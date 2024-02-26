@@ -18,7 +18,7 @@ class User(db.Model):
     phone = db.Column(db.String(10), nullable=False)
     password = db.Column(db.String(8), nullable=False) 
     virtual_link = db.Column(db.String(250), nullable=True)
-    is_active = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=True)
 
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)

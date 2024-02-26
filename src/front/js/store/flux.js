@@ -14,7 +14,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"password": "",
 					"virtual_link": "",
 					"is_active": "",
-				
 				},
 			],
 
@@ -46,12 +45,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return error
 				}
 			},
-
 			logout: async () => {
 				await getActions().protectedFetch("/logout", "POST", null)
 				localStorage.removeItem("token")
 			},
-
 			loginUser: async (email, password) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "api/login", {
@@ -144,8 +141,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error al enviar la solicitud de recuperación de contraseña:", error);
 					setError(error.message);
 				}
+			},
+			getUsers: async () => {
+                try {
+                    const resp = await fetch(process.env.BACKEND_URL + "api/users", {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'Authorization': 'Bearer ' + localStorage.getItem("token")
+                        }
+                    });
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        setStore({ user: data }); 
+                        return data;
+                    } else {
+                        throw new Error("Error al obtener usuarios.");
+                    }
+                } catch (error) {
+                    console.error("Error al obtener usuarios:", error.message);
+                    throw error;
+                }
+            },
+			getUser: async (id) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `api/user/${id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Access-Control-Allow-Origin': '*',
+							'Authorization': 'Bearer ' + localStorage.getItem("token")
+						}
+					});
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({ user: data }); 
+						return data;
+					} else {
+						throw new Error("Error al obtener el usuario.");
+					}
+				} catch (error) {
+					console.error("Error al obtener usuarios:", error.message);
+					throw error;
+				}
+			},
+			editUser: async (id) =>{
+				try{
+					const resp = await fetch (process.env.BACKEND_URL + `api/user/${id}`, {
+						method: 'PUT',
+						headers:
+						{
+							'Content-Type': 'application/json',
+							'Access-Control-Allow-Origin': '*',
+							'Authorization': 'Bearer ' + localStorage.getItem("token")
+						},
+						body: JSON.stringify(userData) 
+					});
+					if (resp.ok){
+						const data = await resp.json();
+						setStore({user : data});
+						return data;
+					}
+					else{
+						throw error ('Error al editar el usuario');
+					}
+				}
+				catch{
+					console.error("Error al editar el usuario:", error.message);
+					throw error;
+				}
 			}
-
 		}
 	};
 };

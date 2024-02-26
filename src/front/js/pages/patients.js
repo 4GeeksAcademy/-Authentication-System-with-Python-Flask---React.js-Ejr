@@ -1,10 +1,16 @@
 import "../../styles/home.css";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 
 export const Patients = () => {
-    const { actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showInactive, setShowInactive] = useState(false);
+    const [nameFilter, setNameFilter] = useState("");
+    const [dniFilter, setDniFilter] = useState("");
     const [userData, setUserData] = useState({
         role_id: 1,
         username: "",
@@ -12,16 +18,26 @@ export const Patients = () => {
         lastname: "",
         dni: "",
         phone: "",
-        email: "",
-        virtual_link: ""
+        email: "", 
+        virtual_link: "",
+        is_active : true
     });
- 
+
+    useEffect(() => {
+        actions.getUsers();
+    }, []);
+
     const openModal = () => {
         setShowModal(true);
     };
 
     const closeModal = () => {
         setShowModal(false);
+    };
+
+    const closeSuccessModal = () => {
+        setShowSuccessModal(false);
+        actions.getUsers();
     };
 
     const handleChange = (e) => {
@@ -38,6 +54,7 @@ export const Patients = () => {
                 userData
             );
             closeModal();
+            setShowSuccessModal(true);
             setUserData({
                 role_id: 2,
                 username: "",
@@ -45,36 +62,95 @@ export const Patients = () => {
                 lastname: "",
                 birth_date: "",
                 phone: "",
-                email: "",
-                virtual_link: ""
+                virtual_link: "", 
+                is_active: true
             });
         } catch (error) {
             console.error("Error al crear usuario:", error.message);
         }
+    }
+
+    const toggleShowInactive = () => {
+        setShowInactive(!showInactive);
     };
 
+    const handleChangeNameFilter = (e) => {
+        setNameFilter(e.target.value);
+    };
+    
+    const handleChangeDniFilter = (e) => {
+        setDniFilter(e.target.value);
+    };
+    
+    const filteredUsers = store.user.filter(user => {
+        const nameMatches = (user.name && user.name.toLowerCase().includes(nameFilter.toLowerCase())) || (user.lastname && user.lastname.toLowerCase().includes(nameFilter.toLowerCase()));
+        const dniMatches = user.dni && user.dni.includes(dniFilter);
+        return nameMatches && dniMatches;
+    });
+
+    const activeFilteredUsers = filteredUsers.filter(user => user.is_active);
+    const inactiveFilteredUsers = filteredUsers.filter(user => !user.is_active);
+
+    const sortedActiveFilteredUsers = activeFilteredUsers.sort((a, b) => a.name.localeCompare(b.name));
+    const sortedInactiveFilteredUsers = inactiveFilteredUsers.sort((a, b) => a.name.localeCompare(b.name));
+
+    const sortedFilteredUsers = [...sortedActiveFilteredUsers, ...sortedInactiveFilteredUsers];
+    
     return (
         <div className="container mt-5">
-            <div className="d-flex justify-content-end mb-3">
-                <button type="button" className="btn btn-primary" onClick={openModal}>Agregar Paciente</button>
+            <div className="d-flex justify-content-start align-items-center mb-3">
+                <div className="input-group flex-grow-1 m-3">
+                    <span className="input-group-text">Nombre o Apellido</span>
+                    <input type="text" className="form-control" value={nameFilter} onChange={handleChangeNameFilter} />
+                </div>
+                <div className="input-group m-3">
+                    <span className="input-group-text">DNI</span>
+                    <input type="text" className="form-control" value={dniFilter} onChange={handleChangeDniFilter} />
+                </div>
+                <div className="input-group flex-grow-1 m-3">
+                    <input className="form-check-input me-2" type="checkbox" id="showInactiveCheckbox" onChange={toggleShowInactive} />
+                    <label className="form-check-label mr-1" htmlFor="showInactiveCheckbox">
+                        Mostrar pacientes inactivos
+                    </label>
+                </div>
+                <button type="button" className="btn btn-primary ms-3" onClick={openModal}>+</button>
             </div>
+
             <table className="table table-hover">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Contacto</th>
-                        <th>Sala Virtual</th>
+                        <th>DNI</th>
+                        <th>Teléfono</th>
+                        <th>Sala virtual</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    {(sortedFilteredUsers.map((user, index) => (
+                        (showInactive || user.is_active) && (
+                            <tr key={index}>
+                                <td>{user.name}</td>
+                                <td>{user.lastname}</td>
+                                <td>{user.dni}</td>
+                                <td>{user.phone}</td>
+                                <td> <a href={user.virtual_link} target="_blank" rel="noopener noreferrer">
+                                        Ingresar
+                                    </a>
+                                </td>
+                                <td>{user.is_active ? 'Activo' : 'Inactivo'}</td>
+                                <td>
+                                    <FontAwesomeIcon icon={faPencilAlt} className="me-2" onClick={() => handleEdit(user.id)} />
+                                </td>
+                            </tr>
+                        )
+                    )))}
                 </tbody>
             </table>
 
-            <div className={`modal fade ${showModal ? 'show' : ''}`} style={{ display: showModal ? 'block' : 'none' }} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className={`modal fade ${showModal ? 'show d-block' : 'd-none'}`} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -121,7 +197,7 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="email" className="col-form-label">Email:</label>
-                                            <textarea className="form-control" id="email" name="email" value={userData.email} onChange={handleChange} />
+                                            <input type="email" className="form-control" id="email" name="email" value={userData.email} onChange={handleChange} /> {/* Cambiado a input type="email" */}
                                         </div>
                                     </div>
                                     <div className="col-6">
@@ -139,6 +215,25 @@ export const Patients = () => {
                     </div>
                 </div>
             </div>
+            <div className={`modal fade ${showSuccessModal ? 'show d-block' : 'd-none'}`} id="successModal" tabIndex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="btn-close" onClick={closeSuccessModal} aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            El paciente se ha cargado con éxito.
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={closeSuccessModal}>Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
+
+
+
+

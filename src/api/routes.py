@@ -137,6 +137,36 @@ def list_users():
     serialized_users = [user.serialize() for user in users]
     return jsonify(serialized_users), 200
 
+#Buscar un solo usuario
+@api.route('/user/<int:id>', methods=['GET'])  
+def get_user(id):
+    user = User.query.get(id) 
+    if user:
+        return jsonify(user.serialize()), 200  
+    else:
+        return jsonify({"message": "Usuario no encontrado"}), 404  
+
+#Editar usuario
+@api.route('/user/<int:id>', methods=['PUT'])
+def edit_user(id):
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"message": "Usuario no encontrado"}), 404
+    
+    data = request.get_json()
+    user.username = data['username']
+    user.name = data['name']
+    user.lastname = data['lastname']
+    user.dni = data['dni']
+    user.phone = data['phone']
+    user.virtual_link = data['virtual_link']
+    user.email = data['email']
+    user.is_active = data['is_active']
+
+    db.session.commit()
+
+    return jsonify({"message": "Usuario actualizado exitosamente"}), 200
+
 # Login de usuario
 @api.route('/login', methods=['POST'])
 def login():
