@@ -68,6 +68,7 @@ def login():
         return jsonify({"msg": "Bad email or password"}), 401    
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+# verificar el tiempo que ha pasado para cobrar a la persona
 
 
 # Protect a route with jwt_required, which will kick out requests
@@ -118,7 +119,7 @@ def signup():
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
     role = data.get('role')
-    subscription_start_date = datetime.utcnow() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
+    subscription_start_date = datetime.today() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
     plan = data.get('plan')
     last_payment_date = ''
     next_payment_date = ''
@@ -178,7 +179,7 @@ def signup_free_trial():
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
     role = data.get('role')
-    subscription_start_date = datetime.utcnow() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
+    subscription_start_date = datetime.today() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
     subscription = Subscription.query.filter_by(plan='Free Trial').first() #seleccionamos la opcion del plan Free Trial
     last_payment_date = ''
     next_payment_date = ''
