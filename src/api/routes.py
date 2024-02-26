@@ -155,3 +155,20 @@ def validate_token():
         return jsonify({"is_loged": True}), 201
     
     return jsonify({"is_loged": False}), 401
+
+# GET Mostrar detalles Eventos
+@api.route('/events/<string:category>', methods=['GET'])
+def event_category(category):
+    if category=="ALL":
+        event_query = Evento.query.all()
+        event_data = [event.serialize() for event in event_query]
+    else: 
+        event_query = Evento.query.filter(Evento.categoria.has(categoria=category)).all()
+        event_data = list(map(lambda item: item.serialize(), event_query))
+        
+    response_body = {
+        "msg": category,
+        "result": event_data,
+    }
+
+    return jsonify(response_body), 200

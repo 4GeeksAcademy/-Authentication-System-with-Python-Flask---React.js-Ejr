@@ -11,6 +11,9 @@ import injectContext from "./store/appContext";
 import {Navbar} from "./component/navbar" 
 import {Footer} from "./component/footer" 
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -31,6 +34,18 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
+                    <ToastContainer 
+								position="top-center"
+								autoClose={2000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								theme="dark"
+					/>
                 </ScrollToTop>
             </BrowserRouter>
         </div>
