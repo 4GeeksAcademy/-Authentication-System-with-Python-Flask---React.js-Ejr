@@ -40,62 +40,45 @@ export const Navbar = () => {
 	},[store.auth]);
 
 	return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 row">
-          <div className="container-fluid d-flex justify-content-between align-item-center row">
-            <div className="col-sm-3 col-md-4 col-lg-3">
-              {/* <a className="navbar-brand text-black fs-2" href="#"><strong>Never Hobby Alone</strong></a> */}
+            <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white">
+              <div className="container-fluid d-flex justify-content-between align-items-center">
+                <div className="navbar-brand col-8">
+                  <img className="img-thumbnail border-0" src={Logo} alt="" />
+                </div>
+                <button className="navbar-toggler p-2 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon"></span>
+                </button>
 
-              <img class="img-thumbnail border-0" src={ Logo } alt="" />
+              {/*Esta parte son los botones de la derecha */}
+              {loggedNavbar ? 
+                (<div className="collapse navbar-collapse" id="navbarSupportedContent">
+                  <div className="d-flex flex-row justify-content-end align-items-center">
+                    <img className="img-fluid col-3 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" src={ ProfilePicture }/>
+                    <span>{ store.user.name }</span>
+                    <ul className="dropdown-menu border-0" aria-labelledby="navbarDropdown">
+                      <li><button className="dropdown-item btn-400 px-4 ms-3 mb-2 rounded">Usuario</button></li>
+                      <li><button className="dropdown-item btn-400 px-4 ms-3 rounded" onClick={logOut}>Cerrar sesión</button></li>
+                    </ul>
+                  </div>
+                  {/* <div className="d-flex flex-row justify-content-end">
+                    <button className="btn-400 px-4 ms-3 rounded" onClick={logOut}>Cerrar sesión</button>
+                  </div> */}
+                </div>):
+                (<div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                  <ul className="navbar-nav">
+                    <li className="nav-item">
+                      <a className="nav-link fs-5 text-white btn bg-400 p-2 me-2 mb-2" href="#" onClick={updateModalState}>Log in</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link fs-5 text-white btn bg-300 p-2 me-2" href="#" onClick={updateModalRegistrerState}>Sign up</a>
+                    </li>
+                  </ul>
+                </div>)
+              }
+            </div> 
 
-              {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button> */}
-      
-              {/*Esta parte es la entrada de busqueda */}
-              {/* <div className="col-sm-6 col-md-6 col-lg-2">
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                </form>
-              </div> */}
-      
-              {/*Esta parte es la otra entrada de busqueda */}
-              {/* <div className="col-sm-6 col-md-6 col-lg-2">
-                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                <select class="form-select" id="inlineFormSelectPref">
-                  <option selected>Choose...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-              </div> */}
-            </div>
-
-            {/*Esta parte son los botones de la derecha */}
-            {loggedNavbar ? 
-            (<div className="collapse navbar-collapse col-sm-4 col-md-4 col-lg-3" id="navbarNav">
-
-              <div className="d-flex flex-row justify-content-end align-items-center">
-                <img className="img-fluid col-3" src={ ProfilePicture }/>
-                <span>{ store.user.name }</span>
-              </div>
-
-              <button className="btn-400 px-4 ms-3 rounded" onClick={logOut}>Cerrar sesión</button>
-            </div>):
-            (<div className="collapse navbar-collapse d-flex justify-content-end col-sm-6 col-md-4 col-lg-3" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item flex">
-                  <a className="nav-link active fs-5 text-white btn m-1 p-2 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
-                </li>
-                <li className="nav-item flex">
-                  <a className="nav-link fs-5 text-white btn m-1 p-2 bg-300" href="#" onClick={updateModalRegistrerState}>Sign up</a>
-                </li>
-              </ul>
-            </div>)
-            }
-          </div> 
-
-          <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })}/>
-          <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })}/>
+            <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })}/>
+            <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })}/>
         </nav>
     
       )

@@ -1,3 +1,6 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -55,6 +58,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         setStore({ auth: true})
 					    return true;
                     }
+                    else{
+                        toast.error(data.msg)
+                    }
 					
 				} catch (error) {
 					console.log(error);
@@ -106,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.status >= 200 &&  response.status < 300) {
                         return true ; // Registro exitoso
                     } else {
-                        console.error(data.msg); // Manejo de errores
+                        toast.error(data.msg)
                         return false;
                     }
                 } catch (error) {

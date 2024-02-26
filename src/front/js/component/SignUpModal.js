@@ -1,9 +1,6 @@
 import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export const SignUpModal = props => {
     const { store, actions } = useContext(Context);
@@ -19,7 +16,7 @@ export const SignUpModal = props => {
              props.onClose()
             }
             else{
-            toast.error(`Email already exists`)
+            // toast.error(`Email already exists`)
             setName("")
             setEmail("")
             setPassword("")
@@ -72,18 +69,6 @@ export const SignUpModal = props => {
                             <button type="submit" className="btn-300 to-be-hoved form-control w-50">
                                 ¡REGÍSTRATE!
                             </button>
-                            <ToastContainer
-                                position="top-center"
-								autoClose={5000}
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-								theme="dark"
-                            />
                         </form>
                     </div>
                 </div>
