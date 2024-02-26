@@ -31,22 +31,22 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<EventDescription />} path="/description/:theid" />
+                        <Route element={<EventDescription />} path="/description" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
-                    <ToastContainer 
-								position="top-center"
-								autoClose={2000}
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-								theme="dark"
-					/>
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={2000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="dark"
+                    />
                 </ScrollToTop>
             </BrowserRouter>
         </div>
