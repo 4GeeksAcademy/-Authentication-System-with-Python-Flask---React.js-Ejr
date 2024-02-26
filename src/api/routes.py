@@ -138,7 +138,7 @@ def list_users():
     return jsonify(serialized_users), 200
 
 #Buscar un solo usuario
-@api.route('/user/<int:id>', methods=['GET'])  
+@api.route('/get_user/<int:id>', methods=['GET'])  
 def get_user(id):
     user = User.query.get(id) 
     if user:
@@ -147,7 +147,7 @@ def get_user(id):
         return jsonify({"message": "Usuario no encontrado"}), 404  
 
 #Editar usuario
-@api.route('/user/<int:id>', methods=['PUT'])
+@api.route('/edit_user/<int:id>', methods=['PUT'])
 def edit_user(id):
     user = User.query.get(id)
     if not user:

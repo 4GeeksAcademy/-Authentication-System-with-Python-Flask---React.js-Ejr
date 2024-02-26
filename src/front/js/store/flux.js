@@ -16,7 +16,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"is_active": "",
 				},
 			],
-
 		},
 		actions: {
 			protectedFetch: async (endpoint, method = "GET", body = null) => {
@@ -84,7 +83,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!body.username || !body.name || !body.lastname || !body.dni || !body.phone || !body.email) {
 						throw new Error("Por favor, complete todos los campos requeridos.");
 					}
-					
 					const role_id = 2; 
 					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
 						method: 'POST',
@@ -166,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 			getUser: async (id) => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + `api/user/${id}`, {
+					const resp = await fetch(process.env.BACKEND_URL + `api/get_user/${id}`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -176,7 +174,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (resp.ok) {
 						const data = await resp.json();
-						setStore({ user: data }); 
+						setStore({ user: [...getStore().user, data] });
 						return data;
 					} else {
 						throw new Error("Error al obtener el usuario.");
@@ -186,30 +184,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw error;
 				}
 			},
-			editUser: async (id) =>{
-				try{
-					const resp = await fetch (process.env.BACKEND_URL + `api/user/${id}`, {
+			editUser: async (id, userData) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `api/edit_user/${id}`, {
 						method: 'PUT',
-						headers:
-						{
+						headers: {
 							'Content-Type': 'application/json',
 							'Access-Control-Allow-Origin': '*',
 							'Authorization': 'Bearer ' + localStorage.getItem("token")
 						},
-						body: JSON.stringify(userData) 
+						body: JSON.stringify(userData)
 					});
-					if (resp.ok){
-						const data = await resp.json();
-						setStore({user : data});
-						return data;
+					if (resp.ok) {
+						const editedUser = await resp.json();
+						return editedUser; 
+					} else {
+						throw new Error('Error al editar el usuario');
 					}
-					else{
-						throw error ('Error al editar el usuario');
-					}
-				}
-				catch{
+				} catch (error) {
 					console.error("Error al editar el usuario:", error.message);
-					throw error;
+					throw error; 
 				}
 			}
 		}

@@ -54,8 +54,6 @@ class Role(db.Model):
             "name": self.name
         }
     
-    
-
 class Reservation(db.Model):
     __tablename__='reservation'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
