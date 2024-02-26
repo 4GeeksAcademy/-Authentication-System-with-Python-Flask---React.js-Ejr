@@ -25,9 +25,9 @@ export const Formulario = () => {
         console.log(email, password);
         let logged = await actions.login(email, password);
         console.log(logged)
-        // if (logged) { //true
-        //     navigate("/")
-        // }
+        if (logged) { true
+            navigate("/")
+        }
     }
 
     return (
@@ -35,7 +35,7 @@ export const Formulario = () => {
         <form className="d-flex flex-column justify-content-center h-100 align-items-center opacity-50" style={stylebackgroundimg} onSubmit={handleLogin}>
             <div className="text-center  col-11 col-sm-6 col-lg-4">
                 <div className="card-body">
-                    <h1 style={{ fontFamily: 'Poiret One' }}>Login Om</h1>
+                    <h1 style={{ fontFamily: 'Poiret One' }}>Sign Up</h1>
                     <div className="mb-1 text-start">
                         <label for="exampleInputEmail1" className="form-label">Email/Username</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e) => setUserEmail(e.target.value)} />
