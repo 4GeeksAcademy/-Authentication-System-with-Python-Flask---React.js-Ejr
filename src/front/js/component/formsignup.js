@@ -65,7 +65,7 @@ export const FormSignup = () => {
                         <label htmlFor="exampleInputPassword1" className="form-label">A password you would always remember</label>
                         <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
                         <label htmlFor="exampleInputConfirmPassword1" className="form-label">Again, just in case</label>
-                        <input type="confirmpassword" className="form-control" id="exampleInputConfirmPassword1" onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <input type="password" className="form-control" id="exampleInputConfirmPassword1" onChange={(e) => setConfirmPassword(e.target.value)} />
                         <button type="submit" className="btn btn-outline-secondary w-50 mt-3">Sign Up</button>
                     </div>
                 </div>
