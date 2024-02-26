@@ -8,7 +8,7 @@
 
 body {
     margin: 0;
-    overflow: hidden; /* Evita que haya desplazamiento vertical */
+
   }
   
   #imagenFija {
@@ -19,3 +19,15 @@ body {
     height: 100vh; /* Altura del viewport */
     object-fit: cover; /* Ajusta la imagen al contenedor sin perder la proporción y cubriendo completamente */
   }
+
+
+  @media (max-width: 768px) {
+    #imagenClases {
+      margin-top: 100px; /* Ajusta la altura según sea necesario para evitar el navbar */
+    }
+  }
+
+/* #navbar{
+  background-color:steelblue;
+} */
+  
