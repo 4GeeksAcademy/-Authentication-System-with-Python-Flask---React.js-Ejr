@@ -24,18 +24,18 @@ export const Home = () => {
 		<div className="container">
 			<Jumbotron />
 			<div className="4-botones py-5 d-flex justify-content-center row m-1">
-				<button type="button" class="btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2">EVENTS</button>
-				<button type="button" class="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Sports</button>
-				<button type="button" class="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Music</button>
-				<button type="button" class="btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2">and a lot of fun</button>
+				<button type="button" className="btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2">EVENTS</button>
+				<button type="button" className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Sports</button>
+				<button type="button" className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Music</button>
+				<button type="button" className="btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2">and a lot of fun</button>
 			</div>
 
 			<div className="Don't forget to see the events row py-5">
 				<p className="fs-2 col-sm-12 col-md-6 col-lg-5"><strong>Don't forget to see the events!</strong></p>
 
 				{/* <div className="col-sm-12 col-md-6 col-lg-2">
-					<label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-					<select class="form-select" id="inlineFormSelectPref">
+					<label className="visually-hidden" for="inlineFormSelectPref">Preference</label>
+					<select className="form-select" id="inlineFormSelectPref">
 						<option selected>Choose...</option>
 						<option value="1">One</option>
 						<option value="2">Two</option>

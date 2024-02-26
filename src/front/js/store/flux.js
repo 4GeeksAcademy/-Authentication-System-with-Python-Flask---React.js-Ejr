@@ -12,7 +12,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
             obtenerInfoUsuario: async ()=> {
                 let token = localStorage.getItem("token");
-                console.log(token);
                 try {
                     const res = await fetch(process.env.BACKEND_URL + "/api/user/details", {
 						method:"GET",
