@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useContext } from "react";;
 import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 export const LoginModal = props => {
 
@@ -22,7 +19,6 @@ export const LoginModal = props => {
 			props.onClose()
 		}
 		else{
-			toast.error(`Email or password are incorrect`)
 			setEmail("")
 			setPassword("")
 		}
@@ -76,21 +72,9 @@ export const LoginModal = props => {
 								Mantener sesión iniciada
 								</label>
 							</div> */}
-							<button type="submit" className="btn-300 to-be-hoved form-control w-50">
+							<button type="submit"  className="btn-300 to-be-hoved form-control w-50">
 								¡ENTRA!
 							</button>
-							<ToastContainer 
-								position="top-center"
-								autoClose={5000}
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-								theme="dark"
-							/>
 						</form>
 					</div>
 
