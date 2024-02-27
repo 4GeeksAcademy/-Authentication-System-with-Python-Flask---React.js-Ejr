@@ -13,7 +13,6 @@ import { ContextProvider } from "./store/appContext"; // Importa el proveedor de
 import { BookProvider } from "./book"; // 
 
 import { Navbar } from "./component/navbar";
-import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import BookDetails from "./pages/book";
