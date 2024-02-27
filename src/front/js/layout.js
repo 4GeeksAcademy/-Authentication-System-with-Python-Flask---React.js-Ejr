@@ -17,6 +17,7 @@ import { Museums } from "./pages/museums";
 
 import  Navbar  from "./component/navbar";
 import { Footer } from "./component/footer";
+import SignUp from "../js/component/signup";
 
 //create your first component
 const Layout = () => {
@@ -42,6 +43,7 @@ const Layout = () => {
                         <Route element={<Department />} path="/department/:thedepartment" />
                         <Route element={<Museums />} path="/museums" />
                         <Route element={<Login setAuthAttempt={setAuthAttempt}/>} path="/login" />
+                        <Route element={<SignUp />} path="/signup" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

@@ -50,6 +50,7 @@ def sign_up():
     body = request.json
     if body is None:
         return jsonify({"message" : "Please provide a valid email and password!"}), 400
+    
     email = body["email"]
     password = body["password"]
     check_user = User.query.filter_by(email = email).first()

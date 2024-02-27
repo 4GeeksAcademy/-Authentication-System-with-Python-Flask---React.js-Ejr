@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link } from 'react-router-dom';
 
 const Login = ({ setAuthAttempt }) => {
   const { store, actions } = useContext(Context);
@@ -58,9 +59,9 @@ const Login = ({ setAuthAttempt }) => {
       <div className="row">
           <div className='col p-3'>
             {/* <Link> */}
-              <p className="">
-                Sign Up
-              </p> 
+            <Link to ="/signup">
+          SIGN UP
+        </Link>
             {/* </Link */}
           </div>
       <div className="col text-end p-3">
