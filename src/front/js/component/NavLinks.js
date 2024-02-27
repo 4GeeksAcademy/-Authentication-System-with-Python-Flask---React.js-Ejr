@@ -1,12 +1,14 @@
-import React from 'react';
-
+import React from 'react' ;
+import { Link } from 'react-router-dom';
 // Navegación de libros
 const NavLinks = () => {
     return (
         <ul className="nav-links">
-            <li><a href="/recomendaciones">Recomendaciones</a></li>
-            <li><a href="/autores">Autores</a></li>
-            <li><a href="/generos">Géneros</a></li>
+            <li><Link to="/recomendaciones">Recomendaciones</Link></li>
+            <li><Link to="/autores">Autores</Link></li>
+            <li><Link to="/generos">Géneros</Link></li>
+            <li><Link to="/best-seller">Best Seller</Link></li>
+            <li><Link to="/generos">Mas Buscados</Link></li>
             {/* Más enlaces*/}
         </ul>
     );
