@@ -24,7 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  if (!data.user.is_admin) localStorage.setItem('myToken', data.token)
 			  return data
 			},
-
+ 
 			signup: async (
 			  email,
 			  password,
@@ -91,4 +91,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		}
 	};
+
+
 export default getState;
