@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     background: "white",
                     initial: "white"
                 }
-            ]
+            ],
+            urlBase:"https://openlibrary.org/search.json"
         },
         actions: {
             login: async (email, password) => {
@@ -46,23 +47,39 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
-            APIfetch: async (endpoint, method = "GET", body = null) => {
-                let params = { method };
-                if (body != null) {
-                    params.headers = {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
-                    };
-                    params.body = JSON.stringify(body);
-                }
-                let res = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
-                if (!res.ok) {
-                    console.error(res.statusText);
-                    return ({ error: res.statusText });
-                }
-                let json = res.json();
-                return json;
-            }
+            APIfetch: async (endpoint,method="GET",body=null)=>{
+				let params={method}
+				if (body!=null){
+					params.headers={
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin":"*"
+					}
+					params.body=JSON.stringify(body) 
+				}
+				let res=await fetch(process.env.BACKEND_URL+"/api"+endpoint,params)
+				if (!res.ok){
+					console.error(res.statusText)
+					return ({error:res.statusText})
+
+				}
+				let json=res.json()
+				return json
+				
+			},
+			setBooks:async(endpoint,method="GET",body=null)=>{
+				let store=getStore()
+				try {
+					const response=await fetch(store.urlBase+`?q=${endpoint}`)
+					const data=await response.json()
+
+					if(!response.ok){
+						console.log(data)
+					}
+				return data
+				} catch (error) {
+				console.log(error)	
+				}
+			}
         }
     };
 };
