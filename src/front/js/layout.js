@@ -6,8 +6,10 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
+import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
 import injectContext from "./store/appContext";
-import { Login } from "./pages/login";
+import { Login } from "./pages/login"; 
+import { Sessions } from "./pages/classes";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -31,8 +33,10 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         {/* <Route element={<SingleMeditationDetails />} path="/meditation/:theid" /> */}
                         {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
-                        <Route element={<SingleHathaYogaDetails />} path="/hathayoga/:theid" />
+                        <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/sessions" element={<Sessions />} />
+                        <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

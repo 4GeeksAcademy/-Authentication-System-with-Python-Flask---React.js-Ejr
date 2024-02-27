@@ -6,6 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			user: [],
+			jivamuktiYoga: [],
+			jivamuktiSessionInfo: {},
 			// demo: [
 			// 	{
 			// 		title: "FIRST",
@@ -78,6 +80,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			getAllJivamukti: async () => {
+				try {
+					await fetch(process.env.BACKEND_URL + "/jivamuktiyoga")
+						.then(res => {
+							console.log(res.status);
+							if (res.status === 200) {
+								return res.json();
+							} else {
+								throw new Error("Error fetching Jivamukti yoga data");
+							}
+						})
+						.then(data => console.log(data))
+						.catch(err => console.error(err));
+
+					return true
+
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+
+			getOneJivamukti: async (jivamuktiId) => {
+				try {
+					let response = await fetch(process.env.BACKEND_URL + `/api/jivamuktiyoga/${jivamuktiId}`, {
+						method: "GET",
+					});
+					console.log(response.status);
+
+					if (response.status === 200) {
+						let data = await response.json();
+						console.log(data);
+						const jivamuktiSessionInfoWithId = {
+							...data.jivamukti_session,
+							jivamuktiId: jivamuktiId,
+						};
+						console.log("Updated session info:", jivamuktiSessionInfoWithId)
+						setStore({ jivamuktiSessionInfo: jivamuktiSessionInfoWithId });
+						return true
+					} else {
+						throw new Error("Error fetching Jivamukti yoga info");
+					}
+				} catch (err) {
+					console.error(err);
+					return false
+				}
+			},
+
+			// getOneJivamukti: (jivamuktiId) => {
+			// 	fetch(process.env.BACKEND_URL + `/api/session/jivamuktiyoga/${jivamuktiId}`)
+			// 		.then(res => {
+			// 			console.log(res.status);
+			// 			if (res.status === 200) {
+			// 				return res.json();
+			// 			} else {
+			// 				throw new Error("Error fetching Jivamukti yoga info");
+			// 			}
+			// 		})
+			// 		.then(data => console.log(data))
+			// 		.catch(err => console.error(err));
+			// },
 		}
 	};
 };
