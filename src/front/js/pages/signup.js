@@ -24,7 +24,7 @@ export const Signup = () => {
       setErrorMessage("La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial");
       return;
     }
-    
+
     try {
       const data = await actions.createUser(username, email, password);
       console.log('Usuario creado con éxito:', data);
@@ -37,12 +37,12 @@ export const Signup = () => {
       setConfirmPassword('');
     }
   };
-  
+
   const handleInputChange = () => {
     setErrorMessage('');
   };
 
-  return(
+  return (
     <div className="container signup">
       <div className="row">
         <div className="col-md-5">
@@ -54,7 +54,7 @@ export const Signup = () => {
               {errorMessage}
             </div>
           )}
-          <form onSubmit={handleSignup}> 
+          <form onSubmit={handleSignup}>
             <div className="form-group">
               <label>Username</label>
               <input
@@ -100,20 +100,20 @@ export const Signup = () => {
               />
             </div>
             <button type="submit" className="btn btnSignup">
-              Create 
+              Create
             </button>
           </form>
         </div>
       </div>
       <div className="row aling-items-center">
-            <div className="col-md-5">
-              <Link to="/login" className="linkSignup">
-              ← Go Back
-              </Link>
-            </div>
-            <div className="col-md-7">
-              <hr className="mt-4" />
-            </div>
+        <div className="col-md-5">
+          <Link to="/login" className="linkSignup">
+            ← Go Back
+          </Link>
+        </div>
+        <div className="col-md-7">
+          <hr className="mt-4" />
+        </div>
       </div>
     </div>
   );

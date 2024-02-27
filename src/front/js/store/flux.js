@@ -55,9 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 					}
 					if (body != null) {
-						params.headers = {
-							"Content-Type": "application/json"
-						}
+						params.headers["Content-Type"] = "application/json"
 						params.body = JSON.stringify(body)
 					}
 					let resp = await fetch(process.env.BACKEND_URL + "api" + endpoint, params)
@@ -65,6 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error(resp.statusText)
 						return { error: resp.statusText }
 					}
+					return resp
 				} catch (error) {
 					return error
 				}
@@ -158,6 +157,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error("Error al enviar la solicitud de recuperación de contraseña:", error);
 					setError(error.message);
+				}
+			},
+
+			getUserData: async () => {
+				try {
+					const resp = await getActions().protectedFetch("/profile", "GET", null)
+					if (!resp.ok) {
+						console.error("Error al traer datos de usuario: ", resp)
+						return { error: "Error al traer datos de usuario" }
+					}
+					return await resp.json()
+				} catch (error) {
+					console.error("Error: ", error)
+					return { Error: "Error al traer datos de usuario" }
 				}
 			},
 

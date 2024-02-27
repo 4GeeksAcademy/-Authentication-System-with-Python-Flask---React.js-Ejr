@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -57,7 +57,7 @@ export const EditProfile = () => {
                 }
 
                 changes.password = password
-                
+
             }
 
             if (phone !== '') {
@@ -72,9 +72,18 @@ export const EditProfile = () => {
             const result = await actions.editProfile(changes);
             console.log("Profile updated successfully:", result);
 
-            setPassword('')
-            setConfirmError('')
-            setPhoneError('')
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+            setName('');
+            setLastname('');
+            setBirthdate('');
+            setPhone('');
+            setPasswordError('');
+            setConfirmError('');
+            setPhoneError('');
+
+            useNavigate("/profile")
         } catch (error) {
             console.error("Error updating profile:", error);
         }
@@ -134,87 +143,94 @@ export const EditProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col">
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input type="password"
-                                        className="form-control"
-                                        id="password"
-                                        name="password-input"
-                                        value={password}
-                                        onChange={(e) => { setPassword(e.target.value); handleInputChange() }}
-                                    />
-                                    <button className="btn btn-outline-secondary" type="button" id="button-addon-password"
-                                        onClick={togglePasswordVisibility}>
-                                        <FontAwesomeIcon
-                                            icon={showPassword ? faEyeSlash : faEye}
-                                            className="eye-icon"
-                                        /></button>
-                                </div>
-                                {passwordError && (
-                                    <div className="alert alert-danger" role="alert">
-                                        {passwordError}
-                                    </div>
-                                )}
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group">
+                            <div className="input-group">
+                                <input type="password"
+                                    className="form-control"
+                                    id="password"
+                                    name="password-input"
+                                    value={password}
+                                    onChange={(e) => { setPassword(e.target.value); handleInputChange() }}
+                                />
+                                <button className="btn btn-outline-secondary" type="button" id="button-addon-password"
+                                    onClick={togglePasswordVisibility}>
+                                    <FontAwesomeIcon
+                                        icon={showPassword ? faEyeSlash : faEye}
+                                        className="eye-icon"
+                                    /></button>
                             </div>
-                        </div>
-                        <div className="col">
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input type="password"
-                                        className="form-control"
-                                        id="confirm"
-                                        name="confirm-input"
-                                        value={confirmPassword}
-                                        onChange={(e) => { setConfirmPassword(e.target.value); handleInputChange() }}
-                                    />
-                                    <button className="btn btn-outline-secondary" type="button" id="button-addon-confirm"
-                                        onClick={toggleConfirmPasswordVisibility}>
-                                        <FontAwesomeIcon
-                                            icon={showConfirm ? faEyeSlash : faEye}
-                                            className="eye-icon"
-                                        /></button>
+                            {passwordError && (
+                                <div className="alert alert-danger" role="alert">
+                                    {passwordError}
                                 </div>
-                                {confirmError && (
-                                    <div className="alert alert-danger" role="alert">
-                                        {confirmError}
-                                    </div>
-                                )}
-                            </div>
+                            )}
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col">
-                            <div className="form-group">
-                                <input type="date"
+                    <div className="col">
+                        <div className="form-group">
+                            <div className="input-group">
+                                <input type="password"
                                     className="form-control"
-                                    id="birthdate"
-                                    name="birthdate-input"
-                                    value={birthdate}
-                                    onChange={(e) => { setBirthdate(e.target.value); handleInputChange() }}
+                                    id="confirm"
+                                    name="confirm-input"
+                                    value={confirmPassword}
+                                    onChange={(e) => { setConfirmPassword(e.target.value); handleInputChange() }}
                                 />
+                                <button className="btn btn-outline-secondary" type="button" id="button-addon-confirm"
+                                    onClick={toggleConfirmPasswordVisibility}>
+                                    <FontAwesomeIcon
+                                        icon={showConfirm ? faEyeSlash : faEye}
+                                        className="eye-icon"
+                                    /></button>
                             </div>
-                        </div>
-                        <div className="col">
-                            <div className="form-group">
-                                <input type="tel"
-                                    className="form-control"
-                                    id="phonenumber"
-                                    name="phonenumber-input"
-                                    value={phone}
-                                    onChange={(e) => { setPhone(e.target.value); handleInputChange() }}
-                                />
-                                {phoneError && (
-                                    <div className="alert alert-danger" role="alert">
-                                        {phoneError}
-                                    </div>
-                                )}
-                            </div>
+                            {confirmError && (
+                                <div className="alert alert-danger" role="alert">
+                                    {confirmError}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-            </form>
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group">
+                            <input type="date"
+                                className="form-control"
+                                id="birthdate"
+                                name="birthdate-input"
+                                value={birthdate}
+                                onChange={(e) => { setBirthdate(e.target.value); handleInputChange() }}
+                            />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <input type="tel"
+                                className="form-control"
+                                id="phonenumber"
+                                name="phonenumber-input"
+                                value={phone}
+                                onChange={(e) => { setPhone(e.target.value); handleInputChange() }}
+                            />
+                            {phoneError && (
+                                <div className="alert alert-danger" role="alert">
+                                    {phoneError}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <div className="form-group">
+                            <button type="submit">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form >
         </div>
     );
 }
