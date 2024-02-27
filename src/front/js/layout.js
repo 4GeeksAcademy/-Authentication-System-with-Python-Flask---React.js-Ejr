@@ -10,12 +10,9 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { ContextProvider } from "./store/appContext"; // Importa el proveedor de contexto existente
-
-import { Navbar } from "./component/navbar";
+import NavBar from "./component/Navbar";
 import { BookDetails } from "./pages/book";
-
 import { Footer } from "./component/footer";
-
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
@@ -25,7 +22,7 @@ const Layout = () => {
         <div>
             <Router basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <NavBar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
