@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 import "../../styles/exhibit.css";
 
@@ -12,13 +13,18 @@ export const Exhibits = () => {
 	},[store])
 	return (
 		<div className="text-center mt-5">
-			<div className="row1"> 
+			<div> 
 				{artPieces.map(item => (
-					<div className="art-poster">
-						<p>{item.title} </p>
-						<img className="w-100" src={item.primaryImageSmall} onError= {(e)=>{e.target.src = fallBackURL}} alt = {item.objectName} />
+					<div className="row1">
+					<Link to={`single/${item.objectID}`}>
+						<div className="art-poster">
+							<img className="w-100" src={item.primaryImageSmall} onError= {(e)=>{e.target.src = fallBackURL}} alt = {item.objectName} />
+							<p>{item.title} </p>
+						</div>
+					</Link>
 					</div>
-				))}
+						
+					))}	
 			</div>
 		</div>
 	);

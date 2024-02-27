@@ -46,7 +46,7 @@ const Layout = () => {
                         <Route element={<Museums />} path="/museums" />
                         <Route element={<Login setAuthAttempt={setAuthAttempt} setAuthStatus={setAuthStatus} />} path="/login" />
                         <Route element={<SignUp setAuthStatus={setAuthStatus} />} path="/signup" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Single />} path="exhibits/single/:objectID" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
