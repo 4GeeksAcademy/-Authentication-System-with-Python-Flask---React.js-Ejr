@@ -5,11 +5,21 @@ import { BackendURL } from "./component/backendURL";
 import { Login } from "./pages/login";
 import { Forgot } from "./pages/forgot";
 import { Home } from "./pages/home";
+
+
+
+import { Demo } from "./pages/demo";
+import { Single } from "./pages/single";
+import injectContext from "./store/appContext";
+import { ContextProvider } from "./store/appContext"; // Importa el proveedor de contexto existente
+import { BookProvider } from "./book"; // 
+
+import { Navbar } from "./component/navbar";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import BookDetails from "./pages/book";
-import Navbar from "./component/Navbar";
+
 import { Footer } from "./component/footer";
 
 const Layout = () => {
