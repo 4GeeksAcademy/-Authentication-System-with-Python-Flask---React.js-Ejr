@@ -174,7 +174,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (resp.ok) {
 						const data = await resp.json();
-						setStore({ user: [...getStore().user, data] });
 						return data;
 					} else {
 						throw new Error("Error al obtener el usuario.");
@@ -196,8 +195,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(userData)
 					});
 					if (resp.ok) {
-						const editedUser = await resp.json();
-						return editedUser; 
+						const userIndex = getStore().user.findIndex(user => user.id === id);
+						if (userIndex !== -1) {
+							const updatedUsers = [...getStore().user];
+							updatedUsers[userIndex] = {...userData, id};
+							setStore({ user: updatedUsers });
+							return {...userData, id};
+						} else {
+							throw new Error('Usuario no encontrado');
+						}
 					} else {
 						throw new Error('Error al editar el usuario');
 					}

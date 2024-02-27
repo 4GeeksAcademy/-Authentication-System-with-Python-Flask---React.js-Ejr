@@ -12,6 +12,8 @@ export const Patients = () => {
     const [nameFilter, setNameFilter] = useState("");
     const [dniFilter, setDniFilter] = useState("");
     const [showModalEdit, setShowModalEdit] = useState(false);
+    const [successAction, setSuccessAction] = useState("");
+    const [isActive, setIsActive] = useState(true);
     const [userData, setUserData] = useState({
         id : "",
         role_id: 1,
@@ -45,18 +47,34 @@ export const Patients = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUserData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        if (name === "is_active") {
+            setIsActive(value === "activo");
+            setUserData(prevState => ({
+                ...prevState,
+                [name]: value === "activo" ? true : false
+            }));
+        } else {
+            setUserData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     };
-
+    
     const handleSubmit = async () => {
+        const validationMessages = validateForm(userData);
+        setErrorMessages(validationMessages);
+        
+        const hasErrors = Object.values(validationMessages).some(msg => msg !== "");
+        if (hasErrors) {
+            return; 
+        }
         try {
             await actions.createUser(
                 userData
             );
             closeModal();
+            setSuccessAction("add"); 
             setShowSuccessModal(true);
             setUserData({
                 id: "",
@@ -86,22 +104,85 @@ export const Patients = () => {
     };
 
     const handleSaveChanges = async () => {
+        const validationMessages = validateForm(userData);
+        setErrorMessages(validationMessages);
+        
+        const hasErrors = Object.values(validationMessages).some(msg => msg !== "");
+        if (hasErrors) {
+            return; 
+        }
         try {
             const userId = userData.id;
-            const editedUser = await actions.editUser(userId, userData);
-            setShowModalEdit(false);
-            
-            const updatedUsers = store.user.map(user => {
-                if (user.id === editedUser.id) {
-                    return editedUser;
-                }
-                return user;
-            });
-            setStore({ user: updatedUsers });
-            actions.getUsers();
+            await actions.editUser(userId, userData);
+            closeModal();
+            setSuccessAction("edit"); 
+            setShowSuccessModal(true);
         } catch (error) {
             console.error("Error al guardar los cambios:", error.message);
         }
+    };
+    
+    const [errorMessages, setErrorMessages] = useState({
+        username: "",
+        name: "",
+        lastname: "",
+        dni: "",
+        phone: "",
+        email: ""
+    });
+
+    const handleInputFocus = (fieldName) => {
+        setErrorMessages(prevErrors => ({
+            ...prevErrors,
+            [fieldName]: ""
+        }));
+    };
+    
+    const validateForm = (data) => {
+        const errors = {};
+        if (data.username.trim() === "") {
+            errors.username = "*El campo es obligatorio";
+        } else {
+            errors.username = "";
+        }
+        if (data.name.trim() === "") {
+            errors.name = "*El campo es obligatorio";
+        } else {
+            errors.name = "";
+        }        
+        if (data.lastname.trim() === "") {
+            errors.lastname = "*El campo es obligatorio";
+        } else {
+            errors.lastname = "";
+        }
+        if (data.dni.trim() === "") {
+            errors.dni = "*El campo es obligatorio";
+        } else if (!/^\d{8}$/.test(data.dni)) {
+            errors.dni = "El DNI debe contener 8 dígitos numéricos.";
+        } else {
+            errors.dni = "";
+        }
+        if (data.phone.trim() === "") {
+            errors.phone = "*El campo es obligatorio";
+        } else if (!/^\d{10}$/.test(data.phone)) {
+            errors.phone = "El teléfono debe contener 10 dígitos numéricos.";
+        } else {
+            errors.phone = "";
+        }
+        if (data.email.trim() === "") {
+            errors.email = "*El campo es obligatorio";
+        } else if (!isValidEmail(data.email)) {
+            errors.email = "El email no tiene un formato válido.";
+        } else {
+            errors.email = "";
+        }
+    
+        return errors;
+    };
+
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        return emailRegex.test(email);
     };
     
     const toggleShowInactive = () => {
@@ -149,7 +230,6 @@ export const Patients = () => {
                 </div>
                 <button type="button" className="btn btn-primary ms-3" onClick={openModal}>+</button>
             </div>
-
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -196,20 +276,23 @@ export const Patients = () => {
                                 <div className="row">
                                     <div className="mb-3">
                                         <label htmlFor="userName" className="col-form-label">Nombre de usuario:</label>
-                                        <input type="text" className="form-control" id="userName" name="username" value={userData.username} onChange={handleChange} />
+                                        <input type="text" className="form-control" id="userName" name="username" value={userData.username} onChange={handleChange}  onFocus={() => handleInputFocus("username")} />
+                                        <span className="error-message">{errorMessages.username}</span>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-6">    
                                         <div className="mb-3">
                                             <label htmlFor="name" className="col-form-label">Nombre:</label>
-                                            <input type="text" className="form-control" id="name" name="name" value={userData.name} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="name" name="name" value={userData.name} onChange={handleChange}  onFocus={() => handleInputFocus("name")} />
+                                            <span className="error-message">{errorMessages.name}</span>
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="lastName" className="col-form-label">Apellido:</label>
-                                            <input type="text" className="form-control" id="lastName" name="lastname" value={userData.lastname} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="lastName" name="lastname" value={userData.lastname} onChange={handleChange}  onFocus={() => handleInputFocus("lastname")} />
+                                            <span className="error-message">{errorMessages.lastname}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -217,13 +300,15 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="dni" className="col-form-label">DNI:</label>
-                                            <input type="text" className="form-control" id="dni" name="dni" value={userData.dni} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="dni" name="dni" value={userData.dni} onChange={handleChange}  onFocus={() => handleInputFocus("dni")}  />
+                                            <span className="error-message">{errorMessages.dni}</span>
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="phone" className="col-form-label">Telefono de contacto:</label>
-                                            <input type="text" className="form-control" id="phone" name="phone" value={userData.phone} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="phone" name="phone" value={userData.phone} onChange={handleChange}  onFocus={() => handleInputFocus("phone")} />
+                                            <span className="error-message">{errorMessages.phone}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +316,8 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="email" className="col-form-label">Email:</label>
-                                            <input type="email" className="form-control" id="email" name="email" value={userData.email} onChange={handleChange} /> {/* Cambiado a input type="email" */}
+                                            <input type="text" className="form-control" id="email" name="email" value={userData.email} onChange={handleChange}  onFocus={() => handleInputFocus("email")}  /> 
+                                            <span className="error-message">{errorMessages.email}</span>
                                         </div>
                                     </div>
                                     <div className="col-6">
@@ -255,8 +341,12 @@ export const Patients = () => {
                         <div className="modal-header">
                             <button type="button" className="btn-close" onClick={closeSuccessModal} aria-label="Close"></button>
                         </div>
-                        <div className="modal-body">
-                            El paciente se ha cargado con éxito.
+                         <div className="modal-body">
+                            {successAction === "add" ? (
+                                <span>El paciente se ha agregado con éxito.</span>
+                            ) : successAction === "edit" ? (
+                                <span>Los cambios se han guardado con éxito.</span>
+                            ) : null}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={closeSuccessModal}>Cerrar</button>
@@ -276,20 +366,23 @@ export const Patients = () => {
                                 <div className="row">
                                     <div className="mb-3">
                                         <label htmlFor="userName" className="col-form-label">Nombre de usuario:</label>
-                                        <input type="text" className="form-control" id="userName" name="username" value={userData.username} onChange={handleChange} />
+                                        <input type="text" className="form-control" id="userName" name="username" value={userData.username} onChange={handleChange} onFocus={() => handleInputFocus("username")} />
+                                        <span className="error-message">{errorMessages.username}</span>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-6">    
                                         <div className="mb-3">
                                             <label htmlFor="name" className="col-form-label">Nombre:</label>
-                                            <input type="text" className="form-control" id="name" name="name" value={userData.name} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="name" name="name" value={userData.name} onChange={handleChange}  onFocus={() => handleInputFocus("name")}  />
+                                            <span className="error-message">{errorMessages.name}</span>
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="lastName" className="col-form-label">Apellido:</label>
-                                            <input type="text" className="form-control" id="lastName" name="lastname" value={userData.lastname} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="lastName" name="lastname" value={userData.lastname} onChange={handleChange}  onFocus={() => handleInputFocus("lastname")} />
+                                            <span className="error-message">{errorMessages.lastname}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -297,13 +390,15 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="dni" className="col-form-label">DNI:</label>
-                                            <input type="text" className="form-control" id="dni" name="dni" value={userData.dni} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="dni" name="dni" value={userData.dni} onChange={handleChange}  onFocus={() => handleInputFocus("dni")}  />
+                                            <span className="error-message">{errorMessages.dni}</span>
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="phone" className="col-form-label">Telefono de contacto:</label>
-                                            <input type="text" className="form-control" id="phone" name="phone" value={userData.phone} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="phone" name="phone" value={userData.phone} onChange={handleChange}  onFocus={() => handleInputFocus("phone")}  />
+                                            <span className="error-message">{errorMessages.phone}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -311,11 +406,24 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="email" className="col-form-label">Email:</label>
-                                            <input type="email" className="form-control" id="email" name="email" value={userData.email} onChange={handleChange} /> {/* Cambiado a input type="email" */}
+                                            <input type="email" className="form-control" id="email" name="email" value={userData.email} onChange={handleChange}  onFocus={() => handleInputFocus("email")}  /> 
+                                            <span className="error-message">{errorMessages.email}</span>
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
+                                            <label htmlFor="status" className="col-form-label">Estado:</label>
+                                            <select className="form-control" id="status" name="is_active" value={isActive ? "activo" : "inactivo"} onChange={handleChange}>
+                                                <option value="" disabled selected>Seleccione</option>
+                                                <option value="activo">Activo</option>
+                                                <option value="inactivo">Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-12">
+                                    <div className="mb-3">
                                             <label htmlFor="virtual_link" className="col-form-label">Link a sala vitual:</label>
                                             <textarea className="form-control" id="virtual_link" name="virtual_link" value={userData.virtual_link} onChange={handleChange} />
                                         </div>
