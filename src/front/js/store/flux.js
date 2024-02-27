@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{
 					title: "SECOND",
 					background: "white",
-					initial: "white"
+					initial: ""
 				}
 			]
 		},
@@ -25,6 +25,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  return data
 			},
 
+			signup: async (
+			  email,
+			  password,
+			  first_name,
+			  last_name,
+			  phone,
+			  location
+			) => {
+			  const response = await api.signup(
+				email,
+				password,
+				first_name,
+				last_name,
+				phone,
+				location
+			  )
+			  return response
+			},
+	},
 			getMessage: async () => {
 				let actions=getActions()
 				try{
@@ -66,15 +85,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!res.ok){
 					console.error(res.statusText)
 					return ({error:res.statusText})
-
 				}
 				let json=res.json()
 				return json
-				
 			}
-			
 		}
 	};
-};
-
 export default getState;

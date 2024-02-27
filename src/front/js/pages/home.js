@@ -32,7 +32,7 @@ const Home = () => {
         const data = await response.json();
         setter(data.works);
       } catch (error) {
-        console.error('error fetch:', error);
+        console.error('Error fetching books:', error);
       }
     };
 
@@ -91,7 +91,7 @@ const BookCard = ({ book }) => {
       <Card.Body>
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
-		<Link to={`books${book.key}`}>
+		<Link to={`/book/${book.key}`}>
           <button className="btn btn-success">VER LIBRO</button>
         </Link>
         
