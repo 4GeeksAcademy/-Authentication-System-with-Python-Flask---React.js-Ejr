@@ -14,6 +14,8 @@ export const Patients = () => {
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [successAction, setSuccessAction] = useState("");
     const [isActive, setIsActive] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [patientsPerPage] = useState(10);
     const [userData, setUserData] = useState({
         id : "",
         role_id: 1,
@@ -208,9 +210,11 @@ export const Patients = () => {
 
     const sortedActiveFilteredUsers = activeFilteredUsers.sort((a, b) => a.name.localeCompare(b.name));
     const sortedInactiveFilteredUsers = inactiveFilteredUsers.sort((a, b) => a.name.localeCompare(b.name));
-
     const sortedFilteredUsers = [...sortedActiveFilteredUsers, ...sortedInactiveFilteredUsers];
     
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+    const visibleUsers = (showInactive ? sortedFilteredUsers : sortedActiveFilteredUsers);
+
     return (
         <div className="container mt-5">
             <div className="d-flex justify-content-start align-items-center mb-3">
@@ -243,14 +247,15 @@ export const Patients = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {(sortedFilteredUsers.map((user, index) => (
+                    {(sortedFilteredUsers.slice((currentPage - 1) * patientsPerPage, currentPage * patientsPerPage).map((user, index) => (
                         (showInactive || user.is_active) && (
                             <tr key={index}>
                                 <td>{user.name}</td>
                                 <td>{user.lastname}</td>
                                 <td>{user.dni}</td>
                                 <td>{user.phone}</td>
-                                <td><a href={user.virtual_link} target="_blank" rel="noopener noreferrer">
+                                <td>
+                                    <a href={user.virtual_link} target="_blank" rel="noopener noreferrer">
                                         Ingresar
                                     </a>
                                 </td>
@@ -263,6 +268,15 @@ export const Patients = () => {
                     )))}
                 </tbody>
             </table>
+            <ul className="pagination justify-content-center">
+                {Array.from({ length: Math.ceil(visibleUsers.length / patientsPerPage) }, (_, index) => (
+                    <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                        <button onClick={() => paginate(index + 1)} className="page-link">
+                            {index + 1}
+                        </button>
+                    </li>
+                ))}
+            </ul>
 
             <div className={`modal fade ${showModal ? 'show d-block' : 'd-none'}`} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -413,8 +427,8 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="status" className="col-form-label">Estado:</label>
-                                            <select className="form-control" id="status" name="is_active" value={isActive ? "activo" : "inactivo"} onChange={handleChange}>
-                                                <option value="" disabled selected>Seleccione</option>
+                                            <select className="form-control" id="status" name="is_active" value={userData.is_active ? "activo" : "inactivo"} onChange={handleChange}>
+                                                <option value="" disabled>Seleccione</option>
                                                 <option value="activo">Activo</option>
                                                 <option value="inactivo">Inactivo</option>
                                             </select>
