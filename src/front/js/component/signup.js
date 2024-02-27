@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
+const SignUp = ({setAuthStatus}) => {
   const [profileName, setprofileName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');

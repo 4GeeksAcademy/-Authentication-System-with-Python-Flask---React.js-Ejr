@@ -3,20 +3,28 @@ import { Link } from "react-router-dom";
 import logoImage from "../../img/logo.jpg";
 import {Context} from "../store/appContext"
 
+
 const Navbar = ({authAttempt}) => {
 const [authStatus, setAuthStatus] = useState("pending")
 const {store,actions} = useContext(Context)
+const token = store.token
+
+
 useEffect(()=>{
   let authenticate = async () => {
+    console.log(store.token)
     let result = await actions.authenticateUser()
     if(result){
       setAuthStatus("approved")
+      console.log("authenticateUser")
     }else{
       setAuthStatus("denied")
     }
   }
   authenticate()
 },[authAttempt])
+
+
 
     return (
       <React.Fragment>
@@ -54,7 +62,7 @@ useEffect(()=>{
                     Museums
                   </Link>
                 </li>
-              {authStatus == "approved"?(
+              {store.token?(
                 <div className="d-flex">
               <li className="nav-item">
                   <Link to="/exhibits" className="nav-link">
@@ -77,7 +85,7 @@ useEffect(()=>{
                 </li>
 
                 {/* </div> */}
-                {authStatus == "approved"?(
+                {store.token ?(
                   <div>
                 <li className="nav-item">
                   <Link to="/profile" className="nav-link">
@@ -90,14 +98,27 @@ useEffect(()=>{
 
               </ul>
             </div>
+            {store.token ?(
             <div className="text-end p-3">
-            <Link to="/login" className="nav-link">
-              <button className="btn btn-primary">
-                Login
+            <Link to="/" className="nav-link">
+              <button className="btn btn-danger" onClick={() => actions.logOut() }>
+                Logout
               </button>
                   </Link>
               
           </div>
+                        ):(
+                        <div className="text-end p-3">
+                        <Link to="/login" className="nav-link">
+                          <button className="btn btn-primary">
+                            Login
+                          </button>
+            
+                              </Link>
+                          
+                      </div>)
+            }
+
           </div>
         </nav>
       </React.Fragment>

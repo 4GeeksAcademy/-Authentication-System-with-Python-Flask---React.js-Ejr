@@ -6,6 +6,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 			artDepartments: [],
 		},
 		actions: {
+
+			onLoginClick: async (email, password) => {
+				const store = getStore()
+				console.log(email, password);
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+				  method: 'POST',
+				  headers: { "Content-Type": "application/json" },
+				  body: JSON.stringify({ email: email, password: password })
+				});
+			
+				if (response.ok) {
+				  const data = await response.json();
+				  sessionStorage.setItem("token", data.access_token);
+				  setStore({token:data.access_token})
+				  console.log(store.token);
+			
+				  navigate('/profile'); // Navigate to the 'favorite' page on successful login
+				} else {
+				  // Handle unsuccessful login attempts here, maybe set a message to display to the user
+				  setMessage(<span className="text-danger">Invalid login, please try again.</span>);
+				}},
+
+			logOut: () => {
+				const store = getStore()
+				setStore({token:null})
+			}, 
+			
+
 		getObjects: () => {
 			for (let i = 1000; i < 1075; i++){
 				fetch("https://collectionapi.metmuseum.org/public/collection/v1/objects/"+i)

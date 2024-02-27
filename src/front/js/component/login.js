@@ -11,25 +11,28 @@ const Login = ({ setAuthAttempt }) => {
 
   const navigate = useNavigate(); // Initialize useNavigate
 
-  const onLoginClick = async () => {
-    console.log(email, password);
-    const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: password })
-    });
+  // const onLoginClick = async () => {
+  //   console.log(email, password);
+  //   const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+  //     method: 'POST',
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ email: email, password: password })
+  //   });
 
-    if (response.ok) {
-      const data = await response.json();
-      sessionStorage.setItem("token", data.access_token);
-      setAuthAttempt("made");
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     sessionStorage.setItem("token", data.access_token);
+  //     store.token = data.access_token;
+  //     setAuthAttempt("made");
+  //     setAuthStatus("approved");
+  //     console.log(store.token);
 
-      navigate('/profile'); // Navigate to the 'favorite' page on successful login
-    } else {
-      // Handle unsuccessful login attempts here, maybe set a message to display to the user
-      setMessage(<span className="text-danger">Invalid login, please try again.</span>);
-    }
-  };
+  //     navigate('/profile'); // Navigate to the 'favorite' page on successful login
+  //   } else {
+  //     // Handle unsuccessful login attempts here, maybe set a message to display to the user
+  //     setMessage(<span className="text-danger">Invalid login, please try again.</span>);
+  //   }
+  // };
 
   return (
     <div className='mx-5 px-5'>
@@ -66,7 +69,7 @@ const Login = ({ setAuthAttempt }) => {
           </div>
       <div className="col text-end p-3">
         {message}
-        <button className="btn btn-primary" onClick={onLoginClick}>
+        <button className="btn btn-primary" onClick={()=>actions.onLoginClick(email, password)}>
           Login
         </button>
       </div>
