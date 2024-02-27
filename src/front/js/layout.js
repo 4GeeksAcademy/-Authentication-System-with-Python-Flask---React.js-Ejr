@@ -5,13 +5,14 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
 
 //create your first component
 const Layout = () => {
@@ -29,7 +30,9 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        {/* <Route element={<SingleMeditationDetails />} path="/meditation/:theid" /> */}
+                        {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
+                        <Route element={<SingleHathaYogaDetails />} path="/hathayoga/:theid" />
                         <Route path="/login" element={<Login />} />
                         <Route path="/sessions" element={<Sessions />} />
                         {/* <Route path="/jivamuktiyoga/:theid" element={<JivamuktiYoga />} /> */}
