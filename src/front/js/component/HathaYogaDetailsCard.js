@@ -17,7 +17,7 @@ export const HathaYogaDetailsCard = props => {
 
     return (
         <div className="my-3 d-flex justify-content-center m-5 py-2" >
-            <div className="row g-0">
+            <div className="row g-0 ">
                 {/* <hr className="mb-4 bg-secondary mt-0" /> */}
                 <div className="col-md-5 d-flex flex-column justify-content-center align-items-start py-2 ms-5">
                     <div className="col-md-6 d-flex align-items-center">
@@ -48,7 +48,7 @@ export const HathaYogaDetailsCard = props => {
                         <h6 className="ms-2"> intermediate</h6>
                     </div>
                 </div>
-                <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                <div className="col-md-6 d-flex flex-column justify-content-center align-items-end">
                     <img className="col-11 img-fluid w-75" src="https://www.shutterstock.com/image-photo/caucasian-woman-practicing-yoga-seashore-260nw-142334290.jpg"></img>
                 </div>
 

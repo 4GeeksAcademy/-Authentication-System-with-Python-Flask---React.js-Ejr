@@ -19,8 +19,8 @@ export const SingleHathaYogaDetails = () => {
 	}, [])
 
 	return (
-		<div className="jumbotron align-items-center container-fluid try-background h-100 py-5">
-			<div className="stylebackground h-100">
+		<div className="jumbotron align-items-center container-fluid h-100 py-5 stylebackground">
+			<div className=" h-100">
 				<HathaYogaDetailsCard />
 			</div>
 		</div>
