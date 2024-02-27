@@ -16,6 +16,8 @@ import { IncomeControl } from "./pages/incomeControl";
 import { Inbox } from "./pages/inbox";
 import { Patients } from "./pages/patients";
 import { Profile } from "./pages/profile";
+import { Payments } from "./pages/payments";
+import { PatientSchedule } from "./pages/patientSchedule";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -36,12 +38,14 @@ const Layout = () => {
                 <ScrollToTop>
                     <Routes>
                         <Route element={<Landing />} path="/" />
-                        <Route element={<Login />} path="/login" />
                         <Route element={<Home />} path="/home" />
+                        <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
-                        <Route element={<Scheduling />} path="/scheduling" />
                         <Route element={<Profile />} path="/profile" />
+                        <Route element={<Payments />} path="/payments" />
+                        <Route element={<PatientSchedule />} path="/patient_schedule" />
+                        <Route element={<Scheduling />} path="/scheduling" />
                         <Route element={<AppointmentScheduler />} path="/appointment_scheduling" />
                         <Route element={<IncomeControl />} path="/income_control" />
                         <Route element={<Inbox />} path="/inbox" />
