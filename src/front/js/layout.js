@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Login } from "./pages/login";
-
 import { Forgot } from "./pages/forgot";
-
 import { Home } from "./pages/home";
 
 
@@ -17,6 +15,11 @@ import { ContextProvider } from "./store/appContext"; // Importa el proveedor de
 import { BookProvider } from "./book"; // 
 
 import { Navbar } from "./component/navbar";
+import { Demo } from "./pages/demo";
+import { Single } from "./pages/single";
+import injectContext from "./store/appContext";
+import BookDetails from "./pages/book";
+
 import { Footer } from "./component/footer";
 
 const Layout = () => {
@@ -33,14 +36,9 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login />} path="/login" />
-
                         <Route element={<Forgot />} path="/forgot" />
-
-
-                        <Route element={<Login />} path="/login" />
                         <Route element={<BookDetails />} path="/books/works/:id" />
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
