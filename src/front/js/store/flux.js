@@ -18,27 +18,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
             login: async (email, password) => {
                 const actions = getActions();
-                const data = await actions.api.login(email, password);
+                const data = await api.login(email, password);
                 setStore({ user: data.user, token: data.token });
                 actions.getFavorites();
                 if (!data.user.is_admin) localStorage.setItem('myToken', data.token);
                 return data;
             },
             signup: async (email, password, first_name, last_name, phone, location) => {
-                const response = await actions.api.signup(
-                    email,
-                    password,
-                    first_name,
-                    last_name,
-                    phone,
-                    location
-                );
+                const response = await api.signup(email, password, first_name, last_name, phone, location);
                 return response;
             },
             getMessage: async () => {
-                const actions = getActions();
+                let actions = getActions();
                 try {
-                    const data = await actions.APIfetch("/hello");
+                    const data = actions.APIfetch("/hello");
                     setStore({ message: data.message });
                     return data;
                 } catch (error) {
@@ -65,9 +58,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 let res = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
                 if (!res.ok) {
                     console.error(res.statusText);
-                    return { error: res.statusText };
+                    return ({ error: res.statusText });
                 }
-                let json = await res.json();
+                let json = res.json();
                 return json;
             }
         }
@@ -75,3 +68,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
