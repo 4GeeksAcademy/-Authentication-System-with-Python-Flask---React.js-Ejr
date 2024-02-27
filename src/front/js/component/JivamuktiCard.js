@@ -14,20 +14,20 @@ export const JivamuktiCard = (props) => {
 
 	const { store, actions } = useContext(Context);
 
-	
+
 	return (
-		<div className="card mx-0 pl-0" style={{width: "18rem"}}>
-            <Link>
-			    <img src={`https://starwars-visualguide.com/assets/img/characters/${props.id}.jpg`} className="card-img-top" alt="..."/>
-            </Link>
-        <div className="card-body">
-		  <h5 className="card-title">{props.name}</h5>
-          <span className="card-title">{props.asanafocus}</span>
-          <span className="card-title">{props.teacher}</span>
-          <span className="card-title">{props.level}</span>
+		<div className="card mx-0 pl-0" style={{ width: "18rem" }}>
+			<Link>
+				<img src={`${process.env.BACKEND_URL}/api/session/jivamuktiyoga/${props.urlimagen}`} className="card-img-top" alt="..." />
+			</Link>
+			<div className="card-body">
+				<h5 className="card-title">{props.name}</h5>
+				<span className="card-title">{props.asanafocus}</span>
+				<span className="card-title">{props.instructor}</span>
+				<span className="card-title">{props.level}</span>
+			</div>
+
 		</div>
-		
-	  </div>
 	);
 };
 
@@ -40,7 +40,11 @@ export const JivamuktiCard = (props) => {
 
 JivamuktiCard.propTypes = {
 	history: PropTypes.object,
-	id: PropTypes.string
+	id: PropTypes.string,
+	instructor: PropTypes.string,
+	level: PropTypes.string,
+	asanafocus: PropTypes.string,
+	urlimagen: PropTypes.string
 };
 
 /**

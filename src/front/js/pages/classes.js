@@ -13,7 +13,7 @@ import imagenClases from "../../img/fotonavacerrada.jpeg"
 import imagenThePractices from "../../img/thepracticescentro.png"
 
 
-export const Classes = () => {
+export const Sessions = () => {
 	const [state, setState] = useState({
    		
 	});
@@ -23,7 +23,7 @@ export const Classes = () => {
 
 
 	useEffect(() => {
-		// actions.getAllCharacters();
+		actions.getAllJivamukti();
 		// actions.getAllPlanets();
 		// actions.getAllSpecies();
 		// actions.getFavorites();
@@ -69,18 +69,19 @@ export const Classes = () => {
 					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
 					<span className="ms-2">Jivamukti Yoga</span>
 				</div>
-					{/* <div className="container-fluid d-flex flex-row">
+				<div className="container-fluid d-flex flex-row">
 						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
-							{store.characters.map(item => (
-							<li className="col-4 px-0 w-auto my-2" key={item.uid}>
+							{store.jivamuktiYoga.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
 							<JivamuktiCard 
-								id={item.uid}
+								id={item.id}
 								name={item.name}
+								teacher={item.instructor}
 						/>
 						</li>
 						))}
 					</ul>
-				</div> */}
+				</div> 
 			</div>
 
 			
