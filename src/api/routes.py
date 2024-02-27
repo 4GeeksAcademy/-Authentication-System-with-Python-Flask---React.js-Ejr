@@ -146,6 +146,54 @@ def logout_user():
     db.session.commit()
     return jsonify({"msg": "Sesión cerrada exitosamente."}), 200
 
+# Para conseguir el perfil de usuario
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    return jsonify(user.serialize()), 200
+
+# Para editar el perfil
+@api.route('/profile_edit', methods=['PUT'])
+@jwt_required()
+def edit_profile():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    data = request.get_json()
+
+    if 'username' in data:
+        user.username = data['username']
+
+    if 'name' in data:
+        user.name = data['name']
+    
+    if 'lastname' in data:
+        user.lastname = data['lastname']
+
+    if 'birth_date' in data:
+        user.birth_date = data['birth_data']
+
+    if 'phone' in data:
+        user.phone = data['phone']
+
+    if 'password' in data:
+        user.password = bcrypt.generate_password_hash(data['password']).decode("utf-8")
+
+    db.session.commit()
+
+    return jsonify({"message": "Perfil actualizado"}), 200
+
+
+
 # Link para recupero de contraseña
 @api.route('/recovery', methods=['POST'])
 def handle_password_recovery():
