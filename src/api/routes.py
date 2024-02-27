@@ -50,12 +50,14 @@ def sign_up():
     body = request.json
     if body is None:
         return jsonify({"message" : "Please provide a valid email and password!"}), 400
+    name = body["name"]
+    username = body["username"]
     email = body["email"]
     password = body["password"]
     check_user = User.query.filter_by(email = email).first()
     if check_user:
         return jsonify({"message" : "This user already exist"}),409
-    new_user = User(email = email, password = password, is_active = True)
+    new_user = User(**body, is_active = True)
     db.session.add(new_user)
     db.session.commit()
 
