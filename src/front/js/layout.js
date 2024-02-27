@@ -10,12 +10,9 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { ContextProvider } from "./store/appContext"; // Importa el proveedor de contexto existente
-import { BookProvider } from "./book"; // 
 
 import { Navbar } from "./component/navbar";
-import { Single } from "./pages/single";
-import injectContext from "./store/appContext";
-import BookDetails from "./pages/book";
+import { BookDetails } from "./pages/book";
 
 import { Footer } from "./component/footer";
 
