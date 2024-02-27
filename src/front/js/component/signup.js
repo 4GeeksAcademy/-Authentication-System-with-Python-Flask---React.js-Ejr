@@ -21,7 +21,7 @@ const SignUp = () => {
     const response = await fetch(`${process.env.BACKEND_URL}/api/sign-up`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ name:profileName, username, email, password })
     });
 
     if (response.ok) {
