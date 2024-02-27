@@ -4,36 +4,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			artPieces : [],
 			artDepartments: [],
+			bool : false
 		},
 		actions: {
 
-			onLoginClick: async (email, password) => {
-				const store = getStore()
-				console.log(email, password);
-				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-				  method: 'POST',
-				  headers: { "Content-Type": "application/json" },
-				  body: JSON.stringify({ email: email, password: password })
-				});
+		onLoginClick: async (email, password) => {
+			const store = getStore()
+			console.log(email, password);
+			const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+				method: 'POST',
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email: email, password: password })
+			});
 			
-				if (response.ok) {
-				  const data = await response.json();
-				  sessionStorage.setItem("token", data.access_token);
-				  setStore({token:data.access_token})
-				  console.log(store.token);
+			if (response.ok) {
 			
-				  navigate('/profile'); // Navigate to the 'favorite' page on successful login
-				} else {
-				  // Handle unsuccessful login attempts here, maybe set a message to display to the user
-				  setMessage(<span className="text-danger">Invalid login, please try again.</span>);
-				}},
+				const data = await response.json();
+				sessionStorage.setItem("token", data.access_token);
+				setStore({token:data.access_token})
+				console.log(store.token);
 
-			logOut: () => {
-				const store = getStore()
-				setStore({token:null})
-			}, 
-			
+			} else {
+				 // Handle unsuccessful login attempts here, maybe set a message to display to the user
+				setMessage(<span className="text-danger">Invalid login, please try again.</span>);
+			}},
 
+		redirecting: async () => {
+			const store = getStore()
+			console.log(sessionStorage.getItem("token"))
+			if(sessionStorage.getItem("token")){
+				setStore({bool:true})
+				// console.log(store.bool)
+			}
+			
+		},
+
+		logOut: () => {
+			const store = getStore()
+			setStore({token:null})
+			// sessionStorage.setItem("token", null);
+		}, 
+			
 		getObjects: () => {
 			for (let i = 1000; i < 1075; i++){
 				fetch("https://collectionapi.metmuseum.org/public/collection/v1/objects/"+i)

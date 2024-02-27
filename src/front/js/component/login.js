@@ -11,6 +11,17 @@ const Login = ({ setAuthAttempt }) => {
 
   const navigate = useNavigate(); // Initialize useNavigate
 
+    const loginRedirection =  () => {
+
+      if (store.bool){
+        console.log('success')
+        navigate('/profile'); // Navigate to the 'favorite' page on successful login
+      }else{
+        console.log('denied')
+      }
+      
+    }
+
   // const onLoginClick = async () => {
   //   console.log(email, password);
   //   const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
@@ -69,9 +80,13 @@ const Login = ({ setAuthAttempt }) => {
           </div>
       <div className="col text-end p-3">
         {message}
-        <button className="btn btn-primary" onClick={()=>actions.onLoginClick(email, password)}>
+        <button className="btn btn-primary" onClick={()=>{
+          actions.onLoginClick(email, password) 
+          loginRedirection(actions.redirecting())
+          }}>
           Login
         </button>
+        
       </div>
       </div>
     </div>
