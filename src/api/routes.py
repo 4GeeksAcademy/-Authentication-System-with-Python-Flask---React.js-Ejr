@@ -170,7 +170,12 @@ def edit_profile():
 
     data = request.get_json()
 
-    if 'username' in data:
+    for key in data:
+        if key == "password":
+            continue
+        user[key] = data[key]
+       
+    """ if 'username' in data:
         user.username = data['username']
 
     if 'name' in data:
@@ -183,7 +188,7 @@ def edit_profile():
         user.birth_date = data['birth_data']
 
     if 'phone' in data:
-        user.phone = data['phone']
+        user.phone = data['phone'] """
 
     if 'password' in data:
         user.password = bcrypt.generate_password_hash(data['password']).decode("utf-8")

@@ -52,7 +52,7 @@ export const EditProfile = () => {
                 const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
 
                 if (!passwordRegex.test(password)) {
-                    setPasswordError("La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial");
+                    setPasswordError("La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial.");
                     return;
                 }
 
@@ -62,7 +62,7 @@ export const EditProfile = () => {
 
             if (phone !== '') {
                 if (phone.length() !== 10) {
-                    setPhoneError("Número de telefono invalido")
+                    setPhoneError("El número de teléfono debe contener 10 dígitos.")
                     return;
                 }
 
@@ -115,6 +115,7 @@ export const EditProfile = () => {
                                 id="username"
                                 name="username-input"
                                 value={username}
+                                maxLength={50}
                                 onChange={(e) => { setUsername(e.target.value); handleInputChange() }}
                             />
                         </div>
@@ -128,6 +129,7 @@ export const EditProfile = () => {
                                 id="name"
                                 name="name-input"
                                 value={name}
+                                maxLength={25}
                                 onChange={(e) => { setName(e.target.value); handleInputChange() }}
                             />
                         </div>
@@ -138,6 +140,7 @@ export const EditProfile = () => {
                                     id="lastname"
                                     name="lastname-input"
                                     value={lastname}
+                                    maxLength={25}
                                     onChange={(e) => { setLastname(e.target.value); handleInputChange() }}
                                 />
                             </div>
