@@ -115,10 +115,11 @@ def get_jivamukti():
         
     response_body = {
         "msg": "ok",
-        "session": jivamukti_query    }    
+        "jivamukti_sessions": jivamukti_query    }    
         
     return jsonify(response_body), 200
 
+#Endpoint para que aparezca un jivamukti yoga especifico
 @api.route('/jivamuktiyoga/<int:jivamukti_id>', methods=['GET'])
 # Si devuelve ok aparecerá en la consola de vscode el numero de id.
 def get_one_jivamukti(jivamukti_id):
@@ -136,105 +137,42 @@ def get_one_jivamukti(jivamukti_id):
     }
     return jsonify(response_body), 200
 
-#endpoint para que aparezcan las clases de jivamukti
-@api.route('/sessions/vinyasayoga', methods=['GET'])
+#endpoint para que aparezcan las clases de vinyasa
+@api.route('/vinyasayoga', methods=['GET'])
 def get_vinyasa():    
     vinyasa_query = Vinyasa_yoga.query.all()
     vinyasa_query = list(map(lambda item: item.serialize(), vinyasa_query))
-    print(vinyasa_query)    
-    if vinyasa_query == []:
+    # print(jivamukti_query)    
+    if vinyasa_query == [] or None:
         return jsonify({
-             "Msg": "No hay sesiones disponibles"
+             "Msg": "No hay sesiones Vinyasa disponibles"
              }), 404
         
     response_body = {
         "msg": "ok",
-        "session": vinyasa_query    }    
+        "vinyasa_sessions": vinyasa_query    }    
         
     return jsonify(response_body), 200
 
-@api.route('/sessions/hathayoga', methods=['GET'])
-def get_hatha():    
-    hatha_query = Hatha_yoga.query.all()
-    hatha_query = list(map(lambda item: item.serialize(), hatha_query))
-    print(hatha_query)    
-    if hatha_query == []:
+
+#Endpoint para que aparezca un vinyasa yoga especifico
+@api.route('/vinyasayoga/<int:vinyasa_id>', methods=['GET'])
+# Si devuelve ok aparecerá en la consola de vscode el numero de id.
+def get_one_vinyasa(vinyasa_id):
+    vinyasa_query = Vinyasa_yoga.query.filter_by(id = vinyasa_id).first() #El filter sera con el id, no se podrá repetir
+    # Te lo devuelve en crudo.
+    if vinyasa_query is None:
         return jsonify({
-             "Msg": "No hay sesiones disponibles"
-             }), 404
-        
+            "msg": "vinyasa session not found"
+        }), 404
+    
     response_body = {
         "msg": "ok",
-        "session": hatha_query    }    
-        
-    return jsonify(response_body), 200
+        "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+    }
+    return jsonify(response_body), 200 
 
 
-@api.route('/sessions/ashtangayoga', methods=['GET'])
-def get_asthanga():    
-    ashtanga_query = Asthanga_yoga.query.all()
-    ashtanga_query = list(map(lambda item: item.serialize(), ashtanga_query))
-    print(ashtanga_query)    
-    if ashtanga_query == []:
-        return jsonify({
-             "Msg": "No hay sesiones disponibles"
-             }), 404
-        
-    response_body = {
-        "msg": "ok",
-        "session": ashtanga_query    }    
-        
-    return jsonify(response_body), 200
-
-
-@api.route('/sessions/rocketyoga', methods=['GET'])
-def get_rocket():    
-    rocket_query = Rocket_yoga.query.all()
-    rocket_query = list(map(lambda item: item.serialize(), rocket_query))
-    print(rocket_query)    
-    if rocket_query == []:
-        return jsonify({
-             "Msg": "No hay sesiones disponibles"
-             }), 404
-        
-    response_body = {
-        "msg": "ok",
-        "session": rocket_query    }    
-        
-    return jsonify(response_body), 200
-
-
-@api.route('/sessions/meditation', methods=['GET'])
-def get_meditation():    
-    meditation_query = Meditation.query.all()
-    meditation_query = list(map(lambda item: item.serialize(), meditation_query))
-    print(meditation_query)    
-    if meditation_query == []:
-        return jsonify({
-             "Msg": "No hay sesiones disponibles"
-             }), 404
-        
-    response_body = {
-        "msg": "ok",
-        "session": meditation_query    }    
-        
-    return jsonify(response_body), 200
-
-@api.route('/sessions/harmonium', methods=['GET'])
-def get_harmonium():    
-    harmonium_query = Harmonium.query.all()
-    harmonium_query = list(map(lambda item: item.serialize(), harmonium_query))
-    print(harmonium_query)    
-    if harmonium_query == []:
-        return jsonify({
-             "Msg": "No hay sesiones disponibles"
-             }), 404
-        
-    response_body = {
-        "msg": "ok",
-        "session": harmonium_query    }    
-        
-    return jsonify(response_body), 200
 
 #endpoint para registrarse
 @api.route("/signup", methods=["POST"])

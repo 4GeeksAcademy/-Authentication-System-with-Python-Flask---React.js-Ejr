@@ -179,7 +179,7 @@ class Jivamukti_yoga(db.Model):
             "duration": self.duration,
             "type": self.type.type, #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
             "instructor": self.instructor.name + ' ' + self.instructor.last_name
-            #Para serializar el modelo instructor. Si no da error al ser otro modelo.
+            #Para coger solo el nombre y apellido del instructor
             # do not serialize the password, its a security breach
         }
 
@@ -213,8 +213,8 @@ class Vinyasa_yoga(db.Model):
             "asana_focus": self.asana_focus,
             "level": self.level,
             "duration": self.duration,
-            "type": self.type.serialize(), #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.serialize()
+            "type": self.type.type, #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
+            "instructor": self.instructor.name + ' ' + self.instructor.last_name
         }
 
 

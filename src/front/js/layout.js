@@ -7,13 +7,14 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
 import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
+import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
+// import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
 
 //create your first component
 const Layout = () => {
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
+                        <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

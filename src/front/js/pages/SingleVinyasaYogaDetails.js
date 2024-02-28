@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 // import { HathaYogaDetailsCard } from "../component/HathaYogaDetailsCard";
 import "../../styles/singleDetails.css";
-import { JivamutkiYogaDetailsCard } from "../component/JivamutkiYogaDetailsCard";
+import { VinyasaYogaDetailsCard } from "../component/VinyasaYogaDetailsCard";
 
 export const SingleVinyasaYogaDetails = () => {
 	const { store, actions } = useContext(Context);
@@ -14,7 +14,7 @@ export const SingleVinyasaYogaDetails = () => {
 	// console.log(params.theid)
 
 	useEffect(() => {
-		actions.getOneJivamukti(params.theid)
+		actions.getOneVinyasa(params.theid)
 		// Envias a la función la parte que coge la url dinamica y se lo pasas al flux como parametro.
 
 	}, [])
@@ -22,7 +22,7 @@ export const SingleVinyasaYogaDetails = () => {
 	return (
 		<div className="jumbotron align-items-center container-fluid h-100 pb-5 pt-4 stylebackground my-5">
 			<div className=" h-100">
-				<JivamutkiYogaDetailsCard />
+				<VinyasaYogaDetailsCard />
 			</div>
 		</div>
 	);
