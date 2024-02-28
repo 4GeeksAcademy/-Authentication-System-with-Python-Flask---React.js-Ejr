@@ -183,6 +183,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                     throw error;
                 }
             },
+			getUser: async (id) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `api/get_user/${id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Access-Control-Allow-Origin': '*',
+							'Authorization': 'Bearer ' + localStorage.getItem("token")
+						}
+					});
+					if (resp.ok) {
+						const data = await resp.json();
+						return data;
+					} else {
+						throw new Error("Error al obtener el usuario.");
+					}
+				} catch (error) {
+					console.error("Error al obtener usuarios:", error.message);
+					throw error;
+				}
+			},
 			editUser: async (id, userData) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `api/edit_user/${id}`, {

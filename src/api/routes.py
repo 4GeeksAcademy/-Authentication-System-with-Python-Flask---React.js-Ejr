@@ -249,8 +249,6 @@ def edit_profile():
 
     return jsonify({"message": "Perfil actualizado"}), 200
 
-
-
 # Link para recupero de contraseña
 @api.route('/recovery', methods=['POST'])
 def handle_password_recovery():
