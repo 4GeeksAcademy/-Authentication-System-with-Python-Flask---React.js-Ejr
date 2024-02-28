@@ -1,20 +1,60 @@
-import React from "react";
-import imageSample from "../../img/Image-sample.jpg";
+import React, {useState, useEffect, useContext} from "react";
+import { Context } from "../store/appContext";
+import { useNavigate } from 'react-router-dom';
 
 // 2. Crear el componente JSX
 function Jumbotron() {
-    return (
-        <div className="Div-grande-que-encierra-todo flex row m-1">
-            <div className="Izquierda-Texto d-inline row justify-content-center py-5 col-sm-12 col-md-6 col-lg-6">
-                    <h1 className="display-5 mx-auto p-4 col-sm-12 col-md-12 col-lg-12"><strong>We are looking for you!</strong></h1>
-                    <p className="lead mx-auto p-4 d-flex justify-content-center col-sm-12 col-md-12 col-lg-12">You have the talent, we have the hub!</p>
-                    <a className="btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5" href="#" role="button">Join events</a>
-            </div>
-            <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
-                <img className="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/025/835/903/non_2x/three-male-best-friends-are-laughing-enjoying-together-free-hand-drawing-vector.jpg" alt="" />
-            </div>
-        </div>
-    );
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+    const [loggedNavbar, setLoggedNavbar] = useState(false);
+
+    useEffect(() => {
+        if (store.auth) {
+          setLoggedNavbar(true);
+          actions.obtenerInfoUsuario();
+        } else {
+          setLoggedNavbar(false);
+        }
+        },[store.auth]);
+
+        async function handleClickCreatEvent() {
+            await actions.obtenerEventosCategoria("DEPORTE")	
+            navigate('/events/DEPORTE');
+            }
+        async function handleClickRegister() {
+        await actions.obtenerEventosCategoria("ARTE")	
+        navigate('/events/ARTE');
+        }
+
+    return (<div>
+                {loggedNavbar ? (
+                <div className="Div-grande-que-encierra-todo flex row m-1">
+                    <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
+                        <img className="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/017/293/071/non_2x/two-young-boys-playing-guitar-together-cartoon-style-illustration-free-vector.jpg" alt="" />
+                    </div>
+                    <div className="m-auto Izquierda-Texto d-inline row justify-content-center py-5 col-sm-12 col-md-6 col-lg-6">
+                            <h1 className="text-center display-5 mx-auto p-4 col-sm-12 col-md-12 col-lg-12"><strong>Can't find an event for you?</strong></h1>
+                            <p className="lead mx-auto p-4 d-flex justify-content-center col-sm-12 col-md-12 col-lg-12">Create your own event</p>
+                            <button type="button" onClick={handleClickCreatEvent} className="btn-custom btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5">Create Event</button>
+                            {/* <a className="btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5" href="#" role="button">Create Event</a> */}
+                    </div>
+                    {/* <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
+                        <img className="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/025/835/903/non_2x/three-male-best-friends-are-laughing-enjoying-together-free-hand-drawing-vector.jpg" alt="" />
+                    </div> */}
+                </div>) : (
+                <div className="m-auto Div-grande-que-encierra-todo flex row m-1">
+                    <div className="Izquierda-Texto d-inline row justify-content-center py-5 col-sm-12 col-md-6 col-lg-6">
+                            <h1 className="text-center display-5 mx-auto p-4 col-sm-12 col-md-12 col-lg-12"><strong>We are looking for you!</strong></h1>
+                            <p className="lead mx-auto p-4 d-flex justify-content-center col-sm-12 col-md-12 col-lg-12">You have the talent, we have the hub!</p>
+                            <button type="button" onClick={handleClickRegister} className="btn-custom btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5">Join us</button>
+                            {/* <a className="btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5" href="#" role="button">Join us</a> */}
+                    </div>
+                    <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
+                        <img className="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/025/835/903/non_2x/three-male-best-friends-are-laughing-enjoying-together-free-hand-drawing-vector.jpg" alt="" />
+                    </div>
+                </div>) 
+                }
+            </div>);
 }
 
 export default Jumbotron

@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
 
         actions: {
+
             obtenerInfoUsuario: async () => {
                 let token = localStorage.getItem("token");
                 try {
@@ -106,30 +107,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             register: async (name, email, password) => {
                 try {
@@ -157,50 +134,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                     return false;
                 }
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            },
+            
 
         }
     }

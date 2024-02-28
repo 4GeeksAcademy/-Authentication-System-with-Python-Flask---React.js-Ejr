@@ -14,6 +14,7 @@ import { Footer } from "./component/footer"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Events } from "./pages/events";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<EventDescription />} path="/description/:theid" />
+                        <Route path="events/:category" element={<Events/>} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
