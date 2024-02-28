@@ -2,37 +2,37 @@ import React, { useContext, useEffect } from "react";
 import { LoginModal } from "../component/LoginModal.js"
 import "../../styles/home.css";
 import { useNavigate } from 'react-router-dom';
-import {Card} from "../component/card.js";
-import {Navbar} from "../component/navbar.js";
+import { Card } from "../component/card.js";
+import { Navbar } from "../component/navbar.js";
 
 //include images into your bundle
 // import rigoImage from "../../img/rigo-baby.jpg";
 import Jumbotron from "../component/jumbotron.js";
-import {Footer} from "../component/footer.js";
+import { Footer } from "../component/footer.js";
 import { Context } from "../store/appContext.js";
 
 export const Home = () => {
-	const {store, actions} = useContext(Context)
+	const { store, actions } = useContext(Context)
 	const navigate = useNavigate();
 	useEffect(() => { // // cada vez que quiera ejecutar una funcion ni bien se cargue el componente debo hacer un useEffect, React dice esto va asi! siempre antes del return
 		actions.obtenerEventos()
-    }, [])
+	}, [])
 
 	async function handleClickAll() {
 		await actions.obtenerEventosCategoria("ALL")
 		navigate('/events/ALL');
-	  }
+	}
 	async function handleClickDeporte() {
-	await actions.obtenerEventosCategoria("DEPORTE")	
-	navigate('/events/DEPORTE');
+		await actions.obtenerEventosCategoria("DEPORTE")
+		navigate('/events/DEPORTE');
 	}
 	async function handleClickArte() {
-	await actions.obtenerEventosCategoria("ARTE")	
-	navigate('/events/ARTE');
+		await actions.obtenerEventosCategoria("ARTE")
+		navigate('/events/ARTE');
 	}
 	async function handleClickOcio() {
-	await actions.obtenerEventosCategoria("OCIO")	
-	navigate('/events/OCIO');
+		await actions.obtenerEventosCategoria("OCIO")
+		navigate('/events/OCIO');
 	}
 
 
@@ -53,9 +53,9 @@ export const Home = () => {
 				<ul className="list-group d-flex flex-row overflow-auto mb-5" id="contact-list">
 					{store.events.map((item) => (
 						<li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2" key={item.id}>
-							<Card evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha}/>
+							<Card evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} id={item.id} />
 						</li>
-				))}
+					))}
 				</ul>
 			</div>
 			<p className="fs-2 col-sm-12 col-md-6 col-lg-12 d-flex justify-content-center py-5"><strong>If you don't have the time to travel, we bring the plans for you!</strong></p>
