@@ -15,19 +15,15 @@ import { AppointmentScheduler } from "./pages/appointmentScheduler";
 import { IncomeControl } from "./pages/incomeControl";
 import { Inbox } from "./pages/inbox";
 import { Patients } from "./pages/patients";
+import { Profile } from "./pages/profile";
+import { Payments } from "./pages/payments";
+import { PatientSchedule } from "./pages/patientSchedule";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
-    let role = "therapist"; 
-    let Home;
-
-    if (role === "therapist") {
-        Home = <HomeTherapist />;
-    } else {
-        Home = <HomePatient />;
-    }
+    let role = "therapist";
 
     return (
         <div>
@@ -35,15 +31,18 @@ const Layout = () => {
                 <ScrollToTop>
                     <Routes>
                         <Route element={<Landing />} path="/" />
+                        <Route element={role === "therapist" ? <HomeTherapist/> : <HomePatient/>} path="/home" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={Home} path="/home" /> 
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
-                        <Route element={<Scheduling/>} path="/scheduling"/>
-                        <Route element={<AppointmentScheduler/>} path="/appointment_scheduling"/>
-                        <Route element={<IncomeControl/>} path="/income_control"/>
-                        <Route element={<Inbox/>} path="/inbox"/>
-                        <Route element={<Patients/>} path="/patients"/>
+                        <Route element={<Profile />} path="/profile" />
+                        <Route element={<Payments />} path="/payments" />
+                        <Route element={<PatientSchedule />} path="/patient_schedule" />
+                        <Route element={<Scheduling />} path="/scheduling" />
+                        <Route element={<AppointmentScheduler />} path="/appointment_scheduling" />
+                        <Route element={<IncomeControl />} path="/income_control" />
+                        <Route element={<Inbox />} path="/inbox" />
+                        <Route element={<Patients />} path="/patients" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
