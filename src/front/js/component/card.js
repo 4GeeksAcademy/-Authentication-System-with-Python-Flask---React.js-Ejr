@@ -1,6 +1,6 @@
 // 1. Importar react como libreria
 import React, { useEffect, useContext, useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { string } from "prop-types";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -36,5 +36,5 @@ Card.propTypes = {
 	evento: PropTypes.string,
     descripcion: PropTypes.string,
     ciudad: PropTypes.string,
-    fecha: PropTypes.instanceOf(Date)
+    fecha: PropTypes.string
 }
