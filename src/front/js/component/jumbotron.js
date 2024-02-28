@@ -6,16 +6,6 @@ import { useNavigate } from 'react-router-dom';
 function Jumbotron() {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
-    const [loggedNavbar, setLoggedNavbar] = useState(false);
-
-    useEffect(() => {
-        if (store.auth) {
-          setLoggedNavbar(true);
-          actions.obtenerInfoUsuario();
-        } else {
-          setLoggedNavbar(false);
-        }
-        },[store.auth]);
 
         async function handleClickCreatEvent() {
             await actions.obtenerEventosCategoria("DEPORTE")	
@@ -27,7 +17,7 @@ function Jumbotron() {
         }
 
     return (<div>
-                {loggedNavbar ? (
+                {store.auth ? (
                 <div className="Div-grande-que-encierra-todo flex row m-1">
                     <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
                         <img className="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/017/293/071/non_2x/two-young-boys-playing-guitar-together-cartoon-style-illustration-free-vector.jpg" alt="" />
@@ -38,9 +28,6 @@ function Jumbotron() {
                             <button type="button" onClick={handleClickCreatEvent} className="btn-custom btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5">Create Event</button>
                             {/* <a className="btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5" href="#" role="button">Create Event</a> */}
                     </div>
-                    {/* <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
-                        <img className="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/025/835/903/non_2x/three-male-best-friends-are-laughing-enjoying-together-free-hand-drawing-vector.jpg" alt="" />
-                    </div> */}
                 </div>) : (
                 <div className="m-auto Div-grande-que-encierra-todo flex row m-1">
                     <div className="Izquierda-Texto d-inline row justify-content-center py-5 col-sm-12 col-md-6 col-lg-6">
