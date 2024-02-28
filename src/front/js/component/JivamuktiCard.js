@@ -14,17 +14,19 @@ export const JivamuktiCard = (props) => {
 
 	const { store, actions } = useContext(Context);
 
+	console.log(props.url_imagen)
 
 	return (
 		<div className="card mx-0 pl-0" style={{ width: "18rem" }}>
-			<Link>
-				<img src={`${process.env.BACKEND_URL}/api/jivamuktiyoga/${props.urlimagen}`} className="card-img-top" alt="..." />
-			</Link>
+			
+				<img src={`${process.env.BACKEND_URL}/api/jivamuktiyoga/${props.url_imagen}`} className="card-img-top" alt="..." />
+			
 			<div className="card-body">
 				<h5 className="card-title">{props.name}</h5>
-				<span className="card-title">{props.asanafocus}</span>
+				<span className="card-title">{props.asana_focus}</span><br></br>
 				<span className="card-title">{props.instructor}</span>
-				<span className="card-title">{props.level}</span>
+				<span className="card-title">{props.url_imagen}</span>
+				{/* <span className="card-title">{props.level}</span> */}
 			</div>
 
 		</div>
@@ -43,8 +45,8 @@ JivamuktiCard.propTypes = {
 	id: PropTypes.string,
 	instructor: PropTypes.string,
 	level: PropTypes.string,
-	asanafocus: PropTypes.string,
-	urlimagen: PropTypes.string
+	asana_focus: PropTypes.string,
+	url_imagen: PropTypes.string
 };
 
 /**

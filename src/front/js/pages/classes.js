@@ -29,7 +29,7 @@ export const Sessions = () => {
 		// actions.getFavorites();
 	}, []);
 
-
+	console.log(store.jivamuktiYoga)
 
 
 	return (
@@ -76,7 +76,9 @@ export const Sessions = () => {
 							<JivamuktiCard 
 								id={item.id}
 								name={item.name}
-								teacher={item.instructor}
+								instructor={item.instructor}
+								asana_focus={item.asana_focus}
+								url_imagen={item.url_imagen}
 						/>
 						</li>
 						))}

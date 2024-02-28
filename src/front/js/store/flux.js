@@ -84,39 +84,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getAllJivamukti: async () => {
 				try {
-					await fetch(process.env.BACKEND_URL + "/jivamuktiyoga")
-						.then(res => {
-							console.log(res.status);
-							if (res.status === 200) {
-								return res.json();
-							} else {
-								throw new Error("Error fetching Jivamukti yoga data");
-							}
-						})
-						.then(data => console.log(data))
-						.catch(err => console.error(err));
-
-					return true
-
+					const response = await fetch(process.env.BACKEND_URL + "/api/jivamuktiyoga");
+					console.log(response.status);
+			
+					if (response.status === 200) {
+						const data = await response.json();
+						console.log(data);
+						setStore({ jivamuktiYoga: data.jivamukti_sessions });
+						return true;
+					} else {
+						throw new Error("Error fetching Jivamukti yoga data");
+					}
 				} catch (error) {
-					console.log(error);
-					return false
+					console.error(error);
+					return false;
 				}
 			},
-			
-			getJivamuktiInfo: (jivamuktiId) => {
-				fetch(process.env.BACKEND_URL + `/api/sessions/jivamuktiyoga/${jivamuktiId}`)
-					.then(res => {
-						console.log(res.status);
-						if (res.status === 200) {
-							return res.json();
-						} else {
-							throw new Error("Error fetching Jivamukti yoga info");
-						}
-					})
-					.then(data => console.log(data))
-					.catch(err => console.error(err));
-			}
 
 			getOneJivamukti: async (jivamuktiId) => {
 				try {
@@ -193,7 +176,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 		}
-	};
+   }
 };
 
 export default getState;
