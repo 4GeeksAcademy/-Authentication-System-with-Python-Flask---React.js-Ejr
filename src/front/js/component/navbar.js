@@ -41,22 +41,22 @@ export const Navbar = () => {
 
 	return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white">
-              <div className="container-fluid d-flex justify-content-between align-items-center">
-                <div className="navbar-brand col-8">
+              <div className="container d-flex justify-content-between">
+                <div className="navbar-brand col-xl-3 col-lg-3 col-md-6 col-8">
                   <img className="img-thumbnail border-0" src={Logo} alt="" />
                 </div>
                 
               {/*Esta parte son los botones de la derecha */}
               {loggedNavbar ? 
                 (
-                  <div className="dropdown">
-                    <button className="btn btn-400 dropdown-toggle d-flex flex-column align-items-center p-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div className="dropdown d-flex justify-content-end mt-2">
+                    <button className="btn btn-400 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <i className="fa fa-3x fa-user me-2"></i>
                       <h3>{ store.user.name }</h3>
                     </button>
                     <ul className="dropdown-menu border-0">
-                      <li><button className="dropdown-item btn-400 px-4 ms-3 mb-2 rounded">Usuario</button></li>
-                      <li><button className="dropdown-item btn-400 px-4 ms-3 rounded" onClick={logOut} >Cerrar sesión</button></li>
+                      <li><button className="dropdown-item btn-400 mb-2 rounded">Usuario</button></li>
+                      <li><button className="dropdown-item btn-400 rounded" onClick={logOut}>Cerrar sesión</button></li>
                     </ul>
                   </div>
                 ):
