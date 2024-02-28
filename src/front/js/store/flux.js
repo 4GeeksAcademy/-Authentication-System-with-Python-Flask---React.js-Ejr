@@ -107,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
-            
+
             register: async (name, email, password) => {
                 try {
                     let response = await fetch(process.env.BACKEND_URL + "/api/signup", {
@@ -135,10 +135,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+
             
+
+            obtenerEventosCategoria: async (category) => {
+                try {
+                    const res = await fetch(process.env.BACKEND_URL + `/api/events/${category}`)
+                    const data = await res.json()
+                    setStore({ events: data.result })
+
+                } catch (error) {
+                    console.error(error)
+                }
+            },
+
 
         }
     }
 };
+
+
+        
+    
+
 
 export default getState;

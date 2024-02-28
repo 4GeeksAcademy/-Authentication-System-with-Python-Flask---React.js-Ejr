@@ -16,12 +16,12 @@ export const EventDescriptionCard = (props) => {
     // Formatear la fecha en el formato corto
     const fechaFormateada = fechaObjeto.toLocaleDateString();
     return (
-        <div>
+        <div className="d-flex  flex-column" style={{ maxWidth: "840px" }}>
 
-            <div className="card mb-3" style={{ maxWidth: "840px" }}>
+            <div className="card  ms-5 " style={{ maxWidth: "840px" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src="..." className="img-fluid rounded-start" alt="..." />
+                        <img src="https://th.bing.com/th/id/OIP.vQVUl7GC7E0qEtKUgS1m4AHaEo?rs=1&pid=ImgDetMain" className="img-fluid rounded-start" alt="..." />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
@@ -33,31 +33,31 @@ export const EventDescriptionCard = (props) => {
                 </div>
             </div>
 
-            <div>
-                <div>
-                    <button type="button" className="btn btn-primary btn-lg">JOIN EVENT</button>
+            <div className="d-flex justify-content-center mb-3 gap-1" >
+                <div className="p-2 flex-grow-1  ms-5" >
+                    <button type="button" className="btn btn-primary btn-lg ">JOIN EVENT</button>
                 </div>
 
-                <div>
-                    <button type="button" className="btn btn-primary">
+                <div className="p-2">
+                    <button type="button" className="btn btn-primary ">
                         <span className="badge text-bg-secondary">{props.asistentes}</span>
                     </button>
                 </div>
-                <div>
+                <div className="p-2">
                     <p>of</p>
                 </div>
-                <div>
-                    <button type="button" className="btn btn-primary">
+                <div className="p-2">
+                    <button type="button" className="btn btn-primary ">
                         <span className="badge text-bg-secondary">{props.maximo}</span>
                     </button>
                 </div>
-                <div>
+                <div className="p-2">
                     <p>To complete</p>
                 </div>
 
             </div>
 
-            <div>
+            <div className="ms-5" >
                 <h3>Description</h3>
                 <p>{props.descripcion}</p>
             </div>
