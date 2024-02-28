@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemyseeder import ResolvingSeeder
 import datetime
 
 db = SQLAlchemy()
@@ -13,7 +14,7 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     name = db.Column(db.String(25), nullable=False)
     lastname = db.Column(db.String(25), nullable=False)
-    dni = db.Column(db.String(8), nullable=False)
+    dni = db.Column(db.String(8), nullable=False, unique=True)
     email = db.Column(db.String(250), unique=True, nullable=False)
     phone = db.Column(db.String(10), nullable=False)
     password = db.Column(db.String(8), nullable=False) 
@@ -54,6 +55,13 @@ class Role(db.Model):
             "name": self.name
         }
     
+def seed():
+    seeder = ResolvingSeeder(db.session)
+    seeder.register(Role)
+    seeder.register(User)
+    seeder.load_entities_from_json_file('seedData.json')
+    db.session.commit()
+
 class Reservation(db.Model):
     __tablename__='reservation'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
