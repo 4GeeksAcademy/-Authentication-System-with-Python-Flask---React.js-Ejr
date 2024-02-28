@@ -5,16 +5,21 @@ import { LoginModal } from "./LoginModal";
 import { SignUpModal } from "./SignUpModal";
 import Logo from "../../img/logo.png";
 import ProfilePicture from "../../img/profile-picture.jpg";
-
+import { useNavigate } from 'react-router-dom';
 export const Navbar = () => {
 
   const { store, actions } = useContext(Context);
-
+  const navigate = useNavigate();
   const [loggedNavbar, setLoggedNavbar] = useState(false);
   const [modalState, setModalState] = useState({
 		showModal: false,
 		showModalUpdate: false,
 	});
+
+  async function handleClickHome() {
+    await actions.obtenerEventos()
+		navigate('/');
+	  }
 
   function updateModalState() {
     setModalState({ showModal: true });
@@ -42,19 +47,21 @@ export const Navbar = () => {
 	return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white">
               <div className="container d-flex justify-content-between">
-                <div className="navbar-brand col-xl-3 col-lg-3 col-md-6 col-8">
-                  <img className="img-thumbnail border-0" src={Logo} alt="" />
+                <div className="navbar-brand col-xl-3 col-lg-3 col-md-12 col-12">
+                  <img className="img-thumbnail border-0" src={Logo} alt="" onClick={handleClickHome}/>
                 </div>
                 
               {/*Esta parte son los botones de la derecha */}
               {loggedNavbar ? 
                 (
-                  <div className="dropdown d-flex justify-content-end mt-2">
-                    <button className="btn btn-400 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i className="fa fa-3x fa-user me-2"></i>
-                      <h3>{ store.user.name }</h3>
+                  <div className="dropdown d-flex justify-content-end mt-2 col-xl-3 col-lg-3 col-md-12 col-12">
+                    <button className="btn bg-transparent d-flex flex-row dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i className="fa fa-3x fa-user me-1 icono-300"></i>
+                      <div className="d-flex align-self-end">
+                        <h4 className="icono-400">{ store.user.name }</h4>
+                      </div>
                     </button>
-                    <ul className="dropdown-menu border-0">
+                    <ul className="dropdown-menu border-0 dropdown-menu-end dropdown-menu-start">
                       <li><button className="dropdown-item btn-400 mb-2 rounded">Usuario</button></li>
                       <li><button className="dropdown-item btn-400 rounded" onClick={logOut}>Cerrar sesión</button></li>
                     </ul>

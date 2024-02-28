@@ -158,12 +158,14 @@ def validate_token():
 
 # GET Mostrar detalles Eventos
 @api.route('/events/<string:category>', methods=['GET'])
+
 def event_category(category):
+    date = datetime.now()
     if category=="ALL":
-        event_query = Evento.query.all()
+        event_query = Evento.query.filter(Evento.fecha > date).order_by(Evento.fecha).all()
         event_data = [event.serialize() for event in event_query]
     else: 
-        event_query = Evento.query.filter(Evento.categoria.has(categoria=category)).all()
+        event_query = Evento.query.filter(Evento.categoria.has(categoria=category), Evento.fecha > date).all()
         event_data = list(map(lambda item: item.serialize(), event_query))
         
     response_body = {

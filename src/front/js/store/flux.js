@@ -118,49 +118,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                     return false;
                 }
-            }
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            },
+            obtenerEventosCategoria: async (category)=> {
+                try {
+                    const res = await fetch(process.env.BACKEND_URL + `/api/events/${category}`)
+                    const data = await res.json()
+                    setStore({events:data.result})
+                    
+                } catch (error) {
+                    console.error(error) 
+                }               
+            },
            
   
         }
