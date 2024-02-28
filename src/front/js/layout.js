@@ -24,13 +24,6 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     let role = "therapist";
-    let Home;
-
-    if (role === "therapist") {
-        Home = <HomeTherapist />;
-    } else {
-        Home = <HomePatient />;
-    }
 
     return (
         <div>
@@ -38,7 +31,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Routes>
                         <Route element={<Landing />} path="/" />
-                        <Route element={<Home />} path="/home" />
+                        <Route element={role === "therapist" ? <HomeTherapist/> : <HomePatient/>} path="/home" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
