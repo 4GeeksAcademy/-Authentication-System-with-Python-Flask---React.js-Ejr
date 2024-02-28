@@ -18,7 +18,7 @@ export const JivamuktiCard = (props) => {
 	return (
 		<div className="card mx-0 pl-0" style={{ width: "18rem" }}>
 			<Link>
-				<img src={`${process.env.BACKEND_URL}/api/session/jivamuktiyoga/${props.urlimagen}`} className="card-img-top" alt="..." />
+				<img src={`${process.env.BACKEND_URL}/api/jivamuktiyoga/${props.urlimagen}`} className="card-img-top" alt="..." />
 			</Link>
 			<div className="card-body">
 				<h5 className="card-title">{props.name}</h5>
