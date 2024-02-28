@@ -104,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			
 			getJivamuktiInfo: (jivamuktiId) => {
-				fetch(process.env.BACKEND_URL + `/api/session/jivamuktiyoga/${jivamuktiId}`)
+				fetch(process.env.BACKEND_URL + `/api/sessions/jivamuktiyoga/${jivamuktiId}`)
 					.then(res => {
 						console.log(res.status);
 						if (res.status === 200) {
