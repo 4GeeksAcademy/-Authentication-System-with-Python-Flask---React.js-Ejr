@@ -104,7 +104,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!body.username || !body.name || !body.lastname || !body.dni || !body.phone || !body.email) {
 						throw new Error("Por favor, complete todos los campos requeridos.");
 					}
-					const role_id = 2; 
 					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
 						method: 'POST',
 						headers: {

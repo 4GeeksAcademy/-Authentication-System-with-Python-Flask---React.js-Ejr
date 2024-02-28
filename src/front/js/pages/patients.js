@@ -80,7 +80,7 @@ export const Patients = () => {
             setShowSuccessModal(true);
             setUserData({
                 id: "",
-                role_id: 2,
+                role_id: 1,
                 username: "",
                 name: "",
                 lastname: "",
@@ -93,8 +93,8 @@ export const Patients = () => {
         } catch (error) {
             console.error("Error al crear usuario:", error.message);
         }
-    }
-
+    };
+    
     const handleGetUser = async(id) =>{
         try{
             const data = await actions.getUser(id);
@@ -177,6 +177,15 @@ export const Patients = () => {
             errors.email = "El email no tiene un formato válido.";
         } else {
             errors.email = "";
+        }
+
+        const existingEmail = store.user.some(user => user.email === data.email);
+        if (existingEmail) {
+            errors.email = "Este correo electrónico ya está registrado.";
+        }
+        const existingDNI = store.user.some(user => user.dni === data.dni);
+        if (existingDNI) {
+            errors.dni = "Este DNI ya está registrado.";
         }
     
         return errors;
@@ -454,7 +463,6 @@ export const Patients = () => {
         </div>
     );
 };
-
 
 
 

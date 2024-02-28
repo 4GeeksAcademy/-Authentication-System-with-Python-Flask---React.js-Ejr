@@ -69,9 +69,13 @@ def create_user():
     email = data.get("email")
     virtual_link = data.get("virtual_link")
 
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
+    existing_email_user = User.query.filter_by(email=email).first()
+    if existing_email_user:
         return jsonify({"error": "Este correo ya está registrado."}), 400
+
+    existing_dni_user = User.query.filter_by(dni=dni).first()
+    if existing_dni_user:
+        return jsonify({"error": "Este DNI ya está registrado."}), 400
 
     default_password = dni
 
