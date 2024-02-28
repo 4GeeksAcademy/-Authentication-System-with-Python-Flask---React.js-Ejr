@@ -65,6 +65,19 @@ class Categoria(db.Model):
 
 
 
+class Aficiones(db.Model):
+    __table__ = hobbies
+    
+    
+
+class Asistencia(db.Model):
+    __table__ = eventos
+    
+    def serialize(self):
+        return {
+            "evento_id": eventos
+        }
+
 
 
 class Evento(db.Model):
@@ -83,6 +96,9 @@ class Evento(db.Model):
     def __repr__(self):
         return self.evento
     def serialize(self):
+        query_result = db.session.query(eventos).filter_by(evento_id=self.id).all()
+        print(query_result)
+        # print(list(map(lambda item: item.serialize(), query_result)))
         return {
             "id": self.id,
             "evento": self.evento,
@@ -97,12 +113,6 @@ class Evento(db.Model):
 
 
 
-class Aficiones(db.Model):
-    __table__ = hobbies
-    
-    
 
-class Asistencia(db.Model):
-    __table__ = eventos
     
 

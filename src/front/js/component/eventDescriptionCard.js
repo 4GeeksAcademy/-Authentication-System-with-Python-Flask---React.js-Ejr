@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const EventDescriptionCard = (props) => {
+
+    console.log(props.data);
+
+
     const fechaString = props.fecha;
 
     // Convertir la cadena en un objeto de fecha
@@ -21,9 +25,9 @@ export const EventDescriptionCard = (props) => {
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <h5 className="card-title">{props.evento}</h5>
+                            <p className="card-text">{props.fecha}</p>
+                            <p className="card-text"><small className="text-body-secondary">{fechaFormateada}</small></p>
                         </div>
                     </div>
                 </div>
@@ -36,7 +40,7 @@ export const EventDescriptionCard = (props) => {
 
                 <div>
                     <button type="button" className="btn btn-primary">
-                        CONTADOR <span className="badge text-bg-secondary">4</span>
+                        <span className="badge text-bg-secondary">{props.asistentes}</span>
                     </button>
                 </div>
                 <div>
@@ -44,7 +48,7 @@ export const EventDescriptionCard = (props) => {
                 </div>
                 <div>
                     <button type="button" className="btn btn-primary">
-                        CONTADOR <span className="badge text-bg-secondary">4</span>
+                        <span className="badge text-bg-secondary">{props.maximo}</span>
                     </button>
                 </div>
                 <div>
@@ -55,7 +59,7 @@ export const EventDescriptionCard = (props) => {
 
             <div>
                 <h3>Description</h3>
-                <p>lorem</p>
+                <p>{props.descripcion}</p>
             </div>
 
 
@@ -66,4 +70,13 @@ export const EventDescriptionCard = (props) => {
 
         </div>
     );
+}
+
+EventDescriptionCard.propTypes = {
+
+    evento: PropTypes.string,
+    descripcion: PropTypes.string,
+    asistentes: PropTypes.number,
+    maximo: PropTypes.number,
+    fecha: PropTypes.string
 }

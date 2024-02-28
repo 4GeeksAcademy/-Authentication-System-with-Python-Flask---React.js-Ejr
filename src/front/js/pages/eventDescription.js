@@ -9,16 +9,27 @@ export const EventDescription = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
+	useEffect(() => {
+		actions.obtenerOneEvento(params.theid)
+
+
+	}, [])
+	console.log(store.eventInfo);
+
+
+
+
+
 	return (
 		<div>
-            
-            <EventDescriptionCard/>
-			
-			
+
+			<EventDescriptionCard evento={store.eventInfo?.result?.evento} descripcion={store.eventInfo?.result?.descripcion} asistentes={store.eventInfo?.asistentes} maximo={store.eventInfo?.result?.max_personas} fecha={store.eventInfo?.result?.fecha}/>
+
+
 		</div>
 	);
 };
 
 EventDescription.propTypes = {
-	
+
 };
