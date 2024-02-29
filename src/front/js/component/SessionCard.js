@@ -7,7 +7,7 @@ import "../../styles/classes.css";
 
 
 
-export const HarmoniumCard = (props) => {
+export const SessionCard = (props) => {
 	const [state, setState] = useState({
 		//initialize state here
 	});
@@ -22,7 +22,7 @@ export const HarmoniumCard = (props) => {
 			
 			<div className="card-body">
 				<h5 className="card-title">{props.name}</h5>
-				<span className="card-title"><strong>Subtitle:</strong>  {props.subtitle}</span><br></br>
+				<span className="card-title"><strong>Asana Focus:</strong>  {props.asana_focus}</span><br></br>
 				 {/* Verifica si "props.instructor" es un objeto */}
 				 {typeof props.instructor === 'object' ? (
           	<div>
@@ -35,7 +35,7 @@ export const HarmoniumCard = (props) => {
 				{/* // Si no es un objeto, simplemente muestra el valor */}
 				<span className="card-title"><strong>Teacher:</strong> {props.instructor}</span><br></br></>
         		)}
-				<span className="card-title"><strong>Duration:</strong> {props.duration}</span>
+				<span className="card-title"><strong>Level:</strong> {props.level}</span>
 				{/* <span className="card-title">{props.level}</span> */}
 			</div>
 
@@ -50,13 +50,13 @@ export const HarmoniumCard = (props) => {
  * your component's properties
  **/
 
-HarmoniumCard.propTypes = {
+SessionCard.propTypes = {
 	history: PropTypes.object,
 	id: PropTypes.number,
 	name: PropTypes.string,
 	instructor: PropTypes.string,
-	duration: PropTypes.string,
-	subtitle: PropTypes.string,
+	level: PropTypes.string,
+	asana_focus: PropTypes.string,
 	url_imagen: PropTypes.string
 };
 

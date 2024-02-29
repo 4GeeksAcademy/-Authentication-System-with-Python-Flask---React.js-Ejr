@@ -102,75 +102,135 @@ def get_sessions():
     # Create a route to authenticate your users and return JWTs. The
     # create_access_token() function is used to actually generate the JWT.
 
-#endpoint para que aparezcan las clases de jivamukti
-@api.route('/jivamuktiyoga', methods=['GET'])
-def get_jivamukti():    
-    jivamukti_query = Jivamukti_yoga.query.all()
-    jivamukti_query = list(map(lambda item: item.serialize(), jivamukti_query))
-    # print(jivamukti_query)    
-    if jivamukti_query == [] or None:
+#endpoint para que aparezcan las clases de yoga por tipo
+
+@api.route('/yogatype', methods=['GET'])
+def get_yogatype():
+    yogatype_1_query = Jivamukti_yoga.query.all()
+    yogatype_2_query = Vinyasa_yoga.query.all()
+    yogatype_3_query = Rocket_yoga.query.all()
+    yogatype_4_query = Ashtanga_yoga.query.all()
+    yogatype_5_query = Hatha_yoga.query.all()
+    yogatype_6_query = Meditation.query.all()
+    yogatype_7_query = Harmonium.query.all()
+    yogatype_1_query = list(map(lambda item: item.serialize(),  yogatype_1_query))
+    yogatype_2_query = list(map(lambda item: item.serialize(),  yogatype_2_query))
+    yogatype_3_query = list(map(lambda item: item.serialize(),  yogatype_3_query))
+    yogatype_4_query = list(map(lambda item: item.serialize(),  yogatype_4_query))
+    yogatype_5_query = list(map(lambda item: item.serialize(),  yogatype_5_query))
+    yogatype_6_query = list(map(lambda item: item.serialize(),  yogatype_6_query))
+    yogatype_7_query = list(map(lambda item: item.serialize(),  yogatype_7_query))
+    # print(jivamukti_query)
+    if yogatype_1_query == [] or None:
         return jsonify({
              "Msg": "No hay sesiones disponibles"
              }), 404
-        
+    if yogatype_2_query == [] or None:
+        return jsonify({
+             "Msg": "No hay sesiones disponibles"
+             }), 404
+    if yogatype_3_query == [] or None:
+        return jsonify({
+             "Msg": "No hay sesiones disponibles"
+             }), 404
+    if yogatype_4_query == [] or None:
+        return jsonify({
+             "Msg": "No hay sesiones disponibles"
+             }), 404
+    if yogatype_5_query == [] or None:
+        return jsonify({
+             "Msg": "No hay sesiones disponibles"
+             }), 404
+    if yogatype_6_query == [] or None:
+        return jsonify({
+             "Msg": "No hay sesiones disponibles"
+             }), 404
+    if yogatype_7_query == [] or None:
+        return jsonify({
+             "Msg": "No hay sesiones disponibles"
+             }), 404
     response_body = {
         "msg": "ok",
-        "jivamukti_sessions": jivamukti_query    }    
-        
+        "jivamukti_sessions": yogatype_1_query,
+        "vinyasa_sessions": yogatype_2_query,
+        "rocket_sessions": yogatype_3_query,
+        "ashtanga_sessions": yogatype_4_query,
+        "hatha_sessions": yogatype_5_query,
+        "meditation_sessions": yogatype_6_query,
+        "harmonium_sessions": yogatype_7_query
+    }
     return jsonify(response_body), 200
+
+
+
+# @api.route('/jivamuktiyoga', methods=['GET'])
+# def get_jivamukti():    
+#     jivamukti_query = Jivamukti_yoga.query.all()
+#     jivamukti_query = list(map(lambda item: item.serialize(), jivamukti_query))
+#     # print(jivamukti_query)    
+#     if jivamukti_query == [] or None:
+#         return jsonify({
+#              "Msg": "No hay sesiones disponibles"
+#              }), 404
+        
+#     response_body = {
+#         "msg": "ok",
+#         "jivamukti_sessions": jivamukti_query    }    
+        
+#     return jsonify(response_body), 200
 
 #Endpoint para que aparezca un jivamukti yoga especifico
-@api.route('/jivamuktiyoga/<int:jivamukti_id>', methods=['GET'])
-# Si devuelve ok aparecerá en la consola de vscode el numero de id.
-def get_one_jivamukti(jivamukti_id):
-    jivamukti_query = Jivamukti_yoga.query.filter_by(id = jivamukti_id).first() #El filter sera con el id, no se podrá repetir
-    # Te lo devuelve en crudo.
+# @api.route('/jivamuktiyoga/<int:jivamukti_id>', methods=['GET'])
+# # Si devuelve ok aparecerá en la consola de vscode el numero de id.
+# def get_one_jivamukti(jivamukti_id):
+#     jivamukti_query = Jivamukti_yoga.query.filter_by(id = jivamukti_id).first() #El filter sera con el id, no se podrá repetir
+#     # Te lo devuelve en crudo.
     
-    if jivamukti_query is None:
-        return jsonify({
-            "msg": "Jivamukti session not found"
-        }), 404
+#     if jivamukti_query is None:
+#         return jsonify({
+#             "msg": "Jivamukti session not found"
+#         }), 404
     
-    response_body = {
-        "msg": "ok",
-        "jivamukti_session": jivamukti_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
-    }
-    return jsonify(response_body), 200
+#     response_body = {
+#         "msg": "ok",
+#         "jivamukti_session": jivamukti_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+#     }
+#     return jsonify(response_body), 200
 
 #endpoint para que aparezcan las clases de vinyasa
-@api.route('/vinyasayoga', methods=['GET'])
-def get_vinyasa():    
-    vinyasa_query = Vinyasa_yoga.query.all()
-    vinyasa_query = list(map(lambda item: item.serialize(), vinyasa_query))
-    # print(jivamukti_query)    
-    if vinyasa_query == [] or None:
-        return jsonify({
-             "Msg": "No hay sesiones Vinyasa disponibles"
-             }), 404
+# @api.route('/vinyasayoga', methods=['GET'])
+# def get_vinyasa():    
+#     vinyasa_query = Vinyasa_yoga.query.all()
+#     vinyasa_query = list(map(lambda item: item.serialize(), vinyasa_query))
+#     # print(jivamukti_query)    
+#     if vinyasa_query == [] or None:
+#         return jsonify({
+#              "Msg": "No hay sesiones Vinyasa disponibles"
+#              }), 404
         
-    response_body = {
-        "msg": "ok",
-        "vinyasa_sessions": vinyasa_query    }    
+#     response_body = {
+#         "msg": "ok",
+#         "vinyasa_sessions": vinyasa_query    }    
         
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 
-#Endpoint para que aparezca un vinyasa yoga especifico
-@api.route('/vinyasayoga/<int:vinyasa_id>', methods=['GET'])
-# Si devuelve ok aparecerá en la consola de vscode el numero de id.
-def get_one_vinyasa(vinyasa_id):
-    vinyasa_query = Vinyasa_yoga.query.filter_by(id = vinyasa_id).first() #El filter sera con el id, no se podrá repetir
-    # Te lo devuelve en crudo.
-    if vinyasa_query is None:
-        return jsonify({
-            "msg": "vinyasa session not found"
-        }), 404
+# #Endpoint para que aparezca un vinyasa yoga especifico
+# @api.route('/vinyasayoga/<int:vinyasa_id>', methods=['GET'])
+# # Si devuelve ok aparecerá en la consola de vscode el numero de id.
+# def get_one_vinyasa(vinyasa_id):
+#     vinyasa_query = Vinyasa_yoga.query.filter_by(id = vinyasa_id).first() #El filter sera con el id, no se podrá repetir
+#     # Te lo devuelve en crudo.
+#     if vinyasa_query is None:
+#         return jsonify({
+#             "msg": "vinyasa session not found"
+#         }), 404
     
-    response_body = {
-        "msg": "ok",
-        "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
-    }
-    return jsonify(response_body), 200 
+#     response_body = {
+#         "msg": "ok",
+#         "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+#     }
+#     return jsonify(response_body), 200 
 
 
 

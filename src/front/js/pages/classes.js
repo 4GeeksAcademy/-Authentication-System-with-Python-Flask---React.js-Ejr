@@ -2,15 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 
-import { JivamuktiCard } from "../component/JivamuktiCard.js";
-import { VinyasaCard } from "../component/VinyasaCard.js";
-import { HathaCard } from "../component/HathaCard.js";
-import { AshtangaCard } from "../component/AshtangaCard.js";
-import { RocketCard } from "../component/RocketCard.js";
+import { SessionCard } from "../component/SessionCard.js";
 import { MeditationCard } from "../component/MeditationCard.js";
 import { HarmoniumCard } from "../component/HarmoniumCard.js";
 import imagenClases from "../../img/fotonavacerrada.jpeg"
-import imagenThePractices from "../../img/thepracticescentro.png"
+import imagenThePractices from "../../img/thepracticesSINFONDO.png"
 
 
 export const Sessions = () => {
@@ -23,10 +19,7 @@ export const Sessions = () => {
 
 
 	useEffect(() => {
-		actions.getAllJivamukti();
-		// actions.getAllPlanets();
-		// actions.getAllSpecies();
-		// actions.getFavorites();
+		actions.getAllSessions();
 	}, []);
 
 	console.log(store.jivamuktiYoga)
@@ -73,70 +66,166 @@ export const Sessions = () => {
 						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
 							{store.jivamuktiYoga.map(item => (
 							<li className="col-4 px-0 w-auto my-2" key={item.id}>
-							<JivamuktiCard 
+							<SessionCard 
 								id={item.id}
 								name={item.name}
 								instructor={item.instructor}
 								asana_focus={item.asana_focus}
+								level={item.level}
 								url_imagen={item.url_imagen}
 						/>
 						</li>
 						))}
 					</ul>
-				</div> 
+				</div>
+			
 			</div>
 
-			
-
-
-		
-
-			{/* <div className="container-fluid mt-5">
-				<h1 className="text-danger mx-3">Characters</h1>
-					<div className="container-fluid d-flex flex-row">
+			<div className="container-fluid mt-3">
+				<div className="ms-3 d-flex align-items-center">
+					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
+					<span className="ms-2">Vinyasa Yoga</span>
+				</div>
+				<div className="container-fluid d-flex flex-row">
 						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
-							{store.characters.map(item => (
-							<li className="col-4 px-0 w-auto my-2" key={item.uid}>
-							<CharactersCard 
-								id={item.uid}
+							{store.vinyasaYoga.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
+							<SessionCard 
+								id={item.id}
 								name={item.name}
+								instructor={item.instructor}
+								asana_focus={item.asana_focus}
+								level={item.level}
+								url_imagen={item.url_imagen}
 						/>
 						</li>
 						))}
 					</ul>
 				</div>
+			
 			</div>
-			<div className="container-fluid mt-5">
-				<h1 className="text-danger mx-3">Planets</h1>
-					<div className="container-fluid d-flex flex-row">
+
+			<div className="container-fluid mt-3">
+				<div className="ms-3 d-flex align-items-center">
+					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
+					<span className="ms-2">Rocket Yoga</span>
+				</div>
+				<div className="container-fluid d-flex flex-row">
 						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
-							{store.planets.map(item => (
-							<li className="col-4 px-0 w-auto my-2" key={item.uid}>
-								<PlanetsCard 
-								id={item.uid}
+							{store.rocketYoga.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
+							<SessionCard 
+								id={item.id}
 								name={item.name}
-								
-								/>
-							</li>
+								instructor={item.instructor}
+								asana_focus={item.asana_focus}
+								level={item.level}
+								url_imagen={item.url_imagen}
+						/>
+						</li>
 						))}
 					</ul>
 				</div>
+			
 			</div>
-			<div className="container-fluid mt-5">
-				<h1 className="text-danger mx-3">Species</h1>
-					<div className="container-fluid d-flex flex-row">
+
+			<div className="container-fluid mt-3">
+				<div className="ms-3 d-flex align-items-center">
+					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
+					<span className="ms-2">Asthanga Yoga</span>
+				</div>
+				<div className="container-fluid d-flex flex-row">
 						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
-							{store.species.map(item => (
-							<li className="col-4 px-0 w-auto my-2" key={item.uid}>	
-								<SpeciesCard 
-								id={item.uid}
+							{store.ashtangaYoga.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
+							<SessionCard 
+								id={item.id}
 								name={item.name}
-								/>
-							</li>
+								instructor={item.instructor}
+								asana_focus={item.asana_focus}
+								level={item.level}
+								url_imagen={item.url_imagen}
+						/>
+						</li>
 						))}
 					</ul>
 				</div>
-			</div> */}
+			
+			</div>
+
+			<div className="container-fluid mt-3">
+				<div className="ms-3 d-flex align-items-center">
+					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
+					<span className="ms-2">Hatha Yoga</span>
+				</div>
+				<div className="container-fluid d-flex flex-row">
+						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
+							{store.hathaYoga.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
+							<SessionCard 
+								id={item.id}
+								name={item.name}
+								instructor={item.instructor}
+								asana_focus={item.asana_focus}
+								level={item.level}
+								url_imagen={item.url_imagen}
+						/>
+						</li>
+						))}
+					</ul>
+				</div>
+			
+			</div>
+
+			<div className="container-fluid mt-3">
+				<div className="ms-3 d-flex align-items-center">
+					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
+					<span className="ms-2">Meditations</span>
+				</div>
+				<div className="container-fluid d-flex flex-row">
+						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
+							{store.meditation.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
+							<MeditationCard
+								id={item.id}
+								name={item.name}
+								instructor={item.instructor}
+								subtitle={item.subtitle}
+								duration={item.duration}
+								url_imagen={item.url_imagen}
+						/>
+						</li>
+						))}
+					</ul>
+				</div>
+			
+			</div>
+
+			<div className="container-fluid mt-3">
+				<div className="ms-3 d-flex align-items-center">
+					<i className="fa-solid fa-star fa-xl" style={{color: "#74C0FC"}}></i>
+					<span className="ms-2">Harmonium</span>
+				</div>
+				<div className="container-fluid d-flex flex-row">
+						<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
+							{store.harmonium.map(item => (
+							<li className="col-4 px-0 w-auto my-2" key={item.id}>
+							<MeditationCard
+								id={item.id}
+								name={item.name}
+								instructor={item.instructor}
+								subtitle={item.subtitle}
+								duration={item.duration}
+								url_imagen={item.url_imagen}
+						/>
+						</li>
+						))}
+					</ul>
+				</div>
+			
+			</div>
+
+		
 		</div>
 	);
  };

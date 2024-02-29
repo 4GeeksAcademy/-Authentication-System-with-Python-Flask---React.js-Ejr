@@ -178,7 +178,8 @@ class Jivamukti_yoga(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.type, #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.name + ' ' + self.instructor.last_name
+            "instructor": self.instructor.name + ' ' + self.instructor.last_name,
+            "url_imagen": self.url_imagen
             #Para coger solo el nombre y apellido del instructor
             # do not serialize the password, its a security breach
         }
@@ -214,7 +215,8 @@ class Vinyasa_yoga(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.type, #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.name + ' ' + self.instructor.last_name
+            "instructor": self.instructor.name + ' ' + self.instructor.last_name,
+            "url_imagen": self.url_imagen
         }
 
 
@@ -250,7 +252,8 @@ class Rocket_yoga(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.serialize(), #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.serialize()
+            "instructor": self.instructor.serialize(),
+            "url_imagen": self.url_imagen
         }
 
 
@@ -284,7 +287,8 @@ class Ashtanga_yoga(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.serialize(), #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.serialize()
+            "instructor": self.instructor.serialize(),
+            "url_imagen": self.url_imagen
         }
 
 
@@ -318,7 +322,8 @@ class Hatha_yoga(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.serialize(), #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.serialize()
+            "instructor": self.instructor.serialize(),
+            "url_imagen": self.url_imagen
         }
 
 
@@ -354,7 +359,8 @@ class Meditation(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.serialize(), #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.serialize()
+            "instructor": self.instructor.serialize(),
+            "url_imagen": self.url_imagen
         }
 
 
@@ -388,5 +394,6 @@ class Harmonium(db.Model):
             "level": self.level,
             "duration": self.duration,
             "type": self.type.serialize(), #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
-            "instructor": self.instructor.serialize()
+            "instructor": self.instructor.serialize(),
+            "url_imagen": self.url_imagen
         }
