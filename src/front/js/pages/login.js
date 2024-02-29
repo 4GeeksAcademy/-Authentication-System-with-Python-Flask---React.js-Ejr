@@ -70,9 +70,6 @@ export const Login = () => {
             </form>
             <div className="mt-3 text-center link">
                 <p>
-                    Don't have an account? <Link to="/signup">Create account</Link>
-                </p>
-                <p>
                      Forgot your password? <Link to="/recovery">Recover it here</Link>
                 </p>
                 <p>
