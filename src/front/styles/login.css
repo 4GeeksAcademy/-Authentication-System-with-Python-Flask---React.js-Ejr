@@ -14,9 +14,7 @@ label, p{
     color: #718096;
 }
 
-input[type=text]{
-    border-radius: 12px !important;
-}
+
 
 input[type=checkbox]{
     margin-right: 10px;
