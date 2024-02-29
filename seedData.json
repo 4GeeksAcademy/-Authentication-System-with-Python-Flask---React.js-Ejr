@@ -14,18 +14,19 @@
         ]
     },
     {   "target_class": "User",
-        "data":{
-            "role_id": 2, 
-            "username": "SVIGANO",
-            "name": "Sofia",
-            "lastname": "Vigano",
-            "dni": "36353875",  
-            "email": "marmargara.mm@gmail.com",
-            "phone": "3513052538",
-            "password": "",
-            "virtual_link": "",
-            "is_active": true
-        }
-        
+        "data":[
+            {
+                "role_id": 2, 
+                "username": "SVIGANO",
+                "name": "Sofia",
+                "lastname": "Vigano",
+                "dni": "36353875",  
+                "email": "marmargara.mm@gmail.com",
+                "phone": "3513052538",
+                "password": "",
+                "virtual_link": "",
+                "is_active": true
+            }
+        ]
     }
 ]

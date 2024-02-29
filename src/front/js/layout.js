@@ -6,7 +6,6 @@ import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
 import { Landing } from "./pages/landing";
 import { Login } from "./pages/login"
-import { Signup } from "./pages/signup";
 import { Recovery } from "./pages/recovery";
 import { HomePatient } from "./pages/homePatient";
 import { HomeTherapist } from "./pages/homeTherapist";
@@ -33,7 +32,6 @@ const Layout = () => {
                         <Route element={<Landing />} path="/" />
                         <Route element={role === "therapist" ? <HomeTherapist/> : <HomePatient/>} path="/home" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<Payments />} path="/payments" />
