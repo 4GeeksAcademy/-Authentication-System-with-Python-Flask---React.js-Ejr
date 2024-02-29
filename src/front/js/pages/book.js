@@ -11,6 +11,7 @@ console.log(bookDetails)
     const fetchBookDetails = async () => {
       try {
         const response = await fetch(`https://openlibrary.org/works/${id}.json`);
+        //const details = await fetch(`https://openlibrary.org/search/authors.json`);
         if (!response.ok) {
           throw new Error('meee');
 
@@ -18,6 +19,16 @@ console.log(bookDetails)
         }
         const data = await response.json();
         setBookDetails(data);
+
+        const authorId = bookData?.authors?.[0]?.key?.split("/").pop(); // Obtener el ID del autor del primer autor del libro
+        if (authorId) {
+          const authorResponse = await fetch(`https://openlibrary.org/authors/${authorId}.json`);
+          if (!authorResponse.ok) {
+            throw new Error('Failed to fetch author details');
+          }
+          const authorData = await authorResponse.json();
+          setAuthorName(authorData?.name);
+        }
       } catch (error) {
         console.error('meee', error);
       }
@@ -26,7 +37,7 @@ console.log(bookDetails)
     fetchBookDetails();
   }, [id]);
 
-  if (!bookDetails) {
+  if (!bookDetails ) {
     return <div>Cargando cargando librito</div>;
   }
 
