@@ -33,16 +33,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			const store = getStore()
 			console.log(sessionStorage.getItem("token"))
 			if(sessionStorage.getItem("token")){
+				setStore({token: sessionStorage.getItem("token")})
 				setStore({bool:true})
 				// console.log(store.bool)
 			}
 			
 		},
 
+		rehydrate: () => {
+			const token = sessionStorage.getItem("token");
+			if (token){
+				setStore({ token: token });
+			}
+		},
+
 		logOut: () => {
 			const store = getStore()
 			setStore({token:null})
-			// sessionStorage.setItem("token", null);
+			sessionStorage.clear();
 		}, 
 			
 		getObjects: () => {

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
+import AuthComponent from "../component/auth";
 import "../../styles/exhibit.css";
 
 export const Exhibits = () => {
@@ -12,6 +13,7 @@ export const Exhibits = () => {
 		setArtPieces(store.artPieces)
 	},[store])
 	return (
+	<AuthComponent>	
 		<div className="text-center mt-5">
 			<div> 
 				{artPieces.map(item => (
@@ -26,6 +28,8 @@ export const Exhibits = () => {
 						
 					))}	
 			</div>
-		</div>
+		</div>	
+	</AuthComponent>
+		
 	);
 };
