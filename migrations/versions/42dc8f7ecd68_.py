@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b3d75e592380
+Revision ID: 42dc8f7ecd68
 Revises: 
-Create Date: 2024-02-28 14:23:01.535364
+Create Date: 2024-02-29 02:40:59.815511
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b3d75e592380'
+revision = '42dc8f7ecd68'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -50,14 +50,15 @@ def upgrade():
     sa.Column('username', sa.String(length=50), nullable=False),
     sa.Column('name', sa.String(length=25), nullable=False),
     sa.Column('lastname', sa.String(length=25), nullable=False),
-    sa.Column('dni', sa.String(length=8), nullable=False),
+    sa.Column('dni', sa.String(length=15), nullable=False),
     sa.Column('email', sa.String(length=250), nullable=False),
     sa.Column('phone', sa.String(length=10), nullable=False),
-    sa.Column('password', sa.String(length=8), nullable=False),
+    sa.Column('password', sa.String(length=150), nullable=False),
     sa.Column('virtual_link', sa.String(length=250), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['role_id'], ['role.id'], ),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('dni'),
     sa.UniqueConstraint('email')
     )
     op.create_table('reservation',
