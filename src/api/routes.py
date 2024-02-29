@@ -162,6 +162,23 @@ def get_yogatype():
     return jsonify(response_body), 200
 
 
+#endpoint the teachers
+@api.route('/theteachers', methods=['GET'])
+def get_theteachers():
+    
+    theteachers_query = Instructor.query.all()
+    theteachers_query = list(map(lambda item: item.serialize(),  theteachers_query))
+    print(theteachers_query)
+    if theteachers_query == [] or None:
+        return jsonify({
+             "Msg": "There aren't teachers available."
+             }), 404
+    
+    response_body = {
+        "msg": "ok",
+        "theteachers": theteachers_query
+    }
+    return jsonify(response_body), 200
 
 # @api.route('/jivamuktiyoga', methods=['GET'])
 # def get_jivamukti():    

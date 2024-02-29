@@ -95,6 +95,8 @@ class Instructor(db.Model):
     name = db.Column(db.String(120), unique=True, nullable=False)
     last_name = db.Column(db.String(120), unique=False, nullable=False)
     biografy = db.Column(db.String(300), unique=False, nullable=False)
+    residence = db.Column(db.String(120), unique=False, nullable=False)
+    url_imagen = db.Column(db.String(350), unique=False, nullable=False)
     # sessions =  db.relationship('Session', backref='instructor', lazy=True)
 
 
@@ -107,6 +109,8 @@ class Instructor(db.Model):
             "name": self.name,
             "last_name": self.last_name,
             "biografy": self.biografy,
+            "residence": self.residence,
+            "url_imagen": self.url_imagen
             # do not serialize the password, its a security breach
         }
     
