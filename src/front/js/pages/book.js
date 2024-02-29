@@ -38,7 +38,7 @@ console.log(bookDetails)
         </Col>
         <Col md={8}>
           <h2>{bookDetails.title}</h2>
-          <p>Autor: {bookDetails.author_name}</p>
+          <p>Autor: {bookDetails.authors.author_name}</p>
           <p>Año de publicación: {bookDetails.first_publish_year}</p>
           <p>ISBN: {bookDetails.isbn}</p>
         </Col>
