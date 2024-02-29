@@ -11,8 +11,9 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { ContextProvider } from "./store/appContext"; // Importa el proveedor de contexto existente
 import NavBar from "./component/Navbar";
-import { BookDetails } from "./pages/book";
+import BookDetails from "./pages/book"
 import { Footer } from "./component/footer";
+
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 

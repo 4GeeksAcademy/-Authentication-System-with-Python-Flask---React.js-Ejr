@@ -99,7 +99,7 @@ const BookCard = ({ book }) => {
       <Card.Body className="d-flex flex-column justify-content-between">
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
-		    <Link to={`/book/${book.key}`}>
+		    <Link to={`/books${book.key}`}>
           <button className="btn btn-success">VER LIBRO</button>
         </Link>
         
