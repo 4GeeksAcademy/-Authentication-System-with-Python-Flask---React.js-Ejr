@@ -4,6 +4,8 @@ import { Context } from "../store/appContext";
 import "../../styles/departments.css";
 import { Link } from "react-router-dom";
 
+import AuthComponent from "../component/auth";
+
 export const Departments = () => {
 	const { store, actions } = useContext(Context);
 	const [artDepartments , setArtDepartments] = useState([])
@@ -18,7 +20,8 @@ export const Departments = () => {
 
 	// console.log(artDepartments);
 	return (
-		
+	
+	<AuthComponent>
 		<div className="text-center mt-5">
 			<p>This is the department page</p>
 			<div className="row1"> 
@@ -31,6 +34,7 @@ export const Departments = () => {
 				))}
 			</div>
 		</div>
+	</AuthComponent>	
 	);
 	
 };

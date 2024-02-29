@@ -15,7 +15,7 @@ const Login = ({ setAuthAttempt }) => {
 
       if (store.bool){
         console.log('success')
-        navigate('/profile'); // Navigate to the 'favorite' page on successful login
+        navigate('/profile'); // Navigate to the 'profile' page on successful login
       }else{
         console.log('denied')
       }
@@ -80,9 +80,9 @@ const Login = ({ setAuthAttempt }) => {
           </div>
       <div className="col text-end p-3">
         {message}
-        <button className="btn btn-primary" onClick={()=>{
-          actions.onLoginClick(email, password) 
-          loginRedirection(actions.redirecting())
+        <button className="btn btn-primary" onClick={async ()=>{
+          await actions.onLoginClick(email, password) 
+          await loginRedirection(actions.redirecting());
           }}>
           Login
         </button>

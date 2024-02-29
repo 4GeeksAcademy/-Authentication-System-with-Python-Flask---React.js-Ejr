@@ -1,4 +1,4 @@
-.footer {
+/* .footer {
     flex-shrink: 0;
     bottom: 0;
     background-color: 
@@ -41,4 +41,25 @@
 .history-title {
     text-decoration: underline;
     margin: 25px;
+} */
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #000;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.popup-inner {
+    max-width: 600px;
+    overflow-y: auto;
+}
+
+.popup-inner button {
+    display: block;
+    margin: 0 auto;
 }
