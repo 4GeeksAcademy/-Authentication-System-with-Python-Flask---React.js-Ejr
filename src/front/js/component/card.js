@@ -13,7 +13,6 @@ export const Card = (props) => {
 
         navigate(`/description/${props.id}`);
     }
-    console.log(props.id);
 
     // Convertir la cadena en un objeto de fecha
     const fechaObjeto = new Date(fechaString);

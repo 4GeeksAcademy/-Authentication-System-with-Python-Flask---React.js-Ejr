@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { LoginModal } from "./LoginModal";
 import { SignUpModal } from "./SignUpModal";
 import Logo from "../../img/logo.png";
-import ProfilePicture from "../../img/profile-picture.jpg";
 import { useNavigate } from 'react-router-dom';
 export const Navbar = () => {
 
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
-  const [loggedNavbar, setLoggedNavbar] = useState(false);
   const [modalState, setModalState] = useState({
 		showModal: false,
 		showModalUpdate: false,
@@ -31,16 +28,13 @@ export const Navbar = () => {
 
   function logOut() {
     localStorage.removeItem("token");
-    actions.validate_token();
-    window.location.reload();
+    store.auth=false
+    navigate('/');
   }
 
   useEffect(() => {
-    if (store.auth) {
-      setLoggedNavbar(true);
-      actions.obtenerInfoUsuario();
-    } else {
-      setLoggedNavbar(false);
+    if(store.auth){
+       actions.obtenerInfoUsuario();   
     }
 	},[store.auth]);
 
@@ -52,7 +46,7 @@ export const Navbar = () => {
                 </div>
                 
               {/*Esta parte son los botones de la derecha */}
-              {loggedNavbar ? 
+              {store.auth ? 
                 (
                   <div className="dropdown d-flex justify-content-end mt-2 col-xl-3 col-lg-3 col-md-12 col-12">
                     <button className="btn bg-transparent d-flex flex-row dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

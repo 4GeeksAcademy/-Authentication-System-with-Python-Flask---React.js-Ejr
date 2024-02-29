@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const EventDescriptionCard = (props) => {
-
-    console.log(props.data);
-
+    const { store, actions } = useContext(Context);
+    
+    const [asist_event, setAsist_event] = useState([])
+    useEffect(() =>{
+            setAsist_event(store.user.id_eventos)
+    },[])
 
     const fechaString = props.fecha;
 
@@ -35,7 +38,7 @@ export const EventDescriptionCard = (props) => {
 
             <div className="d-flex justify-content-center mb-3 gap-1" >
                 <div className="p-2 flex-grow-1  ms-5" >
-                    <button type="button" className="btn btn-primary btn-lg ">JOIN EVENT</button>
+                    <button type="button" className={asist_event.includes(parseInt(props.id_evento)) ? 'btn btn-primary btn-lg disabled' : 'btn btn-primary btn-lg'}>{asist_event.includes(parseInt(props.id_evento)) ? "Joined this event" : "JOIN EVENT"}</button>
                 </div>
 
                 <div className="p-2">

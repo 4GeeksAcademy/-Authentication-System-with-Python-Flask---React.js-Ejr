@@ -45,8 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const res = await fetch(process.env.BACKEND_URL + `/api/events/${id}`)
                     const data = await res.json()
-                    console.log(data);
-
                     setStore({ eventInfo: data })
 
                 } catch (error) {

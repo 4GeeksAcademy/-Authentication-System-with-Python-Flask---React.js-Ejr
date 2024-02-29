@@ -16,6 +16,8 @@ export const LoginModal = props => {
 	const handleLogIn = async(e) => {
 		let log = await actions.login(email, password);
 		if(log){
+			setEmail("")
+			setPassword("")
 			props.onClose()
 		}
 		else{
@@ -65,13 +67,6 @@ export const LoginModal = props => {
 									required
 								/>
 							</div>
-	
-							{/* <div className="form-group d-flex flex-row justify-content-start w-100">
-								<input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-								<label className="form-check-label" for="flexCheckDefault">
-								Mantener sesión iniciada
-								</label>
-							</div> */}
 							<button type="submit"  className="btn-300 to-be-hoved form-control w-50">
 								¡ENTRA!
 							</button>

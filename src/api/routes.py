@@ -93,13 +93,13 @@ def user_detail():
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email = current_user).first()
     user_data = user_query.serialize()
-    print(user_data["eventos"])
     eventos = [evento.serialize() for evento in Evento.query.filter_by(user_creador=user_data["id"]).all()]
     user_info ={"id": user_data["id"],
                 "name": user_data["name"],
                 "email": user_data["email"],
                 "hobbies": list(map(lambda item: item["name"], user_data["hobbies"])),
                 "num_eventos_asistido": len(user_data["eventos"]),
+                "id_eventos": list(map(lambda item: item["id"], user_data["eventos"])),
                 "eventos_asistido": list(map(lambda item: item["evento"], user_data["eventos"])),
                 "num_eventos_creados" : Evento.query.filter_by(user_creador = user_data["id"]).count(),
                 "eventos_creados": list(map(lambda item: item["evento"], eventos))
