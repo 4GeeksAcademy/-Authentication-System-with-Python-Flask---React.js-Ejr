@@ -1,6 +1,8 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
 .background-img {
     opacity: 70%;
     padding: 20px 20px 20px 20px;

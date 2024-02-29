@@ -13,6 +13,7 @@ import { Signup } from "./pages/signup";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { SignupFreeTrial } from "./pages/signupfreetrial";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +34,8 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
+                        <Route path="/signup/freetrial" element={<SignupFreeTrial />} />
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

@@ -5,7 +5,7 @@ import "../../styles/signup.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const FormSignup = ({ freeTrial }) => {
+export const FormSignupFreeTrial = ({ freeTrial }) => {
     const navigate = useNavigate();
     const [state, setState] = useState({
         //initialize state here
@@ -19,7 +19,7 @@ export const FormSignup = ({ freeTrial }) => {
 
     const { store, actions } = useContext(Context)
 
-    async function handleFormSignup(e) {
+    async function handleFormSignupFreeTrial(e) {
         e.preventDefault()
         let logged = ""
         console.log(name, lastname, date_of_birth, email, password, confirmPassword);
@@ -36,12 +36,12 @@ export const FormSignup = ({ freeTrial }) => {
             toast.error("Invalid email or password");
         }
     }
-    
+
     return (
         <>
             <ToastContainer />
-            <form className="stylebackgroundimg container d-flex mt-5 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignup}>
-                <h1 className="poiret-one-regular fs-1">New Practitioner</h1>
+            <form className="stylebackgroundimg container d-flex mt-5 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
+                <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
                     <div className="col-12 col-sm-6 col-lg-4 ">
                         <div className="card-body">
@@ -74,7 +74,7 @@ export const FormSignup = ({ freeTrial }) => {
                     </div>
                 </div>
 
-                <h1 className="poiret-one-regular mt-5">Thank you a feel warmly welcomed</h1>
+                <h1 className="poiret-one-regular mt-5">¡ This is free version !</h1>
 
             </form>
         </>
