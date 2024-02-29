@@ -80,7 +80,7 @@ def create_user():
     default_password = bcrypt.generate_password_hash(dni, 10).decode("utf-8")
 
     new_user = User(
-        role_id=role_id,
+        role_id=role_id,bcrypt
         username=username,
         name=name,
         lastname=lastname,
