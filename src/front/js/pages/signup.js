@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Context } from '../store/appContext'
 import { useNavigate } from 'react-router-dom'
 
-const Signup = () => {
+export const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')

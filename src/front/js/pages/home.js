@@ -9,7 +9,7 @@ import { Context } from "../store/appContext";
 // Creamos un contexto para almacenar los libros favoritos
 const FavoritesContext = React.createContext();
 
-const Home = () => {
+export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const [popularBooks, setPopularBooks] = useState([]);
 	const [romanceBooks, setRomanceBooks] = useState([]);

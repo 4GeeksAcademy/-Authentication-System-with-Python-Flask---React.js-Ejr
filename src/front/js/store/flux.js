@@ -1,4 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
+<<<<<<< HEAD
 	return {
 		store: {
 			message: null,
@@ -73,6 +74,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			APIfetch: async (endpoint,method="GET",body=null)=>{
+=======
+    return {
+        store: {
+            message: null,
+            demo: [
+                {
+                    title: "FIRST",
+                    background: "white",
+                    initial: "white"
+                },
+                {
+                    title: "SECOND",
+                    background: "white",
+                    initial: "white"
+                }
+            ],
+            urlBase:"https://openlibrary.org/search.json"
+        },
+        actions: {
+            login: async (email, password) => {
+                const actions = getActions();
+                const data = await api.login(email, password);
+                setStore({ user: data.user, token: data.token });
+                actions.getFavorites();
+                if (!data.user.is_admin) localStorage.setItem('myToken', data.token);
+                return data;
+            },
+            signup: async (email, password, first_name, last_name, phone, location) => {
+                const response = await api.signup(email, password, first_name, last_name, phone, location);
+                return response;
+            },
+            getMessage: async () => {
+                let actions = getActions();
+                try {
+                    const data = actions.APIfetch("/hello");
+                    setStore({ message: data.message });
+                    return data;
+                } catch (error) {
+                    console.log("Error loading message from backend", error);
+                }
+            },
+            changeColor: (index, color) => {
+                const store = getStore();
+                const demo = store.demo.map((elm, i) => {
+                    if (i === index) elm.background = color;
+                    return elm;
+                });
+                setStore({ demo: demo });
+            },
+            APIfetch: async (endpoint,method="GET",body=null)=>{
+>>>>>>> ce74c73d9e06fa891b0680e171097358d24f2b92
 				let params={method}
 				if (body!=null){
 					params.headers={
@@ -85,12 +137,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!res.ok){
 					console.error(res.statusText)
 					return ({error:res.statusText})
+
 				}
 				let json=res.json()
 				return json
-			}
-		}
-	};
+				
+			},
+			setBooks:async(endpoint,method="GET",body=null)=>{
+				let store=getStore()
+				try {
+					const response=await fetch(store.urlBase+`?q=${endpoint}`)
+					const data=await response.json()
 
+					if(!response.ok){
+						console.log(data)
+					}
+				return data
+				} catch (error) {
+				console.log(error)	
+				}
+			}
+        }
+    };
+};
 
 export default getState;
+
