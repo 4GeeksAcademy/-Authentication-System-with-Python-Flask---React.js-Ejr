@@ -74,7 +74,8 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
                     </div>
                 </div>
 
-                <h1 className="poiret-one-regular mt-5">¡ This is free version !</h1>
+                <h1 className="poiret-one-regular mt-5">Enjoy our exclusive content for 3 days!</h1>
+                <p>After those days your monthly subcription you'll be charged</p>
 
             </form>
         </>
