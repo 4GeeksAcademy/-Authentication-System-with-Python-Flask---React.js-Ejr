@@ -31,7 +31,7 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
         }
         console.log(logged)
         if (logged) {
-            navigate("/")
+            navigate("/sessions")
         } else {
             toast.error("Invalid email or password");
         }
@@ -40,10 +40,10 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
     return (
         <>
             <ToastContainer />
-            <form className="stylebackgroundimg container d-flex mt-5 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
+            <form className="stylebackgroundimg container d-flex  mt-5 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
                 <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
-                    <div className="col-12 col-sm-6 col-lg-4 ">
+                    <div className="col-11 col-sm-6 col-lg-4">
                         <div className="card-body">
                             <div className="mt-5 text-start">
                                 <label htmlFor="exampleInputEmail1" className="form-label mt-3">Your beautiful first name</label>
@@ -63,7 +63,7 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="d-flex flex-column mt-5 align-items-center col-12 col-sm-6 col-lg-4">
+                    <div className="d-flex flex-column mt-5 align-items-center col-11 col-sm-6 col-lg-4">
                         <div className="card-body mt-5 text-start d-flex flex-column justify-content-center my-auto">
                             <label htmlFor="exampleInputPassword1" className="form-label mt-3">A password you would always remember</label>
                             <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
