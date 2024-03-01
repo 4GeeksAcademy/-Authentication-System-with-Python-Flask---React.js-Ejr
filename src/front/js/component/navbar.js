@@ -20,8 +20,8 @@ export const Navbar = () => {
                         <Link to="/">
                             <img src={logo} className="card-img-top" alt="..." style={{ width: "50%" }} />
                         </Link>
-                        <div className="ml-auto mr-0">
-                            <ul className="nav col-lg-12 col-md-12 col-sm-12 d-md-flex">
+                        <div className="ml-auto me-0">
+                            <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-start">
                                 <li className="nav-item">
                                     <Link to="/">
                                         <span className="nav-link active text-light" aria-current="page">
