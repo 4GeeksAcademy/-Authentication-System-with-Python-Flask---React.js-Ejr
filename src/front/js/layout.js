@@ -12,6 +12,7 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
+import { AboutUs } from "./pages/aboutUs";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -39,6 +40,7 @@ const Layout = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
+                        <Route path="/aboutus" element={<AboutUs />} />
                         <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
                         <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} />
                         <Route element={<h1>Not found!</h1>} />
