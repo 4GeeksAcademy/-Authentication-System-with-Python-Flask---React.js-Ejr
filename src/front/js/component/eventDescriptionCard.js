@@ -1,26 +1,33 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const EventDescriptionCard = (props) => {
     const { store, actions } = useContext(Context);
-    
-    const [asist_event, setAsist_event] = useState([])
-    useEffect(() =>{
-            setAsist_event(store.user.id_eventos)
-    },[])
+    // const [asist_event, setAsist_event] = useState([]);
+    const [isJoinedEvent, setIsJoinedEvent] = useState(false);
+
+    useEffect(() => {
+        if (store.user) {
+            setIsJoinedEvent(store.user.id_eventos?.includes(parseInt(props.id_evento)));
+        }
+    }, []);
 
     const fechaString = props.fecha;
-
-    // Convertir la cadena en un objeto de fecha
     const fechaObjeto = new Date(fechaString);
-
-    // Formatear la fecha en el formato corto
     const fechaFormateada = fechaObjeto.toLocaleDateString();
+
+
+
+    const handleInscription = () => {
+        setIsJoinedEvent(store.user.id_eventos?.includes(parseInt(props.id_evento)));
+        actions.inscripcionEvento(props.id_evento)
+        
+        
+    }
+
     return (
         <div className="d-flex  flex-column" style={{ maxWidth: "840px" }}>
-
             <div className="card  ms-5 " style={{ maxWidth: "840px" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
@@ -37,8 +44,10 @@ export const EventDescriptionCard = (props) => {
             </div>
 
             <div className="d-flex justify-content-center mb-3 gap-1" >
-                <div className="p-2 flex-grow-1  ms-5" >
-                    <button type="button" className={asist_event.includes(parseInt(props.id_evento)) ? 'btn btn-primary btn-lg disabled' : 'btn btn-primary btn-lg'}>{asist_event.includes(parseInt(props.id_evento)) ? "Joined this event" : "JOIN EVENT"}</button>
+                <div className="p-2 flex-grow-1  ms-5" >{store.auth ? <button onClick={handleInscription} type="button" className={isJoinedEvent ? 'btn btn-primary btn-lg disabled' : 'btn btn-primary btn-lg'}>
+                    {isJoinedEvent ? "Joined this event" : "JOIN EVENT"}
+                </button> : <button className="btn btn-primary " >loggin</button>}
+
                 </div>
 
                 <div className="p-2">
@@ -57,26 +66,17 @@ export const EventDescriptionCard = (props) => {
                 <div className="p-2">
                     <p>To complete</p>
                 </div>
-
             </div>
 
             <div className="ms-5" >
                 <h3>Description</h3>
                 <p>{props.descripcion}</p>
             </div>
-
-
-
-
-
-
-
         </div>
     );
 }
 
 EventDescriptionCard.propTypes = {
-
     evento: PropTypes.string,
     descripcion: PropTypes.string,
     asistentes: PropTypes.number,

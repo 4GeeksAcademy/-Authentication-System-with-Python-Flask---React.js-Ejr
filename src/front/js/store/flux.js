@@ -134,7 +134,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            
+
 
             obtenerEventosCategoria: async (category) => {
                 try {
@@ -148,13 +148,53 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 
+            inscripcionEvento: async (id) => {
+                let token = localStorage.getItem("token")
+
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/asistir/${id}`, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+
+                    });
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+
+                        getActions().obtenerOneEvento(id)
+                        getActions().obtenerInfoUsuario()
+
+                        // localStorage.setItem("token", data.access_token);
+                        // setStore({ auth: true })
+                        console.log(data);
+                        return true;
+                    }
+                    else {
+                        toast.error(data.msg)
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+
+
+
+
+
+
+
+
         }
     }
 };
 
 
-        
-    
+
+
 
 
 export default getState;
