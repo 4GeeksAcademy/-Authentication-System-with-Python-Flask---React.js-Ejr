@@ -17,6 +17,7 @@
     background-color: #D7A8EB;
     border-color: #D7A8EB;
     color: #FFFBF5;
+    text-decoration: none;
 }
 .to-be-hoved:hover {
     background-color: #B50DFD;
@@ -24,14 +25,28 @@
     color: #F7EFE5;
     transition: all .6s ease;
     -webkit-transition: all .6s ease;
+    text-decoration: none;
 }
-
 .btn-400 {
     background-color: #B50DFD;
     border-color: #B50DFD;
     color: #F7EFE5;
+    text-decoration: none;
+}
+.nav-tabs > .nav-item > .nav-link {
+    background-color: #B50DFD;
+    border-color: #B50DFD;
+    color: #F7EFE5;
+    text-decoration: none;
+}
+.nav-tabs > .nav-item > .active {
+    background-color: #D7A8EB;
+    border-color: #D7A8EB;
+    color: #FFFBF5;
+    text-decoration: none;
 }
 
+/* ICONOS */
 .icono-400 {
     color: #B50DFD;
 }

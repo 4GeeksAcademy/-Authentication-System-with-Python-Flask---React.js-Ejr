@@ -100,9 +100,9 @@ def user_detail():
                 "email": user_data["email"],
                 "hobbies": list(map(lambda item: item["name"], user_data["hobbies"])),
                 "num_eventos_asistido": len(user_data["eventos"]),
-                "eventos_asistido": list(map(lambda item: item["evento"], user_data["eventos"])),
+                "eventos_asistido": list(map(lambda item: item, eventos)),
                 "num_eventos_creados" : Evento.query.filter_by(user_creador = user_data["id"]).count(),
-                "eventos_creados": list(map(lambda item: item["evento"], eventos))
+                "eventos_creados": list(map(lambda item: item, eventos))
                 } 
     
     response_body = {
