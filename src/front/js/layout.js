@@ -5,12 +5,17 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
+import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
+import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
 import injectContext from "./store/appContext";
-import { Login } from "./pages/login";
+import { Login } from "./pages/login"; 
+import { Sessions } from "./pages/classes";
+import { Teachers } from "./pages/teachers";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+// import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
 
 //create your first component
 const Layout = () => {
@@ -28,8 +33,14 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        {/* <Route element={<SingleMeditationDetails />} path="/meditation/:theid" /> */}
+                        {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
+                        <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/sessions" element={<Sessions />} />
+                        <Route path="/theteachers" element={<Teachers />} />
+                        <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
+                        <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
