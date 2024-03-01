@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import logo from "../../img/logoOCEANOM.png"
+import logo from "../../img/logoOCEANOM.png";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -27,8 +27,6 @@ export const Home = () => {
 		<div className="container-fluid d-flex p-0 col-lg-12 col-md-12 col-sm-12">
 			<img id="imagenFija" src="https://res.cloudinary.com/dx23woi99/image/upload/v1708541359/IMG_5841_tkuzrc.jpg" className="card-img-top p-0" alt="Imagen Fija" style={{width: "100%"}}/>
 			<div className="card-img-overlay">
-				
-					
 				
 					<div className="d-flex justify-content-end">
 						<button type="button" className="btn btn-outline-light p-2 mx-2">Contact Us</button>
