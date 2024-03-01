@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
 import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
 import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
+import { SessionYogaDetails } from "./pages/SessionYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
@@ -41,8 +42,9 @@ const Layout = () => {
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
                         <Route path="/aboutus" element={<AboutUs />} />
-                        <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
-                        <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} />
+                        {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
+                        {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
+                        <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
