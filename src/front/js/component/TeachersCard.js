@@ -16,12 +16,14 @@ export const TeachersCard = (props) => {
 
 
 	return (
-		<div className="card mx-0 pl-0" style={{ width: "10rem", height: "13rem" }}>
+		<div className="card mx-0 pl-0" style={{ width: "14rem", height: "28rem" }}>
 			
 				<img src={props.url_imagen} id="styleImageCard" className="card-img-top" alt="..." />
 			
-			<div className="card-body">
-				<h5 className="card-title">`{props.name} + " " + {props.last_name}</h5>
+			<div className="card-body mt-1">
+				<h5 className="card-title">{props.name} {props.last_name}</h5>
+				<hr className="border" />
+
 				<span className="card-title"><strong>Currently living in:</strong>  {props.residence}</span><br></br>
                 <span className="card-title"><strong>Biography:</strong>  {props.biografy}</span><br></br>
 				 
@@ -43,7 +45,7 @@ TeachersCard.propTypes = {
 	id: PropTypes.number,
 	name: PropTypes.string,
 	last_name: PropTypes.string,
-	biography: PropTypes.string,
+	biografy: PropTypes.string,
 	residence: PropTypes.string,
 	url_imagen: PropTypes.string
 };

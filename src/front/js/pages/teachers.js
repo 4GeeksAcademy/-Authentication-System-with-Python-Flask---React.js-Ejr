@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { TeachersCard } from "../component/TeachersCard.js";
+import "../../styles/teachers.css";
 
 
 import imagenClases from "../../img/fotonavacerrada.jpeg"
@@ -18,7 +19,7 @@ export const Teachers = () => {
 
 
 	useEffect(() => {
-		actions.getAllSessions();
+		actions.getAllTeachers();
 	}, []);
 
 	console.log(store.jivamuktiYoga)
@@ -27,36 +28,30 @@ export const Teachers = () => {
 	return (
    
 
-		<div className="container-fluid">
-            <div className="justify-content-center">   
-                <h1>The Teachers</h1>
-            </div> 
-            
-		
-
-			<div className="container-fluid d-flex flex-row">
-				<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
-					{store.teachers.map(item => (
-						<li className="col-4 px-0 w-auto my-2" key={item.id}>
-							<TeachersCard 
-								id={item.id}
-								name={item.name}
-								instructor={item.instructor}
-								asana_focus={item.asana_focus}
-								level={item.level}
-								url_imagen={item.url_imagen}
-						    />
-						</li>
-						))}
-				</ul>
+		<div className="container-fluid mt-5 pt-5 text-center">
+		<div className="d-flex justify-content-center mt-5 pt-5">   
+			<h1 className="poiret-one-regular">The Teachers</h1>
+		</div> 
+	
+		<div className="container mt-2 d-flex justify-content-center">
+			<div className="row">
+				{store.teachers.map(item => (
+					<div className="col-lg-4 col-md-4 col-sm-4 mb-4 mt-2" key={item.id}>
+						<TeachersCard 
+							id={item.id}
+							name={item.name}
+							last_name={item.last_name}
+							residence={item.residence}
+							biografy={item.biografy}
+							url_imagen={item.url_imagen}
+						/>
+					</div>
+				))}
 			</div>
-			
-			
-
-			
 		</div>
+	</div>
 
-		
+	
 		
 	);
  };

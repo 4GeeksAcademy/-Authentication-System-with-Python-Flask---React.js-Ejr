@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			rocketYoga: [],
 			ashtangaYoga: [],
 			meditation: [],
-			harmonium: []
+			harmonium: [],
+			teachers: []
 			// demo: [
 			// 	{
 			// 		title: "FIRST",
@@ -157,15 +158,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getAllMeditation: async () => 	{
+			getAllTeachers: async () => 	{
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "/api/meditation");
+					const response = await fetch(process.env.BACKEND_URL + "/api/theteachers");
 					console.log(response.status);
 			
 					if (response.status === 200) {
 						const data = await response.json();
 						console.log(data);
-						setStore({ meditation: data.meditation_sessions });
+						setStore({ teachers: data.theteachers });
 						return true;
 					} else {
 						throw new Error("Error fetching Hatha yoga data");
@@ -177,25 +178,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			getAllHarmonium: async () => 	{
-				try {
-					const response = await fetch(process.env.BACKEND_URL + "/api/hathayoga");
-					console.log(response.status);
 			
-					if (response.status === 200) {
-						const data = await response.json();
-						console.log(data);
-						setStore({ hathaYoga: data.hatha_sessions });
-						return true;
-					} else {
-						throw new Error("Error fetching Hatha yoga data");
-					}
-				} catch (error) {
-					console.error(error);
-					return false;
-				}
-
-			},
    
 	    }	
 	}	
