@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
+import { Profile } from "./pages/Profile";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { EventDescription } from "./pages/eventDescription";
@@ -33,7 +33,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<EventDescription />} path="/description/:theid" />
                         <Route path="events/:category" element={<Events />} />
                         <Route element={<h1>Not found!</h1>} />
