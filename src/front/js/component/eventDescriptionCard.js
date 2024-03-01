@@ -21,7 +21,7 @@ export const EventDescriptionCard = (props) => {
             <div className="card  ms-5 " style={{ maxWidth: "840px" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src="https://th.bing.com/th/id/OIP.vQVUl7GC7E0qEtKUgS1m4AHaEo?rs=1&pid=ImgDetMain" className="img-fluid rounded-start" alt="..." />
+                        <img src={props.img} className="img-fluid rounded-start" alt="..." />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
@@ -78,5 +78,6 @@ EventDescriptionCard.propTypes = {
     descripcion: PropTypes.string,
     asistentes: PropTypes.number,
     maximo: PropTypes.number,
-    fecha: PropTypes.string
+    fecha: PropTypes.string,
+    img: PropTypes.string
 }

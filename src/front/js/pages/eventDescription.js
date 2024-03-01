@@ -23,7 +23,7 @@ export const EventDescription = props => {
 	return (
 		<div>
 
-			<EventDescriptionCard evento={store.eventInfo?.result?.evento} descripcion={store.eventInfo?.result?.descripcion} asistentes={store.eventInfo?.asistentes} maximo={store.eventInfo?.result?.max_personas} fecha={store.eventInfo?.result?.fecha}/>
+			<EventDescriptionCard img={store.eventInfo?.result?.url_img} evento={store.eventInfo?.result?.evento} descripcion={store.eventInfo?.result?.descripcion} asistentes={store.eventInfo?.asistentes} maximo={store.eventInfo?.result?.max_personas} fecha={store.eventInfo?.result?.fecha}/>
 
 
 		</div>

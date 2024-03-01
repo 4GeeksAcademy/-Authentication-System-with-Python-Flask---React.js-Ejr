@@ -16,6 +16,7 @@ export const Home = () => {
 	const navigate = useNavigate();
 	useEffect(() => { // // cada vez que quiera ejecutar una funcion ni bien se cargue el componente debo hacer un useEffect, React dice esto va asi! siempre antes del return
 		actions.obtenerEventos()
+		
 	}, [])
 
 	async function handleClickAll() {
@@ -35,25 +36,24 @@ export const Home = () => {
 		navigate('/events/OCIO');
 	}
 
-
 	return (
 		<div className="container">
 			<Jumbotron />
-			<div className="4-botones d-flex justify-content-center row m-1 mt-5">
+			<div className="d-flex justify-content-center row m-1 mt-5">
 				<button type="button" onClick={handleClickAll} className="btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2">EVENTS</button>
 				<button type="button" onClick={handleClickDeporte} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Sports</button>
 				<button type="button" onClick={handleClickArte} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Art</button>
 				<button type="button" onClick={handleClickOcio} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Leisure</button>
 			</div>
 
-			<div className="Don't forget to see the events row py-5">
+			<div className="row py-5">
 				<p className="fs-2 col-sm-12 col-md-6 col-lg-5"><strong>Don't forget to see the events!</strong></p>
 			</div>
 			<div className="row m-1">
 				<ul className="list-group d-flex flex-row overflow-auto mb-5" id="contact-list">
 					{store.events.map((item) => (
 						<li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2" key={item.id}>
-							<Card evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} id={item.id} />
+							<Card img={item.url_img} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} id={item.id} />
 						</li>
 					))}
 				</ul>
