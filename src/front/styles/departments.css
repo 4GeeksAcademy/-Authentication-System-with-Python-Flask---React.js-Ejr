@@ -1,25 +1,19 @@
 .footer {
     flex-shrink: 0;
     bottom: 0;
-    background-color: 
+    background-color:
     #29627D;
- 
   }
-
   .navbar {
-    background-color: 
+    background-color:
     #29627D;
     justify-content: flex-start;
   }
-
-
-
 .navbar-logo {
     width: 100px;
     height: 100px;
     padding-right: 1%;
 }
-
 .jumbotron{
     display: flex;
     text-align: center;
@@ -30,22 +24,23 @@
     width: 200px;
     border: 2px black solid;
 }
-
 .history {
     font-size: 8px;
     border: 2px black solid;
     margin: 5px;
-    width: 100%;   
+    width: 100%;
 }
-
 .history-title {
     text-decoration: underline;
     margin: 25px;
 }
-
 .art-Poster {
     width: 100%;
     border: 10px solid black;
     padding: 75px 50px;
     margin-top: 10px;
+}
+.row1 {
+    background-image: url(https://cdn.pixabay.com/photo/2017/02/15/20/33/floral-2069810_1280.png);
+    margin: 100px;
 }
