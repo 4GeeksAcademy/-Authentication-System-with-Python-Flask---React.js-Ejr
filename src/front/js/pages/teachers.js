@@ -36,7 +36,7 @@ export const Teachers = () => {
 		<div className="container mt-2 d-flex justify-content-center">
 			<div className="row">
 				{store.teachers.map(item => (
-					<div className="col-lg-4 col-md-4 col-sm-4 mb-4 mt-2" key={item.id}>
+					<div className="col-lg-4 col-md-4 col-sm-4 mb-4 mt-2 me-3" key={item.id}>
 						<TeachersCard 
 							id={item.id}
 							name={item.name}
@@ -47,7 +47,14 @@ export const Teachers = () => {
 						/>
 					</div>
 				))}
+
+			<div className="col-lg-12 col-md-12 col-sm-12 mb-4 mt-2">
+				<Link to="/sessions">
+				<button className="btn btn-outline-secondary">Back to home</button>
+				</Link>
 			</div>
+			</div>
+			
 		</div>
 	</div>
 

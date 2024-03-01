@@ -169,7 +169,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ teachers: data.theteachers });
 						return true;
 					} else {
-						throw new Error("Error fetching Hatha yoga data");
+						throw new Error("Error fetching teachers data");
 					}
 				} catch (error) {
 					console.error(error);
