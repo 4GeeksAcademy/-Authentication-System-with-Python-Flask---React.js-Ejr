@@ -13,6 +13,7 @@ import {Footer} from "./component/footer"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CreateEventForm from "./pages/createEventForm";
 
 //create your first component
 const Layout = () => {
@@ -31,6 +32,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<CreateEventForm />} path="/createEventForm" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

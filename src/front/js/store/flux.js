@@ -119,7 +119,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                     return false;
                 }
-            }
+            },
+
+            getCategories: async() => {
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + "/api/categories");
+            
+                    let data = await response.json();
+                    
+                    if (response.ok) {
+                        setStore({categories: data.result})
+                        return true ; // Registro exitoso
+                    } else {
+                        toast.error(data.msg)
+                        return false;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }
+            },
 
             
 
