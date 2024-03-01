@@ -162,6 +162,108 @@ def get_yogatype():
     return jsonify(response_body), 200
 
 
+#Endpoint para que aparezca un typo de yoga con su id yoga especifico
+@api.route('/<string:yogatype>/<int:yogatype_id>', methods=['GET'])
+# Si devuelve ok aparecerá en la consola de vscode el numero de id.
+def get_one_yoga_session(yogatype, yogatype_id):
+    if (yogatype == 'jivamuktiyoga'):
+        jivamukti_query = Jivamukti_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+    
+        if jivamukti_query is None:
+            return jsonify({
+                "msg": "Jivamukti session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "jivamukti_session": jivamukti_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'vinyasayoga'):
+        vinyasa_query = Vinyasa_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        if vinyasa_query is None:
+            return jsonify({
+                "msg": "vinyasa session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'rocketyoga'):
+        rocket_query = Rocket_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if rocket_query is None:
+            return jsonify({
+                "msg": "rocket session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "rocket_session": rocket_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200 
+
+    elif (yogatype == 'ashtangayoga'):
+        ashtanga_query = Ashtanga_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if ashtanga_query is None:
+            return jsonify({
+                "msg": "ashtanga session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "ashtanga_session": ashtanga_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200 
+
+    elif (yogatype == 'hathagayoga'):
+        hatha_query = Hatha_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if hatha_query is None:
+            return jsonify({
+                "msg": "hatha session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "hatha_session": hatha_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'meditation'):
+        meditation_query = Meditation.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if meditation_query is None:
+            return jsonify({
+                "msg": "meditation session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "meditation_session": meditation_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'harmonium'):
+        harmonium_query = Harmonium.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if harmonium_query is None:
+            return jsonify({
+                "msg": "harmonium session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "harmonium_session": harmonium_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200 
+
 #endpoint the teachers
 @api.route('/theteachers', methods=['GET'])
 def get_theteachers():
@@ -179,6 +281,7 @@ def get_theteachers():
         "theteachers": theteachers_query
     }
     return jsonify(response_body), 200
+
 
 # @api.route('/jivamuktiyoga', methods=['GET'])
 # def get_jivamukti():    

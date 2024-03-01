@@ -15,7 +15,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			ashtangaYoga: [],
 			meditation: [],
 			harmonium: [],
-			teachers: []
+			teachers: [],
+			singleYogaSessionInfo: {},
+
 			// demo: [
 			// 	{
 			// 		title: "FIRST",
@@ -89,42 +91,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getAllSessions: async () => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + "/api/yogatype");
-                    console.log(response.status);
-                    if (response.status === 200) {
-                        const data = await response.json();
-                        console.log(data);
-                        setStore({ jivamuktiYoga: data.jivamukti_sessions, vinyasaYoga: data.vinyasa_sessions, hathaYoga: data.hatha_sessions, ashtangaYoga: data.ashtanga_sessions, rocketYoga: data.rocket_sessions, meditation: data.meditation_sessions, harmonium: data.harmonium_sessions});
-                        return true;
-                    } else {
-                        throw new Error("Error fetching Yoga sessions");
-                    }
-                } catch (error) {
-                    console.error(error);
-                    return false;
-                }
-            },
-
-			getOneJivamukti: async (jivamuktiId) => {
 				try {
-					let response = await fetch(process.env.BACKEND_URL + `/api/jivamuktiyoga/${jivamuktiId}`, {
+					const response = await fetch(process.env.BACKEND_URL + "/api/yogatype");
+					console.log(response.status);
+					if (response.status === 200) {
+						const data = await response.json();
+						console.log(data);
+						setStore({ jivamuktiYoga: data.jivamukti_sessions, vinyasaYoga: data.vinyasa_sessions, hathaYoga: data.hatha_sessions, ashtangaYoga: data.ashtanga_sessions, rocketYoga: data.rocket_sessions, meditation: data.meditation_sessions, harmonium: data.harmonium_sessions });
+						return true;
+					} else {
+						throw new Error("Error fetching Yoga sessions");
+					}
+				} catch (error) {
+					console.error(error);
+					return false;
+				}
+			},
+
+			getOneYogatypeSession: async (yogatype, yogatype_Id) => {
+				try {
+					let response = await fetch(process.env.BACKEND_URL + `/api/${yogatype}/${yogatype_Id}`, {
 						method: "GET",
 					});
+					let data = await response.json();
+					console.log(yogatype, yogatype_Id);
 					console.log(response.status);
-
+					console.log(data)
 					if (response.status === 200) {
-						let data = await response.json();
-						console.log(data);
-						const jivamuktiSessionInfoWithId = {
-							...data.jivamukti_session,
-							jivamuktiId: jivamuktiId,
-						};
-						console.log("Updated session info:", jivamuktiSessionInfoWithId)
-						setStore({ jivamuktiSessionInfo: jivamuktiSessionInfoWithId });
+						if (yogatype == 'jivamuktiyoga') {
+							setStore({ singleYogaSessionInfo: data.jivamukti_session })
+						}
+						else if (yogatype == 'vinyasayoga') {
+							setStore({ singleYogaSessionInfo: data.vinyasa_session })
+						}
+						else if (yogatype == 'rocketyoga') {
+							setStore({ singleYogaSessionInfo: data.rocket_session })
+						}
+						else if (yogatype == 'ashtangayoga') {
+							setStore({ singleYogaSessionInfo: data.rocket_session })
+						}
+						else if (yogatype == 'hathayoga') {
+							setStore({ singleYogaSessionInfo: data.hatha_session })
+						}
+						else if (yogatype == 'meditation') {
+							setStore({ singleYogaSessionInfo: data.meditation_session })
+						}
+						else if (yogatype == 'harmonium') {
+							setStore({ singleYogaSessionInfo: data.harmonium_session })
+						}
 						return true
 					} else {
-						throw new Error("Error fetching Jivamukti yoga info");
+						throw new Error("Error fetching session yoga info");
 					}
 				} catch (err) {
 					console.error(err);
@@ -132,37 +149,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getOneVinyasa: async (vinyasaId) => {
-				try {
-					let response = await fetch(process.env.BACKEND_URL + `/api/vinyasayoga/${vinyasaId}`, {
-						method: "GET",
-					});
-					console.log(response.status);
-
-					if (response.status === 200) {
-						let data = await response.json();
-						console.log(data);
-						const vinyasaSessionInfoWithId = {
-							...data.vinyasa_session,
-							vinyasaId: vinyasaId,
-						};
-						console.log("Updated session info:", vinyasaSessionInfoWithId)
-						setStore({ vinyasaSessionInfo: vinyasaSessionInfoWithId });
-						return true
-					} else {
-						throw new Error("Error fetching Vinyasa yoga info");
-					}
-				} catch (err) {
-					console.error(err);
-					return false
-				}
-			},
-
-			getAllTeachers: async () => 	{
+			getAllTeachers: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/theteachers");
 					console.log(response.status);
-			
+
 					if (response.status === 200) {
 						const data = await response.json();
 						console.log(data);
@@ -178,10 +169,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			
-   
-	    }	
-	}	
+
+
+		}
+	}
 };
 
 export default getState;
