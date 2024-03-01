@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Evento, Categoria
+from api.models import db, User , Evento, eventos, Asistencia
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
@@ -93,6 +93,7 @@ def user_detail():
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email = current_user).first()
     user_data = user_query.serialize()
+    print(user_data["eventos"])
     eventos = [evento.serialize() for evento in Evento.query.filter_by(user_creador=user_data["id"]).all()]
     user_info ={"id": user_data["id"],
                 "name": user_data["name"],
@@ -160,12 +161,14 @@ def validate_token():
 
 # GET Mostrar detalles Eventos
 @api.route('/events/<string:category>', methods=['GET'])
+
 def event_category(category):
+    date = datetime.now()
     if category=="ALL":
-        event_query = Evento.query.all()
+        event_query = Evento.query.filter(Evento.fecha > date).order_by(Evento.fecha).all()
         event_data = [event.serialize() for event in event_query]
     else: 
-        event_query = Evento.query.filter(Evento.categoria.has(categoria=category)).all()
+        event_query = Evento.query.filter(Evento.categoria.has(categoria=category), Evento.fecha > date).all()
         event_data = list(map(lambda item: item.serialize(), event_query))
         
     response_body = {
@@ -174,15 +177,3 @@ def event_category(category):
     }
 
     return jsonify(response_body), 200
-
-@api.route('/categories', methods=['GET'])
-def get_all_categories():
-    categorias=Categoria.query.all()
-    categorias=[categoria.serialize() for categoria in categorias]
-    response_body = {
-        "msg": "categorias",
-        "result": categorias,
-    }
-
-    return jsonify(response_body), 200
-
