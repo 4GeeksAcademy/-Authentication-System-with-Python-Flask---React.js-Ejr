@@ -104,10 +104,10 @@ export const Profile = () => {
                     <div className="collapse multi-collapse" id="multiCollapseExample1">
                     <div className="card card-body border-0">
                         <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                            {store.user.eventos_asistido ? (
-                            store.user.eventos_asistido?.map((item) => (
-                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
-                                <SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
+                            {store.user?.eventos_asistido ? (
+                            store.user?.eventos_asistido?.map((item, id) => (
+                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={id}>
+                                    <SimpleCard id={item.id} evento={item}  />
                                 </li>
                             ))
                             ) : (
@@ -117,23 +117,22 @@ export const Profile = () => {
                     </div>
                     </div>
                 </div>
-            <div className="col col-12">
-                <div className="collapse multi-collapse" id="multiCollapseExample2">
-                    <div className="card card-body border-0">
-                        <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                            {store.user.eventos_creados ? (
-                            store.user.eventos_creados?.map((item) => (
-                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
-                                <SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
-                                </li>
-                            ))
-                            ) : (
-                            "Sin eventos creados"
-                            )}
-                        </ul>
+                <div className="col col-12">
+                    <div className="collapse multi-collapse" id="multiCollapseExample2">
+                        <div className="card card-body border-0">
+                            <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
+                                {store.user?.eventos_creados ? (store.user?.eventos_creados?.map((item, id) => (
+                                    <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={id}>
+                                    < SimpleCard id={item.id} evento={item} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
+                                    </li>
+                                ))
+                                ) : (
+                                "Sin eventos creados"
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     );
