@@ -128,19 +128,14 @@ def create_event():
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email = current_user).first()
     user_data = user_query.serialize()
-
-
     id_categoria = request.json["categoria"]
     categoria_query = Categoria.query.filter_by(id=int(id_categoria)).first()
-
     if not categoria_query:
         return jsonify({"msg": "Categoría no encontrada"}), 404
     # categoria_data = categoria_query.serialize()
-
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
     if not all(field in request.json for field in required_fields):
         return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
-
     try:
         new_event = Evento(
             evento=request.json['evento'],
@@ -158,7 +153,6 @@ def create_event():
         db.session.commit()
     except Exception as e:
         return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
-
     return jsonify({"msg": "Evento creado exitosamente"}), 201
 
 
@@ -206,7 +200,21 @@ def eventAsist(id):
         return jsonify("Asistencia a Evento correcta"), 201
     
     return jsonify("Usuario no encontrado"), 400
+
+
+@api.route('/categories', methods=['GET'])
+def get_categories():
+    categories = Categoria.query.all()
+    categories = [categoria.serialize() for categoria in categories]
     
+    response_body = {
+        "msg": "ok",
+        "results": categories
+    }
+
+    return jsonify(response_body), 200
+
+
 #RECUPERACION CONTRASEÑA OLVIDADA 
 @api.route("/forgot_password", methods=["POST"])
 def forgot_password():

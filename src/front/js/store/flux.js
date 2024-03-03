@@ -221,7 +221,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 } catch (error) {
                     toast.error(error);
-                    console.log(error);                    
+                    console.log(error);
                     return false;
                 }
             },
@@ -241,7 +241,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 let token = localStorage.getItem("token");
                 try {
                     const response = await fetch(process.env.BACKEND_URL + "/api/event", {
-                        mode: "no-cors",
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
