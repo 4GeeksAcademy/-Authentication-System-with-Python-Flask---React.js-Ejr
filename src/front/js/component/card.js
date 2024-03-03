@@ -6,11 +6,14 @@ import { Context } from "../store/appContext";
 import { useNavigate } from 'react-router-dom';
 
 // 2. Crear el componente JSX
+
 export const Card = (props) => {
+    const { actions, store } = useContext(Context)
     const fechaString = props.fecha;
     const navigate = useNavigate();
-    function handleClick() {
-
+    async function handleClick() {
+        await actions.obtenerInfoUsuario()
+        await actions.obtenerOneEvento(props.id)
         navigate(`/description/${props.id}`);
     }
 

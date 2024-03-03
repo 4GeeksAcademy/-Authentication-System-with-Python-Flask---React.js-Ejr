@@ -54,7 +54,7 @@ export const Events = () => {
 				<ul className="list-group d-flex flex-row  mb-5" id="contact-list">
 					{store.events.map((item) => (
 						<li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2" key={item.id}>
-							<Card img={item.url_img} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha}/>
+							<Card evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} id={item.id} />
 						</li>
 				))}
 				</ul>

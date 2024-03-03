@@ -6,25 +6,23 @@ import "../../styles/home.css";
 
 export const Profile = () => {
 
-  
+
     const { store, actions } = useContext(Context)
     const [diasDiferencia, setDiasDiferencia] = useState(0);
 
-
-    useEffect(() =>{
-        async function ini (){
+    useEffect(() => {
+        async function ini() {
             await actions.obtenerInfoUsuario();
             console.log(store.user);
             diferenciaDias()
         }
         ini()
-        
-    },[])
+
+    }, [])
 
 
     function diferenciaDias() {
-        // if (store.eventos_asistido && store.eventos_asistido.length>0){
-        let fechaUltima = store.user.eventos_asistido[0].fecha;
+        let fechaUltima = store.user.eventos_asistido[0]?.fecha;
 
         // Convertir la cadena en un objeto de fecha
         const fechaObjeto = new Date(fechaUltima);
@@ -67,6 +65,9 @@ export const Profile = () => {
         // }
     }
 
+
+
+    console.log(store.user.eventos_creados);
     return (
         <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row justify-content-center align-items-center my-5">

@@ -5,7 +5,7 @@ import { SignUpModal } from "./SignUpModal";
 
 export const LoginModal = props => {
 
-	const {store, actions} = useContext(Context);
+	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [modalRegisterState, setModalRegisterState] = useState({
@@ -13,9 +13,11 @@ export const LoginModal = props => {
 		showModalUpdate: false,
 	});
 
-	const handleLogIn = async() => {
+	const handleLogIn = async (e) => {
+		// e.preventDefault()
+		
 		await actions.login(email, password);
-		if(store.auth){
+		if (store.auth) {
 			props.onClose()
 		}
 	}
@@ -29,7 +31,7 @@ export const LoginModal = props => {
 
 	function updateModalRegistrerState() {
 		setModalRegisterState({ showModalUpdate: true });
-	  }
+	}
 
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
@@ -66,7 +68,7 @@ export const LoginModal = props => {
 									required
 								/>
 							</div>
-							<button type="submit"  className="btn-300 to-be-hoved form-control w-50">
+							<button type="submit" className="btn-300 to-be-hoved form-control w-50">
 								¡ENTRA!
 							</button>
 						</form>
@@ -74,7 +76,7 @@ export const LoginModal = props => {
 
 				</div>
 			</div>
-		<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })}/>
-	</div>
+			<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })} />
+		</div>
 	);
 };

@@ -45,7 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const res = await fetch(process.env.BACKEND_URL + `/api/events/${id}`)
                     const data = await res.json()
-
                     setStore({ eventInfo: data })
 
                 } catch (error) {
@@ -98,6 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         });
                         if (response.status >= 200 && response.status < 300) {
                             await setStore({ auth: true })
+                            await getActions().obtenerInfoUsuario()
                         }
                         else {
                             setStore({ auth: false });
@@ -140,7 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            
+
 
             obtenerEventosCategoria: async (category) => {
                 try {
@@ -163,16 +163,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                 )
                 const data = await res.json();
                 return(data.secure_url)
-            }
+            },
             
+
+            inscripcionEvento: async (id) => {
+                let token = localStorage.getItem("token")
+
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/asistir/${id}`, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+
+                    });
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+
+                        await getActions().obtenerOneEvento(id)
+                        await getActions().obtenerInfoUsuario()
+
+                        // localStorage.setItem("token", data.access_token);
+                        // setStore({ auth: true })
+                        console.log(data);
+                        return true;
+                    }
+                    else {
+                        toast.error(data.msg)
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+
+
 
         }
     }
 };
 
 
-        
-    
+
+
 
 
 export default getState;
