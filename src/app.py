@@ -5,6 +5,7 @@ import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
+from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
@@ -13,8 +14,6 @@ from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
 from flask_mail import Mail #IMPORTAR LA FUNCION Mail() de flask_mail
-
-# from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -54,6 +53,9 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+
+# Allow CORS requests to this API
+CORS(app)
 
 # add the admin
 setup_admin(app)
