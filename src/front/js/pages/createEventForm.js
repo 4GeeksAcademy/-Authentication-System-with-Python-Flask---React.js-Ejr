@@ -3,65 +3,69 @@ import { Context } from '../store/appContext';
 
 
 function CreateEventForm() {
-  const {store, actions } = useContext(Context)
-  useEffect(()=> {
-    actions.getCategories()
+  const { actions, store } = useContext(Context);
 
-  },[])
+  useEffect(() => {
+    actions.getCategories();
+  }, [actions]);
+
   const [formData, setFormData] = useState({
-    title: '',
-    eventType: '',
-    date: '',
-    time: '',
-    duration: '',
-    picture: '',
-    description: '',
-    location: ''
+    evento: '',
+    ciudad: '',
+    ubicacion: '',
+    descripcion: '',
+    fecha: '',
+    precio: '',
+    max_personas: '',
+    categoria: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prevState => ({
+      ...prevState,
       [name]: value
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can perform further validation here
-
-    // You can now use the formData object as needed, for example, sending it to a server via AJAX
     console.log(formData);
+    await actions.crearEvento(formData);
   };
 
   return (
-    <div>
+    <div className='row'>
       <h2>Create Event</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title:</label>
-        <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} required /><br />
+      <form className='col-sm-12 col-md-6 col-lg-3' onSubmit={handleSubmit}>
+        <label htmlFor="evento">Evento: </label>
+        <input type="text" name='evento' value={formData.evento} onChange={handleChange} required /><br />
 
-        <label htmlFor="eventType">Type of Event:</label>
-        <input type="text" id="eventType" name="eventType" value={formData.eventType} onChange={handleChange} /><br />
+        <label htmlFor="ciudad">Ciudad: </label>
+        <input type="text" name='ciudad' value={formData.ciudad} onChange={handleChange} /><br required/>
 
-        <label htmlFor="date">Date:</label>
-        <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required /><br />
+        <label htmlFor="ubicacion">Ubicacion: </label>
+        <input type="text" name='ubicacion' value={formData.ubicacion} onChange={handleChange} required/>
 
-        <label htmlFor="time">Time:</label>
-        <input type="time" id="time" name="time" value={formData.time} onChange={handleChange} required /><br />
+        <label htmlFor="descripcion">Descripcion: </label>
+        <input type="text" name='descripcion' value={formData.descripcion} onChange={handleChange} required /><br />
 
-        <label htmlFor="duration">Duration (hours):</label>
-        <input type="number" id="duration" name="duration" min="1" value={formData.duration} onChange={handleChange} required /><br />
+        <label htmlFor="fecha">Fecha: </label>
+        <input type="date" name='fecha' value={formData.fecha} onChange={handleChange} required /><br />
 
-        <label htmlFor="picture">Picture:</label>
-        <input type="file" id="picture" name="picture" value={formData.picture} onChange={handleChange} /><br />
+        <label htmlFor="precio">Precio: </label>
+        <input type="text"  name='precio' value={formData.precio} onChange={handleChange}required/><br />
 
-        <label htmlFor="description">Description:</label>
-        <textarea id="description" name="description" rows="4" cols="50" value={formData.description} onChange={handleChange} required ></textarea><br />
+        <label htmlFor="max_personas">Max personas: </label>
+        <input type="text" name='max_personas' value={formData.max_personas} onChange={handleChange} required/><br />
 
-        <label htmlFor="location">Location:</label>
-        <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required /><br />
+        <label htmlFor="categoria">Categoria: </label>
+        {/* <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required /><br /> */}
+        <select class="form-select"  name='categoria' value={formData.categoria} onChange={handleChange} aria-label="Default select example">
+          <option selected>Open this select menu</option>
+          {store.categories?.map((el,i) => <option key={i} value={el.id}>{el.categoria}</option> )}
+          
+        </select>
 
         <input type="submit" value="Create Event" />
       </form>

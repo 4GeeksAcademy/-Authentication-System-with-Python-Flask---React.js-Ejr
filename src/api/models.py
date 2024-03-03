@@ -108,6 +108,7 @@ class Evento(db.Model):
             "precio":self.precio,
             "fecha": self.fecha,
             "max_personas": self.max_personas,
+            "categoria": self.id_categoria,
             # do not serialize the password, its a security breach
         }
 
