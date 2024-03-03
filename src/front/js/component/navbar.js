@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { LoginModal } from "./LoginModal";
 import { SignUpModal } from "./SignUpModal";
 import Logo from "../../img/logo.png";
-import ProfilePicture from "../../img/profile-picture.jpg";
 import { useNavigate } from 'react-router-dom';
 export const Navbar = () => {
 
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
-  const [loggedNavbar, setLoggedNavbar] = useState(false);
   const [modalState, setModalState] = useState({
     showModal: false,
     showModalUpdate: false,
   });
+  const [userInfo, setUserInfo] = useState(null)
 
   async function handleClickHome() {
     await actions.obtenerEventos()
     navigate('/');
   }
 
-  function handleClickProfile() {
+  async function handleClickProfile() {
+    await actions.obtenerInfoUsuario();
     navigate('/profile');
   }
 
@@ -35,16 +34,19 @@ export const Navbar = () => {
 
   function logOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("email");
+    localStorage.removeItem("id");
     store.auth = false;
+    store.infoUser = []
     navigate("/")
   }
 
   useEffect(() => {
     if (store.auth) {
-      actions.obtenerInfoUsuario();
-    }
-  }, [store.auth]);
 
+    }
+  }, []);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white">
       <div className="container d-flex justify-content-between">
@@ -59,7 +61,7 @@ export const Navbar = () => {
               <button className="btn bg-transparent d-flex flex-row dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i className="fa fa-3x fa-user me-1 icono-300"></i>
                 <div className="d-flex align-self-end">
-                  <h4 className="icono-400">{store.user.name}</h4>
+                  <h4 className="icono-400">{localStorage.getItem("user")}</h4>
                 </div>
               </button>
               <ul className="dropdown-menu border-0 dropdown-menu-end dropdown-menu-start">

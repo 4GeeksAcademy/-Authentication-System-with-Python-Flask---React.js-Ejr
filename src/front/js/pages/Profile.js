@@ -6,11 +6,23 @@ import "../../styles/home.css";
 
 export const Profile = () => {
 
+
     const { store, actions } = useContext(Context)
     const [diasDiferencia, setDiasDiferencia] = useState(0);
 
+    useEffect(() => {
+        async function ini() {
+            await actions.obtenerInfoUsuario();
+            console.log(store.user);
+            diferenciaDias()
+        }
+        ini()
+
+    }, [])
+
+
     function diferenciaDias() {
-        let fechaUltima = store.user.eventos_asistido[0].fecha;
+        let fechaUltima = store.user.eventos_asistido[0]?.fecha;
 
         // Convertir la cadena en un objeto de fecha
         const fechaObjeto = new Date(fechaUltima);
@@ -52,11 +64,9 @@ export const Profile = () => {
         setDiasDiferencia(diferencia);
     }
 
-    useEffect(() => {
-        actions.obtenerInfoUsuario();
-        diferenciaDias();
-    }, [])
 
+
+    console.log(store.user.eventos_creados);
     return (
         <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row justify-content-center align-items-center my-5">
@@ -96,20 +106,20 @@ export const Profile = () => {
             <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="joined" role="tabpanel" aria-labelledby="joined-tab">
                     <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                        {store.user.eventos_creados.map((item) => (
+                        {store.user.eventos_creados ? (store.user.eventos_creados.map((item) => (
                             <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
                                 <SimpleCard evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
                             </li>
-                        ))}
+                        ))) : "Sin eventos creados"}
                     </ul>
                 </div>
                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                        {store.user.eventos_asistido.map((item) => (
+                        {store.user.eventos_asistido ? (store.user.eventos_asistido.map((item) => (
                             <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
                                 <SimpleCard evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
                             </li>
-                        ))}
+                        ))) : "Sin eventos asistidos"}
                     </ul>
                 </div>
             </div>

@@ -45,8 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const res = await fetch(process.env.BACKEND_URL + `/api/events/${id}`)
                     const data = await res.json()
-                    console.log(data);
-
                     setStore({ eventInfo: data })
 
                 } catch (error) {
@@ -67,11 +65,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                             "password": password
                         })
                     });
+                    console.log(response.status);
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         localStorage.setItem("token", data.access_token);
-                        setStore({ auth: true })
-                        return true;
+                        localStorage.setItem("user", data.user.name);
+                        localStorage.setItem("email", data.user.email);
+                        localStorage.setItem("id", data.user.id);
+                        await setStore({ auth: true })
                     }
                     else {
                         toast.error(data.msg)
@@ -79,7 +80,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 } catch (error) {
                     console.log(error);
-                    return false;
                 }
             },
 
@@ -96,11 +96,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                             }
                         });
                         if (response.status >= 200 && response.status < 300) {
-                            setStore({ auth: true })
+                            await setStore({ auth: true })
+                            await getActions().obtenerInfoUsuario()
                         }
                         else {
                             setStore({ auth: false });
                             localStorage.removeItem("token");
+                            localStorage.removeItem("user");
+                            localStorage.removeItem("email");
+                            localStorage.removeItem("id");
                         }
                     } catch (error) {
                         console.log(error);
@@ -136,7 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            
+
 
             obtenerEventosCategoria: async (category) => {
                 try {
@@ -150,13 +154,48 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 
+            inscripcionEvento: async (id) => {
+                let token = localStorage.getItem("token")
+
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/asistir/${id}`, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+
+                    });
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+
+                        await getActions().obtenerOneEvento(id)
+                        await getActions().obtenerInfoUsuario()
+
+                        // localStorage.setItem("token", data.access_token);
+                        // setStore({ auth: true })
+                        console.log(data);
+                        return true;
+                    }
+                    else {
+                        toast.error(data.msg)
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+
+
+
         }
     }
 };
 
 
-        
-    
+
+
 
 
 export default getState;
