@@ -5,9 +5,6 @@ import { Context } from "../store/appContext";
 
 export const EventDescriptionCard = (props) => {
 
-    console.log(props.data);
-
-
     const fechaString = props.fecha;
 
     // Convertir la cadena en un objeto de fecha

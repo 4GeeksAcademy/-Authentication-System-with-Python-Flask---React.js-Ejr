@@ -51,7 +51,7 @@ const Layout = () => {
                         pauseOnHover
                         theme="dark"
                     />
-                </ScrollToTop>
+                </ScrollToTop> 
             </BrowserRouter>
         </div>
     );

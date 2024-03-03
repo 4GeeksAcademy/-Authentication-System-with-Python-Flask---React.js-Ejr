@@ -13,16 +13,19 @@ export const LoginModal = props => {
 		showModalUpdate: false,
 	});
 
-	const handleLogIn = async(e) => {
-		let log = await actions.login(email, password);
-		if(log){
+	const handleLogIn = async() => {
+		await actions.login(email, password);
+		if(store.auth){
 			props.onClose()
 		}
-		else{
+	}
+
+	useEffect(() => {
+		return () => {
 			setEmail("")
 			setPassword("")
-		}
-	}
+		};
+	}, []);
 
 	function updateModalRegistrerState() {
 		setModalRegisterState({ showModalUpdate: true });
@@ -31,15 +34,13 @@ export const LoginModal = props => {
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
 			<div className="modal-dialog" role="document">
-
 				<div className="modal-content">
-
 					<div className="modal-header bg-100 d-flex flex-column px-5">
 						<div className="d-flex flex-row justify-content-end w-100">
 							<i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
 						</div>
 						<h4 className="modal-title">Inicia sesión</h4>
-						<h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6>
+						{/* <h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6> */}
 					</div>
 
 					<div className="modal-body w-100 px-5">
@@ -65,13 +66,6 @@ export const LoginModal = props => {
 									required
 								/>
 							</div>
-	
-							{/* <div className="form-group d-flex flex-row justify-content-start w-100">
-								<input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-								<label className="form-check-label" for="flexCheckDefault">
-								Mantener sesión iniciada
-								</label>
-							</div> */}
 							<button type="submit"  className="btn-300 to-be-hoved form-control w-50">
 								¡ENTRA!
 							</button>
@@ -80,26 +74,7 @@ export const LoginModal = props => {
 
 				</div>
 			</div>
-			<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })}/>
-		</div>
+		<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })}/>
+	</div>
 	);
 };
-/**
- * Define the data-types for
- * your component's properties
- **/
-// LoginModal.propTypes = {
-// 	history: PropTypes.object,
-// 	onClose: PropTypes.func,
-// 	show: PropTypes.bool,
-// 	id: PropTypes.number
-// };
-
-// /**
-//  * Define the default values for
-//  * your component's properties
-//  **/
-// LoginModal.defaultProps = {
-// 	show: false,
-// 	onClose: null
-// };

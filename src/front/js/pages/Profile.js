@@ -6,10 +6,24 @@ import "../../styles/home.css";
 
 export const Profile = () => {
 
+  
     const { store, actions } = useContext(Context)
     const [diasDiferencia, setDiasDiferencia] = useState(0);
 
+
+    useEffect(() =>{
+        async function ini (){
+            await actions.obtenerInfoUsuario();
+            console.log(store.user);
+            diferenciaDias()
+        }
+        ini()
+        
+    },[])
+
+
     function diferenciaDias() {
+        // if (store.eventos_asistido && store.eventos_asistido.length>0){
         let fechaUltima = store.user.eventos_asistido[0].fecha;
 
         // Convertir la cadena en un objeto de fecha
@@ -50,18 +64,14 @@ export const Profile = () => {
 
         var diferencia = diferenciaEnDias(fecha2, fecha1);
         setDiasDiferencia(diferencia);
+        // }
     }
-
-    useEffect(() => {
-        actions.obtenerInfoUsuario();
-        diferenciaDias();
-    }, [])
 
     return (
         <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row justify-content-center align-items-center my-5">
                 <div className="col-6 d-flex flex-row justify-content-center align-items-center ">
-                    <img className="col-4 img-fluid" src={ProfilePicture} />
+                    <img className="col-4 img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" />
                     <div>
                         <ul className="col-8 list-group">
                             <h2>{store.user.name}</h2>
@@ -77,41 +87,52 @@ export const Profile = () => {
             </div>
             <div className="d-flex flex-row justify-content-between align-items-center w-75 my-5">
                 <div className="col-6 text-center">
-                    <h3>HAS CREADO {store.user.num_eventos_asistido} EVENTOS</h3>
+                    <h3>HAS CREADO {store.user.num_eventos_creados} EVENTOS</h3>
                 </div>
                 <div className="col-6 text-center">
-                    <h3>HAS ASISTIDO A {store.user.num_eventos_asistido} EVENTOS</h3>
+                    <h3>HAS ASISTIDO A {store.user.num_eventos_asistido ?  store.user.num_eventos_asistido : "0"} EVENTOS</h3>
                 </div>
             </div>
-            <div className=" my-5">
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
-                    <li className="nav-item" role="presentation">
-                        <button className="nav-link btn-400 active p-3" id="joined-tab" data-bs-toggle="tab" data-bs-target="#joined" type="button" role="tab" aria-controls="joined" aria-selected="true">Próximos eventos a los que asistir</button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <button className="nav-link btn-400 p-3" id="created-tab" data-bs-toggle="tab" data-bs-target="#created" type="button" role="tab" aria-controls="created" aria-selected="false">Tus eventos creados</button>
-                    </li>
-                </ul>
+            
+            <p className="d-inline-flex gap-1">
+                <a className="btn btn-400 active p-3" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Próximos eventos a los que asistir</a>
+                <button className="btn btn-400 active p-3" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Tus eventos creados</button>
+            </p>
+            <div className="row d-flex- flex-row flex-nowrap">
+                <div className="col col-12">
+                    <div className="collapse multi-collapse" id="multiCollapseExample1">
+                    <div className="card card-body border-0">
+                        <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
+                            {store.user.eventos_asistido ? (
+                            store.user.eventos_asistido?.map((item) => (
+                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
+                                <SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
+                                </li>
+                            ))
+                            ) : (
+                            "Sin eventos asistidos"
+                            )}
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            <div className="col col-12">
+                <div className="collapse multi-collapse" id="multiCollapseExample2">
+                <div className="card card-body border-0">
+                    <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
+                        {store.user.eventos_creados ? (
+                        store.user.eventos_creados?.map((item) => (
+                            <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
+                            <SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
+                            </li>
+                        ))
+                        ) : (
+                        "Sin eventos creados"
+                        )}
+                    </ul>
+                </div>
+                </div>
             </div>
-            <div className="tab-content" id="myTabContent">
-                <div className="tab-pane fade show active" id="joined" role="tabpanel" aria-labelledby="joined-tab">
-                    <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                        {store.user.eventos_creados.map((item) => (
-                            <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
-                                <SimpleCard evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                        {store.user.eventos_asistido.map((item) => (
-                            <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
-                                <SimpleCard evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
             </div>
         </div>
     );

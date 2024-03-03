@@ -11,14 +11,7 @@ export const EventDescription = props => {
 
 	useEffect(() => {
 		actions.obtenerOneEvento(params.theid)
-
-
 	}, [])
-	console.log(store.eventInfo);
-
-
-
-
 
 	return (
 		<div>

@@ -28,7 +28,14 @@ def login():
     if email != user_query.email or password != user_query.password:
         return jsonify({"msg": "Bad email or password"}), 401
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify({
+        "access_token": access_token,
+        "user": {
+            "id": user_query.id,
+            "email": user_query.email,
+            "name": user_query.name
+        }
+    })
 
 
 
@@ -100,7 +107,7 @@ def user_detail():
                 "email": user_data["email"],
                 "hobbies": list(map(lambda item: item["name"], user_data["hobbies"])),
                 "num_eventos_asistido": len(user_data["eventos"]),
-                "eventos_asistido": list(map(lambda item: item, eventos)),
+                "eventos_asistido": list(map(lambda item: item, user_data["eventos"])),
                 "num_eventos_creados" : Evento.query.filter_by(user_creador = user_data["id"]).count(),
                 "eventos_creados": list(map(lambda item: item, eventos))
                 } 
