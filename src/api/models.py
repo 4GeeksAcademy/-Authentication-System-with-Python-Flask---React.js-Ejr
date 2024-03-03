@@ -97,7 +97,8 @@ class Evento(db.Model):
         return self.evento
     def serialize(self):
         query_result = db.session.query(eventos).filter_by(evento_id=self.id).all()
-        print(query_result)
+       
+
         # print(list(map(lambda item: item.serialize(), query_result)))
         return {
             "id": self.id,

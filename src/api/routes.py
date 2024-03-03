@@ -28,8 +28,14 @@ def login():
     if email != user_query.email or password != user_query.password:
         return jsonify({"msg": "Bad email or password"}), 401
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
-
+    return jsonify({
+        "access_token": access_token,
+        "user": {
+            "id": user_query.id,
+            "email": user_query.email,
+            "name": user_query.name
+        }
+    })
 
 
 # GET Mostrar todos los eventos proximos
@@ -86,7 +92,6 @@ def event(id):
     return jsonify(response_body), 200
 
 # GET User information
-
 @api.route('/user/details', methods=['GET'])
 @jwt_required()
 def user_detail():
@@ -103,13 +108,11 @@ def user_detail():
                 "eventos_asistido": list(map(lambda item: item["evento"], user_data["eventos"])),
                 "num_eventos_creados" : Evento.query.filter_by(user_creador = user_data["id"]).count(),
                 "eventos_creados": list(map(lambda item: item["evento"], eventos))
-                } 
-    
+                }
     response_body = {
         "msg": "ok",
         "details": user_info
     }
-
     return jsonify(response_body), 200
 
 ##########post para evento #############
