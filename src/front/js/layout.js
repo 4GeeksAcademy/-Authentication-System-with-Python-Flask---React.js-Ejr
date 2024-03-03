@@ -14,6 +14,7 @@ import { Footer } from "./component/footer"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CreateEventForm from "./pages/createEventForm";
 import { Events } from "./pages/events";
 import { Cloudinary } from "./pages/cloudinary";
 
@@ -33,6 +34,9 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        {/* <Route element={<Demo />} path="/demo" /> */}
+                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<CreateEventForm />} path="/createEventForm" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EventDescription />} path="/description/:theid" />
                         <Route path="events/:category" element={<Events />} />

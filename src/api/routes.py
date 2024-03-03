@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Evento, eventos, Asistencia, Categoria
+from api.models import db, User , Evento, eventos, Asistencia, Categoria, Categoria
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
@@ -117,21 +117,25 @@ def user_detail():
 
 ##########post para evento #############
 
-
 @api.route('/event', methods=['POST'])
 @jwt_required()
 def create_event():
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email = current_user).first()
     user_data = user_query.serialize()
-    categoria = request.json["categoria"]
-    categoria_query = Categoria.query.filter_by(categoria = categoria).first()
-    categoria_data = categoria_query.serialize()
+
+
+    id_categoria = request.json["categoria"]
+    categoria_query = Categoria.query.filter_by(id=int(id_categoria)).first()
+
+    if not categoria_query:
+        return jsonify({"msg": "Categoría no encontrada"}), 404
+    # categoria_data = categoria_query.serialize()
+
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
     if not all(field in request.json for field in required_fields):
         return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
 
-   
     try:
         new_event = Evento(
             evento=request.json['evento'],
@@ -141,9 +145,8 @@ def create_event():
             fecha=request.json['fecha'],
             precio=request.json['precio'],
             max_personas=request.json['max_personas'],
-            id_categoria=categoria_data["id"],
+            id_categoria=categoria_query.id, 
             user_creador=user_data["id"]
-        
         )
         db.session.add(new_event)
         db.session.commit()
@@ -151,6 +154,7 @@ def create_event():
         return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
 
     return jsonify({"msg": "Evento creado exitosamente"}), 201
+
 
 
 @api.route('/validate_token', methods=['GET'])
@@ -181,17 +185,15 @@ def event_category(category):
 
     return jsonify(response_body), 200
 
-@api.route('/asistir/<int:id>', methods=['POST'])
-@jwt_required()
-def eventAsist(id):
-    current_user = get_jwt_identity()
-    user_query = User.query.filter_by(email = current_user).first()
-    user_data = user_query.serialize()
-    if (user_data["id"]):
-        new_asist = Asistencia(user_id= user_data["id"], evento_id= id)
-        db.session.add(new_asist)
-        db.session.commit()
-        return jsonify("Asistencia a Evento correcta"), 201
+
+@api.route('/categories', methods=['GET'])
+def get_categories():
+    categories = Categoria.query.all()
+    categories = [categoria.serialize() for categoria in categories]
     
-    return jsonify("Usuario no encontrado"), 400
-    
+    response_body = {
+        "msg": "ok",
+        "results": categories
+    }
+
+    return jsonify(response_body), 200
