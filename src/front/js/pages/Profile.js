@@ -13,7 +13,6 @@ export const Profile = () => {
     useEffect(() => {
         async function ini() {
             await actions.obtenerInfoUsuario();
-            console.log(store.user);
             diferenciaDias()
         }
         ini()
@@ -65,9 +64,6 @@ export const Profile = () => {
         // }
     }
 
-
-
-    console.log(store.user.eventos_creados);
     return (
         <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row justify-content-center align-items-center my-5">
@@ -106,8 +102,8 @@ export const Profile = () => {
                         <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
                             {store.user?.eventos_asistido ? (
                             store.user?.eventos_asistido?.map((item, id) => (
-                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={id}>
-                                    <SimpleCard id={item.id} evento={item}  />
+                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
+                                    < SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
                                 </li>
                             ))
                             ) : (
@@ -122,8 +118,8 @@ export const Profile = () => {
                         <div className="card card-body border-0">
                             <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
                                 {store.user?.eventos_creados ? (store.user?.eventos_creados?.map((item, id) => (
-                                    <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={id}>
-                                    < SimpleCard id={item.id} evento={item} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
+                                    <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
+                                    < SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
                                     </li>
                                 ))
                                 ) : (

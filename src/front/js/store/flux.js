@@ -65,7 +65,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                             "password": password
                         })
                     });
-                    console.log(response.status);
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         localStorage.setItem("token", data.access_token);
