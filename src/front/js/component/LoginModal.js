@@ -42,7 +42,7 @@ export const LoginModal = props => {
 							<i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
 						</div>
 						<h4 className="modal-title">Inicia sesión</h4>
-						<h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6>
+						{/* <h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6> */}
 					</div>
 
 					<div className="modal-body w-100 px-5">

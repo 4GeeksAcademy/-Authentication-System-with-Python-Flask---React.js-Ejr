@@ -44,7 +44,6 @@ export const Navbar = () => {
 
   useEffect(() => {
     if (store.auth) {
-
     }
   }, []);
   return (

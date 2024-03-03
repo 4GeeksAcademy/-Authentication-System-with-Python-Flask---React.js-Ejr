@@ -15,6 +15,7 @@ import { Footer } from "./component/footer"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Events } from "./pages/events";
+import { Cloudinary } from "./pages/cloudinary";
 
 //create your first component
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                    {/* <Cloudinary/> */}
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
@@ -49,7 +51,7 @@ const Layout = () => {
                         pauseOnHover
                         theme="dark"
                     />
-                </ScrollToTop>
+                </ScrollToTop> 
             </BrowserRouter>
         </div>
     );

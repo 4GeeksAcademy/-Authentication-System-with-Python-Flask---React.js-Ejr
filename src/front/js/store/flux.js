@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             auth: false,
             events: [],
             user: [],
-            eventInfo: null
+            eventInfo: null, 
         },
 
         actions: {
@@ -65,7 +65,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                             "password": password
                         })
                     });
-                    console.log(response.status);
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         localStorage.setItem("token", data.access_token);
@@ -153,6 +152,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            uploadImage: async (body) =>{
+                const res = await fetch(
+                    "https://api.cloudinary.com/v1_1/dx9hfbqam/image/upload", 
+                    {
+                        method: "POST",
+                        body: body
+                    }
+                )
+                const data = await res.json();
+                return(data.secure_url)
+            },
+            
 
             inscripcionEvento: async (id) => {
                 let token = localStorage.getItem("token")

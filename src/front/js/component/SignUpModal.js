@@ -77,10 +77,4 @@ export const SignUpModal = props => {
     );
 };
 
-SignUpModal.propTypes = {
-    
-};
 
-SignUpModal.defaultProps = {
-    
-};
