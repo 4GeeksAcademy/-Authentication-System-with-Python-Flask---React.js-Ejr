@@ -136,7 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            
+
 
             obtenerEventosCategoria: async (category) => {
                 try {
@@ -149,14 +149,44 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            sendEmail: async (email) => {
+
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + "/api/forgotpassword", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "email": email
+                        })
+                    });
+                    let data = await response.json();
+                    if (response.status === 200) {
+
+                        // Do something with the profile data if needed
+                        console.log("Usuario autenticado correctamente:", data);
+
+                        return true;
+                    } else {
+                        console.log(data);
+                        return false;
+                    }
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+
+            }
+
 
         }
     }
 };
 
 
-        
-    
+
+
 
 
 export default getState;
