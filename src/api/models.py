@@ -111,6 +111,7 @@ class Evento(db.Model):
             "url_img":self.url_img,
             "fecha": self.fecha,
             "max_personas": self.max_personas,
+            "categoria": self.id_categoria,
             # do not serialize the password, its a security breach
         }
 

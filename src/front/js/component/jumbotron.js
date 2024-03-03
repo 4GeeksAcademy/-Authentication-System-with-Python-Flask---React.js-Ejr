@@ -8,8 +8,8 @@ function Jumbotron() {
     const navigate = useNavigate();
 
         async function handleClickCreatEvent() {
-            await actions.obtenerEventosCategoria("DEPORTE")	
-            navigate('/events/DEPORTE');
+            // await actions.obtenerEventosCategoria("DEPORTE")	
+            navigate('/createEventForm');
             }
         async function handleClickRegister() {
         await actions.obtenerEventosCategoria("ARTE")	

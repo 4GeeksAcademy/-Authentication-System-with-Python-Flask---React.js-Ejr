@@ -225,7 +225,55 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 					return false;
 				}
-			}
+			},
+
+            getCategories: async () => {
+                try {
+                    const res = await fetch(process.env.BACKEND_URL + `/api/categories`)
+                    const data = await res.json()
+                    setStore({ categories: data.results })
+
+                } catch (error) {
+                    console.error(error)
+                }
+            },
+
+            crearEvento: async (datosEvento) => {
+                let token = localStorage.getItem("token");
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/api/event", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`,
+                        },
+                        body: JSON.stringify(datosEvento),
+                    });
+                    const data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Actualizar el estado con el resultado exitoso
+                        setStore((prevState) => ({
+                            ...prevState,
+                            events: [...prevState.events, data], // asumiendo que 'data' contiene el evento creado
+                            feedback: { type: 'success', message: 'Evento creado exitosamente' },
+                        }));
+                        getActions().obtenerEventos(); // Actualiza la lista de eventos
+                    } else {
+                        // Actualizar el estado con el error
+                        setStore((prevState) => ({
+                            ...prevState,
+                            feedback: { type: 'error', message: `Error al crear el evento: ${data.msg}` },
+                        }));
+                    }
+                } catch (error) {
+                    console.error("Error al crear el evento:", error);
+                    setStore((prevState) => ({
+                        ...prevState,
+                        feedback: { type: 'error', message: 'Error al crear el evento. Inténtalo de nuevo.' },
+                    }));
+                }
+            },
+
 
 
 
