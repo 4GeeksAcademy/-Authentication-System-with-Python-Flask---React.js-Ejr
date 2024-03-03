@@ -10,14 +10,9 @@ export const EventDescription = () => {
 	useEffect(() => {
 		async function getEvents() {
 			await actions.obtenerInfoUsuario()
-
 			await actions.obtenerOneEvento(params.theid)
-			
-
-
 		}
 		getEvents()
-
 	}, [])
 
 	return (

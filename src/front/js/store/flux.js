@@ -98,8 +98,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if (response.status >= 200 && response.status < 300) {
                             await setStore({ auth: true })
                             await getActions().obtenerInfoUsuario()
-                            console.log(getStore().eventInfo);
-                            console.log(getStore().user);
                         }
                         else {
                             setStore({ auth: false });

@@ -6,7 +6,7 @@ import { SignUpModal } from "./SignUpModal";
 export const EventDescriptionCard = (props) => {
     const { store, actions } = useContext(Context);
     // const [asist_event, setAsist_event] = useState([]);
-    const [isJoinedEvent, setIsJoinedEvent] = useState(store.user.id_eventos?.includes(parseInt(props.id_evento)));
+    const [isJoinedEvent, setIsJoinedEvent] = useState(false);
     console.log(isJoinedEvent);
     const [modalState, setModalState] = useState({
         showModal: false,
@@ -16,38 +16,18 @@ export const EventDescriptionCard = (props) => {
         setModalState({ showModal: true });
     }
     useEffect(() => {
-
         const fetchUser = async () => {
             await actions.obtenerInfoUsuario()
-            setIsJoinedEvent(store.user.id_eventos?.includes(parseInt(props.id_evento)));
-
-
         }
-
-        if (store.auth) {
-            fetchUser()
-            console.log("entramos");
-        }
-
-
-
+        fetchUser()
     }, []);
 
     const fechaString = props.fecha;
     const fechaObjeto = new Date(fechaString);
     const fechaFormateada = fechaObjeto.toLocaleDateString();
 
-
-
     const handleInscription = async () => {
-
         await actions.inscripcionEvento(props.id_evento)
-
-
-        setIsJoinedEvent(store.user.id_eventos?.includes(parseInt(props.id_evento)));
-
-
-
     }
 
     return (
@@ -68,8 +48,8 @@ export const EventDescriptionCard = (props) => {
             </div>
 
             <div className="d-flex justify-content-center mb-3 gap-1" >
-                <div className="p-2 flex-grow-1  ms-5" >{store.auth ? <button onClick={handleInscription} type="button" className={isJoinedEvent ? 'btn btn-primary btn-lg disabled' : 'btn btn-primary btn-lg'}>
-                    {isJoinedEvent ? "Joined this event" : "JOIN EVENT"}
+                <div className="p-2 flex-grow-1  ms-5" >{store.auth ? <button onClick={handleInscription} type="button" className={store.user.id_eventos?.includes(parseInt(props.id_evento))  ? 'btn btn-primary btn-lg disabled' : 'btn btn-primary btn-lg'}>
+                    {store.user.id_eventos?.includes(parseInt(props.id_evento)) ? "Joined this event" : "JOIN EVENT"}
                 </button> : <button className="btn btn-primary " onClick={updateModalState}  >loggin</button>}
 
                 </div>
