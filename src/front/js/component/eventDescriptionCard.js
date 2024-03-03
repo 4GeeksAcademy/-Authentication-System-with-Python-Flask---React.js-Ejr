@@ -7,7 +7,7 @@ export const EventDescriptionCard = (props) => {
     const { store, actions } = useContext(Context);
     // const [asist_event, setAsist_event] = useState([]);
     const [isJoinedEvent, setIsJoinedEvent] = useState(false);
-    console.log(isJoinedEvent);
+    
     const [modalState, setModalState] = useState({
         showModal: false,
         showModalUpdate: false,

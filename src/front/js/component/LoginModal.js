@@ -15,7 +15,7 @@ export const LoginModal = props => {
 
 	const handleLogIn = async (e) => {
 		// e.preventDefault()
-		console.log("entramos");
+		
 		await actions.login(email, password);
 		if (store.auth) {
 			props.onClose()
