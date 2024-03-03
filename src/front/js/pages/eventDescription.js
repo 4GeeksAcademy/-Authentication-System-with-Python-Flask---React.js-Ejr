@@ -17,7 +17,7 @@ export const EventDescription = () => {
 
 	return (
 		<div>
-			<EventDescriptionCard id_evento={params.theid} evento={store.eventInfo?.result?.evento} descripcion={store.eventInfo?.result?.descripcion} asistentes={store.eventInfo?.asistentes} maximo={store.eventInfo?.result?.max_personas} fecha={store.eventInfo?.result?.fecha} />
+			<EventDescriptionCard img={store.eventInfo?.result?.url_img} id_evento={params.theid} evento={store.eventInfo?.result?.evento} descripcion={store.eventInfo?.result?.descripcion} asistentes={store.eventInfo?.asistentes} maximo={store.eventInfo?.result?.max_personas} fecha={store.eventInfo?.result?.fecha} />
 		</div>
 	);
 };
