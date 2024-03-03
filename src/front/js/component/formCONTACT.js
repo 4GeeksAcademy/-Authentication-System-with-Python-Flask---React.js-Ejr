@@ -17,29 +17,29 @@ export const FormCONTACT = () => {
 
     const { store, actions } = useContext(Context)
 
-    const [email, setUserEmail] = useState("");
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [message, setMessage] = useState("")
 
     async function handleContact(e) {
         e.preventDefault()
-        console.log(email, password);
-        let logged = await actions.login(email, password);
+        console.log(email, name, message);
+        let logged = await actions.contactus(email, name, message);
         console.log(logged)
-        if (logged) { //true
-            navigate("/");
-        } else {
-            toast.error("Invalid email or password");
-        }
-        // if (email )
+        // if (logged) { //true
+        //     navigate("/");
+        // } else {
+        //     toast.error("Invalid email or password");
+        // }
+       
     }
 
     return (
     
 
-            <form className="stylebackgrounding d-flex flex-column justify-content-center h-100 align-items-center text-secondary p-5 mt-3" >
-                <div className="d-flex col-12 col-sm-6 col-md-8 col-lg-4 mb-5">
-                    
-                    <div className="d-block pr-3 me-5 col-6">
+        <form className="stylebackgrounding col-12 col-lg-12 col-md-12 col-sm-12 d-flex flex-column justify-content-center align-items-center text-secondary pt-5 mt-3" onSubmit={handleContact}>
+            <div className="d-flex col-12 col-sm-12 col-md-6 col-lg-6 mb-5 ms-3">
+                <div className="d-block pr-3 me-5 col-6">
                         <h1 className="poiret-one-regular">Contact Us</h1>
                         <span className="poiret-one-regular">Your well being is our priority. If you have questions, suggestions, or simply want to share your experience, we are here to listen. Connect with us and let us be part of your journey towards inner peace and harmony. </span>
                         <div className="mt-5">
@@ -67,36 +67,27 @@ export const FormCONTACT = () => {
                         </div>
                     </div>
                     
-                    {/* onChange={(e) => setUserEmail(e.target.value)}
-                    onChange={(e) => setPassword(e.target.value)} */}
+    
 
-                <div className="d-block col-6 mt-5">
+                <div className="d-block col-6 col-md-6 col-sm-12 col-lg-6 mt-5">
                     <div className="d-block">
                         <div className="mb-1 text-start">
                             <label className="form-label poiret-one-regular">Email</label>
-                            <input type="email" className="form-control inputEmail" id="exampleInputEmail1" aria-describedby="emailHelp"  />
+                            <input type="email" className="form-control inputEmail" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)} />
                            
                         </div>
                         <div className="mb-1 text-start">
                             <label className="form-label poiret-one-regular">Name</label>
-                            <input type="name" className="form-control inputEmail"  />
+                            <input type="name" className="form-control inputEmail" onChange={(e) => setName(e.target.value)} />
                         </div>
                     </div>
                     <div>
                             <label className="form-label poiret-one-regular">How can we help you?</label>
-                            <input className="form-control inputComment inputEmail" id="exampleInputPassword1" />
+                            <input className="form-control inputComment" id="exampleInputPassword1" onChange={(e) => setMessage(e.target.value)} />
+                            <Link to="/thankyou">
                             <button type="submit" className="btn btn-outline-secondary w-50 mt-3 poiret-one-regular fs-5">Send</button>
+                            </Link>
                     </div>
-
-                   
-
-                        
-                   
-                    {/* <div className="d-flex flex-column justify-content-center">
-                        <p className=" fw-light mb-0 text-decoration-none"><Link to="/singup" className="link-secondary">Don't have an acount?</Link></p>
-                        <p className=" fw-light"><Link to="#" className="link-secondary fw-light mt-0">Forgot password?</Link></p>
-
-                    </div> */}
                 </div>
 
                 </div>

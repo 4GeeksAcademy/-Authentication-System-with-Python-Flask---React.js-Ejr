@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Subscription, Testimony, Session, Instructor, Types_of_session, Jivamukti_yoga, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium
+from .models import db, User, Subscription, Testimony, Session, Contact, Instructor, Types_of_session, Jivamukti_yoga, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -25,6 +25,8 @@ def setup_admin(app):
     admin.add_view(ModelView(Hatha_yoga, db.session))
     admin.add_view(ModelView(Meditation, db.session))
     admin.add_view(ModelView(Harmonium, db.session))
+    admin.add_view(ModelView(Contact, db.session))
+
 
 
 

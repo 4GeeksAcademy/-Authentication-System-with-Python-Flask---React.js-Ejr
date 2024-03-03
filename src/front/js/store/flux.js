@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			harmonium: [],
 			teachers: [],
 			singleYogaSessionInfo: {},
+			contactus: {}
 
 			// demo: [
 			// 	{
@@ -167,6 +168,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 
+			},
+			contactus: async (email, name, message) => {
+				// console.log(email, password);
+				// console.log("funciona")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/contactus", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						// mode: 'cors',
+						body: JSON.stringify({
+							"email": email,
+							"name": name,
+							"message": message
+						})
+					})
+					let data = await response.json()
+					if (response.status === 401) {
+						return false;
+					}
+					localStorage.setItem("token", data.access_token)
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
 			},
 
 

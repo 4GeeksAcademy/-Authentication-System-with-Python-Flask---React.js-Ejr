@@ -29,9 +29,11 @@ export const Home = () => {
 			<div className="card-img-overlay">
 				
 					<div className="d-flex justify-content-end">
-						<button type="button" className="btn btn-outline-light p-2 mx-2">Contact Us</button>
+						<Link to="/contactus">
+							<button type="button" className="btn btn-outline-light btn-lg p-2 mx-2">Contact Us</button>
+						</Link>
 						<Link to="/login">
-						<button type="button" className="btn btn-outline-light btn-lg">Login</button>
+							<button type="button" className="btn btn-outline-light btn-lg">Login</button>
 						</Link>
 					</div>
 		
@@ -47,11 +49,11 @@ export const Home = () => {
 						Any style, at any time.
 						</span>
 					<div className="d-flex align-items-center justify-content-start mt-5">
+						<Link to="/sessions">
 						<button type="button" className={`btn ${styleStartNow} btn-lg text-secondary`} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
-							{/* <Link className={`btn ${styleStartNow}`}> */}
                             	Start Now
-                       	 	{/* </Link> */}
 						</button>
+						</Link>
 					</div>	
 					</div>
 			</div>

@@ -23,7 +23,7 @@ export const Navbar = () => {
                         <div className="ml-auto me-0">
                             <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-start">
                                 <li className="nav-item">
-                                    <Link to="/">
+                                    <Link to="/contactus">
                                         <span className="nav-link active text-light" aria-current="page">
                                             Contact Us
                                         </span>
@@ -35,7 +35,9 @@ export const Navbar = () => {
 									</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <span className="nav-link text-light">Login</span>
+                                    <Link to="/">
+                                    <span className="nav-link text-light">Log In</span>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>

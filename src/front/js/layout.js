@@ -13,8 +13,9 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
-import { AboutUs } from "./pages/aboutus.js";
+import { AboutUs } from "./pages/aboutus";
 import { ContactUs } from "./pages/contactus";
+import { ThankYou } from "./pages/thankyou";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -44,6 +45,7 @@ const Layout = () => {
                         <Route path="/theteachers" element={<Teachers />} />
                         <Route path="/aboutus" element={<AboutUs />} />
                         <Route path="/contactus" element={<ContactUs />} />
+                        <Route path="/thankyou" element={<ThankYou />} />
                         {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
                         {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
                         <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Subscription, Testimony, Session, Instructor, Types_of_session, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium, Jivamukti_yoga
+from api.models import db, User, Subscription, Testimony, Contact, Session, Instructor, Types_of_session, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium, Jivamukti_yoga
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import datetime, timedelta
@@ -81,6 +81,46 @@ def protected():
     current_user = get_jwt_identity()
     info_profile = User.query.filter_by(email=current_user).first()
     return jsonify({"user": info_profile.serialize()}), 200
+
+
+#endpoint para coger los mensajes de la gente que quiere contactarnos
+@api.route("/contactus", methods=["POST"])
+def contact():
+    print("HOLA")
+    request_body = request.json
+   
+    data = request.json
+    
+    email = data.get('email')
+    name = data.get('name')
+    message = data.get('message')
+
+     # Example validation
+    if not email or not name or not message:
+        return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
+ 
+    new_message = Contact(
+        message=message,
+        email=email,
+        name=name
+       
+        )
+    
+
+    print(new_message)
+    # Le decimos que lo agregue y que lo comitee 
+    db.session.add(new_message)
+    db.session.commit()
+
+    # generamos el token de este usuario
+    access_token = create_access_token(identity=new_message.email)
+
+    response_body = {
+        "msg": "the message has been sent",
+        "access_token": access_token
+        }
+    
+    return jsonify(response_body), 200
 
 
 #endpoint para que aparezcan las clases

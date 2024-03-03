@@ -72,6 +72,7 @@ class Testimony(db.Model):
             "description": self.description,
             # do not serialize the password, its a security breach
         }
+    
 
 class Types_of_session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -399,4 +400,23 @@ class Harmonium(db.Model):
             "type": self.type.type, #Para serializar el modelo types_of_session. Si no da error al ser otro modelo
             "instructor": self.instructor.name + ' ' + self.instructor.last_name,
             "url_imagen": self.url_imagen
+        }
+    
+
+class Contact(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String(320), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Contact {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "message": self.message
+            # do not serialize the password, its a security breach
         }
