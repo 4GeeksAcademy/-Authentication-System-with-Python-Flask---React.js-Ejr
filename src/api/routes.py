@@ -145,7 +145,8 @@ def create_event():
             fecha=request.json['fecha'],
             precio=request.json['precio'],
             max_personas=request.json['max_personas'],
-            id_categoria=categoria_query.id, 
+            id_categoria=categoria_query.id,
+            url_img= request.json['url_img'],
             user_creador=user_data["id"]
         )
         db.session.add(new_event)
