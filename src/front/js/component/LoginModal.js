@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";;
 import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
+import { PasswordRecoveryModal } from "./PasswordRecoveryModal";
 
 
 export const LoginModal = props => {
@@ -12,10 +13,14 @@ export const LoginModal = props => {
 		showModal: false,
 		showModalUpdate: false,
 	});
+	const [modalPWRecoveryState, setModalPWRecoveryState] = useState({
+		showPWModal: false,
+		showPWModalUpdate: false,
+	});
 
 	const handleLogIn = async (e) => {
 		// e.preventDefault()
-		
+
 		await actions.login(email, password);
 		if (store.auth) {
 			props.onClose()
@@ -32,6 +37,9 @@ export const LoginModal = props => {
 	function updateModalRegistrerState() {
 		setModalRegisterState({ showModalUpdate: true });
 	}
+	function updateModalPWRecoveryState() {
+		setModalPWRecoveryState({ showPWModalUpdate: true });
+	}
 
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
@@ -42,7 +50,7 @@ export const LoginModal = props => {
 							<i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
 						</div>
 						<h4 className="modal-title">Inicia sesión</h4>
-						{/* <h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6> */}
+						<h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6>
 					</div>
 
 					<div className="modal-body w-100 px-5">
@@ -74,9 +82,14 @@ export const LoginModal = props => {
 						</form>
 					</div>
 
+					<div className="modal-footer bg-100 d-flex flex-column px-5">
+						<h6><a className="text-primary" onClick={updateModalPWRecoveryState}>¿Has olvidado tu contraseña?</a></h6>
+					</div>
+
 				</div>
 			</div>
 			<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })} />
+			<PasswordRecoveryModal show={modalPWRecoveryState.showPWModalUpdate} onClose={() => setModalPWRecoveryState({ showPWModalUpdate: false })} />
 		</div>
 	);
 };

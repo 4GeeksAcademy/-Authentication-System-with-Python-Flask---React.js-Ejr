@@ -1,12 +1,17 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Evento, eventos, Asistencia, Categoria, Categoria
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from api.models import db, User , Evento, eventos, Asistencia, Categoria
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import datetime
+
+from flask_mail import Message #importamos Message() de flask_mail
+import random #importamos ramdom y string para generar una clave aleatoria nueva
+import string
+
 
 api = Blueprint('app', __name__)
 # Allow CORS requests to this API
@@ -123,19 +128,14 @@ def create_event():
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email = current_user).first()
     user_data = user_query.serialize()
-
-
     id_categoria = request.json["categoria"]
     categoria_query = Categoria.query.filter_by(id=int(id_categoria)).first()
-
     if not categoria_query:
         return jsonify({"msg": "Categoría no encontrada"}), 404
     # categoria_data = categoria_query.serialize()
-
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
     if not all(field in request.json for field in required_fields):
         return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
-
     try:
         new_event = Evento(
             evento=request.json['evento'],
@@ -153,7 +153,6 @@ def create_event():
         db.session.commit()
     except Exception as e:
         return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
-
     return jsonify({"msg": "Evento creado exitosamente"}), 201
 
 
@@ -187,6 +186,22 @@ def event_category(category):
     return jsonify(response_body), 200
 
 
+
+@api.route('/asistir/<int:id>', methods=['POST'])
+@jwt_required()
+def eventAsist(id):
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email = current_user).first()
+    user_data = user_query.serialize()
+    if (user_data["id"]):
+        new_asist = Asistencia(user_id= user_data["id"], evento_id= id)
+        db.session.add(new_asist)
+        db.session.commit()
+        return jsonify("Asistencia a Evento correcta"), 201
+    
+    return jsonify("Usuario no encontrado"), 400
+
+
 @api.route('/categories', methods=['GET'])
 def get_categories():
     categories = Categoria.query.all()
@@ -198,3 +213,27 @@ def get_categories():
     }
 
     return jsonify(response_body), 200
+
+
+#RECUPERACION CONTRASEÑA OLVIDADA 
+@api.route("/forgot_password", methods=["POST"])
+def forgot_password():
+    recover_email = request.json['email']
+    recover_password = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8)) #clave aleatoria nueva
+
+
+    if not recover_email:
+        return jsonify({"msg": "Debe ingresar el correo"}), 401
+    
+    #busco si el correo existe en mi base de datos
+    user = User.query.filter_by(email=recover_email).first()
+    if user == None:
+        return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
+    #si existe guardo la nueva contraseña aleatoria
+    user.password = recover_password
+    db.session.commit()
+    #luego se la envio al usuario por correo para que pueda ingresar
+    msg = Message("Hi", recipients=[recover_email])
+    msg.html = f"""<h1>Su nueva contraseña es: {recover_password}</h1>"""
+    current_app.mail.send(msg)
+    return jsonify({"msg": "Su nueva clave ha sido enviada al correo electrónico ingresado"}), 200

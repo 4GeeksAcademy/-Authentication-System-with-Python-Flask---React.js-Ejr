@@ -90,7 +90,7 @@ function CreateEventForm() {
           </div>
           <div className="mb-3">
             <label htmlFor="ciudad" className="form-label">Ciudad:</label>
-            <input type="text" name="ciudad" className="form-control" value={formData.ciudad} onChange={handleChange} />
+            <input type="text" name="ciudad" className="form-control" value={formData.ciudad} onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="ubicacion" className="form-label">Ubicacion:</label>
@@ -114,7 +114,7 @@ function CreateEventForm() {
           </div>
           <div className="mb-3">
             <label htmlFor="categoria" className="form-label">Categoria:</label>
-            <select className="form-select" name="categoria" value={formData.categoria} onChange={handleChange} aria-label="Default select example">
+            <select className="form-select" name="categoria" value={formData.categoria} onChange={handleChange} aria-label="Default select example" required>
               <option value="">Open this select menu</option>
               {store.categories?.map((el, i) => <option key={i} value={el.id}>{el.categoria}</option>)}
             </select>
