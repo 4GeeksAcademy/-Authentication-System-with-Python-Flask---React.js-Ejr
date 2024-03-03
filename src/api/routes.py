@@ -237,3 +237,78 @@ def forgot_password():
     msg.html = f"""<h1>Su nueva contraseña es: {recover_password}</h1>"""
     current_app.mail.send(msg)
     return jsonify({"msg": "Su nueva clave ha sido enviada al correo electrónico ingresado"}), 200
+
+
+# Eliminar evento endpoint
+@api.route('/event/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_event(id):
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email=current_user).first()
+    if not user_query:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
+    event = Evento.query.filter_by(id=id, user_creador=user_query.id).first()
+    if not event:
+        return jsonify({"msg": "Evento no encontrado"}), 404
+
+    db.session.delete(event)
+    db.session.commit()
+    
+    return jsonify({"msg": "Evento eliminado exitosamente"}), 200
+
+
+# Dejar de Asistir a un evento:
+
+@api.route('/asistir/<int:id>', methods=['DELETE'])
+@jwt_required()
+def dejar_de_asistir(id):
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email=current_user).first()
+    if user_query:
+        asistencia = Asistencia.query.filter_by(user_id=user_query.id, evento_id=id).first()
+        if asistencia:
+            db.session.delete(asistencia)
+            db.session.commit()
+            return jsonify({"msg": "Has dejado de asistir al evento exitosamente"}), 200
+        else:
+            return jsonify({"msg": "No estás registrado para este evento"}), 400
+    else:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
+    # Actualizar un evento
+
+@api.route('/event/<int:id>', methods=['PUT'])
+@jwt_required()
+
+def update_event(id):
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email=current_user).first()
+    if not user_query:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
+    event = Evento.query.filter_by(id=id, user_creador=user_query.id).first()
+    if not event:
+        return jsonify({"msg": "Evento no encontrado"}), 404
+
+    data = request.json
+    if 'evento' in data:
+        event.evento = data['evento']
+    if 'descripcion' in data:
+        event.descripcion = data['descripcion']
+    if 'ciudad' in data:
+        event.ciudad = data['ciudad']
+    if 'ubicacion' in data:
+        event.ubicación = data['ubicacion']
+    if 'fecha' in data:
+        event.fecha = data['fecha']
+    if 'precio' in data:
+        event.precio = data['precio']
+    if 'url_img' in data:
+        event.url_img = data['url_img']
+    if 'max_personas' in data:
+        event.max_personas = data['max_personas']
+    
+    db.session.commit()
+    
+    return jsonify({"msg": "Evento actualizado exitosamente"}), 200

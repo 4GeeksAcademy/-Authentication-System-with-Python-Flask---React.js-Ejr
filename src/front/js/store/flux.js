@@ -274,7 +274,85 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 
+            eliminarEvento: async (id) => {
+                let token = localStorage.getItem("token");
+            
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/event/${id}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+            
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Elimina el evento del estado
+                        // setStore(prevState => ({
+                        //     events: prevState.events.filter(event => event.id !== id)
+                        // }));
+                        toast.success("Evento eliminado exitosamente");
+                    } else {
+                        toast.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error al eliminar el evento");
+                }
+            },
+            
+            dejarDeAsistirEvento: async (id) => {
+                let token = localStorage.getItem("token");
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/asistir/${id}`, {
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    let data = await response.json();
+                    if (response.status === 200) {
+                        await getActions().obtenerOneEvento(id);
+                        await getActions().obtenerInfoUsuario();
+                        return true;
+                    } else {
+                        toast.error(data.msg);
+                        return false;
+                    }
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
 
+            actualizarEvento: async (id, newData) => {
+                let token = localStorage.getItem("token");
+            
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/event/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(newData) // Los nuevos datos que quieres actualizar
+                    });
+            
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Actualiza el estado con los nuevos datos del evento
+                        await getActions().obtenerOneEvento(id);
+                        toast.success("Datos del evento actualizados exitosamente");
+                    } else {
+                        toast.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error al actualizar los datos del evento");
+                }
+            }
 
         }
     }
