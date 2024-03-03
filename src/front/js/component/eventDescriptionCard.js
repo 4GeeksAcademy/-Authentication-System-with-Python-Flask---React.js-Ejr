@@ -1,27 +1,41 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import { LoginModal } from "./LoginModal";
+import { SignUpModal } from "./SignUpModal";
 export const EventDescriptionCard = (props) => {
-
-    console.log(props.data);
-
+    const { store, actions } = useContext(Context);
+    // const [asist_event, setAsist_event] = useState([]);
+    const [isJoinedEvent, setIsJoinedEvent] = useState(false);
+    
+    const [modalState, setModalState] = useState({
+        showModal: false,
+        showModalUpdate: false,
+    });
+    function updateModalState() {
+        setModalState({ showModal: true });
+    }
+    useEffect(() => {
+        const fetchUser = async () => {
+            await actions.obtenerInfoUsuario()
+        }
+        fetchUser()
+    }, []);
 
     const fechaString = props.fecha;
-
-    // Convertir la cadena en un objeto de fecha
     const fechaObjeto = new Date(fechaString);
-
-    // Formatear la fecha en el formato corto
     const fechaFormateada = fechaObjeto.toLocaleDateString();
+
+    const handleInscription = async () => {
+        await actions.inscripcionEvento(props.id_evento)
+    }
+
     return (
         <div className="d-flex  flex-column" style={{ maxWidth: "840px" }}>
-
             <div className="card  ms-5 " style={{ maxWidth: "840px" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src="https://th.bing.com/th/id/OIP.vQVUl7GC7E0qEtKUgS1m4AHaEo?rs=1&pid=ImgDetMain" className="img-fluid rounded-start" alt="..." />
+                        <img src={props.img} className="img-fluid rounded-start" alt="..." />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
@@ -34,8 +48,10 @@ export const EventDescriptionCard = (props) => {
             </div>
 
             <div className="d-flex justify-content-center mb-3 gap-1" >
-                <div className="p-2 flex-grow-1  ms-5" >
-                    <button type="button" className="btn btn-primary btn-lg ">JOIN EVENT</button>
+                <div className="p-2 flex-grow-1  ms-5" >{store.auth ? <button onClick={handleInscription} type="button" className={store.user.id_eventos?.includes(parseInt(props.id_evento))  ? 'btn btn-primary btn-lg disabled' : 'btn btn-primary btn-lg'}>
+                    {store.user.id_eventos?.includes(parseInt(props.id_evento)) ? "Joined this event" : "JOIN EVENT"}
+                </button> : <button className="btn btn-primary " onClick={updateModalState}  >loggin</button>}
+
                 </div>
 
                 <div className="p-2">
@@ -54,7 +70,6 @@ export const EventDescriptionCard = (props) => {
                 <div className="p-2">
                     <p>To complete</p>
                 </div>
-
             </div>
 
             <div className="ms-5" >
@@ -62,21 +77,17 @@ export const EventDescriptionCard = (props) => {
                 <p>{props.descripcion}</p>
             </div>
 
-
-
-
-
-
-
+            <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })} />
+            <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })} />
         </div>
     );
 }
 
 EventDescriptionCard.propTypes = {
-
     evento: PropTypes.string,
     descripcion: PropTypes.string,
     asistentes: PropTypes.number,
     maximo: PropTypes.number,
-    fecha: PropTypes.string
+    fecha: PropTypes.string,
+    img: PropTypes.string
 }

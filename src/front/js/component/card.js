@@ -6,14 +6,16 @@ import { Context } from "../store/appContext";
 import { useNavigate } from 'react-router-dom';
 
 // 2. Crear el componente JSX
+
 export const Card = (props) => {
+    const { actions, store } = useContext(Context)
     const fechaString = props.fecha;
     const navigate = useNavigate();
-    function handleClick() {
-
+    async function handleClick() {
+        await actions.obtenerInfoUsuario()
+        await actions.obtenerOneEvento(props.id)
         navigate(`/description/${props.id}`);
     }
-    console.log(props.id);
 
     // Convertir la cadena en un objeto de fecha
     const fechaObjeto = new Date(fechaString);
@@ -22,7 +24,7 @@ export const Card = (props) => {
     const fechaFormateada = fechaObjeto.toLocaleDateString();
     return (
         <div className="card" >
-            <img src="https://i.pinimg.com/564x/e6/c3/4a/e6c34afdf235e76c31344d6a933cae27.jpg" className="card-img-top" alt="..." />
+            <img src={props.img} className="card-img-top" alt="..." style={{height:"200px"}}/>
             <div className="card-body" style={{ height: "100px" }}>
                 <h5 className="card-title">{props.evento}</h5>
                 <p className="card-text">{props.descripcion}</p>
@@ -43,5 +45,6 @@ Card.propTypes = {
     evento: PropTypes.string,
     descripcion: PropTypes.string,
     ciudad: PropTypes.string,
-    fecha: PropTypes.string
+    fecha: PropTypes.string,
+    img: PropTypes.string
 }

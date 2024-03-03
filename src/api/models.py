@@ -53,7 +53,7 @@ class Categoria(db.Model):
     eventos = db.relationship('Evento', backref='categoria', lazy=True)
 
     def __repr__(self):
-        return  self.name
+        return  self.categoria
     def serialize(self):
         return {
             "id": self.id,
@@ -89,6 +89,7 @@ class Evento(db.Model):
     ubicación = db.Column(db.String(250), nullable=True)
     fecha = db.Column(db.DateTime, default=datetime.utcnow)
     precio = db.Column(db.String(250), nullable=True)
+    url_img = db.Column(db.String(250), nullable=True)
     max_personas = db.Column(db.Integer, nullable=True)
     id_categoria = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
     user_creador = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -97,7 +98,8 @@ class Evento(db.Model):
         return self.evento
     def serialize(self):
         query_result = db.session.query(eventos).filter_by(evento_id=self.id).all()
-        print(query_result)
+       
+
         # print(list(map(lambda item: item.serialize(), query_result)))
         return {
             "id": self.id,
@@ -106,6 +108,7 @@ class Evento(db.Model):
             "ciudad": self.ciudad,
             "ubicación":self.ubicación,
             "precio":self.precio,
+            "url_img":self.url_img,
             "fecha": self.fecha,
             "max_personas": self.max_personas,
             "categoria": self.id_categoria,

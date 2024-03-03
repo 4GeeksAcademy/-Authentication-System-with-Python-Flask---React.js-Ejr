@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
+import { Profile } from "./pages/Profile";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { EventDescription } from "./pages/eventDescription";
@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateEventForm from "./pages/createEventForm";
 import { Events } from "./pages/events";
+import { Cloudinary } from "./pages/cloudinary";
 
 //create your first component
 const Layout = () => {
@@ -29,12 +30,14 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                    {/* <Cloudinary/> */}
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<CreateEventForm />} path="/createEventForm" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<EventDescription />} path="/description/:theid" />
                         <Route path="events/:category" element={<Events />} />
                         <Route element={<h1>Not found!</h1>} />
@@ -52,7 +55,7 @@ const Layout = () => {
                         pauseOnHover
                         theme="dark"
                     />
-                </ScrollToTop>
+                </ScrollToTop> 
             </BrowserRouter>
         </div>
     );
