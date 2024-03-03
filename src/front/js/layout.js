@@ -13,10 +13,13 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
+import { Signup } from "./pages/signup";
+
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 // import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
+import { SignupFreeTrial } from "./pages/signupfreetrial";
 
 //create your first component
 const Layout = () => {
@@ -43,6 +46,9 @@ const Layout = () => {
                         {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
                         {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
                         <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/signup/freetrial" element={<SignupFreeTrial />} />
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
