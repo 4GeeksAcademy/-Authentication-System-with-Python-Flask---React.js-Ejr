@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             auth: false,
             events: [],
             user: [],
-            eventInfo: null
+            eventInfo: null, 
         },
 
         actions: {
@@ -45,8 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const res = await fetch(process.env.BACKEND_URL + `/api/events/${id}`)
                     const data = await res.json()
-                    console.log(data);
-
                     setStore({ eventInfo: data })
 
                 } catch (error) {
@@ -70,8 +68,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         localStorage.setItem("token", data.access_token);
-                        setStore({ auth: true })
-                        return true;
+                        localStorage.setItem("user", data.user.name);
+                        localStorage.setItem("email", data.user.email);
+                        localStorage.setItem("id", data.user.id);
+                        await setStore({ auth: true })
                     }
                     else {
                         toast.error(data.msg)
@@ -79,7 +79,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 } catch (error) {
                     console.log(error);
-                    return false;
                 }
             },
 
@@ -96,11 +95,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                             }
                         });
                         if (response.status >= 200 && response.status < 300) {
-                            setStore({ auth: true })
+                            await setStore({ auth: true })
+                            await getActions().obtenerInfoUsuario()
                         }
                         else {
                             setStore({ auth: false });
                             localStorage.removeItem("token");
+                            localStorage.removeItem("user");
+                            localStorage.removeItem("email");
+                            localStorage.removeItem("id");
                         }
                     } catch (error) {
                         console.log(error);
@@ -149,35 +152,81 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            sendEmail: async (email) => {
+            uploadImage: async (body) =>{
+                const res = await fetch(
+                    "https://api.cloudinary.com/v1_1/dx9hfbqam/image/upload", 
+                    {
+                        method: "POST",
+                        body: body
+                    }
+                )
+                const data = await res.json();
+                return(data.secure_url)
+            },
+            
+
+            inscripcionEvento: async (id) => {
+                let token = localStorage.getItem("token")
 
                 try {
-                    let response = await fetch(process.env.BACKEND_URL + "/api/forgotpassword", {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/asistir/${id}`, {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            "email": email
-                        })
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+
                     });
                     let data = await response.json();
-                    if (response.status === 200) {
+                    if (response.status >= 200 && response.status < 300) {
 
-                        // Do something with the profile data if needed
-                        console.log("Usuario autenticado correctamente:", data);
+                        await getActions().obtenerOneEvento(id)
+                        await getActions().obtenerInfoUsuario()
 
-                        return true;
-                    } else {
+                        // localStorage.setItem("token", data.access_token);
+                        // setStore({ auth: true })
                         console.log(data);
-                        return false;
+                        return true;
                     }
+                    else {
+                        toast.error(data.msg)
+                    }
+
                 } catch (error) {
                     console.log(error);
                     return false;
                 }
+            },
 
-            }
+            sendEmail: async (email) => {
+				
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/forgotpassword", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({
+							"email": email
+						})
+					});
+					let data = await response.json();
+					if (response.status === 200) {
+						
+						// Do something with the profile data if needed
+						console.log("Usuario autenticado correctamente:", data);
+
+						return true;
+					} else {
+						console.log(data);
+						return false;
+					}
+				} catch (error) {
+					console.log(error);
+					return false;
+				}
+			}
+
 
 
         }
