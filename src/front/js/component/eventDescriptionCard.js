@@ -14,9 +14,9 @@ export const EventDescriptionCard = (props) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            if(store.auth){
+            if (store.auth) {
                 await actions.obtenerInfoUsuario()
-            }                    
+            }
         }
         fetchUser()
     }, []);
@@ -26,26 +26,26 @@ export const EventDescriptionCard = (props) => {
     const fechaFormateada = fechaObjeto.toLocaleDateString();
 
     const handleInscription = async () => {
-        if(store.user.id_eventos?.includes(parseInt(props.id_evento))){
+        if (store.user.id_eventos?.includes(parseInt(props.id_evento))) {
             await actions.dejarDeAsistirEvento(props.id_evento);
         }
-        else{
+        else {
             await actions.inscripcionEvento(props.id_evento)
-            
+
         }
-        
+
     }
 
     function updateModalState() {
         setModalState({ showModal: true });
-      }
+    }
 
     const handleDelete = async () => {
         await actions.eliminarEvento(props.id_evento);
         navigate('/');
     }
 
-    const updateEvent = async () =>{
+    const updateEvent = async () => {
         await actions.obtenerOneEvento(props.id_evento);
         navigate(`/event/${props.id_evento}`);
     }
@@ -101,7 +101,7 @@ export const EventDescriptionCard = (props) => {
                                 </button>
                             ) : (
                                 <button className="btn btn-400" onClick={updateModalState}>
-                                    loggin
+                                    JOIN US!
                                 </button>
                             )}
                         </div>
