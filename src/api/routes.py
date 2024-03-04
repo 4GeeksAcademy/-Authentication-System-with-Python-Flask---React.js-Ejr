@@ -223,7 +223,7 @@ def forgot_password():
 
 
     if not recover_email:
-        return jsonify({"msg": "Debe ingresar el correo"}), 401
+        return jsonify({"msg": "Debe ingresar el correo"}), 400
     
     #busco si el correo existe en mi base de datos
     user = User.query.filter_by(email=recover_email).first()
@@ -246,11 +246,11 @@ def delete_event(id):
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email=current_user).first()
     if not user_query:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+        return jsonify({"msg": "Usuario no encontrado"}), 400
     
     event = Evento.query.filter_by(id=id, user_creador=user_query.id).first()
     if not event:
-        return jsonify({"msg": "Evento no encontrado"}), 404
+        return jsonify({"msg": "Evento no encontrado"}), 400
 
     db.session.delete(event)
     db.session.commit()
@@ -285,11 +285,11 @@ def update_event(id):
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email=current_user).first()
     if not user_query:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+        return jsonify({"msg": "Usuario no encontrado"}), 400
     
     event = Evento.query.filter_by(id=id, user_creador=user_query.id).first()
     if not event:
-        return jsonify({"msg": "Evento no encontrado"}), 404
+        return jsonify({"msg": "Evento no encontrado"}), 400
 
     data = request.json
     if 'evento' in data:
@@ -320,10 +320,10 @@ def update_user(id):
     user_query = User.query.filter_by(email=current_user).first()
 
     if not user_query:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+        return jsonify({"msg": "Usuario no encontrado"}), 400
     
     if user_query.id != id:
-        return jsonify({"msg": "No tienes permiso para actualizar este usuario"}), 403
+        return jsonify({"msg": "No tienes permiso para actualizar este usuario"}), 400
 
     data = request.json
 
