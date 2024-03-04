@@ -20,8 +20,7 @@ export const LoginModal = props => {
 		showPWModalUpdate: false,
 	});
 
-	const handleLogIn = async (e) => {
-		e.preventDefault()
+	const handleLogIn = async () => {
 		await actions.login(email, password);
 			if (store.auth) {
 				await actions.obtenerInfoUsuario()

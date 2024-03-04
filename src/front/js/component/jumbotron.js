@@ -29,7 +29,7 @@ function Jumbotron() {
                 <div className="m-auto Izquierda-Texto d-inline row justify-content-center py-5 col-sm-12 col-md-6 col-lg-6">
                     <h1 className="text-center display-5 mx-auto p-4 col-sm-12 col-md-12 col-lg-12"><strong>Can't find an event for you?</strong></h1>
                     <p className="lead mx-auto p-4 d-flex justify-content-center col-sm-12 col-md-12 col-lg-12">Create your own event</p>
-                    <button type="button" onClick={handleClickCreatEvent} className="btn-custom btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5">Create Event</button>
+                    <button type="button" onClick={handleClickCreatEvent} className="btn-custom btn bg-400 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5">Create Event</button>
                     {/* <a className="btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5" href="#" role="button">Create Event</a> */}
                 </div>
             </div>) : (

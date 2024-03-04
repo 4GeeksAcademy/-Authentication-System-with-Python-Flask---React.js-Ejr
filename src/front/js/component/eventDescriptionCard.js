@@ -50,7 +50,7 @@ export const EventDescriptionCard = (props) => {
 
 
     return (
-        <div className="d-flex flex-column align-items-center align-content-center m-3">
+        <div className="d-flex flex-column m-3">
             <div className="card  ms-5 border-0" style={{ maxWidth: "840px" }}>
                 <div className="row">
                     <div className="col-md-4">
@@ -70,8 +70,8 @@ export const EventDescriptionCard = (props) => {
                 </div>
             </div>
 
-            <div className="d-flex align-content-start align-items-center my-3 gap-1" >
-                <div className="p-2 flex-grow-1 ms-5">
+            <div className="d-flex flex-row justify-content-around align-items-center" >
+                <div className="p-2 ms-5">
                     {store.auth ? (
                         <button
                         onClick={handleInscription}
@@ -98,25 +98,27 @@ export const EventDescriptionCard = (props) => {
                         </button>
                     )}
                 </div>
-                <div className="p-2">
+                <div className="d-flex flex-row">
+                    <div className="p-2">
                     <button type="button" className="btn btn-300 ">
                         <span className="badge text-bg-secondary">{props.asistentes}</span>
                     </button>
-                </div>
-                <div className="pt-3">
-                    <p>of</p>
-                </div>
-                <div className="p-2">
-                    <button type="button" className="btn btn-300">
-                        <span className="badge text-bg-secondary">{props.maximo}</span>
-                    </button>
-                </div>
-                <div className="pt-3">
-                    <p>To complete</p>
+                    </div>
+                    <div className="pt-3">
+                        <p>of</p>
+                    </div>
+                    <div className="p-2">
+                        <button type="button" className="btn btn-300">
+                            <span className="badge text-bg-secondary">{props.maximo}</span>
+                        </button>
+                    </div>
+                    <div className="pt-3">
+                        <p>To complete</p>
+                    </div>
                 </div>
                 <div className="d-flex flex-column gap-1 p-2">
-                <button className={props.user_creador == store.user?.id ? "btn btn-danger": "d-none"} onClick={handleDelete}>Delete Event</button>
-                <button className={props.user_creador == store.user?.id ? "btn btn-400": "d-none"} onClick={updateEvent}>Update Event</button>
+                    <button className={props.user_creador == store.user?.id ? "btn btn-danger": "d-none"} onClick={handleDelete}>Delete Event</button>
+                    <button className={props.user_creador == store.user?.id ? "btn btn-400": "d-none"} onClick={updateEvent}>Update Event</button>
                 </div>
             </div>
             
