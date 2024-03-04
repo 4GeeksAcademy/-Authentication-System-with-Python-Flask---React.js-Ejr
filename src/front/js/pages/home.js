@@ -40,7 +40,7 @@ export const Home = () => {
 		<div className="container">
 			<Jumbotron /> 
 			<div className="4-botones d-flex justify-content-center row m-1 mt-5">
-				<button type="button" onClick={handleClickAll} className="btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2">EVENTS</button>
+				<button type="button" onClick={handleClickAll} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">EVENTS</button>
 				<button type="button" onClick={handleClickDeporte} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Sports</button>
 				<button type="button" onClick={handleClickArte} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Art</button>
 				<button type="button" onClick={handleClickOcio} className="btn btn-lg m-1 bg-300 text-black col-sm-8 col-md-12 col-lg-2">Leisure</button>
