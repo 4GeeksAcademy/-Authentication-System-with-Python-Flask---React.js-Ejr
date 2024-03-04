@@ -8,7 +8,7 @@ export const UpdateEventPage = () => {
     const params = useParams();
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
-    const [url_imgn, setUrl_img]= useState("https://i.pinimg.com/564x/e6/c3/4a/e6c34afdf235e76c31344d6a933cae27.jpg")
+    const [url_imgn, setUrl_img] = useState("https://i.pinimg.com/564x/e6/c3/4a/e6c34afdf235e76c31344d6a933cae27.jpg")
     const [formData, setFormData] = useState({
         evento: '',
         descripcion: '',
@@ -27,19 +27,19 @@ export const UpdateEventPage = () => {
             const { evento, descripcion, ciudad, ubicación, fecha, precio, url_img, max_personas, categoria } = store.eventInfo.result;
             const formattedDate = new Date(fecha).toISOString().split('T')[0];
             console.log(url_img);
-            
+
             setFormData({
-                            evento: evento,
-                            descripcion: descripcion,
-                            ciudad: ciudad,
-                            ubicacion: ubicación,
-                            fecha: formattedDate,
-                            precio: precio,
-                            max_personas: max_personas,
-                            categoria: categoria,
-                            url_img: url_img
-                           })
-            
+                evento: evento,
+                descripcion: descripcion,
+                ciudad: ciudad,
+                ubicacion: ubicación,
+                fecha: formattedDate,
+                precio: precio,
+                max_personas: max_personas,
+                categoria: categoria,
+                url_img: url_img
+            })
+
         }
         EventData();
     }, []);
@@ -47,7 +47,7 @@ export const UpdateEventPage = () => {
     // setUrl_img(formData.url_img)
     // console.log(url_imgn)
 
-    const changeUploadImage = async (e) =>{
+    const changeUploadImage = async (e) => {
         const files = e.target.files[0];
         const data = new FormData();
         data.append("file", files);
@@ -55,8 +55,8 @@ export const UpdateEventPage = () => {
         const newImage = await actions.uploadImage(data)
         // setUrl_img(newImage)
         setFormData(prevState => ({
-          ...prevState,
-          url_img: newImage // Actualizamos el formData con la nueva URL de la imagen
+            ...prevState,
+            url_img: newImage // Actualizamos el formData con la nueva URL de la imagen
         }));
     }
 
@@ -77,6 +77,7 @@ export const UpdateEventPage = () => {
             toast.error('Error al actualizar los datos del evento');
         }
     };
+    const hoy = new Date().toISOString().split('T')[0];
 
     return (
         <div className="container mt-5">
@@ -100,7 +101,7 @@ export const UpdateEventPage = () => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="fecha" className="form-label">Fecha</label>
-                    <input type="date" className="form-control" id="fecha" name="fecha" value={formData.fecha} onChange={handleChange} required />
+                    <input className='me-2' type="date" id="fecha" name="fecha" min={hoy} value={formData.fecha} onChange={handleChange} required />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="precio" className="form-label">Precio</label>
@@ -108,7 +109,7 @@ export const UpdateEventPage = () => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="categoria" className="form-label">Imagen Evento:</label>
-                    <input type="file" className="form-control" accept="image/*" onChange={changeUploadImage}/>
+                    <input type="file" className="form-control" accept="image/*" onChange={changeUploadImage} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="max_personas" className="form-label">Máximo de personas</label>
@@ -117,7 +118,7 @@ export const UpdateEventPage = () => {
                 <div className='d-flex justify-content-center'>
                     <button type="submit" className="btn btn-400 text-white mb-3">Actualizar Evento</button>
                 </div>
-                
+
             </form>
         </div>
     );
