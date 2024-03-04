@@ -43,8 +43,7 @@ export const Navbar = () => {
   }
 
   useEffect(() => {
-    if (store.auth) {
-    }
+    actions.validate_token();
   }, []);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white">
@@ -87,7 +86,6 @@ export const Navbar = () => {
           )
         }
       </div>
-
       <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })} />
       <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })} />
     </nav>

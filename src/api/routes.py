@@ -312,3 +312,28 @@ def update_event(id):
     db.session.commit()
     
     return jsonify({"msg": "Evento actualizado exitosamente"}), 200
+
+@api.route('/user/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_user(id):
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email=current_user).first()
+
+    if not user_query:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
+    if user_query.id != id:
+        return jsonify({"msg": "No tienes permiso para actualizar este usuario"}), 403
+
+    data = request.json
+
+    if 'name' in data:
+        user_query.name = data['name']
+    if 'email' in data:
+        user_query.email = data['email']
+    if 'password' in data:
+        user_query.password = data['password']
+
+    db.session.commit()
+
+    return jsonify({"msg": "Usuario actualizado exitosamente"}), 200

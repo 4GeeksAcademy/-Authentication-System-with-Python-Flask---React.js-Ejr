@@ -58,8 +58,6 @@ function CreateEventForm() {
     e.preventDefault()
     try {
       await actions.crearEvento(formData);
-      setShowSuccessModal(true);
-      setShowErrorModal(false);
       setUrl_img("https://i.pinimg.com/564x/e6/c3/4a/e6c34afdf235e76c31344d6a933cae27.jpg")
       setFormData({
         evento: '',
@@ -72,9 +70,10 @@ function CreateEventForm() {
         categoria: '',
         url_img: url_img
        })
+       navigate("/")
     } catch (error) {
-      setShowSuccessModal(false);
-      setShowErrorModal(true);
+      toast.error('Error al actualizar los datos del evento');
+
     }
   };
 

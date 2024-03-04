@@ -5,20 +5,22 @@ import { SimpleCard } from "../component/SimpleCard.js";
 import "../../styles/home.css";
 
 export const Profile = () => {
-
-
-    const { store, actions } = useContext(Context)
+    const { store, actions } = useContext(Context);
     const [diasDiferencia, setDiasDiferencia] = useState(0);
+    const [userData, setUserData] = useState({
+        name: store.user.name,
+        email: store.user.email,
+        password: store.user.password
+    });
+    const [editable, setEditable] = useState(false);
 
     useEffect(() => {
         async function ini() {
             await actions.obtenerInfoUsuario();
-            diferenciaDias()
+            diferenciaDias();
         }
-        ini()
-
-    }, [])
-
+        ini();
+    }, []);
 
     function diferenciaDias() {
         let fechaUltima = store.user.eventos_asistido[0]?.fecha;
@@ -61,19 +63,57 @@ export const Profile = () => {
 
         var diferencia = diferenciaEnDias(fecha2, fecha1);
         setDiasDiferencia(diferencia);
-        // }
+        
     }
+
+    const handleInputChange = e => {
+        setUserData({
+            ...userData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleUpdateUser = async () => {
+        // Lógica para actualizar los datos del usuario
+        await actions.actualizarUsuario(store.user.id, userData);
+        setEditable(false);
+    };
 
     return (
         <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row justify-content-center align-items-center my-5">
                 <div className="col-6 d-flex flex-row justify-content-center align-items-center ">
-                    <img className="col-4 img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" />
+                    <img className="col-4 img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" alt="Profile" />
                     <div>
                         <ul className="col-8 list-group">
-                            <h2>{store.user.name}</h2>
-                            <h4>{store.user.email}</h4>
+                            {editable ? (
+                                <div className="border-0">
+                                    <input className="border-0 mb-2" type="text" name="name" value={userData.name} onChange={handleInputChange} />
+                                    <input className="border-0" type="email" name="email" value={userData.email} onChange={handleInputChange} />
+                                    {/* <input type="text" name="password" value={userData.password} onChange={handleInputChange} /> */}
+                                </div>
+                            ) : (
+                                <div className="border-0">
+                                    <h2>{store.user.name}</h2>
+                                    <h4>{store.user.email}</h4>
+                                    {/* <h4>{store.user.password}</h4> */}
+                                </div>
+                            )}
                         </ul>
+                        <button className="btn btn-400 text-white m-2" onClick={() => {
+                            if (editable) {
+                                handleUpdateUser();
+                            } else {
+                                setEditable(true);
+                                setUserData({
+                                    name: store.user.name,
+                                    email: store.user.email,
+                                    // password: store.user.password
+                                });
+                            }
+                        }}>
+                            {editable ? "Guardar" : "Editar"}
+                        </button>
                     </div>
                 </div>
                 <div className="col-6 d-flex justify-content-end align-items-center">
@@ -125,55 +165,6 @@ export const Profile = () => {
                         </ul>              
                     </div>
                 </div>
-
-
-
-
-            
-            {/* <div className="accordion mb-5" id="accordionExample">
-                <div className="accordion-item mb-3 border-0">
-                    <h2 className="accordion-header">
-                    <button className="btn-400 accordion-button m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Próximos eventos a los que asistir
-                    </button>
-                    </h2>
-                    <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                    <div className="accordion-body">
-                        <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                            {store.user?.eventos_asistido? (store.user?.eventos_asistido?.map((item, id) => (
-                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100 text-center" key={item.id}>
-                                < SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
-                                </li>
-                            ))
-                            ) : (
-                            "Sin eventos creados"
-                            )}
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-                <div className="accordion-item border-0 text-center">
-                    <h2 className="accordion-header">
-                    <button className="btn-400 accordion-button collapsed m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Tus eventos creados
-                    </button>
-                    </h2>
-                    <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div className="accordion-body">
-                        <ul className="list-group d-flex flex-column mb-5 w-100" id="contact-list">
-                            {store.user?.eventos_creados ? (store.user?.eventos_creados?.map((item, id) => (
-                                <li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2 w-100" key={item.id}>
-                                < SimpleCard id={item.id} evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha} />
-                                </li>
-                            ))
-                            ) : (
-                            "Sin eventos creados"
-                            )}
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-            </div> */}
         </div>
     );
 };

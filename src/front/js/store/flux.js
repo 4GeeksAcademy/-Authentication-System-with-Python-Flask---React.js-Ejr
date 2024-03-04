@@ -256,6 +256,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             events: [...prevState.events, data], // asumiendo que 'data' contiene el evento creado
                             feedback: { type: 'success', message: 'Evento creado exitosamente' },
                         }));
+                        toast.success("Datos del evento creados exitosamente");
                         getActions().obtenerEventos(); // Actualiza la lista de eventos
                     } else {
                         // Actualizar el estado con el error
@@ -263,9 +264,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                             ...prevState,
                             feedback: { type: 'error', message: `Error al crear el evento: ${data.msg}` },
                         }));
+                        toast.error(data.msg);
                     }
                 } catch (error) {
                     console.error("Error al crear el evento:", error);
+                    toast.error("Error al crear evento");
                     setStore((prevState) => ({
                         ...prevState,
                         feedback: { type: 'error', message: 'Error al crear el evento. Inténtalo de nuevo.' },
@@ -351,6 +354,33 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error(error);
                     toast.error("Error al actualizar los datos del evento");
+                }
+            },
+
+            actualizarUsuario: async (id, newData) => {
+                let token = localStorage.getItem("token");
+            
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/user/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(newData) // Los nuevos datos que quieres actualizar
+                    });
+            
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Actualiza el estado con los nuevos datos del usuario
+                        await getActions().obtenerInfoUsuario();
+                        toast.success("Datos del usuario actualizados exitosamente");
+                    } else {
+                        toast.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error al actualizar los datos del usuario");
                 }
             }
 
