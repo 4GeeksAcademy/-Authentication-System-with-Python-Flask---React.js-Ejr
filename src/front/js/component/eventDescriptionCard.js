@@ -36,6 +36,10 @@ export const EventDescriptionCard = (props) => {
         
     }
 
+    function updateModalState() {
+        setModalState({ showModal: true });
+      }
+
     const handleDelete = async () => {
         await actions.eliminarEvento(props.id_evento);
         navigate('/');
@@ -64,7 +68,7 @@ export const EventDescriptionCard = (props) => {
                             <h3><strong>Description</strong></h3>
                             <p>{props.descripcion}</p>
                             <p><strong>Ciudad:</strong> {props.ciudad}</p>
-                            <p><strong>Ubicación:</strong> {props.ubicacion}</p>
+                            {/* <p><strong>Ubicación:</strong> {props.ubicacion}</p> */}
                             <p><strong>Precio:</strong> {props.precio}</p>
                         </div>
                     </div>
