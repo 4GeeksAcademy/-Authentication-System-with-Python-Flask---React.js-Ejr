@@ -72,6 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         localStorage.setItem("email", data.user.email);
                         localStorage.setItem("id", data.user.id);
                         await setStore({ auth: true })
+                        await getActions().obtenerInfoUsuario()
                     }
                     else {
                         toast.error(data.msg)
@@ -256,6 +257,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             events: [...prevState.events, data], // asumiendo que 'data' contiene el evento creado
                             feedback: { type: 'success', message: 'Evento creado exitosamente' },
                         }));
+                        toast.success("Datos del evento creados exitosamente");
                         getActions().obtenerEventos(); // Actualiza la lista de eventos
                     } else {
                         // Actualizar el estado con el error
@@ -263,9 +265,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                             ...prevState,
                             feedback: { type: 'error', message: `Error al crear el evento: ${data.msg}` },
                         }));
+                        toast.error(data.msg);
                     }
                 } catch (error) {
                     console.error("Error al crear el evento:", error);
+                    toast.error("Error al crear evento");
                     setStore((prevState) => ({
                         ...prevState,
                         feedback: { type: 'error', message: 'Error al crear el evento. Inténtalo de nuevo.' },
@@ -274,7 +278,114 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 
+            eliminarEvento: async (id) => {
+                let token = localStorage.getItem("token");
+            
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/event/${id}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+            
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Elimina el evento del estado
+                        // setStore(prevState => ({
+                        //     events: prevState.events.filter(event => event.id !== id)
+                        // }));
+                        toast.success("Evento eliminado exitosamente");
+                    } else {
+                        toast.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error al eliminar el evento");
+                }
+            },
+            
+            dejarDeAsistirEvento: async (id) => {
+                let token = localStorage.getItem("token");
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/asistir/${id}`, {
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    let data = await response.json();
+                    if (response.status === 200) {
+                        await getActions().obtenerOneEvento(id);
+                        await getActions().obtenerInfoUsuario();
+                        return true;
+                    } else {
+                        toast.error(data.msg);
+                        return false;
+                    }
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
 
+            actualizarEvento: async (id, newData) => {
+                let token = localStorage.getItem("token");
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/event/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(newData) // Los nuevos datos que quieres actualizar
+                    });
+            
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Actualiza el estado con los nuevos datos del evento
+                        await getActions().obtenerOneEvento(id);
+
+                        toast.success("Datos del evento actualizados exitosamente");
+                    } else {
+                        toast.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error al actualizar los datos del evento");
+                }
+            },
+
+            actualizarUsuario: async (id, newData) => {
+                let token = localStorage.getItem("token");
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + `/api/user/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(newData) // Los nuevos datos que quieres actualizar
+                    });
+            
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        // Actualiza el estado con los nuevos datos del usuario
+                        await getActions().obtenerInfoUsuario();
+                        localStorage.setItem("user", newData.name);
+                        localStorage.setItem("email", newData.email);
+                        getActions().validate_token()
+                        toast.success("Datos del usuario actualizados exitosamente");
+                    } else {
+                        toast.error(data.msg);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Error al actualizar los datos del usuario");
+                }
+            }
 
         }
     }

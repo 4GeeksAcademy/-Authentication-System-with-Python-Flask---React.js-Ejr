@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";;
 import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
 import { PasswordRecoveryModal } from "./PasswordRecoveryModal";
+import { useNavigate } from 'react-router-dom';
 
 
 export const LoginModal = props => {
@@ -9,6 +10,7 @@ export const LoginModal = props => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
 	const [modalRegisterState, setModalRegisterState] = useState({
 		showModal: false,
 		showModalUpdate: false,
@@ -18,14 +20,13 @@ export const LoginModal = props => {
 		showPWModalUpdate: false,
 	});
 
-	const handleLogIn = async (e) => {
-		// e.preventDefault()
-
+	const handleLogIn = async () => {
 		await actions.login(email, password);
-		if (store.auth) {
-			props.onClose()
-		}
-	}
+			if (store.auth) {
+				await actions.obtenerInfoUsuario()
+				props.onClose(); // Cierra el modal
+    		}
+	}	
 
 	useEffect(() => {
 		return () => {
