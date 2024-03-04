@@ -68,7 +68,7 @@ export const EventDescriptionCard = (props) => {
                             <h3><strong>Description</strong></h3>
                             <p>{props.descripcion}</p>
                             <p><strong>Ciudad:</strong> {props.ciudad}</p>
-                            {/* <p><strong>Ubicación:</strong> {props.ubicacion}</p> */}
+                            <p><strong>Ubicación:</strong> {props.ubicacion}</p>
                             <p><strong>Precio:</strong> {props.precio}</p>
                         </div>
                     </div>
