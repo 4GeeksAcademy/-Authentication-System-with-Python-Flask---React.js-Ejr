@@ -96,7 +96,7 @@ export const EventDescriptionCard = (props) => {
                                     }
                                 >
                                     {store.user?.id_eventos?.includes(parseInt(props.id_evento))
-                                        ? 'UNJOIN EVENT'
+                                        ? 'LEAVE EVENT'
                                         : 'JOIN EVENT'}
                                 </button>
                             ) : (

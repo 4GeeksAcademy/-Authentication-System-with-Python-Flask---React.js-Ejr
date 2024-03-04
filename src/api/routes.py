@@ -233,8 +233,11 @@ def forgot_password():
     user.password = recover_password
     db.session.commit()
     #luego se la envio al usuario por correo para que pueda ingresar
-    msg = Message("Hi", recipients=[recover_email])
-    msg.html = f"""<h1>Su nueva contraseña es: {recover_password}</h1>"""
+    msg = Message("Never Hobby Alone: Restablecimiento de contraseña", recipients=[recover_email])
+    msg.html = f"""<p>Hola {user.name},</p> 
+      <p>Su nueva contraseña es: <strong>{recover_password}</strong></p> 
+      <p>El equipo de Never Hobby Alone le desea un buen dia y le agradece su confianza.</p>
+      <p>Saludos cordiales.</p>"""
     current_app.mail.send(msg)
     return jsonify({"msg": "Su nueva clave ha sido enviada al correo electrónico ingresado"}), 200
 

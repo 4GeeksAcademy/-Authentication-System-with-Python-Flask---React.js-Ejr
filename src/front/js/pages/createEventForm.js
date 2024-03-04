@@ -123,7 +123,7 @@ function CreateEventForm() {
                           <input type="file" className="form-control" accept="image/*" onChange={changeUploadImage} />
                       </div>
                       <div className="d-grid d-flex justify-content-center">
-                          <button type="submit" className="btn bg-400 text-white mb-3">Actualizar Evento</button>
+                          <button type="submit" className="btn bg-400 text-white mb-3">Crear Evento</button>
                       </div>
                   </form>
                   {showSuccessModal && <SuccessModal onClose={() => {
