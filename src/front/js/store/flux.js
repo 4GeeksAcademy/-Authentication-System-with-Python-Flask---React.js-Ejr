@@ -72,6 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         localStorage.setItem("email", data.user.email);
                         localStorage.setItem("id", data.user.id);
                         await setStore({ auth: true })
+                        await getActions().obtenerInfoUsuario()
                     }
                     else {
                         toast.error(data.msg)
@@ -332,7 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             actualizarEvento: async (id, newData) => {
                 let token = localStorage.getItem("token");
-            
                 try {
                     let response = await fetch(process.env.BACKEND_URL + `/api/event/${id}`, {
                         method: "PUT",
@@ -347,6 +347,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.status >= 200 && response.status < 300) {
                         // Actualiza el estado con los nuevos datos del evento
                         await getActions().obtenerOneEvento(id);
+
                         toast.success("Datos del evento actualizados exitosamente");
                     } else {
                         toast.error(data.msg);
@@ -359,7 +360,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             actualizarUsuario: async (id, newData) => {
                 let token = localStorage.getItem("token");
-            
                 try {
                     let response = await fetch(process.env.BACKEND_URL + `/api/user/${id}`, {
                         method: "PUT",
@@ -374,6 +374,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.status >= 200 && response.status < 300) {
                         // Actualiza el estado con los nuevos datos del usuario
                         await getActions().obtenerInfoUsuario();
+                        localStorage.setItem("user", newData.name);
+                        localStorage.setItem("email", newData.email);
+                        getActions().validate_token()
                         toast.success("Datos del usuario actualizados exitosamente");
                     } else {
                         toast.error(data.msg);

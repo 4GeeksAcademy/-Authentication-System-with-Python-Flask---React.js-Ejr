@@ -59,7 +59,6 @@ export const Home = () => {
 				</ul>
 			</div>
 			<p className="fs-2 col-sm-12 col-md-6 col-lg-12 d-flex justify-content-center py-5"><strong>If you don't have the time to travel, we bring the plans for you!</strong></p>
-
 		</div>
 	);
 };

@@ -81,7 +81,7 @@ function CreateEventForm() {
       <div className="container">
           <div className="row justify-content-center">
               <div className="col-md-8">
-                  <h2 className="text-center mb-4">Actualizar Evento</h2>
+                  <h2 className="text-center mb-4">Crear Evento</h2>
                   <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                           <label htmlFor="evento" className="form-label">Evento:</label>

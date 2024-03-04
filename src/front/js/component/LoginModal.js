@@ -24,8 +24,8 @@ export const LoginModal = props => {
 		e.preventDefault()
 		await actions.login(email, password);
 			if (store.auth) {
+				await actions.obtenerInfoUsuario()
 				props.onClose(); // Cierra el modal
-
     		}
 	}	
 

@@ -17,7 +17,7 @@ export const UpdateEventPage = () => {
         fecha: '',
         precio: '',
         categoria: '',
-        url_img: url_imgn,
+        url_img: "",
         max_personas: ''
     });
 
@@ -27,8 +27,7 @@ export const UpdateEventPage = () => {
             const { evento, descripcion, ciudad, ubicación, fecha, precio, url_img, max_personas, categoria } = store.eventInfo.result;
             const formattedDate = new Date(fecha).toISOString().split('T')[0];
             console.log(url_img);
-            setUrl_img(url_img)
-            console.log(url_imgn)
+            
             setFormData({
                             evento: evento,
                             descripcion: descripcion,
@@ -38,12 +37,15 @@ export const UpdateEventPage = () => {
                             precio: precio,
                             max_personas: max_personas,
                             categoria: categoria,
-                            url_img: url_imgn
+                            url_img: url_img
                            })
             
         }
         EventData();
     }, []);
+
+    // setUrl_img(formData.url_img)
+    // console.log(url_imgn)
 
     const changeUploadImage = async (e) =>{
         const files = e.target.files[0];
@@ -51,7 +53,7 @@ export const UpdateEventPage = () => {
         data.append("file", files);
         data.append("upload_preset", "Presents_react");
         const newImage = await actions.uploadImage(data)
-        setUrl_img(newImage)
+        // setUrl_img(newImage)
         setFormData(prevState => ({
           ...prevState,
           url_img: newImage // Actualizamos el formData con la nueva URL de la imagen
