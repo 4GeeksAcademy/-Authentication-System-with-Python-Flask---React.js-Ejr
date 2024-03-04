@@ -8,7 +8,6 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from base64 import b64encode
 import os
 
 
@@ -21,44 +20,37 @@ CORS(api)
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.json
+    
 
-    if User.query.filter_by(email=data['email']).first():
-        raise APIException(message='Email already in use', status_code=409)
+    if not data:
+        return jsonify({'message': 'Datos de usuario no proporcionados'}), 400
 
-    if 'password' not in data or not data['password']:
-        return jsonify({'message': 'Password is required'}), 400
+    # Lógica de registro de usuario aquí
 
-    # Encriptar la contraseña antes de guardarla en la base de datos
-    hashed_password = bcrypt.hashpw(
-        data['password'].encode('utf-8'), bcrypt.gensalt())
+    return jsonify({'message': 'Usuario registrado exitosamente'}), 201
 
-    new_user = User(
-        first_name=data['first_name'],
-        last_name=data['last_name'],
-        email=data['email'],
-        # Decodificar el hash para almacenarlo como cadena
-        password=hashed_password.decode('utf-8'),
-        phone=data['phone'],
-        location=data['location'],
-    )
 
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'message': 'User created succefully'}), 201
 
-@api.route('/login', methods=['POST'])
-def login():
+@api.route("/login", methods=["POST"])
+def user_login():
     data = request.json
-    email = data['email']
-    password = data['password']
+    
+    if data.get("email", None) is None:
+        return jsonify({"message":"the email is required"}), 400
 
-    if not email or not password:
-        return jsonify({'message': 'Email and password are required'}), 400
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=data["email"]).one_or_none()
+    if user is not None:
+        # validar la contraseña
+        result = check_password_hash(user.password, f'{data["password"]}{user.salt}')
+       
 
-    if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        token = create_access_token(identity=user.id)
-        return jsonify({'message': 'Successful login', 'token': token, 'user': user.serialize()}), 200
+        if result: 
+            #generar el token
+            token = create_access_token(identity=user.email)
+
+            return jsonify({"token":token}),201
+        else:
+            return jsonify({"message":"Credenciales incorrectas"}),400 
     else:
-        return jsonify({'message': 'Invalid credentials'}), 401
+        return jsonify({"message":"Credenciales incorrectas"}),400 
