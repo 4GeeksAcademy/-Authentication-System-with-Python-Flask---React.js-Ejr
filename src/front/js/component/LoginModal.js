@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
 import { PasswordRecoveryModal } from "./PasswordRecoveryModal";
 import { useNavigate } from 'react-router-dom';
-
+import { redirect } from "react-router-dom";
 
 export const LoginModal = props => {
 
@@ -20,12 +20,14 @@ export const LoginModal = props => {
 		showPWModalUpdate: false,
 	});
 
-	const handleLogIn = async () => {
+	const handleLogIn = async (e) => {
+		e.preventDefault()
 		await actions.login(email, password);
 			if (store.auth) {
 				await actions.obtenerInfoUsuario()
 				props.onClose(); // Cierra el modal
     		}
+			// return navigate("/");
 	}	
 
 	useEffect(() => {

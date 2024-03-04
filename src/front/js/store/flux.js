@@ -53,8 +53,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             login: async (email, password) => {
-
                 try {
+                    console.log("Entramos en point");
                     let response = await fetch(process.env.BACKEND_URL + "/api/login", {
                         method: "POST",
                         headers: {
@@ -65,20 +65,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                             "password": password
                         })
                     });
+                    console.log(response.status);
                     let data = await response.json();
-                    if (response.status >= 200 && response.status < 300) {
+                    console.log(data);
+                    if (response.status === 200) {
                         localStorage.setItem("token", data.access_token);
                         localStorage.setItem("user", data.user.name);
                         localStorage.setItem("email", data.user.email);
                         localStorage.setItem("id", data.user.id);
-                        await setStore({ auth: true })
-                        await getActions().obtenerInfoUsuario()
+                        setStore({ auth: true })
                     }
                     else {
                         toast.error(data.msg)
                     }
 
                 } catch (error) {
+                    console.log("Entramos en catch");
                     console.log(error);
                 }
             },

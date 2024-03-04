@@ -9,7 +9,8 @@ export const SignUpModal = props => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSignUp = async ()  => {
+    const handleSignUp = async (e)  => { 
+            e.preventDefault()
             let registrer = await  actions.register(name, email, password);
             if (registrer == true ){
              await actions.login(email,password)
