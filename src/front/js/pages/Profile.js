@@ -17,52 +17,36 @@ export const Profile = () => {
     useEffect(() => {
         async function ini() {
             await actions.obtenerInfoUsuario();
-            diferenciaDias();
+            await diferenciaDias();
+            console.log(diasDiferencia);
         }
         ini();
     }, []);
 
-    function diferenciaDias() {
-        let fechaUltima = store.user.eventos_asistido[0]?.fecha;
-
-        // Convertir la cadena en un objeto de fecha
-        const fechaObjeto = new Date(fechaUltima);
-
-        // Formatear la fecha en el formato corto
-        const fechaString1 = fechaObjeto.toLocaleDateString();
-
-        // Obtener la fecha actual
-        var fechaActual = new Date();
-
-        // Obtener día, mes y año
-        var dia = fechaActual.getDate();
-        var mes = fechaActual.getMonth() + 1; // Se suma 1 porque los meses van de 0 a 11
-        var año = fechaActual.getFullYear();
-
-        // Formatear la fecha
-        var fechaString2 = dia.toString().padStart(2, '0') + '/' + mes.toString().padStart(2, '0') + '/' + año;
-
-        // Función para convertir una fecha en formato "dd/mm/aaaa" a objeto de fecha en JavaScript
-        function convertirAFecha(fechaString) {
-            var partesFecha = fechaString.split('/');
-            var dia = parseInt(partesFecha[0], 10);
-            var mes = parseInt(partesFecha[1], 10) - 1; // Se resta 1 porque los meses van de 0 a 11
-            var año = parseInt(partesFecha[2], 10);
-            return new Date(año, mes, dia);
+    async function diferenciaDias() {
+        let eventosAsistidos = store.user.eventos_asistido || [];
+        let eventosFuturos = eventosAsistidos.filter(evento => {
+            let fechaEvento = new Date(evento.fecha);
+            let fechaActual = new Date();
+            return fechaEvento >= fechaActual;
+        });
+    
+        // Ordenar los eventos por fecha ascendente
+        eventosFuturos.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+    
+        // Obtener la fecha del próximo evento
+        let fechaProximoEvento = eventosFuturos.length > 0 ? eventosFuturos[0].fecha : null;
+    
+        // Calcular la diferencia de días solo si hay un próximo evento
+        if (fechaProximoEvento) {
+            let fechaActual = new Date();
+            let fechaEvento = new Date(fechaProximoEvento);
+            let diferencia = Math.round((fechaEvento - fechaActual) / (1000 * 60 * 60 * 24));
+            setDiasDiferencia(diferencia);
+        } else {
+            // Si no hay próximos eventos, establecer la diferencia de días en 0
+            setDiasDiferencia(0);
         }
-
-        // Función para calcular la diferencia en días entre dos fechas
-        function diferenciaEnDias(fecha1, fecha2) {
-            var diferenciaEnMilisegundos = fecha2.getTime() - fecha1.getTime();
-            var milisegundosPorDia = 1000 * 60 * 60 * 24;
-            return Math.round(diferenciaEnMilisegundos / milisegundosPorDia);
-        }
-
-        var fecha1 = convertirAFecha(fechaString1);
-        var fecha2 = convertirAFecha(fechaString2);
-
-        var diferencia = diferenciaEnDias(fecha2, fecha1);
-        setDiasDiferencia(diferencia);
         
     }
 
@@ -118,7 +102,7 @@ export const Profile = () => {
                 </div>
                 <div className="col-6 d-flex justify-content-end align-items-center">
                     <div className="bg-300 rounded-circle d-flex justify-content-center align-items-center p-5" style={{ height: "22rem", width: "22rem" }}>
-                        <h3 className="text-white">Próximo eventos en {diasDiferencia} días</h3>
+                        <h3 className="text-white"> {diasDiferencia >=0 ? `Próximo eventos en ${diasDiferencia} días` : "No tienes eventos próximos"}</h3>
                     </div>
                 </div>
             </div>
