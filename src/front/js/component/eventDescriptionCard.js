@@ -77,18 +77,18 @@ export const EventDescriptionCard = (props) => {
                         onClick={handleInscription}
                         type="button"
                         className={
-                            store.user.id_eventos?.includes(parseInt(props.id_evento))
+                            store.user?.id_eventos?.includes(parseInt(props.id_evento))
                             ? 'btn btn-danger btn-lg'
                             : props.asistentes >= props.maximo
                             ? 'btn btn-300 btn-lg disabled'
                             : 'btn btn-400 btn-lg'
                         }
                         disabled={
-                            !store.user.id_eventos?.includes(parseInt(props.id_evento)) &&
+                            !store.user?.id_eventos?.includes(parseInt(props.id_evento)) &&
                             props.asistentes >= props.maximo
                         }
                         >
-                        {store.user.id_eventos?.includes(parseInt(props.id_evento))
+                        {store.user?.id_eventos?.includes(parseInt(props.id_evento))
                             ? 'UNJOIN EVENT'
                             : 'JOIN EVENT'}
                         </button>
