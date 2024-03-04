@@ -7,8 +7,8 @@ export const PasswordRecoveryModal = props => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
 
-    const handlePWRecovery = async () => {
-        console.log(email);
+    const handlePWRecovery = async (e) => {
+        e.preventDefault()
         let sentEmail = await actions.sendEmail(email);
         if (sentEmail == true) {
             props.onClose()

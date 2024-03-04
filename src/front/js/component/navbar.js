@@ -68,11 +68,8 @@ export const Navbar = () => {
               </ul>
             </div>
           ) :
-          (<div>
-            <button className="navbar-toggler p-2 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          (
+          <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <a className="nav-link fs-5 text-white btn bg-400 p-2 me-2 mb-2" href="#" onClick={updateModalState}>Log in</a>
@@ -82,7 +79,6 @@ export const Navbar = () => {
                 </li>
               </ul>
             </div>
-          </div>
           )
         }
       </div>
