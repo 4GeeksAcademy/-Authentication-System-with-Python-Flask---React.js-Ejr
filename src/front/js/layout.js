@@ -1,4 +1,5 @@
 import React from "react";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";

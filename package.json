@@ -7,7 +7,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "webpack-dev-server --config webpack.dev.js --port 3000",
+		"start": "webpack-dev-server --config webpack.dev.js --port 3001",
 		"build": "webpack --config webpack.prod.js"
 	},
 	"author": {
@@ -73,7 +73,6 @@
 		]
 	},
 	"dependencies": {
-		"bcrypt": "^5.1.1",
 		"formik": "^2.4.5",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",

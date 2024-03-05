@@ -1,0 +1,25 @@
+.search-results {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+}
+.search-results li {
+    cursor: pointer; /* Cambia el cursor para indicar que son clikeables */
+    white-space: nowrap; /* no se haga un torbellino de texto */
+    overflow: hidden; /* No se desborda el texto si es largo */
+    text-overflow: ellipsis; /*puntos suspensivos*/
+}
+
+.btn {
+    display: inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 0.5rem;
+}
+
+.btn .bi-search-heart {
+    font-size: 1.5rem;
+    color: #d63384;
+}
