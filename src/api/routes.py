@@ -3,54 +3,79 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
+from flask_cors import CORS
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
+import os
+
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_cors import CORS
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from werkzeug.security import generate_password_hash, check_password_hash
-import os
+
+
 
 
 api = Blueprint('api', __name__)
+app = Flask(__name__)
+jwt = JWTManager(app)
+secret_key = os.urandom(24).hex()
+app.config['JWT_SECRET_KEY'] = secret_key
 
-# Allow CORS requests to this API
+
+
+bcrypt = Bcrypt(app)
+
 CORS(api)
 
 
 @api.route('/signup', methods=['POST'])
 def signup():
-    data = request.json
+    data = request.get_json()
+    email = data["email"]
+    repetido = User.query.filter_by(email=email).first()
+
+    if repetido: 
+        return jsonify({"error":"correo registrado"}), 400
     
+    password = bcrypt.generate_password_hash(data["password"]).decode('utf-8')
 
-    if not data:
-        return jsonify({'message': 'Datos de usuario no proporcionados'}), 400
+    user = User(email=email,password=password,first_name=data["first_name"],last_name=data["last_name"],phone=data["phone"],location=data["location"],is_active=True)
+    
+    db.session.add(user)
+    db.session.commit()   
 
-    # Lógica de registro de usuario aquí
-
-    return jsonify({'message': 'Usuario registrado exitosamente'}), 201
-
-
+    return jsonify({"mensaje":"registro exitoso"})
 
 @api.route("/login", methods=["POST"])
 def user_login():
-    data = request.json
+    data = request.get_json()
     
-    if data.get("email", None) is None:
+    if data["email"] is None:
         return jsonify({"message":"the email is required"}), 400
 
+    user = User.query.filter_by(email=data["email"]).first()
+    if user is None:
+        return jsonify({"error":"Usuario no encontrado"}), 404
+    
+    if not data["password"]:
+        return jsonify({"message":"Credenciales incorrectas"}), 401
 
-    user = User.query.filter_by(email=data["email"]).one_or_none()
-    if user is not None:
-        # validar la contraseña
-        result = check_password_hash(user.password, f'{data["password"]}{user.salt}')
-       
-
-        if result: 
-            #generar el token
-            token = create_access_token(identity=user.email)
-
-            return jsonify({"token":token}),201
-        else:
-            return jsonify({"message":"Credenciales incorrectas"}),400 
+    if bcrypt.check_password_hash(user, data["password"]):
+        payload = {
+            "email": user.email, 
+            "first_name": user.first_name, 
+            "last_name": user.last_name,
+            "phone": user.phone, 
+            "location": user.location, 
+            "nivel": "user"}
+        token = create_access_token(identity=user.id, additional_claims=payload)
+        return jsonify({"token": token})
     else:
-        return jsonify({"message":"Credenciales incorrectas"}),400 
+        return jsonify({"message": "Credenciales incorrectas"}), 401
+
+
+@api.route("/private", methods=["GET"])
+@jwt_required()
+
+def private():
+    return jsonify({"message":"acceso permitido"}), 200
