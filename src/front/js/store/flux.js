@@ -18,17 +18,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
         actions: {
             login: async (email, password) => {
-                const actions = getActions();
-                const data = await api.login(email, password);
-                setStore({ user: data.user, token: data.token });
-                actions.getFavorites();
-                if (!data.user.is_admin) localStorage.setItem('myToken', data.token);
-                return data;
+                let actions=getActions()
+				const dat =await actions.APIfetch("/login","POST",{email,password})
+				if(dat.error){
+					return false
+				}
+				setStore({token:dat.token})
+				localStorage.setItem("accessToken",dat.token)
+				return true				
+
             },
             signup: async (email, password, first_name, last_name, phone, location) => {
-                const response = await api.signup(email, password, first_name, last_name, phone, location);
-                return response;
-            },
+				
+                let actions=getActions()
+                const res= await actions.APIfetch("/signup","POST", {email,password,email, password, first_name, last_name, phone, location})
+                if(res.ok){
+                    console.log("Usuario registrado")
+                    return true
+
+                }
+                else{
+                    console.log("error")
+                    return false
+
+                }
+
+        
+
+        }		,
             getMessage: async () => {
                 let actions = getActions();
                 try {
@@ -79,7 +96,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				console.log(error)	
 				}
-			}
+            
+			},
+            showNotification: async (message, type) => {
+                setStore({ response: { message, type } })
+              },
+              loadSession: ()=>{
+                  let token=localStorage.getItem("accessToken")
+                  setStore({token})
+              }
         }
     };
 };
