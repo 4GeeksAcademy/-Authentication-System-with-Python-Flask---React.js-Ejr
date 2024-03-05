@@ -1,23 +1,20 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import os
-
 from api.models import db, User
-from api.utils import generate_sitemap, APIException
 
 
-
-
-api = Blueprint('api', __name__)
 app = Flask(__name__)
 jwt = JWTManager(app)
+
+api = Blueprint('api', __name__)
+
 secret_key = os.urandom(24).hex()
 app.config['JWT_SECRET_KEY'] = secret_key
 
@@ -48,31 +45,35 @@ def signup():
 
 @api.route("/login", methods=["POST"])
 def user_login():
-    data = request.get_json()
-    
-    if data["email"] is None:
-        return jsonify({"message":"the email is required"}), 400
+    try:
+        data = request.get_json()
+        
+        if not data or "email" not in data or "password" not in data:
+            return jsonify({"message": "Se requieren tanto el correo electrónico como la contraseña"}), 400
 
-    user = User.query.filter_by(email=data["email"]).first()
-    if user is None:
-        return jsonify({"error":"Usuario no encontrado"}), 404
-    
-    if not data["password"]:
-        return jsonify({"message":"Credenciales incorrectas"}), 401
+        email = data["email"]
+        password = data["password"]
 
-    if bcrypt.check_password_hash(user, data["password"]):
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+        
+        if not bcrypt.check_password_hash(user.password, password):
+            return jsonify({"message": "Credenciales incorrectas"}), 401
+
         payload = {
             "email": user.email, 
             "first_name": user.first_name, 
             "last_name": user.last_name,
             "phone": user.phone, 
             "location": user.location, 
-            "nivel": "user"}
+            "nivel": "user"
+        }
         token = create_access_token(identity=user.id, additional_claims=payload)
-        return jsonify({"token": token})
-    else:
-        return jsonify({"message": "Credenciales incorrectas"}), 401
-
+        return jsonify({"token": token}), 200
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
 
 @api.route("/private", methods=["GET"])
 @jwt_required()
