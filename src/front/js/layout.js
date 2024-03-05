@@ -32,7 +32,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     {/* <Cloudinary/> */}
-                    <Navbar />
+                    <Navbar  />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         {/* <Route element={<Demo />} path="/demo" /> */}

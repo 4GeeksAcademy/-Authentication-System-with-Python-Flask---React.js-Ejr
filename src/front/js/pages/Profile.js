@@ -64,7 +64,7 @@ export const Profile = () => {
     };
 
     return (
-        <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
+        <div className="container-fluid d-flex flex-column justify-content-between align-items-center vh-100">
             <div className="row justify-content-center align-items-center my-5">
                 <div className="col-12 col-md-4 d-flex justify-content-center">
                     <img className="img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" alt="Profile" />

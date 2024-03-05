@@ -80,7 +80,7 @@ export const UpdateEventPage = () => {
     const hoy = new Date().toISOString().split('T')[0];
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5 vh-100">
             <h2>Actualizar Evento</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
