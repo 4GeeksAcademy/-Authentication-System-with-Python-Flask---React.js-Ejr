@@ -30,8 +30,7 @@ export const Signup = () => {
       actions.showNotification("Complete all fields", "danger");
     } else {
 
-    actions
-      .signup(
+    actions.signup(
         email,
         password,
         firstName,
