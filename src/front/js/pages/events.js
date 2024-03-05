@@ -87,7 +87,7 @@ export const Events = () => {
 
 
 	return (
-		<div className="container">
+		<div className="container vh-100">
 
 			<div className="4-botones py-5 d-flex justify-content-center row m-1">
 				<button type="button" onClick={handleClickAll} className={styleDrop.btnAll ? "btn btn-lg m-1 bg-400 text-white col-sm-8 col-md-12 col-lg-2" : "btn btn-lg m-1 bg-300 text-white col-sm-8 col-md-12 col-lg-2"}>EVENTS</button>
