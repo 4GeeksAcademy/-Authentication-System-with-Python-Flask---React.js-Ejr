@@ -18,7 +18,6 @@ export const Profile = () => {
         async function ini() {
             await actions.obtenerInfoUsuario();
             await diferenciaDias();
-            console.log(diasDiferencia);
         }
         ini();
     }, []);
@@ -57,14 +56,16 @@ export const Profile = () => {
         });
     };
 
+
     const handleUpdateUser = async () => {
         // Lógica para actualizar los datos del usuario
         await actions.actualizarUsuario(store.user.id, userData);
         setEditable(false);
     };
 
+    console.log(store.user);
     return (
-        <div className="container-fluid d-flex flex-column justify-content-between align-items-center vh-100">
+        <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
             <div className="row justify-content-center align-items-center my-5">
                 <div className="col-12 col-md-4 d-flex justify-content-center">
                     <img className="img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" alt="Profile" />
@@ -76,13 +77,11 @@ export const Profile = () => {
                                 <div className="border-0">
                                     <input className="border-0 mb-2" type="text" name="name" value={userData.name} onChange={handleInputChange} />
                                     <input className="border-0" type="email" name="email" value={userData.email} onChange={handleInputChange} />
-                                    {/* <input type="text" name="password" value={userData.password} onChange={handleInputChange} /> */}
                                 </div>
                             ) : (
                                 <div className="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center">
                                     <h2>{store.user.name}</h2>
                                     <h4>{store.user.email}</h4>
-                                    {/* <h4>{store.user.password}</h4> */}
                                 </div>
                             )}
                         </ul>
@@ -98,7 +97,7 @@ export const Profile = () => {
                                 });
                             }
                         }}>
-                            {editable ? "Guardar" : "Editar"}
+                            {editable ? "Save" : "Edit"}
                         </button>
                     </div>
                 </div>
@@ -108,25 +107,25 @@ export const Profile = () => {
                             height: window.innerWidth < 768 ? "15rem" : "22rem",
                             width: window.innerWidth < 768 ? "15rem" : "22rem"
                         }}>
-                        <h3 className="text-white"> {diasDiferencia >= 0 ? `Próximo eventos en ${diasDiferencia} días` : "No tienes eventos próximos"}</h3>
+                        <h3 className="text-white"> {diasDiferencia >= 0 ? `Next events in ${diasDiferencia} days` : "You don't have any upcoming events"}</h3>
                     </div>
                 </div>
             </div>
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center my-5">
                 <div className="col-12 col-md-6 text-center">
-                    <h3>HAS CREADO {store.user.num_eventos_creados} EVENTOS</h3>
+                    <h3>YOU HAVE CREATED {store.user.num_eventos_creados} EVENTS</h3>
                 </div>
                 <div className="col-12 col-md-6 text-center">
-                    <h3>HAS ASISTIDO A {store.user.num_eventos_asistido ? store.user.num_eventos_asistido : "0"} EVENTOS</h3>
+                    <h3>HAVE YOU ATTENDED {store.user.num_eventos_asistido ? store.user.num_eventos_asistido : "0"} EVENTS</h3>
                 </div>
             </div>
 
             <ul className="nav nav-tabs" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
-                    <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Próximos eventos a los que asistir</button>
+                    <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Next events to attend</button>
                 </li>
                 <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Tus eventos creados</button>
+                    <button className="nav-link mt-2" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Your created events</button>
                 </li>
             </ul>
             <div className="tab-content mt-2" id="myTabContent">
@@ -138,7 +137,7 @@ export const Profile = () => {
                             </li>
                         ))
                         ) : (
-                            "Sin eventos creados"
+                            "No events created"
                         )}
                     </ul>
                 </div>
@@ -150,7 +149,7 @@ export const Profile = () => {
                             </li>
                         ))
                         ) : (
-                            "Sin eventos creados"
+                            "No events created"
                         )}
                     </ul>
                 </div>

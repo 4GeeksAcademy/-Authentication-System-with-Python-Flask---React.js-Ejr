@@ -44,8 +44,6 @@ export const UpdateEventPage = () => {
         EventData();
     }, []);
 
-    // setUrl_img(formData.url_img)
-    // console.log(url_imgn)
 
     const changeUploadImage = async (e) => {
         const files = e.target.files[0];
@@ -53,7 +51,6 @@ export const UpdateEventPage = () => {
         data.append("file", files);
         data.append("upload_preset", "Presents_react");
         const newImage = await actions.uploadImage(data)
-        // setUrl_img(newImage)
         setFormData(prevState => ({
             ...prevState,
             url_img: newImage // Actualizamos el formData con la nueva URL de la imagen
@@ -80,46 +77,50 @@ export const UpdateEventPage = () => {
     const hoy = new Date().toISOString().split('T')[0];
 
     return (
-        <div className="container mt-5 vh-100">
-            <h2>Actualizar Evento</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="evento" className="form-label">Evento</label>
-                    <input type="text" className="form-control" id="evento" name="evento" value={formData.evento} onChange={handleChange} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="descripcion" className="form-label">Descripción</label>
-                    <input type="text" className="form-control" id="descripcion" name="descripcion" value={formData.descripcion} onChange={handleChange} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="ciudad" className="form-label">Ciudad</label>
-                    <input type="text" className="form-control" id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleChange} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="ubicacion" className="form-label">Ubicación</label>
-                    <input type="text" className="form-control" id="ubicacion" name="ubicacion" value={formData.ubicacion} onChange={handleChange} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="fecha" className="form-label">Fecha</label>
-                    <input className='me-2' type="date" id="fecha" name="fecha" min={hoy} value={formData.fecha} onChange={handleChange} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="precio" className="form-label">Precio</label>
-                    <input type="text" className="form-control" id="precio" name="precio" value={formData.precio} onChange={handleChange} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="categoria" className="form-label">Imagen Evento:</label>
-                    <input type="file" className="form-control" accept="image/*" onChange={changeUploadImage} />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="max_personas" className="form-label">Máximo de personas</label>
-                    <input type="text" className="form-control" id="max_personas" name="max_personas" value={formData.max_personas} onChange={handleChange} required />
-                </div>
-                <div className='d-flex justify-content-center'>
-                    <button type="submit" className="btn btn-400 text-white mb-3">Actualizar Evento</button>
-                </div>
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <h2 className="text-center mb-4">Update Event</h2>
+                <form className="row g-3" onSubmit={handleSubmit}>
+                    <div className="mb-3 col-md-8">
+                        <label htmlFor="evento" className="form-label">Event:</label>
+                        <input type="text" className="form-control" id="evento" name="evento" value={formData.evento} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-4">
+                        <label htmlFor="ciudad" className="form-label">City:</label>
+                        <input type="text" className="form-control" id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-12">
+                        <label htmlFor="ubicacion" className="form-label">Ubication:</label>
+                        <input type="text" className="form-control" id="ubicacion" name="ubicacion" value={formData.ubicacion} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-12">
+                        <label htmlFor="descripcion" className="form-label">Description:</label>
+                        <input type="text" className="form-control" id="descripcion" name="descripcion" value={formData.descripcion} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-4">
+                        <label htmlFor="fecha" className="form-label">Date:</label>
+                        <input className='form-control me-2' type="date" id="fecha" name="fecha" min={hoy} value={formData.fecha} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-4">
+                        <label htmlFor="precio" className="form-label">Price:</label>
+                        <input type="text" className="form-control" id="precio" name="precio" value={formData.precio} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-4">
+                        <label htmlFor="max_personas" className="form-label">Max.people:</label>
+                        <input type="text" className="form-control" id="max_personas" name="max_personas" value={formData.max_personas} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                        <label htmlFor="categoria" className="form-label">Event Image:</label>
+                        <input type="file" className="form-control" accept="image/*" onChange={changeUploadImage} />
+                    </div>
+                    <div className='d-flex justify-content-center'>
+                        <button type="submit" className="btn btn-400 text-white mb-3">Update Event</button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
+    </div>
     );
 };

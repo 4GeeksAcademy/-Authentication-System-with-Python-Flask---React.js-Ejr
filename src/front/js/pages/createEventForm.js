@@ -82,49 +82,49 @@ function CreateEventForm() {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <h2 className="text-center mb-4">Crear Evento</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="evento" className="form-label">Evento:</label>
-              <input type="text" name="evento" className="form-control" value={formData.evento} onChange={handleChange} required />
+          <h2 className="text-center mb-4">Create Event</h2>
+          <form className="row g-3" onSubmit={handleSubmit}>
+            <div className="col-md-8">
+              <label for="inputEmail4" className="form-label">Event:</label>
+              <input type="text" name="evento" className="form-control" value={formData.evento} onChange={handleChange} required/>
             </div>
-            <div className="mb-3">
-              <label htmlFor="ciudad" className="form-label">Ciudad:</label>
+            <div className="col-md-4">
+              <label for="inputPassword4" className="form-label">City:</label>
               <input type="text" name="ciudad" className="form-control" value={formData.ciudad} onChange={handleChange} required />
             </div>
-            <div className="mb-3">
-              <label htmlFor="ubicacion" className="form-label">Ubicación:</label>
+            <div className="mb-3 col-12">
+              <label htmlFor="ubicacion" className="form-label">Location:</label>
               <input type="text" name="ubicacion" className="form-control" value={formData.ubicacion} onChange={handleChange} required />
             </div>
-            <div className="mb-3">
-              <label htmlFor="descripcion" className="form-label">Descripción:</label>
+            <div className="mb-3 col-12">
+              <label htmlFor="descripcion" className="form-label">Description:</label>
               <textarea name="descripcion" className="form-control" value={formData.descripcion} onChange={handleChange} required rows="3"></textarea>
             </div>
-            <div className="mb-3">
-              <label htmlFor="fecha" className="form-label">Fecha:</label>
-              <input className='me-2' type="date" id="fecha" name="fecha" min={hoy} value={formData.fecha} onChange={handleChange} required />
+            <div className="mb-3 col-md-4">
+              <label htmlFor="fecha" className="form-label">Date:</label>
+              <input className='form-control me-2' type="date" id="fecha" name="fecha" min={hoy} value={formData.fecha} onChange={handleChange} required />
             </div>
-            <div className="mb-3">
-              <label htmlFor="precio" className="form-label">Precio:</label>
+            <div className="mb-3 col-md-4">
+              <label htmlFor="precio" className="form-label">Price:</label>
               <input type="text" name="precio" className="form-control" value={formData.precio} onChange={handleChange} required />
             </div>
-            <div className="mb-3">
-              <label htmlFor="max_personas" className="form-label">Max personas:</label>
+            <div className="mb-3 col-md-4">
+              <label htmlFor="max_personas" className="form-label">Max.people:</label>
               <input type="text" name="max_personas" className="form-control" value={formData.max_personas} onChange={handleChange} required />
             </div>
-            <div className="mb-3">
-              <label htmlFor="categoria" className="form-label">Categoria:</label>
+            <div className="mb-3 col-md-4">
+              <label htmlFor="categoria" className="form-label">Category:</label>
               <select className="form-select" name="categoria" value={formData.categoria} onChange={handleChange} aria-label="Default select example" required>
-                <option value="">Open this select menu</option>
+                <option value="">Select category</option>
                 {store.categories?.map((el, i) => <option key={i} value={el.id}>{el.categoria}</option>)}
               </select>
             </div>
-            <div className="mb-3">
-              <label htmlFor="categoria" className="form-label">Imagen Evento:</label>
+            <div className="mb-3 col-md-8">
+              <label htmlFor="categoria" className="form-label">Event Image:</label>
               <input type="file" className="form-control" accept="image/*" onChange={changeUploadImage} />
             </div>
             <div className="d-grid d-flex justify-content-center">
-              <button type="submit" className="btn bg-400 text-white mb-3">Crear Evento</button>
+              <button type="submit" className="btn bg-400 text-white mb-3">Create Event</button>
             </div>
           </form>
           {showSuccessModal && <SuccessModal onClose={() => {

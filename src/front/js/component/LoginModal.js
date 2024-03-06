@@ -60,60 +60,36 @@ export const LoginModal = props => {
 							<div className="d-flex flex-row justify-content-end w-100">
 								<i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
 							</div>
-							<h4 className="modal-title">Inicia sesión</h4>
-							<h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6>
+							<h4 className="modal-title">Log in</h4>
+							<h6>Not yet a member? <a className="text-primary" onClick={updateModalRegistrerState}>Sign up.</a></h6>
 						</div>
 
 						<div className="modal-body w-100 px-5">
 							<Formik initialValues={initialValues} onSubmit={handleLogIn}>
 								<Form>
 									<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
-										<label className="d-flex justify-content-start w-100">Correo electrónico</label>
+										<label className="d-flex justify-content-start w-100">Email</label>
 										<Field type="email" name="email" className="w-100 rounded-3" required />
 										<ErrorMessage name="email" component="div" className="error-message" />
 									</div>
 
 									<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
-										<label className="d-flex justify-content-start w-100">Contraseña</label>
+										<label className="d-flex justify-content-start w-100">Password</label>
 										<Field type="password" name="password" className="w-100 rounded-3" required />
 										<ErrorMessage name="password" component="div" className="error-message" />
 									</div>
-									<button type="submit" className="btn-300 to-be-hoved form-control w-50">
-										¡ENTRA!
+									<div className="d-flex justify-content-center mt-2">
+										<button type="submit" className="btn-300 to-be-hoved form-control w-50">
+										ENTERS!
 									</button>
+									</div>
+									
 								</Form>
 							</Formik>
-							{/* <form className="d-flex flex-column justify-content-center align-items-center w-100 row gy-3" onSubmit={handleLogIn}>
-								<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
-									<label className="d-flex justify-content-start w-100">Correo electrónico</label>
-									<input
-										value={email}
-										className="w-100 rounded-3"
-										type="email"
-										onChange={(e) => setEmail(e.target.value)}
-										required
-									/>
-								</div>
-
-								<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
-									<label className="d-flex justify-content-start w-100">Contraseña</label>
-									<input
-										value={password}
-										className="w-100 rounded-3"
-										type="password"
-										onChange={(e) => setPassword(e.target.value)}
-										required
-									/>
-								</div>
-								// <button type="submit" className="btn-300 to-be-hoved form-control w-50">
-								// 	¡ENTRA!
-								// </button>
-							</form> */}
-
 						</div>
 
 						<div className="modal-footer bg-100 d-flex flex-column px-5">
-							<h6><a className="text-primary" onClick={updateModalPWRecoveryState}>¿Has olvidado tu contraseña?</a></h6>
+							<h6><a className="text-primary" onClick={updateModalPWRecoveryState}>Have you forgotten your password?</a></h6>
 						</div>
 
 					</div>
