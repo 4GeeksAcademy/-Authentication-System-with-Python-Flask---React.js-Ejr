@@ -11,6 +11,7 @@ export const SignUpModal = props => {
     const [password, setPassword] = useState("");
 
     const initialValues = {
+        name: '',
         email: '',
         password: ''
     };
@@ -56,7 +57,7 @@ export const SignUpModal = props => {
                                     <ErrorMessage name="password" component="div" className="error-message" />
                                 </div>
                                 <div className="d-flex justify-content-center mt-2">
-                                    <button type="submit" className="btn-300 to-be-hoved form-control w-50">
+                                    <button type="submit" className="btn-300 to-be-hoved form-control w-50 ">
                                     SIGN UP!
                                 </button>
                                 </div>

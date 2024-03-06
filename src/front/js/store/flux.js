@@ -141,10 +141,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
             obtenerEventosCategoria: async (category) => {
+
                 try {
                     const res = await fetch(process.env.BACKEND_URL + `/api/events/${category}`)
                     const data = await res.json()
                     setStore({ events: data.result })
+
 
                 } catch (error) {
                     console.error(error)
@@ -197,9 +199,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            sendEmail: async (email) => {
+            sendPWDRestoration: async (email) => {
                 try {
-                    let response = await fetch(process.env.BACKEND_URL + "/api/forgot_password", {
+                    let response = await fetch(process.env.BACKEND_URL + "/api/send_pwd_restoration", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -210,9 +212,33 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
-
                         toast.success(data.msg)
-
+                        return true;
+                    } else {
+                        toast.error(data.msg);
+                        return false;
+                    }
+                } catch (error) {
+                    toast.error(error);
+                    console.log(error);
+                    return false;
+                }
+            },
+            restorePassword: async (new_password, token) => {
+                try {
+                    console.log(new_password);
+                    let response = await fetch(process.env.BACKEND_URL + `/api/restore_password/${token}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "new_password": new_password
+                        })
+                    });
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+                        toast.success(data.msg)
                         return true;
                     } else {
                         toast.error(data.msg);
@@ -278,7 +304,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             eliminarEvento: async (id) => {
                 let token = localStorage.getItem("token");
-            
+
                 try {
                     let response = await fetch(process.env.BACKEND_URL + `/api/event/${id}`, {
                         method: "DELETE",
@@ -287,7 +313,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             "Authorization": `Bearer ${token}`
                         }
                     });
-            
+
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         // Elimina el evento del estado
@@ -303,7 +329,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     toast.error("Error al eliminar el evento");
                 }
             },
-            
+
             dejarDeAsistirEvento: async (id) => {
                 let token = localStorage.getItem("token");
                 try {
@@ -340,7 +366,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(newData) // Los nuevos datos que quieres actualizar
                     });
-            
+
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         // Actualiza el estado con los nuevos datos del evento
@@ -369,7 +395,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(newData) // Los nuevos datos que quieres actualizar
                     });
-            
+
                     let data = await response.json();
                     if (response.status >= 200 && response.status < 300) {
                         // Actualiza el estado con los nuevos datos del usuario

@@ -34,14 +34,15 @@
     text-decoration: none;
 }
 .nav-tabs > .nav-item > .nav-link {
-    background-color: #B50DFD;
-    border-color: #B50DFD;
+    
+    background-color: #D7A8EB;
+    border-color: #D7A8EB;
     color: #F7EFE5;
     text-decoration: none;
 }
 .nav-tabs > .nav-item > .active {
-    background-color: #D7A8EB;
-    border-color: #D7A8EB;
+    background-color: #B50DFD;
+    border-color: #B50DFD;
     color: #FFFBF5;
     text-decoration: none;
 }

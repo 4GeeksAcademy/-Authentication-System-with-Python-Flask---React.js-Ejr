@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";;
 import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
-import { PasswordRecoveryModal } from "./PasswordRecoveryModal";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { PasswordRestorationModal } from "./PasswordRestorationModal";
 
 
 export const LoginModal = props => {
@@ -42,10 +42,16 @@ export const LoginModal = props => {
 	}, []);
 
 	function updateModalRegistrerState() {
+
 		setModalRegisterState({ showModalUpdate: true });
+
+
+
+
 	}
 	function updateModalPWRecoveryState() {
 		setModalPWRecoveryState({ showPWModalUpdate: true });
+
 	}
 
 	return (
@@ -80,10 +86,10 @@ export const LoginModal = props => {
 									</div>
 									<div className="d-flex justify-content-center mt-2">
 										<button type="submit" className="btn-300 to-be-hoved form-control w-50">
-										ENTERS!
-									</button>
+											ENTERS!
+										</button>
 									</div>
-									
+
 								</Form>
 							</Formik>
 						</div>
@@ -95,7 +101,7 @@ export const LoginModal = props => {
 					</div>
 				</div>
 				<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })} />
-				<PasswordRecoveryModal show={modalPWRecoveryState.showPWModalUpdate} onClose={() => setModalPWRecoveryState({ showPWModalUpdate: false })} />
+				<PasswordRestorationModal show={modalPWRecoveryState.showPWModalUpdate} onClose={() => setModalPWRecoveryState({ showPWModalUpdate: false })} />
 			</div>
 
 		</>

@@ -15,10 +15,13 @@ from flask_jwt_extended import JWTManager
 
 from flask_mail import Mail #IMPORTAR LA FUNCION Mail() de flask_mail
 
+
+
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
+BACKEND_URL = os.getenv('BACKEND_URL')
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 app.url_map.strict_slashes = False
@@ -92,6 +95,7 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
+
 
 
 # this only runs if `$ python src/main.py` is executed

@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask import current_app
 
 db = SQLAlchemy()
 
@@ -33,6 +34,23 @@ class User(db.Model):
     
     def __repr__(self):
         return  self.name
+    
+    def get_reset_token(self): #<---HERE
+        serializer = Serializer(current_app.config['SECRET_KEY']) #<---HERE
+        token = serializer.dumps({'user_id': self.id})
+
+        return token #<---HERE
+
+    @staticmethod
+    def verify_reset_token(token, expiration=300):
+        serializer = Serializer(current_app.config['SECRET_KEY'])
+
+        try:
+            user_id = serializer.loads(token, max_age=expiration)['user_id']
+        except:
+            return None 
+        return User.query.get(user_id)
+    
     def serialize(self):
         return {
             "id": self.id,

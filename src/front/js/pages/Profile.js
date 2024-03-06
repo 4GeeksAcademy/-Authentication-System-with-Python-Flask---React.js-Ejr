@@ -65,7 +65,7 @@ export const Profile = () => {
 
     console.log(store.user);
     return (
-        <div className="container-fluid d-flex flex-column justify-content-between align-items-center">
+        <div className="container-fluid d-flex flex-column justify-content-between align-items-center vh-100">
             <div className="row justify-content-center align-items-center my-5">
                 <div className="col-12 col-md-4 d-flex justify-content-center">
                     <img className="img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" alt="Profile" />
@@ -125,7 +125,7 @@ export const Profile = () => {
                     <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Next events to attend</button>
                 </li>
                 <li className="nav-item" role="presentation">
-                    <button className="nav-link mt-2" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Your created events</button>
+                    <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Your created events</button>
                 </li>
             </ul>
             <div className="tab-content mt-2" id="myTabContent">
