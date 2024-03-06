@@ -59,6 +59,7 @@ def user_login():
             return jsonify({"error": "Usuario no encontrado"}), 404
         
         if not bcrypt.check_password_hash(user.password, password):
+        
             return jsonify({"message": "Credenciales incorrectas"}), 401
 
         payload = {
@@ -69,6 +70,7 @@ def user_login():
             "location": user.location, 
             "nivel": "user"
         }
+        print(payload)
         token = create_access_token(identity=user.id, additional_claims=payload)
         return jsonify({"token": token}), 200
     except Exception as e:

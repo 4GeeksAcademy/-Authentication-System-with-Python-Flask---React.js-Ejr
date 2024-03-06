@@ -2,10 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-import { Login } from "./pages/login";
 import { Forgot } from "./pages/forgot";
 import { Home } from "./pages/home";
-import { Signup } from "./pages/signup";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -13,6 +11,8 @@ import { ContextProvider } from "./store/appContext"; // Importa el proveedor de
 import NavBar from "./component/Navbar";
 import BookDetails from "./pages/book"
 import { Footer } from "./component/footer";
+import Signup from "./pages/signup";
+import Login from "./pages/login";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
