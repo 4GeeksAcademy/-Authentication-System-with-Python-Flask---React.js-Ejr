@@ -6,26 +6,21 @@ import '../../styles/searchbar.css';
 
 const SearchBar = () => {
     const [search, setSearch] = useState("");
+    const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad de Resultados
     const { store, actions } = useContext(Context);
 
-    const handleSearchChange = async (event) => {
-        const value = event.target.value;
-        setSearch(value);
-        if (value.trim()) {
-            try {
-                const data = await actions.setBooks(value);
-                setResults(data.docs.slice(0,6)); 
-            } catch (error) {
-                console.error("Error en la búsqueda:", error);
-                setResults([]);
-            }
-        } else {
-            setResults([]);
+    const handleSearchChange = (event) => {
+        setSearch(event.target.value);
+        if (!event.target.value.trim()) {
+            setShowResults(false); // Si el input está vacío, no mostrar Resultados
         }
     };
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
+        if (search.trim()) {
+            setShowResults(true); // Mostrar Resultados cuando se envíe el formulario
+        }
     };
 
     return (
@@ -33,14 +28,15 @@ const SearchBar = () => {
             <input 
                 className="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Busca libros, autores, editoriales y más..."
                 aria-label="Search"
                 value={search}
                 onChange={handleSearchChange}
             />
-            <button className="btn btn-outline-success" type="submit"><i className="bi bi-search-heart"></i>
+            <button className="btn btn-outline-success" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-            <Resultados valor={search} />
+            {showResults && <Resultados valor={search} />}
         </form>
     );
 }
