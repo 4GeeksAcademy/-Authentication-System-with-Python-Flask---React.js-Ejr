@@ -4,12 +4,15 @@ import { Context } from "../store/appContext";
 import { LoginModal } from "./LoginModal";
 import { SignUpModal } from "./SignUpModal";
 import { useNavigate } from 'react-router-dom';
+import { DeleteEventModal } from "./DeleteEventModal";
+
 export const EventDescriptionCard = (props) => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
     const [modalState, setModalState] = useState({
         showModal: false,
         showModalUpdate: false,
+        showModalDelete: false,
     });
 
     useEffect(() => {
@@ -41,8 +44,7 @@ export const EventDescriptionCard = (props) => {
     }
 
     const handleDelete = async () => {
-        await actions.eliminarEvento(props.id_evento);
-        navigate('/');
+        setModalState({ showModalDelete: true });
     }
 
     const updateEvent = async () => {
@@ -55,30 +57,30 @@ export const EventDescriptionCard = (props) => {
 
 
     return (
-        <div className="container d-flex flex-column align-items-center justify-content-center mt-5">
+        <div className="container d-flex flex-column justify-content-center">
             <div className="card border-0" style={{ maxWidth: "840px" }}>
                 <div className="row">
                     <div className="col-md-4">
                         <img src={props.img} className="img-fluid rounded-start" alt="..." />
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-8 mt-2">
                         <div className="card-body pt-0">
                             <h2 className="card-title"><strong>{props.evento}</strong></h2>
                             <p className="card-text"><small className="text-body-secondary">{fechaFormateada}</small></p>
-                            <h3><strong>Description</strong></h3>
+                            <h3><strong>Description:</strong></h3>
                             <p>{props.descripcion}</p>
-                            <p><strong>Ciudad:</strong> {props.ciudad}</p>
-                            <p><strong>Ubicación:</strong> {props.ubicacion}</p>
-                            <p><strong>Precio:</strong> {props.precio}</p>
+                            <p><strong>City: :</strong> {props.ciudad}</p>
+                            <p><strong>Ubication:</strong> {props.ubicacion}</p>
+                            <p><strong>Price:</strong> {props.precio}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="d-flex flex-row justify-content-around align-items-center mb-3 gap-5">
+            <div className="d-flex flex-row flex-wrap mb-3">
                 {eventoPendiente ? (
                     <>
-                        <div>
+                        <div className="col-12 col-md-4 d-flex justify-content-center mb-3">
                             {store.auth ? (
                                 <button
                                     onClick={handleInscription}
@@ -105,7 +107,7 @@ export const EventDescriptionCard = (props) => {
                                 </button>
                             )}
                         </div>
-                        <div className="d-flex flex-row">
+                        <div className="d-flex flex-row col-12 col-md-6 justify-content-center mb-3">
                             <div className="p-2">
                                 <button type="button" className="btn btn-300">
                                     <span className="badge text-bg-secondary">{props.asistentes}</span>
@@ -123,14 +125,14 @@ export const EventDescriptionCard = (props) => {
                                 <p>To complete</p>
                             </div>
                         </div>
-                        <div className="d-flex flex-column gap-1 p-2">
-                            <button className={props.user_creador == store.user?.id ? "btn btn-danger" : "d-none"} onClick={handleDelete}>Delete Event</button>
-                            <button className={props.user_creador == store.user?.id ? "btn btn-400" : "d-none"} onClick={updateEvent}>Update Event</button>
+                        <div className="d-flex flex-column gap-1 col-12 col-md-2">
+                            <button className={props.user_creador == store.user?.id ? "btn btn-danger" : "d-none"} onClick={handleDelete}>Delete</button>
+                            <button className={props.user_creador == store.user?.id ? "btn btn-400" : "d-none"} onClick={updateEvent}>Update</button>
                         </div>
                     </>
                 ) : (
                     <div className="alert alert-danger" role="alert">
-                        <h1>"El evento ha finalizado"</h1>
+                        <h1>"The event has ended"</h1>
                     </div>
                 )}
             </div>
@@ -138,6 +140,7 @@ export const EventDescriptionCard = (props) => {
 
             <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })} />
             <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })} />
+            <DeleteEventModal show={modalState.showModalDelete} onClose={() => setModalState({ showModalDelete: false })} id_evento={props.id_evento}/>
         </div>
     );
 }

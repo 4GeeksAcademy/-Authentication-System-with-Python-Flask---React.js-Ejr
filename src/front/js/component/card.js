@@ -30,10 +30,10 @@ export const Card = (props) => {
                 <p className="card-text">{props.descripcion}</p>
             </div>
             <div className="card-body">
-                <p className="card-text">Ciudad: {props.ciudad}</p>
-                <p className="card-text">Fecha: {fechaFormateada}</p>
+                <p className="card-text">City: {props.ciudad}</p>
+                <p className="card-text">Date: {fechaFormateada}</p>
             </div>
-            <button type="button" onClick={handleClick} className="bg-300 col-5 m-auto mb-3 rounded">
+            <button type="button" onClick={handleClick} className="btn btn-300 col-5 m-auto mb-3 rounded">
                 See details!
             </button>
         </div>

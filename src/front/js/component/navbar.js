@@ -4,6 +4,8 @@ import { LoginModal } from "./LoginModal";
 import { SignUpModal } from "./SignUpModal";
 import Logo from "../../img/logo.png";
 import { useNavigate } from 'react-router-dom';
+import { LogoutModal } from "./LogoutModal";
+
 export const Navbar = () => {
 
   const { store, actions } = useContext(Context);
@@ -11,6 +13,7 @@ export const Navbar = () => {
   const [modalState, setModalState] = useState({
     showModal: false,
     showModalUpdate: false,
+    showModalOut: false,
   });
   const [userInfo, setUserInfo] = useState(null)
 
@@ -33,13 +36,7 @@ export const Navbar = () => {
   }
 
   function logOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("email");
-    localStorage.removeItem("id");
-    store.auth = false;
-    store.infoUser = []
-    navigate("/")
+    setModalState({ showModalOut: true });
   }
 
   useEffect(() => {
@@ -63,8 +60,8 @@ export const Navbar = () => {
                 </div>
               </button>
               <ul className="dropdown-menu border-0 dropdown-menu-end dropdown-menu-start">
-                <li><button className="dropdown-item btn-400 mb-2 rounded" onClick={handleClickProfile}>Usuario</button></li>
-                <li><button className="dropdown-item btn-400 rounded" onClick={logOut}>Cerrar sesión</button></li>
+                <li><button className="dropdown-item btn-400 mb-2 rounded" onClick={handleClickProfile}>User</button></li>
+                <li><button className="dropdown-item btn-400 rounded" onClick={logOut}>Sign off</button></li>
               </ul>
             </div>
           ) :
@@ -84,6 +81,7 @@ export const Navbar = () => {
       </div>
       <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })} />
       <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })} />
+      <LogoutModal show={modalState.showModalOut} onClose={() => setModalState({ showModalOut: false })} />
     </nav>
 
   )

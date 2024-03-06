@@ -8,6 +8,7 @@ import { Profile } from "./pages/Profile";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { EventDescription } from "./pages/eventDescription";
+import { PasswordRestoration } from "./pages/PasswordRestoration";
 
 import { Navbar } from "./component/navbar"
 import { Footer } from "./component/footer"
@@ -28,11 +29,11 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div>
+        <div className="container-fluid">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     {/* <Cloudinary/> */}
-                    <Navbar  />
+                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         {/* <Route element={<Demo />} path="/demo" /> */}
@@ -41,8 +42,9 @@ const Layout = () => {
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EventDescription />} path="/description/:theid" />
                         <Route path="events/:category" element={<Events />} />
-                        <Route element={<UpdateEventPage/>} path="/event/:theid" />
+                        <Route element={<UpdateEventPage />} path="/event/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<PasswordRestoration />} path="/restore_password/:token" />
                     </Routes>
                     <Footer />
                     <ToastContainer
@@ -57,7 +59,7 @@ const Layout = () => {
                         pauseOnHover
                         theme="dark"
                     />
-                </ScrollToTop> 
+                </ScrollToTop>
             </BrowserRouter>
         </div>
     );

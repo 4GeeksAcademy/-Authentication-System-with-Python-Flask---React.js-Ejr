@@ -23,6 +23,7 @@ export const Events = () => {
 		async function ini() {
 
 			if (params.category == "ALL") {
+
 				setTitulo("TODOS LOS EVENTOS")
 				await actions.obtenerEventosCategoria(params.category)
 				setStyleDrop({

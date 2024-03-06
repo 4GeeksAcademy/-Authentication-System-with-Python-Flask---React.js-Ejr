@@ -2,25 +2,22 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-export const PasswordRecoveryModal = props => {
+
+export const PasswordRestorationModal = props => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
-
     const handlePWRecovery = async (e) => {
         e.preventDefault()
-        let sentEmail = await actions.sendEmail(email);
+        let sentEmail = await actions.sendPWDRestoration(email);
         if (sentEmail == true) {
             props.onClose()
         }
     }
-
     function closeRecovery() {
         setEmail("");
         props.onClose()
     }
-
-
     return (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
             <div className="modal-dialog" role="document">
