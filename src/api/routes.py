@@ -70,7 +70,6 @@ def user_login():
             "location": user.location, 
             "nivel": "user"
         }
-        print(payload)
         token = create_access_token(identity=user.id, additional_claims=payload)
         return jsonify({"token": token}), 200
     except Exception as e:
