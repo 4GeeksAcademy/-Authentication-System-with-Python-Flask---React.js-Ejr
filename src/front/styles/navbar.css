@@ -1,3 +1,10 @@
 .navbar{
     background-color: #DFDCD3 !important;
 }
+
+/* navbar.css */
+.login-signup-btn {
+    padding: 0.375rem 0.75rem; /* Ajusta el padding si es necesario */
+    /* Otras propiedades que desees aplicar a los botones */
+  }
+  
