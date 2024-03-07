@@ -77,7 +77,7 @@ export const UpdateEventPage = () => {
     const hoy = new Date().toISOString().split('T')[0];
 
     return (
-        <div className="container">
+        <div className="container vh-100">
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <h2 className="text-center mb-4">Update Event</h2>

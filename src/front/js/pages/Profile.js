@@ -63,10 +63,9 @@ export const Profile = () => {
         setEditable(false);
     };
 
-    console.log(store.user);
     return (
-        <div className="container-fluid d-flex flex-column justify-content-between align-items-center vh-100">
-            <div className="row justify-content-center align-items-center my-5">
+        <div className="d-flex flex-column justify-content-between align-items-center">
+            <div className="row justify-content-center align-items-center">
                 <div className="col-12 col-md-4 d-flex justify-content-center">
                     <img className="img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" alt="Profile" />
                 </div>
@@ -112,11 +111,11 @@ export const Profile = () => {
                 </div>
             </div>
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center my-5">
-                <div className="col-12 col-md-6 text-center">
-                    <h3>YOU HAVE CREATED {store.user.num_eventos_creados} EVENTS</h3>
+                <div className="col-12 col-md-8 text-center">
+                    <h4>CREATED {store.user.num_eventos_creados} EVENTS</h4>
                 </div>
-                <div className="col-12 col-md-6 text-center">
-                    <h3>HAVE YOU ATTENDED {store.user.num_eventos_asistido ? store.user.num_eventos_asistido : "0"} EVENTS</h3>
+                <div className="col-12 col-md-8 text-center">
+                    <h4>ATTENDED {store.user.num_eventos_asistido} EVENTS</h4>
                 </div>
             </div>
 

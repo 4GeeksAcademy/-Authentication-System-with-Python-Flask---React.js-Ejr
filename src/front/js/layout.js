@@ -29,10 +29,9 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div className="container-fluid">
+        <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    {/* <Cloudinary/> */}
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />

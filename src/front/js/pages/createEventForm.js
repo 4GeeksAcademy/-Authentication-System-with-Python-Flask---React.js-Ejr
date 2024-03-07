@@ -85,11 +85,11 @@ function CreateEventForm() {
           <h2 className="text-center mb-4">Create Event</h2>
           <form className="row g-3" onSubmit={handleSubmit}>
             <div className="col-md-8">
-              <label for="inputEmail4" className="form-label">Event:</label>
+              <label htmlFor="inputEmail4" className="form-label">Event:</label>
               <input type="text" name="evento" className="form-control" value={formData.evento} onChange={handleChange} required/>
             </div>
             <div className="col-md-4">
-              <label for="inputPassword4" className="form-label">City:</label>
+              <label htmlFor="inputPassword4" className="form-label">City:</label>
               <input type="text" name="ciudad" className="form-control" value={formData.ciudad} onChange={handleChange} required />
             </div>
             <div className="mb-3 col-12">
@@ -127,11 +127,11 @@ function CreateEventForm() {
               <button type="submit" className="btn bg-400 text-white mb-3">Create Event</button>
             </div>
           </form>
-          {showSuccessModal && <SuccessModal onClose={() => {
+          {/* {showSuccessModal && <SuccessModal onClose={() => {
             setShowSuccessModal(false)
             navigate('/');
           }} />}
-          {showErrorModal && <ErrorModal onClose={() => setShowErrorModal(false)} />}
+          {showErrorModal && <ErrorModal onClose={() => setShowErrorModal(false)} />} */}
         </div>
       </div>
     </div>

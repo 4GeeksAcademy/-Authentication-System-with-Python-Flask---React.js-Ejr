@@ -57,13 +57,13 @@ export const EventDescriptionCard = (props) => {
 
 
     return (
-        <div className="container d-flex flex-column justify-content-center">
+        <div className="container d-flex flex-column justify-content-center mt-md-5">
             <div className="card border-0" style={{ maxWidth: "840px" }}>
                 <div className="row">
                     <div className="col-md-4">
                         <img src={props.img} className="img-fluid rounded-start" alt="..." />
                     </div>
-                    <div className="col-md-8 mt-2">
+                    <div className="col-md-8">
                         <div className="card-body pt-0">
                             <h2 className="card-title"><strong>{props.evento}</strong></h2>
                             <p className="card-text"><small className="text-body-secondary">{fechaFormateada}</small></p>

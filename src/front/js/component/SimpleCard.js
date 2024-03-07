@@ -20,9 +20,12 @@ export const SimpleCard = (props) => {
     // Formatear la fecha en el formato corto
     const fechaFormateada = fechaObjeto.toLocaleDateString();
     return(
-        <div className="card d-flex flex-row border-0">
-                <p onClick={handleClick}  style={{ cursor: 'pointer', color: 'black' }} onMouseEnter={(e) => { e.target.style.color = 'blue'; }}  onMouseLeave={(e) => { e.target.style.color = 'black'; }}className="card-title">{props.evento}</p>
+        <div className="card d-flex flex-row justify-content-between border-0">
+                <p onClick={handleClick} style={{ cursor: 'pointer', color: 'black' }} onMouseEnter={(e) => { e.target.style.color = 'blue'; }} onMouseLeave={(e) => { e.target.style.color = 'black'; }} className="card-title">{props.evento}</p>
+                <p style={{ margin: '0 8px' }}>{ `    -     `}</p>
+                <p>{fechaFormateada}</p>
         </div>
+
     );
 }
 

@@ -25,12 +25,12 @@ export const PasswordRestoration = () => {
             <form className='col-4 my-5 row gy-3' onSubmit={handlePWRestoration}>
                 <h3>Restore your password!</h3>
                 <div className="form-group">
-                    <label for="newPWD">Enter your new password</label>
+                    <label htmlFor="newPWD">Enter your new password</label>
                     <input type="password" className="form-control" id="newPWD" aria-describedby="emailHelp" onChange={(e) => setNewPassword(e.target.value)} required />
                     <small id="pwdHelp" className="form-text text-muted">We won't tell anyone you are using the same password all along Internet.</small>
                 </div>
                 <div className="form-group">
-                    <label for="confirmPWD">Confirm password</label>
+                    <label htmlFor="confirmPWD">Confirm password</label>
                     <input type="password" className="form-control" id="confirmPWD" onChange={(e) => setConfirmedPassword(e.target.value)} required />
                 </div>
                 <div className="form-group">
