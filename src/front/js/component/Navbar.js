@@ -2,38 +2,48 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../../styles/navbar.css';
-import { Navbar, Container, Nav } from 'react-bootstrap';
 
 const NavBar = () => {
   let navigate = useNavigate();
 
   return (
-    <Navbar expand="lg" style={{ backgroundColor: '#DFDCD3' }} className="align-items-center">
-      <Container fluid>
-        <Navbar.Brand href="#home"><Logo /></Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll" className="d-flex align-items-center">
-          <Nav className="me-auto my-2 my-lg-0" style={{ '--bs-scroll-height': '100px' }}>
-            <Nav.Link as={Link} to="/recomendaciones">Recomendaciones</Nav.Link>
-            <Nav.Link as={Link} to="/autores">Autores</Nav.Link>
-            <Nav.Link as={Link} to="/generos">Géneros</Nav.Link>
-            <Nav.Link as={Link} to="/best-seller">Best Seller</Nav.Link>
-            <Nav.Link as={Link} to="/mas-buscados">Más Buscados</Nav.Link>
-          </Nav>
+    <nav className="navbar navbar-expand-lg bg-body-tertiary align-items-center">
+      <div className="container-fluid">
+        <Link className="navbar-brand" to="/"><Logo /></Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link active" aria-current="page" to="/recomendaciones">Recomendaciones</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/autores">Autores</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/generos">Géneros</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/best-seller">Best Seller</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/mas-buscados">Más Buscados</Link>
+            </li>
+          </ul>
           <SearchBar />
-          <div className="ms-auto">
-            <button onClick={() => navigate('/signup')} className="btn btn-primary login-signup-btn me-2">
+          <div className="d-flex justify-content-end align-items-center flex-nowrap">
+            <button onClick={() => navigate('/signup')} className="btn btn-primary me-1">
               Sign Up
             </button>
-            <button onClick={() => navigate('/login')} className="btn btn-secondary login-signup-btn">
+            <button onClick={() => navigate('/login')} className="btn btn-secondary ms-1">
               Log In
             </button>
           </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </div>
+      </div>
+    </nav>
   );
 };
 
