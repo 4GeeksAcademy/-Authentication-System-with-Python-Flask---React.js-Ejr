@@ -73,7 +73,10 @@
 		]
 	},
 	"dependencies": {
+		"@fortawesome/free-brands-svg-icons": "^6.5.1",
+		"@fortawesome/react-fontawesome": "^0.2.0",
 		"bcrypt": "^5.1.1",
+		"bootstrap": "^5.3.3",
 		"formik": "^2.4.5",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
