@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import "../../styles/login.css"
 import { Context } from '../store/appContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -29,8 +30,7 @@ export const Signup = () => {
       actions.showNotification("Complete all fields", "danger");
     } else {
 
-    actions
-      .signup(
+    actions.signup(
         email,
         password,
         firstName,
@@ -58,16 +58,12 @@ export const Signup = () => {
   }
 
   return (
-    <div className='p-5 ' style={{ background: "linear-gradient(0deg, rgba(0,0,0,1) 6%, rgba(128,128,128,1) 30%, rgba(255,255,255,1) 50%, rgba(138,138,138,1) 70%, rgba(0,0,0,1) 94%)" }}>
-      <h1 className='mx-auto text-center text-white p-3' style={{ fontSize: '3rem' }}>
-        RUL Rules!
-      </h1>
-      <form
-        style={{ borderRadius: "25px" }} className='  card col-12 col-lg-6 mx-auto mb-5 bg-black text-white' onSubmit={handleSubmit}>
-        <div className='m-3 '>
-          <label htmlFor='exampleInputEmail1' className='form-label'>
-            <h5>Email address</h5>
-          </label>
+    <form onSubmit={handleSubmit}>
+    <div >
+      <h1>Sign-up</h1>
+      
+        <div className='mb-3'>
+          <label htmlFor='exampleInputEmail1' className='form-label'>Email address</label>
           <input
             type='email'
             onChange={(e) => setEmail(e.target.value)}
@@ -75,10 +71,8 @@ export const Signup = () => {
             id='email'
           />
         </div>
-        <div className='m-3'>
-          <label htmlFor='exampleInputPassword1' className='form-label'>
-            <h5>Password</h5>
-          </label>
+        <div className='mb-3'>
+          <label htmlFor='exampleInputPassword1' className='form-label'>Password</label>
           <input
             type='password'
             onChange={(e) => setPassword(e.target.value)}
@@ -86,10 +80,8 @@ export const Signup = () => {
             id='password'
           />
         </div>
-        <div className='m-3 '>
-          <label htmlFor='exampleInputEmail1' className='form-label'>
-            <h5>First Name</h5>
-          </label>
+        <div className='mb-3 '>
+          <label htmlFor='exampleInputEmail1' className='form-label'>First Name</label>
           <input
             type='text'
             onChange={(e) => setFirstName(e.target.value)}
@@ -97,10 +89,8 @@ export const Signup = () => {
             id='firstName'
           />
         </div>
-        <div className='m-3 '>
-          <label htmlFor='exampleInputEmail1' className='form-label'>
-            <h5>Last Name</h5>
-          </label>
+        <div className='mb-3 '>
+          <label htmlFor='exampleInputEmail1' className='form-label'>Last Name</label>
           <input
             type='text'
             onChange={(e) => setLastName(e.target.value)}
@@ -108,10 +98,8 @@ export const Signup = () => {
             id='lastName'
           />
         </div>
-        <div className='m-3 '>
-          <label htmlFor='exampleInputEmail1' className='form-label'>
-            <h5>Phone</h5>
-          </label>
+        <div className='mb-3 '>
+          <label htmlFor='exampleInputEmail1' className='form-label'>Phone</label>
           <input
             type='text'
             onChange={(e) => setPhone(e.target.value)}
@@ -119,10 +107,8 @@ export const Signup = () => {
             id='Phone'
           />
         </div>
-        <div className='m-3 '>
-          <label htmlFor='exampleInputEmail1' className='form-label'>
-            <h5>Location</h5>
-          </label>
+        <div className='mb-3 '>
+          <label htmlFor='exampleInputEmail1' className='form-label'>Location</label>
           <input
             type='text'
             onChange={(e) => setLocation(e.target.value)}
@@ -133,21 +119,19 @@ export const Signup = () => {
         <button
           style={{ cursor: 'pointer' }}
           type='submit'
-          className='btn btn-light  mx-auto m-3 rounded-pill'
-        >
-          <h5>Create account</h5>
-        </button>
-      </form>
-      <div className=' mb-5  w-50 mx-auto'>
+          className='btn btn-success'
+        >Create account</button>
+      
+      <div className='mb-3 pt-5  mx-auto'>
         <h5
-          className='text-center text-white'
+          className='text-center'
           style={{ cursor: 'pointer' }}
           onClick={handleLogin}
-        >
-          if you already have an account go to Login
+        >If you already have an account go to Login
         </h5>
       </div>
     </div>
+    </form>
   )
 }
 

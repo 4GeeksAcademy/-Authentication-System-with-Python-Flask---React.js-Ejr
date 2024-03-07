@@ -45,6 +45,7 @@ export const Home = () => {
   return (
     <Container>
       <FavoritesContext.Provider value={{ favorites, addToFavorites }}>
+      <div className="grid-container">
         <Row>
           <h2>Libros populares</h2>
           {popularBooks.map((book) => (
@@ -53,6 +54,8 @@ export const Home = () => {
             </Col>
           ))}
         </Row>
+      </div>
+      <div className="grid-container">
         <Row>
           <h2>Mis libros favoritos</h2>
           {favorites.map((book) => (
@@ -61,6 +64,8 @@ export const Home = () => {
             </Col>
           ))}
         </Row>
+      </div>
+      <div className="grid-container">
         <Row>
           <h2>Libros de Romance</h2>
           {romanceBooks.map((book) => (
@@ -69,6 +74,8 @@ export const Home = () => {
             </Col>
           ))}
         </Row>
+      </div>
+      <div className="grid-container">
         <Row>
           <h2>Libros de Suspense</h2>
           {suspenseBooks.map((book) => (
@@ -77,6 +84,7 @@ export const Home = () => {
             </Col>
           ))}
         </Row>
+      </div>
       </FavoritesContext.Provider>
     </Container>
   );
@@ -86,12 +94,12 @@ const BookCard = ({ book }) => {
   const { addToFavorites } = useContext(FavoritesContext);
 
   return (
-    <Card>
+    <Card className="d-flex flex-column h-100">
       <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-M.jpg`} />
-      <Card.Body>
+      <Card.Body className="d-flex flex-column justify-content-between">
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
-		<Link to={`/book/${book.key}`}>
+		    <Link to={`/books${book.key}`}>
           <button className="btn btn-success">VER LIBRO</button>
         </Link>
         

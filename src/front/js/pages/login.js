@@ -18,7 +18,7 @@ export const Login = () => {
         <form onSubmit={handleLogin}>
             <div>
                 <h1>Login</h1>
-                <p>Don’t have an account? <a href="">Create now</a></p>
+                <p>Don’t have an account? <a href="signup">Create now</a></p>
             </div>
 
             <div className="mb-3">
@@ -55,3 +55,4 @@ export const Login = () => {
         </form>
     );
 };
+export default Login
