@@ -13,6 +13,7 @@ export const Profile = () => {
         password: store.user.password
     });
     const [editable, setEditable] = useState(false);
+    const [altura, setAltura] = useState(window.innerWidth < 768 ? '' : '100vh');
 
     useEffect(() => {
         async function ini() {
@@ -20,6 +21,17 @@ export const Profile = () => {
             await diferenciaDias();
         }
         ini();
+
+        const cambiarAltura = () => {
+            setAltura(window.innerWidth < 768 ? '' : '100vh');
+          };
+      
+          window.addEventListener('resize', cambiarAltura);
+      
+          return () => {
+            window.removeEventListener('resize', cambiarAltura);
+          };
+
     }, []);
 
     async function diferenciaDias() {
@@ -64,27 +76,27 @@ export const Profile = () => {
     };
 
     return (
-        <div className="d-flex flex-column justify-content-between align-items-center">
+        <div className="d-flex flex-column align-items-center"  style={{ height: altura }}>
             <div className="row justify-content-center align-items-center">
                 <div className="col-12 col-md-4 d-flex justify-content-center">
                     <img className="img-fluid" src="https://img.freepik.com/fotos-premium/feliz-dibujo-dibujos-animclass=abindex`ados-boceto-imagen-fondo-blanco-arte-generado-ai_848903-6756.jpg" alt="Profile" />
                 </div>
                 <div className="col-12 col-md-4 d-flex justify-content-center">
-                    <div className="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center">
-                        <ul className="col-8 list-group">
+                    <div className="col-12 d-flex flex-column justify-content-center align-items-start">
+                        <ul className="list-group">
                             {editable ? (
-                                <div className="border-0">
+                                <div className="ms-3 border-0 col-12 d-flex flex-column justify-content-center align-items-start">
                                     <input className="border-0 mb-2" type="text" name="name" value={userData.name} onChange={handleInputChange} />
                                     <input className="border-0" type="email" name="email" value={userData.email} onChange={handleInputChange} />
                                 </div>
                             ) : (
-                                <div className="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center">
+                                <div className="ms-3 col-12 d-flex flex-column justify-content-center align-items-start">
                                     <h2>{store.user.name}</h2>
                                     <h4>{store.user.email}</h4>
                                 </div>
                             )}
                         </ul>
-                        <button className="btn btn-400 text-white m-2" onClick={() => {
+                        <button className="ms-3 btn btn-400 text-white m-2" onClick={() => {
                             if (editable) {
                                 handleUpdateUser();
                             } else {
@@ -101,29 +113,25 @@ export const Profile = () => {
                     </div>
                 </div>
                 <div className="col-12 col-md-4 d-flex justify-content-center mt-5">
-                    <div className="bg-300 rounded-circle d-flex justify-content-center align-items-center p-5"
-                        style={{
-                            height: window.innerWidth < 768 ? "15rem" : "22rem",
-                            width: window.innerWidth < 768 ? "15rem" : "22rem"
-                        }}>
+                    <div className="bg-300 rounded-circle d-flex justify-content-center align-items-center p-5">
                         <h3 className="text-white"> {diasDiferencia >= 0 ? `Next events in ${diasDiferencia} days` : "You don't have any upcoming events"}</h3>
                     </div>
                 </div>
             </div>
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center my-5">
-                <div className="col-12 col-md-8 text-center">
+            <div className="d-flex flex-column col-md-8 flex-md-row justify-content-between align-items-center my-5">
+                <div className="col-12 col-md-6 text-center">
                     <h4>CREATED {store.user.num_eventos_creados} EVENTS</h4>
                 </div>
-                <div className="col-12 col-md-8 text-center">
+                <div className="col-12 col-md-6 text-center">
                     <h4>ATTENDED {store.user.num_eventos_asistido} EVENTS</h4>
                 </div>
             </div>
 
-            <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li className="nav-item" role="presentation">
+            <ul className="d-flex align-items-stretch nav nav-tabs mb-3" id="myTab" role="tablist">
+                <li className="nav-item col-6" role="presentation">
                     <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Next events to attend</button>
                 </li>
-                <li className="nav-item" role="presentation">
+                <li className="d-flex align-items-stretch nav-item col-6" role="presentation">
                     <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Your created events</button>
                 </li>
             </ul>

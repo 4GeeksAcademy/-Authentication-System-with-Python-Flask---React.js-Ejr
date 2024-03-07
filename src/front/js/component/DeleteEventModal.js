@@ -21,8 +21,8 @@ export const DeleteEventModal = props => {
 					<div className="modal-content">
 						<div className="modal-header bg-100 d-flex flex-column px-5">
 							<h4 className="modal-title">Are you sure to delete the event?</h4>
-                            <button className="btn-400 my-2 rounded col-12 col-md-4" onClick={deleteEvent}>YES</button>
-                            <button className="btn-400 rounded col-12 col-md-4" onClick={() => props.onClose()}>NO</button>
+                            <button className="btn btn-300 to-be-hoved text-white my-2 rounded col-12 col-md-4" onClick={deleteEvent}>YES</button>
+                            <button className="btn btn-300 to-be-hoved text-white rounded col-12 col-md-4" onClick={() => props.onClose()}>NO</button>
 						</div>
                     </div>
                 </div>

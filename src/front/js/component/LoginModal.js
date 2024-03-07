@@ -86,7 +86,7 @@ export const LoginModal = props => {
 									</div>
 									<div className="d-flex justify-content-center mt-2">
 										<button type="submit" className="btn-300 to-be-hoved form-control w-50">
-											ENTERS!
+											ENTER!
 										</button>
 									</div>
 

@@ -57,13 +57,13 @@ export const EventDescriptionCard = (props) => {
 
 
     return (
-        <div className="container d-flex flex-column justify-content-center mt-md-5">
+        <div className="container d-flex flex-column justify-content-center mt-md-5 ">
             <div className="card border-0" style={{ maxWidth: "840px" }}>
                 <div className="row">
-                    <div className="col-md-4">
-                        <img src={props.img} className="img-fluid rounded-start" alt="..." />
+                    <div className="col-md-6">
+                        <img src={props.img} className="img-fluid rounded-start col-12" alt="..." />
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-6 ">
                         <div className="card-body pt-0">
                             <h2 className="card-title"><strong>{props.evento}</strong></h2>
                             <p className="card-text"><small className="text-body-secondary">{fechaFormateada}</small></p>
@@ -77,7 +77,7 @@ export const EventDescriptionCard = (props) => {
                 </div>
             </div>
 
-            <div className="d-flex flex-row flex-wrap mb-3">
+            <div className="d-flex flex-row flex-wrap my-3">
                 {eventoPendiente ? (
                     <>
                         <div className="col-12 col-md-4 d-flex justify-content-center mb-3">
@@ -126,8 +126,8 @@ export const EventDescriptionCard = (props) => {
                             </div>
                         </div>
                         <div className="d-flex flex-column gap-1 col-12 col-md-2">
+                            <button className={props.user_creador == store.user?.id ? "btn btn-300 to-be-hoved text-white " : "d-none"} onClick={updateEvent}>Update</button>
                             <button className={props.user_creador == store.user?.id ? "btn btn-danger" : "d-none"} onClick={handleDelete}>Delete</button>
-                            <button className={props.user_creador == store.user?.id ? "btn btn-400" : "d-none"} onClick={updateEvent}>Update</button>
                         </div>
                     </>
                 ) : (

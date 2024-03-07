@@ -73,7 +73,7 @@ export const Home = () => {
                         interval={null} // Desactivar la reproducción automática
                         controls={false} // Desactivar los controles automáticos
                         wrap={true} // Desactivar el desplazamiento circular
-                        className="carousel-fade"
+                        className="carousel-fade bg-"
                     >
                         {[...Array(store.events.length)].map((_, idx) => (
                             <Carousel.Item key={idx}>

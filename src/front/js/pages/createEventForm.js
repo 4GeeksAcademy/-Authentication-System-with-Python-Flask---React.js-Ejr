@@ -7,12 +7,23 @@ import { useNavigate } from "react-router-dom";
 
 function CreateEventForm() {
   const { actions, store } = useContext(Context);
-
+  const [altura, setAltura] = useState(window.innerWidth < 768 ? '' : '100vh');
   const [url_img, setUrl_img] = useState("https://i.pinimg.com/564x/e6/c3/4a/e6c34afdf235e76c31344d6a933cae27.jpg")
   const navigate = useNavigate();
   useEffect(() => {
     actions.getCategories();
-  }, [actions]);
+
+    const cambiarAltura = () => {
+      setAltura(window.innerWidth < 768 ? '' : '100vh');
+    };
+
+    window.addEventListener('resize', cambiarAltura);
+
+    return () => {
+      window.removeEventListener('resize', cambiarAltura);
+    };
+
+  }, []);
 
   const [formData, setFormData] = useState({
     evento: '',
@@ -29,7 +40,7 @@ function CreateEventForm() {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const [showErrorModal, setShowErrorModal] = useState(false)
-
+ 
   const changeUploadImage = async (e) => {
     const files = e.target.files[0];
     const data = new FormData();
@@ -79,7 +90,7 @@ function CreateEventForm() {
   const hoy = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="container">
+    <div className="container" style={{ height: altura }}>
       <div className="row justify-content-center">
         <div className="col-md-8">
           <h2 className="text-center mb-4">Create Event</h2>
