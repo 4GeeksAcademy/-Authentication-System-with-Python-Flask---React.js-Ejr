@@ -1,46 +1,46 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import { useCallback, useContext, useState, useEffect } from "react";
-import { Resultados } from "../component/resultados"
+import { Resultados } from "./resultados";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import '../../styles/searchbar.css'; 
 
-// Barra de búsqueda
 const SearchBar = () => {
     const [search, setSearch] = useState("");
+    const [results, setResults] = useState([]);
     const { store, actions } = useContext(Context);
 
-    const handelOnSubmit = (e) => {
-        e.preventDefault()
+    const handleSearchChange = async (event) => {
+        const value = event.target.value;
+        setSearch(value);
+        if (value.trim()) {
+           
+            actions.setBooks(value); 
+        }
+    };
 
-    }
-    useEffect(() => {
-        console.log('Input:', search)
-
-    }, [search])
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+       
+    };
 
     return (
-        <>
-            <div className="text-center">
-                <form onSubmit={handelOnSubmit} className="d-flex me-0 " >
-
-                         <input 
-                        className="form-control m-1 col-6"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)} />
-
-                        <button className="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <Resultados valor={search} />
-            </div>
-
-
-
-
-
-        </>
-    )
+        <form onSubmit={handleOnSubmit} className="d-flex" role="search">
+            <input 
+                className="form-control me-2"
+                type="search"
+                placeholder="Busca libros, autores, editoriales..."
+                aria-label="Search"
+                value={search}
+                onChange={handleSearchChange}
+            />
+          <button className="btn btn-outline-success search-btn" type="submit">
+    <FontAwesomeIcon icon={faMagnifyingGlass} /> 
+</button>
+            
+            <Resultados valor={search} />
+        </form>
+    );
 }
 
 export default SearchBar;
