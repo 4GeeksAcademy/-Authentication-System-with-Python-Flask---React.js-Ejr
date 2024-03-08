@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
+            // Estado inicial del store
             message: null,
             demo: [
                 {
@@ -14,44 +15,43 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            urlBase:"https://openlibrary.org/search.json"
+            resultados: [], // Almacenar los resultados de la búsqueda de libros
+            urlBase: "https://openlibrary.org/search.json", 
         },
         actions: {
             login: async (email, password) => {
-                let actions=getActions()
-				const dat =await actions.APIfetch("/login","POST",{email,password})
-				if(dat.error){
-					return false
-				}
-				setStore({token:dat.token})
-				localStorage.setItem("accessToken",dat.token)
-				return true				
-
-            },
-            signup: async (email, password, first_name, last_name, phone, location) => {
-				
-                let actions=getActions()
-                const res= await actions.APIfetch("/signup","POST", {email,password,email, password, first_name, last_name, phone, location})
-                if(res.ok){
-                    console.log("Usuario registrado")
-                    return true
-
-                }
-                else{
-                    console.log("error")
-                    return false
-
-                }
-
-        
-
-        }		,
-            getMessage: async () => {
-                let actions = getActions();
+                // Implementación de la lógica de inicio de sesión
+                const actions = getActions();
                 try {
-                    const data = actions.APIfetch("/hello");
+                    const data = await actions.APIfetch("/login", "POST", { email, password });
+                    setStore({ token: data.token });
+                    localStorage.setItem("accessToken", data.token);
+                    return true;
+                } catch (error) {
+                    console.error("Error al iniciar sesión:", error);
+                    return false;
+                }
+            },
+            // Acción para registrarse
+            signup: async (email, password, first_name, last_name, phone, location) => {
+                const actions = getActions();
+                try {
+                    const res = await actions.APIfetch("/signup", "POST", {
+                        email, password, first_name, last_name, phone, location
+                    });
+                    console.log("Usuario registrado exitosamente");
+                    return true;
+                } catch (error) {
+                    console.error("Error al registrar el usuario:", error);
+                    return false;
+                }
+            },
+            // Acción para obtener un mensaje del backend
+            getMessage: async () => {
+                const actions = getActions();
+                try {
+                    const data = await actions.APIfetch("/hello");
                     setStore({ message: data.message });
-                    return data;
                 } catch (error) {
                     console.log("Error loading message from backend", error);
                 }
@@ -64,50 +64,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
-            APIfetch: async (endpoint,method="GET",body=null)=>{
-				let params={method}
-				if (body!=null){
-					params.headers={
-						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin":"*"
-					}
-					params.body=JSON.stringify(body) 
-				}
-				let res=await fetch(process.env.BACKEND_URL+"/api"+endpoint,params)
-				if (!res.ok){
-					console.error(res.statusText)
-					return ({error:res.statusText})
 
-				}
-				let json=res.json()
-				return json
-				
-			},
-			setBooks:async(endpoint,method="GET",body=null)=>{
-				let store=getStore()
-				try {
-					const response=await fetch(store.urlBase+`?q=${endpoint}`)
-					const data=await response.json()
+            // Función genérica para realizar llamadas API
+            APIfetch: async (endpoint, method = "GET", body = null) => {
+                const params = { method, headers: {} };
+                if (body) {
+                    params.headers["Content-Type"] = "application/json";
+                    params.body = JSON.stringify(body);
+                }
+                try {
+                    const res = await fetch(`${process.env.BACKEND_URL}api${endpoint}`, params);
+                    if (!res.ok) throw new Error(res.statusText);
+                    return await res.json();
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    throw error;
+                }
+            },
 
-					if(!response.ok){
-						console.log(data)
-					}
-				return data
-				} catch (error) {
-				console.log(error)	
-				}
-            
-			},
-            showNotification: async (message, type) => {
-                setStore({ response: { message, type } })
-              },
-              loadSession: ()=>{
-                  let token=localStorage.getItem("accessToken")
-                  setStore({token})
-              }
+            // Acción para realizar la búsqueda de libros en OpenLibrary
+            setBooks: async (searchTerm) => {
+                let store = getStore();
+                try {
+                    // Realizar solicitud a OpenLibrary con el término de búsqueda
+                    const response = await fetch(`${store.urlBase}?q=${searchTerm}&limit=50`);
+                    if (!response.ok) throw new Error('Respuesta no exitosa de la API');
+                    const data = await response.json();
+                    // Filtrar resultados para que coincidan más estrechamente con el término de búsqueda
+                    // y limitar a los primeros 6 resultados
+                    const filteredResults = data.docs.filter(doc => doc.title.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6);
+                    // Actualizar el estado global 'resultados' con los documentos filtrados
+                    setStore({ resultados: filteredResults });
+                } catch (error) {
+                    console.error("Error al realizar la búsqueda:", error);
+                    // Manejar errores, como actualizar el estado global con un error o mostrar una notificación
+                }
+            },
+
+            // Acción para cargar la sesión
+            loadSession: () => {
+                // Carga la sesión desde localStorage u otra fuente
+                const token = localStorage.getItem("accessToken");
+                setStore({ token });
+            }
         }
     };
 };
 
 export default getState;
-
