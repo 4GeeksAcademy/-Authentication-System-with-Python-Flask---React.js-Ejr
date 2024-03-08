@@ -10,7 +10,7 @@ import injectContext from "./store/appContext";
 import { ContextProvider } from "./store/appContext"; // Importa el proveedor de contexto existente
 import NavBar from "./component/Navbar";
 import BookDetails from "./pages/book"
-import { Footer } from "./component/footer";
+import Footer from "./component/footer";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 

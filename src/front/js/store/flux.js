@@ -57,11 +57,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ demo: demo });
             },
             APIfetch: async (endpoint, method = "GET", body = null) => {
-                let params = { method };
+                let params = { method, headers:{
+                    "Access-Control-Allow-Origin": "*"
+                } };
                 if (body != null) {
                     params.headers = {
                         "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
+                       
                     };
                     params.body = JSON.stringify(body);
                 }

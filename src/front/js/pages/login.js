@@ -25,13 +25,13 @@ export const Login = () => {
                 <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                 <input placeholder="email@email.com" 
                 type="email" className="form-control" 
-                id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)}/>
             </div>
 
             <div className="mb-3">
                 <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                 <div className="input-group">
-                    <input placeholder="**********" type="password" className="form-control" id="exampleInputPassword1"/>
+                    <input placeholder="**********" type="password" className="form-control" id="exampleInputPassword1" onChange={(e)=>setPassword(e.target.value)}/>
                     <div className="input-group-text"><i className="fa fa-eye"></i></div>
                 </div>
             </div>
@@ -50,7 +50,7 @@ export const Login = () => {
             </div>
 
             <div className="d-grid gap-2">
-                <button type="submit" className="btn btn-success">Login</button>
+                <button type="submit" className="btn btn-success" onClick={handleLogin}>Login</button>
             </div>
         </form>
     );
