@@ -6,7 +6,7 @@ import '../../styles/searchbar.css';
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/js/bootstrap.bundle.min'; 
 
-// Componente SearchBar con lógica de búsqueda y resultados
+// Componente SearchBar lógica de búsqueda y resultados
 const SearchBar = () => {
     const [search, setSearch] = useState("");
     const { actions, store } = useContext(Context);
