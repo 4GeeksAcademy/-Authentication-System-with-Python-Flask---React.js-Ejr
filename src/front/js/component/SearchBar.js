@@ -14,9 +14,9 @@ const SearchBar = () => {
     }
     useEffect(() => {
         console.log('Input:', search)
-
+        
     }, [search])
-
+    const [pag, setPag]=useState(false)
     return (
         <>
             <div className="text-center">
@@ -30,7 +30,7 @@ const SearchBar = () => {
                         value={search}
                         onChange={(event) => setSearch(event.target.value)} />
 
-                        <button className="btn btn-outline-success" type="submit">Search</button>
+                        <button className="btn btn-outline-success" type="submit" onClick={()=>setPag(!pag)}>Search</button>
                 </form>
                 <Resultados valor={search} />
             </div>

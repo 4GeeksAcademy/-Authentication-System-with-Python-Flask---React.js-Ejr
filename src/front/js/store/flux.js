@@ -14,38 +14,39 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            urlBase:"https://openlibrary.org/search.json"
+            urlBase: "https://openlibrary.org/search.json",
+            resultados: []
         },
         actions: {
             login: async (email, password) => {
-                let actions=getActions()
-				const dat =await actions.APIfetch("/login","POST",{email,password})
-				if(dat.error){
-					return false
-				}
-				setStore({token:dat.token})
-				localStorage.setItem("accessToken",dat.token)
-				return true				
+                let actions = getActions()
+                const dat = await actions.APIfetch("/login", "POST", { email, password })
+                if (dat.error) {
+                    return false
+                }
+                setStore({ token: dat.token })
+                localStorage.setItem("accessToken", dat.token)
+                return true
 
             },
             signup: async (email, password, first_name, last_name, phone, location) => {
-				
-                let actions=getActions()
-                const res= await actions.APIfetch("/signup","POST", {email,password,email, password, first_name, last_name, phone, location})
-                if(res.ok){
+
+                let actions = getActions()
+                const res = await actions.APIfetch("/signup", "POST", { email, password, email, password, first_name, last_name, phone, location })
+                if (res.ok) {
                     console.log("Usuario registrado")
                     return true
 
                 }
-                else{
+                else {
                     console.log("error")
                     return false
 
                 }
 
-        
 
-        }		,
+
+            },
             getMessage: async () => {
                 let actions = getActions();
                 try {
@@ -64,50 +65,82 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
-            APIfetch: async (endpoint,method="GET",body=null)=>{
-				let params={method}
-				if (body!=null){
-					params.headers={
-						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin":"*"
-					}
-					params.body=JSON.stringify(body) 
-				}
-				let res=await fetch(process.env.BACKEND_URL+"/api"+endpoint,params)
-				if (!res.ok){
-					console.error(res.statusText)
-					return ({error:res.statusText})
+            APIfetch: async (endpoint, method = "GET", body = null) => {
+                let params = { method }
+                if (body != null) {
+                    params.headers = {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                    params.body = JSON.stringify(body)
+                }
+                let res = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params)
+                if (!res.ok) {
+                    console.error(res.statusText)
+                    return ({ error: res.statusText })
 
-				}
-				let json=res.json()
-				return json
-				
-			},
-			setBooks:async(endpoint,method="GET",body=null)=>{
-				let store=getStore()
-				try {
-					const response=await fetch(store.urlBase+`?q=${endpoint}`)
-					const data=await response.json()
+                }
+                let json = res.json()
+                return json
 
-					if(!response.ok){
-						console.log(data)
-					}
-				return data
-				} catch (error) {
-				console.log(error)	
-				}
-            
-			},
+            },
+            setBooks: async (endpoint, method = "GET", body = null) => {
+                let store = getStore()
+                try {
+                    const response = await fetch(store.urlBase + `?q=${endpoint}`)
+                    const data = await response.json()
+
+                    if (!response.ok) {
+                        console.log(data)
+                    }
+                    return data
+                } catch (error) {
+                    console.log(error)
+                }
+
+            },
             showNotification: async (message, type) => {
                 setStore({ response: { message, type } })
-              },
-              loadSession: ()=>{
-                  let token=localStorage.getItem("accessToken")
-                  setStore({token})
-              }
-        }
-    };
-};
+            },
+            loadSession: () => {
+                let token = localStorage.getItem("accessToken")
+                setStore({ token })
+            },
+            consulta: async (valor) => {
+                let actions=getActions()
+                let store=getStore()
+                if (valor) {
+    
+                    try {
+                        const data = await actions.setBooks(valor);
+                        setStore({ resultados: [...data.docs, store.resultados] });
+    
+                        if (store.resultados) {
+    
+                            console.log("bien")
+                            return store.resultados
+                        }
+                        else {
+                            console.log("mal")
+    
+                            return !store.resultados
+                        }
+                    } catch (error) {
+                        console.log("error", error);
+                    }
+    
+    
+    
+                }
+                else {
+                    setStore({ resultados: [] })
+                }
+            }
+        },
+
+        
+    }
+}
 
 export default getState;
 
