@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            urlBase:"https://openlibrary.org/search.json"
+            urlBase: "https://openlibrary.org/search.json",
+            resultados: []
         },
         actions: {
             login: async (email, password) => {
@@ -57,51 +58,80 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ demo: demo });
             },
             APIfetch: async (endpoint, method = "GET", body = null) => {
-                let params = { method, headers:{
-                    "Access-Control-Allow-Origin": "*"
-                } };
+                let params = { method }
                 if (body != null) {
                     params.headers = {
                         "Content-Type": "application/json",
-                       
-                    };
-                    params.body = JSON.stringify(body);
-                }
-                try {
-                    let res = await fetch(process.env.BACKEND_URL + "api" + endpoint, params);
-                    if (!res.ok) {
-                        console.error(res.statusText);
-                        return { error: res.statusText };
+                        "Access-Control-Allow-Origin": "*"
                     }
-                    let json = await res.json();
-                    return json;
-                } catch (error) {
-                    console.error("Error fetching data:", error);
-                    return { error: "Error fetching data" };
+                    params.body = JSON.stringify(body)
                 }
+                let res = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params)
+                if (!res.ok) {
+                    console.error(res.statusText)
+                    return ({ error: res.statusText })
+
+                }
+                let json = res.json()
+                return json
+
             },
             setBooks: async (endpoint, method = "GET", body = null) => {
-                let store = getStore();
+                let store = getStore()
                 try {
-                    const response = await fetch(store.urlBase + `?q=${endpoint}`);
-                    const data = await response.json();
+                    const response = await fetch(store.urlBase + `?q=${endpoint}`)
+                    const data = await response.json()
+
                     if (!response.ok) {
-                        console.error(data);
+                        console.log(data)
                     }
-                    return data;
+                    return data
                 } catch (error) {
-                    console.error(error);
+                    console.log(error)
                 }
+
             },
             showNotification: async (message, type) => {
-                setStore({ response: { message, type } });
+                setStore({ response: { message, type } })
             },
             loadSession: () => {
-                let token = localStorage.getItem("accessToken");
-                setStore({ token });
+                let token = localStorage.getItem("accessToken")
+                setStore({ token })
+            },
+            consulta: async (valor) => {
+                let actions=getActions()
+                let store=getStore()
+                if (valor) {
+    
+                    try {
+                        const data = await actions.setBooks(valor);
+                        setStore({ resultados: [...data.docs, store.resultados] });
+    
+                        if (store.resultados) {
+    
+                            console.log("bien")
+                            return store.resultados
+                        }
+                        else {
+                            console.log("mal")
+    
+                            return !store.resultados
+                        }
+                    } catch (error) {
+                        console.log("error", error);
+                    }
+    
+    
+    
+                }
+                else {
+                    setStore({ resultados: [] })
+                }
             }
-        }
-    };
-};
+        },
+
+        
+    }
+}
 
 export default getState;
