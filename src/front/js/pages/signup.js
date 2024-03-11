@@ -20,13 +20,13 @@ export default function Signup() {
     actions.createUser(name, email, password).then((res) => navigate("/profile")).catch((err) => setError(err));
   }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleClick}>
         <h1>Login</h1>
         <input
           type={"text"}
           placeholder="email"
           value={email}
-          onChange={(e) => setemail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"

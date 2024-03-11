@@ -57,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: (form, navigate) => {
 				const store = getStore();
-				const url = "https://animated-engine-r4gjrv4vwwjpcxrrq-3001.app.github.dev/api/login";
+				const url = "https://animated-engine-r4gjrv4vwwjpcxrrq-3001.app.github.dev/api/token";
 				fetch(url, {
 					method: "Post",
 					headers: {
