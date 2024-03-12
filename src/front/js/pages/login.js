@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {  
   const { store, actions } = useContext(Context);
+  const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -21,28 +22,35 @@ export default function Login() {
     // Submit email/password here
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
-      <input
-        type={"text"}
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-      <button>
-        <Link to="/register">Create an account</Link>
-      </button>
-      <button>
-        <Link to="/forgot">Forgot Password</Link>
-      </button>
-    </form>
-  );
+ 
+    return (
+      <form onSubmit={handleSubmit}>
+        <h1>Login</h1>
+        <input
+          type="text"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setemail(e.target.value)}
+        />
+        <input
+          type="text" 
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)} 
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+        <button>
+          <Link to="/register">Create an account</Link>
+        </button>
+        <button>
+          <Link to="/forgot">Forgot Password</Link>
+        </button>
+      </form>
+    );
 }
