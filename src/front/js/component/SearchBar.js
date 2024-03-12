@@ -11,8 +11,9 @@ const SearchBar = () => {
     const [loading, setLoading] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { actions, store } = useContext(Context);
-
+  
     useEffect(() => {
+        console.log('Input:', search);
         if (search.trim().length >= 3) {
             setLoading(true);
             setIsMenuOpen(true);
@@ -34,7 +35,7 @@ const SearchBar = () => {
 
     const fetchDebounced = useCallback(debounce((valor) => {
         performSearch(valor);
-    }, 50), [performSearch]);
+    }, 500), [performSearch]);
 
     const handleSearchChange = (event) => {
         setSearch(event.target.value);

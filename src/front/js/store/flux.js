@@ -20,33 +20,39 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
         actions: {
             login: async (email, password) => {
-                // Implementación de la lógica de inicio de sesión
                 const actions = getActions();
                 try {
                     const data = await actions.APIfetch("/login", "POST", { email, password });
+                    if (data.error) {
+                        console.error("Error al iniciar sesión:", data.error);
+                        return false;
+                    }
                     setStore({ token: data.token });
                     localStorage.setItem("accessToken", data.token);
                     return true;
                 } catch (error) {
-                    console.error("Error al iniciar sesión:", error);
+                    console.error("Error al realizar la petición:", error);
                     return false;
                 }
             },
-            // Acción para registrarse
             signup: async (email, password, first_name, last_name, phone, location) => {
                 const actions = getActions();
                 try {
                     const res = await actions.APIfetch("/signup", "POST", {
                         email, password, first_name, last_name, phone, location
                     });
-                    console.log("Usuario registrado exitosamente");
-                    return true;
+                    if (res.error) {
+                        console.error("Error al registrar el usuario:", res.error);
+                        return false;
+                    } else {
+                        console.log("Usuario registrado exitosamente");
+                        return true;
+                    }
                 } catch (error) {
-                    console.error("Error al registrar el usuario:", error);
+                    console.error("Error al realizar la petición:", error);
                     return false;
                 }
             },
-            // Acción para obtener un mensaje del backend
             getMessage: async () => {
                 const actions = getActions();
                 try {
@@ -64,8 +70,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
-
-            // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {
                 const params = { method, headers: {} };
                 if (body) {
@@ -81,29 +85,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                     throw error;
                 }
             },
-
-            // Acción para realizar la búsqueda de libros en OpenLibrary
             setBooks: async (searchTerm) => {
-                let store = getStore();
+                const store = getStore();
                 try {
-                    // Realizar solicitud a OpenLibrary con el término de búsqueda
                     const response = await fetch(`${store.urlBase}?q=${searchTerm}&limit=50`);
                     if (!response.ok) throw new Error('Respuesta no exitosa de la API');
                     const data = await response.json();
-                    // Filtrar resultados para que coincidan más estrechamente con el término de búsqueda
-                    // y limitar a los primeros 6 resultados
                     const filteredResults = data.docs.filter(doc => doc.title.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6);
-                    // Actualizar el estado global 'resultados' con los documentos filtrados
                     setStore({ resultados: filteredResults });
                 } catch (error) {
                     console.error("Error al realizar la búsqueda:", error);
-                    // Manejar errores, como actualizar el estado global con un error o mostrar una notificación
                 }
             },
-
-            // Acción para cargar la sesión
             loadSession: () => {
-                // Carga la sesión desde localStorage u otra fuente
                 const token = localStorage.getItem("accessToken");
                 setStore({ token });
             }
@@ -112,3 +106,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+

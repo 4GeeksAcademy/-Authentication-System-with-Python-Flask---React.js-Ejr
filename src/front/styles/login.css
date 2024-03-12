@@ -11,8 +11,6 @@ label, p{
     color: #718096;
 }
 
-
-
 input[type=checkbox]{
     margin-right: 10px;
 }
@@ -24,4 +22,8 @@ a{
 a.forgotPassword{
     margin-left: 40%;
     text-align: right;
+}
+
+.error {
+    border-color: red;
 }

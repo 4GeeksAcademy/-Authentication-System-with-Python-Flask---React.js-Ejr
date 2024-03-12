@@ -14,7 +14,7 @@ export const Home = () => {
 	const [popularBooks, setPopularBooks] = useState([]);
 	const [romanceBooks, setRomanceBooks] = useState([]);
 	const [suspenseBooks, setSuspenseBooks] = useState([]);
-  	const [favorites, setFavorites] = useState([]);
+ 	const [favorites, setFavorites] = useState([]);
 
   // Función para agregar un libro a favoritos
   const addToFavorites = (book) => {
