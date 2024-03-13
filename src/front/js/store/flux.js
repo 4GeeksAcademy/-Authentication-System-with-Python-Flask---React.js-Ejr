@@ -56,7 +56,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             getMessage: async () => {
                 const actions = getActions();
                 try {
-                    const data = await actions.APIfetch("/hello");
+                    const response = await fetch('https://your-api-url.com/message');
+                    const data = await response.json();
                     setStore({ message: data.message });
                 } catch (error) {
                     console.log("Error loading message from backend", error);
@@ -64,11 +65,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             changeColor: (index, color) => {
                 const store = getStore();
-                const demo = store.demo.map((elm, i) => {
-                    if (i === index) elm.background = color;
-                    return elm;
+                const updatedDemo = store.demo.map((item, i) => {
+                    if (i === index) {
+                        return { ...item, background: color };
+                    }
+                    return item;
                 });
-                setStore({ demo: demo });
+                setStore({ demo: updatedDemo });
             },
             APIfetch: async (endpoint, method = "GET", body = null) => {
                 const params = { method, headers: {} };

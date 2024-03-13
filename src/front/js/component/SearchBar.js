@@ -25,7 +25,7 @@ const SearchBar = () => {
 
     const performSearch = useCallback(async (valor) => {
         try {
-            await actions.setBooks(valor);
+            await actions.searchBooks(valor);
         } catch (error) {
             console.error("Error en la búsqueda", error);
         } finally {
