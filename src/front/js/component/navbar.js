@@ -34,10 +34,10 @@ export const Navbar = () => {
           </form>
 
           <div
-            className="collapse navbar-collapse w-25"
+            className="collapse navbar-collapse flex-grow-0"
             id="navbarSupportedContent"
           >
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="#">
                   Features
