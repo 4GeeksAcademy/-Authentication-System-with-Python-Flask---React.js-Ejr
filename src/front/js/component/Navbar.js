@@ -8,7 +8,7 @@ const NavBar = () => {
   let navigate = useNavigate();
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary align-items-center">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary align-items-center p-0 mb-5">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/"><Logo /></Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
