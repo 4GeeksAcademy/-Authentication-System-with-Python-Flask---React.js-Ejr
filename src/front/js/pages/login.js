@@ -46,9 +46,6 @@ export default function Login() {
         />
         <button type="submit">Login</button>
         <button>
-          <Link to="/register">Create an account</Link>
-        </button>
-        <button>
           <Link to="/forgot">Forgot Password</Link>
         </button>
       </form>

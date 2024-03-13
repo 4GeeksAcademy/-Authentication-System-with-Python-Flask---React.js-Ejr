@@ -10,27 +10,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
+			// start of user related fetch request
 			signUp: async (form, navigate) => {
-				const url = "https://animated-engine-r4gjrv4vwwjpcxrrq-3001.app.github.dev/api/signup";
+				const url = process.env.BACKEND_URL + "/api/signup";
 				await fetch(url, {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin":"*",
-						"Access-Control-Allow-Methods":"*"
+						// "Access-Control-Allow-Origin":"*"
 					},
 					body: JSON.stringify({						
 						"email": form.email,
@@ -55,9 +42,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				})
 			},
-			login: (form, navigate) => {
+			login: (form) => {
 				const store = getStore();
-				const url = "https://animated-engine-r4gjrv4vwwjpcxrrq-3001.app.github.dev/api/login";
+				const url = process.env.BACKEND_URL + "/api/login";
 				fetch(url, {
 					method: "Post",
 					headers: {
@@ -82,7 +69,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data.token});
 					
 					console.log(store.token);
-					navigate('/private');
 				})				
 				.catch(error => {
 					//error handling
@@ -92,7 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			authenticateUser: (navigate) => {
 				const store = getStore();
 				console.log(store.token);
-				const url = "https://animated-engine-r4gjrv4vwwjpcxrrq-3001.app.github.dev/api/private"
+				const url = process.env.BACKEND_URL + "/api/private"
 				fetch(url, {
 					method: "GET",
 					headers: {
@@ -132,6 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({token: null});
 				navigate("/");
 			}
+			// end of user related fetch request
 		}
 	};
 };

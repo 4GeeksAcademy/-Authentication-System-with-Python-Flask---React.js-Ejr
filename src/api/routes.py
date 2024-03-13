@@ -26,7 +26,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
+# start of user related routes
 @api.route('/signup', methods=['POST'])
 def handle_signup():
     email = request.json.get("email", None)
@@ -38,10 +38,6 @@ def handle_signup():
     db.session.add(newUser)
     db.session.commit()
     return jsonify("Added User"), 200
-
-
-
-
     
 @api.route('/login', methods=['POST'])
 def login():
@@ -66,3 +62,4 @@ def handle_private():
         return jsonify({"msg": "Please login"})
     else:
         return jsonify({"user_id": user.id, "email":user.email}), 200
+# end of user related routes

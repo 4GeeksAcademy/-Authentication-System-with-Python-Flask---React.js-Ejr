@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "../../styles/signup.css";
+// import "../../styles/signup.css";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -17,11 +17,11 @@ export default function Signup() {
   const handleClick = (e) => {
     e.preventDefault();
     console.log(e.target);
-    actions.createUser(name, email, password).then((res) => navigate("/profile")).catch((err) => setError(err));
+    actions.signUp(name, email, password).then((res) => navigate("/profile")).catch((err) => setError(err));
   }
     return (
         <form onSubmit={handleClick}>
-        <h1>Login</h1>
+        <h1>Sign up</h1>
         <input
           type={"text"}
           placeholder="email"
@@ -34,10 +34,7 @@ export default function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
-        <button>
-          <Link to="/register">Create an account</Link>
-        </button>
+        <button type="submit">Create Account</button>
         <button>
           <Link to="/forgot">Forgot Password</Link>
         </button>
