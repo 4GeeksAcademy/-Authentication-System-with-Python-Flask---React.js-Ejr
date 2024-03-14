@@ -3,7 +3,7 @@
     padding: 0%;
     width: auto;
     max-width: none;
-    flex-grow: 1;
+    min-width: none;
 }
 
 .search-btn {
