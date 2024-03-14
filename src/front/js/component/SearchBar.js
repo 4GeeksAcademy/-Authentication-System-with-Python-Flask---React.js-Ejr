@@ -13,7 +13,7 @@ const SearchBar = () => {
 
     const searchContainerRef = useRef(null);
 
-    // Actualizamos handleSearch para que no dependa de ninguna variable externa en useCallback
+    
     const handleSearch = useCallback(debounce(async (searchTerm) => {
         if (!searchTerm.trim()) {
             setIsMenuOpen(false);
@@ -23,13 +23,13 @@ const SearchBar = () => {
         await actions.setBooks(searchTerm);
         setLoading(false);
         setIsMenuOpen(true);
-    }, 500), []); // Las dependencias vacías aseguran que la función no se reinicie
+    }, 500), []); // 
 
-    // Observa el cambio en `search` para iniciar la búsqueda
+    
     useEffect(() => {
         handleSearch(search);
-        // No necesitamos cerrar el menú aquí, ya que handleSearch lo manejará.
-    }, [search]); // handleSearch aquí no causa reinicio debido a useCallback sin dependencias
+      
+    }, [search]); 
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -45,7 +45,7 @@ const SearchBar = () => {
     }, []);
 
     const handleFocus = () => {
-        // Si hay una búsqueda previa con resultados, permitimos que el menú se abra de nuevo.
+       
         if (search.trim() && store.resultados.length > 0) {
             setIsMenuOpen(true);
         }
@@ -56,6 +56,7 @@ const SearchBar = () => {
             <form onSubmit={(e) => e.preventDefault()} className="d-flex" role="search">
                 <input
                     className="form-control me-2"
+                    class="searchbar"
                     type="search"
                     placeholder="Busca libros, autores, editoriales..."
                     aria-label="Search"
