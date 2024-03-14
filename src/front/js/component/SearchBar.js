@@ -1,81 +1,87 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect, useCallback, useRef } from "react";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/searchbar.css'; 
+import '../../styles/searchbar.css';
 import debounce from 'lodash.debounce';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const SearchBar = () => {
     const [search, setSearch] = useState("");
-    const [loading, setLoading] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { actions, store } = useContext(Context);
-  
-    useEffect(() => {
-        console.log('Input:', search);
-        if (search.trim().length >= 3) {
-            setLoading(true);
-            setIsMenuOpen(true);
-            fetchDebounced(search);
-        } else {
+    const [loading, setLoading] = useState(false);
+    const { store, actions } = useContext(Context);
+
+    const searchContainerRef = useRef(null);
+
+    // Actualizamos handleSearch para que no dependa de ninguna variable externa en useCallback
+    const handleSearch = useCallback(debounce(async (searchTerm) => {
+        if (!searchTerm.trim()) {
             setIsMenuOpen(false);
+            return;
         }
-    }, [search]);
-
-    const performSearch = useCallback(async (valor) => {
-        try {
-            await actions.searchBooks(valor);
-        } catch (error) {
-            console.error("Error en la búsqueda", error);
-        } finally {
-            setLoading(false);
-        }
-    }, [actions]);
-
-    const fetchDebounced = useCallback(debounce((valor) => {
-        performSearch(valor);
-    }, 500), [performSearch]);
-
-    const handleSearchChange = (event) => {
-        setSearch(event.target.value);
-    };
-
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
-        performSearch(search);
+        await actions.setBooks(searchTerm);
+        setLoading(false);
+        setIsMenuOpen(true);
+    }, 500), []); // Las dependencias vacías aseguran que la función no se reinicie
+
+    // Observa el cambio en `search` para iniciar la búsqueda
+    useEffect(() => {
+        handleSearch(search);
+        // No necesitamos cerrar el menú aquí, ya que handleSearch lo manejará.
+    }, [search]); // handleSearch aquí no causa reinicio debido a useCallback sin dependencias
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleFocus = () => {
+        // Si hay una búsqueda previa con resultados, permitimos que el menú se abra de nuevo.
+        if (search.trim() && store.resultados.length > 0) {
+            setIsMenuOpen(true);
+        }
     };
 
     return (
-        <div className="position-relative search-bar"> 
-            <form onSubmit={handleOnSubmit} className="d-flex" role="search">
+        <div ref={searchContainerRef} className="search-bar-container">
+            <form onSubmit={(e) => e.preventDefault()} className="d-flex" role="search">
                 <input
                     className="form-control me-2"
                     type="search"
                     placeholder="Busca libros, autores, editoriales..."
                     aria-label="Search"
                     value={search}
-                    onChange={handleSearchChange}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onFocus={handleFocus}
                 />
-                <button className="btn btn-outline-success search-btn" type="button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <button className="btn btn-outline-success search-btn" type="submit">
                     <FontAwesomeIcon icon={loading ? faSpinner : faMagnifyingGlass} spin={loading} />
                 </button>
             </form>
             {isMenuOpen && (
-                <div className="collapse show" id="collapseSearchResults" style={{ position: 'absolute', zIndex: 1000, width: '100%', top: '100%' }}>
-                    <div className="card card-body">
-                        {loading ? <p>Buscando...</p> : search.trim() && store.resultados.length > 0 ? (
-                            <ul>    
-                                {store.resultados.map((resultado, index) => (
-                                    <li className="list-group-item" key={index}>{resultado.title}</li>
-                                ))}
-                            </ul>
-                        ) : <p>No se encontraron resultados.</p>}
-                    </div>
+                <div className="collapse show" id="collapseSearchResults">
+                    {loading ? (
+                        <p>Buscando...</p>
+                    ) : (
+                        <ul>
+                            {store.resultados.map((resultado, index) => (
+                                <li key={index}>{resultado.title}</li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             )}
         </div>
     );
 };
+
 export default SearchBar;

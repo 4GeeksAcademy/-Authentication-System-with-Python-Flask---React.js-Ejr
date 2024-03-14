@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            // Estado inicial del store
             message: null,
             demo: [
                 {
@@ -15,8 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            resultados: [], // Almacenar los resultados de la búsqueda de libros
-            urlBase: "https://openlibrary.org/search.json", 
+            resultados: [],
+            urlBase: "https://openlibrary.org/search.json",
         },
         actions: {
             login: async (email, password) => {
@@ -56,8 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getMessage: async () => {
                 const actions = getActions();
                 try {
-                    const response = await fetch('https://your-api-url.com/message');
-                    const data = await response.json();
+                    const data = await actions.APIfetch("/hello");
                     setStore({ message: data.message });
                 } catch (error) {
                     console.log("Error loading message from backend", error);
@@ -65,22 +63,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             changeColor: (index, color) => {
                 const store = getStore();
-                const updatedDemo = store.demo.map((item, i) => {
-                    if (i === index) {
-                        return { ...item, background: color };
-                    }
-                    return item;
+                const demo = store.demo.map((elm, i) => {
+                    if (i === index) elm.background = color;
+                    return elm;
                 });
-                setStore({ demo: updatedDemo });
+                setStore({ demo: demo });
             },
             APIfetch: async (endpoint, method = "GET", body = null) => {
+                const backendURL = process.env.BACKEND_URL || "http://localhost:5000"; // Fallback to localhost if env var is not set
                 const params = { method, headers: {} };
                 if (body) {
                     params.headers["Content-Type"] = "application/json";
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${process.env.BACKEND_URL}api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {
@@ -109,4 +106,3 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
-
