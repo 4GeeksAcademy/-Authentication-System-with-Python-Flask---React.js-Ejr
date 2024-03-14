@@ -20,7 +20,7 @@ export const Home = () => {
 	return (
 		<div className="w-50 mx-auto">
 			<img 
-				src="https://cdn.vox-cdn.com/thumbor/XT0dC02q2XhIqTVeyZuzRFYFoVk=/1400x1050/filters:format(png)/cdn.vox-cdn.com/uploads/chorus_asset/file/25255126/Banner_UncleIroh_2400x1600.png" 
+				src="C:\Users\hgreg\Downloads\video_full (2).gif" 
 				className="mx-auto"
 				height="300px"
 				width="300px"

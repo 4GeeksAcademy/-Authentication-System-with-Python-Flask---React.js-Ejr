@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "../../styles/loginform.css";
+import "../../styles/loginpage.css";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -25,7 +25,7 @@ export default function Login() {
  
     return (
       <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
+        <h1 className="">Login</h1>
         <input
           type="text"
           placeholder="email"
