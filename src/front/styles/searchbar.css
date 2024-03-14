@@ -1,16 +1,17 @@
 .d-flex {
     background-color: transparent !important;
     padding: 0%;
+    width: auto;
+    max-width: none;
+    flex-grow: 1;
 }
 
 .search-btn {
     margin-right: 1rem;
   }
 
-.btn-primary{
+.btn-primary, .btn-secondary{
     margin-right: 1rem;
 }
 
-.btn-secondary{
-    margin-right: 1rem;
-}
+
