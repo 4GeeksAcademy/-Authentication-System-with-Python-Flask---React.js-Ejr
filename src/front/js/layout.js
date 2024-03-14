@@ -9,10 +9,8 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
-import Recipe from "../recipe/Recipe";
 import { Footer } from "./component/footer";
-import recipes from "../recipe/Recipe"
-
+import Recipe  from "./component/recipe/Recipe.jsx"
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -29,7 +27,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<Recipe recipes={recipes} />} path="/recipe"/>
+                        <Route element={<Recipe recipes={Recipe} />} path="/recipe" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
