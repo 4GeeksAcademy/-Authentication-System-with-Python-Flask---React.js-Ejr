@@ -13,14 +13,18 @@ export default function Login() {
 
   const token = sessionStorage.getItem("token");
   console.log(token);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions
-      .login(email, password)
-      .then((res) => navigate("/profile"))
-      .catch((err) => setError( err));
-    // Submit email/password here
-  };
+    try {
+        await actions.login({ email, password });
+        navigate('/profile'); 
+    } catch (error) {
+        setError(error.message);
+    }
+};
+
+  
 
  
     return (

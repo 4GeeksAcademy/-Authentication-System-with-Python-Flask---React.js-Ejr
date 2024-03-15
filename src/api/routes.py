@@ -52,6 +52,7 @@ def login():
     return jsonify(access_token = access_token)
 
 
+
 @api.route('/private', methods=['GET'])
 @jwt_required()
 def handle_private():

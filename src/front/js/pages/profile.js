@@ -15,6 +15,8 @@ const Private = () => {
             authenticate() }, 500)        
     }, [])
 
+    
+    
     return (
         <div className="container text-center">
             <h1>Hello!</h1>

@@ -33,7 +33,7 @@ export default function Signup() {
   const handleClick = (e) => {
     e.preventDefault();
     console.log(e.target);
-    actions.signUp(name, email, password).then((res) => navigate("/profile")).catch((err) => setError(err));
+    actions.signUp({name, email, password},navigate).then((res) => navigate("/login")).catch((err) => setError(err));
   }
 
     return (
