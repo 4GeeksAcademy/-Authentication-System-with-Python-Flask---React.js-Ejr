@@ -18,7 +18,7 @@ export default function Login() {
     actions
       .login(email, password)
       .then((res) => navigate("/profile"))
-      .catch((err) => setError(err));
+      .catch((err) => setError( err));
     // Submit email/password here
   };
 
