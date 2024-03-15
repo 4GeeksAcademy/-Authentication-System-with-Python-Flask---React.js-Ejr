@@ -12,37 +12,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// start of user related fetch request
 			signUp: async (form, navigate) => {
-				const url = process.env.BACKEND_URL + "/api/signup";
-				await fetch(url, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						// "Access-Control-Allow-Origin":"*"
-					},
-					body: JSON.stringify({						
-						"email": form.email,
-                      	"password": form.password,
-						"is_active": true
-					})					
-				})
-				.then(async resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok) {
-						alert("user already exists");
-						console.log(resp.status);
-						return false;
-						
+				const url = `${process.env.REACT_APP_BACKEND_URL}/api/signup`;
+				try {
+					const response = await fetch(url, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(form)
+					});
+					if (!response.ok) {
+						throw new Error('User already exists or other error');
 					}
-					await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-					navigate('/login');														
-				})
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
+					const data = await response.json();
+					navigate('/login');
+				} catch (error) {
+					console.error("Signup error:", error);
+				}
 			},
-			login: (form) => {
+			login: (form, navigate) => {
 				const store = getStore();
 				const url = process.env.BACKEND_URL + "/api/login";
 				fetch(url, {
@@ -67,6 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json();
 					sessionStorage.setItem("token", data.token);
 					setStore({token: data.token});
+					navigate('/private')
 					
 					console.log(store.token);
 				})				
@@ -117,7 +106,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem("token");
 				setStore({token: null});
 				navigate("/");
-			}
+			},
+			
 			// end of user related fetch request
 		}
 	};

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "../../styles/loginform.css";
+import "../../styles/loginpage.css";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -13,19 +13,23 @@ export default function Login() {
 
   const token = sessionStorage.getItem("token");
   console.log(token);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions
-      .login(email, password)
-      .then((res) => navigate("/profile"))
-      .catch((err) => setError(err));
-    // Submit email/password here
-  };
+    try {
+        await actions.login({ email, password });
+        navigate('/profile'); 
+    } catch (error) {
+        setError(error.message);
+    }
+};
+
+  
 
  
     return (
       <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
+        <h1 className="">Login</h1>
         <input
           type="text"
           placeholder="email"
