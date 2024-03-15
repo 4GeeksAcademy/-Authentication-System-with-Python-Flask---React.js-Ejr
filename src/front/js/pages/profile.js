@@ -16,7 +16,7 @@ const Private = () => {
     }, [])
 
     
-    
+    //We need to ask new user for: Name, Date of birth, weight, height, main health concerns, goals, workout activity level, do you want supplement suggestions, allergies/sensitivities, cravings(sugar, cigarettes, coffee) etc. 
     return (
         <div className="container text-center">
             <h1>Hello!</h1>
@@ -28,6 +28,7 @@ const Private = () => {
                 navigate("/login")
             }
         </div>
+        
     );
 }
 
