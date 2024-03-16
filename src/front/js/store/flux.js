@@ -24,15 +24,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const data = await actions.APIfetch("/login", "POST", { email, password });
                     if (data.error) {
-                        console.error("Error al iniciar sesión:", data.error);
-                        return false;
+                        console.error("Login error:", data.error);
+                        return { success: false, error: data.error }; // Devuelve un objeto indicando un error de autenticación
                     }
                     setStore({ token: data.token });
                     localStorage.setItem("accessToken", data.token);
-                    return true;
+                    return { success: true }; // Indica que la autenticación fue exitosa
                 } catch (error) {
-                    console.error("Error al realizar la petición:", error);
-                    return false;
+                    console.error("Error error:", error);
+                    return { success: false, error: "Incorrect credentilas" };
                 }
             },
             signup: async (email, password, first_name, last_name, phone, location) => {

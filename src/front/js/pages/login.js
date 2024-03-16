@@ -1,28 +1,42 @@
 import React, { useContext, useState } from "react";
 import "../../styles/login.css";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const { actions } = useContext(Context);
+    const navigate = useNavigate(); // Obtener la función navigate
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formError, setFormError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        // Verificar si algún campo está vacío
         if (email === "" || password === "") {
             setFormError(true);
+            setErrorMessage("Incorrect credentials");
             return;
         }
 
-        // Resetear el estado de error del formulario
         setFormError(false);
 
-        actions.login(email, password);
+        const loginResult = await actions.login(email, password);
+        if (!loginResult.success) {
+            setFormError(true);
+            setErrorMessage(loginResult.error);
+            return;
+        }
+
+        setLoggedIn(true);
     };
+
+    // Redireccionar si el usuario está autenticado
+    if (loggedIn) {
+        navigate("/"); // Redireccionar al usuario al home
+    }
 
     return (
         <form onSubmit={handleLogin}>
@@ -32,6 +46,12 @@ export const Login = () => {
                     Don’t have an account? <Link to="/signup">Create now</Link>
                 </p>
             </div>
+
+            {formError && (
+                <div className="error-message">
+                    {errorMessage}
+                </div>
+            )}
 
             <div className={`mb-3 ${formError && email === "" ? "error" : ""}`}>
                 <label htmlFor="exampleInputEmail1" className="form-label">
