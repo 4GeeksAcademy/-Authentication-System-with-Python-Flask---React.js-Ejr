@@ -15,21 +15,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            resultados: [], // Almacenar los resultados de la búsqueda de libros
-            urlBase: "https://openlibrary.org/search.json", 
+            resultados: [],
+            urlBase: "https://openlibrary.org/search.json",
         },
         actions: {
             login: async (email, password) => {
-                // Implementación de la lógica de inicio de sesión
                 const actions = getActions();
                 try {
                     const data = await actions.APIfetch("/login", "POST", { email, password });
+                    if (data.error) {
+                        console.error("Login error:", data.error);
+                        return { success: false, error: data.error }; // Devuelve un objeto indicando un error de autenticación
+                    }
                     setStore({ token: data.token });
                     localStorage.setItem("accessToken", data.token);
-                    return true;
+                    return { success: true }; // Indica que la autenticación fue exitosa
                 } catch (error) {
-                    console.error("Error al iniciar sesión:", error);
-                    return false;
+                    console.error("Error error:", error);
+                    return { success: false, error: "Incorrect credentilas" };
+
                 }
             },
             // Acción para registrarse
@@ -39,10 +43,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const res = await actions.APIfetch("/signup", "POST", {
                         email, password, first_name, last_name, phone, location
                     });
-                    console.log("Usuario registrado exitosamente");
-                    return true;
+                    if (res.error) {
+                        console.error("Error al registrar el usuario:", res.error);
+                        return false;
+                    } else {
+                        console.log("Usuario registrado exitosamente");
+                        return true;
+                    }
                 } catch (error) {
-                    console.error("Error al registrar el usuario:", error);
+                    console.error("Error al realizar la petición:", error);
                     return false;
                 }
             },
@@ -67,13 +76,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {
+                const backendURL = process.env.BACKEND_URL || "http://localhost:5000"; // Fallback to localhost if env var is not set
+
                 const params = { method, headers: {} };
                 if (body) {
                     params.headers["Content-Type"] = "application/json";
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${process.env.BACKEND_URL}api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {
@@ -81,29 +92,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                     throw error;
                 }
             },
-
-            // Acción para realizar la búsqueda de libros en OpenLibrary
             setBooks: async (searchTerm) => {
-                let store = getStore();
+                const store = getStore();
                 try {
-                    // Realizar solicitud a OpenLibrary con el término de búsqueda
                     const response = await fetch(`${store.urlBase}?q=${searchTerm}&limit=50`);
                     if (!response.ok) throw new Error('Respuesta no exitosa de la API');
                     const data = await response.json();
-                    // Filtrar resultados para que coincidan más estrechamente con el término de búsqueda
-                    // y limitar a los primeros 6 resultados
                     const filteredResults = data.docs.filter(doc => doc.title.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6);
-                    // Actualizar el estado global 'resultados' con los documentos filtrados
                     setStore({ resultados: filteredResults });
                 } catch (error) {
                     console.error("Error al realizar la búsqueda:", error);
-                    // Manejar errores, como actualizar el estado global con un error o mostrar una notificación
                 }
             },
-
-            // Acción para cargar la sesión
             loadSession: () => {
-                // Carga la sesión desde localStorage u otra fuente
                 const token = localStorage.getItem("accessToken");
                 setStore({ token });
             }

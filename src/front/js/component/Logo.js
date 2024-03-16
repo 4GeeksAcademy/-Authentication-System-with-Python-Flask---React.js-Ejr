@@ -1,11 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 // Poner Logo
 const Logo = () => {
     return (
-        <a href="/" className="logo-wrap col-3">
+        <Link to="/" className="logo-wrap col-3">
             <img src="/front/img/x.png" alt="Recomiéndame un Libro" />
-        </a>
+        </Link>
     );
 }
 

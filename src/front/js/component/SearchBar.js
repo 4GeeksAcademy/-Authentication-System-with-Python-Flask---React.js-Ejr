@@ -1,65 +1,88 @@
-import React, { useState, useContext, useCallback } from "react";
+
+import React, { useState, useContext, useEffect, useCallback, useRef } from "react";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/searchbar.css';
 import debounce from 'lodash.debounce';
-import 'bootstrap/dist/js/bootstrap.bundle.min'; // Asegúrate de que Bootstrap JS esté incluido
 
 // Componente SearchBar con lógica de búsqueda y resultados
 const SearchBar = () => {
     const [search, setSearch] = useState("");
-    const { actions, store } = useContext(Context);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { store, actions } = useContext(Context);
 
-    // Función para realizar la búsqueda
-    const performSearch = async (valor) => {
-        if (valor.trim().length >= 3) {
-            try {
-                await actions.setBooks(valor);
-            } catch (error) {
-                console.error("Error en la búsqueda", error);
+    const searchContainerRef = useRef(null);
+
+    
+    const handleSearch = useCallback(debounce(async (searchTerm) => {
+        if (!searchTerm.trim()) {
+            setIsMenuOpen(false);
+            return;
+        }
+        setLoading(true);
+        await actions.setBooks(searchTerm);
+        setLoading(false);
+        setIsMenuOpen(true);
+    }, 500), []); // 
+
+    
+    useEffect(() => {
+        handleSearch(search);
+      
+    }, [search]); 
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
             }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleFocus = () => {
+       
+        if (search.trim() && store.resultados.length > 0) {
+            setIsMenuOpen(true);
         }
     };
 
-    // Debounced search para la entrada en tiempo real
-    const fetchDebounced = useCallback(debounce((valor) => {
-        performSearch(valor);
-    }, 500), [actions]);
-
-    // Maneja el cambio en el campo de búsqueda y ejecuta la búsqueda debounced
-    const handleSearchChange = (event) => {
-        const value = event.target.value;
-        setSearch(value);
-        fetchDebounced(value);
-    };
-
     return (
-        <div>
-            <div className="d-flex" role="search">
-                <input 
+        <div ref={searchContainerRef} className="search-bar-container">
+            <form onSubmit={(e) => e.preventDefault()} className="d-flex" role="search">
+                <input
                     className="form-control me-2"
+                    class="searchbar"
                     type="search"
-                    placeholder="Busca libros, autores, editoriales..."
+                    placeholder="Search for books, authors, publishers..."
                     aria-label="Search"
                     value={search}
-                    onChange={handleSearchChange}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onFocus={handleFocus}
                 />
-                <button className="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearchResults" aria-expanded="false" aria-controls="collapseSearchResults">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <button className="btn btn-outline-success search-btn" type="submit">
+                    <FontAwesomeIcon icon={loading ? faSpinner : faMagnifyingGlass} spin={loading} />
                 </button>
-            </div>
-            <div className="collapse" id="collapseSearchResults">
-                <div className="card card-body">
-                    {search.trim() && store.resultados.length > 0 ? (
-                        <ul>    
+            </form>
+            {isMenuOpen && (
+                <div className="collapse show" id="collapseSearchResults">
+                    {loading ? (
+                        <p>Buscando...</p>
+                    ) : (
+                        <ul>
                             {store.resultados.map((resultado, index) => (
-                                <li className="list-group-item" key={index}>{resultado.title}</li>
+                                <li key={index}>{resultado.title}</li>
                             ))}
                         </ul>
-                    ) : <p>No se encontraron resultados.</p>}
+                    )}
                 </div>
-            </div>
+            )}
         </div>
     );
 };
