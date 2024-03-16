@@ -3,12 +3,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,			
 			token: null,
-			user: null
+			user: null,
+      favorites: [],
 		},
 		actions: {
+      addFavorites: (fav) => {
+        setStore({ favorites: [...getStore().favorites, fav] });
+      },
+      removeFavorites: (fav) => {
+        setStore({
+          favorites: [...getStore().favorites.filter((item) => item !== fav)],
+        });
+      },
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+        
 			},
 			// start of user related fetch request
 			signUp: async (form, navigate) => {

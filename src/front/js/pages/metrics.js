@@ -1,44 +1,30 @@
+import { useState } from "react";
 import React from "react";
+import "../../styles/metrics.css";
+
+export default function Metrics() {
+  const [top, setTop] = useState(false);
+  const [middle, setMiddle] = useState(false);
+  const [bottom, setBottom] = useState(false);
+
+  function handleBottle() {
+    if (bottom === false) {
+      setBottom(true);
+    } else if (middle === false) {
+      setMiddle(true);
+    } else if (top === false) {
+      setTop(true);
+    }
+  }
 
 const Water = () => {
   const [waterDrank, setWaterDrank] = useState("blue");
+
   return (
-    <div id="whole-wheat" className="text-center mx-auto">
-      <div className="stick"></div>
-      <div className="lights">
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-        <div
-          className={activeLight === "blue" ? "blue light" : "blue light"}
-          onClick={() => setActiveLight("blue")}
-        ></div>
-      </div>
+    <div class="bottle" onClick={(e) => handleBottle()}>
+      <div class={top === true ? "top active" : "top"}></div>
+      <div class={middle === true ? "middle active" : "middle"}></div>
+      <div class={bottom === true ? "bottom active" : "bottom"}></div>
     </div>
   );
-};
+}
