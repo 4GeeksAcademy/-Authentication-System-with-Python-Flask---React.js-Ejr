@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { useParams, Link } from "react-router-dom"; // Importa Link desde react-router-dom
+import { Container } from "react-bootstrap";
 import { Context } from "../store/appContext";
 import debounce from 'lodash.debounce';
 
@@ -57,7 +57,11 @@ export const BookDetails = () => {
                         <p>Año de publicacion: {bookDetails.first_publish_date}</p>
                         <p>Descripcion:{bookDetails.description}</p>
                         <p>ISBN: {bookDetails.isbn}</p>
+                        <Link to={`/books/${id}/reviews`}>
+                            <button className="btn btn-success">LEAVE A REVIEW</button>
+                        </Link>
                     </div>
+                    
                 </div>
             </Container>
         );
