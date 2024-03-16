@@ -36,6 +36,8 @@ const Layout = () => {
                         <Route element={<BookDetails />} path="/books/works/:id" />
                         <Route path="*" element={<h1>Not found!</h1>} />
                         <Route element={<Reviews />} path="/reviews" />
+                        <Route exact path="/books/:id" component={BookDetails} />
+                        <Route exact path="/books/:id/reviews" component={Reviews} />
 
                     </Routes>
                     <Footer />
