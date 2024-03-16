@@ -1,49 +1,45 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
-import '../../styles/navbar.css';
+import '../../styles/navbar.css'; // Asegúrate de que este archivo contenga las clases CSS que has proporcionado
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 
 const NavBar = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary align-items-center p-0 mb-5">
+    <Navbar bg="body-tertiary" expand="lg" className="align-items-center mb-5 p-0" style={{ backgroundColor: '#DFDCD3' }}>
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/"><Logo /></Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/recomendaciones">Recomendaciones</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/autores">Autores</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/generos">Géneros</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/best-seller">Best Seller</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/mas-buscados">Más Buscados</Link>
-            </li>
-          </ul>
+        <Navbar.Brand as={NavLink} to="/"><Logo /></Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav className="me-auto">
+            <NavDropdown title="Menu" id="navbarScrollingDropdown" className="custom-dropdown-toggle">
+              <NavDropdown.Item as={NavLink} to="/recomendaciones">Recommendations</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/autores">Authors</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/generos">Genres</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/best-seller">Best Seller</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/mas-buscados">Most Wanted</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/random-books">Random Books</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+
+          <div className="mx-auto">
           <SearchBar />
-          <div className="d-flex justify-content-end align-items-center flex-nowrap">
-            <button onClick={() => navigate('/signup')} className="btn btn-primary me-1">
-              Sign Up
-            </button>
-            <button onClick={() => navigate('/login')} className="btn btn-secondary ms-1">
-              Log In
-            </button>
           </div>
-        </div>
+          <div className="d-flex justify-content-end align-items-center">
+            <Button onClick={() => navigate('/signup')} variant="primary" className="login-signup-btn me-2">
+              Sign Up
+            </Button>
+            <Button onClick={() => navigate('/login')} variant="secondary" className="login-signup-btn">
+              Log In
+            </Button>
+          </div>
+        </Navbar.Collapse>
       </div>
-    </nav>
+    </Navbar>
   );
 };
 

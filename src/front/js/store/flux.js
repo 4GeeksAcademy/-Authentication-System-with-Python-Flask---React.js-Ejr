@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            // Estado inicial del store
             message: null,
             demo: [
                 {
@@ -15,8 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            resultados: [], // Almacenar los resultados de la búsqueda de libros
-            urlBase: "https://openlibrary.org/search.json", 
+            resultados: [],
+            urlBase: "https://openlibrary.org/search.json",
         },
         actions: {
             login: async (email, password) => {
@@ -71,13 +70,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ demo: demo });
             },
             APIfetch: async (endpoint, method = "GET", body = null) => {
+                const backendURL = process.env.BACKEND_URL || "http://localhost:5000"; // Fallback to localhost if env var is not set
                 const params = { method, headers: {} };
                 if (body) {
                     params.headers["Content-Type"] = "application/json";
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${process.env.BACKEND_URL}api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {
@@ -106,4 +106,3 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
-
