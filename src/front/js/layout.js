@@ -15,6 +15,7 @@ import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Reviews from "./pages/reviews";
 
+
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
@@ -36,7 +37,6 @@ const Layout = () => {
                         <Route element={<BookDetails />} path="/books/works/:id" />
                         <Route path="*" element={<h1>Not found!</h1>} />
                         <Route element={<Reviews />} path="/reviews" />
-                        <Route exact path="/books/:id" component={BookDetails} />
                         <Route exact path="/books/:id/reviews" component={Reviews} />
 
                     </Routes>
