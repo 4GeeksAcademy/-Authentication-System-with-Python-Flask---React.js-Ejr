@@ -31,7 +31,7 @@ const Reviews = () => {
   return (
     <Container>
       <Row>
-        <Col md={6}>
+        <Col className="col-6">
           {/* Mostrar la portada del libro en la primera columna */}
           <img
             src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-L.jpg`}
@@ -39,7 +39,7 @@ const Reviews = () => {
             className="img-fluid"
           />
         </Col>
-        <Col md={6}>
+        <Col className="col-6">
           {/* Mostrar el formulario de comentario en la segunda columna */}
           <Card>
             <Card.Body>
