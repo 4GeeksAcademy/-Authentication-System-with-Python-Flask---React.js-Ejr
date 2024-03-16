@@ -11,7 +11,6 @@ export const BookDetails = () => {
     const [author, setAuthor] = useState(null);
 
     useEffect(() => {
-        // Fetch book details when the component mounts
         fetchBookDetails();
     }, [id]);
 
@@ -23,7 +22,6 @@ export const BookDetails = () => {
             }
             const data = await response.json();
             setBookDetails(data);
-            // Fetch author details only if bookDetails is not null
             if (data && data.authors && data.authors[0]) {
                 authorDetails(data.authors[0].author.key);
             }
@@ -42,8 +40,9 @@ export const BookDetails = () => {
         }
     }, 500), []);
 
-    if (!author) {
-        return <div>Cargando</div>;
+    // Render loading state until bookDetails and author are fetched
+    if (!bookDetails || !author) {
+        return <div>Cargando...</div>;
     } else {
         return (
             <Container>
@@ -54,8 +53,8 @@ export const BookDetails = () => {
                     <div>
                         <h2>{bookDetails.title}</h2>
                         <p>Autor: {author.name}</p>
-                        <p>Año de publicacion: {bookDetails.first_publish_date}</p>
-                        <p>Descripcion:{bookDetails.description}</p>
+                        <p>Año de publicación: {bookDetails.first_publish_date}</p>
+                        <p>Descripción: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
                         <p>ISBN: {bookDetails.isbn}</p>
                     </div>
                 </div>
