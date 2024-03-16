@@ -26,9 +26,6 @@ const NavBar = () => {
               <Link className="nav-link" to="/generos">Géneros</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/best-seller">Best Seller</Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/mas-buscados">Más Buscados</Link>
             </li>
           </ul>
