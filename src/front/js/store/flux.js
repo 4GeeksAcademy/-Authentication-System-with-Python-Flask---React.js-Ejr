@@ -15,8 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ],
-            resultados: [], // Almacenar los resultados de la búsqueda de libros
-            urlBase: "https://openlibrary.org/search.json", 
+            resultados: [],
+            urlBase: "https://openlibrary.org/search.json",
         },
         actions: {
             login: async (email, password) => {
@@ -24,17 +24,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const data = await actions.APIfetch("/login", "POST", { email, password });
                     if (data.error) {
-                        console.error("Error al iniciar sesión:", data.error);
-                        return false;
+                        console.error("Login error:", data.error);
+                        return { success: false, error: data.error }; // Devuelve un objeto indicando un error de autenticación
                     }
                     setStore({ token: data.token });
                     localStorage.setItem("accessToken", data.token);
-                    return true;
+                    return { success: true }; // Indica que la autenticación fue exitosa
                 } catch (error) {
-                    console.error("Error al realizar la petición:", error);
-                    return false;
+                    console.error("Error error:", error);
+                    return { success: false, error: "Incorrect credentilas" };
+
                 }
             },
+            // Acción para registrarse
             signup: async (email, password, first_name, last_name, phone, location) => {
                 const actions = getActions();
                 try {
@@ -53,6 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // Acción para obtener un mensaje del backend
             getMessage: async () => {
                 const actions = getActions();
                 try {
@@ -70,14 +73,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
+
+            // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {
+                const backendURL = process.env.BACKEND_URL || "http://localhost:5000"; // Fallback to localhost if env var is not set
+
                 const params = { method, headers: {} };
                 if (body) {
                     params.headers["Content-Type"] = "application/json";
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${process.env.BACKEND_URL}api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {
@@ -106,4 +113,3 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
-

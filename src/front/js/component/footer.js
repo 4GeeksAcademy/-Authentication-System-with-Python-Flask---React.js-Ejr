@@ -5,13 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/footer.css'
 
 const Footer = () => {
-  // Función para manejar la redirección
   const redirectTo = (url) => {
     window.open(url, '_blank');
   };
 
   return (
-    <footer className="bg-dark text-light py-4 footer">
+    <footer className="bg-dark text-light py-4 footer" Class="footer">
       <div className="container">
         <div className="row">
           <div className="col-md-4 ayuda">
