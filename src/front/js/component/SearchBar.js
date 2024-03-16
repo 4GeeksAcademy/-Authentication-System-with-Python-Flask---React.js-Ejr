@@ -1,3 +1,4 @@
+
 import React, { useState, useContext, useEffect, useCallback, useRef } from "react";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,6 +6,7 @@ import { faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import '../../styles/searchbar.css';
 import debounce from 'lodash.debounce';
 
+// Componente SearchBar con lógica de búsqueda y resultados
 const SearchBar = () => {
     const [search, setSearch] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);

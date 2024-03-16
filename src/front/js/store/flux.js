@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
+            // Estado inicial del store
             message: null,
             demo: [
                 {
@@ -32,8 +33,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error("Error error:", error);
                     return { success: false, error: "Incorrect credentilas" };
+
                 }
             },
+            // Acción para registrarse
             signup: async (email, password, first_name, last_name, phone, location) => {
                 const actions = getActions();
                 try {
@@ -52,6 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // Acción para obtener un mensaje del backend
             getMessage: async () => {
                 const actions = getActions();
                 try {
@@ -69,8 +73,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
+
+            // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {
                 const backendURL = process.env.BACKEND_URL || "http://localhost:5000"; // Fallback to localhost if env var is not set
+
                 const params = { method, headers: {} };
                 if (body) {
                     params.headers["Content-Type"] = "application/json";
