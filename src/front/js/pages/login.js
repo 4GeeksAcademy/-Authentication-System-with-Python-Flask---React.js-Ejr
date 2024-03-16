@@ -40,7 +40,7 @@ export const Login = () => {
                 <input
                     placeholder="email@email.com"
                     type="email"
-                    className="form-control"
+                    className={`form-control ${formError && email === '' ? 'error' : ''}`}
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     onChange={(e) => setEmail(e.target.value)}
@@ -58,7 +58,7 @@ export const Login = () => {
                     <input
                         placeholder="**********"
                         type="password"
-                        className="form-control"
+                        className={`form-control ${formError && email === '' ? 'error' : ''}`}
                         id="exampleInputPassword1"
                         onChange={(e) => setPassword(e.target.value)}
                     />
