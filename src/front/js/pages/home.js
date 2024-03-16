@@ -98,7 +98,7 @@ const BookCard = ({ book }) => {
       <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-M.jpg`} />
       <Card.Body className="d-flex flex-column justify-content-between">
         <Card.Title>{book.title}</Card.Title>
-        <Card.Text>{book.author_name}</Card.Text>
+        <Card.Text>{book.authors[0].name}</Card.Text>
 		    <Link to={`/books${book.key}`}>
           <button className="btn btn-success">VER LIBRO</button>
         </Link>
