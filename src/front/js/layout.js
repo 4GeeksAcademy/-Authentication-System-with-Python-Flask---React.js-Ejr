@@ -4,7 +4,6 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Forgot } from "./pages/forgot";
 import { Home } from "./pages/home";
-import Reviews from "./pages/reviews";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -14,6 +13,7 @@ import BookDetails from "./pages/book"
 import Footer from "./component/footer";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
+import Reviews from "./pages/reviews";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -27,7 +27,6 @@ const Layout = () => {
                     <NavBar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Reviews />} path="/reviews" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Single />} path="/single/:theid" />
@@ -36,6 +35,8 @@ const Layout = () => {
                         <Route element={<Forgot />} path="/forgot" />
                         <Route element={<BookDetails />} path="/books/works/:id" />
                         <Route path="*" element={<h1>Not found!</h1>} />
+                        <Route element={<Reviews />} path="/reviews" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>
