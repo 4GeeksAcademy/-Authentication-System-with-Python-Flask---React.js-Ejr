@@ -10,45 +10,45 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-dark text-light py-4 footer" Class="footer">
+    <footer className="bg-dark text-light py-4 footer">
       <div className="container">
         <div className="row">
           <div className="col-md-4 ayuda">
-            <h5>Ayuda</h5>
-            <button onClick={() => redirectTo('/sobre-nosotros')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Sobre Nosotros</button>
-            <button onClick={() => redirectTo('/recomendadores')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Quiénes son los "Recomendadores"</button>
-            <button onClick={() => redirectTo('/aviso-privacidad')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Aviso de privacidad</button>
-            <button onClick={() => redirectTo('/anuncios')} className="btn btn-link text-decoration-none text-secondary p-0 d-block">Anuncios en la página</button>
+            <h5>Help</h5>
+            <button onClick={() => redirectTo('/about-us')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">About Us</button>
+            <button onClick={() => redirectTo('/recommenders')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Who are the "Recommenders"</button>
+            <button onClick={() => redirectTo('/privacy-notice')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Privacy Notice</button>
+            <button onClick={() => redirectTo('/advertisements')} className="btn btn-link text-decoration-none text-secondary p-0 d-block">Advertisements on the page</button>
           </div>
           <div className="col-md-4 unete">
-            <h5>Únete a Nuestras Noticias</h5>
-            <p>Recibe las mejores recomendaciones, noticias y más directamente en tu correo electrónico.</p>
-            <button className="btn btn-primary">Únete a las Noticias</button>
+            <h5>Join Our Newsletter</h5>
+            <p>Receive the best recommendations, news, and more directly in your email.</p>
+            <button className="btn btn-primary">Join the News</button>
           </div>
           <div className="col-md-4 siguenos">
-            <h5>Síguenos</h5>
+            <h5>Follow Us</h5>
             <div>
-			<a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faTwitter} size="lg" /></a>
-			{' | '}
-                            <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faFacebookF} size="lg" /></a>
-							{' | '}
-                            <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faInstagram} size="lg" /></a>
-							{' | '}
-                            <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faTiktok} size="lg" /></a>
-							{' | '}
-                            <a href="#!" className="text-secondary"><FontAwesomeIcon icon={faYoutube} size="lg" /></a>
+              <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faTwitter} size="lg" /></a>
+              {' | '}
+              <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faFacebookF} size="lg" /></a>
+              {' | '}
+              <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faInstagram} size="lg" /></a>
+              {' | '}
+              <a href="#!" className="text-secondary me-2"><FontAwesomeIcon icon={faTiktok} size="lg" /></a>
+              {' | '}
+              <a href="#!" className="text-secondary"><FontAwesomeIcon icon={faYoutube} size="lg" /></a>
             </div>
           </div>
         </div>
         <div className="border-top border-secondary mt-3 pt-3 text-center text-secondary">
-		<button onClick={() => redirectTo('/politica-privacidad')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Política de Privacidad</button>
+          <button onClick={() => redirectTo('/privacy-policy')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Privacy Policy</button>
           {' | '}
-          <button onClick={() => redirectTo('/terminos')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Términos y Condiciones</button>
+          <button onClick={() => redirectTo('/terms')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Terms and Conditions</button>
           {' | '}
-          <button onClick={() => redirectTo('/aviso-cookies')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Aviso de Cookies</button>
+          <button onClick={() => redirectTo('/cookie-notice')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Cookie Notice</button>
           {' | '}
-          <button onClick={() => redirectTo('/noticias')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Noticias</button>
-          <p>Copyright © Recomiéndame un Libro. Todos los derechos reservados.</p>
+          <button onClick={() => redirectTo('/news')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">News</button>
+          <p>Copyright © Recommend Me a Book. All rights reserved.</p>
         </div>
       </div>
     </footer>
