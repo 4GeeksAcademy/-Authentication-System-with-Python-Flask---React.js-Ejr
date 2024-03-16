@@ -1,24 +1,21 @@
-.stick{
-    background-color: black;
-    height: 100px;
-    width: 15px;
-    margin-bottom: -7px;
-    margin: 0 auto;
+.bottle {
+  background: white;
+  height: 300px;
+  width: 200px;
+  border: 1px solid black;
 }
-.lights{
-    height: 350px;
-    width: 115px;
-    background-color: black;
-    margin: 0 auto;
-    padding: 35px 5px;
+.top {
+  height: 33%;
+  width: 100%;
 }
-.light{
-    height: 90px;
-    border-radius: 50%;
-    margin: 5px 0;
-    z-index: 99;
+.middle {
+  height: 33%;
+  width: 100%;
 }
-.blue{
-    background-color: blue;
-    margin: 0;
+.bottom {
+  height: 33%;
+  width: 100%;
+}
+.active {
+  background: blue;
 }

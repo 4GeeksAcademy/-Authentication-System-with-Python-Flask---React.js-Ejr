@@ -4,9 +4,10 @@ import "../../styles/navbar.css";
 
 export const Navbar = () => {
   return (
-    <div id="whole-wheat" className="">
+    <div id="whole-wheat" className="px-5">
       <nav className="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between">
         <div className="d-flex justify-content-between w-100">
+          {/*           this is linking to the homepage*/}
           <a className="navbar-brand" href="#">
             NourishNav
           </a>
@@ -32,14 +33,14 @@ export const Navbar = () => {
               Search
             </button>
           </form>
-
           <div
             className="collapse navbar-collapse flex-grow-0"
             id="navbarSupportedContent"
           >
+            {/* add linking for pages */}
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <a className="nav-link" aria-current="page" href="#">
                   Features
                 </a>
               </li>
@@ -68,7 +69,8 @@ export const Navbar = () => {
                 >
                   Account
                 </a>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu dropdown-menu-end">
+                  {/* add linking for various pages */}
                   <li>
                     <a className="dropdown-item" href="#">
                       Account
