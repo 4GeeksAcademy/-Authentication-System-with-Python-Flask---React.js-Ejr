@@ -58,7 +58,7 @@ const SearchBar = () => {
                     className="form-control me-2"
                     class="searchbar"
                     type="search"
-                    placeholder="Busca libros, autores, editoriales..."
+                    placeholder="Search for books, authors, publishers..."
                     aria-label="Search"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}

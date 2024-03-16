@@ -2,44 +2,44 @@ import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
-import '../../styles/navbar.css';
+import '../../styles/navbar.css'; // Asegúrate de que este archivo contenga las clases CSS que has proporcionado
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 
 const NavBar = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary align-items-center p-0 mb-5">
+    <Navbar bg="body-tertiary" expand="lg" className="align-items-center mb-5 p-0" style={{ backgroundColor: '#DFDCD3' }}>
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/"><Logo /></NavLink>
-        <Dropdown>
-          <Dropdown.Toggle class="menu-bottom" variant="secondary" id="dropdown-basic">
-            Look Here
-          </Dropdown.Toggle>
+        <Navbar.Brand as={NavLink} to="/"><Logo /></Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav className="me-auto">
+            <NavDropdown title="Menu" id="navbarScrollingDropdown" className="custom-dropdown-toggle">
+              <NavDropdown.Item as={NavLink} to="/recomendaciones">Recommendations</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/autores">Authors</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/generos">Genres</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/best-seller">Best Seller</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/mas-buscados">Most Wanted</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/random-books">Random Books</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
 
-          <Dropdown.Menu>
-            <Dropdown.Item as={NavLink} to="/recomendaciones">Recommendations</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to="/autores">Authors</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to="/generos">Genres</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to="/best-seller">Best Seller</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to="/mas-buscados">Most Wanted</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to="/libros aleatorios">Random Books</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <SearchBar />
-
-        <div className="d-flex justify-content-end align-items-center">
-          <button onClick={() => navigate('/signup')} className="btn btn-primary me-2">
-            Registrarse
-          </button>
-          <button onClick={() => navigate('/login')} className="btn btn-secondary">
-            Iniciar Sesión
-          </button>
-        </div>
+          <div className="mx-auto">
+          <SearchBar />
+          </div>
+          <div className="d-flex justify-content-end align-items-center">
+            <Button onClick={() => navigate('/signup')} variant="primary" className="login-signup-btn me-2">
+              Sign Up
+            </Button>
+            <Button onClick={() => navigate('/login')} variant="secondary" className="login-signup-btn">
+              Log In
+            </Button>
+          </div>
+        </Navbar.Collapse>
       </div>
-    </nav>
+    </Navbar>
   );
 };
 
