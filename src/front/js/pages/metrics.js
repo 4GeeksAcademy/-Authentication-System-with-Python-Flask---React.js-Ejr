@@ -17,6 +17,9 @@ export default function Metrics() {
     }
   }
 
+const Water = () => {
+  const [waterDrank, setWaterDrank] = useState("blue");
+
   return (
     <div class="bottle" onClick={(e) => handleBottle()}>
       <div class={top === true ? "top active" : "top"}></div>
