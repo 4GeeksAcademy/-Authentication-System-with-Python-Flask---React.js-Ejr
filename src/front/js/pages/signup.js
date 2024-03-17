@@ -29,11 +29,9 @@ export default function Signup() {
   };
 
   const token = sessionStorage.getItem("token");
-  console.log(token);
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(e.target);
-    actions.signUp({name, email, password},navigate).then((res) => navigate("/login")).catch((err) => setError(err));
+    actions.signUp({name, email, password,},navigate).then((res) => navigate("/login")).catch((err) => setError(err));
   }
 
     return (
@@ -45,6 +43,12 @@ export default function Signup() {
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="text" 
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)} 
         />
         <input
           type="password"

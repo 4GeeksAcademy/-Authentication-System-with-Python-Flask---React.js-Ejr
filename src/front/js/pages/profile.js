@@ -12,20 +12,26 @@ const Private = () => {
             actions.authenticateUser(navigate);
         }
         setTimeout(() => {
-            authenticate() }, 500)        
+            authenticate() }, 5000) 
+             
     }, [])
 
+    // useEffect(() => {
+    //     actions.tokenFromStore()
+    //     if(store.token)
+    // }, [user.token])
     
     //We need to ask new user for: Name, Date of birth, weight, height, main health concerns, goals, workout activity level, do you want supplement suggestions, allergies/sensitivities, cravings(sugar, cigarettes, coffee) etc. 
     return (
         <div className="container text-center">
             <h1>Hello!</h1>
-            {store.user!= null ?
+            {store.user ?
                 <div >
                     <h2>Email: {store.user.email}</h2>
                 </div>
                 :
-                navigate("/login")
+                // navigate("/login")
+                <h1>user not found</h1>
             }
         </div>
         

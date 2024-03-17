@@ -12,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// start of user related fetch request
 			signUp: async (form, navigate) => {
-				const url = `${process.env.REACT_APP_BACKEND_URL}/api/signup`;
+				const url = `${process.env.BACKEND_URL}/api/signup`;
 				try {
 					const response = await fetch(url, {
 						method: "POST",
@@ -53,11 +53,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 					//console.log(resp.text()); // will try return the exact result as string
 					const data = await resp.json();
-					sessionStorage.setItem("token", data.token);
-					setStore({token: data.token});
+					sessionStorage.setItem("token", data.access_token);
+					setStore({token: data.access_token});
+					setStore({user: data.user});
+
 					navigate('/private')
 					
-					console.log(store.token);
+					console.log(store.access_token);
 				})				
 				.catch(error => {
 					//error handling
@@ -66,7 +68,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			authenticateUser: (navigate) => {
 				const store = getStore();
-				console.log(store.token);
 				const url = process.env.BACKEND_URL + "/api/private"
 				fetch(url, {
 					method: "GET",
@@ -83,13 +84,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert("Please login to continue");
 												
 					}
-					
 					//console.log(resp.text()); // will try return the exact result as string
 					return resp.json();
 				})
 				.then(data => {
 					setStore({user: data});
-					
 				})
 				.catch(error => {
 					//error handling

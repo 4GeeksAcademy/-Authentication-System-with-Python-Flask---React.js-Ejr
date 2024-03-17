@@ -31,10 +31,11 @@ def handle_hello():
 def handle_signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
+    name = request.json.get("name", None)
     user = User.query.filter_by(email = email).first()
     if user:
         return jsonify({"msg": "User account already exists"})
-    newUser = User(email = email, password = password)
+    newUser = User(email = email, password = password, name = name, age = 0, height= "5.5", weight=150, activity_level = "lazy")
     db.session.add(newUser)
     db.session.commit()
     return jsonify("Added User"), 200
@@ -44,12 +45,12 @@ def login():
     body = request.get_json ( force = True)
     email = body['email']
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
-    print(password)
-    new_user = User(email = email, password = password)
-    db.session.add(new_user)
-    db.session.commit()
-    access_token = create_access_token(identity = email)
-    return jsonify(access_token = access_token)
+    current_user = User(email = email, password = password)
+    if current_user is not None:
+        access_token = create_access_token(identity = current_user.id)
+        return jsonify(access_token = access_token, user = current_user.serialize())
+        
+    return jsonify("user does not exist")
 
 
 
@@ -57,10 +58,11 @@ def login():
 @jwt_required()
 def handle_private():
     current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
+    user = User.query.filter_by(id=current_user_id).first()
 
     if user is None:
         return jsonify({"msg": "Please login"})
     else:
         return jsonify({"user_id": user.id, "email":user.email}), 200
+
 # end of user related routes

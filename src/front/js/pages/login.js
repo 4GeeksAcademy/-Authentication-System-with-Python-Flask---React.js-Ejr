@@ -5,14 +5,12 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {  
   const { store, actions } = useContext(Context);
-  const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const token = sessionStorage.getItem("token");
-  console.log(token);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,12 +33,6 @@ export default function Login() {
           placeholder="email"
           value={email}
           onChange={(e) => setemail(e.target.value)}
-        />
-        <input
-          type="text" 
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)} 
         />
         <input
           type="password"
