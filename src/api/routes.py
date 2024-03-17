@@ -47,7 +47,7 @@ def login():
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
     current_user = User(email = email, password = password)
     if current_user is not None:
-        access_token = create_access_token(identity = current_user.id)
+        access_token = create_access_token(identity = current_user.email)
         return jsonify(access_token = access_token, user = current_user.serialize())
         
     return jsonify("user does not exist")
@@ -57,12 +57,12 @@ def login():
 @api.route('/private', methods=['GET'])
 @jwt_required()
 def handle_private():
-    current_user_id = get_jwt_identity()
-    user = User.query.filter_by(id=current_user_id).first()
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email = current_user_email).first()
 
     if user is None:
-        return jsonify({"msg": "Please login"})
+        return jsonify({"msg": "Please login"}), 400
     else:
-        return jsonify({"user_id": user.id, "email":user.email}), 200
+        return jsonify(user = user.serialize()), 200
 
 # end of user related routes

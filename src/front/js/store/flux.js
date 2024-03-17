@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,			
-			token: null,
+			token: sessionStorage.getItem('token'),
 			user: null
 		},
 		actions: {
@@ -54,46 +54,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					//console.log(resp.text()); // will try return the exact result as string
 					const data = await resp.json();
 					sessionStorage.setItem("token", data.access_token);
-					setStore({token: data.access_token});
 					setStore({user: data.user});
 
-					navigate('/private')
 					
-					console.log(store.access_token);
+					
 				})				
 				.catch(error => {
 					//error handling
 					console.log(error);
 				})
 			},
-			authenticateUser: (navigate) => {
+			authenticateUser: async (navigate) => {
+				console.log(sessionStorage.getItem('token'))
 				const store = getStore();
 				const url = process.env.BACKEND_URL + "/api/private"
-				fetch(url, {
+				let response = await fetch(url, {
 					method: "GET",
 					headers: {
-						"Authorization": "Bearer " + store.token,
+						"Authorization": "Bearer " + sessionStorage.getItem('token'),
 						'Access-Control-Allow-Origin':'*'
 					}
 				})
-				.then(resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						navigate("/login");
-						alert("Please login to continue");
-												
-					}
-					//console.log(resp.text()); // will try return the exact result as string
-					return resp.json();
-				})
-				.then(data => {
-					setStore({user: data});
-				})
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
+				let data = response.json()
+				setStore({user: data.user});
 			},
 			tokenFromStore: () => {
 				let store = getStore();
@@ -104,7 +87,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({user:null});
 				sessionStorage.removeItem("token");
 				setStore({token: null});
-				navigate("/");
 			},
 			
 			// end of user related fetch request

@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from "react";
+import React, {useEffect, useContext, useState} from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Private = () => {
     const {store, actions} = useContext(Context);
     const navigate = useNavigate();
+    const [user, setUser] = useState();
 
     useEffect(() => {
         function authenticate() {
@@ -16,6 +17,10 @@ const Private = () => {
              
     }, [])
 
+    useEffect(() => {
+        setUser(store.user)
+    }, [store.user]);
+
     // useEffect(() => {
     //     actions.tokenFromStore()
     //     if(store.token)
@@ -25,7 +30,7 @@ const Private = () => {
     return (
         <div className="container text-center">
             <h1>Hello!</h1>
-            {store.user ?
+            {user ?
                 <div >
                     <h2>Email: {store.user.email}</h2>
                 </div>
