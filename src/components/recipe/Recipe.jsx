@@ -10,7 +10,10 @@ import lunch3 from "../../assets/lunch3.jpeg";
 
 const Recipe = () => {
   return (
-    <div className="hero-section" style={{ backgroundImage: `url(${foodImage2})` }}>
+    <div
+      className="hero-section"
+      style={{ backgroundImage: `url(${foodImage2})` }}
+    >
       <div className="container py-5">
         <h1 className="text-center text-white mb-5">Nutrition Made Easy</h1>
         <div className="row justify-content-center">
@@ -33,8 +36,8 @@ const Recipe = () => {
             <div className="card bg-light p-3">
               <h3 className="text-center mb-4">Join Our Newsletter</h3>
               <p className="text-center">
-                Stay updated with our latest recipes, nutrition tips, and special
-                offers.
+                Stay updated with our latest recipes, nutrition tips, and
+                special offers.
               </p>
               <form>
                 <div className="mb-3">
@@ -61,35 +64,67 @@ const Recipe = () => {
           </button>
         </div>
         <div className="recipes-section">
-          <h3 className="text-center mb-4">Try one of our Delicious and Balanced Recipes</h3>
+          <h3 className="text-center mb-4">
+            Try one of our Delicious and Balanced Recipes
+          </h3>
           <div className="row row-cols-1 row-cols-md-3 g-4">
             <div className="col">
               <div className="card h-100">
-                <img src={breakfast2} className="card-img-top" alt="Breakfast 1" />
+                <img
+                  src={breakfast2}
+                  className="card-img-top"
+                  alt="Breakfast 1"
+                />
                 <div className="card-body">
                   <h5 className="card-title">Buddha Bowl</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Delicious and Nutritious</h6>
-                  <p className="card-text">Discover the perfect balance of flavors and nutrients in our Buddha Bowl. Packed with protein, fiber, and essential vitamins.</p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Delicious and Nutritious
+                  </h6>
+                  <p className="card-text">
+                    Discover the perfect balance of flavors and nutrients in our
+                    Buddha Bowl. Packed with protein, fiber, and essential
+                    vitamins.
+                  </p>
                 </div>
               </div>
             </div>
             <div className="col">
               <div className="card h-100">
-                <img src={breakfast1} className="card-img-top" alt="Breakfast 2" />
+                <img
+                  src={breakfast1}
+                  className="card-img-top"
+                  alt="Breakfast 2"
+                />
                 <div className="card-body">
                   <h5 className="card-title">Mediterranean Salad</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Fresh and Flavorful</h6>
-                  <p className="card-text">Indulge in the vibrant tastes of the Mediterranean with our refreshing salad. Bursting with fresh veggies, olives, feta cheese, and a tangy vinaigrette.</p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Fresh and Flavorful
+                  </h6>
+                  <p className="card-text">
+                    Indulge in the vibrant tastes of the Mediterranean with our
+                    refreshing salad. Bursting with fresh veggies, olives, feta
+                    cheese, and a tangy vinaigrette.
+                  </p>
                 </div>
               </div>
             </div>
             <div className="col">
               <div className="card h-100">
-                <img src={breakfast3} className="card-img-top" alt="Breakfast 3" />
+                <img
+                  src={breakfast3}
+                  className="card-img-top"
+                  alt="Breakfast 3"
+                />
                 <div className="card-body">
                   <h5 className="card-title">Green Smoothie</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Energy Booster</h6>
-                  <p className="card-text">Revitalize your day with our Green Smoothie, packed with leafy greens, fruits, and superfoods. It's the perfect way to fuel your body and mind!</p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Energy Booster
+                  </h6>
+                  <p className="card-text">
+                    Revitalize your day with our Green Smoothie, packed with
+                    leafy greens, fruits, and superfoods. It's the perfect way
+                    to fuel your body and mind!
+                  </p>
                 </div>
               </div>
             </div>
@@ -98,8 +133,14 @@ const Recipe = () => {
                 <img src={buddhaBowl} className="card-img-top" alt="Lunch 1" />
                 <div className="card-body">
                   <h5 className="card-title">Buddha Bowl</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Delicious and Nutritious</h6>
-                  <p className="card-text">Discover the perfect balance of flavors and nutrients in our Buddha Bowl. Packed with protein, fiber, and essential vitamins.</p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Delicious and Nutritious
+                  </h6>
+                  <p className="card-text">
+                    Discover the perfect balance of flavors and nutrients in our
+                    Buddha Bowl. Packed with protein, fiber, and essential
+                    vitamins.
+                  </p>
                 </div>
               </div>
             </div>
@@ -108,8 +149,14 @@ const Recipe = () => {
                 <img src={veggieWrap} className="card-img-top" alt="Lunch 2" />
                 <div className="card-body">
                   <h5 className="card-title">Mediterranean Salad</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Fresh and Flavorful</h6>
-                  <p className="card-text">Indulge in the vibrant tastes of the Mediterranean with our refreshing salad. Bursting with fresh veggies, olives, feta cheese, and a tangy vinaigrette.</p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Fresh and Flavorful
+                  </h6>
+                  <p className="card-text">
+                    Indulge in the vibrant tastes of the Mediterranean with our
+                    refreshing salad. Bursting with fresh veggies, olives, feta
+                    cheese, and a tangy vinaigrette.
+                  </p>
                 </div>
               </div>
             </div>
@@ -118,8 +165,14 @@ const Recipe = () => {
                 <img src={lunch3} className="card-img-top" alt="Lunch 3" />
                 <div className="card-body">
                   <h5 className="card-title">Green Smoothie</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">Energy Booster</h6>
-                  <p className="card-text">Revitalize your day with our Green Smoothie, packed with leafy greens, fruits, and superfoods. It's the perfect way to fuel your body and mind!</p>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Energy Booster
+                  </h6>
+                  <p className="card-text">
+                    Revitalize your day with our Green Smoothie, packed with
+                    leafy greens, fruits, and superfoods. It's the perfect way
+                    to fuel your body and mind!
+                  </p>
                 </div>
               </div>
             </div>
