@@ -1,8 +1,65 @@
+.recipe-container {
+  padding: 20px;
+  background-color: #f4f4f2; /* neutral beige */
+}
+
+.recipe-content {
+  padding: 40px 0;
+}
+
+.recipe-heading {
+  font-size: 2.5rem;
+  color: #4d834e; /* muted green */
+}
+
+.recipe-description {
+  font-size: 1.1rem;
+  color: #6c757d; /* neutral gray */
+}
+
+.recipe-features {
+  margin-top: 40px;
+}
+
+.feature-heading {
+  font-size: 1.5rem;
+  color: #4d834e; /* muted green */
+}
+
+.feature-description {
+  font-size: 1.1rem;
+  color: #6c757d; /* neutral gray */
+}
+
+.upgrade-section {
+  margin-top: 40px;
+}
+
+.upgrade-heading {
+  font-size: 1.5rem;
+  color: #4d834e; /* muted green */
+}
+
+.recipes-section {
+  margin-top: 40px;
+}
+
+.recipes-heading {
+  font-size: 1.8rem;
+  color: #4d834e; /* muted green */
+}
+
+.whats-hot-heading {
+  font-size: 1.2rem;
+  color: #6c757d; /* neutral gray */
+}
+
+
 /* src/App.css */
-.gpt3__possibility {
+/* .gpt3__possibility {
     display: flex;
     flex-direction: row;
-  }
+  } */
   
   /* .gpt3__possibility-image {
     flex: 1;
@@ -12,7 +69,7 @@
     margin-right: 2rem;
   } */
   
-  .gpt3__possibility-image img {
+  /* .gpt3__possibility-image img {
     width: 100%;
     height: 100%;
   }
@@ -31,8 +88,8 @@
     font-size: 16px;
     line-height: 30px;
     color: #333333;
-  }
-  .gpt3__possibility-content h4:last-child {
+  } */
+  /* .gpt3__possibility-content h4:last-child {
     color: #333333;
   }
   .gpt3__possibility-content h1 {
@@ -57,10 +114,10 @@
   
     .gpt3__possibility-image {
       margin: 1rem 0;
-    }
+    } */
   
-    .gpt3__possibility-content {
+    /* .gpt3__possibility-content {
       margin-top: 2rem;
     }
   }
-  
+   */
