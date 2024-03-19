@@ -1,12 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { FavoritesContext } from "./home";
-
 
 const Reviews = () => {
-  const { bookKey } = useParams(); // Obtener el ID del libro de los parámetros de la URL
-  const { favorites } = useContext(FavoritesContext);
+  const { id } = useParams(); // Obtener el ID del libro de los parámetros de la URL
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
@@ -21,45 +18,33 @@ const Reviews = () => {
     setRating(0);
   };
 
-  // Encuentra el libro por su ID en la lista de libros favoritos
-  const book = favorites.find((book) => book.key === bookKey);
-
-  if (!book) {
-    return <div>Libro no encontrado</div>;
-  }
-
   return (
     <Container>
       <Row>
         <Col className="col-6">
           {/* Mostrar la portada del libro en la primera columna */}
-          <img
-            src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-L.jpg`}
-            alt="Portada del libro"
-            className="img-fluid"
-          />
+          {/* Puedes agregar aquí la portada del libro si lo deseas */}
         </Col>
         <Col className="col-6">
           {/* Mostrar el formulario de comentario en la segunda columna */}
           <Card>
             <Card.Body>
-              <Card.Title>{book.title}</Card.Title>
-              <Card.Text>{book.author_name}</Card.Text>
+              <h1>Título del Libro</h1>
+              <p>Autor del Libro</p>
               {/* Formulario de comentario */}
               <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="comment">
-                  <Form.Label>Deja tu comentario</Form.Label>
-                  <Form.Control
+                <div controlId="comment">
+                  <label>Deja tu comentario</label>
+                  <input
                     as="textarea"
                     rows={3}
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   />
-                </Form.Group>
-                <Form.Group controlId="rating">
-                  <Form.Label>Calificación</Form.Label>
-                  <Form.Control
-                    as="select"
+                </div>
+                <div controlId="rating">
+                  <label>Calificación</label>
+                  <select
                     value={rating}
                     onChange={(e) => setRating(e.target.value)}
                   >
@@ -69,8 +54,8 @@ const Reviews = () => {
                     <option value={3}>3 estrellas</option>
                     <option value={4}>4 estrellas</option>
                     <option value={5}>5 estrellas</option>
-                  </Form.Control>
-                </Form.Group>
+                  </select>
+                </div>
                 <Button variant="primary" type="submit">
                   Enviar comentario
                 </Button>
