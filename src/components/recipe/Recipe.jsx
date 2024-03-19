@@ -69,7 +69,7 @@ const Recipe = () => {
           </h3>
           <div className="row row-cols-1 row-cols-md-3 g-4">
             <div className="col">
-              <div className="card h-100">
+              <div className="card h-100 recipe-card">
                 <img
                   src={breakfast2}
                   className="card-img-top"
@@ -90,7 +90,7 @@ const Recipe = () => {
               </div>
             </div>
             <div className="col">
-              <div className="card h-100">
+              <div className="card h-100 recipe-card">
                 <img
                   src={breakfast1}
                   className="card-img-top"
@@ -111,7 +111,7 @@ const Recipe = () => {
               </div>
             </div>
             <div className="col">
-              <div className="card h-100">
+              <div className="card h-100 recipe-card">
                 <img
                   src={breakfast3}
                   className="card-img-top"
@@ -132,7 +132,7 @@ const Recipe = () => {
               </div>
             </div>
             <div className="col">
-              <div className="card h-100">
+              <div className="card h-100 recipe-card">
                 <img
                   src={buddhaBowl}
                   className="card-img-top"
@@ -153,7 +153,7 @@ const Recipe = () => {
               </div>
             </div>
             <div className="col">
-              <div className="card h-100">
+              <div className="card h-100 recipe-card">
                 <img
                   src={veggieWrap}
                   className="card-img-top"
@@ -174,7 +174,7 @@ const Recipe = () => {
               </div>
             </div>
             <div className="col">
-              <div className="card h-100">
+              <div className="card h-100 recipe-card">
                 <img
                   src={lunch3}
                   className="card-img-top"

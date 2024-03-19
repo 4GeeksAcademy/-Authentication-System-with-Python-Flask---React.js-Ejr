@@ -64,15 +64,18 @@
 .hero-section {
   background-size: cover;
   background-position: center;
-  min-height: 80vh; 
+  min-height: 80vh;
 }
 
 .card {
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for recipe of the day */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Semi-transparent background for recipe of the day */
 }
 
-.card-body {
-  background-color: 
+.recipe-card {
+  background-color: #eeeeee;
 }
-
-
