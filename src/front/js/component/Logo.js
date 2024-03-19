@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../../styles/logo.css'; 
+import logo from '../../../front/img/logo.jpg'; 
 
-
-// Poner Logo
 const Logo = () => {
     return (
-        <Link to="/" className="logo-wrap col-3">
-            <img src="/front/img/x.png" alt="Recomiéndame un Libro" />
+        <Link to="/" className="logo-wrap">
+            <img src={logo} className="logo-image" alt="Recommend me a Book" />
         </Link>
     );
 }
