@@ -1,6 +1,15 @@
 #whole-wheat-footer {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Ensure the container takes up the full height */
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #bac686;
+}
+
+a {
+  color: #3b4a40;
+}
+
+.nav-link {
+  color: #3b4a40;
 }
