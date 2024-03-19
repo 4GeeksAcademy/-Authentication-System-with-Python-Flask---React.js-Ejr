@@ -14,6 +14,9 @@ import Footer from "./component/footer";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Reviews from "./pages/reviews";
+{/*EMPIEZAN PAGINAS DE FOOTER*/}
+import PrivacyPolicy from "./pages/privacy-policy";
+
 
 
 const Layout = () => {
@@ -36,6 +39,9 @@ const Layout = () => {
                             <Route element={<Forgot />} path="/forgot" />
                             <Route element={<BookDetails />} path="/books/works/:id" />
                             <Route element={<Reviews />} path="/books/works/:id/reviews" />
+                            {/* EMPIEZAN PAGINAS DE FOOTER*/}
+                            <Route element={<PrivacyPolicy />} path="/privacy-policy" />
+                            {/*TERMINAN PAGINAS DE FOOTER*/}
                             {/*<Route exact path="/books/:id/reviews" component={Reviews} />*/}
                             <Route path="*" element={<h1>Not found!</h1>} />
 
