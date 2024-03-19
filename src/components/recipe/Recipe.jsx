@@ -32,7 +32,7 @@ const Recipe = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <div className="card bg-light p-3">
               <h3 className="text-center mb-4">Join Our Newsletter</h3>
               <p className="text-center">
@@ -53,7 +53,7 @@ const Recipe = () => {
                 </button>
               </form>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="container">
@@ -74,6 +74,7 @@ const Recipe = () => {
                   src={breakfast2}
                   className="card-img-top"
                   alt="Breakfast 1"
+                  style={{ height: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body">
                   <h5 className="card-title">Buddha Bowl</h5>
@@ -94,6 +95,7 @@ const Recipe = () => {
                   src={breakfast1}
                   className="card-img-top"
                   alt="Breakfast 2"
+                  style={{ height: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body">
                   <h5 className="card-title">Mediterranean Salad</h5>
@@ -114,6 +116,7 @@ const Recipe = () => {
                   src={breakfast3}
                   className="card-img-top"
                   alt="Breakfast 3"
+                  style={{ height: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body">
                   <h5 className="card-title">Green Smoothie</h5>
@@ -130,7 +133,12 @@ const Recipe = () => {
             </div>
             <div className="col">
               <div className="card h-100">
-                <img src={buddhaBowl} className="card-img-top" alt="Lunch 1" />
+                <img
+                  src={buddhaBowl}
+                  className="card-img-top"
+                  alt="Lunch 1"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
                 <div className="card-body">
                   <h5 className="card-title">Buddha Bowl</h5>
                   <h6 className="card-subtitle mb-2 text-muted">
@@ -146,7 +154,12 @@ const Recipe = () => {
             </div>
             <div className="col">
               <div className="card h-100">
-                <img src={veggieWrap} className="card-img-top" alt="Lunch 2" />
+                <img
+                  src={veggieWrap}
+                  className="card-img-top"
+                  alt="Lunch 2"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
                 <div className="card-body">
                   <h5 className="card-title">Mediterranean Salad</h5>
                   <h6 className="card-subtitle mb-2 text-muted">
@@ -162,7 +175,12 @@ const Recipe = () => {
             </div>
             <div className="col">
               <div className="card h-100">
-                <img src={lunch3} className="card-img-top" alt="Lunch 3" />
+                <img
+                  src={lunch3}
+                  className="card-img-top"
+                  alt="Lunch 3"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
                 <div className="card-body">
                   <h5 className="card-title">Green Smoothie</h5>
                   <h6 className="card-subtitle mb-2 text-muted">

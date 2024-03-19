@@ -17,14 +17,15 @@ export default function Metrics() {
     }
   }
 
-const Water = () => {
-  const [waterDrank, setWaterDrank] = useState("blue");
+  const Water = () => {
+    const [waterDrank, setWaterDrank] = useState("blue");
 
-  return (
-    <div class="bottle" onClick={(e) => handleBottle()}>
-      <div class={top === true ? "top active" : "top"}></div>
-      <div class={middle === true ? "middle active" : "middle"}></div>
-      <div class={bottom === true ? "bottom active" : "bottom"}></div>
-    </div>
-  );
+    return (
+      <div class="bottle" onClick={(e) => handleBottle()}>
+        <div class={top === true ? "top active" : "top"}></div>
+        <div class={middle === true ? "middle active" : "middle"}></div>
+        <div class={bottom === true ? "bottom active" : "bottom"}></div>
+      </div>
+    );
+  };
 }
