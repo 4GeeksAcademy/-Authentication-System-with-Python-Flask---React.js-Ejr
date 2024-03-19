@@ -40,6 +40,7 @@ export default function Metrics() {
     }
   }
 
+
   return (
     <div className="bottle" onClick={handleBottle}>
       {[...Array(8)].map((_, index) => (
