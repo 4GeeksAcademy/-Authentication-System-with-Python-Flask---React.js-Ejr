@@ -27,17 +27,17 @@ const Layout = () => {
                 <ScrollToTop>
                     <NavBar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Signup />} path="/signup" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Forgot />} path="/forgot" />
-                        <Route element={<BookDetails />} path="/books/works/:id" />
-                        <Route path="*" element={<h1>Not found!</h1>} />
-                        <Route element={<Reviews />} path="/reviews" />
-                        <Route exact path="/books/:id/reviews" component={Reviews} />
+                            <Route element={<Home />} path="/" />
+                            <Route element={<Demo />} path="/demo" />
+                            <Route element={<Signup />} path="/signup" />
+                            <Route element={<Single />} path="/single/:theid" />
+                            <Route element={<h1>Not found!</h1>} />
+                            <Route element={<Login />} path="/login" />
+                            <Route element={<Forgot />} path="/forgot" />
+                            <Route element={<BookDetails />} path="/books/works/:id" />
+                            <Route element={<Reviews />} path="/books/works/:id/reviews" />
+                            {/*<Route exact path="/books/:id/reviews" component={Reviews} />*/}
+                            <Route path="*" element={<h1>Not found!</h1>} />
 
                     </Routes>
                     <Footer />

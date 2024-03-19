@@ -57,7 +57,7 @@ export const BookDetails = () => {
                         <p>Año de publicacion: {bookDetails.first_publish_date}</p>
                         <p>Descripcion:{bookDetails.description}</p>
                         <p>ISBN: {bookDetails.isbn}</p>
-                        <Link to={`/books/${id}/reviews`}>
+                        <Link to={`/books/works/${id}/reviews`}>
                             <button className="btn btn-success">LEAVE A REVIEW</button>
                         </Link>
                     </div>
