@@ -2,10 +2,45 @@ import React from "react";
 import "../../styles/footer.css";
 
 export const Footer = () => (
-  <div id="whole-wheat-footer" className="">
-    {/* SUBSCRIBE TO NEWSLETTER */}
+  <div id="whole-wheat-footer" className="d-flex flex-column">
+    <div id="newsletter">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="bg-transparent p-3">
+            <h3 className="text-center mb-4">Join Our Newsletter</h3>
+            <p className="text-center">
+              Stay updated with our latest recipes, nutrition tips, and special
+              offers.
+            </p>
+            <form className="row g-2">
+              <div className="col-md-5">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="emailInput"
+                  placeholder="Your Email Address"
+                />
+              </div>
+              <div className="col-md-4">
+                <input
+                  type="name"
+                  className="form-control"
+                  id="nameInput"
+                  placeholder="Your Name Please"
+                />
+              </div>
+              <div className="col-md-3">
+                <button type="submit" className="btn btn-success w-100">
+                  Join Here
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <footer className="footer mt-auto py-3 text-center">
+    <footer id="footer" className="mt-auto py-3 text-center">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
@@ -40,7 +75,7 @@ export const Footer = () => (
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="./recipe/Recipe">
                   Menu
                 </a>
               </li>
@@ -84,10 +119,6 @@ export const Footer = () => (
           </div>
         </div>
       </nav>
-      <p>
-        Made with <i className="fa fa-heart text-danger" /> by{" "}
-        <a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-      </p>
     </footer>
   </div>
 );
