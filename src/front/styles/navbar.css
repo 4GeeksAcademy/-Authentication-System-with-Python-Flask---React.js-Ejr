@@ -5,7 +5,7 @@
   }
   
   .container-fluid {
-    background-color: #DFDCD3 !important;
+    background-color: #E8E2D2 !important;
     padding: 3%;
   }
   
@@ -23,8 +23,10 @@
   }
   
   .custom-dropdown-toggle .dropdown-toggle {
-    background-color: #6b5936; 
-    color: white;
+    background-color: #E8E2D2; 
+    color: black !important;
+    font-weight: bold;
+    font-size: 18px;
     border-radius: 50px; 
     width: 100%;
     max-width: max-content;
@@ -33,6 +35,6 @@
   }
     
   .custom-dropdown-toggle .dropdown-toggle:hover {
-    background-color: #cbb233; 
+    background-color: #e0c020; 
   }
   
