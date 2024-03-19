@@ -4,15 +4,17 @@ import { Container, Row, Col, Card, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-
 // Creamos un contexto para almacenar los libros favoritos
-const FavoritesContext = React.createContext();
+const FavoritesContext = createContext();
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
+  const { store } = useContext(Context);
   const [popularBooks, setPopularBooks] = useState([]);
   const [romanceBooks, setRomanceBooks] = useState([]);
   const [suspenseBooks, setSuspenseBooks] = useState([]);
+  
+  // Verificamos si el usuario ha iniciado sesión
+  const isLoggedIn = store.token !== null;
 
   useEffect(() => {
     fetchBooksByCategory('popular', setPopularBooks);
@@ -20,7 +22,6 @@ export const Home = () => {
     fetchBooksByCategory('suspense', setSuspenseBooks);
   }, []);
 
-  // 3 Libros por Carrusel
   const chunkBooks = (books, size) => {
     const chunked = [];
     for (let i = 0; i < books.length; i += size) {
@@ -31,16 +32,24 @@ export const Home = () => {
 
   return (
     <Container>
-      {popularBooks.length > 0 && (
-        <BookCarousel title="Popular Books" books={chunkBooks(popularBooks, 3)} />
-      )}
-      {romanceBooks.length > 0 && (
-        <BookCarousel title="Romance Books" books={chunkBooks(romanceBooks, 3)} />
-      )}
-      {suspenseBooks.length > 0 && (
-        <BookCarousel title="Suspense Books" books={chunkBooks(suspenseBooks, 3)} />
-      )}
-      {/* Repite el componente BookCarousel para las otras secciones... */}
+      <FavoritesContext.Provider value={{ /* Aquí va la logica de favoritos */ }}>
+        {popularBooks.length > 0 && (
+          <BookCarousel title="Popular Books" books={chunkBooks(popularBooks, 3)} />
+        )}
+        {romanceBooks.length > 0 && (
+          <BookCarousel title="Romance Books" books={chunkBooks(romanceBooks, 3)} />
+        )}
+        {suspenseBooks.length > 0 && (
+          <BookCarousel title="Suspense Books" books={chunkBooks(suspenseBooks, 3)} />
+        )}
+        {/* no aparece sin inicio de sesion */}
+        {isLoggedIn && (
+          <div>
+            <h2>Mis Libros Favoritos</h2>
+            {/*lógica relacionada con los favoritos */}
+          </div>
+        )}
+      </FavoritesContext.Provider>
     </Container>
   );
 };
@@ -55,7 +64,7 @@ const BookCarousel = ({ title, books }) => {
   return (
     <div className="mb-5">
       <h2>{title}</h2>
-      <Carousel activeIndex={index} onSelect={handleSelect} indicators={false} nextLabel="" prevLabel="">
+      <Carousel activeIndex={index} onSelect={handleSelect} indicators={false} nextLabel="" prevLabel="" interval={null}>
         {books.map((bookGroup, idx) => (
           <Carousel.Item key={idx}>
             <Row xs={1} md={3} className="g-4">
@@ -79,13 +88,14 @@ const BookCard = ({ book }) => {
       <Card.Body className="d-flex flex-column justify-content-between">
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.authors[0].name}</Card.Text>
-        <Link to={`/books${book.key}`}>
+        <Link to={`/books/${book.key}`}>
           <button className="btn btn-success">VIEW BOOK</button>
         </Link>
       </Card.Body>
     </Card>
   );
 };
+
 const fetchBooksByCategory = async (category, setter) => {
   try {
     const response = await fetch(`https://openlibrary.org/subjects/${category}.json?limit=6`);

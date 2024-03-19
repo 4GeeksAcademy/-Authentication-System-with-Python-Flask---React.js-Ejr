@@ -37,3 +37,12 @@ img.card-img-top {
       max-width: 100%;
   }
 }
+
+/*pantalla chica*/
+@media (max-width: 576px) {
+  .searchbar {
+      max-width: 100%;
+      min-width: 100px;
+      margin-right: 0.5rem;
+  }
+}
