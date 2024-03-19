@@ -20,21 +20,38 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
         actions: {
             login: async (email, password) => {
+                // Usuario y contraseña falsos para pruebas como usuario
+                const fakeEmail = "prueba1@gmail.com";
+                const fakePassword = "prueba123";
+                const fakeToken = "fakeToken123456789"; // Token falso para simulación no borrar
+            
+                // Simulación de autenticación para el usuario falso no borrar
+                if (email === fakeEmail && password === fakePassword) {
+                    // Estableciendo el token falso y procediendo como si fuera exitoso no borrar
+                    setStore({ token: fakeToken });
+                    localStorage.setItem("accessToken", fakeToken);
+                    return { success: true };
+                }
+            
+                // Proceso real de autenticación no borrar
                 const actions = getActions();
                 try {
                     const data = await actions.APIfetch("/login", "POST", { email, password });
                     if (data.error) {
                         console.error("Login error:", data.error);
-                        return { success: false, error: data.error }; // Devuelve un objeto indicando un error de autenticación
+                        return { success: false, error: data.error }; 
                     }
                     setStore({ token: data.token });
                     localStorage.setItem("accessToken", data.token);
-                    return { success: true }; // Indica que la autenticación fue exitosa
+                    return { success: true }; 
                 } catch (error) {
-                    console.error("Error error:", error);
-                    return { success: false, error: "Incorrect credentilas" };
-
+                    console.error("Error:", error);
+                    return { success: false, error: "Incorrect credentials" };
                 }
+            },
+            logout: () => {
+                setStore({ token: null });
+                localStorage.removeItem('accessToken');
             },
             // Acción para registrarse
             signup: async (email, password, first_name, last_name, phone, location) => {
@@ -50,7 +67,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.log("Usuario registrado exitosamente");
                         return true;
                     }
-                } catch (error) {
+                } 
+                catch (error) {
                     console.error("Error al realizar la petición:", error);
                     return false;
                 }
@@ -76,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {
-                const backendURL = process.env.BACKEND_URL || "http://localhost:5000"; // Fallback to localhost if env var is not set
+                const backendURL = process.env.BACKEND_URL || "http://localhost:5000";
 
                 const params = { method, headers: {} };
                 if (body) {
@@ -84,11 +102,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${backendURL}api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}/api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {
-                    console.error("Error fetching data:", error);
+                    console.error("Error fetching data durign login:", error);
                     throw error;
                 }
             },

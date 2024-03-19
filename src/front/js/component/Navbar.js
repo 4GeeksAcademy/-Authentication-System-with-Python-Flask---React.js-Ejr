@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
-import '../../styles/navbar.css'; // Asegúrate de que este archivo contenga las clases CSS que has proporcionado
+import '../../styles/navbar.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
+import { Context } from '../store/appContext';
 
 const NavBar = () => {
+  const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const isLoggedIn = !!store.token;
+
+  const handleLogout = () => {
+    actions.logout();
+    navigate('/login');
+  };
 
   return (
     <Navbar bg="body-tertiary" expand="lg" className="align-items-center mb-5 p-0" style={{ backgroundColor: '#DFDCD3' }}>
@@ -27,15 +35,25 @@ const NavBar = () => {
           </Nav>
 
           <div className="mx-auto">
-          <SearchBar />
+            <SearchBar />
           </div>
           <div className="d-flex justify-content-end align-items-center">
-            <Button onClick={() => navigate('/signup')} variant="primary" className="login-signup-btn me-2">
-              Sign Up
-            </Button>
-            <Button onClick={() => navigate('/login')} variant="secondary" className="login-signup-btn">
-              Log In
-            </Button>
+            {isLoggedIn ? (
+              <>
+                <Button onClick={handleLogout} variant="secondary" className="login-signup-btn me-2">
+                  Log Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={() => navigate('/signup')} variant="primary" className="login-signup-btn me-2">
+                  Sign Up
+                </Button>
+                <Button onClick={() => navigate('/login')} variant="secondary" className="login-signup-btn">
+                  Log In
+                </Button>
+              </>
+            )}
           </div>
         </Navbar.Collapse>
       </div>

@@ -1,8 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import "../../styles/home.css";
 import { Container, Row, Col, Card, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+
+
+// Creamos un contexto para almacenar los libros favoritos
+const FavoritesContext = React.createContext();
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
