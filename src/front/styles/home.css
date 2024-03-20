@@ -30,6 +30,25 @@ img.card-img-top {
 .card {
   height: auto;
 }
+
+button:focus {
+  outline: none;
+}
+
+.button favorite-button {
+  outline: none;
+}
+
+@keyframes clickEffect {
+  0% {
+    box-shadow: 0 0 0 0 blue;
+  }
+  100% {
+    box-shadow: 0 0 0 2px blue;
+    border-color: blue;
+  }
+}
+
 /*pantalla grande*/
 @media (max-width: 768px) {
   .col-2, .col {
