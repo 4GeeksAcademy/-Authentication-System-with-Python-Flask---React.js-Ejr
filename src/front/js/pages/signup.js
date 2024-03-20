@@ -22,11 +22,10 @@ export default function Signup() {
     setRememberPreference(event.target.checked);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted!');
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission
+    actions.signUp({ name, email, password }, navigate);
+};
 
   const token = sessionStorage.getItem("token");
   const handleClick = (e) => {
@@ -36,7 +35,7 @@ export default function Signup() {
 
     return (
       <div>
-        <form onSubmit={handleClick}>
+        <form onSubmit={handleSubmit}>
         <h1>Sign up</h1>
         <input
           type={"text"}

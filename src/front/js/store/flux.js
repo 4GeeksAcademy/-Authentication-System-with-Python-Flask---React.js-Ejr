@@ -12,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// start of user related fetch request
 			signUp: async (form, navigate) => {
-				const url = `${process.env.BACKEND_URL}/api/signup`;
+				const url = `${process.env.REACT_APP_BACKEND_URL}/api/signup`;
 				try {
 					const response = await fetch(url, {
 						method: "POST",
@@ -22,80 +22,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(form)
 					});
 					if (!response.ok) {
-						throw new Error('User already exists or other error');
+						const errorDetails = await response.text();
+						throw new Error(`Signup failed: ${errorDetails}`);
 					}
-					const data = await response.json();
 					navigate('/login');
 				} catch (error) {
 					console.error("Signup error:", error);
 				}
 			},
-			login: (form, navigate) => {
-				const store = getStore();
-				const url = process.env.BACKEND_URL + "/api/login";
-				fetch(url, {
-					method: "Post",
-					headers: {
-						"Content-Type": "application/json",
-						'Access-Control-Allow-Origin':'*'
-					},
-					body: JSON.stringify({						
-						"email": form.email,
-                      	"password": form.password
-					})					
-				})
-				.then(async resp => {
-					console.log(resp.ok); // will be true if the response is successfull
-					console.log(resp.status); // the status code = 200 or code = 400 etc.
-					if(!resp.ok){
-						alert("wrong username or password");
-						return false;						
-					}
-					//console.log(resp.text()); // will try return the exact result as string
-					const data = await resp.json();
-					sessionStorage.setItem("token", data.access_token);
-					setStore({user: data.user});
-
-					
-					
-				})				
-				.catch(error => {
-					//error handling
-					console.log(error);
-				})
-			},
-			authenticateUser: async (navigate) => {
-				const store = getStore();
-				const url = process.env.BACKEND_URL + "/api/private";
+			login: async (form, navigate) => {
+				const url = `${process.env.REACT_APP_BACKEND_URL}/api/login`;
 				try {
 					const response = await fetch(url, {
-						method: "GET",
+						method: "POST",
 						headers: {
-							"Authorization": "Bearer " + sessionStorage.getItem('token'),
-							'Access-Control-Allow-Origin':'*'
-						}
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(form)
 					});
-			
 					if (!response.ok) {
-						// Handling responses that are not OK (e.g., 401, 403, etc.)
-						throw new Error("Authentication failed, response not OK.");
+						const errorDetails = await response.text();
+						throw new Error(`Login failed: ${errorDetails}`);
 					}
-			
-					const data = await response.json(); // Make sure to await the conversion of the response to JSON
-			
-					// Check if the user data exists in the response before setting it
-					if (data && data.user) {
-						setStore({ user: data.user });
-					} else {
-						// Handle case where user data is not returned
-						throw new Error("User data not found in response.");
-					}
-				} catch (error) {
-					console.error("Authentication error:", error);
-					// Optionally, navigate the user to the login page if authentication fails
+					const data = await response.json();
+					sessionStorage.setItem("token", data.access_token);
+					setStore(prevState => ({ ...prevState, user: data.user, token: data.access_token }));
 					navigate('/profile');
+				} catch (error) {
+					console.error("Login error:", error);
 				}
 			},
+			
+			authenticateUser: async () => {
+                const store = getStore();
+                if (!store.token) return; // No token, no authentication
+                const url =`${process.env.REACT_APP_BACKEND_URL}/api/private`;
+                try {
+                    const response = await fetch(url, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": "Bearer " + store.token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) throw new Error("Authentication failed");
+
+                    const data = await response.json();
+                    setStore({ user: data.user });
+                } catch (error) {
+                    console.error("Authentication error:", error);
+                    setStore({ user: null }); // Clear user info on authentication failure
+                }
+            },
 			
 			tokenFromStore: () => {
 				let store = getStore();

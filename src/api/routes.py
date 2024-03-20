@@ -10,6 +10,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS 
+from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -29,28 +30,39 @@ def handle_hello():
 # start of user related routes
 @api.route('/signup', methods=['POST'])
 def handle_signup():
+    # Extract data from request
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     name = request.json.get("name", None)
-    user = User.query.filter_by(email = email).first()
+
+    # Check if user already exists
+    user = User.query.filter_by(email=email).first()
     if user:
-        return jsonify({"msg": "User account already exists"})
-    newUser = User(email = email, password = password, name = name, age = 0, height= "5.5", weight=150, activity_level = "lazy")
-    db.session.add(newUser)
+        return jsonify({"msg": "User account already exists"}), 409
+
+    # Hash password and create new user
+    hashed_password = generate_password_hash(password)
+    new_user = User(email=email, password=hashed_password, name=name, ...)
+    db.session.add(new_user)
     db.session.commit()
-    return jsonify("Added User"), 200
-    
+    return jsonify({"msg": "User added successfully"}), 201
+
 @api.route('/login', methods=['POST'])
 def login():
-    body = request.get_json ( force = True)
-    email = body['email']
-    password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
-    current_user = User(email = email, password = password)
-    if current_user is not None:
-        access_token = create_access_token(identity = current_user.email)
-        return jsonify(access_token = access_token, user = current_user.serialize())
-        
-    return jsonify("user does not exist")
+    # Extract data from request
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+
+    # Find user by email
+    user = User.query.filter_by(email=email).first()
+    if user and check_password_hash(user.password, password):
+        # Correct password
+        access_token = create_access_token(identity=email)
+        return jsonify(access_token=access_token, user=user.serialize()), 200
+    else:
+        # Incorrect email or password
+        return jsonify({"msg": "Bad username or password"}), 401
+
 
 
 
@@ -58,11 +70,9 @@ def login():
 @jwt_required()
 def handle_private():
     current_user_email = get_jwt_identity()
-    user = User.query.filter_by(email = current_user_email).first()
+    user = User.query.filter_by(email=current_user_email).first()
 
-    if user is None:
-        return jsonify({"msg": "Please login"}), 400
-    else:
-        return jsonify(user = user.serialize()), 200
+    if user:
+        return jsonify(user=user.serialize()), 200
 
-# end of user related routes
+    return jsonify({"msg": "User not found"}), 404
