@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import os
-from api.models import db, User
+from api.models import db, User,Books,Comments
 
 
 app = Flask(__name__)
@@ -81,3 +81,4 @@ def user_login():
 
 def private():
     return jsonify({"message":"acceso permitido"}), 200
+
