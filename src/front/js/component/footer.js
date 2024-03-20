@@ -47,8 +47,7 @@ const Footer = () => {
         <div className="border-top border-secondary mt-3 pt-3 text-center text-secondary">
           <button onClick={() => redirectTo('/privacy-policy')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Privacy Policy</button>
           {' | '}
-          {' | '}
-          <button onClick={() => redirectTo('/terms')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Terms and Conditions</button>
+          <button onClick={() => redirectTo('/terms-and-conditions')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Terms and Conditions</button>
           {' | '}
           <button onClick={() => redirectTo('/cookie-notice')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Cookie Notice</button>
           {' | '}
