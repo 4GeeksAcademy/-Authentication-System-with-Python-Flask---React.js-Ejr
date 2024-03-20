@@ -1,0 +1,16 @@
+.terms-conditions {
+    /* Estilos generales de la página */
+}
+
+.terms-title, .section-title {
+    /* Estilos para los títulos */
+    color: #0056b3;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.introduction, .section-content {
+    /* Estilos para el texto */
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
