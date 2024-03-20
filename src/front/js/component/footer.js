@@ -1,12 +1,16 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 import { faTwitter, faFacebookF, faInstagram, faTiktok, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/footer.css'
 
 const Footer = () => {
-  const redirectTo = (url) => {
-    window.open(url, '_blank');
+  const navigate = useNavigate();
+
+  const redirectTo = (path) => {
+    navigate(path);
   };
 
   return (
@@ -42,6 +46,7 @@ const Footer = () => {
         </div>
         <div className="border-top border-secondary mt-3 pt-3 text-center text-secondary">
           <button onClick={() => redirectTo('/privacy-policy')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Privacy Policy</button>
+          {' | '}
           {' | '}
           <button onClick={() => redirectTo('/terms')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Terms and Conditions</button>
           {' | '}
