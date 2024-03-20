@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import "../../styles/footer.css";
 
 export const Footer = () => (
   <div id="whole-wheat-footer" className="">
+    {/* SUBSCRIBE TO NEWSLETTER */}
+
     <footer className="footer mt-auto py-3 text-center">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
@@ -33,7 +35,7 @@ export const Footer = () => (
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="">
+                <a className="nav-link" href="#">
                   Recipes
                 </a>
               </li>
