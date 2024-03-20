@@ -65,19 +65,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			},
 			authenticateUser: async (navigate) => {
-				console.log(sessionStorage.getItem('token'))
 				const store = getStore();
-				const url = process.env.BACKEND_URL + "/api/private"
-				let response = await fetch(url, {
-					method: "GET",
-					headers: {
-						"Authorization": "Bearer " + sessionStorage.getItem('token'),
-						'Access-Control-Allow-Origin':'*'
+				const url = process.env.BACKEND_URL + "/api/private";
+				try {
+					const response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Authorization": "Bearer " + sessionStorage.getItem('token'),
+							'Access-Control-Allow-Origin':'*'
+						}
+					});
+			
+					if (!response.ok) {
+						// Handling responses that are not OK (e.g., 401, 403, etc.)
+						throw new Error("Authentication failed, response not OK.");
 					}
-				})
-				let data = response.json()
-				setStore({user: data.user});
+			
+					const data = await response.json(); // Make sure to await the conversion of the response to JSON
+			
+					// Check if the user data exists in the response before setting it
+					if (data && data.user) {
+						setStore({ user: data.user });
+					} else {
+						// Handle case where user data is not returned
+						throw new Error("User data not found in response.");
+					}
+				} catch (error) {
+					console.error("Authentication error:", error);
+					// Optionally, navigate the user to the login page if authentication fails
+					navigate('/profile');
+				}
 			},
+			
 			tokenFromStore: () => {
 				let store = getStore();
 				const token = sessionStorage.getItem("token");

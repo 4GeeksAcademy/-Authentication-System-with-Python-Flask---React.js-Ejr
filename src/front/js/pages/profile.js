@@ -35,9 +35,10 @@ const Private = () => {
                     <h2>Email: {store.user.email}</h2>
                 </div>
                 :
-                // navigate("/login")
-                <h1>user not found</h1>
+                <h3>user not found</h3>
+                
             }
+            
         </div>
         
     );

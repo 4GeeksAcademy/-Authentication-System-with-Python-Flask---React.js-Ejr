@@ -38,6 +38,9 @@ export const Home = () => {
 				height="300px"
 				width="300px"
 			/>
+			{/* <Link className="navbar-brand" to="/">
+          <img className="logo" src="C:\Users\hgreg\Downloads\video_full (2).gif" />
+        </Link> */}
 			<div className="text-left">
 				<h3>Sign In</h3>
 				<p>Hi there! Nice to see you again</p>
