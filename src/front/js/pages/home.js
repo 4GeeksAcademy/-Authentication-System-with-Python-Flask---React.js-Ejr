@@ -137,7 +137,7 @@ const BookCard = ({ book }) => {
         <Card.Body className="d-flex flex-column justify-content-between">
           <Card.Title>{book.title}</Card.Title>
           <Card.Text>{book.authors[0]?.name}</Card.Text>
-          <Link to={`/books/${book.key}`}>
+          <Link to={`/books${book.key}`}>
             <Button variant="success">VIEW BOOK</Button>
           </Link>
           {isLoggedIn && (
