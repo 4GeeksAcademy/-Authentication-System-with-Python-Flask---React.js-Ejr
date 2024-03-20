@@ -1,5 +1,5 @@
 import React from "react";
-import "./recipe.css"; // Assuming you have custom styles
+import "./recipe.css"; 
 import foodImage2 from "../../assets/foodImage2.jpg";
 import buddhaBowl from "../../assets/buddhaBowl.jpg";
 import breakfast1 from "../../assets/breakfast1.jpg";
