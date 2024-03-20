@@ -17,6 +17,7 @@ import Reviews from "./pages/reviews";
 {/*EMPIEZAN PAGINAS DE FOOTER*/}
 import PrivacyPolicy from "./pages/privacy-policy";
 import PrivacyNotice from "./pages/privacy-notice";
+import TermsandConditions from "./pages/terms-and-conditions";
 
 
 
@@ -43,6 +44,7 @@ const Layout = () => {
                             {/* EMPIEZAN PAGINAS DE FOOTER*/}
                             <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                             <Route element={<PrivacyNotice/>} path="/privacy-notice" />
+                            <Route element={<TermsandConditions/>} path="/terms-and-conditions" />
                             {/*TERMINAN PAGINAS DE FOOTER*/}
                             {/*<Route exact path="/books/:id/reviews" component={Reviews} />*/}
                             <Route path="*" element={<h1>Not found!</h1>} />
