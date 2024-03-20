@@ -50,6 +50,7 @@ class Books(db.Model):
             "id": self.id,
             "title": self.title,
             "author_name": self.author_name,
+            "user_id":self.user_id
         }
 
 class Comments(db.Model):
