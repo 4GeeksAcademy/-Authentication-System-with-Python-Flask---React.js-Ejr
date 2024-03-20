@@ -8,6 +8,17 @@ import breakfast3 from "../../assets/breakfast3.jpg";
 import veggieWrap from "../../assets/veggieWrap.jpeg";
 import lunch3 from "../../assets/lunch3.jpeg";
 
+const addFavorite = (recipe) => {
+  setFavorites((prevFavorites) => {
+    // Check if the recipe is already in favorites
+    const isFavorite = prevFavorites.some((fav) => fav.id === recipe.id);
+    if (!isFavorite) {
+      return [...prevFavorites, recipe];
+    }
+    return prevFavorites;
+  });
+};
+
 const Recipe = () => {
   return (
     <div
@@ -86,6 +97,9 @@ const Recipe = () => {
                     Buddha Bowl. Packed with protein, fiber, and essential
                     vitamins.
                   </p>
+                  <button type="button" class="btn btn-success">
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -107,6 +121,9 @@ const Recipe = () => {
                     refreshing salad. Bursting with fresh veggies, olives, feta
                     cheese, and a tangy vinaigrette.
                   </p>
+                  <button type="button" class="btn btn-success">
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -128,6 +145,9 @@ const Recipe = () => {
                     leafy greens, fruits, and superfoods. It's the perfect way
                     to fuel your body and mind!
                   </p>
+                  <button type="button" class="btn btn-success">
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -149,6 +169,9 @@ const Recipe = () => {
                     Buddha Bowl. Packed with protein, fiber, and essential
                     vitamins.
                   </p>
+                  <button type="button" class="btn btn-success">
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -170,6 +193,9 @@ const Recipe = () => {
                     refreshing salad. Bursting with fresh veggies, olives, feta
                     cheese, and a tangy vinaigrette.
                   </p>
+                  <button type="button" class="btn btn-success">
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -191,6 +217,9 @@ const Recipe = () => {
                     leafy greens, fruits, and superfoods. It's the perfect way
                     to fuel your body and mind!
                   </p>
+                  <button type="button" class="btn btn-success">
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
