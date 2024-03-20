@@ -1,14 +1,14 @@
-.terms-conditions {
-    
+.about-us {
+
 }
 
-.terms-title, .section-title {
+.about-title, .team-title {
     color: #0056b3;
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
-.introduction, .section-content {
+.about-content, .team-content {
     line-height: 1.6;
     margin-bottom: 1rem;
 }
