@@ -12,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// start of user related fetch request
 			signUp: async (form, navigate) => {
-				const url = `${process.env.REACT_APP_BACKEND_URL}/api/signup`;
+				const url = `${process.env.BACKEND_URL}/api/signup`;
 				try {
 					const response = await fetch(url, {
 						method: "POST",
@@ -31,7 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			login: async (form, navigate) => {
-				const url = `${process.env.REACT_APP_BACKEND_URL}/api/login`;
+				const url = `${process.env.BACKEND_URL}/api/login`;
 				try {
 					const response = await fetch(url, {
 						method: "POST",
@@ -56,7 +56,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			authenticateUser: async () => {
                 const store = getStore();
                 if (!store.token) return; // No token, no authentication
-                const url =`${process.env.REACT_APP_BACKEND_URL}/api/private`;
+                const url =`${process.env.BACKEND_URL}/api/private`;
                 try {
                     const response = await fetch(url, {
                         method: "GET",

@@ -11,11 +11,14 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS 
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
-CORS(api)
+# CORS(api)
+CORS(api, resources={r"/api/*": {"origins": "https://supreme-robot-wr7w9jrjxjr729jvv-3000.app.github.dev"}})
+
 
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -42,7 +45,7 @@ def handle_signup():
 
     # Hash password and create new user
     hashed_password = generate_password_hash(password)
-    new_user = User(email=email, password=hashed_password, name=name, ...)
+    new_user = User(email=email, password=hashed_password, name=name )
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"msg": "User added successfully"}), 201
@@ -57,7 +60,8 @@ def login():
     user = User.query.filter_by(email=email).first()
     if user and check_password_hash(user.password, password):
         # Correct password
-        access_token = create_access_token(identity=email)
+        # access_token = create_access_token(identity=email)
+        access_token = create_access_token(identity=email, expires_delta=timedelta(days=1))
         return jsonify(access_token=access_token, user=user.serialize()), 200
     else:
         # Incorrect email or password
