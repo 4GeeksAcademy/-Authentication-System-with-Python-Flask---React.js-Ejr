@@ -1,5 +1,5 @@
 import React from "react";
-import "./recipe.css"; // Assuming you have custom styles
+import "./recipe.css";
 import foodImage2 from "../../assets/foodImage2.jpg";
 import buddhaBowl from "../../assets/buddhaBowl.jpg";
 import breakfast1 from "../../assets/breakfast1.jpg";
@@ -7,6 +7,17 @@ import breakfast2 from "../../assets/breakfast2.jpg";
 import breakfast3 from "../../assets/breakfast3.jpg";
 import veggieWrap from "../../assets/veggieWrap.jpeg";
 import lunch3 from "../../assets/lunch3.jpeg";
+
+const addFavorite = (recipe) => {
+  setFavorites((prevFavorites) => {
+    // Check if the recipe is already in favorites
+    const isFavorite = prevFavorites.some((fav) => fav.id === recipe.id);
+    if (!isFavorite) {
+      return [...prevFavorites, recipe];
+    }
+    return prevFavorites;
+  });
+};
 
 const Recipe = () => {
   return (
@@ -86,6 +97,13 @@ const Recipe = () => {
                     Buddha Bowl. Packed with protein, fiber, and essential
                     vitamins.
                   </p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -107,6 +125,13 @@ const Recipe = () => {
                     refreshing salad. Bursting with fresh veggies, olives, feta
                     cheese, and a tangy vinaigrette.
                   </p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -128,6 +153,13 @@ const Recipe = () => {
                     leafy greens, fruits, and superfoods. It's the perfect way
                     to fuel your body and mind!
                   </p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -149,6 +181,13 @@ const Recipe = () => {
                     Buddha Bowl. Packed with protein, fiber, and essential
                     vitamins.
                   </p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -170,6 +209,13 @@ const Recipe = () => {
                     refreshing salad. Bursting with fresh veggies, olives, feta
                     cheese, and a tangy vinaigrette.
                   </p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -191,6 +237,13 @@ const Recipe = () => {
                     leafy greens, fruits, and superfoods. It's the perfect way
                     to fuel your body and mind!
                   </p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
                 </div>
               </div>
             </div>
