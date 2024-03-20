@@ -1,5 +1,5 @@
 import React from "react";
-import "./recipe.css"; 
+import "./recipe.css";
 import foodImage2 from "../../assets/foodImage2.jpg";
 import buddhaBowl from "../../assets/buddhaBowl.jpg";
 import breakfast1 from "../../assets/breakfast1.jpg";
@@ -97,7 +97,11 @@ const Recipe = () => {
                     Buddha Bowl. Packed with protein, fiber, and essential
                     vitamins.
                   </p>
-                  <button type="button" class="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
                     <i className="fa-regular fa-heart"></i>
                   </button>
                 </div>
@@ -121,7 +125,11 @@ const Recipe = () => {
                     refreshing salad. Bursting with fresh veggies, olives, feta
                     cheese, and a tangy vinaigrette.
                   </p>
-                  <button type="button" class="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
                     <i className="fa-regular fa-heart"></i>
                   </button>
                 </div>
@@ -145,7 +153,11 @@ const Recipe = () => {
                     leafy greens, fruits, and superfoods. It's the perfect way
                     to fuel your body and mind!
                   </p>
-                  <button type="button" class="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
                     <i className="fa-regular fa-heart"></i>
                   </button>
                 </div>
@@ -169,7 +181,11 @@ const Recipe = () => {
                     Buddha Bowl. Packed with protein, fiber, and essential
                     vitamins.
                   </p>
-                  <button type="button" class="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
                     <i className="fa-regular fa-heart"></i>
                   </button>
                 </div>
@@ -193,7 +209,11 @@ const Recipe = () => {
                     refreshing salad. Bursting with fresh veggies, olives, feta
                     cheese, and a tangy vinaigrette.
                   </p>
-                  <button type="button" class="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
                     <i className="fa-regular fa-heart"></i>
                   </button>
                 </div>
@@ -217,7 +237,11 @@ const Recipe = () => {
                     leafy greens, fruits, and superfoods. It's the perfect way
                     to fuel your body and mind!
                   </p>
-                  <button type="button" class="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => addFavorite(recipe)}
+                  >
                     <i className="fa-regular fa-heart"></i>
                   </button>
                 </div>
