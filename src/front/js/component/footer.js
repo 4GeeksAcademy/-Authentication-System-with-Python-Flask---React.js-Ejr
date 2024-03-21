@@ -20,7 +20,7 @@ const Footer = () => {
           <div className="col-md-4 ayuda">
             <h5>Help</h5>
             <button onClick={() => redirectTo('/about-us')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">About Us</button>
-            <button onClick={() => redirectTo('/recommenders')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Who are the "Recommenders"</button>
+            <button onClick={() => redirectTo('/recommenders')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Recommenders</button>
             <button onClick={() => redirectTo('/privacy-notice')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-block">Privacy Notice</button>
             <button onClick={() => redirectTo('/advertisements')} className="btn btn-link text-decoration-none text-secondary p-0 d-block">Advertisements on the page</button>
           </div>
