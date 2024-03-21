@@ -51,7 +51,7 @@ const Footer = () => {
           {' | '}
           <button onClick={() => redirectTo('/cookies-notice')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Cookies Notice</button>
           {' | '}
-          <button onClick={() => redirectTo('/news')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Contact</button>
+          <button onClick={() => redirectTo('/contact')} className="btn btn-link text-decoration-none text-secondary p-0 mb-2 d-inline">Contact</button>
           <p>Copyright © Recommend Me a Book. All rights reserved.</p>
         </div>
       </div>
