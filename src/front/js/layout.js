@@ -19,6 +19,7 @@ import PrivacyPolicy from "./pages/privacy-policy";
 import PrivacyNotice from "./pages/privacy-notice";
 import TermsAndConditions from "./pages/terms-and-conditions";
 import AboutUs from "./pages/about-us";
+import CookiesNotice from "./pages/cookies-notice";
 
 
 
@@ -47,6 +48,7 @@ const Layout = () => {
                             <Route element={<PrivacyNotice/>} path="/privacy-notice" />
                             <Route element={<TermsAndConditions/>} path="/terms-and-conditions" />
                             <Route element={<AboutUs/>} path="/about-us" />
+                            <Route element={<CookiesNotice/>} path="/cookies-notice" />
                             {/*TERMINAN PAGINAS DE FOOTER*/}
                             {/*<Route exact path="/books/:id/reviews" component={Reviews} />*/}
                             <Route path="*" element={<h1>Not found!</h1>} />
