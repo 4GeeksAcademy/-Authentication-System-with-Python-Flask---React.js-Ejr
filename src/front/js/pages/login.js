@@ -11,6 +11,7 @@ export const Login = () => {
     const [formError, setFormError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
+    const [showPass, setShowPass] = useState(true);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -77,12 +78,12 @@ export const Login = () => {
                 <div className="input-group">
                     <input
                         placeholder="**********"
-                        type="password"
+                        type={showPass ? "password" : "text"}
                         className={`form-control ${formError && email === '' ? 'error' : ''}`}
                         id="exampleInputPassword1"
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <div className="input-group-text">
+                    <div style={{ cursor: "pointer" }} onClick={() => setShowPass(!showPass)} className="input-group-text">
                         <i className="fa fa-eye"></i>
                     </div>
                 </div>
