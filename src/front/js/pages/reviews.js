@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import "../../styles/reviews.css";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 
 const Reviews = () => {
   const { id } = useParams(); // Obtener el ID del libro de los parámetros de la URL
@@ -18,6 +22,27 @@ const Reviews = () => {
     setRating(0);
   };
 
+  // Función para establecer la calificación
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
+
+  // Función para renderizar los iconos de estrellas
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={i <= rating ? solidStar : regularStar}
+          onClick={() => handleRatingChange(i)}
+          style={{ cursor: 'pointer' }}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
     <Container>
       <Row>
@@ -32,33 +57,28 @@ const Reviews = () => {
               <h1>Título del Libro</h1>
               <p>Autor del Libro</p>
               {/* Formulario de comentario */}
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className="comentarios">
                 <div controlId="comment">
-                  <label>Deja tu comentario</label>
-                  <input
+                  <label className="form-check-label py-2">Deja tu comentario</label>
+                  <textarea
                     as="textarea"
                     rows={3}
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
+                    className="form-control"
                   />
                 </div>
-                <div controlId="rating">
-                  <label>Calificación</label>
-                  <select
-                    value={rating}
-                    onChange={(e) => setRating(e.target.value)}
-                  >
-                    <option value={0}>Selecciona una calificación</option>
-                    <option value={1}>1 estrella</option>
-                    <option value={2}>2 estrellas</option>
-                    <option value={3}>3 estrellas</option>
-                    <option value={4}>4 estrellas</option>
-                    <option value={5}>5 estrellas</option>
-                  </select>
+                <div className="mb-3" controlId="rating">
+                  <label className="form-check-label py-2">Calificación</label>
+                  <div>
+                    {renderStars()}
+                  </div>
                 </div>
-                <Button variant="primary" type="submit">
-                  Enviar comentario
-                </Button>
+                <div className="d-grid gap-2">
+                  <Button className="btn btn-success btnReviews" type="submit">
+                    Send review
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
