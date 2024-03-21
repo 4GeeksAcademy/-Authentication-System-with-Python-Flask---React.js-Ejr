@@ -1,0 +1,13 @@
+.cookies-notice {
+}
+
+.notice-title, .section-title {
+    color: #0056b3;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.notice-content, .section-content, .additional-info, .questions, .contact-info, .closing-remark {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
