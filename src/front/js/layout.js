@@ -22,6 +22,7 @@ import AboutUs from "./pages/about-us";
 import CookiesNotice from "./pages/cookies-notice";
 import Recommenders from "./pages/recommenders.js";
 import Contact from "./pages/contact.js";
+import Advertisements from "./pages/advertisements.js";
 
 
 
@@ -53,6 +54,7 @@ const Layout = () => {
                             <Route element={<CookiesNotice/>} path="/cookies-notice" />
                             <Route element={<Recommenders />} path="/recommenders" />
                             <Route element={<Contact />} path="/contact" />
+                            <Route element={<Advertisements />} path="/advertisements" />
                             {/*TERMINAN PAGINAS DE FOOTER*/}
                             {/*<Route exact path="/books/:id/reviews" component={Reviews} />*/}
                             <Route path="*" element={<h1>Not found!</h1>} />
