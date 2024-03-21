@@ -58,7 +58,7 @@ const SearchBar = () => {
             <form onSubmit={(e) => e.preventDefault()} className="d-flex" role="search">
                 <input
                     className="form-control me-2"
-                    class="searchbar"
+                    class="searchbar form-control"
                     type="search"
                     placeholder="Search for books, authors, publishers..."
                     aria-label="Search"
@@ -66,7 +66,7 @@ const SearchBar = () => {
                     onChange={(e) => setSearch(e.target.value)}
                     onFocus={handleFocus}
                 />
-                <button className="btn btn-outline-success search-btn" type="submit">
+                <button className="btn btn-outline-dark search-btn" type="submit">
                     <FontAwesomeIcon icon={loading ? faSpinner : faMagnifyingGlass} spin={loading} />
                 </button>
             </form>
@@ -77,7 +77,7 @@ const SearchBar = () => {
                     ) : (
                         <ul>
                             {store.resultados.map((resultado, index) => (
-                                <li key={index}>{resultado.title}</li>
+                                <li className="py-2 hoverEffect" key={index}>{resultado.title}</li>
                             ))}
                         </ul>
                     )}

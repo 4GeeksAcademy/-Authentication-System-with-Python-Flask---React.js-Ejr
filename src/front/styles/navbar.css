@@ -4,9 +4,9 @@
     }
   }
   
-  .container-fluid {
+  .bg-begie {
     background-color: #E8E2D2 !important;
-    padding: 3%;
+    width: 100%;
   }
   
   .login-signup-btn {
@@ -38,3 +38,7 @@
     background-color: #e0c020; 
   }
   
+.hoverEffect:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}

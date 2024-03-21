@@ -10,8 +10,8 @@ import { Context } from "../store/appContext";
 // Creación del contexto para los favoritos.
 const FavoritesContext = createContext({
   favorites: [],
-  addToFavorites: () => {},
-  removeFromFavorites: () => {},
+  addToFavorites: () => { },
+  removeFromFavorites: () => { },
   isFavorite: () => false,
 });
 
@@ -22,9 +22,9 @@ export const Home = () => {
   const [romanceBooks, setRomanceBooks] = useState([]);
   const [suspenseBooks, setSuspenseBooks] = useState([]);
   const [favorites, setFavorites] = useState(() => {
-  const savedFavorites = localStorage.getItem('favorites');
-  return savedFavorites ? JSON.parse(savedFavorites) : [];
-}); 
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
 
   // Verificamos si el usuario ha iniciado sesión.
   const isLoggedIn = store.token !== null;
@@ -50,9 +50,9 @@ export const Home = () => {
     fetchBooksByCategory('romance', setRomanceBooks);
     fetchBooksByCategory('suspense', setSuspenseBooks);
   }, []);
-useEffect(() => {
-  localStorage.setItem('favorites' , JSON.stringify(favorites));
-},[favorites])
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites])
   // Función para dividir los libros en grupos para el carrusel.
   const chunkBooks = (books, size) => {
     const chunked = [];
@@ -99,11 +99,9 @@ const BookCarousel = ({ title, books }) => {
       <Carousel activeIndex={index} onSelect={handleSelect} indicators={false} nextLabel="" prevLabel="" interval={null}>
         {books.map((bookGroup, idx) => (
           <Carousel.Item key={idx}>
-            <Row xs={1} md={3} className="g-4">
+            <Row xs={1} md={3} className="g-5">
               {bookGroup.map((book) => (
-                <Col key={book.key}>
-                  <BookCard book={book} />
-                </Col>
+                <BookCard book={book} />
               ))}
             </Row>
           </Carousel.Item>
@@ -131,26 +129,28 @@ const BookCard = ({ book }) => {
   const favoriteIcon = isFavorite(book.key) ? faHeartSolid : faHeartRegular;
 
   return (
-    <Col key={book.key}>
+    <Col className="col-5" key={book.key}>
       <Card className="d-flex flex-column h-100">
-        <Card.Img variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-M.jpg`} />
+        <Card.Img width={10} height={350} src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-M.jpg`} />
         <Card.Body className="d-flex flex-column justify-content-between">
           <Card.Title>{book.title}</Card.Title>
           <Card.Text>{book.authors[0]?.name}</Card.Text>
-          <Link to={`/books${book.key}`}>
-            <Button variant="success">VIEW BOOK</Button>
-          </Link>
-          {isLoggedIn && (
-            <Button
-            className={`favorite-button ${isClicked ? "button-click-effect" : ""}`}
-            onMouseDown={(event) => {
-              event.preventDefault();
-            }}
-            onClick={handleFavoriteClick}
-            >
-              <FontAwesomeIcon icon={favoriteIcon} />
-            </Button>
-          )}
+          <div className="d-flex justify-content-between">
+            <Link to={`/books${book.key}`}>
+              <Button variant="dark">Learn more</Button>
+            </Link>
+            {isLoggedIn && (
+              <Button
+                className={`btn btn-outline-light ${isClicked ? "" : ""}`}
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                }}
+                onClick={handleFavoriteClick}
+              >
+                <FontAwesomeIcon icon={favoriteIcon} />
+              </Button>
+            )}
+          </div>
         </Card.Body>
       </Card>
     </Col>

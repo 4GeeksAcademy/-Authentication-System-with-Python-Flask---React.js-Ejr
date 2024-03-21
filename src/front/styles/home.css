@@ -65,3 +65,26 @@ button:focus {
       margin-right: 0.5rem;
   }
 }
+
+.carousel-control-prev,
+.carousel-control-next {
+  box-shadow: 2px 2px 5px #b5bda1; 
+  padding: 0 !important;
+  background-color: #b5bda1 !important;
+  width: 4% !important;
+  font-weight: bold; 
+}
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 0.9 !important;
+  background-color: #b5bda1 !important;
+  box-shadow: 2px 2px 5px #b5bda1 !important; 
+
+}
+
+.carousel-control-next {
+  right: -4% !important;
+}
+.carousel-control-prev {
+  left: -4% !important;
+}
