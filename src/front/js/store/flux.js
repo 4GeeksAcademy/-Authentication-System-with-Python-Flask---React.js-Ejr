@@ -1,93 +1,125 @@
+const apiUrl = process.env.BACKEND_URL;
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,			
-			token: sessionStorage.getItem('token'),
-			user: null
+			token: null,
+			user: null,
+      favorites: [],
 		},
 		actions: {
+      addFavorites: (fav) => {
+        setStore({ favorites: [...getStore().favorites, fav] });
+      },
+      removeFavorites: (fav) => {
+        setStore({
+          favorites: [...getStore().favorites.filter((item) => item !== fav)],
+        });
+      },
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+        
 			},
-			// start of user related fetch request
-			signUp: async (form, navigate) => {
-				const url = `${process.env.BACKEND_URL}/api/signup`;
+			signUp: async (form, callback) => {
+				const url = apiUrl + "/api/signup";
 				try {
 					const response = await fetch(url, {
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json"
+							"Content-Type": "application/json",
 						},
-						body: JSON.stringify(form)
+						body: JSON.stringify({
+							"email": form.email,
+							"password": form.password,
+						})      
 					});
 					if (!response.ok) {
-						const errorDetails = await response.text();
-						throw new Error(`Signup failed: ${errorDetails}`);
+						// Convert non-OK HTTP responses into errors
+						const errorBody = await response.json();
+						throw new Error(errorBody.message || 'Signup failed');
 					}
-					navigate('/login');
+					await response.json(); // Assuming you might use this for something
+					if (callback) callback(); // Call the callback if signup is successful
 				} catch (error) {
-					console.error("Signup error:", error);
+					console.error('Signup error:', error);
+					throw error; // Rethrow the error so it can be caught and handled in the component
 				}
 			},
-			login: async (form, navigate) => {
-				const url = `${process.env.BACKEND_URL}/api/login`;
-				try {
-					const response = await fetch(url, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify(form)
-					});
-					if (!response.ok) {
-						const errorDetails = await response.text();
-						throw new Error(`Login failed: ${errorDetails}`);
+
+			login: (form, navigate) => {
+				const store = getStore();
+				const url = apiUrl+"/api/token";
+				fetch(url, {
+					method: "Post",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({						
+						"email": form.email,
+                      	"password": form.password
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						alert("Wrong email or password");
+						return false;						
 					}
-					const data = await response.json();
-					sessionStorage.setItem("token", data.access_token);
-					setStore(prevState => ({ ...prevState, user: data.user, token: data.access_token }));
+					//console.log(resp.text()); // will try return the exact result as string
+					const data = await resp.json();
+					sessionStorage.setItem("token", data.token);
+					setStore({token: data.token});
+					
+					console.log(store.token);
 					navigate('/profile');
-				} catch (error) {
-					console.error("Login error:", error);
-				}
+				})				
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
 			},
-			
-			authenticateUser: async () => {
-                const store = getStore();
-                if (!store.token) return; // No token, no authentication
-                const url =`${process.env.BACKEND_URL}/api/private`;
-                try {
-                    const response = await fetch(url, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": "Bearer " + store.token,
-                            'Content-Type': 'application/json'
-                        }
-                    });
 
-                    if (!response.ok) throw new Error("Authentication failed");
+			logout: (navigate) => {			
+				setStore({user:null});
+				sessionStorage.removeItem("token");
+				setStore({token: null});
+				navigate("/");
+			},
 
-                    const data = await response.json();
-                    setStore({ user: data.user });
-                } catch (error) {
-                    console.error("Authentication error:", error);
-                    setStore({ user: null }); // Clear user info on authentication failure
-                }
-            },
-			
+			authenticateUser: () => {
+				const store = getStore();
+				return new Promise((resolve, reject) => {
+					fetch(apiUrl + "/api/private", {
+						method: "GET",
+						headers: {
+							"Authorization": "Bearer " + store.token
+						}
+					})
+					.then(resp => {
+						if (!resp.ok) {
+							throw new Error("Authentication failed");
+						}
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ user: data });
+						resolve(data);
+					})
+					.catch(error => {
+						reject(error);
+					});
+				});
+			},
+
 			tokenFromStore: () => {
 				let store = getStore();
 				const token = sessionStorage.getItem("token");
 				if (token && token!= null && token!=undefined) setStore({token: token});
 			},
-			logout: (navigate) => {			
-				setStore({user:null});
-				sessionStorage.removeItem("token");
-				setStore({token: null});
-			},
-		}	
-			
+
+		}
 	};
 };
 
