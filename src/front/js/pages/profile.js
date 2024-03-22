@@ -1,4 +1,3 @@
-// Private.js
 import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
@@ -8,25 +7,29 @@ const Private = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!store.token) {
-            navigate('/login');
-        } else if (!store.user) {
-            actions.authenticateUser();
+        if (!store.user) {
+            actions.authenticateUser()
+                .then(() => {
+                    // If authentication is successful and user is retrieved,
+                    // you can optionally perform additional actions here.
+                })
+                .catch(() => {
+                    // If authentication fails, redirect to home.
+                    navigate("/");
+                });
         }
-    }, [store.token, store.user]);
-    
+    }, [actions, navigate, store.user]);
+
     return (
         <div className="container text-center">
             <h1>Hello!</h1>
-            {store.user ? (
+            {store.user && (
                 <div>
                     <h2>Email: {store.user.email}</h2>
                 </div>
-            ) : (
-                <h3>User not found</h3>
             )}
         </div>
     );
-}
+};
 
 export default Private;

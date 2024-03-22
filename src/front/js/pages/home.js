@@ -4,56 +4,64 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Home = () => {
-	const { actions } = useContext(Context);
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [loginError, setLoginError] = useState(""); 
-	const navigate = useNavigate();
+    const { actions } = useContext(Context);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginError, setLoginError] = useState("");
+    const [isMember, setIsMember] = useState(true); // Add state to toggle between login and signup view
+    const navigate = useNavigate();
 
-	const handleLogin = async () => {
-		try {
-			await actions.login({ email, password });
-			navigate('/profile'); 
-		} catch (error) {
-			setLoginError("Failed to log in: " + error.message); message
-		}
-	};
+    const handleLogin = async () => {
+        try {
+            const result = await actions.login({ email, password });
+            if (result) {
+                navigate("/private"); // Navigate to profile if login is successful
+            }
+        } catch (error) {
+            setLoginError("Failed to log in: " + error.message);
+        }
+    };
 
-	
-	const handleSignup = async () => {
-		
-		try {
-			await actions.signUp({ email, password });
-			navigate('/signup'); 
-		} catch (error) {
-			
-		}
-	};
+    const handleSignup = async () => {
+        try {
+            await actions.signUp({ email, password });
+            setIsMember(true); // Switch to login view after successful signup
+            setLoginError(""); // Clear any existing errors
+        } catch (error) {
+            setLoginError("Failed to sign up: " + error.message);
+        }
+    };
 
-	return (
-		<div className="w-50 mx-auto">
-			<img 
-				src="C:\Users\hgreg\Downloads\video_full (2).gif" 
-				className="mx-auto"
-				height="300px"
-				width="300px"
-			/>
-			{/* <Link className="navbar-brand" to="/">
-          <img className="logo" src="C:\Users\hgreg\Downloads\video_full (2).gif" />
-        </Link> */}
-			<div className="text-left">
-				<h3>Sign In</h3>
-				<p>Hi there! Nice to see you again</p>
-			</div>
-			<p>Email</p>
-			<input type="email" onChange={(e) => setEmail(e.target.value)} value={email}/>
-			<p>Password</p>
-			<input type="password" onChange={(e) => setPassword(e.target.value)} value={password}/>
-			{loginError && <p className="text-danger">{loginError}</p>}
-			<div>
-				<button onClick={handleLogin} className="btn btn-success">Sign In</button>
-				<button onClick={handleSignup} className="btn btn-secondary">Sign up</button>
-			</div>
-		</div>
-	);
+    return (
+        <div className="w-50 mx-auto">
+            <img src="#" className="mx-auto" height="300px" width="300px" />
+            {isMember ? (
+                <div className="text-left">
+                    <h3>Sign In</h3>
+                    <p>Hi there! Nice to see you again.</p>
+                    <p>Email</p>
+                    <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <p>Password</p>
+                    <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
+                    {loginError && <p className="text-danger">{loginError}</p>}
+                    <button onClick={handleLogin} className="btn btn-success">Sign In</button>
+                    <p>Not a member yet? <span className="text-primary" style={{cursor: 'pointer'}} onClick={() => setIsMember(false)}>Sign up</span></p>
+                    <button onClick={() => navigate("/profile")}>Test Navigate</button>
+
+                </div>
+            ) : (
+                <div className="text-left">
+                    <h3>Join Us</h3>
+                    <p>Welcome! Join us by signing up below.</p>
+                    <p>Email</p>
+                    <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <p>Password</p>
+                    <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
+                    {loginError && <p className="text-danger">{loginError}</p>}
+                    <button onClick={handleSignup} className="btn btn-secondary">Sign up</button>
+                    <p>Already a member? <span className="text-primary" style={{cursor: 'pointer'}} onClick={() => setIsMember(true)}>Log in</span></p>
+                </div>
+            )}
+        </div>
+    );
 };

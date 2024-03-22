@@ -86,9 +86,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem("token");
 				setStore({token: null});
 			},
+		}	
 			
-			// end of user related fetch request
-		}
 	};
 };
 
