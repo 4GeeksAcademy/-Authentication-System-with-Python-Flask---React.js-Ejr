@@ -23,6 +23,6 @@ class User(db.Model):
             "age": self.age,
             "height": self.height,
             "weight": self.weight,
-            "activity_level": self.activity_level,
+            "activity_level": self.activity_level
             # do not serialize the password, its a security breach
         }
