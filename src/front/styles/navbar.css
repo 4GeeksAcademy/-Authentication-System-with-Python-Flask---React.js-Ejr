@@ -4,9 +4,8 @@
     }
   }
   
-  .bg-begie {
+  .container-fluid {
     background-color: #E8E2D2 !important;
-    width: 100%;
   }
   
   .login-signup-btn {
