@@ -39,11 +39,13 @@ const NavBar = () => {
           </div>
           <div className="d-flex justify-content-end align-items-center">
             {isLoggedIn ? (
-              <>
-                <Button onClick={handleLogout} variant="secondary" className="login-signup-btn me-2">
-                  Log Out
-                </Button>
-              </>
+              <NavDropdown title="User" id="user-dropdown" align="end">
+                <NavDropdown.Item as={NavLink} to="/perfil">Profile</NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/configuraciones">Settings</NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/favoritos">Favorites</NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/mensajes">Messages</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
+              </NavDropdown>
             ) : (
               <>
                 <Button onClick={() => navigate('/signup')} variant="primary" className="login-signup-btn me-2">

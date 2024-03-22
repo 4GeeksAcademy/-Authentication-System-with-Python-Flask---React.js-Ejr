@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect, useCallback, useRef } from "react";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
