@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
-import '../../styles/navbar.css'; 
+import '../../styles/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Context } from '../store/appContext';
@@ -18,7 +18,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar bg="body-tertiary" expand="lg" className="align-items-center mb-5 p-0" style={{ backgroundColor: '#DFDCD3' }}>
+    <Navbar bg="body-tertiary" expand="lg" className="align-items-center mb-5 p-0 navbar-custom-bg">
       <div className="container-fluid">
         <Navbar.Brand as={NavLink} to="/"><Logo /></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

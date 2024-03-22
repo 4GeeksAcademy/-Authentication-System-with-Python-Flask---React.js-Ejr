@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import "../../styles/reviews.css";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { FavoritesContext } from "./home";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 
 const Reviews = () => {
-  const { bookKey } = useParams(); // Obtener el ID del libro de los parámetros de la URL
-  const { favorites } = useContext(FavoritesContext);
+  const { id } = useParams(); // Obtener el ID del libro de los parámetros de la URL
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
@@ -21,59 +22,63 @@ const Reviews = () => {
     setRating(0);
   };
 
-  // Encuentra el libro por su ID en la lista de libros favoritos
-  const book = favorites.find((book) => book.key === bookKey);
+  // Función para establecer la calificación
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
 
-  if (!book) {
-    return <div>Libro no encontrado</div>;
-  }
+  // Función para renderizar los iconos de estrellas
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={i <= rating ? solidStar : regularStar}
+          onClick={() => handleRatingChange(i)}
+          style={{ cursor: 'pointer' }}
+        />
+      );
+    }
+    return stars;
+  };
 
   return (
     <Container>
       <Row>
         <Col className="col-6">
           {/* Mostrar la portada del libro en la primera columna */}
-          <img
-            src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-L.jpg`}
-            alt="Portada del libro"
-            className="img-fluid"
-          />
+          {/* Puedes agregar aquí la portada del libro si lo deseas */}
         </Col>
         <Col className="col-6">
           {/* Mostrar el formulario de comentario en la segunda columna */}
           <Card>
             <Card.Body>
-              <Card.Title>{book.title}</Card.Title>
-              <Card.Text>{book.author_name}</Card.Text>
+              <h1>Título del Libro</h1>
+              <p>Autor del Libro</p>
               {/* Formulario de comentario */}
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="comment">
-                  <Form.Label>Deja tu comentario</Form.Label>
-                  <Form.Control
+              <Form onSubmit={handleSubmit} className="comentarios">
+                <div controlId="comment">
+                  <label className="form-check-label py-2">Deja tu comentario</label>
+                  <textarea
                     as="textarea"
                     rows={3}
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
+                    className="form-control"
                   />
-                </Form.Group>
-                <Form.Group controlId="rating">
-                  <Form.Label>Calificación</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={rating}
-                    onChange={(e) => setRating(e.target.value)}
-                  >
-                    <option value={0}>Selecciona una calificación</option>
-                    <option value={1}>1 estrella</option>
-                    <option value={2}>2 estrellas</option>
-                    <option value={3}>3 estrellas</option>
-                    <option value={4}>4 estrellas</option>
-                    <option value={5}>5 estrellas</option>
-                  </Form.Control>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Enviar comentario
-                </Button>
+                </div>
+                <div className="mb-3" controlId="rating">
+                  <label className="form-check-label py-2">Calificación</label>
+                  <div>
+                    {renderStars()}
+                  </div>
+                </div>
+                <div className="d-grid gap-2">
+                  <Button className="btn btn-success btnReviews" type="submit">
+                    Send review
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
