@@ -32,6 +32,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify({
 							"email": form.email,
 							"password": form.password,
+							"age": form.age,
+							"height" : form.height,
+							"weight": form.weight,
+							"activity_level": form.activity
 						})      
 					});
 					if (!response.ok) {
@@ -47,7 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			login: (form, navigate) => {
+			login: (form) => {
 				const store = getStore();
 				const url = apiUrl+"/api/token";
 				fetch(url, {
@@ -73,7 +77,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: data.token});
 					
 					console.log(store.token);
-					navigate('/profile');
 				})				
 				.catch(error => {
 					//error handling
