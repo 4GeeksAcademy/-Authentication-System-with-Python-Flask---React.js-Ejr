@@ -30,6 +30,7 @@ export const Footer = () => (
                 />
               </div>
               <div className="col-md-3">
+                {/* LINK */}
                 <button type="submit" className="btn btn-success w-100">
                   Join Here
                 </button>
