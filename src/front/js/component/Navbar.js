@@ -36,7 +36,7 @@ const NavBar = () => {
           <Nav className="me-auto">
             <NavDropdown title="Menu" id="navbarScrollingDropdown" className="custom-dropdown-toggle">
               <NavDropdown.Item as={NavLink} to="/recomendaciones">Recommendations</NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/autores">Authors</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to="/authors">Authors</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/generos">Genres</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/best-seller">Best Seller</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to="/mas-buscados">Most Wanted</NavDropdown.Item>
