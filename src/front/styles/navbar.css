@@ -41,3 +41,22 @@
   opacity: 0.5;
   cursor: pointer;
 }
+
+.dropdown-toggle:focus, .dropdown-toggle:active {
+  outline: none !important;
+  border: none;
+  box-shadow: none;
+}
+
+.profile-image-oval {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%; 
+  cursor: pointer;
+  display: inline-block;
+  border: 2px solid white; 
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+  background-color: white; 
+}

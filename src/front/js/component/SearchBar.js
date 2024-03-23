@@ -14,7 +14,7 @@ const SearchBar = () => {
 
     const searchContainerRef = useRef(null);
 
-    
+
     const handleSearch = useCallback(debounce(async (searchTerm) => {
         if (!searchTerm.trim()) {
             setIsMenuOpen(false);
@@ -26,11 +26,11 @@ const SearchBar = () => {
         setIsMenuOpen(true);
     }, 500), []); // 
 
-    
+
     useEffect(() => {
         handleSearch(search);
-      
-    }, [search]); 
+
+    }, [search]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -46,7 +46,7 @@ const SearchBar = () => {
     }, []);
 
     const handleFocus = () => {
-       
+
         if (search.trim() && store.resultados.length > 0) {
             setIsMenuOpen(true);
         }
@@ -56,8 +56,7 @@ const SearchBar = () => {
         <div ref={searchContainerRef} className="search-bar-container">
             <form onSubmit={(e) => e.preventDefault()} className="d-flex" role="search">
                 <input
-                    className="form-control me-2"
-                    class="searchbar form-control"
+                    className="form-control me-2 searchbar form-control"
                     type="search"
                     placeholder="Search for books, authors, publishers..."
                     aria-label="Search"
