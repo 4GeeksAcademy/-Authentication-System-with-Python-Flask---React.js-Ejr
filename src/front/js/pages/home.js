@@ -29,7 +29,12 @@ export const Home = () => {
 
   return (
     <div className="w-50 mx-auto">
-      <img src="#" className="mx-auto" height="300px" width="300px" />
+      <img
+        src="https://i.imgur.com/FQHFWqe.png"
+        className="mx-auto"
+        height="300px"
+        width="300px"
+      />
       <div className="text-left">
         <h3>Sign In</h3>
         <p>Hi there! Nice to see you again</p>

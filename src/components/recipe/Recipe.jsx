@@ -7,6 +7,7 @@ import breakfast2 from "../../assets/breakfast2.jpg";
 import breakfast3 from "../../assets/breakfast3.jpg";
 import veggieWrap from "../../assets/veggieWrap.jpeg";
 import lunch3 from "../../assets/lunch3.jpeg";
+import Favorites from "../../front/js/pages/favorites";
 
 const addFavorite = (recipe) => {
   setFavorites((prevFavorites) => {

@@ -29,7 +29,7 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
-          <Routes>
+          <Routes className="h-100">
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Recipe recipes={Recipe} />} path="/recipe" />
