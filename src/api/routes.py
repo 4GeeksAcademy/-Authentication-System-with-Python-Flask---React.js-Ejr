@@ -86,3 +86,41 @@ def protected():
         return jsonify(response_body)
     
     return jsonify({"id": user.id, "email": user.email }), 200
+
+
+#Contact
+@api.route('/contact', methods=['POST'])
+def handle_contact_form():
+    # Extract data from the request
+    name = request.json.get('name')
+    email = request.json.get('email')
+    message = request.json.get('message')
+
+  
+    contact = contact(name=name, email=email, message=message)
+    db.session.add(contact)
+    db.session.commit()
+
+    # Example: Send email notification
+    # Replace this with your actual email sending logic
+    def send_email_notification(name, email, message):
+    # Assuming you have configured Flask-Mail in your Flask app
+        mail = current_app.extensions['mail']
+
+    # Create the message
+    msg = Message(subject="New Contact Form Submission",
+                  sender=("Your Name", "your_email@example.com"),
+                  recipients=["your_recipient_email@example.com"])  # Add your recipient email address here
+
+    # Customize the email body
+    msg.body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
+
+    # Send the email
+    mail.send(msg)
+    send_email_notification(name, email, message)
+
+    # Respond to the client with a success message
+    response_body = {
+        "message": "Your message has been successfully submitted. We will get back to you soon!"
+    }
+    return jsonify(response_body), 200
