@@ -2,26 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export default function Favorites() {
+export default function Favorites(props) {
   const { store, actions } = useContext(Context);
-  const handleFavorites = (item) => {
-    if (store.favorites.includes(item)) {
-      actions.removeFavorites(item);
+
+  const handleFavorites = () => {
+    if (store.favorites.includes(props.item)) {
+      actions.removeFavorites(props.item);
     } else {
-      actions.addFavorites(item);
+      actions.addFavorites(props.item);
     }
   };
 
-  return (
-    <div className="d-flex col-10 mx-auto overflow-auto">
-      {store.favorites?.map((favorites, index) => (
-        <div key={index} className="card" style={{ minWidth: "18rem" }}>
-          <div className="card-body">
-            <h5 className="card-title">{favorites.name}</h5>
-            <button onClick={() => handleFavorites(favorites.name)}>💖</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+  return <button onClick={() => handleFavorites()}>💖</button>;
 }

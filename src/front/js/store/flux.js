@@ -8,10 +8,32 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: [],
     },
     actions: {
-      addFavorites: (fav) => {
+      addFavorites: async (fav) => {
+        let response = await fetch(process.env.BACKEND_URL + "/favorites", {
+          method: "Post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            recipe_name: fav,
+          }),
+        });
+        let data = response.json();
+        console.log(data);
         setStore({ favorites: [...getStore().favorites, fav] });
       },
-      removeFavorites: (fav) => {
+      removeFavorites: async (fav) => {
+        let response = await fetch(process.env.BACKEND_URL + "/favorites", {
+          method: "DELTE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            recipe_name: fav,
+          }),
+        });
+        let data = response.json();
+        console.log(data);
         setStore({
           favorites: [...getStore().favorites.filter((item) => item !== fav)],
         });

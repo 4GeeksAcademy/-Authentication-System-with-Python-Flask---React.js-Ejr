@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
   return (
     <div id="whole-wheat" className="px-5">
       <nav className="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between">
         <div className="d-flex justify-content-between w-100">
-          <Link className="navbar-brand" to="/Hero">
+          <Link className="navbar-brand" to={store.user ? "/profile" : "/"}>
             NourishNav
           </Link>
           <button

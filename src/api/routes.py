@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Favorites
 from api.utils import generate_sitemap, APIException
 import hashlib
 from flask_jwt_extended import create_access_token
@@ -64,3 +64,35 @@ def handle_private():
     else:
         return jsonify({"user_id": user.id, "email":user.email}), 200
 # end of user related routes
+
+# start of favorites routes
+@api.route('/favorites', methods=['POST'])
+@jwt_required()
+def addFavorite():
+    uid = get_jwt_identity()
+    request_body = request.get_json()
+    favorite = Favorites(uid = uid,recipe_name = repr(request_body['recipe_name']),)
+    db.session.add(favorite)   
+    db.session.commit()
+    return jsonify(msg="okie ^^~")
+  
+
+@api.route('/favorites', methods=['DELETE'])
+@jwt_required()
+def removeFav():
+    uid = get_jwt_identity()
+    request_body = request.get_json()
+    recipe_name=repr(request_body['recipe_name'])
+    Favorites.query.filter_by(uid = uid, recipe_name=recipe_name).delete()
+    db.session.commit()
+    db.session.commit()
+    return jsonify(msg="okie ^^~")
+
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def getFavorites():
+    uid = get_jwt_identity()
+    user = User.query.filter_by(id=uid).first()
+
+    return jsonify(favorites=user.get_favorites())
+# end of favorites routes
