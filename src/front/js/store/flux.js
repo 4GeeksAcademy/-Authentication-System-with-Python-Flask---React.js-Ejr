@@ -34,122 +34,116 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         let data = response.json();
         console.log(data);
-        setStore({
-          favorites: [...getStore().favorites.filter((item) => item !== fav)],
-        });
-      },
+		actions: {
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },
-      signUp: async (form, navigate) => {
-        const url = apiUrl + "/api/signup";
-        await fetch(url, {
-          method: "Post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: form.email,
-            password: form.password,
-          }),
-        })
-          .then(async (resp) => {
-            console.log(resp.ok); // will be true if the response is successfull
-            console.log(resp.status); // the status code = 200 or code = 400 etc.
-            if (!resp.ok) {
-              alert("user already exists");
-              return false;
-            }
-            await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-            navigate("/login");
-          })
-          .catch((error) => {
-            //error handling
-            console.log(error);
-          });
-      },
+			signUp: async (form, callback) => {
+				const url = apiUrl + "/api/signup";
+				try {
+					const response = await fetch(url, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							"email": form.email,
+							"password": form.password,
+							"age": form.age,
+							"height" : form.height,
+							"weight": form.weight,
+							"activity_level": form.activity
+						})      
+					});
+					if (!response.ok) {
+						// Convert non-OK HTTP responses into errors
+						const errorBody = await response.json();
+						throw new Error(errorBody.message || 'Signup failed');
+					}
+					await response.json(); // Assuming you might use this for something
+					if (callback) callback(); // Call the callback if signup is successful
+				} catch (error) {
+					console.error('Signup error:', error);
+					throw error; // Rethrow the error so it can be caught and handled in the component
+				}
+			},
 
-      login: (form, navigate) => {
-        const store = getStore();
-        const url = apiUrl + "/api/token";
-        fetch(url, {
-          method: "Post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: form.email,
-            password: form.password,
-          }),
-        })
-          .then(async (resp) => {
-            console.log(resp.ok); // will be true if the response is successfull
-            console.log(resp.status); // the status code = 200 or code = 400 etc.
-            if (!resp.ok) {
-              alert("Wrong email or password");
-              return false;
-            }
-            //console.log(resp.text()); // will try return the exact result as string
-            const data = await resp.json();
-            sessionStorage.setItem("token", data.token);
-            setStore({ token: data.token });
+			login: (form) => {
+				const store = getStore();
+				const url = apiUrl+"/api/token";
+				fetch(url, {
+					method: "Post",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({						
+						"email": form.email,
+                      	"password": form.password
+					})					
+				})
+				.then(async resp => {
+					console.log(resp.ok); // will be true if the response is successfull
+					console.log(resp.status); // the status code = 200 or code = 400 etc.
+					if(!resp.ok){
+						alert("Wrong email or password");
+						return false;						
+					}
+					//console.log(resp.text()); // will try return the exact result as string
+					const data = await resp.json();
+					sessionStorage.setItem("token", data.token);
+					setStore({token: data.token});
+					
+					console.log(store.token);
+				})				
+				.catch(error => {
+					//error handling
+					console.log(error);
+				})
+			},
 
-            console.log(store.token);
-            navigate("/profile");
-          })
-          .catch((error) => {
-            //error handling
-            console.log(error);
-          });
-      },
+			logout: (navigate) => {			
+				setStore({user:null});
+				sessionStorage.removeItem("token");
+				setStore({token: null});
+				navigate("/");
+			},
 
-      logout: (navigate) => {
-        setStore({ user: null });
-        sessionStorage.removeItem("token");
-        setStore({ token: null });
-        navigate("/");
-      },
+			authenticateUser: () => {
+				const store = getStore();
+				return new Promise((resolve, reject) => {
+					fetch(apiUrl + "/api/private", {
+						method: "GET",
+						headers: {
+							"Authorization": "Bearer " + store.token
+						}
+					})
+					.then(resp => {
+						if (!resp.ok) {
+							throw new Error("Authentication failed");
+						}
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ user: data });
+						resolve(data);
+					})
+					.catch(error => {
+						reject(error);
+					});
+				});
+			},
 
-      authenticateUser: (navigate) => {
-        const store = getStore();
-        console.log(store.token);
-        const url = apiUrl + "/api/private";
-        fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + store.token,
-          },
-        })
-          .then((resp) => {
-            console.log(resp.ok); // will be true if the response is successfull
-            console.log(resp.status); // the status code = 200 or code = 400 etc.
-            if (!resp.ok) {
-              navigate("/login");
-              alert("Please login to continue");
-            }
+			tokenFromStore: () => {
+				let store = getStore();
+				const token = sessionStorage.getItem("token");
+				if (token && token!= null && token!=undefined) setStore({token: token});
+			},
 
-            //console.log(resp.text()); // will try return the exact result as string
-            return resp.json();
-          })
-          .then((data) => {
-            setStore({ user: data });
-            console.log(data);
-          })
-          .catch((error) => {
-            //error handling
-            console.log(error);
-          });
-      },
-
-      tokenFromStore: () => {
-        let store = getStore();
-        const token = sessionStorage.getItem("token");
-        if (token && token != null && token != undefined)
-          setStore({ token: token });
       },
     },
   };
+			
 };
 
 export default getState;

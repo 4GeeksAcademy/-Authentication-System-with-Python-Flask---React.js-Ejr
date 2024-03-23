@@ -1,34 +1,35 @@
-import React, {useEffect, useContext} from "react";
+import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-
 const Private = () => {
-    const {store, actions} = useContext(Context);
+    const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 
     useEffect(() => {
-        function authenticate() {
-            actions.authenticateUser(navigate);
+        if (!store.user) {
+            actions.authenticateUser()
+                .then(() => {
+                    // If authentication is successful and user is retrieved,
+                    // you can optionally perform additional actions here.
+                })
+                .catch(() => {
+                    // If authentication fails, redirect to home.
+                    navigate("/");
+                });
         }
-        setTimeout(() => {
-            authenticate() }, 500)        
-    }, [])
+    }, [actions, navigate, store.user]);
 
-    
-    
     return (
         <div className="container text-center">
             <h1>Hello!</h1>
-            {store.user!= null ?
-                <div >
+            {store.user && (
+                <div>
                     <h2>Email: {store.user.email}</h2>
                 </div>
-                :
-                navigate("/login")
-            }
+            )}
         </div>
     );
-}
+};
 
 export default Private;

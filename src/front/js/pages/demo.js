@@ -13,4 +13,5 @@ export const Demo = () => {
       <Favorites item={"whatever"} />
     </div>
   );
+
 };
