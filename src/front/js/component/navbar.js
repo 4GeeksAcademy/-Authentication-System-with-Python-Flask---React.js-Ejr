@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
@@ -6,10 +7,9 @@ export const Navbar = () => {
     <div id="whole-wheat" className="px-5">
       <nav className="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between">
         <div className="d-flex justify-content-between w-100">
-          {/*           this is linking to the homepage*/}
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/Hero">
             NourishNav
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -36,32 +36,30 @@ export const Navbar = () => {
             className="collapse navbar-collapse flex-grow-0"
             id="navbarSupportedContent"
           >
-            {/* add linking for pages */}
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">
+                <Link className="nav-link" to="/features">
                   Features
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/about">
                   About
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/Recipe">
                   Recipes
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/menu">
                   Menu
-                </a>
+                </Link>
               </li>
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -69,29 +67,28 @@ export const Navbar = () => {
                   Account
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
-                  {/* add linking for various pages */}
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/profile">
                       Account
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/favorites">
                       Favorites
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/metrics">
                       Metrics
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/login">
                       Log-in
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </li>

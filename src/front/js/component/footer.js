@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/footer.css";
 
 export const Footer = () => (
@@ -44,9 +45,9 @@ export const Footer = () => (
     <footer id="footer" className="mt-auto py-3 text-center">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/Hero">
             NourishNav
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -61,29 +62,28 @@ export const Footer = () => (
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">
+                <Link className="nav-link" to="/features">
                   Features
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/about">
                   About
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/Recipe">
                   Recipes
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="./recipe/Recipe">
+                <Link className="nav-link" to="/menu">
                   Menu
-                </a>
+                </Link>
               </li>
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -92,27 +92,27 @@ export const Footer = () => (
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/profile">
                       Account
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/favorites">
                       Favorites
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/metrics">
                       Metrics
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/login">
                       Log-in
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </li>
