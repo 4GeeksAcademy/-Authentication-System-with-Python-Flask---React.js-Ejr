@@ -41,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.error("Login error:", data.error);
                         return { success: false, error: data.error }; 
                     }
-                    setStore({ token: data.token });
+                    setStore({ token: data.token, userName: data.user.name });
                     localStorage.setItem("accessToken", data.token);
                     return { success: true }; 
                 } catch (error) {
