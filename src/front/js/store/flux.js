@@ -16,6 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             ],
             resultados: [],
+            favorites: [],
             urlBase: "https://openlibrary.org/search.json",
         },
         actions: {
@@ -91,6 +92,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 setStore({ demo: demo });
             },
+
+            addToFavorites: (book) => {
+                const { favorites } = getStore().store;
+                if (!favorites.find((b) => b.key === book.key)) {
+                    const updatedFavorites = [...favorites, book];
+                    setStore({ favorites: updatedFavorites });
+                    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+                }
+            },
+            removeFromFavorites: (bookKey) => {
+                const { favorites } = getStore().store;
+                const updatedFavorites = favorites.filter((book) => book.key !== bookKey);
+                setStore({ favorites: updatedFavorites });
+                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            },
+
 
             // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {

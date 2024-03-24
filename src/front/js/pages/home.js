@@ -7,6 +7,7 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
+
 // Creación del contexto para los favoritos.
 const FavoritesContext = createContext({
   favorites: [],
@@ -173,3 +174,4 @@ const fetchBooksByCategory = async (category, setter) => {
 
 export { FavoritesContext, BookCarousel, BookCard };
 export default Home;
+
