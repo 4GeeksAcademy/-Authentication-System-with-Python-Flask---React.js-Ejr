@@ -16,22 +16,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             ],
             resultados: [],
+            favorites: [],
             urlBase: "https://openlibrary.org/search.json",
         },
         actions: {
             login: async (email, password) => {
-                // Usuario y contraseña falsos para pruebas como usuario
-                const fakeEmail = "prueba1@gmail.com";
-                const fakePassword = "prueba123";
-                const fakeToken = "fakeToken123456789"; // Token falso para simulación no borrar
-            
-                // Simulación de autenticación para el usuario falso no borrar
-                if (email === fakeEmail && password === fakePassword) {
-                    // Estableciendo el token falso y procediendo como si fuera exitoso no borrar
-                    setStore({ token: fakeToken });
-                    localStorage.setItem("accessToken", fakeToken);
-                    return { success: true };
-                }
             
                 // Proceso real de autenticación no borrar
                 const actions = getActions();
@@ -41,7 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.error("Login error:", data.error);
                         return { success: false, error: data.error }; 
                     }
-                    setStore({ token: data.token, userName: data.user.name });
+                    setStore({ token: data.token });
                     localStorage.setItem("accessToken", data.token);
                     return { success: true }; 
                 } catch (error) {
@@ -92,6 +81,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ demo: demo });
             },
 
+            addToFavorites: (book) => {
+                const { favorites } = getStore().store;
+                if (!favorites.find((b) => b.key === book.key)) {
+                    const updatedFavorites = [...favorites, book];
+                    setStore({ favorites: updatedFavorites });
+                    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+                }
+            },
+            removeFromFavorites: (bookKey) => {
+                const { favorites } = getStore().store;
+                const updatedFavorites = favorites.filter((book) => book.key !== bookKey);
+                setStore({ favorites: updatedFavorites });
+                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            },
+
+
             // Función genérica para realizar llamadas API
             APIfetch: async (endpoint, method = "GET", body = null) => {
                 const backendURL = process.env.BACKEND_URL || "http://localhost:5000";
@@ -102,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     params.body = JSON.stringify(body);
                 }
                 try {
-                    const res = await fetch(`${backendURL}/api${endpoint}`, params);
+                    const res = await fetch(`${backendURL}api${endpoint}`, params);
                     if (!res.ok) throw new Error(res.statusText);
                     return await res.json();
                 } catch (error) {

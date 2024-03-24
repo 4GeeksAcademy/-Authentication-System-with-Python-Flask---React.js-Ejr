@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
 
+// Importa el componente FavoritesProvider y FavoritesPage
+import { FavoritesProvider, FavoritesPage } from "../pages/favorites";
+
 // Don't change, here is where we initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
 
@@ -36,7 +39,12 @@ const injectContext = PassedComponent => {
 		// on the state of this component
 		return (
 			<Context.Provider value={state}>
-				<PassedComponent {...props} />
+				{/* Envuelve el componente PassedComponent con el componente FavoritesProvider */}
+				<FavoritesProvider>
+					<PassedComponent {...props} />
+					{/* Renderiza el componente FavoritesPage dentro de FavoritesProvider */}
+					<FavoritesPage />
+				</FavoritesProvider>
 			</Context.Provider>
 		);
 	};
