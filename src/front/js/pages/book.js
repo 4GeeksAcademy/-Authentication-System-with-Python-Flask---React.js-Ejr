@@ -92,7 +92,7 @@ export const BookDetails = () => {
                     </div>
                     <div className="col-lg-4 col-sm-12 col-md-12">
                         <h2>{bookDetails.title}</h2>
-                        <p>Autor: <Link to={`/authors/${author.key}`}>{author.name}</Link></p>
+                        <p>Autor: {author.name}</p>
                         <p>Año de publicación: {bookDetails.first_publish_date}</p>
                         <p>Descripción: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
                         <p>ISBN: {bookDetails.isbn}</p>

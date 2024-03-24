@@ -17,8 +17,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             ],
             resultados: [],
             urlBase: "https://openlibrary.org/search.json",
-            authors: [], 
-            authorBooks: [],
         },
         actions: {
             login: async (email, password) => {
@@ -122,31 +120,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({ resultados: filteredResults });
                 } catch (error) {
                     console.error("Error al realizar la búsqueda:", error);
-                }
-            },
-            getAuthors: async () => {
-                const store = getStore();
-                try {
-                    const response = await fetch('https://openlibrary.org/authors.json');
-                    if (!response.ok) throw new Error('Respuesta no exitosa de la API');
-                    const data = await response.json();
-                    setStore({ authors: data.authors });
-                } catch (error) {
-                    console.error('Error al obtener la lista de autores:', error);
-                }
-            },
-            // Obtener los libros de un autor específico desde la API de Open Library
-            getAuthorBooks: async (authorKey) => {
-                const store = getStore();
-                try {
-                    const response = await fetch(`https://openlibrary.org/authors/${authorKey}.json`);
-                    if (!response.ok) throw new Error('Respuesta no exitosa de la API');
-                    const data = await response.json();
-                    // Aquí procesa los datos para obtener los libros del autor
-                    // Puedes acceder a la información en data y almacenarla en el store
-                    setStore({ authorBooks: data.books });
-                } catch (error) {
-                    console.error('Error al obtener los libros del autor:', error);
                 }
             },
             loadSession: () => {

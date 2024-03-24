@@ -23,8 +23,7 @@ import CookiesNotice from "./pages/cookies-notice";
 import Recommenders from "./pages/recommenders.js";
 import Contact from "./pages/contact.js";
 import Advertisements from "./pages/advertisements.js";
-import AuthorsPage from './pages/authors';
-import AuthorDetailPage from './pages/authorsDetails';
+
 
 
 const Layout = () => {
@@ -46,9 +45,6 @@ const Layout = () => {
                             <Route element={<Login />} path="/login" />
                             <Route element={<Forgot />} path="/forgot" />
                             <Route element={<BookDetails />} path="/books/works/:id" />
-                            <Route element={<AuthorsPage />} path="/authors" />
-
-                            <Route path="/authors/:authorKey" component={AuthorDetailPage} />
                             <Route element={<Reviews />} path="/books/works/:id/reviews" />
                             {/* EMPIEZAN PAGINAS DE FOOTER*/}
                             <Route element={<PrivacyPolicy />} path="/privacy-policy" />
