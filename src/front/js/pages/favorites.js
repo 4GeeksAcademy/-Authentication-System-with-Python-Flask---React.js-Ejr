@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 
+
 // Creamos el contexto para manejar los favoritos
 export const FavoritesContext = createContext({
   favorites: [],
