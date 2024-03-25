@@ -39,11 +39,9 @@ const injectContext = PassedComponent => {
 		// on the state of this component
 		return (
 			<Context.Provider value={state}>
+				
 				{/* Envuelve el componente PassedComponent con el componente FavoritesProvider */}
-				<FavoritesProvider>
 					<PassedComponent {...props} />
-					{/* Renderiza el componente FavoritesPage dentro de FavoritesProvider */}
-				</FavoritesProvider>
 			</Context.Provider>
 		);
 	};

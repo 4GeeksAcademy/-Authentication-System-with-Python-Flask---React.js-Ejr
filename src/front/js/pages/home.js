@@ -7,7 +7,6 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-
 // Creación del contexto para los favoritos.
 const FavoritesContext = createContext({
   favorites: [],
@@ -51,9 +50,11 @@ export const Home = () => {
     fetchBooksByCategory('romance', setRomanceBooks);
     fetchBooksByCategory('suspense', setSuspenseBooks);
   }, []);
+  
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites])
+  }, [favorites]);
+
   // Función para dividir los libros en grupos para el carrusel.
   const chunkBooks = (books, size) => {
     const chunked = [];
@@ -67,20 +68,24 @@ export const Home = () => {
     <Container>
       <FavoritesContext.Provider value={{ favorites, addToFavorites, removeFromFavorites, isFavorite, isLoggedIn }}>
         {popularBooks.length > 0 && (
-          <BookCarousel title="Popular Books" books={chunkBooks(popularBooks, 3)} />
+          <BookCarousel title="Popular Books" books={chunkBooks(popularBooks, 4)} />
         )}
         {romanceBooks.length > 0 && (
-          <BookCarousel title="Romance Books" books={chunkBooks(romanceBooks, 3)} />
+          <BookCarousel title="Romance Books" books={chunkBooks(romanceBooks, 4)} />
         )}
         {suspenseBooks.length > 0 && (
-          <BookCarousel title="Suspense Books" books={chunkBooks(suspenseBooks, 3)} />
+          <BookCarousel title="Suspense Books" books={chunkBooks(suspenseBooks, 4)} />
         )}
         {isLoggedIn && (
-          <div>
-            <h2>Mis Libros Favoritos</h2>
-            {/* Aquí podría ir una visualización de los libros favoritos del usuario */}
-          </div>
-        )}
+        <div>
+          <h2>Mis Libros Favoritos</h2>
+          <Row xs={1} md={4} className="g-5">
+            {favorites.map((book) => (
+              <BookCard key={book.key} book={book} />
+            ))}
+          </Row>
+        </div>
+      )}
       </FavoritesContext.Provider>
     </Container>
   );
@@ -100,9 +105,9 @@ const BookCarousel = ({ title, books }) => {
       <Carousel activeIndex={index} onSelect={handleSelect} indicators={false} nextLabel="" prevLabel="" interval={null}>
         {books.map((bookGroup, idx) => (
           <Carousel.Item key={idx}>
-            <Row xs={1} md={3} className="g-5">
+            <Row xs={1} md={4} className="g-5">
               {bookGroup.map((book) => (
-                <BookCard book={book} />
+                <BookCard book={book} key={book.key} />
               ))}
             </Row>
           </Carousel.Item>
@@ -172,6 +177,4 @@ const fetchBooksByCategory = async (category, setter) => {
   }
 };
 
-export { FavoritesContext, BookCarousel, BookCard };
 export default Home;
-
