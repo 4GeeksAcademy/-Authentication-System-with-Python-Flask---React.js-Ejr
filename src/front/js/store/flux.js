@@ -115,16 +115,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     throw error;
                 }
             },
-            setBooks: async (searchTerm) => {
-                const store = getStore();
+            fetchBooksByCategory: async (category) => {
                 try {
-                    const response = await fetch(`${store.urlBase}?q=${searchTerm}&limit=50`);
-                    if (!response.ok) throw new Error('Respuesta no exitosa de la API');
+                    const response = await fetch(`https://openlibrary.org/subjects/${category}.json?limit=12`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
                     const data = await response.json();
-                    const filteredResults = data.docs.filter(doc => doc.title.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6);
-                    setStore({ resultados: filteredResults });
+                    return data.works;
                 } catch (error) {
-                    console.error("Error al realizar la búsqueda:", error);
+                    console.error('Error fetching books:', error);
+                    return [];
                 }
             },
             loadSession: () => {
