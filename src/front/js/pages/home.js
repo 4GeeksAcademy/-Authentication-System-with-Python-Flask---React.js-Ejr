@@ -17,7 +17,7 @@ const FavoritesContext = createContext({
 
 // Componente principal Home que muestra los libros.
 export const Home = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [popularBooks, setPopularBooks] = useState([]);
   const [romanceBooks, setRomanceBooks] = useState([]);
   const [suspenseBooks, setSuspenseBooks] = useState([]);
@@ -46,10 +46,16 @@ export const Home = () => {
 
   // Efecto para cargar libros por categoría al montar el componente.
   useEffect(() => {
-    fetchBooksByCategory('popular', setPopularBooks);
-    fetchBooksByCategory('romance', setRomanceBooks);
-    fetchBooksByCategory('suspense', setSuspenseBooks);
-  }, []);
+      const fetchData = async () => {
+          const popular = await actions.fetchBooksByCategory('popular');
+          const romance = await actions.fetchBooksByCategory('romance');
+          const suspense = await actions.fetchBooksByCategory('suspense');
+          setPopularBooks(popular);
+          setRomanceBooks(romance);
+          setSuspenseBooks(suspense);
+      };
+      fetchData();
+  }, [actions]);
   
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -161,20 +167,6 @@ const BookCard = ({ book }) => {
       </Card>
     </Col>
   );
-};
-
-// Función para cargar libros por categoría desde la API.
-const fetchBooksByCategory = async (category, setter) => {
-  try {
-    const response = await fetch(`https://openlibrary.org/subjects/${category}.json?limit=6`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    setter(data.works);
-  } catch (error) {
-    console.error('Error fetching books:', error);
-  }
 };
 
 export default Home;
