@@ -87,7 +87,7 @@ def private():
 def add_to_favorites():
     try:
         data = request.get_json()
-        user_id = secret_key() 
+        user_id = data['user_id']
         
         if not data or "book_id" not in data:
             return jsonify({"message": "Book ID requiered"}), 400
@@ -109,9 +109,10 @@ def add_to_favorites():
         print("Error:", e)
         return jsonify({"message": "Internal error"}), 500
 
-@app.route("/remove_from_favorites", methods=["DELETE"])
+@app.route("/remove_from_favorites<int:book_id>", methods=["DELETE"])
 def remove_from_favorites(book_id):
-    user_id = secret_key()   # Implementa esta función para obtener el ID del usuario actual.
+    data = request.get_json()
+    user_id = data['user_id']   # Implementa esta función para obtener el ID del usuario actual.
     if not user_id:
         return jsonify({"message": "User not authenticated"}), 401
 
