@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             ],
             resultados: [],
             urlBase: "https://openlibrary.org/search.json",
-            favorites: [],
+            gi: [],
             // Otros métodos de tu store...
             /* addToFavorites: (book) => {
                 const { favorites } = getStore();
