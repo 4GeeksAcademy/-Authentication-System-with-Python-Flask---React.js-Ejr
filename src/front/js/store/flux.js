@@ -36,6 +36,24 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
         },
         actions: {
+            addToFavorites: async (bookId) => {
+                const actions = getActions();
+                try {
+                    const response = await actions.APIfetch("/add_to_favorites", "POST", {
+                        if (body) {
+                            params.headers["Content-Type"] = "application/json";
+                            params.body = JSON.stringify(body);
+                        }
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || "Error al agregar libro a favoritos");
+                    }
+                    console.log(data.message);
+                } catch (error) {
+                    console.error("Error al agregar libro a favoritos:", error);
+                }
+            },
             login: async (email, password) => {
             
                 // Proceso real de autenticación no borrar
