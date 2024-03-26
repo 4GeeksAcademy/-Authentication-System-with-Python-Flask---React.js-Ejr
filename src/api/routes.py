@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import os
-from api.models import db, User,Books,Comments,Favorites
+from api.models import db, User,Books,Favorites, Comments
 
 
 app = Flask(__name__)
