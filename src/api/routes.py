@@ -87,17 +87,16 @@ def private():
 def add_to_favorites():
     try:
         data = request.get_json()
-        user_id = secret_key()  # Obtener el ID del usuario desde el token
+        user_id = secret_key() 
         
         if not data or "book_id" not in data:
-            return jsonify({"message": "Se requiere el ID del libro"}), 400
+            return jsonify({"message": "Book ID requiered"}), 400
 
         book_id = data["book_id"]
         book = Books.query.get(book_id)
         if not book:
-            return jsonify({"message": "Libro no encontrado"}), 404
+            return jsonify({"message": "bOOK NOT FOUND"}), 404
 
-        # Verificar si el libro ya está en favoritos
         if Favorites.query.filter_by(user_id=user_id, book_id=book_id).first():
             return jsonify({"message": "El libro ya está en tus favoritos"}), 400
 
@@ -105,11 +104,25 @@ def add_to_favorites():
         db.session.add(favorite)
         db.session.commit()
 
-        return jsonify({"message": "Libro agregado a tus favoritos exitosamente"}), 200
+        return jsonify({"message": "Book added to favorites"}), 200
     except Exception as e:
         print("Error:", e)
-        return jsonify({"message": "Ocurrió un error interno del servidor"}), 500
+        return jsonify({"message": "Internal error"}), 500
 
+@app.route("/remove_from_favorites", methods=["DELETE"])
+def remove_from_favorites(book_id):
+    user_id = secret_key()   # Implementa esta función para obtener el ID del usuario actual.
+    if not user_id:
+        return jsonify({"message": "User not authenticated"}), 401
+
+    favorite = Favorites.query.filter_by(user_id=user_id, book_id=book_id).first()
+    if not favorite:
+        return jsonify({"message": "Book not found in favorites"}), 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify({"message": "Book removed from favorites successfully"}), 200
 
 @api.route("/favorites", methods=["GET"])
 @jwt_required()

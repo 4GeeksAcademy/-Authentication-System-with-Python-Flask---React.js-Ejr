@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             urlBase: "https://openlibrary.org/search.json",
             favorites: [],
             // Otros métodos de tu store...
-            addToFavorites: (book) => {
+            /* addToFavorites: (book) => {
                 const { favorites } = getStore();
                 if (!favorites.find((b) => b.key === book.key)) {
                     const updatedFavorites = [...favorites, book];
@@ -33,45 +33,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const updatedFavorites = favorites.filter((book) => book.key !== bookKey);
                 setStore({ favorites: updatedFavorites });
                 localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-            },
+            }, */
         },
         actions: {
-            addToFavorites: async (bookId) => {
-                const actions = getActions();
-                try {
-                    const response = await actions.APIfetch("/add_to_favorites", "POST", {
-                        if (body) {
-                            params.headers["Content-Type"] = "application/json";
-                            params.body = JSON.stringify(body);
-                        }
-                    });
-                    const data = await response.json();
-                    if (!response.ok) {
-                        throw new Error(data.message || "Error al agregar libro a favoritos");
-                    }
-                    console.log(data.message);
-                } catch (error) {
-                    console.error("Error al agregar libro a favoritos:", error);
-                }
-            },
-            loadFavorites: async () => {
-                const actions = getActions();
-                try {
-                    const response = await actions.APIfetch("/add_to_favorites", "GET",{
-                        method: "GET",
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-                    const data = await response.json();
-                    if (!response.ok) {
-                        throw new Error(data.message || "Error al obtener libros favoritos");
-                    }
-                    setStore({ favorites: data.favorites });
-                } catch (error) {
-                    console.error("Error al cargar libros favoritos:", error);
-                }
-            },
             login: async (email, password) => {
             
                 // Proceso real de autenticación no borrar
@@ -131,6 +95,47 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return elm;
                 });
                 setStore({ demo: demo });
+            },
+            addToFavorites: async (bookId) => {
+                const actions = getActions();
+                try {
+                    const response = await actions.APIfetch("/add_to_favorites", "POST", { bookId });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || "Error al agregar libro a favoritos");
+                    }
+                    console.log(data.message);
+                    actions.loadFavorites(); // Vuelve a cargar los favoritos después de agregar uno nuevo.
+                } catch (error) {
+                    console.error("Error al agregar libro a favoritos:", error);
+                }
+            },
+            removeFromFavorites: async (bookId) => {
+                const actions = getActions();
+                try {
+                    const response = await actions.APIfetch("/remove_from_favorites/${bookId}", "DELETE");
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || "Error al eliminar libro de favoritos");
+                    }
+                    console.log(data.message);
+                    actions.loadFavorites(); // Vuelve a cargar los favoritos después de eliminar uno.
+                } catch (error) {
+                    console.error("Error al eliminar libro de favoritos:", error);
+                }
+            },
+            loadFavorites: async (token) => {
+                const actions = getActions();
+                try {
+                    const response = await actions.APIfetch("/favorites", "GET");
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || "Error al obtener libros favoritos");
+                    }
+                    setStore({ favorites: data.favorites });
+                } catch (error) {
+                    console.error("Error al cargar libros favoritos:", error);
+                }
             },
 
             // Función genérica para realizar llamadas API
