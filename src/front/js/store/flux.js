@@ -98,9 +98,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             addToFavorites: async (bookId) => {
                 const actions = getActions();
                 try {
-                    const response = await actions.APIfetch("/add_to_favorites", "POST");
-                    const data = await response.json();
-                    if (!response.ok) {
+                    const data = await actions.APIfetch("/add_to_favorites", "POST");
+                    if (data.error) {
                         throw new Error(data.message || "Error al agregar libro a favoritos");
                     }
                     console.log(data.message);
@@ -112,9 +111,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             removeFromFavorites: async (bookId) => {
                 const actions = getActions();
                 try {
-                    const response = await actions.APIfetch(`/remove_from_favorites/${bookId}`, "DELETE");
-                    const data = await response.json();
-                    if (!response.ok) {
+                    const data = await actions.APIfetch(`/remove_from_favorites/${bookId}`, "DELETE");
+                    if (data.error) {
                         throw new Error(data.message || "Error al eliminar libro de favoritos");
                     }
                     console.log(data.message);
@@ -125,11 +123,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             loadFavorites: async (token) => {
                 const actions = getActions();
-                await actions.loadFavorites();
                 try {
-                    const response = await actions.APIfetch("/favorites", "GET");
-                    const data = await response.json();
-                    if (!response.ok) {
+                    const data = await actions.APIfetch("/favorites", "GET");
+                    if (data.error) {
                         throw new Error(data.message || "Error al obtener libros favoritos");
                     }
                     setStore({ favorites: data.favorites });

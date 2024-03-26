@@ -16,8 +16,8 @@ export const FavoritesPage = () => {
   const isLoggedIn = store.token !== null;
 
   useEffect(() => {
-    actions.loadFavorites(store.token);
-  }, [actions, store.token]);
+      actions.loadFavorites(store.token);
+  }, []);
 
   const addToFavorites = (book) => {
     actions.addToFavorites(book);
