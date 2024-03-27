@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity
 from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -87,7 +87,8 @@ def private():
 def add_to_favorites():
     try:
         data = request.get_json()
-        user_id = data['user_id']
+        user_id = get_jwt_identity()
+        
         
         if not data or "book_id" not in data:
             return jsonify({"message": "Book ID requiered"}), 400
