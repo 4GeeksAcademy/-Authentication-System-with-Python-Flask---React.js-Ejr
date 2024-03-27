@@ -6,7 +6,6 @@ import '../../styles/navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown, Button, Dropdown } from 'react-bootstrap';
 import { Context } from '../store/appContext';
-import { FavoritesContext } from '../pages/favorites.js';
 
 function getInitials(name) {
   if (!name) return '';
@@ -16,7 +15,6 @@ function getInitials(name) {
 }
 
 const NavBar = () => {
-  const { favorites } = useContext(FavoritesContext);
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const isLoggedIn = !!store.token;
