@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             ],
             resultados: [],
             urlBase: "https://openlibrary.org/search.json",
-            favorites: [],
+            gi: [],
             // Otros métodos de tu store...
             /* addToFavorites: (book) => {
                 const { favorites } = getStore();
@@ -150,6 +150,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error("Error fetching data durign login:", error);
                     throw error;
+                }
+            },
+            setBooks: async (searchTerm) => {
+                const store = getStore();
+                try {
+                    const response = await fetch(`${store.urlBase}?q=${searchTerm}&limit=50`);
+                    if (!response.ok) throw new Error('Respuesta no exitosa de la API');
+                    const data = await response.json();
+                    const filteredResults = data.docs.filter(doc => doc.title.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6);
+                    setStore({ resultados: filteredResults });
+                } catch (error) {
+                    console.error("Error al realizar la búsqueda:", error);
                 }
             },
             fetchBooksByCategory: async (category) => {
