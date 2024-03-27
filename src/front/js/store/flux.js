@@ -56,6 +56,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             logout: () => {
                 setStore({ token: null });
                 localStorage.removeItem('accessToken');
+                localStorage.removeItem('favorites');
             },
             // Acción para registrarse
             signup: async (email, password, first_name, last_name, phone, location) => {
