@@ -65,7 +65,7 @@ const Login = () => {
                 <button type="button" className="btn btn-primary" onClick={() => sendLogin(email, password)}>
                     Login
                 </button>
-                <p className="mt-3 text-center">Don't have an account? <Link to="/register" className="btn-link">Create Your Account</Link></p>
+                <p className="mt-3 text-center">Don't have an account? <Link to="/registro" className="btn-link">Create Your Account</Link></p>
             </div>
         </div>
     );
