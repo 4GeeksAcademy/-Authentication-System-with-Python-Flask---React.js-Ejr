@@ -1,3 +1,105 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+.auth-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #d6d6d6;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; 
+}
+
+.error-message {
+    color: red; 
+    text-align: center; 
+    margin-top: 10px; 
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    max-width: 600px; 
+    margin-bottom: 20px; 
+    border-radius: 40px;
+}
+
+.password-input-container {
+    position: relative;
+}
+
+.password {
+    padding-right: 40px; 
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 40%; 
+    right: 10px; 
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: grid;
+}
+
+.imageLogo {
+    width: 100px; 
+    height: auto; 
+    margin-left: 40px;
+  }
+  
+  .navbar .navbar-brand .link-text {
+    display: none;
+    margin-left: 8px;
+}
+
+.navbar .navbar-brand:hover .link-text {
+    display: inline;
+}
+
+.icon {
+    transition: transform 0.3s ease;
+}
+
+.navbar .navbar-brand:hover .icon {
+    transform: scale(1.1);
+}
