@@ -23,7 +23,7 @@ const Login = () => {
 
             const data = await resp.json();
             localStorage.setItem("jwt-token", data.token);
-            navigate("/perfil");
+            navigate("/");
         } catch (error) {
             console.error(error);
             setError("Contraseña incorrecta"); 

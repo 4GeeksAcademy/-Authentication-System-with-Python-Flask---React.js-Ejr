@@ -34,13 +34,6 @@ button:hover {
     background-color: #d6d6d6;
 }
 
-.image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh; 
-}
-
 .error-message {
     color: red; 
     text-align: center; 
@@ -51,13 +44,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.image {
-    width: 100%;
-    max-width: 400px; 
-    margin-bottom: 20px; 
-    border-radius: 40px;
 }
 
 .password-input-container {
@@ -81,25 +67,175 @@ button:hover {
     display: grid;
 }
 
+/* CSS de Navbar*/
+
+.image {
+    width: 100%;
+    max-width: 400px; 
+    margin-bottom: 20px; 
+    border-radius: 40px;
+}
+
 .imageLogo {
     width: 100px; 
     height: auto; 
     margin-left: 40px;
-  }
-  
-  .navbar .navbar-brand .link-text {
-    display: none;
+}
+
+.navbar .navbar-brand .link-text {
+    display: inline-block; 
     margin-left: 8px;
+    opacity: 0; 
+    transition: opacity 0.5s ease; 
+    white-space: nowrap; 
 }
 
 .navbar .navbar-brand:hover .link-text {
-    display: inline;
+    opacity: 1; 
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.link-text {
+    opacity: 0;
+    transition: opacity 0.5s ease; 
+    white-space: nowrap; 
+}
+
+.navbar-brand:hover .link-text {
+    opacity: 1; 
 }
 
 .icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease; 
+    color: #FFC107; 
 }
 
 .navbar .navbar-brand:hover .icon {
-    transform: scale(1.1);
+    transform: scale(1.1); 
+}
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 1rem 2rem; 
+}
+
+.navbar-brand {
+    transition: all 0.3s ease; 
+}
+
+.navbar-brand:hover {
+    transform: translateY(-2px); 
+}
+
+.logout {
+    color: red;
+}
+
+/* CSS de Rankings*/
+
+.rankings-container {
+    display: flex;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 20px;
+    gap: 20px; 
+}
+
+.ranking {
+    flex: 1;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.411); 
+    padding: 10px; 
+    border-radius: 10px; 
+}
+
+.table {
+    display: table;
+    width: 100%;
+    margin: auto;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 10px;
+    text-align: left; 
+}
+
+.first .position, .first .name, .first .score,
+.second .position, .second .name, .second .score,
+.third .position, .third .name, .third .score,
+.other .position, .other .name, .other .score {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
+}
+
+.first .position, .first .name, .first .score {
+    color: gold;
+    font-size: 3em;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 2); 
+}
+
+.second .position, .second .name, .second .score {
+    color: silver;
+    font-size: 2.5em;
+    text-shadow: 0 0 8px rgba(192, 192, 192, 2); 
+}
+
+.third .position, .third .name, .third .score {
+    color: #cd7f32; 
+    font-size: 2em;
+    text-shadow: 0 0 8px rgba(205, 127, 50, 2); 
+}
+
+.other .position, .other .name, .other .score {
+    color: white;
+    font-size: 1.5em;
+}
+
+.name {
+    text-align: left;
+}
+
+.table-row.header .pos {
+    text-align: left !important;
+}
+
+.score {
+    text-align: center;
+}
+
+.name-and-button, .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-container {
+    flex-shrink: 0; 
+}
+
+.header {
+    background-color: rgba(83, 81, 81, 0.459); 
+    color: #fff;
+    font-weight: bold;
+}
+
+.header .name {
+    text-align: left !important;
+}
+
+.header .table-cell {
+    text-align: center;
+}
+
+.header .name {
+    text-align: left;
 }
