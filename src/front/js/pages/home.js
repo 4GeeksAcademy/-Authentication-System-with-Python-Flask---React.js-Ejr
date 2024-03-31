@@ -84,7 +84,7 @@ export const Home = () => {
         )}
         {isLoggedIn && (
         <div>
-          <h2>Mis Libros Favoritos</h2>
+          <h2>My favorite books</h2>
           <Row xs={1} md={4} className="g-5">
             {favorites.map((book) => (
               <BookCard key={book.key} book={book} />
