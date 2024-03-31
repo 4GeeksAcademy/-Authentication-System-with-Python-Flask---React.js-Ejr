@@ -95,8 +95,8 @@ export const BookDetails = () => {
                         <p>Autor: {author.name}</p>
                         <p>Año de publicación: {bookDetails.first_publish_date}</p>
                         <p>Descripción: {typeof bookDetails.description === 'string' ? bookDetails.description : bookDetails.description?.value}</p>
-                        <p>ISBN: {bookDetails.isbn}</p>
-                        {/*<Link to={`/books/works/${id}/reviews`}>
+                        {/*<p>ISBN: {bookDetails.isbn}</p>
+                        <Link to={`/books/works/${id}/reviews`}>
                             <button className="btn btn-success">LEAVE A REVIEW</button>
                         </Link>*/}
                     </div>
