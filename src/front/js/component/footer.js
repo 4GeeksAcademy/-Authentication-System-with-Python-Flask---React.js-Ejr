@@ -1,9 +1,10 @@
 import React from "react";
 
 export const Footer = () => (
-	<footer className="footer mt-5 py-3 text-center">
+	<footer className="footer py-3 text-center">
+		<p>© 2024 Urban Treasures. All rights reserved.</p>
 		<p>
-			Footer: Realizado por Ernesto, Javier y Denis.
+			Performed for Ernesto, Javier & Denis.
 		</p>
 	</footer>
 );

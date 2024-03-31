@@ -1,3 +1,4 @@
+/* CSS de Formularios*/
 .auth-container {
     max-width: 400px;
     margin: 0 auto;
@@ -8,7 +9,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-.title {
+.title-form {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -28,10 +29,6 @@ input {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-button:hover {
-    background-color: #d6d6d6;
 }
 
 .error-message {
@@ -67,73 +64,154 @@ button:hover {
     display: grid;
 }
 
+/* CSS del Home*/
+
+.contenido-relleno {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    text-align: center; 
+    height: 260px;
+}
+
+.map-image {
+    height: 220px;
+    border-radius: 15px;
+    border: 3px solid #ffd700; 
+}
+
+.description-title {
+    font-size: 70px;
+    color: black;
+    font-weight: bold;
+    text-shadow: 
+        0 0 3px #fff,  
+        0 0 5px #fff,   
+        0 0 10px #fff, 
+        0 0 15px #fff,  
+        1px 1px #fff,   
+        -1px -1px #fff,
+        -1px 1px #fff,  
+        1px -1px #fff;  
+}
+
+.description-text {
+    font-size: 35px;
+    color: black;
+    text-shadow: 
+        0 0 3px #fff,  
+        0 0 5px #fff,   
+        0 0 10px #fff, 
+        0 0 15px #fff,  
+        1px 1px #fff,   
+        -1px -1px #fff,
+        -1px 1px #fff,  
+        1px -1px #fff;  
+}
+
+.home-container{
+    font-family: 'Play', sans-serif !important;
+}
+
+/* CSS botones Home*/
+
+.btn-custom {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .btn-hide-treasure {
+    background-color: #000000;
+    color:#FFC107;
+    border: 2px solid #FFC107;
+    font-size: 25px;
+  }
+  
+  .btn-hide-treasure:hover {
+    background-color: #FFC107;
+    transform: scale(1.05);
+  }
+  
+  .btn-find-treasures {
+    background-color: #000000;
+    color: #FFC107; 
+    border: 2px solid #FFC107;
+    font-size: 25px;
+  }
+  
+  .btn-find-treasures:hover {
+    background-color: #FFC107; 
+    transform: scale(1.05);
+  }
+  
+  .btn-custom:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
 /* CSS de Navbar*/
 
-.image {
-    width: 100%;
-    max-width: 400px; 
-    margin-bottom: 20px; 
-    border-radius: 40px;
+.navbar-custom {
+    background-color: #000000;
+    padding-top: 10px;
+    padding-bottom: 5px;
 }
 
-.imageLogo {
-    width: 100px; 
-    height: auto; 
-    margin-left: 40px;
-}
-
-.navbar .navbar-brand .link-text {
-    display: inline-block; 
-    margin-left: 8px;
-    opacity: 0; 
-    transition: opacity 0.5s ease; 
-    white-space: nowrap; 
-}
-
-.navbar .navbar-brand:hover .link-text {
-    opacity: 1; 
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-}
-
-.link-text {
+.navbar-custom .navbar-brand .link-text {
+    color: #FFF; 
+    font-family: 'Pirata One', cursive;
+    font-size: 35px; 
     opacity: 0;
-    transition: opacity 0.5s ease; 
-    white-space: nowrap; 
+    transition: opacity 0.5s ease;
 }
 
-.navbar-brand:hover .link-text {
-    opacity: 1; 
+.navbar-custom .navbar-brand:hover .link-text {
+    opacity: 1;
 }
 
-.icon {
-    transition: transform 0.5s ease; 
+.navbar-custom .navbar-brand .icon {
     color: #FFC107; 
+    font-size: 32px; 
+    transition: transform 0.5s ease;
 }
 
-.navbar .navbar-brand:hover .icon {
+.navbar-custom .navbar-brand:hover .icon {
     transform: scale(1.1); 
 }
 
-.navbar {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    padding: 1rem 2rem; 
-}
+.btn-warning {
+    background: #FFC107;
+    box-shadow: 0 0 25px #FFC107;
+  }
+  
+  .btn-warning:hover {
+    box-shadow: 0 0 5px #FFC107,
+                0 0 15px #FFC107,
+                0 0 30px #FFC107,
+                0 0 50px #FFC107;
+  }
 
-.navbar-brand {
-    transition: all 0.3s ease; 
-}
-
-.navbar-brand:hover {
-    transform: translateY(-2px); 
+.imageLogo {
+    width: 70px; 
+    height: 70px; 
+    margin-left: 40px;
 }
 
 .logout {
     color: red;
+}
+
+.boton-navbar{
+    font-family: 'Play', sans-serif !important;
+}
+
+.text-navbar{
+    color: #ffffff;
+    font-size: 20px;
+    font-family: 'Pirata One', cursive;
 }
 
 /* CSS de Rankings*/
@@ -238,4 +316,108 @@ button:hover {
 
 .header .name {
     text-align: left;
+}
+
+/* CSS de Footer*/
+
+.footer {
+    background-color: #000000;
+    color: white;
+    font-size: 13px;
+}
+
+/* CSS de How it Works*/
+
+.container-fluid {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    background-color: #000000;
+  }
+  
+  .left-column {
+    flex: 1;
+    padding-right: 20px; 
+  }
+  
+  .right-column {
+    flex: 2;
+    display: flex;
+    justify-content: space-between; 
+  }
+  
+  .image-description {
+    text-align: center;
+    width: 30%; 
+  }
+
+  .how-it-works {
+    font-size: 45px;
+    background: linear-gradient(#ffffff, #FFC107, #ffffff); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    color: transparent; 
+    display: inline-block; 
+    font-weight: bold;
+  }
+  
+  .how-text {
+    font-size: 25px;
+    color: #ffffff;
+
+  }
+
+  .imagen-how {
+    height: 350px;
+    border-radius: 10px;
+    border: #FFC107 3px solid;
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.6), 0 6px 20px 0 rgba(255, 255, 255, 0.2);
+  }
+
+.imagen-how:hover {
+    transform: scale(1.1);
+}
+
+  .text-how{
+    font-size: 20px;
+    color: white;
+  }
+
+.text-how-2{
+    font-size: 20px;
+    color: #FFC107;
+}
+
+  .text-links{
+    color: rgb(151, 147, 147);
+  }
+
+/* CSS de Join the adventure*/
+
+.container-fluid-join {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #3d3900;
+    margin-top: auto;
+}
+
+.join-btn {
+    font-size: 25px;
+}
+
+.text-login-join {
+    font-size: 15px;
+    color: #ccc;
+}
+
+.image-description,
+.text-description {
+    flex: 1; 
+}
+
+.text-description {
+    margin-top: auto; 
 }

@@ -34,9 +34,9 @@ const Register = () => {
     };
 
     return (
-        <div className="auth-container mt-5">
+        <div className="auth-container mt-5 mb-5">
             <div className="container form-body">
-                <h2 className="title">Create an account</h2>
+                <h2 className="title-form">Create an account</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="accountType">Account Type</label>

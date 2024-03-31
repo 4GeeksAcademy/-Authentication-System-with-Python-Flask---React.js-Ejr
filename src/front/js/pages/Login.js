@@ -31,9 +31,9 @@ const Login = () => {
     };
 
     return (
-        <div className="auth-container mt-5">
+        <div className="auth-container mt-5 mb-5">
             <div className="container form-body">
-                <h2 className="title">Login</h2>
+                <h2 className="title-form">Login</h2>
                 <div className="input-group">
                     <label htmlFor="email">E-mail</label>
                     <input

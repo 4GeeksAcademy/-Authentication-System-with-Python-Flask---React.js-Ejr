@@ -11,7 +11,7 @@ export const Navbar = () => {
 	useEffect(() => {
 		const token = localStorage.getItem("jwt-token");
 		if (token) {
-			setUser("denis9diaz@hotmail.com"); // Traer el username del backend
+			setUser("denis9diaz@hotmail.com"); 
 		} else {
 			setUser(null);
 		}
@@ -20,7 +20,7 @@ export const Navbar = () => {
 	const handleLogin = () => {
 		const token = localStorage.getItem("jwt-token");
 		if (token) {
-			setUser("denis9diaz@hotmail.com"); // Username del backend
+			setUser("denis9diaz@hotmail.com");
 			navigate("/perfil");
 		} else {
 			navigate("/login");
@@ -34,18 +34,21 @@ export const Navbar = () => {
 	};
 
 	return (
-		<nav className="navbar navbar-dark bg-black bg-light pe-5">
-			<Link to="/">
-				<img src={logoGame} alt="logo" className="imageLogo" />
-			</Link>
+		<nav className="navbar navbar-custom pe-5">
+			<div>
+				<Link to="/">
+					<img src={logoGame} alt="logo" className="imageLogo" />
+				</Link>
+			<p className="text-navbar ps-3">URBAN TREASURES</p>
+			</div>
 			<Link to="/lista-tesoros" className="navbar-brand mb-0 h1" title="TREASURES">
-				<i className="fas fa-search icon"></i><span className="link-text">TREASURES</span>
+				<i class="fas fa-gem icon me-3"></i><span className="link-text">Treasures</span>
 			</Link>
 			<Link to="/formulario-tesoro" className="navbar-brand mb-0 h1" title="HIDE YOUR TREASURE">
-				<i className="fas fa-eye-slash icon"></i><span className="link-text">HIDE TREASURE</span>
+				<i class="fas fa-map-marked-alt icon me-3"></i><span className="link-text">Hide Treasure</span>
 			</Link>
 			<Link to="/rankings" className="navbar-brand mb-0 h1" title="RANKINGS">
-				<i className="fas fa-trophy icon"></i><span className="link-text">RANKINGS</span>
+				<i className="fas fa-trophy icon me-3"></i><span className="link-text">Rankings</span>
 			</Link>
 			{user ? (
 				<div className="ml-auto dropdown">
@@ -61,11 +64,11 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					<div style={{ display: "inline-block", marginRight: "10px" }}>
 						<Link to="/registro" className="nav-link">
-							<button className="btn btn-warning">Create your account</button>
+							<button className="btn btn-warning boton-navbar">Create your account</button>
 						</Link>
 					</div>
 					<div style={{ display: "inline-block", marginRight: "10px" }}>
-						<Link className="btn-link text-warning" to="/login" onClick={handleLogin}>Login</Link>
+						<Link className="btn-link text-warning boton-navbar" to="/login" onClick={handleLogin}>Login</Link>
 					</div>
 				</div>
 			)}
