@@ -47,7 +47,7 @@ export const Home = () => {
   // Efecto para cargar libros por categoría al montar el componente.
   useEffect(() => {
       const fetchData = async () => {
-          const popular = await actions.fetchBooksByCategory('popular');
+          const popular = await actions.fetchBooksByCategory('famous');
           const romance = await actions.fetchBooksByCategory('romance');
           const suspense = await actions.fetchBooksByCategory('suspense');
           setPopularBooks(popular);

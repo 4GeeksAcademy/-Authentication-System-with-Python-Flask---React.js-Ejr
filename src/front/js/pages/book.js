@@ -88,7 +88,7 @@ export const BookDetails = () => {
                 <div className="container-fluid review d-flex bg-light"> 
                     <div className="row">
                     <div className="col-lg-3 col-sm-12 col-md-12">
-                        <img className="img-fluid" src={`https://covers.openlibrary.org/b/id/${bookDetails.covers}-L.jpg`} alt="Portada del libro" />
+                        <img className="img-fluid" src={`https://covers.openlibrary.org/b/id/${bookDetails.covers[0]}.jpg`} alt="Portada del libro" />
                     </div>
                     <div className="col-lg-4 col-sm-12 col-md-12">
                         <h2>{bookDetails.title}</h2>
