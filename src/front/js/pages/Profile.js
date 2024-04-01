@@ -1,41 +1,20 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "./../store/appContext"
 
 const Profile = () => {
-    const navigate = useNavigate(); 
+    const { store, actions } = useContext(Context)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
         if (!token) {
-            navigate("/login"); 
+            navigate("/login");
         } else {
-            getMyTasks();
+            actions.getMyTasks();
         }
     }, [navigate]);
-
-    const getMyTasks = async () => {
-        try {
-            const token = localStorage.getItem("jwt-token");
-    
-            const resp = await fetch(process.env.BACKEND_URL + "/api/protected", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + token,
-                },
-            });
-    
-            if (!resp.ok) {
-                throw new Error("Error al obtener los datos");
-            }
-    
-            const data = await resp.json();
-            console.log(data);
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     return (
         <div className="text-center profile-page">

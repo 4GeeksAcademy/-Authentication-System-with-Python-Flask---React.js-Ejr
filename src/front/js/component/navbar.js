@@ -15,7 +15,7 @@ export const Navbar = () => {
 		} else {
 			setUser(null);
 		}
-	}, []);
+	}, [localStorage.getItem("jwt-token")]);
 
 	const handleLogin = () => {
 		const token = localStorage.getItem("jwt-token");
