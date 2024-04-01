@@ -5,6 +5,7 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(50),nullable=False)
@@ -59,10 +60,3 @@ class Review(db.Model):
     def __repr__(self):
         return f"<Review(user_id='{self.user_id}', book_id='{self.book_id}', content='{self.content}')>"
 
-class Favorites(db.Model):
-    __tablename__ = "favorites"
-    id = db.Column(db.Integer, primary_key=True)
-    # user_id = db.Column(db.String(50), db.ForeignKey('user.id'), nullable=False)
-    # book_id = db.Column(db.String(50), db.ForeignKey('books.id'), nullable=False)  # Mantenido como String
-    
-   
