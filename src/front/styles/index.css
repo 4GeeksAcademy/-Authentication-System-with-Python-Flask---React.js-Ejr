@@ -1,14 +1,27 @@
+/* CSS de Formularios*/
 .auth-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #fff;
+    background-image: linear-gradient(to bottom, #fff, #808080); /* De blanco a gris */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    font-family: 'Play', sans-serif !important;
 }
 
-.title {
+.login-page{
+    padding-top: 100px;
+    background-color: #000000;
+    padding-bottom: 50px;
+}
+
+.register-page{
+    padding-top: 100px;
+    background-color: #000000;
+    padding-bottom: 50px;
+}
+
+.title-form {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -30,17 +43,6 @@ input {
     border-radius: 5px;
 }
 
-button:hover {
-    background-color: #d6d6d6;
-}
-
-.image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh; 
-}
-
 .error-message {
     color: red; 
     text-align: center; 
@@ -51,13 +53,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.image {
-    width: 100%;
-    max-width: 600px; 
-    margin-bottom: 20px; 
-    border-radius: 40px;
 }
 
 .password-input-container {
@@ -81,25 +76,464 @@ button:hover {
     display: grid;
 }
 
-.imageLogo {
-    width: 100px; 
-    height: auto; 
-    margin-left: 40px;
+/* CSS del Home*/
+
+.contenido-relleno {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    text-align: center; 
+    height: 260px;
+}
+
+.map-image {
+    height: 220px;
+    border-radius: 15px;
+    border: 3px solid #ffd700; 
+}
+
+.description-title {
+    font-size: 70px;
+    color: black;
+    font-weight: bold;
+    text-shadow: 
+        0 0 3px #fff,  
+        0 0 5px #fff,   
+        0 0 10px #fff, 
+        0 0 15px #fff,  
+        1px 1px #fff,   
+        -1px -1px #fff,
+        -1px 1px #fff,  
+        1px -1px #fff;  
+}
+
+.description-text {
+    font-size: 35px;
+    color: black;
+    text-shadow: 
+        0 0 3px #fff,  
+        0 0 5px #fff,   
+        0 0 10px #fff, 
+        0 0 15px #fff,  
+        1px 1px #fff,   
+        -1px -1px #fff,
+        -1px 1px #fff,  
+        1px -1px #fff;  
+}
+
+.home-container{
+    font-family: 'Play', sans-serif !important;
+}
+
+/* CSS botones Home*/
+
+.btn-custom {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
   }
   
-  .navbar .navbar-brand .link-text {
-    display: none;
-    margin-left: 8px;
+  .btn-hide-treasure {
+    background-color: #000000;
+    color:#FFC107;
+    border: 2px solid #FFC107;
+    font-size: 25px;
+  }
+  
+  .btn-hide-treasure:hover {
+    background-color: #FFC107;
+    transform: scale(1.05);
+  }
+  
+  .btn-find-treasures {
+    background-color: #000000;
+    color: #FFC107; 
+    border: 2px solid #FFC107;
+    font-size: 25px;
+  }
+  
+  .btn-find-treasures:hover {
+    background-color: #FFC107; 
+    transform: scale(1.05);
+  }
+  
+  .btn-custom:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+/* CSS de Navbar*/
+
+.navbar-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
-.navbar .navbar-brand:hover .link-text {
-    display: inline;
+.navbar-group-left, .navbar-group-right {
+    display: flex;
+    align-items: center;
 }
 
-.icon {
-    transition: transform 0.3s ease;
+.navbar-group-left .navbar-brand {
+    margin-right: 65px; 
 }
 
-.navbar .navbar-brand:hover .icon {
+.navbar-custom .navbar-brand .link-text {
+    color: #ffffff; 
+    font-family: 'Pirata One', cursive;
+    font-size: 35px; 
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.navbar-custom .navbar-brand:hover .link-text {
+    opacity: 1;
+}
+
+.navbar-custom .navbar-brand .icon {
+    color: #FFC107; 
+    font-size: 32px; 
+    transition: transform 0.5s ease;
+    text-shadow: 0 0 25px #FFC107;
+}
+
+.navbar-custom .navbar-brand:hover .icon {
+    transform: scale(1.1); 
+}
+
+.btn-warning {
+    background: #FFC107;
+    box-shadow: 0 0 25px #FFC107;
+  }
+  
+  .btn-warning:hover {
+    box-shadow: 0 0 5px #FFC107,
+                0 0 15px #FFC107,
+                0 0 30px #FFC107,
+                0 0 50px #FFC107;
+  }
+
+.imageLogo {
+    width: 70px; 
+    height: 70px; 
+    margin-left: 40px;
+    margin-right: 150px;
+}
+
+.logout {
+    color: red;
+}
+
+.boton-navbar{
+    font-family: 'Play', sans-serif !important;
+}
+
+.text-navbar{
+    color: #ffffff;
+    font-size: 20px;
+    font-family: 'Pirata One', cursive;
+}
+
+/* CSS de Rankings*/
+
+.rankings-div{
+    background-color: black;
+    padding-top: 150px;
+}
+
+.rankings-container {
+    display: flex;
+    color: white;
+    padding: 20px;
+    gap: 20px; 
+    font-family: 'Play', sans-serif !important;
+}
+
+.ranking {
+    flex: 1;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.411); 
+    padding: 10px; 
+    border-radius: 10px; 
+}
+
+.table {
+    display: table;
+    width: 100%;
+    margin: auto;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 10px;
+    text-align: left; 
+}
+
+.first .position, .first .name, .first .score,
+.second .position, .second .name, .second .score,
+.third .position, .third .name, .third .score,
+.other .position, .other .name, .other .score {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
+}
+
+.first .position, .first .name, .first .score {
+    color: gold;
+    font-size: 3em;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 2); 
+}
+
+.second .position, .second .name, .second .score {
+    color: silver;
+    font-size: 2.5em;
+    text-shadow: 0 0 8px rgba(192, 192, 192, 2); 
+}
+
+.third .position, .third .name, .third .score {
+    color: #cd7f32; 
+    font-size: 2em;
+    text-shadow: 0 0 8px rgba(205, 127, 50, 2); 
+}
+
+.other .position, .other .name, .other .score {
+    color: white;
+    font-size: 1.5em;
+}
+
+.name {
+    text-align: left;
+}
+
+.table-row.header .pos {
+    text-align: left !important;
+}
+
+.score {
+    text-align: center;
+}
+
+.name-and-button, .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-container {
+    flex-shrink: 0; 
+}
+
+.header {
+    background-color: rgba(83, 81, 81, 0.459); 
+    color: #fff;
+    font-weight: bold;
+}
+
+.header .name {
+    text-align: left !important;
+}
+
+.header .table-cell {
+    text-align: center;
+}
+
+.header .name {
+    text-align: left;
+}
+
+.rankings-options{
+    background-color: #000000;
+    text-align: center;
+    font-size: 25px;
+}
+
+.button-rankigns-options {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Play', sans-serif !important;
+  }
+
+  .button-rankigns-options:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .button-rankigns-options {
+    background-color: #000000;
+    color:#ffffff;
+    border: 2px solid #ffffff;
+    font-size: 20px;
+  }
+  
+  .button-rankigns-options:hover {
+    background-color: #ffffff;
+    color: black;
+    transform: scale(1.05);
+  }
+  
+.ranking-companies {
+    max-width: 60%; 
+    margin: 0 auto; 
+}
+
+/* CSS de Footer*/
+
+.footer {
+    background-color: #000000;
+    color: white;
+    font-size: 13px;
+}
+
+/* CSS de How it Works*/
+
+.container-fluid {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
+  }
+  
+  .left-column {
+    flex: 1;
+    padding-right: 20px; 
+  }
+  
+  .right-column {
+    flex: 2;
+    display: flex;
+    justify-content: space-between; 
+  }
+  
+  .image-description {
+    text-align: center;
+    width: 30%; 
+  }
+
+  .how-it-works {
+    font-size: 45px;
+    background: linear-gradient(#ffffff, #FFC107, #ffffff); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    color: transparent; 
+    display: inline-block; 
+    font-weight: bold;
+  }
+  
+  .how-text {
+    font-size: 25px;
+    color: #ffffff;
+
+  }
+
+  .imagen-how {
+    height: 350px;
+    border-radius: 10px;
+    border: #FFC107 3px solid;
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.6), 0 6px 20px 0 rgba(255, 255, 255, 0.2);
+  }
+
+.imagen-how:hover {
     transform: scale(1.1);
+}
+
+  .text-how{
+    font-size: 20px;
+    color: white;
+  }
+
+  .text-how-2{
+    font-size: 20px;
+    color: #FFC107;
+}
+
+  .text-links{
+    color: rgb(185, 182, 182);
+  }
+
+/* CSS de Join the adventure*/
+
+.container-fluid-join {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
+    margin-top: auto;
+}
+
+.join-btn {
+    font-size: 25px;
+}
+
+.text-login-join {
+    font-size: 15px;
+    color: #ccc;
+}
+
+.image-description,
+.text-description {
+    flex: 1; 
+}
+
+.text-description {
+    margin-top: auto; 
+}
+
+/* CSS de Companys*/
+
+.container-fluid-company{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
+    margin-top: auto;
+}
+
+/* CSS de Profile*/
+
+.profile-page{
+    font-family: 'Play', sans-serif !important;
+    background-color: #000000;
+    color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
+}
+
+/* CSS de TreasureForm*/
+
+.treasure-form-page{
+    font-family: 'Play', sans-serif !important;
+    background-color: #000000;
+    color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
+}
+
+/* CSS de TreasureList*/
+
+.treasure-list-page{
+    font-family: 'Play', sans-serif !important;
+    background-color: #000000;
+    color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
 }
