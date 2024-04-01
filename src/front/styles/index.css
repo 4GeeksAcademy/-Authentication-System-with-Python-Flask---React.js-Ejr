@@ -3,10 +3,22 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #fff;
+    background-image: linear-gradient(to bottom, #fff, #808080); /* De blanco a gris */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    font-family: 'Play', sans-serif !important;
+}
+
+.login-page{
+    padding-top: 100px;
+    background-color: #000000;
+    padding-bottom: 50px;
+}
+
+.register-page{
+    padding-top: 100px;
+    background-color: #000000;
+    padding-bottom: 50px;
 }
 
 .title-form {
@@ -155,14 +167,26 @@ input {
 /* CSS de Navbar*/
 
 .navbar-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: transparent;
-    padding-top: 10px; 
-    padding-bottom: 5px; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    z-index: 1000; 
+    padding-top: 10px;
+    padding-bottom: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-group-left, .navbar-group-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-group-left .navbar-brand {
+    margin-right: 65px; 
 }
 
 .navbar-custom .navbar-brand .link-text {
@@ -181,6 +205,7 @@ input {
     color: #FFC107; 
     font-size: 32px; 
     transition: transform 0.5s ease;
+    text-shadow: 0 0 25px #FFC107;
 }
 
 .navbar-custom .navbar-brand:hover .icon {
@@ -203,6 +228,7 @@ input {
     width: 70px; 
     height: 70px; 
     margin-left: 40px;
+    margin-right: 150px;
 }
 
 .logout {
@@ -214,16 +240,20 @@ input {
 }
 
 .text-navbar{
-    color: #000000;
+    color: #ffffff;
     font-size: 20px;
     font-family: 'Pirata One', cursive;
 }
 
 /* CSS de Rankings*/
 
+.rankings-div{
+    background-color: black;
+    padding-top: 150px;
+}
+
 .rankings-container {
     display: flex;
-    background-color: rgb(0, 0, 0);
     color: white;
     padding: 20px;
     gap: 20px; 
@@ -484,6 +514,8 @@ input {
     font-family: 'Play', sans-serif !important;
     background-color: #000000;
     color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
 }
 
 /* CSS de TreasureForm*/
@@ -492,6 +524,8 @@ input {
     font-family: 'Play', sans-serif !important;
     background-color: #000000;
     color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
 }
 
 /* CSS de TreasureList*/
@@ -500,4 +534,6 @@ input {
     font-family: 'Play', sans-serif !important;
     background-color: #000000;
     color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
 }

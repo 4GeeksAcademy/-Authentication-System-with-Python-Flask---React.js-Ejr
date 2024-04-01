@@ -4,7 +4,7 @@ const Rankings = () => {
     const [view, setView] = useState('Users');
 
     return (
-        <div>
+        <div className="rankings-div">
             <div className="rankings-options pt-3">
                 <button className="button-rankigns-options me-3" onClick={() => setView('Users')}>Users</button>
                 <button className="button-rankigns-options" onClick={() => setView('Companies')}>Companies</button>
