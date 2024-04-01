@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import logoGame from "/src/front/img/logo.png";
+import logoGame from "/src/front/img/logoSinFondo.png";
 
 export const Navbar = () => {
 	const navigate = useNavigate();

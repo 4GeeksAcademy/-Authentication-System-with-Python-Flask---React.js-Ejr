@@ -38,7 +38,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="text-center mt-5">
+        <div className="text-center pt-5 pb-5 profile-page">
             <h1 className="profile-title">Profile</h1>
         </div>
     );

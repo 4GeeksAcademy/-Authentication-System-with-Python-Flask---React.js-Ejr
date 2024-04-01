@@ -6,12 +6,14 @@ import esconde from '/src/front/img/esconde.webp';
 import encuentra from '/src/front/img/encuentra.webp';
 import rankings from '/src/front/img/rankings.webp';
 import join from '/src/front/img/join.webp';
+import regalo from '/src/front/img/regalo.webp';
+import golden from '/src/front/img/golden.webp';
 
 export const Home = () => {
     return (
         <div className="home-container">
-            {/* Sección Hero */}
-            <div className="hero-section text-center" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '100px 0' }}>
+            {/* Sección Principal */}
+            <div className="principal-section text-center" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '100px 0' }}>
                 <div className="description">
                     <h1 className="description-title mt-5">Welcome to Urban Treasures</h1>
                     <p className="description-text">Join the adventure and discover hidden treasures around you. Hide your own for others to find.</p>
@@ -57,6 +59,27 @@ export const Home = () => {
                 </div>
             </div>
 
+            {/* Sección Empresas */}
+            <div className="container-fluid-company pb-5 px-0">
+            <div className="row mx-0">
+                    <div className="col-3 left-column px-0">
+                        <h2 className="how-it-works pt-5 ps-5">Are you a Company?</h2>
+                        <p className="how-text ps-5">Discover our section for business.</p>
+                    </div>
+                    <div className="col-9 right-column px-0">
+                        <div className="image-description pt-5">
+                            <Link to="/formulario-tesoro"><img src={golden} className="imagen-how" alt="Descripción de la imagen 1" /></Link>
+                            <p className="text-how pt-4">1. Hide golden tickets for users to find and redeem in your stores for promotional products.</p>
+                        </div>
+                        <div className="image-description pt-5">
+                            <Link to="/rankings"><img src={regalo} className="imagen-how" alt="Descripción de la imagen 2" /></Link>
+                            <p className="text-how-2 pt-4">2. Earn points and climb the rankings to become our users' favorite company. Start now! <Link to="/registro">Create you account</Link></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Sección Crea tu cuenta y comienza */}
             <div className="container-fluid-join pb-5 px-0">
                 <div className="row mx-0">
                     <div className="col-3 left-column px-0">
@@ -67,8 +90,8 @@ export const Home = () => {
                         <div className="image-description pt-5 pe-5">
                             <Link to="/registro"><img src={join} className="imagen-how ms-5" alt="Join the Adventure" /></Link>
                         </div>
-                        <div className="text-description pt-2 pe-5"> {/* Cambié pt-5 a pt-2 para colocar el texto más abajo */}
-                            <p className="mt-5 ms-3 text-login-join"> {/* Cambié mt-5 a mt-3 para colocar el texto más abajo */}
+                        <div className="text-description pt-2 pe-5"> 
+                            <p className="mt-5 ms-3 text-login-join"> 
                                 Already have an account? <a href="/login">Login here</a>
                             </p>
                         </div>
