@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
+import Status_Score from "./pages/Status_Score";
 import TreasureForm from "./pages/TreasureForm";
 import TreasureList from "./pages/TreasureList";
 import Register from "./pages/Register";
@@ -34,6 +35,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Rankings />} path="/rankings" />
                         <Route element={<Profile />} path="/perfil" />
+                        <Route element={<Status_Score />} path="/puntuacion" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
