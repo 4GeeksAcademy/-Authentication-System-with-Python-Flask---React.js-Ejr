@@ -4,18 +4,18 @@
     margin: 0 auto;
     padding: 20px;
     border-radius: 5px;
-    background-image: linear-gradient(to bottom, #fff, #808080); /* De blanco a gris */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    background-image: linear-gradient(to bottom, #fff, #808080);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: 'Play', sans-serif !important;
 }
 
-.login-page{
+.login-page {
     padding-top: 100px;
     background-color: #000000;
     padding-bottom: 50px;
 }
 
-.register-page{
+.register-page {
     padding-top: 100px;
     background-color: #000000;
     padding-bottom: 50px;
@@ -44,9 +44,9 @@ input {
 }
 
 .error-message {
-    color: red; 
-    text-align: center; 
-    margin-top: 10px; 
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .column-container {
@@ -60,13 +60,13 @@ input {
 }
 
 .password {
-    padding-right: 40px; 
+    padding-right: 40px;
 }
 
 .password-toggle-icon {
     position: absolute;
-    top: 40%; 
-    right: 10px; 
+    top: 40%;
+    right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
 }
@@ -81,46 +81,40 @@ input {
 .contenido-relleno {
     margin-top: 5rem;
     margin-bottom: 5rem;
-    text-align: center; 
-    height: 260px;
-}
-
-.map-image {
-    height: 220px;
-    border-radius: 15px;
-    border: 3px solid #ffd700; 
+    text-align: center;
+    height: 280px;
 }
 
 .description-title {
     font-size: 70px;
     color: black;
     font-weight: bold;
-    text-shadow: 
-        0 0 3px #fff,  
-        0 0 5px #fff,   
-        0 0 10px #fff, 
-        0 0 15px #fff,  
-        1px 1px #fff,   
+    text-shadow:
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #fff,
+        1px 1px #fff,
         -1px -1px #fff,
-        -1px 1px #fff,  
-        1px -1px #fff;  
+        -1px 1px #fff,
+        1px -1px #fff;
 }
 
 .description-text {
     font-size: 35px;
     color: black;
-    text-shadow: 
-        0 0 3px #fff,  
-        0 0 5px #fff,   
-        0 0 10px #fff, 
-        0 0 15px #fff,  
-        1px 1px #fff,   
+    text-shadow:
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #fff,
+        1px 1px #fff,
         -1px -1px #fff,
-        -1px 1px #fff,  
-        1px -1px #fff;  
+        -1px 1px #fff,
+        1px -1px #fff;
 }
 
-.home-container{
+.home-container {
     font-family: 'Play', sans-serif !important;
 }
 
@@ -134,35 +128,40 @@ input {
     border-radius: 20px;
     font-weight: bold;
     text-transform: uppercase;
-  }
-  
-  .btn-hide-treasure {
+    box-shadow: 0 0 20px #FFC107;
+}
+
+.btn-hide-treasure {
     background-color: #000000;
-    color:#FFC107;
+    color: #FFC107;
     border: 2px solid #FFC107;
     font-size: 25px;
-  }
-  
-  .btn-hide-treasure:hover {
+}
+
+.btn-hide-treasure:hover {
     background-color: #FFC107;
     transform: scale(1.05);
-  }
-  
-  .btn-find-treasures {
+    box-shadow: 0 0 5px #FFC107,
+        0 0 15px #FFC107,
+        0 0 30px #FFC107,
+        0 0 50px #FFC107;
+}
+
+.btn-find-treasures {
     background-color: #000000;
-    color: #FFC107; 
+    color: #FFC107;
     border: 2px solid #FFC107;
     font-size: 25px;
-  }
-  
-  .btn-find-treasures:hover {
-    background-color: #FFC107; 
+}
+
+.btn-find-treasures:hover {
+    background-color: #FFC107;
     transform: scale(1.05);
-  }
-  
-  .btn-custom:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+    box-shadow: 0 0 5px #FFC107,
+        0 0 15px #FFC107,
+        0 0 30px #FFC107,
+        0 0 50px #FFC107;
+}
 
 /* CSS de Navbar*/
 
@@ -180,88 +179,97 @@ input {
     z-index: 1000;
 }
 
-.navbar-group-left, .navbar-group-right {
+.navbar-group-left,
+.navbar-group-right {
     display: flex;
     align-items: center;
 }
 
 .navbar-group-left .navbar-brand {
-    margin-right: 45px; 
+    margin-right: 45px;
 }
 
 .navbar-custom .navbar-brand .link-text {
-    color: #ffffff; 
+    color: #ffffff;
     font-family: 'Pirata One', cursive;
-    font-size: 33px; 
+    font-size: 30px;
     opacity: 0;
     transition: opacity 0.5s ease;
+    text-shadow: 2px 2px 6px #ccc;
 }
 
 .div-bar {
-    display: flex; 
-    align-items: center; 
-  }
-  
-  .div-icono, .div-texto {
-    display: flex; 
+    display: flex;
     align-items: center;
-  }
+}
+
+.div-icono,
+.div-texto {
+    display: flex;
+    align-items: center;
+}
 
 .navbar-custom .navbar-brand:hover .link-text {
     opacity: 1;
 }
 
 .navbar-custom .navbar-brand .icon1 {
-    color: #FFC107; 
-    height: 50px; 
-    width: 60px;
+    color: #FFC107;
+    height: 45px;
+    width: 52px;
     transition: transform 0.5s ease;
     text-shadow: 0 0 25px #FFC107;
 }
 
 .navbar-custom .navbar-brand:hover .icon1 {
-    transform: scale(1.1); 
+    transform: scale(1.2);
 }
 
 .navbar-custom .navbar-brand .icon2 {
-    color: #FFC107; 
-    height: 50px; 
+    color: #FFC107;
+    height: 50px;
     width: 40px;
     transition: transform 0.5s ease;
     text-shadow: 0 0 25px #FFC107;
 }
 
 .navbar-custom .navbar-brand:hover .icon2 {
-    transform: scale(1.2); 
+    transform: scale(1.2);
 }
 
 .navbar-custom .navbar-brand .icon3 {
-    color: #FFC107; 
-    height: 35px; 
+    color: #FFC107;
+    height: 35px;
     width: 70px;
     transition: transform 0.5s ease;
     text-shadow: 0 0 25px #FFC107;
 }
 
 .navbar-custom .navbar-brand:hover .icon3 {
-    transform: scale(1.2); 
+    transform: scale(1.2);
 }
 
 .btn-warning {
     background: #FFC107;
-    box-shadow: 0 0 25px #FFC107;
-  }
-  
-  .btn-warning:hover {
-    box-shadow: 0 0 5px #FFC107,
-                0 0 15px #FFC107,
-                0 0 30px #FFC107,
-                0 0 50px #FFC107;
-  }
+}
+
+.btn-warning:hover {
+    box-shadow: 0 0 10px #FFC107,
+        0 0 10px #FFC107,
+        0 0 10px #FFC107,
+        0 0 10px #FFC107;
+}
+
+.text-warning:hover {
+    text-shadow: 0 0 5px #FFC107,
+        0 0 5px #FFC107,
+        0 0 5px #FFC107,
+        0 0 5px #FFC107;
+}
 
 .imageLogo {
-    width: 70px; 
-    height: 70px; 
+    width: 70px;
+    height: 70px;
     margin-left: 40px;
     margin-right: 150px;
 }
@@ -270,11 +278,11 @@ input {
     color: red;
 }
 
-.boton-navbar{
+.boton-navbar {
     font-family: 'Play', sans-serif !important;
 }
 
-.text-navbar{
+.text-navbar {
     color: #ffffff;
     font-size: 20px;
     font-family: 'Pirata One', cursive;
@@ -282,7 +290,7 @@ input {
 
 /* CSS de Rankings*/
 
-.rankings-div{
+.rankings-div {
     background-color: black;
     padding-top: 150px;
 }
@@ -291,16 +299,16 @@ input {
     display: flex;
     color: white;
     padding: 20px;
-    gap: 20px; 
+    gap: 20px;
     font-family: 'Play', sans-serif !important;
 }
 
 .ranking {
     flex: 1;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.411); 
-    padding: 10px; 
-    border-radius: 10px; 
+    border: 1px solid rgba(255, 255, 255, 0.411);
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .table {
@@ -316,35 +324,51 @@ input {
 .table-cell {
     display: table-cell;
     padding: 10px;
-    text-align: left; 
+    text-align: left;
 }
 
-.first .position, .first .name, .first .score,
-.second .position, .second .name, .second .score,
-.third .position, .third .name, .third .score,
-.other .position, .other .name, .other .score {
-    text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
+.first .position,
+.first .name,
+.first .score,
+.second .position,
+.second .name,
+.second .score,
+.third .position,
+.third .name,
+.third .score,
+.other .position,
+.other .name,
+.other .score {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
-.first .position, .first .name, .first .score {
+.first .position,
+.first .name,
+.first .score {
     color: gold;
     font-size: 3em;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 2); 
+    text-shadow: 0 0 8px rgba(255, 215, 0, 2);
 }
 
-.second .position, .second .name, .second .score {
+.second .position,
+.second .name,
+.second .score {
     color: silver;
     font-size: 2.5em;
-    text-shadow: 0 0 8px rgba(192, 192, 192, 2); 
+    text-shadow: 0 0 8px rgba(192, 192, 192, 2);
 }
 
-.third .position, .third .name, .third .score {
-    color: #cd7f32; 
+.third .position,
+.third .name,
+.third .score {
+    color: #cd7f32;
     font-size: 2em;
-    text-shadow: 0 0 8px rgba(205, 127, 50, 2); 
+    text-shadow: 0 0 8px rgba(205, 127, 50, 2);
 }
 
-.other .position, .other .name, .other .score {
+.other .position,
+.other .name,
+.other .score {
     color: white;
     font-size: 1.5em;
 }
@@ -361,18 +385,19 @@ input {
     text-align: center;
 }
 
-.name-and-button, .button-container {
+.name-and-button,
+.button-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .button-container {
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 .header {
-    background-color: rgba(83, 81, 81, 0.459); 
+    background-color: rgba(83, 81, 81, 0.459);
     color: #fff;
     font-weight: bold;
 }
@@ -389,7 +414,7 @@ input {
     text-align: left;
 }
 
-.rankings-options{
+.rankings-options {
     background-color: #000000;
     text-align: center;
     font-size: 25px;
@@ -404,28 +429,28 @@ input {
     font-weight: bold;
     text-transform: uppercase;
     font-family: 'Play', sans-serif !important;
-  }
+}
 
-  .button-rankigns-options:hover {
+.button-rankigns-options:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  .button-rankigns-options {
+.button-rankigns-options {
     background-color: #000000;
-    color:#ffffff;
+    color: #ffffff;
     border: 2px solid #ffffff;
     font-size: 20px;
-  }
-  
-  .button-rankigns-options:hover {
+}
+
+.button-rankigns-options:hover {
     background-color: #ffffff;
     color: black;
     transform: scale(1.05);
-  }
-  
+}
+
 .ranking-companies {
-    max-width: 60%; 
-    margin: 0 auto; 
+    max-width: 60%;
+    margin: 0 auto;
 }
 
 /* CSS de Footer*/
@@ -440,68 +465,70 @@ input {
 
 .container-fluid {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: flex-start;
     background-image: linear-gradient(to bottom, #000000, #2e2e2e);
-  }
-  
-  .left-column {
+}
+
+.left-column {
     flex: 1;
-    padding-right: 20px; 
-  }
-  
-  .right-column {
+    padding-right: 20px;
+}
+
+.right-column {
     flex: 2;
     display: flex;
-    justify-content: space-between; 
-  }
-  
-  .image-description {
-    text-align: center;
-    width: 30%; 
-  }
+    justify-content: space-between;
+}
 
-  .how-it-works {
+.image-description {
+    text-align: center;
+    width: 30%;
+}
+
+.how-it-works {
     font-size: 45px;
-    background: linear-gradient(#ffffff, #FFC107, #ffffff); 
-    -webkit-background-clip: text; 
-    background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    color: transparent; 
-    display: inline-block; 
+    background: linear-gradient(#ffffff, #FFC107, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: inline-block;
     font-weight: bold;
-  }
-  
-  .how-text {
+}
+
+.how-text {
     font-size: 25px;
     color: #ffffff;
 
-  }
+}
 
-  .imagen-how {
+.imagen-how {
     height: 350px;
     border-radius: 10px;
     border: #FFC107 3px solid;
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.6), 0 6px 20px 0 rgba(255, 255, 255, 0.2);
-  }
+    transition: all 0.3s ease;
+}
 
 .imagen-how:hover {
     transform: scale(1.1);
+    transition: all 0.3s ease;
 }
 
-  .text-how{
+.text-how {
     font-size: 20px;
     color: white;
-  }
+}
 
-  .text-how-2{
+.text-how-2 {
     font-size: 20px;
     color: #FFC107;
 }
 
-  .text-links{
+.text-links {
     color: rgb(185, 182, 182);
-  }
+}
 
 /* CSS de Join the adventure*/
 
@@ -525,16 +552,16 @@ input {
 
 .image-description,
 .text-description {
-    flex: 1; 
+    flex: 1;
 }
 
 .text-description {
-    margin-top: auto; 
+    margin-top: auto;
 }
 
 /* CSS de Companys*/
 
-.container-fluid-company{
+.container-fluid-company {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -545,7 +572,7 @@ input {
 
 /* CSS de Profile*/
 
-.profile-page{
+.profile-page {
     font-family: 'Play', sans-serif !important;
     background-color: #000000;
     color: white;
@@ -555,7 +582,7 @@ input {
 
 /* CSS de TreasureForm*/
 
-.treasure-form-page{
+.treasure-form-page {
     font-family: 'Play', sans-serif !important;
     background-color: #000000;
     color: white;
@@ -565,7 +592,7 @@ input {
 
 /* CSS de TreasureList*/
 
-.treasure-list-page{
+.treasure-list-page {
     font-family: 'Play', sans-serif !important;
     background-color: #000000;
     color: white;
@@ -586,17 +613,18 @@ input {
     padding-bottom: 50px;
 }
 
-.left-column-status, .right-column-status {
-    flex: 1; 
-    padding: 20px; 
+.left-column-status,
+.right-column-status {
+    flex: 1;
+    padding: 20px;
 }
 
-.right-column-status{
+.right-column-status {
     justify-content: left;
     flex: 2;
 }
 
-.left-column-status{
+.left-column-status {
     flex: 1;
 }
 
@@ -605,19 +633,19 @@ input {
 }
 
 .element-status {
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     display: flex;
     flex-direction: row;
     justify-content: left;
 }
 
 .status-table {
-    border-collapse: collapse; 
+    border-collapse: collapse;
 }
 
 .status-table td {
-    padding: 10px; 
-    border: none; 
+    padding: 10px;
+    border: none;
 }
 
 .status-list .element-status img {
@@ -625,40 +653,40 @@ input {
     height: auto;
 }
 
-.description-status{
+.description-status {
     font-size: 25px;
 }
 
-.title-status{
+.title-status {
     font-size: 45px;
-    background: linear-gradient(#ffffff, #FFC107, #ffffff); 
-    -webkit-background-clip: text; 
-    background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    color: transparent; 
-    display: inline-block; 
+    background: linear-gradient(#ffffff, #FFC107, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: inline-block;
     font-weight: bold;
 }
 
 .image-status {
     height: 100px;
     width: 100px;
-    border: 2px solid #FFC107; 
+    border: 2px solid #FFC107;
     border-radius: 10px;
 }
 
 .name-status {
     text-align: left;
     font-size: 40px;
-    text-shadow: 2px 2px 6px #ccc; 
+    text-shadow: 2px 2px 6px #ccc;
 }
 
 .desc-status {
     text-align: left;
     font-size: 40px;
     background: linear-gradient(to bottom, #fffdfd, #d6a101);
-    -webkit-background-clip: text; 
-    -moz-background-clip: text; 
-    background-clip: text; 
-    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

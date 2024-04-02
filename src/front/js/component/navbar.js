@@ -5,7 +5,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import logoGame from "/src/front/img/logoSinFondo.png";
 import podio from "/src/front/img/podio.png"
 import ubic from "/src/front/img/ubic.png"
-import treas from "/src/front/img/treas.png"
+import diamante from "/src/front/img/diamante.png"
 
 export const Navbar = () => {
 	const navigate = useNavigate();
@@ -45,13 +45,13 @@ export const Navbar = () => {
 				</Link>
 				<p className="text-navbar ps-3">URBAN TREASURES</p>
 				</div>
-				<Link to="/lista-tesoros" className="navbar-brand mb-0 h1" title="TREASURES">
-					<div className="div-bar"><div className="div-icono"><img src={treas} alt="logo" className="icon1 me-2" /></div><div className="div-texto"><span className="link-text">Treasures</span></div></div>
+				<Link to="/lista-tesoros" className="navbar-brand h1" title="TREASURES">
+					<div className="div-bar"><div className="div-icono"><img src={diamante} alt="logo" className="icon1 me-3" /></div><div className="div-texto"><span className="link-text">Treasures List</span></div></div>
 				</Link>
-				<Link to="/formulario-tesoro" className="navbar-brand mb-0 h1" title="HIDE YOUR TREASURE">
+				<Link to="/formulario-tesoro" className="navbar-brand h1" title="HIDE YOUR TREASURE">
 					<div className="div-bar"><div className="div-icono"><img src={ubic} alt="logo" className="icon2 me-2" /></div><div className="div-texto"><span className="link-text">Hide Treasure</span></div></div>
 				</Link>
-				<Link to="/rankings" className="navbar-brand mb-0 h1" title="RANKINGS">
+				<Link to="/rankings" className="navbar-brand h1" title="RANKINGS">
 					<div className="div-bar"><div className="div-icono"><img src={podio} alt="logo" className="icon3 me-3" /></div><div className="div-texto"><span className="link-text">Rankings</span></div></div>
 				</Link>
 			</div>
