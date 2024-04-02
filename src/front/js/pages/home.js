@@ -54,7 +54,7 @@ export const Home = () => {
                 </div>
                 <div className="row mx-0 text-center">
                     <div className="col">
-                        <p className="text-links">Do you want to know how the Scoring and Status work?<Link to="/status" className="score-status ms-1">Score & Status</Link></p>
+                        <p className="text-links">Do you want to know how the Scoring and Status work?<Link to="/puntuacion" className="score-status ms-1">Score & Status</Link></p>
                     </div>
                 </div>
             </div>

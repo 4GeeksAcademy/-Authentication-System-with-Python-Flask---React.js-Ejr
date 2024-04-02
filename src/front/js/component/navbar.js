@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import logoGame from "/src/front/img/logoSinFondo.png";
+import podio from "/src/front/img/podio.png"
+import ubic from "/src/front/img/ubic.png"
+import treas from "/src/front/img/treas.png"
 
 export const Navbar = () => {
 	const navigate = useNavigate();
@@ -43,13 +46,13 @@ export const Navbar = () => {
 				<p className="text-navbar ps-3">URBAN TREASURES</p>
 				</div>
 				<Link to="/lista-tesoros" className="navbar-brand mb-0 h1" title="TREASURES">
-					<i class="fas fa-gem icon me-3"></i><span className="link-text">Treasures</span>
+					<div className="div-bar"><div className="div-icono"><img src={treas} alt="logo" className="icon1 me-2" /></div><div className="div-texto"><span className="link-text">Treasures</span></div></div>
 				</Link>
 				<Link to="/formulario-tesoro" className="navbar-brand mb-0 h1" title="HIDE YOUR TREASURE">
-					<i class="fas fa-map-marked-alt icon me-3"></i><span className="link-text">Hide Treasure</span>
+					<div className="div-bar"><div className="div-icono"><img src={ubic} alt="logo" className="icon2 me-2" /></div><div className="div-texto"><span className="link-text">Hide Treasure</span></div></div>
 				</Link>
 				<Link to="/rankings" className="navbar-brand mb-0 h1" title="RANKINGS">
-					<i className="fas fa-trophy icon me-3"></i><span className="link-text">Rankings</span>
+					<div className="div-bar"><div className="div-icono"><img src={podio} alt="logo" className="icon3 me-3" /></div><div className="div-texto"><span className="link-text">Rankings</span></div></div>
 				</Link>
 			</div>
 			<div className="navbar-group-right">
