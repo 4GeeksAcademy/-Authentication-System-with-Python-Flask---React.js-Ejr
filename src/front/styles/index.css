@@ -3,16 +3,33 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border-radius: 5px;
-    background-image: linear-gradient(to bottom, #fff, #808080);
+    background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family: 'Play', sans-serif !important;
+    font-family: 'Outfit', sans-serif;
 }
 
-.login-page {
-    padding-top: 100px;
-    background-color: #000000;
-    padding-bottom: 50px;
+.auth-container-login {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Outfit', sans-serif;
+    border-radius: 10px;
+}
+
+.title-form {
+    padding-top: 40px;
+    color: white;
+    font-size: 40px;
+}
+
+.title-login {
+    color: black;
+    font-size: 25px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 25px;
 }
 
 .register-page {
@@ -21,26 +38,29 @@
     padding-bottom: 50px;
 }
 
-.title-form {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 .input-group {
     margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
+    margin-bottom: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 3px;
+}
+
+.btn-success {
+    border-radius: 30px;
+}
+
+.btn-primary {
+    border-radius: 30px;
 }
 
 .error-message {
@@ -74,6 +94,26 @@ input {
 .input-group {
     margin-bottom: 15px;
     display: grid;
+}
+
+.row-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding-top: 60px;
+}
+
+.auth-container {
+    flex: 1;
+    margin: 0;
+
+    &:first-child {
+        margin-right: 0;
+    }
+
+    &:last-child {
+        margin-left: 0;
+    }
 }
 
 /* CSS del Home*/
@@ -164,6 +204,14 @@ input {
 }
 
 /* CSS de Navbar*/
+
+.dropdown-menu {
+    font-family: 'Play', sans-serif !important;
+}
+
+.dropdown {
+    font-family: 'Play', sans-serif !important;
+}
 
 .navbar-custom {
     display: flex;
@@ -621,11 +669,19 @@ input {
 
 .right-column-status {
     justify-content: left;
-    flex: 2;
+    flex: 1;
 }
 
 .left-column-status {
     flex: 1;
+}
+
+.description-status .bold-text {
+    font-size: 28px;
+    text-shadow: 0 0 2px #f5e727,
+        0 0 2px #f5e727,
+        0 0 2px #f5e727,
+        0 0 2px #f5e727;
 }
 
 .status-page {
