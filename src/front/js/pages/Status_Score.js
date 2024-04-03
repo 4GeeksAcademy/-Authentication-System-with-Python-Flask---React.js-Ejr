@@ -15,7 +15,7 @@ const StatusScore = () => {
                 <h1 className="title-status">Status & Score</h1>
                 <p className="description-status pt-4">You will be awarded <span className="bold-text">10 points</span> for each treasure found.</p>
                 <p className="description-status">You will be awarded <span className="bold-text">10 points</span> for each hidden treasure.</p>
-                <p className="description-status">Accumulate points to achieve higher status and to climb the <Link to="/rankings">rankings.</Link></p>
+                <p className="description-status">Accumulate points to achieve higher status and climb the <Link to="/rankings">rankings.</Link></p>
             </div>
 
             <div class="right-column-status">

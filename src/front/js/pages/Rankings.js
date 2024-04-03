@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Rankings = () => {
     const [view, setView] = useState('Users');
@@ -29,6 +30,7 @@ const Rankings = () => {
                     </div>
                 )}
             </div>
+            <div className="text-ranks-div"><p className="text-ranks">Click to see more about<Link to="/puntuacion" className="link-ranks">Status & Score</Link></p></div>
         </div>
     );
 }
