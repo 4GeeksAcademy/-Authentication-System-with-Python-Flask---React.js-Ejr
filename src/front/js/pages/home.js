@@ -5,7 +5,6 @@ import backgroundImage from '/src/front/img/backgroundImage.png';
 import esconde from '/src/front/img/esconde.webp';
 import encuentra from '/src/front/img/encuentra.webp';
 import rankings from '/src/front/img/rankings.webp';
-import join from '/src/front/img/join.webp';
 import regalo from '/src/front/img/regalo.webp';
 import golden from '/src/front/img/golden.webp';
 
@@ -36,6 +35,13 @@ export const Home = () => {
                     <div className="col-1 left-column px-0">
                         <h2 className="how-it-works pt-5 ps-5">How It Works</h2>
                         <p className="how-text ps-5">Discover how you can participate in this exciting treasure hunt.</p>
+                        <div className="div-button ps-5 pt-2">
+                            <Link to="/registro">
+                                <button role="button" className="golden-button">
+                                    <span className="golden-text">START NOW</span>
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                     <div className="col right-column px-0">
                         <div className="image-description pt-5">
@@ -52,11 +58,6 @@ export const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row mx-0 text-center">
-                    <div className="col">
-                        <p className="text-links">Do you want to know how the Scoring and Status work?<Link to="/puntuacion" className="score-status ms-1">Score & Status</Link></p>
-                    </div>
-                </div>
             </div>
 
             {/* Sección Empresas */}
@@ -65,6 +66,13 @@ export const Home = () => {
                     <div className="col-3 left-column px-0">
                         <h2 className="how-it-works pt-5 ps-5">Are you a Company?</h2>
                         <p className="how-text ps-5">Discover our section for business.</p>
+                        <div className="div-button ps-5 pt-2">
+                            <Link to="/registro">
+                                <button role="button" className="golden-button">
+                                    <span className="golden-text">START NOW</span>
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                     <div className="col-9 right-column px-0">
                         <div className="image-description pt-5">
@@ -78,27 +86,6 @@ export const Home = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Sección Crea tu cuenta y comienza */}
-            <div className="container-fluid-join pb-5 px-0">
-                <div className="row mx-0">
-                    <div className="col-3 left-column px-0 pe-5">
-                        <h2 className="how-it-works pt-5 ps-5">Join the Adventure</h2>
-                        <p className="how-text ps-5">Sign up today and start your own treasure hunting journey.</p>
-                    </div>
-                    <div className="col-9 d-flex">
-                        <div className="image-description pt-5 pe-3 ps-5">
-                            <Link to="/registro"><img src={join} className="imagen-how ms-5" alt="Join the Adventure" /></Link>
-                        </div>
-                        <div className="text-description pt-2 pe-5">
-                            <p className="mt-5 ms-3 text-login-join">
-                                Already have an account? <a href="/login">Login here</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     );
 };
