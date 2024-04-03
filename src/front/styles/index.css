@@ -6,6 +6,7 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: 'Outfit', sans-serif;
+    font-size: 18px;
 }
 
 .auth-container-login {
@@ -16,6 +17,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: 'Outfit', sans-serif;
     border-radius: 10px;
+    font-size: 18px;
 }
 
 .title-form {
@@ -34,7 +36,7 @@
 
 .register-page {
     padding-top: 100px;
-    background-color: #000000;
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     padding-bottom: 50px;
 }
 
@@ -503,7 +505,7 @@ input {
 }
 
 .text-ranks-div {
-    font-size: 20px;
+    font-size: 25px;
     color: white;
     background: black;
     font-family: 'Play', sans-serif !important;
@@ -517,7 +519,7 @@ input {
 }
 
 .link-ranks {
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
 /* CSS de Footer*/
@@ -593,38 +595,52 @@ input {
     color: #FFC107;
 }
 
-.text-links {
-    color: rgb(185, 182, 182);
-}
-
-/* CSS de Join the adventure*/
-
-.container-fluid-join {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
-    margin-top: auto;
-}
-
-.join-btn {
+.golden-button {
+    touch-action: manipulation;
+    display: inline-block;
+    outline: none;
+    font-family: inherit;
     font-size: 25px;
-}
-
-.text-login-join {
-    font-size: 15px;
-    color: #ccc;
-}
-
-.image-description,
-.text-description {
-    flex: 1;
-}
-
-.text-description {
-    margin-top: auto;
-}
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0.3em;
+    height: 2.75em;
+    line-height: 2.5em;
+    text-transform: uppercase;
+    padding: 0 1em;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4),
+      inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+      inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+    background-image: linear-gradient(
+      160deg,
+      #a54e07,
+      #b47e11,
+      #fef1a2,
+      #bc881b,
+      #a54e07
+    );
+    border: 1px solid #a55d07;
+    color: rgb(120, 50, 5);
+    text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-size: 100% 100%;
+    background-position: center;
+  }
+  
+  .golden-button:focus,
+  .golden-button:hover {
+    background-size: 150% 150%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23),
+      inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+    border: 1px solid rgba(165, 93, 7, 0.6);
+    color: rgba(120, 50, 5, 0.8);
+  }
+  
+  .golden-button:active {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4),
+      inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+  }
 
 /* CSS de Companys*/
 
@@ -635,6 +651,15 @@ input {
     justify-content: flex-start;
     background-image: linear-gradient(to bottom, #000000, #2e2e2e);
     margin-top: auto;
+}
+
+.image-description {
+    text-align: center;
+    width: 80%;
+}
+
+.image-description:not(:first-child) {
+    padding-top: 2rem; 
 }
 
 /* CSS de Profile*/
@@ -655,6 +680,15 @@ input {
     color: white;
     padding-top: 150px;
     padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide-input-group {
+    text-align: left;
+    font-size: 20px;
+    width: 80vh;
 }
 
 /* CSS de TreasureList*/

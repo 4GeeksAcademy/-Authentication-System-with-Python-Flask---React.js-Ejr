@@ -27,7 +27,7 @@ const Login = () => {
             navigate("/");
         } catch (error) {
             console.error(error);
-            setError("Contraseña incorrecta");
+            setError("Contraseña o email no válidos");
         }
     };
 
@@ -46,12 +46,12 @@ const Login = () => {
                     <div className="container form-body">
                         <h2 className="title-login">Login</h2>
                         <div className="input-group">
-                            <label htmlFor="email">E-mail</label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 type="text"
                                 id="email"
                                 className="email"
-                                placeholder="Enter e-mail"
+                                placeholder="Enter email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
