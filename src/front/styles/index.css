@@ -160,51 +160,6 @@ input {
     font-family: 'Play', sans-serif !important;
 }
 
-/* CSS botones Home*/
-
-.btn-custom {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 0 20px #FFC107;
-}
-
-.btn-hide-treasure {
-    background-color: #000000;
-    color: #FFC107;
-    border: 2px solid #FFC107;
-    font-size: 25px;
-}
-
-.btn-hide-treasure:hover {
-    background-color: #FFC107;
-    transform: scale(1.05);
-    box-shadow: 0 0 5px #FFC107,
-        0 0 15px #FFC107,
-        0 0 30px #FFC107,
-        0 0 50px #FFC107;
-}
-
-.btn-find-treasures {
-    background-color: #000000;
-    color: #FFC107;
-    border: 2px solid #FFC107;
-    font-size: 25px;
-}
-
-.btn-find-treasures:hover {
-    background-color: #FFC107;
-    transform: scale(1.05);
-    box-shadow: 0 0 5px #FFC107,
-        0 0 15px #FFC107,
-        0 0 30px #FFC107,
-        0 0 50px #FFC107;
-}
-
 /* CSS de Navbar*/
 
 .dropdown-menu {
@@ -528,6 +483,8 @@ input {
     background-color: #000000;
     color: white;
     font-size: 13px;
+    padding-top: 30px;
+    padding-bottom: 20px;
 }
 
 /* CSS de How it Works*/
@@ -609,38 +566,37 @@ input {
     text-transform: uppercase;
     padding: 0 1em;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4),
-      inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
-      inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
-    background-image: linear-gradient(
-      160deg,
-      #a54e07,
-      #b47e11,
-      #fef1a2,
-      #bc881b,
-      #a54e07
-    );
+        inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+        inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+    background-image: linear-gradient(160deg,
+            #a54e07,
+            #b47e11,
+            #fef1a2,
+            #bc881b,
+            #a54e07);
     border: 1px solid #a55d07;
     color: rgb(120, 50, 5);
     text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.5s ease-in-out;
     background-size: 100% 100%;
     background-position: center;
-  }
-  
-  .golden-button:focus,
-  .golden-button:hover {
+}
+
+.golden-button:focus,
+.golden-button:hover {
     background-size: 150% 150%;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23),
-      inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+        inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
     border: 1px solid rgba(165, 93, 7, 0.6);
     color: rgba(120, 50, 5, 0.8);
-  }
-  
-  .golden-button:active {
+    transform: scale(1.1);
+}
+
+.golden-button:active {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4),
-      inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
-  }
+        inset 0 -2px 5px 1px #b17d10, inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+}
 
 /* CSS de Companys*/
 
@@ -659,17 +615,162 @@ input {
 }
 
 .image-description:not(:first-child) {
-    padding-top: 2rem; 
+    padding-top: 2rem;
 }
 
 /* CSS de Profile*/
 
 .profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Play', sans-serif !important;
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     color: white;
     padding-top: 150px;
     padding-bottom: 50px;
+    height: 100vh;
+}
+
+.profile-cont {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    flex: 1;
+    background-color: transparent;
+    color: white;
+    font-size: 25px;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sidebar ul li.active {
+    background-color: #000000;
+    color: white;
+    border-radius: 10px;
+}
+
+.content {
+    flex: 4;
+    padding-left: 20px;
+}
+
+.photo-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: left;
+    margin-right: 20px;
+}
+
+.user-info h2,
+.user-info p {
+    margin: 5px 0;
+}
+
+.elementos-profile td {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.image-title-profile {
+    width: 200px;
+}
+
+.name-title-profile {
+    width: 250px;
+}
+
+.description-title-list-profile {
+    width: 350px;
+}
+
+.city-title-profile {
+    width: 200px;
+}
+
+.title-hide-profile{
+    text-shadow: 2px 2px 6px #ccc;
+}
+
+.table-list-profile {
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    padding-left: 150px;
+    text-align: left;
+    text-align: center;
+}
+
+.table-list-profile th,
+.table-list-profile td {
+    border: 0.5px solid #5f5f5f;
+}
+
+.configuration {
+    padding-left: 150px;
+    text-align: left;
+}
+
+.my-profile {
+    display: flex;
+    align-items: center;
+    padding-left: 150px;
+
+}
+
+.treasures-activity{
+    padding-left: 150px;
+    text-align: left;
+}
+
+.photo-user {
+    border-radius: 100px;
+    height: 200px;
+    width: 200px;
+    border: 3px solid #FFC107;
+}
+
+.user-info {
+    text-align: left;
+}
+
+.username-text-profile {
+    font-size: 50px;
+    color: transparent;
+    background: linear-gradient(to bottom, #FFC107, white);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.status-text-profile {
+    font-size: 32px;
+    text-shadow: 2px 2px 6px #ccc;
+}
+
+.points-text-profile {
+    font-size: 32px;
+    text-shadow: 2px 2px 6px #ccc;
+}
+
+.image-status-profile {
+    height: 60px;
+    width: 60px;
+    border: 2px solid #FFC107;
+    border-radius: 7px;
 }
 
 /* CSS de TreasureForm*/
@@ -691,14 +792,101 @@ input {
     width: 80vh;
 }
 
+.title-hide {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 50px;
+    color: black;
+    font-weight: bold;
+    text-shadow:
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #fff,
+        1px 1px #fff,
+        -1px -1px #fff,
+        -1px 1px #fff,
+        1px -1px #fff;
+}
+
 /* CSS de TreasureList*/
 
 .treasure-list-page {
     font-family: 'Play', sans-serif !important;
-    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     color: white;
-    padding-top: 150px;
-    padding-bottom: 50px;
+}
+
+.title-page-list {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 50px;
+    color: black;
+    font-weight: bold;
+    text-shadow:
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #fff,
+        1px 1px #fff,
+        -1px -1px #fff,
+        -1px 1px #fff,
+        1px -1px #fff;
+}
+
+.table-list {
+    background-color: black;
+    color: white;
+    margin: 0 auto;
+    font-size: 25px;
+}
+
+.table-list th,
+.table-list td {
+    border: 0.5px solid #5f5f5f;
+}
+
+.elementos td {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.find-it-elements {
+    text-align: center !important;
+}
+
+.image-title {
+    width: 200px;
+}
+
+.name-title {
+    width: 250px;
+}
+
+.description-title-list {
+    width: 350px;
+}
+
+.city-title {
+    width: 200px;
+}
+
+.find-it-title {
+    width: 200px;
+}
+
+.button-see-more {
+    font-size: 15px !important;
+    justify-content: end !important;
+}
+
+.image-elements img {
+    max-width: 100%;
+    height: auto;
+}
+
+.button-see-more {
+    margin-left: 10px;
 }
 
 /* CSS de Status*/

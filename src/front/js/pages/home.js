@@ -18,11 +18,15 @@ export const Home = () => {
                     <p className="description-text">Join the adventure and discover hidden treasures around you. Hide your own for others to find.</p>
                 </div>
                 <div className="action-buttons pt-5">
-                    <Link to="/formulario-tesoro">
-                        <button className="btn btn-custom btn-hide-treasure mt-3">Hide your treasure</button>
-                    </Link>
                     <Link to="/lista-tesoros">
-                        <button className="btn btn-custom btn-find-treasures mt-3 ms-4">Find treasures</button>
+                        <button role="button" className="golden-button me-4">
+                            <span className="golden-text">FIND TREASURES</span>
+                        </button>
+                    </Link>
+                    <Link to="/formulario-tesoro">
+                        <button role="button" className="golden-button">
+                            <span className="golden-text">HIDE A TREASURE</span>
+                        </button>
                     </Link>
                 </div>
                 <div className="contenido-relleno">
@@ -81,7 +85,7 @@ export const Home = () => {
                         </div>
                         <div className="image-description pt-5">
                             <Link to="/rankings"><img src={regalo} className="imagen-how" alt="Descripción de la imagen 2" /></Link>
-                            <p className="text-how-2 pt-4">2. Earn points and climb the rankings to become our users' favorite company. Start now! <Link to="/registro">Create you account</Link></p>
+                            <p className="text-how-2 pt-4">2. Earn points and climb the rankings to become our users' favorite company. Start now!</p>
                         </div>
                     </div>
                 </div>
