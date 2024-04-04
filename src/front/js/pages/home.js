@@ -25,7 +25,7 @@ export const Home = () => {
                     </Link>
                     <Link to="/formulario-tesoro">
                         <button role="button" className="golden-button">
-                            <span className="golden-text">HIDE A TREASURE</span>
+                            <span className="golden-text">HIDE TREASURE</span>
                         </button>
                     </Link>
                 </div>

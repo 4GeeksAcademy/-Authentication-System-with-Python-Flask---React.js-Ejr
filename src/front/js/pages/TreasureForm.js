@@ -19,7 +19,7 @@ const TreasureForm = () => {
     return (
         <div className="text-center treasure-form-page">
             <form>
-                <h1 className="title-hide pb-4">Hide a treasure</h1>
+                <h1 className="title-hide pb-4">Hide treasure</h1>
                 <div className="hide-input-group pb-4">
                     <label htmlFor="name-treasure">Name</label>
                     <input
