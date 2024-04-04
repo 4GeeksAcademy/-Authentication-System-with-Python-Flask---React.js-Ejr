@@ -4,6 +4,11 @@ import { useContext } from "react";
 import { Context } from "./../store/appContext";
 import amateur from '/src/front/img/1.png';
 
+const treasures = [
+    { imageUrl: "", name: "Name 1", description: "Description 1", city: "City", findUrl: "" },
+    { imageUrl: "", name: "Name 2", description: "Description 2", city: "City", findUrl: "" },
+];
+
 const Profile = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
@@ -57,12 +62,14 @@ const Profile = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="elementos-profile">
-                                        <td className="image-elements-profile"><img src="" alt="Tesoro" /></td>
-                                        <td className="name-elements-profile">Name</td>
-                                        <td className="description-elements-profile">Description</td>
-                                        <td className="city-elements-profile">City</td>
+                                {treasures.map((treasure, index) => (
+                                    <tr className="elementos-profile" key={index}>
+                                        <td className="image-elements-profile ps-2"><img src={treasure.imageUrl} alt="Tesoro" /></td>
+                                        <td className="name-elements-profile ps-2">Name</td>
+                                        <td className="description-elements-profile ps-2">Description</td>
+                                        <td className="city-elements-profile ps-2">City</td>
                                     </tr>
+                                    ))}
                                 </tbody>
                             </table>
                             <h2 className="pb-2 pt-5 title-hide-profile">Hidden Treasures</h2>
@@ -76,12 +83,14 @@ const Profile = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="elementos-profile">
-                                        <td className="image-elements-profile"><img src="" alt="Tesoro" /></td>
-                                        <td className="name-elements-profile">Name</td>
-                                        <td className="description-elements-profile">Description</td>
-                                        <td className="city-elements-profile">City</td>
+                                {treasures.map((treasure, index) => (
+                                    <tr className="elementos-profile" key={index}>
+                                        <td className="image-elements-profile ps-2"><img src={treasure.imageUrl} alt="Tesoro" /></td>
+                                        <td className="name-elements-profile ps-2">{treasure.name}</td>
+                                        <td className="description-elements-profile ps-2">{treasure.description}</td>
+                                        <td className="city-elements-profile ps-2">{treasure.city}</td>
                                     </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
