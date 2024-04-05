@@ -4,9 +4,9 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import cofre from '/src/front/img/cofre.webp';
 
 const Register = () => {
-    const [accountType, setAccountType] = useState("user");
+    const [user_type, setUser_type] = useState("");
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
+    const [user_name, setUser_name] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +17,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== repeatPassword) {
-            setError("Las contraseñas no coinciden");
+            setError("The passwords are not similar");
             return;
         }
 
@@ -25,7 +25,7 @@ const Register = () => {
         const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ accountType, email, password })
+            body: JSON.stringify({ email, password, user_type, user_name })
         });
 
         if (!resp.ok) throw Error("There was a problem in the signup request");
@@ -55,8 +55,8 @@ const Register = () => {
                                 <select
                                     id="accountType"
                                     className="accountType"
-                                    value={accountType}
-                                    onChange={(e) => setAccountType(e.target.value)}
+                                    value={user_type}
+                                    onChange={(e) => setUser_type(e.target.value)}
                                 >
                                     <option value="user">User</option>
                                     <option value="company">Company</option>
@@ -80,8 +80,8 @@ const Register = () => {
                                     id="username"
                                     className="username"
                                     placeholder="Enter your username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
+                                    value={user_name}
+                                    onChange={(e) => setUser_name(e.target.value)}
                                 />
                             </div>
                             <div className="input-group">
