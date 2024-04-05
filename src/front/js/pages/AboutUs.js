@@ -19,12 +19,12 @@ const AboutUs = () => {
                 <div className="team-members">
                     <div className="team-member">
                         <img className="members-image" src="https://www.blixt.tv/wp-content/uploads/2018/10/Foto-para-empresas-06.jpg" alt="Ernesto" />
-                        <h3>Ernesto</h3>
+                        <h3>Ernesto Pineda</h3>
                         <p>CEO</p>
                     </div>
                     <div className="team-member">
                         <img className="members-image" src="https://media.istockphoto.com/id/640021202/es/foto/retrato-de-un-hombre-joven-alegre.jpg?s=612x612&w=0&k=20&c=55QWCFuSYNyRJUj10cCiOIqetLN8Ia4R8voI2vXtS5Q=" alt="Javier" />
-                        <h3>Javier</h3>
+                        <h3>Javier García</h3>
                         <p>CEO</p>
                     </div>
                     <div className="team-member">
