@@ -5,8 +5,8 @@ import enum
 db = SQLAlchemy()
 
 class MyEnum(enum.Enum):
-    Empresa ='Corsario'
-    Particular = 'Pirata'
+    user ='user'
+    company = 'company'
 
 
 class Cities (db.Model):
@@ -21,7 +21,6 @@ class Cities (db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            # do not serialize the password, its a security breach
         }
 
 
@@ -41,7 +40,6 @@ class Status (db.Model):
             "name": self.name,
             "points_min": self.points_min,
             "points_max": self.points_max
-            # do not serialize the password, its a security breach
         }
 
 class Treasures_Hide (db.Model):
@@ -61,7 +59,6 @@ class Treasures_Hide (db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            # do not serialize the password, its a security breach
         }
 
 
@@ -73,11 +70,11 @@ class User(db.Model):
     user_name =db.Column(db.String(30), unique=True, nullable=False)
     user_type = db.Column(db.Enum(MyEnum), nullable=False)
     points = db.Column(db.Integer, default=0)
-    status_id = db.Column(db.Integer, db.ForeignKey('status.id'),default=0, nullable=False)
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'),default=1, nullable=False)
     status_relationship = db.relationship(Status)
 
     def __repr__(self):
-        return "Usuario de Nombre{} con email {} con status {}".format (self.user_name, self.email, self.status_name)
+        return "Usuario de Nombre{} con email {} y status {}".format (self.user_name, self.email, self.status_name)
 
     def serialize(self):
         return {
@@ -85,7 +82,6 @@ class User(db.Model):
             "email": self.email,
             "user_name":self.user_name,
             "status_name":self.status_name
-            # do not serialize the password, its a security breach
         }
     
 class Treasures_Founded(db.Model):
@@ -100,5 +96,4 @@ class Treasures_Founded(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            # do not serialize the password, its a security breach
         }

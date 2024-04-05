@@ -81,16 +81,21 @@ def serve_any_other_file(path):
 def register():
     body = request.get_json(silent = True)
     if body is None:
-        return jsonify({'msg': "Debes eniar información en el body"}), 400
+        return jsonify({'msg': "Debes enviar información en el body"}), 400
     if 'email' not in body:
         return jsonify({'msg': "El campo email es obligatorio"}), 400
     if 'password' not in body:
         return jsonify({'msg': "El campo password es obligatorio"}), 400
+    if "user_type" not in body:
+        return jsonify({"msg": "El campo user_type es obligatorio"}), 400
+    if "user_name" not in body:
+        return jsonify({"msg": "El campo user_name es obligatorio"}), 400
     new_user = User()
     new_user.email = body['email']
     pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
     new_user.password = pw_hash
-    new_user.is_active = True
+    new_user.user_name = body["user_name"]
+    new_user.user_type = body["user_type"]
     db.session.add (new_user)
     db.session.commit()
     return jsonify({"msg": "El usuario ha sido creado con exito"}), 201

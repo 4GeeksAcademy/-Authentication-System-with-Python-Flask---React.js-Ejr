@@ -24,7 +24,7 @@ const Login = () => {
             });
 
             if (!resp.ok) {
-                throw new Error("Problema al iniciar sesión");
+                throw new Error("Login failed");
             }
 
             const data = await resp.json();
@@ -32,7 +32,7 @@ const Login = () => {
             navigate("/");
         } catch (error) {
             console.error(error);
-            setError("Contraseña o email no válidos");
+            setError("Password or email not valid");
         }
     };
 
