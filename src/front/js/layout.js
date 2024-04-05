@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Rankings from "./pages/Rankings";
 import Profile from "./pages/Profile";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 
@@ -36,6 +38,8 @@ const Layout = () => {
                         <Route element={<Rankings />} path="/rankings" />
                         <Route element={<Profile />} path="/perfil" />
                         <Route element={<Status_Score />} path="/puntuacion" />
+                        <Route element={<AboutUs />} path="/about-us" />
+                        <Route element={<Contact />} path="/contact" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

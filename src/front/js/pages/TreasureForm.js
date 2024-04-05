@@ -77,7 +77,7 @@ const TreasureForm = () => {
                     </div>
                 </div>
                 <div className="button-hide">
-                    <button type="submit" className="btn btn-warning">Register</button>
+                    <button type="submit" className="btn btn-warning">Hide</button>
                 </div>
             </form>
         </div>

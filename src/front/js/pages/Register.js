@@ -49,7 +49,7 @@ const Register = () => {
                 </div>
                 <div className="auth-container pt-5 mt-5">
                     <div className="container form-body">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="form-register">
                             <div className="input-group">
                                 <label htmlFor="accountType">Account Type</label>
                                 <select
