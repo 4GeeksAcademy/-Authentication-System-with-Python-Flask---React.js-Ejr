@@ -27,9 +27,8 @@ export const Footer = () => (
         </div>
       </div>
       <div className="row">
-        <div className="col-12 text-center">
+        <div className="col-12 text-center pt-2">
           <p>© 2024 Urban Treasures. All rights reserved.</p>
-          <p>Performed by Ernesto, Javier & Denis.</p>
         </div>
       </div>
     </div>
