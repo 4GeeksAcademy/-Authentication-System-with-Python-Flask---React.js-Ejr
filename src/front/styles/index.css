@@ -465,11 +465,12 @@ input {
 }
 
 .text-ranks-div {
-    font-size: 25px;
+    font-size: 22px;
     color: white;
     background: black;
     font-family: 'Play', sans-serif !important;
     padding-left: 25px;
+    padding-bottom: 60px;
 
 }
 
@@ -1205,6 +1206,7 @@ input {
     justify-content: center;
     gap: 10px; 
     flex-wrap: wrap; 
+    padding-bottom: 150px;
 }
 
 .team-member {

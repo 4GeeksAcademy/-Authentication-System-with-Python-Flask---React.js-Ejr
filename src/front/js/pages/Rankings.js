@@ -23,7 +23,7 @@ const Rankings = () => {
                     </div>
                 )}
             </div>
-            <div className="text-ranks-div pb-5"><p className="text-ranks">Click to see more about<Link to="/puntuacion" className="link-ranks">Status & Score</Link></p></div>
+            <div className="text-ranks-div"><p className="text-ranks">Click to see more about<Link to="/puntuacion" className="link-ranks">Status & Score</Link></p></div>
         </div>
     );
 }
