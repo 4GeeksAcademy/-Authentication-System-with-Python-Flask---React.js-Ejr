@@ -37,7 +37,7 @@
 .register-page {
     padding-top: 100px;
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
-    padding-bottom: 50px;
+    padding-bottom: 100px;
 }
 
 .input-group {
@@ -352,7 +352,7 @@ input {
 .first .name,
 .first .score {
     color: gold;
-    font-size: 3em;
+    font-size: 38px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 2);
 }
 
@@ -360,7 +360,7 @@ input {
 .second .name,
 .second .score {
     color: silver;
-    font-size: 2.5em;
+    font-size: 34px;
     text-shadow: 0 0 8px rgba(192, 192, 192, 2);
 }
 
@@ -368,7 +368,7 @@ input {
 .third .name,
 .third .score {
     color: #cd7f32;
-    font-size: 2em;
+    font-size: 30px;
     text-shadow: 0 0 8px rgba(205, 127, 50, 2);
 }
 
@@ -376,7 +376,7 @@ input {
 .other .name,
 .other .score {
     color: white;
-    font-size: 1.5em;
+    font-size: 24px;
 }
 
 .name {
@@ -459,6 +459,11 @@ input {
     margin: 0 auto;
 }
 
+.ranking-users {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
 .text-ranks-div {
     font-size: 25px;
     color: white;
@@ -475,16 +480,8 @@ input {
 
 .link-ranks {
     padding-left: 10px;
-}
+    color: #FFC107 !important;
 
-/* CSS de Footer*/
-
-.footer {
-    background-color: #000000;
-    color: white;
-    font-size: 13px;
-    padding-top: 30px;
-    padding-bottom: 20px;
 }
 
 /* CSS de How it Works*/
@@ -494,6 +491,8 @@ input {
     flex-direction: column;
     align-items: flex-start;
     background-image: linear-gradient(to bottom, #000000, #2e2e2e);
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .left-column {
@@ -607,6 +606,8 @@ input {
     justify-content: flex-start;
     background-image: linear-gradient(to bottom, #000000, #2e2e2e);
     margin-top: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .image-description {
@@ -667,14 +668,6 @@ input {
     padding-left: 20px;
 }
 
-.photo-container img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    text-align: left;
-    margin-right: 20px;
-}
-
 .user-info h2,
 .user-info p {
     margin: 5px 0;
@@ -702,7 +695,7 @@ input {
     width: 200px;
 }
 
-.title-hide-profile{
+.title-hide-profile {
     text-shadow: 2px 2px 6px #ccc;
 }
 
@@ -728,11 +721,24 @@ input {
 .my-profile {
     display: flex;
     align-items: center;
-    padding-left: 150px;
-
+    padding-left: 50px;
+    border: 1px solid rgb(126, 126, 126);
+    border-radius: 15px;
+    width: 750px;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    background-color: #2e2e2e;
 }
 
-.treasures-activity{
+.edit-profile-btn {
+    position: absolute; 
+    top: 50%; 
+    left: 55%; 
+    transform: translateX(-50%); 
+    color: #000000; 
+}
+
+.treasures-activity {
     padding-left: 150px;
     text-align: left;
 }
@@ -742,6 +748,7 @@ input {
     height: 200px;
     width: 200px;
     border: 3px solid #FFC107;
+    margin-right: 30px;
 }
 
 .user-info {
@@ -771,6 +778,12 @@ input {
     width: 60px;
     border: 2px solid #FFC107;
     border-radius: 7px;
+}
+
+.image-elements-profile img {
+    width: 200px; 
+    height: 100px; 
+    object-fit: cover; 
 }
 
 /* CSS de TreasureForm*/
@@ -845,6 +858,13 @@ input {
     border: 0.5px solid #5f5f5f;
 }
 
+.image-treasure-list {
+    display: block;
+    width: 180px;
+    height: 100px;
+    object-fit: cover;
+}
+
 .elementos td {
     text-align: left;
     vertical-align: middle;
@@ -855,7 +875,7 @@ input {
     text-align: center !important;
 }
 
-.image-title {
+.user-title{
     width: 200px;
 }
 
@@ -878,11 +898,6 @@ input {
 .button-see-more {
     font-size: 15px !important;
     justify-content: end !important;
-}
-
-.image-elements img {
-    max-width: 100%;
-    height: auto;
 }
 
 .button-see-more {
@@ -986,4 +1001,231 @@ input {
     -moz-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.link-ranks-status {
+    color: #FFC107 !important;
+}
+
+/* CSS de Footer*/
+
+.footer {
+    background-color: #000000;
+    color: #dddddd;
+    padding: 40px 0;
+  }
+  
+  .footer h5 {
+    color: #dddddd;
+    margin-bottom: 20px;
+  }
+  
+  .footer p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .footer-section {
+    margin-bottom: 20px;
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links li a {
+    color: #a9acad;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links li a:hover {
+    color: #d3c015;
+  }
+  
+  .social-links a {
+    display: inline-block;
+    margin-right: 10px;
+    color: #6c757d;
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    color: #d3c015;
+  }
+
+/* CSS de Contact */
+
+.page-contact{
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    padding-top: 150px;
+    padding-bottom: 50px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.contact {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9e5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-description {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 16px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.additional-contact-info {
+    margin-top: 20px;
+}
+
+.additional-contact-info p {
+    font-size: 16px;
+    color: #666;
+}
+
+.additional-contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.additional-contact-info ul li {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+/* CSS de AboutUs */
+
+.about-us-page {
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    padding-top: 150px;
+    padding-bottom: 50px;
+    font-family: 'Outfit', sans-serif;
+    color: #ebebeb;
+}
+
+.about-us-page.container {
+    margin: 0; 
+    max-width: 100%; 
+    padding-left: 300px;
+    padding-right: 300px;
+}
+
+.about-us-banner {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+}
+
+.about-us-banner h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.about-us-content p {
+    text-align: justify;
+    margin: 20px 0;
+    font-size: 22px;
+}
+
+.about-us-team {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.about-us-team h2 {
+    font-size: 1.5em;
+    color: #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.team-members {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+.team-member {
+    width: 200px; 
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    margin-bottom: 10px;
+}
+
+.team-member h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #ffffff; 
+}
+
+.team-member p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #b8b8b8;
 }

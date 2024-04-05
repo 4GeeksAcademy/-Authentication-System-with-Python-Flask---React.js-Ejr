@@ -10,6 +10,11 @@ const Login = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        sendLogin(email, password);
+    };
+
     const sendLogin = async (email, password) => {
         try {
             const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
@@ -45,37 +50,39 @@ const Login = () => {
                 <div className="auth-container-login">
                     <div className="container form-body">
                         <h2 className="title-login">Login</h2>
-                        <div className="input-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="text"
-                                id="email"
-                                className="email"
-                                placeholder="Enter email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className="input-group">
-                            <label htmlFor="password">Your password</label>
-                            <div className="password-input-container">
+                        <form onSubmit={handleSubmit}>
+                            <div className="input-group">
+                                <label htmlFor="email">Email</label>
                                 <input
-                                    type={showPassword ? "text" : "password"}
-                                    id="password"
-                                    className="password"
-                                    placeholder="Enter password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    type="text"
+                                    id="email"
+                                    className="email"
+                                    placeholder="Enter email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
-                                <div className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </div>
+                            <div className="input-group">
+                                <label htmlFor="password">Your password</label>
+                                <div className="password-input-container">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        id="password"
+                                        className="password"
+                                        placeholder="Enter password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                    <div className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {error && <div className="error-message mb-4">{error}</div>}
-                        <button type="button" className="btn btn-primary" onClick={() => sendLogin(email, password)}>
-                            Login
-                        </button>
+                            {error && <div className="error-message mb-4">{error}</div>}
+                            <button type="submit" className="btn btn-primary">
+                                Login
+                            </button>
+                        </form>
                         <p className="mt-3 text-center">Don't have an account? <Link to="/registro" className="btn-link">Create account</Link></p>
                     </div>
                 </div>
