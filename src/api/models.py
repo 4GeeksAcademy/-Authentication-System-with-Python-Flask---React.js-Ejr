@@ -15,7 +15,7 @@ class Cities (db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
 
     def __repr__(self):
-        return "Ciudad con id: {} de nombre: {}".format (self.id, self.name)
+        return "{}".format (self.name)
 
     def serialize(self): 
         return {
@@ -48,8 +48,9 @@ class Treasures_Hide (db.Model):
     name =db.Column(db.String(30), nullable=False)
     image =db.Column(db.String, nullable=False)
     location =db.Column(db.String, nullable=False)
-    cities_id=db.Column(db.Integer, db.ForeignKey('cities.id'))
-    cities_relationship = db.relationship(Cities)
+    tips =db.Column(db.String,nullable=False)
+    city_name=db.Column(db.String, db.ForeignKey('cities.name'))
+    city_relationship = db.relationship(Cities)
     founded=db.Column(db.Boolean(), nullable=True)
     
     def __repr__(self):

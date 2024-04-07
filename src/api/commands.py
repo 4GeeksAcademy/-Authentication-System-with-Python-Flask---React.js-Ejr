@@ -15,6 +15,15 @@ statuses = [{"name": "Amateur","points": {"points_min": 0, "points_max":99}},
             {"name": "Platinum", "points":{"points_min": 500, "points_max":699}},
             {"name": "Diamond", "points":{"points_min": 700, "points_max":999}},
             {"name": "Legendary", "points":{"points_min": 1000, "points_max":None}},]
+
+cities = [{"name": "Madrid"},
+          {"name": "Barcelona"},
+          {"name": "Sevilla"},
+          {"name": "Valencia"},
+          {"name": "Bilbao"},
+          {"name": "Galicia"},
+          {"name": "Lanzarote"},]
+
 def setup_commands(app):
     
     """ 
@@ -50,6 +59,17 @@ def setup_commands(app):
             print("Status {} creado!".format(statuses[x]["name"]))
         print("Todos los status creados")
 
+    @app.cli.command("insert-cities")
+    def insert_cities():
+        print("Creating Cities")
+        for x in range(0,len(cities)):
+            new_city = Cities()
+            new_city.name = cities[x]["name"]
+            db.session.add(new_city)
+            db.session.commit()
+            print("City {} creada!".format(cities[x]["name"]))
+        print("Todas las ciudades creadas")
+        
     @app.cli.command("insert-test-data")
     def insert_test_data():
         pass

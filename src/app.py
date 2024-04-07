@@ -66,15 +66,32 @@ def sitemap():
 # any other endpoint will try to serve it like a static file
 
 
-@app.route('/<path:path>', methods=['GET'])
-def serve_any_other_file(path):
-    if not os.path.isfile(os.path.join(static_file_dir, path)):
-        path = 'index.html'
-    response = send_from_directory(static_file_dir, path)
-    response.cache_control.max_age = 0  # avoid cache memory
-    return response
+''' -----------------------------------------------------------POST----------------------------------------------------'''
 
-
+@app.route('/api/hide', methods=['POST'])
+def hide_treasure():
+    body = request.get_json(silent = True)
+    if body is None:
+        return jsonify({'msg': "Debes enviar informacion en el body"}), 400
+    if 'name' not in body:
+        return jsonify({'msg': "Name requerido"}), 400
+    if 'image' not in body:
+        return jsonify({'msg':"Image requerida"}), 400
+    if 'location' not in body:
+        return jsonify({'msg':"location requerida"}),400
+    if 'city_name' not in body:
+        return jsonify({'msg':"city_name requerida"}), 400
+    if 'tips' not in body:
+        return jsonify({'msg':"tips requerido"}),400
+    new_treasure = Treasures_Hide()
+    new_treasure.name = body['name']
+    new_treasure.image = body['image']
+    new_treasure.location = body['location']
+    new_treasure.city_name = body['city_name']
+    new_treasure.tips = body['tips']
+    db.session.add (new_treasure)
+    db.session.commit()
+    return jsonify({'msg': " Tesoro enterrado con exito"}), 201
 
 
 @app.route('/api/register', methods=['POST'])
@@ -120,14 +137,37 @@ def login():
     return jsonify({'msg': "Login aceptado",
                     'token': access_token})
 
+'''--------------------------------------------------------------------GET------------------------------------------------------- '''
+@app.route('/<path:path>', methods=['GET'])
+def serve_any_other_file(path):
+    if not os.path.isfile(os.path.join(static_file_dir, path)):
+        path = 'index.html'
+    response = send_from_directory(static_file_dir, path)
+    response.cache_control.max_age = 0  # avoid cache memory
+    return response
+
+@app.route('/api/treasures', methods=['GET'])
+def get_treasures():
+    treasures = Treasures_Hide.query.all()
+    result =[]
+    for treasure in treasures:
+        treasure_data ={
+            "name": treasure.name,
+            "image": treasure.image,
+            "location": treasure.location,
+            "city_name": treasure.city_name,
+            "tips": treasure.tips
+        }
+        result.append(treasure_data)
+    return jsonify(result), 200
+
+
 
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
-
-
 
 
 # this only runs if `$ python src/main.py` is executed
