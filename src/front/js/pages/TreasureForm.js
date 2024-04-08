@@ -28,9 +28,10 @@ const TreasureForm = () => {
         e.preventDefault();
         setError("");
         try {
+            const token = localStorage.getItem("jwt-token");
             const resp = await fetch (process.env.BACKEND_URL + "/api/hide",{
                 method: "POST",
-                headers: {"content-type": "application/json"},
+                headers: {"content-type": "application/json", 'Authorization': `Bearer ${token}`},
                 body: JSON.stringify({name, image, location, tips, city_name})
             });
 
@@ -40,7 +41,7 @@ const TreasureForm = () => {
             navigate("/lista-tesoros");
             return data;
         } catch (error) {
-            setError("Server error")
+            setError("Login to update a treasure")
         }
     };
     return (
@@ -99,7 +100,7 @@ const TreasureForm = () => {
                     <label htmlFor="image">Image</label>
                     <div className="password-input-container">
                         <input
-                            type="text"
+                            type="file"
                             id="image"
                             className="treasure-image"
                             placeholder="Enter your image"
