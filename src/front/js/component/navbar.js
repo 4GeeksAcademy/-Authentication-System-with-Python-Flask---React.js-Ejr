@@ -11,30 +11,42 @@ export const Navbar = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
 
-	useEffect(() => {
-		const token = localStorage.getItem("jwt-token");
-		if (token) {
-			setUser("denis9diaz@hotmail.com");
-		} else {
-			setUser(null);
-		}
-	}, [localStorage.getItem("jwt-token")]);
-
-	const handleLogin = () => {
-		const token = localStorage.getItem("jwt-token");
-		if (token) {
-			setUser("denis9diaz@hotmail.com");
-			navigate("/perfil");
-		} else {
-			navigate("/login");
-		}
-	};
-
 	const handleLogout = () => {
 		localStorage.removeItem("jwt-token");
 		setUser(null);
 		navigate("/");
 	};
+
+	useEffect(() => {
+		const token = localStorage.getItem("jwt-token");
+	
+		const fetchUserData = async () => {
+			if (token) {
+				try {
+					const response = await fetch( process.env.BACKEND_URL + '/api/current-user', {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+					const data = await response.json();
+	
+					if (data.username) {
+						setUser(data.username);
+					} else {
+						setUser(null);
+					}
+				} catch (error) {
+					console.error(error);
+					setUser(null);
+				}
+			} else {
+				setUser(null);
+			}
+		};
+	
+		fetchUserData();
+	}, [localStorage.getItem("jwt-token")]);
 
 	return (
 		<nav className="navbar navbar-custom pe-5">
@@ -74,7 +86,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 					<div style={{ display: "inline-block", marginRight: "10px" }}>
-						<Link className="btn-link text-warning boton-navbar" to="/login" onClick={handleLogin}>Login</Link>
+						<Link className="btn-link text-warning boton-navbar" to="/login">Login</Link>
 					</div>
 				</div>
 			)}

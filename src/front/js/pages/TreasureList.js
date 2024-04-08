@@ -4,32 +4,33 @@ import amateur from '/src/front/img/1.png';
 
 
 const TreasureList = () => {
-
+    const token = localStorage.getItem("jwt-token");
     const [treasures, setTreasures] = useState([]);
     const [filter, setFilter] = useState('');
-useEffect(() =>{
-    const treasuresList = async () =>{
-        try{
-            const response = await fetch (process.env.BACKEND_URL + "/api/treasures",{
-                method: "GET"
-            });
 
-            if (!response.ok) throw new Error ("This treasure map is imposible to read")
+    useEffect(() => {
+        const treasuresList = async () => {
+            try {
+                const response = await fetch(process.env.BACKEND_URL + "/api/treasures", {
+                    method: "GET"
+                });
 
-            const data = await response.json();
-            setTreasures(data);
-        } catch (error) {
-            console.error("Error list dont found")
-        }
-    };
-    treasuresList ()
-},[]);
-    const searchCity = (e) =>{
+                if (!response.ok) throw new Error("Failed to update treasure list")
+
+                const data = await response.json();
+                setTreasures(data);
+            } catch (error) {
+                console.error("Error list dont found")
+            }
+        };
+        treasuresList()
+    }, []);
+    const searchCity = (e) => {
         setFilter(e.target.value)
     }
-    const treasuresFilter = treasures.filter(treasure=>treasure.city_name.toLowerCase().includes(filter.toLowerCase()));
+    const treasuresFilter = treasures.filter(treasure => treasure.city_name.toLowerCase().includes(filter.toLowerCase()));
     return (
-        <div className="text-center treasure-list-page" style={{ backgroundImage: `url(${list})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '150px 0', height: "100%" }}>
+        <div className="text-center treasure-list-page" style={{ backgroundImage: `url(${list})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '150px 0', height: "100vh" }}>
             <h1 className="title-page-list pb-4">Treasures List</h1>
             <div>
                 <input
@@ -37,13 +38,13 @@ useEffect(() =>{
                     placeholder="Search by city..."
                     className="search-input"
                     onChange={searchCity}
-                    style={{ marginBottom: '20px', width: '25%', height: '45px'}}
+                    style={{ marginBottom: '20px', width: '25%', height: '45px' }}
                 />
             </div>
             <table className="table-list">
                 <thead>
                     <tr className="cabecero">
-                        <th className="user-title">User</th> 
+                        <th className="user-title">User</th>
                         <th className="image-title">Image</th>
                         <th className="name-title">Name</th>
                         <th className="city-title">City</th>
@@ -53,9 +54,7 @@ useEffect(() =>{
                 <tbody>
                     {treasuresFilter.map((treasure, index) => (
                         <tr className="elementos" key={index}>
-                            <td className="user-elements ps-3">Usuario {index + 1}
-                                <img className="image-status-profile ms-3 me-3" src={amateur} alt="nombre_imagen_2" />
-                            </td>
+                            <td className="user-elements ps-3">{treasure.username}</td>
                             <td className="image-elements"><img src={treasure.imageUrl} alt="Tesoro" className="image-treasure-list" /></td>
                             <td className="name-elements ps-2">{treasure.name}</td>
                             <td className="city-elements ps-2">{treasure.city_name}</td>
