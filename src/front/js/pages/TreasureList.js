@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import list from '/src/front/img/list.webp';
-
+import { Link } from "react-router-dom";
+ 
 const TreasureList = () => {
     const token = localStorage.getItem("jwt-token");
     const [treasures, setTreasures] = useState([]);
@@ -57,7 +58,7 @@ const TreasureList = () => {
                             <td className="name-elements ps-2">{treasure.name}</td>
                             <td className="city-elements ps-2">{treasure.city_name}</td>
                             <td className="find-it-elements">
-                                <button className="button-see-more btn btn-warning" onClick={() => window.location.href = treasure.findUrl}>Find it</button>
+                                <Link to="/treasure"><button className="button-see-more btn btn-warning">Find it</button></Link>
                             </td>
                         </tr>
                     ))}
