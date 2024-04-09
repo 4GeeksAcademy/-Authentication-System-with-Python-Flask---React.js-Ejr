@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import cofre from '/src/front/img/cofre.webp';
+import { useLocation } from "react-router-dom";
 
 const Register = () => {
     const [user_type, setUser_type] = useState("");
@@ -13,6 +14,7 @@ const Register = () => {
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +36,11 @@ const Register = () => {
         navigate("/login");
         return data;
     };
+
+    useEffect(() => {
+        const userTypeFromLocation = location.state?.from === 'company' ? 'company' : 'user';
+        setUser_type(userTypeFromLocation);
+    }, [location]);
 
     return (
         <div className="register-page">
