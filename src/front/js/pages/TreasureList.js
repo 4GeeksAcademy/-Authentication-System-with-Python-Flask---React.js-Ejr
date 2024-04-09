@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import list from '/src/front/img/list.webp';
-import amateur from '/src/front/img/1.png';
-
 
 const TreasureList = () => {
     const token = localStorage.getItem("jwt-token");
@@ -30,7 +28,7 @@ const TreasureList = () => {
     }
     const treasuresFilter = treasures.filter(treasure => treasure.city_name.toLowerCase().includes(filter.toLowerCase()));
     return (
-        <div className="text-center treasure-list-page" style={{ backgroundImage: `url(${list})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '150px 0', height: "100vh" }}>
+        <div className="text-center treasure-list-page" style={{ backgroundImage: `url(${list})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '150px 0', minHeight: "100vh" }}>
             <h1 className="title-page-list pb-4">Treasures List</h1>
             <div>
                 <input

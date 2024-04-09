@@ -852,7 +852,7 @@ input {
     color: white;
     margin: 0 auto;
     font-size: 25px;
-    opacity: 0.85; 
+    opacity: 0.9; 
 }
 
 .table-list th,
@@ -1043,7 +1043,7 @@ input {
   }
   
   .footer-links li a:hover {
-    color: #d3c015;
+    color: #FFC107;
   }
   
   .social-links a {
@@ -1055,7 +1055,7 @@ input {
   }
   
   .social-links a:hover {
-    color: #d3c015;
+    color: #FFC107;
   }
 
 /* CSS de Contact */
