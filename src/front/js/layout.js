@@ -12,6 +12,7 @@ import Rankings from "./pages/Rankings";
 import Profile from "./pages/Profile";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
+import SingleTreasure from "./pages/SingleTreasure";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 
@@ -40,6 +41,7 @@ const Layout = () => {
                         <Route element={<Status_Score />} path="/puntuacion" />
                         <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<Contact />} path="/contact" />
+                        <Route element={<SingleTreasure />} path="/treasure" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

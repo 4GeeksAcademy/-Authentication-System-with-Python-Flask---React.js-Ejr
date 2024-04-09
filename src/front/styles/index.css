@@ -1232,3 +1232,16 @@ input {
     font-size: 0.9em;
     color: #b8b8b8;
 }
+
+/* CSS de SingleTreasure*/
+
+.single-treasure-page {
+    font-family: 'Play', sans-serif !important;
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    color: white;
+    padding-top: 150px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
