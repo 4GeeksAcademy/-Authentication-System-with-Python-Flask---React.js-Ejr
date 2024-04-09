@@ -7,8 +7,54 @@ const Profile = () => {
     const [activeSection, setActiveSection] = useState("Profile");
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [hiddenTreasures, setHiddenTreasures] = useState([]);
+    const [foundTreasures, setFoundTreasures] = useState([]);
     const changeSection = (section) => {
         setActiveSection(section);
+    };
+
+    const fetchUserTreasuresFound = async (userId) => {
+        setIsLoading(true);
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch(`${process.env.BACKEND_URL}/api/user/${userId}/found-treasures`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const treasures = await response.json();
+            if (response.ok) {
+                setFoundTreasures(treasures);
+            } else {
+                console.error("Error fetching found treasures:", treasures.message);
+            }
+        } catch (error) {
+            console.error("Error fetching found treasures: ", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchUserTreasures = async (userId) => {
+        setIsLoading(true);
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch(`${process.env.BACKEND_URL}/api/user/${userId}/hide-treasures`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const treasures = await response.json();
+            if (response.ok) {
+                setHiddenTreasures(treasures);
+            } else {
+                console.error("Error fetching treasures:", treasures.message);
+            }
+        } catch (error) {
+            console.error("Error fetching treasures: ", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -20,11 +66,18 @@ const Profile = () => {
         }
     }, [navigate]);
 
+    useEffect(() => {
+        if (userData) {
+            fetchUserTreasures(userData.id);
+            fetchUserTreasuresFound(userData.id); 
+        }
+    }, [userData]);
+
     const fetchUserData = async () => {
         setIsLoading(true);
         try {
             const token = localStorage.getItem("jwt-token");
-            const response = await fetch( process.env.BACKEND_URL + '/api/current-user', {
+            const response = await fetch(process.env.BACKEND_URL + '/api/current-user', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -45,7 +98,7 @@ const Profile = () => {
         }
     };
     if (isLoading) {
-        return <div>Loading...</div>; 
+        return <div>Loading...</div>;
     }
 
     return (
@@ -68,7 +121,7 @@ const Profile = () => {
                                     <p className="username-text-profile">{userData.username || "No Username"}</p>
                                     <p className="points-text-profile pb-2">{userData.points || 0} points</p>
                                     <p className="status-text-profile">
-                                        {userData.status_id || "AMATEUR"}
+                                        {userData.status_name || "AMATEUR"}
                                         <img className="image-status-profile ms-3" src={amateur} alt="Status" />
                                     </p>
                                 </div>
@@ -88,11 +141,13 @@ const Profile = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="elementos-profile">
-                                        <td className="image-elements-profile"><img src="T" alt="Treasure" /></td>
-                                        <td className="name-elements-profile ps-2"></td>
-                                        <td className="city-elements-profile ps-2"></td>
-                                    </tr>
+                                    {foundTreasures.map(treasure => (
+                                        <tr className="elementos-profile" key={treasure.id}>
+                                            <td className="image-elements-profile"><img src={treasure.image} alt="Found Treasure" /></td>
+                                            <td className="name-elements-profile ps-2">{treasure.name}</td>
+                                            <td className="city-elements-profile ps-2">{treasure.city_name}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                             <h2 className="pb-2 pt-5 title-hide-profile">Hidden Treasures</h2>
@@ -105,11 +160,13 @@ const Profile = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="elementos-profile" >
-                                        <td className="image-elements-profile"><img src="t" alt="Hidden Treasure" /></td>
-                                        <td className="name-elements-profile ps-2"></td>
-                                        <td className="city-elements-profile ps-2"></td>
-                                    </tr>
+                                    {hiddenTreasures.map(treasure => (
+                                        <tr className="elementos-profile" key={treasure.id}>
+                                            <td className="image-elements-profile"><img src={treasure.image} alt="Found Treasure" /></td>
+                                            <td className="name-elements-profile ps-2">{treasure.name}</td>
+                                            <td className="city-elements-profile ps-2">{treasure.city_name}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

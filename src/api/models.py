@@ -48,11 +48,11 @@ class User(db.Model):
     username =db.Column(db.String(30), unique=True, nullable=False)
     user_type = db.Column(db.Enum(MyEnum), nullable=False)
     points = db.Column(db.Integer, default=0)
-    status_id = db.Column(db.Integer, db.ForeignKey('status.id'),default=1, nullable=False)
+    status_name = db.Column(db.String, db.ForeignKey('status.name'),default="Amateur", nullable=False)
     status_relationship = db.relationship(Status)
 
     def __repr__(self):
-        return "Usuario {}, con email {} y status {}".format (self.username, self.email, self.status_id)
+        return "Usuario {}, con email {} y status {}".format (self.username, self.email, self.status_name)
 
     def serialize(self):
         return {
@@ -60,7 +60,7 @@ class User(db.Model):
             "email": self.email,
             "username":self.username,
             "points": self.points,
-            "status_id": self.status_id
+            "status_name": self.status_name
         }
     
 class Treasures_Hide (db.Model):
@@ -83,6 +83,8 @@ class Treasures_Hide (db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "image": self.image,
+            "city_name": self.city_name
         }
     
 class Treasures_Founded(db.Model):
@@ -90,11 +92,19 @@ class Treasures_Founded(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     treasures_hide_id = db.Column(db.Integer, db.ForeignKey('treasures_hide.id'), nullable=False)
     treasures_hide_relationship = db.relationship(Treasures_Hide)
+    user_found_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_relationship = db.relationship(User)
 
     def __repr__(self):
         return "Tesoro encontrado de id {}".format (self.id)
 
     def serialize(self):
+        treasure = self.treasures_hide_relationship
         return {
             "id": self.id,
+            "user_found_id": self.user_found_id,
+            "treasure_hide_id": self.treasures_hide_id,
+            "name": treasure.name,
+            "image": treasure.image,
+            "city_name": treasure.city_name
         }

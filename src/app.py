@@ -171,7 +171,6 @@ def get_treasures():
     return jsonify(result), 200
     
 
-
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
 def protected():
@@ -189,6 +188,20 @@ def get_current_user():
         return jsonify(user.serialize()), 200
     else:
         return jsonify({"msg": "Usuario no encontrado"}), 404
+
+
+@app.route('/api/user/<int:user_id>/hide-treasures', methods=['GET'])
+def get_user_treasures(user_id):
+    treasures = db.session.query(Treasures_Hide).filter(Treasures_Hide.user_id == user_id).all()
+    result = [treasure.serialize() for treasure in treasures]  
+    return jsonify(result), 200
+
+
+@app.route('/api/user/<int:user_id>/found-treasures', methods=['GET'])
+def get_user_treasures_found(user_id):
+    treasures = db.session.query(Treasures_Founded).filter(Treasures_Founded.user_found_id == user_id).all()
+    result = [treasure.serialize() for treasure in treasures]  
+    return jsonify(result), 200
 
 
 # this only runs if `$ python src/main.py` is executed
