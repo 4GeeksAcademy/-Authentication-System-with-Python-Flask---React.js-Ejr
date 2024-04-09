@@ -59,6 +59,8 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "username":self.username,
+            "points": self.points,
+            "status_id": self.status_id
         }
     
 class Treasures_Hide (db.Model):

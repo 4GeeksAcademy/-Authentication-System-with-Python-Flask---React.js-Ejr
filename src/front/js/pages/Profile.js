@@ -1,32 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { Context } from "./../store/appContext";
 import amateur from '/src/front/img/1.png';
 
-const foundTreasures = [
-    { imageUrl: "https://media.istockphoto.com/id/636783196/es/foto/5-billetes-en-euros.jpg?s=612x612&w=0&k=20&c=Mti9s5mpdMQpyI_yCmIR7azvmrZhLmwKkFxgVgNGc_E=", name: "Billete", description: "Billete de 5€", city: "Valencia", findUrl: "" },
-];
-const hiddenTreasures = [
-    { imageUrl: "https://www.superchuches.com/11642-thickbox_default/chicles-trident-max-fresa.jpg", name: "Chicles", description: "Paquete de chicles Trident", city: "Sevilla", findUrl: "" },
-];
-
 const Profile = () => {
-    const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState("Profile");
+    const [userData, setUserData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const changeSection = (section) => {
+        setActiveSection(section);
+    };
+
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
         if (!token) {
             navigate("/login");
         } else {
-            actions.getMyTasks();
+            fetchUserData();
         }
-    }, [navigate, actions]);
+    }, [navigate]);
 
-    const changeSection = (section) => {
-        setActiveSection(section);
+    const fetchUserData = async () => {
+        setIsLoading(true);
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch( process.env.BACKEND_URL + '/api/current-user', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setUserData(data);
+                console.log("User data fetched successfully:", data);
+            } else {
+                console.error("Error fetching user data:", data.message);
+                setUserData({});
+            }
+        } catch (error) {
+            console.error("Error fetching user data: ", error);
+            setUserData({});
+        } finally {
+            setIsLoading(false);
+        }
     };
+    if (isLoading) {
+        return <div>Loading...</div>; 
+    }
 
     return (
         <div className="profile-page text-center">
@@ -42,18 +62,20 @@ const Profile = () => {
                         <>
                             <div className="my-profile">
                                 <div className="photo-container">
-                                    <img src="https://vivolabs.es/wp-content/uploads/2022/03/perfil-mujer-vivo.png" alt="Profile Photo" className="photo-user" />
+                                    <img src={userData.profilePhoto || "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"} alt="Profile" className="photo-user" />
                                 </div>
                                 <div className="user-info ps-3">
-                                    <p className="status-text-profile"><img className="image-status-profile me-3" src={amateur} alt="nombre_imagen_2" />AMATEUR</p>
-                                    <p className="points-text-profile pb-2">20 points</p>
-                                    <p className="username-text-profile">Username</p>
+                                    <p className="username-text-profile">{userData.username || "No Username"}</p>
+                                    <p className="points-text-profile pb-2">{userData.points || 0} points</p>
+                                    <p className="status-text-profile">
+                                        {userData.status_id || "AMATEUR"}
+                                        <img className="image-status-profile ms-3" src={amateur} alt="Status" />
+                                    </p>
                                 </div>
                             </div>
                             <button className="btn btn-warning mt-3 edit-profile-btn">Edit Profile</button>
                         </>
                     )}
-
                     {activeSection === "Treasures Activity" && (
                         <div className="treasures-activity">
                             <h2 className="pb-2 title-hide-profile">Found Treasures</h2>
@@ -62,41 +84,32 @@ const Profile = () => {
                                     <tr className="cabecero-profile">
                                         <th className="image-title-profile">Image</th>
                                         <th className="name-title-profile">Name</th>
-                                        <th className="description-title-list-profile">Description</th>
                                         <th className="city-title-profile">City</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {foundTreasures.map((treasure, index) => (
-                                        <tr className="elementos-profile" key={index}>
-                                            <td className="image-elements-profile"><img src={treasure.imageUrl} alt="Tesoro" /></td>
-                                            <td className="name-elements-profile ps-2">{treasure.name}</td>
-                                            <td className="description-elements-profile ps-2">{treasure.description}</td>
-                                            <td className="city-elements-profile ps-2">{treasure.city}</td>
-                                        </tr>
-                                    ))}
+                                    <tr className="elementos-profile">
+                                        <td className="image-elements-profile"><img src="T" alt="Treasure" /></td>
+                                        <td className="name-elements-profile ps-2"></td>
+                                        <td className="city-elements-profile ps-2"></td>
+                                    </tr>
                                 </tbody>
                             </table>
-
                             <h2 className="pb-2 pt-5 title-hide-profile">Hidden Treasures</h2>
                             <table className="table-list-profile">
                                 <thead>
                                     <tr className="cabecero-profile">
                                         <th className="image-title-profile">Image</th>
                                         <th className="name-title-profile">Name</th>
-                                        <th className="description-title-list-profile">Description</th>
                                         <th className="city-title-profile">City</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {hiddenTreasures.map((treasure, index) => (
-                                        <tr className="elementos-profile" key={index}>
-                                            <td className="image-elements-profile"><img src={treasure.imageUrl} alt="Tesoro" /></td>
-                                            <td className="name-elements-profile ps-2">{treasure.name}</td>
-                                            <td className="description-elements-profile ps-2">{treasure.description}</td>
-                                            <td className="city-elements-profile ps-2">{treasure.city}</td>
-                                        </tr>
-                                    ))}
+                                    <tr className="elementos-profile" >
+                                        <td className="image-elements-profile"><img src="t" alt="Hidden Treasure" /></td>
+                                        <td className="name-elements-profile ps-2"></td>
+                                        <td className="city-elements-profile ps-2"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -105,6 +118,7 @@ const Profile = () => {
             </div>
         </div>
     );
+
 };
 
 export default Profile;
