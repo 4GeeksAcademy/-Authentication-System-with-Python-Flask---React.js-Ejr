@@ -159,6 +159,7 @@ def get_treasures():
     result =[]
     for treasure, user in treasures:
         treasure_data ={
+            "id": treasure.id,
             "name": treasure.name,
             "image": treasure.image,
             "location": treasure.location,
@@ -202,6 +203,19 @@ def get_user_treasures_found(user_id):
     treasures = db.session.query(Treasures_Founded).filter(Treasures_Founded.user_found_id == user_id).all()
     result = [treasure.serialize() for treasure in treasures]  
     return jsonify(result), 200
+
+
+@app.route('/api/treasure/<int:treasure_id>', methods=['GET'])
+@jwt_required()
+def get_treasure(treasure_id): 
+    treasure = Treasures_Hide.query.filter_by(id=treasure_id).first()
+    if treasure is None:
+        return jsonify({"error": "Tesoro no encontrado"}), 404
+
+    treasure_data = treasure.serialize()  
+    treasure_data['username'] = treasure.user_relationship.username
+
+    return jsonify(treasure_data), 200
 
 
 # this only runs if `$ python src/main.py` is executed

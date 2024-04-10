@@ -18,12 +18,12 @@ export const Home = () => {
                     <p className="description-text">Join the adventure and discover hidden treasures around you. Hide your own for others to find.</p>
                 </div>
                 <div className="action-buttons pt-5">
-                    <Link to="/lista-tesoros">
+                    <Link to="/treasures">
                         <button role="button" className="golden-button me-4">
                             <span className="golden-text">FIND TREASURES</span>
                         </button>
                     </Link>
-                    <Link to="/formulario-tesoro">
+                    <Link to="/hide">
                         <button role="button" className="golden-button">
                             <span className="golden-text">HIDE TREASURE</span>
                         </button>
@@ -39,7 +39,7 @@ export const Home = () => {
                         <h2 className="how-it-works pt-5 ps-5">Are you a Company?</h2>
                         <p className="how-text ps-5">Discover our section for business.</p>
                         <div className="div-button ps-5 pt-2">
-                            <Link to="/registro" state={{ from: 'company' }}>
+                            <Link to="/register" state={{ from: 'company' }}>
                                 <button role="button" className="golden-button">
                                     <span className="golden-text">START NOW</span>
                                 </button>
@@ -48,7 +48,7 @@ export const Home = () => {
                     </div>
                     <div className="col-9 right-column px-0">
                         <div className="image-description pt-5">
-                            <Link to="/formulario-tesoro"><img src={golden} className="imagen-how" alt="Descripción de la imagen 1" /></Link>
+                            <Link to="/hide"><img src={golden} className="imagen-how" alt="Descripción de la imagen 1" /></Link>
                             <p className="text-how pt-4">1. Hide golden tickets for users to find and redeem in your stores for promotional products.</p>
                         </div>
                         <div className="image-description pt-5">
@@ -65,7 +65,7 @@ export const Home = () => {
                         <h2 className="how-it-works pt-5 ps-5">How It Works</h2>
                         <p className="how-text ps-5">Discover how you can participate in this exciting treasure hunt.</p>
                         <div className="div-button ps-5 pt-2">
-                            <Link to="/registro" state={{ from: 'user' }}>
+                            <Link to="/register" state={{ from: 'user' }}>
                                 <button role="button" className="golden-button">
                                     <span className="golden-text">START NOW</span>
                                 </button>
@@ -74,11 +74,11 @@ export const Home = () => {
                     </div>
                     <div className="col right-column px-0">
                         <div className="image-description pt-5">
-                            <Link to="/formulario-tesoro"><img src={esconde} className="imagen-how" alt="Descripción de la imagen 1" /></Link>
+                            <Link to="/hide"><img src={esconde} className="imagen-how" alt="Descripción de la imagen 1" /></Link>
                             <p className="text-how pt-4">1. Hide your treasure so that other users can find it. Earn points for it!</p>
                         </div>
                         <div className="image-description pt-5">
-                            <Link to="/lista-tesoros"><img src={encuentra} className="imagen-how" alt="Descripción de la imagen 2" /></Link>
+                            <Link to="/treasures"><img src={encuentra} className="imagen-how" alt="Descripción de la imagen 2" /></Link>
                             <p className="text-how-2 pt-4">2. Find the treasures hidden around your city and earn points for it!</p>
                         </div>
                         <div className="image-description pt-5 pe-5">

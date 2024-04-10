@@ -84,9 +84,12 @@ class Treasures_Hide (db.Model):
             "id": self.id,
             "name": self.name,
             "image": self.image,
-            "city_name": self.city_name
+            "city_name": self.city_name,
+            "user_id": self.user_id,
+            "location": self.location,
+            "tips": self.tips
         }
-    
+
 class Treasures_Founded(db.Model):
     __tablename__='trasures_founded'
     id = db.Column(db.Integer, primary_key=True)
