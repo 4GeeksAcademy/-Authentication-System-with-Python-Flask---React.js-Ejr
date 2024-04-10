@@ -38,7 +38,7 @@ const TreasureForm = () => {
             if (!resp.ok) throw new Error ("This treasure don't exist");
 
             const data = await resp.json();
-            navigate("/lista-tesoros");
+            navigate("/treasures");
             return data;
         } catch (error) {
             setError("Login to update a treasure")

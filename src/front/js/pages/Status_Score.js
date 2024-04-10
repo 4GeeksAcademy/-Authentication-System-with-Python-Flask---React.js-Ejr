@@ -10,17 +10,17 @@ import legendary from '/src/front/img/7.png';
 
 const StatusScore = () => {
     return (
-        <div class="status-container">
-            <div class="left-column-status">
+        <div className="status-container">
+            <div className="left-column-status">
                 <h1 className="title-status">Status & Score</h1>
                 <p className="description-status pt-4">You will be awarded <span className="bold-text">10 points</span> for each treasure found.</p>
                 <p className="description-status">You will be awarded <span className="bold-text">10 points</span> for each hidden treasure.</p>
                 <p className="description-status">Accumulate points to achieve higher status and climb the <Link to="/rankings" className="link-ranks-status">rankings.</Link></p>
             </div>
 
-            <div class="right-column-status">
-                <div class="status-page">
-                    <table class="status-table">
+            <div className="right-column-status">
+                <div className="status-page">
+                    <table className="status-table">
                         <tbody>
                             <tr>
                                 <td><img className="image-status" src={amateur} alt="nombre_imagen_1" /></td>

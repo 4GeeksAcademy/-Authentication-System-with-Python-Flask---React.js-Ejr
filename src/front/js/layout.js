@@ -32,16 +32,16 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<TreasureForm />} path="/formulario-tesoro" />
-                        <Route element={<TreasureList />} path="/lista-tesoros" />
-                        <Route element={<Register />} path="/registro" />
+                        <Route element={<TreasureForm />} path="/hide" />
+                        <Route element={<TreasureList />} path="/treasures" />
+                        <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Rankings />} path="/rankings" />
-                        <Route element={<Profile />} path="/perfil" />
-                        <Route element={<Status_Score />} path="/puntuacion" />
+                        <Route element={<Profile />} path="/profile" />
+                        <Route element={<Status_Score />} path="/status" />
                         <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<Contact />} path="/contact" />
-                        <Route element={<SingleTreasure />} path="/treasure" />
+                        <Route element={<SingleTreasure />} path="/treasure/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
