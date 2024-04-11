@@ -1,18 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { Context } from "./../store/appContext"
-
+import { Context } from "./../store/appContext";
 
 const TreasureForm = () => {
-    const { store, actions } = useContext(Context)
+    const { store, actions } = useContext(Context);
     const navigate = useNavigate();
-
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
     const [city_name, setCity_name] = useState('');
     const [tips, setTips] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState(''); 
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -22,31 +20,59 @@ const TreasureForm = () => {
         } else {
             actions.getMyTasks();
         }
-    }, [navigate]);
+    }, [navigate, actions]);
 
-    const hideTreasure = async (e) => {
-        e.preventDefault();
+    useEffect(() => { 
+        if (imageUrl) hideTreasure(); 
+    }, [imageUrl]); 
+
+    const uploadImage = () => {
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", "treasure");
+
+        fetch("https://api.cloudinary.com/v1_1/dxzhssh9m/image/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            setImageUrl(data.url); 
+        })
+        .catch(error => {
+            setError("Upload error");
+            console.error("Error uploading the image:", error);
+        });
+    };
+
+    const hideTreasure = async () => {
         setError("");
         try {
             const token = localStorage.getItem("jwt-token");
-            const resp = await fetch (process.env.BACKEND_URL + "/api/hide",{
+            const response = await fetch(`${process.env.BACKEND_URL}/api/hide`, {
                 method: "POST",
-                headers: {"content-type": "application/json", 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({name, image, location, tips, city_name})
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ name, location, city_name, tips, image: imageUrl }) 
             });
 
-            if (!resp.ok) throw new Error ("This treasure don't exist");
+            if (!response.ok) throw new Error("This treasure doesn't exist");
 
-            const data = await resp.json();
+            await response.json();
             navigate("/treasures");
-            return data;
         } catch (error) {
-            setError("Login to update a treasure")
+            setError("Update error");
+            console.error("Error hiding the treasure:", error);
         }
     };
+
     return (
         <div className="text-center treasure-form-page">
-            <form onSubmit={hideTreasure}>
+            <form onSubmit= {(e) => {e.preventDefault()
+            uploadImage()
+            }}>
                 <h1 className="title-hide pb-4">Hide treasure</h1>
                 <div className="hide-input-group pb-4">
                     <label htmlFor="name-treasure">Name</label>
@@ -76,7 +102,7 @@ const TreasureForm = () => {
                         <input
                             type="text"
                             id="city"
-                            className="treasure-image"
+                            className="treasure-city"
                             placeholder="Enter city"
                             value={city_name}
                             onChange={e=> setCity_name(e.target.value)}
@@ -89,7 +115,7 @@ const TreasureForm = () => {
                         <input
                             type="text"
                             id="tips"
-                            className="treasure-image"
+                            className="treasure-tips"
                             placeholder="Enter your tips"
                             value={tips}
                             onChange={e=> setTips(e.target.value)}
@@ -102,10 +128,11 @@ const TreasureForm = () => {
                         <input
                             type="file"
                             id="image"
-                            className="treasure-image"
+                            className="treasure-image-form"
                             placeholder="Enter your image"
-                            value={image}
-                            onChange={e=> setImage(e.target.value)}
+                            onChange={e=> {
+                                console.log(e.target.files[0])
+                            setImage(e.target.files[0])}}
                         />
                     </div>
                 </div>

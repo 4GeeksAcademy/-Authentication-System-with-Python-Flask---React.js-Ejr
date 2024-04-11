@@ -54,12 +54,14 @@ const TreasureList = () => {
                     {treasuresFilter.map((treasure, index) => (
                         <tr className="elementos" key={index}>
                             <td className="user-elements ps-3">{treasure.username}</td>
-                            <td className="image-elements"><img src={treasure.imageUrl} alt="Tesoro" className="image-treasure-list" /></td>
+                            <td className="image-elements">
+                                <img src={treasure.image} alt="Tesoro" className="image-treasure-list" />
+                            </td>
                             <td className="name-elements ps-2">{treasure.name}</td>
                             <td className="city-elements ps-2">{treasure.city_name}</td>
                             <td className="find-it-elements">
                                 <Link to={`/treasure/${treasure.id}`}>
-                                    <button className="button-see-more btn btn-warning">Find it</button>
+                                    <button className="button-details btn btn-warning">Details</button>
                                 </Link>
                             </td>
                         </tr>
