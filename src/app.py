@@ -149,6 +149,25 @@ def login():
                     'token': access_token})
 
 
+@app.route('/api/update-profile-image', methods=['POST'])
+@jwt_required()
+def update_profile_image():
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+    
+    if user is None:
+        return jsonify({'msg': "Usuario no encontrado"}), 404
+    
+    body = request.get_json(silent=True)
+    if body is None or 'photo' not in body:
+        return jsonify({'msg': "Debes enviar el campo photo con la URL de la nueva imagen en el body"}), 400
+    
+    user.photo = body['photo']
+    db.session.commit()
+    
+    return jsonify({'msg': "Imagen de perfil actualizada con éxito"}), 200
+
+
 '''-------------------------------------GET------------------------------------------- '''
 
 

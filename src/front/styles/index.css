@@ -733,7 +733,7 @@ input {
 
 .edit-profile-btn {
     position: absolute; 
-    top: 50%; 
+    top: 56%; 
     left: 55%; 
     transform: translateX(-50%); 
     color: #000000; 
@@ -744,12 +744,31 @@ input {
     text-align: left;
 }
 
+.photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .photo-user {
     border-radius: 100px;
     height: 200px;
     width: 200px;
     border: 3px solid #FFC107;
-    margin-right: 30px;
+    object-fit: cover;
+    margin-bottom: 10px; 
+}
+
+.edit-photo-label {
+    color: #FFC107; 
+    cursor: pointer;
+    font-size: 0.9rem; 
+    text-decoration: underline; 
+}
+
+.edit-photo-label:hover {
+    color: #E0A106; 
 }
 
 .user-info {
@@ -1223,6 +1242,7 @@ input {
     height: 150px;
     border-radius: 50%; 
     margin-bottom: 10px;
+    object-fit: cover; 
 }
 
 .team-member h3 {
@@ -1243,10 +1263,74 @@ input {
     font-family: 'Play', sans-serif !important;
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     color: white;
-    padding-top: 150px;
-    padding-bottom: 50px;
+    padding: 50px 0;
     display: flex;
+    flex-direction: row; 
     justify-content: center;
     align-items: center;
+    gap: 50px; 
     min-height: 100vh;
 }
+
+.name-single {
+    font-size: 2.7rem;
+    margin-bottom: 20px; 
+    margin: 5px 0;
+    padding: 0 20px;
+    text-shadow: 2px 2px 4px #000000;
+    color: #FFC107;
+}
+
+.image-single {
+    height: auto;
+    max-width: 50%; 
+    max-height: 350px; 
+    border: #FFC107 4px solid;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(255, 193, 7, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.image-single:hover {
+    transform: scale(1.05);
+}
+
+.text-single {
+    font-size: 2rem;
+    margin: 5px 0;
+    padding: 0 20px; 
+    text-align: left; 
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.bold{
+    font-weight: bold;
+    color: #fce7aa;
+}
+
+.button-single {
+    display: inline-block;
+    padding: 12px 28px;
+    margin-left: 15px;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000000;
+    background-image: linear-gradient(to bottom right, #FFC107, #c99e1f);
+    border: none;
+    border-radius: 40px;
+    box-shadow: 0px 4px 0px #feffcd;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .button-single:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 0px #2e3021;
+  }

@@ -61,7 +61,7 @@ const TreasureList = () => {
                             <td className="city-elements ps-2">{treasure.city_name}</td>
                             <td className="find-it-elements">
                                 <Link to={`/treasure/${treasure.id}`}>
-                                    <button className="button-see-more btn btn-warning">Find it</button>
+                                    <button className="button-details btn btn-warning">Details</button>
                                 </Link>
                             </td>
                         </tr>

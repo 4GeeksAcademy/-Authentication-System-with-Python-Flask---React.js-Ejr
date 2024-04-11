@@ -10,7 +10,7 @@ const TreasureForm = () => {
     const [city_name, setCity_name] = useState('');
     const [tips, setTips] = useState('');
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(''); 
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -22,9 +22,9 @@ const TreasureForm = () => {
         }
     }, [navigate, actions]);
 
-    useEffect(() => {
-        if (imageUrl) hideTreasure();
-    }, [imageUrl]);
+    useEffect(() => { 
+        if (imageUrl) hideTreasure(); 
+    }, [imageUrl]); 
 
     const uploadImage = () => {
         const formData = new FormData();
@@ -37,7 +37,7 @@ const TreasureForm = () => {
         })
         .then(response => response.json())
         .then(data => {
-            setImageUrl(data.url);
+            setImageUrl(data.url); 
         })
         .catch(error => {
             setError("Upload error");
@@ -55,7 +55,7 @@ const TreasureForm = () => {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, location, city_name, tips, image: imageUrl })
+                body: JSON.stringify({ name, location, city_name, tips, image: imageUrl }) 
             });
 
             if (!response.ok) throw new Error("This treasure doesn't exist");

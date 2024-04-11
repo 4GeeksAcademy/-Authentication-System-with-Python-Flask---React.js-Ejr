@@ -42,18 +42,21 @@ const SingleTreasure = () => {
             console.error("Error fetching treasure:", error);
         }
     };
-    
+
     if (!treasure) {
         return <div>No hay tesoro...</div>;
     }
 
     return (
         <div className="single-treasure-page">
-            <h1>{treasure.name}</h1>
-            <img src={treasure.image} alt={treasure.name} />
-            <p>City: {treasure.city_name}</p>
-            <p>Location: {treasure.location}</p>
-            <p>Tips: {treasure.tips}</p>
+            <img src={treasure.image} alt={treasure.name} className="image-single" />
+            <div className="text-container">
+                <p className="name-single">{treasure.name}</p>
+                <p className="text-single"><span class="bold">Location:</span> {treasure.location}</p>
+                <p className="text-single"><span class="bold">City:</span> {treasure.city_name}</p>
+                <p className="text-single"><span class="bold">Tips:</span> {treasure.tips}</p>
+                <button className="button-single">Click if you found it</button>
+            </div>
         </div>
     );
 };
