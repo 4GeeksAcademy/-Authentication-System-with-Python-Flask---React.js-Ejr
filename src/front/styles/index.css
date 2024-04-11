@@ -806,6 +806,10 @@ input {
     width: 80vh;
 }
 
+.treasure-image-form{
+    border: none;
+}
+
 .title-hide {
     display: inline-block;
     padding: 5px 10px;

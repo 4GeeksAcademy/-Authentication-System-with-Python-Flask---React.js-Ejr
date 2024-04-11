@@ -54,7 +54,9 @@ const TreasureList = () => {
                     {treasuresFilter.map((treasure, index) => (
                         <tr className="elementos" key={index}>
                             <td className="user-elements ps-3">{treasure.username}</td>
-                            <td className="image-elements"><img src={treasure.imageUrl} alt="Tesoro" className="image-treasure-list" /></td>
+                            <td className="image-elements">
+                                <img src={treasure.image} alt="Tesoro" className="image-treasure-list" />
+                            </td>
                             <td className="name-elements ps-2">{treasure.name}</td>
                             <td className="city-elements ps-2">{treasure.city_name}</td>
                             <td className="find-it-elements">
