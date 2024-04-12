@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import logoGame from "/src/front/img/logoSinFondo.png";
 import podio from "/src/front/img/podio.png"
 import ubic from "/src/front/img/ubic.png"
@@ -9,11 +7,11 @@ import diamante from "/src/front/img/diamante.png"
 
 export const Navbar = () => {
 	const navigate = useNavigate();
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState({ username: null, photo: null });
 
 	const handleLogout = () => {
 		localStorage.removeItem("jwt-token");
-		setUser(null);
+		setUser({ username: null, photo: null });
 		navigate("/");
 	};
 
@@ -23,7 +21,7 @@ export const Navbar = () => {
 		const fetchUserData = async () => {
 			if (token) {
 				try {
-					const response = await fetch( process.env.BACKEND_URL + '/api/current-user', {
+					const response = await fetch(process.env.BACKEND_URL + '/api/current-user', {
 						method: 'GET',
 						headers: {
 							'Authorization': `Bearer ${token}`
@@ -32,16 +30,16 @@ export const Navbar = () => {
 					const data = await response.json();
 	
 					if (data.username) {
-						setUser(data.username);
+						setUser({ username: data.username, photo: data.photo });
 					} else {
-						setUser(null);
+						setUser({ username: null, photo: null });
 					}
 				} catch (error) {
 					console.error(error);
-					setUser(null);
+					setUser({ username: null, photo: null });
 				}
 			} else {
-				setUser(null);
+				setUser({ username: null, photo: null });
 			}
 		};
 	
@@ -68,10 +66,11 @@ export const Navbar = () => {
 				</Link>
 			</div>
 			<div className="navbar-group-right">
-			{user ? (
+			{user.username ? (
 				<div className="ml-auto dropdown">
 					<button className="btn btn-link text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-						<FontAwesomeIcon icon={faUser} className="me-1" /> {user}
+						{user.photo ? <img src={user.photo} alt={user.username} className="user-image me-2" style={{ width: "35px", height: "35px", borderRadius: "50%" }} /> : null}
+						{user.username}
 					</button>
 					<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<li><Link className="dropdown-item" to="/profile">My Profile</Link></li>

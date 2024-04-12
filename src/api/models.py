@@ -76,7 +76,7 @@ class Treasures_Hide (db.Model):
     user_relationship = db.relationship(User)
     city_name=db.Column(db.String, db.ForeignKey('cities.name'))
     city_relationship = db.relationship(Cities)
-    founded=db.Column(db.Boolean(), nullable=True)
+    founded=db.Column(db.Boolean(), default=False, nullable=True)
     
     def __repr__(self):
         return "Tesoro escondido: {}".format (self.name)
@@ -93,7 +93,7 @@ class Treasures_Hide (db.Model):
         }
 
 class Treasures_Founded(db.Model):
-    __tablename__='trasures_founded'
+    __tablename__='treasures_founded'
     id = db.Column(db.Integer, primary_key=True)
     treasures_hide_id = db.Column(db.Integer, db.ForeignKey('treasures_hide.id'), nullable=False)
     treasures_hide_relationship = db.relationship(Treasures_Hide)

@@ -6,7 +6,7 @@ import { Context } from "./../store/appContext";
 const SingleTreasure = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { id } = useParams(); 
     const [treasure, setTreasure] = useState(null);
 
     useEffect(() => {
@@ -43,6 +43,27 @@ const SingleTreasure = () => {
         }
     };
 
+    const markFound = async () => {
+        const token = localStorage.getItem("jwt-token");
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/treasure/${id}/found`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                alert("Tesoro marcado como encontrado!");
+                navigate("/treasures"); 
+            } else {
+                alert("No se pudo marcar el tesoro como encontrado.");
+            }
+        } catch (error) {
+            console.error("Error al marcar el tesoro:", error);
+        }
+    };
+
     if (!treasure) {
         return <div>No hay tesoro...</div>;
     }
@@ -55,7 +76,7 @@ const SingleTreasure = () => {
                 <p className="text-single"><span class="bold">Location:</span> {treasure.location}</p>
                 <p className="text-single"><span class="bold">City:</span> {treasure.city_name}</p>
                 <p className="text-single"><span class="bold">Tips:</span> {treasure.tips}</p>
-                <button className="button-single">Click if you found it</button>
+                <button className="button-single" onClick={markFound}>Click if you found it</button>
             </div>
         </div>
     );
