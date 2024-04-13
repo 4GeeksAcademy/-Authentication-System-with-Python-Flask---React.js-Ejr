@@ -7,16 +7,51 @@
     height: 50px;
 }
 .titulo {
-    font-family: Cambria, serif;
-    font-weight: bold;
-    font-size: 80px; 
+    /* font-family: Cambria, serif; */
+    /* font-family: "Permanent Marker", cursive; */
+    font-family: "Rubik Bubbles", system-ui;
+    /* font-weight: bold; */
+    color: white;
+    font-size: 150px; 
   }
 .negrita{
     font-weight: bold;
 }
 .cambria{
-    font-family: Cambria, serif;
+    /* font-family: Cambria, serif; */
+    font-family: "Permanent Marker", cursive;
 }
 .texto{
     font-size: 30px; 
+}
+.back-navbar{
+    background-color: #7AA2E3;
+}
+.back-texto1{
+    background-color: #6AD4DD;
+}
+.back-texto2{
+    background-color: #97E7E1;
+}
+.back-texto3{
+    background-color: #F8F6E3;
+}
+.imagen-boton {
+    position: relative;
+    /* display: inline-block; */
+}
+.boton {
+    position: absolute;
+    font-family: "Permanent Marker", cursive;
+    top: 90%; /* Ajusta la posición vertical del botón */
+    /* left: 0%; Ajusta la posición horizontal del botón */
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    margin: auto;
+    background-color: #4F6F52;
+    color: #fff;
+    border: 3px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 50px;
 }
