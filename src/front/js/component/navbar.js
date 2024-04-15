@@ -10,9 +10,14 @@ export const Navbar = () => {
 					<Link to="/">
 						<img className="logo m-3" src={logo}  />
 					</Link>
+					<a href="#queEsGuessNation" className="text-black text-decoration-none cambria fs-5 p-2">¿Que es GuessNation?</a>
+					<a href="#comoJugar" className="text-black text-decoration-none cambria fs-5 p-2">¿Como Jugar?</a>
+					<a href="#ranking" className="text-black text-decoration-none cambria fs-5 p-2">Ranking</a>
 				</div>
 				<div className="ml-auto">
-					<i class="fa-solid fa-circle-user fa-2x m-3 "></i>
+					<Link to="/login">
+						<i class="fa-solid fa-circle-user fa-2x m-3 text-black "></i>
+					</Link>
 				</div>
 			</div>
 		</nav>
