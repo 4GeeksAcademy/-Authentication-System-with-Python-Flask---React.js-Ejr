@@ -22,7 +22,6 @@ const SingleTreasure = () => {
     const loadTreasure = async () => {
         try {
             const url = `${process.env.BACKEND_URL}/api/treasure/${id}`;
-            console.log("URL de la petición:", url);
             const token = localStorage.getItem("jwt-token");
             const response = await fetch(url, {
                 method: "GET",
@@ -54,10 +53,10 @@ const SingleTreasure = () => {
             });
 
             if (response.ok) {
-                alert("Tesoro marcado como encontrado!");
+                alert("Treasure found! You win 10 points!");
                 navigate("/treasures"); 
             } else {
-                alert("No se pudo marcar el tesoro como encontrado.");
+                alert("Couldn't mark treasure as found");
             }
         } catch (error) {
             console.error("Error al marcar el tesoro:", error);
@@ -65,15 +64,20 @@ const SingleTreasure = () => {
     };
 
     if (!treasure) {
-        return <div>No hay tesoro...</div>;
+        return (
+            <div className="loading-container">
+                <div className="spinner"></div>
+            </div>
+        );
     }
+
 
     return (
         <div className="single-treasure-page">
             <img src={treasure.image} alt={treasure.name} className="image-single" />
             <div className="text-container">
                 <p className="name-single">{treasure.name}</p>
-                <p className="text-single"><span class="bold">Location:</span> {treasure.location}</p>
+                <p className="text-single"><span class="bold">Location:</span> <a className="color-url" href={treasure.location} target="_blank">Open in Google Maps</a></p>
                 <p className="text-single"><span class="bold">City:</span> {treasure.city_name}</p>
                 <p className="text-single"><span class="bold">Tips:</span> {treasure.tips}</p>
                 <button className="button-single" onClick={markFound}>Click if you found it</button>

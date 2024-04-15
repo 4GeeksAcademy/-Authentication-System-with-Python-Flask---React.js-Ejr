@@ -28,6 +28,7 @@ class Status (db.Model):
     name= db.Column(db.String(30), unique=True, nullable=False)
     points_min=db.Column(db.Integer)
     points_max= db.Column(db.Integer)
+    image=db.Column(db.String)
 
     def __repr__(self):
         return "Status: {}".format (self.name)
@@ -37,7 +38,8 @@ class Status (db.Model):
             "id": self.id,
             "name": self.name,
             "points_min": self.points_min,
-            "points_max": self.points_max
+            "points_max": self.points_max,
+            "image": self.image
         }
 
 class User(db.Model):

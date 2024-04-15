@@ -23,7 +23,7 @@ const Register = () => {
             return;
         }
 
-        setError("");
+        setError("Register error");
         const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

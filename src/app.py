@@ -184,11 +184,17 @@ def mark_treasure_as_found(treasure_id):
         return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
 
     treasure.founded = True
-    db.session.add(treasure)
+
+    user.points += 10
+    db.session.add(user)
+
+    user_hide = User.query.filter_by(id=treasure.user_id).first()
+    if user_hide:
+        user_hide.points += 10
+        db.session.add(user_hide)
 
     new_treasure_found = Treasures_Founded(treasures_hide_id=treasure_id, user_found_id=user.id)
     db.session.add(new_treasure_found)
-
     db.session.commit()
 
     return jsonify({'msg': "Tesoro marcado como encontrado con éxito"}), 201
@@ -260,6 +266,37 @@ def get_treasure(treasure_id):
     treasure_data['username'] = treasure.user_relationship.username
 
     return jsonify(treasure_data), 200
+
+
+@app.route('/api/cities', methods=['GET'])
+def get_cities():
+    cities = Cities.query.all()
+    cities_list = [city.serialize() for city in cities]
+    return jsonify(cities_list), 200
+
+
+@app.route('/api/rankings/<type>', methods=['GET'])
+def get_rankings(type):
+    try:
+        if type == 'Users':
+            users = User.query.filter_by(user_type='user').order_by(User.points.desc()).limit(10).all()
+        elif type == 'Companies':
+            users = User.query.filter_by(user_type='company').order_by(User.points.desc()).limit(10).all()
+        else:
+            return jsonify({"error": "Invalid type"}), 400
+
+        return jsonify([user.serialize() for user in users]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/status-by-points/<int:points>', methods=['GET'])
+def get_status_by_points(points):
+    status = Status.query.filter(Status.points_min <= points, Status.points_max >= points).first()
+    if status:
+        return jsonify(status.serialize()), 200
+    else:
+        return jsonify({'msg': "No se encontró un status válido para los puntos dados"}), 404
 
 
 # this only runs if `$ python src/main.py` is executed
