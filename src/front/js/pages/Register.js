@@ -16,24 +16,33 @@ const Register = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const isValidEmail = (email) => {
+        return /\S+@\S+\.\S+/.test(email);
+      };      
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== repeatPassword) {
             setError("The passwords are not similar");
             return;
         }
-
-        setError("Register error");
+        if (!isValidEmail(email)) {
+            setError("Please enter a valid email address.");
+            return;
+          }
+        
         const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password, user_type, username })
         });
-
-        if (!resp.ok) throw Error("There was a problem in the signup request");
-
+        
         const data = await resp.json();
-        navigate("/login");
+        console.log(data)
+        if (resp.status == 400) {
+            setError(data.msg)}
+        if (resp.status == 201) {
+            navigate("/login")}
         return data;
     };
 

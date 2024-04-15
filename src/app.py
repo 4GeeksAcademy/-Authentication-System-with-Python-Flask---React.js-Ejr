@@ -13,6 +13,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
+import re
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -109,14 +110,25 @@ def register():
     body = request.get_json(silent = True)
     if body is None:
         return jsonify({'msg': "Debes enviar información en el body"}), 400
-    if 'email' not in body:
-        return jsonify({'msg': "El campo email es obligatorio"}), 400
+    if 'email' not in body or body["email"] == "":
+        return jsonify({'msg': "Email is mandatory"}), 400
+    if not re.match(r'\S+@\S+\.\S+', body['email']):
+        return jsonify({'msg': "Invalid email format"}), 400
     if 'password' not in body:
         return jsonify({'msg': "El campo password es obligatorio"}), 400
     if "user_type" not in body:
         return jsonify({"msg": "El campo user_type es obligatorio"}), 400
-    if "username" not in body:
-        return jsonify({"msg": "El campo username es obligatorio"}), 400
+    if "username" not in body or body["username"] == "":
+        return jsonify({"msg": "Username is mandatory"}), 400
+    
+    user_exist = User.query.filter_by(email=body["email"]).first()
+    username_exist = User.query.filter_by(username=body["username"]).first()
+
+    if user_exist != None:
+        return jsonify({"msg": "Email already registered"}), 400
+    if username_exist != None:
+        return jsonify({"msg": "Username already exist"}), 400
+    
     new_user = User()
     new_user.email = body['email']
     pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
