@@ -88,6 +88,7 @@ const Profile = () => {
             const data = await response.json();
             if (response.ok) {
                 setUserData(data);
+                fetchStatusByPoints(data.points);
             } else {
                 console.error("Error fetching user data:", data.message);
                 setUserData({});
@@ -97,6 +98,25 @@ const Profile = () => {
             setUserData({});
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const fetchStatusByPoints = async (points) => {
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch(`${process.env.BACKEND_URL}/api/status-by-points/${points}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const statusData = await response.json();
+            if (response.ok) {
+                setUserData(prevState => ({ ...prevState, status_name: statusData.name, status_image: statusData.image }));
+            } else {
+                console.error("Error fetching status by points:", statusData.message);
+            }
+        } catch (error) {
+            console.error("Error fetching status by points: ", error);
         }
     };
 
@@ -149,7 +169,11 @@ const Profile = () => {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="loading-container">
+                <div className="spinner"></div>
+            </div>
+        );
     }
 
     return (
@@ -166,7 +190,7 @@ const Profile = () => {
                         <>
                             <div className="my-profile">
                                 <div className="photo-container">
-                                    <img src={userData.photo || "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"} alt="Profile" className="photo-user" />
+                                    <img src={userData && userData.photo ? userData.photo : "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"} alt="Profile" className="photo-user" />
                                     <label htmlFor="file-upload" className="edit-photo-label">Edit photo</label>
                                     <input
                                         id="file-upload"
@@ -178,11 +202,11 @@ const Profile = () => {
                                     />
                                 </div>
                                 <div className="user-info ps-3">
-                                    <p className="username-text-profile">{userData.username || "No Username"}</p>
-                                    <p className="points-text-profile pb-2">{userData.points || 0} points</p>
+                                    <p className="username-text-profile">{userData ? userData.username : "No Username"}</p>
+                                    <p className="points-text-profile pb-2">{userData ? userData.points : 0} points</p>
                                     <p className="status-text-profile">
-                                        {userData.status_name || "AMATEUR"}
-                                        <img className="image-status-profile ms-3" src={amateur} alt="Status" />
+                                        {userData ? userData.status_name : "AMATEUR"}
+                                        <img className="image-status-profile ms-3" src={userData && userData.status_image ? userData.status_image : amateur} alt="Status" />
                                     </p>
                                 </div>
                             </div>
@@ -191,7 +215,7 @@ const Profile = () => {
                     )}
                     {activeSection === "Treasures Activity" && (
                         <div className="treasures-activity">
-                            <h2 className="pb-2 title-hide-profile">Found Treasures</h2>
+                            <h2 className="pb-2 title-hide-profile">Found Treasures ({foundTreasures.length})</h2>
                             <table className="table-list-profile">
                                 <thead>
                                     <tr className="cabecero-profile">
@@ -210,7 +234,7 @@ const Profile = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <h2 className="pb-2 pt-5 title-hide-profile">Hidden Treasures</h2>
+                            <h2 className="pb-2 pt-5 title-hide-profile">Hidden Treasures ({hiddenTreasures.length})</h2>
                             <table className="table-list-profile">
                                 <thead>
                                     <tr className="cabecero-profile">
@@ -238,7 +262,6 @@ const Profile = () => {
             </div>
         </div>
     );
-
 };
 
 export default Profile;

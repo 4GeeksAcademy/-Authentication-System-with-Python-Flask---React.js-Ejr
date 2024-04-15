@@ -13,7 +13,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
-
+import re
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -110,14 +110,25 @@ def register():
     body = request.get_json(silent = True)
     if body is None:
         return jsonify({'msg': "Debes enviar información en el body"}), 400
-    if 'email' not in body:
-        return jsonify({'msg': "El campo email es obligatorio"}), 400
+    if 'email' not in body or body["email"] == "":
+        return jsonify({'msg': "Email is mandatory"}), 400
+    if not re.match(r'\S+@\S+\.\S+', body['email']):
+        return jsonify({'msg': "Invalid email format"}), 400
     if 'password' not in body:
         return jsonify({'msg': "El campo password es obligatorio"}), 400
     if "user_type" not in body:
         return jsonify({"msg": "El campo user_type es obligatorio"}), 400
-    if "username" not in body:
-        return jsonify({"msg": "El campo username es obligatorio"}), 400
+    if "username" not in body or body["username"] == "":
+        return jsonify({"msg": "Username is mandatory"}), 400
+    
+    user_exist = User.query.filter_by(email=body["email"]).first()
+    username_exist = User.query.filter_by(username=body["username"]).first()
+
+    if user_exist != None:
+        return jsonify({"msg": "Email already registered"}), 400
+    if username_exist != None:
+        return jsonify({"msg": "Username already exist"}), 400
+    
     new_user = User()
     new_user.email = body['email']
     pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
@@ -168,16 +179,48 @@ def update_profile_image():
     return jsonify({'msg': "Imagen de perfil actualizada con éxito"}), 200
 
 
+@app.route('/api/treasure/<int:treasure_id>/found', methods=['POST'])
+@jwt_required()
+def mark_treasure_as_found(treasure_id):
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email=user_email).first()
+    if not user:
+        return jsonify({'msg': "Usuario no encontrado"}), 404
+
+    treasure = Treasures_Hide.query.filter_by(id=treasure_id).first()
+    if not treasure:
+        return jsonify({'msg': "Tesoro no encontrado"}), 404
+
+    if treasure.founded:
+        return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
+
+    treasure.founded = True
+
+    user.points += 10
+    db.session.add(user)
+
+    user_hide = User.query.filter_by(id=treasure.user_id).first()
+    if user_hide:
+        user_hide.points += 10
+        db.session.add(user_hide)
+
+    new_treasure_found = Treasures_Founded(treasures_hide_id=treasure_id, user_found_id=user.id)
+    db.session.add(new_treasure_found)
+    db.session.commit()
+
+    return jsonify({'msg': "Tesoro marcado como encontrado con éxito"}), 201
+
+
 '''-------------------------------------GET------------------------------------------- '''
 
 
 @app.route('/api/treasures', methods=['GET'])
 def get_treasures():
-    treasures = db.session.query(Treasures_Hide, User).join(User).all()
-    print(treasures)
-    result =[]
+    treasures = db.session.query(Treasures_Hide, User).join(User).filter(Treasures_Hide.founded == False).all()
+    result = []
     for treasure, user in treasures:
-        treasure_data ={
+        treasure_data = {
             "id": treasure.id,
             "name": treasure.name,
             "image": treasure.image,
@@ -189,7 +232,7 @@ def get_treasures():
         }
         result.append(treasure_data)
     return jsonify(result), 200
-    
+
 
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
@@ -235,6 +278,37 @@ def get_treasure(treasure_id):
     treasure_data['username'] = treasure.user_relationship.username
 
     return jsonify(treasure_data), 200
+
+
+@app.route('/api/cities', methods=['GET'])
+def get_cities():
+    cities = Cities.query.all()
+    cities_list = [city.serialize() for city in cities]
+    return jsonify(cities_list), 200
+
+
+@app.route('/api/rankings/<type>', methods=['GET'])
+def get_rankings(type):
+    try:
+        if type == 'Users':
+            users = User.query.filter_by(user_type='user').order_by(User.points.desc()).limit(10).all()
+        elif type == 'Companies':
+            users = User.query.filter_by(user_type='company').order_by(User.points.desc()).limit(10).all()
+        else:
+            return jsonify({"error": "Invalid type"}), 400
+
+        return jsonify([user.serialize() for user in users]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/status-by-points/<int:points>', methods=['GET'])
+def get_status_by_points(points):
+    status = Status.query.filter(Status.points_min <= points, Status.points_max >= points).first()
+    if status:
+        return jsonify(status.serialize()), 200
+    else:
+        return jsonify({'msg': "No se encontró un status válido para los puntos dados"}), 404
 
 
 # this only runs if `$ python src/main.py` is executed
