@@ -6,6 +6,24 @@ const TreasureList = () => {
     const token = localStorage.getItem("jwt-token");
     const [treasures, setTreasures] = useState([]);
     const [filter, setFilter] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [treasuresPerPage] = useState(5);
+
+    const treasuresFilter = treasures.filter(treasure =>
+        treasure.city_name.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    const indexOfLastTreasure = currentPage * treasuresPerPage;
+    const indexOfFirstTreasure = indexOfLastTreasure - treasuresPerPage;
+
+    const currentTreasures = treasuresFilter.length ?
+        treasuresFilter.slice(indexOfFirstTreasure, indexOfLastTreasure) : [];
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
+    const searchCity = (e) => {
+        setFilter(e.target.value);
+    };
 
     useEffect(() => {
         const treasuresList = async () => {
@@ -13,21 +31,18 @@ const TreasureList = () => {
                 const response = await fetch(process.env.BACKEND_URL + "/api/treasures", {
                     method: "GET"
                 });
-
-                if (!response.ok) throw new Error("Failed to update treasure list")
-
+    
+                if (!response.ok) throw new Error("Failed to update treasure list");
+    
                 const data = await response.json();
                 setTreasures(data);
             } catch (error) {
-                console.error("Error list dont found")
+                console.error("Error list don't found", error);
             }
         };
-        treasuresList()
+        treasuresList();
     }, []);
-    const searchCity = (e) => {
-        setFilter(e.target.value)
-    }
-    const treasuresFilter = treasures.filter(treasure => treasure.city_name.toLowerCase().includes(filter.toLowerCase()));
+
     return (
         <div className="text-center treasure-list-page" style={{ backgroundImage: `url(${list})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '150px 0', minHeight: "100vh" }}>
             <h1 className="title-page-list pb-4">Treasures List</h1>
@@ -51,11 +66,19 @@ const TreasureList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {treasuresFilter.map((treasure, index) => (
+                    {currentTreasures.map((treasure, index) => (
                         <tr className="elementos" key={index}>
-                            <td className="user-elements ps-3">{treasure.username}</td>
+                            <td className="user-elements ps-3">
+                                <img
+                                    src={treasure.userPhoto ? treasure.userPhoto : "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"}
+                                    alt="User"
+                                    className="rounded-circle user-photo"
+                                    style={{ width: '30px', height: '30px', marginRight: '10px', verticalAlign: 'middle' }}
+                                />
+                                {treasure.username}
+                            </td>
                             <td className="image-elements">
-                                <img src={treasure.image} alt="Tesoro" className="image-treasure-list" />
+                                <img src={treasure.image} alt="Treasure" className="image-treasure-list" />
                             </td>
                             <td className="name-elements ps-2">{treasure.name}</td>
                             <td className="city-elements ps-2">{treasure.city_name}</td>
@@ -67,9 +90,15 @@ const TreasureList = () => {
                         </tr>
                     ))}
                 </tbody>
+
+
             </table>
+            <div className="pt-2">
+                <button className="btn btn-prev" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>🡸 Prev</button>
+                <button className="btn btn-next" onClick={() => paginate(currentPage + 1)} disabled={currentPage * treasuresPerPage >= treasuresFilter.length}>Next 🡺</button>
+            </div>
         </div>
     );
-}
+};
 
 export default TreasureList;

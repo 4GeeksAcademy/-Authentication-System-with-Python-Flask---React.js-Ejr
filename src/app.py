@@ -228,7 +228,8 @@ def get_treasures():
             "city_name": treasure.city_name,
             "tips": treasure.tips,
             "user_id": treasure.user_id,
-            "username": user.username
+            "username": user.username,
+            "userPhoto": user.photo,
         }
         result.append(treasure_data)
     return jsonify(result), 200
