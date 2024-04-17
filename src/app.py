@@ -195,6 +195,8 @@ def mark_treasure_as_found(treasure_id):
     if treasure.founded:
         return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
 
+    if user.id == treasure.user_id:
+        return jsonify({'msg': "You cant found treasure you hide"}), 403 
     treasure.founded = True
 
     user.points += 10

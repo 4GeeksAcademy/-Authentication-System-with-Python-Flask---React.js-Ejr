@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "./../store/appContext";
+import Swal from 'sweetalert2'
 
 const SingleTreasure = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
-    const { id } = useParams(); 
+    const { id } = useParams();
     const [treasure, setTreasure] = useState(null);
 
     useEffect(() => {
@@ -53,11 +54,33 @@ const SingleTreasure = () => {
             });
 
             if (response.ok) {
-                alert("Treasure found! You win 10 points!");
-                navigate("/treasures"); 
-            } else {
-                alert("Couldn't mark treasure as found");
+                Swal.fire({
+                    position: "center-center",
+                    icon: "success",
+                    title: "Marked as founded!",
+                    text: 'Earned 10 points!',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                navigate("/treasures");
+            } else if (response.status === 403) {
+                const data = await response.json()
+                Swal.fire({
+                    icon: "error",
+                    title: "Action Forbidden!",
+                    text: data.msg
+                });
             }
+
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Mark Failed",
+                    text: 'Couldnt marked treasure as founded',
+                    footer: 'This treasure has been founded'
+                });
+            }
+
         } catch (error) {
             console.error("Error al marcar el tesoro:", error);
         }
