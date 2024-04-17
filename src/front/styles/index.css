@@ -362,7 +362,7 @@ input {
 .second .position,
 .second .name,
 .second .score {
-    color: silver;
+    color: rgb(190, 181, 181);
     font-size: 34px;
     text-shadow: 0 0 8px rgba(192, 192, 192, 2);
 }
@@ -370,7 +370,7 @@ input {
 .third .position,
 .third .name,
 .third .score {
-    color: #cd7f32;
+    color: #d39353;
     font-size: 30px;
     text-shadow: 0 0 8px rgba(205, 127, 50, 2);
 }
@@ -429,7 +429,7 @@ input {
     font-size: 25px;
 }
 
-.button-rankigns-options {
+.button-rankings-options {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
@@ -440,18 +440,18 @@ input {
     font-family: 'Play', sans-serif !important;
 }
 
-.button-rankigns-options:hover {
+.button-rankings-options:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.button-rankigns-options {
+.button-rankings-options {
     background-color: #000000;
     color: #ffffff;
     border: 2px solid #ffffff;
     font-size: 20px;
 }
 
-.button-rankigns-options:hover {
+.button-rankings-options:hover {
     background-color: #ffffff;
     color: black;
     transform: scale(1.05);
@@ -470,11 +470,11 @@ input {
 .text-ranks-div {
     font-size: 22px;
     color: white;
-    
     font-family: 'Play', sans-serif !important;
     padding-left: 25px;
-    padding-bottom: 60px;
-
+    padding-bottom: 70px;
+    padding-top: 30px;
+    padding-left: 200px;
 }
 
 .text-ranks {
@@ -486,6 +486,13 @@ input {
     padding-left: 10px;
     color: #FFC107 !important;
 
+}
+
+.user-photo-rankings {
+    width: 50px; 
+    height: 50px; 
+    margin-right: 10px; 
+    vertical-align: middle; 
 }
 
 /* CSS de How it Works*/
@@ -752,7 +759,7 @@ input {
     width: 750px;
     padding-top: 15px;
     padding-bottom: 30px;
-    background-color: #2e2e2e;
+    background-color: #424242;
 }
 
 .edit-profile-btn {
@@ -918,7 +925,7 @@ input {
 .elementos td {
     text-align: left;
     vertical-align: middle;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .find-it-elements {
@@ -926,23 +933,23 @@ input {
 }
 
 .user-title{
-    width: 200px;
+    width: 210px;
 }
 
 .name-title {
-    width: 250px;
+    width: 260px;
 }
 
 .description-title-list {
-    width: 350px;
+    width: 360px;
 }
 
 .city-title {
-    width: 200px;
+    width: 210px;
 }
 
 .find-it-title {
-    width: 200px;
+    width: 210px;
 }
 
 .button-see-more {
@@ -953,6 +960,33 @@ input {
 .button-see-more {
     margin-left: 10px;
 }
+
+.btn-prev, .btn-next {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFC107; 
+    background-color: #000000; 
+    border: none;
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    transition: all 0.3s ease; 
+}
+
+.btn-prev:hover, .btn-next:hover {
+    background-color: #000000; 
+    color: white;
+    box-shadow: 0 4px 8px rgba(209, 209, 209, 0.3); 
+}
+
+.btn-prev:disabled, .btn-next:disabled {
+    background-color: #cccccc; 
+    color: #666666; 
+    cursor: default; 
+    box-shadow: none; 
+}
+
 
 /* CSS de Status*/
 
