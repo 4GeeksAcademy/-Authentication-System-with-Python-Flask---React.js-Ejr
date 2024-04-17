@@ -11,6 +11,8 @@ const Profile = () => {
     const [foundTreasures, setFoundTreasures] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadError, setUploadError] = useState('');
+    const [editingUsername, setEditingUsername] = useState(false);
+    const [newUsername, setNewUsername] = useState('');
 
     const changeSection = (section) => {
         setActiveSection(section);
@@ -98,6 +100,29 @@ const Profile = () => {
             setUserData({});
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleUsernameChange = async () => {
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch(`${process.env.BACKEND_URL}/api/update-username/${userData.id}`, {
+                method: "PUT",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: newUsername })
+            });
+            if (response.ok) {
+                // Actualizar el estado del nombre de usuario y salir del modo de edición
+                setUserData(prevState => ({ ...prevState, username: newUsername }));
+                setEditingUsername(false);
+            } else {
+                console.error("Error updating username");
+            }
+        } catch (error) {
+            console.error("Error updating username: ", error);
         }
     };
 
@@ -202,7 +227,17 @@ const Profile = () => {
                                     />
                                 </div>
                                 <div className="user-info ps-3">
-                                    <p className="username-text-profile">{userData ? userData.username : "No Username"}</p>
+                                    {editingUsername ? (
+                                    <div>
+                                        <input type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
+                                        <button onClick={handleUsernameChange}>Save</button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <p className="username-text-profile">{userData ? userData.username : "No Username"}</p>
+                                        <button onClick={() => setEditingUsername(true)}>Edit</button>
+                                    </div>
+                                )}
                                     <p className="points-text-profile pb-2">{userData ? userData.points : 0} points</p>
                                     <p className="status-text-profile">
                                         {userData ? userData.status_name : "AMATEUR"}

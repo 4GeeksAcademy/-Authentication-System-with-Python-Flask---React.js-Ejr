@@ -14,6 +14,7 @@ from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import re
+from flask_mail import Mail
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -310,6 +311,27 @@ def get_status_by_points(points):
         return jsonify(status.serialize()), 200
     else:
         return jsonify({'msg': "No se encontró un status válido para los puntos dados"}), 404
+    
+
+'''-------------------------------------------PUT----------------------------------------------------'''
+
+@app.route('/api/update-username/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def update_username(user_id):
+    user = User.query.get(user_id)
+
+    if user is None:
+        return jsonify({'msg': "Usuario no encontrado"}), 404
+    data=request.get_json()
+    new_username = data.get('username')
+
+    if not new_username:
+        return jsonify({'msg': "El nombre de usuario es requerido"})
+    
+    user.username = new_username
+    db.session.commit()
+
+    return jsonify({'msg': "Nombre de usuario actualizado con éxito"}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
