@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			tokenOK: false
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -46,6 +47,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			// Iniciar sesion
+			// {
+			// 	"email": "messi@miami.com",
+			// 	"password": "leo"
+			// }
+			// Registrarse
+			// {
+			// 	"email": "messi@miami.com",
+			// 	"password": "leo",
+			// 	"is_active": true
+			// }
+			registrarUsuario: function (email, contraseña) {
+				console.log(email, contraseña);
+				fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/user`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						"email": email,
+						"password": contraseña,
+						"is_active": true,
+					})
+				})
+					.then(res =>{ 
+						res.json()
+						if (res.status == 200){
+							setStore({tokenOK : true})
+						}
+					})
+					.then(data => {
+						console.log(data);
+						localStorage.setItem("token",data.token)
+						setStore({tokenOK : true})
+					})
+					.catch(err => console.error(err))
 			}
 		}
 	};
