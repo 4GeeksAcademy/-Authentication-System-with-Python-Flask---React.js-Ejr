@@ -44,53 +44,62 @@ const SingleTreasure = () => {
     };
 
     const markFound = async () => {
-        const token = localStorage.getItem("jwt-token");
-        try {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/treasure/${id}/found`, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                },
-            });
-
-            if (response.ok) {
+        Swal.fire({
+            title: 'Enter the code you found with the treasure',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: async (inputCode) => {
+                return fetch(`${process.env.BACKEND_URL}/api/treasure/${id}/found`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("jwt-token")}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ code: inputCode })
+                })
+                    .then(response => response.json().then(data => {
+                        if (!response.ok) {
+                            throw new Error(data.msg || 'Unknown error');
+                        }
+                        return data;
+                    }))
+                    .catch(error => {
+                        if (!error.message.includes('Unknown error') && !error.message.includes('Incorrect code')) {
+                            throw error;
+                        }
+                        Swal.showValidationMessage(
+                            `Request failed: ${error.message}`
+                        );
+                        return false;
+                    });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
                 Swal.fire({
                     title: '¡Treasure Found!',
-                    text: 'Earned 10 points',
-                    icon: 'success',
-                    confirmButtonText: 'Perfect'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        navigate("/treasures");
-                    }
+                    text: '¡You earn 10 points!',
+                    icon: 'success'
+                }).then(() => {
+                    navigate("/treasures");
                 });
-            } else if (response.status === 403) {
-                const data = await response.json(); 
-                Swal.fire({
-                    title: 'Action Forbidden',
-                    text: data.msg,
-                    icon: 'warning',
-                    confirmButtonText: 'Close'
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'This treasure is already founded',
-                    icon: 'error',
-                    confirmButtonText: 'Close'
-                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+            } else if (result.value === false) {
             }
-        } catch (error) {
-            console.error("Error marking the treasure:", error);
+        }).catch(error => {
             Swal.fire({
                 title: 'Error',
-                text: 'An error occurred while trying to mark the treasure',
+                text: error.message,
                 icon: 'error',
                 confirmButtonText: 'Close'
             });
-        }
-    };    
-
+        });
+    };
     if (!treasure) {
         return (
             <div className="loading-container">
