@@ -9,11 +9,11 @@ export const Login = () => {
 
     return (
         <div className="back-texto2 p-5 h-auto ">
-            <div className="cambria m-auto p-5 back-texto3" style={{width:"500px"}}>
-                <h1 className="text-center">Login</h1>
-                <form>
+            <div className="cambria m-auto p-5 back-texto3" style={{width:"500px", height: "670px"}}>
+                <h1 className="text-center mb-3">Login</h1>
+                <form className="mb-4">
                     <p className="mb-0 login">Email:</p>
-                    <input type="text" placeholder="example@gmail.com" className="w-100 mb-4 login"></input>
+                    <input type="text" placeholder="ejemplo@gmail.com" className="w-100 mb-4 login"></input>
                     <p className="mb-0 login">Contraseña:</p>
                     <input type="password" className="mb-4 w-100 login"></input><br/>
                     <div className="text-center">
@@ -21,8 +21,8 @@ export const Login = () => {
                     </div>
                 </form>
                 <p className="mb-0">¿No tienes Cuenta? <Link to="/register">Registrarse</Link></p>
-                <p className="mb-0">¿Olvidaste la contraseña?</p>
-                <p className="text-center">OR</p>
+                <p className="mb-4">¿Olvidaste la contraseña?</p>
+                <p className="text-center mb-4">OR</p>
                 <div className="text-center">
                     <img src={google} style={{width : "300px", height : "70px" }}/>
                 </div>
