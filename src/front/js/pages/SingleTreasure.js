@@ -55,36 +55,41 @@ const SingleTreasure = () => {
 
             if (response.ok) {
                 Swal.fire({
-                    position: "center-center",
-                    icon: "success",
-                    title: "Marked as founded!",
-                    text: 'Earned 10 points!',
-                    showConfirmButton: false,
-                    timer: 2000
+                    title: '¡Treasure Found!',
+                    text: 'Earned 10 points',
+                    icon: 'success',
+                    confirmButtonText: 'Perfect'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate("/treasures");
+                    }
                 });
-                navigate("/treasures");
             } else if (response.status === 403) {
-                const data = await response.json()
+                const data = await response.json(); 
                 Swal.fire({
-                    icon: "error",
-                    title: "Action Forbidden!",
-                    text: data.msg
+                    title: 'Action Forbidden',
+                    text: data.msg,
+                    icon: 'warning',
+                    confirmButtonText: 'Close'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'This treasure is already founded',
+                    icon: 'error',
+                    confirmButtonText: 'Close'
                 });
             }
-
-            else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Mark Failed",
-                    text: 'Couldnt marked treasure as founded',
-                    footer: 'This treasure has been founded'
-                });
-            }
-
         } catch (error) {
-            console.error("Error al marcar el tesoro:", error);
+            console.error("Error marking the treasure:", error);
+            Swal.fire({
+                title: 'Error',
+                text: 'An error occurred while trying to mark the treasure',
+                icon: 'error',
+                confirmButtonText: 'Close'
+            });
         }
-    };
+    };    
 
     if (!treasure) {
         return (
@@ -93,7 +98,6 @@ const SingleTreasure = () => {
             </div>
         );
     }
-
 
     return (
         <div className="single-treasure-page">

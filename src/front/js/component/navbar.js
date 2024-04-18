@@ -4,10 +4,13 @@ import logoGame from "/src/front/img/logoSinFondo.png";
 import podio from "/src/front/img/podio.png"
 import ubic from "/src/front/img/ubic.png"
 import diamante from "/src/front/img/diamante.png"
+import { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState({ username: null, photo: null });
+	const {store, actions} = useContext(Context)
 
 	const handleLogout = () => {
 		localStorage.removeItem("jwt-token");
@@ -44,7 +47,7 @@ export const Navbar = () => {
 		};
 	
 		fetchUserData();
-	}, [localStorage.getItem("jwt-token")]);
+	}, [localStorage.getItem("jwt-token"), store.infoUpdated]);
 
 	return (
 		<nav className="navbar navbar-custom pe-5">
