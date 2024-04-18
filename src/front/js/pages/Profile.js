@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { useContext } from "react";
+import { Context } from "../store/appContext";
 import amateur from '/src/front/img/1.png';
 
 const Profile = () => {
@@ -11,33 +15,12 @@ const Profile = () => {
     const [foundTreasures, setFoundTreasures] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadError, setUploadError] = useState('');
-    const [editingUsername, setEditingUsername] = useState(false);
+    const [editMode, setEditMode] = useState(false);
     const [newUsername, setNewUsername] = useState('');
+    const {store, actions} = useContext(Context)
 
     const changeSection = (section) => {
         setActiveSection(section);
-    };
-
-    const fetchUserTreasuresFound = async (userId) => {
-        setIsLoading(true);
-        try {
-            const token = localStorage.getItem("jwt-token");
-            const response = await fetch(`${process.env.BACKEND_URL}/api/user/${userId}/found-treasures`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            });
-            const treasures = await response.json();
-            if (response.ok) {
-                setFoundTreasures(treasures);
-            } else {
-                console.error("Error fetching found treasures:", treasures.message);
-            }
-        } catch (error) {
-            console.error("Error fetching found treasures: ", error);
-        } finally {
-            setIsLoading(false);
-        }
     };
 
     const fetchUserTreasures = async (userId) => {
@@ -62,6 +45,28 @@ const Profile = () => {
         }
     };
 
+    const fetchUserTreasuresFound = async (userId) => {
+        setIsLoading(true);
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch(`${process.env.BACKEND_URL}/api/user/${userId}/found-treasures`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const treasures = await response.json();
+            if (response.ok) {
+                setFoundTreasures(treasures);
+            } else {
+                console.error("Error fetching found treasures:", treasures.message);
+            }
+        } catch (error) {
+            console.error("Error fetching found treasures: ", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
         if (!token) {
@@ -72,7 +77,7 @@ const Profile = () => {
     }, [navigate]);
 
     useEffect(() => {
-        if (userData) {
+        if (userData && userData.id) {
             fetchUserTreasures(userData.id);
             fetchUserTreasuresFound(userData.id);
         }
@@ -80,70 +85,47 @@ const Profile = () => {
 
     const fetchUserData = async () => {
         setIsLoading(true);
-        try {
-            const token = localStorage.getItem("jwt-token");
-            const response = await fetch(`${process.env.BACKEND_URL}/api/current-user`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            });
-            const data = await response.json();
-            if (response.ok) {
-                setUserData(data);
-                fetchStatusByPoints(data.points);
-            } else {
-                console.error("Error fetching user data:", data.message);
-                setUserData({});
-            }
-        } catch (error) {
-            console.error("Error fetching user data: ", error);
-            setUserData({});
-        } finally {
-            setIsLoading(false);
+        const token = localStorage.getItem("jwt-token");
+        const response = await fetch(`${process.env.BACKEND_URL}/api/current-user`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        const data = await response.json();
+        if (response.ok) {
+            setUserData(data);
+        } else {
+            console.error("Error fetching user data:", data.message);
         }
-    };
-
-    const handleUsernameChange = async () => {
-        try {
-            const token = localStorage.getItem("jwt-token");
-            const response = await fetch(`${process.env.BACKEND_URL}/api/update-username/${userData.id}`, {
-                method: "PUT",
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: newUsername })
-            });
-            if (response.ok) {
-                // Actualizar el estado del nombre de usuario y salir del modo de edición
-                setUserData(prevState => ({ ...prevState, username: newUsername }));
-                setEditingUsername(false);
-            } else {
-                console.error("Error updating username");
-            }
-        } catch (error) {
-            console.error("Error updating username: ", error);
-        }
+        setIsLoading(false);
     };
 
     const fetchStatusByPoints = async (points) => {
-        try {
-            const token = localStorage.getItem("jwt-token");
-            const response = await fetch(`${process.env.BACKEND_URL}/api/status-by-points/${points}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            });
-            const statusData = await response.json();
-            if (response.ok) {
-                setUserData(prevState => ({ ...prevState, status_name: statusData.name, status_image: statusData.image }));
-            } else {
-                console.error("Error fetching status by points:", statusData.message);
-            }
-        } catch (error) {
-            console.error("Error fetching status by points: ", error);
+        const token = localStorage.getItem("jwt-token");
+        const response = await fetch(`${process.env.BACKEND_URL}/api/status-by-points/${points}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        const statusData = await response.json();
+        if (response.ok) {
+            setUserData(prevState => ({
+                ...prevState,
+                status_name: statusData.current_status.name,
+                status_image: statusData.current_status.image,
+                nextStatus: statusData.next_status,
+                progress: statusData.progress
+            }));
+        } else {
+            console.error("Error fetching status by points:", statusData.message);
         }
     };
+
+    useEffect(() => {
+        if (userData && userData.points) {
+            fetchStatusByPoints(userData.points);
+        }
+    }, [userData?.points]);
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
@@ -152,11 +134,33 @@ const Profile = () => {
         try {
             await uploadProfileImage(file);
         } catch (error) {
-            console.error("Error al cargar la imagen: ", error);
+            console.error("Error uploading the profile image: ", error);
             setUploadError('Error uploading the profile image');
         }
         setIsUploading(false);
+        actions.changeInfo()
     };
+
+    const handleUsernameChange = async () => {
+        const token = localStorage.getItem('jwt-token');
+        const response = await fetch(`${process.env.BACKEND_URL}/api/update-username/${userData.id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: newUsername })
+        });
+
+        if (response.ok) {
+            setUserData(prev => ({ ...prev, username: newUsername }));
+            setEditMode(false)
+            actions.changeInfo()
+        } else {
+            const error = await response.json();
+            console.error('Error updating username:', error.message);
+        }
+    }
 
     const uploadProfileImage = async (file) => {
         const formData = new FormData();
@@ -170,11 +174,10 @@ const Profile = () => {
 
         const data = await response.json();
         if (!data.secure_url) {
-            throw new Error('La URL de la imagen no está disponible.');
+            throw new Error('Image URL not available.');
         }
 
         await updateProfileImage(data.secure_url);
-        await fetchUserData(); 
     };
 
     const updateProfileImage = async (imageUrl) => {
@@ -187,9 +190,14 @@ const Profile = () => {
             },
             body: JSON.stringify({ photo: imageUrl })
         });
-
-        if (!response.ok) {
-            throw new Error('La respuesta del servidor no fue OK.');
+    
+        if (response.ok) {
+            setUserData(prevUserData => ({
+                ...prevUserData,
+                photo: imageUrl 
+            }));
+        } else {
+            throw new Error('Server response was not OK.');
         }
     };
 
@@ -214,7 +222,7 @@ const Profile = () => {
                     {activeSection === "Profile" && (
                         <>
                             <div className="my-profile">
-                                <div className="photo-container">
+                                <div className="photo-container pe-3">
                                     <img src={userData && userData.photo ? userData.photo : "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"} alt="Profile" className="photo-user" />
                                     <label htmlFor="file-upload" className="edit-photo-label">Edit photo</label>
                                     <input
@@ -227,25 +235,38 @@ const Profile = () => {
                                     />
                                 </div>
                                 <div className="user-info ps-3">
-                                    {editingUsername ? (
-                                    <div>
-                                        <input type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
-                                        <button onClick={handleUsernameChange}>Save</button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <p className="username-text-profile">{userData ? userData.username : "No Username"}</p>
-                                        <button onClick={() => setEditingUsername(true)}>Edit</button>
-                                    </div>
-                                )}
+                                    {editMode ? (
+                                        <>
+                                            <input value={newUsername} onChange={e => setNewUsername(e.target.value)} className="form-control" />
+                                            <button onClick={handleUsernameChange} className="btn btn-change">Save</button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="username-text-profile">
+                                                {userData ? userData.username : "No Username"}
+                                                <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEditMode(true)} className="ms-2 text-secondary" />
+                                            </p>
+                                        </>
+                                    )}
                                     <p className="points-text-profile pb-2">{userData ? userData.points : 0} points</p>
-                                    <p className="status-text-profile">
+                                    <div className="status-text-profile">
                                         {userData ? userData.status_name : "AMATEUR"}
-                                        <img className="image-status-profile ms-3" src={userData && userData.status_image ? userData.status_image : amateur} alt="Status" />
-                                    </p>
+                                    </div>
+                                    <div className="status-progress">
+                                        <img className="image-status-profile" src={userData && userData.status_image ? userData.status_image : amateur} alt="Status" />
+                                        {userData && userData.nextStatus && (
+                                            <>
+                                                <div className="progress-bar-container">
+                                                    <div className="progress-bar">
+                                                        <div className="progress-bar-inner" style={{ width: `${userData.progress}%` }}></div>
+                                                    </div>
+                                                </div>
+                                                <img className="image-status-profile" src={userData.nextStatus.image} alt="Next Status" />
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                            <button className="btn btn-warning mt-3 edit-profile-btn">Edit Profile</button>
                         </>
                     )}
                     {activeSection === "Treasures Activity" && (
@@ -278,13 +299,14 @@ const Profile = () => {
                                         <th className="city-title-profile">City</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="relleno">
                                     {hiddenTreasures.map(treasure => (
                                         <tr className="elementos-profile" key={treasure.id}>
                                             <td className="image-elements-profile"><img src={treasure.image} alt="Found Treasure" /></td>
                                             <td className="name-elements-profile ps-2">{treasure.name}</td>
                                             <td className="city-elements-profile ps-2">{treasure.city_name}</td>
                                         </tr>
+                                        
                                     ))}
                                 </tbody>
                             </table>

@@ -23,7 +23,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== repeatPassword) {
-            setError("The passwords are not similar");
+            setError("Passwords are not the same");
             return;
         }
         if (!isValidEmail(email)) {
