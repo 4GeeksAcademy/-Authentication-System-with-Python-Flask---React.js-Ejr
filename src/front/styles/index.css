@@ -62,11 +62,10 @@
 .creadores {
     position: absolute;
     font-family: "Permanent Marker", cursive;
-    top: 57%; /* Ajusta la posición vertical del botón */
+    height: 108px;
+    top: 50%; /* Ajusta la posición vertical del botón */
     left: 10%;/* left: 0%; Ajusta la posición horizontal del botón */
     transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    margin: auto;
     cursor: pointer;
 }
 .agradecimientos {
@@ -77,4 +76,7 @@
     transform: translate(-50%, -50%);
     padding: 10px 20px;
     cursor: pointer;
+}
+.login{
+    font-size: 27px; 
 }
