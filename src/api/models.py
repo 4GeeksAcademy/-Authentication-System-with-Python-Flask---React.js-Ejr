@@ -79,6 +79,7 @@ class Treasures_Hide (db.Model):
     city_name=db.Column(db.String, db.ForeignKey('cities.name'))
     city_relationship = db.relationship(Cities)
     founded=db.Column(db.Boolean(), default=False, nullable=True)
+    code=db.Column(db.String(20), nullable=True, unique=True)
     
     def __repr__(self):
         return "Tesoro escondido: {}".format (self.name)

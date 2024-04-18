@@ -99,6 +99,7 @@ def hide_treasure():
     new_treasure.city_name = body['city_name']
     new_treasure.tips = body['tips']
     new_treasure.user_id = user.id
+    new_treasure.code = body['code']
     db.session.add (new_treasure)
     db.session.commit()
     
@@ -191,6 +192,15 @@ def mark_treasure_as_found(treasure_id):
     treasure = Treasures_Hide.query.filter_by(id=treasure_id).first()
     if not treasure:
         return jsonify({'msg': "Tesoro no encontrado"}), 404
+
+    data = request.get_json()
+    submitted_code = data.get('code')
+    
+    if not submitted_code:
+        return jsonify({"msg": "Code required"}), 400
+    
+    if submitted_code != treasure.code:
+        return jsonify({"msg": "Code not correct"}), 403
 
     if treasure.founded:
         return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400

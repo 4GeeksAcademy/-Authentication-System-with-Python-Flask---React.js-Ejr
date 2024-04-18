@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "./../store/appContext";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { TbSettingsCode } from "react-icons/tb";
+import Swal from "sweetalert2";
 
 const TreasureForm = () => {
     const { store, actions } = useContext(Context);
@@ -11,9 +13,10 @@ const TreasureForm = () => {
     const [city_name, setCity_name] = useState('');
     const [tips, setTips] = useState('');
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState(''); 
+    const [imageUrl, setImageUrl] = useState('');
     const [error, setError] = useState('');
     const [cities, setCities] = useState([]);
+    const [code, setCode] = useState("")
 
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
@@ -29,7 +32,7 @@ const TreasureForm = () => {
         try {
             const response = await fetch(process.env.BACKEND_URL + '/api/cities');
             const data = await response.json();
-            setCities(data); 
+            setCities(data);
         } catch (error) {
             console.error("Error fetching cities:", error);
         }
@@ -56,19 +59,21 @@ const TreasureForm = () => {
             method: "POST",
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            setImageUrl(data.url); 
-            hideTreasure(data.url);
-        })
-        .catch(error => {
-            setError("Upload error");
-            console.error("Error uploading the image:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                setImageUrl(data.url);
+                hideTreasure(data.url);
+            })
+            .catch(error => {
+                setError("Upload error");
+                console.error("Error uploading the image:", error);
+            });
     };
 
     const hideTreasure = async (uploadedImageUrl) => {
         setError("");
+        const unique_code = Math.random().toString(10).slice(2, 7)
+        setCode(unique_code)
         try {
             const token = localStorage.getItem("jwt-token");
             const locationUrl = `https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`;
@@ -78,12 +83,22 @@ const TreasureForm = () => {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, location: locationUrl, city_name, tips, image: uploadedImageUrl }) 
+                body: JSON.stringify({ name, location: locationUrl, city_name, tips, image: uploadedImageUrl, code: unique_code })
             });
 
             if (!response.ok) throw new Error("Fail to hide treasure");
 
             await response.json();
+            Swal.fire({
+                title: `SECRET CODE: ${unique_code}`,
+                text: 'Dont forget hide this code with your treasure!',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/treasures");
+                }
+            });
             navigate("/treasures");
         } catch (error) {
             setError("Update error");
@@ -93,7 +108,7 @@ const TreasureForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        uploadImage(); 
+        uploadImage();
     };
 
     return (
