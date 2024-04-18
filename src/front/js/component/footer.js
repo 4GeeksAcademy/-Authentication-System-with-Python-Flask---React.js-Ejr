@@ -5,7 +5,7 @@ export const Footer = () => (
 		<div className="creadores p-0">
 			<ul className="cambria list-unstyled ">
 				<li className="fw-bold fs-5 ">Creado por:</li>
-				<li><a href="https://www.linkedin.com/in/connor-clements-425124245/" className="text-black text-decoration-none fs-6">Conor Clements  <i class="fa-brands fa-linkedin"></i></a></li>
+				<li><a href="https://www.linkedin.com/in/connor-clements-425124245/" className="text-black text-decoration-none fs-6">Connor Clements  <i class="fa-brands fa-linkedin"></i></a></li>
 				<li><a href="https://www.linkedin.com/in/ramiro-sca-048182226/" className="text-black text-decoration-none fs-6">Ramiro Scarinci  <i class="fa-brands fa-linkedin"></i></a></li>
 				<li><a href="https://github.com/Sai40k" className="text-black text-decoration-none fs-6 pb-0 mb-0">Ivan Torres Álvarez  <i class="fa-brands fa-github"></i></a></li>
 			</ul>
