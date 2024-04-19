@@ -54,7 +54,7 @@ const TreasureForm = () => {
         formData.append("file", image);
         formData.append("upload_preset", "treasure");
 
-        fetch("https://api.cloudinary.com/v1_1/dxzhssh9m/image/upload", {
+        fetch(`https://api.cloudinary.com/v1_1/${process.env.USER_CLOUDINARY}/image/upload`, {
             method: "POST",
             body: formData
         })
@@ -138,7 +138,7 @@ const TreasureForm = () => {
                 </div>
                 <div className="hide-input-group pb-4">
                     <label htmlFor="location">Location (Select on the map where you have hidden the treasure)</label>
-                    <LoadScript googleMapsApiKey="AIzaSyCTGrpUkNXzG9IGFu5xWq1ag5x3HIfoqnU">
+                    <LoadScript googleMapsApiKey={process.env.API_KEY_GOOGLE}>
                         <GoogleMap
                             mapContainerStyle={{ width: '100%', height: '350px', borderRadius: '10px', border: '2px solid #FFC107' }}
                             center={location}

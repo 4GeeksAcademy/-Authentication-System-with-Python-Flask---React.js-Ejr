@@ -9,13 +9,13 @@ import TreasureList from "./pages/TreasureList";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Rankings from "./pages/Rankings";
+import ForgetPassword from "./pages/ForgetPassword";
 import Profile from "./pages/Profile";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import SingleTreasure from "./pages/SingleTreasure";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
@@ -42,6 +42,7 @@ const Layout = () => {
                         <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<SingleTreasure />} path="/treasure/:id" />
+                        <Route element={<ForgetPassword />} path="/password" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
