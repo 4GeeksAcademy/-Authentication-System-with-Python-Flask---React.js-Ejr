@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "./../store/appContext";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { TbSettingsCode } from "react-icons/tb";
 import Swal from "sweetalert2";
 
 const TreasureForm = () => {
@@ -141,7 +140,7 @@ const TreasureForm = () => {
                     <label htmlFor="location">Location (Select on the map where you have hidden the treasure)</label>
                     <LoadScript googleMapsApiKey="AIzaSyCTGrpUkNXzG9IGFu5xWq1ag5x3HIfoqnU">
                         <GoogleMap
-                            mapContainerStyle={{ width: '100%', height: '350px' }}
+                            mapContainerStyle={{ width: '100%', height: '350px', borderRadius: '10px', border: '2px solid #FFC107' }}
                             center={location}
                             zoom={10}
                             onClick={onMapClick}

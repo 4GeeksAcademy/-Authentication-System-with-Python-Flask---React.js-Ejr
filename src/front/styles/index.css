@@ -13,7 +13,7 @@
     max-width: 400px;
     margin: auto;
     padding: 20px;
-    background: white;
+    background: rgb(255, 255, 255);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: 'Outfit', sans-serif;
     border-radius: 10px;
@@ -355,7 +355,7 @@ input {
 .first .name,
 .first .score {
     color: gold;
-    font-size: 38px;
+    font-size: 34px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 2);
 }
 
@@ -363,7 +363,7 @@ input {
 .second .name,
 .second .score {
     color: rgb(190, 181, 181);
-    font-size: 34px;
+    font-size: 31px;
     text-shadow: 0 0 8px rgba(192, 192, 192, 2);
 }
 
@@ -371,7 +371,7 @@ input {
 .third .name,
 .third .score {
     color: #d39353;
-    font-size: 30px;
+    font-size: 28px;
     text-shadow: 0 0 8px rgba(205, 127, 50, 2);
 }
 
@@ -379,7 +379,7 @@ input {
 .other .name,
 .other .score {
     color: white;
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .name {
@@ -761,7 +761,8 @@ input {
     width: 750px;
     padding-top: 15px;
     padding-bottom: 30px;
-    background-color: #454545;
+    background-color: #535353;
+    box-shadow: 3px 3px 3px rgba(232, 240, 167, 0.5)
 }
 
 .edit-profile-btn {
