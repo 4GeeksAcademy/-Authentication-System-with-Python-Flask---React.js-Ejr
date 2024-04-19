@@ -63,7 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			registrarUsuario: async function (email, contraseña) {
 				console.log(email, contraseña);
 				try{
-					const response = await fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/user`, {
+					const response = await fetch(`https://orange-cod-4jjwqw7xr657hqpw9-3001.app.github.dev/api/user`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loginUsuario: async function (email, contraseña) {
 				console.log(email, contraseña);
 				try{
-					const response = await fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/login`, {
+					const response = await fetch(`https://orange-cod-4jjwqw7xr657hqpw9-3001.app.github.dev/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -142,6 +142,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error(err)
 
+				}
+			},
+			tokenOK: function(){
+				if (localStorage.getItem("token")!= null) {
+					setStore({tokenOK : true})
 				}
 			}
 		}
