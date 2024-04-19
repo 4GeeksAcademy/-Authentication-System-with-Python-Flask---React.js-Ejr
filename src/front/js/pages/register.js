@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import google from "../../img/googlelogin.png";
 
@@ -8,11 +9,18 @@ export const Register = () => {
     const { store, actions } = useContext(Context);
     const [email, setEmail] = useState("")
     const [contraseña, setContraseña] = useState("")
+    const navigate = useNavigate();
 
-    function registrarUsuario(e){
+    async function registrarUsuario(e){
         e.preventDefault()
         console.log(email,contraseña);
-        actions.registrarUsuario(email, contraseña)
+        await actions.registrarUsuario(email, contraseña)
+        console.log(store.navigate);
+        if (store.navigate==true) {
+            navigate('/')
+        }
+        store.navigate = false
+        // console.log(store.navigate);
         // setEmail("")
         // setContraseña("")
     }

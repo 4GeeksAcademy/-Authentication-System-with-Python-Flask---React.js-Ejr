@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			tokenOK: false
+			tokenOK: false,
+			navigate: false,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -59,31 +60,89 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	"password": "leo",
 			// 	"is_active": true
 			// }
-			registrarUsuario: function (email, contraseña) {
+			registrarUsuario: async function (email, contraseña) {
 				console.log(email, contraseña);
-				fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/user`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						"email": email,
-						"password": contraseña,
-						"is_active": true,
+				try{
+					const response = await fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/user`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							"email": email,
+							"password": contraseña,
+							"is_active": true,
+						})
 					})
-				})
-					.then(res =>{ 
-						res.json()
-						if (res.status == 200){
-							setStore({tokenOK : true})
-						}
-					})
-					.then(data => {
-						console.log(data);
-						localStorage.setItem("token",data.token)
+					const data = await response.json()
+					console.log(data);
+					console.log(response.status);
+					localStorage.setItem("token",data.token)
+					if (response.status == 200){
 						setStore({tokenOK : true})
+						setStore({navigate : true})
+					}
+					return true
+				} catch (error) {
+					console.error(err)
+
+				}
+				// fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/user`, {
+				// 	method: 'POST',
+				// 	headers: {
+				// 		'Content-Type': 'application/json'
+				// 	},
+				// 	body: JSON.stringify({
+				// 		"email": email,
+				// 		"password": contraseña,
+				// 		"is_active": true,
+				// 	})
+				// })
+				// 	.then(res =>{ 
+				// 		res.json()
+				// 		if (res.status == 200){
+				// 			setStore({tokenOK : true})
+				// 		}
+				// 	})
+				// 	.then(data => {
+				// 		console.log(data);
+				// 		localStorage.setItem("token",data.token)
+				// 	})
+				// 	.catch(err => console.error(err))
+			},
+
+
+
+
+
+
+
+			loginUsuario: async function (email, contraseña) {
+				console.log(email, contraseña);
+				try{
+					const response = await fetch(`https://fantastic-space-zebra-v6r7vrg469pfxx9q-3001.app.github.dev/api/login`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							"email": email,
+							"password": contraseña,
+						})
 					})
-					.catch(err => console.error(err))
+					const data = await response.json()
+					console.log(data);
+					console.log(response.status);
+					localStorage.setItem("token",data.token)
+					if (response.status == 200){
+						setStore({tokenOK : true})
+						setStore({navigate : true})
+					}
+					return true
+				} catch (error) {
+					console.error(err)
+
+				}
 			}
 		}
 	};

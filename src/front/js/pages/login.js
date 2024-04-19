@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import google from "../../img/googlelogin.png";
 
@@ -8,9 +9,15 @@ export const Login = () => {
     const { store, actions } = useContext(Context);
     const [email, setEmail] = useState("")
     const [contraseña, setContraseña] = useState("")
+    const navigate = useNavigate();
 
-    function userLogin (e) {
+    async function userLogin (e) {
         e.preventDefault()
+        await actions.loginUsuario(email, contraseña)
+        if (store.navigate==true) {
+            navigate('/')
+        }
+        store.navigate = false
         // console.log(localStorage.getItem("token"));
         console.log(store.tokenOK);
     }
@@ -21,9 +28,9 @@ export const Login = () => {
                 <h1 className="text-center mb-3">Login</h1>
                 <form className="mb-4" onSubmit={userLogin}>
                     <p className="mb-0 login">Email:</p>
-                    <input type="text" placeholder="ejemplo@gmail.com" className="w-100 mb-4 login"></input>
+                    <input type="text" placeholder="ejemplo@gmail.com" className="w-100 mb-4 login" onChange={event => setEmail(event.target.value)}></input>
                     <p className="mb-0 login">Contraseña:</p>
-                    <input type="password" className="mb-4 w-100 login"></input><br/>
+                    <input type="password" className="mb-4 w-100 login" onChange={event => setContraseña(event.target.value)}></input><br/>
                     <div className="text-center">
                     <button type="submit" className="login mb-3">Iniciar Sesion</button>
                     </div>
