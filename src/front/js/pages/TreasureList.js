@@ -94,7 +94,7 @@ const TreasureList = () => {
 
             </table>
             <div className="pt-2">
-                <button className="btn btn-prev" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>🡸 Prev</button>
+                <button className="btn btn-prev me-1" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>🡸 Prev</button>
                 <button className="btn btn-next" onClick={() => paginate(currentPage + 1)} disabled={currentPage * treasuresPerPage >= treasuresFilter.length}>Next 🡺</button>
             </div>
         </div>

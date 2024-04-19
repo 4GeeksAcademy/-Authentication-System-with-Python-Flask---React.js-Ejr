@@ -14,14 +14,14 @@ from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import re
-from flask_mail import Mail
+from flask_mail import Mail, Message
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
-mail = Mail(app)
 
 app.config.update(dict(
     DEBUG=False,
@@ -30,8 +30,9 @@ app.config.update(dict(
     MAIL_USE_TLS=True,
     MAIL_USE_SSL=False,
     MAIL_USERNAME="urbantreasures.info@gmail.com",
-    MAIL_PASSWORD=''
+    MAIL_PASSWORD='smbbvwybbzzebwpo'
 ))
+mail = Mail(app)
 
 CORS(app)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
@@ -151,6 +152,11 @@ def register():
     new_user.user_type = body["user_type"]
     db.session.add (new_user)
     db.session.commit()
+
+    msg = Message(subject="Welcome mail", sender="urbantreasures.info@gmail.com", recipients=[new_user.email])
+    msg.html = "<h3>Hi {}! Welcome to Urban Treasures. We hope you enjoy the adventure!</h3>".format (new_user.username)
+    mail.send(msg)
+
     return jsonify({"msg": "El usuario ha sido creado con exito"}), 201
 
 
@@ -234,6 +240,10 @@ def mark_treasure_as_found(treasure_id):
     new_treasure_found = Treasures_Founded(treasures_hide_id=treasure_id, user_found_id=user.id)
     db.session.add(new_treasure_found)
     db.session.commit()
+
+    msg = Message(subject="Treasure founded", sender="urbantreasures.info@gmail.com", recipients=[user_hide.email])
+    msg.html = "<h3>Hello {}, your treasure '{}' is already founded by {}</h3>".format (user_hide.username, treasure.name, user.username)
+    mail.send(msg)
 
     return jsonify({'msg': "Tesoro marcado como encontrado con éxito"}), 201
 

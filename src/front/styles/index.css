@@ -93,6 +93,10 @@ input {
     cursor: pointer;
 }
 
+.forget-password{
+    text-align: right;
+}
+
 .input-group {
     margin-bottom: 15px;
     display: grid;
