@@ -1,5 +1,9 @@
-import click
 from api.models import db, User, Cities, Status 
+from flask_bcrypt import Bcrypt
+from flask import Flask
+
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 statuses = [{"name": "Amateur","points": {"points_min": 0, "points_max":99, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952499/1_dgp6wp.png"}},
             {"name": "Bronze" , "points":{"points_min": 100, "points_max":199, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952499/2_cf8hd4.png"}},
@@ -33,22 +37,33 @@ cities = [
     {"name": "Zaragoza"}
 ]
 
-def setup_commands(app):
-    
-    @app.cli.command("insert-test-users") # name of our command
-    @click.argument("count") # argument of out command
-    def insert_test_users(count):
-        print("Creating test users")
-        for x in range(1, int(count) + 1):
-            user = User()
-            user.email = "test_user" + str(x) + "@test.com"
-            user.password = "123456"
-            user.is_active = True
-            db.session.add(user)
-            db.session.commit()
-            print("User: ", user.email, " created.")
+users = [
+    {"username": "denis9diaz", "email": "denis9diaz@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "javi001", "email": "javi@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "ernest0", "email": "ernesto@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "mariagarcia", "email": "maria@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "pedropicapiedra", "email": "pedro@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "soyelena", "email": "elena@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "gonz0", "email": "gonzo@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "silvialahouse", "email": "silvia@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "pepe33", "email": "pepe@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "miriammm", "email": "miriam@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+]
 
-        print("All test users created")
+companies = [
+    {"username": "CocaCola", "email": "cocacola@cocacola.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Orbit", "email": "orbit@orbit.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Nike", "email": "nike@nike.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Adidas", "email": "adidas@adidas.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Reebok", "email": "reebok@reebok.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Supreme", "email": "supreme@supreme.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Relx", "email": "relx@relx.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Fanta", "email": "fanta@fanta.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "Nestle", "email": "nestle@nestle.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+    {"username": "MediaMarkt", "email": "mediamarkt@mediamarkt.com", "password": "123", "user_type": "company", "status_name": "Amateur"},
+]
+
+def setup_commands(app):
 
     @app.cli.command("insert-status")
     def insert_status():
@@ -75,7 +90,40 @@ def setup_commands(app):
             db.session.commit()
             print("City {} creada!".format(cities[x]["name"]))
         print("Todas las ciudades creadas")
-        
+    
+    @app.cli.command("insert-users")
+    def insert_users():
+        with app.app_context():  
+            print("Creating Users")
+        for x in range(0, len(users)):
+            user = User()
+            user.username = users[x]["username"]
+            user.email = users[x]["email"]
+            user.password = bcrypt.generate_password_hash(users[x]["password"]).decode("utf-8")  
+            user.user_type = users[x]["user_type"]
+            user.status_name = users[x]["status_name"]
+            db.session.add(user)
+            db.session.commit()
+            print("User {} creado!".format(users[x]["username"]))
+        print("Todos los usuarios creados")
+
+
+    @app.cli.command("insert-companies")
+    def insert_companies():
+        with app.app_context():
+            print("Creating Companies")
+        for x in range(0, len(companies)):
+            user = User()
+            user.username = companies[x]["username"]
+            user.email = companies[x]["email"]
+            user.password = bcrypt.generate_password_hash(companies[x]["password"]).decode("utf-8")  
+            user.user_type = companies[x]["user_type"]
+            db.session.add(user)
+            db.session.commit()
+            print("Company {} creada!".format(companies[x]["username"]))
+        print("Todas las empresas creadas")
+
+
     @app.cli.command("insert-test-data")
     def insert_test_data():
         pass
