@@ -21,7 +21,7 @@ export const Session = () => {
                 </div>
             </div>
             <div className="Pictureholder text-center  " >
-                <img className=" border border-dark rounded my-2"src={fotopais} style={{width:350, height:500}} />
+                <img className=" border border-dark rounded my-2"src={fotopais} style={{width:300, height:400}} />
             </div>
             <div className="QuestionHolder text-center">
                 <h1>¿A qué país pertenece esta imagen?</h1>
