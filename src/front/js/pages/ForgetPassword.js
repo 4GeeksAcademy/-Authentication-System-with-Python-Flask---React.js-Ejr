@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'; 
 
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -18,8 +19,16 @@ const ForgetPassword = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                setMessage("Check your email for the temporary password.");
-                navigate('/reset-password'); 
+                Swal.fire({
+                    title: 'Email Sent!',
+                    text: 'Temporary password sent to your email.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.value) {
+                        navigate('/reset-password'); 
+                    }
+                });
             } else {
                 setMessage(data.msg);
             }

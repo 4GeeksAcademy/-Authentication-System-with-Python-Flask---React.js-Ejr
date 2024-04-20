@@ -118,6 +118,9 @@ def forgot_password():
 
 @app.route('/api/reset-password', methods=['POST'])
 def reset_password():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
     body = request.get_json()
     temp_password = body.get('temp_password')
     new_password = body.get('new_password')
@@ -125,19 +128,22 @@ def reset_password():
     if not temp_password or not new_password:
         return jsonify({'msg': "All fields are required"}), 422
 
-    user = User.query.filter_by(temp_password=bcrypt.generate_password_hash(temp_password).decode('utf-8')).first()
+    user = User.query.filter(User.temp_password != None).first()
 
     if not user:
-        return jsonify({'msg': "Invalid or expired temporary password"}), 404
+        return jsonify({'msg': "No temporary password has been set for any user"}), 404
+
+    if not bcrypt.check_password_hash(user.temp_password, temp_password):
+        return jsonify({'msg': "Temporary password is invalid or has expired"}), 404
 
     if (datetime.utcnow() - user.temp_password_time).total_seconds() > 3600:
-        return jsonify({'msg': "Temporary password has expired"}), 400
+        return jsonify({'msg': "The temporary password has expired"}), 400
 
     user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
     user.temp_password = None  
     db.session.commit()
 
-    return jsonify({"msg": "Password has been reset successfully"}), 200
+    return jsonify({"msg": "Password has been successfully reset"}), 200
 
 
 @app.route('/api/contact', methods=['POST'])
