@@ -1492,14 +1492,14 @@ input {
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     padding-top: 200px;
     min-height: 100vh;
-    font-family: 'Play', sans-serif !important;
+    font-family: 'Outfit', sans-serif;
     padding-left: 600px;
     padding-right: 600px;
   }
 
 .form-password-title {
     color: #ffffff;
-    font-size: 30px;
+    font-size: 32px;
     margin-bottom: 20px;
 }
 
@@ -1511,6 +1511,7 @@ input {
     color: white;
     margin-top: 30px;
     margin-bottom: 5px;
+    font-size: 20px;
 }
 
 .btn-forget{
@@ -1521,31 +1522,46 @@ input {
 
 /* CSS de ResetPassword*/
 
-.reset-password-form{
+.reset-form{
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
-    padding-top: 200px;
     min-height: 100vh;
-    font-family: 'Play', sans-serif !important;
-    padding-left: 600px;
-    padding-right: 600px;
+    padding-top: 200px;
+}
+.auth-container-reset {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: rgb(234, 234, 234);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Outfit', sans-serif;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: 100px;
 }
 
-.reset-password-form-title{
-    color: #ffffff;
-    font-size: 30px;
+.input-group-reset {
     margin-bottom: 20px;
 }
 
-.msg-reset{
-    color:rgb(255, 255, 255);
+label {
+    display: block;
+    margin-bottom: 4px;
 }
 
-.btn-reset{
-    background-color: #007bff;
-    color: white;
+input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.btn-primary {
     border-radius: 30px;
 }
 
-.label-reset{
-    color: white;
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }

@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
-        name: '',
+        username: '',
         subject: '',
         message: ''
     });
@@ -56,8 +56,8 @@ const Contact = () => {
                 <p className="contact-description">If you have any questions, please don't hesitate to send us a message.</p>
                 <form className="contact-form" onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input type="text" id="name" placeholder="Your Name" required onChange={handleChange} />
+                        <label htmlFor="name">Userame</label>
+                        <input type="text" id="username" placeholder="Your Username" required onChange={handleChange} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="subject">Subject</label>

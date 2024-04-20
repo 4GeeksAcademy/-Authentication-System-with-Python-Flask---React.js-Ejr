@@ -54,42 +54,49 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className="reset-password-form">
-            <h1 className="reset-password-form-title">Reset Your Password</h1>
-            <form onSubmit={handleSubmit}>
-                <label className="label-reset" htmlFor="tempPassword">Temporary Password:</label>
-                <input
-                    type="text"
-                    id="tempPassword"
-                    value={tempPassword}
-                    onChange={(e) => setTempPassword(e.target.value)}
-                    placeholder="Enter your temporary password"
-                    required
-                    className="input-reset mb-4"
-                />
-                <label className="label-reset" htmlFor="newPassword">New Password:</label>
-                <input
-                    type="password"
-                    id="newPassword"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Enter your new password"
-                    required
-                    className="input-reset mb-4"
-                />
-                <label className="label-reset" htmlFor="confirmPassword">Confirm New Password:</label>
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm your new password"
-                    required
-                    className="input-reset mb-4"
-                />
-                <button className="btn btn-reset" type="submit">Reset Password</button>
-            </form>
-            {message && <p className="msg-reset">{message}</p>}
+        <div className="reset-form">
+        <div className="auth-container-reset">
+            <div className="container form-body">
+                <h2 className="title-login">Reset Your Password</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group-reset">
+                        <label htmlFor="tempPassword">Temporary Password:</label>
+                        <input
+                            type="text"
+                            id="tempPassword"
+                            value={tempPassword}
+                            onChange={(e) => setTempPassword(e.target.value)}
+                            placeholder="Enter your temporary password"
+                            required
+                        />
+                    </div>
+                    <div className="input-group-reset">
+                        <label htmlFor="newPassword">New Password:</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="Enter your new password"
+                            required
+                        />
+                    </div>
+                    <div className="input-group-reset">
+                        <label htmlFor="confirmPassword">Confirm New Password:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="Confirm your new password"
+                            required
+                        />
+                    </div>
+                    {message && <div className="error-message mb-4">{message}</div>}
+                    <button type="submit" className="btn btn-primary">Reset Password</button>
+                </form>
+            </div>
+        </div>
         </div>
     );
 };

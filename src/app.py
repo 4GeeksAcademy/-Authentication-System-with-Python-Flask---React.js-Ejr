@@ -154,17 +154,17 @@ def contact():
     if not body:
         return jsonify({'msg': "No se han proporcionado datos"}), 400
 
-    name = body.get('name')
+    username = body.get('username')
     subject = body.get('subject')
     message = body.get('message')
 
-    if not all([name, subject, message]):
+    if not all([username, subject, message]):
         return jsonify({'msg': "Todos los campos son obligatorios excepto el email"}), 400
 
     msg = Message(subject="Formulario de Contacto: " + subject,
                   sender=user_email,  
                   recipients=["urbantreasures.info@gmail.com"])
-    msg.html = f"<h3>Mensaje de: {name}</h3><p>{message}</p>"
+    msg.html = f"<h3>Mensaje de: {username}</h3><p>{message}</p>"
     mail.send(msg)
 
     return jsonify({"msg": "Mensaje enviado con éxito"}), 200
