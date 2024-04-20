@@ -41,7 +41,7 @@ const ForgetPassword = () => {
         <div className="form-password">
             <h1 className="form-password-title">Forgot Password?</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="email" className="label-forget">Enter your email to send you a temporary password:</label>
+                <label htmlFor="email" className="label-forget mb-3">Enter your email to send you a temporary password:</label>
                 <input
                     type="email"
                     id="email"
@@ -49,7 +49,7 @@ const ForgetPassword = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
-                    className="input-forget mb-3"
+                    className="input-forget mb-4"
                 />
                 <button className="btn btn-forget" type="submit">Send Password</button>
             </form>
