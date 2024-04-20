@@ -15,7 +15,9 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import re
 from flask_mail import Mail, Message
-
+import random
+import string
+from datetime import datetime, timezone
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -85,7 +87,81 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+
 ''' ------------------------------------POST-----------------------------------------'''
+
+
+@app.route('/api/forgot-password', methods=['POST'])
+def forgot_password():
+    body = request.get_json()
+    email = body.get('email')
+    if not email:
+        return jsonify({'msg': "Email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({'msg': "No user found with that email"}), 404
+
+    temp_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+    user.temp_password = bcrypt.generate_password_hash(temp_password).decode('utf-8')
+    user.temp_password_time = datetime.utcnow()
+    db.session.commit()
+
+    msg = Message(subject="Your temporary password",
+                  sender="urbantreasures.info@gmail.com",
+                  recipients=[user.email])
+    msg.html = f"<h3>Your temporary password is: {temp_password}</h3>"
+    mail.send(msg)
+
+    return jsonify({"msg": "Temporary password sent to your email"}), 200
+
+
+@app.route('/api/reset-password', methods=['POST'])
+def reset_password():
+    body = request.get_json()
+    temp_password = body.get('temp_password')
+    new_password = body.get('new_password')
+
+    if not temp_password or not new_password:
+        return jsonify({'msg': "All fields are required"}), 422
+
+    user = User.query.filter_by(temp_password=bcrypt.generate_password_hash(temp_password).decode('utf-8')).first()
+
+    if not user:
+        return jsonify({'msg': "Invalid or expired temporary password"}), 404
+
+    if (datetime.utcnow() - user.temp_password_time).total_seconds() > 3600:
+        return jsonify({'msg': "Temporary password has expired"}), 400
+
+    user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    user.temp_password = None  
+    db.session.commit()
+
+    return jsonify({"msg": "Password has been reset successfully"}), 200
+
+
+@app.route('/api/contact', methods=['POST'])
+@jwt_required()
+def contact():
+    user_email = get_jwt_identity()
+    body = request.get_json(silent=True)
+    if not body:
+        return jsonify({'msg': "No se han proporcionado datos"}), 400
+
+    name = body.get('name')
+    subject = body.get('subject')
+    message = body.get('message')
+
+    if not all([name, subject, message]):
+        return jsonify({'msg': "Todos los campos son obligatorios excepto el email"}), 400
+
+    msg = Message(subject="Formulario de Contacto: " + subject,
+                  sender=user_email,  
+                  recipients=["urbantreasures.info@gmail.com"])
+    msg.html = f"<h3>Mensaje de: {name}</h3><p>{message}</p>"
+    mail.send(msg)
+
+    return jsonify({"msg": "Mensaje enviado con éxito"}), 200
 
 
 @app.route('/api/hide', methods=['POST'])

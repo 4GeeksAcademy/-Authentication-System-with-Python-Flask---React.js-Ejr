@@ -1485,3 +1485,67 @@ input {
     cursor: pointer;
     padding-left: 10px;
   }
+
+/* CSS de ForgetPassword*/
+
+.form-password{
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    padding-top: 200px;
+    min-height: 100vh;
+    font-family: 'Play', sans-serif !important;
+    padding-left: 600px;
+    padding-right: 600px;
+  }
+
+.form-password-title {
+    color: #ffffff;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.msg-forget{
+    color:rgb(255, 255, 255);
+}
+
+.label-forget{
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
+.btn-forget{
+    background-color: #007bff;
+    color: white;
+    border-radius: 30px;
+}
+
+/* CSS de ResetPassword*/
+
+.reset-password-form{
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    padding-top: 200px;
+    min-height: 100vh;
+    font-family: 'Play', sans-serif !important;
+    padding-left: 600px;
+    padding-right: 600px;
+}
+
+.reset-password-form-title{
+    color: #ffffff;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.msg-reset{
+    color:rgb(255, 255, 255);
+}
+
+.btn-reset{
+    background-color: #007bff;
+    color: white;
+    border-radius: 30px;
+}
+
+.label-reset{
+    color: white;
+}
