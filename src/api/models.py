@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey
+from sqlalchemy import DateTime
 from sqlalchemy.orm import relationship
 import enum
 db = SQLAlchemy()
@@ -43,28 +43,32 @@ class Status (db.Model):
         }
 
 class User(db.Model):
-    __tablename__='user'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    username =db.Column(db.String(30), unique=True, nullable=False)
+    username = db.Column(db.String(30), unique=True, nullable=False)
     user_type = db.Column(db.Enum(MyEnum), nullable=False)
     photo = db.Column(db.String, unique=False, nullable=True)
     points = db.Column(db.Integer, default=0)
-    status_name = db.Column(db.String, db.ForeignKey('status.name'),default="Amateur", nullable=False)
+    status_name = db.Column(db.String, db.ForeignKey('status.name'), default="Amateur", nullable=False)
     status_relationship = db.relationship(Status)
+    temp_password = db.Column(db.String(120), nullable=True)  
+    temp_password_time = db.Column(DateTime, nullable=True)  
 
     def __repr__(self):
-        return "Usuario {}, con email {} y status {}".format (self.username, self.email, self.status_name)
+        return "Usuario {}, con email {} y status {}".format(self.username, self.email, self.status_name)
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "username":self.username,
+            "username": self.username,
             "points": self.points,
             "status_name": self.status_name,
-            "photo": self.photo
+            "photo": self.photo,
+            "temp_password": self.temp_password,  
+            "temp_password_time": self.temp_password_time  
         }
     
 class Treasures_Hide (db.Model):

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
+import Swal from 'sweetalert2';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -27,15 +28,24 @@ const Contact = () => {
         })
         .then(response => {
             if (response.ok) {
-                navigate('/');  
+                Swal.fire({
+                    title: 'Email Sent!',
+                    text: 'We will respond as soon as possible.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate('/');
+                    }
+                });
             }
             return response.json();
         })
         .then(data => {
-            console.log('Mensaje enviado:', data);
+            console.log('Message sent:', data);
         })
         .catch(error => {
-            console.log('Error enviando mensaje:', error);
+            console.log('Error sending message:', error);
         });
     };
 
