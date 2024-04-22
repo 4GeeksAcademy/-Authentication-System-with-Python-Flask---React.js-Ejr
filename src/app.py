@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
@@ -17,13 +17,14 @@ import re
 from flask_mail import Mail, Message
 import random
 import string
-from datetime import datetime, timezone
+from datetime import datetime
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../src/templates')
 
 app.config.update(dict(
     DEBUG=False,
@@ -204,7 +205,7 @@ def hide_treasure():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    body = request.get_json(silent = True)
+    body = request.get_json(silent=True)
     if body is None:
         return jsonify({'msg': "Debes enviar información en el body"}), 400
     if 'email' not in body or body["email"] == "":
@@ -217,29 +218,24 @@ def register():
         return jsonify({"msg": "El campo user_type es obligatorio"}), 400
     if "username" not in body or body["username"] == "":
         return jsonify({"msg": "Username is mandatory"}), 400
-    
+
     user_exist = User.query.filter_by(email=body["email"]).first()
     username_exist = User.query.filter_by(username=body["username"]).first()
 
-    if user_exist != None:
+    if user_exist is not None:
         return jsonify({"msg": "Email already registered"}), 400
-    if username_exist != None:
+    if username_exist is not None:
         return jsonify({"msg": "Username already exists"}), 400
-    
-    new_user = User()
-    new_user.email = body['email']
-    pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
-    new_user.password = pw_hash
-    new_user.username = body["username"]
-    new_user.user_type = body["user_type"]
-    db.session.add (new_user)
+
+    new_user = User(username=body['username'], email=body['email'], password=bcrypt.generate_password_hash(body['password']).decode('utf-8'), user_type=body['user_type'])
+    db.session.add(new_user)
     db.session.commit()
 
     msg = Message(subject="Welcome mail", sender="urbantreasures.info@gmail.com", recipients=[new_user.email])
-    msg.html = "<h3>Hi {}! Welcome to Urban Treasures. We hope you enjoy the adventure!</h3>".format (new_user.username)
+    msg.html = render_template('welcome_mail.html', username=new_user.username)
     mail.send(msg)
 
-    return jsonify({"msg": "El usuario ha sido creado con exito"}), 201
+    return jsonify({"msg": "El usuario ha sido creado con éxito"}), 201
 
 
 @app.route('/api/login', methods=['POST'])
@@ -307,10 +303,9 @@ def mark_treasure_as_found(treasure_id):
         return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
 
     if user.id == treasure.user_id:
-        return jsonify({'msg': "You can not mark a treasure as found if you hid it yourself"}), 403
+        return jsonify({'msg': "You cannot mark a treasure as found if you hid it yourself"}), 403
 
     treasure.founded = True
-
     user.points += 10
     db.session.add(user)
 
@@ -323,8 +318,8 @@ def mark_treasure_as_found(treasure_id):
     db.session.add(new_treasure_found)
     db.session.commit()
 
-    msg = Message(subject="Treasure founded", sender="urbantreasures.info@gmail.com", recipients=[user_hide.email])
-    msg.html = "<h3>Hello {}, your treasure '{}' is already founded by {}</h3>".format (user_hide.username, treasure.name, user.username)
+    msg = Message(subject="Treasure Found", sender="urbantreasures.info@gmail.com", recipients=[user_hide.email])
+    msg.html = render_template('treasure_founded.html', username=user_hide.username, treasure_name=treasure.name, finder_username=user.username)
     mail.send(msg)
 
     return jsonify({'msg': "Tesoro marcado como encontrado con éxito"}), 201
