@@ -1,49 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background-color: #fff;
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .header {
-            background-color: #ffd500;
-            color: #000000;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-        }
-        .footer {
-            text-align: center;
-            padding: 10px 20px;
-            background-color: #eee;
-            color: #333;
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Treasure Found!</h1>
+<body style="font-family: 'Outfit', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+    <div style="background-color: #fff; width: 80%; margin: 20px auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <div style="background-color: #a07b00; color: #000000; padding: 10px 20px; text-align: center;">
+            <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1713694613/Logo_sin_fondo_bj8i38.png" alt="Urban Treasures Logo" style="width: 100px; margin: 0 auto; display: block;">
+            <h1 style="margin-top: 20px; color: #ffffff;">Treasure Found!</h1>
         </div>
-        <div class="content">
-            <h3>Hello {{ username }},</h3>
+        <div style="padding: 20px;">
+            <h3 style="margin-top: 0;">Hello {{ username }},</h3>
             <p>We are excited to inform you that your treasure <strong>{{ treasure_name }}</strong> has been successfully found by {{ finder_username }}!</p>
             <p>You earn 10 points! We hope this news brings you joy and motivates you to continue participating in our treasure hunting adventures.</p>
             <p>If you have any questions or would like to know more details, feel free to reach out to us. We're here to help!</p>
         </div>
-        <div class="footer">
+        <div style="text-align: center; padding: 10px 20px; background-color: #eee; color: #333;">
             Warm regards,<br>
             The Urban Treasures Team
         </div>
