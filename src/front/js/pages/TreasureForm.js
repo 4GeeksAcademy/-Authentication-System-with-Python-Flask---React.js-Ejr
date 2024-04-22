@@ -112,8 +112,8 @@ const TreasureForm = () => {
 
     return (
         <div className="text-center treasure-form-page">
-            <form onSubmit={handleSubmit}>
-                <h1 className="title-hide pb-4">Hide treasure</h1>
+            <h1 className="title-hide pb-4">Hide treasure</h1>
+            <form onSubmit={handleSubmit} className="form-hide">
                 <div className="hide-input-group pb-4">
                     <label htmlFor="name-treasure">Name</label>
                     <input

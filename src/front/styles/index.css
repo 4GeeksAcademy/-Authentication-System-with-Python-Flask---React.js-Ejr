@@ -886,12 +886,20 @@ input {
 .treasure-form-page {
     font-family: 'Play', sans-serif !important;
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
-    color: white;
+    color: rgb(0, 0, 0);
     padding-top: 150px;
     padding-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.form-hide{
+    background: linear-gradient(to bottom, #b2b2b2 0%, #e1e1e1 100%);
+    padding: 20px;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .hide-input-group {
@@ -950,7 +958,7 @@ input {
 }
 
 .button-hide{
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 /* CSS de TreasureList*/
