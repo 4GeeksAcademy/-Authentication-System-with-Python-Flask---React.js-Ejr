@@ -72,7 +72,7 @@ class Question(db.Model):
     __tablename__ = 'questions'
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String(250), nullable=False)
-    information = db.Column(db.String(250), nullable=False)
+    information = db.Column(db.String(450), nullable=False)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'), nullable=False)
     country = db.relationship(Country)
 
