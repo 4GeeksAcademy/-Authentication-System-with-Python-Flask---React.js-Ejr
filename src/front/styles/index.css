@@ -131,6 +131,12 @@ input {
     height: 280px;
 }
 
+@media (max-width: 768px) {  /* Asumiendo que el toggler aparece a 768px, ajusta según sea necesario */
+    .principal-section {
+        padding-top: 150px; /* Ajusta este valor basado en la altura del menú desplegable */
+    }
+}
+
 .description-title {
     font-size: 70px;
     color: black;
@@ -144,6 +150,7 @@ input {
         -1px -1px #fff,
         -1px 1px #fff,
         1px -1px #fff;
+        padding-top: 50px;
 }
 
 .description-text {
@@ -559,7 +566,7 @@ input {
     padding: 10px; 
 }
 
-@media (min-width: 992px) { 
+@media (min-width: 1555px) { 
     .image-description {
         flex: 0 0 30%; 
     }
@@ -683,7 +690,7 @@ input {
     }
 }
 
-@media (max-width: 992px) { 
+@media (max-width: 1100px) { 
     .right-column-how {
         flex-direction: column;
         align-items: center;
@@ -708,27 +715,6 @@ input {
     display: flex;
     width: 100%;
 }
-
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(0,0,0,.1);
-    border-radius: 50%;
-    border-top-color: #007bff;
-    animation: spin 1s ease-in-out infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  .loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa;
-  }
 
 .sidebar {
     flex: 1;
@@ -760,56 +746,6 @@ input {
     padding-left: 20px;
 }
 
-.user-info h2,
-.user-info p {
-    margin: 5px 0;
-}
-
-.elementos-profile td {
-    text-align: left;
-    vertical-align: middle;
-    font-size: 18px;
-}
-
-.image-title-profile {
-    width: 200px;
-}
-
-.name-title-profile {
-    width: 250px;
-}
-
-.description-title-list-profile {
-    width: 350px;
-}
-
-.city-title-profile {
-    width: 200px;
-}
-
-.title-hide-profile {
-    text-shadow: 2px 2px 6px #ccc;
-}
-
-.table-list-profile {
-    background-color: black;
-    color: white;
-    font-size: 25px;
-    padding-left: 150px;
-    text-align: left;
-    text-align: center;
-}
-
-.table-list-profile th,
-.table-list-profile td {
-    border: 0.5px solid #5f5f5f;
-}
-
-.configuration {
-    padding-left: 150px;
-    text-align: left;
-}
-
 .my-profile {
     display: flex;
     align-items: center;
@@ -820,19 +756,6 @@ input {
     padding-top: 15px;
     padding-bottom: 30px;
     background-color: #535353;
-}
-
-.edit-profile-btn {
-    position: absolute; 
-    top: 57%; 
-    left: 59%; 
-    transform: translateX(-50%); 
-    color: #000000; 
-}
-
-.treasures-activity {
-    padding-left: 150px;
-    text-align: left;
 }
 
 .photo-container {
@@ -865,6 +788,7 @@ input {
 
 .user-info {
     text-align: left;
+    width: 100%; /* Full width */
 }
 
 .username-text-profile {
@@ -923,17 +847,203 @@ input {
     transition: width 0.5s ease; 
 }
 
-.image-elements-profile img {
-    width: 200px; 
-    height: 100px; 
-    object-fit: cover; 
-}
-
 .btn-change{
     background-color: #FFC107 !important;
     color: black;
     border-radius: 30px;
 }
+
+@media (max-width: 1000px) {
+    .profile-cont {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sidebar ul li {
+        flex: 1;  /* This will distribute the space evenly */
+    }
+
+    .content {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .my-profile {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: auto; /* Makes the width adjust to the device size */
+    }
+
+    .photo-container {
+        padding-bottom: 20px;
+    }
+
+    .user-info {
+        text-align: center;
+    }
+
+    .status-progress {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress-bar-container {
+        width: 100%;  /* Full width to utilize the space */
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-cont {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sidebar ul li {
+        flex: 1;  /* This will distribute the space evenly */
+    }
+
+    .content {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .my-profile {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: auto; /* Makes the width adjust to the device size */
+    }
+
+    .photo-container {
+        padding-bottom: 20px;
+    }
+
+    .user-info {
+        text-align: center;
+    }
+
+    .status-progress {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress-bar-container {
+        width: 100%;  /* Full width to utilize the space */
+    }
+}
+
+/* Ensure responsiveness in smaller devices */
+@media (max-width: 480px) {
+    .sidebar ul li {
+        font-size: 20px;  /* Adjust font size for smaller screens */
+    }
+
+    .username-text-profile {
+        font-size: 35px;  /* Smaller font size for smaller screens */
+    }
+
+    .points-text-profile,
+    .status-text-profile {
+        font-size: 25px;
+    }
+}
+
+.table-list-profile {
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    opacity: 0.9;
+    max-width: 800px;
+}
+
+.table-list-profile th, .table-list-profile td {
+    border: 0.5px solid #5f5f5f;
+    padding: 8px;
+    text-align:left;
+}
+
+.name-title-profile, .city-title-profile {
+    width: 150px;  /* Ensure consistency across tables */
+}
+
+.image-elements-profile {
+    width: 100px;  /* Ajustar el ancho a un tamaño más pequeño desde el principio */
+    margin: 0 auto;  /* Centrar la imagen dentro de la celda */
+}
+
+.image-elements-profile img {
+    display: block;
+    max-width: 100%;  /* Usar todo el ancho del contenedor, sin excederlo */
+    height: auto;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .table-list-profile {
+        font-size: 18px;
+    }
+
+    .image-elements-profile {
+        width: 80px;  /* Ajuste del ancho en pantallas medianas */
+    }
+
+    .image-elements-profile img {
+        width: 100%;  /* La imagen usa el 100% del ancho del contenedor */
+        height: auto; /* Mantener la proporción */
+    }
+}
+
+@media (max-width: 480px) {
+    .table-list-profile th, .table-list-profile td {
+        width: auto; /* Aseguramos que las celdas no se fuerzan a anchos específicos que podrían causar problemas */
+    }
+
+    .image-elements-profile {
+        width: 50px; /* Reducir el tamaño de las imágenes para una mejor visualización en pantallas pequeñas */
+    }
+
+    .image-elements-profile img {
+        display: block;  /* Confirmar que la imagen siempre se muestra */
+        width: 100%;  /* Usar todo el ancho del contenedor */
+        height: auto; /* Ajustar la altura automáticamente para mantener la proporción */
+        max-width: 50px;  /* Establecer un máximo para prevenir que la imagen se agrande */
+    }
+}
+
+.name-title-profile, .city-title-profile {
+    width: 150px;  /* Ajustar el ancho para que sea consistente en todas las resoluciones */
+}
+
 
 /* CSS de TreasureForm*/
 
