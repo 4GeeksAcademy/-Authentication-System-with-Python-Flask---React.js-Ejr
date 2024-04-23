@@ -297,6 +297,10 @@ input {
     font-family: 'Pirata One', cursive;
 }
 
+.fa-solid{
+    color: #FFC107!important;
+}
+
 /* CSS de Rankings*/
 
 .rankings-div {
@@ -503,7 +507,7 @@ input {
 
 /* CSS de How it Works*/
 
-.container-fluid {
+.container-fluid-how {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -520,12 +524,21 @@ input {
 .right-column {
     flex: 2;
     display: flex;
+    flex-wrap: wrap; /* Añadir flex-wrap para permitir el salto de línea */
     justify-content: space-between;
 }
 
 .image-description {
     text-align: center;
-    width: 30%;
+    flex: 1 1 100%; /* Ajustar la base y la capacidad de crecimiento para llenar el ancho en pantallas pequeñas */
+    padding: 10px; /* Añadir un poco de espacio alrededor */
+}
+
+/* Ajustes específicos para pantallas más grandes */
+@media (min-width: 992px) { /* Asumiendo lg inicia en 992px como en Bootstrap */
+    .image-description {
+        flex: 0 0 30%; /* Restablecer la base para que no crezca ni se encoja más allá de 30% */
+    }
 }
 
 .how-it-works {
@@ -542,7 +555,6 @@ input {
 .how-text {
     font-size: 25px;
     color: #ffffff;
-
 }
 
 .imagen-how {
@@ -558,13 +570,12 @@ input {
     transition: all 0.3s ease;
 }
 
-.text-how {
+.text-how, .text-how-2 {
     font-size: 20px;
     color: white;
 }
 
 .text-how-2 {
-    font-size: 20px;
     color: #FFC107;
 }
 
@@ -629,11 +640,30 @@ input {
 
 .image-description {
     text-align: center;
-    width: 80%;
+    margin-bottom: 20px; 
 }
 
 .image-description:not(:first-child) {
     padding-top: 2rem;
+}
+
+.right-column-how {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) { /* Cambia el valor según tus necesidades */
+    .right-column-how {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 992px) { /* Nuevo media query para tamaño mediano */
+    .right-column-how {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 /* CSS de Profile*/
@@ -766,6 +796,7 @@ input {
     padding-top: 15px;
     padding-bottom: 30px;
     background-color: #535353;
+    box-shadow: 3px 3px 3px rgba(232, 240, 167, 0.5)
 }
 
 .edit-profile-btn {
@@ -886,20 +917,12 @@ input {
 .treasure-form-page {
     font-family: 'Play', sans-serif !important;
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
-    color: rgb(0, 0, 0);
+    color: white;
     padding-top: 150px;
     padding-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-}
-
-.form-hide{
-    background: linear-gradient(to bottom, #b2b2b2 0%, #e1e1e1 100%);
-    padding: 20px;
-    border-radius: 20px;
-    font-weight: bold;
 }
 
 .hide-input-group {
@@ -958,7 +981,7 @@ input {
 }
 
 .button-hide{
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 }
 
 /* CSS de TreasureList*/
