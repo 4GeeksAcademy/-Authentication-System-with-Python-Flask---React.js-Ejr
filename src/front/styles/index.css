@@ -307,6 +307,8 @@ input {
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     padding-top: 150px;
     min-height: 100vh;
+    width: 100%; 
+    margin: 0 auto; 
 }
 
 .rankings-container {
@@ -315,8 +317,9 @@ input {
     padding: 20px;
     gap: 20px;
     font-family: 'Play', sans-serif !important;
-    width: 60%;
+    max-width: 1000px;
     margin: 0 auto; 
+    flex-wrap: wrap; 
 }
 
 .ranking {
@@ -325,7 +328,69 @@ input {
     border: 1px solid rgba(219, 219, 219, 0.712);
     padding: 10px;
     border-radius: 10px;
-    background-color: black;
+    background-color: black; 
+    margin-bottom: 20px; 
+}
+
+.button-rankings-options {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Play', sans-serif !important;
+    margin: 0 auto; 
+    margin-bottom: 10px; 
+    font-size: 20px; 
+    background-color: #000000;
+    color: white;
+    border: 2px solid white;
+}
+
+.button-rankings-options:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    color: black;
+    transform: scale(1.05);
+}
+
+.text-ranks-div {
+    font-size: 22px; 
+    color: white;
+    font-family: 'Play', sans-serif !important;
+    padding-bottom: 70px;
+    text-align: center; 
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .rankings-div {
+        width: 90%; 
+    }
+
+    .button-rankings-options {
+        font-size: 16px; 
+    }
+
+    .text-ranks-div {
+        font-size: 18px; 
+    }
+}
+
+@media (max-width: 576px) {
+    .rankings-div {
+        width: 100%; 
+    }
+
+    .button-rankings-options {
+        font-size: 14px; 
+    }
+
+    .text-ranks-div {
+        font-size: 16px; 
+    }
 }
 
 .table {
@@ -363,7 +428,7 @@ input {
 .first .name,
 .first .score {
     color: gold;
-    font-size: 34px;
+    font-size: 27px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 2);
 }
 
@@ -371,7 +436,7 @@ input {
 .second .name,
 .second .score {
     color: rgb(190, 181, 181);
-    font-size: 31px;
+    font-size: 25px;
     text-shadow: 0 0 8px rgba(192, 192, 192, 2);
 }
 
@@ -379,7 +444,7 @@ input {
 .third .name,
 .third .score {
     color: #d39353;
-    font-size: 28px;
+    font-size: 23px;
     text-shadow: 0 0 8px rgba(205, 127, 50, 2);
 }
 
@@ -387,7 +452,7 @@ input {
 .other .name,
 .other .score {
     color: white;
-    font-size: 22px;
+    font-size: 21px;
 }
 
 .name {
@@ -437,34 +502,6 @@ input {
     font-size: 25px;
 }
 
-.button-rankings-options {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-family: 'Play', sans-serif !important;
-}
-
-.button-rankings-options:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.button-rankings-options {
-    background-color: #000000;
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    font-size: 20px;
-}
-
-.button-rankings-options:hover {
-    background-color: #ffffff;
-    color: black;
-    transform: scale(1.05);
-}
-
 .ranking-companies {
     max-width: 60%;
     margin: 0 auto;
@@ -473,18 +510,6 @@ input {
 .ranking-users {
     max-width: 60%;
     margin: 0 auto;
-}
-
-.text-ranks-div {
-    font-size: 22px;
-    color: white;
-    
-    font-family: 'Play', sans-serif !important;
-    padding-left: 25px;
-    padding-bottom: 70px;
-    padding-top: 30px;
-    padding-left: 200px;
-
 }
 
 .text-ranks {
@@ -795,7 +820,6 @@ input {
     padding-top: 15px;
     padding-bottom: 30px;
     background-color: #535353;
-    box-shadow: 3px 3px 3px rgba(232, 240, 167, 0.5)
 }
 
 .edit-profile-btn {
@@ -925,18 +949,8 @@ input {
     align-items: center;
 }
 
-.hide-input-group {
-    text-align: left;
-    font-size: 20px;
-    width: 70vh;
-}
-
-.treasure-image-form{
-    border: none;
-}
-
 .title-hide {
-    display: inline-block;
+    display: block;
     padding: 5px 10px;
     font-size: 50px;
     color: black;
@@ -950,14 +964,61 @@ input {
         -1px -1px #fff,
         -1px 1px #fff,
         1px -1px #fff;
+    margin-bottom: 20px;
+    width: 90%; 
+    max-width: 500px; 
 }
 
-.treasure-name {
-    border-radius: 10px;
+.form-hide {
+    background: linear-gradient(to bottom, #aeaeae 0%, #e7e7e7 100%);
+    padding: 28px;
+    border-radius: 20px;
+    color: #000000;
+    font-weight: bold;
+    width: 90%; 
+    max-width: 700px; 
 }
 
-.treasure-tips {
-    border-radius: 10px;
+@media only screen and (max-width: 768px) {
+    .title-hide {
+        font-size: 40px;
+    }
+}
+
+.hide-input-group {
+    text-align: left;
+    font-size: 20px;
+    width: 100%; 
+    margin-bottom: 0px; 
+}
+
+.hide-input-group label {
+    display: block; 
+    margin-bottom: 5px; 
+}
+
+.treasure-name,
+.treasure-tips,
+.treasure-city,
+.treasure-image-form {
+    width: calc(100% - 30px); 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.treasure-city {
+    width: calc(100% - 50px);
+}
+
+.google-map-container {
+    width: 100%; 
+    height: 300px; 
+    border-radius: 10px; 
+    border: 2px solid #FFC107; 
+    margin-bottom: 20px; 
 }
 
 .btn-hide{
@@ -981,15 +1042,7 @@ input {
 }
 
 .button-hide{
-    padding-bottom: 50px;
-}
-
-.form-hide{
-    background: linear-gradient(to bottom, #c0c0c0 0%, #dadada 100%);
-    padding: 15px;
-    border-radius: 20px;
-    color: #000000;
-    font-weight: bold;
+    padding-bottom: 20px;
 }
 
 /* CSS de TreasureList*/
@@ -1273,14 +1326,6 @@ input {
   
   .social-links a:hover {
     color: #FFC107;
-  }
-
-  .footer-section-3{
-    padding-left: 150px;
-  }
-
-  .footer-section-2{
-    padding-left: 150px;
   }
 
 /* CSS de Contact */
