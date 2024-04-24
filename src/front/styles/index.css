@@ -173,6 +173,48 @@ input {
 
 /* CSS de Navbar*/
 
+@media (max-width: 992px) {
+    .navbar-toggler.collapsed + .collapse {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+    .navbar-nav {
+        flex-direction: row;
+    }
+    .navbar-custom .navbar-brand .link-text,
+    .navbar-custom .navbar-brand:hover .link-text {
+        display: none;
+    }
+    .navbar-nav.ms-auto {
+        flex-grow: 0;
+    }
+    .nav-item {
+        margin-right: 5px;
+    }
+    .nav-item .navbar-brand {
+        padding: 0;
+    }
+    .nav-item .div-icono {
+        margin-right: 0; 
+    }
+    .div-bar {
+        margin: 0; 
+        padding: 0; 
+    }
+    .boton-navbar{
+        margin-right: 5px;
+    }
+}
+
+.navbar-custom .navbar-brand {
+    padding: 0; 
+    margin: 0; 
+}
+
 .dropdown-menu {
     font-family: 'Play', sans-serif !important;
 }
@@ -372,9 +414,9 @@ input {
     width: 100%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .rankings-div {
-        width: 90%; 
+        width: 100%; 
     }
 
     .button-rankings-options {
@@ -386,13 +428,14 @@ input {
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 727px) {
     .rankings-div {
         width: 100%; 
     }
 
     .button-rankings-options {
         font-size: 14px; 
+        margin-top: 60px;
     }
 
     .text-ranks-div {
@@ -1043,6 +1086,8 @@ input {
     width: 150px;  
 }
 
+
+
 /* CSS de TreasureForm*/
 
 .treasure-form-page {
@@ -1154,6 +1199,12 @@ input {
 }
 
 /* CSS de TreasureList*/
+
+@media (max-width: 666px) {
+    .title-page-list {
+        padding-top: 400px; 
+    }
+}
 
 .treasure-list-page {
     font-family: 'Play', sans-serif !important;
@@ -1443,6 +1494,7 @@ input {
     padding-top: 150px;
     padding-bottom: 50px;
     font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
 }
 
 .contact {
@@ -1775,4 +1827,32 @@ input {
     color: red;
     text-align: center;
     margin-top: 10px;
+}
+
+/* CSS de Spinner de carga */
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
