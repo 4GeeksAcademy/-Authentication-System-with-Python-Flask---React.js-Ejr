@@ -16,7 +16,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			tokenOK: false,
 			navigate: false,
+			question: null,
+			option1: null,
+			option2: null,
 		},
+
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
@@ -148,7 +152,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (localStorage.getItem("token")!= null) {
 					setStore({tokenOK : true})
 				}
+			},
+			questionRandom: function(numberRandom){
+				fetch('https://refactored-telegram-4jv976pw4xrf7gxg-3001.app.github.dev/api/question/'+numberRandom)
+				    .then((response)=>response.json())
+				    .then((data)=>setStore({question:data.results}))
+				    .catch((error)=>console.log(error))
+					
+			},
+			wrongChoice: function(numberRandom){
+				fetch('https://refactored-telegram-4jv976pw4xrf7gxg-3001.app.github.dev/api/country/'+numberRandom)
+				    .then((response)=>response.json())
+				    .then((data)=>setStore({option1:data.results}))
+				    .catch((error)=>console.log(error))
+			},
+			wrongChoice1: function(numberRandom){
+				fetch('https://refactored-telegram-4jv976pw4xrf7gxg-3001.app.github.dev/api/country/'+numberRandom)
+				    .then((response)=>response.json())
+				    .then((data)=>setStore({option2:data.results}))
+				    .catch((error)=>console.log(error))
 			}
+
+
 		}
 	};
 };
