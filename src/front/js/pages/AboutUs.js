@@ -28,7 +28,7 @@ const AboutUs = () => {
                         <p>CEO</p>
                     </div>
                     <div className="team-member">
-                        <img className="members-image" src="https://img.freepik.com/fotos-premium/hombre-corporativo-exitoso-confiado-que-guina-ojo-que-sonrie-satisfecho-lo-alienta-pie-decidido-feliz-contra-fondo-blanco_176420-45218.jpg" alt="Denis Díaz" />
+                        <img className="members-image" src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1713965922/vvv_gfaxne.jpg" alt="Denis Díaz" />
                         <h3>Denis Díaz</h3>
                         <p>CEO</p>
                     </div>

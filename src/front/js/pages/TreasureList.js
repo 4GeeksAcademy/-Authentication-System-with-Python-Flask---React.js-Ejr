@@ -45,7 +45,7 @@ const TreasureList = () => {
 
     return (
         <div className="text-center treasure-list-page" style={{ backgroundImage: `url(${list})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '150px 0', minHeight: "100vh" }}>
-            <h1 className="title-page-list pb-4">Treasures List</h1>
+            <h1 className="title-page-list pt-5 pb-4">Treasures List</h1>
             <div>
                 <input
                     type="text"
