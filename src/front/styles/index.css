@@ -137,6 +137,12 @@ input {
     }
 }
 
+@media (max-width: 495px) {  
+    .golden-button {
+        margin-top: 7px; 
+    }
+}
+
 .description-title {
     font-size: 70px;
     color: black;
@@ -170,6 +176,8 @@ input {
 .home-container {
     font-family: 'Play', sans-serif !important;
 }
+
+
 
 /* CSS de Navbar*/
 
@@ -348,6 +356,8 @@ input {
 
 .fa-solid{
     color: #FFC107!important;
+    font-size: 2.5rem !important;
+    margin-top: 10px;
 }
 
 /* CSS de Rankings*/
@@ -723,7 +733,7 @@ input {
 
 .right-column-how {
     display: flex;
-    align-items: center;
+    justify-content: space-around;
 }
 
 @media (max-width: 768px) { 

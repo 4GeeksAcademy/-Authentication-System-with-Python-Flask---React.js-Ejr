@@ -11,7 +11,7 @@ const PrincipalSection = () => {
             </div>
             <div className="action-buttons pt-5">
                 <Link to="/treasures">
-                    <button role="button" className="golden-button">
+                    <button role="button" className="golden-button me-2">
                         <span className="golden-text">FIND TREASURES</span>
                     </button>
                 </Link>
