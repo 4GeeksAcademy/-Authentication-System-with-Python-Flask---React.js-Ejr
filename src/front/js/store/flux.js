@@ -67,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			registrarUsuario: async function (email, contraseña) {
 				console.log(email, contraseña);
 				try{
-					const response = await fetch(`https://orange-cod-4jjwqw7xr657hqpw9-3001.app.github.dev/api/user`, {
+					const response = await fetch(`https://congenial-fishstick-v66qpqvx5wj9hw995-3001.app.github.dev/api/user`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -81,8 +81,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					console.log(data);
 					console.log(response.status);
-					localStorage.setItem("token",data.token)
 					if (response.status == 200){
+						localStorage.setItem("token",data.token)
 						setStore({tokenOK : true})
 						setStore({navigate : true})
 					}
@@ -124,7 +124,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loginUsuario: async function (email, contraseña) {
 				console.log(email, contraseña);
 				try{
-					const response = await fetch(`https://orange-cod-4jjwqw7xr657hqpw9-3001.app.github.dev/api/login`, {
+					const response = await fetch(`https://congenial-fishstick-v66qpqvx5wj9hw995-3001.app.github.dev/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -137,8 +137,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					console.log(data);
 					console.log(response.status);
-					localStorage.setItem("token",data.token)
 					if (response.status == 200){
+						localStorage.setItem("token",data.token)
 						setStore({tokenOK : true})
 						setStore({navigate : true})
 					}
