@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { disableValidation } from "schema-utils";
-import fotopais from "../../img/Eiffel-Tower-Paris.png"
-import { Flag } from "../component/flag";
 
 export const Session = () => {
     const {store,actions}=useContext(Context)
