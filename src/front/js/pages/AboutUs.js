@@ -1,4 +1,5 @@
 import React from "react";
+import denis from "/src/front/img/denis.png";
 
 const AboutUs = () => {
     return (
@@ -28,7 +29,7 @@ const AboutUs = () => {
                         <p>CEO</p>
                     </div>
                     <div className="team-member">
-                        <img className="members-image" src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1713965922/vvv_gfaxne.jpg" alt="Denis Díaz" />
+                        <img className="members-image" src={denis} alt="Denis Díaz" />
                         <h3>Denis Díaz</h3>
                         <p>CEO</p>
                     </div>

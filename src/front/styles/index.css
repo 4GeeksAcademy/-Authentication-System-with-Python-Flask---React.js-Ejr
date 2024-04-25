@@ -122,14 +122,7 @@ input {
     }
 }
 
-/* CSS del Home*/
-
-.contenido-relleno {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-    text-align: center;
-    height: 280px;
-}
+/* CSS del PrincipalSection*/
 
 @media (max-width: 768px) {  
     .principal-section {
@@ -177,7 +170,59 @@ input {
     font-family: 'Play', sans-serif !important;
 }
 
+.video-div{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 130px;
+    padding-bottom: 10px;
+    padding-top: 50px;
+}
 
+.video{
+    max-width: 100%;
+    height: 390px;
+    margin-top: 0;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    border: 1.5px solid rgba(207, 207, 207, 0.3); 
+    box-shadow: 0 8px 16px rgba(184, 183, 182, 0.479); 
+    background: rgb(255, 255, 255);
+}
+
+.video:hover{
+    transform: scale(1.05);
+}
+
+@media (max-width: 780px) {  
+    .video-div {
+        padding-left: 0; 
+        padding-right: 0; 
+        padding-bottom: 0; 
+        padding-top: 20px; 
+        justify-content: center; 
+    }
+    
+    .video {
+        height: 350px; 
+        margin-top: 0; 
+    }
+}
+
+@media (max-width: 1000px) {  
+    .video-div {
+        padding-left: 0; 
+        padding-right: 0; 
+        padding-bottom: 0; 
+        padding-top: 30px; 
+        justify-content: center; 
+    }
+    
+    .video {
+        height: 290px; 
+        margin-top: 0; 
+    }
+}
 
 /* CSS de Navbar*/
 
@@ -334,10 +379,16 @@ input {
 }
 
 .imageLogo {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     margin-left: 40px;
     margin-right: 150px;
+    margin-top: 10px;
+    transition: transform 0.5s ease;
+}
+
+.imageLogo:hover{
+    transform: scale(1.1);
 }
 
 .logout {
@@ -1049,14 +1100,16 @@ input {
 }
 
 .image-elements-profile {
-    width: 100px;  
-    margin: 0 auto;  
+    width: 80px;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .image-elements-profile img {
     display: block;
-    max-width: 100%;  
-    height: auto;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -1066,12 +1119,13 @@ input {
     }
 
     .image-elements-profile {
-        width: 80px;  
+        width: 60px;
+        height: 90px;  
     }
 
     .image-elements-profile img {
         width: 100%;  
-        height: auto;
+        height: 100%;
     }
 }
 
@@ -1081,13 +1135,14 @@ input {
     }
 
     .image-elements-profile {
-        width: 50px;
+        width: 40px;
+        height: 60px;  
     }
 
     .image-elements-profile img {
         display: block;  
         width: 100%; 
-        height: auto; 
+        height: 100%; 
         max-width: 50px;  
     }
 }
@@ -1096,7 +1151,9 @@ input {
     width: 150px;  
 }
 
-
+.image-title-profile{
+    width: 100px;
+}
 
 /* CSS de TreasureForm*/
 
@@ -1609,8 +1666,8 @@ input {
 .about-us-page.container {
     margin: 0; 
     max-width: 100%; 
-    padding-left: 300px;
-    padding-right: 300px;
+    padding-left: 10vh;
+    padding-right: 10vh;
 }
 
 .about-us-banner {

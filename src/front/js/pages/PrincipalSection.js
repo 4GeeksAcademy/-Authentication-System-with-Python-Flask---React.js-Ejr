@@ -21,6 +21,7 @@ const PrincipalSection = () => {
                     </button>
                 </Link>
             </div>
+            <div className='video-div'><video src="https://res.cloudinary.com/dxzhssh9m/video/upload/v1714057201/video2_ykfqee.mp4" controls className="video"></video></div>
         </div>
     );
 };
