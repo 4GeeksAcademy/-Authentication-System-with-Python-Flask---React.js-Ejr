@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Rankings = () => {
-    const [view, setView] = useState('Users');
+    const location = useLocation();
+    const [view, setView] = useState(location.state?.view || 'Users');
     const [rankings, setRankings] = useState([]);
 
     useEffect(() => {
@@ -31,7 +32,7 @@ const Rankings = () => {
                 <div className="ranking">
                     <div className="table">
                         <div className="table-row header">
-                            <div className="table-cell pos ps-5">POS</div>
+                            <div className="table-cell pos">POS</div>
                             <div className="table-cell name">NAME</div>
                             <div className="table-cell">SCORE</div>
                         </div>

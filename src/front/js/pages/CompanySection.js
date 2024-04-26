@@ -24,7 +24,7 @@ const CompanySection = () => {
                         <p className="text-how pt-4">1. Hide golden tickets for users to find and redeem in your stores for promotional products.</p>
                     </div>
                     <div className="image-description pt-5">
-                        <Link to="/rankings"><img src={regalo} className="imagen-how" alt="Description of image 2" /></Link>
+                        <Link to="/rankings" state={{ view: 'Companies' }}><img src={regalo} className="imagen-how" alt="Description of image 2" /></Link>
                         <p className="text-how-2 pt-4">2. Earn points and climb the rankings to become our users' favorite company. Start now!</p>
                     </div>
                 </div>

@@ -1,4 +1,6 @@
 import React from "react";
+import denis from "/src/front/img/denis.png";
+import javier from "/src/front/img/javi.png";
 
 const AboutUs = () => {
     return (
@@ -23,12 +25,12 @@ const AboutUs = () => {
                         <p>CEO</p>
                     </div>
                     <div className="team-member">
-                        <img className="members-image" src="https://media.istockphoto.com/id/640021202/es/foto/retrato-de-un-hombre-joven-alegre.jpg?s=612x612&w=0&k=20&c=55QWCFuSYNyRJUj10cCiOIqetLN8Ia4R8voI2vXtS5Q=" alt="Javier" />
+                        <img className="members-image" src={javier} alt="Javier" />
                         <h3>Javier García</h3>
                         <p>CEO</p>
                     </div>
                     <div className="team-member">
-                        <img className="members-image" src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1713965922/vvv_gfaxne.jpg" alt="Denis Díaz" />
+                        <img className="members-image" src={denis} alt="Denis Díaz" />
                         <h3>Denis Díaz</h3>
                         <p>CEO</p>
                     </div>

@@ -122,14 +122,7 @@ input {
     }
 }
 
-/* CSS del Home*/
-
-.contenido-relleno {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-    text-align: center;
-    height: 280px;
-}
+/* CSS del PrincipalSection*/
 
 @media (max-width: 768px) {  
     .principal-section {
@@ -177,7 +170,105 @@ input {
     font-family: 'Play', sans-serif !important;
 }
 
+.video-div{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 130px;
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
 
+.video{
+    max-width: 100%;
+    height: 390px;
+    margin-top: 0;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    border: 1.5px solid rgba(207, 207, 207, 0.3); 
+    box-shadow: 0 8px 16px rgba(184, 183, 182, 0.479); 
+    background: rgb(255, 255, 255);
+}
+
+.video:hover{
+    transform: scale(1.1);
+}
+
+.video-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 780px) {  
+    .video-div {
+        padding-left: 0; 
+        padding-right: 0; 
+        padding-bottom: 0; 
+        padding-top: 20px; 
+        justify-content: center; 
+    }
+    
+    .video {
+        height: 350px; 
+        margin-top: 0; 
+    }
+}
+
+@media (max-width: 1000px) {  
+    .video-div {
+        padding-left: 0; 
+        padding-right: 0; 
+        padding-bottom: 0; 
+        padding-top: 30px; 
+        justify-content: center; 
+    }
+    
+    .video {
+        height: 290px; 
+        margin-top: 0; 
+    }
+}
+
+.blur-background > :not(.video-div) {
+    filter: blur(8px);
+}
+
+.video-centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.6);
+    z-index: 1001;
+    width: 90%;
+    max-width: 900px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
+}
 
 /* CSS de Navbar*/
 
@@ -334,10 +425,16 @@ input {
 }
 
 .imageLogo {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     margin-left: 40px;
     margin-right: 150px;
+    margin-top: 10px;
+    transition: transform 0.5s ease;
+}
+
+.imageLogo:hover{
+    transform: scale(1.1);
 }
 
 .logout {
@@ -969,6 +1066,7 @@ input {
         width: 100%;
         text-align: center;
         padding-left: 0;
+        padding-top: 15px;
     }
 
     .sidebar ul {
@@ -1049,14 +1147,16 @@ input {
 }
 
 .image-elements-profile {
-    width: 100px;  
-    margin: 0 auto;  
+    width: 80px;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .image-elements-profile img {
     display: block;
-    max-width: 100%;  
-    height: auto;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -1066,12 +1166,13 @@ input {
     }
 
     .image-elements-profile {
-        width: 80px;  
+        width: 60px;
+        height: 90px;  
     }
 
     .image-elements-profile img {
         width: 100%;  
-        height: auto;
+        height: 100%;
     }
 }
 
@@ -1081,13 +1182,14 @@ input {
     }
 
     .image-elements-profile {
-        width: 50px;
+        width: 40px;
+        height: 60px;  
     }
 
     .image-elements-profile img {
         display: block;  
         width: 100%; 
-        height: auto; 
+        height: 100%; 
         max-width: 50px;  
     }
 }
@@ -1096,7 +1198,9 @@ input {
     width: 150px;  
 }
 
-
+.image-title-profile{
+    width: 100px;
+}
 
 /* CSS de TreasureForm*/
 
@@ -1214,6 +1318,22 @@ input {
     .title-page-list {
         padding-top: 400px; 
     }
+    .find-it-elements {
+        text-align: left;
+        vertical-align: middle;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    .user-title{
+        width: auto;
+    }
+    .table-list{
+        width: auto;
+    }
 }
 
 .treasure-list-page {
@@ -1273,6 +1393,17 @@ input {
     .find-it-title {
         width: auto; 
     }
+    .find-it-elements {
+        text-align: left;
+        vertical-align: middle;
+    }
+    
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
 }
 
 .image-container {
@@ -1308,18 +1439,8 @@ input {
     width: 20%; 
 }
 
-.button-see-more {
-    font-size: 15px !important;
-    justify-content: end !important;
-}
-
-.button-see-more {
-    margin-left: 10px;
-}
-
 .btn-prev, .btn-next {
     font-size: 20px;
-    font-weight: bold;
     color: #FFC107; 
     background-color: #000000; 
     border: none;
@@ -1341,6 +1462,19 @@ input {
     color: #666666; 
     cursor: default; 
     box-shadow: none; 
+}
+
+.find-it-elements {
+    text-align: left;
+    vertical-align: middle;
+    width: 20%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* CSS de Status*/
@@ -1609,8 +1743,8 @@ input {
 .about-us-page.container {
     margin: 0; 
     max-width: 100%; 
-    padding-left: 300px;
-    padding-right: 300px;
+    padding-left: 10vh;
+    padding-right: 10vh;
 }
 
 .about-us-banner {
