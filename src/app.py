@@ -77,7 +77,7 @@ def serve_any_other_file(path):
 
 @app.route('/login', methods=['POST'])
 def login (): 
-    data =request.json()
+    data =request.json
     if not data:
         APIException("Insert correct information"), 400
 
@@ -104,14 +104,13 @@ def login ():
 
 @app.route('/signup', methods=['POST'])
 def create_new_user ():
-    data = request.json()
-
+    data = request.json
     check_if_email_already_exists = User.query.filter_by(email = data["email"]).first()
     if check_if_email_already_exists:
         APIException("Email already exists")
     
     new_user = User(
-        name= data["name"], 
+        user_name= data["user_name"], 
         email= data["email"],
         password= data["password"],
         role = "user",
