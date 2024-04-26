@@ -175,7 +175,7 @@ input {
     justify-content: flex-start;
     padding-left: 130px;
     padding-bottom: 10px;
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
 .video{
@@ -191,7 +191,29 @@ input {
 }
 
 .video:hover{
-    transform: scale(1.05);
+    transform: scale(1.1);
+}
+
+.video-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 780px) {  
@@ -222,6 +244,30 @@ input {
         height: 290px; 
         margin-top: 0; 
     }
+}
+
+.blur-background > :not(.video-div) {
+    filter: blur(8px);
+}
+
+.video-centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.6);
+    z-index: 1001;
+    width: 90%;
+    max-width: 900px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
 }
 
 /* CSS de Navbar*/
@@ -1020,6 +1066,7 @@ input {
         width: 100%;
         text-align: center;
         padding-left: 0;
+        padding-top: 15px;
     }
 
     .sidebar ul {
@@ -1271,6 +1318,22 @@ input {
     .title-page-list {
         padding-top: 400px; 
     }
+    .find-it-elements {
+        text-align: left;
+        vertical-align: middle;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    .user-title{
+        width: auto;
+    }
+    .table-list{
+        width: auto;
+    }
 }
 
 .treasure-list-page {
@@ -1330,6 +1393,17 @@ input {
     .find-it-title {
         width: auto; 
     }
+    .find-it-elements {
+        text-align: left;
+        vertical-align: middle;
+    }
+    
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
 }
 
 .image-container {
@@ -1365,18 +1439,8 @@ input {
     width: 20%; 
 }
 
-.button-see-more {
-    font-size: 15px !important;
-    justify-content: end !important;
-}
-
-.button-see-more {
-    margin-left: 10px;
-}
-
 .btn-prev, .btn-next {
     font-size: 20px;
-    font-weight: bold;
     color: #FFC107; 
     background-color: #000000; 
     border: none;
@@ -1398,6 +1462,19 @@ input {
     color: #666666; 
     cursor: default; 
     box-shadow: none; 
+}
+
+.find-it-elements {
+    text-align: left;
+    vertical-align: middle;
+    width: 20%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* CSS de Status*/

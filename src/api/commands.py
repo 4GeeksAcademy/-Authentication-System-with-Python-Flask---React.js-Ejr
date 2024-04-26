@@ -42,7 +42,7 @@ users = [
     {"username": "javi001", "email": "javi@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
     {"username": "ernest0", "email": "ernesto@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
     {"username": "mariagarcia", "email": "maria@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
-    {"username": "pedropicapiedra", "email": "pedro@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
+    {"username": "pedropica", "email": "pedro@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
     {"username": "soyelena", "email": "elena@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
     {"username": "gonz0", "email": "gonzo@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},
     {"username": "silvialahouse", "email": "silvia@hotmail.com", "password": "123", "user_type": "user", "status_name": "Amateur"},

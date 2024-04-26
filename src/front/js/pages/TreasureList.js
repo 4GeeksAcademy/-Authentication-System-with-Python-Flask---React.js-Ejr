@@ -69,7 +69,7 @@ const TreasureList = () => {
                     <tbody>
                         {currentTreasures.map((treasure, index) => (
                             <tr className="elementos" key={index}>
-                                <td className="user-elements ps-3">
+                                <td className="user-elements ps-2">
                                     <img
                                         src={treasure.userPhoto ? treasure.userPhoto : "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"}
                                         alt="User"
@@ -86,9 +86,11 @@ const TreasureList = () => {
                                 <td className="name-elements ps-2">{treasure.name}</td>
                                 <td className="city-elements ps-2">{treasure.city_name}</td>
                                 <td className="find-it-elements">
-                                    <Link to={`/treasure/${treasure.id}`}>
-                                        <button className="button-details btn btn-warning">Details</button>
-                                    </Link>
+                                    <div className="button-container">
+                                        <Link to={`/treasure/${treasure.id}`}>
+                                            <button className="button-details btn btn-warning">Details</button>
+                                        </Link>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
