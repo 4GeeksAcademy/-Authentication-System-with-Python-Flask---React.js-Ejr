@@ -1,5 +1,5 @@
 import React, { useState } from "react"; 
-import "../../styles/index.css";
+import "../../styles/signUp.css";
 
 const SignUp = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -59,7 +59,11 @@ const SignUp = () => {
 								placeholder="Contraseña"
 							/>
 							<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
-							<button className="button-input submit" onClick={handleSubmit}>Enviar</button>
+							<button 
+								className="button-input submit" 
+								onClick={()=>{handleSubmit();
+											handleClose();}}>
+									Enviar</button>
 						</div>
 					</div>
 				)}
