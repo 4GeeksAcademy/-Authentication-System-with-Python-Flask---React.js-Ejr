@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User_regular, User_admin
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -67,8 +67,37 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+ # TODO tener en cuenta el token y el rol a la hora de coger los datos 
+""" @app.route('/login', methods=['POST'])
+def login (): 
+    data =request.json()
+ """
+
+
+
+@app.route('signup', methods=['POST'])
+def create_new_user ():
+    data = request.json()
+
+    check_if_email_already_exists = User_regular.query.filter_by(email = data["email"]).first()
+    if check_if_email_already_exists:
+        APIException("Email already exists")
+    
+    new_user = User_regular(
+        name= data["name"], 
+        email= data["email"],
+        password= data["password"],
+    )
+
+    db.session.add(new_user)
+    db.session.commit()
+    serialized_new_user = new_user.serialize()
+
+    return jsonify(serialized_new_user), 200
+    
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
