@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db, User_regular, User_admin
+from api.models import db, User, Trainer
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -75,15 +75,15 @@ def login ():
 
 
 
-@app.route('signup', methods=['POST'])
+@app.route('/signup', methods=['POST'])
 def create_new_user ():
     data = request.json()
 
-    check_if_email_already_exists = User_regular.query.filter_by(email = data["email"]).first()
+    check_if_email_already_exists = User.query.filter_by(email = data["email"]).first()
     if check_if_email_already_exists:
         APIException("Email already exists")
     
-    new_user = User_regular(
+    new_user = User(
         name= data["name"], 
         email= data["email"],
         password= data["password"],
