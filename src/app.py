@@ -88,18 +88,14 @@ def login ():
 
     user = User.query.filter_by(email=email).first()
     trainer = Trainer.query.filter_by(email=email).first()
-# TODO hacer la validación de las contraseñas/usuarios - quitar lo del role
-    if user and password == user.password:
-        role = user.role
-    elif trainer and password == trainer.password:
-        role = trainer.role
-    else:
-        APIException("Invalid email or password"), 401
 
+    if (user and password != user.password) or (trainer and password != trainer.password):
+        APIException("Invalid password, please try again"), 401
+    
     #access_token = create_access_token(identity=email)
     #"access_token": access_token,
     
-    return jsonify({ "role": role}), 200
+    return jsonify({ "access_token": "acces_token"}), 200
     
 
 @app.route('/signup', methods=['POST'])
