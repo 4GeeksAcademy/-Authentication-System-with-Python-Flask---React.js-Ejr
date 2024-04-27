@@ -6,10 +6,17 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db, User_regular, User_admin
+from api.models import db, User, Trainer
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+
+#from flask_jwt_extended import create_access_token
+#from flask_jwt_extended import get_jwt_identity
+#from flask_jwt_extended import jwt_required
+#from flask_jwt_extended import JWTManager
+
+from datetime import timedelta
 
 # from models import Person
 
@@ -18,7 +25,8 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-
+""" app.config['JWT_SECRET_KEY'] = 'your_secret_key_here'
+jwt = JWTManager(app) """
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -30,7 +38,6 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
-
 # add the admin
 setup_admin(app)
 
@@ -67,26 +74,46 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
- # TODO tener en cuenta el token y el rol a la hora de coger los datos 
-""" @app.route('/login', methods=['POST'])
+
+@app.route('/login', methods=['POST'])
 def login (): 
-    data =request.json()
- """
+    data =request.json
+    if not data:
+        APIException("Insert correct information"), 400
 
+    email = data.get("email")
+    password = data.get("password")
+    if not email or not password:
+        APIException("Missing email or password"), 400
 
+    user = User.query.filter_by(email=email).first()
+    trainer = Trainer.query.filter_by(email=email).first()
+# TODO hacer la validación de las contraseñas/usuarios - quitar lo del role
+    if user and password == user.password:
+        role = user.role
+    elif trainer and password == trainer.password:
+        role = trainer.role
+    else:
+        APIException("Invalid email or password"), 401
 
-@app.route('signup', methods=['POST'])
+    #access_token = create_access_token(identity=email)
+    #"access_token": access_token,
+    
+    return jsonify({ "role": role}), 200
+    
+
+@app.route('/signup', methods=['POST'])
 def create_new_user ():
-    data = request.json()
-
-    check_if_email_already_exists = User_regular.query.filter_by(email = data["email"]).first()
+    data = request.json
+    check_if_email_already_exists = User.query.filter_by(email = data["email"]).first()
     if check_if_email_already_exists:
         APIException("Email already exists")
     
-    new_user = User_regular(
-        name= data["name"], 
+    new_user = User(
+        user_name= data["user_name"], 
         email= data["email"],
         password= data["password"],
+        role = "user",
     )
 
     db.session.add(new_user)
