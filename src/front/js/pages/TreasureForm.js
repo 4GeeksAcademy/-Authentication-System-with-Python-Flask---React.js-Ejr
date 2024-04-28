@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "./../store/appContext";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Swal from "sweetalert2";
+import fondohide from '/src/front/img/fondo-hide.png';
 
 const TreasureForm = () => {
     const { store, actions } = useContext(Context);
@@ -111,7 +112,7 @@ const TreasureForm = () => {
     };
 
     return (
-        <div className="text-center treasure-form-page">
+        <div className="text-center treasure-form-page" style={{ backgroundImage: `url(${fondohide})`, backgroundSize: 'cover', backgroundPosition: 'center', padding: '100px 0', minHeight: "100vh" }}>
             <h1 className="title-hide pt-5 pb-4">Hide treasure</h1>
             <form onSubmit={handleSubmit} className="form-hide">
                 <div className="hide-input-group pb-4">

@@ -182,7 +182,7 @@ input {
     max-width: 100%;
     height: 390px;
     margin-top: 0;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
     border-radius: 10px;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
     border: 1.5px solid rgba(207, 207, 207, 0.3); 
@@ -1241,18 +1241,20 @@ input {
 }
 
 .form-hide {
-    background: linear-gradient(to bottom, #aeaeae 0%, #e7e7e7 100%);
+    background: linear-gradient(to bottom, rgba(153, 153, 153, 0.9) 0%, rgba(153, 153, 153, 0.9) 100%);
     padding: 28px;
     border-radius: 20px;
     color: #000000;
     font-weight: bold;
     width: 90%; 
     max-width: 700px; 
+    border: 1.5px solid grey;
 }
 
 @media only screen and (max-width: 768px) {
     .title-hide {
         font-size: 40px;
+        margin-top: 80px;
     }
 }
 
@@ -2000,7 +2002,7 @@ input {
 
 .spinner {
     border: 8px solid rgba(255, 255, 255, 0.3);
-    border-top: 8px solid #3498db;
+    border-top: 8px solid #f1d223;
     border-radius: 50%;
     width: 50px;
     height: 50px;

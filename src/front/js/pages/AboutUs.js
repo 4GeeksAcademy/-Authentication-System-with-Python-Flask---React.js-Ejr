@@ -1,6 +1,7 @@
 import React from "react";
 import denis from "/src/front/img/denis.png";
 import javier from "/src/front/img/javi.png";
+import ernesto from "/src/front/img/ernesto.png";
 
 const AboutUs = () => {
     return (
@@ -20,7 +21,7 @@ const AboutUs = () => {
                 <h2>Our Team</h2>
                 <div className="team-members">
                     <div className="team-member">
-                        <img className="members-image" src="https://www.blixt.tv/wp-content/uploads/2018/10/Foto-para-empresas-06.jpg" alt="Ernesto" />
+                        <img className="members-image" src={ernesto} alt="Ernesto" />
                         <h3>Ernesto Pineda</h3>
                         <p>CEO</p>
                     </div>
