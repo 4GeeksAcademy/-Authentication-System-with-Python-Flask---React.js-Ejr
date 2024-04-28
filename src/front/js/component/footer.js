@@ -5,19 +5,19 @@ export const Footer = () => (
   <footer className="footer">
     <div className="container">
       <div className="row">
-        <div className="footer-section-1 col-md-4">
-          <h5>Urban Treasures</h5>
+        <div className="footer-section footer-section-1 col-md-4">
+          <h6>Urban Treasures</h6>
           <p>Explore the best urban treasures with us.</p>
         </div>
-        <div className="footer-section-2 col-md-4">
-          <h5>Quick Links</h5>
+        <div className="footer-section footer-section-2 col-md-4">
+          <h6>Quick Links</h6>
           <ul className="footer-links">
             <li><a href="/about-us">About Us</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
-        <div className="footer-section-3 col-md-4">
-          <h5>Follow Us</h5>
+        <div className="footer-section footer-section-3 col-md-4">
+          <h6>Follow Us</h6>
           <div className="social-links">
             <a href="https://instagram.com"><FaInstagram /></a>
             <a href="https://twitter.com"><FaTwitter /></a>

@@ -63,7 +63,7 @@ const PrincipalSection = () => {
             </div>
             <div className='video-div'>
                 <div className={`video-wrapper ${isExpanded ? 'video-centered' : ''}`}>
-                    <video ref={videoRef} src="https://res.cloudinary.com/dxzhssh9m/video/upload/v1714057201/video2_ykfqee.mp4" className="video" controls></video>
+                    <video ref={videoRef} src="https://res.cloudinary.com/dxzhssh9m/video/upload/v1714159637/Proyecto_DEJ_4Geeks_epkohr.mp4" className="video" controls></video>
                     {!isPlaying && (
                         <button className="play-button" onClick={togglePlay}>▶</button>
                     )}
