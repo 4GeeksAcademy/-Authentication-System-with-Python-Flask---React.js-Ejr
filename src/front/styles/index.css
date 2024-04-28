@@ -1007,6 +1007,10 @@ input {
     border-radius: 30px;
 }
 
+.form-control{
+    width: 50%;
+}
+
 @media (max-width: 1000px) {
     .profile-cont {
         flex-direction: column;
