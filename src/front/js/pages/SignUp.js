@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../../styles/signUp.css";
 
-export const Home = () => {
+const SignUp = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [inputValues, setInputValues] = useState({
 		input1: "",
@@ -45,14 +45,14 @@ export const Home = () => {
 								placeholder="Nombre Completo"
 							/>
 							<input
-								type="email"
+								type="text"
 								name="input2"
 								value={inputValues.input2}
 								onChange={handleChange}
 								placeholder="Email"
 							/>
 							<input
-								type="password"
+								type="text"
 								name="input3"
 								value={inputValues.input3}
 								onChange={handleChange}
@@ -71,3 +71,5 @@ export const Home = () => {
 		</div>
 	);
 };
+
+export default SignUp;

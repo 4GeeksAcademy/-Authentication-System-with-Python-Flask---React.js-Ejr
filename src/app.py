@@ -111,7 +111,32 @@ def create_new_user ():
     serialized_new_user = new_user.serialize()
 
     return jsonify(serialized_new_user), 200
+
+@app.route('/trainer/<int:id>')
+def get_trainer_users (id):
+    trainer = Trainer_data.query.filter_by(trainer_data_id=id).first()
+    if not trainer:
+        APIException('User not found')
     
+    users = User_data.query.get_all(trainer_id=id)
+    serialized_users = (user.serialize () for user in users)
+    
+    return jsonify(serialized_users), 200
+    
+@app.route('/trainer/<int:trainer_id>/<int:user_id>')
+def get_single_user_from_trainer (trainer_id, user_id):
+    get_particular_user = User_data.query.filter_by(trainer_id=trainer_id, user_id = user_id)
+
+    if not get_particular_user:
+        APIException("Not users associated with this account"), 400
+    serialized_user = get_particular_user.serialize()
+
+    return jsonify(serialized_user), 200
+
+
+
+
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

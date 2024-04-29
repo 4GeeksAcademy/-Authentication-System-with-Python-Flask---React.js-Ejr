@@ -1,0 +1,62 @@
+/* 
+    General Styles used on every website (Don't Repeat Yourself)
+*/
+
+/* Modal (background) */
+.modal {
+  display: flex;
+  background-color: rgba(154, 154, 154, 0.515);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #004112;
+  padding: 20px;
+  border: 1px solid #006c0e;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  
+}
+
+/* Close Button */
+.close {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+.modal-p {
+  color: #fff;
+}
+input {
+  border-radius: 5px;
+  margin: 2px;
+}
+.button-input {
+  margin: 2px;
+  border-radius: 5px;
+  color: #fff;
+}
+.close-button {
+  background-color: rgb(160, 1, 1);
+}
+.submit {
+  background-color: #0011ff;
+}
+.button-sign-up {
+  border-radius: 5px;
+  background-color: #0011ff;
+  color: #fff;
+}
