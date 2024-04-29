@@ -9,9 +9,8 @@ class Trainer(db.Model):
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(80), unique=False, nullable=False)
     role = Column(String(10), nullable=False)
-    #exercices_id = db.Column(db.Integer, ForeignKey( Exercises.exercises_id))
+    trainer_data = relationship("Trainer_data", backref = "Trainer", lazy=True)
     
-
     def __repr__(self):
         return f'<Trainer {self.email}>'
 
@@ -24,9 +23,11 @@ class Trainer(db.Model):
 
 class Trainer_data(db.Model):
     trainer_data_id= Column(Integer, primary_key=True)
+    trainer = Column(Integer, ForeignKey(Trainer.id))
     trainer_name = Column (String(50), nullable=False)
     profile_picture = Column(String(250), nullable=True)
-    routines = relationship("Routines", back_populates="trainer_data")
+    user_id = relationship("User_data", backref = "Trainer_data", lazy=True)
+    #exercices_id = db.Column(db.Integer, ForeignKey( Exercises.exercises_id))
     
     def __repr__(self):
         return f'<Trainer_data {self.trainer_name}>'
@@ -43,8 +44,8 @@ class User(db.Model):
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(80), unique=False, nullable=False)
     role = Column(String(10), nullable=False)
+    user_data = relationship("User_data", backref = "User", lazy = True)
     
-
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -64,7 +65,7 @@ class User_data(db.Model):
     user_height = Column(Integer, nullable=True)
     user_illness = Column(String(250), nullable=False)
     user_objetives = Column(String(250), nullable=True)
-    routines = relationship('Routines', back_populates='user_data')
+    trainer_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id))
 
     def __repr__(self):
         return f'<User_data {self.id}>'
@@ -84,12 +85,12 @@ class Routines(db.Model):
     id = Column(Integer, primary_key=True)
     actual_routine = Column(String(100), nullable=False)
     historial = Column(String(250), nullable=False)
-    user_data_id = Column(Integer, ForeignKey('user_data.id'), nullable=False)
-    trainer_data_id = Column(Integer, ForeignKey('trainer_data.id'), nullable=False)
-    #excercise_id = Column(Integer, ForeignKey('excercises.id'), nullable=False)
-    user = relationship('User_data', back_populates='routines')
-    trainer = relationship('Trainer_data', back_populates='routines')
+    user_data_id = Column(Integer, ForeignKey(User_data.id), nullable=False)
+    trainer_data_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id), nullable=False)
+    user_data = relationship('User_data', backref = "Routines", lazy = True )
+    trainer = relationship('Trainer_data', backref = "Routines", lazy = True)
     #excercise = relationship('Excercises', back_populates='routines')
+    #excercise_id = Column(Integer, ForeignKey('excercises.id'), nullable=False)
 
     def __repr__(self):
         return f'<Routines {self.id}'
@@ -100,3 +101,6 @@ class Routines(db.Model):
             'actual_routine':self.actual_routine,
             'historial':self.historial,
         }
+
+
+    
