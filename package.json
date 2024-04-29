@@ -73,10 +73,18 @@
 		]
 	},
 	"dependencies": {
+		"@fortawesome/free-solid-svg-icons": "^6.5.1",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@react-google-maps/api": "^2.19.3",
+		"axios": "^1.6.8",
+		"bootstrap": "^5.3.3",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-bootstrap": "^2.10.2",
 		"react-dom": "^16.8.4",
+		"react-icons": "^5.0.1",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-router-dom": "^6.3.0",
+		"sweetalert2": "^11.10.8"
 	}
 }
