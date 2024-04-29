@@ -1,26 +1,73 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import React, { useState } from "react";
+import "../../styles/signUp.css";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	const [showModal, setShowModal] = useState(false);
+	const [inputValues, setInputValues] = useState({
+		input1: "",
+		input2: "",
+		input3: ""
+	});
+	const handleClose = () => setShowModal(false);
+	const handleShow = () => setShowModal(true);
+
+	const handleSubmit = () => {
+	/* Aquí podemos realizar cualquier acción con los datos ingresados
+		 Por ejemplo, enviarlos a través de una solicitud HTTP o realizar alguna lógica de procesamiento */
+		console.log("Datos enviados:", inputValues);
+		// Luego, cierra el modal
+		handleClose();
+	};
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setInputValues(prevState => ({
+			...prevState,
+			[name]: value
+		}));
+	};
 
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+		<div>
+			<div>
+				<button className="button-sign-up" onClick={handleShow}>Sign Up</button>
+
+				{showModal && (
+					<div className="modal">
+						<div className="modal-content">
+							<span className="close" onClick={handleClose}>&times;</span>
+							<p className="modal-p">Sing Up</p>
+							<input
+								type="text"
+								name="input1"
+								value={inputValues.input1}
+								onChange={handleChange}
+								placeholder="Nombre Completo"
+							/>
+							<input
+								type="email"
+								name="input2"
+								value={inputValues.input2}
+								onChange={handleChange}
+								placeholder="Email"
+							/>
+							<input
+								type="password"
+								name="input3"
+								value={inputValues.input3}
+								onChange={handleChange}
+								placeholder="Contraseña"
+							/>
+							<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
+							<button 
+								className="button-input submit" 
+								onClick={()=>{handleSubmit();
+											handleClose();}}>
+									Enviar</button>
+						</div>
+					</div>
+				)}
 			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
 		</div>
 	);
 };
