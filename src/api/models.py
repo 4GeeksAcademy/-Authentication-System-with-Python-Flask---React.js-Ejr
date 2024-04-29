@@ -26,6 +26,7 @@ class Trainer_data(db.Model):
     trainer_data_id= Column(Integer, primary_key=True)
     trainer_name = Column (String(50), nullable=False)
     profile_picture = Column(String(250), nullable=True)
+    routines = relationship("Routines", back_populates="trainer_data")
     
     def __repr__(self):
         return f'<Trainer_data {self.trainer_name}>'
@@ -63,9 +64,10 @@ class User_data(db.Model):
     user_height = Column(Integer, nullable=True)
     user_illness = Column(String(250), nullable=False)
     user_objetives = Column(String(250), nullable=True)
+    routines = relationship('Routines', back_populates='user_data')
 
     def __repr__(self):
-        return f'<User data {self.user_id}>'
+        return f'<User_data {self.id}>'
 
     def serialize(self):
         return {
@@ -76,4 +78,25 @@ class User_data(db.Model):
             "user_height": self.user_height,
             "user_illness": self.user_illness,
             "user_objetives": self.user_objetives,
+        }
+
+class Routines(db.Model):
+    id = Column(Integer, primary_key=True)
+    actual_routine = Column(String(100), nullable=False)
+    historial = Column(String(250), nullable=False)
+    user_data_id = Column(Integer, ForeignKey('user_data.id'), nullable=False)
+    trainer_data_id = Column(Integer, ForeignKey('trainer_data.id'), nullable=False)
+    #excercise_id = Column(Integer, ForeignKey('excercises.id'), nullable=False)
+    user = relationship('User_data', back_populates='routines')
+    trainer = relationship('Trainer_data', back_populates='routines')
+    #excercise = relationship('Excercises', back_populates='routines')
+
+    def __repr__(self):
+        return f'<Routines {self.id}'
+    
+    def serialize(self):
+        return {
+            'id':self.id,
+            'actual_routine':self.actual_routine,
+            'historial':self.historial,
         }
