@@ -84,8 +84,8 @@ class User_data(db.Model):
 class Routines(db.Model):
     id = Column(Integer, primary_key=True)
     actual_routine = Column(String(100), nullable=False)
-    historial = Column(String(250), nullable=False)
-    user_data_id = Column(Integer, ForeignKey(User_data.id), nullable=False)
+    historical = Column(String(250), nullable=True)
+    user_data_id = Column(Integer, ForeignKey(User_data.id), unique = True, nullable=False)
     trainer_data_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id), nullable=False)
     user_data = relationship('User_data', backref = "Routines", lazy = True )
     trainer = relationship('Trainer_data', backref = "Routines", lazy = True)
@@ -99,7 +99,7 @@ class Routines(db.Model):
         return {
             'id':self.id,
             'actual_routine':self.actual_routine,
-            'historial':self.historial,
+            'historial':self.historical,
         }
 
 
