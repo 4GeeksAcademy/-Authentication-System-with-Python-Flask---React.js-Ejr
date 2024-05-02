@@ -27,7 +27,7 @@ class Trainer_data(db.Model):
     trainer_name = Column (String(50), nullable=False)
     profile_picture = Column(String(250), nullable=True)
     user_id = relationship("User_data", backref = "Trainer_data", lazy=True)
-    #exercices_id = db.Column(db.Integer, ForeignKey( Exercises.exercises_id))
+    exercises = relationship("Exercise", backref="Trainer_data", lazy=True)
     
     def __repr__(self):
         return f'<Trainer_data {self.trainer_name}>'
@@ -66,6 +66,7 @@ class User_data(db.Model):
     user_illness = Column(String(250), nullable=False)
     user_objetives = Column(String(250), nullable=True)
     trainer_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id))
+    exercises = relationship("Exercise", backref = "User_data", lazy = True)
 
     def __repr__(self):
         return f'<User_data {self.id}>'
@@ -89,8 +90,7 @@ class Routines(db.Model):
     trainer_data_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id), nullable=False)
     user_data = relationship('User_data', backref = "Routines", lazy = True )
     trainer = relationship('Trainer_data', backref = "Routines", lazy = True)
-    #excercise = relationship('Excercises', back_populates='routines')
-    #excercise_id = Column(Integer, ForeignKey('excercises.id'), nullable=False)
+    exercises = relationship("Exercise", secondary='routine_exercise_association', back_populates="routines")
 
     def __repr__(self):
         return f'<Routines {self.id}'
@@ -102,5 +102,29 @@ class Routines(db.Model):
             'historial':self.historical,
         }
 
+class Exercise (db.Model):
+    id = Column(Integer, primary_key = True)
+    exercise_name= Column(String(100), nullable = False, unique = True)
+    exercise_type= Column(String(50), nullable = False)
+    exercise_weight = Column(Integer, nullable = True)
+    user_data_id = Column(Integer, ForeignKey(User_data.id))
+    trainer_data_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id))
+    routines = relationship("Routines", secondary='routine_exercise_association', back_populates="exercises")
 
+    def __repr__(self):
+        return f'<Exercise {self.id}>'
+    def serialize(self):
+        return {
+            "id": self.id,
+            "exercise_name": self.exercise_name,
+            "exercise_type": self.exercise_type,
+            "exercise_weight": self.exercise_weight,
+        }
     
+class RoutineExerciseAssociation (db.Model):
+    id = Column (Integer, primary_key=True )
+    routine_id = Column(Integer, ForeignKey(Routines.id))
+    exercise_id = Column(Integer, ForeignKey(Exercise.id))
+
+    def __repr__(self):
+        return f'<RoutineExerciseAssociation {self.id}>'
