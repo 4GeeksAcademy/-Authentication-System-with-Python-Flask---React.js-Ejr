@@ -9,6 +9,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from datetime import timedelta
+from flask_cors import CORS
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -27,6 +28,7 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+CORS(app)
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
@@ -89,8 +91,7 @@ def create_new_user():
     if check_if_email_already_exists:
         return jsonify({'error': 'Email already exists'}), 400
     
-    new_user = User(
-        user_name=data["user_name"], 
+    new_user = User( 
         email=data["email"],
         password=data["password"],
         role="user",

@@ -1,30 +1,42 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../../styles/signUp.css";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const Home = () => {
 	const [showModal, setShowModal] = useState(false);
-	const [inputValues, setInputValues] = useState({
-		input1: "",
-		input2: "",
-		input3: ""
-	});
+	const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+	const navigate = useNavigate()
 	const handleClose = () => setShowModal(false);
 	const handleShow = () => setShowModal(true);
 
-	const handleSubmit = () => {
-	/* Aquí podemos realizar cualquier acción con los datos ingresados
-		 Por ejemplo, enviarlos a través de una solicitud HTTP o realizar alguna lógica de procesamiento */
-		console.log("Datos enviados:", inputValues);
-		// Luego, cierra el modal
-		handleClose();
-	};
+	const handleEmailChange = (event) => {
+		setEmail(event.target.value);
+	  };
+	
+	  const handlePasswordChange = (event) => {
+		setPassword(event.target.value);
+	  };
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setInputValues(prevState => ({
-			...prevState,
-			[name]: value
-		}));
+	  const handleSubmit = (event) => {
+		event.preventDefault();
+		 fetch(process.env.BACKEND_URL + "/signup", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email, password })
+		})
+		.then(res => res.json())
+		.then(data => {
+			if (data && data.access_token) {
+				handleClose(); 
+				navigate(/* Ruta para el perfil */);
+			}
+		})
+		.catch(error => {
+			alert.error('Ha ocurrido un error', error);
+		});
 	};
 
 	return (
@@ -37,33 +49,29 @@ export const Home = () => {
 						<div className="modal-content">
 							<span className="close" onClick={handleClose}>&times;</span>
 							<p className="modal-p">Sing Up</p>
-							<input
-								type="text"
-								name="input1"
-								value={inputValues.input1}
-								onChange={handleChange}
-								placeholder="Nombre Completo"
-							/>
-							<input
-								type="email"
-								name="input2"
-								value={inputValues.input2}
-								onChange={handleChange}
-								placeholder="Email"
-							/>
-							<input
-								type="password"
-								name="input3"
-								value={inputValues.input3}
-								onChange={handleChange}
-								placeholder="Contraseña"
-							/>
-							<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
-							<button 
-								className="button-input submit" 
-								onClick={()=>{handleSubmit();
-											handleClose();}}>
-									Enviar</button>
+							<form onSubmit={handleSubmit}>
+								<input
+									type="email"
+									name="email"
+									value={email}
+									onChange={handleEmailChange}
+									placeholder="Email"
+								/>
+								<input
+									type="password"
+									name="password"
+									value={password}
+									onChange={handlePasswordChange}
+									placeholder="Contraseña"
+								/>
+								<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
+								<button 
+									className="button-input submit" 
+									type="submit">
+									Enviar
+								</button>
+							</form>
+							
 						</div>
 					</div>
 				)}
