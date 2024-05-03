@@ -98,9 +98,9 @@ def create_new_user():
 
     db.session.add(new_user)
     db.session.commit()
-    serialized_new_user = new_user.serialize()
+    access_token = create_access_token(identity=new_user.email, additional_claims={"role": new_user.role})
 
-    return jsonify(serialized_new_user), 200
+    return jsonify(access_token), 200
 
 #User Endpoints
 @app.route('/user_data/<int:user_id>')
