@@ -5,7 +5,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 const SignUp = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [inputValues, setInputValues] = useState({
-		name: "",
 		email: "",
 		password: ""
 	});
@@ -49,13 +48,6 @@ const SignUp = () => {
 						<div className="modal-content">
 							<span className="close" onClick={handleClose}>&times;</span>
 							<p className="modal-p">Sing Up</p>
-							<input
-								type="text"
-								name="name"
-								value={inputValues.name}
-								onChange={handleChange}
-								placeholder="Nombre Completo"
-							/>
 							<input
 								type="text"
 								name="email"
