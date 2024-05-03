@@ -10,6 +10,13 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Africa } from "./pages/africa";
+import { AsiaPacific } from "./pages/asiaPacific";
+import { CentralAmerica } from "./pages/centralAmerica";
+import { MiddleEast } from "./pages/middleEast";
+import { SouthAmerica } from "./pages/southAmerica";
+import { Regions } from "./pages/regions";
+
 
 //create your first component
 const Layout = () => {
@@ -27,6 +34,12 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<Regions />} path="/regions" />
+                        <Route element={<Africa />} path="/regions/africa" />
+                        <Route element={<AsiaPacific />} path="/regions/asia-pacific" />
+                        <Route element={<CentralAmerica />} path="/regions/central-america" />
+                        <Route element={<MiddleEast />} path="/regions/middle-east" />
+                        <Route element={<SouthAmerica />} path="/regions/south-america" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
