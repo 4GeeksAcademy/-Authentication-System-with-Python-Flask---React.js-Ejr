@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-
-import { Context } from "../store/appContext";
+import React, { useState } from "react";
 
 export const Demo = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -10,8 +7,8 @@ export const Demo = () => {
 		password: "",
 	});
 
-
-	const handleLogin = async (data) => {
+	const handleLogin = async (formData) => {
+		formData.preventDefault();
 		const response = await fetch(`${process.env.BACKEND_URL}/login`, {
 			method: 'POST',
 			headers: {
@@ -20,15 +17,13 @@ export const Demo = () => {
 			body: JSON.stringify(data)
 		});
 		if (!response.ok) {
-			alert("Wrong user or password")
-		}
-		if (response.ok) {
-			result = response.json();
+			alert("Wrong user or password");
+		} else {
+			const result = await response.json();
 			sessionStorage.setItem("token", result.access_token);
-			console.log('te has logueado', token)
+			console.log('te has logueado', result.access_token);
 		}
 		setShowModal(false);
-
 	};
 
 	return (
@@ -40,14 +35,14 @@ export const Demo = () => {
 					<div className="modal-content">
 						<span className="close" onClick={() => setShowModal(false)}>&times;</span>
 						<h2>Login</h2>
-						<form onSubmit={handleLogin()}>
+						<form onSubmit={handleLogin}>
 							<label>Email:</label>
 							<input
 								type="email"
 								id="email"
 								name="email"
-								value={email}
-								onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+								value={data.email}
+								onChange={(e) => setData({ ...data, email: e.target.value })}
 								required
 							/>
 							<label>Contraseña:</label>
@@ -55,8 +50,8 @@ export const Demo = () => {
 								type="password"
 								id="password"
 								name="password"
-								value={password}
-								onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
+								value={data.password}
+								onChange={(e) => setData({ ...data, password: e.target.value })}
 								required
 							/>
 							<button type="submit">Login</button>
@@ -66,4 +61,4 @@ export const Demo = () => {
 			)}
 		</div>
 	);
-}
+};
