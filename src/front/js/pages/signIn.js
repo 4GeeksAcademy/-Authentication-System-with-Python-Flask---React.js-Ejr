@@ -27,11 +27,12 @@ function SignIn() {
   return (
     <ThemeProvider theme={createTheme()}>
       <CssBaseline />
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#2db734' }}>
+
         <Toolbar>
           {/* Empty Navbar */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            &nbsp;
+          <Typography variant="h6" component="div" sx= {{ flexGrow: 1 }}>
+              
           </Typography>
         </Toolbar>
       </AppBar>
@@ -42,7 +43,7 @@ function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            bgcolor:'2196f3',
+            
           }}
         >
           <LockOutlinedIcon />
@@ -94,11 +95,7 @@ function SignIn() {
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
+      
             </Grid>
           </Box>
         </Box>
