@@ -1,7 +1,8 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -9,29 +10,11 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { SignpostOutlined } from '@mui/icons-material';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
-export default function SignIn() {
+function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,30 +25,43 @@ export default function SignIn() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={createTheme()}>
+      <CssBaseline />
+      <AppBar position="static">
+        <Toolbar>
+          {/* Empty Navbar */}
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            &nbsp;
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            bgcolor:'2196f3',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+          <LockOutlinedIcon />
+          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+            New user? <Link href="#" variant="body2">
+                 Create an account
+                </Link>
+          </Typography>
+          
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="employee id"
-              label="Employee id"
+              id="employee-id"
+              label="Employee ID"
               name="employee"
               autoComplete="employee id"
               autoFocus
@@ -88,7 +84,7 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: '#2db734' }} // Change the background color to #2db734
+              sx={{ mt: 3, mb: 2, bgcolor: '#2db734' }}
             >
               Sign In
             </Button>
@@ -106,8 +102,9 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4}} />
       </Container>
     </ThemeProvider>
   );
 }
+
+export default SignIn;
