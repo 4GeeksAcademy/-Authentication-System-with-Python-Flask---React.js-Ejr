@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 // import "../../styles/demo.css";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-export const Demo = () => {
+export const Login = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [user, setUser] = useState({});
 	const { store, actions } = useContext(Context);
