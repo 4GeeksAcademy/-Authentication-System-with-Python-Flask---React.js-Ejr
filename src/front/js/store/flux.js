@@ -1,35 +1,47 @@
+import { jwtDecode } from "jwt-decode";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			token: sessionStorage.getItem("token") || "",
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			logOut: () => {
+				sessionStorage.removeItem("token");
+				setStore({ token: "" });
+			},
+			login: async (loginData) => {
+				const response = await fetch(`${process.env.BACKEND_URL}/login`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(loginData)
+				});
+				if (!response.ok) {
+					alert("Wrong user or password")
+				}
+				if (response.ok) {
+					const data = await response.json()
+					console.log("token", data)
+					const decoded = jwtDecode(data.access_token);
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });					
+				}
 			},
 
+
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
