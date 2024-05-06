@@ -8,6 +8,9 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Landing } from "./pages/landing";
+import { Trainer } from "./pages/trainer";
+import { User } from "./pages/user";
 
 const Layout = () => {
 
@@ -21,7 +24,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Landing />} path="/" />
                         <Route element={<User />} path="/user" />
                         <Route element={<Trainer />} path="/trainer" />
                         <Route element={<h1>Not found!</h1>} />

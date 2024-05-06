@@ -101,7 +101,7 @@ def create_new_user():
     db.session.commit()
     access_token = create_access_token(identity=new_user.email, additional_claims={"role": new_user.role})
 
-    return jsonify(access_token), 200
+    return jsonify({'access_token': access_token}), 200
 
 #User Endpoints
 @app.route('/user_data/<int:user_id>')
@@ -110,17 +110,7 @@ def get_user_data(user_id):
     user_data = User_data.query.get(user_id)
 
     if not user_data:
-        no_user_data = User_data(
-            user_name="",
-            user_weight="",
-            user_height="",
-            user_illness="",
-            user_objetives="",
-            user_id=get_jwt_identity() 
-        )
-        serialized_no_user_data = no_user_data.serialize()
-        return jsonify(serialized_no_user_data), 200
-        
+        return jsonify({'error': 'User data not found'}), 404
     
     serialized_user_data = user_data.serialize()
 
