@@ -10,8 +10,7 @@ const Chatbot = () => {
         "How do points/status work?": "Go to 'Status & Score'"
     };
 
-    const preguntasTipicas = Object.keys(respuestas); 
-
+    const preguntasComunes = Object.keys(respuestas); 
     const preguntaInicial = "How can I help you?"; 
 
     const [preguntaSeleccionada, setPreguntaSeleccionada] = useState(preguntaInicial);
@@ -55,7 +54,7 @@ const Chatbot = () => {
             )}
             <div>
                 <select onChange={handleQuestionSelect}>
-                    {preguntasTipicas.map((pregunta, index) => (
+                    {preguntasComunes.map((pregunta, index) => (
                         <option key={index} value={pregunta}>{pregunta}</option>
                     ))}
                 </select>
