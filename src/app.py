@@ -101,7 +101,7 @@ def create_new_user():
     db.session.commit()
     access_token = create_access_token(identity=new_user.email, additional_claims={"role": new_user.role})
 
-    return jsonify(access_token), 200
+    return jsonify({'access_token': access_token}), 200
 
 #User Endpoints
 @app.route('/user_data/<int:user_id>')

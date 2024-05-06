@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+
 			token: sessionStorage.getItem("token") || "",
 		},
 		actions: {
