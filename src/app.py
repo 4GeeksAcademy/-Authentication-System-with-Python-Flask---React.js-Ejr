@@ -110,7 +110,17 @@ def get_user_data(user_id):
     user_data = User_data.query.get(user_id)
 
     if not user_data:
-        return jsonify({'error': 'User data not found'}), 404
+        no_user_data = User_data(
+            user_name="",
+            user_weight="",
+            user_height="",
+            user_illness="",
+            user_objetives="",
+            user_id=get_jwt_identity() 
+        )
+        serialized_no_user_data = no_user_data.serialize()
+        return jsonify(serialized_no_user_data), 200
+        
     
     serialized_user_data = user_data.serialize()
 
