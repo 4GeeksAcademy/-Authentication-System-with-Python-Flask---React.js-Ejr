@@ -10,6 +10,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import OrderList from "./pages/order";
 import { Africa } from "./pages/africa";
 import { AsiaPacific } from "./pages/asiaPacific";
 import { CentralAmerica } from "./pages/centralAmerica";
@@ -34,6 +35,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<OrderList />} path="/order" />
                         <Route element={<Regions />} path="/regions" />
                         <Route element={<Africa />} path="/regions/africa" />
                         <Route element={<AsiaPacific />} path="/regions/asia-pacific" />
