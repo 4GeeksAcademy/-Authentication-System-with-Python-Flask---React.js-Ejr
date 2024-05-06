@@ -26,7 +26,7 @@ if db_url is not None:
         "postgres://", "postgresql://")
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
-
+CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 MIGRATE = Migrate(app, db, compare_type=True)
