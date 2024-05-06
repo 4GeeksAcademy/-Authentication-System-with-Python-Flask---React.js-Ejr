@@ -19,6 +19,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ChatTab from "./pages/ChatTab"; 
 
 const Layout = () => {
 
@@ -31,6 +32,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
+                    <ChatTab /> 
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<TreasureForm />} path="/hide" />

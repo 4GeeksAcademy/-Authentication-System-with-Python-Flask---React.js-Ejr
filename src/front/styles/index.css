@@ -1,4 +1,74 @@
 
+/* CSS de Chat*/
+
+#chat-tab {
+    position: fixed;
+    bottom: 25px;
+    right: 30px;
+    background-color: #219ef1; 
+    color: #fff; 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+#chatbot {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #f5f5f5; 
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    display: none;
+    margin-left: 15px;
+    font-family: 'Outfit', sans-serif;
+}
+
+#chatbot.show {
+    display: block;
+}
+
+.chat-message {
+    margin: 10px 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+.chat-message-response {
+    align-self: flex-end;
+    background-color: #caeef7;
+    color: #000; 
+    margin-left: 15px;
+}
+
+.chat-message-user {
+    background-color: #fdf8c9; 
+    margin-left: 15px;
+}
+
+.boton-chat {
+    background-color: #219ef1; 
+    border: none; 
+    color: white; 
+    text-align: center;
+    text-decoration: none; 
+    display: inline-block;
+    font-size: 16px; 
+    margin: 8px 4px; 
+    cursor: pointer; 
+    border-radius: 8px;
+}
+
 /* CSS de Formularios*/
 
 .auth-container {
