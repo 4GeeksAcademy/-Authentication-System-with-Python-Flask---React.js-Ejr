@@ -2,9 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Transactions
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from flask_jwt_extended import create_access_token, jwt_required
 
 api = Blueprint('api', __name__)
 
@@ -13,6 +14,7 @@ CORS(api)
 
 
 @api.route('/hello', methods=['POST', 'GET'])
+@jwt_required()
 def handle_hello():
 
     response_body = {
@@ -20,10 +22,6 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-
-
-
-
 
 @api.route('/users', methods=['POST'])
 def create_user():
@@ -59,5 +57,41 @@ def create_user():
     db.session.commit()
 
     return jsonify({"message": "User created successfully"}), 201
+
+
+# Create a route to authenticate your users and return JWT Token
+# The create_access_token() function is used to actually generate the JWT
+@api.route("/token", methods=["POST"])
+def create_token():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+
+    # Query your database for username and password
+    user = User.query.filter_by(username=username, password=password).first()
+
+    if user is None:
+        # The user was not found on the database
+        return jsonify({"msg": "Bad username or password"}), 401
+    
+    # Create a new token with the user id inside
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })
+
+
+
+@api.route("/transactions", methods=["GET"])
+@jwt_required()
+def get_transactions():
+    # Query all transactions from the database
+    all_transactions = Transactions.query.all()
+
+    # Serialize the transactions
+    serialized_transactions = [transaction.serialize() for transaction in all_transactions]
+
+    return jsonify(serialized_transactions), 200
+
+
+
+
 
 
