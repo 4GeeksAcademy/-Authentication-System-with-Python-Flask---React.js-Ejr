@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import RegionCard from "../component/RegionCard";
 let coffee = {
     'Central America': [
       {
@@ -359,12 +359,15 @@ let coffee = {
         <>
             <ul>
                 {Object.keys(coffee).map((region) => {
-                    return (
-                        <li key={region}>
-                            <Link to={`/regions/${region.toLowerCase().replace(/\s+/g, '-')}`}>
-                                {region}
-                            </Link>
-                        </li>
+                    return ( 
+                      <li key={region}>
+                        <RegionCard>
+                        <Link to={`/regions/${region.toLowerCase().replace(/\s+/g, '-')}`}>
+                          {region}
+                        </Link>
+                      
+                      </RegionCard>
+                      </li>
                     );
                 })}
             </ul>

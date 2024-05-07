@@ -14,13 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			regions: []
 		},
 		actions: {
-			populateRegions: () => {
-				const store = getStore(); 
-				setStore({ ...store, regions:Object.keys(coffee)});
-			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
