@@ -6,18 +6,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/Landing/navbar";
-import { Footer } from "./component/Landing/footer";
+import { Navbar } from "./component/Landing/navbar.jsx";
+import { Footer } from "./component/Landing/footer.jsx";
 import { Landing } from "./pages/Landing/landing";
 import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";
 import { UserForm } from "./pages/User/userForm";
+import ScrollToTop from "./scrollToTop.jsx";
 
 const Layout = () => {
 
     const basename = process.env.BASENAME || "";
-
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
@@ -33,6 +32,7 @@ const Layout = () => {
                     </Routes>
                     <Footer />
                 </ScrollToTop>
+
             </BrowserRouter>
         </div>
     );

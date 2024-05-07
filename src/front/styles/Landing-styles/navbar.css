@@ -1,0 +1,56 @@
+.landing-nav-container {
+  width: 100%;
+  background-image: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--primary-color)
+  );
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  align-self: flex-start;
+  margin-left: 20px;
+}
+
+.routes-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-around;
+}
+
+.anchor {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+}
+.a-home:hover,
+.a-classes:hover {
+  color: var(--primary-color);
+}
+.a-about:hover,
+.a-contact:hover {
+  color: var(--secondary-color);
+}
+
+.button-container {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  align-self: flex-end;
+}
+.login-component {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.login-component:hover {
+  background-color: white;
+  color: var(--primary-color);
+}
