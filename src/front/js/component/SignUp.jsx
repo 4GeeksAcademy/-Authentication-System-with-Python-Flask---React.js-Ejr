@@ -1,42 +1,41 @@
-import React, { useState } from "react"; 
+import React, { useState, useContext } from "react";
 import "../../styles/signUp.css";
+import { Context } from "../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
 
-export const SingUp = () => {
+export const Home = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const { actions } = useContext(Context);
 	const navigate = useNavigate()
 	const handleClose = () => setShowModal(false);
 	const handleShow = () => setShowModal(true);
 
 	const handleEmailChange = (event) => {
 		setEmail(event.target.value);
-	  };
-	
-	  const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	  };
+	};
 
-	  const handleSubmit = (event) => {
+	const handlePasswordChange = (event) => {
+		setPassword(event.target.value);
+	};
+	const handleConfirmPassword = (event) => {
+		setConfirmPassword(event.target.value);
+	}
+
+	const handleSubmit = (event) => {
 		event.preventDefault();
-		 fetch(process.env.BACKEND_URL + "/signup", {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email, password })
-		})
-		.then(res => res.json())
-		.then(data => {
-			if (data && data.access_token) {
-				handleClose(); 
-				navigate(/* Ruta para el perfil */);
-			}
-		})
-		.catch(error => {
-			alert.error('Ha ocurrido un error', error);
-		});
+		if (password !== confirmPassword) {
+			alert("La contraseña no coincide");
+			return;
+		}
+		actions.signUp({email, password})
+		setPassword("");
+		setEmail("");
+		setConfirmPassword("");
+		handleClose();
+		navigate("/user/form");
 	};
 
 	return (
@@ -56,6 +55,7 @@ export const SingUp = () => {
 									value={email}
 									onChange={handleEmailChange}
 									placeholder="Email"
+									required
 								/>
 								<input
 									type="password"
@@ -63,15 +63,26 @@ export const SingUp = () => {
 									value={password}
 									onChange={handlePasswordChange}
 									placeholder="Contraseña"
+									required
 								/>
-								<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
-								<button 
-									className="button-input submit" 
-									type="submit">
-									Enviar
-								</button>
+								<input
+									type="password"
+									name="ConfirPassword"
+									value={confirmPassword}
+									onChange={handleConfirmPassword}
+									placeholder="Confirmar Contraseña"
+									required
+								/>
+								<div>
+									<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
+									<button
+										className="button-input submit"
+										type="submit">
+										Enviar
+									</button>
+								</div>
 							</form>
-							
+
 						</div>
 					</div>
 				)}

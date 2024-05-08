@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../../styles/signUp.css";
+import { Context } from "../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const Home = () => {
@@ -7,6 +8,7 @@ export const Home = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const { actions } = useContext(Context);
 	const navigate = useNavigate()
 	const handleClose = () => setShowModal(false);
 	const handleShow = () => setShowModal(true);
@@ -28,24 +30,12 @@ export const Home = () => {
 			alert("La contraseña no coincide");
 			return;
 		}
-		fetch(process.env.BACKEND_URL + "/signup", {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email, password })
-		})
-			.then(res => res.json())
-			.then(data => {
-				if (data && data.access_token) {
-					sessionStorage.setItem("token", data.access_token)
-					handleClose();
-					/* navigate("/user"); */
-				}
-			})
-			.catch(error => {
-				alert.error('Ha ocurrido un error', error);
-			});
+		actions.signUp({email, password})
+		setPassword("");
+		setEmail("");
+		setConfirmPassword("");
+		handleClose();
+		navigate("/user/form");
 	};
 
 	return (
@@ -65,6 +55,7 @@ export const Home = () => {
 									value={email}
 									onChange={handleEmailChange}
 									placeholder="Email"
+									required
 								/>
 								<input
 									type="password"
@@ -72,6 +63,7 @@ export const Home = () => {
 									value={password}
 									onChange={handlePasswordChange}
 									placeholder="Contraseña"
+									required
 								/>
 								<input
 									type="password"
@@ -79,6 +71,7 @@ export const Home = () => {
 									value={confirmPassword}
 									onChange={handleConfirmPassword}
 									placeholder="Confirmar Contraseña"
+									required
 								/>
 								<div>
 									<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
