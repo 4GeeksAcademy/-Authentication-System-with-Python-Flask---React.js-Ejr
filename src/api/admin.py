@@ -1,7 +1,6 @@
-  
 import os
 from flask_admin import Admin
-from .models import db, User
+from .models import db, User, Vehicle, FavoriteVehicle, MyVehicleInRent
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -9,9 +8,19 @@ def setup_admin(app):
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
     admin = Admin(app, name='4Geeks Admin', template_mode='bootstrap3')
 
+    class FavoriteVehicleView(ModelView):
+        column_list=('vehicle_id', 'user_id')
+        form_columns=('vehicle_id', 'user_id')
+
+    class MyVehicleInRentView(ModelView):
+        column_list=('vehicle_id', 'user_id')
+        form_columns=('vehicle_id', 'user_id')
     
     # Add your models here, for example this is how we add a the User model to the admin
     admin.add_view(ModelView(User, db.session))
+    admin.add_view(ModelView(Vehicle, db.session))
+    admin.add_view(FavoriteVehicleView(FavoriteVehicle, db.session))
+    admin.add_view(MyVehicleInRentView(MyVehicleInRent, db.session))
 
-    # You can duplicate that line to add mew models
-    # admin.add_view(ModelView(YourModelName, db.session))
+   
+ 
