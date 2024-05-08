@@ -26,10 +26,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				if (response.ok) {
 					const data = await response.json()
-					console.log("token", data)
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
 					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
+				}
+			},
+			signUp: async (email, password) => {
+				const response = await fetch(process.env.BACKEND_URL + "/signup", {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(email, password)
+				})
+				if (!response.ok) {
+					alert("Error al registrarse")
+				}
+				if (response.ok) {
+					const data = await response.json()
+					const decoded = jwtDecode(data.access_token);
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });					
 				}
 			},
 		}
