@@ -1,13 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-
-
-
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/Landing/navbar.jsx";
-import { Footer } from "./component/Landing/footer.jsx";
+import { Navbar } from "./component/navbar.jsx";
+import { Footer } from "./component/footer.jsx";
 import { Landing } from "./pages/Landing/landing";
 import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";

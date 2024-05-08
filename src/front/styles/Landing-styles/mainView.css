@@ -1,0 +1,22 @@
+.background-slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: slideshow 10s infinite;
+}
+
+@keyframes slideshow {
+  0% {
+    background-image: url("src/front/img/background-img-1.png");
+  }
+  50% {
+    background-image: url("src/front/img/background-img-2.jpg");
+  }
+  100% {
+    background-image: url("imagen3.jpg");
+  }
+}

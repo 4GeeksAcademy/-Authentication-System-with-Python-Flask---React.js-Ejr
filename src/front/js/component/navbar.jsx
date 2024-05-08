@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../../store/appContext";
+import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import LogoSVG from "./logoSVG.jsx";
-import { Login } from "./login.jsx";
+import LogoSVG from "./Landing/logoSVG.jsx";
+import { Login } from "./Landing/login.jsx";
 
-import "./../../../styles/Landing-styles/navbar.css";
+import "./../../styles/Landing-styles/navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -34,7 +34,9 @@ export const Navbar = () => {
         <Link to="/contact" className="anchor a-contact">
           CONTACT
         </Link>
-        <button onClick={actions.logOut}>LogOut</button>
+        <button onClick={actions.logOut} className="logout-btn">
+          Log Out
+        </button>
       </div>
     </nav>
   ) : (
