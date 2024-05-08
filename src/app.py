@@ -26,9 +26,9 @@ if db_url is not None:
         "postgres://", "postgresql://")
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    
 CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-CORS(app)
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
@@ -44,7 +44,7 @@ app.register_blueprint(api, url_prefix='/api')
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
-# generate sitemap with all your endpoints
+""" # generate sitemap with all your endpoints
 @app.route('/')
 def sitemap():
     if ENV == "development":
@@ -58,25 +58,28 @@ def serve_any_other_file(path):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
-    return response
+    return response """
 
 # Login & Signup Endpoints
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
     if not data:
-        return jsonify({'error': 'Insert correct information'}), 400
+        raise APIException('Insert the correct information', status_code=400)
+        
 
     email = data.get("email")
     password = data.get("password")
     if not email or not password:
-        return jsonify({'error': 'Missing email or password'}), 400
+        raise APIException('Missing email or password', status_code=400)
+        
 
     user = User.query.filter_by(email=email).first()
     trainer = Trainer.query.filter_by(email=email).first()
 
     if (user and password != user.password) or (trainer and password != trainer.password):
-        return jsonify({'error': 'Invalid password, please try again'}), 401
+        raise APIException('Invalid password, please try again', status_code=401)
+        
     
     role = "user" if user else "trainer"
 
@@ -87,9 +90,11 @@ def login():
 @app.route('/signup', methods=['POST'])
 def create_new_user():
     data = request.json
+    print("vista general", data)
     check_if_email_already_exists = User.query.filter_by(email=data["email"]).first()
     if check_if_email_already_exists:
-        return jsonify({'error': 'Email already exists'}), 400
+        raise APIException('Email already exists', status_code=400)
+        
     
     new_user = User( 
         email=data["email"],
@@ -110,7 +115,8 @@ def get_user_data(user_id):
     user_data = User_data.query.get(user_id)
 
     if not user_data:
-        return jsonify({'error': 'User data not found'}), 404
+        raise APIException('User data not found', status_code=404)
+        
     
     serialized_user_data = user_data.serialize()
 
@@ -158,7 +164,8 @@ def add_or_update_user_data():
 def get_trainer_users(id):
     trainer = Trainer_data.query.filter_by(trainer_data_id=id).first()
     if not trainer:
-        return jsonify({'error': 'User not found'}), 404
+        raise APIException('User not found', status_code=404)
+       
     
     users = User_data.query.filter_by(trainer_id=id)
     serialized_users = [user.serialize() for user in users]
@@ -171,7 +178,8 @@ def get_single_user_from_trainer(trainer_id, user_id):
     user = User_data.query.filter_by(trainer_id=trainer_id, user_id=user_id).first()
 
     if not user:
-        return jsonify({'error': 'Not users associated with this account'}), 400
+        raise APIException('Not users associated with this account', status_code=400)
+        
     serialized_user = user.serialize()
 
     return jsonify(serialized_user), 200
@@ -185,7 +193,8 @@ def get_actual_routine(user_id):
     if user_routine:
         return jsonify(user_routine.serialize())
     else:
-        return jsonify({'error': 'No user routine found'}), 404
+        raise APIException('No user routine found', status_code=404)
+        
 
 #Get the particular user's Historical 
 @app.route('/user/<int:user_id>/routine_history')
@@ -198,7 +207,8 @@ def get_routine_history(user_id):
         user_history = user_routine.historical
         return jsonify({"historical": user_history})
     else:
-        return jsonify({'error': "User's historical not found"}), 404
+        raise APIException("User's historical not found", status_code=404)
+       
     
 #Allows the Trainer to set the rutine to the user
 @app.route('/trainer/<int:user_id>/set_routine', methods=['POST'])
@@ -208,11 +218,13 @@ def set_routine_with_exercises(user_id):
     
     user = User_data.query.get(user_id)
     if not user:
-        return jsonify({'error': 'User not found'}), 404
+        raise APIException('User not found', status_code=404)
+        
 
     exercises_data = data.get("exercises")
     if not exercises_data:
-        return jsonify({'error': 'Exercises data missing'}), 400
+        raise APIException('Exercises data missing', status_code=400)
+        
 
     exercises = []
     for exercise_data in exercises_data:
@@ -255,10 +267,15 @@ def get_all_exercises():
 @app.route('/exercises/<int:exercise_id>', methods=['GET'])
 @jwt_required()
 def get_exercise(exercise_id):
+
     exercise = Exercise.query.get(exercise_id)
+
     if not exercise:
-        return jsonify({'error': 'Exercise not found'}), 404
+        raise APIException('Exercise not found', status_code=404)
+        
+
     serialized_exercise = exercise.serialize()
+
     return jsonify(serialized_exercise), 200
 
 # Create a new exercise
@@ -266,6 +283,7 @@ def get_exercise(exercise_id):
 @jwt_required()
 def create_exercise():
     data = request.json
+
     new_exercise = Exercise(
         exercise_name=data["exercise_name"],
         exercise_type=data["exercise_type"],
@@ -273,8 +291,10 @@ def create_exercise():
         user_data_id=data.get("user_data_id"),
         trainer_data_id=data.get("trainer_data_id")
     )
+
     db.session.add(new_exercise)
     db.session.commit()
+
     serialized_new_exercise = new_exercise.serialize()
     return jsonify(serialized_new_exercise), 201
 
@@ -283,16 +303,23 @@ def create_exercise():
 @jwt_required()
 def update_exercise(exercise_id):
     data = request.json
+
     exercise = Exercise.query.get(exercise_id)
+
     if not exercise:
-        return jsonify({'error': 'Exercise not found'}), 404
+        raise APIException('Exercise not found', status_code=404)
+        
+    
     exercise.exercise_name = data.get("exercise_name", exercise.exercise_name)
     exercise.exercise_type = data.get("exercise_type", exercise.exercise_type)
     exercise.exercise_weight = data.get("exercise_weight", exercise.exercise_weight)
     exercise.user_data_id = data.get("user_data_id", exercise.user_data_id)
     exercise.trainer_data_id = data.get("trainer_data_id", exercise.trainer_data_id)
+
     db.session.commit()
+
     serialized_updated_exercise = exercise.serialize()
+
     return jsonify(serialized_updated_exercise), 200
 
 # Delete an exercise
@@ -300,10 +327,14 @@ def update_exercise(exercise_id):
 @jwt_required()
 def delete_exercise(exercise_id):
     exercise = Exercise.query.get(exercise_id)
+
     if not exercise:
-        return jsonify({'error': 'Exercise not found'}), 404
+        raise APIException('Exercise not found', status_code=404)
+        
+    
     db.session.delete(exercise)
     db.session.commit()
+    
     return jsonify({'message': 'Exercise deleted'}), 200
 
 
