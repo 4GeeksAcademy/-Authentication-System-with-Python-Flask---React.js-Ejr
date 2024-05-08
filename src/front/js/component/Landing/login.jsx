@@ -44,7 +44,6 @@ export const Login = () => {
 		console.log("token", store.token)
 
 		setShowModal(false);
-
 	};
 
 	return (
