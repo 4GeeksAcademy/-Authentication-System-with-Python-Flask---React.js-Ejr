@@ -87,6 +87,7 @@ def login():
 @app.route('/signup', methods=['POST'])
 def create_new_user():
     data = request.json
+    print("vista general", data)
     check_if_email_already_exists = User.query.filter_by(email=data["email"]).first()
     if check_if_email_already_exists:
         return jsonify({'error': 'Email already exists'}), 400
