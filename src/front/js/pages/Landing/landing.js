@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 
-export const Trainer = () => {
+export const Landing = () => {
     const { store, actions } = useContext(Context);
 
     return (

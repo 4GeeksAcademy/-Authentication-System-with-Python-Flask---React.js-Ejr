@@ -1,23 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
-
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
-import { Landing } from "./pages/landing";
-import { Trainer } from "./pages/trainer";
+import { Navbar } from "./component/navbar.jsx";
+import { Footer } from "./component/footer.jsx";
+import { Landing } from "./pages/Landing/landing";
+import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";
 import { UserForm } from "./pages/User/userForm";
+import ScrollToTop from "./scrollToTop.jsx";
 
 const Layout = () => {
 
     const basename = process.env.BASENAME || "";
-
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
@@ -27,12 +23,13 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Landing />} path="/" />
                         <Route element={<User />} path="/user" />
-                        <Route element={<UserForm />} path="/user" />
+                        <Route element={<UserForm />} path="/user/form" />
                         <Route element={<Trainer />} path="/trainer" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
+
             </BrowserRouter>
         </div>
     );
