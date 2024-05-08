@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
@@ -7,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -44,10 +44,10 @@ export default function SignUp() {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <AppBar position="static" sx={{ backgroundColor: '#2db734' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#2db734' }}> 
           <Toolbar>
-            {/* Empty Navbar */}
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {/* Centered Navbar */}
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
               CODEFUSION CAFE
             </Typography>
           </Toolbar>
@@ -65,20 +65,20 @@ export default function SignUp() {
             Sign up
           </Typography>
           
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid item xs={12}>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3}}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="EMPLOYEE ID"
-                  label="EMPLOYEE ID"
-                  type="EMPLOYEE ID"
-                  id="EMPLOYEE ID"
-                  autoComplete="EMPLOYEE ID"
+                  name="employeeId"
+                  label="Employee ID"
+                  type="text"
+                  id="employeeId"
+                  autoComplete="employeeId"
                   autoFocus
                 />
               </Grid>
-            <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -102,12 +102,13 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="password"
+                  autoComplete="current-password"
                   name="password"
                   required
                   fullWidth
                   id="password"
                   label="Password"
+                  type="password"
                   autoFocus
                 />
               </Grid>
@@ -115,10 +116,11 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="Confirm Password"
+                  id="confirmPassword"
                   label="Confirm Password"
-                  name="Confirm Password"
-                  autoComplete="family-name"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="confirm-password"
                 />
               
               </Grid>
@@ -128,7 +130,8 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                {/* Link to the sign-in page */}
+                <Link to="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
