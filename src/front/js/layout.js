@@ -8,7 +8,8 @@ import { Footer } from "./component/footer.jsx";
 import { Landing } from "./pages/Landing/landing";
 import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";
-import { UserForm } from "./pages/User/userForm";
+import  UserForm  from "./pages/User/userForm";
+import ScrollToTop from "./component/scrollToTop.jsx";
 
 const Layout = () => {
 
