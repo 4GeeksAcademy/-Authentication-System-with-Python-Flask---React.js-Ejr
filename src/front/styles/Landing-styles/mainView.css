@@ -4,19 +4,20 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
-  animation: slideshow 10s infinite;
+  background-image: url("/workspaces/Kevin-Marina-JJ-Final-Project-User-Stories---Wireframes/src/front/img/background-img-2.jpg");
+  /* background-size: cover;
+  background-position: center; */
+  /* animation: slideshow 10s infinite; */
 }
 
-@keyframes slideshow {
+/* @keyframes slideshow {
   0% {
-    background-image: url("src/front/img/background-img-1.png");
+    background-image: url("../../img//background-img-1.png");
   }
   50% {
-    background-image: url("src/front/img/background-img-2.jpg");
+    background-image: url("../../img/background-img-2.jpg");
   }
   100% {
-    background-image: url("imagen3.jpg");
+    background-image: url("../../img/background-img-3.jpg");
   }
-}
+} */
