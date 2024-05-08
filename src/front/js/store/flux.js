@@ -1,20 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
+		store: {},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
@@ -33,20 +19,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			fetchCoffee: async () => {
+				const response = await fetch(
+				  `https://fake-coffee-api.vercel.app/api`
+				)
+				  .then((response) => {
+					if (!response.ok) {
+					  throw new Error("Network response was not okay");
+					}
+					return response.json();
+				  })
+				  .catch((err) => {
+					console.error(err);
+				  });
+				  
+				  const coffeePerCategory = response.reduce((acc, curr) => {
+					if (!acc[curr.region]) {
+					  acc[curr.region] = [];
+					}
+				  
+					acc[curr.region] = [...acc[curr.region], curr];
+					return acc;
+				  }, {});
+				  setStore(coffeePerCategory);
+			  },
 		}
 	};
 };
