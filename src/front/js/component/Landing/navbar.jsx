@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../../store/appContext";
 import { Link } from "react-router-dom";
 import LogoSVG from "./logoSVG.jsx";
 import { Login } from "./login.jsx";
@@ -6,7 +7,37 @@ import { Login } from "./login.jsx";
 import "./../../../styles/Landing-styles/navbar.css";
 
 export const Navbar = () => {
-  return (
+  const { store, actions } = useContext(Context);
+  const [loggedin, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(!!store.token);
+  }, [store.token]);
+
+  return loggedin ? (
+    <nav className="landing-nav-container">
+      <div className="logo-container">
+        <Link to="/">
+          <LogoSVG />
+        </Link>
+      </div>
+      <div className="routes-container">
+        <Link to="/user" className="anchor a-home">
+          PROFILE
+        </Link>
+        <Link to="/classes" className="anchor a-classes">
+          CLASSES
+        </Link>
+        <Link to="/about" className="anchor a-about">
+          ABOUT
+        </Link>
+        <Link to="/contact" className="anchor a-contact">
+          CONTACT
+        </Link>
+        <button onClick={actions.logOut}>LogOut</button>
+      </div>
+    </nav>
+  ) : (
     <nav className="landing-nav-container">
       <div className="logo-container">
         <Link to="/">
