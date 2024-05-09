@@ -17,6 +17,8 @@ def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_exist = User.query.filter_by(email=email).first()
+    if email is "" or password is "":
+        return jsonify({"msg": "Email and password are required"}), 400
     if user_exist is None: 
         new_user = User(
             email=email, 
@@ -87,7 +89,7 @@ def get_one_vehicle(vehicle_id):
         return jsonify({"msg":"Vehicle doesn't exist"}), 404
     return jsonify(vehicle.serialize()), 200
   
-@api.route('/user/vehicle/<int:vehicle_id>', methods=['DELETE'])
+@api.route('/rent/vehicle/<int:vehicle_id>', methods=['DELETE'])
 @jwt_required()
 def delete_vehicle_in_rent(vehicle_id):
     email = get_jwt_identity()
@@ -97,13 +99,6 @@ def delete_vehicle_in_rent(vehicle_id):
     if vehicle_exist is None:
         return jsonify({"msg": "This vehicle doesn't exist"}), 400
     else:
-        favorite_vehicle_to_delete = FavoriteVehicle.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
-        if favorite_vehicle_to_delete:
-            db.session.delete(favorite_vehicle_to_delete)
-            db.session.commit()
-            return jsonify({"msg": "Vehicle deleted to favorites"}), 200
-        else:  
-            return ({"msg": "This vehicle doesn't exist in favorites"}), 400
         rent_vehicle_to_delete = MyVehicleInRent.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
         if rent_vehicle_to_delete:
             db.session.delete(rent_vehicle_to_delete)
@@ -132,6 +127,7 @@ def create_favorite_vehicle(vehicle_id):
             return jsonify({'msg': 'El vehiculo ya lo tienes en favoritos.'}), 400
           
 @api.route('/user/favorites', methods=['GET'])
+@jwt_required()
 def get_all_favorites():
     email =  get_jwt_identity()
     user_exist = User.query.filter_by(email=email).first()
@@ -169,6 +165,7 @@ def delete_favorite_vehicle(vehicle_id):
             return ({"msg": "This vehicle doesn't exist in favorites"}), 400
           
 @api.route('/user/rent', methods=['GET'])
+@jwt_required()
 def get_all_rents():
     email =  get_jwt_identity()
     user_exist = User.query.filter_by(email=email).first()
