@@ -1097,6 +1097,13 @@ input {
 }
 
 @media (max-width: 1000px) {
+    .my-profile {
+        width: 700px; 
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 1000px) {
     .profile-cont {
         flex-direction: column;
         align-items: center;
@@ -1129,6 +1136,7 @@ input {
         padding-left: 20px;
         padding-right: 20px;
         width: auto; 
+        margin-left: 0;
     }
 
     .photo-container {
@@ -1183,6 +1191,7 @@ input {
         padding-left: 20px;
         padding-right: 20px;
         width: auto; 
+        margin-left: 0;
     }
 
     .photo-container {
@@ -1215,6 +1224,10 @@ input {
     .points-text-profile,
     .status-text-profile {
         font-size: 25px;
+    }
+
+    .my-profile{
+        margin-left: 0;
     }
 }
 
