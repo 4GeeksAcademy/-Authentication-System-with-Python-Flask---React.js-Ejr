@@ -28,3 +28,22 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
+
+@api.route('/user/rent', methods=['GET'])
+def get_all_rents():
+    email =  get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    user_id = user_exist.id
+    all_rents = MyVehicleInRent.query.filter_by(user_id=user_id).all()
+    all_rents_list = list(map(lambda item: item.serialize(), all_rents))
+
+    if all_rents_list == []:
+        return jsonify({"msg":"You don't have vehicles in rent"}), 404
+
+    response_body = {
+        "msg": "ok",
+        "results": [
+            all_rents_list,
+        ]
+    }    
+    return jsonify(response_body), 200
