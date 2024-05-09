@@ -28,3 +28,70 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@api.route('/vehicle/<int:vehicle_id>', methods=['GET'])
+def get_one_vehicle(vehicle_id):
+    vehicle = Vehicle.query.get(vehicle_id)
+    if vehicle is None:
+        return jsonify({"msg":"Vehicle doesn't exist"}), 404
+    return jsonify(vehicle.serialize()), 200
