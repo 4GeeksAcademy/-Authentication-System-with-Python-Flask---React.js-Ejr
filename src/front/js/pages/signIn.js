@@ -6,56 +6,49 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const employeeId = data.get('employee-id');
+    const password = data.get('password');
+    console.log("Employee ID:", employeeId);
+    console.log("Password:", password);
   };
 
   return (
     <ThemeProvider theme={createTheme()}>
       <CssBaseline />
-      <AppBar position="static" sx={{ backgroundColor: '#2db734' }}>
-
-        <Toolbar>
-          {/* Empty Navbar */}
-          <Typography variant="h6" component="div" sx= {{ flexGrow: 1 }}>
-              
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <AppBar position="static" sx={{ backgroundColor: '#2db734' }}> 
+  <Toolbar>
+    {/* Centered Navbar */}
+    <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+      CODEFUSION CAFE
+    </Typography>
+  </Toolbar>
+</AppBar>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            
+            alignItems: 'flex-start',
           }}
         >
-          <LockOutlinedIcon />
-          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+          <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left'}}>
             Sign in
           </Typography>
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
-            New user? <Link href="#" variant="body2">
-                 Create an account
-                </Link>
+            New user? <Link to="/signup" variant="body2">Create an account</Link>
           </Typography>
-          
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
             <TextField
               margin="normal"
@@ -63,8 +56,8 @@ function SignIn() {
               fullWidth
               id="employee-id"
               label="Employee ID"
-              name="employee"
-              autoComplete="employee id"
+              name="employee-id"
+              autoComplete="employee-id"
               autoFocus
             />
             <TextField
@@ -91,11 +84,10 @@ function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="/forgotpassword" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
-      
             </Grid>
           </Box>
         </Box>
