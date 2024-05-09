@@ -18,7 +18,7 @@ export const Navbar = () => {
 		</a>
 		</Link>
         {/* Nombre de la empresa */}
-        <h2 className="navbar-text mx-2">Happy Wheels</h2>
+        <h2 className="navbar-text mx-2">Friendly Wheels</h2>
         {/* Botón a la derecha */}
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
