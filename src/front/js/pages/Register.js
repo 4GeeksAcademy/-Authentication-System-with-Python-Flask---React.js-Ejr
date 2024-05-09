@@ -19,7 +19,9 @@ const Register = () => {
     const isValidEmail = (email) => {
         return /\S+@\S+\.\S+/.test(email);
       };      
-
+    const isValidPassword = (password) => {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(password);
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== repeatPassword) {
@@ -30,7 +32,10 @@ const Register = () => {
             setError("Please enter a valid email address.");
             return;
           }
-        
+        if (!isValidPassword(password)){
+            setError("Enter a valid Password (1 lowercase letter, 1 uppercase letter, 1 number, min. 6 characters).");
+            return;
+        }
         const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
