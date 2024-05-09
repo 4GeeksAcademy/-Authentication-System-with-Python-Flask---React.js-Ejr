@@ -6,12 +6,12 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-
 import injectContext from "./store/appContext";
 
 
 import { Navbar } from "./component/navbar";
-import SignIn from "./pages/signIn";
+import { SignUp }  from "./pages/signUp";
+import { SignIn } from "./pages/signIn";
 import { Footer } from "./component/footer";
 import { Africa } from "./pages/africa";
 import { AsiaPacific } from "./pages/asiaPacific";
@@ -39,6 +39,7 @@ const Layout = () => {
                     <Route element={<Home />} path="/" />
 
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<SignUp />} path="/signUp" />                         
                         <Route element={<Regions />} path="/regions" />
                         <Route element={<Africa />} path="/regions/africa" />
                         <Route element={<AsiaPacific />} path="/regions/asia-pacific" />
