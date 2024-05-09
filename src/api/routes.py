@@ -28,7 +28,7 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
-
+      
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -40,3 +40,15 @@ def login():
         return jsonify({"msg": "Bad email or password"}), 401
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token),200
+
+@api.route('/vehicle', methods=['GET'])
+def get_all_vehicles():
+    all_vehicles = Vehicle.query.all()
+    all_vehicles_list = list(map(lambda item:item.serialize(), all_vehicles))
+    if all_vehicles_list == []:
+        return jsonify({"msg":"Vehicles not found"}), 404
+    response_body = {
+        "msg": "ok",
+        "results": all_vehicles_list
+    }
+    return jsonify(response_body), 200
