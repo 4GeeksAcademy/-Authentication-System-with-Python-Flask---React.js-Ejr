@@ -10,8 +10,8 @@ import injectContext from "./store/appContext";
 
 
 import { Navbar } from "./component/navbar";
-import { SignUp }  from "./pages/signUp";
-import { SignIn } from "./pages/signIn";
+import SignUp  from "./pages/signUp";
+import SignIn from "./pages/signIn";
 import { Footer } from "./component/footer";
 import { Africa } from "./pages/africa";
 import { AsiaPacific } from "./pages/asiaPacific";
