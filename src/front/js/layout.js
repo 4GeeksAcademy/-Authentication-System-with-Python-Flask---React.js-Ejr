@@ -6,10 +6,12 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import SignUp  from "./pages/signUp";
 import injectContext from "./store/appContext";
 
+
 import { Navbar } from "./component/navbar";
+import { SignUp }  from "./pages/signUp";
+import { SignIn } from "./pages/signIn";
 import { Footer } from "./component/footer";
 import { Africa } from "./pages/africa";
 import { AsiaPacific } from "./pages/asiaPacific";
@@ -33,7 +35,9 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                    <Route element={<SignIn />} path="/signIn" />                         
+                    <Route element={<Home />} path="/" />
+
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<SignUp />} path="/signUp" />                         
                         <Route element={<Regions />} path="/regions" />
