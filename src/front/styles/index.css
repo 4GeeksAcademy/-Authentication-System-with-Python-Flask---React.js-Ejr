@@ -1,3 +1,23 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.navbar {
+    background-color: #b4c794;
+    /* background-color: rgb(140, 172, 140); */
+}
+
+.logo {
+    width: 80px;
+    margin-left: 20px;
+    /* margin-left: 100px; */
+}
+
+.btn {
+    margin-left: 1400px;
+    margin-right: 60px;
+    /* margin-top: 20px; */
+}
+
+.footer {
+    background-color: #B3A398;
+}
