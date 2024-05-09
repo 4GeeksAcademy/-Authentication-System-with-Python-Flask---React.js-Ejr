@@ -17,7 +17,7 @@ const Profile = () => {
     const [uploadError, setUploadError] = useState('');
     const [editMode, setEditMode] = useState(false);
     const [newUsername, setNewUsername] = useState('');
-    const {store, actions} = useContext(Context)
+    const { store, actions } = useContext(Context)
 
     const changeSection = (section) => {
         setActiveSection(section);
@@ -190,11 +190,11 @@ const Profile = () => {
             },
             body: JSON.stringify({ photo: imageUrl })
         });
-    
+
         if (response.ok) {
             setUserData(prevUserData => ({
                 ...prevUserData,
-                photo: imageUrl 
+                photo: imageUrl
             }));
         } else {
             throw new Error('Server response was not OK.');
@@ -271,45 +271,41 @@ const Profile = () => {
                     )}
                     {activeSection === "Treasures Activity" && (
                         <div className="treasures-activity">
-                            <h2 className="pb-2 title-hide-profile">Found Treasures ({foundTreasures.length})</h2>
-                            <table className="table-list-profile">
-                                <thead>
-                                    <tr className="cabecero-profile">
-                                        <th className="image-title-profile">Image</th>
-                                        <th className="name-title-profile">Name</th>
-                                        <th className="city-title-profile">City</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            {/* Sección de tesoros encontrados */}
+                            <h2 className="pb-4 title-hide-profile">Found Treasures ({foundTreasures.length})</h2>
+                            <div className="treasures-container">
+                                <div className="treasure-cards-container">
                                     {foundTreasures.map(treasure => (
-                                        <tr className="elementos-profile" key={treasure.id}>
-                                            <td className="image-elements-profile"><img src={treasure.image} alt="Found Treasure" /></td>
-                                            <td className="name-elements-profile ps-2">{treasure.name}</td>
-                                            <td className="city-elements-profile ps-2">{treasure.city_name}</td>
-                                        </tr>
+                                        <div className="treasure-card-wrapper" key={treasure.id}>
+                                            <div className="treasure-card">
+                                                <img src={treasure.image} alt="Found Treasure" className="treasure-image" />
+                                                <div className="treasure-details">
+                                                    <p className="treasure-name-ta">{treasure.name}</p>
+                                                    <p className="treasure-city-ta">{treasure.city_name}</p>
+                                                    <p className="treasure-points">+10 points</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     ))}
-                                </tbody>
-                            </table>
-                            <h2 className="pb-2 pt-5 title-hide-profile">Hidden Treasures ({hiddenTreasures.length})</h2>
-                            <table className="table-list-profile">
-                                <thead>
-                                    <tr className="cabecero-profile">
-                                        <th className="image-title-profile">Image</th>
-                                        <th className="name-title-profile">Name</th>
-                                        <th className="city-title-profile">City</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="relleno">
+                                </div>
+                            </div>
+                            <h2 className="pb-4 pt-5 title-hide-profile">Hidden Treasures ({hiddenTreasures.length})</h2>
+                            <div className="treasures-container">
+                                <div className="treasure-cards-container">
                                     {hiddenTreasures.map(treasure => (
-                                        <tr className="elementos-profile" key={treasure.id}>
-                                            <td className="image-elements-profile"><img src={treasure.image} alt="Found Treasure" /></td>
-                                            <td className="name-elements-profile ps-2">{treasure.name}</td>
-                                            <td className="city-elements-profile ps-2">{treasure.city_name}</td>
-                                        </tr>
-                                        
+                                        <div className="treasure-card-wrapper" key={treasure.id}>
+                                            <div className="treasure-card">
+                                                <img src={treasure.image} alt="Hidden Treasure" className="treasure-image" />
+                                                <div className="treasure-details">
+                                                    <p className="treasure-name-ta">{treasure.name}</p>
+                                                    <p className="treasure-city-ta">{treasure.city_name}</p>
+                                                    <p className="treasure-points">+10 points</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     ))}
-                                </tbody>
-                            </table>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>

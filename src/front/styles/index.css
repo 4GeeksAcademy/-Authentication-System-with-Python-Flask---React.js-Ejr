@@ -62,9 +62,10 @@
 }
 
 .boton-chat {
-    background-color: #494949;
-    color: #FFC107;
+    background-color: #ffffff;
+    color: #000000;
     border: none; 
+    border: 1px solid black;
     text-align: center;
     text-decoration: none; 
     display: inline-block;
@@ -935,6 +936,31 @@ input {
 
 /* CSS de Profile*/
 
+@media (max-width: 1280px) {
+    .treasure-cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .treasure-cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .treasure-card-wrapper {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .treasure-card-wrapper {
+        width: 100%;
+    }
+}
+
 .profile-page {
     display: flex;
     flex-direction: column;
@@ -1096,6 +1122,49 @@ input {
     width: 50%;
 }
 
+.table-list-profile {
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    opacity: 0.9;
+    max-width: 800px;
+}
+
+.table-list-profile th, .table-list-profile td {
+    border: 0.5px solid #5f5f5f;
+    padding: 8px;
+    text-align:left;
+}
+
+.name-title-profile, .city-title-profile {
+    width: 150px; 
+}
+
+.image-elements-profile {
+    width: 80px;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.image-elements-profile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name-title-profile, .city-title-profile {
+    width: 150px;  
+}
+
+.image-title-profile{
+    width: 100px;
+}
+
 @media (max-width: 1000px) {
     .my-profile {
         width: 700px; 
@@ -1231,41 +1300,6 @@ input {
     }
 }
 
-.table-list-profile {
-    background-color: black;
-    color: white;
-    font-size: 25px;
-    text-align: center;
-    width: 100%;
-    margin: 0 auto;
-    opacity: 0.9;
-    max-width: 800px;
-}
-
-.table-list-profile th, .table-list-profile td {
-    border: 0.5px solid #5f5f5f;
-    padding: 8px;
-    text-align:left;
-}
-
-.name-title-profile, .city-title-profile {
-    width: 150px; 
-}
-
-.image-elements-profile {
-    width: 80px;
-    height: 120px;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.image-elements-profile img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 @media (max-width: 768px) {
     .table-list-profile {
         font-size: 18px;
@@ -1300,12 +1334,66 @@ input {
     }
 }
 
-.name-title-profile, .city-title-profile {
-    width: 150px;  
+.treasures-container {
+    overflow-x: auto; 
+    white-space: nowrap;
+    margin-bottom: 20px;
+    max-width: 100%; 
 }
 
-.image-title-profile{
-    width: 100px;
+.treasure-cards-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center; 
+}
+
+.treasure-card-wrapper {
+    width: 250px; 
+    margin-right: 20px; 
+    display: inline-block; 
+}
+
+.treasure-card {
+    background-color: #535353;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.treasure-details {
+    padding: 15px;
+    text-align: center; 
+}
+
+.treasure-name-ta {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #FFFFFF; 
+    margin-bottom: 5px; 
+}
+
+.treasure-city-ta {
+    font-size: 16px;
+    color: #c5c5c5;
+    margin-bottom: 10px;
+    margin-bottom: 0;
+    margin-bottom: 5px; 
+}
+
+.treasure-points {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFC107;
+}
+
+.treasure-image {
+    width: 240px;
+    height: 300px;
+    object-fit: cover;
+    border-bottom: 1px solid #333;
+    border-radius: 15px 15px 0 0;
 }
 
 /* CSS de TreasureForm*/
