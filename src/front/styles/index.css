@@ -5,8 +5,8 @@
     position: fixed;
     bottom: 25px;
     right: 30px;
-    background-color: #219ef1; 
-    color: #fff; 
+    background-color: #FFC107; 
+    color: #7e5402; 
     border-radius: 50%;
     width: 65px;
     height: 65px;
@@ -51,20 +51,20 @@
 
 .chat-message-response {
     align-self: flex-end;
-    background-color: #caeef7;
+    background-color: #FFC107;
     color: #000; 
     margin-left: 15px;
 }
 
 .chat-message-user {
-    background-color: #fdf8c9; 
+    background-color: #fff59c; 
     margin-left: 15px;
 }
 
 .boton-chat {
-    background-color: #219ef1; 
+    background-color: #494949;
+    color: #FFC107;
     border: none; 
-    color: white; 
     text-align: center;
     text-decoration: none; 
     display: inline-block;
@@ -134,12 +134,17 @@ input {
     border-radius: 3px;
 }
 
-.btn-success {
+.btn-reg {
     border-radius: 30px;
-}
-
-.btn-primary {
-    border-radius: 30px;
+    background-color: #FFC107 !important;
+    font-size: 18px;
+    padding: 8px 16px;
+    background-color: #FFC107; 
+    color: black; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .error-message {
@@ -983,10 +988,11 @@ input {
     padding-left: 50px;
     border: 1px solid rgb(126, 126, 126);
     border-radius: 15px;
-    width: 750px;
+    width: 900px;
     padding-top: 15px;
     padding-bottom: 30px;
     background-color: #535353;
+    margin-left: 100px;
 }
 
 .photo-container {
@@ -995,6 +1001,8 @@ input {
     align-items: center;
     margin-bottom: 20px;
     padding-top: 25px;
+    margin-right: 65px;
+    margin-left: 65px;
 }
 
 .photo-user {
