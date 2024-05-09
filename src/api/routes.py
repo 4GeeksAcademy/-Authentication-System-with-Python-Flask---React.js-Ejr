@@ -70,7 +70,7 @@ def add_vehicle():
     db.session.commit()
 
     return jsonify({"msg": "El vehículo ha sido creado correctamente"}), 200
-
+  
 @api.route('/vehicle', methods=['GET'])
 def get_all_vehicles():
     all_vehicles = Vehicle.query.all()
@@ -107,4 +107,23 @@ def delete_vehicle_in_rent(vehicle_id):
             return jsonify({"msg": "Vehicle deleted to rent"}), 200
         else:  
             return ({"msg": "This vehicle doesn't exist in rent"}), 400
-
+  
+@api.route("/favorite/vehicle/<int:vehicle_id>", methods=["POST"])
+@jwt_required()
+def create_favorite_vehicle(vehicle_id):
+    email = get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    user_id = user_exist.id
+    vehicle_exist = Vehicle.query.filter_by(id=vehicle_id).first()
+    if vehicle_exist is None:
+        return ({"msg": "This vehicle doesn't exist"}), 400
+    else:
+        exist_favorite_vehicle = FavoriteVehicle.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
+        if exist_favorite_vehicle is None:
+            new_favorite_vehicle = FavoriteVehicle(vehicle_id= vehicle_id, user_id=user_id)
+            db.session.add(new_favorite_vehicle)
+            db.session.commit()
+            return jsonify({"msg": "El vehiculo se añadió a favoritos"}), 201
+        else:
+            return jsonify({'msg': 'El vehiculo ya lo tienes en favoritos.'}), 400
+          
