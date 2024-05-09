@@ -8,7 +8,10 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
+
 import { Navbar } from "./component/navbar";
+import SignUp  from "./pages/signUp";
+import SignIn from "./pages/signIn";
 import { Footer } from "./component/footer";
 import OrderList from "./pages/order";
 import { Africa } from "./pages/africa";
@@ -33,9 +36,12 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                    <Route element={<SignIn />} path="/signIn" />                         
+                    <Route element={<Home />} path="/" />
+
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<OrderList />} path="/order" />
+                        <Route element={<SignUp />} path="/signUp" />                         
                         <Route element={<Regions />} path="/regions" />
                         <Route element={<Africa />} path="/regions/africa" />
                         <Route element={<AsiaPacific />} path="/regions/asia-pacific" />
