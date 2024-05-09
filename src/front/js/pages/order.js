@@ -5,10 +5,10 @@ const OrderList = () => {
   const [items, setItems] = useState([]);
   const [hoverIndex, setHoverIndex] = useState(null);
 
-  const fakeItems = [
+  const Items = [
     { name: 'Bubble Tea', price: 10 },
     { name: 'Iced Coffee', price: 15 },
-    { name: 'Hot Chocolate', price: 15 },
+    { name: 'Hot Chocolate', price: 10 },
     { name: 'English Tea', price: 15 },
     { name: 'Cappucino', price: 25 },
     { name: 'Espresso', price: 25 },
@@ -43,11 +43,8 @@ const OrderList = () => {
             >
               {item.name} - ${item.price.toFixed(2)}
               {hoverIndex === index && (
-                <span
-                  style={{ marginLeft: '5px', cursor: 'pointer' }}
-                  onClick={() => deleteItem(index)}
-                >
-                  (Remove)
+                <span style={{ marginLeft: '5px', cursor: 'pointer' }}
+                  onClick={() => deleteItem(index)} > (Remove)
                 </span>
               )}
             </li>
@@ -61,7 +58,7 @@ const OrderList = () => {
       <div style={{ flex: 1 }}>
         <h2>Items</h2>
         <ul>
-          {fakeItems.map((item, index) => (
+          {Items.map((item, index) => (
             <li key={index} onClick={() => addItem(item.name, item.price)}>
               {item.name} - ${item.price.toFixed(2)}
             </li>
