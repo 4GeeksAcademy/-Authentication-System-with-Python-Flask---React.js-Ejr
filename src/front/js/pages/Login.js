@@ -80,7 +80,7 @@ const Login = () => {
                                 <Link to="/password" className="forget-password">Forget your password?</Link>
                             </div>
                             {error && <div className="error-message mb-4">{error}</div>}
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-reg">
                                 Login
                             </button>
                         </form>

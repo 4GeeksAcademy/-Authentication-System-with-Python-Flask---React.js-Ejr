@@ -133,7 +133,7 @@ const Register = () => {
                                 </div>
                             </div>
                             {error && <div className="error-message mb-4">{error}</div>}
-                            <button type="submit" className="btn btn-success">Register</button>
+                            <button type="submit" className="btn btn-reg">Register</button>
                             <p className="mt-3 text-center">
                                 Already have an account? <a href="/login">Login here</a>
                             </p>
