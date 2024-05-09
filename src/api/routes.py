@@ -39,8 +39,8 @@ def login():
     if email != user_exist.email or password != user_exist.password:
         return jsonify({"msg": "Bad email or password"}), 401
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token),200
-
+    return jsonify(access_token=access_token),200    
+      
 @api.route('/vehicle', methods=['POST'])
 def add_vehicle():
     marca_modelo = request.json.get("marca_modelo")
@@ -81,7 +81,14 @@ def get_all_vehicles():
         "msg": "ok",
         "results": all_vehicles_list
     }
-    return jsonify(response_body), 200  
+    return jsonify(response_body), 200 
+  
+@api.route('/vehicle/<int:vehicle_id>', methods=['GET'])
+def get_one_vehicle(vehicle_id):
+    vehicle = Vehicle.query.get(vehicle_id)
+    if vehicle is None:
+        return jsonify({"msg":"Vehicle doesn't exist"}), 404
+    return jsonify(vehicle.serialize()), 200
   
 @api.route('/user/vehicle/<int:vehicle_id>', methods=['DELETE'])
 @jwt_required()
@@ -100,4 +107,4 @@ def delete_vehicle_in_rent(vehicle_id):
             return jsonify({"msg": "Vehicle deleted to rent"}), 200
         else:  
             return ({"msg": "This vehicle doesn't exist in rent"}), 400
- 
+
