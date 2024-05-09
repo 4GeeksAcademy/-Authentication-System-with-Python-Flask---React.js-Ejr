@@ -79,12 +79,20 @@ def signup():
 
 
 
-@api.route('/vehicle/<int:vehicle_id>', methods=['DELETE'])
-def delete_vehicle(vehicle_id):
-    vehicle_to_delete = Vehicle.query.filter_by(id=vehicle_id).first()
-    if vehicle_to_delete:
-        db.session.delete(vehicle_to_delete)
-        db.session.commit()
-        return jsonify({"msg": "Vehicle deleted"}), 200
+@api.route('/user/vehicle/<int:vehicle_id>', methods=['DELETE'])
+@jwt_required()
+def delete_vehicle_in_rent(vehicle_id):
+    email = get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    user_id = user_exist.id
+    vehicle_exist = Vehicle.query.filter_by(id=vehicle_id).first()
+    if vehicle_exist is None:
+        return jsonify({"msg": "This vehicle doesn't exist"}), 400
     else:
-        return jsonify({"msg": "Vehicle not found"}), 404
+        rent_vehicle_to_delete = MyVehicleInRent.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
+        if rent_vehicle_to_delete:
+            db.session.delete(rent_vehicle_to_delete)
+            db.session.commit()
+            return jsonify({"msg": "Vehicle deleted to rent"}), 200
+        else:  
+            return ({"msg": "This vehicle doesn't exist in rent"}), 400
