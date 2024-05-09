@@ -28,18 +28,18 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
-
-
-
-
-
-
-
-
-
-
-
-
+      
+@api.route("/login", methods=["POST"])
+def login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user_exist = User.query.filter_by(email=email).first()
+    if user_exist is None:
+        return jsonify({"msg": "Email doesn't exist"}), 404
+    if email != user_exist.email or password != user_exist.password:
+        return jsonify({"msg": "Bad email or password"}), 401
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token),200
 
 @api.route('/vehicle', methods=['GET'])
 def get_all_vehicles():
