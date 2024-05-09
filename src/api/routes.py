@@ -28,7 +28,7 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
-      
+     
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -127,3 +127,21 @@ def create_favorite_vehicle(vehicle_id):
         else:
             return jsonify({'msg': 'El vehiculo ya lo tienes en favoritos.'}), 400
           
+@api.route('/user/favorites', methods=['GET'])
+def get_all_favorites():
+    email =  get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    user_id = user_exist.id
+    all_favorites = FavoriteVehicle.query.filter_by(user_id=user_id).all()
+    all_favorites_list = list(map(lambda item: item.serialize(), all_favorites))
+   
+    if all_favorites_list == []:
+        return jsonify({"msg":"There are not favorites"}), 404
+    
+    response_body = {
+        "msg": "ok",
+        "results": [
+            all_favorites_list,
+        ]
+    }    
+    return jsonify(response_body), 200
