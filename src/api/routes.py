@@ -28,7 +28,7 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
-     
+  
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -52,7 +52,6 @@ def add_vehicle():
 
     if not (marca_modelo and matricula and motor and tipo_cambio and asientos and precio):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
-
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
     if existing_vehicle:
         return jsonify({"msg": "El vehículo con esta matrícula ya existe"}), 400
@@ -65,10 +64,8 @@ def add_vehicle():
         asientos=asientos,
         precio=precio
     )
-    
     db.session.add(new_vehicle)
     db.session.commit()
-
     return jsonify({"msg": "El vehículo ha sido creado correctamente"}), 200
   
 @api.route('/vehicle', methods=['GET'])
@@ -100,6 +97,13 @@ def delete_vehicle_in_rent(vehicle_id):
     if vehicle_exist is None:
         return jsonify({"msg": "This vehicle doesn't exist"}), 400
     else:
+        favorite_vehicle_to_delete = FavoriteVehicle.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
+        if favorite_vehicle_to_delete:
+            db.session.delete(favorite_vehicle_to_delete)
+            db.session.commit()
+            return jsonify({"msg": "Vehicle deleted to favorites"}), 200
+        else:  
+            return ({"msg": "This vehicle doesn't exist in favorites"}), 400
         rent_vehicle_to_delete = MyVehicleInRent.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
         if rent_vehicle_to_delete:
             db.session.delete(rent_vehicle_to_delete)
@@ -145,3 +149,21 @@ def get_all_favorites():
         ]
     }    
     return jsonify(response_body), 200
+  
+@api.route('/favorite/vehicle/<int:vehicle_id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite_vehicle(vehicle_id): 
+    email = get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    user_id = user_exist.id
+    vehicle_exist = Vehicle.query.filter_by(id=vehicle_id).first()
+    if vehicle_exist is None:
+        return jsonify({"msg": "This vehicle doesn't exist"}), 400
+    else:
+        favorite_vehicle_to_delete = FavoriteVehicle.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
+        if favorite_vehicle_to_delete:
+            db.session.delete(favorite_vehicle_to_delete)
+            db.session.commit()
+            return jsonify({"msg": "Vehicle deleted to favorites"}), 200
+        else:  
+            return ({"msg": "This vehicle doesn't exist in favorites"}), 400
