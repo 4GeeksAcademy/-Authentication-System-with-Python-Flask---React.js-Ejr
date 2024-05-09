@@ -28,3 +28,63 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "User has already exist"}), 400
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@api.route('/vehicle/<int:vehicle_id>', methods=['DELETE'])
+def delete_vehicle(vehicle_id):
+    vehicle_to_delete = Vehicle.query.filter_by(id=vehicle_id).first()
+    if vehicle_to_delete:
+        db.session.delete(vehicle_to_delete)
+        db.session.commit()
+        return jsonify({"msg": "Vehicle deleted"}), 200
+    else:
+        return jsonify({"msg": "Vehicle not found"}), 404
