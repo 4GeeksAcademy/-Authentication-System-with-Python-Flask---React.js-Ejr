@@ -1,6 +1,6 @@
 import os
 from flask_admin import Admin
-from .models import db, User, Vehicle, FavoriteVehicle, MyVehicleInRent
+from .models import db, User, Vehicle, FavoriteVehicle
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -12,15 +12,13 @@ def setup_admin(app):
         column_list=('vehicle_id', 'user_id')
         form_columns=('vehicle_id', 'user_id')
 
-    class MyVehicleInRentView(ModelView):
-        column_list=('vehicle_id', 'user_id')
-        form_columns=('vehicle_id', 'user_id')
+
     
     # Add your models here, for example this is how we add a the User model to the admin
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Vehicle, db.session))
     admin.add_view(FavoriteVehicleView(FavoriteVehicle, db.session))
-    admin.add_view(MyVehicleInRentView(MyVehicleInRent, db.session))
+    
 
    
  
