@@ -6,7 +6,7 @@ const
 
 module.exports = {
   entry: [
-    './src/front/js/index.js'
+    './src/app.js'
   ],
   output: {
     filename: 'bundle.js',

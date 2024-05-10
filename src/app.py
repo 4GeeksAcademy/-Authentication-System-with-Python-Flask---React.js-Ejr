@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
-#from flask_migrate import Migrate
+from flask_migrate import Migrate
 from backend.utils import APIException, generate_sitemap
 from backend.models import db
 from backend.routes import root, api
@@ -14,10 +14,10 @@ app.url_map.strict_slashes = False
 print("Serving static files from: " + static_file_dir)
 
 # config
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:////tmp/database.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:////database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#MIGRATE = Migrate(app, db, compare_type=True)
+MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 setup_admin(app)
 setup_commands(app)
@@ -26,10 +26,16 @@ setup_commands(app)
 app.register_blueprint(root)
 app.register_blueprint(api, url_prefix='/api')
 
+# root
 @app.route('/')
 def sitemap():
     if ENV == "dev": return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
+
+# basic health check
+@app.route('/healthcheck', methods=['GET'])
+def handle_health():
+    return "ok", 200
 
 # for every unused path
 @app.route('/<path:path>', methods=['GET'])

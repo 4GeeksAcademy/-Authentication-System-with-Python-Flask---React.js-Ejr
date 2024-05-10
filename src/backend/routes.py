@@ -9,9 +9,4 @@ CORS(api)
 
 ### ROOT ROUTES
 
-# basic health check
-@root.route('/healthcheck', methods=['GET'])
-def handle_health():
-    return "ok", 200
-
 ### PUBLIC /API ROUTES

@@ -2,6 +2,8 @@
 # these are examples, of course
 User-agent: *
 
+Disallow: /admin/*
+
 Disallow: /registry/*
 Disallow: /workspace/*
 Disallow: /project/*
