@@ -13,10 +13,29 @@
 }
 
 .btn {
-    margin-left: 1400px;
+    /* margin-left: 1400px; */
     margin-right: 60px;
     /* margin-top: 20px; */
 }
+
+.contactForm {
+    width: 400px;
+    height: 300px;
+    margin-left: 550px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.login {
+    /* margin-bottom: 10px; */
+}
+
+/* .mb-3 {
+    width: auto;
+} */
 
 .footer {
     background-color: #B3A398;
