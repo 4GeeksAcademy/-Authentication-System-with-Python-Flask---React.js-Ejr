@@ -165,6 +165,7 @@ def delete_favorite_vehicle(vehicle_id):
             return ({"msg": "This vehicle doesn't exist in favorites"}), 400
           
 @api.route('/user/rent', methods=['GET'])
+@jwt_required()
 def get_all_rents():
     email =  get_jwt_identity()
     user_exist = User.query.filter_by(email=email).first()
