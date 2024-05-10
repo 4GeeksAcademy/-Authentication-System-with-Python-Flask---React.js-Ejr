@@ -28,6 +28,7 @@ class Vehicle(db.Model):
     asientos = db.Column(db.String(50), nullable=False)
     precio = db.Column(db.String(50), nullable=False)    
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return f'<Vehicle {self.matricula}>'
