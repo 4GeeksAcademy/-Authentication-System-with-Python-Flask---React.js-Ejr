@@ -17,7 +17,7 @@ def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_exist = User.query.filter_by(email=email).first()
-    if email == " " or password == " ":
+    if email is "" or password is "":
         return jsonify({"msg": "El email y password son obligatorios"}), 400
     if user_exist is None:
         new_user = User(
@@ -30,6 +30,7 @@ def signup():
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"msg": "El usuario ya existe"}), 400
+    
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -41,8 +42,13 @@ def login():
         return jsonify({"msg": "El email o password no son correctos"}), 401
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token),200
+
 @api.route('/vehicle', methods=['POST'])
+@jwt_required()
 def add_vehicle():
+    email = get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    user_id = user_exist.id
     marca_modelo = request.json.get("marca_modelo")
     matricula = request.json.get("matricula")
     motor = request.json.get("motor")
@@ -60,11 +66,13 @@ def add_vehicle():
         motor=motor,
         tipo_cambio=tipo_cambio,
         asientos=asientos,
-        precio=precio
+        precio=precio,
+        user_id= user_id
     )
     db.session.add(new_vehicle)
     db.session.commit()
     return jsonify({"msg": "El vehículo ha sido creado correctamente"}), 200
+
 @api.route('/vehicle', methods=['GET'])
 def get_all_vehicles():
     all_vehicles = Vehicle.query.all()
@@ -76,12 +84,14 @@ def get_all_vehicles():
         "results": all_vehicles_list
     }
     return jsonify(response_body), 200
+
 @api.route('/vehicle/<int:vehicle_id>', methods=['GET'])
 def get_one_vehicle(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
     if vehicle is None:
         return jsonify({"msg":"El vehículo no existe"}), 404
     return jsonify(vehicle.serialize()), 200
+
 @api.route('vehicle/<int:vehicle_id>', methods=['DELETE'])
 @jwt_required()
 def delete_vehicle(vehicle_id):
@@ -99,6 +109,7 @@ def delete_vehicle(vehicle_id):
             return jsonify({"msg": "Vehículo eliminado correctamente"}), 200
         else:
             return ({"msg": "No puedes eliminar este vehículo, ya que no es un vehiculo propio"}), 400
+        
 @api.route("/favorite/vehicle/<int:vehicle_id>", methods=["POST"])
 @jwt_required()
 def create_favorite_vehicle(vehicle_id):
@@ -117,6 +128,7 @@ def create_favorite_vehicle(vehicle_id):
             return jsonify({"msg": "El vehículo se añadió a favoritos"}), 201
         else:
             return jsonify({'msg': 'El vehículo ya lo tienes en favoritos.'}), 400
+        
 @api.route('/user/favorites', methods=['GET'])
 @jwt_required()
 def get_all_favorites():
@@ -134,6 +146,7 @@ def get_all_favorites():
         ]
     }
     return jsonify(response_body), 200
+
 @api.route('/favorite/vehicle/<int:vehicle_id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite_vehicle(vehicle_id):
@@ -151,6 +164,7 @@ def delete_favorite_vehicle(vehicle_id):
             return jsonify({"msg": "Vehículo eliminado correctamente de favoritos"}), 200
         else:
             return ({"msg": "El vehículo no existe en favoritos"}), 400
+        
 @api.route('/user/rent', methods=['GET'])
 @jwt_required()
 def get_all_rents():

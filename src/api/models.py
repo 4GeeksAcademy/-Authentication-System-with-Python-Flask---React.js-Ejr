@@ -8,8 +8,7 @@ class User(db.Model):
     password = db.Column(db.String(50), nullable=False)
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='user', lazy=True)
     vehicle = db.relationship('Vehicle', backref='user', lazy=True)
-
-
+    
     def __repr__(self):
         return f'<User {self.email}>'
 
