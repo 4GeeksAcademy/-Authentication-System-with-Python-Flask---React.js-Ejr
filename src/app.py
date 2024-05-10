@@ -8,6 +8,7 @@ from backend.models import db
 from backend.routes import root, api
 from backend.admin import setup_admin
 from backend.commands import setup_commands
+from flask_jwt_extended import JWTManager
 
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
@@ -18,18 +19,19 @@ print("Serving static files from: " + static_file_dir)
 # config
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:////database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["JWT_SECRET_KEY"]= "paja_a_la_crema_es_una_buena_paja"
+app.config["JWT_SECRET_KEY"]= "una_paja_a_la_crema_es_una_buena_paja"
 app.config["JWT_TOKEN_LOCATION"]= ('headers')
 app.config["JWT_HEADER_NAME"]= "Auth-Token"
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
 
 MIGRATE = Migrate(app, db, compare_type=True)
+CORS(app)
 db.init_app(app)
 setup_admin(app)
 setup_commands(app)
 
-CORS(app)
+jwt = JWTManager(app)
 
 # backend routes blueprints
 app.register_blueprint(root)
