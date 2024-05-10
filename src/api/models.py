@@ -7,7 +7,7 @@ db = SQLAlchemy()
 class User(db.Model):  # Define una clase que representa la tabla de usuarios en la base de datos
     id = db.Column(db.Integer, primary_key=True)  # Define una columna para el ID de usuario como clave primaria
     email = db.Column(db.String(120), unique=True, nullable=False)  # Columna para el correo electrónico único y no nulo
-    password = db.Column(db.String(80), unique=False, nullable=False)  # Columna para la contraseña no nula
+    password = db.Column(db.String(250), unique=False, nullable=False)  # Columna para la contraseña no nula
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)  # Columna para el estado de activación del usuario
     name = db.Column(db.String(80), nullable=False)  # Columna para el nombre del usuario
     last_name = db.Column(db.String(80), nullable=False)  # Columna para el nombre del usuario
