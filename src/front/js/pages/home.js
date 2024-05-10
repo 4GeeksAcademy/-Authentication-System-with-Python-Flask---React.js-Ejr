@@ -369,6 +369,7 @@ let coffee = {
 
 
 
+
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
