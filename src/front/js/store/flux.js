@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			vehicles: [],
 			message: null,
 			demo: [
 				{
@@ -19,6 +20,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			// fetch de todos los vehículos en alquiler -> GET vehicles
+			getVehicles: () => {
+				fetch("https://fantastic-happiness-v665pr9p4xv9f69vp-3000.app.github.dev/admin/vehicle/", {
+					method: 'GET'
+				})
+					.then(res => res.json())
+					.then(data => setStore({ vehicles: data.results }))
+					.catch(err => console.error(err))
 			},
 
 			getMessage: async () => {

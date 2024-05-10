@@ -26,7 +26,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
-                    <Jumbotron />
+                    {/* <Jumbotron /> */}
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
