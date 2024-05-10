@@ -17,6 +17,8 @@ def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_exist = User.query.filter_by(email=email).first()
+    if email is "" or password is "":
+        return jsonify({"msg": "Email and password are required"}), 400
     if user_exist is None: 
         new_user = User(
             email=email, 
