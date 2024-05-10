@@ -13,11 +13,22 @@
 }
 
 .btn {
-    margin-left: 1400px;
+    /* margin-left: 1400px; */
     margin-right: 60px;
     /* margin-top: 20px; */
 }
 
 .footer {
-    background-color: #B3A398;
+    background-color: #b4c794;
 }
+
+.jumbotron {
+        font-family: 'lato', sans-serif;
+        text-shadow: 5px 5px 5px #cccccc;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* .cardvehicles {
+    margin:10px;
+    padding: 10px;
+} */
