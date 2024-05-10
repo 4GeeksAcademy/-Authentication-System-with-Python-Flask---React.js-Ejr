@@ -70,11 +70,11 @@
 		]
 	},
 	"dependencies": {
-		"prop-types": "^15.6.1",
+		"@uiw/react-markdown-editor": "^6.1.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0",
+		"react-router-dom": "^6.23.1",
 		"tailwindcss": "^3.4.3"
 	}
 }
