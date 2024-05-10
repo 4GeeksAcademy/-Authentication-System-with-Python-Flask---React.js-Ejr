@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			vehicles: [],
 			message: null,
 			demo: [
 				{
@@ -19,6 +20,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			// fetch de todos los vehículos en alquiler -> GET vehicles
+			getVehicles: () => {
+				fetch("https://animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/vehicle", {
+					method: 'GET'
+				})
+					.then(res => res.json())
+					.then(data => setStore({ vehicles: data.results })
+				)
+					.catch((error) => console.log(error))
 			},
 
 			getMessage: async () => {
