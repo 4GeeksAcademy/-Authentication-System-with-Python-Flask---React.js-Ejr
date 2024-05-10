@@ -21,7 +21,7 @@
 .contactForm {
     width: 400px;
     height: 300px;
-    margin-left: 550px;
+    margin-left: 700px;
     margin-top: 80px;
     margin-bottom: 80px;
     background-color: #fff;
@@ -29,9 +29,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.login {
-    /* margin-bottom: 10px; */
-}
 
 /* .mb-3 {
     width: auto;
