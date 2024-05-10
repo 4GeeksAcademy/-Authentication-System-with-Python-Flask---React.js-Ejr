@@ -1,4 +1,5 @@
-import os
+import os, sys, signal
+from datetime import timedelta
 from flask import Flask, request, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -17,6 +18,11 @@ print("Serving static files from: " + static_file_dir)
 # config
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:////database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["JWT_SECRET_KEY"]= "paja_a_la_crema_es_una_buena_paja"
+app.config["JWT_TOKEN_LOCATION"]= ('headers')
+app.config["JWT_HEADER_NAME"]= "Auth-Token"
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
 
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
@@ -57,3 +63,8 @@ def handle_invalid_usage(error):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+with app.app_context():
+    if 'run' in sys.argv and len(db.engine.table_names()) == 0:
+        print("\n\033[1;93mPlease initialize your DB first using \033[91mpipenv run upgrade\033[93m|\033[91mremake\n\033[0m")
+        os.kill(os.getpid(), signal.SIGTERM)

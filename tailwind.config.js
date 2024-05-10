@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['selector', '[data-mode="dark"]'],
   content: [],
   presets: [],
-  darkMode: 'media', // or 'class'
+  darkMode: ['selector', '[data-mode="dk"]'],
   theme: {
     accentColor: ({ theme }) => ({
       ...theme('colors'),
