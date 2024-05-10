@@ -5,10 +5,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-
-function CoffeeCard({ name, price }) {
+function CoffeeCard({ name, price, handleClick }) {
     return (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345 }} onClick={() => handleClick(name, price)}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -27,6 +26,5 @@ function CoffeeCard({ name, price }) {
       </Card>
     );
 }
-
 
 export default CoffeeCard;
