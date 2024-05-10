@@ -74,18 +74,3 @@ class FavoriteVehicle(db.Model):
             "user_id": self.user_id,
             "vehicle_id": result.serialize()["matricula"]
         }
-class MyVehicleInRent(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicle.id'))
-
-    def __repr__(self):
-        return f'<MyVehicleInRent {self.id}>'
-
-    def serialize(self):
-        result = Vehicle.query.filter_by(id=self.vehicle_id).first()
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "vehicle_id": result.serialize()["matricula"]
-        }
