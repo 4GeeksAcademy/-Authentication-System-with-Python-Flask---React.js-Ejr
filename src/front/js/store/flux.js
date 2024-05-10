@@ -1,6 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {},
+		store: {
+			order: {
+				total: null,
+				items: []
+			}
+		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
@@ -41,7 +46,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					acc[curr.region] = [...acc[curr.region], curr];
 					return acc;
 				  }, {});
-				  setStore(coffeePerCategory);
+				  const actualStore = getStore();
+				  setStore({...actualStore, ...coffeePerCategory});
 			  },
 		}
 	};
