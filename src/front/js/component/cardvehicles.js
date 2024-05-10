@@ -3,11 +3,27 @@ import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
-export const CardVehicles = () => {
+export const CardVehicles = (props) => {
 
-    // const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
     return (
-            <div className="card col-3" style={{ width: "19rem" }}>
+        <div className="card m-3" style={{ minWidth: "300px" }}>
+            <img className="image"
+                src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png"
+                alt="image"
+            />
+            <div className="card-body bg-light">
+                <h5 className="card-title">{props.vehicle.marca_modelo}</h5>
+                <p className="card-text mb-0"> {
+                    props.vehicle.precio
+                }</p>
+            </div>
+        </div>
+
+
+
+                 
+            /* <div className="card col-3" style={{ width: "19rem" }}>
                 <div className="card">
                     <Link to="/demo">
                         <a className="cardvehicles" href="#">
@@ -22,7 +38,7 @@ export const CardVehicles = () => {
                     <div className="d-flex justify-content-between mb-4 m-3">
                     </div>
                 </div>
-            </div>
+            </div> */
     )
 };
 

@@ -63,8 +63,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: 'GET'
 				})
 					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results }))
-					.catch(err => console.error(err))
+					.then(data => setStore({ vehicles: data.results })
+				)
+					.catch((error) => console.log(error))
 			},
 
 			getMessage: async () => {
