@@ -1,5 +1,6 @@
-import React from "react";
 import CoffeeCard from "../component/coffeeCard.js";
+import { Typography } from "@mui/material";
+import React, { useState } from "react";
 
 let coffee = {
     'Central America': [
@@ -354,13 +355,30 @@ let coffee = {
   }
 
   
-export const Africa = () => {
-    return (
-        coffee.Africa.map((current) => {
-            return <CoffeeCard name={current.name} price={current.price} key={current.id} />;
-        })
-    );
-}
+  export const Africa = () => {
+    // State to keep track of selected coffee card's information
+    const [selectedCoffee, setSelectedCoffee] = useState(null);
+
+    // Function to handle click on a coffee card
+    const handleClick = (name, price) => {
+        setSelectedCoffee({ name, price });
+    };
+    
+      return (
+          <div style={{ display: "flex" }}>
+              <div style={{ flex: 1 }}>
+              <Typography variant="h1">Orders:</Typography>
+              </div>
+              <div style={{ flex: 1 }}>
+              <Typography variant="h1">Coffee:</Typography>
+                  {coffee.Africa.map((current) => {
+                      return <CoffeeCard name={current.name} price={current.price} key={current.id} />;
+                  })}
+              </div>
+          </div>
+      );
+  }
+  
 
   
 
