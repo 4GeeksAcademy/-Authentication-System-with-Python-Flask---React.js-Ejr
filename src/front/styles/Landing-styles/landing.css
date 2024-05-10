@@ -31,19 +31,3 @@
     /* background-image: url("../../../../src/front/img/background-img-3.jpg"); */
   }
 }
-.left-text-container {
-  justify-content: flex-start;
-  align-self: center;
-}
-.right-text-container {
-  justify-content: flex-end;
-  align-self: center;
-}
-.text-container {
-  color: white;
-  align-items: center;
-  text-align: center;
-}
-.green-text {
-  color: var(--primary-color);
-}

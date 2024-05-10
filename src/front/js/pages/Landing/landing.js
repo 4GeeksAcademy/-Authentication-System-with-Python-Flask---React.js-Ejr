@@ -10,11 +10,12 @@ export const Landing = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="main-view-container ">
+        <section className="main-view-container ">
             <div className="background-slider">
 
             </div>
             <MainView />
-        </div>
+
+        </section>
     );
 };
