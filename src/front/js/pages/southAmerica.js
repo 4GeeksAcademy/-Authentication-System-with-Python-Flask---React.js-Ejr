@@ -1,4 +1,5 @@
 import React from "react";
+import CoffeeCard from "../component/coffeeCard.js";
 
 let coffee = {
     'Central America': [
@@ -352,13 +353,15 @@ let coffee = {
     ]
   }
 
-
+  
 export const SouthAmerica = () => {
     return (
-        <>
-            {coffee['South America'].map((current) => {
-                return <h1>{current.name}</h1>
-            })}
-        </>
-    )
+        coffee["South America"].map((current) => {
+            return <CoffeeCard name={current.name} price={current.price} key={current.id} />;
+        })
+    );
 }
+
+  
+
+

@@ -378,24 +378,10 @@ export const Home = () => {
 			<Grid item xs={6}>
 				<div className="mt-5">
 					<Typography variant="h1">Orders:</Typography>
-					<p>
-					</p>
-					<div className="alert alert-info">
-						{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-					</div>
-					<p>
-						This boilerplate comes with lots of documentation:{" "}
-						<a href="https://start.4geeksacademy.com/starters/react-flask">
-							Read documentation
-						</a>
-					</p>
 				</div>
 			</Grid>
 			<Grid item xs={6}>
-				Regions:
-				<RegionCard />
-				<RegionCard />
-				<RegionCard />
+      <Typography variant="h1">Regions:</Typography>
 				<RegionCard />
 			</Grid>
 		</Grid>
