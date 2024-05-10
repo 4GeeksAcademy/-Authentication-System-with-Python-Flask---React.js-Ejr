@@ -6,7 +6,6 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     name = db.Column(db.String, unique=False, nullable=False)
     age = db.Column(db.Integer)
     region = db.Column(db.String)
@@ -21,7 +20,7 @@ class User(db.Model):
     epic_id = db.Column(db.String)
     bio = db.Column(db.String)
     gender = db.Column(db.String)
-    admin = db.Column(db.Boolean)
+    admin = db.Column(db.Boolean, unique=False, nullable=False)
 
 
     def __repr__(self):
@@ -36,7 +35,6 @@ class User(db.Model):
             "region": self.region,
             "timezone": self.timezone,
             "languages": self.languages,
-            # Omitir la serialización de la contraseña y la imagen por motivos de seguridad
             "xbox": self.xbox,
             "psn": self.psn,
             "steam": self.steam,
