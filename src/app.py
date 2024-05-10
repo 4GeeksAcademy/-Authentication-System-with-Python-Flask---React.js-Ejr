@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_migrate import Migrate
+from flask_cors import CORS
 from backend.utils import APIException, generate_sitemap
 from backend.models import db
 from backend.routes import root, api
@@ -21,6 +22,8 @@ MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 setup_admin(app)
 setup_commands(app)
+
+CORS(app)
 
 # backend routes blueprints
 app.register_blueprint(root)

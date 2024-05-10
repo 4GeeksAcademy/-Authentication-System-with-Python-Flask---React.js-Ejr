@@ -1,8 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client'
 
-import "./frontend/styles/index.css";
+import Layout from "./frontend/js/layout"
 
-import Layout from "./frontend/js/layout";
+import "./frontend/styles/tailwind.css"
 
-ReactDOM.render(<Layout />, document.querySelector("#app"));
+const root = createRoot(document.getElementById('app'))
+root.render(<Layout />);
