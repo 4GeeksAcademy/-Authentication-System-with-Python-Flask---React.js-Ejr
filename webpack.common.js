@@ -1,7 +1,8 @@
-const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const 
+  webpack = require('webpack'),
+  path = require('path'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: [
@@ -40,8 +41,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-        favicon: '4geeks.ico',
-        template: 'template.html'
+        favicon: 'favicon.ico',
+        template: 'index.html'
     }),
     new Dotenv({ safe: true, systemvars: true })
   ]
