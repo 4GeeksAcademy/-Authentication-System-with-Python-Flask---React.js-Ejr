@@ -18,7 +18,6 @@ def setup_admin(app):
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Vehicle, db.session))
     admin.add_view(FavoriteVehicleView(FavoriteVehicle, db.session))
-    
 
    
  

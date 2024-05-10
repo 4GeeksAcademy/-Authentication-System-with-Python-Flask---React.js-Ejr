@@ -9,6 +9,7 @@ class User(db.Model):
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='user', lazy=True)
     vehicle = db.relationship('Vehicle', backref='user', lazy=True)
 
+
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -20,12 +21,13 @@ class User(db.Model):
 
 class Vehicle(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     marca_modelo = db.Column(db.String(50), nullable=False)
     matricula = db.Column(db.String(50), nullable=False)
     motor = db.Column(db.String(50), nullable=False)
     tipo_cambio = db.Column(db.String(50), nullable=False)
     asientos = db.Column(db.String(50), nullable=False)
-    precio = db.Column(db.String(50), nullable=False)
+    precio = db.Column(db.String(50), nullable=False)    
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
