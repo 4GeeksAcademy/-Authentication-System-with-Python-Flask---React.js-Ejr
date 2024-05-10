@@ -59,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			// fetch de todos los vehículos en alquiler -> GET vehicles
 			getVehicles: () => {
-				fetch("https://fantastic-happiness-v665pr9p4xv9f69vp-3000.app.github.dev/admin/vehicle/", {
+				fetch("https://animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/vehicle", {
 					method: 'GET'
 				})
 					.then(res => res.json())

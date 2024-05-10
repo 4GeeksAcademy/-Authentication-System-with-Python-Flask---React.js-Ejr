@@ -6,9 +6,22 @@ import "../../styles/home.css";
 
 export const Home = () => {
 
+	const { store, actions } = useContext(Context);
+
+	// useEffect(() => {
+	// 	actions.getVehicles()
+	// }, [])
+
 	return (
 		<div className="text-danger vehicles ms-5 mt-2 mb-5">
 					<div className="Map Cards text-dark" style={{ overflowX: "scroll" }}>
+					{store.vehicles.map((vehicle) => {
+							//   console.log(planet);
+							return (
+								<CardVehicles vehicle={vehicle} key={vehicle.id} />
+							)
+						})
+						}
 					<CardVehicles/>
 					</div>
 				</div>

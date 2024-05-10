@@ -29,6 +29,7 @@ const Layout = () => {
                     {/* <Jumbotron /> */}
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        {/* codigo_Martha */}
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
