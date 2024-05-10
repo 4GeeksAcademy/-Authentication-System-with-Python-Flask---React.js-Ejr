@@ -5,6 +5,7 @@ const
   Dotenv = require('dotenv-webpack')
 
 module.exports = {
+  cache: false,
   entry: [
     './src/app.js'
   ],
@@ -44,6 +45,6 @@ module.exports = {
         favicon: 'favicon.ico',
         template: 'index.html'
     }),
-    new Dotenv({ safe: true, systemvars: true })
+    new Dotenv({ safe: "./.env.default", systemvars: true })
   ]
 };

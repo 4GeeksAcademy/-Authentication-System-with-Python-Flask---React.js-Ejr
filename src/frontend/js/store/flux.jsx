@@ -1,19 +1,7 @@
-const getState = ({ getStore, getActions, setStore }) => {
+const storeState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			backend_health: false,
 		},
 		actions: {
 
@@ -21,14 +9,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			checkBackendHealth: async () => {
 				try{
 					const res = (await fetch(process.env.BACKEND_URL + "/healthcheck"))
-					setStore({ backend: res.status===200 })
+					setStore({ backend_health: res.status===200 })
 					return res.text;
 				}
 				catch(e){ console.log("BackEnd error:", e) }
 				return "ERROR"
 			}
 		}
-	};
-};
+	}
+}
 
-export default getState;
+export default storeState;

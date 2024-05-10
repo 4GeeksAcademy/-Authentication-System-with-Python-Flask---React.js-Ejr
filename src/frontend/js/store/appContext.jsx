@@ -1,12 +1,12 @@
 import React from "react"
-import getState from "./flux.js"
+import storeState from "./flux.jsx"
 
 export const Context = React.createContext(null)
 
-const injectContext = PassedComponent => {
+const appContext = ReactComponent => {
 	const StoreWrapper = props => {
 		const [state, setState] = React.useState(
-			getState({
+			storeState({
 				getStore: () => state.store,
 				getActions: () => state.actions,
 				setStore: updatedStore =>
@@ -17,15 +17,15 @@ const injectContext = PassedComponent => {
 			})
 		)
 
-		useEffect(() => { state.actions.getBackendHealth() }, [])
+		React.useEffect(() => { state.actions.checkBackendHealth() }, [])
 
 		return (
 			<Context.Provider value={state}>
-				<PassedComponent {...props} />
+				<ReactComponent {...props} />
 			</Context.Provider>
 		)
 	}
 	return StoreWrapper
 }
 
-export default injectContext
+export default appContext
