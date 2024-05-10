@@ -364,9 +364,8 @@ let coffee = {
                         <RegionCard>
                         <Link to={`/regions/${region.toLowerCase().replace(/\s+/g, '-')}`}>
                           {region}
-                        </Link>
-                      
-                      </RegionCard>
+                        </Link>         
+                        </RegionCard>
                       </li>
                     );
                 })}
