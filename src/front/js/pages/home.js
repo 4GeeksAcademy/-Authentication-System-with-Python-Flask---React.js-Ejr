@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { CardVehicles } from "../component/cardvehicles.js";
+import { Jumbotron } from "../component/jumbotron";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+
 
 export const Home = () => {
 
@@ -14,6 +16,7 @@ export const Home = () => {
 
 	return (
 		<div className="text-danger vehicles ms-5 mt-2 mb-5">
+			<Jumbotron />
 					<div className="Map Cards text-dark" style={{ overflowX: "scroll" }}>
 					{store.vehicles.map((vehicle) => {
 							//   console.log(planet);
@@ -23,6 +26,7 @@ export const Home = () => {
 						})
 						}
 					<CardVehicles/>
+					
 					</div>
 				</div>
 

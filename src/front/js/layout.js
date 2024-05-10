@@ -10,7 +10,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Jumbotron } from "./component/jumbotron";
+// import { Jumbotron } from "./component/jumbotron";
 
 
 //create your first component

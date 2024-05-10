@@ -23,6 +23,7 @@
 }
 
 .jumbotron {
+        color: rgb(90, 90, 90);
         font-family: 'lato', sans-serif;
         text-shadow: 5px 5px 5px #cccccc;
         box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
