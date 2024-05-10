@@ -9,7 +9,6 @@ class User(db.Model):
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='user', lazy=True)
     vehicle = db.relationship('Vehicle', backref='user', lazy=True)
     
-
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -41,7 +40,8 @@ class Vehicle(db.Model):
             "motor": self.motor,
             "tipo_cambio": self.tipo_cambio,
             "asientos": self.asientos,
-            "precio": self.precio
+            "precio": self.precio,
+            "user_id": self.user_id
         }
 
 class FavoriteVehicle(db.Model):
