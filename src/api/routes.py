@@ -6,6 +6,9 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
+from datetime import timedelta
+import re
 
 api = Blueprint('api', __name__)
 
@@ -79,9 +82,50 @@ def new_user():
         db.session.add(new_user)
         db.session.commit()
 
-       
         return jsonify({"message": "User created successfully", "user": new_user.serialize()}), 201
     
     except Exception as e:
         print(str(e))
         return jsonify({"message": "Failed to create user", "error": str(e)}), 500
+    
+
+@api.route('/login', methods=['POST'])
+def get_token():
+    
+    def validate_email(email):
+        pattern = r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$'
+        return re.match(pattern, email)
+    
+    try:
+        email = request.json.get('email')
+        password = request.json.get('password')
+        
+        if not email or not password:
+            return jsonify({'error': 'Email and password are required.'}), 400
+        
+        if not validate_email(email):
+            return jsonify({'error': 'Invalid email format.'}), 404
+        
+        login_user = User.query.filter_by(email=request.json['email']).one()
+
+        if not login_user:
+            return jsonify({'error': 'email/user not found.'}), 404
+
+        password_from_db = login_user.password
+        hashed_password_hex = password_from_db
+        hashed_password_bin = bytes.fromhex(hashed_password_hex[2:])
+
+        true_o_false = check_password_hash(hashed_password_bin, password)
+        
+        # Si es verdadero generamos un token y lo devuelve en una respuesta JSON:
+        if true_o_false:
+            expires = timedelta(days=1)  # pueden ser "hours", "minutes", "days","seconds"
+            user_id = login_user.id
+            access_token = create_access_token(identity=user_id, expires_delta=expires)
+            return jsonify({ 'access_token':access_token}), 200
+
+        else:
+            return {"Error":"Contraseña  incorrecta"},404
+    
+    except Exception as e:
+        return {"Error":"El email proporcionado no corresponde a ninguno registrado: " + str(e)}, 500
