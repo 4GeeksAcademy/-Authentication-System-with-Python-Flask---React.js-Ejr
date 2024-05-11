@@ -5,7 +5,7 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(2042), unique=False, nullable=False)
     name = db.Column(db.String, unique=False, nullable=False)
     age = db.Column(db.Integer)
     region = db.Column(db.String)
@@ -20,7 +20,7 @@ class User(db.Model):
     epic_id = db.Column(db.String)
     bio = db.Column(db.String)
     gender = db.Column(db.String)
-    admin = db.Column(db.Boolean, unique=False, nullable=False)
+    admin = db.Column(db.Boolean, unique=False, nullable=True)
 
 
     def __repr__(self):
