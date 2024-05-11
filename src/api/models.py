@@ -88,3 +88,20 @@ class Games(db.Model):
             "id": self.id,
             "name": self.name
         }
+
+class Player_list(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    room_id = db.Column (db.Integer, nullable=False)
+    confirmed = db.Column(db.Boolean(), unique=False, nullable=False)
+   
+    def __repr__(self):
+        return f'<Player_list {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id":self.id,
+            "user_id":self.user_id,
+            "room_id":self.room_id,
+            "confirmed":self.confirmed
+        }
