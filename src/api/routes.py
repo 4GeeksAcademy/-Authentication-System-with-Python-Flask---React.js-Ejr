@@ -53,5 +53,20 @@ def create_signup_user():
         #Password encriptada
         password_hash = generate_password_hash(password)
 
+        #User con password encriptada
+        new_user = User(
+            email=email,
+            password=password_hash,
+            is_user=is_user,
+            name=name,
+            last_name=last_name,
+            username=username,
+            number_document=number_document,
+            phone=phone,
+            age=age,
+            gender=gender
+        )
+        return jsonify({"Message":"User Created Successfully", "user_create": new_user.serialize()}), 201
+
     except Exception as err:
         return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
