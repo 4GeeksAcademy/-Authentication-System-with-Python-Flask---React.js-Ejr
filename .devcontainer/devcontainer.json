@@ -15,5 +15,12 @@
 	},
 	"forwardPorts": [3000, 3001], // Add 5432 to forward PostgreSQL locally.
 	"onCreateCommand": "(cp .env.default .env || echo \".env creation failed\"); (pipenv install || echo \"pipenv install failed\"); (bash database.sh || echo \"database.sh failed\");",
-	"postCreateCommand": "npm install && pipenv install"
+	"postCreateCommand": "npm install && pipenv install",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bradlc.vscode-tailwindcss"
+			]
+		}
+	}
 }
