@@ -9,19 +9,6 @@ import "../../styles/home.css";
 
     console.log(store.vehicles);
 
-    // const [detailVehicle, setDetailVehicle] = useState({})
-    // const [className, setClassName] = useState("btn btn-outline-warning ms-5")
-
-    // useEffect(() => {
-    //     // console.log("llamando Vehiculo con uid: " + vehiculo.uid);
-    //     fetch("https://www.swapi.tech/api/vehicles/", {
-    //         method: 'GET'
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => setDetailVehicle(data.result.properties))
-    //         .catch(err => console.error(err))
-    // }, [])
-
     return (
             <div className="card col-3" style={{ width: "19rem" }}>
                 <div className="card">
@@ -31,15 +18,16 @@ import "../../styles/home.css";
                         </a>
                     </Link>
                     <div className="card-body">
-                        <h5 className="card-title mb-4">Modelo: {vehicle.marca_modelo}</h5>
-                        <p className="card-text mb-1">Matricula: {vehicle.matricula}</p>
-                        <p className="card-text mb-1">Motor: {vehicle.motor}</p>
-                        <p className="card-text mb-1">Tipo de cambio: {vehicle.tipodecambio}</p>
-                        <p className="card-text mb-1">Asientos: {vehicle.asientos}</p>
-                        <p className="card-text mb-1">precio: {vehicle.precio}</p>
+                        <h5 className="card-title mb-4"><strong></strong> {vehicle.marca_modelo}</h5>
+                        <p className="card-text mb-1"><strong>Matricula:</strong> {vehicle.matricula}</p>
+                        <p className="card-text mb-1"><strong>Motor:</strong> {vehicle.motor}</p>
+                        <p className="card-text mb-1"><strong>Tipo cambio:</strong> {vehicle.tipo_cambio}</p>
+                        <p className="card-text mb-1"><strong>Asientos:</strong> {vehicle.asientos}</p>
+                        <p className="card-text mb-1"><strong>precio:</strong> {vehicle.precio}</p>
                     </div>
-                    <div className="d-flex justify-content-between mb-4 m-3">
-                    </div>
+                    {/* PODEMOS USAR PARA EL BOTON DE FAVORITO */}
+                    {/* <div className="d-flex justify-content-between mb-4 m-3">
+                    </div> */}
                 </div>
             </div>
     )
