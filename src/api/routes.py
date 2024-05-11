@@ -20,3 +20,21 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/signup/user', methods=['POST'])
+def create_signup_user():
+    try:
+        #Obtenermos los datos de los campo del body
+        email =  request.json.get('email')
+        password = request.json.get('password')
+        is_user = request.json.get('is_user')
+        name = request.json.get('name') 
+        last_name = request.json.get('last_name')
+        username = request.json.get('username')
+        number_document = request.json.get('number_document')
+        phone = request.json.get('phone')
+        age = request.json.get('age')
+        gender = request.json.get('gender')
+
+    except Exception as err:
+        return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
