@@ -1,6 +1,6 @@
 {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false,
+    "files.autoSave": "off",
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
     }

@@ -1,11 +1,13 @@
-const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const 
+  webpack = require('webpack'),
+  path = require('path'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  Dotenv = require('dotenv-webpack')
 
 module.exports = {
+  cache: false,
   entry: [
-    './src/front/js/index.js'
+    './src/app.js'
   ],
   output: {
     filename: 'bundle.js',
@@ -40,9 +42,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-        favicon: '4geeks.ico',
-        template: 'template.html'
+        favicon: 'favicon.ico',
+        template: 'index.html'
     }),
-    new Dotenv({ safe: true, systemvars: true })
+    new Dotenv({ safe: "./.env.default", systemvars: true })
   ]
 };

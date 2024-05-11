@@ -71,7 +71,7 @@ dist/*
 !.gitkeep
 !.htaccess
 !.eslintrc
-!.env.example
+!.env.*
 .now
 
 # backend stuff
@@ -80,3 +80,4 @@ database.database
 database.db
 diagram.png
 __pycache__/
+src/instance
