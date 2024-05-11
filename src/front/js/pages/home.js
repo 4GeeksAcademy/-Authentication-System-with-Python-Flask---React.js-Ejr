@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { CardVehicles } from "../component/cardvehicles.js";
 import { Jumbotron } from "../component/jumbotron";
@@ -10,23 +10,23 @@ export const Home = () => {
 
 	const { store, actions } = useContext(Context);
 
-	// useEffect(() => {
-	// 	actions.getVehicles()
-	// }, [])
+	useEffect(() => {
+		actions.getVehicles()
+	}, [])
 
 	return (
 		<div className="text-danger vehicles ms-5 mt-2 mb-5">
 			<Jumbotron />
-					<div className="Map Cards text-dark" style={{ overflowX: "scroll" }}>
-					{store.vehicles.map((vehicle, index) => {
-							//   console.log(planet);
-							return (
-								<CardVehicles vehicle={vehicle} key={index} />
-							)
-						})
-						}
-					</div>
-				</div>
+			<div className="Map Cards text-dark" style={{ overflowX: "scroll" }}>
+				{store.vehicles.map((vehicle) => {
+					//   console.log(planet);
+					return (
+						<CardVehicles vehicle={vehicle} key={vehicle} />
+					)
+					})
+				}
+			</div>
+		</div>
 
 
 		// <div className="text-center mt-5">
