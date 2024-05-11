@@ -3,13 +3,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+// import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+// import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
+import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
+import  Home  from "./pages/Home.jsx";
+
+
 
 //create your first component
 const Layout = () => {
@@ -23,7 +28,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <Navbar /> {/* Renderiza el componente Navbar */}
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />

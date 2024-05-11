@@ -1,0 +1,28 @@
+.features {
+    padding: 20px 0;
+  }
+  
+  .card {
+    margin: 10px;
+    background-color: #F8F9FA; /* Lighter grey for cards */
+    border: none;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-title {
+    color: #333333; /* Dark grey for text */
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    color: #666666; /* Medium grey for card text */
+    text-align: center;
+  }
+  
