@@ -136,8 +136,8 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=True)
     title_category = db.Column(db.String(250), nullable=True)
     title_course = db.Column(db.String(250), nullable=True)
-    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
+    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=False)
     #Relations
     manager = db.relationship('Manager', backref=db.backref('category', lazy=True))
     teacher = db.relationship('Teacher', backref=db.backref('category', lazy=True))
