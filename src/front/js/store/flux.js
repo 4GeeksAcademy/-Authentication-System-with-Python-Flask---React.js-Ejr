@@ -83,6 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			// fetch de todos los vehículos en alquiler -> GET vehicles
 			getVehicles: () => {
+				console.log("Obtener vehiculos");
 				fetch("https://animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/vehicle", {
 					method: 'GET'
 				})
@@ -92,10 +93,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch((error) => console.log(error))
 			},
 
+			// getVehicles: () => {
+            //     fetch("animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/vehicle")
+				
+            //     .then((response) => response.json())
+            //     .then((data) => {
+            //          setStore({vehicles: data.results })
+            //     })
+            //     .catch((error) => console.log(error))
+            // },
+
+
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
@@ -104,6 +117,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
+
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
