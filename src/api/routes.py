@@ -6,6 +6,11 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash 
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from datetime import timedelta
+import re
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -45,7 +50,8 @@ def create_signup_user():
         if existing_user:
             return jsonify({"Error":"Email already exists."}), 409
         
-        
+        #Password encriptada
+        password_hash = generate_password_hash(password)
 
     except Exception as err:
         return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
