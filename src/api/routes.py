@@ -36,5 +36,9 @@ def create_signup_user():
         age = request.json.get('age')
         gender = request.json.get('gender')
 
+        #Verificacion de campos vacios
+        if not email or not password or not is_user or not name or not last_name or not username or not number_document or not phone or not age or not gender:
+            return({"Error":"Email, password, is_user, name, last_name, username, number_document, phone, age, gender"}), 400
+
     except Exception as err:
         return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
