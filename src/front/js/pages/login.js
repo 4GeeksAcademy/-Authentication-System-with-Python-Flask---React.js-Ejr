@@ -1,18 +1,11 @@
-import React,{useContext, useState} from "react";
-import { Context } from "../store/appContext";
-import { useNavigate} from "react-router-dom";
+import React from "react";
 import { LoginForm } from "../component/loginform.js";
 
-
-
- export const Login = () => {
-
-     const {store, action}= useContext(Context)
-
-     return (
+export const Login = () => {
+    return (
         <div className="Login">
             <LoginForm />
         </div>
-     )
+    )
  };
    

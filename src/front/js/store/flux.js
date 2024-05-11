@@ -14,37 +14,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			favorites: [],
+			myVehicles: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			login: async (email, password, name) => {
+			login: async (email, password) => {
                 try {
-                let response = await fetch("https://probable-memory-979wvpxr75gq279rg-3001.app.github.dev/login", {
-                    method: 'POST',
-                    headers:{
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({
-                        email:email,
-                        password:password,
-                        name:name,
-                    })  
-            })
-            let data = await response.json()
-            if (response.status === 200) {
-                localStorage.setItem("token", data.access_token);
-                return true;
-            }else{
-                return false
-            }
-            } catch (error) {
-                return false;
-            }
-        },
+					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/login", {
+						method: 'POST',
+						headers:{
+							'Content-Type':'application/json'
+						},
+						body: JSON.stringify({
+							email:email,
+							password:password
+						})  
+					});
+					let data = await response.json()
+					if (response.status === 200) {
+						localStorage.setItem("token", data.access_token);
+						return true;
+					}else{
+						return false
+					}
+				} catch (error) {
+					return false;
+				}
+        	},
 
 
 			
@@ -92,19 +93,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)
 					.catch((error) => console.log(error))
 			},
-
-			// getVehicles: () => {
-            //     fetch("animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/vehicle")
-				
-            //     .then((response) => response.json())
-            //     .then((data) => {
-            //          setStore({vehicles: data.results })
-            //     })
-            //     .catch((error) => console.log(error))
-            // },
-
-
-
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
@@ -117,9 +105,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-
-
-
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
@@ -133,6 +118,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			logOut: () => {
+				localStorage.removeItem('token');
+				setStore({favorites: [[], [], []]});
 			}
 		}
 	};
