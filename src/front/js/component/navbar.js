@@ -11,13 +11,13 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid">
-        {/* Logo de la empresa */}
+        {/* Logo de la app */}
 		<Link to="/"> 
 		<a className="navbar-brand" href="#">
           <img className="logo" src={logoImageUrl}/> 
 		</a>
 		</Link>
-        {/* Nombre de la empresa */}
+        {/* Nombre de la app */}
         <h2 className="navbar-text mx-2">Friendly Wheels</h2>
         {/* Botón a la derecha */}
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -18,6 +18,22 @@
     /* margin-top: 20px; */
 }
 
+.contactForm {
+    width: 400px;
+    height: 300px;
+    margin-left: 700px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* .mb-3 {
+    width: auto;
+} */
+
 .footer {
     background-color: #b4c794;
 }

@@ -21,6 +21,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			login: async (email, password, name) => {
+                try {
+                let response = await fetch("https://probable-memory-979wvpxr75gq279rg-3001.app.github.dev/login", {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        email:email,
+                        password:password,
+                        name:name,
+                    })  
+            })
+            let data = await response.json()
+            if (response.status === 200) {
+                localStorage.setItem("token", data.access_token);
+                return true;
+            }else{
+                return false
+            }
+            } catch (error) {
+                return false;
+            }
+        },
 
 
 			
