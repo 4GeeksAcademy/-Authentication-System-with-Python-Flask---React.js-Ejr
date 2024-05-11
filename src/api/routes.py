@@ -3,12 +3,15 @@ Este módulo se encarga de iniciar el servidor API, cargar la base de datos y ag
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect, url_for  # Importación de Flask y funciones relacionadas
-from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission  # Importación de los modelos de la base de datos
+from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Transaction, TransactionDetail, UserMembershipHistory  # Importación de los modelos de la base de datos
 from api.utils import generate_sitemap, APIException  # Importación de funciones de utilidad y excepciones personalizadas
 from flask_cors import CORS  # Importación de CORS para permitir solicitudes desde otros dominios
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity  # Importación de JWT para autenticación y autorización basada en tokens
 from flask_bcrypt import generate_password_hash, check_password_hash  # Importación de bcrypt para encriptación de contraseñas
 from datetime import timedelta  # Importación de timedelta para manejar intervalos de tiempo
+
+from .booking_service import create_booking, cancel_booking, process_payment, create_transaction, activate_membership
+
 
 #------------------verificar con david --------------------------------
 
@@ -81,7 +84,7 @@ def create_token():  # Define la función que manejará la solicitud
 
 #-------------------CONSULTAR TODOS LOS USUARIOS--------------------------------------------------------------------------
 @api.route('/users', methods=['GET'])
-@jwt_required() # Decorador para requerir autenticación con JWT
+# @jwt_required() # Decorador para requerir autenticación con JWT
 def get_users():
     try:
         users = User.query.all()
@@ -112,7 +115,7 @@ def get_user_by_email():
     
 #-------------------CREAR  USUARIOS PARA INTERFAL MASTER--------------------------------------------------------------------------
 @api.route('master/users', methods=['POST'])  # Define un endpoint para agregar un nuevo usuario mediante una solicitud POST a la ruta '/users'
-@jwt_required() # Decorador para requerir autenticación con JWT
+# @jwt_required() # Decorador para requerir autenticación con JWT
 def create_new_user():  # Define la función que manejará la solicitud
     try:  # Inicia un bloque try para manejar posibles excepciones
         data = request.json  # Obtén los datos JSON enviados en la solicitud
@@ -186,7 +189,7 @@ def create_new_user():  # Define la función que manejará la solicitud
 
 #------ actualizar el usuario---------
 @api.route('master/users/<int:user_id>', methods=['PUT'])  # Define un endpoint para actualizar un usuario mediante una solicitud PUT
-@jwt_required() # Requiere autenticación con JWT para acceder a esta ruta
+# @jwt_required() # Requiere autenticación con JWT para acceder a esta ruta
 def update_user(user_id):  # Define la función para manejar las solicitudes PUT de actualización de usuario, con el parámetro de ID de usuario
     try:  # Inicia un bloque try-except para manejar posibles errores durante la ejecución
 
@@ -471,3 +474,465 @@ def delete_permission(permission_id):  # Define la función para manejar las sol
 
 
 
+
+
+
+#------ actualizar el usuario---------
+@api.route('/singup/user', methods=['PUT'])  # Define un endpoint para actualizar un personaje mediante una solicitud PUT
+@jwt_required() 
+def update_comun_user():
+    try:
+
+        data = request.json  # Obtén los datos JSON enviados en la solicitud
+        if not data:  # Verifica si no se proporcionaron datos JSON
+            return jsonify({'error': 'No data provided'}), 400  # Devuelve un error con código de estado 400 si no se proporcionaron datos
+        
+        current_user_id = get_jwt_identity() # Obtiene la id del usuario del token  # Busca el usuaerio en la base de datos utilizando su ID
+        user = User.query.get(current_user_id) # Buscar al usuario por su ID
+
+        if not user:  # Verifica si el user no fue encontrado en la base de datos
+            return jsonify({'error': 'User not found'}), 404  # Devuelve un error con código de estado 404 si el user no fue encontrado
+    
+        # Iterar sobre cada campo en el JSON y actualizar el user si corresponde
+        for key, value in data.items():  #items() para iterar sobre cada par llave-valor en el JSON recibido
+            # Verificar si el campo existe en la clase Character
+            if hasattr(user, key):  # Verifica si el user tiene un atributo con el nombre de la llave
+                if  key == 'password': #verificamos si unos de los atributos es password la hasheamos para luego incluirtla
+                    password_hash = generate_password_hash(value).decode('utf-8') #hasheamos la nueva contraseña
+                    setattr(user, key, password_hash) # iteramos sobre la llave 'password' y le asigamos la nueva contraseña hasheada
+                else:
+                    # Para otros campos, asignar el valor directamente al atributo correspondiente del usuario
+                    setattr(user, key, value)
+
+        db.session.commit()  # Confirma los cambios en la base de datos
+        return jsonify({'message': 'Password updated successfully'})  # Devuelve un mensaje de éxito indicando que el personaje se actualizó correctamente
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+#-------------------CREAR  USUARIO COMUN--------------------------------------------------------------------------
+@api.route('/singup/user', methods=['POST'])  # Define un endpoint para agregar un nuevo usuario mediante una solicitud POST a la ruta '/users'
+def create_new_normal_user():  # Define la función que manejará la solicitud
+    try:  # Inicia un bloque try para manejar posibles excepciones
+        data = request.json  # Obtén los datos JSON enviados en la solicitud
+        if not data:  # Verifica si no se proporcionaron datos JSON
+            return jsonify({'error': 'No data provided'}), 400  # Devuelve un error con código de estado 400 si no se proporcionaron datos
+
+        if 'email' not in data:  # Verifica si 'email' no está presente en los datos JSON
+            return jsonify({'error': 'Email is required'}), 400  # Devuelve un error con código de estado 400 si 'email' no está presente
+
+        if 'username' not in data:  # Verifica si 'username' no está presente en los datos JSON
+            return jsonify({'error': 'Username is required'}), 400  # Devuelve un error con código de estado 400 si 'username' no está presente
+
+        if 'password' not in data:  # Verifica si 'password' no está presente en los datos JSON
+            return jsonify({'error': 'Password is required'}), 400  # Devuelve un error con código de estado 400 si 'password' no está presente
+
+        # Verifica si se proporcionan las preguntas y respuestas de seguridad en los datos JSON
+        if 'security_questions' not in data or len(data['security_questions']) != 2:
+            return jsonify({'error': 'Security questions and answers are required'}), 400
+
+        existing_user = User.query.filter_by(email=data['email']).first()  # Busca un usuario en la base de datos con el mismo email
+        if existing_user:  # Verifica si ya existe un usuario con el mismo email
+            return jsonify({'error': 'Email already exists.'}), 409  # Devuelve un error con código de estado 409 si ya existe un usuario con el mismo email
+
+        existing_username = User.query.filter_by(username=data['username']).first()  # Busca un usuario en la base de datos con el mismo username
+        if existing_username:  # Verifica si ya existe un usuario con el mismo username
+            return jsonify({'error': 'Username already exists.'}), 409  # Devuelve un error con código de estado 409 si ya existe un usuario con el mismo username
+
+        password_hash = generate_password_hash(data['password']).decode('utf-8')
+
+        # Crea un nuevo usuario con los datos proporcionados
+        new_user = User(email=data['email'], password=password_hash, username=data['username'], name=data.get('name'), last_name=data.get('last_name'), is_active=True )
+       
+        # Agrega las preguntas y respuestas de seguridad al usuario
+        for question_answer in data['security_questions']:
+            new_question = SecurityQuestion(
+                question=question_answer['question'],
+                answer=question_answer['answer']
+            )
+            new_user.security_questions.append(new_question)
+
+        db.session.add(new_user)  # Agrega el nuevo usuario a la sesión de la base de datos
+        db.session.commit()  # Confirma los cambios en la base de datos
+ 
+        return jsonify({'message': 'User created successfully'}), 201  # Devuelve un mensaje de éxito con el ID del nuevo usuario y un código de estado 201
+   
+    except Exception as e:  # Captura cualquier excepción que ocurra dentro del bloque try
+        return jsonify({'error': 'Error in user creation: ' + str(e)}), 500  # Devuelve un mensaje de error con un código de estado HTTP 500 si ocurre una excepción durante el procesamiento
+
+
+
+#-------------------CREAR  TOKEN LOGIN--------------------------------------------------------------------------
+@api.route('/token', methods=['POST'])  # Define un endpoint para agregar un nuevo usuario mediante una solicitud POST a la ruta '/users'
+def create_normal_user_token():  # Define la función que manejará la solicitud
+    try:  # Inicia un bloque try para manejar posibles excepciones
+        data = request.json  # Obtén los datos JSON enviados en la solicitud
+        if not data:  # Verifica si no se proporcionaron datos JSON
+            return jsonify({'error': 'No data provided'}), 400  # Devuelve un error con código de estado 400 si no se proporcionaron datos
+
+        if 'email' not in data:  # Verifica si 'email' no está presente en los datos JSON
+            return jsonify({'error': 'Email is required'}), 400  # Devuelve un error con código de estado 400 si 'email' no está presente
+
+        if 'password' not in data:  # Verifica si 'password' no está presente en los datos JSON
+            return jsonify({'error': 'Password is required'}), 400  # Devuelve un error con código de estado 400 si 'password' no está presente
+
+        existing_user = User.query.filter_by(email=data['email']).first()  # Busca un usuario en la base de datos con el mismo email
+        if not existing_user:  # Verifica si ya existe un usuario con el mismo email
+            return jsonify({'error': 'Email does not exist.'}), 400  # Devuelve un error con código de estado 409 si ya existe un usuario con el mismo email
+
+        password_user_db = existing_user.password  # Extraemos la contraseña almacenada del usuario existente en la base de datos
+
+        true_o_false = check_password_hash(password_user_db, data['password'])  # Comparamos la contraseña ingresada en el formulario con la contraseña almacenada en la base de datos, después de descifrarla
+
+        if true_o_false:  # Si la comparación es verdadera, es decir, las contraseñas coinciden
+            expires = timedelta(days=1)  # Configuramos la duración del token de acceso
+            user_id = existing_user.id  # Obtenemos el ID del usuario existente en la base de datos
+            access_token = create_access_token(identity=user_id, expires_delta=expires)  # Creamos un token de acceso para el usuario
+            return jsonify({'access_token': access_token, 'login': True}), 200  # Devolvemos el token de acceso como respuesta exitosa
+        else:  # Si la comparación de contraseñas es falsa, es decir, las contraseñas no coinciden
+            return jsonify({'error': 'Incorrect password'}), 400  # Devolvemos un mensaje de error indicando que la contraseña es incorrecta
+
+    except Exception as e:  # Captura cualquier excepción que ocurra dentro del bloque try
+        return jsonify({'error': 'Error login user: ' + str(e)}), 500  # Devuelve un mensaje de error con un código de estado HTTP 500 si ocurre una excepción durante el procesamiento
+
+
+
+#-------------------CREAR  TOKEN recuperar contraseña--------------------------------------------------------------------------
+@api.route('/tokenLoginHelp', methods=['POST'])  # Define un endpoint para agregar un nuevo usuario mediante una solicitud POST a la ruta '/users'
+def create_token_login_help():  # Define la función que manejará la solicitud
+    try:  # Inicia un bloque try para manejar posibles excepciones
+        data = request.json  # Obtén los datos JSON enviados en la solicitud
+        if not data:  # Verifica si no se proporcionaron datos JSON
+            return jsonify({'error': 'No data provided'}), 400  # Devuelve un error con código de estado 400 si no se proporcionaron datos
+
+        if 'email' not in data:  # Verifica si 'email' no está presente en los datos JSON
+            return jsonify({'error': 'Email is required'}), 400  # Devuelve un error con código de estado 400 si 'email' no está presente
+
+        existing_user = User.query.filter_by(email=data['email']).first()  # Busca un usuario en la base de datos con el mismo email
+        if existing_user:  # Si la comparación es verdadera, es decir, el email coinciden
+            expires = timedelta(hours=1)  # Configuramos la duración del token de acceso
+            user_id = existing_user.id  # Obtenemos el ID del usuario existente en la base de datos
+            access_token = create_access_token(identity=user_id, expires_delta=expires)  # Creamos un token de acceso para el usuario
+            return jsonify({'access_token': access_token, 'login': True}), 200  # Devolvemos el token de acceso como respuesta exitosa
+        else:  # Si la comparación de contraseñas es falsa, es decir, las contraseñas no coinciden
+            return jsonify({'error': 'Email does not exist.'}), 400  # Devuelve un error con código de estado 400 si ya existe un usuario con el mismo email
+    
+    except Exception as e:  # Captura cualquier excepción que ocurra dentro del bloque try
+        return jsonify({'error': 'Error email user: ' + str(e)}), 500  # Devuelve un mensaje de error con un código de estado HTTP 500 si ocurre una excepción durante el procesamiento
+
+
+
+#--------------------------------------------------ENPOINT PARA LA CONSULTA DE Y CREACION DE RESERVAS DE CLASE-----------------------------------
+#Consultar reservas (GET)
+@api.route('/booking', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_booking():
+    try:
+        all_booking = Booking.query.all()
+        if not all_booking:
+            return jsonify({'message': 'No booking found'}), 404
+        
+        response_body = [booking.serialize() for booking in all_booking]
+        return jsonify(response_body), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+#Endpoint para Crear una Reserva:
+@api.route('/book_class', methods=['POST'])
+@jwt_required()
+def book_class():
+    try:
+        user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado
+        training_class_id = request.json.get('training_class_id')
+
+        if not training_class_id:
+            return jsonify({'error': 'Training class ID is required'}), 400
+
+        user = User.query.get(user_id)
+        if not (user.has_active_membership() and user.has_remaining_classes()):
+            return jsonify({'error': "No active membership or no remaining classes"}), 400
+        
+        if not user.consume_class():
+            return jsonify({'error': "No classes left to book"}), 400
+        
+        success, message = create_booking(user_id, training_class_id)
+        if success:
+            return jsonify({'success': True, 'message': message}), 200
+        else:
+            return jsonify({'error': message}), 400
+        
+    except Exception as e:  # Captura cualquier excepción que ocurra durante la ejecución
+        db.session.rollback()  # Realiza un rollback para evitar inconsistencias en la base de datos
+        return jsonify({'error': 'Error booking class: ' + str(e)}), 500  # Devuelve un mensaje de error con el código de estado 500 (Internal Server Error)
+
+
+    
+#Endpoint para Cancelar una Reserva:
+
+@api.route('/cancel_booking/<int:booking_id>', methods=['DELETE'])
+@jwt_required()
+def cancel_booking_endpoint(booking_id):
+    try:
+
+        success, message = cancel_booking(booking_id)
+        if success:
+            return jsonify({'message': message}), 200
+        else:
+            return jsonify({'error': message}), 400
+    
+    except Exception as e:  # Captura cualquier excepción que ocurra durante la ejecución
+        db.session.rollback()  # Realiza un rollback para evitar inconsistencias en la base de datos
+        return jsonify({'error': 'error canceling class: ' + str(e)}), 500  # Devuelve un mensaje de error con el código de estado 500 (Internal Server Error)
+
+
+#-------------------------------------------------ENPOINT PARA LAS CLASES-----------------------------------------------------------
+#Consultar clases (GET)
+@api.route('/training_classes', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_training_classes():
+    try:
+        classes = Training_classes.query.all()
+        if not classes:
+            return jsonify({'message': 'No training_classes found'}), 404
+        
+        response_body = [training_classes.serialize() for training_classes in classes]
+        return jsonify(response_body), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+#Crear una nueva clase (POST)
+@api.route('/training_classes', methods=['POST'])
+@jwt_required()
+def create_training_class():
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No input data provided'}), 400
+
+    name = data.get('name')
+    description = data.get('description')
+    instructor_id = data.get('instructor_id')
+    day_of_week = data.get('day_of_week')
+    start_time = data.get('start_time')
+    duration = data.get('duration')
+    available_slots = data.get('available_slots')
+
+    if not all([name, description, instructor_id, day_of_week, start_time, duration, available_slots]):
+        return jsonify({'error': 'Missing data'}), 400
+
+    try:
+        new_class = Training_classes(
+            name=name,
+            description=description,
+            instructor_id=instructor_id,
+            day_of_week=day_of_week,
+            start_time=start_time,
+            duration=duration,
+            available_slots=available_slots
+        )
+        db.session.add(new_class)
+        db.session.commit()
+        return jsonify({'message': 'Training class created successfully', 'class_id': new_class.id}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+#Modificar una clase existente (PUT)
+@api.route('/training_classes/<int:class_id>', methods=['PUT'])
+@jwt_required()
+def update_training_class(class_id):
+    data = request.get_json()
+    training_class = Training_classes.query.get_or_404(class_id)
+
+    try:
+        if 'name' in data:
+            training_class.name = data['name']
+        if 'description' in data:
+            training_class.description = data['description']
+        if 'available_slots' in data:
+            training_class.available_slots = data['available_slots']
+
+        db.session.commit()
+        return jsonify({'message': 'Training class updated successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+#Eliminar una clase (DELETE)
+@api.route('/training_classes/<int:class_id>', methods=['DELETE'])
+@jwt_required()
+def delete_training_class(class_id):
+    #Obtener la clase a eliminar
+    training_class = Training_classes.query.get(class_id)
+    if not training_class:  # Comprueba si el rol no se encontró en la base de datos
+            return jsonify({'error': 'training_classes not found'}), 404  # Devuelve un mensaje de error si el rol no se encontró
+
+    try:
+        db.session.delete(training_class)
+        db.session.commit()
+        return jsonify({'message': 'Training class deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+#-------------------------------------------------ENPOINT PARA LAS MEMBRESIAS-----------------------------------------------------------
+#Consultar clases (GET)
+@api.route('/memberships', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_memberships():
+    try:
+        memberships = Membership.query.all()
+        if not memberships:
+            return jsonify({'message': 'No memberships found'}), 404
+        
+        response_body = [membership.serialize() for membership in memberships]
+        return jsonify(response_body), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+#Consultar clases (GET)
+@api.route('/histoy_memberships', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_histoy_memberships():
+    try:
+        histoy_memberships = UserMembershipHistory.query.all()
+        if not histoy_memberships:
+            return jsonify({'message': 'No memberships found'}), 404
+        
+        response_body = [all_history.serialize() for all_history in histoy_memberships]
+        return jsonify(response_body), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+#Crear una nueva clase (POST)
+@api.route('/memberships', methods=['POST'])
+@jwt_required()
+def create_membership():
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No input data provided'}), 400
+
+    name = data.get('name')
+    description = data.get('description')
+    price = data.get('price')
+    duration_days = data.get('duration_days')
+    classes_per_month = data.get('classes_per_month')
+
+    if not all([name, description, price]):
+        return jsonify({'error': 'Missing data'}), 400
+
+    try:
+        new_membership = Membership(
+            name=name,
+            description=description,
+            price=price,
+            duration_days=duration_days,
+            classes_per_month=classes_per_month
+        )
+        db.session.add(new_membership)
+        db.session.commit()
+        return jsonify({'message': 'Membership created successfully', 'membership_id': new_membership.id}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+    
+#Modificar una clase existente (PUT)
+@api.route('/memberships/<int:membership_id>', methods=['PUT'])
+@jwt_required()
+def update_membership(membership_id):
+    data = request.get_json()
+    membership = Membership.query.get_or_404(membership_id)
+
+    try:
+        if 'name' in data:
+            membership.name = data['name']
+        if 'description' in data:
+            membership.description = data['description']
+        if 'price' in data:
+            membership.price = data['price']
+        if 'duration_days' in data:
+            membership.duration_days = data['duration_days']
+        if 'classes_per_month' in data:
+            membership.classes_per_month = data['classes_per_month']
+
+        db.session.commit()
+        return jsonify({'message': 'Membership updated successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+#ELIMINAR una clase existente (DELETE)
+@api.route('/memberships/<int:membership_id>', methods=['DELETE'])
+@jwt_required()
+def delete_membership(membership_id):
+    membership = Membership.query.get_or_404(membership_id)
+    if not membership:  # Comprueba si el rol no se encontró en la base de datos
+            return jsonify({'error': 'membershipS not found'}), 404  # Devuelve un mensaje de error si el rol no se encontró
+
+    try:
+        db.session.delete(membership)
+        db.session.commit()
+        return jsonify({'message': 'Membership deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+#-------------------------------------------------ENPOINT PARA LA COMPRA DE MEMBRESIAS-----------------------------------------------------------
+#cuerpo de la solicitud
+# {
+#     "membership_id": 2, #id del plan de membresia
+#     "payment_data": {
+#         "amount": 150.00, #monto
+#         "payment_method": "credit_card" #metodo de pago "credit_card", "cash" ...
+#     }
+# }
+
+from flask import jsonify, request
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
+@api.route('/purchase_membership', methods=['POST'])
+@jwt_required()
+def purchase_membership():
+    user_id = get_jwt_identity()
+    membership_id = request.json.get('membership_id')
+    payment_data = request.json.get('payment_data')  # Debe incluir 'amount' y 'payment_method'
+
+    # Validación básica
+    if not membership_id or not payment_data:
+        return jsonify({'error': 'Missing required parameters'}), 400
+
+    membership = Membership.query.get(membership_id)
+    if not membership:
+        return jsonify({'error': 'Membership not found'}), 404
+
+    try:
+        # Procesamiento de pago diferenciado por método
+        if payment_data['payment_method'] == 'cash':
+            message = 'Payment recorded, pending verification'
+            result = True  # Asumimos que el pago en efectivo siempre es exitoso
+        else:
+            result, message = process_payment(payment_data)
+
+        if result:
+            transaction = create_transaction(user_id, membership_id, payment_data['amount'], payment_data['payment_method'])
+            activate_membership(user_id, membership_id, membership.duration_days, membership.classes_per_month)
+            return jsonify({'message': 'Purchase successful', 'transaction_id': transaction.id}), 200
+        else:
+            return jsonify({'error': message}), 400
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Purchase failed: ' + str(e)}), 500
