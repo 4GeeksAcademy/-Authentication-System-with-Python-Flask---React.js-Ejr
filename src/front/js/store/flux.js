@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (email, password) => {
                 try {
-					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/login", {
+					const response = await fetch("https://animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/login", {
 						method: 'POST',
 						headers:{
 							'Content-Type':'application/json'
