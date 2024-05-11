@@ -13,8 +13,6 @@ import React,{useContext, useState} from "react";
     const [inputEmail, setInputEmail]=useState("")
     // const [inputName, setInputName]=useState("")
     const [inputPassword, setInputPassword]=useState("")
-
-
     const navigate = useNavigate();
 
      async function handleSubmit(e) {
@@ -27,8 +25,8 @@ import React,{useContext, useState} from "react";
      }
      return (
         <div className="contactForm">
-             <h1 className="title">Login</h1>
-             <form onSubmit={handleSubmit}>
+            <h1 className="title">Login</h1>
+            <form onSubmit={handleSubmit}>
                  <div className="mb-3">
                      <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
                      <input type="email" className="form-control" id="exampleInputEmail1" placeholder="enter your email" name='email' value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} />
@@ -42,7 +40,7 @@ import React,{useContext, useState} from "react";
                      <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" name='password' value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} />
                  </div>
                  <button type="submit" className="login btn btn-dark">Login</button>
-             </form>
-         </div>
+            </form>
+        </div>
                )
             };
