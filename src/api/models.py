@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
@@ -77,3 +76,15 @@ class Room(db.Model):
             "members": self.in_room
         }
     
+class Games(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Games {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
