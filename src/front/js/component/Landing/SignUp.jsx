@@ -10,6 +10,7 @@ export const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { actions } = useContext(Context);
   const navigate = useNavigate();
+
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 

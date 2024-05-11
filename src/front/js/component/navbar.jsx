@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import LogoSVG from "./Landing/logoSVG.jsx";
 import { Login } from "./Landing/login.jsx";
 
-import "./../../styles/Landing-styles/navbar.css";
+import "./../../styles/navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
