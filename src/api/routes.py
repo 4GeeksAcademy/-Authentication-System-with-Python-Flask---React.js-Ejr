@@ -50,7 +50,7 @@ def new_user():
         if not email.strip() or not password.strip():
             return jsonify({"message": "Missing required fields: email or password"}), 400
     
-        if not email or not email or not password:
+        if not email or not password:
             return jsonify({"message": "Missing required fields: email or password"}), 400
         
         existing_user = User.query.filter_by(email=email).first()
