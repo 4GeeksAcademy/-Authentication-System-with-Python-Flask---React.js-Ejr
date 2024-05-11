@@ -46,6 +46,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			login: async (data) => {
+				try {
+					console.log(data)
+					alert(data.email)
+				} catch (error) {
+					console.error(error)
+				}
 			}
 		}
 	};
