@@ -5,11 +5,14 @@ import "../../styles/footer.css";
 
 export const Footer = () => (
   <footer className="footer mt-auto py-3 gym-footer">
-    <a href="" target="_blank">
+    <a href="https://github.com/Marinamb19" target="_blank">
       <img src={GitHubLogo} alt="Marina github logo" />
       <span>Marina</span>
     </a>
-    <a href="" target="_blank">
+    <a
+      href="https://www.linkedin.com/in/marina-martín-barranco-7a6316247"
+      target="_blank"
+    >
       <img
         className="linkedin-logo"
         src={LinkedinLogo}
@@ -17,12 +20,12 @@ export const Footer = () => (
       />
       <span>Marina</span>
     </a>
-    <a href="" target="_blank">
+    <a href="https://github.com/KevinGaBo" target="_blank">
       <img src={GitHubLogo} alt="Kevin github logo" />
       <span>Kevin</span>
     </a>
 
-    <a href="">
+    <a href="https://www.linkedin.com/in/kevin-boriosi-61261126b/">
       <img
         className="linkedin-logo"
         src={LinkedinLogo}
