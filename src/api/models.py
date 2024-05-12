@@ -61,8 +61,8 @@ class Room(db.Model):
     reviews = db.Column(db.Integer)
     
     room_participants = db.relationship('Room_participant', backref='room', lazy=True)
-
     user = db.relationship('User', backref=db.backref('hosted_rooms', lazy=True))
+    game = db.relationship('Games', backref=db.backref('rooms', lazy=True))
 
     def __repr__(self):
         return f'<Room {self.id}>'

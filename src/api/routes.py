@@ -2,13 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Room, Games
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
 from datetime import timedelta
 import re
+
 
 api = Blueprint('api', __name__)
 
@@ -129,3 +130,23 @@ def get_token():
     
     except Exception as e:
         return {"Error":"El email proporcionado no corresponde a ninguno registrado: " + str(e)}, 500
+
+@api.route('/home', methods=['GET'])
+def get_current_games():
+    try:
+        current_games = Room.query.all()
+        serialized_games = []
+
+        for game in current_games:
+            serialized_game = {
+                "game_name": game.game.name,
+                "room_name": game.room_name,
+                "game_description": game.description,
+                "host_name": game.user.name
+            }
+            serialized_games.append(serialized_game)
+
+        return jsonify(serialized_games)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
