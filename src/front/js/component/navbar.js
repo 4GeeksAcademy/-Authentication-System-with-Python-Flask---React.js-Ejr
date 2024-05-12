@@ -39,57 +39,65 @@ export const Navbar = () => {
 				</div>
     		</nav> */}
 			<div className="container-fluid">
-				{/* Logo de la empresa */}
-				<Link to="/"> 
-					<img className="logo" src={logoImageUrl}/> 
-				</Link>
-				{/* Nombre de la empresa */}
-				<h2 className="navbar-text mx-2">Friendly Wheels</h2>
+				<div className="d-flex">
+					{/* Logo de la empresa */}
+					<Link to="/"> 
+						<img className="logo" src={logoImageUrl}/> 
+					</Link>
+					{/* Nombre de la empresa */}
+					<div className="align-self-center">
+						<h2 className="navbar-text ms-3">Friendly Wheels</h2>
+					</div>
+				</div>
 				{token ?
 					<>
-						<div>
-							<button className="btn-lg btn-light">Añadir vehículo</button>
-						</div>
-						<div className="nav dropdown me-5">
-							<a className=" d-flex nav-link dropdown-toggle text-white bg-primary rounded align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-								Favoritos
-								<span className="bg-secondary px-2 ms-1" style={{borderRadius:"30px"}}>{store.favorites.length}</span>
-							</a>
-							<ul className="dropdown-menu">
-								{store.favorites.length === 0 
-									? <li className="text-center">(empty)</li>
-									: <p>Tengo algo</p>  /* En esta linea iria el map */
-								}
-							</ul>
-						</div>
-						<div className="nav dropdown me-5">
-							<a className=" d-flex nav-link dropdown-toggle text-white bg-primary rounded align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-								Tú
-								<span className="bg-secondary px-2 ms-1" style={{borderRadius:"30px"}}>{store.myVehicles.length}</span>
-							</a>
-							<ul className="dropdown-menu">
-								{store.myVehicles.length === 0 
-									? <li className="text-center">(empty)</li>
-									: <p>Tengo algo</p>  /* En esta linea iria el map */
-								}
-							</ul>
-						</div>
-						<div>
-							<button className="btn-lg btn-light"onClick={handleLogOut}>Log Out</button>
+						<div className="d-flex">
+							<div className="btn-group me-5">
+								<button className="btn-lg btn-light">Añadir vehículo</button>
+							</div>
+							<div className="btn-group me-5">
+								<button class="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Favoritos
+									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.favorites.length}</span>
+								</button>
+								<ul className="dropdown-menu">
+									{store.favorites.length === 0 
+										? <li className="text-center">(empty)</li>
+										: <p>Tengo algo</p>  /* En esta linea iria el map */
+									}
+								</ul>
+							</div>
+							<div className="btn-group me-5">
+								<button class="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Tú
+									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.myVehicles.length}</span>
+								</button>
+								<ul className="dropdown-menu">
+									{store.myVehicles.length === 0 
+										? <li className="text-center">(empty)</li>
+										: <p>Tengo algo</p>  /* En esta linea iria el map */
+									}
+								</ul>
+							</div>
+							<div>
+								<button className="btn-lg btn-light"onClick={handleLogOut}>Log Out</button>
+							</div>
 						</div>
 					</>
 					: (
 						<>
-							<Link to="/login"> 
-								<div>	
-									<button className="btn-lg btn-light">Login</button>
-								</div>
-							</Link> 
-							<Link to="/signup"> 
-								<div>	
-									<button className="btn-lg btn-light">Signup</button>
-								</div>
-							</Link> 
+							<div className="d-flex">
+								<Link to="/login"> 
+									<div className="btn-group me-5">	
+										<button className="btn-lg btn-light">Login</button>
+									</div>
+								</Link> 
+								<Link to="/signup"> 
+									<div className="btn-group me-5">	
+										<button className="btn-lg btn-light">Signup</button>
+									</div>
+								</Link> 
+							</div>
 						</>
 					)
 				} 			
