@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			favorites: [],
-			myVehicles: []
+			myVehicles: [],
+			details: {}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -143,6 +144,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return false;
 				}
+			},
+			getDetails: (id) => {
+				fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle/${id}`, {
+					method: 'GET'
+				})
+				.then((response) => response.json())
+				.then(data => {
+					setStore({ details: data})
+				})
+				.catch((error) => console.log(error))
 			},
 		}
 	};

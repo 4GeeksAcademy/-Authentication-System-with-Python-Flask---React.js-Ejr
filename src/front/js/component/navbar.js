@@ -56,7 +56,7 @@ export const Navbar = () => {
 								<button className="btn-lg btn-light">Añadir vehículo</button>
 							</div>
 							<div className="btn-group me-5">
-								<button class="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Favoritos
 									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.favorites.length}</span>
 								</button>
@@ -68,7 +68,7 @@ export const Navbar = () => {
 								</ul>
 							</div>
 							<div className="btn-group me-5">
-								<button class="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Tú
 									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.myVehicles.length}</span>
 								</button>

@@ -17,7 +17,7 @@ export const Signup = () => {
         let isSignup = await actions.signup(inputEmail, inputPassword) 
         if (isSignup){
             console.log('Signup successful');
-            alert("Usuario creado correctamente")
+            alert("Usuario creado correctamente");
             navigate("/");
         } else {
             setSignupError(true);
