@@ -13,10 +13,10 @@ export const CardVehicles = ({ vehicle }) => {
     return (
         <div className="card col-3" style={{ width: "19rem" }}>
             <div className="card">
+                <a className="cardvehicles" href="#">
+                    <img className="Vehiculo" src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
+                </a>
                 <Link to="/details">
-                    <a className="cardvehicles" href="#">
-                        <img className="Vehiculo" src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
-                    </a>
                 </Link>
                 <div className="card-body">
                     <h5 className="card-title mb-4"><strong></strong> {vehicle.marca_modelo}</h5>
@@ -29,10 +29,10 @@ export const CardVehicles = ({ vehicle }) => {
                 {token ?
                     <div className="d-flex justify-content-between">
                         <Link to={`/details`}>
-                            <button className="btn text-primary border-primary">More Details</button>
-                        </Link>   
+                            <button className="btn text-primary btn btn-secondary">More Details</button>
+                        </Link>
                     </div>
-                : null
+                    : null
                 }
             </div>
         </div>

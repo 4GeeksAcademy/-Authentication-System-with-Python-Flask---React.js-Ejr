@@ -24,64 +24,64 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 			login: async (email, password) => {
-                try {
+				try {
 					const response = await fetch("https://animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/login", {
 						method: 'POST',
-						headers:{
-							'Content-Type':'application/json'
+						headers: {
+							'Content-Type': 'application/json'
 						},
 						body: JSON.stringify({
-							email:email,
-							password:password
-						})  
+							email: email,
+							password: password
+						})
 					});
 					let data = await response.json()
 					if (response.status === 200) {
 						localStorage.setItem("token", data.access_token);
 						return true;
-					}else{
+					} else {
 						return false
 					}
 				} catch (error) {
 					return false;
 				}
-        	},
+			},
 
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			// fetch de todos los vehículos en alquiler -> GET vehicles
 			getVehicles: () => {
 				console.log("Obtener vehiculos");
@@ -90,18 +90,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 					.then(res => res.json())
 					.then(data => setStore({ vehicles: data.results })
-				)
+					)
 					.catch((error) => console.log(error))
 			},
+
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
@@ -121,7 +122,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logOut: () => {
 				localStorage.removeItem('token');
-				setStore({favorites: [[], [], []]});
+				setStore({ favorites: [[], [], []] });
+			},
+
+
+			signup: (email, password) => {
+				return (
+					fetch("https://animated-space-rotary-phone-4jjrqv5q45xx2qvgw-3001.app.github.dev/api/signup", {
+						method: 'POST',
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ email: email, password: password })
+					})
+						.then(res => {
+							if (!res.ok) {
+								throw Error()
+							}
+							console.log("Hola");
+							return res.json()
+						})
+						.then(data => data)
+						.catch(err => console.error(err))
+				)
 			}
 		}
 	};

@@ -88,6 +88,7 @@ export const Navbar = () => {
 							<Link to="/signup"> 
 								<div>	
 									<button className="btn-lg btn-light">Signup</button>
+							
 								</div>
 							</Link> 
 						</>
