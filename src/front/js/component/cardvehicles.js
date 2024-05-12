@@ -28,7 +28,7 @@ export const CardVehicles = ({ vehicle }) => {
                 </div>
                 {token ?
                     <div className="d-flex justify-content-between">
-                        <Link to={`/details`}>
+                        <Link to={`/details/${vehicle.id}`}>
                             <button className="btn text-primary btn btn-secondary">More Details</button>
                         </Link>
                     </div>

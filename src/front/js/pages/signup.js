@@ -17,7 +17,8 @@ export const Signup = () => {
         let isSignup = await actions.signup(inputEmail, inputPassword) 
         if (isSignup){
             console.log('Signup successful');
-            navigate("/Login");    // url del home aqui con navigate
+            alert("Usuario creado correctamente");
+            navigate("/");
         } else {
             setSignupError(true);
             console.log('Signup failed');
@@ -39,7 +40,7 @@ export const Signup = () => {
                      <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
                      <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                  </div>
-                 {signupError ? <div className="text-danger mb-3">Wrong email or password</div> : null}
+                 {signupError ? <div className="text-danger mb-3">Todos los campos son obligatorios</div> : null}
                  <button type="submit" className="login btn btn-dark">Signup</button>
             </form>
         </div>

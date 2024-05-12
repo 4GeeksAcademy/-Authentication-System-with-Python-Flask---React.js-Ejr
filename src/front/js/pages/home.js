@@ -29,10 +29,10 @@ export const Home = () => {
 
 		<div className="text-danger vehicles ms-5 mt-2 mb-5">
 			<div className="Map Cards text-dark d-flex" style={{ overflowX: "scroll" }}>
-				{store.vehicles.map((vehicle) => {
+				{store.vehicles.map((vehicle, index) => {
 					//   console.log(planet);
 					return (
-						<CardVehicles vehicle={vehicle} key={vehicle} />
+						<CardVehicles vehicle={vehicle} key={index} />
 					)
 					})
 				}
@@ -41,10 +41,10 @@ export const Home = () => {
 
 		<div className="text-danger vehicles ms-5 mt-2 mb-5">
 			<div className="Map Cards text-dark d-flex" style={{ overflowX: "scroll" }}>
-				{store.vehicles.map((vehicle) => {
+				{store.vehicles.map((vehicle, index) => {
 					//   console.log(planet);
 					return (
-						<CardVehicles vehicle={vehicle} key={vehicle} />
+						<CardVehicles vehicle={vehicle} key={index} />
 					)
 					})
 				}

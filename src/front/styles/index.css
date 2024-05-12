@@ -61,3 +61,16 @@
     margin:10px;
     padding: 10px;
 } */
+
+.botonAlquilar {
+    background-color: #b4c794;
+}
+
+.propiedadVehiculo {
+    margin-right: 80px;
+    margin-left: 80px;
+}
+
+.corazon:hover i{
+    color:black !important;
+}
