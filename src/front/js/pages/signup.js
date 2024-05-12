@@ -4,11 +4,9 @@ import { useNavigate} from "react-router-dom";
 import "../../styles/index.css";
 
 export const Signup = () => {
-
     const [inputEmail, setInputEmail]=useState("")
     const [inputPassword, setInputPassword]=useState("")
     const [signupError,setSignupError] = useState(false);
-   
 	const navigate = useNavigate();
     const {actions } = useContext(Context);
 
