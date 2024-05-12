@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Signup } from "./component/signup";
+import { Signup } from "./pages/signup";
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import { Demo } from "./pages/demo";
@@ -32,7 +32,7 @@ const Layout = () => {
                         {/* codigo_Martha */}
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
-                        <Route path="/Signup" element={<Signup/>} />
+                        <Route element={<Signup />} path="/signup" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
