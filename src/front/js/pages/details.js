@@ -1,9 +1,10 @@
 import React, {useEffect, useContext, useState} from "react";
-import {useParams, Link } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import { Context } from "../store/appContext.js";
+import { ModalAlquilar } from "../component/modalalquilar.js";
 import "../../styles/home.css";
 
-export const Details = (props) => {
+export const Details = () => {
     const {store, actions} = useContext(Context);
     const [isFavorite, setIsFavorite] = useState(false); 
     const params = useParams();
@@ -24,7 +25,8 @@ export const Details = (props) => {
 	}, [store.favorites]);
 
 	useEffect (() => {
-		actions.getDetails(params.id)
+		actions.getDetails(params.id);
+        actions.getVehicles();
 	}, []);
 
     return (
@@ -100,11 +102,9 @@ export const Details = (props) => {
                     </div>
                 </div>
             </div>
-            <Link to="/alquilar" className="text-decoration-none"> 
-                <div className="d-grid gap-2 col-4">
-                    <button className="botonAlquilar btn-lg btn-light mb-5 ms-5 ">ALQUILAR</button>
-                </div>
-			</Link> 
+            <div className="d-grid gap-2 col-4">
+                <ModalAlquilar />
+            </div>
     </>
 
     );
