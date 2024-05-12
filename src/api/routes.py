@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -32,11 +32,11 @@ def create_signup_user():
         #Obtenermos los datos de los campo del body
         email =  request.json.get('email')
         password = request.json.get('password')
-        is_user = request.json.get('is_user')
+        is_user = request.json.get('isUser')
         name = request.json.get('name') 
-        last_name = request.json.get('last_name')
+        last_name = request.json.get('lastName')
         username = request.json.get('username')
-        number_document = request.json.get('number_document')
+        number_document = request.json.get('numberDocument')
         phone = request.json.get('phone')
         age = request.json.get('age')
         gender = request.json.get('gender')
@@ -66,6 +66,8 @@ def create_signup_user():
             age=age,
             gender=gender
         )
+        db.session.add(new_user)
+        db.session.commit()
         return jsonify({"Message":"User Created Successfully", "user_create": new_user.serialize()}), 201
 
     except Exception as err:
