@@ -23,7 +23,6 @@ export const Signup = () => {
             console.log('Signup failed');
         }
     };
-
     return (
         <div className="contactForm">
             <h1 className="title">Signup</h1>
