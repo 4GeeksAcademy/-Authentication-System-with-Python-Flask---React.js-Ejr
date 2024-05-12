@@ -1,16 +1,16 @@
 .navbar {
-  background-color: #D3D3D3 !important;
+  background-color: #9f9f9f !important;
 }
 
 
-/* 
+
 .navbar {
     background-color: #9f9f9f;
-    color: #90EE90; 
+    /* color: #90EE90;  */
     display: flex;
     justify-content: space-around;
     padding: 12px 0;
-  }*/
+  }
   
   a {
     color: inherit;
@@ -22,7 +22,81 @@
   }
   
   a:hover {
-    background-color: #8a8a8a;
+    /* background-color: #8a8a8a; */
     color: #ffffff;
   } 
   
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    /* background-color: #8a8a8a; */
+    box-shadow: none;
+  }
+  
+  .logo {
+    height: 55px;
+    margin-top: -5px;
+  }
+  
+  .logo img {
+    height: 100%;
+  }
+  
+  .loginButton {
+    background-color: rgb(246, 246, 246);
+    color: #5a5a5a;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 15px;
+    cursor: pointer;
+  }
+  
+  .loginButton:hover {
+    background-color: #0f0e0f;
+  }
+
+  .logoutButton {
+    background-color: rgb(246, 246, 246);
+    color: #5a5a5a;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .logoutButton:hover {
+    background-color: #f50a15;
+  }
+
+  .ProfileButton {
+    background-color: #808080;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 17px 5px 17px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  .ProfileButton:hover {
+    background-color: #808080;
+  }
+
+  .nav-link {
+    display: block;
+    padding: .5rem 1rem;
+    color: rgba(0, 0, 0, .25);
+    text-decoration: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+#offcanvasNavbarDropdown{
+  display: block;
+  padding: .5rem 1rem;
+  color: rgba(0, 0, 0, 0.74);
+  text-decoration: none;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
