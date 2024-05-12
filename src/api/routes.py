@@ -141,9 +141,8 @@ def get_all_favorites():
         return jsonify({"msg":"No tienes favoritos hasta el momento"}), 404
     response_body = {
         "msg": "ok",
-        "results": [
+        "results":
             all_favorites_list,
-        ]
     }
     return jsonify(response_body), 200
 

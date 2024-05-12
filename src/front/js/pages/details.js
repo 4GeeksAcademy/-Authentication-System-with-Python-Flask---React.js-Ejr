@@ -1,28 +1,27 @@
-import React, {useEffect, useContext} from "react";
+import React, {useEffect, useContext, useState} from "react";
 import {useParams, Link } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
-import {useParams } from 'react-router-dom';
-import { Context } from "../store/appContext.js";
 
-export const Details = () => {
-  const {store, actions} = useContext(Context);
-	const  params  = useParams();
+export const Details = (props) => {
+    const {store, actions} = useContext(Context);
+    const [isFavorite, setIsFavorite] = useState(false); 
+    const params = useParams();
 
-  let isFavorite = false;
-  if (store.favorites.length !== 0) {
-      isFavorite = [
-          store.favorites
-      ].some((favorite) => favorite.matricula === store.details.matricula);
-  }
+    const addOrRemove = () => {
+        if (!isFavorite) {
+            actions.addFav(store.details.id)
+        } else {
+            actions.removeFav(store.details.id)
+        }
+    }
 
-  const addOrRemove = () => {
-      if (!isFavorite) {
-          actions.addFav(storedetails.id)
-      } else {
-          actions.removeFav(storedetails.id)
-      }
-  }
+    useEffect (() => {
+        if (store.favorites.length !== 0) {
+            const isFav = store.favorites.some((favorite) => favorite.id == params.id);
+            setIsFavorite(isFav);
+        }
+	}, [store.favorites]);
 
 	useEffect (() => {
 		actions.getDetails(params.id)
@@ -30,7 +29,7 @@ export const Details = () => {
 
     return (
         <>
-            <div id="carouselExample" class="carousel slide">
+            <div id="carouselExample" className="carousel slide">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" className="d-block w-100" alt="..."/>
@@ -102,7 +101,7 @@ export const Details = () => {
                 </div>
             </div>
             <Link to="/alquilar" className="text-decoration-none"> 
-                <div class="d-grid gap-2 col-4">
+                <div className="d-grid gap-2 col-4">
                     <button className="botonAlquilar btn-lg btn-light mb-5 ms-5 ">ALQUILAR</button>
                 </div>
 			</Link> 

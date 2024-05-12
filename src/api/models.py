@@ -31,7 +31,7 @@ class Vehicle(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return f'<Vehicle {self.matricula}>'
+        return f'<Vehicle {self.id}>'
 
     def serialize(self):
         return {
@@ -54,9 +54,8 @@ class FavoriteVehicle(db.Model):
         return f'<FavoriteVehicle {self.id}>'
 
     def serialize(self):
-        result = Vehicle.query.filter_by(id=self.vehicle_id).first()
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "vehicle_id": result.serialize()["matricula"]
+            "vehicle_id": self.vehicle_id
         }

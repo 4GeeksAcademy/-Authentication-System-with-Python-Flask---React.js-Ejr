@@ -155,6 +155,73 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch((error) => console.log(error))
 			},
+			favorites: async () => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/user/favorites", {
+						method: 'GET',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						const data = await response.json();
+						const vehicles = getStore().vehicles;
+						const backendVehicles= data.results;
+						const filteredVehicles = vehicles.filter((vehicle) => {
+							return backendVehicles.some((beVehicle) => vehicle.id == beVehicle.vehicle_id);
+						});
+						setStore({favorites: filteredVehicles});
+					} else {
+						return [];
+					}
+                } catch (error) {
+                    return []; 
+                } 
+            },
+			addFav: async (id) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/favorite/vehicle/${id}`, {
+						method: 'POST',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+				 	if (response.status === 201) {
+							let listFav = getStore().favorites;
+							const allVehicles = getStore().vehicles;
+							const newFav = allVehicles.filter((vehicle) => vehicle.id === id);
+							const newListFav = listFav.concat(newFav) ;
+							setStore({favorites: newListFav})
+					} else {
+						return [];
+					}
+                } catch (error) {
+                    return []; 
+                } 
+			},
+			removeFav: async (id) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/favorite/vehicle/${id}`, {
+						method: 'DELETE',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						let listFav = getStore().favorites;
+						const newListFav = listFav.filter((vehicle) => vehicle.id !== id);
+						setStore({favorites: newListFav})
+					}
+				} catch (error) {
+					return []; 
+				} 
+			}
 		}
 	};
 };
