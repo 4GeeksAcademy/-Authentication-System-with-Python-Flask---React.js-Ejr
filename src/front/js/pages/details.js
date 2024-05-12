@@ -2,25 +2,27 @@ import React, {useEffect, useContext} from "react";
 import {useParams, Link } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
+import {useParams } from 'react-router-dom';
+import { Context } from "../store/appContext.js";
 
 export const Details = () => {
-    const {store, actions} = useContext(Context);
+  const {store, actions} = useContext(Context);
 	const  params  = useParams();
-	
-    let isFavorite = false;
-    if (store.favorites.length !== 0) {
-        isFavorite = [
-            store.favorites
-        ].some((favorite) => favorite.matricula === store.details.matricula);
-    }
 
-    const addOrRemove = () => {
-        if (!isFavorite) {
-            actions.addFav(storedetails.id)
-        } else {
-            actions.removeFav(storedetails.id)
-        }
-    }
+  let isFavorite = false;
+  if (store.favorites.length !== 0) {
+      isFavorite = [
+          store.favorites
+      ].some((favorite) => favorite.matricula === store.details.matricula);
+  }
+
+  const addOrRemove = () => {
+      if (!isFavorite) {
+          actions.addFav(storedetails.id)
+      } else {
+          actions.removeFav(storedetails.id)
+      }
+  }
 
 	useEffect (() => {
 		actions.getDetails(params.id)
@@ -105,5 +107,6 @@ export const Details = () => {
                 </div>
 			</Link> 
     </>
+
     );
 };
