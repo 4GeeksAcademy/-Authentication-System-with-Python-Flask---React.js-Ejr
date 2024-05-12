@@ -2,9 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { CardVehicles } from "../component/cardvehicles.js";
 import { Jumbotron } from "../component/jumbotron";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-
 
 export const Home = () => {
 
@@ -17,7 +15,7 @@ export const Home = () => {
 	return (
 		<>
 		<div className="text-danger vehicles ms-5 mt-2 mb-5 mt-4">
-			<Jumbotron />
+			{/* <Jumbotron /> */}
 			<div className="Map Cards text-dark d-flex" style={{ overflowX: "scroll" }}>
 				{store.vehicles.map((vehicle) => {
 					//   console.log(planet);
