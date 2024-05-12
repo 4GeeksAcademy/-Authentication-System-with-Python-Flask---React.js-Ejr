@@ -43,7 +43,7 @@ def create_signup_user():
 
         #Verificacion de campos vacios
         if not email or not password or not is_user or not name or not last_name or not username or not number_document or not phone or not age or not gender:
-            return({"Error":"Email, password, is_user, name, last_name, username, number_document, phone, age, gender"}), 400
+            return({"Error":"Email, password, is_user, name, last_name, username, number_document, phone, age and gender are required"}), 400
         
         #Verificacion de existencia de email en la base de datos
         existing_user = User.query.filter_by(email=email).first()
