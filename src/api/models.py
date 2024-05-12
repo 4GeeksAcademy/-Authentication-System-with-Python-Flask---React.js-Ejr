@@ -22,6 +22,8 @@ class User(db.Model):
     gender = db.Column(db.String)
     admin = db.Column(db.Boolean, unique=False, nullable=True)
 
+    Room_participants = db.relationship('Room_participant', backref='user', lazy=True)
+
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -48,32 +50,35 @@ class User(db.Model):
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date = db.Column(db.String)
     time = db.Column(db.String)
     room_name = db.Column(db.String(80), nullable=False)
-    game_name = db.Column(db.Integer, nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
     platform = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     mood = db.Column(db.String, nullable=False)
     reviews = db.Column(db.Integer)
-    in_room = db.Column(db.Integer, nullable=False)
     
+    room_participants = db.relationship('Room_participant', backref='room', lazy=True)
+
+    user = db.relationship('User', backref=db.backref('hosted_rooms', lazy=True))
 
     def __repr__(self):
         return f'<Room {self.id}>'
-    
+
     def serialize(self):
-        return{
+        return {
             "id": self.id,
             "user_id": self.user_id,
             "date": self.date,
             "time": self.time,
             "room_name": self.room_name,
+            "game_id": self.game_id,
             "platform": self.platform,
             "description": self.description,
             "mood": self.mood,
-            "members": self.in_room
+            "reviews": self.reviews
         }
     
 class Games(db.Model):
@@ -89,19 +94,22 @@ class Games(db.Model):
             "name": self.name
         }
 
-class Player_list(db.Model):
+class Room_participant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    room_id = db.Column (db.Integer, nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     confirmed = db.Column(db.Boolean(), unique=False, nullable=False)
    
     def __repr__(self):
-        return f'<Player_list {self.id}>'
+        return f'<Room_participant {self.id}>'
     
     def serialize(self):
         return {
-            "id":self.id,
-            "user_id":self.user_id,
-            "room_id":self.room_id,
-            "confirmed":self.confirmed
+            "id": self.id,
+            "room_id": self.room_id,
+            "user_id": self.user_id,
+            "confirmed": self.confirmed
         }
+
+
+
