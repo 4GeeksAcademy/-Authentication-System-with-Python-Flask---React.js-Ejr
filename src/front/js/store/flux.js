@@ -1,10 +1,13 @@
 const getState = ({ getStore, getActions, setStore }) => {
+
+	const localStorageOrder = JSON.parse(localStorage.getItem('order')) || {
+        total: 0,
+        items: []
+    };
+
 	return {
 	  store: {
-		order: {
-		  total: null,
-		  items: []
-		}
+		order: localStorageOrder
 	  },
 	  actions: {
 		// Use getActions to call a function within a function
@@ -31,15 +34,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  const actualStore = getStore();
 		  setStore({ ...actualStore, ...coffeePerCategory });
 		},
-		addCoffeeToOrder: (coffee) => {
-		  const actualStore = getStore();
-		  const { order } = actualStore;
-		  const updatedOrder = {
-			total: order.total + coffee.price,
-			items: [...order.items, coffee]
-		  };
-		  setStore({ ...actualStore, order: updatedOrder });
+		addCoffeeToOrder: ({ name, price }) => {
+			const store = getStore();
+			const { order } = store;
+			const updatedOrder = {
+				...order,
+				total: order.total + price,
+				items: [...order.items, { name, price }]
+			};
+			setStore({ order: updatedOrder });
+		
+			// Update localStorage
+			localStorage.setItem('order', JSON.stringify(updatedOrder));
 		}
+		
+		
 	  }
 	};
   };
