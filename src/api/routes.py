@@ -2,15 +2,17 @@
 Este módulo se encarga de iniciar el servidor API, cargar la base de datos y agregar los puntos finales.
 """
 
-from flask import Flask, request, jsonify, url_for, Blueprint, redirect, url_for  # Importación de Flask y funciones relacionadas
+from flask import Flask, request, jsonify, url_for, Blueprint, redirect, url_for, render_template  # Importación de Flask y funciones relacionadas
 from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Transaction, TransactionDetail, UserMembershipHistory  # Importación de los modelos de la base de datos
 from api.utils import generate_sitemap, APIException  # Importación de funciones de utilidad y excepciones personalizadas
 from flask_cors import CORS  # Importación de CORS para permitir solicitudes desde otros dominios
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity  # Importación de JWT para autenticación y autorización basada en tokens
 from flask_bcrypt import generate_password_hash, check_password_hash  # Importación de bcrypt para encriptación de contraseñas
 from datetime import timedelta  # Importación de timedelta para manejar intervalos de tiempo
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask_mail import Mail, Message
 
-from .booking_service import create_booking, cancel_booking, process_payment, create_transaction, activate_membership
+from .booking_service import create_booking, cancel_booking, process_payment, create_transaction, activate_membership, generate_confirmation_token_email, confirm_token_email, send_email
 
 
 #------------------verificar con david --------------------------------
@@ -543,8 +545,8 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
 
         password_hash = generate_password_hash(data['password']).decode('utf-8')
 
-        # Crea un nuevo usuario con los datos proporcionados
-        new_user = User(email=data['email'], password=password_hash, username=data['username'], name=data.get('name'), last_name=data.get('last_name'), is_active=True )
+        # Crea un nuevo usuario con los datos proporcionados                                                                                            aca deberia activarse cuando confirme el email con el token
+        new_user = User(email=data['email'], password=password_hash, username=data['username'], name=data.get('name'), last_name=data.get('last_name'))
        
         # Agrega las preguntas y respuestas de seguridad al usuario
         for question_answer in data['security_questions']:
@@ -553,15 +555,51 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
                 answer=question_answer['answer']
             )
             new_user.security_questions.append(new_question)
+    
+        # Generación del token y envío del correo electrónico
+        token = generate_confirmation_token_email(new_user.email)
+        confirm_url = url_for('api.confirm_email', token=token, _external=True)
+        # html = render_template('activate.html', confirm_url=confirm_url)
+        html = f"""
+                <html>
+                    <head></head>
+                    <body>
+                        <p>Thank you for registering! Please click the following link to activate your account:</p>
+                        <p><a href="{confirm_url}">{confirm_url}</a></p>
+                    </body>
+                </html>
+                """
+        send_email('Confirm Your Email', new_user.email, html)
 
         db.session.add(new_user)  # Agrega el nuevo usuario a la sesión de la base de datos
         db.session.commit()  # Confirma los cambios en la base de datos
- 
-        return jsonify({'message': 'User created successfully'}), 201  # Devuelve un mensaje de éxito con el ID del nuevo usuario y un código de estado 201
+        # return jsonify({'message': 'User created successfully'}), 201  # Devuelve un mensaje de éxito con el ID del nuevo usuario y un código de estado 201
+
+        return jsonify({'message': 'Please confirm your email address to complete the registration'}), 201
+    
    
     except Exception as e:  # Captura cualquier excepción que ocurra dentro del bloque try
         return jsonify({'error': 'Error in user creation: ' + str(e)}), 500  # Devuelve un mensaje de error con un código de estado HTTP 500 si ocurre una excepción durante el procesamiento
 
+
+
+
+#--------------------- activacion de cuenta via email----------------
+@api.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        email = confirm_token_email(token)
+    except:
+        return jsonify(message='The confirmation link is invalid or has expired.'), 400
+
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.is_active:
+        return jsonify(message='Account already confirmed. Please login.'), 400
+    else:
+        user.is_active = True
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message='You have confirmed your account. Thanks!'), 200
 
 
 #-------------------CREAR  TOKEN LOGIN--------------------------------------------------------------------------

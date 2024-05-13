@@ -4,7 +4,7 @@ Este módulo se encarga de iniciar el servidor de la API, cargar la base de dato
 
 # Importar los módulos necesarios
 import os  # Importar el módulo os para interactuar con el sistema operativo
-from flask import Flask, request, jsonify, url_for, send_from_directory, redirect  # Importar clases y funciones de Flask para crear y gestionar la aplicación web
+from flask import Flask, request, jsonify, url_for, send_from_directory, redirect, render_template  # Importar clases y funciones de Flask para crear y gestionar la aplicación web
 from flask_migrate import Migrate  # Importar Migrate para facilitar la migración de la base de datos
 from flask_swagger import swagger  # Importar swagger para generar documentación de la API
 from api.utils import APIException, generate_sitemap  # Importar clases y funciones definidas en otros archivos del proyecto
@@ -20,6 +20,10 @@ from werkzeug.utils import secure_filename # importacion de secure_filename para
 # Importar JWTManager para manejar la autenticación JWT
 from flask_jwt_extended import JWTManager
 
+
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask_mail import Mail, Message
+
 # Configurar el entorno de desarrollo o producción y el directorio para archivos estáticos
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"  # Configurar el entorno según la variable de entorno FLASK_DEBUG
 static_file_dir = os.path.join(os.path.dirname(
@@ -32,6 +36,22 @@ app.url_map.strict_slashes = False  # Configurar para permitir rutas sin barra a
 # Inicializar JWTManager y configurar la clave secreta
 jwt = JWTManager(app)  # Inicializar JWTManager con la aplicación Flask
 app.config["JWT_SECRET_KEY"] = "your-secret-key"  # Definir la clave secreta para JWT (debes cambiarla por una clave segura)
+
+
+
+app.config['SECRET_KEY'] = 'tu_secret_key_super_secreta'
+app.config['SECURITY_PASSWORD_SALT'] = 'tu_salt_super_secreto'
+
+#configuracion de email
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'newappcrossfit@gmail.com'
+app.config['MAIL_PASSWORD'] = 'pruebas1234-'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+
+mail = Mail(app)
 
 
 #------------------verificar con david --------------------------------

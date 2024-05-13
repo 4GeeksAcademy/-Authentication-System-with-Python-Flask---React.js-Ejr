@@ -1,6 +1,11 @@
 import os
 from .models import db, Booking, Training_classes, User, Transaction, UserMembershipHistory
 from datetime import datetime, timedelta  # Importación del módulo datetime para trabajar con fechas y horas
+from flask import current_app as app
+from flask_mail import Message, Mail
+from itsdangerous import URLSafeTimedSerializer as Serializer
+
+mail = Mail()
 
 
 #Funciones de Servicio
@@ -99,3 +104,28 @@ def activate_membership(user_id, membership_id, duration_days, classes_per_month
     user = User.query.get(user_id)
     user.active_membership_id = new_membership_history.id
     db.session.commit()
+
+
+#funciones para el envio de email de configuracion
+def generate_confirmation_token_email(email):
+    serializer = Serializer(app.config['SECRET_KEY'])
+    return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
+
+# def send_email(subject, recipient, html):
+#     msg = Message(subject, sender=app.config['MAIL_USERNAME'], recipients=[recipient])
+#     msg.html = html
+#     mail.send(msg)
+
+def send_email(subject, recipient, html):
+    msg = Message(subject, sender=app.config['MAIL_USERNAME'], recipients=[recipient])
+    msg.html = html
+    mail.send(msg)
+
+
+def confirm_token_email(token, expiration=3600):
+    serializer = Serializer(app.config['SECRET_KEY'])
+    try:
+        email = serializer.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=expiration)
+    except:
+        return False
+    return email

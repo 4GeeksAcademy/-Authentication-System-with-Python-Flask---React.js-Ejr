@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 224b5c35979a
+Revision ID: 8f466d081273
 Revises: 
-Create Date: 2024-05-11 01:07:47.645921
+Create Date: 2024-05-13 14:37:38.549523
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '224b5c35979a'
+revision = '8f466d081273'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,18 +33,12 @@ def upgrade():
     sa.Column('description', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    with op.batch_alter_table('permission', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_permission_id'), ['id'], unique=False)
-
     op.create_table('role',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    with op.batch_alter_table('role', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_role_id'), ['id'], unique=False)
-
     op.create_table('role_permission',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('role_id', sa.Integer(), nullable=False),
@@ -53,15 +47,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['role_id'], ['role.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    with op.batch_alter_table('role_permission', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_role_permission_id'), ['id'], unique=False)
-        batch_op.create_index(batch_op.f('ix_role_permission_role_id'), ['role_id'], unique=False)
-
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=250), nullable=False),
-    sa.Column('is_active', sa.Boolean(), nullable=False),
+    sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('last_name', sa.String(length=80), nullable=False),
     sa.Column('username', sa.String(length=80), nullable=False),
@@ -70,12 +60,9 @@ def upgrade():
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('role_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['role_id'], ['role.id'], ondelete='SET NULL'),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email')
     )
-    with op.batch_alter_table('user', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_user_email'), ['email'], unique=True)
-        batch_op.create_index(batch_op.f('ix_user_id'), ['id'], unique=False)
-
     op.create_table('security_question',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('question', sa.String(length=255), nullable=False),
@@ -84,15 +71,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    with op.batch_alter_table('security_question', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_security_question_id'), ['id'], unique=False)
-        batch_op.create_index(batch_op.f('ix_security_question_user_id'), ['user_id'], unique=False)
-
     op.create_table('training_classes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('description', sa.Text(), nullable=False),
-    sa.Column('day_of_week', sa.String(length=10), nullable=False),
+    sa.Column('day_of_week', sa.Date(), nullable=True),
     sa.Column('start_time', sa.Time(), nullable=False),
     sa.Column('duration', sa.Integer(), nullable=False),
     sa.Column('available_slots', sa.Integer(), nullable=False),
@@ -152,28 +135,10 @@ def downgrade():
     op.drop_table('user_membership_history')
     op.drop_table('transaction')
     op.drop_table('training_classes')
-    with op.batch_alter_table('security_question', schema=None) as batch_op:
-        batch_op.drop_index(batch_op.f('ix_security_question_user_id'))
-        batch_op.drop_index(batch_op.f('ix_security_question_id'))
-
     op.drop_table('security_question')
-    with op.batch_alter_table('user', schema=None) as batch_op:
-        batch_op.drop_index(batch_op.f('ix_user_id'))
-        batch_op.drop_index(batch_op.f('ix_user_email'))
-
     op.drop_table('user')
-    with op.batch_alter_table('role_permission', schema=None) as batch_op:
-        batch_op.drop_index(batch_op.f('ix_role_permission_role_id'))
-        batch_op.drop_index(batch_op.f('ix_role_permission_id'))
-
     op.drop_table('role_permission')
-    with op.batch_alter_table('role', schema=None) as batch_op:
-        batch_op.drop_index(batch_op.f('ix_role_id'))
-
     op.drop_table('role')
-    with op.batch_alter_table('permission', schema=None) as batch_op:
-        batch_op.drop_index(batch_op.f('ix_permission_id'))
-
     op.drop_table('permission')
     op.drop_table('membership')
     # ### end Alembic commands ###

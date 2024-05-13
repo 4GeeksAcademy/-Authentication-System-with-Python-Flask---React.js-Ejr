@@ -12,7 +12,7 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)  # Columna para la contraseña no nula
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)  # Columna para el estado de activación del usuario
+    is_active = db.Column(db.Boolean(), unique=False, nullable=True)  # Columna para el estado de activación del usuario
     name = db.Column(db.String(80), nullable=False)  # Columna para el nombre del usuario
     last_name = db.Column(db.String(80), nullable=False)  # Columna para el nombre del usuario
     username = db.Column(db.String(80), nullable=False)  # Columna para el nombre del usuario
@@ -24,11 +24,13 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
 
     security_questions = db.relationship("SecurityQuestion", back_populates="user", lazy=True, cascade="all, delete-orphan")
     role = db.relationship("Role")  # Relación con la tabla de módulos
-    active_membership = db.relationship('UserMembershipHistory',foreign_keys=[active_membership_id],post_update=True,lazy='joined',uselist=False, backref=db.backref('active_user', uselist=False) )    
     memberships_history = db.relationship('UserMembershipHistory',foreign_keys='UserMembershipHistory.user_id',backref=db.backref('user', lazy='joined'),lazy='dynamic') 
+    active_membership = db.relationship('UserMembershipHistory',foreign_keys=[active_membership_id],post_update=True,lazy='joined',uselist=False, backref=db.backref('active_user', uselist=False) )    
     transactions = db.relationship('Transaction', backref='user', lazy=True)
 
-    
+    #NOTA: siempre que se haga un eliminacion de base de datos se debe comentar active_membership_id y active_membership ya que tiene una relacion circular y una depende de otra
+
+
     def __repr__(self):  # Método para representar un objeto de usuario como una cadena
         return '<User %r>' % self.id
     
