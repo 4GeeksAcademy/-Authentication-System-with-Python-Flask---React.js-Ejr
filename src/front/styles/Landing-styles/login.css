@@ -1,7 +1,3 @@
-:root {
-  --primary-color: #02b532;
-  --secondary-color: #000501;
-}
 .login-button {
   background-color: var(--secondary-color);
   color: var(--primary-color);

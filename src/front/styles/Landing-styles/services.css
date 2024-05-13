@@ -1,0 +1,22 @@
+.services-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+  list-style: none;
+}
+.green-text {
+  color: var(--primary-color);
+}
+.left-services ul,
+.right-services ul {
+  padding: 0;
+  margin: 0;
+}
+
+.left-services ul li,
+.right-services ul li {
+  list-style: none;
+}

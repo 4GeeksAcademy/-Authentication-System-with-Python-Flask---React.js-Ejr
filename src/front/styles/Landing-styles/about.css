@@ -1,0 +1,23 @@
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+}
+
+.about-text {
+  flex: 1;
+  padding-left: 20px; /* Espacio entre el texto y la imagen */
+}
+
+.about-img {
+  max-width: 100%;
+  height: auto;
+  flex: 1;
+}
+
+.green-text {
+  color: var(--primary-color);
+}
