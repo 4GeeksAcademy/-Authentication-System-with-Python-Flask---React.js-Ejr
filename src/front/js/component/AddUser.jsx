@@ -87,10 +87,13 @@ export const AddUser = () => {
                 <div className="input-group has-validation"  >
                     <select className="form-select"  name='isUser' onChange={handleChange} value={createUser.isUser} required>
                     <option selected disabled value="Choose">Choose</option>
-                    <option value={false}>Teacher</option>
-                    <option value={true} >Student</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                    <option value="Manager">Manager</option>
                 </select>
-                
+                <div className="invalid-feedback">
+                Please choose a role.
+                </div>
                 </div>
             </div>
 
