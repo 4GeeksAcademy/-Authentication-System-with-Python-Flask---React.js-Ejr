@@ -2,20 +2,17 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 .navbar {
-    background-color: #b4c794;
+    background-color:  #a9ce68;
+    height: 150px;
     /* background-color: rgb(140, 172, 140); */
-}
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
+    }
+
 
 .logo {
     width: 80px;
     margin-left: 20px;
     /* margin-left: 100px; */
-}
-
-.btn {
-    /* margin-left: 1400px; */
-    /* margin-right: 60px; */
-    /* margin-top: 20px; */
 }
 
 .contactForm {
@@ -47,10 +44,10 @@
     flex-direction: column;
 } */
 
-.footer {
+footer {
     /* margin-top: auto; */
-    background-color: #b4c794;
-    flex-shrink: 0;
+    background: #a9ce68 !important;
+    /* flex-shrink: 0; */
 }
 
 /* .cardvehicles {
@@ -59,7 +56,7 @@
 } */
 
 .botonAlquilar {
-    background-color: #b4c794;
+    background-color:  #a9ce68;
 }
 
 .propiedadVehiculo {
