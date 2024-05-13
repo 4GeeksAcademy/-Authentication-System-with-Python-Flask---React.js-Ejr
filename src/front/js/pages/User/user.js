@@ -4,14 +4,18 @@ import Calendly from "../../component/User/calendar.jsx";
 
 import { Context } from "../../store/appContext";
 import Exercises from "../../component/User/exercises.jsx";
+import SearchExercises from "../../component/User/searchExercises.jsx";
 
 export const User = () => {
     const { store, actions } = useContext(Context);
+    const [exercises, setExercises] = useState([]);
+    const [bodyPart, setBodyPart] = useState('all');
 
     return (
         <div>
             <Calendly />
-            <Exercises />
+            <SearchExercises setExercises={setExercises} bodyPart={bodyPart} setBodyPart={setBodyPart} />
+            <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />
         </div>
     );
 };
