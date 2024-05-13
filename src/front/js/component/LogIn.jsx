@@ -28,27 +28,45 @@ export const LogIn = () => {
 
     return (
         <div className='row d-flex flex-row'>
-            <div className='col-5'>
-                <h1>Log In</h1>
-                <form onSubmit={handlerLogin}>
-                    <input
-                        name='email'
-                        value={login.email}
-                        onChange={handlerChangeLogin}
-                        type="text"
-                        placeholder='Ingrese email'
-                    />
-                    <input
-                        name='password'
-                        value={login.password}
-                        onChange={handlerChangeLogin}
-                        type='password'
-                        placeholder='Ingrese password'
-                    />
-                    <button onClick={handlerLogin}>Login In</button>
-                </form>
+            <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
+                <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
+                    <h1 className='text-center my-3'>Log In</h1>
+                    <form onSubmit={handlerLogin}>
+                        <div className='col-md my-3'>
+                            <label className='my-2'>Email</label>
+                            <input
+                                name='email'
+                                value={login.email}
+                                onChange={handlerChangeLogin}
+                                type="text"
+                                placeholder='Ingrese email'
+                                className="form-control" 
+                            />
+                        </div>
+
+                        <div className='col-md my-3'>
+                            <label className='my-2'>Password</label>
+                            <input
+                                name='password'
+                                value={login.password}
+                                onChange={handlerChangeLogin}
+                                type='password'
+                                placeholder='Ingrese password'
+                                className="form-control" 
+                            />
+                        </div>
+
+                        <div className='col-md' style={{marginTop: '80px'}}>
+                            <button className='btn btn-primary w-100' onClick={handlerLogin}>Login In</button>
+                        </div>
+                        <div className='col-md my-3 text-center'>
+                            <a onClick={handlerLogin}>Don't have an account yet? click here to register.</a>
+                        </div>
+                        
+                    </form>
+                </div>
             </div>
-            <div className='col-7 d-flex justify-content-center align-items-center'>
+            <div className='col-lg-7 d-md-none d-lg-block d-flex justify-content-center align-items-center'>
                 <img
                     src="https://www.ceac.es/sites/default/files/2020-08/estudiar-online-ceac.jpg.webp"
                     alt="imgLogInEducation"
