@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (email, password) => {
                 try {
-					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/login", {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -84,9 +84,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			// fetch de todos los vehículos en alquiler -> GET vehicles
-			getVehicles: () => {
-				console.log("Obtener vehiculos");
-				fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle", {
+			getVehicles: () => 
+				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
 					.then(res => res.json())
@@ -126,7 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			signup: async (email, password) => {
                 try {
-					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/signup", {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'

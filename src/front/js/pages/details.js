@@ -106,6 +106,5 @@ export const Details = () => {
                 <ModalAlquilar />
             </div>
     </>
-
     );
 };
