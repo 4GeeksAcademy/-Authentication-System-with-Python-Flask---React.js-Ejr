@@ -41,11 +41,6 @@
         box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* html, body {
-    height: 100%;
-    margin: 0;
-}
-
 .container {
     min-height: 100%;
     display: flex;
@@ -53,8 +48,9 @@
 } */
 
 .footer {
-    margin-top: auto;
+    /* margin-top: auto; */
     background-color: #b4c794;
+    flex-shrink: 0;
 }
 
 /* .cardvehicles {
