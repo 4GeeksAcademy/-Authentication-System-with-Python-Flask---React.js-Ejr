@@ -3,12 +3,16 @@ import { jwtDecode } from "jwt-decode";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-
 			token: sessionStorage.getItem("token") || "",
+			exerciseOptions: {
+				method: 'GET',
+				headers: {
+					'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+					'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+				}
+			},
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
 			logOut: () => {
 				sessionStorage.removeItem("token");
 				setStore({ token: "" });
@@ -46,8 +50,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });					
+					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
 				}
+			},
+			fetchData: async (url, options) => {
+				const response = await fetch(url, options);
+				const data = await response.json();
+				return data;
 			},
 		}
 	};

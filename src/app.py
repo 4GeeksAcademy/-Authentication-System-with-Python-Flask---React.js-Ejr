@@ -44,7 +44,7 @@ app.register_blueprint(api, url_prefix='/api')
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
-""" # generate sitemap with all your endpoints
+# generate sitemap with all your endpoints
 @app.route('/')
 def sitemap():
     if ENV == "development":
@@ -58,7 +58,7 @@ def serve_any_other_file(path):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
-    return response """
+    return response 
 
 # Login & Signup Endpoints
 @app.route('/login', methods=['POST'])

@@ -51,7 +51,7 @@ export const Login = () => {
       </button>
 
       {showModal && (
-        <div className="login-modal">
+        <div className="modal">
           <div className="modal-content">
             <span className="close" onClick={() => setShowModal(false)}>
               &times;
