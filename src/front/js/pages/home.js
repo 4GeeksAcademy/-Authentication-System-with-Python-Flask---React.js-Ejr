@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { CardVehicles } from "../component/cardvehicles.js";
+import { CardVehicles } from "../component/cardvehicles";
 import "../../styles/home.css";
 
 export const Home = () => {

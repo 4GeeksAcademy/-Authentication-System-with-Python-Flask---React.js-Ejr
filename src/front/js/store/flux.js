@@ -47,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getVehicles: () => 
+			getVehicles: () => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
@@ -186,5 +186,5 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		}
 	};
-
+}
 export default getState;

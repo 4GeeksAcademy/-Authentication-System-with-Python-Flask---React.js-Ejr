@@ -16,6 +16,7 @@ export const Navbar = () => {
 
 	useEffect(() => {
 		if (store.vehicles.length !== 0) {
+			console.log(actions);
 			actions.favorites();
 		} 
 	},[store.vehicles])
@@ -30,7 +31,7 @@ export const Navbar = () => {
 					</Link>
 					{/* Nombre de la empresa */}
 					<div className="align-self-center">
-						<h2 className="navbar-text ms-3">Friendly Wheels</h2>
+						<h2 className="navbar-text ms-3 pt-4 display-4 text-center"><strong>Friendly Wheels</strong></h2>
 					</div>
 				</div>
 				{token ?
