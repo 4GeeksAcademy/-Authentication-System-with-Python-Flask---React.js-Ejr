@@ -9,7 +9,7 @@ import { Landing } from "./pages/Landing/landing";
 import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";
 import { UserForm } from "./pages/User/userForm";
-import ScrollToTop from "./scrollToTop.jsx";
+import ScrollToTop from "./component/scrollToTop.jsx";
 
 const Layout = () => {
 

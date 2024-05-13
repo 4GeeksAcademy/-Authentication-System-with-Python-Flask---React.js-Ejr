@@ -58,7 +58,9 @@ def serve_any_other_file(path):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
+
     return response
+
 # Login & Signup Endpoints
 @app.route('/login', methods=['POST'])
 def login():
