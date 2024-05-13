@@ -20,89 +20,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			details: {}
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			login: async (email, password) => {
-                try {
-<<<<<<< HEAD
-					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-=======
-				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
->>>>>>> 6102e8540a77ae79140598c9c3bbc9a05d45aaf9
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							email: email,
-							password: password
-						})
-					});
-					let data = await response.json()
-					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
-						return true;
-					} else {
-						return false
-					}
-				} catch (error) {
-					return false;
-				}
-			},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			// fetch de todos los vehículos en alquiler -> GET vehicles
-<<<<<<< HEAD
-			getVehicles: () => {
-=======
-			getVehicles: () => 
->>>>>>> 6102e8540a77ae79140598c9c3bbc9a05d45aaf9
-				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
-					method: 'GET'
-				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
-			},
-			getMessage: async () => {
+      getMessage: async () => {
 				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "")
@@ -128,17 +49,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+			login: async (email, password) => {
+                try {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
+					});
+					let data = await response.json()
+					if (response.status === 200) {
+						localStorage.setItem("token", data.access_token);
+						return true;
+					} else {
+						return false
+					}
+				} catch (error) {
+					return false;
+				}
+			},
 			logOut: () => {
 				localStorage.removeItem('token');
 				setStore({ favorites: [] });
 			},
 			signup: async (email, password) => {
                 try {
-<<<<<<< HEAD
 					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
-=======
-					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
->>>>>>> 6102e8540a77ae79140598c9c3bbc9a05d45aaf9
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -159,6 +99,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+      	getVehicles: () => {
+				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+					method: 'GET'
+				})
+					.then(res => res.json())
+					.then(data => setStore({ vehicles: data.results })
+					)
+					.catch((error) => console.log(error))
+			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
 					method: 'GET'
@@ -173,7 +122,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const token = localStorage.getItem("token")
                 try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/user/favorites`, {
-
 						method: 'GET',
 						headers:{
 							'Content-Type':'application/json',
@@ -235,10 +183,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					return []; 
-				} 
+				}
 			}
 		}
 	};
-};
-
+}
 export default getState;
