@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			favorites: [],
-			myVehicles: []
+			myVehicles: [],
+			details: {}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -25,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (email, password) => {
                 try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -83,8 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			// fetch de todos los vehículos en alquiler -> GET vehicles
-			getVehicles: () => {
-				console.log("Obtener vehiculos");
+			getVehicles: () => 
 				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
@@ -135,9 +135,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							password: password
 						})
 					});
-					let data = await response.json()
 					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
 						return true;
 					} else {
 						return false
@@ -146,6 +144,83 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			getDetails: (id) => {
+				fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle/${id}`, {
+					method: 'GET'
+				})
+				.then((response) => response.json())
+				.then(data => {
+					setStore({ details: data})
+				})
+				.catch((error) => console.log(error))
+			},
+			favorites: async () => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/user/favorites", {
+						method: 'GET',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						const data = await response.json();
+						const vehicles = getStore().vehicles;
+						const backendVehicles= data.results;
+						const filteredVehicles = vehicles.filter((vehicle) => {
+							return backendVehicles.some((beVehicle) => vehicle.id == beVehicle.vehicle_id);
+						});
+						setStore({favorites: filteredVehicles});
+					} else {
+						return [];
+					}
+                } catch (error) {
+                    return []; 
+                } 
+            },
+			addFav: async (id) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/favorite/vehicle/${id}`, {
+						method: 'POST',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+				 	if (response.status === 201) {
+							let listFav = getStore().favorites;
+							const allVehicles = getStore().vehicles;
+							const newFav = allVehicles.filter((vehicle) => vehicle.id === id);
+							const newListFav = listFav.concat(newFav) ;
+							setStore({favorites: newListFav})
+					} else {
+						return [];
+					}
+                } catch (error) {
+                    return []; 
+                } 
+			},
+			removeFav: async (id) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/favorite/vehicle/${id}`, {
+						method: 'DELETE',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						let listFav = getStore().favorites;
+						const newListFav = listFav.filter((vehicle) => vehicle.id !== id);
+						setStore({favorites: newListFav})
+					}
+				} catch (error) {
+					return []; 
+				} 
+			}
 		}
 	};
 };

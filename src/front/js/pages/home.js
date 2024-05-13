@@ -12,6 +12,7 @@ export const Home = () => {
 		actions.getVehicles()
 	}, [])
 
+
 	return (
 		<>
 		<div className="text-danger vehicles ms-5 mt-2 mb-5 mt-4">
@@ -20,31 +21,7 @@ export const Home = () => {
 				{store.vehicles.map((vehicle) => {
 					//   console.log(planet);
 					return (
-						<CardVehicles vehicle={vehicle} key={vehicle} />
-					)
-					})
-				}
-			</div>
-		</div>
-
-		<div className="text-danger vehicles ms-5 mt-2 mb-5">
-			<div className="Map Cards text-dark d-flex" style={{ overflowX: "scroll" }}>
-				{store.vehicles.map((vehicle) => {
-					//   console.log(planet);
-					return (
-						<CardVehicles vehicle={vehicle} key={vehicle} />
-					)
-					})
-				}
-			</div>
-		</div>
-
-		<div className="text-danger vehicles ms-5 mt-2 mb-5">
-			<div className="Map Cards text-dark d-flex" style={{ overflowX: "scroll" }}>
-				{store.vehicles.map((vehicle) => {
-					//   console.log(planet);
-					return (
-						<CardVehicles vehicle={vehicle} key={vehicle} />
+						<CardVehicles vehicle={vehicle} key={vehicle.id} />
 					)
 					})
 				}

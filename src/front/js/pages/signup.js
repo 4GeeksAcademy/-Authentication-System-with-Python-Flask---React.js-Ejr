@@ -4,11 +4,9 @@ import { useNavigate} from "react-router-dom";
 import "../../styles/index.css";
 
 export const Signup = () => {
-
     const [inputEmail, setInputEmail]=useState("")
     const [inputPassword, setInputPassword]=useState("")
     const [signupError,setSignupError] = useState(false);
-   
 	const navigate = useNavigate();
     const {actions } = useContext(Context);
 
@@ -17,7 +15,6 @@ export const Signup = () => {
         let isSignup = await actions.signup(inputEmail, inputPassword) 
         if (isSignup){
             console.log('Signup successful');
-            alert("Usuario creado correctamente")
             navigate("/");
         } else {
             setSignupError(true);

@@ -1,71 +1,110 @@
-import React, {useEffect, useContext} from "react";
-import {useParams } from 'react-router-dom';
+import React, {useEffect, useContext, useState} from "react";
+import {useParams} from 'react-router-dom';
 import { Context } from "../store/appContext.js";
+import { ModalAlquilar } from "../component/modalalquilar.js";
+import "../../styles/home.css";
 
 export const Details = () => {
     const {store, actions} = useContext(Context);
-	const  params  = useParams();
-		
+    const [isFavorite, setIsFavorite] = useState(false); 
+    const params = useParams();
+
+    const addOrRemove = () => {
+        if (!isFavorite) {
+            actions.addFav(store.details.id)
+        } else {
+            actions.removeFav(store.details.id)
+        }
+    }
+
+    useEffect (() => {
+        if (store.favorites.length !== 0) {
+            const isFav = store.favorites.some((favorite) => favorite.id == params.id);
+            setIsFavorite(isFav);
+        }
+	}, [store.favorites]);
+
 	useEffect (() => {
-		actions.getDetails(params.id)
+		actions.getDetails(params.id);
+        actions.getVehicles();
 	}, []);
 
     return (
-		<div className="principal bg-dark">
-			<div className="d-flex ms-3 me-1">
-				<div className="mt-3">
-					<img className="imageDetails border-end border-danger border-2 rounded-start"
-						src={noImageUrl !== "" ? noImageUrl : `https://starwars-visualguide.com/assets/img/${category}/${params.uid}.jpg`}
-						alt="image"
-					/>
-				</div>
-				<div className="w-75 mt-3 bg-secondary bg-opacity-25 me-2 text-white rounded-end">
-					<h1 className="ms-3">{store.details.name?.toUpperCase()}</h1>
-					<p className="ms-3">{store.details.description}</p>
-				</div>
-			</div>
-			<div className="d-flex d-flex text-danger text-primary text-opacity-50 pb-2">
-				<div className="mt-4 border-end border-secondary border-2 ps-4 pe-5">
-					<h6 className="text-white">
-					    MATRICULA
-					</h6>
-					<p> 
-						params.category == "people" ? store.details.matricula:
-					</p>
-				</div>
-                <div className="mt-4 border-end border-secondary border-2 ps-4 pe-5">
-					<h6 className="text-white">
-					    Tipo de motor
-					</h6>
-					<p> 
-						params.category == "people" ? store.details.matricula:
-					</p>
-				</div>
-                <div className="mt-4 border-end border-secondary border-2 ps-4 pe-5">
-					<h6 className="text-white">
-					    Tipo de cambio
-					</h6>
-					<p> 
-						params.category == "people" ? store.details.matricula:
-					</p>
-				</div>
-                <div className="mt-4 border-end border-secondary border-2 ps-4 pe-5">
-					<h6 className="text-white">
-					    N° de asientos
-					</h6>
-					<p> 
-						params.category == "people" ? store.details.matricula:
-					</p>
-				</div>
-                <div className="mt-4 ps-3 pe-5">
-					<h6 className="text-white">
-					    Precio por día
-					</h6>
-					<p> 
-						params.category == "people" ? store.details.matricula:
-					</p>
-				</div>
-			</div>
-		</div>
+        <>
+            <div id="carouselExample" className="carousel slide">
+                <div className="carousel-inner">
+                    <div className="carousel-item active">
+                        <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" className="d-block w-100" alt="..."/>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=road-car-vehicle-170811.jpg&fm=jpg" className="d-block w-100" alt="..."/>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="https://techservicecenter.nl/wp-content/uploads/2022/11/Hoog-olieverbruik-Audi-A5.jpg" className="d-block w-100" alt="..."/>
+                    </div>
+                </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div className="principal mb-5 me-3">
+                    <div className="d-flex mt-3 rounded-end justify-content-between">
+                        <h1 className="ms-3">{store.details.marca_modelo?.toUpperCase()}</h1>
+                        <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
+                            <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
+                        </button>
+                    </div>
+                <div className="d-flex pb-2">
+                    <div className="propiedadVehiculo mt-4">
+                        <h6>
+                            MATRICULA
+                        </h6>
+                        <p> 
+                            {store.details.matricula?.toUpperCase()}
+                        </p>
+                    </div>
+                    <div className="propiedadVehiculo mt-4">
+                        <h6>
+                            TIPO DE MOTOR
+                        </h6>
+                        <p> 
+                            {store.details.motor?.toUpperCase()}
+                        </p>
+                    </div>
+                    <div className=" propiedadVehiculo mt-4 ">
+                        <h6>
+                            TIPO DE CAMBIO
+                        </h6>
+                        <p> 
+                            {store.details.tipo_cambio?.toUpperCase()}
+                        </p>
+                    </div>
+                    <div className="propiedadVehiculo mt-4">
+                        <h6>
+                            N° ASIENTOS
+                        </h6>
+                        <p> 
+                            {store.details.asientos?.toUpperCase()}
+                        </p>
+                    </div>
+                    <div className="propiedadVehiculo mt-4">
+                        <h6>
+                            PRECIO POR DIA
+                        </h6>
+                        <p> 
+                            {store.details.precio?.toUpperCase()}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="d-grid gap-2 col-4">
+                <ModalAlquilar />
+            </div>
+    </>
     );
 };

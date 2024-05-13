@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import logoImageUrl from "../../img/logoHW.png";
@@ -13,6 +13,12 @@ export const Navbar = () => {
 		actions.logOut();
 		navigate('/')
 	};
+
+	useEffect(() => {
+		if (store.vehicles.length !== 0) {
+			actions.favorites();
+		} 
+	},[store.vehicles])
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
@@ -56,19 +62,26 @@ export const Navbar = () => {
 								<button className="btn-lg btn-light">Añadir vehículo</button>
 							</div>
 							<div className="btn-group me-5">
-								<button class="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Favoritos
 									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.favorites.length}</span>
 								</button>
 								<ul className="dropdown-menu">
 									{store.favorites.length === 0 
 										? <li className="text-center">(empty)</li>
-										: <p>Tengo algo</p>  /* En esta linea iria el map */
+										: (store.favorites.map((item, index) => (
+											<li key={index} className="d-flex justify-content-between text-primary">
+												{item.matricula}
+												<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+													<i className="fas fa-trash"></i>
+												</button>
+											</li>
+										)))
 									}
 								</ul>
 							</div>
 							<div className="btn-group me-5">
-								<button class="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Tú
 									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.myVehicles.length}</span>
 								</button>
