@@ -57,7 +57,7 @@ const Exercises = ({}) => {
       <div className="body-part-container">
         <HorizontalScrollbar
           data={bodyParts}
-          bodyPart={bodyPart}
+          bodyPart={bodyPart} 
           setBodyPart={setBodyPart}
         />
       </div>

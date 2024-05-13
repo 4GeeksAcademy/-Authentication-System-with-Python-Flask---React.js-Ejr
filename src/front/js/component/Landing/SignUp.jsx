@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import "../../styles/signUp.css";
+import "../../../styles/Landing-styles/signUp.css";
 import { Context } from "../../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
 
-export const Home = () => {
+export const SignUp = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
