@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import userForm from "../pages/User/userForm";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -35,6 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
 				}
 			},
+
 			signUp: async (email, password) => {
 				const response = await fetch(process.env.BACKEND_URL + "/signup", {
 					method: 'POST',
