@@ -1,23 +1,28 @@
 import React from "react";
 import BodyPartCard from "./bodyPartCard.jsx";
+import "../../../styles/User-styles/horizontalScrollbar.css";
 
-const HorizontalScrollbar = ({ data }) => {
+const HorizontalScrollbar = ({ data, bodyParts, bodyPart, setBodyPart }) => {
   return (
-    <div>
+    <article className="horizontal-bar">
       {data.map((item) => (
-        <article
+        <div
           key={item.id || item}
-          itemId={item.id || item}
+          itemID={item.id || item}
           title={item.id || item}
         >
-          <BodyPartCard
-            item={itme}
-            bodyPart={bodyPart}
-            setBodyPart={setBodyPart}
-          />
-        </article>
+          {bodyParts ? (
+            <BodyPartCard
+              item={item}
+              bodyPart={bodyPart}
+              setBodyPart={setBodyPart}
+            />
+          ) : (
+            <ExerciseCard exercise={item} />
+          )}
+        </div>
       ))}
-    </div>
+    </article>
   );
 };
 
