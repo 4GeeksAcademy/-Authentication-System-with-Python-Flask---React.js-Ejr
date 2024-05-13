@@ -26,7 +26,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (email, password) => {
                 try {
+<<<<<<< HEAD
 					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+=======
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+>>>>>>> 6102e8540a77ae79140598c9c3bbc9a05d45aaf9
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -85,7 +89,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			// fetch de todos los vehículos en alquiler -> GET vehicles
+<<<<<<< HEAD
 			getVehicles: () => {
+=======
+			getVehicles: () => 
+>>>>>>> 6102e8540a77ae79140598c9c3bbc9a05d45aaf9
 				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
@@ -126,7 +134,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			signup: async (email, password) => {
                 try {
+<<<<<<< HEAD
 					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
+=======
+					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+>>>>>>> 6102e8540a77ae79140598c9c3bbc9a05d45aaf9
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
