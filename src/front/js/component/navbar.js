@@ -25,11 +25,9 @@ export const Navbar = () => {
 		<nav className="navbar navbar-expand-lg navbar-light">
 			<div className="container-fluid">
 				<div className="d-flex">
-					{/* Logo de la empresa */}
 					<Link to="/"> 
 						<img className="logo" src={logoImageUrl}/> 
 					</Link>
-					{/* Nombre de la empresa */}
 					<div className="align-self-center">
 						<h2 className="navbar-text ms-3 pt-4 display-4 text-center"><strong>Friendly Wheels</strong></h2>
 					</div>

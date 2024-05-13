@@ -10,7 +10,6 @@ import { Login } from "./pages/login";
 import { Details } from "./pages/details";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-
 import injectContext from "./store/appContext";
 
 const Layout = () => {
