@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (email, password) => {
                 try {
-					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/login", {
+					const response = await fetch("https://animated-robot-g4q69gpj4rrvfppvv-3001.app.github.dev/api/login", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -47,7 +47,55 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
+			// añadirVehiculo: async () => {
+			// 	const token = localStorage.getItem("token")
+            //     try {
+			// 		const response = await fetch("https://animated-robot-g4q69gpj4rrvfppvv-3001.app.github.dev/api/agregarvehiculo", {
+			// 			method: 'POST',
+			// 			headers:{
+			// 				'Content-Type':'application/json',
+			// 				'Authorization': "Bearer " + token
+			// 			},
+			// 			body: JSON.stringify({
+			// 		 			marca_modelo: marca_modelo,
+			// 		 			matricula: matricula,
+			// 		 			motor: motor,
+			// 		 			cambio: cambio,
+			// 		 			asientos: asientos,
+			// 					precio_dia: precio
+			// 	 		})
+            //     	})
+			// 		.then(response => {
+			// 			if (response.ok) {
+			// 				throw new Error('Error al añadir vehículo');
+			// 			}
+			// 			return response.json();
+			// 		})
+			// 		.then(data => {
+			// 			console.log(data);
+			// 		})
+			// 		.catch(error => {
+			// 			console.log('Error:', error);
+			// 		})
+			// 	 }
+			// 	},
+			
+			// añadirvehiculo: () => {
+			// 	fetch("https://animated-robot-g4q69gpj4rrvfppvv-3001.app.github.dev/api/añadirvehiculo", {
+			// 		method: 'POST',
+			// 		headers: {
+			// 			'Content-Type': 'application/json'
+			// 		},
+			// 		body: JSON.stringify({
+			// 			marca_modelo: marca_modelo,
+			// 			matricula: matricula,
+			// 			motor: motor,
+			// 			cambio: cambio,
+			// 			asientos: asientos,
+			// 			precio_dia: precio
+			// 		})
+			// 	})
+			
 
 
 
@@ -122,7 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logOut: () => {
 				localStorage.removeItem('token');
-				setStore({ favorites: [[], [], []] });
+				setStore({ favorites: [[]] }); //linea de codigo para que te elimine el token y los favoritos desaparezcan
 			},
 			signup: async (email, password) => {
                 try {

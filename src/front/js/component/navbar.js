@@ -59,7 +59,9 @@ export const Navbar = () => {
 					<>
 						<div className="d-flex">
 							<div className="btn-group me-5">
+							<Link to="/agregarvehiculo">
 								<button className="btn-lg btn-light">Añadir vehículo</button>
+							</Link>
 							</div>
 							<div className="btn-group me-5">
 								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">

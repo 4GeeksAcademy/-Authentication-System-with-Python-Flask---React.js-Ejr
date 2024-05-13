@@ -30,9 +30,17 @@
     justify-content: center;
 }
 
-/* .mb-3 {
-    width: auto;
-} */
+.container {
+    width: 800px;
+    /* height: 400px;
+    margin-left: 700px; */
+    margin-top: 80px;
+    margin-bottom: 80px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+} 
 
 .jumbotron {
         color: rgb(90, 90, 90);
