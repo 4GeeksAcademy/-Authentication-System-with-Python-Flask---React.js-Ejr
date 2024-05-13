@@ -46,9 +46,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 		
 			// Update localStorage
 			localStorage.setItem('order', JSON.stringify(updatedOrder));
+		},
+		removeCoffeeFromOrder: ({ name, price }) => {
+			const store = getStore();
+			const { order } = store;
+
+			// Find the index of the coffee to remove
+			const index = order.items.findIndex(item => item.name === name && item.price === price);
+
+			if (index !== -1) {
+				// Create a new array with the coffee removed
+				const updatedItems = order.items.filter((item, i) => i !== index);
+
+				// Update the order with the new items array
+				const updatedOrder = {
+					...order,
+					total: order.total - price,
+					items: updatedItems
+				};
+
+				// Update the store and localStorage
+				setStore({ order: updatedOrder });
+				localStorage.setItem('order', JSON.stringify(updatedOrder));
+			}
+		
 		}
-		
-		
 	  }
 	};
   };
