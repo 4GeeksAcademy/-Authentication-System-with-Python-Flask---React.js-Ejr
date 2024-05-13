@@ -1,29 +1,14 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			vehicles: [],
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
+			vehicles: [],
 			favorites: [],
 			myVehicles: [],
 			details: {}
 		},
 		actions: {
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-      getMessage: async () => {
+      		getMessage: async () => {
 				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "")
@@ -99,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-      	getVehicles: () => {
+      		getVehicles: () => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})

@@ -1,13 +1,9 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
 .navbar {
     background-color:  #a9ce68;
     height: 150px;
     /* background-color: rgb(140, 172, 140); */
         text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
-    }
-
+}
 
 .logo {
     width: 80px;
@@ -64,6 +60,6 @@ footer {
     margin-left: 80px;
 }
 
-.corazon:hover i{
+.corazon:hover i {
     color:black !important;
 }

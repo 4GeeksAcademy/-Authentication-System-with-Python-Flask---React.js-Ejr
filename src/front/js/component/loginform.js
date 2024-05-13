@@ -4,7 +4,6 @@ import React,{useContext, useState} from "react";
  import "../../styles/index.css";
 
  export const LoginForm = () => {
-    
     const {actions} = useContext(Context)
     const [loginError,setLoginError] = useState(false);
     const [inputEmail, setInputEmail]=useState("")
