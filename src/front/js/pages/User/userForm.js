@@ -17,13 +17,14 @@ const userForm = () => {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target.value;
         setFormData({
             ...formData,
             [name]: value
         });
     };
     const handleSubmit = () => {
+        console.log(formData)
         try {
 
             if (
@@ -58,10 +59,10 @@ const userForm = () => {
 
     return (
         <div className="container-form">
-        <form onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(e);
-        }}>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit(e);
+            }}>
                 <label>
                     Name and Surnames:
                     <input
@@ -74,7 +75,7 @@ const userForm = () => {
                 </label>
                 <br />
                 <label>
-                    Age 
+                    Age
                     <input
                         type="number"
                         name="age"
@@ -104,7 +105,7 @@ const userForm = () => {
                         name="weight"
                         value={formData.weight}
                         onChange={handleChange}
-                        pattern="\d+(\,\d{1,2})?"
+                        pattern="\d+(\.\d{1,2})?"
                         placeholder="00.00"
                         required
                     />
