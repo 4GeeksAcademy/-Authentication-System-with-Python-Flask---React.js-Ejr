@@ -7,20 +7,20 @@ import "../../styles/index.css";
 export const Signup = () => {
     const [inputEmail, setInputEmail]=useState("")
     const [inputPassword, setInputPassword]=useState("")
-    const [signupError,setSignupError] = useState(false);
 	const navigate = useNavigate();
     const {actions } = useContext(Context);
 
     async function handleSubmit(e) {
         e.preventDefault()
         let isSignup = await actions.signup(inputEmail, inputPassword) 
-        if (isSignup){
+        if (isSignup === "1"){
             console.log('Signup successful');
-            swal ( "Registro con éxito" ,  "Gracias por registrarse en nuestar web!" ,  "success" )
+            swal ( "Registro con éxito" ,  "Gracias por registrarse en nuestra web!" ,  "success" )
              navigate("/");
+        } else if (isSignup === "2") {
+            swal ("Este email ya se encuentra registrado", "Por favor intentelo con otro email" ,  "error" )
         } else {
-            setSignupError(true);
-            console.log('Signup failed');
+            swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
         }
     };
     return (
@@ -35,7 +35,6 @@ export const Signup = () => {
                         <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                     </div>
-                    {signupError ? <div className="text-danger mb-3">Todos los campos son obligatorios</div> : null}
                     <button type="submit" className="login btn btn-dark"data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
                 </form>
             </div>

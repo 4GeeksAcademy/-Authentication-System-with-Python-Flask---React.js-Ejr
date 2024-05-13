@@ -136,10 +136,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 							password: password
 						})
 					});
-					if (response.status === 200) {
-						return true;
+					if (response.status === 201) {
+						return "1";
+					} else if (response.status === 409) {
+						return "2";
 					} else {
-						return false
+						return "3"
 					}
 				} catch (error) {
 					return false;
