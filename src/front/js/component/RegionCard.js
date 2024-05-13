@@ -1,7 +1,9 @@
-import CoffeeCard from "../component/coffeeCard.js";
-import { Typography } from "@mui/material";
-import React, { useState } from "react";
-
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 let coffee = {
   'Central America': [
     {
@@ -354,37 +356,28 @@ let coffee = {
   ]
 }
 
-export const AsiaPacific = () => {
-  const [selectedCoffees, setSelectedCoffees] = useState([]);
 
-  const handleClick = (name, price) => {
-    setSelectedCoffees([...selectedCoffees, { name, price }]);
-  };
 
-  const total = selectedCoffees.reduce((acc, curr) => acc + curr.price, 0);
+function RegionCard({region, children}) {
+    return (
+      <Card sx={{ maxWidth: 345 }}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            height="140"
+            image="https://fastly.picsum.photos/id/63/5000/2813.jpg?hmac=HvaeSK6WT-G9bYF_CyB2m1ARQirL8UMnygdU9W6PDvM"
+            alt={region} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {region}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {children}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    );
+}
 
-  return (
-    <div style={{ display: "flex" }}>
-      <div style={{ flex: 1 }}>
-        <Typography variant="h1">Orders:</Typography>
-        <ul>
-          {selectedCoffees.map((coffee, index) => (
-            <li key={index}>{coffee.name} - ${coffee.price}</li>
-          ))}
-        </ul>
-        <Typography variant="h3">Total: ${total.toFixed(2)}</Typography>
-      </div>
-      <div style={{ flex: 1 }}>
-        <Typography variant="h1">Coffee:</Typography>
-        {coffee["Asia Pacific"].map((current) => (
-          <CoffeeCard
-            name={current.name}
-            price={current.price}
-            key={current.id}
-            handleClick={handleClick}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
+export default RegionCard;
