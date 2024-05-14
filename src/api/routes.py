@@ -20,6 +20,27 @@ def handle_hello():
     }
     return jsonify(response_body), 200
 
+#---------------CREACION DE UN POST --------------------
+@api.route('/post', methods=['POST'])
+
+def handle_create_user(img, bodytext):
+    new_post = Post(img=img, bodytext=bodytext)
+    db.session.add(new_post)
+    db.session.commit()
+
+    response_body = {
+        "user": {
+            "id": new_post.id,
+            "img": new_post.img,
+            "bodytext": new_post.bodytext,
+        },
+        "msg": "El post fue creado por Maikel y Jose"
+    }
+    return jsonify(response_body), 200
+
+
+
+#--------------------------------------------------------
 @api.route('/wipeall', methods=['GET'])
 def database_wipe():
     try:
