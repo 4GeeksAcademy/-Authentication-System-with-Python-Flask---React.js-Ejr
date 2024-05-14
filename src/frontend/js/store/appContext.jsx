@@ -17,7 +17,16 @@ const appContext = ReactComponent => {
 			})
 		)
 
-		React.useEffect(() => { state.actions.checkBackendHealth() }, [])
+    // call initialize on startup
+		React.useEffect(() => { state.actions.initialize() }, [])
+
+    // applies darkMode changes to actual page
+    React.useEffect(()=>{
+      if(state.store.userPrefs.darkMode) {
+        document.body.setAttribute("data-darkmode","1")
+      }
+      else document.body.removeAttribute("data-darkmode")
+    },[state.store.userPrefs.darkMode])
 
 		return (
 			<Context.Provider value={state}>
