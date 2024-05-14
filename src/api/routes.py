@@ -75,14 +75,14 @@ def create_token():  # Define la función que manejará la solicitud
             expires = timedelta(days=1)  # Configuramos la duración del token de acceso
             user_id = existing_user.id  # Obtenemos el ID del usuario existente en la base de datos
             access_token = create_access_token(identity=user_id, expires_delta=expires)  # Creamos un token de acceso para el usuario
-            return jsonify({'access_token': access_token, 'login': True}), 200  # Devolvemos el token de acceso como respuesta exitosa
+            return jsonify({'access_token': access_token, 'login': True, 'role':existing_user.role}), 200  # Devolvemos el token de acceso como respuesta exitosa
         else:  # Si la comparación de contraseñas es falsa, es decir, las contraseñas no coinciden
             return jsonify({'error': 'Incorrect password'}), 400  # Devolvemos un mensaje de error indicando que la contraseña es incorrecta
 
     except Exception as e:  # Captura cualquier excepción que ocurra dentro del bloque try
         return jsonify({'error': 'Error login user: ' + str(e)}), 500  # Devuelve un mensaje de error con un código de estado HTTP 500 si ocurre una excepción durante el procesamiento
 
-
+#mandar el serializado del user y el tipo de rol que tienen
 
 #-------------------CONSULTAR TODOS LOS USUARIOS--------------------------------------------------------------------------
 @api.route('/users', methods=['GET'])
@@ -546,7 +546,7 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
         password_hash = generate_password_hash(data['password']).decode('utf-8')
 
         # Crea un nuevo usuario con los datos proporcionados                                                                                            aca deberia activarse cuando confirme el email con el token
-        new_user = User(email=data['email'], password=password_hash, username=data['username'], name=data.get('name'), last_name=data.get('last_name'))
+        new_user = User(email=data['email'], password=password_hash, username=data['username'], name=data.get('name'), last_name=data.get('last_name'), role=data.get('role'))
        
         # Agrega las preguntas y respuestas de seguridad al usuario
         for question_answer in data['security_questions']:
@@ -556,20 +556,28 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
             )
             new_user.security_questions.append(new_question)
     
+
         # Generación del token y envío del correo electrónico
         token = generate_confirmation_token_email(new_user.email)
-        confirm_url = url_for('api.confirm_email', token=token, _external=True)
         # html = render_template('activate.html', confirm_url=confirm_url)
+        confirm_url = url_for('api.confirm_email', token=token, _external=True)
         html = f"""
-                <html>
-                    <head></head>
-                    <body>
-                        <p>Thank you for registering! Please click the following link to activate your account:</p>
-                        <p><a href="{confirm_url}">{confirm_url}</a></p>
-                    </body>
-                </html>
-                """
+        <!DOCTYPE html>
+        <html>
+        <head>
+        </head>
+        <body>
+            <div style="margin: 0 auto; width: 80%; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 3px #ccc;">
+                <h1 style="color: #333;">Confirm Your Email</h1>
+                <p>Thank you for registering! Please click the button below to activate your account:</p>
+                <a href="{confirm_url}" style="background-color: #007bff; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; border-radius: 5px;">Activate Account</a>
+            </div>
+        </body>
+        </html>
+
+        """
         send_email('Confirm Your Email', new_user.email, html)
+
 
         db.session.add(new_user)  # Agrega el nuevo usuario a la sesión de la base de datos
         db.session.commit()  # Confirma los cambios en la base de datos
@@ -585,21 +593,23 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
 
 
 #--------------------- activacion de cuenta via email----------------
-@api.route('/confirm/<token>')
+@api.route('/confirm/<string:token>', methods=['POST'])
 def confirm_email(token):
     try:
         email = confirm_token_email(token)
+        if not email:
+            raise ValueError("El email no puede estar vacío")
+        user = User.query.filter_by(email=email).first_or_404()
+        if user.is_active:
+            return jsonify(message='Account already confirmed. Please login.'), 400
+        else:
+            user.is_active = True
+            db.session.commit()
+            print()
+            return jsonify({'message':'You have confirmed your account. Thanks!', 'ok':True}), 200
+    
     except:
         return jsonify(message='The confirmation link is invalid or has expired.'), 400
-
-    user = User.query.filter_by(email=email).first_or_404()
-    if user.is_active:
-        return jsonify(message='Account already confirmed. Please login.'), 400
-    else:
-        user.is_active = True
-        db.session.add(user)
-        db.session.commit()
-        return jsonify(message='You have confirmed your account. Thanks!'), 200
 
 
 #-------------------CREAR  TOKEN LOGIN--------------------------------------------------------------------------
@@ -938,8 +948,6 @@ def delete_membership(membership_id):
 #     }
 # }
 
-from flask import jsonify, request
-from flask_jwt_extended import jwt_required, get_jwt_identity
 
 @api.route('/purchase_membership', methods=['POST'])
 @jwt_required()

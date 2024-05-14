@@ -46,7 +46,7 @@ app.config['SECURITY_PASSWORD_SALT'] = 'tu_salt_super_secreto'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'newappcrossfit@gmail.com'
-app.config['MAIL_PASSWORD'] = 'pruebas1234-'
+app.config['MAIL_PASSWORD'] = 'melqbhdvkxwwkhkd'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
