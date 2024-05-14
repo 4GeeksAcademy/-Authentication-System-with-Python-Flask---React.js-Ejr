@@ -3,7 +3,7 @@ import React from "react";
 export const ModalAlquilar = () => {
     return (
         <>
-            <button type="button" class="boton Alquilar btn btn-lg btn-light mb-5 ms-5 text-grey fs-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="botonAlquilar btn btn-lg btn-light mb-5 ms-5 text-grey fs-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Alquiler
             </button>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

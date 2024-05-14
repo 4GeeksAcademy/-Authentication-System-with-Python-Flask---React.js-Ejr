@@ -32,7 +32,7 @@ export const Details = () => {
     return (
         <>
             <div className="container justify-content-center">
-                <div id="carouselExample" className="carousel slide mt-5 justify-content-center align-items-center">
+                <div id="carouselExample" className="carousel slide">
                     <div className="carousel-inner">
                         <div className="carousel-item">
                             <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" className="d-block w-100 text-center" alt="..." />

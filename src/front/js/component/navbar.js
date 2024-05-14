@@ -35,7 +35,7 @@ export const Navbar = () => {
 				{token ?
 					<>
 					<div className="d-flex align-items-center">
-						<div className="nav-favorito text-dark align-items-center mx-0 fs-4" type="button">
+						<div className="text-dark align-items-center mx-0 fs-4" type="button">
 							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 								<li class="nav-item active me-2 me-n2">
 									<a class="nav-link" href="#">Añadir Vehículo<span class="sr-only">(current)</span></a>
@@ -44,7 +44,7 @@ export const Navbar = () => {
 						</div>
 						</div>
 						<div className="nav-item me-2 me-n2">
-							<a className="nav-favorito dropdown-toggle text-dark align-items-center mx-0 fs-4" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a className="dropdown-toggle text-dark align-items-center mx-0 fs-4" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Favoritos
 								<span className="px-1 text-dark fs-4" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
 							</a>
@@ -63,7 +63,7 @@ export const Navbar = () => {
 							</ul>
 						</div>
 						<div className="btn-group me-1 text-center">
-							<a className="nav-favorito dropdown-toggle text-dark align-items-center mx-0 fs-4" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a className="dropdown-toggle text-dark align-items-center mx-0 fs-4" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Tú
 								<span className="px-1 text-dark fs-4" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
 							</a>
