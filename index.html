@@ -5,7 +5,12 @@
         <meta charset="UTF-8">
         <title>-- FRONTEND --</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+        <!-- THIS 2 SCRIPTS BELOW ARE ONLY FOR DEVELOPMENT STAGE -->
         <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+          window.tailwind = window.tailwind || {}
+          window.tailwind.config = { darkMode: ['selector', '[data-darkmode]'], }
+        </script>
     </head>
     <body class="w-full text-white">
         <div id="app" class="w-full"></div>
