@@ -12,7 +12,10 @@ function merge(a, b) {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = merge({
-  content: [],
+  content: [
+    './src/frontend/js/**/*.{html,js,jsx}',
+    './src/frontend/styles/**/*.{html,js,jsx}',
+  ],
   presets: [],
   darkMode: ['selector', '[data-mode="dk"]'],
   theme: {
