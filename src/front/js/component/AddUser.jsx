@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 
 export const AddUser = () => {
-    const { action } = useContext(Context);
+    const { store, actions } = useContext(Context)
 
     const [userData, setUserData] = useState({
         email: '',
@@ -45,19 +45,17 @@ export const AddUser = () => {
         ) {
             const newUser = {
                 ...userData
-            };
+            }
             const userRole = {
                 role: selectedRole
-            };
-            console.log('New User:', newUser);
-            console.log('Selected Role:', userRole);
-            action.createUser(newUser, userRole); // Aquí corregimos de actions.createUser a action.createUser
+            }
+            actions.createUser(newUser, userRole)
         } else {
-            alert('You must complete all fields');
+            alert('You must complete all fields')
         }
     };
-    
-    console.log(userData);
+
+    console.log(userData, selectedRole);
 
     return (
         <form className="container mx-auto mt-5 row g-3 needs-validation" onSubmit={handleSubmit} noValidate>
@@ -66,19 +64,37 @@ export const AddUser = () => {
             </div>
             <div className="col-md-4">
                 <label className="form-label">Name</label>
-                <input type="text" className="form-control" aria-describedby="inputGroupPrepend" name='name' onChange={handleChange} value={userData.name} required />
+                <input
+                    type="text"
+                    className="form-control" aria-describedby="inputGroupPrepend"
+                    name='name'
+                    onChange={handleChange}
+                    value={userData.name}
+                    required />
                 <div className="valid-feedback">Looks good!</div>
             </div>
             <div className="col-md-4">
                 <label className="form-label">Last name</label>
-                <input type="text" className="form-control" aria-describedby="inputGroupPrepend" name='lastName' onChange={handleChange} value={userData.lastName} required />
+                <input
+                    type="text"
+                    className="form-control" aria-describedby="inputGroupPrepend"
+                    name='lastName'
+                    onChange={handleChange}
+                    value={userData.lastName}
+                    required />
                 <div className="valid-feedback">Looks good!</div>
             </div>
             <div className="col-md-2">
                 <label className="form-label">Username</label>
                 <div className="input-group has-validation">
-                    <span className="input-group-text" id="inputGroupPrepend">@</span>
-                    <input type="text" className="form-control" aria-describedby="inputGroupPrepend" name='username' onChange={handleChange} value={userData.username} required />
+                    {/* <span className="input-group-text" id="inputGroupPrepend">@</span> */}
+                    <input
+                        type="text"
+                        className="form-control" aria-describedby="inputGroupPrepend"
+                        name='username'
+                        onChange={handleChange}
+                        value={userData.username}
+                        required />
                     <div className="invalid-feedback">Please choose a username.</div>
                 </div>
             </div>
@@ -87,15 +103,22 @@ export const AddUser = () => {
                 <div className="input-group has-validation">
                     <select className="form-select" name='isUser' onChange={handleChange} value={selectedRole} required>
                         <option selected disabled value="Choose">Choose</option>
-                        <option>Teacher</option>
-                        <option>Student</option>
-                        <option>Manager</option>
+                        <option value='teacher'>Teacher</option>
+                        <option value='user'>Student</option>
+                        <option value='manager'>Manager</option>
                     </select>
                 </div>
             </div>
             <div className="col-md-3 position-relative">
                 <label className="form-label">Number Document</label>
-                <input type="text" className="form-control" id="validationTooltip03" name='numberDocument' onChange={handleChange} value={userData.numberDocument} required />
+                <input
+                    type="text"
+                    className="form-control"
+                    id="validationTooltip03"
+                    name='numberDocument'
+                    onChange={handleChange}
+                    value={userData.numberDocument}
+                    required />
                 <div className="invalid-tooltip">Please provide a valid number document.</div>
             </div>
             <div className="col-md-3 position-relative">
@@ -109,24 +132,51 @@ export const AddUser = () => {
             </div>
             <div className="col-md-3 position-relative">
                 <label className="form-label">Phone</label>
-                <input type="text" className="form-control" name='phone' onChange={handleChange} value={userData.phone} required />
+                <input
+                    type="text"
+                    className="form-control"
+                    name='phone'
+                    onChange={handleChange}
+                    value={userData.phone}
+                    required />
                 <div className="invalid-tooltip">Please provide a valid Phone.</div>
             </div>
             <div className="col-md-3 position-relative">
                 <label className="form-label">Age</label>
-                <input type="number" className="form-control" name='age' onChange={handleChange} value={userData.age} required />
+                <input
+                    type="number"
+                    className="form-control"
+                    name='age'
+                    onChange={handleChange}
+                    value={userData.age}
+                    required />
                 <div className="invalid-tooltip">Please provide a valid Age.</div>
             </div>
             <div className="mb-3">
                 <label className="form-label">Email address</label>
-                <input type="email" className="form-control" name='email' onChange={handleChange} value={userData.email} />
+                <input
+                    type="email"
+                    className="form-control"
+                    name='email'
+                    onChange={handleChange}
+                    value={userData.email}
+                    required />
                 <div className="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div className="mb-3">
                 <label className="form-label">Password</label>
-                <input type="password" className="form-control" name='password' onChange={handleChange} value={userData.password} />
+                <input
+                    type="password"
+                    className="form-control"
+                    name='password'
+                    onChange={handleChange}
+                    value={userData.password}
+                    required />
             </div>
-            <button type="submit" className="btn btn-primary">Create User</button>
+            <button 
+            type="submit" 
+            className="btn btn-primary"
+            onClick={handleSubmit}>Create User</button>
         </form>
     );
 };
