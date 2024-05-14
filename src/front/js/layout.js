@@ -8,11 +8,11 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/Navbar.jsx";
+
 import { Footer } from "./component/Footer.jsx";
 import { FormUser } from "./pages/FormUser.jsx";
 import { LogIn } from "./component/LogIn.jsx";
-import { CoursesContainer } from "./component/CoursesContainer.jsx";
+import { UserView } from "./pages/UserView.jsx";
 
 //create your first component
 const Layout = () => {
@@ -26,16 +26,15 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<FormUser />} path="/FormUser" />
                         <Route element={<LogIn />} path="/LogIn" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<UserView />} path={"/UserView"} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <CoursesContainer />
                     <Footer />
                     
                 </ScrollToTop>
