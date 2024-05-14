@@ -22,19 +22,23 @@ def handle_hello():
 
 #---------------CREACION DE UN POST --------------------
 @api.route('/post', methods=['POST'])
-
-def handle_create_user(img, bodytext):
-    new_post = Post(img=img, bodytext=bodytext)
+def handle_create_post():
+    data = request.json 
+    if 'img' not in data or 'bodytext' not in data:
+        return jsonify({"msg": "Missing data"}), 400 
+    
+    new_post = Post(img=data['img'], bodytext=data['bodytext'])
     db.session.add(new_post)
     db.session.commit()
 
+    # Construir la respuesta JSON
     response_body = {
         "user": {
             "id": new_post.id,
             "img": new_post.img,
             "bodytext": new_post.bodytext,
         },
-        "msg": "El post fue creado por Maikel y Jose"
+        "msg": "El segundo post fue creado por Maikel y Jose"
     }
     return jsonify(response_body), 200
 

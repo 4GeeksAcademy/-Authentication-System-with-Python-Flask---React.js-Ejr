@@ -24,7 +24,7 @@ class User(db.Model):
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    img = db.Column(db.String, unique=True, nullable=False)
+    img = db.Column(db.String)
     bodytext = db.Column(db.String(120), unique=False, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id')) 
     user = db.relationship('User', backref='Post', lazy=True)
