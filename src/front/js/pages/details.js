@@ -54,15 +54,15 @@ export const Details = () => {
                     </button>
                 </div>       
                 <div className="container justify-content-center">
-                    <div className="principal mb-5 mx-3 me-3 mt-5 border-top border-bottom">
+                    <div className="principal mb-5 me-3 mt-5 border-top border-bottom">
                         <div className="d-flex mt-3 rounded-end justify-content-between">
                             <h1 className="ms-3">{store.details.marca_modelo?.toUpperCase()}</h1>
                             <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
                                 <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                             </button>
                         </div>
-                        <div className="d-flex pb-2 mt-5">
-                            <div className="propiedadVehiculo mt-4">
+                        <div className="d-flex pb-2 mt-5 justify-content-between mt-4 text-center">
+                            <div>
                                 <h6>
                                     MATRICULA
                                 </h6>
@@ -70,7 +70,7 @@ export const Details = () => {
                                     {store.details.matricula?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="propiedadVehiculo mt-4">
+                            <div>
                                 <h6>
                                     TIPO DE MOTOR
                                 </h6>
@@ -78,7 +78,7 @@ export const Details = () => {
                                     {store.details.motor?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className=" propiedadVehiculo mt-4 ">
+                            <div>
                                 <h6>
                                     TIPO DE CAMBIO
                                 </h6>
@@ -86,7 +86,7 @@ export const Details = () => {
                                     {store.details.tipo_cambio?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="propiedadVehiculo mt-4">
+                            <div>
                                 <h6>
                                     N° ASIENTOS
                                 </h6>
@@ -94,7 +94,7 @@ export const Details = () => {
                                     {store.details.asientos?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="propiedadVehiculo mt-4">
+                            <div>
                                 <h6>
                                     PRECIO POR DIA
                                 </h6>
@@ -106,7 +106,7 @@ export const Details = () => {
                     </div>
                 </div>
                 <div className="d-flex justify-content-end mt-auto mb-5 pb-5">
-                    <div className="d-grid gap-2 col-6 mx-auto">
+                    <div className="d-grid gap-2 col-3 mx-auto">
                         <ModalAlquilar />
                     </div>
                 </div>
