@@ -13,7 +13,7 @@ export const CoursesContainer = () => {
                             />
                         </div>
                     </div>
-                    <div className="card-body ">
+                    <div className="card-body">
                         <h5 className="card-title">Curso 1</h5>
                         <p className="card-text">Descripción del curso.</p>
                         <div className="d-flex justify-content-between">
