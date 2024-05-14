@@ -22,23 +22,23 @@ export const Navbar = () => {
 	}, [store.vehicles])
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light">
+		<nav className="navbar navbar-expand navbar-light">
 			<div className="container-fluid">
 				<div className="d-flex">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
 					</Link>
 					<div className="ms-3">
-						<h2 className="navbar-text ms-3 pt-4 text-center"><strong>Friendly Wheels</strong></h2>
+						<h2 className="navbar-text ms-3 mt-2 mb-2 display-4 text-center"><strong>Friendly Wheels</strong></h2>
 					</div>
 				</div>
 				{token ?
 					<>
-						<div className="d-flex align-items-center">
-							<div className="btn-group me-5">
+						<div className="d-flex">
+							<div className="btn-group me-5 text-dark align-items-center mx-0 fs-4">
 								<button className="btn-lg btn-light">Añadir vehículo</button>
 							</div>
-							<div className="btn-group me-5">
+							<div className="btn-group me-5 d-flex justify-content-end">
 								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
 									Favoritos
 									<span className="px-1 text-dark fs-4" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>

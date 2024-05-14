@@ -1,6 +1,6 @@
 .navbar {
     background-color:  #a9ce68;
-    height: 150px;
+    height: 200px;
     /* background-color: rgb(140, 172, 140); */
         text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
@@ -57,7 +57,6 @@ footer {
 
 .propiedadVehiculo {
     margin-right: 80px;
-    margin-left: 80px;
 }
 
 .corazon:hover i {
