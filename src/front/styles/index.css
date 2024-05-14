@@ -39,3 +39,7 @@ footer {
 .corazon:hover i {
     color:black !important;
 }
+
+.imgCarousel {
+    width: 80%;
+}
