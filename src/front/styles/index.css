@@ -8,7 +8,6 @@
 .logo {
     width: 80px;
     margin-left: 20px;
-    /* margin-left: 100px; */
 }
 
 .contactForm {
@@ -30,22 +29,11 @@
 } 
 
 footer {
-    /* margin-top: auto; */
     background: #a9ce68 !important;
-    /* flex-shrink: 0; */
 }
-
-/* .cardvehicles {
-    margin:10px;
-    padding: 10px;
-} */
 
 .botonAlquilar {
-    background-color:  #a9ce68;
-}
-
-.propiedadVehiculo {
-    margin-right: 80px;
+    background-color: #a9ce68;
 }
 
 .corazon:hover i {
