@@ -12,6 +12,7 @@ import { Navbar } from "./component/Navbar.jsx";
 import { Footer } from "./component/Footer.jsx";
 import { FormUser } from "./pages/FormUser.jsx";
 import { LogIn } from "./component/LogIn.jsx";
+import { CoursesContainer } from "./component/CoursesContainer.jsx";
 
 //create your first component
 const Layout = () => {
@@ -34,6 +35,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
+                    <CoursesContainer />
                     <Footer />
                     
                 </ScrollToTop>
