@@ -1,3 +1,5 @@
+
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -13,6 +15,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method:"POST",
 						body:JSON.stringify({
 							mail:mail,
+							password:password
+						}),
+						headers:{"Content-Type":"application/json"}
+					})
+					const data=await response.json()
+					console.log(data)
+				} catch (error) {
+					console.error(error)
+				}  
+			},
+			loginUser: async (email, password) => {
+				
+				try {
+					const response=await fetch(process.env.BACKEND_URL+"api/token",{
+						method:"POST",
+						body:JSON.stringify({
+							email:email,
 							password:password
 						}),
 						headers:{"Content-Type":"application/json"}
