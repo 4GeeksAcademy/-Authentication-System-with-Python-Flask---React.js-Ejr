@@ -32,29 +32,27 @@ export const Details = () => {
     return (
         <>
             <div className="container justify-content-center">
-                <div id="carouselExample" className="carousel slide">
-                    <div className="carousel-inner">
-                        <div className="carousel-item">
-                            <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" className="d-block w-100 text-center" alt="..." />
+                <div id="carouselExample" class="carousel slide mt-5 align-items-center">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" class="d-block w-100" alt="..."/>
                         </div>
-                        <div className="carousel-item active">
-                            <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=road-car-vehicle-170811.jpg&fm=jpg" className="d-block w-100" alt="..." />
+                        <div class="carousel-item">
+                            <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=road-car-vehicle-170811.jpg&fm=jpg" class="d-block w-100" alt="..."/>
                         </div>
-                        <div className="carousel-item active">
-                            <img src="https://techservicecenter.nl/wp-content/uploads/2022/11/Hoog-olieverbruik-Audi-A5.jpg" className="d-block w-100" alt="..." />
+                        <div class="carousel-item">
+                            <img src="https://techservicecenter.nl/wp-content/uploads/2022/11/Hoog-olieverbruik-Audi-A5.jpg" class="d-block w-100" alt="..."/>
                         </div>
                     </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
                     </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
                     </button>
-                </div>
-            </div>
-            <>
+                </div>       
                 <div className="container justify-content-center">
                     <div className="principal mb-5 mx-3 me-3 mt-5 border-top border-bottom">
                         <div className="d-flex mt-3 rounded-end justify-content-between">
@@ -112,7 +110,7 @@ export const Details = () => {
                         <ModalAlquilar />
                     </div>
                 </div>
-            </>
+            </div>
         </>
     );
 };
