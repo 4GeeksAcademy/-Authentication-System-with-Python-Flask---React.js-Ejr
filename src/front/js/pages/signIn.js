@@ -12,11 +12,15 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar'; // Import Snackbar
-import MuiAlert from '@mui/material/Alert'; // Import Alert for Snackbar
+import Snackbar from '@mui/material/Snackbar'; 
+import MuiAlert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert';  
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 function SignIn() {
   const [open, setOpen] = React.useState(false); // State to control Snackbar open/close
+  const [showBasicCard, setShowBasicCard] = React.useState(false); // State to control Basic Card visibility
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,6 +42,16 @@ function SignIn() {
       return;
     }
     setOpen(false);
+  };
+
+  // Show Basic Card
+  const handleForgotPasswordClick = () => {
+    setShowBasicCard(true);
+  };
+
+  // Hide Basic Card
+  const handleBasicCardClose = () => {
+    setShowBasicCard(false);
   };
 
   return (
@@ -100,20 +114,37 @@ function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to="/forgotpassword" variant="body2">
+                <Button onClick={handleForgotPasswordClick} variant="text" color="primary">
                   Forgot password?
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>
         </Box>
       </Container>
       {/*  incorrect password message */}
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          Incorrect password. Please try again.
-        </MuiAlert>
-      </Snackbar>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} sx={{ backgroundColor: '#f00', opacity: 1 }}>
+  <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+    Incorrect password. Please try again.
+  </MuiAlert>
+</Snackbar>
+     {/* Basic Card */}
+{showBasicCard && (
+  <Card sx={{bgcolor: 'white', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: 'none', border: '1px solid #000' }}>
+    
+    <CardContent>
+      <Typography variant="h5" component="div">
+        Incorrect Password
+      </Typography>
+      <MuiAlert severity="error" >Please try again</MuiAlert>
+
+      <Button onClick={handleBasicCardClose} variant="contained">
+        Close
+      </Button>
+    </CardContent>
+  </Card>
+)}
+
     </ThemeProvider>
   );
 }
