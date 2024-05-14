@@ -358,14 +358,14 @@ let coffee = {
 
 
 
-function RegionCard({region, children}) {
+function RegionCard({region, children, image}) {
     return (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, border: '3px solid #2DB734', margin: '10px' }}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="140"
-            image="https://fastly.picsum.photos/id/63/5000/2813.jpg?hmac=HvaeSK6WT-G9bYF_CyB2m1ARQirL8UMnygdU9W6PDvM"
+            image={image}
             alt={region} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
