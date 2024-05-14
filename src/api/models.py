@@ -47,7 +47,7 @@ class User(db.Model):
     user_data = relationship("User_data", backref = "User", lazy = True)
     
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.id}>'
 
     def serialize(self):
         return {
@@ -67,6 +67,7 @@ class User_data(db.Model):
     user_objetives = Column(String(250), nullable=True)
     trainer_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id))
     exercises = relationship("Exercise", backref = "User_data", lazy = True)
+    
 
     def __repr__(self):
         return f'<User_data {self.id}>'

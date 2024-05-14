@@ -36,7 +36,7 @@ export const SignUp = () => {
     setEmail("");
     setConfirmPassword("");
     handleClose();
-    navigate("/user/form");
+    navigate("/user_form");
   };
 
   return (

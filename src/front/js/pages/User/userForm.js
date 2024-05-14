@@ -2,47 +2,52 @@ import React, { useState, useEffect, useContext } from "react";
 import "./../../../styles/User/userForm.css";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const userForm = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        name: '',
-        surnames: '',
-        age: '',
-        height: '',
-        weight: '',
-        illness: '',
-        objetives: ''
+        user_name: '',
+        //age: '',
+        user_height: '',
+        user_weight: '',
+        user_illness: '',
+        user_objetives: ''
     });
+console.log("store", store.token)
+console.log("local", sessionStorage.getItem("token"))
 
     const handleChange = (e) => {
-        const { name, value } = e.target.value;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
     };
-    const handleSubmit = () => {
+
+
+    const  handleSubmit = async () => {
         console.log(formData)
+        console.log(store.token)
         try {
 
             if (
-                formData.name === '' ||
-                formData.age === '' ||
-                formData.height === '' ||
-                formData.weight === '' ||
-                formData.illness === ''
+                formData.user_name === '' ||
+                //formData.user_age === '' ||
+                formData.user_height === '' ||
+                formData.user_weight === '' ||
+                formData.user_illness === ''
             ) {
                 alert('Por favor, complete todos los campos.');
                 return;
             }
 
-            const response = fetch(`${process.env.BACKEND_URL}/user_data`, {
+            const response = await fetch(`${process.env.BACKEND_URL}/user_data`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": store.token
+                    Authorization: "Bearer " + store.token
                 },
                 body: JSON.stringify(formData),
             });
@@ -67,8 +72,8 @@ const userForm = () => {
                     Name and Surnames:
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="user_name"
+                        value={formData.user_name}
                         onChange={handleChange}
                         required
                     />
@@ -78,9 +83,9 @@ const userForm = () => {
                     Age
                     <input
                         type="number"
-                        name="age"
-                        value={formData.age}
-                        onChange={handleChange}
+                        name="user_age"
+                        //value={formData.user_age}
+                        //onChange={handleChange}
                         min="16"
                         required
                     />
@@ -90,8 +95,8 @@ const userForm = () => {
                     Height (cm):
                     <input
                         type="number"
-                        name="height"
-                        value={formData.height}
+                        name="user_height"
+                        value={formData.user_height}
                         onChange={handleChange}
                         placeholder="000"
                         required
@@ -101,9 +106,9 @@ const userForm = () => {
                 <label>
                     Weight (kg):
                     <input
-                        type="text"
-                        name="weight"
-                        value={formData.weight}
+                        type="number"
+                        name="user_weight"
+                        value={formData.user_weight}
                         onChange={handleChange}
                         pattern="\d+(\.\d{1,2})?"
                         placeholder="00.00"
@@ -115,8 +120,8 @@ const userForm = () => {
                     Illness:
                     <input
                         type="text"
-                        name="illness"
-                        value={formData.illness}
+                        name="user_illness"
+                        value={formData.user_illness}
                         onChange={handleChange}
                         required
                     />
@@ -126,8 +131,8 @@ const userForm = () => {
                     Objetives:
                     <input
                         type="text"
-                        name="objetives"
-                        value={formData.objetives}
+                        name="user_objetives"
+                        value={formData.user_objetives}
                         onChange={handleChange}
                     />
                 </label>

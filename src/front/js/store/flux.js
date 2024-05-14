@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
+					setStore({ token: data.access_token, user_id: decoded.sub, role: decoded.role });
 				}
 			},
 
@@ -52,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
+					setStore({ token: data.access_token, user_id: decoded.sub, role: decoded.role });
 				}
 			},
 			fetchData: async (url, options) => {
