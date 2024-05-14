@@ -3,4 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+
+  .dev {
+    outline: 1px dashed #FF00FF10;
+    &:hover { outline: 1px dashed #FF00FF }
+  }
+
 }
