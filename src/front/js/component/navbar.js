@@ -16,7 +16,6 @@ export const Navbar = () => {
 
 	useEffect(() => {
 		if (store.vehicles.length !== 0) {
-			console.log(actions);
 			actions.favorites();
 		}
 	}, [store.vehicles])
