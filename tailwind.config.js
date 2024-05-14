@@ -1,5 +1,17 @@
+const 
+  tw_sopze = require('./tailwind.sopze.js'),
+  tw_andrei = require('./tailwind.andrei.js'),
+  tw_miguel = require('./tailwind.miguel.js')
+
+function merge(a, b) {
+  return Object.entries(b).reduce((o, [k, v]) => {
+      o[k] = v && typeof v === 'object' ? merge(o[k] = o[k] || (Array.isArray(v) ? [] : {}), v) : v;
+      return o;
+  }, a);
+}
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = merge({
   content: [],
   presets: [],
   darkMode: ['selector', '[data-mode="dk"]'],
@@ -1060,5 +1072,6 @@ module.exports = {
     },
   },
   plugins: [],
-}
-
+},
+  merge(merge(tw_miguel, tw_andrei), tw_sopze)
+)
