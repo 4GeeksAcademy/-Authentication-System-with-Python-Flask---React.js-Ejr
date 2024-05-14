@@ -2,6 +2,7 @@
 Este módulo se encarga de iniciar el servidor API, cargar la base de datos y agregar los puntos finales.
 """
 
+
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect, url_for, render_template  # Importación de Flask y funciones relacionadas
 from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Transaction, TransactionDetail, UserMembershipHistory  # Importación de los modelos de la base de datos
 from api.utils import generate_sitemap, APIException  # Importación de funciones de utilidad y excepciones personalizadas
@@ -982,3 +983,4 @@ def purchase_membership():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': 'Purchase failed: ' + str(e)}), 500
+

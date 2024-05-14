@@ -26,6 +26,7 @@ from flask_mail import Mail, Message
 
 # Configurar el entorno de desarrollo o producción y el directorio para archivos estáticos
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"  # Configurar el entorno según la variable de entorno FLASK_DEBUG
+
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')  # Establecer la ruta del directorio de archivos estáticos
 
@@ -36,6 +37,7 @@ app.url_map.strict_slashes = False  # Configurar para permitir rutas sin barra a
 # Inicializar JWTManager y configurar la clave secreta
 jwt = JWTManager(app)  # Inicializar JWTManager con la aplicación Flask
 app.config["JWT_SECRET_KEY"] = "your-secret-key"  # Definir la clave secreta para JWT (debes cambiarla por una clave segura)
+
 
 
 
