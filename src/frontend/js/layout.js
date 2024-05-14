@@ -7,6 +7,8 @@ import { Home } from "./pages/home.jsx"
 import { Navbar } from "./component/navbar.jsx"
 import { Footer } from "./component/footer.jsx"
 
+import Board from "./pages/board.jsx"
+
 import appContext from "./store/appContext.jsx"
 
 const Layout = () => {
@@ -18,7 +20,10 @@ const Layout = () => {
             <BrowserRouter>
                 <Navbar />
                 <Routes>
-                    <Route element={<Home />} path="/" />
+                    <Route path="/" element={<Home />} />
+
+                    <Route path="/test" element={<Board />} />
+
                     <Route element={<h1>Not found!</h1>} />
                 </Routes>
                 <Footer />

@@ -17,7 +17,7 @@ app.url_map.strict_slashes = False
 print("Serving static files from: " + static_file_dir)
 
 # config
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:////database.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["JWT_SECRET_KEY"]= "una_paja_a_la_crema_es_una_buena_paja"
 app.config["JWT_TOKEN_LOCATION"]= ('headers')
