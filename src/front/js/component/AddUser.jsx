@@ -3,10 +3,12 @@ import { Context } from '../store/appContext';
 
 export const AddUser = () => {
     const { store, actions } = useContext(Context)
-
+    const [selectedRole, setSelectedRole] = useState(null);
+    const [isUsers, setIsUsers] = useState(true)
     const [userData, setUserData] = useState({
         email: '',
         password: '',
+        isUser: isUsers,
         name: '',
         lastName: '',
         username: '',
@@ -16,7 +18,7 @@ export const AddUser = () => {
         gender: '',
     });
 
-    const [selectedRole, setSelectedRole] = useState(null);
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -49,7 +51,7 @@ export const AddUser = () => {
             const userRole = {
                 role: selectedRole
             }
-            actions.createUser(newUser, userRole)
+            actions.createUser(userData, selectedRole)
         } else {
             alert('You must complete all fields')
         }
@@ -173,10 +175,10 @@ export const AddUser = () => {
                     value={userData.password}
                     required />
             </div>
-            <button 
-            type="submit" 
-            className="btn btn-primary"
-            onClick={handleSubmit}>Create User</button>
+            <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleSubmit}>Create User</button>
         </form>
     );
 };
