@@ -23,18 +23,20 @@ import React,{useContext, useState} from "react";
     };
     return (
         <div className="contactForm">
-            <h1 className="title">Login</h1>
+            <h1 className="title text-center">Login</h1>
             <form onSubmit={handleSubmit}>
-                 <div className="mb-3">
-                     <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
-                     <input type="email" className="form-control" id="exampleInputEmail1" placeholder="enter your email" onChange={(e) => setInputEmail(e.target.value)} />
-                 </div>
-                 <div className="mb-3">
-                     <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
-                     <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
-                 </div>
-                 {loginError ? <div className="text-danger mb-3">Wrong email or password</div> : null}
-                 <button type="submit" className="login btn btn-dark">Login</button>
+                <div className="mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="enter your email" onChange={(e) => setInputEmail(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
+                    <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
+                </div>
+                <div className="d-flex justify-content-center">
+                    {loginError ? <div className="text-danger mb-3">Wrong email or password</div> : null}
+                    <button type="submit" className="login btn-lg btn-dark">Login</button>
+                </div>
             </form>
         </div>
     )
