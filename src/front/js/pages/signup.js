@@ -24,7 +24,7 @@ export const Signup = () => {
     };
     return (
             <div className="contactForm">
-                <h1 className="title">Signup</h1>
+                <h1 className="title text-center">Signup</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
@@ -34,7 +34,9 @@ export const Signup = () => {
                         <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                     </div>
-                    <button type="submit" className="login btn btn-dark"data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
+                    <div className="d-flex justify-content-center">
+                        <button type="submit" className="login btn-lg btn-dark"data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
+                    </div>
                 </form>
             </div>
     )

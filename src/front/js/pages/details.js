@@ -31,7 +31,7 @@ export const Details = () => {
 
     return (
         <>
-            <div className="container justify-content-center h-25">
+            <div className="container justify-content-center">
                 <div id="carouselExample" class="carousel slide mt-5 align-items-center">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
