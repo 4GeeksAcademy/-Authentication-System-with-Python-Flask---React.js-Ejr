@@ -31,26 +31,26 @@ export const Details = () => {
 
     return (
         <>
-            <div className="container justify-content-center">
+            <div className="container">
                 <div id="carouselExample" class="carousel slide mt-5 align-items-center">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" class="d-block w-100" alt="..."/>
+                        <div className="carousel-item active">
+                            <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" className="imgCarousel d-block" alt="..."/>
                         </div>
-                        <div class="carousel-item">
-                            <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=road-car-vehicle-170811.jpg&fm=jpg" class="d-block w-100" alt="..."/>
+                        <div className="carousel-item">
+                            <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=road-car-vehicle-170811.jpg&fm=jpg" className="imgCarousel d-block" alt="..."/>
                         </div>
-                        <div class="carousel-item">
-                            <img src="https://techservicecenter.nl/wp-content/uploads/2022/11/Hoog-olieverbruik-Audi-A5.jpg" class="d-block w-100" alt="..."/>
+                        <div className="carousel-item">
+                            <img src="https://techservicecenter.nl/wp-content/uploads/2022/11/Hoog-olieverbruik-Audi-A5.jpg" className="imgCarousel d-block" alt="..."/>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                    <button className="carousel-control-next w-75" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Next</span>
                     </button>
                 </div>       
                 <div className="container justify-content-center">
