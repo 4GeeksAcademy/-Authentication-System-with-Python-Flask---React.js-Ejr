@@ -72,3 +72,22 @@ def create_signup_user():
 
     except Exception as err:
         return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
+@api.route('/login/user', methods=['POST'])
+def login_user():
+    try:
+        email = request.json.get('email')
+        password = request.json.get('password')
+
+        # Buscamos el usuario en la base de datos por su correo electrónico
+        user = User.query.filter_by(email=email).first()
+
+        # Verificamos si el usuario existe y si la contraseña es correcta
+        if not user or not check_password_hash(user.password, password):
+            return jsonify({"Error": "Invalid username or password"}), 401
+
+        # Generamos un token de acceso para el usuario autenticado
+        access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=1))
+        return jsonify(access_token=access_token), 200
+
+    except Exception as err:
+        return jsonify({"Error": "Error in User Login:" + str(err)}), 500
