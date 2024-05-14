@@ -237,3 +237,57 @@ def get_token_login_teacher():
             return {"error":"Clave incorrecta"}, 400
     except Exception as e:
         return jsonify({"error": "Error in user teacher" + str(e)}), 500
+
+
+@api.route('/private/user')
+@jwt_required() #Decorador para requerir autenticacion con jwt
+def show_user():
+    current_user_id = get_jwt_identity() #obtiene la id del user del token
+    if current_user_id:
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email
+            }
+            user_list.append(user_dict)
+        return jsonify(user_list), 200
+    else:
+        return jsonify({"Error": "Token invalid or not exits"}), 401
+        
+
+@api.route('/private/teacher')
+@jwt_required() #Decorador para requerir autenticacion con jwt
+def show_teacher():
+    current_user_id = get_jwt_identity() #obtiene la id del user del token
+    if current_user_id:
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email
+            }
+            user_list.append(user_dict)
+        return jsonify(user_list), 200
+    else:
+        return jsonify({"Error": "Token invalid or not exits"}), 401
+
+
+@api.route('/private/manager')
+@jwt_required() #Decorador para requerir autenticacion con jwt
+def show_manager():
+    current_user_id = get_jwt_identity() #obtiene la id del user del token
+    if current_user_id:
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email
+            }
+            user_list.append(user_dict)
+        return jsonify(user_list), 200
+    else:
+        return jsonify({"Error": "Token invalid or not exits"}), 401
