@@ -9,7 +9,7 @@
 	"scripts": {
 		"start": "webpack-dev-server --config webpack.dev.js --port 3000",
 		"build": "webpack --config webpack.prod.js",
-		"tailwind": "npx tailwindcss -i ./src/frontend/styles/_builder.css -o ./src/frontend/styles/tailwind.css"
+		"tailwind": "python scripts.py --tailwind-cleaner"
 	},
 	"author": {
 		"name": "Sergio del Pino",
