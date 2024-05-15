@@ -8,16 +8,15 @@ import React,{useContext, useState} from "react";
     const {actions} = useContext(Context)
     const [loginError,setLoginError] = useState(false);
     const [inputEmail, setInputEmail]=useState("")
-    // const [inputName, setInputName]=useState("")
     const [inputPassword, setInputPassword]=useState("")
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let isLogged = await actions.login(inputEmail, inputPassword) //inputName)
+        let isLogged = await actions.login(inputEmail, inputPassword)
         if (isLogged){
             console.log('Login successful');
-            navigate("/");    // url del home aqui con navigate
+            navigate("/");
         } else {
             setLoginError(true);
             console.log('Login failed');
@@ -31,10 +30,6 @@ import React,{useContext, useState} from "react";
                      <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
                      <input type="email" className="form-control" id="exampleInputEmail1" placeholder="enter your email" onChange={(e) => setInputEmail(e.target.value)} />
                  </div>
-                 {/* <div className="mb-3">
-                     <label htmlFor="exampleInputName" className="form-label" style={{ color: 'orange' }}>Name</label>
-                     <input type="text" className="form-control" id="exampleInputName" placeholder="enter your name" name='name' value={inputName} onChange={(e) => setInputName(e.target.value)} />
-                 </div> */}
                  <div className="mb-3">
                      <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
                      <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
