@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Private from '../component/private';
 
 const PrivateView = () => {
     // Aquí puedes agregar lógica adicional si es necesario para la vista privada
@@ -8,6 +9,7 @@ const PrivateView = () => {
     return (
         <div>
             <h1>VISTA PRIVADA, HAS INICIADO SESIÓN</h1>
+            <Private />
             {/* Agregar contenido adicional para la vista privada aquí */}
         </div>
     );
