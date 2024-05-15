@@ -623,7 +623,7 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
         db.session.add(new_user)  # Agrega el nuevo usuario a la base de datos.
         db.session.commit()  # Guarda los cambios en la base de datos.
 
-        return jsonify({'message': 'Please confirm your email address to complete the registration'}), 201  # Devuelve un mensaje solicitando la confirmación del email.
+        return jsonify({'message': 'Please confirm your email address to complete the registration', 'create': True}), 201  # Devuelve un mensaje solicitando la confirmación del email.
 
     except Exception as e:  # Captura cualquier excepción que ocurra durante el proceso.
         return jsonify({'error': 'Error in user creation: ' + str(e)}), 500  # Devuelve un mensaje de error si ocurre un problema.

@@ -22,7 +22,7 @@ import Benefitis from "./pages/Benefitis.jsx"
 import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del componente Navbar
 import LoginUserV2 from "./component/LoginUserV2.jsx"; // Importación del componente Navbar
 import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del componente Navbar
-
+import Register from "./component/Register.jsx"; 
 
 
 
@@ -46,6 +46,7 @@ const Layout = () => {
                         <Route element={<Plans />} path="/Plans" />
                         <Route element={<Benefitis />} path="/Benefitis" />
                         <Route element={<LoginUserV2 />} path="/LoginUserV2" />
+                        <Route element={<Register />} path="/Register" />
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
                         <Route element={<h1>Not found!</h1>} />
 

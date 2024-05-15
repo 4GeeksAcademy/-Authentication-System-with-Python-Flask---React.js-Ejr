@@ -65,7 +65,7 @@ const LoginUserV2 = () => {
                 <div className="rememberMe">
                     <input type="checkbox" />
                     <span>Recuérdame</span>
-                    <p>¿Es tu primera vez aquí? <Link to="/signup">Regístrate ahora.</Link></p>
+                    <p>¿Es tu primera vez aquí? <Link to="/Register">Regístrate ahora.</Link></p>
                 </div>
             </form>
         </div>

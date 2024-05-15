@@ -6,7 +6,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isAuthenticated: null,
 			uploadedUserData:[],
 			isAuthenticatedMessage: null,
-			loginError:[]
+			loginError:[],
+			dataUser: { // Objeto que almacena los datos del usuario
+				email: "", // Correo electrónico del usuario (inicializado como cadena vacía)
+				name: "", // Nombre del usuario (inicializado como cadena vacía)
+				last_name: "", // Apellido del usuario (inicializado como cadena vacía)
+				username: "", // Nombre de usuario del usuario (inicializado como cadena vacía)
+				password: "", // Contraseña del usuario (inicializada como cadena vacía)
+				security_questions: [ // Array que almacena las preguntas y respuestas de seguridad del usuario
+					{ question: "", answer: "" }, // Pregunta y respuesta de seguridad 1 (ambos inicializados como cadena vacía)
+					{ question: "", answer: "" } // Pregunta y respuesta de seguridad 2 (ambos inicializados como cadena vacía)
+				]
+			  },
+			  creationState: null,
+			  createError:[],
+
 
 			
 		},
@@ -103,9 +117,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					// console.log(store); // Se imprime el estado actualizado en la consola (para propósitos de depuración)
 			  },
-		
+			
+			  createUser: async (dataUser) => {
+				try {
+					let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/singup/user", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(dataUser)
+					});
+					let data = await response.json();
+					if(response.ok){
+						setStore({ ...getStore(), creationState: { create: true, message: data.message } });
+						return true; // Indica que la creación fue exitosa
 
-
+					} else {
+						setStore({ ...getStore(), creationState: { create: false, error: data.error } });
+						return false; // Indica que hubo un error
+					}
+				} catch (error) {
+					// console.error("Registration Error:", error);
+					setStore({ ...getStore(), creationState: { create: false, error: "Registration failed due to an exception." } });
+					return false;
+				}
+			},
+			
+			
 
 
 

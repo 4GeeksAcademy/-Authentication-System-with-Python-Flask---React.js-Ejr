@@ -1,115 +1,103 @@
-import React from "react";
 
+import React, { useState, useEffect, useContext } from "react"; // Importación de React y algunos hooks
+import styles from "./Register.module.css"; // Importación de estilos CSS
+import { Link } from "react-router-dom"; // Importación de Link para la navegación
+import { Context } from "../store/appContext"; // Importación del contexto
+import { useNavigate } from "react-router-dom"; // Importación de useNavigate para la navegación programática
 
 const Register = () => {
+    const { store, actions } = useContext(Context); // Obtención del estado global, las acciones y la función setStore desde el contexto
+  const { creationState } = store; // Obtención del estado de inicio de sesión y los datos recuperados del usuario desde el estado global
+    const navigate = useNavigate();
+
+    const [userDetails, setUserDetails] = useState({
+        email: "",
+        username: "",
+        password: "",
+        name: "",
+        last_name: "",
+        role:"athlete",
+        security_questions: [
+            { question: "", answer: "" },
+            { question: "", answer: "" }
+        ]
+    });
+    // console.log(userDetails)
+    const handleChange = (e) => {
+        const { name, value } = e.target; // Extraemos name y value directamente del evento
+    
+        // Verificamos si estamos actualizando preguntas de seguridad
+        if (name.startsWith("security_question_") || name.startsWith("security_answer_")) {
+            // Extraemos el índice y el tipo desde el nombre del campo
+            const [type, index] = name.split("_").slice(-2);
+            const newSecurityQuestions = [...userDetails.security_questions];
+            newSecurityQuestions[index][type] = value;
+    
+            setUserDetails({ ...userDetails, security_questions: newSecurityQuestions });
+        } else {
+            // Actualizamos el estado para campos normales
+            setUserDetails({ ...userDetails, [name]: value });
+        }
+    };
+    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const result = await actions.createUser(userDetails);
+        if (result) {
+            alert(store.creationState.message);
+            navigate("/LoginUserV2");
+        } else {
+            alert(store.creationState.error);
+        }
+    };
+    
+
     return (
-        <div class="container">
-            <form>
+        <div className={styles.container}>
+            <form onSubmit={handleSubmit}>
                 <h1>REGISTER</h1>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="text"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">First Name</label>
+                <div className={styles.inputGroup}>
+                    <input type="text" name="name" value={userDetails.name} onChange={handleChange} required />
+                    <label>First Name</label>
                 </div>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="text"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">Last Name</label>
+                <div className={styles.inputGroup}>
+                    <input type="text" name="last_name" value={userDetails.last_name} onChange={handleChange} required />
+                    <label>Last Name</label>
                 </div>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="email"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">Email</label>
+                <div className={styles.inputGroup}>
+                    <input type="email" name="email" value={userDetails.email} onChange={handleChange} required />
+                    <label>Email</label>
                 </div>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="text"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">Username</label>
+                <div className={styles.inputGroup}>
+                    <input type="text" name="username" value={userDetails.username} onChange={handleChange} required />
+                    <label>Username</label>
                 </div>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="password"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">Password</label>
+                <div className={styles.inputGroup}>
+                    <input type="password" name="password" value={userDetails.password} onChange={handleChange} required />
+                    <label>Password</label>
                 </div>
-                <div class="input-group">
-                    <select name="security-question" class="security-question" required>
-                        <option value="" disabled selected></option>
-                        <option value="1">What is your mother's maiden name?</option>
-                        <option value="2">What is the name of your first pet?</option>
-                        <option value="3">
-                            What is the name of the city where you were born?
-                        </option>
-                    </select>
-                    <label class="security-label">Security Question 1</label>
-                </div>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="password"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">Answer 1</label>
-                </div>
-                <div class="input-group">
-                    <select name="security-question" class="security-question" required>
-                        <option value="" disabled selected></option>
-                        <option value="1">What is your mother's name?</option>
-                        <option value="2">What is the name of your first pet?</option>
-                        <option value="3">
-                            What is the name of the city where you were born?
-                        </option>
-                    </select>
-                    <label class="security-label">Security Question 2</label>
-                </div>
-                <div class="input-group">
-                    <input
-                        required=""
-                        type="password"
-                        name="text"
-                        autocomplete="off"
-                        class="input"
-                    />
-                    <label class="user-label">Answer 2</label>
-                </div>
-                <div class="button">
-                    <button type="submit" class="button-Save">Sign up</button>
-                </div>
-                <p className="link">
-                    Have an account?
-                    <a href=".src\front\js\views\Login.jsx" class="login-link"
-                    >Login Here</a
-                    >
+                {/* Security Questions Inputs */}
+                {userDetails.security_questions.map((sq, index) => (
+                    <div key={index} className={styles.inputGroup}>
+                        <select name={`security_question_${index}`} value={sq.question} onChange={handleChange} required className={styles.securityQuestion}>
+                            <option value="" disabled selected>Choose a question</option>
+                            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                            <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                            <option value="What is the name of the city where you were born?">What is the name of the city where you were born?</option>
+                        </select>
+                        <input type="text" name={`security_answer_${index}`} value={sq.answer} onChange={handleChange} required />
+                        <label>{`Answer ${index + 1}`}</label>
+                    </div>
+                ))}
+
+                <button type="submit" className={styles.buttonSave}>Sign up</button>
+                <p>
+                    Have an account? <Link to="/login">Login Here</Link>
                 </p>
             </form>
         </div>
-    )
+    );
 };
 
 export default Register;
