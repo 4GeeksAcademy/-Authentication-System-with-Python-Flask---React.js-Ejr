@@ -82,7 +82,7 @@ def create_signup_teacher():
 
     
         # Check if any required field is None or empty
-        if email is None or password is None or is_teacher is None or name is None or last_name is None or username is None or number_document is None or phone is None or age is None or gender is None or certificate_teacher is None or user_id is None:
+        if email is None or password is None or is_teacher is None or name is None or last_name is None or username is None or number_document is None or phone is None or age is None or gender is None:
             return jsonify({"Error": "email, password, is_teacher, name, last_name, username, number_document, phone, age, gender, certificate_teacher, user_id are required"}), 400
         
         existing_teacher = Teacher.query.filter_by(email=email).first()
@@ -129,7 +129,7 @@ def create_signup_manager():
         if len(email) > 80:
             return jsonify({"Error": "Email too long"}), 400
 
-        if not email or not password or not is_manager or not name or not last_name or not phone or not user_id or not teacher_id:
+        if not email or not password or not is_manager or not name or not last_name or not phone:
             return jsonify({"msg": "email, password, is_manager, name, last_name, phone, user_id and teacher_id are required"})
         
         existing_manager = Manager.query.filter_by(email=email).first()

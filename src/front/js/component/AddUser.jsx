@@ -1,9 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 export const AddUser = () => {
-    const { action } = useContext(Context);
-
+    const { actions } = useContext(Context);
+    const [selectedRole, setSelectedRole] = useState(null)
+    const [isUsers, setIsUsers] = useState(true)
+    const [certificate, setCertificate] = useState()
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({
         email: '',
         password: '',
@@ -13,15 +17,40 @@ export const AddUser = () => {
         numberDocument: '',
         phone: '',
         age: '',
-        gender: '',
+        gender: ''
     });
-
-    const [selectedRole, setSelectedRole] = useState(null);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        if (name === 'isUser') {
-            setSelectedRole(value);
+        if (name === 'isPeople') {
+            setSelectedRole(value)
+            let updatedData = {}
+            if (value === 'user') {
+                updatedData = { isUser: isUsers }
+                setUserData(prevState => ({
+                    ...prevState,
+                    ...updatedData,
+                    isTeacher: undefined,
+                    isManager: undefined
+                }));
+            } else if (value === 'teacher') {
+                updatedData = { isTeacher: isUsers }
+                setUserData(prevState => ({
+                    ...prevState,
+                    ...updatedData,
+                    isUser: undefined,
+                    isManager: undefined,
+                    certificateTeacher: certificate 
+                }));
+            } else if (value === 'manager') {
+                updatedData = { isManager: isUsers }
+                setUserData(prevState => ({
+                    ...prevState,
+                    ...updatedData,
+                    isUser: undefined,
+                    isTeacher: undefined
+                }));
+            }
         } else {
             setUserData(prevState => ({
                 ...prevState,
@@ -30,103 +59,150 @@ export const AddUser = () => {
         }
     };
 
-    const handleSubmit = (event) => {
+    async function handleSubmit(event){
         event.preventDefault();
-        if (
-            userData.email !== '' &&
-            userData.password !== '' &&
-            userData.name !== '' &&
-            userData.lastName !== '' &&
-            userData.username !== '' &&
-            userData.numberDocument !== '' &&
-            userData.phone !== '' &&
-            userData.age !== '' &&
-            selectedRole
-        ) {
-            const newUser = {
-                ...userData
-            };
-            const userRole = {
-                role: selectedRole
-            };
-            console.log('New User:', newUser);
-            console.log('Selected Role:', userRole);
-            action.createUser(newUser, userRole); // Aquí corregimos de actions.createUser a action.createUser
-        } else {
-            alert('You must complete all fields');
-        }
+        await actions.createUser(userData, selectedRole)
+        navigate('/LogIn')
     };
+
     
-    console.log(userData);
 
     return (
         <form className="container mx-auto mt-5 row g-3 needs-validation" onSubmit={handleSubmit} noValidate>
             <div className="text-center">
-                <h4>Personal information</h4>
+                <h4>Record your Data</h4>
             </div>
-            <div className="col-md-4">
+
+            <div className='col-md-4'>
                 <label className="form-label">Name</label>
-                <input type="text" className="form-control" aria-describedby="inputGroupPrepend" name='name' onChange={handleChange} value={userData.name} required />
-                <div className="valid-feedback">Looks good!</div>
+                <input
+                    type="text"
+                    className="form-control" aria-describedby="inputGroupPrepend"
+                    name='name'
+                    onChange={handleChange}
+                    value={userData.name}
+                    required />
             </div>
-            <div className="col-md-4">
+
+            <div className='col-md-4'>
                 <label className="form-label">Last name</label>
-                <input type="text" className="form-control" aria-describedby="inputGroupPrepend" name='lastName' onChange={handleChange} value={userData.lastName} required />
-                <div className="valid-feedback">Looks good!</div>
+                <input
+                    type="text"
+                    className="form-control" aria-describedby="inputGroupPrepend"
+                    name='lastName'
+                    onChange={handleChange}
+                    value={userData.lastName}
+                    required />
             </div>
-            <div className="col-md-2">
+
+            <div className={`col-md-3 ${(selectedRole === 'teacher' || selectedRole === 'user') ? 'd-block' : 'd-none'}`}>
                 <label className="form-label">Username</label>
                 <div className="input-group has-validation">
-                    <span className="input-group-text" id="inputGroupPrepend">@</span>
-                    <input type="text" className="form-control" aria-describedby="inputGroupPrepend" name='username' onChange={handleChange} value={userData.username} required />
-                    <div className="invalid-feedback">Please choose a username.</div>
+                    <input
+                        type="text"
+                        className="form-control" aria-describedby="inputGroupPrepend"
+                        name='username'
+                        onChange={handleChange}
+                        value={userData.username}
+                        required />
                 </div>
             </div>
-            <div className="col-md-2">
+            
+            <div className='col-md-3'>
                 <label className="form-label">Role</label>
                 <div className="input-group has-validation">
-                    <select className="form-select" name='isUser' onChange={handleChange} value={selectedRole} required>
+                    <select className="form-select" name='isPeople' onChange={handleChange} value={selectedRole} required>
                         <option selected disabled value="Choose">Choose</option>
-                        <option>Teacher</option>
-                        <option>Student</option>
-                        <option>Manager</option>
+                        <option value='teacher'>Teacher</option>
+                        <option value='user'>Student</option>
+                        <option value='manager'>Manager</option>
                     </select>
                 </div>
             </div>
-            <div className="col-md-3 position-relative">
+
+            <div className={`col-md-4 ${(selectedRole === 'manager') ? 'd-none' : 'd-block' }`}>
                 <label className="form-label">Number Document</label>
-                <input type="text" className="form-control" id="validationTooltip03" name='numberDocument' onChange={handleChange} value={userData.numberDocument} required />
-                <div className="invalid-tooltip">Please provide a valid number document.</div>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="validationTooltip03"
+                    name='numberDocument'
+                    onChange={handleChange}
+                    value={userData.numberDocument}
+                    required />
             </div>
-            <div className="col-md-3 position-relative">
+
+            <div className={`col-md-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block' }`}>
                 <label className="form-label">Gender</label>
                 <select className="form-select" name='gender' onChange={handleChange} value={userData.gender} required>
-                    <option selected disabled value="Choose">Choose</option>
+                    <option selected value="">--Choose--</option>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
                 </select>
                 <div className="invalid-tooltip">Please select a Gender</div>
             </div>
-            <div className="col-md-3 position-relative">
+            <div className='col-md-4'>
                 <label className="form-label">Phone</label>
-                <input type="text" className="form-control" name='phone' onChange={handleChange} value={userData.phone} required />
+                <input
+                    type="text"
+                    className="form-control"
+                    name='phone'
+                    onChange={handleChange}
+                    value={userData.phone}
+                    required />
                 <div className="invalid-tooltip">Please provide a valid Phone.</div>
             </div>
-            <div className="col-md-3 position-relative">
+
+            <div className={`col-md-1 ${(selectedRole === 'manager') ? 'd-none' : 'd-block' }`}>
                 <label className="form-label">Age</label>
-                <input type="number" className="form-control" name='age' onChange={handleChange} value={userData.age} required />
+                <input
+                    type="number"
+                    className="form-control"
+                    name='age'
+                    onChange={handleChange}
+                    value={userData.age}
+                    required />
                 <div className="invalid-tooltip">Please provide a valid Age.</div>
             </div>
-            <div className="mb-3">
+
+            <div className={`col-md-4 ${(selectedRole === 'teacher') ? 'd-block' : 'd-none' }`}>
+                <label className="form-label">Do you have a Certificate?</label>
+                <input
+                    type="number"
+                    className="form-control"
+                    name='certificateTeacher'
+                    onChange={()=>{setCertificate(e.target.value)}}
+                    value={certificate}
+                    required />
+                <div className="invalid-tooltip">Please provide a valid certificate.</div>
+            </div>
+
+
+            <div className={`col-md-4 ${(selectedRole === 'user') ? 'd-block' : '' }`}>
                 <label className="form-label">Email address</label>
-                <input type="email" className="form-control" name='email' onChange={handleChange} value={userData.email} />
+                <input
+                    type="email"
+                    className="form-control"
+                    name='email'
+                    onChange={handleChange}
+                    value={userData.email}
+                    required />
                 <div className="form-text">We'll never share your email with anyone else.</div>
             </div>
-            <div className="mb-3">
+            <div className={`col-md-4 ${(selectedRole === 'user') ? 'd-block' : '' }`}>
                 <label className="form-label">Password</label>
-                <input type="password" className="form-control" name='password' onChange={handleChange} value={userData.password} />
+                <input
+                    type="password"
+                    className="form-control"
+                    name='password'
+                    onChange={handleChange}
+                    value={userData.password}
+                    required />
             </div>
-            <button type="submit" className="btn btn-primary">Create User</button>
+            <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleSubmit}>Create User</button>
         </form>
     );
 };

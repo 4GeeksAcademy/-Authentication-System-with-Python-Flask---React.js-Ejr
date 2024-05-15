@@ -41,8 +41,8 @@ class Manager(db.Model):
     name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
     phone = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
     #Relations
     user = db.relationship('User', backref=db.backref('managers', lazy=True))
     teacher = db.relationship('Teacher', backref=db.backref('managers', lazy=True))
@@ -75,10 +75,10 @@ class Teacher(db.Model):
     phone = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
-    certificate_teacher = db.Column(db.String(500), nullable=False)
+    certificate_teacher = db.Column(db.String(500), nullable=True)
 
     #relations
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     user = db.relationship('User', backref=db.backref('teacher', lazy=True))
 
     def __repr__(self):
