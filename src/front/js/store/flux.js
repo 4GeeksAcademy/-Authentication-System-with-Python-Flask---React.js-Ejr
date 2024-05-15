@@ -37,10 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Error al crear el usuario: " + respCreateUser.statusText
             );
           }
-
           const dataCreateUser = await respCreateUser.json();
-
-          console.log("Respuesta del servidor:", dataCreateUser);
 
         } catch (error) {
           console.error("Error al crear el usuario:", error);
@@ -64,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     
             const dataLoginIn = await respLoginIn.json();
             localStorage.setItem("jwt-token", dataLoginIn.access_token)
-            console.log(dataLoginIn)
+            
             await getActions().getUser(userRole);
             
     
@@ -92,8 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     
             const dataGetUser = await respGetUsers.json();
             setStore({...store, user: dataGetUser})
-            console.log(dataGetUser)
-            /* console.log(store.user) */
+            
         } catch (error) {
             console.error('Error al obtener los datos del usuario: ', error);
         }

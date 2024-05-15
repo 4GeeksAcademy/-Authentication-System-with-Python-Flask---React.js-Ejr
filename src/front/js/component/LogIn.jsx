@@ -43,8 +43,6 @@ export const LogIn = () => {
         setActive(false)
     }
 
-    console.log(login, typeRol);
-
     return (
         <div className='row d-flex flex-row'>
             <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
@@ -102,9 +100,6 @@ export const LogIn = () => {
                                     </div>
                                 </div>
                         }
-
-
-
 
                     </form>
                 </div>
