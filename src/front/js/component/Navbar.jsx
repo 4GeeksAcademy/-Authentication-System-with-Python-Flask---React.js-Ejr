@@ -8,6 +8,15 @@ export const Navbar = () => {
     function handleUserView() {
         navigate('/UserView')
     }
+
+    const navigateManagerView = useNavigate()
+    function handleManagerView(){
+        navigateManagerView('/ManagerView')
+    }
+    const navigateTeacherView = useNavigate()
+    function handleTeacherView(){
+        navigateTeacherView('/TeacherView')
+    }
     return (
         <div>
             <nav className="navbar navbar-light bg-light">
@@ -15,6 +24,8 @@ export const Navbar = () => {
                     <a className="navbar-brand">Atlas learning</a>
                     <p>More about us</p>
                     <button onClick={handleUserView}>UserView</button>
+                    <button onClick={handleManagerView}>ManagerView</button>
+                    <button onClick={handleTeacherView}>TeacherView</button>
                     <div className="d-flex">
                         <Link to='/FormUser'>
                             <button className='btn btn-outline-success m-1' type='submit'>signup</button>

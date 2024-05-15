@@ -1,13 +1,14 @@
-import React from 'react';
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export const TeacherNavbar = () => {
+export const ManagerNavbar = () => {
+
     const navigate = useNavigate()
-    function handleHomeView() {
+    function handleHomeView(){
         navigate('/')
     }
-    return (
-        <div>
+  return (
+    <div>
             <nav className="navbar navbar-light bg-light">
                 <div className="container-fluid">
                     <a className="navbar-brand">Atlas learning</a>
@@ -15,5 +16,5 @@ export const TeacherNavbar = () => {
                 </div>
             </nav>
         </div>
-    )
-}
+  )
+};

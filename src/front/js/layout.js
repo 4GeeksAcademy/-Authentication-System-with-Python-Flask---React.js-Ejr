@@ -13,6 +13,7 @@ import { FormUser } from "./pages/FormUser.jsx";
 import { LogIn } from "./component/LogIn.jsx";
 import { UserView } from "./pages/UserView.jsx";
 import { TeacherView } from "./pages/TeacherView.jsx";
+import { ManagerView } from "./pages/ManagerView.jsx";
 
 
 //create your first component
@@ -35,6 +36,7 @@ const Layout = () => {
                         <Route element={<LogIn />} path="/LogIn" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<UserView />} path="/UserView" />
+                        <Route element={<ManagerView />} path="/ManagerView" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
