@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			login: async (email, password) => {
                 try {
-					const response = await fetch("https://animated-robot-g4q69gpj4rrvfppvv-3001.app.github.dev/api/login", {
+					const response = await fetch(process.env.BACKEND_URL/api + "/api/login", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -48,15 +48,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 					precio: precio
 			 	 		})
                  	});
-					 	if (response.ok){
-							return "Vehículo añadido correctamente"; 
-							//aqui se podría mostrar un modal con el mensaje
-						} else {
-							throw new Error("Error al añadir vehículo, todos los campos son obligatorios");
-						}
-				 } catch (error) {
-					return error.message;
-				 }	
+					 if (response.status === 200) {
+						return "1";
+					} else if (response.status === 409) {
+						return "2";
+					} else {
+						return "3"
+					}
+				} catch (error) {
+					return false;
+				}
+				// 	 	if (response.ok){
+				// 			return "Vehículo añadido correctamente"; 
+				// 			//aqui se podría mostrar un modal con el mensaje
+				// 		} else {
+				// 			throw new Error("Error al añadir vehículo, todos los campos son obligatorios");
+				// 		}
+				//  } catch (error) {
+				// 	return error.message;
+				//  }	
 				},
       getVehicles: () => {
 				console.log("Obtener vehiculos");
