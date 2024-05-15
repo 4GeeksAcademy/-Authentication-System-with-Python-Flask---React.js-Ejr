@@ -1,27 +1,19 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
 .navbar {
-    background-color: #b4c794;
+    background-color:  #a9ce68;
+    height: 180px;
     /* background-color: rgb(140, 172, 140); */
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
 
 .logo {
     width: 80px;
     margin-left: 20px;
-    /* margin-left: 100px; */
-}
-
-.btn {
-    /* margin-left: 1400px; */
-    /* margin-right: 60px; */
-    /* margin-top: 20px; */
 }
 
 .contactForm {
     width: 400px;
     height: 400px;
-    margin-left: 700px;
+    margin:auto;
     margin-top: 80px;
     margin-bottom: 80px;
     background-color: #fff;
@@ -30,47 +22,24 @@
     justify-content: center;
 }
 
-/* .mb-3 {
-    width: auto;
-} */
-
-.jumbotron {
-        color: rgb(90, 90, 90);
-        font-family: 'lato', sans-serif;
-        text-shadow: 5px 5px 5px #cccccc;
-        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* html, body {
-    height: 100%;
-    margin: 0;
-}
-
 .container {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-} */
+} 
 
-.footer {
-    margin-top: auto;
-    background-color: #b4c794;
+footer {
+    background: #a9ce68 !important;
 }
-
-/* .cardvehicles {
-    margin:10px;
-    padding: 10px;
-} */
 
 .botonAlquilar {
-    background-color: #b4c794;
+    background-color: #a9ce68;
 }
 
-.propiedadVehiculo {
-    margin-right: 80px;
-    margin-left: 80px;
-}
-
-.corazon:hover i{
+.corazon:hover i {
     color:black !important;
+}
+
+.imgCarousel {
+    width: 80%;
 }

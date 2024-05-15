@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import logoImageUrl from "../../img/logoHW.png";
@@ -9,7 +9,7 @@ export const Navbar = () => {
 	const navigate = useNavigate();
 	const token = localStorage.getItem("token")
 
-	const handleLogOut= () => {
+	const handleLogOut = () => {
 		actions.logOut();
 		navigate('/')
 	};
@@ -17,104 +17,77 @@ export const Navbar = () => {
 	useEffect(() => {
 		if (store.vehicles.length !== 0) {
 			actions.favorites();
-		} 
-	},[store.vehicles])
+		}
+	}, [store.vehicles])
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light">
-		 	 {/* <nav className="navbar navbar-expand-lg navbar-light">
-				<div className="container-fluid">
-					<Link to="/"> 
-					<a className="navbar-brand" href="#">
-					<img className="logo" src={logoImageUrl}/> 
-					</a>
-					</Link>
-					<h2 className="navbar-text mx-2">Friendly Wheels</h2>
-					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span className="navbar-toggler-icon"></span>
-					</button>
-					<div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-					<ul className="navbar-nav">
-						<li className="nav-item">
-						<Link to="/login">  
-						<button className="btn btn-light">Login</button>
-						</Link>  
-						</li>
-					</ul>
-					</div>
-				</div>
-    		</nav> */}
-			<div className="container-fluid">
+		<nav className="navbar navbar-expand navbar-light">
+			<div className="container-fluid d-flex">
 				<div className="d-flex">
-					{/* Logo de la empresa */}
-					<Link to="/"> 
-						<img className="logo" src={logoImageUrl}/> 
+					<Link to="/">
+						<img className="logo" src={logoImageUrl} />
 					</Link>
-					{/* Nombre de la empresa */}
-					<div className="align-self-center">
-						<h2 className="navbar-text ms-3">Friendly Wheels</h2>
+					<div className="ms-3">
+						<h2 className="navbar-text ms-3 mt-2 mb-2 display-4 text-center"><strong>Friendly Wheels</strong></h2>
 					</div>
 				</div>
-				{token ?
-					<>
-						<div className="d-flex">
-							<div className="btn-group me-5">
-								<button className="btn-lg btn-light">Añadir vehículo</button>
+					{token ?
+							<div clasName="d-grid gap-3 col-6">
+								<div className="btn-group me-1">
+									<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0 mb-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mis <i class="fas fa-car-side"></i>
+										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
+									</button>
+									<ul className="dropdown-menu">
+										{store.myVehicles.length === 0
+											? <li className="text-center">(empty)</li>
+											: <p>Tengo algo</p>  /* En esta linea iria el map */
+										}
+									</ul>
+								</div>
+								<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
+									<button className="btn btn-light">Añadir <i class="fas fa-car-side"></i></button>
+								</div>
+		
+								<div className="btn-group me-2 d-flex justify-content-end mb-1">
+									<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
+										Mis <i class="fas fa-heart"></i>
+										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
+									</button>
+									<ul className="dropdown-menu">
+										{store.favorites.length === 0
+											? <li className="text-center">(empty)</li>
+											: (store.favorites.map((item, index) => (
+												<li key={index} className="d-flex justify-content-between text-primary m-2">
+													{item.matricula}
+													<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+														<i className="fas fa-trash"></i>
+													</button>
+												</li>
+											)))
+										}
+									</ul>
+								</div>
+								<div className="btn-group d-flex justify-content-end mb-1">
+									<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i class="fas fa-sign-out-alt"></i></button>
+								</div>
 							</div>
-							<div className="btn-group me-5">
-								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Favoritos
-									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.favorites.length}</span>
-								</button>
-								<ul className="dropdown-menu">
-									{store.favorites.length === 0 
-										? <li className="text-center">(empty)</li>
-										: (store.favorites.map((item, index) => (
-											<li key={index} className="d-flex justify-content-between text-primary">
-												{item.matricula}
-												<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
-													<i className="fas fa-trash"></i>
-												</button>
-											</li>
-										)))
-									}
-								</ul>
-							</div>
-							<div className="btn-group me-5">
-								<button className="btn btn-light btn-lg dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Tú
-									<span className="px-2 ms-1 text-success" style={{borderRadius:"30px"}}>{store.myVehicles.length}</span>
-								</button>
-								<ul className="dropdown-menu">
-									{store.myVehicles.length === 0 
-										? <li className="text-center">(empty)</li>
-										: <p>Tengo algo</p>  /* En esta linea iria el map */
-									}
-								</ul>
-							</div>
-							<div>
-								<button className="btn-lg btn-light"onClick={handleLogOut}>Log Out</button>
-							</div>
-						</div>
-					</>
-					: (
-						<>
-							<div className="d-flex">
-								<Link to="/login"> 
-									<div className="btn-group me-5">	
-										<button className="btn-lg btn-light">Login</button>
-									</div>
-								</Link> 
-								<Link to="/signup"> 
-									<div className="btn-group me-5">	
-										<button className="btn-lg btn-light">Signup</button>
-									</div>
-								</Link> 
-							</div>
-						</>
-					)
-				} 			
-      		</div>
-   		 </nav>
+						: (
+								<div clasName="d-grid gap-2 col-3">
+									<Link to="/login" className="text-decoration-none">
+										<div className="btn-group d-flex mb-3">
+											<button className="btn-lg btn-light">Login <i class="fas fa-sign-in-alt"></i></button>
+										</div>
+									</Link>
+									<Link to="/signup" className="text-decoration-none">
+										<div className="btn-group d-flex">
+											<button className="btn-lg btn-light">Signup <i class="fas fa-sign-in-alt"></i></button>
+										</div>
+									</Link>
+								</div>
+						)
+					}
+			</div>
+		</nav >
 	);
 };

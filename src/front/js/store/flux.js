@@ -1,99 +1,14 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			vehicles: [],
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
+			vehicles: [],
 			favorites: [],
 			myVehicles: [],
 			details: {}
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			login: async (email, password) => {
-                try {
-				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							email: email,
-							password: password
-						})
-					});
-					let data = await response.json()
-					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
-						return true;
-					} else {
-						return false
-					}
-				} catch (error) {
-					return false;
-				}
-			},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			// fetch de todos los vehículos en alquiler -> GET vehicles
-			getVehicles: () => 
-				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
-					method: 'GET'
-				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
-			},
-			getMessage: async () => {
+      		getMessage: async () => {
 				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "")
@@ -119,13 +34,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			logOut: () => {
-				localStorage.removeItem('token');
-				setStore({ favorites: [[], [], []] });
-			},
-			signup: async (email, password) => {
+			login: async (email, password) => {
                 try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -135,7 +46,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							password: password
 						})
 					});
+					let data = await response.json()
 					if (response.status === 200) {
+						localStorage.setItem("token", data.access_token);
 						return true;
 					} else {
 						return false
@@ -143,6 +56,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return false;
 				}
+			},
+			logOut: () => {
+				localStorage.removeItem('token');
+				setStore({ favorites: [] });
+			},
+			signup: async (email, password) => {
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
+					});
+					if (response.status === 201) {
+						return "1";
+					} else if (response.status === 409) {
+						return "2";
+					} else {
+						return "3"
+					}
+				} catch (error) {
+					return false;
+				}
+			},
+      		getVehicles: () => {
+				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+					method: 'GET'
+				})
+					.then(res => res.json())
+					.then(data => setStore({ vehicles: data.results })
+					)
+					.catch((error) => console.log(error))
 			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
@@ -219,10 +168,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					return []; 
-				} 
+				}
 			}
 		}
 	};
-;
 
 export default getState;
