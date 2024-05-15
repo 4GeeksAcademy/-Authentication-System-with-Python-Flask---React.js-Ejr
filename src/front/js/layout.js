@@ -8,11 +8,11 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-
 import { Footer } from "./component/Footer.jsx";
 import { FormUser } from "./pages/FormUser.jsx";
 import { LogIn } from "./component/LogIn.jsx";
 import { UserView } from "./pages/UserView.jsx";
+import { TeacherView } from "./pages/TeacherView.jsx";
 
 
 //create your first component
@@ -31,9 +31,10 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<FormUser />} path="/FormUser" />
+                        <Route element={<TeacherView />} path="/TeacherView" />
                         <Route element={<LogIn />} path="/LogIn" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<UserView />} path={"/UserView"} />
+                        <Route element={<UserView />} path="/UserView" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
