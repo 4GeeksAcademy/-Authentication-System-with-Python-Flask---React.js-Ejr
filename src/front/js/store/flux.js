@@ -42,9 +42,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const dataCreateUser = await respCreateUser.json();
 
-          
           console.log("Respuesta del servidor:", dataCreateUser);
-          
+
         } catch (error) {
           console.error("Error al crear el usuario:", error);
         }
