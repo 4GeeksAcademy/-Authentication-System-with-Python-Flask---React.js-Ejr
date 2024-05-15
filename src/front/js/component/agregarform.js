@@ -17,7 +17,7 @@ import "../../styles/index.css";
 
      async function handleSubmit(e) {
         e.preventDefault()
-        let respuesta = await actions.añadirVehiculo(inputMarcayModelo, inputMatricula, inputMotor, inputCambio, inputAsientos, inputPrecio) 
+        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio) 
         if (respuesta === "1"){
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");

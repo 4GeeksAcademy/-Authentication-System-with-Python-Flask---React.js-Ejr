@@ -84,9 +84,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			añadirVehiculo: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio) => {
+			addVehicle: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio) => {
 				const token = localStorage.getItem("token")
-                 try {
+                try {
 			 		const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 			 			method: 'POST',
 			 			headers:{
@@ -107,24 +107,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("token", data.access_token);
 						return "1";
 					} else if (response.status === 409) {
+						console.log(2);
 						return "2";
 					} else {
-						return "3"
+						console.log(3);
+						return "3";
 					}
 				} catch (error) {
 					return false;
 				}
 			},
-      		getVehicles: () => {
-				fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle", {
-					method: 'GET'
-				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
-			},
-			
       		getVehicles: () => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
