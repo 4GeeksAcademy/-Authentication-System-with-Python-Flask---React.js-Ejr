@@ -22,7 +22,7 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-expand navbar-light">
-			<div className="container-fluid d-flex">
+			<div className="container-fluid">
 				<div className="d-flex">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
@@ -33,9 +33,9 @@ export const Navbar = () => {
 				</div>
 				{token ?
 					<div className="d-flex">
-						<div className="d-grid gap-3 col-6">
-							<div className="btn-group me-1">
-								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0 mb-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<div className="d-grid gap-3">
+							<div className="btn-group">
+								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Mis <i className="fas fa-car-side"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
 								</button>
@@ -45,15 +45,14 @@ export const Navbar = () => {
 										: <p>Tengo algo</p>  /* En esta linea iria el map */
 									}
 								</ul>
+								<div className="btn-group text-dark fs-6 ms-1">
+									<Link to="/agregarvehiculo" className="text-decoration-none">
+									<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
+									</Link>
+								</div>
 							</div>
-							<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
-								<Link to="/agregarvehiculo" className="text-decoration-none">
-								  <button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
-								</Link>
-							</div>
-
-							<div className="btn-group me-2 d-flex justify-content-end mb-1">
-								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
+							<div className="btn-group">
+								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
 									Mis <i className="fas fa-heart"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
 								</button>
@@ -71,10 +70,11 @@ export const Navbar = () => {
 									}
 								</ul>
 							</div>
-							<div className="btn-group d-flex justify-content-end mb-1">
-								<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
+							<div className="btn-group">
+								<button className="btn btn-light" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
 							</div>
 						</div>
+						
 					</div>
 						: (
 							<div className="d-grid gap-2 col-3 justify-content-end">
@@ -90,7 +90,7 @@ export const Navbar = () => {
 								</Link>
 							</div>
 						)
-					}
+				}
 			</div>
 		</nav >
 	);
