@@ -29,6 +29,7 @@
 
 footer {
     background: #a9ce68 !important;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
 .botonAlquilar {
@@ -40,5 +41,9 @@ footer {
 }
 
 .imgCarousel {
-    width: 80%;
+    width: 70% !important;
+    height: 50%;
+    background-position: center center;
+    position: relative;
+    justify-items: center;
 }
