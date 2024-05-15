@@ -10,6 +10,7 @@ import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";
 import { UserForm } from "./pages/User/userForm";
 import ScrollToTop from "./component/scrollToTop.jsx";
+import ExerciceDetail from "./pages/User/exerciseDetail.js";
 
 const Layout = () => {
 
@@ -23,6 +24,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Landing />} path="/" />
                         <Route element={<User />} path="/user" />
+                        <Route element={<ExerciceDetail />} path="/exercise-detail/:id" />
                         <Route element={<UserForm />} path="/user/form" />
                         <Route element={<Trainer />} path="/trainer" />
                         <Route element={<h1>Not found!</h1>} />
