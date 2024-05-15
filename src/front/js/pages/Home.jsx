@@ -5,6 +5,9 @@ import "../../styles/home.css";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../component/Navbar.jsx";
 import { CoursesContainer } from "../component/CoursesContainer.jsx";
+import { TeacherCourses } from "../component/TeacherCourses.jsx";
+
+
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
@@ -13,6 +16,7 @@ export const Home = () => {
     return (
         <div>
             <Navbar />
+            
             <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">

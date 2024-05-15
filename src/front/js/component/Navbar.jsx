@@ -5,7 +5,7 @@ import { Context } from '../store/appContext';
 export const Navbar = () => {
 
     const navigate = useNavigate()
-    function handleUserView(){
+    function handleUserView() {
         navigate('/UserView')
     }
     return (
@@ -22,8 +22,12 @@ export const Navbar = () => {
                         <Link to='/logIn'>
                             <button className="btn btn-outline-success m-1" type="submit">login</button>
                         </Link>
-                            
-                            <button className='btn btn-outline-success m-1' type='submit'><i className="fa-solid fa-cart-shopping fa-fade" style={{color: "#13ec49;"}}></i></button>
+
+                        <Link to='/TeacherView'>
+                            <button className="btn btn-outline-success m-1" type="submit"> Private User</button>
+                        </Link>
+
+                        <button className='btn btn-outline-success m-1' type='submit'><i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49;" }}></i></button>
                     </div>
                 </div>
             </nav>
