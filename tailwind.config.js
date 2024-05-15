@@ -558,6 +558,7 @@ module.exports = merge({
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      "100vh": '100vh',
     }),
     hueRotate: {
       0: '0deg',
@@ -665,6 +666,7 @@ module.exports = merge({
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      "100vh": '100vh',
     }),
     maxWidth: ({ theme, breakpoints }) => ({
       ...theme('spacing'),
@@ -686,6 +688,7 @@ module.exports = merge({
       fit: 'fit-content',
       prose: '65ch',
       ...breakpoints(theme('screens')),
+      "100vw": '100vw',
     }),
     minHeight: ({ theme }) => ({
       ...theme('spacing'),
@@ -697,6 +700,7 @@ module.exports = merge({
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      "100vh": '100vh',
     }),
     minWidth: ({ theme }) => ({
       ...theme('spacing'),
@@ -704,6 +708,7 @@ module.exports = merge({
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      "100vw": '100vw',
     }),
     objectPosition: {
       bottom: 'bottom',
@@ -1057,6 +1062,7 @@ module.exports = merge({
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      "100vw": '100vw',
     }),
     willChange: {
       auto: 'auto',

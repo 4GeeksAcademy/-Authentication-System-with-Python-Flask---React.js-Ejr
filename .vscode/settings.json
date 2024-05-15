@@ -3,5 +3,9 @@
     "files.autoSave": "off",
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
+    },
+    "files.associations": {
+      "*.tss": "tailwindcss"
     }
+    
 }
