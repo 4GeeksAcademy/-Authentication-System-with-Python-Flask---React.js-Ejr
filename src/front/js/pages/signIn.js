@@ -32,6 +32,13 @@ function SignIn() {
     const data = new FormData(event.currentTarget);
     const employeeId = data.get('employee-id');
     const password = data.get('password');
+    try {
+      await actions.login(employeeId, password);
+      navigate('/regions');
+    } catch (error) {
+      console.error("Login failed:", error);
+      setOpen(true);
+    }
   };
 
   // Close Snackbar
@@ -50,14 +57,6 @@ function SignIn() {
   // Hide Basic Card
   const handleBasicCardClose = () => {
     setShowBasicCard(false);
-
-    try {
-      await actions.login(employeeId, password);
-      navigate('/regions');
-    } catch (error) {
-      console.error("Login failed:", error);
-      setOpen(true);
-    }
   };
 
   return (
