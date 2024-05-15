@@ -27,9 +27,9 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         access_token = create_access_token(identity=email)
-        return jsonify(access_token=access_token), 200
+        return jsonify(access_token=access_token), 201
     else:
-        return jsonify({"msg": "El usuario ya existe"}), 400
+        return jsonify({"msg": "El usuario ya existe"}), 409
     
 @api.route("/login", methods=["POST"])
 def login():

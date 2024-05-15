@@ -1,29 +1,13 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			vehicles: [],
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
+			vehicles: [],
 			favorites: [],
 			myVehicles: [],
 			details: {}
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
 			login: async (email, password) => {
                 try {
 					const response = await fetch("https://animated-robot-g4q69gpj4rrvfppvv-3001.app.github.dev/api/login", {
@@ -74,45 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return error.message;
 				 }	
 				},
-			
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			// fetch de todos los vehículos en alquiler -> GET vehicles
-			getVehicles: () => {
+      getVehicles: () => {
 				console.log("Obtener vehiculos");
 				fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle", {
 					method: 'GET'
@@ -148,13 +94,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			logOut: () => {
-				localStorage.removeItem('token');
-				setStore({ favorites: [[]] }); //linea de codigo para que te elimine el token y los favoritos desaparezcan
-			},
-			signup: async (email, password) => {
+			login: async (email, password) => {
                 try {
-					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/signup", {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -164,7 +106,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							password: password
 						})
 					});
+					let data = await response.json()
 					if (response.status === 200) {
+						localStorage.setItem("token", data.access_token);
 						return true;
 					} else {
 						return false
@@ -173,8 +117,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			logOut: () => {
+				localStorage.removeItem('token');
+				setStore({ favorites: [] });
+			},
+			signup: async (email, password) => {
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
+					});
+					if (response.status === 201) {
+						return "1";
+					} else if (response.status === 409) {
+						return "2";
+					} else {
+						return "3"
+					}
+				} catch (error) {
+					return false;
+				}
+			},
+      		getVehicles: () => {
+				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+					method: 'GET'
+				})
+					.then(res => res.json())
+					.then(data => setStore({ vehicles: data.results })
+					)
+					.catch((error) => console.log(error))
+			},
 			getDetails: (id) => {
-				fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle/${id}`, {
+				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
 					method: 'GET'
 				})
 				.then((response) => response.json())
@@ -186,7 +166,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: async () => {
 				const token = localStorage.getItem("token")
                 try {
-					const response = await fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/user/favorites", {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/favorites`, {
 						method: 'GET',
 						headers:{
 							'Content-Type':'application/json',
@@ -211,7 +191,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			addFav: async (id) => {
 				const token = localStorage.getItem("token")
                 try {
-					const response = await fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/favorite/vehicle/${id}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/favorite/vehicle/${id}`, {
 						method: 'POST',
 						headers:{
 							'Content-Type':'application/json',
@@ -234,7 +214,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			removeFav: async (id) => {
 				const token = localStorage.getItem("token")
                 try {
-					const response = await fetch(`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/favorite/vehicle/${id}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/favorite/vehicle/${id}`, {
 						method: 'DELETE',
 						headers:{
 							'Content-Type':'application/json',
@@ -248,10 +228,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					return []; 
-				} 
+				}
 			}
 		}
 	};
-};
 
 export default getState;
