@@ -75,7 +75,7 @@ def create_token():
     
     # Create a new token with the user id inside
     access_token = create_access_token(identity=user.id)
-    return jsonify({ "token": access_token, "user_id": user.id })
+    return jsonify({ "token": access_token, "user_id": user.id, "username": user.username })
 
 
 
@@ -89,6 +89,38 @@ def get_transactions():
     serialized_transactions = [transaction.serialize() for transaction in all_transactions]
 
     return jsonify(serialized_transactions), 200
+
+
+
+@api.route('/transactions', methods=['POST'])
+def create_transaction():
+    data = request.json
+
+    if not data:
+        raise APIException("No data provided", status_code=400)
+
+    user_id = data.get('user_id')
+    total_price = data.get('total_price')
+    products = data.get('products')
+    is_cash = data.get('is_cash')
+    created = data.get('created')
+
+    if not user_id or not total_price or not products or not is_cash or not created:
+        raise APIException("Missing required fields", status_code=400)
+
+    # Create a new transaction
+    new_transaction = Transactions(
+        user_id=user_id,
+        total_price=total_price,
+        products=products,
+        is_cash=is_cash,
+        created=created
+    )
+
+    db.session.add(new_transaction)
+    db.session.commit()
+
+    return jsonify({"message": "Transaction added to database successfully"}), 201
 
 
 

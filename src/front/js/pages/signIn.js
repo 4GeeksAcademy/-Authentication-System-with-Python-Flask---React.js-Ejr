@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -17,23 +18,20 @@ import MuiAlert from '@mui/material/Alert';
 import Alert from '@mui/material/Alert';  
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { Context } from "../store/appContext";
 
 function SignIn() {
   const [open, setOpen] = React.useState(false); // State to control Snackbar open/close
   const [showBasicCard, setShowBasicCard] = React.useState(false); // State to control Basic Card visibility
+  
+  const { actions } = useContext(Context);
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const employeeId = data.get('employee-id');
     const password = data.get('password');
-    console.log("Employee ID:", employeeId);
-    console.log("Password:", password);
-
-    // Check if the password is incorrect and show the Snackbar if it is
-    if (password !== "correctPassword") { // Change "correctPassword" to the correct password
-      setOpen(true);
-    }
   };
 
   // Close Snackbar
@@ -52,6 +50,14 @@ function SignIn() {
   // Hide Basic Card
   const handleBasicCardClose = () => {
     setShowBasicCard(false);
+
+    try {
+      await actions.login(employeeId, password);
+      navigate('/regions');
+    } catch (error) {
+      console.error("Login failed:", error);
+      setOpen(true);
+    }
   };
 
   return (
@@ -67,13 +73,12 @@ function SignIn() {
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left'}}>
+          <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left' }}>
             Sign in
           </Typography>
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
