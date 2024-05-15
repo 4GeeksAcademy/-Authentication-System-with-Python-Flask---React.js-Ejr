@@ -7,14 +7,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         items: []
     };
 
+	const localStorageUser = JSON.parse(localStorage.getItem('user')) || {
+        isSignedIn: false,
+        username: "",
+        user_id: null
+    };
+
 	return {
 	  store: {
 		order: localStorageOrder,
-		user: {
-			isSignedIn: false,
-			username: "",
-			user_id: null
-		}
+		user: localStorageUser
 	  },
 	  actions: {
 		// Use getActions to call a function within a function
@@ -77,43 +79,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem('order', JSON.stringify(updatedOrder));
 			}
 		},
-login: async (username, password) => {
-    const resp = await fetch(`${process.env.BACKEND_URL}api/token`, { 
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }) 
-    });
+		login: async (username, password) => {
+			const resp = await fetch(`${process.env.BACKEND_URL}api/token`, { 
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username, password }) 
+			});
 
-    if (!resp.ok) throw Error("There was a problem in the login request");
+			if (!resp.ok) throw Error("There was a problem in the login request");
 
-    if (resp.status === 401) {
-        throw new Error("Invalid credentials");
-    } else if (resp.status === 400) {
-        throw new Error("Invalid email or password format");
-    }
+			if (resp.status === 401) {
+				throw new Error("Invalid credentials");
+			} else if (resp.status === 400) {
+				throw new Error("Invalid email or password format");
+			}
 
-    const data = await resp.json();
-    localStorage.setItem("jwt-token", data.token);
+			const data = await resp.json();
+			localStorage.setItem("jwt-token", data.token);
 
-    if (data) {
-        const store = getStore();
-        const updatedUser = {
-            isSignedIn: true,
-            username: data.username, // Assuming the API returns the username
-            user_id: data.user_id    // Assuming the API returns the user_id
-        };
-        
-        // Save user data to localStorage
-        localStorage.setItem('user', JSON.stringify(updatedUser));
+			if (data) {
+				const store = getStore();
+				const updatedUser = {
+					isSignedIn: true,
+					username: data.username, // Assuming the API returns the username
+					user_id: data.user_id    // Assuming the API returns the user_id
+				};
+				
+				// Save user data to localStorage
+				localStorage.setItem('user', JSON.stringify(updatedUser));
 
-        setStore({
-            ...store,
-            user: updatedUser
-        });
-    }
+				setStore({
+					...store,
+					user: updatedUser
+				});
+			}
 
-    return data;
-}
+			return data;
+		}
 
 	  }
 	};
