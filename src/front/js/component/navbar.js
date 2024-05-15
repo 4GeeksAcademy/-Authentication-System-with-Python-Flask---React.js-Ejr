@@ -33,10 +33,10 @@ export const Navbar = () => {
 				</div>
 				{token ?
 					<div className="d-flex">
-						<div clasName="d-grid gap-3 col-6">
+						<div className="d-grid gap-3 col-6">
 							<div className="btn-group me-1">
 								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0 mb-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Mis <i class="fas fa-car-side"></i>
+									Mis <i className="fas fa-car-side"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
 								</button>
 								<ul className="dropdown-menu">
@@ -47,12 +47,12 @@ export const Navbar = () => {
 								</ul>
 							</div>
 							<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
-								<button className="btn btn-light">Añadir <i class="fas fa-car-side"></i></button>
+								<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
 							</div>
 
 							<div className="btn-group me-2 d-flex justify-content-end mb-1">
 								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
-									Mis <i class="fas fa-heart"></i>
+									Mis <i className="fas fa-heart"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
 								</button>
 								<ul className="dropdown-menu">
@@ -70,20 +70,20 @@ export const Navbar = () => {
 								</ul>
 							</div>
 							<div className="btn-group d-flex justify-content-end mb-1">
-								<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i class="fas fa-sign-out-alt"></i></button>
+								<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
 							</div>
 						</div>
 					</div>
 						: (
-							<div clasName="d-grid gap-2 col-3">
+							<div className="d-grid gap-2 col-3">
 								<Link to="/login" className="text-decoration-none">
 									<div className="btn-group d-flex mb-3">
-										<button className="btn-lg btn-light">Login <i class="fas fa-sign-in-alt"></i></button>
+										<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
 									</div>
 								</Link>
 								<Link to="/signup" className="text-decoration-none">
 									<div className="btn-group d-flex">
-										<button className="btn-lg btn-light">Signup <i class="fas fa-sign-in-alt"></i></button>
+										<button className="btn-lg btn-light">Signup <i className="fas fa-sign-in-alt"></i></button>
 									</div>
 								</Link>
 							</div>
