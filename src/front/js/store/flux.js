@@ -59,7 +59,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logOut: () => {
 				localStorage.removeItem('token');
-				setStore({ favorites: [] });
+				setStore({ 
+					favorites: [],
+					myVehicles: [] 
+				});
 			},
 			signup: async (email, password) => {
                 try {
@@ -202,7 +205,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return []; 
 				}
-			}
+			},
+			myVehiclesInRent: async () => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/rent`, {
+						method: 'GET',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						const data = await response.json();
+						const vehicles = getStore().vehicles;
+						const backendVehicles= data.results;
+						const filteredVehicles = vehicles.filter((vehicle) => {
+							return backendVehicles.some((beVehicle) => vehicle.user_id == beVehicle.user_id);
+						});
+						setStore({myVehicles: filteredVehicles});
+					} else {
+						return [];
+					}
+                } catch (error) {
+                    return []; 
+                } 
+            },
 		}
 	};
 };

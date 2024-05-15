@@ -173,8 +173,7 @@ def get_all_rents():
         return jsonify({"msg":"You don't have vehicles in rent"}), 404
     response_body = {
         "msg": "ok",
-        "results": [
+        "results":
             all_rents_list,
-        ]
     }
     return jsonify(response_body), 200

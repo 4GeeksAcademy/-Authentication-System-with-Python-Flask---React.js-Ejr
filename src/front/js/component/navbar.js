@@ -17,6 +17,7 @@ export const Navbar = () => {
 	useEffect(() => {
 		if (store.vehicles.length !== 0) {
 			actions.favorites();
+			actions.myVehiclesInRent();
 		}
 	}, [store.vehicles])
 
@@ -42,7 +43,14 @@ export const Navbar = () => {
 								<ul className="dropdown-menu">
 									{store.myVehicles.length === 0
 										? <li className="text-center">(empty)</li>
-										: <p>Tengo algo</p>  /* En esta linea iria el map */
+										: (store.myVehicles.map((item, index) => (
+											<li key={index} className="d-flex justify-content-between text-primary m-2">
+												{item.matricula}
+												<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+													<i className="fas fa-trash"></i>
+												</button>
+											</li>
+										)))
 									}
 								</ul>
 								<div className="btn-group text-dark fs-6 ms-1">
