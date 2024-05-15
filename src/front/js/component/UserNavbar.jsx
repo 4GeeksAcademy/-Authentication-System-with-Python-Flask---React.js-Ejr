@@ -11,15 +11,7 @@ export const UserNavbar = () => {
             <nav className="navbar navbar-light bg-light">
                 <div className="container-fluid">
                     <a className="navbar-brand">Atlas learning</a>
-
-
-
                     <button onClick={handleHomeView} className="btn btn-outline-danger m-1">Go back home</button>
-
-
-
-
-
                 </div>
             </nav>
         </div>
