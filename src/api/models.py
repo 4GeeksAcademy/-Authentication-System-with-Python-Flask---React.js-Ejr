@@ -70,12 +70,12 @@ class Like (db.Model):
 class Suggestion (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
-    suggesting = db.Column(db.Boolean, unique=False, nullable=False)
+    suggestion = db.Column(db.String)
     user = db.relationship('User', backref='Suggestion', lazy=True)
 
     def serialize(self):
         return {
             "id": self.id,
-            "suggesting": self.suggesting,
+            "suggestion": self.suggestion,
             # do not serialize the password, its a security breach
         }

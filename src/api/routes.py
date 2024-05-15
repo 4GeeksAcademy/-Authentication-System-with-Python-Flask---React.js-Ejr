@@ -19,6 +19,7 @@ def handle_hello():
         "msg": "Hello, this is your GET /user response "
     }
     return jsonify(response_body), 200
+#----------CREACION DE SOLO API`S TIPO POST-------------------
 
 #---------------CREACION DE UN POST --------------------
 @api.route('/post', methods=['POST'])
@@ -80,7 +81,54 @@ def handle_create_like():
     }
     return jsonify(response_body), 200
 
+#-------------CREACIONDE UNA SUGERANCIA-----------------
 
+@api.route('/suggestion', methods=['POST'])
+def handle_create_suggestion():
+    data = request.json
+  
+    new_suggestion = Suggestion(suggestion=data['suggestion'])
+    db.session.add(new_suggestion)
+    db.session.commit()
+    response_body = {
+        "user": {
+            "id": new_suggestion.id,
+            "suggestion": new_suggestion.suggestion,
+        },
+        "msg": "otra vez la mierda de copilot"
+    }
+    return jsonify(response_body), 200
+
+#-----------------CREACION DE API`S DE TIPO GET----------------------
+#-------------TRAER TODAS LAS SUGERIAS --------------------------
+@api.route('/suggestion', methods=['GET'])
+def handle_get_suggestion():
+    users = Suggestion.query.all()
+    users_serialized = []
+    for suggestion in users:
+        users_serialized.append(suggestion.serialize())
+    print (users)
+
+    response_body = {
+        "suggestion": users_serialized
+    }
+
+    return jsonify(response_body), 200
+#-------------TRAER TODAS LAS PUBLICACIONES-----------
+
+@api.route('/post', methods=['GET'])
+def handle_get_post():
+    users = Post.query.all()
+    users_serialized = []
+    for post in users:
+        users_serialized.append(post.serialize())
+
+    response_body = {
+        "img": users_serialized,
+        "bodytext":users_serialized
+    }
+
+    return jsonify(response_body), 200
 
 #--------------------------------------------------------
 @api.route('/wipeall', methods=['GET'])
