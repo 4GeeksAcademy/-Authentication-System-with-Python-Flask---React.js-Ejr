@@ -11,9 +11,6 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<Signup/>
-			<Login/>
-		</div>
+		<h1>HOME</h1>
 	);
 };
