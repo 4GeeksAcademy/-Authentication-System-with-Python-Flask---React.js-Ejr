@@ -39,28 +39,30 @@ const _DEVTOOL_POSITIONS= Object.freeze([
 
 const DevTools = () => {
   const 
-    { store, actions }= React.useContext(Context),
-    [ devToolsState, set_devToolsState]= React.useState(true),
-    [ devToolsPosition, set_devToolsPosition]= React.useState(1),
+    { actions }= React.useContext(Context),
     nav= useNavigate()
 
-  function toggle_devTools(e){ Utils.cancelEvent(e); set_devToolsState(!devToolsState)}
-  function move_devToolsPanel(e, i){ Utils.cancelEvent(e); set_devToolsPosition(i)}
-  function toggle_darkModeState(e){ Utils.cancelEvent(e); actions.toggleDarkMode()}
+  function toggle_devTools(e){ Utils.cancelEvent(e); actions.toggleDevPref(Utils.constants.DEVPREFS_SHOWSTATE)}
+  function move_devToolsPanel(e, i){ Utils.cancelEvent(e); actions.setDevPref(Utils.constants.DEVPREFS_PANELPOSITION, i)}
+  function toggle_darkModeState(e){ Utils.cancelEvent(e); actions.toggleUserPref(Utils.constants.USERPREFS_DARKMODE)}
   function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
   function save_userPrefs(e){ Utils.cancelEvent(e); actions.saveUserPrefs() }
-
   function navigate_page(e, url){ Utils.cancelEvent(e); nav(url) }
+
+  const 
+    _user_darkMode= actions.getUserPref(Utils.constants.USERPREFS_DARKMODE),
+    _devToolState= actions.getDevPref(Utils.constants.DEVPREFS_SHOWSTATE),
+    _devToolPosition= actions.getDevPref(Utils.constants.DEVPREFS_PANELPOSITION)
   
   return (
-		<div className={"fixed text-center" + _DEVTOOL_POSITIONS[devToolsPosition][0]}>
-      <div className={"flex" + _DEVTOOL_POSITIONS[devToolsPosition][2]}>
-        <div className={"flex" + _DEVTOOL_POSITIONS[devToolsPosition][1]}>
-          <button className="bg-slate-400 px-0.5 rounded-md w-7 aspect-square" onClick={toggle_devTools}>{devToolsState ? "❌" : "🛠️"}</button>
+		<div className={"fixed text-center" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
+      <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][2]}>
+        <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][1]}>
+          <button className="bg-zinc-900 hover:bg-zinc-800 px-0.5 rounded-md w-8 aspect-square border border-zinc-700" onClick={toggle_devTools}>{_devToolState ? "❌" : "🛠️"}</button>
         </div>
-        { devToolsState &&
+        { _devToolState &&
           <div className="flex flex-col gap-2 bg-black bg-opacity-50 border border-slate-600 rounded-xl p-2">
-            <button className="devtools-btn w-48" onClick={toggle_darkModeState}>{store.userPrefs.darkMode ? "dark mode" : "light mode"}</button>
+            <button className="devtools-btn w-48" onClick={toggle_darkModeState}>{_user_darkMode ? "dark mode" : "light mode"}</button>
             <p>-- panel position --</p>
             <div className="flex w-32 mx-auto flex-col border border-gray-600 gap-2">
               <div className="flex justify-between">

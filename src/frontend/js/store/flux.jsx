@@ -5,16 +5,18 @@ const storeState = ({ getStore, getActions, setStore }) => {
 		store: {
       // DEFAULT user settings, save them on cookies?
       userPrefs: {
-        darkMode: false,
+        darkMode: false
       },
       // DEFAULT dev settings, for us, remove on production
       devPrefs: {
-        showTools: true,
+        showState: true,
+        panelPosition: 1
       },
       readyState: {
         backend: false,
         frontend: false
-      }
+      },
+      timestamp: 0
 		},
 		actions: {
 
@@ -24,15 +26,28 @@ const storeState = ({ getStore, getActions, setStore }) => {
       initialize: async ()=>{
 
         const _actions= getActions()
+
         _actions.loadUserPrefs()
+        _actions.loadDevPrefs()
 
         // do initialization tasks
 				
         // keep this following lines at the end of the function
-        
-        setStore({ readyState: { frontend: true }} ) // mark frontend as ready, 
+        setStore({ readyState: { frontend: true }} ) // mark frontend as ready
         await getActions().checkBackendHealth() // check if backend is ready, and set it accordly
         if(!getStore().readyState.backend) console.log("Couldn't connect to backend, page will render in offline mode")
+      },
+
+      getUserPref:(pref)=>{ return getStore().userPrefs[pref]?? null },
+      
+      toggleUserPref:(pref)=>{
+        getActions().setUserPref(pref, !getStore().userPrefs[pref])
+      },
+      
+      setUserPref:(pref, value)=>{
+        const newPrefs= structuredClone(getStore().userPrefs)
+        newPrefs[pref]= value
+        setStore({ userPrefs: newPrefs })
       },
 
       // decode and load the userPrefs from the cookie that contains it
@@ -42,7 +57,7 @@ const storeState = ({ getStore, getActions, setStore }) => {
           const newUserPrefs= {
             darkMode: data[0] != "0"
           }
-          setStore({ userPrefs: newUserPrefs} )
+          setStore({ userPrefs: newUserPrefs })
         }
 
         // TODO: binary load
@@ -69,13 +84,6 @@ const storeState = ({ getStore, getActions, setStore }) => {
 
       // ------------------------------------------------------------ PAGE BEHAVIOUR
 
-      // toggles dark mode on/off
-      toggleDarkMode:()=>{ 
-        setStore({ userPrefs: { darkMode: !getStore().userPrefs.darkMode }} )
-        // dont save during development
-        // getActions().saveUserPrefs()
-      },
-
       // ------------------------------------------------------------ BACKEND
 
 			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
@@ -91,20 +99,37 @@ const storeState = ({ getStore, getActions, setStore }) => {
 
       // ------------------------------------------------------------ DEVELOPER ONLY
       
+      getDevPref:(pref)=>{ return getStore().devPrefs[pref]?? null },
+      
+      toggleDevPref:(pref)=>{
+        getActions().setDevPref(pref, !getStore().devPrefs[pref])
+      },
+      
+      setDevPref:(pref, value)=>{
+        const newPrefs= structuredClone(getStore().devPrefs)
+        newPrefs[pref]= value
+        setStore({ devPrefs: newPrefs })
+        // instantly save dev prefs
+        getActions().saveDevPrefs()
+      },
+
       loadDevPrefs:()=>{
         const data= Utils.getCookie("devPrefs")
+        console.log("devPrefs Cookie: ", data)
         if(data){
-          const newDevPrefs= {
-            showTools: data[0] != "0"
+          const newPrefs= {
+            showState: data[0] != "0",
+            panelPosition: parseInt(data[1])
           }
-          setStore({ devPrefs: newDevPrefs} )
+          setStore({ devPrefs: newPrefs })
         }
       },
 
       saveDevPrefs:()=>{
-        const _devPrefs= getStore().devPrefs
+        const prefs= getStore().devPrefs
         const data= [
-          _devPrefs.showTools ? '1' : '0'
+          prefs.showState ? '1' : '0',
+          prefs.panelPosition.toString()
         ].join("")
         Utils.setCookie("devPrefs", data, [30,0,0], "/", Utils.constants.COOKIE_SAMESITE_STRICT )
       },
@@ -112,4 +137,4 @@ const storeState = ({ getStore, getActions, setStore }) => {
 	}
 }
 
-export default storeState;
+export default storeState

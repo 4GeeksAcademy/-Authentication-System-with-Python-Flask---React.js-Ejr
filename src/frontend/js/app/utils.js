@@ -10,8 +10,12 @@ const Utils= {
     SESSION_MODE_LOGIN: 1,
     SESSION_MODE_LOGOUT: 2,
     SESSION_MODE_RECOVER: 3,
-    SESSION_MODE_DELETED: 4
+    SESSION_MODE_DELETED: 4,
 
+    USERPREFS_DARKMODE: "darkMode",
+
+    DEVPREFS_SHOWSTATE: "showState",
+    DEVPREFS_PANELPOSITION: "panelPosition",
   }),
 
   /** short for writing preventDefault and stopPropagation */
@@ -24,7 +28,9 @@ const Utils= {
 
   // read a cookie and returns it, or undefined if not found */
   getCookie: (cookie)=>{
-    return document.cookie.split(", ")?.find(e=>e.startsWith(`${cookie}=`))?.split('=')[1] ?? undefined
+    const result= document.cookie.split("; ")?.find(e=>e.startsWith(`${cookie}=`))
+    console.log(`loaded cookie:`, result)
+    return result?.split('=')[1] ?? undefined
   },
 
   /** writes a cookie, if given, expire must be an array of 3 int as in: [days, hours, mins] */
@@ -44,7 +50,7 @@ const Utils= {
     const cpath= path ? (";Path=" + path) : ""
     const csamesite= samesite ? (";SameSite=" + samesite) : ""
     const result= `${cookie}=${value}${cexpire}${cpath}${csamesite}`
-    console.log("saved cookie: ", result)
+    console.log("saved cookie:", result)
     document.cookie= result
   },
 
@@ -66,7 +72,7 @@ export default Utils
 
 // common function for the mouse Utils above
 function __isMouseButton(e, idx){
-  if(e && e.button) return e.button === idx
+  if(e && e.button !== undefined) return e.button === idx
   else console.log("isMouseLeft(): event was not a mouse event", e)
   return false
 }

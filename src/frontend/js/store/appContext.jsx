@@ -12,7 +12,8 @@ const appContext = ReactComponent => {
 				setStore: updatedStore =>
 					setState({
 						store: Object.assign(state.store, updatedStore),
-						actions: { ...state.actions }
+						actions: { ...state.actions },
+            timestamp: Date.now()
 					})
 			})
 		)
@@ -26,11 +27,13 @@ const appContext = ReactComponent => {
         document.body.setAttribute("data-darkmode","1")
       }
       else document.body.removeAttribute("data-darkmode")
-    },[state.store.userPrefs.darkMode])
+    },[state.store.readyState.frontend, state.store.userPrefs.darkMode])
 
 		return (
 			<Context.Provider value={state}>
-				<ReactComponent {...props} />
+        { state.store.readyState.frontend &&
+				  <ReactComponent {...props} />
+        }
 			</Context.Provider>
 		)
 	}
