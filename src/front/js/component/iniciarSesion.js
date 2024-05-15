@@ -11,8 +11,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        actions.Login(email, password);
-        
+        actions.LogIn(email, password);        
     };
 
     return (
