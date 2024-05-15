@@ -77,7 +77,7 @@ export const Navbar = () => {
 						</div>
 					</div>
 						: (
-							<div className="d-grid gap-2 col-3">
+							<div className="d-grid gap-2 col-3 justify-content-end">
 								<Link to="/login" className="text-decoration-none">
 									<div className="btn-group d-flex mb-3">
 										<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
