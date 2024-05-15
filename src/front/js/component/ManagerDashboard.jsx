@@ -4,8 +4,9 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { ManagerCourses } from './ManagerCourses.jsx';
 import { ManagerProfile } from './ManagerProfile.jsx';
 import { Payments } from './Payments.jsx';
-import Teachers from './Teachers.jsx';
+import  Teachers  from './Teachers.jsx';
 import { ActiveUsers } from './ActiveUsers.jsx';
+import { GeneralFiles } from './GeneralFiles.jsx';
 
 export const ManagerDashboard = () => {
 
@@ -30,6 +31,10 @@ export const ManagerDashboard = () => {
     const handleUsers =()=>{
         setButtonSelected(<ActiveUsers/>)
     }
+    
+    const HandleFiles=()=>{
+        setButtonSelected(<GeneralFiles />)
+    }
 
     const navigate = useNavigate()
     function handleHome(){
@@ -44,15 +49,17 @@ export const ManagerDashboard = () => {
                     <h1>Welcome!</h1>
                     <h5>Manager</h5>
                 </div>
-                <button className="btn btn-outline-primary my-2 w-75 " onClick={handleMyCourses}>Courses</button>
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>Courses</button>
 
-                <button className="btn btn-outline-primary my-2 w-75 " onClick={handleMyProfile}>Profile</button>
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>Profile</button>
                 
-                <button className="btn btn-outline-primary my-2 w-75 " onClick={handlePayments}>Payments </button>
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments}>Payments </button>
 
-                <button className='btn btn-outline-primary my-2 w-75 ' onClick={handleTeachers}>Teachers</button>
+                <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>Teachers</button>
 
-                <button className='btn btn-outline-primary my-2 w-75 ' onClick={handleUsers}>Users</button>
+                <button className='btn btn-outline-primary my-2 w-75' onClick={handleUsers}>Users</button>
+
+                <button className='btn btn-outline-primary my-2 w-75' onClick={HandleFiles}>Files</button>
             </div>
             <div className="col-9">
                 {buttonSelected}
