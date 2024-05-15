@@ -133,13 +133,14 @@ function SignIn() {
   <Card sx={{bgcolor: 'white', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: 'none', border: '1px solid #000' }}>
     
     <CardContent>
-      <Typography variant="h5" component="div">
-        Incorrect Password
-      </Typography>
-      <MuiAlert severity="error" >Please try again</MuiAlert>
+  <Typography variant="h5" component="div">
+    <span style={{ fontWeight: 'bold' }}>Forgot Password</span> <br />
+    Please enter the email address used to SignUp. We will send a password reset.
+  </Typography>
+  <TextField id="outlined-basic" label="User Email" variant="outlined" />
 
       <Button onClick={handleBasicCardClose} variant="contained">
-        Close
+        Enter
       </Button>
     </CardContent>
   </Card>
