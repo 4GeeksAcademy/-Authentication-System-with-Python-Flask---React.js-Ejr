@@ -26,7 +26,7 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     role = db.relationship("Role")  # Relación con la tabla de módulos
     memberships_history = db.relationship('UserMembershipHistory',foreign_keys='UserMembershipHistory.user_id',backref=db.backref('user', lazy='joined'),lazy='dynamic') 
     active_membership = db.relationship('UserMembershipHistory',foreign_keys=[active_membership_id],post_update=True,lazy='joined',uselist=False, backref=db.backref('active_user', uselist=False) )    
-    transactions = db.relationship('Transaction', backref='user', lazy=True)
+    payments = db.relationship('Payment', backref='user', lazy=True)
 
     #NOTA: siempre que se haga un eliminacion de base de datos se debe comentar active_membership_id y active_membership ya que tiene una relacion circular y una depende de otra
 
@@ -158,7 +158,7 @@ class Membership(db.Model):
     classes_per_month = db.Column(db.Integer, nullable=True)  # Cantidad de clases por mes
 
     membership_history = db.relationship('UserMembershipHistory', backref='membership', lazy='dynamic')
-    transactions = db.relationship('Transaction', backref='membership', lazy=True)
+    payments = db.relationship('Payment', backref='membership', lazy=True)
 
     def __repr__(self):  # Método para representar un objeto de pregunta de seguridad como una cadena
         return '<Membership %r>' % self.id
@@ -252,19 +252,19 @@ class Booking(db.Model):
 
     
 # Tabla de Transacciones
-class Transaction(db.Model):
+class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     membership_id = db.Column(db.Integer, db.ForeignKey('membership.id'), nullable=False)
-    transaction_date = db.Column(db.DateTime, default=datetime.utcnow)  # Fecha de la transacción
+    payment_date = db.Column(db.DateTime, default=datetime.utcnow)  # Fecha de la transacción
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(50), nullable=False)
 
-    transaction_details = db.relationship('TransactionDetail', backref='transaction', lazy=True)
+    payment_details = db.relationship('PaymentDetail', backref='payment', lazy=True)
 
     def __repr__(self):  # Método para representar un objeto de pregunta de seguridad como una cadena
-        return '<Transaction %r>' % self.id
+        return '<Payment %r>' % self.id
     
     def serialize(self):  # Método para serializar un objeto de pregunta de seguridad a un diccionario JSON
         return {  # Devolver un diccionario con los atributos de la pregunta de seguridad
@@ -278,14 +278,14 @@ class Transaction(db.Model):
 
 
 # Tabla de Detalles de la Transacción #aun no defino que deberia ir aca
-class TransactionDetail(db.Model):
+class PaymentDetail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    transaction_id = db.Column(db.Integer, db.ForeignKey('transaction.id'), nullable=False)
+    payment_id = db.Column(db.Integer, db.ForeignKey('payment.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     subtotal = db.Column(db.Float, nullable=False)
 
     def __repr__(self):  # Método para representar un objeto de pregunta de seguridad como una cadena
-        return '<TransactionDetail %r>' % self.id
+        return '<PaymentDetail %r>' % self.id
 
 
 
