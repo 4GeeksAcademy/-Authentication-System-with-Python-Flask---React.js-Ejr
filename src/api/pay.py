@@ -1,5 +1,4 @@
 # pipenv install stripe
-#! /usr/bin/env python3.6
 
 import os
 from flask import Flask, redirect, request
@@ -21,7 +20,7 @@ def create_checkout_session():
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': '{{PRICE_ID}}',
+                    'precio': '{{vehiculo_id}}',
                     'quantity': 1,
                 },
             ],
