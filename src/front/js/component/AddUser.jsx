@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 export const AddUser = () => {
     const { actions } = useContext(Context);
-    const [selectedRole, setSelectedRole] = useState(null);
-    const [isUsers, setIsUsers] = useState(true);
-    const [certificate] = useState()
+    const [selectedRole, setSelectedRole] = useState(null)
+    const [isUsers, setIsUsers] = useState(true)
+    const [certificate, setCertificate] = useState()
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({
         email: '',
         password: '',
@@ -21,11 +23,10 @@ export const AddUser = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
         if (name === 'isPeople') {
-            setSelectedRole(value);
-            let updatedData = {}; // Variable para almacenar los datos actualizados
-            // Dependiendo del rol seleccionado, actualiza userData con la propiedad correspondiente y elimina las otras
+            setSelectedRole(value)
+            let updatedData = {}
             if (value === 'user') {
-                updatedData = { isUser: isUsers };
+                updatedData = { isUser: isUsers }
                 setUserData(prevState => ({
                     ...prevState,
                     ...updatedData,
@@ -33,7 +34,7 @@ export const AddUser = () => {
                     isManager: undefined
                 }));
             } else if (value === 'teacher') {
-                updatedData = { isTeacher: isUsers };
+                updatedData = { isTeacher: isUsers }
                 setUserData(prevState => ({
                     ...prevState,
                     ...updatedData,
@@ -42,7 +43,7 @@ export const AddUser = () => {
                     certificateTeacher: certificate 
                 }));
             } else if (value === 'manager') {
-                updatedData = { isManager: isUsers };
+                updatedData = { isManager: isUsers }
                 setUserData(prevState => ({
                     ...prevState,
                     ...updatedData,
@@ -58,12 +59,13 @@ export const AddUser = () => {
         }
     };
 
-    const handleSubmit = (event) => {
+    async function handleSubmit(event){
         event.preventDefault();
-        actions.createUser(userData, selectedRole)
+        await actions.createUser(userData, selectedRole)
+        navigate('/LogIn')
     };
 
-    console.log(userData, selectedRole);
+    
 
     return (
         <form className="container mx-auto mt-5 row g-3 needs-validation" onSubmit={handleSubmit} noValidate>
@@ -80,7 +82,6 @@ export const AddUser = () => {
                     onChange={handleChange}
                     value={userData.name}
                     required />
-                <div className="valid-feedback">Looks good!</div>
             </div>
 
             <div className='col-md-4'>
@@ -92,7 +93,6 @@ export const AddUser = () => {
                     onChange={handleChange}
                     value={userData.lastName}
                     required />
-                <div className="valid-feedback">Looks good!</div>
             </div>
 
             <div className={`col-md-3 ${(selectedRole === 'teacher' || selectedRole === 'user') ? 'd-block' : 'd-none'}`}>
@@ -105,9 +105,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.username}
                         required />
-                    <div className="invalid-feedback">Please choose a username.</div>
                 </div>
             </div>
+            
             <div className='col-md-3'>
                 <label className="form-label">Role</label>
                 <div className="input-group has-validation">
@@ -119,6 +119,7 @@ export const AddUser = () => {
                     </select>
                 </div>
             </div>
+
             <div className={`col-md-4 ${(selectedRole === 'manager') ? 'd-none' : 'd-block' }`}>
                 <label className="form-label">Number Document</label>
                 <input
@@ -129,12 +130,12 @@ export const AddUser = () => {
                     onChange={handleChange}
                     value={userData.numberDocument}
                     required />
-                <div className="invalid-tooltip">Please provide a valid number document.</div>
             </div>
+
             <div className={`col-md-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block' }`}>
                 <label className="form-label">Gender</label>
                 <select className="form-select" name='gender' onChange={handleChange} value={userData.gender} required>
-                    <option selected disabled value="Choose">Choose</option>
+                    <option selected value="">--Choose--</option>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
                 </select>
@@ -151,6 +152,7 @@ export const AddUser = () => {
                     required />
                 <div className="invalid-tooltip">Please provide a valid Phone.</div>
             </div>
+
             <div className={`col-md-1 ${(selectedRole === 'manager') ? 'd-none' : 'd-block' }`}>
                 <label className="form-label">Age</label>
                 <input
