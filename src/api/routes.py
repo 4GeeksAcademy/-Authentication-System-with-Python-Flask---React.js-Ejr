@@ -20,7 +20,7 @@ CORS(api)
 @api.route('/signup/user', methods=['POST'])
 def create_signup_user():
     try:
-        #Obtenermos los datos de los campo del body
+        #Obtenermos los datos de los campos del body
         email =  request.json.get('email')
         password = request.json.get('password')
         is_user = request.json.get('isUser')
