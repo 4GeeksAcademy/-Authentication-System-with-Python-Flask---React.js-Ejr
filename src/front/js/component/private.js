@@ -8,7 +8,7 @@ const Private = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        actions.
+        actions.Private();
         
     };
 
