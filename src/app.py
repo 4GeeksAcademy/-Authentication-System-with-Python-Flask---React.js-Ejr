@@ -108,7 +108,9 @@ def create_new_user():
 
     db.session.add(new_user)
     db.session.commit()
+
     new_user_id = new_user.id
+
     access_token = create_access_token(identity=new_user_id, additional_claims={"role": new_user.role})
 
     return jsonify({'access_token': access_token}), 200
@@ -131,6 +133,7 @@ def get_user_data(user_id):
 @jwt_required()
 def add_or_update_user_data():
     data = request.json
+    print(data)
     existing_user_data = User_data.query.filter_by(user_id=get_jwt_identity()).first()
     
     if existing_user_data:

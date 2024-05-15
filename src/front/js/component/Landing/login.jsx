@@ -39,7 +39,6 @@ export const Login = () => {
     e.preventDefault();
 
     actions.login(data);
-    console.log("token", store.token);
 
     setShowModal(false);
   };
