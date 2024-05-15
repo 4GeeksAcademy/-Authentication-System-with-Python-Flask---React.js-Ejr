@@ -1,4 +1,6 @@
 import { jwtDecode } from "jwt-decode";
+import userForm from "../pages/User/userForm";
+import { useNavigate } from "react-router-dom";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -32,9 +34,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
+					setStore({ token: data.access_token, user_id: decoded.sub, role: decoded.role });
+					return true;
 				}
 			},
+
 			signUp: async (email, password) => {
 				const response = await fetch(process.env.BACKEND_URL + "/signup", {
 					method: 'POST',
@@ -48,18 +52,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				if (response.ok) {
 					const data = await response.json()
-					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
 				}
 			},
-			fetchData: async (url, options) => {
-				const response = await fetch(url, options);
-				const data = await response.json();
-				return data;
-			},
-		}
-	};
+
+			postUserData: async (formData) => {
+				const store = getStore()
+				const response = await fetch(`${process.env.BACKEND_URL}/user_data`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: "Bearer " + store.token
+					},
+					body: JSON.stringify(formData),
+				});
+
+				if (response.ok) {
+
+					const decoded = jwtDecode(store.token);
+					setStore({ user_id: decoded.sub, role: decoded.role });
+				} else {
+					console.error('Error al enviar los datos');
+				}
+			}, catch(error) {
+				console.error('Error de red:', error);
+			}
+		},
+
+		fetchData: async (url, options) => {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			return data;
+		},
+	}
 };
+
 
 export default getState;
