@@ -39,11 +39,9 @@ export const Login = () => {
     e.preventDefault();
 
     actions.login(data);
-    console.log("token", store.token);
 
-		setShowModal(false);
-
-	};
+    setShowModal(false);
+  };
 
   return (
     <div className="login">

@@ -15,8 +15,6 @@ const userForm = () => {
         user_illness: '',
         user_objetives: ''
     });
-console.log("store", store.token)
-console.log("local", sessionStorage.getItem("token"))
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,9 +25,8 @@ console.log("local", sessionStorage.getItem("token"))
     };
 
 
-    const  handleSubmit = async () => {
-        console.log(formData)
-        console.log(store.token)
+    const handleSubmit = async () => {
+
         try {
 
             if (
@@ -41,26 +38,16 @@ console.log("local", sessionStorage.getItem("token"))
             ) {
                 alert('Por favor, complete todos los campos.');
                 return;
-            }
-
-            const response = await fetch(`${process.env.BACKEND_URL}/user_data`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + store.token
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                navigate('/user');
             } else {
-                console.error('Error al enviar los datos');
+                actions.postUserData(formData);
+                navigate("/user")
             }
-        } catch (error) {
+        }
+
+        catch (error) {
             console.error('Error de red:', error);
         }
-    }
+    };
 
     return (
         <div className="container-form">
