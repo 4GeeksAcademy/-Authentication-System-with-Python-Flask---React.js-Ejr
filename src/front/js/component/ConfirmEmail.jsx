@@ -23,7 +23,7 @@ function ConfirmarEmail() { // Define el componente React para confirmar el emai
             setIsConfirmed(true); // Actualiza el estado a confirmado.
             setTimeout(() => {
               navigate('/'); // Redirige al usuario a la página de inicio después de 3 segundos.
-            }, 9000);
+            }, 2000);
           } else {
             setIsConfirmed(false); // Actualiza el estado a no confirmado si falla.
           }

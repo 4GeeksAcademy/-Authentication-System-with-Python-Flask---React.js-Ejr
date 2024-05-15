@@ -413,43 +413,52 @@ def delete_role(role_id):  # Define una función para manejar las solicitudes DE
     
 #------------------------------------------- PERMISOS ------------------------------------------------------------------
 #------------------ CREAR PERMISO---------------
-@api.route('/master/permissions', methods=['POST'])
-# @jwt_required()
+@api.route('/master/permissions', methods=['POST'])  # Define el endpoint para crear nuevos permisos.
+# @jwt_required() # Comentado aquí, pero este decorador requeriría autenticación con JWT para acceder a este endpoint.
 def create_permissions():
     try:
-        data = request.json
+        data = request.json  # Obtiene los datos enviados en formato JSON.
         if not data:
-            return jsonify({'error': 'No data provided'}), 400
+            return jsonify({'error': 'No data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos.
 
-        # Preparar los datos para siempre trabajar con una lista
-        if isinstance(data, dict):  # Si es un solo objeto, conviértelo en una lista
+        if isinstance(data, dict):  # Si los datos son un solo objeto, conviértelos en una lista.
             data = [data]
 
-        if not isinstance(data, list):  # Verificar si la data es ahora una lista
+        if not isinstance(data, list):  # Verifica si los datos son una lista.
             return jsonify({'error': 'Expected a list or a single object of permissions'}), 400
 
-        created_permissions = []
+        created_permissions = []  # Lista para almacenar los permisos creados.
+        duplicate_permissions = []  # Lista para almacenar los nombres de los permisos duplicados.
         for item in data:
-            if 'name' not in item or not item['name'].strip():
+            if 'name' not in item or not item['name'].strip():  # Verifica que cada permiso tenga un nombre.
                 return jsonify({'error': 'Name is required for each permission'}), 400
 
-            description = item.get('description', '').strip()
+            description = item.get('description', '').strip()  # Obtiene la descripción del permiso, si existe.
+            existing_permission = Permission.query.filter_by(name=item['name']).first()  # Busca si el permiso ya existe.
 
-            # Verificar si el permiso ya existe para evitar duplicados
-            if Permission.query.filter_by(name=item['name']).first():
-                return jsonify({'error': 'Name permission is duplicate'}), 400
+            if existing_permission:  # Si el permiso ya existe, lo añade a la lista de duplicados.
+                duplicate_permissions.append(item['name'])
+                continue  # Continúa con el siguiente item sin crear un duplicado.
 
-            new_permission = Permission(name=item['name'], description=description)
+            new_permission = Permission(name=item['name'], description=description)  # Crea una nueva instancia de Permission.
             db.session.add(new_permission)
-            created_permissions.append({'name': item['name'], 'id': new_permission.id})
+            db.session.flush()  # Asigna un ID antes del commit final.
+            created_permissions.append({'name': item['name'], 'id': new_permission.id})  # Añade el nuevo permiso a la lista de creados.
 
-        db.session.commit()
+        db.session.commit()  # Confirma todos los cambios en la base de datos.
 
-        return jsonify({'message': 'Permissions created successfully', 'permissions': created_permissions}), 201
+        response = {
+            'message': 'Permissions created successfully',
+            'permissions': created_permissions
+        }
+        if duplicate_permissions:  # Si hay duplicados, añade una nota al respecto en la respuesta.
+            response['duplicate'] = f"The following permissions already existed and were not created: {', '.join(duplicate_permissions)}"
 
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        return jsonify(response), 201  # Retorna los detalles de los permisos creados y los duplicados, si los hay.
+
+    except Exception as e:  # Captura cualquier excepción que ocurra durante la ejecución.
+        db.session.rollback()  # Realiza un rollback para mantener la consistencia de la base de datos.
+        return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
 
 
 #------------------ CONSULTAR PERMISO O TODOS LOS PERMISOS---------------
@@ -502,10 +511,6 @@ def delete_permission(permission_id):  # Define la función para manejar las sol
     except Exception as e:  # Captura cualquier excepción que ocurra durante la ejecución
         db.session.rollback()  # Realiza un rollback para evitar inconsistencias en la base de datos
         return jsonify({'error': 'Error deleting permission: ' + str(e)}), 500  # Devuelve un mensaje de error con el código de estado 500 (Internal Server Error)
-
-
-
-
 
 
 #------ actualizar el usuario---------
@@ -670,8 +675,9 @@ def create_normal_user_token():  # Define la función que manejará la solicitud
         if true_o_false:  # Si la comparación es verdadera, es decir, las contraseñas coinciden
             expires = timedelta(days=1)  # Configuramos la duración del token de acceso
             user_id = existing_user.id  # Obtenemos el ID del usuario existente en la base de datos
+            role = existing_user.role.name  # Obtenemos el ID del usuario existente en la base de datos
             access_token = create_access_token(identity=user_id, expires_delta=expires)  # Creamos un token de acceso para el usuario
-            return jsonify({'access_token': access_token, 'login': True}), 200  # Devolvemos el token de acceso como respuesta exitosa
+            return jsonify({'access_token': access_token, 'login': True, 'role':role}), 200  # Devolvemos el token de acceso como respuesta exitosa
         else:  # Si la comparación de contraseñas es falsa, es decir, las contraseñas no coinciden
             return jsonify({'error': 'Incorrect password'}), 400  # Devolvemos un mensaje de error indicando que la contraseña es incorrecta
 
@@ -788,93 +794,57 @@ def get_training_classes():  # Función que maneja la solicitud GET para obtener
 
 
 #Crear una nueva clase (POST)
-@api.route('/training_classes', methods=['POST'])
-@jwt_required()
-def create_training_class():
-    data = request.get_json()
-    if not data:
-        return jsonify({'error': 'No input data provided'}), 400
-
-    name = data.get('name')
-    description = data.get('description')
-    instructor_id = data.get('instructor_id')
-    day_of_week = data.get('day_of_week')
-    start_time = data.get('start_time')
-    duration = data.get('duration')
-    available_slots = data.get('available_slots')
-
-    if not all([name, description, instructor_id, day_of_week, start_time, duration, available_slots]):
-        return jsonify({'error': 'Missing data'}), 400
-
-    try:
-        new_class = Training_classes(
-            name=name,
-            description=description,
-            instructor_id=instructor_id,
-            day_of_week=day_of_week,
-            start_time=start_time,
-            duration=duration,
-            available_slots=available_slots
-        )
-        db.session.add(new_class)
-        db.session.commit()
-        return jsonify({'message': 'Training class created successfully', 'class_id': new_class.id}), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
-
-###PROBAR ESTE CODIGO
-# @api.route('/training_classes', methods=['POST'])  # Define el endpoint para crear nuevas clases de entrenamiento. Se usa el método POST.
+@api.route('/training_classes', methods=['POST'])  # Define el endpoint para crear nuevas clases de entrenamiento. Se usa el método POST.
 # @jwt_required()  # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan crear clases.
-# def create_training_classes():  # Función que maneja la solicitud POST para crear clases de entrenamiento.
-#     data = request.get_json()  # Obtiene los datos enviados en formato JSON.
-#     if not data:  # Verifica si no se proporcionaron datos.
-#         return jsonify({'error': 'No input data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos y un código de estado HTTP 400.
+def create_training_classes():  # Función que maneja la solicitud POST para crear clases de entrenamiento.
+    data = request.get_json()  # Obtiene los datos enviados en formato JSON.
+    if not data:  # Verifica si no se proporcionaron datos.
+        return jsonify({'error': 'No input data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos y un código de estado HTTP 400.
 
-#     if isinstance(data, dict):  # Si los datos son un solo objeto, conviértelos en una lista para manejarlos de manera uniforme.
-#         data = [data]
+    if isinstance(data, dict):  # Si los datos son un solo objeto, conviértelos en una lista para manejarlos de manera uniforme.
+        data = [data]
 
-#     created_classes = []  # Lista para almacenar las instancias de las clases creadas.
-#     errors = []  # Lista para almacenar los errores que puedan ocurrir.
-#     for item in data:  # Itera sobre cada elemento de los datos recibidos.
-#         name = item.get('name')
-#         description = item.get('description')
-#         instructor_id = item.get('instructor_id')
-#         day_of_week = item.get('day_of_week')
-#         start_time = item.get('start_time')
-#         duration = item.get('duration')
-#         available_slots = item.get('available_slots')
+    created_classes = []  # Lista para almacenar las instancias de las clases creadas.
+    errors = []  # Lista para almacenar los errores que puedan ocurrir.
+    for item in data:  # Itera sobre cada elemento de los datos recibidos.
+        name = item.get('name')
+        description = item.get('description')
+        instructor_id = item.get('instructor_id')
+        date_class = item.get('date_class')
+        start_time = item.get('start_time')
+        duration_minutes = item.get('duration_minutes')
+        available_slots = item.get('available_slots')
 
-#         # Verifica que todos los campos necesarios están presentes.
-#         if not all([name, description, instructor_id, day_of_week, start_time, duration, available_slots]):
-#             errors.append({'error': 'Missing data for class', 'class_info': item})  # Agrega un error si falta algún dato.
-#             continue
+        # Verifica que todos los campos necesarios están presentes.
+        if not all([name, date_class, start_time, duration_minutes, available_slots]):
+            errors.append({'error': 'Missing data for class', 'class_info': item})  # Agrega un error si falta algún dato.
+            continue
 
-#         try:
-#             new_class = Training_classes(
-#                 name=name,
-#                 description=description,
-#                 instructor_id=instructor_id,
-#                 day_of_week=day_of_week,
-#                 start_time=start_time,
-#                 duration=duration,
-#                 available_slots=available_slots
-#             )
-#             db.session.add(new_class)  # Agrega la nueva clase a la sesión de la base de datos.
-#             created_classes.append(new_class)  # Agrega la clase creada a la lista de clases creadas.
-#         except Exception as e:
-#             errors.append({'error': str(e), 'class_info': item})  # Agrega un error si ocurre una excepción durante la creación.
-#             db.session.rollback()  # Realiza un rollback para evitar inconsistencias en la base de datos.
-#             continue
+        try:
+            new_class = Training_classes(
+                name=name,
+                description=description,
+                instructor_id=instructor_id,
+                date_class=date_class,
+                start_time=start_time,
+                duration_minutes=duration_minutes,
+                available_slots=available_slots
+            )
+            db.session.add(new_class)  # Agrega la nueva clase a la sesión de la base de datos.
+            created_classes.append(new_class)  # Agrega la clase creada a la lista de clases creadas.
+        except Exception as e:
+            errors.append({'error': str(e), 'class_info': item})  # Agrega un error si ocurre una excepción durante la creación.
+            db.session.rollback()  # Realiza un rollback para evitar inconsistencias en la base de datos.
+            continue
 
-#     db.session.commit()  # Guarda los cambios en la base de datos si todo fue correcto.
+    db.session.commit()  # Guarda los cambios en la base de datos si todo fue correcto.
     
-#     if errors:
-#         # Retorna un estado 207 Multi-Status si hubo errores pero algunas clases se crearon correctamente.
-#         return jsonify({'errors': errors, 'created_classes': [{'class_id': cls.id, 'name': cls.name} for cls in created_classes]}), 207
+    if errors:
+        # Retorna un estado 207 Multi-Status si hubo errores pero algunas clases se crearon correctamente.
+        return jsonify({'errors': errors, 'created_classes': [{'class_id': cls.id, 'name': cls.name} for cls in created_classes]}), 207
 
-#     # Retorna un mensaje de éxito y la lista de clases creadas si no hubo errores.
-#     return jsonify({'message': 'Training classes created successfully', 'created_classes': [{'class_id': cls.id, 'name': cls.name} for cls in created_classes]}), 201
+    # Retorna un mensaje de éxito y la lista de clases creadas si no hubo errores.
+    return jsonify({'message': 'Training classes created successfully', 'created_classes': [{'class_id': cls.id, 'name': cls.name} for cls in created_classes]}), 201
 
 
 #Modificar una clase existente (PUT)
@@ -950,37 +920,57 @@ def get_histoy_memberships():  # Función que maneja la solicitud GET para obten
 
 
 #Crear una MEMBRESIA  (POST)
-@api.route('/memberships', methods=['POST'])  # Define el endpoint para crear nuevas membresías. Se usa el método POST.
-@jwt_required()  # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan crear membresías.
-def create_membership():  # Función que maneja la solicitud POST para crear una membresía.
+@api.route('/memberships', methods=['POST'])  # Define el endpoint para crear nuevas membresías.
+# @jwt_required() # Comentado aquí, pero este decorador requeriría autenticación con JWT para acceder a este endpoint.
+def create_memberships():
     data = request.get_json()  # Obtiene los datos enviados en formato JSON.
     if not data:
-        return jsonify({'error': 'No input data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos y un código de estado HTTP 400.
+        return jsonify({'error': 'No input data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos.
 
-    name = data.get('name')  # Obtiene el nombre de la membresía de los datos.
-    description = data.get('description')  # Obtiene la descripción de la membresía.
-    price = data.get('price')  # Obtiene el precio de la membresía.
-    duration_days = data.get('duration_days')  # Obtiene la duración en días de la membresía.
-    classes_per_month = data.get('classes_per_month')  # Obtiene el número de clases permitidas por mes bajo esta membresía.
+    if isinstance(data, dict):  # Si los datos son un solo objeto, conviértelos en una lista.
+        data = [data]
 
-    # Verifica si los campos esenciales están presentes.
-    if not all([name, description, price]):
-        return jsonify({'error': 'Missing data'}), 400  # Retorna un mensaje de error si falta algún dato esencial y un código de estado HTTP 400.
+    if not isinstance(data, list):  # Verifica si los datos son una lista.
+        return jsonify({'error': 'Expected a list or a single object of memberships'}), 400
 
-    try:
-        new_membership = Membership(
-            name=name,
-            description=description,
-            price=price,
-            duration_days=duration_days,
-            classes_per_month=classes_per_month
-        )  # Crea una instancia de la membresía con los datos proporcionados.
-        db.session.add(new_membership)  # Agrega la nueva membresía a la sesión de la base de datos.
-        db.session.commit()  # Guarda los cambios en la base de datos.
-        return jsonify({'message': 'Membership created successfully', 'membership_id': new_membership.id}), 201  # Retorna un mensaje de éxito y el ID de la membresía creada con un código de estado HTTP 201.
-    except Exception as e:
-        db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error.
-        return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
+    created_memberships = []  # Lista para almacenar las membresías creadas.
+    errors = []  # Lista para almacenar errores durante la creación.
+    for item in data:
+        # Extrae y verifica los campos necesarios para crear una membresía.
+        name = item.get('name')
+        description = item.get('description')
+        price = item.get('price')
+        duration_days = item.get('duration_days')
+        classes_per_month = item.get('classes_per_month')
+
+        # Verifica que los campos obligatorios estén presentes.
+        if not all([name, description, price]):
+            errors.append({'error': 'Missing data', 'membership_info': item})
+            continue  # Si falta información, añade un error y continúa con el siguiente item.
+
+        try:
+            # Crea una nueva instancia de Membership y la añade a la base de datos.
+            new_membership = Membership(
+                name=name,
+                description=description,
+                price=price,
+                duration_days=duration_days,
+                classes_per_month=classes_per_month
+            )
+            db.session.add(new_membership)
+            created_memberships.append(new_membership)  # Añade la membresía creada a la lista de creadas.
+        except Exception as e:
+            errors.append({'error': str(e), 'membership_info': item})  # Añade un error si hay excepciones durante la creación.
+            db.session.rollback()
+            continue  # Realiza un rollback y continúa con el siguiente item.
+
+    db.session.commit()  # Confirma todos los cambios en la base de datos.
+    
+    # Genera la respuesta final basada en si hubo errores o no.
+    if errors:
+        return jsonify({'errors': errors, 'created_memberships': [{'membership_id': m.id, 'name': m.name} for m in created_memberships]}), 207  # HTTP 207 Multi-Status si hubo errores pero también se crearon algunas membresías.
+
+    return jsonify({'message': 'Memberships created successfully', 'created_memberships': [{'membership_id': m.id, 'name': m.name} for m in created_memberships]}), 201  # HTTP 201 Created si todas las membresías se crearon exitosamente sin errores.
 
     
 #Modificar una MEMBRESIA existente (PUT)

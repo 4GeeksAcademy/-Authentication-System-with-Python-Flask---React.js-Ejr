@@ -61,22 +61,28 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     
     def serialize(self):  # Método para serializar un objeto de usuario a un diccionario JSON
         return {  # Devolver un diccionario con los atributos del usuario
-            "id": self.id,
-            "email": self.email,
-            "image": self.image_url,
-            "username": self.username,  # Faltó definir este atributo en la clase
-            "name": self.name, 
-            "last_name": self.last_name,  # Faltó definir este atributo en la clase
-            "role": self.role.name if self.role else "N/A",  # Mostrar "N/A" si no hay rol
-            "permissions": [perm.permission.serialize() for perm in self.role.role_permissions] if self.role else [],
-            "security_questions_question1": self.security_questions[0].question if self.security_questions else "N/A",
-            "security_questions_answer1": self.security_questions[0].answer if self.security_questions else "N/A",
-            "security_questions_question2": self.security_questions[1].question if self.security_questions else "N/A",
-            "security_questions_answer2": self.security_questions[1].answer if self.security_questions else "N/A",
-            "password": self.password,
-            "register_date": self.registration_date.isoformat(),  # Formato ISO de la fecha
-            "account_update": self.last_update_date.isoformat()  # Formato ISO de la fecha
-        }
+        "id": self.id,
+        "email": self.email,
+        "image": self.image_url,
+        "username": self.username,
+        "name": self.name, 
+        "last_name": self.last_name,
+        "role": self.role.name if self.role else "N/A",  # Mostrar "N/A" si no hay rol
+        "security_questions_question1": self.security_questions[0].question if self.security_questions else "N/A",
+        "security_questions_answer1": self.security_questions[0].answer if self.security_questions else "N/A",
+        "security_questions_question2": self.security_questions[1].question if self.security_questions else "N/A",
+        "security_questions_answer2": self.security_questions[1].answer if self.security_questions else "N/A",
+        "password": self.password,
+        "register_date": self.registration_date.isoformat(),  # Formato ISO de la fecha
+        "account_update": self.last_update_date.isoformat(),  # Formato ISO de la fecha
+        "active_membership_is_active": self.active_membership.is_active if self.active_membership else "N/A",
+        "membership_start_date": self.active_membership.start_date.isoformat() if self.active_membership else "N/A",
+        "membership_end_date": self.active_membership.end_date.isoformat() if self.active_membership else "N/A",
+        "membership_description": self.active_membership.membership.description if self.active_membership and self.active_membership.membership else "N/A",
+        "membership_remaining_classes": self.active_membership.membership.remaining_classes if self.active_membership and self.active_membership.membership else "N/A",
+        
+    }
+
     
     
 # Tabla de Asignación de Preguntas de Seguridad
@@ -191,7 +197,11 @@ class UserMembershipHistory(db.Model):
             "history_membership_id": self.id,
             "membership_id": self.membership_id,
             "user_id": self.user_id,
-            "user_name": self.user.name
+            "user_name": self.user.name,
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+            "remaining_classes": self.remaining_classes,
+            "is_active": self.is_active
         }
     
     
@@ -199,13 +209,13 @@ class UserMembershipHistory(db.Model):
 class Training_classes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    instructor = db.Column(db.String(100), nullable=False)
-    day_of_week = db.Column(db.Date)  # Día de la semana (e.g., Lunes, Martes, etc.)
+    description = db.Column(db.Text, nullable=True)
+    instructor = db.Column(db.String(100), nullable=True)
+    date_class = db.Column(db.Date)  # Día de la semana (e.g., Lunes, Martes, etc.)
     start_time = db.Column(db.Time, nullable=False)  # Hora de inicio de la clase
-    duration = db.Column(db.Integer, nullable=False)  # Duración en minutos
+    duration_minutes = db.Column(db.Integer, nullable=False)  # Duración en minutos
     available_slots = db.Column(db.Integer, nullable=False)  # Cupos disponibles en la clase
-    instructor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Foreign key para el instructor
+    instructor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Foreign key para el instructor
     
     instructor = db.relationship("User")  # Relación con la tabla de usuarios
 
@@ -216,10 +226,10 @@ class Training_classes(db.Model):
         return {  # Devolver un diccionario con los atributos de la pregunta de seguridad
             "id": self.id,
             "name": self.name,
-            "day_of_week": self.day_of_week,
+            "date_class": self.date_class,
             "start_time": self.start_time.strftime('%H:%M'),  # Formato de hora como HH:MM
-            "duration": self.duration,
-            "instructor": self.instructor.name,
+            "duration_minutes": self.duration_minutes,
+            "instructor":self.instructor.name if self.instructor else "",
             "available_slots": self.available_slots,
         }
 
