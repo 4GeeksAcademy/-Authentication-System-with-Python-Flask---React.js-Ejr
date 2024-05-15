@@ -1,14 +1,34 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
-
-
+import Signup from "./component/registroUsuario";
+import Login from "./component/iniciarSesion";
 import "../../styles/home.css";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
 
-	return (
-		<h1>HOME</h1>
-	);
+    const handleSignup = (email, password) => {
+        actions.Signup(email, password);
+    };
+
+    const handleLogin = (email, password) => {
+        actions.Login(email, password);
+    };
+
+    return (
+        <div>
+            <h1>HOME</h1>
+            <div>
+                <h2>Signup Form</h2>
+                <Signup onSubmit={handleSignup} />
+            </div>
+            <div>
+                <h2>Login Form</h2>
+                <Login onSubmit={handleLogin} />
+            </div>
+        </div>
+    );
 };
+
+export default Home;
