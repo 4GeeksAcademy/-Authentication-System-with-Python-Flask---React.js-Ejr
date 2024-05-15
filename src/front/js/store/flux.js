@@ -11,6 +11,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
 				}
 			},
+			youtubeOptions: {
+				method: 'GET',
+				headers: {
+					'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com',
+					'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+				}
+			},
 		},
 		actions: {
 			logOut: () => {
@@ -33,6 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
 					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
+
 				}
 			},
 			signUp: async (email, password) => {
@@ -50,10 +58,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json()
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token, email: decoded.sub, role: decoded.role });
 				}
 			},
-			fetchData: async (url, options) => {
+			fetchDataExercice: async (url, options) => {
 				const response = await fetch(url, options);
 				const data = await response.json();
 				return data;
