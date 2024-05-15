@@ -1,13 +1,12 @@
 
-import React, { useState, useEffect, useContext } from "react"; // Importación de React y algunos hooks
-import styles from "./Register.module.css"; // Importación de estilos CSS
-import { Link } from "react-router-dom"; // Importación de Link para la navegación
+import React, { useContext, useState } from "react"; // Importación de React y algunos hooks
+import { Link, useNavigate } from "react-router-dom"; // Importación de Link para la navegación
 import { Context } from "../store/appContext"; // Importación del contexto
-import { useNavigate } from "react-router-dom"; // Importación de useNavigate para la navegación programática
+import styles from "./Register.module.css"; // Importación de estilos CSS
 
 const Register = () => {
     const { store, actions } = useContext(Context); // Obtención del estado global, las acciones y la función setStore desde el contexto
-  const { creationState } = store; // Obtención del estado de inicio de sesión y los datos recuperados del usuario desde el estado global
+    const { creationState } = store; // Obtención del estado de inicio de sesión y los datos recuperados del usuario desde el estado global
     const navigate = useNavigate();
 
     const [userDetails, setUserDetails] = useState({
@@ -16,7 +15,7 @@ const Register = () => {
         password: "",
         name: "",
         last_name: "",
-        role:"athlete",
+        role: "athlete",
         security_questions: [
             { question: "", answer: "" },
             { question: "", answer: "" }
@@ -25,21 +24,21 @@ const Register = () => {
     // console.log(userDetails)
     const handleChange = (e) => {
         const { name, value } = e.target; // Extraemos name y value directamente del evento
-    
+
         // Verificamos si estamos actualizando preguntas de seguridad
         if (name.startsWith("security_question_") || name.startsWith("security_answer_")) {
             // Extraemos el índice y el tipo desde el nombre del campo
             const [type, index] = name.split("_").slice(-2);
             const newSecurityQuestions = [...userDetails.security_questions];
             newSecurityQuestions[index][type] = value;
-    
+
             setUserDetails({ ...userDetails, security_questions: newSecurityQuestions });
         } else {
             // Actualizamos el estado para campos normales
             setUserDetails({ ...userDetails, [name]: value });
         }
     };
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,15 +50,15 @@ const Register = () => {
             alert(store.creationState.error);
         }
     };
-    
+
 
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit}>
                 <h1>REGISTER</h1>
                 <div className={styles.inputGroup}>
-                    <input type="text" name="name" value={userDetails.name} onChange={handleChange} required />
-                    <label>First Name</label>
+                    <input type="text" class="input" name="name" value={userDetails.name} onChange={handleChange} required />
+                    <label className="label">First Name</label>
                 </div>
                 <div className={styles.inputGroup}>
                     <input type="text" name="last_name" value={userDetails.last_name} onChange={handleChange} required />
@@ -70,7 +69,7 @@ const Register = () => {
                     <label>Email</label>
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type="text" name="username" value={userDetails.username} onChange={handleChange} required />
+                    <input type="text" name="username" autoComplete="off" value={userDetails.username} onChange={handleChange} required />
                     <label>Username</label>
                 </div>
                 <div className={styles.inputGroup}>
