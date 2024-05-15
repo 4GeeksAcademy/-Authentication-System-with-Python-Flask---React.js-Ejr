@@ -1,6 +1,7 @@
 import React,{useContext, useState} from "react";
 import { Context } from "../store/appContext";
-//import { useNavigate} from "react-router-dom";
+import swal from 'sweetalert';
+import { useNavigate} from "react-router-dom";
 import "../../styles/index.css";
 
  export const AgregarForm = () => {
@@ -14,17 +15,27 @@ import "../../styles/index.css";
     const [inputCambio, setInputCambio]=useState("")
     const [inputAsientos, setInputAsientos]=useState("")
     const [inputPrecio, setInputPrecio]=useState("")
-   // const navigate = useNavigate();
+    const navigate = useNavigate();
 
      async function handleSubmit(e) {
-         e.preventDefault()
-        if (
-            marca_modelo.trim() == "" || matricula.trim() === '' || motor.trim() === '' || tipo_cambio.trim() === '' || asientos.trim() === '' || precio.trim() === ''
-    ) {
-        setError('Todos los campos son obligatorios');
-            return;
+        e.preventDefault()
+        let añadirVehiculo = await actions.añadirVehiculo(marca_modelo, matricula, motor, tipo_cambio, asientos, precio) 
+        if (añadirVehiculo === "1"){
+            swal ( "Vehículo añadido correctamente",  "success" )
+             navigate("/");
+        } else if (añadirVehiculo === "2") {
+            swal ("Este vehículo ya ha sido añadido" ,  "error" )
+        } else {
+            swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
         }
-        setError('');
+        // e.preventDefault()
+    //     if (
+    //         marca_modelo.trim() == "" || matricula.trim() === '' || motor.trim() === '' || tipo_cambio.trim() === '' || asientos.trim() === '' || precio.trim() === ''
+    // ) {
+    //     setError('Todos los campos son obligatorios');
+    //         return;
+    //     }
+    //     setError('');
      }
     return (
         <div className="container mt-5">

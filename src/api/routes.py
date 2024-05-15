@@ -59,7 +59,7 @@ def add_vehicle():
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
     if existing_vehicle:
-        return jsonify({"msg": "El vehículo con esta matrícula ya existe"}), 400
+        return jsonify({"msg": "El vehículo con esta matrícula ya existe"}), 409
     new_vehicle = Vehicle(
         marca_modelo=marca_modelo,
         matricula=matricula,

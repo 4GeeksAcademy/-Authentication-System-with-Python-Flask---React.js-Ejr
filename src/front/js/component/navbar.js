@@ -47,7 +47,9 @@ export const Navbar = () => {
 								</ul>
 							</div>
 							<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
+								<Link to="/agregarvehiculo" className="text-decoration-none">
 								<button className="btn btn-light">Añadir <i class="fas fa-car-side"></i></button>
+								</Link>
 							</div>
 
 							<div className="btn-group me-2 d-flex justify-content-end mb-1">
