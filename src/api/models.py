@@ -24,7 +24,7 @@ class User(db.Model):
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    img = db.Column(db.String, unique=True, nullable=False)
+    img = db.Column(db.String)
     bodytext = db.Column(db.String(120), unique=False, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id')) 
     user = db.relationship('User', backref='Post', lazy=True)
@@ -41,7 +41,7 @@ class Comment (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
     id_post = db.Column(db.Integer, db.ForeignKey('post.id'))
-    comment = db.Column(db.Integer(), unique=False, nullable=False)
+    comment = db.Column(db.String)
     user = db.relationship('User', backref='Comment', lazy=True)
     post = db.relationship('Post', backref='Comment', lazy=True)
 
@@ -70,12 +70,12 @@ class Like (db.Model):
 class Suggestion (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
-    suggesting = db.Column(db.Boolean(), unique=False, nullable=False)
+    suggestion = db.Column(db.String)
     user = db.relationship('User', backref='Suggestion', lazy=True)
 
     def serialize(self):
         return {
             "id": self.id,
-            "suggesting": self.suggesting,
+            "suggestion": self.suggestion,
             # do not serialize the password, its a security breach
         }

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c165d1929a38
+Revision ID: c7a1f2b78174
 Revises: 
-Create Date: 2024-05-10 19:29:48.159876
+Create Date: 2024-05-15 19:23:06.954890
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c165d1929a38'
+revision = 'c7a1f2b78174'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,23 +22,23 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('name', sa.String(length=250), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('img', sa.String(), nullable=False),
+    sa.Column('img', sa.String(), nullable=True),
     sa.Column('bodytext', sa.String(length=120), nullable=False),
     sa.Column('id_user', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('img')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('suggestion',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('id_user', sa.Integer(), nullable=True),
-    sa.Column('suggesting', sa.Boolean(), nullable=False),
+    sa.Column('suggestion', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -46,7 +46,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('id_user', sa.Integer(), nullable=True),
     sa.Column('id_post', sa.Integer(), nullable=True),
-    sa.Column('comment', sa.Integer(), nullable=False),
+    sa.Column('comment', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['id_post'], ['post.id'], ),
     sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
