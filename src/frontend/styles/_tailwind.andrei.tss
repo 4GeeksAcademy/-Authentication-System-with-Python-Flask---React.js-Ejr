@@ -1,0 +1,12 @@
+/* 
+  use only tailwind classes here when possible, for pure css code, edit _styles.andrei.css
+  remember to run 'npm run tailwind' to apply any change on tailwind styles
+*/
+
+@layer components {
+  /* this is used for entire react parts with several TAILWIND classes, like entire buttons, cards, menus etc... */
+}
+
+@layer utilities {
+  /* this is used for small tweaking classes, like m-8, px-5 */
+}
