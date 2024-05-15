@@ -9,7 +9,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
 	  store: {
-		order: localStorageOrder
+		order: localStorageOrder,
+		user: {
+			isSignedIn: false,
+			username: "",
+			user_id: null
+		}
 	  },
 	  actions: {
 		// Use getActions to call a function within a function
@@ -72,29 +77,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem('order', JSON.stringify(updatedOrder));
 			}
 		},
-		login: async (username, password) => {
-			const resp = await fetch(`${process.env.BACKEND_URL}api/token`, { 
-				 method: "POST",
-				 headers: { "Content-Type": "application/json" },
-				 body: JSON.stringify({ username, password }) 
-			})
-	   
-			if(!resp.ok) throw Error("There was a problem in the login request")
-	   
-			if(resp.status === 401){
-				 throw("Invalid credentials")
-			}
-			else if(resp.status === 400){
-				 throw ("Invalid email or password format")
-			}
-			const data = await resp.json()
-			// Save your token in the localStorage
-			// Also you should set your user into the store using the setItem function
-			localStorage.setItem("jwt-token", data.token);
-			console.log(data.token);
-	   
-			return data
-	   }
+login: async (username, password) => {
+    const resp = await fetch(`${process.env.BACKEND_URL}api/token`, { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }) 
+    });
+
+    if (!resp.ok) throw Error("There was a problem in the login request");
+
+    if (resp.status === 401) {
+        throw new Error("Invalid credentials");
+    } else if (resp.status === 400) {
+        throw new Error("Invalid email or password format");
+    }
+
+    const data = await resp.json();
+    localStorage.setItem("jwt-token", data.token);
+
+    if (data) {
+        const store = getStore();
+        const updatedUser = {
+            isSignedIn: true,
+            username: data.username, // Assuming the API returns the username
+            user_id: data.user_id    // Assuming the API returns the user_id
+        };
+        
+        // Save user data to localStorage
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+
+        setStore({
+            ...store,
+            user: updatedUser
+        });
+    }
+
+    return data;
+}
+
 	  }
 	};
   };

@@ -35,7 +35,7 @@ export const Regions = () => {
 
       <div style={{ flex: 1 }}>
   {Object.keys(store)
-    .filter((region) => region !== 'order')
+    .filter((region) => region !== 'order' && region !== 'user')
     .map((region) => (
       <RegionCard image={getImageForRegion(region)} key={region}>
         <Link to={`/regions/${region.toLowerCase().replace(/\s+/g, '-')}`}>
