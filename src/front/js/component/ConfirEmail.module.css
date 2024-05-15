@@ -1,0 +1,30 @@
+#confirmationBox {
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    background: rgba(211, 211, 211, 0.43);
+    padding: 20px;
+    height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px #ccc;
+    transition: all 0.5s ease;
+  }
+  
+  #confirmationSuccess {
+    margin-right: 10px;
+    border-color: #28a745;
+    color: #28a745;
+    font-size: 3rem;
+
+  }
+  
+  #confirmationError {
+    margin-right: 10px;
+    border-color: #dc3545;
+    color: #dc3545;
+    font-size: 3rem;
+
+  }
+  
+

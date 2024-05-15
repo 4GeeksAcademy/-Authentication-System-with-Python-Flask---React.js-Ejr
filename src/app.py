@@ -13,6 +13,7 @@ from api.routes import api  # Importar el objeto Blueprint para los endpoints de
 from api.admin import setup_admin  # Importar la función para configurar el panel de administración
 from api.commands import setup_commands  # Importar la función para configurar comandos de Flask
 
+
 #------------------verificar con david --------------------------------
 from werkzeug.utils import secure_filename # importacion de secure_filename para manejar imagen
 
@@ -20,7 +21,7 @@ from werkzeug.utils import secure_filename # importacion de secure_filename para
 # Importar JWTManager para manejar la autenticación JWT
 from flask_jwt_extended import JWTManager
 
-
+# Importar dangeus y flask_email para manejar el envio de email
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask_mail import Mail, Message
 
@@ -36,19 +37,19 @@ app.url_map.strict_slashes = False  # Configurar para permitir rutas sin barra a
 
 # Inicializar JWTManager y configurar la clave secreta
 jwt = JWTManager(app)  # Inicializar JWTManager con la aplicación Flask
-app.config["JWT_SECRET_KEY"] = "your-secret-key"  # Definir la clave secreta para JWT (debes cambiarla por una clave segura)
+app.config["JWT_SECRET_KEY"] = os.getenv("KEY_JWT")  # Definir la clave secreta para JWT  se obtiene desde el archivo .env (debes cambiarla por una clave segura)
 
 
 
-
-app.config['SECRET_KEY'] = 'tu_secret_key_super_secreta'
-app.config['SECURITY_PASSWORD_SALT'] = 'tu_salt_super_secreto'
+#------------------------seccion de envio de email----------------------------------------------
+app.config['SECRET_KEY'] = os.getenv("EMAIL_ENCRYPTION_KEY")
+app.config['SECURITY_PASSWORD_SALT'] = os.getenv("EMAIL_ENCRYPTION_PASSWORD")
 
 #configuracion de email
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'newappcrossfit@gmail.com'
-app.config['MAIL_PASSWORD'] = 'melqbhdvkxwwkhkd'
+app.config['MAIL_USERNAME'] = os.getenv("EMAIL_FOR_SEND")
+app.config['MAIL_PASSWORD'] = os.getenv("PASSWORD_SEND_EMAIL")
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
