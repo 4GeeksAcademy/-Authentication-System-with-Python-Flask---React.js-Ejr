@@ -1,13 +1,14 @@
-/* body {
+body {
   background-color: #212121;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0 auto;
-} */
+}
 
 .container {
+  margin-left: 100px;
   display: flex;
   align-items: center;
   padding: 60px;
@@ -21,21 +22,21 @@
     "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   font-weight: 700;
-  color: #e8e8e8;
+  color: #ffffff;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.input-group {
+.inputGroup {
   position: relative;
   margin: 10px 0;
   width: 300px;
 }
 
-.input {
-  border: solid 1.5px #9e9e9e;
+.inputGroup input {
+  border: solid 1.5px #fffefe;
   border-radius: 1rem;
-  background: none;
+  background: rgba(176, 176, 176, 0.644);
   padding: 1rem;
   font-size: 1rem;
   color: #f5f5f5;
@@ -44,10 +45,10 @@
   box-sizing: border-box;
 }
 
-.user-label {
+.label {
   position: absolute;
   left: 15px;
-  color: #e8e8e8;
+  color: #000000d1;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   pointer-events: none;
   transform: translateY(1rem);
@@ -57,52 +58,42 @@
 .input:focus,
 input:valid {
   outline: none;
-  border: 1.5px solid #1a73e8;
+  border: 1.5px solid #3b38ff;
 }
 
-.input:focus ~ label,
+/*.input:focus ~ label,
 input:valid ~ label {
-  transform: translateY(-50%) scale(0.8);
-  background-color: #212121;
+  transform: translateY(-40%) scale(0.8);
+  background-color: #21212100;
   padding: 0 0.2em;
   color: #2196f3;
-}
+}*/
 
-.security-question {
+.securityQuestion {
   border: solid 1.5px #9e9e9e;
   border-radius: 1rem;
-  background: none;
+  background: rgba(176, 176, 176, 0.644);
   padding: 1rem;
   font-size: 1rem;
-  color: #808080;
+  color: #ffffff;
   transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   box-sizing: border-box;
 }
 
-.security-question:focus,
-.security-question:valid {
+.securityQuestion:focus,
+.securityQuestion:valid {
   outline: none;
   border: 1.5px solid #1a73e8;
 }
 
-.security-question:focus ~ .security-label,
-.security-question:valid ~ .security-label {
+/*.securityQuestion:focus ~ label,
+.securityQuestion:valid ~ label {
   transform: translateY(-50%) scale(0.8);
-  background-color: #212121;
+  background-color: #21212100;
   padding: 0 0.2em;
-  color: #2196f3;
-}
-
-.security-label {
-  position: absolute;
-  left: 15px;
-  color: #e8e8e8;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  pointer-events: none;
-  transform: translateY(1rem);
-  transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-}
+  color: #ffffff;
+}*/
 
 .button {
   display: flex;
@@ -111,7 +102,7 @@ input:valid ~ label {
   margin-top: 20px;
 }
 
-.button-Save {
+.buttonSave {
   border: none;
   color: white;
   padding: 10px 15px;
@@ -123,20 +114,20 @@ input:valid ~ label {
   margin: 5px;
 }
 
-.button-Save {
+.buttonSave {
   background-color: #8b8b8b;
 }
 
-.button-Save:hover {
+.buttonSave:hover {
   opacity: 0.8;
 }
 
-.login-link {
+.link {
   color: #2196f3;
   text-decoration: none;
   margin-left: 10px;
 }
 
-.login-link:hover {
+.link:hover {
   text-decoration: underline;
 }
