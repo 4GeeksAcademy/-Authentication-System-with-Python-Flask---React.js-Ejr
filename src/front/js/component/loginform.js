@@ -33,8 +33,9 @@ import React,{useContext, useState} from "react";
                     <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
                     <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                 </div>
+                
+                {loginError ? <div className="text-danger mb-2">Wrong email or password</div> : null}
                 <div className="d-flex justify-content-center">
-                    {loginError ? <div className="text-danger mb-3">Wrong email or password</div> : null}
                     <button type="submit" className="login btn-lg btn-dark">Login</button>
                 </div>
             </form>
