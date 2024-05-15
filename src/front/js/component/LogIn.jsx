@@ -50,11 +50,10 @@ export const LogIn = () => {
         setActive(false)
     }
 
-    function handlerHome(){
+    function handlerHome() {
         navigate('/')
     }
 
-    console.log(selectedRole)
 
     useEffect(() => {
         if (redirectPath !== '') {
@@ -141,15 +140,20 @@ export const LogIn = () => {
                                             <p className='text-decoration-underline' onClick={handlerChangeActive} style={{ cursor: "pointer" }}>Do you want to change roles?</p>
                                         </div>
                                     </div>
-                                    : <div className='col-md-3'>
-                                        <label className="form-label">Role</label>
-                                        <div className="input-group has-validation">
-                                            <select className="form-select" name='isPeople' onChange={handlerChangeLogin} value={selectedRole} required>
-                                                <option value="">--Choose--</option>
-                                                <option value='teacher'>Teacher</option>
-                                                <option value='user'>Student</option>
-                                                <option value='manager'>Manager</option>
-                                            </select>
+                                    : <div className='d-flex justify-content-center my-5'>
+                                        <div className='col-md-8'>
+                                            <div className='text-center'>
+                                               <label className="form-label fw-bold">Role</label> 
+                                            </div>
+                                        
+                                            <div className="input-group has-validation">
+                                                <select className="form-select" name='isPeople' onChange={handlerChangeLogin} value={selectedRole} required>
+                                                    <option value="">--Choose--</option>
+                                                    <option value='teacher'>Teacher</option>
+                                                    <option value='user'>Student</option>
+                                                    <option value='manager'>Manager</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                             }
