@@ -7,6 +7,7 @@ import { Footer } from "./component/footer";
 import { Signup } from "./pages/signup";
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
+import {AgregarVehiculo } from "./pages/agregarvehiculo";
 import { Details } from "./pages/details";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -26,6 +27,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        <Route element={<AgregarVehiculo />} path="/agregarvehiculo" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />

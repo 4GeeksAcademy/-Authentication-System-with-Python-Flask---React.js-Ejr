@@ -8,7 +8,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 			details: {}
 		},
 		actions: {
-      		getMessage: async () => {
+			login: async (email, password) => {
+                try {
+					const response = await fetch("https://animated-robot-g4q69gpj4rrvfppvv-3001.app.github.dev/api/login", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
+					});
+					let data = await response.json()
+					if (response.status === 200) {
+						localStorage.setItem("token", data.access_token);
+						return true;
+					} else {
+						return false
+					}
+				} catch (error) {
+					return false;
+				}
+			},
+			añadirVehiculo: async (marca_modelo,matricula,motor,tipo_cambio,asientos,precio) => {
+                 try {
+			 		let response = await fetch(process.env.BACKEND_URL/api + "/api/agregarvehiculo", {
+			 			method: 'POST',
+			 			headers:{
+			 				'Content-Type':'application/json',
+			 				//'Authorization': "Bearer " + token
+			 			},
+			 			body: JSON.stringify({
+			 		 			marca_modelo: marca_modelo,
+			 		 			matricula: matricula,
+			 		 			motor: motor,
+			 		 			tipo_cambio: tipo_cambio,
+			 		 			asientos: asientos,
+			 					precio: precio
+			 	 		})
+                 	});
+					 	if (response.ok){
+							return "Vehículo añadido correctamente"; 
+							//aqui se podría mostrar un modal con el mensaje
+						} else {
+							throw new Error("Error al añadir vehículo, todos los campos son obligatorios");
+						}
+				 } catch (error) {
+					return error.message;
+				 }	
+				},
+      getVehicles: () => {
+				console.log("Obtener vehiculos");
+				fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle", {
+					method: 'GET'
+				})
+					.then(res => res.json())
+					.then(data => setStore({ vehicles: data.results })
+					)
+					.catch((error) => console.log(error))
+			},
+			getMessage: async () => {
 				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "")
