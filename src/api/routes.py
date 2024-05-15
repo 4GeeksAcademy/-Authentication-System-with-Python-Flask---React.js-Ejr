@@ -41,6 +41,44 @@ def handle_create_post():
         "msg": "El segundo post fue creado por Maikel y Jose"
     }
     return jsonify(response_body), 200
+#------------CREACION DE COMMET---------------------
+
+@api.route('/comment', methods=['POST'])
+def handle_create_comment():
+    data = request.json
+    if 'comment' not in data:
+        return jsonify({"msg": "Missing data"}), 400
+    new_comment = Comment(comment=data['comment'])
+    db.session.add(new_comment)
+    db.session.commit()
+    # Construir la respuesta JSON
+    response_body = {
+        "comments": {
+            "id": new_comment.id,
+            "comment": new_comment.comment,
+             
+        },
+        "msg": "El segundo post fue creado por copilot"
+    }
+    return jsonify(response_body), 200
+
+#------------CREACION DE UN LIKE -----------------------
+@api.route('/like', methods=['POST'])
+def handle_create_like():
+    data = request.json
+    if 'like' not in data:
+        return jsonify({"msg": "Missing data"}), 400
+    new_like = Like(like=data['like'])
+    db.session.add(new_like)
+    db.session.commit()
+    response_body = {
+        "user": {
+            "id": new_like.id,
+            "like": new_like.like,
+        },
+        "msg": "otra vez la mierda de copilot"
+    }
+    return jsonify(response_body), 200
 
 
 

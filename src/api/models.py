@@ -41,7 +41,7 @@ class Comment (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
     id_post = db.Column(db.Integer, db.ForeignKey('post.id'))
-    comment = db.Column(db.Integer(), unique=False, nullable=False)
+    comment = db.Column(db.String)
     user = db.relationship('User', backref='Comment', lazy=True)
     post = db.relationship('Post', backref='Comment', lazy=True)
 
@@ -70,7 +70,7 @@ class Like (db.Model):
 class Suggestion (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
-    suggesting = db.Column(db.Boolean(), unique=False, nullable=False)
+    suggesting = db.Column(db.Boolean, unique=False, nullable=False)
     user = db.relationship('User', backref='Suggestion', lazy=True)
 
     def serialize(self):
