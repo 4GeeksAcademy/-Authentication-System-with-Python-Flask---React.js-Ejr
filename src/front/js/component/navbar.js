@@ -31,60 +31,62 @@ export const Navbar = () => {
 						<h2 className="navbar-text ms-3 mt-2 mb-2 display-4 text-center"><strong>Friendly Wheels</strong></h2>
 					</div>
 				</div>
-					{token ?
-							<div className="d-grid gap-3 col-6">
-								<div className="btn-group me-1">
-									<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0 mb-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Mis <i className="fas fa-car-side"></i>
-										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
-									</button>
-									<ul className="dropdown-menu">
-										{store.myVehicles.length === 0
-											? <li className="text-center">(empty)</li>
-											: <p>Tengo algo</p>  /* En esta linea iria el map */
-										}
-									</ul>
-								</div>
-								<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
-									<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
-								</div>
-		
-								<div className="btn-group me-2 d-flex justify-content-end mb-1">
-									<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
-										Mis <i className="fas fa-heart"></i>
-										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
-									</button>
-									<ul className="dropdown-menu">
-										{store.favorites.length === 0
-											? <li className="text-center">(empty)</li>
-											: (store.favorites.map((item, index) => (
-												<li key={index} className="d-flex justify-content-between text-primary m-2">
-													{item.matricula}
-													<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
-														<i className="fas fa-trash"></i>
-													</button>
-												</li>
-											)))
-										}
-									</ul>
-								</div>
-								<div className="btn-group d-flex justify-content-end mb-1">
-									<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
-								</div>
+				{token ?
+					<div className="d-flex">
+						<div clasName="d-grid gap-3 col-6">
+							<div className="btn-group me-1">
+								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0 mb-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Mis <i class="fas fa-car-side"></i>
+									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
+								</button>
+								<ul className="dropdown-menu">
+									{store.myVehicles.length === 0
+										? <li className="text-center">(empty)</li>
+										: <p>Tengo algo</p>  /* En esta linea iria el map */
+									}
+								</ul>
 							</div>
+							<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
+								<button className="btn btn-light">Añadir <i class="fas fa-car-side"></i></button>
+							</div>
+
+							<div className="btn-group me-2 d-flex justify-content-end mb-1">
+								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
+									Mis <i class="fas fa-heart"></i>
+									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
+								</button>
+								<ul className="dropdown-menu">
+									{store.favorites.length === 0
+										? <li className="text-center">(empty)</li>
+										: (store.favorites.map((item, index) => (
+											<li key={index} className="d-flex justify-content-between text-primary m-2">
+												{item.matricula}
+												<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+													<i className="fas fa-trash"></i>
+												</button>
+											</li>
+										)))
+									}
+								</ul>
+							</div>
+							<div className="btn-group d-flex justify-content-end mb-1">
+								<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i class="fas fa-sign-out-alt"></i></button>
+							</div>
+						</div>
+					</div>
 						: (
-								<div className="d-grid gap-2 col-3">
-									<Link to="/login" className="text-decoration-none">
-										<div className="btn-group d-flex mb-3">
-											<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
-										</div>
-									</Link>
-									<Link to="/signup" className="text-decoration-none">
-										<div className="btn-group d-flex">
-											<button className="btn-lg btn-light">Signup <i className="fas fa-sign-in-alt"></i></button>
-										</div>
-									</Link>
-								</div>
+							<div clasName="d-grid gap-2 col-3">
+								<Link to="/login" className="text-decoration-none">
+									<div className="btn-group d-flex mb-3">
+										<button className="btn-lg btn-light">Login <i class="fas fa-sign-in-alt"></i></button>
+									</div>
+								</Link>
+								<Link to="/signup" className="text-decoration-none">
+									<div className="btn-group d-flex">
+										<button className="btn-lg btn-light">Signup <i class="fas fa-sign-in-alt"></i></button>
+									</div>
+								</Link>
+							</div>
 						)
 					}
 			</div>

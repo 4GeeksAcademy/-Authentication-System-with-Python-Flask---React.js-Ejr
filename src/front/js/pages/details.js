@@ -9,20 +9,16 @@ export const Details = () => {
     const [isFavorite, setIsFavorite] = useState(false);
     const params = useParams();
 
-    const addOrRemove = () => {
+    const addOrRemove = async () => {
         if (!isFavorite) {
-            actions.addFav(store.details.id)
-        } else {
-            actions.removeFav(store.details.id)
-        }
-    }
-
-    useEffect(() => {
-        if (store.favorites.length !== 0) {
+            await actions.addFav(store.details.id)
             const isFav = store.favorites.some((favorite) => favorite.id == params.id);
             setIsFavorite(isFav);
+        } else {
+            await actions.removeFav(store.details.id)
+            setIsFavorite(false);
         }
-    }, [store.favorites]);
+    }
 
     useEffect(() => {
         actions.getDetails(params.id);
