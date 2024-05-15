@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		order: localStorageOrder,
 		user: localStorageUser
 	  },
+
 	  actions: {
 		// Use getActions to call a function within a function
 		fetchCoffee: async () => {
@@ -97,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			const data = await resp.json();
 			localStorage.setItem("jwt-token", data.token);
 
-			if (data) {
+			if (data.token) {
 				const store = getStore();
 				const updatedUser = {
 					isSignedIn: true,
