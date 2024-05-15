@@ -1,10 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      message: null,
-      user: null,
-      error: "",
-      currentRole: "",
+      message: '',
+      user: '',
+      error: '',
+      currentRole: '',
     },
     actions: {
       /* getMessage: async () => {
@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       createUser: async (newUser, userRole) => {
         const store = getStore();
-        console.log(newUser)
+        
         try {
           const respCreateUser = await fetch(
             process.env.BACKEND_URL + `/api/signup/` + userRole,
@@ -102,11 +102,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             );
           }
 
-          const dataGetUser = await respGetUsers.json();
-          setStore({ ...store, user: dataGetUser });
+          const dataGetUser = await respGetUsers.json()
+          setStore({ ...store, user: dataGetUser })
+          console.log(userRole)
+          console.log(store.user)
         } catch (error) {
-          console.error("Error al obtener los datos del usuario: ", error);
-          alert(error);
+          console.error("Error al obtener los datos del usuario: ", error)
+          alert(error)
         }
       },
 
