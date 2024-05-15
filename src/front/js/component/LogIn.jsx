@@ -145,7 +145,7 @@ export const LogIn = () => {
                                         <label className="form-label">Role</label>
                                         <div className="input-group has-validation">
                                             <select className="form-select" name='isPeople' onChange={handlerChangeLogin} value={selectedRole} required>
-                                                <option disabled value="Choose">Choose</option>
+                                                <option value="">--Choose--</option>
                                                 <option value='teacher'>Teacher</option>
                                                 <option value='user'>Student</option>
                                                 <option value='manager'>Manager</option>

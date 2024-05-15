@@ -63,7 +63,6 @@ export const AddUser = () => {
         }
     }
 
-    console.log(userData)
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -158,7 +157,7 @@ export const AddUser = () => {
                     <label className="form-label">Role</label>
                     <div className="input-group has-validation">
                         <select className="form-select" name='isPeople' onChange={handleChange} value={selectedRole} required>
-                            <option disabled value="Choose">Choose</option>
+                            <option value="">--Choose--</option>
                             <option value='teacher'>Teacher</option>
                             <option value='user'>Student</option>
                             <option value='manager'>Manager</option>
@@ -181,7 +180,7 @@ export const AddUser = () => {
                 <div className={`col-md-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block'}`}>
                     <label className="form-label">Gender</label>
                     <select className="form-select" name='gender' onChange={handleChange} value={userData.gender} required>
-                        <option disabled value="">--Choose--</option>
+                        <option value="">--Choose--</option>
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
                     </select>
