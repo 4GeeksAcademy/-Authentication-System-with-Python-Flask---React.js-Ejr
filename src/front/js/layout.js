@@ -13,11 +13,13 @@ import injectContext from "./store/appContext";
 // import { Footer } from "./component/footer";
 
 import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
-import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del componente Navbar
+import LoginUser from "./pages/LoginUser.jsx"
+
 import  Home  from "./pages/Home.jsx";
 import  Footer  from "./component/Footer.jsx";
 import  Plans  from "./pages/Plans.jsx";
 import Benefitis from "./pages/Benefitis.jsx"
+import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del componente Navbar
 
 
 
@@ -41,8 +43,11 @@ const Layout = () => {
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
                         <Route element={<Plans />} path="/Plans" />
                         <Route element={<Benefitis />} path="/Benefitis" />
+                        <Route element={<LoginUser />} path="/Login" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Benefitis />} path="/Benefitis" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>
