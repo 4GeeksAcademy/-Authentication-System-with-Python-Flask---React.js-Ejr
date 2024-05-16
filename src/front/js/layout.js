@@ -20,6 +20,7 @@ import { CentralAmerica } from "./pages/centralAmerica";
 import { MiddleEast } from "./pages/middleEast";
 import { SouthAmerica } from "./pages/southAmerica";
 import { Regions } from "./pages/regions";
+import { OrderView } from "./pages/payment";
 
 
 //create your first component
@@ -50,6 +51,7 @@ const Layout = () => {
                         <Route element={<SouthAmerica />} path="/regions/south-america" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<OrderView />} path="/payment" /> 
                     </Routes>
                     <Footer />
                 </ScrollToTop>
