@@ -64,7 +64,7 @@ export const LogIn = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (prevCounter + 1 === 4) {
+                if (prevCounter + 1 === 4 && store.error == '') {
                     setRedirectPath(`/${selectedRole}View`)
                     clearInterval(interval)
                 }
@@ -75,20 +75,21 @@ export const LogIn = () => {
         return () => clearInterval(interval)
     }, [setRedirectPath, selectedRole])
 
+    console.log(store.error);
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
+
     return (
         <div className=' position-relative'>
-            <div className=' d-flex justify-content-center position-absolute top-00 start-50 translate-middle-x'>
-                <div className={`text-center w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`} >
-                    {"Log In Successfully"}
-                </div>
-
-            </div>
-            {/* <div className={`d-flex justify-content-center position-absolute top-00 start-50 translate-middle-x ${ (store.error == '') ? 'd-none' : 'd-block'}`}>
-                    <div className="text-center w-100 alert alert-danger">
-                        {"Se ha presentado un error al Iniciar Session"}
+            <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x'>
+                {msgError === ''
+                    ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
+                        {"Sign Up Successfully"}
                     </div>
-
-                </div> */}
+                    : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
+                        {msgError}
+                    </div>}
+            </div>
+            
             <div className='row d-flex flex-row'>
                 <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
                     <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>

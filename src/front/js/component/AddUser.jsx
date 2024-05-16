@@ -1,17 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
-
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
 export const AddUser = () => {
     const { store, actions } = useContext(Context);
-    const [selectedRole, setSelectedRole] = useState('')
-    const [isUsers, setIsUsers] = useState(true)
-    const [certificate, setCertificate] = useState()
-    const [counter, setCounter] = useState(5)
-    const [redirectPath, setRedirectPath] = useState('')
-    const navigate = useNavigate()
+    const [selectedRole, setSelectedRole] = useState('');
+    const [isUsers, setIsUsers] = useState(true);
+    const [certificate, setCertificate] = useState('');
+    const [counter, setCounter] = useState(5);
+    const [redirectPath, setRedirectPath] = useState('');
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         email: '',
         password: '',
@@ -27,10 +26,10 @@ export const AddUser = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
         if (name === 'isPeople') {
-            setSelectedRole(value)
-            let updatedData = {}
+            setSelectedRole(value);
+            let updatedData = {};
             if (value === 'user') {
-                updatedData = { isUser: isUsers }
+                updatedData = { isUser: isUsers };
                 setUserData(prevState => ({
                     ...prevState,
                     ...updatedData,
@@ -38,7 +37,7 @@ export const AddUser = () => {
                     isManager: undefined
                 }));
             } else if (value === 'teacher') {
-                updatedData = { isTeacher: isUsers }
+                updatedData = { isTeacher: isUsers };
                 setUserData(prevState => ({
                     ...prevState,
                     ...updatedData,
@@ -47,7 +46,7 @@ export const AddUser = () => {
                     certificateTeacher: certificate
                 }));
             } else if (value === 'manager') {
-                updatedData = { isManager: isUsers }
+                updatedData = { isManager: isUsers };
                 setUserData(prevState => ({
                     ...prevState,
                     ...updatedData,
@@ -61,51 +60,55 @@ export const AddUser = () => {
                 [name]: value
             }));
         }
-    }
-
+    };
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await actions.createUser(userData, selectedRole)
-        setCounter(0)
+        await actions.createUser(userData, selectedRole);
+        setCounter(0);
     }
 
     function handlerGoToLogIn() {
-        navigate('/LogIn')
+        navigate('/LogIn');
     }
 
     function handlerHome() {
-        navigate('/')
+        navigate('/');
     }
 
     useEffect(() => {
         if (redirectPath !== '') {
-            navigate(redirectPath)
+            navigate(redirectPath);
         }
-    }, [navigate, redirectPath])
+    }, [navigate, redirectPath]);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (prevCounter + 1 === 4) {
-                    setRedirectPath('/LogIn')
-                    clearInterval(interval)
+                if (store.error === '' && counter === 4) {
+                    setRedirectPath('/LogIn');
+                    clearInterval(interval);
                 }
                 return prevCounter + 1;
             });
         }, 500);
 
-        return () => clearInterval(interval)
-    }, [setRedirectPath, selectedRole])
+        return () => clearInterval(interval);
+    }, [setRedirectPath, store.error, counter]);
 
+    
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
 
     return (
-        <div className=' position-relative'>
-            <div className=' d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x'>
-                <div className={`text-center w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`} >
-                    {"Sing Up Successfully"}
-                </div>
-
+        <div className='position-relative'>
+            <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x'>
+                {msgError === ''
+                    ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
+                        {"Sign Up Successfully"}
+                    </div>
+                    : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
+                        {msgError}
+                    </div>}
             </div>
             <div className="d-flex justify-content-center align-items-center">
                 <div className='d-flex justify-content-center align-items-center mx-2 fs-4' onClick={handlerHome} style={{ cursor: "pointer" }}>
@@ -116,13 +119,11 @@ export const AddUser = () => {
                 </div>
             </div>
             <form className="container mx-auto mt-5 row g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-
-
                 <div className='col-md-4'>
                     <label className="form-label">Name</label>
                     <input
                         type="text"
-                        className="form-control" aria-describedby="inputGroupPrepend"
+                        className="form-control"
                         name='name'
                         onChange={handleChange}
                         value={userData.name}
@@ -133,7 +134,7 @@ export const AddUser = () => {
                     <label className="form-label">Last name</label>
                     <input
                         type="text"
-                        className="form-control" aria-describedby="inputGroupPrepend"
+                        className="form-control"
                         name='lastName'
                         onChange={handleChange}
                         value={userData.lastName}
@@ -145,7 +146,7 @@ export const AddUser = () => {
                     <div className="input-group has-validation">
                         <input
                             type="text"
-                            className="form-control" aria-describedby="inputGroupPrepend"
+                            className="form-control"
                             name='username'
                             onChange={handleChange}
                             value={userData.username}
@@ -170,7 +171,6 @@ export const AddUser = () => {
                     <input
                         type="text"
                         className="form-control"
-                        id="validationTooltip03"
                         name='numberDocument'
                         onChange={handleChange}
                         value={userData.numberDocument}
@@ -216,12 +216,11 @@ export const AddUser = () => {
                         type="number"
                         className="form-control"
                         name='certificateTeacher'
-                        onChange={() => { setCertificate(eve.target.value) }}
+                        onChange={(eve) => { setCertificate(eve.target.value) }}
                         value={certificate}
                         required />
                     <div className="invalid-tooltip">Please provide a valid certificate.</div>
                 </div>
-
 
                 <div className={`col-md-4 ${(selectedRole === 'user') ? 'd-block' : ''}`}>
                     <label className="form-label">Email address</label>
@@ -250,11 +249,9 @@ export const AddUser = () => {
                     onClick={handleSubmit}>Create User</button>
 
                 <div className='col-md my-3 text-center text-decoration-underline' style={{ cursor: "pointer" }}>
-                    <a onClick={handlerGoToLogIn}>You already have an accounts.</a>
+                    <a onClick={handlerGoToLogIn}>You already have an account.</a>
                 </div>
             </form>
         </div>
-
     );
 };
-
