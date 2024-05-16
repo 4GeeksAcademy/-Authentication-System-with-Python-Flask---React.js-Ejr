@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const ModalAlquilar = () => {
     return (
@@ -35,7 +36,9 @@ export const ModalAlquilar = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save</button>
+                            <Link to = "/payment">
+                                <button type="button" className="btn btn-primary">Save</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
