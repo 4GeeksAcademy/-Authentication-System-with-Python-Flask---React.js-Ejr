@@ -4,10 +4,12 @@ import { useParams } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
 
 import Board from "../component/boardview/board.jsx"
-//import BoardToolBar from "./component/board/toolbar.jsx"
+import Toolbar from "../component/boardview/toolbar.jsx"
+import SidePanel from "../component/boardview/sidepanel.jsx"
 //import TrashBin from "./component/trashbin.jsx"
 
 const icon= "https://cdn.icon-icons.com/icons2/2518/PNG/512/photo_icon_151153.png"
+
 
 /**
  *  -- Board View --
@@ -33,18 +35,15 @@ const BoardView= ()=>{
     console.log(`hello world: ${pid} / ${bid}`)
   },[window.location.href])
 
-  // return the board passing it the data
+  // return the board
   return (
-    <div className="flex flex-col h-full bg-red-900">
-      <nav className="flex h-12 bg-zinc-900 bg-opacity-30 justify-between">
-        <div className="flex h-2/3 my-auto px-4 gap-4">
-          <span className="font-bold my-auto text-xl">[Board]</span>
-        </div>
-        <div className="flex h-2/3 my-auto px-4 gap-4">
-          <span className="font-bold my-auto text-xl">[People]</span>
-          <i className="fa fa-solid fa-share-nodes my-auto text-3xl" />
-        </div>
-      </nav>
+    <div className="flex flex-col h-full bg-red-900 overflow-hidden relative -z-50">
+      <div className="absolute top-0 left-0 right-0 z-0">
+        <Toolbar />
+      </div>
+      <div className="absolute top-0 bottom-0 right-0 z-0">
+        <SidePanel />
+      </div>
       <Board />
     </div>
   )

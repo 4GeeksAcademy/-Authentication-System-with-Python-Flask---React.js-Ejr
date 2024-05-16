@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Utils from "./app/utils.js"
+import { Constants } from "./store/flux.jsx"
 
 import DevTools from "./app/devtools.jsx"
 
@@ -39,11 +39,11 @@ const Layout = () => {
               <Routes>
                   <Route path="/" element={<LandingView />} exact />
       
-                  <Route strict path="/signup" element={<SessionManagerView mode={Utils.constants.SESSION_MODE_SIGNUP}/>} />
-                  <Route strict path="/login" element={<SessionManagerView mode={Utils.constants.SESSION_MODE_LOGIN}/>} />
-                  <Route strict path="/logout" element={<SessionManagerView mode={Utils.constants.SESSION_MODE_LOGOUT}/>} />
-                  <Route strict path="/recover" element={<SessionManagerView mode={Utils.constants.SESSION_MODE_RECOVER}/>} />
-                  <Route strict path="/farewell" element={<SessionManagerView mode={Utils.constants.SESSION_MODE_DELETED}/>} />
+                  <Route strict path="/signup" element={<SessionManagerView mode={Constants.SESSION_MODE_SIGNUP}/>} />
+                  <Route strict path="/login" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGIN}/>} />
+                  <Route strict path="/logout" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGOUT}/>} />
+                  <Route strict path="/recover" element={<SessionManagerView mode={Constants.SESSION_MODE_RECOVER}/>} />
+                  <Route strict path="/farewell" element={<SessionManagerView mode={Constants.SESSION_MODE_DELETED}/>} />
       
                   <Route strict path="/settings" element={<SettingsView />} />
                   <Route strict path="/profile" element={<ProfileView self/>} exact />
@@ -56,6 +56,7 @@ const Layout = () => {
       
                   <Route strict path="/project/:pid/:bid" element={<BoardView />} />
                   <Route strict path="/board/:bid" element={<BoardView />}/>
+                  
                   <Route path="*" element={<Redirector url="/404" replace/>} />
               </Routes>
               </>

@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, shutil
 
 if __name__ == '__main__':
     
@@ -13,14 +13,49 @@ if __name__ == '__main__':
     if '--tailwind-cleaner' in sys.argv:
 
       path="./src/frontend/styles"
+      removals=[]
 
-      inname="_builder.tss"
-      rawname= "_tailwind_raw.css"
+      # PHASE 1: load all our files and append them to _tailwind.tss before generating the css
+      print("appending our tailwind css modules...")
+
+      inname="_tailwind.tss"
+      outname="_tailwind_joined.tss"
+
+      # the files to append
+      includes=[
+        "_tailwind.miguel.tss",
+        "_tailwind.andrei.tss",
+        "_tailwind.sopze.tss"
+      ]
+      
+      shutil.copyfile(f"{path}/{inname}", f"{path}/{outname}")
+      removals.append(f"{path}/{outname}")
+
+      try:
+        with open(f"{path}/{outname}", 'a') as outfile:
+
+          for include in includes:
+            with open(f"{path}/{include}", 'r') as infile:
+              for line in infile:
+                outfile.write(line)
+          
+          outfile.close()
+      except FileNotFoundError:
+        print(f"Error joining _tailwind.###.tss files with _tailwind.tss... make sure all files exist")
+        pass
+
+      # generate the css through tailwindcss npm package (npx tailwindcss)
+      print("generating tailwind css...")
+
+      inname="_tailwind_joined.tss"
+      rawname= "_tailwind_generated.css"
       outname= "tailwind.css"
 
-      print("generating tailwind raw css...")
       os.system(f"npx tailwindcss -i {path}/{inname} -o {path}/{rawname}")
-      print(f"cleaning {rawname}...")
+      removals.append(f"{path}/{rawname}")
+      
+      # clean the generated css (the mf tailwind puts a LOT of comments there)
+      print(f"cleaning resulting css")
       try:
         outdata= []
         longskip= False
@@ -38,7 +73,7 @@ if __name__ == '__main__':
             outdata.append(line)
       
       except FileNotFoundError:
-        print(f"Unable to locate {rawname}... nothing was changed")
+        print(f"unable to locate file {rawname}... nothing was changed")
         pass
         
       try:
@@ -48,10 +83,11 @@ if __name__ == '__main__':
           outfile.close()
       
       except FileNotFoundError:
-        print(f"Unable to create {outname}.. nothing was changed")
+        print(f"unable to create file {outname}.. nothing was changed")
         pass
 
-      os.remove(f"{path}/{rawname}")
+      for removal in removals:
+        os.remove(removal)
         
-      print("ok")
+      print("\nseems ok\n")
           

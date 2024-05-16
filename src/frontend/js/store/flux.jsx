@@ -1,5 +1,24 @@
 import Utils from "../app/utils.js"
 
+export const Constants= Object.freeze({
+
+  COOKIE_SAMESITE_NONE: "None",
+  COOKIE_SAMESITE_NONE_SECURE: "None; Secure",
+  COOKIE_SAMESITE_LAX: "Lax",
+  COOKIE_SAMESITE_STRICT: "Strict",
+
+  SESSION_MODE_SIGNUP: 0,
+  SESSION_MODE_LOGIN: 1,
+  SESSION_MODE_LOGOUT: 2,
+  SESSION_MODE_RECOVER: 3,
+  SESSION_MODE_DELETED: 4,
+
+  USERPREFS_DARKMODE: "darkMode",
+
+  DEVPREFS_SHOWSTATE: "showState",
+  DEVPREFS_PANELPOSITION: "panelPosition",
+})
+
 const storeState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -77,7 +96,7 @@ const storeState = ({ getStore, getActions, setStore }) => {
           _userPrefs.darkMode ? '1' : '0'
         ].join("")
 
-        Utils.setCookie("userPrefs", data, [30,0,0], "/", Utils.constants.COOKIE_SAMESITE_STRICT )
+        Utils.setCookie("userPrefs", data, [30,0,0], "/", Constants.COOKIE_SAMESITE_STRICT )
 
         // TODO: binary save
       },
@@ -131,7 +150,7 @@ const storeState = ({ getStore, getActions, setStore }) => {
           prefs.showState ? '1' : '0',
           prefs.panelPosition.toString()
         ].join("")
-        Utils.setCookie("devPrefs", data, [30,0,0], "/", Utils.constants.COOKIE_SAMESITE_STRICT )
+        Utils.setCookie("devPrefs", data, [30,0,0], "/", Constants.COOKIE_SAMESITE_STRICT )
       },
 		}
 	}
