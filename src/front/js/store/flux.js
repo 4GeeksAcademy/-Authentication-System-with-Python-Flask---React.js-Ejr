@@ -1,6 +1,4 @@
 import { jwtDecode } from "jwt-decode";
-import userForm from "../pages/User/userForm";
-import { useNavigate } from "react-router-dom";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -42,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
 					setStore({ token: data.access_token, user_id: decoded.sub, role: decoded.role });
-					return true;
+
 				}
 			},
 
