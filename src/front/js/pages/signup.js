@@ -13,10 +13,10 @@ export const Signup = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         let isSignup = await actions.signup(inputEmail, inputPassword) 
-        if (isSignup === "1"){
+        if (isSignup === "success"){
             swal ( "Registro con éxito" ,  "Gracias por registrarse en nuestra web!" ,  "success" )
              navigate("/");
-        } else if (isSignup === "2") {
+        } else if (isSignup === "email_exist") {
             swal ("Este email ya se encuentra registrado", "Por favor intentelo con otro email" ,  "error" )
         } else {
             swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )

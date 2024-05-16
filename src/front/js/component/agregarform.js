@@ -18,11 +18,10 @@ import "../../styles/index.css";
      async function handleSubmit(e) {
         e.preventDefault()
         let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio) 
-        if (respuesta === "1"){
+        if (respuesta === "success"){
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");
-            //  actions.myVehiclesInRent(); 
-        } else if (respuesta === "2") {
+        } else if (respuesta === "plate_exist") {
             swal ("El vehículo con esta matrícula ya ha sido añadido" , "Por favor intentelo de nuevo",  "error" )
         } else {
             swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
