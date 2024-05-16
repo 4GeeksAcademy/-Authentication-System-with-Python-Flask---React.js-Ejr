@@ -73,8 +73,7 @@ export const LogIn = () => {
         return () => clearInterval(interval)
     }, [setRedirectPath, selectedRole])
 
-    console.log(store.error)
-    console.log(counter)
+    
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
 
     return (

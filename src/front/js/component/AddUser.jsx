@@ -263,11 +263,11 @@ export const AddUser = () => {
                     onClick={handleSubmit}>
                     {
                         (store.spinner)
-                            ? <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                            ? <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
                             </div>
-                            : <div class="row align-items-center ">
-                                <div class="col align-self-center text-center fs-4">
+                            : <div className="row align-items-center ">
+                                <div className="col align-self-center text-center fs-4">
                                     <span>Create User</span>
                                 </div>
                             </div>
