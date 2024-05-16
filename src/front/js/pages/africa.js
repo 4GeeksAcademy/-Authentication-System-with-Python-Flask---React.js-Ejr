@@ -3,6 +3,7 @@ import { Typography, IconButton } from "@mui/material";
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import DeleteIcon from '@mui/icons-material/Delete';
+import  Navbar  from "../component/navbar.js";
 
 export const Africa = () => {
   const { store, actions } = useContext(Context);
@@ -16,33 +17,33 @@ export const Africa = () => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ flex: 1 }}>
-        <Typography variant="h1">Orders:</Typography>
-        <ul>
-          {store.order.items.map((coffee, index) => (
-            <li key={index}>
-              {coffee.name} - ${coffee.price}
-              <IconButton onClick={() => handleRemove(coffee.name, coffee.price)}>
-                <DeleteIcon />
-              </IconButton>
-            </li>
-          ))}
-        </ul>
-        <Typography variant="h3">Total: ${store.order.total.toFixed(2)}</Typography>
-      </div>
-
-      <div style={{ flex: 1 }}>
-        <Typography variant="h1">Coffee:</Typography>
-        {store.Africa && store.Africa.map((current) => (
-          <CoffeeCard
-            name={current.name}
-            price={current.price}
-            key={current.id}
-            handleClick={handleClick}
-          />
+    <div style={{ display: "flex", paddingTop: '64px' }}>
+    <div style={{ flex: 1 }}>
+      <Typography variant="h1">Orders:</Typography>
+      <ul>
+        {store.order.items.map((coffee, index) => (
+          <li key={index}>
+            {coffee.name} - ${coffee.price}
+            <IconButton onClick={() => handleRemove(coffee.name, coffee.price)}>
+              <DeleteIcon />
+            </IconButton>
+          </li>
         ))}
-      </div>
+      </ul>
+      <Typography variant="h3">Total: ${store.order.total.toFixed(2)}</Typography>
     </div>
-  );
+
+    <div style={{ flex: 1 }}>
+      <Typography variant="h1">Coffee:</Typography>
+      {store.Africa && store.Africa.map((current) => (
+        <CoffeeCard
+          name={current.name}
+          price={current.price}
+          key={current.id}
+          handleClick={handleClick}
+        />
+      ))}
+    </div>
+  </div>
+);
 };
