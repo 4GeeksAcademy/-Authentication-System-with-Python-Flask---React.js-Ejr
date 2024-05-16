@@ -1,54 +1,132 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+  return {
+    store: {
+      message: '',
+      user: '',
+      error: '',
+      currentRole: '',
+    },
+    actions: {
+      /* getMessage: async () => {
+        try {
+          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+          const data = await resp.json();
+          setStore({ message: data.message });
+          return data;
+        } catch (error) {
+          console.log("Error loading message from backend", error);
+        }
+      }, */
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+      createUser: async (newUser, userRole) => {
+        const store = getStore();
+        
+        try {
+          const respCreateUser = await fetch(
+            process.env.BACKEND_URL + `/api/signup/` + userRole,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newUser),
+            }
+          );
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+          if (!respCreateUser.ok) {
+            throw new Error(
+              "Error al crear el usuario: " + respCreateUser.statusText
+            );
+          }
+          const dataCreateUser = await respCreateUser.json();
+        } catch (error) {
+          console.error("Error al crear el usuario:", error);
+          alert(error);
+        }
+      },
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+      loginIn: async (userToLogin, userRole) => {
+        const store = getStore();
+        try {
+          const respLoginIn = await fetch(
+            process.env.BACKEND_URL + `/api/login/` + userRole,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userToLogin),
+            }
+          );
+
+          if (!respLoginIn.ok) {
+            throw new Error(
+              "Error al iniciar sesión: " + respLoginIn.statusText
+            );
+          }
+
+          const dataLoginIn = await respLoginIn.json();
+          localStorage.setItem("jwt-token", dataLoginIn.access_token);
+          localStorage.setItem("currentRole", userRole);
+
+          await getActions().getUser(userRole);
+        } catch (error) {
+          console.error("Error al iniciar sesión: ", error);
+          setStore({ ...store, error: error });
+          alert(error);
+        }
+      },
+
+      getUser: async (userRole) => {
+        const store = getStore();
+
+        try {
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const respGetUsers = await fetch(
+            process.env.BACKEND_URL + `/api/private/` + userRole,
+            {
+              method: "GET",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+            }
+          );
+
+          if (!respGetUsers.ok) {
+            throw new Error(
+              "Error al obtener los datos del usuario: " +
+                respGetUsers.statusText
+            );
+          }
+
+          const dataGetUser = await respGetUsers.json()
+          setStore({ ...store, user: dataGetUser })
+          console.log(userRole)
+          console.log(store.user)
+        } catch (error) {
+          console.error("Error al obtener los datos del usuario: ", error)
+          alert(error)
+        }
+      },
+
+      checkUserSession: async () => {
+        const store = getStore()
+        try {
+          const token = localStorage.getItem("jwt-token");
+          const userRole = localStorage.getItem("currentRole");
+          if (token && userRole) {
+            setStore({ currentRole: userRole });
+            await getActions().getUser(store.currentRole);
+          }
+        } catch (error) {
+          console.error("Error checking user session: ", error);
+        }
+      },
+    },
+  };
 };
 
 export default getState;
