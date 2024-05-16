@@ -1,29 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Box,
+  Container,
+  CssBaseline,
+  Snackbar,
+  Alert as MuiAlert,
+  Card,
+  CardContent
+} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar'; 
-import MuiAlert from '@mui/material/Alert';
-import Alert from '@mui/material/Alert';  
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { Context } from "../store/appContext";
 
 function SignIn() {
-  const [open, setOpen] = React.useState(false); // State to control Snackbar open/close
-  const [showBasicCard, setShowBasicCard] = React.useState(false); // State to control Basic Card visibility
-  
+  const [open, setOpen] = useState(false); // State to control Snackbar open/close
+  const [showBasicCard, setShowBasicCard] = useState(false); // State to control Basic Card visibility
+  const [resetLinkSent, setResetLinkSent] = useState(false); // State to control Reset Link confirmation
+
   const { actions } = useContext(Context);
   const navigate = useNavigate();
 
@@ -47,6 +49,7 @@ function SignIn() {
       return;
     }
     setOpen(false);
+    setResetLinkSent(false); // Close the reset link confirmation Snackbar
   };
 
   // Show Basic Card
@@ -57,6 +60,12 @@ function SignIn() {
   // Hide Basic Card
   const handleBasicCardClose = () => {
     setShowBasicCard(false);
+  };
+
+  // Handle Reset Link
+  const handleSendResetLink = () => {
+    setShowBasicCard(false);
+    setResetLinkSent(true);
   };
 
   return (
@@ -77,6 +86,7 @@ function SignIn() {
             alignItems: 'flex-start',
           }}
         >
+        <br></br>
           <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left' }}>
             Sign in
           </Typography>
@@ -126,30 +136,34 @@ function SignIn() {
           </Box>
         </Box>
       </Container>
-      {/*  incorrect password message */}
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} sx={{ backgroundColor: '#f00', opacity: 1 }}>
-  <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-    Incorrect password. Please try again.
-  </MuiAlert>
-</Snackbar>
-     {/* Basic Card */}
-{showBasicCard && (
-  <Card sx={{bgcolor: 'white', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: 'none', border: '1px solid #000' }}>
-    
-    <CardContent>
-  <Typography variant="h5" component="div">
-    <span style={{ fontWeight: 'bold' }}>Forgot Password</span> <br />
-    Please enter the email address used to SignUp. We will send a password reset.
-  </Typography>
-  <TextField id="outlined-basic" label="User Email" variant="outlined" />
+      {/* Incorrect password message */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%', textAlign: 'center' }}>
+          Incorrect password. Please try again.
+        </MuiAlert>
+      </Snackbar>
+      {/* Password reset link confirmation */}
+      <Snackbar open={resetLinkSent} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert onClose={handleClose} severity="success" sx={{ width: '100%', textAlign: 'center' }}>
+          Password reset link sent. Please check your email.
+        </MuiAlert>
+      </Snackbar>
+      {/* Basic Card */}
+      {showBasicCard && (
+        <Card sx={{ bgcolor: 'white', position: 'fixed', top: '50%', left: '70%', transform: 'translate(-50%, -50%)', boxShadow: 'none', border: '1px solid #000' }}>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              <span style={{ fontWeight: 'bold' }}>Forgot Password</span> <br />
+              Please enter the email address used to SignUp. We will send a password reset.
+            </Typography>
+            <TextField id="outlined-basic" label="User Email" variant="outlined" sx={{ mt: 2, mb: 2 }} fullWidth />
+    <Button onClick={handleSendResetLink} variant="contained" sx={{ mt: 2, bgcolor: '#2db734', width: '100%' }}>
+             Send Reset Link
+            </Button>
+          </CardContent>
+        </Card>
 
-      <Button onClick={handleBasicCardClose} variant="contained">
-        Enter
-      </Button>
-    </CardContent>
-  </Card>
-)}
-
+      )}
     </ThemeProvider>
   );
 }
