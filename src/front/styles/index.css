@@ -78,10 +78,3 @@ footer {
     background: lightgrey;
 }
 
-body .content {
-    font-size: 14px;
-    width: 720px;
-    height: 1024px;
-    text-align:center;
-    border: 1px solid red;
-    }
