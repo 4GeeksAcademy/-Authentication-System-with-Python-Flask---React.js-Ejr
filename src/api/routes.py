@@ -99,7 +99,7 @@ def delete_vehicle(vehicle_id):
     if vehicle_exist is None:
         return jsonify({"msg": "El vehículo no existe"}), 400
     else:
-        vehicle_to_delete = Vehicle.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
+        vehicle_to_delete = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
         if vehicle_to_delete:
             db.session.delete(vehicle_to_delete)
             db.session.commit()
