@@ -198,7 +198,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 	if (response.status === 201) {
 							let listFav = getStore().favorites;
 							const allVehicles = getStore().vehicles;
-							const newFav = allVehicles.filter((vehicle) => vehicle.id === id);
+							const newFav = allVehicles.filter((vehicle) => vehicle.id == id);
 							const newListFav = listFav.concat(newFav) ;
 							setStore({favorites: newListFav})
 					} else {
@@ -220,7 +220,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 	});
 					if (response.status === 200) {
 						let listFav = getStore().favorites;
-						const newListFav = listFav.filter((vehicle) => vehicle.id !== id);
+						const newListFav = listFav.filter((vehicle) => vehicle.id != id);
 						setStore({favorites: newListFav})
 					}
 				} catch (error) {
