@@ -10,7 +10,8 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        actions.LogIn(email, password);        
+        actions.LogIn(email, password);
+        navigate('/private')        
     };
 
     return (

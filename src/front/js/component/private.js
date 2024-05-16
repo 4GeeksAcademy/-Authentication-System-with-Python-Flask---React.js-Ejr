@@ -18,7 +18,7 @@ const Private = () => {
         // Lógica para cerrar sesión (ejemplo)
         actions.logout();
         // Redirigir al componente de inicio de sesión después de cerrar sesión
-        history.push('/login');
+        history.push('/private');
     };
 
     return (
