@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			vehicles: [],
 			favorites: [],
 			myVehicles: [],
-			details: {}
+			details: {},
 		},
 		actions: {
 			getMessage: async () => {
