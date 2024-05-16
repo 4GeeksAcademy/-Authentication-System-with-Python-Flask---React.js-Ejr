@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import RegionCard from "../component/RegionCard";
 import { Grid, Typography, } from "@mui/material"; // Import Material-UI components
 import "../../styles/home.css";
+import {Navbar} from "../component/navbar"
 let coffee = {
     'Central America': [
       {
@@ -373,17 +374,23 @@ let coffee = {
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
-	return (
-		<Grid container spacing={2}>
-			<Grid item xs={6}>
-				<div className="mt-5">
-					<Typography variant="h1">Orders:</Typography>
-				</div>
-			</Grid>
-			<Grid item xs={6}>
-      <Typography variant="h1">Regions:</Typography>
-				<RegionCard />
-			</Grid>
-		</Grid>
-	);
+  return (
+    <>
+      <Navbar /> {/* Include the Navbar component */}
+      <div style={{ paddingTop: '64px' }}>
+        {/* Assuming 64px is the height of your navbar */}
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <div className="mt-5">
+              <Typography variant="h1">Orders:</Typography>
+            </div>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h1">Regions:</Typography>
+            <RegionCard />
+          </Grid>
+        </Grid>
+      </div>
+    </>
+  );
 };
