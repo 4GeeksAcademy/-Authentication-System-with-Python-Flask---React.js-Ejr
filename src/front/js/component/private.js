@@ -11,8 +11,8 @@ const Private = () => {
     };
 
     return (
-        <div>
-            <h1>VISTA PRIVADA, HAS INICIADO SESIÓN</h1>
+        <div style={{ textAlign: 'center', marginTop: '30px', marginBottom: '20px' }}>
+            <h1 style={{ marginBottom: '20px' }}>Bienvenido, este es tu espacio privado</h1>
             <button onClick={handleLogout}>Cerrar Sesión</button>
         </div>
     );

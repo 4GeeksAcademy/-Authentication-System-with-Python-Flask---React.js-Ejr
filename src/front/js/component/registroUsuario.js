@@ -17,6 +17,7 @@ const Signup = () => {
         e.preventDefault();    
         actions.SignUp(email, password);
         // navigate('/home');   Aquí podríamos poner a dónde queremos que se redirija el navegador después de registrar el usuario
+        alert('Usuario creado, ahora puedes iniciar sesión.');
     };
 
     return (

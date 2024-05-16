@@ -8,15 +8,16 @@ import Login from "../component/iniciarSesion";
 export const Home = () => {
     const { actions } = useContext(Context);
 
-
     return (
         <div>
+            <h1 style={{ textAlign: "center" }}>WELCOME</h1>
             <div>
-                <h2>Signup Form</h2>
+                <h2>Sign up</h2>
                 <Signup />
             </div>
+            <br></br>
             <div>
-                <h2>Login Form</h2>
+                <h2>Log in</h2>
                 <Login />
             </div>
         </div>
