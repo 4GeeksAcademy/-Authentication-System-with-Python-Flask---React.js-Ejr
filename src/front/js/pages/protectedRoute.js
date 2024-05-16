@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 const ProtectedRoute = ({ element: Component }) => {
     const { store } = useContext(Context);
 
-    return store.user.isSignedIn ? Component : <Navigate to="/signIn" />;
+    return store.user.isSignedIn ? Component : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;
