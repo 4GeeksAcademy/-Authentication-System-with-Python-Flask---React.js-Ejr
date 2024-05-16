@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+
+import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
 const Private = () => {
-    const history = useHistory();
+    // const history = useHistory();
     const { actions, store } = useContext(Context);
 
     // useEffect(() => {
@@ -24,7 +25,7 @@ const Private = () => {
     return (
         <div>
             <h1>VISTA PRIVADA, HAS INICIADO SESIÓN</h1>
-            <button onClick={handleLogout}>Cerrar Sesión</button>
+            {/* <button onClick={handleLogout}>Cerrar Sesión</button> */}
         </div>
     );
 };

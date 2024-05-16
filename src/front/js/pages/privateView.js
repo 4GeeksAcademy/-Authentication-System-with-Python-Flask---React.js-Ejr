@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Private from '../component/private';
 import { Context } from "../store/appContext";
@@ -8,7 +8,6 @@ const PrivateView = () => {
 
     return (
         <div>
-            <h1>VISTA PRIVADA, HAS INICIADO SESIÓN</h1>
             <Private />
         </div>
     );
