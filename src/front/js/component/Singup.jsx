@@ -2,9 +2,9 @@
 import React, { useContext, useState } from "react"; // Importación de React y algunos hooks
 import { Link, useNavigate } from "react-router-dom"; // Importación de Link para la navegación
 import { Context } from "../store/appContext"; // Importación del contexto
-import styles from "./Register.module.css"; // Importación de estilos CSS
+import styles from "./Singup.module.css"; // Importación de estilos CSS
 
-const Register = () => {
+const Singup = () => {
     const { store, actions } = useContext(Context); // Obtención del estado global, las acciones y la función setStore desde el contexto
     const { creationState } = store; // Obtención del estado de inicio de sesión y los datos recuperados del usuario desde el estado global
     const navigate = useNavigate();
@@ -99,4 +99,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Singup;

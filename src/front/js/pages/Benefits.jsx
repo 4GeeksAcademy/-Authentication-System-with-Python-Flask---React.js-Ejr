@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"; // Importación de React y algunos hooks
 import { Link } from "react-router-dom"; // Importación de Link para la navegación
 import { Context } from "../store/appContext"; // Importación del contexto
-import styles from "./Benefitis.module.css"; // Importación de estilos CSS
+import styles from "./Benefits.module.css"; // Importación de estilos CSS
 
 const Benefitis = () => {
   return (

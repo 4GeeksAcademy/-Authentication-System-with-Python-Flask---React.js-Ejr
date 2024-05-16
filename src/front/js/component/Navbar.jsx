@@ -34,7 +34,7 @@ const Navbar = () => { // Definición del componente Navbar
                   <a className="nav-link" href="/plans">plans</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/Benefitis">about</a>
+                  <a className="nav-link" href="/Benefits">about</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">Contact</a>
@@ -49,7 +49,7 @@ const Navbar = () => { // Definición del componente Navbar
             <button className={styles.logoutButton} onClick={handleCloseSession}>Cerrar sesión</button>
           )}
           {!store.isAuthenticated && ( // Condición para renderizar el botón de inicio de sesión si el usuario no ha iniciado sesión
-            <Link to="/LoginUserV2">
+            <Link to="/Login">
               <button className={styles.loginButton}>Login</button>
             </Link>
           )}

@@ -4,7 +4,7 @@ import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./Home.module.css"; // Importación de estilos CSS
 
 
-import Benefitis from './Benefitis.jsx';
+import Benefits from './Benefits.jsx';
 import Plans from './Plans.jsx';
 
 
@@ -16,7 +16,7 @@ const Home = () => {
         <h1 className={styles.headerTitle}>Welcome to Our CrossFit Website</h1>
       </header>
       <div className={styles.content}>
-        <Benefitis/>
+        <Benefits/>
         <Plans/>
       </div>
     </div>

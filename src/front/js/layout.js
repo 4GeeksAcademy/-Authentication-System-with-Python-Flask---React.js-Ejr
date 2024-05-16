@@ -5,7 +5,6 @@ import { BackendURL } from "./component/backendURL";
 
 // import { Home } from "./pages/home";
 
-import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -13,16 +12,15 @@ import injectContext from "./store/appContext";
 // import { Footer } from "./component/footer";
 
 import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
-import LoginUser from "./pages/LoginUser.jsx"
 
 import  Home  from "./pages/Home.jsx";
 import  Footer  from "./component/Footer.jsx";
 import  Plans  from "./pages/Plans.jsx";
-import Benefitis from "./pages/Benefitis.jsx"
+import Benefits from "./pages/Benefits.jsx"
 import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del componente Navbar
-import LoginUserV2 from "./component/LoginUserV2.jsx"; // Importación del componente Navbar
+import Login from "./component/Login.jsx"; // Importación del componente Navbar
 import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del componente Navbar
-import Register from "./component/Register.jsx"; 
+import Singup from "./component/Singup.jsx"; 
 
 
 
@@ -44,12 +42,11 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
                         <Route element={<Plans />} path="/Plans" />
-                        <Route element={<Benefitis />} path="/Benefitis" />
-                        <Route element={<LoginUserV2 />} path="/LoginUserV2" />
-                        <Route element={<Register />} path="/Register" />
+                        <Route element={<Benefits />} path="/Benefits" />
+                        <Route element={<Login />} path="/Login" />
+                        <Route element={<Singup />} path="/Singup" />
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
                         <Route element={<h1>Not found!</h1>} />
-
                     </Routes>
                     <Footer />
                 </ScrollToTop>

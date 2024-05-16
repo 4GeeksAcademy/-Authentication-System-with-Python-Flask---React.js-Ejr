@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import styles from "./LoginUserV2.module.css"; // Asegúrate de tener este archivo de estilos o ajusta el nombre según necesites
+import styles from "./Login.module.css"; // Asegúrate de tener este archivo de estilos o ajusta el nombre según necesites
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-const LoginUserV2 = () => {
+const Login = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
 
@@ -65,11 +65,11 @@ const LoginUserV2 = () => {
                 <div className="rememberMe">
                     <input type="checkbox" />
                     <span>Recuérdame</span>
-                    <p>¿Es tu primera vez aquí? <Link to="/Register">Regístrate ahora.</Link></p>
+                    <p>¿Es tu primera vez aquí? <Link to="/Singup">Regístrate ahora.</Link></p>
                 </div>
             </form>
         </div>
     );
 };
 
-export default LoginUserV2;
+export default Login;
