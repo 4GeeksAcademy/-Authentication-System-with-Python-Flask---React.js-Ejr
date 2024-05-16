@@ -375,22 +375,23 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
   return (
-    <>
-      <Navbar /> {/* Include the Navbar component */}
-      <div style={{ paddingTop: '64px' }}>
-        {/* Assuming 64px is the height of your navbar */}
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <div className="mt-5">
-              <Typography variant="h1">Orders:</Typography>
-            </div>
-          </Grid>
-          <Grid item xs={6}>
+<>
+      <Navbar /> 
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <div className="mt-5">
+            <Typography variant="h1">Orders:<div style={{ width: '100px', height: '100px', background: '#cfd8dc' }} />
+            </Typography>
+            
+          </div>
+        </Grid>
+        <Grid item xs={6}>
+          <div className="mt-5">
             <Typography variant="h1">Regions:</Typography>
             <RegionCard />
-          </Grid>
+          </div>
         </Grid>
-      </div>
+      </Grid>
     </>
   );
 };
