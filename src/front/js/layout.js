@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
+import Homeadmin from "./pages/Homeadmin.jsx";
 // import { Home } from "./pages/home";
 
 import { Single } from "./pages/single";
@@ -25,6 +25,7 @@ import Singup from "./component/Singup.jsx";
 
 
 
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -42,6 +43,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
                         <Route element={<Plans />} path="/Plans" />
+                        <Route element={<Homeadmin />} path="/Admin" />
                         <Route element={<Benefits />} path="/Benefits" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />
