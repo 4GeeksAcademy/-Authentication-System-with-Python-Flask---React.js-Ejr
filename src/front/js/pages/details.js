@@ -51,7 +51,7 @@ export const Details = () => {
                     </button>
                 </div>
                 <div className="container-fluid p-0 bg-light">
-                    <div className="principal mb-5 mt-4 border-top border-bottom m-1">
+                    <div className="principal mb-5 mt-4 border-top border-bottom m-1 text-dark">
                         <div className="d-flex rounded-end justify-content-between text-center mt-3 m-1">
                             <h1>{store.details.marca_modelo?.toUpperCase()}</h1>
                             <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
