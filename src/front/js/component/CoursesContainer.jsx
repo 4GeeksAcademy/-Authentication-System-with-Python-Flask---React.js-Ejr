@@ -20,10 +20,10 @@ export const CoursesContainer = () => {
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-primary">
-                            Ver Curso
+                            View Course
                         </button>
                         <button type="button" className="btn btn-success">
-                            Comprar
+                            Buy Course
                         </button>
                     </div>
                 </div>
@@ -45,10 +45,10 @@ export const CoursesContainer = () => {
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-primary">
-                            Ver Curso
+                            View Course
                         </button>
                         <button type="button" className="btn btn-success">
-                            Comprar
+                            Buy Course
                         </button>
                     </div>
                 </div>
@@ -70,10 +70,10 @@ export const CoursesContainer = () => {
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-primary">
-                            Ver Curso
+                            View Course
                         </button>
                         <button type="button" className="btn btn-success">
-                            Comprar
+                            Buy Course
                         </button>
                     </div>
                 </div>
@@ -94,10 +94,10 @@ export const CoursesContainer = () => {
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-primary">
-                            Ver Curso
+                            View Course
                         </button>
                         <button type="button" className="btn btn-success">
-                            Comprar
+                            Buy Course
                         </button>
                     </div>
                 </div>
@@ -121,10 +121,10 @@ export const CoursesContainer = () => {
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-primary">
-                            Ver Curso
+                            View Course
                         </button>
                         <button type="button" className="btn btn-success">
-                            Comprar
+                            Buy Course
                         </button>
                     </div>
                 </div>
@@ -148,10 +148,10 @@ export const CoursesContainer = () => {
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-primary">
-                            Ver Curso
+                            View Course
                         </button>
                         <button type="button" className="btn btn-success">
-                            Comprar
+                            Buy Course
                         </button>
                     </div>
                 </div>
