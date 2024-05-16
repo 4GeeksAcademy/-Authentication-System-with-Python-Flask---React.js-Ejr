@@ -8,8 +8,19 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
+
 import { Navbar } from "./component/navbar";
+import SignUp  from "./pages/signUp";
+import SignIn from "./pages/signIn";
 import { Footer } from "./component/footer";
+import OrderList from "./pages/order";
+import { Africa } from "./pages/africa";
+import { AsiaPacific } from "./pages/asiaPacific";
+import { CentralAmerica } from "./pages/centralAmerica";
+import { MiddleEast } from "./pages/middleEast";
+import { SouthAmerica } from "./pages/southAmerica";
+import { Regions } from "./pages/regions";
+
 
 //create your first component
 const Layout = () => {
@@ -20,13 +31,23 @@ const Layout = () => {
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
+        
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<SignIn />} path="/signIn" />                         
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<OrderList />} path="/order" />
+                        <Route element={<SignUp />} path="/signUp" />                         
+                        <Route element={<Regions />} path="/regions"/>
+                        <Route element={<Africa />} path="/regions/africa" />
+                        <Route element={<AsiaPacific />} path="/regions/asia-pacific" />
+                        <Route element={<CentralAmerica />} path="/regions/central-america" />
+                        <Route element={<MiddleEast />} path="/regions/middle-east" />
+                        <Route element={<SouthAmerica />} path="/regions/south-america" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
