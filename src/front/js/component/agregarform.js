@@ -21,6 +21,7 @@ import "../../styles/index.css";
         if (respuesta === "1"){
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");
+            //  actions.myVehiclesInRent(); 
         } else if (respuesta === "2") {
             swal ("El vehículo con esta matrícula ya ha sido añadido" , "Por favor intentelo de nuevo",  "error" )
         } else {
