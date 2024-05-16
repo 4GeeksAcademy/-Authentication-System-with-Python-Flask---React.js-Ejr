@@ -34,6 +34,7 @@ export const Regions = () => {
       </div>
 
       <div style={{ flex: 1 }}>
+      <Typography variant="h1">Regions:</Typography>
   {Object.keys(store)
     .filter((region) => region !== 'order' && region !== 'user')
     .map((region) => (
