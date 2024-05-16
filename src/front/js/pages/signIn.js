@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -11,32 +12,64 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar'; 
+import MuiAlert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert';  
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { Context } from "../store/appContext";
 
 function SignIn() {
-  const handleSubmit = (event) => {
+  const [open, setOpen] = React.useState(false); // State to control Snackbar open/close
+  const [showBasicCard, setShowBasicCard] = React.useState(false); // State to control Basic Card visibility
+  
+  const { actions } = useContext(Context);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const employeeId = data.get('employee-id');
     const password = data.get('password');
-    console.log("Employee ID:", employeeId);
-    console.log("Password:", password);
+    try {
+      await actions.login(employeeId, password);
+      navigate('/regions');
+    } catch (error) {
+      console.error("Login failed:", error);
+      setOpen(true);
+    }
+  };
+
+  // Close Snackbar
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  // Show Basic Card
+  const handleForgotPasswordClick = () => {
+    setShowBasicCard(true);
+  };
+
+  // Hide Basic Card
+  const handleBasicCardClose = () => {
+    setShowBasicCard(false);
   };
 
   return (
     <ThemeProvider theme={createTheme()}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ top: 0, backgroundColor: '#2db734' }}> 
+      <AppBar position="static" sx={{ backgroundColor: '#2db734' }}> 
         <Toolbar>
-          {/* Centered Navbar */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
             CODEFUSION CAFE
           </Typography>
-          
         </Toolbar>
       </AppBar>
-      <Container component="main" maxWidth="xs" sx={{ marginTop: '64px' }}>
-       
+      <Container component="main" maxWidth="xs">
         <Box
           sx={{
             display: 'flex',
@@ -44,11 +77,9 @@ function SignIn() {
             alignItems: 'flex-start',
           }}
         >
-          
-            <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left'}}>
-              Sign in
-            </Typography>
-            
+          <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left' }}>
+            Sign in
+          </Typography>
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             New user? <Link to="/signup" variant="body2">Create an account</Link>
           </Typography>
@@ -77,7 +108,6 @@ function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Link to="/regions" >
             <Button
               type="submit"
               fullWidth
@@ -86,21 +116,42 @@ function SignIn() {
             >
               Sign In
             </Button>
-            </Link>
             <Grid container>
               <Grid item xs>
-                <Link to="/forgotpassword" variant="body2">
+                <Button onClick={handleForgotPasswordClick} variant="text" color="primary">
                   Forgot password?
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>
         </Box>
       </Container>
+      {/*  incorrect password message */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} sx={{ backgroundColor: '#f00', opacity: 1 }}>
+  <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+    Incorrect password. Please try again.
+  </MuiAlert>
+</Snackbar>
+     {/* Basic Card */}
+{showBasicCard && (
+  <Card sx={{bgcolor: 'white', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: 'none', border: '1px solid #000' }}>
+    
+    <CardContent>
+  <Typography variant="h5" component="div">
+    <span style={{ fontWeight: 'bold' }}>Forgot Password</span> <br />
+    Please enter the email address used to SignUp. We will send a password reset.
+  </Typography>
+  <TextField id="outlined-basic" label="User Email" variant="outlined" />
+
+      <Button onClick={handleBasicCardClose} variant="contained">
+        Enter
+      </Button>
+    </CardContent>
+  </Card>
+)}
+
     </ThemeProvider>
   );
 }
 
 export default SignIn;
-
-

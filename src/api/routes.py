@@ -75,7 +75,7 @@ def create_token():
     
     # Create a new token with the user id inside
     access_token = create_access_token(identity=user.id)
-    return jsonify({ "token": access_token, "user_id": user.id })
+    return jsonify({ "token": access_token, "user_id": user.id, "username": user.username })
 
 
 

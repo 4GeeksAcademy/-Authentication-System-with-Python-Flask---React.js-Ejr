@@ -32,17 +32,18 @@ const Layout = () => {
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
+        
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                    <Route element={<SignIn />} path="/signIn" />                         
-                    <Route element={<Home />} path="/" />  
+                        <Route element={<SignIn />} path="/signIn" />                         
+                        <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<OrderList />} path="/order" />
                         <Route element={<SignUp />} path="/signUp" />                         
-                        <Route element={<Regions />} path="/regions" />
+                        <Route element={<Regions />} path="/regions"/>
                         <Route element={<Africa />} path="/regions/africa" />
                         <Route element={<AsiaPacific />} path="/regions/asia-pacific" />
                         <Route element={<CentralAmerica />} path="/regions/central-america" />
