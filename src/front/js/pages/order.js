@@ -31,7 +31,7 @@ const OrderList = () => {
   const totalPrice = items.reduce((total, item) => total + item.price, 0);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', paddingTop:'64px' }}>
       <div style={{ flex: 1 }}>
         <h2>Order</h2>
         <ul>
