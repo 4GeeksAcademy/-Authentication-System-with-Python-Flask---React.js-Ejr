@@ -52,13 +52,14 @@ export const Details = () => {
                     </button>
                 </div>
                 <div className="container-fluid p-0 bg-light">
-                    <div className="principal mb-5 mt-4 border-top border-bottom m-1">
+                    <div className="principal mb-5 mt-4 border-top border-bottom m-1 text-dark">
                         <div className="d-flex rounded-end justify-content-between text-center mt-3 m-1">
                             <h1>{store.details.marca_modelo?.toUpperCase()}</h1>
                             <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
                                 <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                             </button>
                         </div>
+                        <div className="card d-flex m-auto">
                         <div className="container mt-4 p-0">
                         <div className="d-flex justify-content-between pb-2 text-center">
                             <div className="detalle px-2">
@@ -102,6 +103,7 @@ export const Details = () => {
                                 </p>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 </div>
