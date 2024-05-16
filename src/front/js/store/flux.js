@@ -103,7 +103,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => {
 					console.error('Error en el inicio de sesion', error);
 				});
-			}
+			},
+			LogOut: () => {
+                sessionStorage.removeItem("token"); // Elimina el token de sesión
+                // Redirige al usuario a la página de inicio de sesión
+                window.location.href = '/';
+            }
 		}
 	};
 };
