@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user: '',
       error: {},
       currentRole: '',
+      spinner: false
     },
     actions: {
       /* getMessage: async () => {
@@ -21,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       createUser: async (newUser, userRole) => {
         const store = getStore();
         getActions().updateMsgError('')
+        getActions().spinner(true)
         try {
           const respCreateUser = await fetch(
             process.env.BACKEND_URL + `/api/signup/` + userRole,
@@ -43,12 +45,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           setStore({ ...store, error: "Error al crear el usuario" })
           console.error("Error al crear el usuario:", err);
+        }finally{
+          getActions().spinner(false)
         }
       },
 
       loginIn: async (userToLogin, userRole) => {
         const store = getStore();
         getActions().updateMsgError('')
+        getActions().spinner(true)
         try {
           const respLoginIn = await fetch(
             process.env.BACKEND_URL + `/api/login/` + userRole,
@@ -75,14 +80,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           console.error("Error al iniciar sesión: ", err);
           setStore({ ...store, error: "Error al iniciar sesión" })
-          
+        }finally{
+          getActions().spinner(false)
         }
       },
 
       getUser: async (userRole) => {
         const store = getStore()
         getActions().updateMsgError('')
-
+        getActions().spinner(true)
         try {
           const token = localStorage.getItem("jwt-token");
           if (!token) throw new Error("No token found");
@@ -112,6 +118,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           console.error("Error al obtener los datos del usuario: ", err)
           setStore({ ...store, error: "Error al obtener los datos del usuario" })
+        }finally{
+          getActions().spinner(false)
         }
       },
 
@@ -125,20 +133,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getUser(store.currentRole);
           }
         } catch (err) {
-          setStore({ ...store, error: err })
+          setStore({ ...store, error: "Error checking user session" })
           console.error("Error checking user session: ", err);
         }
       },
+
       updateMsgError: async (changesMsg) => {
         const store = getStore()
-        
-          console.log(store.error)
-        setStore({ ...store, error: changesMsg})
-        console.log(store.error)
-
-        
+        setStore({ ...store, error: changesMsg}) 
       },
-      
+
+      spinner: async (changesSpinner) => {
+        const store = getStore()
+        setStore({ ...store, spinner: changesSpinner}) 
+      },
+
     },
   };
 };

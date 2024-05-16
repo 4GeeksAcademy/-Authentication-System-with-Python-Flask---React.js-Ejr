@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
-import { FaCircleArrowLeft } from "react-icons/fa6";
+import { GoArrowLeft } from "react-icons/go";
 
 export const LogIn = () => {
     const { store, actions } = useContext(Context)
@@ -80,6 +80,7 @@ export const LogIn = () => {
 
     return (
         <div className=' position-relative'>
+            {/* Msg */}
             <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x'>
                 {msgError === ''
                     ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
@@ -89,24 +90,25 @@ export const LogIn = () => {
                         {msgError}
                     </div>}
             </div>
-            
+            {/* Título */}
             <div className='row d-flex flex-row'>
                 <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
                     <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
-                        <div className="d-flex justify-content-center align-items-center">
-                            <div className='d-flex justify-content-center align-items-center mx-2 fs-4' onClick={handlerHome} style={{ cursor: "pointer" }}>
-                                <FaCircleArrowLeft />
-                            </div>
-                            <div className='d-flex justify-content-center align-items-center'>
+                        <div className="d-flex justify-content-center align-items-center position-relative mb-5">
+                            <div className='d-flex justify-content-center align-items-center mx-2 fs-4 position-absolute top-0 start-0' onClick={handlerHome} style={{ cursor: "pointer" }}>
+                                <GoArrowLeft />
+                            </div> 
+                            <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-50 translate-middle-x'>
                                 <h1>Log In</h1>
                             </div>
                         </div>
-                        <form onSubmit={handlerLogin}>
+                        <form className='mt-5 mb-5' onSubmit={handlerLogin}>
 
 
                             {
                                 (active)
                                     ? <div>
+                                        {/* Email */}
                                         <div className='col-md my-3'>
                                             <label className='my-2'>Email {store.error}</label>
                                             <input
@@ -118,7 +120,7 @@ export const LogIn = () => {
                                                 className="form-control"
                                             />
                                         </div>
-
+                                        {/* Password */}
                                         <div className='col-md my-3'>
                                             <label className='my-2'>Password</label>
                                             <input
@@ -132,7 +134,18 @@ export const LogIn = () => {
                                         </div>
 
                                         <div className='col-md' style={{ marginTop: '80px' }}>
-                                            <button className='btn btn-primary w-100' onClick={handlerLogin}>Login In</button>
+                                            <button className='btn btn-primary w-100' onClick={handlerLogin}>{
+                                                (store.spinner)
+                                                    ? <div class="spinner-border" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </div>
+                                                    : <div class="row align-items-center">
+                                                        <div class="col align-self-center text-center fs-4">
+                                                            <span>Login In</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </button>
                                         </div>
                                         <div className='col-md my-3 text-center'>
                                             <p className='text-decoration-underline' onClick={handlerGoToRegister} style={{ cursor: "pointer" }}>Don't have an account yet? click here to register.</p>
@@ -142,11 +155,11 @@ export const LogIn = () => {
                                         </div>
                                     </div>
                                     : <div className='d-flex justify-content-center my-5'>
-                                        <div className='col-md-8'>
+                                        <div className='col-md-8 my-3'>
                                             <div className='text-center'>
-                                               <label className="form-label fw-bold">Role</label> 
+                                                <label className="form-label fw-bold">Role</label>
                                             </div>
-                                        
+
                                             <div className="input-group has-validation">
                                                 <select className="form-select" name='isPeople' onChange={handlerChangeLogin} value={selectedRole} required>
                                                     <option value="">--Choose--</option>
@@ -162,7 +175,7 @@ export const LogIn = () => {
                         </form>
                     </div>
                 </div>
-                <div className='col-lg-7 d-md-none d-lg-block d-flex justify-content-center align-items-center'>
+                <div className='col-lg-7 d-sm-none d-md-none d-lg-block d-flex justify-content-center align-items-center'>
                     <img
                         src="https://www.ceac.es/sites/default/files/2020-08/estudiar-online-ceac.jpg.webp"
                         alt="imgLogInEducation"
