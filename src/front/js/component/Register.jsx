@@ -54,7 +54,7 @@ const Register = () => {
 
     return (
         <div className={styles.container}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>REGISTER</h1>
                 <div className={styles.inputGroup}>
                     <input type="text" class="input" name="name" value={userDetails.name} onChange={handleChange} required />
@@ -92,7 +92,7 @@ const Register = () => {
 
                 <button type="submit" className={styles.buttonSave}>Sign up</button>
                 <p>
-                    Have an account? <Link to="/login">Login Here</Link>
+                    Have an account? <Link to="/LoginUserV2">Login Here</Link>
                 </p>
             </form>
         </div>

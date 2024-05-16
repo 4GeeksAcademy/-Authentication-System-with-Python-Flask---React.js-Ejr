@@ -52,11 +52,11 @@ const LoginUserV2 = () => {
                 {renderLoginResponse()} {/* Renderiza la respuesta del inicio de sesión */}
             </div>
             <form onSubmit={handleLogin}>
-                <label>
+                <label className="labels">
                     Email:
-                    <input type="email" name="email" value={email.trim()} onChange={e => setEmail(e.target.value)} required />
+                    <input type="email" name="email" className="inputs" value={email.trim()} onChange={e => setEmail(e.target.value)} required />
                 </label>
-                <label>
+                <label className="labels">
                     Contraseña:
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>

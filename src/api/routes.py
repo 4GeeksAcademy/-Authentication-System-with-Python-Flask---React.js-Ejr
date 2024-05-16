@@ -905,7 +905,7 @@ def get_memberships():  # Función que maneja la solicitud GET para obtener memb
 
 #Consultar historial de MEMBRESIA (GET)
 @api.route('/histoy_memberships', methods=['GET'])  # Define el endpoint para obtener el historial de membresías. Se usa el método GET.
-@jwt_required() # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan acceder a esta información.
+# @jwt_required() # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan acceder a esta información.
 def get_histoy_memberships():  # Función que maneja la solicitud GET para obtener el historial de membresías.
     try:
         histoy_memberships = UserMembershipHistory.query.all()  # Consulta todo el historial de membresías en la base de datos.
