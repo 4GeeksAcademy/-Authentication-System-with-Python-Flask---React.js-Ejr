@@ -20,12 +20,13 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     last_update_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)  # Nueva columna para la fecha de última modificación
     image_url = db.Column(db.String(255), nullable=True)  # Almacena la ruta de la imagen
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='SET NULL'), nullable=True)
-    active_membership_id = db.Column(db.Integer, db.ForeignKey('user_membership_history.id'))
 
-    security_questions = db.relationship("SecurityQuestion", back_populates="user", lazy=True, cascade="all, delete-orphan")
+    # Relación con SecurityQuestion configurada para eliminar en cascada
+    security_questions = db.relationship('SecurityQuestion', back_populates='user', cascade='all, delete-orphan')
     role = db.relationship("Role")  # Relación con la tabla de módulos
-    memberships_history = db.relationship('UserMembershipHistory',foreign_keys='UserMembershipHistory.user_id',backref=db.backref('user', lazy='joined'),lazy='dynamic') 
-    active_membership = db.relationship('UserMembershipHistory',foreign_keys=[active_membership_id],post_update=True,lazy='joined',uselist=False, backref=db.backref('active_user', uselist=False) )    
+    
+    # Relaciones sin eliminar en cascada para Membership History y Payments
+    memberships_history = db.relationship('UserMembershipHistory', backref='user', lazy='dynamic')
     payments = db.relationship('Payment', backref='user', lazy=True)
 
     #NOTA: siempre que se haga un eliminacion de base de datos se debe comentar active_membership_id y active_membership ya que tiene una relacion circular y una depende de otra
@@ -34,54 +35,60 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     def __repr__(self):  # Método para representar un objeto de usuario como una cadena
         return '<User %r>' % self.id
     
+    def get_active_membership(self):
+        # Obtener la membresía activa basada en la fecha y el estado
+        return self.memberships_history.filter(
+            UserMembershipHistory.end_date >= datetime.utcnow(),
+            UserMembershipHistory.is_active == True
+        ).first()
+
     def has_active_membership(self):
         # Verificar si el usuario tiene una membresía activa
-        if self.active_membership:
-            return self.active_membership.end_date > datetime.utcnow()
-        return False
+        active_membership = self.get_active_membership()
+        return active_membership is not None and active_membership.end_date > datetime.utcnow()
 
     def has_remaining_classes(self):
         # Verificar si el usuario tiene clases restantes en su membresía
-        if self.active_membership:
-            return self.active_membership.remaining_classes > 0
+        active_membership = self.get_active_membership()
+        return active_membership and active_membership.remaining_classes > 0
+
+    def consume_class(self):
+        # Consumir una clase de la membresía del usuario
+        active_membership = self.get_active_membership()
+        if self.has_active_membership() and self.has_remaining_classes():
+            active_membership.remaining_classes -= 1
+            db.session.commit()
+            return True
         return False
 
     # def activate_membership(self, membership):
     #     # Activar una membresía para el usuario
     #     self.membership = membership
     #     db.session.commit()  # Guardar los cambios en la base de datos
-
-    def consume_class(self):
-        # Consumir una clase de la membresía del usuario
-        if self.has_active_membership() and self.has_remaining_classes():
-            self.active_membership.remaining_classes -= 1
-            db.session.commit()  # Guardar los cambios en la base de datos
-            return True
-        return False
     
     def serialize(self):  # Método para serializar un objeto de usuario a un diccionario JSON
+        active_membership = self.get_active_membership()  # Obtiene la membresía activa usando el nuevo método
         return {  # Devolver un diccionario con los atributos del usuario
-        "id": self.id,
-        "email": self.email,
-        "image": self.image_url,
-        "username": self.username,
-        "name": self.name, 
-        "last_name": self.last_name,
-        "role": self.role.name if self.role else "N/A",  # Mostrar "N/A" si no hay rol
-        "security_questions_question1": self.security_questions[0].question if self.security_questions else "N/A",
-        "security_questions_answer1": self.security_questions[0].answer if self.security_questions else "N/A",
-        "security_questions_question2": self.security_questions[1].question if self.security_questions else "N/A",
-        "security_questions_answer2": self.security_questions[1].answer if self.security_questions else "N/A",
-        "password": self.password,
-        "register_date": self.registration_date.isoformat(),  # Formato ISO de la fecha
-        "account_update": self.last_update_date.isoformat(),  # Formato ISO de la fecha
-        "active_membership_is_active": self.active_membership.is_active if self.active_membership else "N/A",
-        "membership_start_date": self.active_membership.start_date.isoformat() if self.active_membership else "N/A",
-        "membership_end_date": self.active_membership.end_date.isoformat() if self.active_membership else "N/A",
-        "membership_description": self.active_membership.membership.description if self.active_membership and self.active_membership.membership else "N/A",
-        "membership_remaining_classes": self.active_membership.membership.remaining_classes if self.active_membership and self.active_membership.membership else "N/A",
-        
-    }
+            "id": self.id,
+            "email": self.email,
+            "image": self.image_url,
+            "username": self.username,
+            "name": self.name,
+            "last_name": self.last_name,
+            "role": self.role.name if self.role else "N/A",  # Mostrar "N/A" si no hay rol
+            "security_questions_question1": self.security_questions[0].question if self.security_questions else "N/A",
+            "security_questions_answer1": self.security_questions[0].answer if self.security_questions else "N/A",
+            "security_questions_question2": self.security_questions[1].question if self.security_questions else "N/A",
+            "security_questions_answer2": self.security_questions[1].answer if self.security_questions else "N/A",
+            "password": self.password,  # Generalmente no es buena práctica incluir la contraseña en información serializada.
+            "register_date": self.registration_date.isoformat(),  # Formato ISO de la fecha
+            "account_update": self.last_update_date.isoformat(),  # Formato ISO de la fecha
+            "active_membership_is_active": active_membership.is_active if active_membership else "N/A",
+            "membership_start_date": active_membership.start_date.isoformat() if active_membership else "N/A",
+            "membership_end_date": active_membership.end_date.isoformat() if active_membership else "N/A",
+            "membership_description": active_membership.membership.description if active_membership and active_membership.membership else "N/A",
+            "membership_remaining_classes": active_membership.remaining_classes if active_membership else "N/A",
+        }
 
     
     
@@ -255,7 +262,7 @@ class Booking(db.Model):
             "booking_status": self.status,
             "class_id": self.training_class.id,
             "class_name": self.training_class.name,
-            "cllas_day_of_week": self.training_class.day_of_week,
+            "date_class": self.training_class.date_class,
             "class_start_time": self.training_class.start_time.isoformat(),
             "class_instructor": self.training_class.instructor.name  # Asumiendo que 'instructor' también es un objeto serializable
         }
