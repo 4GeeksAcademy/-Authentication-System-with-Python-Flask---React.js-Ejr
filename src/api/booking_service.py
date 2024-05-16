@@ -52,10 +52,13 @@ def cancel_booking(booking_id):
         if booking.status == 'cancelled':
             return False, "Booking already cancelled"
 
-        # Opcional: Verificar si el usuario aún puede cancelar la reserva según reglas de negocio.
-        # Descomenta y ajusta las siguientes líneas según necesidad.
-        # if datetime.now() > booking.booking_date - timedelta(hours=10):  # Ejemplo: no permitir cancelar si falta menos de 10 horas.
-        #     return False, "It's too late to cancel this booking"
+        # Verificar si el usuario aún puede cancelar la reserva según reglas de negocio.
+        # Combinar la fecha y hora de la clase para obtener un datetime completo
+        class_datetime = datetime.combine(booking.training_class.date_class, booking.training_class.start_time)
+
+        # Comprobar si faltan menos de 2 horas para la clase
+        if datetime.utcnow() > class_datetime - timedelta(hours=2):
+            return False, "It's too late to cancel this booking"
 
         # Recuperar la clase asociada a la reserva.
         training_class = booking.training_class
@@ -65,8 +68,8 @@ def cancel_booking(booking_id):
 
         # Recuperar el usuario asociado a la reserva.
         user = User.query.get(booking.user_id)
-        # Recuperar la membresía activa del usuario, si la tiene.
-        active_membership = user.active_membership
+        # Recuperar la membresía activa del usuario.
+        active_membership = user.get_active_membership()
         # Si existe una membresía activa y lleva un conteo de clases, incrementa el número de clases disponibles.
         if active_membership and active_membership.remaining_classes is not None:
             active_membership.remaining_classes += 1  # Devuelve la clase a la membresía activa del usuario
