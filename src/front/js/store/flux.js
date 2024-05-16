@@ -20,6 +20,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  },
 			  creationState: null,
 			  createError:[],
+			  trainingClasses: [],  // Array para almacenar las clases
+
+			  
 
 
 			
@@ -140,6 +143,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+
+			loadTrainingClasses: async () => {
+                try {
+                    const response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/training_classes");
+                    if (response.ok) {
+                        const data = await response.json();
+                        setStore({ ...getStore(), trainingClasses: data });  // Actualiza el estado con las clases obtenidas
+                    } else {
+                        throw new Error("Failed to fetch classes");
+                    }
+                } catch (error) {
+                    console.error("Error loading training classes:", error);
+                }
+            },
 			
 			
 

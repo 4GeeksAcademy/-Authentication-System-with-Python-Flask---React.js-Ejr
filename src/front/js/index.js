@@ -1,6 +1,9 @@
 //import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
+import Modal from 'react-modal';
+// Modal.setAppElement('#root');
+
 
 
 //include your index.scss file into the bundle
