@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     };
 
 	const localStorageUser = JSON.parse(localStorage.getItem('user')) || {
-        isSignedIn: false,
+        isSignedIn: true,
         username: "",
         user_id: null
     };
