@@ -58,6 +58,7 @@ export const Details = () => {
                                 <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                             </button>
                         </div>
+                        <div className="card d-flex m-auto">
                         <div className="container mt-4 p-0">
                         <div className="d-flex justify-content-between pb-2 text-center">
                             <div className="detalle px-2">
@@ -101,6 +102,7 @@ export const Details = () => {
                                 </p>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 </div>
