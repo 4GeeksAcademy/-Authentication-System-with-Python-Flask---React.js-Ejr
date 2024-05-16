@@ -12,6 +12,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Signup from "./component/registroUsuario";
 import Login from "./component/iniciarSesion";
+import PrivateView from "./pages/privateView";
 
 //create your first component
 const Layout = () => {
@@ -28,7 +29,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        
+                        <Route element={<PrivateView />} path="/private" />                        
                     </Routes>
                     <Footer />
                 </ScrollToTop>
