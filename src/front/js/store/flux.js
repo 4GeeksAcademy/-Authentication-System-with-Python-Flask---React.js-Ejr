@@ -1,5 +1,3 @@
-
-
 const getState = ({ getStore, getActions, setStore }) => {
 
 	const localStorageOrder = JSON.parse(localStorage.getItem('order')) || {
@@ -105,7 +103,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					username: data.username, // Assuming the API returns the username
 					user_id: data.user_id    // Assuming the API returns the user_id
 				};
-				
 				// Save user data to localStorage
 				localStorage.setItem('user', JSON.stringify(updatedUser));
 
@@ -116,11 +113,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 
 			return data;
-		}
+		},
+		signOut: () => {
+			const defaultUser = {
+				isSignedIn: false,
+				username: "",
+				user_id: null
+			};
 
+			// Update store
+			setStore({ user: defaultUser });
+
+			// Update localStorage
+			localStorage.setItem('user', JSON.stringify(defaultUser));
+			localStorage.removeItem('jwt-token');
+		},
+		signUp: async (username, firstName, lastName, password) => {
+			const resp = await fetch(`${process.env.BACKEND_URL}api/users`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ 
+					username, 
+					first_name: firstName, 
+					last_name: lastName, 
+					password 
+				})
+			});
+
+			if (!resp.ok) throw Error("There was a problem in the signup request");
+
+			const data = await resp.json();
+			
+			// Automatically log the user in after sign-up
+			const loginResp = await getActions().login(username, password);
+			
+			return loginResp;
+		}
 	  }
 	};
-  };
-  
-  export default getState;
-  
+};
+
+export default getState;
