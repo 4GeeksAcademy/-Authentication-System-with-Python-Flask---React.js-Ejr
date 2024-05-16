@@ -46,7 +46,7 @@ export const Navbar = () => {
 										: (store.myVehicles.map((item, index) => (
 											<li key={index} className="d-flex justify-content-between text-primary m-2">
 												{item.matricula}
-												<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+												<button onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
 													<i className="fas fa-trash"></i>
 												</button>
 											</li>

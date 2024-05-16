@@ -139,6 +139,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch((error) => console.log(error))
 			},
+			removeVehicle: async (vehicle_id) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle/${vehicle_id}`, {
+						method: 'DELETE',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						let allVehicles = getStore().vehicles;
+						const newListVehicles = allVehicles.filter((vehicle) => vehicle.id !== vehicle_id);
+						setStore({
+							vehicles: newListVehicles
+						})
+					}
+				} catch (error) {
+					return []; 
+				}
+			},
 			favorites: async () => {
 				const token = localStorage.getItem("token")
                 try {
@@ -230,7 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     return []; 
                 } 
-            },
+            }
 		}
 	};
 };
