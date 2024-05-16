@@ -13,7 +13,13 @@ const Private = () => {
     return (
         <div style={{ textAlign: 'center', marginTop: '30px', marginBottom: '20px' }}>
             <h1 style={{ marginBottom: '20px' }}>Bienvenido, este es tu espacio privado</h1>
-            <button onClick={handleLogout}>Cerrar Sesión</button>
+            
+            <button 
+                type="button" 
+                class="btn btn-outline-danger"
+                onClick={handleLogout}>
+                    Cerrar sesión
+            </button>
         </div>
     );
 };
