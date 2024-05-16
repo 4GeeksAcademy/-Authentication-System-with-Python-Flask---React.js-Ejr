@@ -12,7 +12,7 @@ export const Home = () => {
 
 	return (
 		<>
-		<div className="text-danger vehicles mt-2 mb-5 mt-4 justify-content-center">
+		<div className="text-danger vehicles mt-2 mb-5 mt-4 justify-content-center bg-light">
 			<div className="container">
 			<div className="row Map Cards text-dark d-flex justify-content-center">
 				{store.vehicles.map((vehicle) => {
