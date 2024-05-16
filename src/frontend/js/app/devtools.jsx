@@ -57,18 +57,17 @@ const DevTools = () => {
     _devToolPosition= actions.getDevPref(Constants.DEVPREFS_PANELPOSITION)
   
   return (
-		<div className={"fixed text-center text-white" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
+		<div className={"fixed text-center text-white text-xs" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
       <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][2]}>
         <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][1]}>
           <button className="bg-slate-400 px-0.5 rounded-md w-7 aspect-square" onClick={toggle_devTools}>{_devToolState ? "❌" : "🛠️"}</button>
         </div>
         { _devToolState &&
-        <div className="max-h-70scr w-52 overflow-hidden bg-black bg-opacity-50 border border-slate-600 rounded-xl">
+        <div className="max-h-70scr w-36 overflow-hidden bg-black bg-opacity-50 border border-slate-600 rounded-xl">
           <div className="max-h-70scr hidescroll-y overflow-x-hidden overflow-y-scroll">
-            <div className="flex flex-col gap-2 p-2">
-              <button className="devtools-btn w-48" onClick={toggle_darkModeState}>{_userDarkMode ? "dark mode" : "light mode"}</button>
+            <div className="flex flex-col w-36 gap-2 p-2">
               <p>-- panel position --</p>
-              <div className="flex w-32 mx-auto flex-col border border-gray-600 gap-2">
+              <div className="flex flex-col w-28 mx-auto border border-gray-600 gap-2">
                 <div className="flex justify-between">
                   <button className="devtools-corner-btn rounded-br-3xl" onClick={(e)=>{move_devToolsPanel(e, 0)}}>TL</button>
                   <button className="devtools-corner-btn rounded-bl-3xl" onClick={(e)=>{move_devToolsPanel(e, 1)}}>TR</button>
@@ -79,14 +78,15 @@ const DevTools = () => {
                 </div>
               </div>
               <p>-- userPrefs --</p>
-              <div className="flex justify-around">
+              <button className="devtools-btn w-32" onClick={toggle_darkModeState}>{_userDarkMode ? "dark mode" : "light mode"}</button>
+              <div className="flex gap-3">
                 <button className="devtools-btn w-20" onClick={load_userPrefs}>load</button>
                 <button className="devtools-btn w-20" onClick={save_userPrefs}>save</button>
               </div>
               <p>-- navigation --</p>
               <div className="flex flex-col gap-1">
                 { _DEV_PAGES.map((p,i)=> p[0] ?
-                  <button key={`nav-${i}-${p[0]}`} className={"devtools-btn w-48 " + (window.location.pathname.toLowerCase()===p[1] ? "active" : "")} onClick={(e)=>{navigate_page(e, p[1])}}>{p[0]}</button>
+                  <button key={`nav-${i}-${p[0]}`} className={"devtools-btn w-32 " + (window.location.pathname.toLowerCase()===p[1] ? "active" : "")} onClick={(e)=>{navigate_page(e, p[1])}}>{p[0]}</button>
                   :
                   <div key={`sep-${i}`} className="h-1"></div>
                 )}
