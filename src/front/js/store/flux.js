@@ -77,11 +77,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					});
 					if (response.status === 201) {
-						return "1";
+						return "success";
 					} else if (response.status === 409) {
-						return "2";
+						return "email_exist";
 					} else {
-						return "3"
+						return "incomplete_data"
 					}
 				} catch (error) {
 					return false;
@@ -105,16 +105,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 					precio: precio
 			 	 		})
                  	});
-					let data = await response.json()
 					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
-						return "1";
+						return "success";
 					} else if (response.status === 409) {
 						console.log(2);
-						return "2";
+						return "plate_exist";
 					} else {
 						console.log(3);
-						return "3";
+						return "incomplete_data";
 					}
 				} catch (error) {
 					return false;

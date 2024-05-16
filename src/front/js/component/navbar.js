@@ -19,11 +19,7 @@ export const Navbar = () => {
 			actions.favorites();
 			actions.myVehiclesInRent();
 		}
-		if (store.myVehicles.length !== 0) {
-			actions.favorites();
-			actions.myVehiclesInRent();
-		}
-	}, [store.vehicles, store.myVehicles]);
+	}, [store.vehicles]);
 
 	return (
 		<nav className="navbar navbar-expand navbar-light">
