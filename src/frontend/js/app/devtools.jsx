@@ -57,7 +57,7 @@ const DevTools = () => {
     _devToolPosition= actions.getDevPref(Constants.DEVPREFS_PANELPOSITION)
   
   return (
-		<div className={"fixed text-center text-white text-xs" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
+		<div className={"devtools fixed text-center text-white text-xs" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
       <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][2]}>
         <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][1]}>
           <button className="bg-slate-400 px-0.5 rounded-md w-7 aspect-square" onClick={toggle_devTools}>{_devToolState ? "❌" : "🛠️"}</button>
