@@ -10,8 +10,8 @@ class User(db.Model):
     name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
     username = db.Column(db.String(250), unique=True, nullable=False)
-    number_document = db.Column(db.Integer, nullable=False)
-    phone = db.Column(db.Integer, nullable=False)
+    number_document = db.Column(db.String(250), nullable=False)
+    phone = db.Column(db.String(250), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
 
