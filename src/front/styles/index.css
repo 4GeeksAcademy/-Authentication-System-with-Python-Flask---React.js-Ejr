@@ -41,9 +41,13 @@ footer {
 }
 
 .imgCarousel {
-    width: 70% !important;
-    height: 50%;
+    width: 75px !important;
+    /* height: 50%; */
     background-position: center center;
     position: relative;
     justify-items: center;
+}
+
+.body {
+    background: lightgrey;
 }
