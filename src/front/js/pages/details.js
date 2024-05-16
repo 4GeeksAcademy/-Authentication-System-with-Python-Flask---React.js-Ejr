@@ -59,10 +59,9 @@ export const Details = () => {
                                 <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                             </button>
                         </div>
-                        <div className="card d-flex m-auto">
-                        <div className="container mt-4 p-0">
-                        <div className="d-flex justify-content-between pb-2 text-center">
-                            <div className="detalle px-2">
+                        {/* <div className="card d-flex m-auto"> */}
+                        <div className="d-flex justify-content-between text-center mt-4 p-0">
+                            <div className="detalle">
                                 <h6>
                                     MATRICULA
                                 </h6>
@@ -70,7 +69,7 @@ export const Details = () => {
                                     {store.details.matricula?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="detalle px-2">
+                            <div className="detalle">
                                 <h6>
                                     TIPO DE MOTOR
                                 </h6>
@@ -78,7 +77,7 @@ export const Details = () => {
                                     {store.details.motor?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="detalle px-2">
+                            <div className="detalle">
                                 <h6>
                                     TIPO DE CAMBIO
                                 </h6>
@@ -86,7 +85,7 @@ export const Details = () => {
                                     {store.details.tipo_cambio?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="detalle px-2">
+                            <div className="detalle">
                                 <h6>
                                     N° ASIENTOS
                                 </h6>
@@ -94,7 +93,7 @@ export const Details = () => {
                                     {store.details.asientos?.toUpperCase()}
                                 </p>
                             </div>
-                            <div className="detalle px-2">
+                            <div className="detalle">
                                 <h6>
                                     PRECIO POR DIA
                                 </h6>
@@ -107,14 +106,13 @@ export const Details = () => {
                     </div>
                 </div>
                 </div>
-                </div>
                 <div className="d-flex justify-content-end mt-auto mb-5 pb-5">
                     <div className="d-grid gap-2 col-3 mx-auto justify-content-center">
                         <ModalAlquilar />
                     
                 </div>
             </div>
-            </div>
+            {/* </div> */}
         </>
     );
 };
