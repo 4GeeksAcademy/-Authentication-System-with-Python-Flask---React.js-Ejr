@@ -118,14 +118,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-      		getVehicles: () => {
-				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+      		getVehicles: async () => {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
+				if (response.status === 200) {
+					const data = await response.json();
+					setStore({ vehicles: data.results })
+				} else {
+					return [];
+				}	
+				
 			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {

@@ -70,23 +70,13 @@ footer {
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
-/* .botonAlquilar {
-    background-color: #a9ce68;
-} */
-
 .corazon:hover i {
     color:black !important;
 }
 
 .imgCarousel {
     width: 75px !important;
-    /* height: 50%; */
     background-position: center center;
     position: relative;
     justify-items: center;
 }
-
-.body {
-    background: lightgrey;
-}
-
