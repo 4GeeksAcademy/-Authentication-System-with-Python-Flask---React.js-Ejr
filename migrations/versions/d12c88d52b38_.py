@@ -69,8 +69,8 @@ def upgrade():
     )
     op.create_table('routines',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('actual_routine', sa.String(length=100), nullable=False),
-    sa.Column('historical', sa.String(length=250), nullable=True),
+    sa.Column('actual_routine', sa.JSON(), nullable=False),
+    sa.Column('historical', sa.JSON(), nullable=True),
     sa.Column('user_data_id', sa.Integer(), nullable=False),
     sa.Column('trainer_data_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['trainer_data_id'], ['trainer_data.trainer_data_id'], ),

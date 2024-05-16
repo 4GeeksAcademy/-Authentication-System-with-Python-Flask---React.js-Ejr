@@ -127,7 +127,6 @@ def get_user_data(user_id):
 @jwt_required()
 def add_or_update_user_data():
     data = request.json
-    print(data)
     existing_user_data = User_data.query.filter_by(user_id=get_jwt_identity()).first()
     
     if existing_user_data:
@@ -150,7 +149,8 @@ def add_or_update_user_data():
             user_height=data.get("user_height"),
             user_illness=data.get("user_illness"),
             user_objetives=data.get("user_objetives"),
-            user_id=get_jwt_identity() 
+            user_id=get_jwt_identity() ,
+            trainer_id=1,
         )
 
         db.session.add(new_user_data)
@@ -222,35 +222,22 @@ def set_routine_with_exercises(user_id):
     if not user:
         raise APIException('User not found', status_code=404)
         
+    routine_data = data.get("routine")
+    if not routine_data:
+        raise APIException('Routine data missing', status_code=400)
 
-    exercises_data = data.get("exercises")
-    if not exercises_data:
-        raise APIException('Exercises data missing', status_code=400)
-        
-
-    exercises = []
-    for exercise_data in exercises_data:
-        exercise_id = exercise_data.get("exercise_id")
-        exercise = Exercise.query.get(exercise_id)
-        if not exercise:
-            abort(400, description=f"Exercise with ID {exercise_id} not found")
-        exercises.append(exercise)
-
-    
     user_routine = Routines.query.filter_by(user_data_id=user_id).first()
     if not user_routine:
         new_routine = Routines(
             user_data_id=user_id,
             trainer_data_id=data["trainer_data_id"],
-            actual_routine=data["routine"],
-            historical=data["routine"],
-            exercises=exercises
+            actual_routine=routine_data,
+            historical=[routine_data]
         )
         db.session.add(new_routine)
     else:
-        user_routine.actual_routine = data["routine"]
-        user_routine.historical = f"{user_routine.historical}, {data['routine']}"
-        user_routine.exercises = exercises
+        user_routine.actual_routine = routine_data
+        user_routine.historical.append(routine_data)
 
     db.session.commit()
 
