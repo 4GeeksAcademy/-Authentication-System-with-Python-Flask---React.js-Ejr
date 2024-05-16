@@ -11,7 +11,7 @@ export const CardVehicles = ({ vehicle }) => {
     console.log(store.vehicles);
 
     return (
-        <div className="card col-md-4 mb-4 me-5" style={{ width: "22rem", height: "26rem" }}>
+        <div className="card col-md-4 mb-4 me-5 mt-4" style={{ width: "22rem", height: "26rem" }}>
             <a className="cardvehicles" href="#">
                 <img className="Vehiculo mt-4" src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
             </a>

@@ -58,9 +58,9 @@ footer {
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
-.botonAlquilar {
+/* .botonAlquilar {
     background-color: #a9ce68;
-}
+} */
 
 .corazon:hover i {
     color:black !important;
@@ -77,3 +77,4 @@ footer {
 .body {
     background: lightgrey;
 }
+
