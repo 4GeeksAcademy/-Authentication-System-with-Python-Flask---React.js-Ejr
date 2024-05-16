@@ -65,7 +65,7 @@ export const AddUser = () => {
     async function handleSubmit(event) {
         event.preventDefault();
         await actions.createUser(userData, selectedRole);
-        setCounter(0);
+        setCounter(0)
     }
 
     function handlerGoToLogIn() {
@@ -101,28 +101,29 @@ export const AddUser = () => {
 
     return (
         <div className='container'>
+            {/* Msg */}
             <div className='position-relative'>
-    <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
-        {msgError === ''
-            ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
-                {"Sign Up Successfully"}
+                <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
+                    {msgError === ''
+                        ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
+                            {"Sign Up Successfully"}
+                        </div>
+                        : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
+                            {msgError}
+                        </div>}
+                </div>
             </div>
-            : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
-                {msgError}
-            </div>}
-    </div>
-</div>
-
-<div className="d-flex justify-content-center align-items-center position-relative mt-3 mb-5" style={{ zIndex: 0 }}>
-    <div className='d-flex justify-content-center align-items-center mx-2 fs-4 position-absolute start-0'
-        onClick={handlerHome}
-        style={{ cursor: "pointer" }}>
-        <GoArrowLeft />
-    </div>
-    <div className='d-flex justify-content-center align-items-center'>
-        <h1>Record your Personal Data</h1>
-    </div>
-</div>
+            
+            <div className="d-flex justify-content-center align-items-center position-relative mt-3 mb-5" style={{ zIndex: 0 }}>
+                <div className='d-flex justify-content-center align-items-center mx-2 fs-4 position-absolute start-0'
+                    onClick={handlerHome}
+                    style={{ cursor: "pointer" }}>
+                    <GoArrowLeft />
+                </div>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <h1>Record your Personal Data</h1>
+                </div>
+            </div>
 
 
 

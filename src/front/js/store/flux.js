@@ -44,7 +44,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           
         } catch (err) {
           setStore({ ...store, error: "Error al crear el usuario" })
-          console.error("Error al crear el usuario:", err);
         }finally{
           getActions().spinner(false)
         }
@@ -78,7 +77,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           await getActions().getUser(userRole);
         } catch (err) {
-          console.error("Error al iniciar sesión: ", err);
           setStore({ ...store, error: "Error al iniciar sesión" })
         }finally{
           getActions().spinner(false)
@@ -113,10 +111,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const dataGetUser = await respGetUsers.json()
           setStore({ ...store, user: dataGetUser })
-          console.log(userRole)
-          console.log(store.user)
+          
         } catch (err) {
-          console.error("Error al obtener los datos del usuario: ", err)
           setStore({ ...store, error: "Error al obtener los datos del usuario" })
         }finally{
           getActions().spinner(false)

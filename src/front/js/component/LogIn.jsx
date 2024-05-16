@@ -33,10 +33,8 @@ export const LogIn = () => {
     async function handlerLogin(e) {
         e.preventDefault();
         if (login.email !== '' && login.password !== '') {
-            await actions.loginIn(login, selectedRole);
-            if (localStorage.getItem('jwt-token')) {
-                setCounter(0)
-            }
+            await actions.loginIn(login, selectedRole)
+            setCounter(0)
         } else {
             alert('Ingrese todo los campos')
         }
@@ -75,7 +73,8 @@ export const LogIn = () => {
         return () => clearInterval(interval)
     }, [setRedirectPath, selectedRole])
 
-    console.log(store.error);
+    console.log(store.error)
+    console.log(counter)
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
 
     return (
@@ -110,7 +109,7 @@ export const LogIn = () => {
                                     ? <div>
                                         {/* Email */}
                                         <div className='col-md my-3'>
-                                            <label className='my-2'>Email {store.error}</label>
+                                            <label className='my-2'>Email</label>
                                             <input
                                                 name='email'
                                                 value={login.email}
@@ -136,11 +135,11 @@ export const LogIn = () => {
                                         <div className='col-md' style={{ marginTop: '80px' }}>
                                             <button className='btn btn-primary w-100' onClick={handlerLogin}>{
                                                 (store.spinner)
-                                                    ? <div class="spinner-border" role="status">
-                                                        <span class="visually-hidden">Loading...</span>
+                                                    ? <div className="spinner-border" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
                                                     </div>
-                                                    : <div class="row align-items-center">
-                                                        <div class="col align-self-center text-center fs-4">
+                                                    : <div className="row align-items-center">
+                                                        <div className="col align-self-center text-center fs-4">
                                                             <span>Login In</span>
                                                         </div>
                                                     </div>
