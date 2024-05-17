@@ -59,15 +59,7 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <AppBar position="static" sx={{ backgroundColor: '#2db734' }}>
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-              CODEFUSION CAFE
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
+        
         <Box
           sx={{
             marginTop: 8,
