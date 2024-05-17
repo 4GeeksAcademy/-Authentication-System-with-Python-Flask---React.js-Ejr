@@ -218,7 +218,7 @@ class Training_classes(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     instructor = db.Column(db.String(100), nullable=True)
-    dateTime_class = db.Column(db.DateTime)  # Día de la semana (e.g., Lunes, Martes, etc.)
+    dateTime_class = db.Column(db.DateTime)  
     start_time = db.Column(db.Time, nullable=False)  # Hora de inicio de la clase
     duration_minutes = db.Column(db.Integer, nullable=False)  # Duración en minutos
     available_slots = db.Column(db.Integer, nullable=False)  # Cupos disponibles en la clase

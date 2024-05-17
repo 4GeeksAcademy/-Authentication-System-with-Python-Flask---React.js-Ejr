@@ -61,7 +61,7 @@ const Login = () => {
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>
                 <button type="submit" className={styles.submitButtonLogin}>Iniciar sesión</button>
-                <Link to="/login-help">¿Olvidaste la contraseña?</Link>
+                <Link to="/Master-private-registration">¿Olvidaste la contraseña?</Link>
                 <div className="rememberMe">
                     <input type="checkbox" />
                     <span>Recuérdame</span>

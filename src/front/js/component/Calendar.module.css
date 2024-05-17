@@ -9,6 +9,10 @@
     margin: 10px 0;
     width: 300px;
   }
+
+  .rbc-day-bg rbc-today{
+      background-color: #eaf6ff9d;
+  }
   
   .input {
     border: solid 1.5px #9e9e9e;

@@ -20,7 +20,8 @@ import Benefits from "./pages/Benefits.jsx"
 import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del componente Navbar
 import Login from "./component/Login.jsx"; // Importación del componente Navbar
 import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del componente Navbar
-import Singup from "./component/Singup.jsx"; 
+import Singup from "./component/Singup.jsx";
+import SingupMaster from "./component/SingupMaster.jsx";
 import Calendar from "./component/Calendar.jsx"; 
 
 
@@ -47,6 +48,7 @@ const Layout = () => {
                         <Route element={<Benefits />} path="/Benefits" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />
+                        <Route element={<SingupMaster />} path="/Master-private-registration" />
                         <Route element={<Calendar />} path="/Calendar" />
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
                         <Route element={<h1>Not found!</h1>} />
