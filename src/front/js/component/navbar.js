@@ -22,8 +22,8 @@ export const Navbar = () => {
 	}, [store.vehicles]);
 
 	return (
-		<nav className="navbar navbar-expand navbar-light">
-			<div className="container-fluid">
+		<nav class="navbar navbar-light">
+			<div class="container-fluid">
 				<div className="d-flex">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
@@ -33,8 +33,11 @@ export const Navbar = () => {
 					</div>
 				</div>
 				{token ?
-					<div className="d-flex">
-						<div className="d-grid gap-3">
+					<div>
+						<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
 							<div className="btn-group">
 								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Mis <i className="fas fa-car-side"></i>
@@ -55,12 +58,12 @@ export const Navbar = () => {
 								</ul>
 								<div className="btn-group text-dark fs-6 ms-1">
 									<Link to="/agregarvehiculo" className="text-decoration-none">
-									<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
+										<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
 									</Link>
 								</div>
 							</div>
 							<div className="btn-group">
-								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
+								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Mis <i className="fas fa-heart"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
 								</button>
@@ -82,24 +85,23 @@ export const Navbar = () => {
 								<button className="btn btn-light" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
 							</div>
 						</div>
-						
 					</div>
-						: (
-							<div className="d-grid gap-2 col-3 justify-content-end">
-								<Link to="/login" className="text-decoration-none">
-									<div className="btn-group d-flex mb-3">
-										<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
-									</div>
-								</Link>
-								<Link to="/signup" className="text-decoration-none">
-									<div className="btn-group d-flex">
-										<button className="btn-lg btn-light">Signup <i className="fas fa-sign-in-alt"></i></button>
-									</div>
-								</Link>
-							</div>
-						)
+					: (
+						<div className="d-grid gap-2 col-3 justify-content-end">
+							<Link to="/login" className="text-decoration-none">
+								<div className="btn-group d-flex mb-3">
+									<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
+								</div>
+							</Link>
+							<Link to="/signup" className="text-decoration-none">
+								<div className="btn-group d-flex">
+									<button className="btn-lg btn-light">Signup <i className="fas fa-sign-in-alt"></i></button>
+								</div>
+							</Link>
+						</div>
+					)
 				}
 			</div>
-		</nav >
+		</nav>
 	);
 };
