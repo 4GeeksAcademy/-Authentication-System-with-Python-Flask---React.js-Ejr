@@ -85,7 +85,7 @@ export const AddUser = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (store.error === '' && counter === 4) {
+                if (store.error === '' && selectedRole !== '' && counter === 4) {
                     setRedirectPath('/LogIn');
                     clearInterval(interval);
                 }
@@ -104,12 +104,12 @@ export const AddUser = () => {
             {/* Msg */}
             <div className='position-relative'>
                 <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
-                    {msgError === ''
+                    {msgError === '' && selectedRole !== ''
                         ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
                             {"Sign Up Successfully"}
                         </div>
                         : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
-                            {msgError}
+                            {msgError || 'Error, Invalid Role'}
                         </div>}
                 </div>
             </div>

@@ -111,8 +111,6 @@ def create_signup_teacher():
     except Exception as e:
         return jsonify({"error": "Error posting teacher user" + str(e)})
 
-    
-
 @api.route('/signup/manager', methods=['POST'])
 def create_signup_manager():
     try:
@@ -155,30 +153,38 @@ def create_signup_manager():
     except Exception as e: 
         return jsonify({"Error": "Error in user manager creation" + str(e)}), 500
 
+
 @api.route('/login/user', methods=['POST'])
 def get_token_login_user():
     try:
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Email and Password are required"}), 400
+        
         #buscamos el user con ese correo
         login_user = User.query.filter_by(email=request.json['email']).one()
         if not login_user:
-            return jsonify({'error': 'invalid email'}), 400
+            return jsonify({'Error': 'Invalid Email'}), 400
+        
+
         password_from_db = login_user.password
         hashed_password_hex = password_from_db
         hashed_password_bin = bytes.fromhex(hashed_password_hex[2:])
         true_or_false = check_password_hash(hashed_password_bin, password)
+
+
         if true_or_false:
             expires = timedelta(days=1)
             user_id = login_user.id
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"error":"Clave incorrecta"}, 400
+            return {"Error":"Invalid Password"}, 400
+        
+        
     except Exception as e:
-        return jsonify({"error": "Error in user:" + str(e)}), 500
+        return jsonify({"Error": "User not exists in Data Base", "Msg": str(e)}), 500
 
 @api.route('/login/manager', methods=['POST'])
 def get_token_login_manager():
@@ -186,13 +192,13 @@ def get_token_login_manager():
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Email and Password are required"}), 400
 
         #buscamos el user con ese correo
         login_manager = Manager.query.filter_by(email=request.json['email']).one()
 
         if not login_manager:
-            return jsonify({'error': 'invalid email'}), 400
+            return jsonify({'Error': 'Invalid Email'}), 400
 
         password_from_db = login_manager.password
         hashed_password_hex = password_from_db
@@ -205,9 +211,9 @@ def get_token_login_manager():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"error":"Clave incorrecta"}, 400
+            return {"Error":"Invalid Password"}, 400
     except Exception as e:
-        return jsonify({"error": "Error in user manager:" + str(e)}), 500
+        return jsonify({"Error": "Manager not exists in Data Base" , "Msg": str(e)}), 500
 
 @api.route('/login/teacher', methods=['POST'])
 def get_token_login_teacher():
@@ -215,13 +221,13 @@ def get_token_login_teacher():
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Email and Password are required"}), 400
 
         #buscamos el user con ese correo
         login_teacher = Teacher.query.filter_by(email=request.json['email']).one()
 
         if not login_teacher:
-            return jsonify({'error': 'invalid email'}), 400
+            return jsonify({'Error': 'Invalid Email'}), 400
 
         password_from_db = login_teacher.password
         hashed_password_hex = password_from_db
@@ -234,9 +240,9 @@ def get_token_login_teacher():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"error":"Clave incorrecta"}, 400
+            return {"Error":"Invalid Password"}, 400
     except Exception as e:
-        return jsonify({"error": "Error in user teacher" + str(e)}), 500
+        return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
 
 @api.route('/private/user')
@@ -249,10 +255,18 @@ def show_user():
         for user in users:
             user_dict = {
                 "id": user.id,
-                "email": user.email
+                "email": user.email,
+                "is_user": user.is_user,
+                "name": user.name,
+                "last_name": user.last_name,
+                "username": user.username,
+                "number_document": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
             }
             user_list.append(user_dict)
-        return jsonify(user_list), 200
+        return jsonify({"msg": "Access to User"}, user_list), 200
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
         
