@@ -11,6 +11,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager 
+import stripe
 
 # from models import Person
 
@@ -22,6 +23,8 @@ app.url_map.strict_slashes = False
 
 app.config["JWT_SECRET_KEY"] = "super-secret"
 jwt = JWTManager(app)
+
+stripe.api_key = 'sk_test_51PDP2q01WUGKqP0MReBFy1CQvP0hNmIOvIhfl1go8d61b8WTJJsFeE2B3FHbhVxaNYHONulV47NR20XIfKlVoYpv00W9XfutlZ'
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
