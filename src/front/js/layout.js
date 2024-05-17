@@ -23,10 +23,10 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Landing />} path="/" />
-                        <Route element={<User />} path="/user" />
+                        <Route element={<User />} path="/user/:id" />
                         <Route element={<ExerciceDetail />} path="/exercise/:id" />
                         <Route element={<UserForm />} path="/user_form" />
-                        <Route element={<Trainer />} path="/trainer" />
+                        <Route element={<Trainer />} path="/trainer/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

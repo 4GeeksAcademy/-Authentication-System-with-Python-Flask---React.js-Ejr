@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../../store/appContext";
 import { useParams } from 'react-router-dom';
-import { Loader } from 'lucide-react';
+import Loader from "../User/loader.jsx";
 
 const UserRoutine = () => {
     const { store, actions } = useContext(Context);
@@ -11,7 +11,7 @@ const UserRoutine = () => {
     useEffect(() => {
         const fetchRoutine = async () => {
             try {
-                const response = await fetch(`/api/user/${id}/actual_routine`, {
+                const response = await fetch(`${process.env.BACKEND_URL}/user/${id}/actual_routine`, {
                     headers: {
                         'Authorization': `Bearer ${store.token}`
                     }
@@ -29,7 +29,7 @@ const UserRoutine = () => {
         };
 
         fetchRoutine();
-    }, [id, store.token]);
+    }, []);
 
     if (!routine) {
         return <Loader />;

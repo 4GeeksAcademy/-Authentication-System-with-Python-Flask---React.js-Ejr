@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./../../../styles/User/userForm.css";
+import "./../../../styles/User-styles/userForm.css";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -9,7 +9,7 @@ const userForm = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user_name: '',
-        //age: '',
+        age: '',
         user_height: '',
         user_weight: '',
         user_illness: '',
@@ -31,7 +31,7 @@ const userForm = () => {
 
             if (
                 formData.user_name === '' ||
-                //formData.user_age === '' ||
+                formData.user_age === '' ||
                 formData.user_height === '' ||
                 formData.user_weight === '' ||
                 formData.user_illness === ''
@@ -40,7 +40,7 @@ const userForm = () => {
                 return;
             } else {
                 actions.postUserData(formData);
-                navigate("/user")
+                navigate(`/user/${store.user_id}`)
             }
         }
 

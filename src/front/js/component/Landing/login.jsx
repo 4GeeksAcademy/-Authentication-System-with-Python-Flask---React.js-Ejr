@@ -28,10 +28,10 @@ export const Login = () => {
   const handleRedirection = () => {
     switch (store.role) {
       case "user":
-        navigate("/user");
+        navigate(`/user/${store.user_id}`);
         break;
       case "trainer":
-        navigate("/trainer");
+        navigate(`/trainer/${store.user_id}`);
     }
   };
 
