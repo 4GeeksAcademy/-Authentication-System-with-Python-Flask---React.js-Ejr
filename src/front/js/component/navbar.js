@@ -17,12 +17,13 @@ export const Navbar = () => {
 	useEffect(() => {
 		if (store.vehicles.length !== 0) {
 			actions.favorites();
+			actions.myVehiclesInRent();
 		}
 	}, [store.vehicles])
 
 	return (
 		<nav className="navbar navbar-expand navbar-light">
-			<div className="container-fluid d-flex">
+			<div className="container-fluid">
 				<div className="d-flex">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
@@ -33,28 +34,34 @@ export const Navbar = () => {
 				</div>
 				{token ?
 					<div className="d-flex">
-						<div clasName="d-grid gap-3 col-6">
-							<div className="btn-group me-1">
-								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0 mb-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Mis <i class="fas fa-car-side"></i>
+						<div className="d-grid gap-3">
+							<div className="btn-group">
+								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Mis <i className="fas fa-car-side"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
 								</button>
 								<ul className="dropdown-menu">
 									{store.myVehicles.length === 0
 										? <li className="text-center">(empty)</li>
-										: <p>Tengo algo</p>  /* En esta linea iria el map */
+										: (store.myVehicles.map((item, index) => (
+											<li key={index} className="d-flex justify-content-between text-primary m-2">
+												{item.matricula}
+												<button onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
+													<i className="fas fa-trash"></i>
+												</button>
+											</li>
+										)))
 									}
 								</ul>
+								<div className="btn-group text-dark fs-6 ms-1">
+									<Link to="/agregarvehiculo" className="text-decoration-none">
+									<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
+									</Link>
+								</div>
 							</div>
-							<div className="btn-group me-2 text-dark align-items-center fs-4 mb-1">
-								<Link to="/agregarvehiculo" className="text-decoration-none">
-								<button className="btn btn-light">Añadir <i class="fas fa-car-side"></i></button>
-								</Link>
-							</div>
-
-							<div className="btn-group me-2 d-flex justify-content-end mb-1">
-								<button className="btn btn-light dropdown-toggle text-dark align-items-center mx-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
-									Mis <i class="fas fa-heart"></i>
+							<div className="btn-group">
+								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">	
+									Mis <i className="fas fa-heart"></i>
 									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
 								</button>
 								<ul className="dropdown-menu">
@@ -71,26 +78,27 @@ export const Navbar = () => {
 									}
 								</ul>
 							</div>
-							<div className="btn-group d-flex justify-content-end mb-1">
-								<button className="btn btn-light me-2" onClick={handleLogOut}>Log Out <i class="fas fa-sign-out-alt"></i></button>
+							<div className="btn-group">
+								<button className="btn btn-light" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
 							</div>
 						</div>
+						
 					</div>
 						: (
-							<div clasName="d-grid gap-2 col-3">
+							<div className="d-grid gap-2 col-3 justify-content-end">
 								<Link to="/login" className="text-decoration-none">
 									<div className="btn-group d-flex mb-3">
-										<button className="btn-lg btn-light">Login <i class="fas fa-sign-in-alt"></i></button>
+										<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
 									</div>
 								</Link>
 								<Link to="/signup" className="text-decoration-none">
 									<div className="btn-group d-flex">
-										<button className="btn-lg btn-light">Signup <i class="fas fa-sign-in-alt"></i></button>
+										<button className="btn-lg btn-light">Signup <i className="fas fa-sign-in-alt"></i></button>
 									</div>
 								</Link>
 							</div>
 						)
-					}
+				}
 			</div>
 		</nav >
 	);

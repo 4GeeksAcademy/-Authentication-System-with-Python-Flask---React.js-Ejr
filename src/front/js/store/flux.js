@@ -8,76 +8,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			details: {}
 		},
 		actions: {
-			login: async (email, password) => {
-                try {
-					const response = await fetch(process.env.BACKEND_URL/api + "/api/login", {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							email: email,
-							password: password
-						})
-					});
-					let data = await response.json()
-					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
-						return true;
-					} else {
-						return false
-					}
-				} catch (error) {
-					return false;
-				}
-			},
-			añadirVehiculo: async (marca_modelo,matricula,motor,tipo_cambio,asientos,precio) => {
-                 try {
-			 		let response = await fetch(process.env.BACKEND_URL/api + "/api/agregarvehiculo", {
-			 			method: 'POST',
-			 			headers:{
-			 				'Content-Type':'application/json',
-			 				//'Authorization': "Bearer " + token
-			 			},
-			 			body: JSON.stringify({
-			 		 			marca_modelo: marca_modelo,
-			 		 			matricula: matricula,
-			 		 			motor: motor,
-			 		 			tipo_cambio: tipo_cambio,
-			 		 			asientos: asientos,
-			 					precio: precio
-			 	 		})
-                 	});
-					 if (response.status === 200) {
-						return "1";
-					} else if (response.status === 409) {
-						return "2";
-					} else {
-						return "3"
-					}
-				} catch (error) {
-					return false;
-				}
-				// 	 	if (response.ok){
-				// 			return "Vehículo añadido correctamente"; 
-				// 			//aqui se podría mostrar un modal con el mensaje
-				// 		} else {
-				// 			throw new Error("Error al añadir vehículo, todos los campos son obligatorios");
-				// 		}
-				//  } catch (error) {
-				// 	return error.message;
-				//  }	
-				},
-      getVehicles: () => {
-				console.log("Obtener vehiculos");
-				fetch("https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/vehicle", {
-					method: 'GET'
-				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
-			},
 			getMessage: async () => {
 				try {
 					// fetching data from the backend
@@ -129,7 +59,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logOut: () => {
 				localStorage.removeItem('token');
-				setStore({ favorites: [] });
+				setStore({ 
+					favorites: [],
+					myVehicles: [] 
+				});
 			},
 			signup: async (email, password) => {
                 try {
@@ -154,6 +87,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			addVehicle: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio) => {
+				const token = localStorage.getItem("token")
+                try {
+			 		const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+			 			method: 'POST',
+			 			headers:{
+			 				'Content-Type':'application/json',
+			 				'Authorization': "Bearer " + token
+			 			},
+			 			body: JSON.stringify({
+			 		 			marca_modelo: marca_modelo,
+			 		 			matricula: matricula,
+			 		 			motor: motor,
+			 		 			tipo_cambio: tipo_cambio,
+			 		 			asientos: asientos,
+			 					precio: precio
+			 	 		})
+                 	});
+					let data = await response.json()
+					if (response.status === 200) {
+						localStorage.setItem("token", data.access_token);
+						return "1";
+					} else if (response.status === 409) {
+						console.log(2);
+						return "2";
+					} else {
+						console.log(3);
+						return "3";
+					}
+				} catch (error) {
+					return false;
+				}
+			},
       		getVehicles: () => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
@@ -172,6 +138,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ details: data})
 				})
 				.catch((error) => console.log(error))
+			},
+			removeVehicle: async (vehicle_id) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle/${vehicle_id}`, {
+						method: 'DELETE',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						let allVehicles = getStore().vehicles;
+						const newListVehicles = allVehicles.filter((vehicle) => vehicle.id !== vehicle_id);
+						setStore({
+							vehicles: newListVehicles
+						})
+					}
+				} catch (error) {
+					return []; 
+				}
 			},
 			favorites: async () => {
 				const token = localStorage.getItem("token")
@@ -239,7 +226,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return []; 
 				}
-			}
+			},
+			myVehiclesInRent: async () => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/rent`, {
+						method: 'GET',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					if (response.status === 200) {
+						const data = await response.json();
+						const vehicles = getStore().vehicles;
+						const backendVehicles= data.results;
+						const filteredVehicles = vehicles.filter((vehicle) => {
+							return backendVehicles.some((beVehicle) => vehicle.user_id == beVehicle.user_id);
+						});
+						setStore({myVehicles: filteredVehicles});
+					} else {
+						return [];
+					}
+                } catch (error) {
+                    return []; 
+                } 
+            }
 		}
 	};
 };

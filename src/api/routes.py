@@ -1,6 +1,3 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Vehicle, FavoriteVehicle
 from api.utils import generate_sitemap, APIException
@@ -17,7 +14,7 @@ def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_exist = User.query.filter_by(email=email).first()
-    if email is "" or password is "":
+    if email == "" or password == "":
         return jsonify({"msg": "El email y password son obligatorios"}), 400
     if user_exist is None:
         new_user = User(
@@ -36,8 +33,8 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_exist = User.query.filter_by(email=email).first()
-    if user_exist is None:
-        return jsonify({"msg": "El email no existe"}), 404
+    if email == "" or password == "":
+        return jsonify({"msg": "Todos los campos son obligatorios"}), 400
     if email != user_exist.email or password != user_exist.password:
         return jsonify({"msg": "El email o password no son correctos"}), 401
     access_token = create_access_token(identity=email)
@@ -55,7 +52,7 @@ def add_vehicle():
     tipo_cambio = request.json.get("tipo_cambio")
     asientos = request.json.get("asientos")
     precio = request.json.get("precio")
-    if not (marca_modelo and matricula and motor and tipo_cambio and asientos and precio):
+    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
     if existing_vehicle:
@@ -102,7 +99,7 @@ def delete_vehicle(vehicle_id):
     if vehicle_exist is None:
         return jsonify({"msg": "El vehículo no existe"}), 400
     else:
-        vehicle_to_delete = Vehicle.query.filter_by(vehicle_id=vehicle_id, user_id=user_id).first()
+        vehicle_to_delete = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
         if vehicle_to_delete:
             db.session.delete(vehicle_to_delete)
             db.session.commit()
@@ -176,8 +173,7 @@ def get_all_rents():
         return jsonify({"msg":"You don't have vehicles in rent"}), 404
     response_body = {
         "msg": "ok",
-        "results": [
+        "results":
             all_rents_list,
-        ]
     }
     return jsonify(response_body), 200
