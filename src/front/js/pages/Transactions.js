@@ -15,14 +15,17 @@ export const Transactions = () => {
 <Navbar />
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <div className="mt-5">
-            <Typography variant="h1">Transactions:<div style={{ width: '100px', height: '100px', background: '#cfd8dc' }} />
+          <div className="mt-5" style={{ flex: 1, backgroundColor: "lightgray", padding: "20px" }}>
+            <Typography variant="h1">Transactions:
             </Typography>
-            <TransactionList />
+            <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px" }} />
+            
           </div>
         </Grid>
-        <Grid item xs={6}>
-          <div className="mt-5">
+        <Grid item xs={6}> 
+          <div className="mt-5" style={{flex:1}}>
+            <Typography variant="h1"> Transaction History: </Typography>
+            <TransactionList />
           </div>
         </Grid>
       </Grid>
