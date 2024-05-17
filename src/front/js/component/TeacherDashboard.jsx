@@ -7,6 +7,7 @@ import { TeacherStudents } from './TeacherStudents.jsx';
 import { TeacherFiles } from './TeacherFiles.jsx';
 import { TeacherMyPayment } from './TeacherMyPayment.jsx';
 import { TeacherSettings } from './TeacherSettings.jsx';
+import { Certificate } from './Certificate.jsx';
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context);
@@ -35,7 +36,9 @@ export const TeacherDashboard = () => {
     const  handleMyPayment =()=>{
         setButtonSelected(<TeacherMyPayment />)
     }
-
+    const handlePDF =()=>{
+        setButtonSelected(<Certificate />)
+    }
         
     const  handleSettings =()=>{
         setButtonSelected(<TeacherSettings />)
@@ -83,7 +86,7 @@ export const TeacherDashboard = () => {
                         <div className='col-12 w-100'>
                             
                                 <button className='btn btn-outline-primary my-2 w-75'onClick={handleSettings}>Settings</button>
-                            
+                                <button className='btn btn-outline-primary my-2 w-75'onClick={handlePDF}>Certificate</button>
                         </div>
                     </div>
                 </div>

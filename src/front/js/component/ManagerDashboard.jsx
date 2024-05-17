@@ -7,6 +7,7 @@ import { Payments } from './Payments.jsx';
 import  Teachers  from './Teachers.jsx';
 import { ActiveUsers } from './ActiveUsers.jsx';
 import { GeneralFiles } from './GeneralFiles.jsx';
+import { Certificate } from './Certificate.jsx';
 
 export const ManagerDashboard = () => {
 
@@ -36,6 +37,10 @@ export const ManagerDashboard = () => {
         setButtonSelected(<GeneralFiles />)
     }
 
+    const handlePDF=()=>{
+        setButtonSelected(<Certificate />)
+    }
+
     const navigate = useNavigate()
     function handleHome(){
         navigate('/')
@@ -60,6 +65,8 @@ export const ManagerDashboard = () => {
                 <button className='btn btn-outline-primary my-2 w-75' onClick={handleUsers}>Users</button>
 
                 <button className='btn btn-outline-primary my-2 w-75' onClick={HandleFiles}>Files</button>
+
+                <button className='btn btn-outline-primary my-2 w-75'onClick={handlePDF}>Certificate</button>
             </div>
             <div className="col-9">
                 {buttonSelected}

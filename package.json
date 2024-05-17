@@ -73,6 +73,8 @@
 		]
 	},
 	"dependencies": {
+		"html2canvas": "^1.4.1",
+		"jspdf": "^2.5.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
