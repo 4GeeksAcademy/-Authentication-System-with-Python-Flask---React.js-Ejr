@@ -12,8 +12,7 @@ const Private = () => {
 
     return (
         <div style={{ textAlign: 'center', marginTop: '30px', marginBottom: '20px' }}>
-            <h1 style={{ marginBottom: '20px' }}>Bienvenido, este es tu espacio privado</h1>
-            
+            <h1 style={{ marginBottom: '50px' }}>Bienvenido, este es tu espacio privado</h1>            
             <button 
                 type="button" 
                 class="btn btn-outline-danger"
