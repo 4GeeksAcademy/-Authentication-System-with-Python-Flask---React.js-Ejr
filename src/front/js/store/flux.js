@@ -46,7 +46,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			SignUp: (email, password) => {
+				fetch('https://sturdy-space-barnacle-7vv77gvq456ghxjwv-3001.app.github.dev/api/crear_usuario', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email: email, password: password }),
+				})
+				.then(response => {
+					if (response.ok) {
+						navigate('/iniciar_sesion');
+					} else {
+						throw new Error('Sign up error');
+					}
+				})
+				.catch(error => {
+					console.error('Error during registration:', error);
+				});
+			},
+			LogIn: (email, password) => {
+				fetch('https://sturdy-space-barnacle-7vv77gvq456ghxjwv-3001.app.github.dev/api/iniciar_sesion', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email: email, password: password }),
+				})
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					} else {
+						throw new Error('Login error');
+					}
+				})
+				.then(data => {
+					sessionStorage.setItem('token', data.token);
+					// window.location.href = '/private';
+					console.log(data.token)
+				})
+				.catch(error => {
+					console.error('Error en el inicio de sesion', error);
+				});
+			},
+			ValidateToken: () => {
+				const token = sessionStorage.getItem("token")
+
+				fetch('https://sturdy-space-barnacle-7vv77gvq456ghxjwv-3001.app.github.dev/api/protected', {
+					method: 'GET',
+					headers: { 'Autorization': 'Bearer' + token }
+				})
+				.then(response => {
+					if (!(response.ok)) {
+						return false
+					} else {
+						return true
+					}
+				})				
+				.catch(error => {
+					console.error('Error en el inicio de sesion', error);
+				});
+			},
+			LogOut: () => {
+                sessionStorage.removeItem("token"); // Elimina el token de sesión
+                // Redirige al usuario a la página de inicio de sesión
+                window.location.href = '/';
+            }
 		}
 	};
 };

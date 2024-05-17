@@ -5,3 +5,10 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+body {
+    justify-content: center;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
