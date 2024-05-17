@@ -33,71 +33,94 @@ export const Navbar = () => {
 					</div>
 				</div>
 				{token ?
-					<div>
-						<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-						<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-							<div className="btn-group">
-								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Mis <i className="fas fa-car-side"></i>
-									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
-								</button>
-								<ul className="dropdown-menu">
-									{store.myVehicles.length === 0
-										? <li className="text-center">(empty)</li>
-										: (store.myVehicles.map((item, index) => (
-											<li key={index} className="d-flex justify-content-between text-primary m-2">
-												{item.matricula}
-												<button onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
-													<i className="fas fa-trash"></i>
-												</button>
-											</li>
-										)))
-									}
-								</ul>
-								<div className="btn-group text-dark fs-6 ms-1">
-									<Link to="/agregarvehiculo" className="text-decoration-none">
-										<button className="btn btn-light">Añadir <i className="fas fa-car-side"></i></button>
-									</Link>
-								</div>
-							</div>
-							<div className="btn-group">
-								<button className="btn btn-light dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Mis <i className="fas fa-heart"></i>
-									<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
-								</button>
-								<ul className="dropdown-menu">
-									{store.favorites.length === 0
-										? <li className="text-center">(empty)</li>
-										: (store.favorites.map((item, index) => (
-											<li key={index} className="d-flex justify-content-between text-primary m-2">
-												{item.matricula}
-												<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
-													<i className="fas fa-trash"></i>
-												</button>
-											</li>
-										)))
-									}
-								</ul>
-							</div>
-							<div className="btn-group">
-								<button className="btn btn-light" onClick={handleLogOut}>Log Out <i className="fas fa-sign-out-alt"></i></button>
-							</div>
+				<>
+					<button class="navbar-toggler bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+						<div class="offcanvas-header">
+							<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+						</div>
+						<div class="offcanvas-body">
+							<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+								<li class="nav-item dropdown mb-3">
+									<a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Favoritos
+										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
+									</a>
+									<ul className="dropdown-menu">
+										{store.favorites.length === 0
+											? <li className="text-center">(empty)</li>
+											: (store.favorites.map((item, index) => (
+												<li key={index} className="dropdown-item d-flex text-primary m-2">
+													{item.matricula}
+													<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+														<i className="fas fa-trash"></i>
+													</button>
+												</li>
+											)))
+										}
+									</ul>
+									</li>
+									<li class="nav-item dropdown mb-3">
+										<a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											Mis Coches
+											<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
+										</a>
+										<ul className="dropdown-menu">
+											{store.myVehicles.length === 0
+												? <li className="text-center">(empty)</li>
+												: (store.myVehicles.map((item, index) => (
+													<li key={index} className="dropdown-item d-flex text-primary m-2">
+														{item.matricula}
+														<a onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
+															<i className="fas fa-trash"></i>
+														</a>
+													</li>
+												)))
+											}
+										</ul>
+									</li>
+									<li class="nav-item mb-3">
+										<Link to="/agregarvehiculo" className="text-decoration-none">
+											<a className="text-black text-decoration-none">Pon tú coche en Friendly Wheels </a>
+										</Link>
+									</li>
+									<li class="nav-item">
+										<Link to="/agregarvehiculo" className="text-decoration-none">
+											<a className="text-black text-decoration-none" onClick={handleLogOut}>Cerrar sesión </a>
+										</Link>
+									</li>
+							</ul>
 						</div>
 					</div>
+				</>
 					: (
-						<div className="d-grid gap-2 col-3 justify-content-end">
-							<Link to="/login" className="text-decoration-none">
-								<div className="btn-group d-flex mb-3">
-									<button className="btn-lg btn-light">Login <i className="fas fa-sign-in-alt"></i></button>
+						<div>
+							<button class="navbar-toggler justify-content-end bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+								<div class="offcanvas-header">
+									<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 								</div>
-							</Link>
-							<Link to="/signup" className="text-decoration-none">
-								<div className="btn-group d-flex">
-									<button className="btn-lg btn-light">Signup <i className="fas fa-sign-in-alt"></i></button>
+								<div class="offcanvas-body">
+									<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+										<li class="nav-item mb-3">
+											<Link to="/signup" className="text-black text-decoration-none">
+												<a>Regístrate</a>
+											</Link>
+										</li>
+										<li class="nav-item">
+											<Link to="/login" className="text-decoration-none">
+												<a className="text-black text-decoration-none">Iniciar sesión</a>
+											</Link>
+										</li>
+									</ul>
 								</div>
-							</Link>
+							</div>
 						</div>
 					)
 				}
