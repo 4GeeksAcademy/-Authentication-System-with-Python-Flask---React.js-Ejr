@@ -56,13 +56,10 @@
 footer {
     background: #a9ce68 !important;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-<<<<<<< HEAD
-=======
 }
 
 .botonAlquilar {
     background-color: #a9ce68;
->>>>>>> 394cba7deadd79fb08b6d9f1fec1c597a8023d51
 }
 
 .corazon:hover i {
@@ -71,20 +68,12 @@ footer {
 
 .imgCarousel {
     width: 75px !important;
-<<<<<<< HEAD
-=======
     /* height: 50%; */
->>>>>>> 394cba7deadd79fb08b6d9f1fec1c597a8023d51
     background-position: center center;
     position: relative;
     justify-items: center;
 }
 
-<<<<<<< HEAD
 body{
     min-height: 100vh; /* Establece la altura mínima del cuerpo como el 100% de la altura de la ventana del navegador */
-=======
-.body {
-    background: lightgrey;
->>>>>>> 394cba7deadd79fb08b6d9f1fec1c597a8023d51
 }
