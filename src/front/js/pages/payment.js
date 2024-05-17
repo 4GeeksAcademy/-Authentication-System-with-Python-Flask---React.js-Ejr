@@ -1,6 +1,7 @@
 import { Typography, IconButton, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const OrderView = () => {
@@ -8,6 +9,7 @@ export const OrderView = () => {
   const [payment, setPayment] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
+  const navigate = useNavigate(); // Use useNavigate to get the navigation function
 
   const handleRemove = (name, price) => {
     actions.removeCoffeeFromOrder({ name, price });
@@ -41,13 +43,12 @@ export const OrderView = () => {
   };
 
   const handleGoBack = () => {
-    // Add your go back handling logic here
-    console.log('Go Back clicked');
+    navigate('/regions'); // Navigate to the /regions page
   };
 
   const handleLogOut = () => {
-    // Add your log out handling logic here
-    console.log('Log Out clicked');
+    actions.signOut(); // Call the signOut action from the store
+    navigate('/'); // Optionally, navigate to the home page or login page after logging out
   };
 
   return (
@@ -84,12 +85,19 @@ export const OrderView = () => {
       </div>
 
       <div style={{ flex: 1, marginLeft: "20px", padding: "20px" }}>
+        <Typography variant="h6">Payment</Typography> {/* Payment title */}
         <TextField
-          label="Payment"
+          label=""
           type="number"
           value={payment}
           onChange={(e) => setPayment(parseFloat(e.target.value))}
           fullWidth
+          InputProps={{
+            style: {
+              border: "2px solid black",
+              borderRadius: "4px",
+            }
+          }}
         />
         <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
           <Button
