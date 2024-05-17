@@ -50,7 +50,7 @@
     - Formulario de Contacto: Para consultas o dudas sobre nuestro servicio.
     - Sección Sobre Nosotros: Para conocer más sobre nuestro equipo.
     - Flask mail: El usuario recibe un correo de bienvenida al registrarse y un correo cuando otro usuario encuentra un tesoro escondido por él.
-    - Video de presentación: Hemos añadido a la sección principal un video presentando brevemente la web y sus funciones para darle un toque más dinámico y llamativo.
+    - Video de presentación: Añadido un vídeo a la sección principal, presentando brevemente la web y sus funciones para darle un toque más dinámico y llamativo.
     - Chat Bot: Añadido un chat bot con una serie de preguntas comunes y sus respuestas
 
 <!-- Tecnologías utilizadas -->
@@ -59,7 +59,7 @@
 <!-- Frontend -->
 <h4 align="left">Frontend</h4>
 <p align="left">
-    - React, Javascript, HTML, CSS, Bootstrap, Axios
+    - React, Javascript, HTML, CSS, Bootstrap
 </p>
 
 <!-- Backend -->
@@ -71,9 +71,9 @@
 <!-- Seguridad de la Plataforma -->
 <h3 align="left">Seguridad de la Plataforma:</h3>
 <ul>
-    <li>JWT (JSON Web Tokens): Implementamos JWT para gestionar la autenticación de los usuarios de forma segura.</li>
-    <li>Bcrypt para Hash de Contraseñas: Usamos Bcrypt para cifrar las contraseñas de los usuarios antes de almacenarlas en nuestra base de datos.</li>
-    <li>Verificación de Tesoros mediante Códigos Aleatorios: Generamos un código aleatorio que los usuarios deben ingresar para verificar la autenticidad de un tesoro encontrado. Esto no solo protege contra falsas reclamaciones, sino que también aumenta la emoción y la participación en la búsqueda del tesoro.</li>
+    <li>JWT (JSON Web Tokens): Implementación de JWT para gestionar la autenticación de los usuarios de forma segura.</li>
+    <li>Bcrypt para Hash de Contraseñas: Implementación de Bcrypt para cifrar las contraseñas de los usuarios antes de almacenarlas en nuestra base de datos.</li>
+    <li>Verificación de Tesoros mediante Códigos Aleatorios: Genera un código aleatorio que los usuarios deben ingresar para verificar la autenticidad de un tesoro encontrado. Esto no solo protege contra falsas reclamaciones, sino que también aumenta la emoción y la participación en la búsqueda del tesoro.</li>
     <
 
 <h3 align="left">Vídeo de presentación: https://res.cloudinary.com/dxzhssh9m/video/upload/v1715946078/Compartir_pantalla_-_2024-05-17_13_39_52_ixmpsg.mp4</h3>
