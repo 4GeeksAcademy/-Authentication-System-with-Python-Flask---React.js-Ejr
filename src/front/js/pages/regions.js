@@ -1,15 +1,16 @@
 import { Typography, IconButton } from "@mui/material";
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import RegionCard from "../component/RegionCard";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const Regions = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate(); // Get the navigate function
 
-  const handleClick = (name, price) => {
-    actions.addCoffeeToOrder({ name, price });
+  const handleClick = (name, price, region) => {
+    navigate(`/regions/${region.toLowerCase().replace(/\s+/g, '-')}`);
   };
 
   const handleRemove = (name, price) => {
@@ -17,36 +18,36 @@ export const Regions = () => {
   };
 
   return (
-    <div style={{ display: "flex", paddingTop:'64px' }}>
-      <div style={{ flex: 1 }}>
+    <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
+      <div style={{ flex: 1, paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
         <Typography variant="h1">Orders:</Typography>
-        <ul>
+        <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
           {store.order.items.map((coffee, index) => (
-            <li key={index}>
-              {coffee.name} - ${coffee.price}
-              <IconButton onClick={() => handleRemove(coffee.name, coffee.price)}>
+            <li key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+              <IconButton onClick={() => handleRemove(coffee.name, coffee.price)} style={{ marginRight: '16px' }}>
                 <DeleteIcon />
               </IconButton>
+              <Typography variant="h6" component="span">
+                {coffee.name} - ${coffee.price}
+              </Typography>
             </li>
           ))}
         </ul>
-        <Typography variant="h3">Total: ${store.order.total.toFixed(2)}</Typography>
+        <Typography variant="h3" style={{ marginTop: 'auto' }}>Total: ${store.order.total.toFixed(2)}</Typography>
       </div>
 
-      <div style={{ flex: 1 }}>
-      <Typography variant="h1">Regions:</Typography>
-  {Object.keys(store)
-    .filter((region) => region !== 'order' && region !== 'user')
-    .map((region) => (
-      <RegionCard image={getImageForRegion(region)} key={region}>
-        <Link to={`/regions/${region.toLowerCase().replace(/\s+/g, '-')}`}>
-          {region}
-        </Link>
-      </RegionCard>
-    ))}
-</div>
-
-
+      <div style={{ flex: 1, paddingLeft: '16px' }}>
+        <Typography variant="h1">Regions:</Typography>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "16px" }}>
+          {Object.keys(store)
+            .filter((region) => region !== 'order' && region !== 'user')
+            .map((region) => (
+              <div key={region} style={{ flex: "1 0 calc(33% - 16px)" }} onClick={() => handleClick('', 0, region)}>
+                <RegionCard image={getImageForRegion(region)} region={region}/>
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };
