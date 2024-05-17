@@ -6,6 +6,7 @@ from api.models import db, User, Post, Comment, Like, Suggestion
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -20,6 +21,49 @@ def handle_hello():
     }
     return jsonify(response_body), 200
 #----------CREACION DE SOLO API`S TIPO POST-------------------
+
+#---- ENDPOINT PARA LOGEEAR UN USUARIO---
+
+@api.route('/login', methods=['POST'])
+def login():
+    datos_login = request.json
+    email = datos_login.get('email')
+    password = datos_login.get('password')
+
+   
+    usuario = User.query.filter_by(email=email).first()
+
+    if usuario and usuario.password == password:
+        """ access_token = create_access_token(identity=usuario.id) """
+        """ return jsonify({"token": access_token}), 200 """
+    else:
+        return jsonify({'mensaje': 'Usuario y Contraseña no encontrados'}), 401
+
+#----ENDPOINT PARA  REGISTRAR UN USUARIO-------------
+
+@api.route('/signup', methods=['POST'])
+def register_User():
+
+    data = request.get_json()
+    print(data);
+    name = data["name"]
+    email = data["email"]
+    password = data["password"]
+    
+    new_user = User(name =name, email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    response_body = {
+        "user": {
+            "id": new_user.id,
+            "name": new_user.name,
+            "email": new_user.email,
+            
+        },
+        "msg": "El usuario se registró exitosamente"
+    }
+    return jsonify(response_body), 200 
 
 #---------------CREACION DE UN POST --------------------
 @api.route('/post', methods=['POST'])
@@ -42,7 +86,7 @@ def handle_create_post():
         "msg": "El segundo post fue creado por Maikel y Jose"
     }
     return jsonify(response_body), 200
-#------------CREACION DE COMMET---------------------
+#------------CREACION DE COMMENT---------------------
 
 @api.route('/comment', methods=['POST'])
 def handle_create_comment():
