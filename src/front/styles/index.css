@@ -29,10 +29,7 @@
 
 footer {
     background: #a9ce68 !important;
-}
-
-.botonAlquilar {
-    background-color: #a9ce68;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
 .corazon:hover i {
@@ -40,5 +37,12 @@ footer {
 }
 
 .imgCarousel {
-    width: 80%;
+    width: 75px !important;
+    background-position: center center;
+    position: relative;
+    justify-items: center;
+}
+
+body{
+    min-height: 100vh; /* Establece la altura mínima del cuerpo como el 100% de la altura de la ventana del navegador */
 }
