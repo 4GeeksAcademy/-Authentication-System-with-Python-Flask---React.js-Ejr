@@ -79,7 +79,7 @@ export const LogIn = () => {
     return (
         <div className=' position-relative'>
             {/* Msg */}
-            <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x'>
+            <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {msgError === ''
                     ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
                         {"Sign Up Successfully"}
