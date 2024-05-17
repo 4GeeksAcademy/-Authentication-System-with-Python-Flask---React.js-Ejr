@@ -5,7 +5,6 @@ export const UserNavbar = () => {
     const navigate = useNavigate()
     function handleHomeView() {
         localStorage.removeItem('jwt-token')
-        console.log(localStorage.removeItem('jwt-token'))
         navigate('/SignOut')
     }
     return (

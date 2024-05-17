@@ -244,12 +244,13 @@ def get_token_login_teacher():
     except Exception as e:
         return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
-
-@api.route('/private/user')
+        
+@api.route('/view/general')
 @jwt_required() #Decorador para requerir autenticacion con jwt
-def show_user():
-    current_user_id = get_jwt_identity() #obtiene la id del user del token
-    if current_user_id:
+def show_teacher():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
+        
         users = User.query.all()
         user_list = []
         for user in users:
@@ -266,42 +267,43 @@ def show_user():
                 "gender": user.gender
             }
             user_list.append(user_dict)
-        return jsonify({"msg": "Access to User"}, user_list), 200
-    else:
-        return jsonify({"Error": "Token invalid or not exits"}), 401
-        
 
-@api.route('/private/teacher')
-@jwt_required() #Decorador para requerir autenticacion con jwt
-def show_teacher():
-    current_teacher_id = get_jwt_identity() #obtiene la id del user del token
-    if current_teacher_id:
         teachers = Teacher.query.all()
         teacher_list = []
         for teacher in teachers:
             teacher_dict = {
                 "id": teacher.id,
-                "email": teacher.email
+                "email": teacher.email,
+                "is_teacher": teacher.is_teacher,
+                "name": teacher.name,
+                "last_name": teacher.last_name,
+                "username": teacher.username,
+                "number_document": teacher.number_document,
+                "phone": teacher.phone,
+                "age": teacher.age,
+                "gender": teacher.gender,
+                "certificate_teacher": teacher.certificate_teacher,
+                "user_id": teacher.user_id
             }
             teacher_list.append(teacher_dict)
-        return jsonify(teacher_list), 200
-    else:
-        return jsonify({"Error": "Token invalid or not exits"}), 401
 
-
-@api.route('/private/manager')
-@jwt_required() #Decorador para requerir autenticacion con jwt
-def show_manager():
-    current_manager_id = get_jwt_identity() #obtiene la id del user del token
-    if current_manager_id:
         managers = Manager.query.all()
         manager_list = []
         for manager in managers:
             manager_dict = {
                 "id": manager.id,
-                "email": manager.email
+                "email": manager.email,
+                "is_manager": manager.is_manager,
+                "name": manager.name,
+                "last_name": manager.last_name,
+                "phone": manager.phone,
+                "user_id": manager.user_id,
+                "teacher_id": manager.teacher_id
             }
             manager_list.append(manager_dict)
-        return jsonify(manager_list), 200
+
+        return jsonify({"Access to User": user_list, "Access to Teacher": teacher_list, "Access to Manager": manager_list}), 200
+        
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
+

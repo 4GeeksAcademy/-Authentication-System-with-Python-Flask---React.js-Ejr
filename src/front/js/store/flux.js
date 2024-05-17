@@ -100,6 +100,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataGetUser = await respGetUsers.json();
+          console.log(dataGetUser)
           setStore({ ...store, user: dataGetUser });
           
         } catch (err) {
