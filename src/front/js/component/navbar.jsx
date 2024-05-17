@@ -14,6 +14,8 @@ export const Navbar = () => {
     setLoggedIn(!!store.token);
   }, [store.token]);
 
+  //TODO añadir el nombre de usuario cuando esté logeado
+
   return loggedin ? (
     <nav className="landing-nav-container">
       <div className="logo-container">

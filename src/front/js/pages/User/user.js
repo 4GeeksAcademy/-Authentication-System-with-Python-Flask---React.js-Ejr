@@ -11,6 +11,8 @@ export const User = () => {
     const [exercises, setExercises] = useState([]);
     const [bodyPart, setBodyPart] = useState('all');
 
+
+
     return (
         <div>
             <Calendly />

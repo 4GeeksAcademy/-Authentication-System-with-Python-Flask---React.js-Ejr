@@ -1,6 +1,4 @@
 import { jwtDecode } from "jwt-decode";
-import userForm from "../pages/User/userForm";
-import { useNavigate } from "react-router-dom";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -11,6 +9,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				headers: {
 					'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
 					'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+				}
+			},
+			youtubeOptions: {
+				method: 'GET',
+				headers: {
+					'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com',
+					'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
 				}
 			},
 		},
@@ -35,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
 					setStore({ token: data.access_token, user_id: decoded.sub, role: decoded.role });
-					return true;
+
 				}
 			},
 
@@ -74,18 +79,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					console.error('Error al enviar los datos');
 				}
-			}, catch(error) {
-				console.error('Error de red:', error);
-			}
-		},
-
-		fetchData: async (url, options) => {
-			const response = await fetch(url, options);
-			const data = await response.json();
-			return data;
-		},
-	}
+			},
+			fetchDataExercice: async (url, options) => {
+				const response = await fetch(url, options);
+				const data = await response.json();
+				return data;
+			},
+		}
+	};
 };
-
 
 export default getState;

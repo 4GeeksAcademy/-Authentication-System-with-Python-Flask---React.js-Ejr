@@ -81,9 +81,14 @@ def login():
         raise APIException('Invalid password, please try again', status_code=401)
         
     
-    role = "user" if user else "trainer"
+    if user:
+        identity = user.id
+        role = "user"
+    else:
+        identity = trainer.id
+        role = "trainer"
 
-    access_token = create_access_token(identity=email, additional_claims={"role": role})
+    access_token = create_access_token(identity=identity, additional_claims={"role": role})
    
     return jsonify({ "access_token": access_token}), 200
 
@@ -104,7 +109,8 @@ def create_new_user():
     db.session.add(new_user)
     db.session.commit()
 
-    new_user_id = new_user.id     
+    new_user_id = new_user.id
+
     access_token = create_access_token(identity=new_user_id, additional_claims={"role": new_user.role})
 
     return jsonify({'access_token': access_token}), 200
@@ -158,7 +164,7 @@ def add_or_update_user_data():
 
         serialized_new_user_data = new_user_data.serialize()
 
-        return jsonify(serialized_new_user_data), 201
+        return jsonify(serialized_new_user_data), 200
 
 # Trainer Endpoints
 @app.route('/trainer/<int:id>')

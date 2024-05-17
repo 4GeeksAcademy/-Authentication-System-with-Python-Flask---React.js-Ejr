@@ -8,7 +8,7 @@ import Services from "./services.jsx";
 const MainView = () => {
   return (
     <>
-      <div className="main-view-container  ">
+      <div className="main-view-container">
         <article className="text-container background-slider">
           <div className="left-text-container">
             <h2>
