@@ -5,25 +5,30 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-function CoffeeCard({ name, price, handleClick }) {
+function CoffeeCard({ name, price, handleClick, image }) {
     return (
-      <Card sx={{ maxWidth: 345 }} onClick={() => handleClick(name, price)}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://fastly.picsum.photos/id/63/5000/2813.jpg?hmac=HvaeSK6WT-G9bYF_CyB2m1ARQirL8UMnygdU9W6PDvM"
-            alt={name} />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {price}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+        <Card sx={{ maxWidth: 345 }} onClick={() => handleClick(name, price)}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={image}
+                    alt={name}
+                />
+                <CardContent
+                    sx={{
+                        backgroundColor: 'lightgray',
+                    }}
+                >
+                    <Typography gutterBottom variant="h5" component="div" sx={{ color: 'black' }}>
+                        {name}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'black' }}>
+                        {price}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card>
     );
 }
 
