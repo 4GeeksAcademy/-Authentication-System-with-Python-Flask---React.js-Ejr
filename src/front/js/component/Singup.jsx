@@ -21,6 +21,12 @@ const Singup = () => {
             { question: "", answer: "" }
         ]
     });
+
+    // estados para el modal
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+
+
     // console.log(userDetails)
     const handleChange = (e) => {
         const { name, value } = e.target; // Extraemos name y value directamente del evento
@@ -44,10 +50,18 @@ const Singup = () => {
         e.preventDefault();
         const result = await actions.createUser(userDetails);
         if (result) {
-            alert(store.creationState.message);
-            navigate("/LoginUserV2");
+            setModalMessage(store.creationState.message);
+            setModalVisible(true);
         } else {
-            alert(store.creationState.error);
+            setModalMessage(store.creationState.error);
+            setModalVisible(true);
+        }
+    };
+
+    const handleModalClose = () => {
+        setModalVisible(false);
+        if (store.creationState.message) {
+            navigate("/Login");
         }
     };
 
@@ -95,6 +109,24 @@ const Singup = () => {
                     Have an account? <Link to="/LoginUserV2">Login Here</Link>
                 </p>
             </form>
+
+            {/* Modal */}
+            <div className={`modal fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1" id={styles["modal"]}>
+                <div className="modal-dialog">
+                    <div className={styles["modal-content"]}>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Registration Status</h5>
+                        </div>
+                        <div className="modal-body">
+                            <p>{modalMessage}</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
         </div>
     );
 };
