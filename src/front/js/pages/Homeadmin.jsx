@@ -11,11 +11,16 @@ import Menuadmin from "../component/Menuadmin.jsx";
 const Homeadmin = () => {
   return (
     <div>
-      <header>
+      <div className="d-flex justify-content-center">
+      <Menuadmin/> 
+      </div>
+      
+      <header className={styles.header}>
+        
         <h1 className={styles.headerTitle}>Welcome User Admin</h1>
       </header>
       
-      <Menuadmin/>  
+       
        
       
     </div>
