@@ -14,6 +14,7 @@ import { LogIn } from "./component/LogIn.jsx";
 import { UserView } from "./pages/UserView.jsx";
 import { TeacherView } from "./pages/TeacherView.jsx";
 import { ManagerView } from "./pages/ManagerView.jsx";
+import { SignOut } from "./pages/SignOut.jsx";
 
 
 //create your first component
@@ -35,6 +36,7 @@ const Layout = () => {
                         <Route element={<LogIn />} path="/LogIn" /> 
                         <Route element={<UserView />} path="/userView" />
                         <Route element={<ManagerView />} path="/managerView" />
+                        <Route element={<SignOut />} path="/SignOut"/>
                         <Route element={<h1>Not found!</h1>} />
                         {/*<Route element={<Single />} path="/single/:theid" /> */}
                     </Routes>
