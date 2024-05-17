@@ -87,10 +87,10 @@ function SignIn() {
           }}
         >
         <br></br>
-          <Typography component="h1" variant="h5" sx={{ mt: 1, textAlign: 'left' }}>
+          <Typography component="h1" variant="h4" sx={{ mt: 1, textAlign: 'left' }}>
             Sign in
           </Typography>
-          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+          <Typography component="h1" variant="body1" sx={{ mt: 1 }}>
             New user? <Link to="/signup" variant="body2">Create an account</Link>
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
@@ -152,17 +152,18 @@ function SignIn() {
       {showBasicCard && (
         <Card sx={{ bgcolor: 'white', position: 'fixed', top: '50%', left: '70%', transform: 'translate(-50%, -50%)', boxShadow: 'none', border: '1px solid #000' }}>
           <CardContent>
-            <Typography variant="h5" component="div">
-              <span style={{ fontWeight: 'bold' }}>Forgot Password</span> <br />
+            <Typography variant="h5" component="div" gutterBottom>
+              <span style={{ fontWeight: 'bold' }}>Forgot Password</span>
+            </Typography>
+            <Typography variant="body2" component="div">
               Please enter the email address used to SignUp. We will send a password reset.
             </Typography>
             <TextField id="outlined-basic" label="User Email" variant="outlined" sx={{ mt: 2, mb: 2 }} fullWidth />
-    <Button onClick={handleSendResetLink} variant="contained" sx={{ mt: 2, bgcolor: '#2db734', width: '100%' }}>
-             Send Reset Link
+            <Button onClick={handleSendResetLink} variant="contained" sx={{ mt: 2, bgcolor: '#2db734', width: '100%' }}>
+              Send Reset Link
             </Button>
           </CardContent>
         </Card>
-
       )}
     </ThemeProvider>
   );

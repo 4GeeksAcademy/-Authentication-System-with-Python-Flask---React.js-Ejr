@@ -1,4 +1,4 @@
-import React, { useContext, } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,19 +11,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Context } from '../store/appContext'; // Adjust the import path according to your project structure
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const defaultTheme = createTheme();
 
@@ -48,7 +35,7 @@ export default function SignUp() {
     try {
       const response = await actions.signUp(username, firstName, lastName, password);
       if (response) {
-        navigate('/signin');
+        navigate('/');
       }
     } catch (error) {
       console.error(error);
@@ -58,8 +45,8 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
       <Container component="main" maxWidth="xs">
-        
         <Box
           sx={{
             marginTop: 8,
@@ -68,10 +55,11 @@ export default function SignUp() {
             alignItems: 'flex-start',
           }}
         >
-          <Typography component="h1" variant="h5">
-            Sign up
+          <br></br>
+          <br></br>
+          <Typography component="h1" variant="h4" sx={{ mt: 1, textAlign: 'left' }}>
+                        Sign up
           </Typography>
-          
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -94,7 +82,6 @@ export default function SignUp() {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -116,7 +103,6 @@ export default function SignUp() {
                   id="password"
                   label="Password"
                   type="password"
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -136,7 +122,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/signin" variant="body2">
+                <Link to="/" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
