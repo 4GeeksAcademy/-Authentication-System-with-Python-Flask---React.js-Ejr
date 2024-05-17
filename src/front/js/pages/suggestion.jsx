@@ -20,7 +20,7 @@ const Suggestions = () => {
 
     return (
         <div className="container">
-            <h1>Suggestions from users</h1>
+            <h1>Suggestions from users111</h1>
             <ul className="list-group">
                 {store.suggestions.map((suggestion, index) => (
                     <li key={index} className="list-group-item">
