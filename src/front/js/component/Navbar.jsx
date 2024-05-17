@@ -37,7 +37,7 @@ const Navbar = () => { // Definición del componente Navbar
                   <a className="nav-link" href="/Benefits">about</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Contact</a>
+                  <a className="nav-link" href="/Calendar">Calendar</a>
                 </li>
               </ul>
             </div>

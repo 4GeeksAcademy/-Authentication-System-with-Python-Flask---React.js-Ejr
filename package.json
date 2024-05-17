@@ -74,9 +74,12 @@
 	},
 	"dependencies": {
 		"bootstrap": "^5.3.3",
+		"moment": "^2.30.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.14.0",
+		"react-big-calendar": "^1.12.2",
 		"react-dom": "^16.14.0",
+		"react-modal": "^3.16.1",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",
 		"reactstrap": "^9.2.2",

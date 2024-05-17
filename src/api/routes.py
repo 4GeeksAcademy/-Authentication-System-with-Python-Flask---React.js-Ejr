@@ -810,13 +810,13 @@ def create_training_classes():  # Función que maneja la solicitud POST para cre
         name = item.get('name')
         description = item.get('description')
         instructor_id = item.get('instructor_id')
-        date_class = item.get('date_class')
+        dateTime_class = item.get('dateTime_class')
         start_time = item.get('start_time')
         duration_minutes = item.get('duration_minutes')
         available_slots = item.get('available_slots')
 
         # Verifica que todos los campos necesarios están presentes.
-        if not all([name, date_class, start_time, duration_minutes, available_slots]):
+        if not all([name, dateTime_class, start_time, duration_minutes, available_slots]):
             errors.append({'error': 'Missing data for class', 'class_info': item})  # Agrega un error si falta algún dato.
             continue
 
@@ -825,7 +825,7 @@ def create_training_classes():  # Función que maneja la solicitud POST para cre
                 name=name,
                 description=description,
                 instructor_id=instructor_id,
-                date_class=date_class,
+                dateTime_class=dateTime_class,
                 start_time=start_time,
                 duration_minutes=duration_minutes,
                 available_slots=available_slots
@@ -885,7 +885,7 @@ def delete_training_class(class_id):  # Función que maneja la solicitud DELETE 
     except Exception as e:
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error.
         return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
-
+#
 
 #-------------------------------------------------ENPOINT PARA LAS MEMBRESIAS-----------------------------------------------------------
 #Consultar todas las MEMBRESIA (GET)
