@@ -68,6 +68,13 @@
 footer {
     background: #a9ce68 !important;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    height: 100px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 
 .corazon:hover i {
@@ -80,3 +87,9 @@ footer {
     position: relative;
     justify-items: center;
 }
+
+.body {
+    background: lightgrey;
+    width: 100px;
+    height: 100px;
+}  
