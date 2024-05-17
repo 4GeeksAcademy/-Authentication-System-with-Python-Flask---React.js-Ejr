@@ -16,7 +16,7 @@ export const Navbar = () => {
             CODEFUSION CAFE {/* Centered text */}
           </Typography>
           <div className="ml-auto">
-            <Link to="/signIn">
+            <Link to="/transactions">
               <button className="btn btn-primary">EMPLOYEE ID</button>
             </Link>
           </div>
