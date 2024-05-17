@@ -130,6 +130,35 @@ def handle_get_post():
 
     return jsonify(response_body), 200
 
+#----------ACTUALIZAR UN POST-------------------------------
+@api.route('/post/<int:post_id>', methods=['PUT'])
+def handle_update_post(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({"msg": "Post not found"}), 404
+    
+    data = request.json
+    if 'img' in data:
+        post.img = data['img']
+    if 'bodytext' in data:
+        post.bodytext = data['bodytext']
+    
+    db.session.commit()
+
+    return jsonify({"msg": "Post updated successfully", "post": post.serialize()}), 200
+
+#----------ELIMINAR UN POST---------------------------------
+@api.route('/post/<int:post_id>', methods=['DELETE'])
+def handle_delete_post(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({"msg": "Post not found"}), 404
+    
+    db.session.delete(post)
+    db.session.commit()
+
+    return jsonify({"msg": "Post deleted"}), 200
+
 #--------------------------------------------------------
 @api.route('/wipeall', methods=['GET'])
 def database_wipe():
