@@ -21,7 +21,7 @@ import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del com
 import Login from "./component/Login.jsx"; // Importación del componente Navbar
 import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del componente Navbar
 import Singup from "./component/Singup.jsx"; 
-
+import Users from "./pages/Users.jsx";
 
 
 
@@ -44,6 +44,7 @@ const Layout = () => {
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
                         <Route element={<Plans />} path="/Plans" />
                         <Route element={<Homeadmin />} path="/Admin" />
+                        <Route element={<Users />} path="/users" />
                         <Route element={<Benefits />} path="/Benefits" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />

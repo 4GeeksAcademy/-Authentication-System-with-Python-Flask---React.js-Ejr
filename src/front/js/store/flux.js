@@ -3,6 +3,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			users:[],
 			isAuthenticated: null,
 			uploadedUserData:[],
 			isAuthenticatedMessage: null,
@@ -182,6 +183,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 		console.error(error)
 			// 	}  
 			// },
+			getUsers : async () => {
+				try {
+				  let response = await fetch("https://humble-space-funicular-5ggx7rpppw76fqj6-3000.app.github.dev/api/users", 
+				  {
+					method: "GET",
+					headers: {
+					  "Content-Type": "application/json",
+					  // Incluye el token de autorización si es necesario
+					  // Authorization: `Bearer ${token}`,
+					},
+				  });
+				  console.log (response)
+				  if (!response.ok) {
+					throw new Error(`Error fetching users: ${response.statusText}`);
+				  }
+			  
+				  let data = await response.json();
+				  console.log(data);
+				  
+				  
+				  let store = getStore(); // Obtiene el estado actual del almacén
+				  setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
+			  
+				} catch (error) {
+				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+				  // Puedes también manejar el estado del error en tu store si es necesario
+				  let store = getStore();
+				  setStore({ ...store, fetchUsersError: error.message });
+				}
+			  },
 		}
 	};
 };
