@@ -885,7 +885,7 @@ def delete_training_class(class_id):  # Función que maneja la solicitud DELETE 
     except Exception as e:
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error.
         return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
-
+#
 
 #-------------------------------------------------ENPOINT PARA LAS MEMBRESIAS-----------------------------------------------------------
 #Consultar todas las MEMBRESIA (GET)
