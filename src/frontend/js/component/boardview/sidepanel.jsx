@@ -1,16 +1,98 @@
 import React from 'react'
 
-const SidePanel=()=>{
+import Constants from "../../app/constants.js"
+
+import useClickDrag from '../../effects/useClickDrag.jsx'
+
+const SidePanelExpandable=({label, icon, expand, children})=>{
+  const [ expanded, set_expanded ]= React.useState(expand ? true : false)
+  
   return (
-    <section className="flex w-96 h-full bg-zinc-900 bg-opacity-70">
-      <div className="flex h-2/3 my-auto px-4 gap-4">
-        <span className="font-bold my-auto text-xl">[Board]</span>
+    <div className="k--sidepanel-expandable">
+      <button className="flex w-full text-xl justify-between" onClick={()=>{set_expanded(!expanded)}}>
+        <div className="flex gap-2">
+          <i className={`fa ${icon} text-md my-auto`} />
+          {label}
+        </div>
+        <i className={"fa fa-solid text-sm my-auto" + (expanded ? " fa-square-caret-up" : " fa-square-caret-down")} />
+      </button>
+      { expanded &&
+        <div className="flex flex-col bg-black bg-opacity-15 px-4 mt-2 mr-4 py-2 rounded-lg border border-zinc-900">
+          {children}
+        </div>
+      }
+    </div>
+  )
+}
+
+const SidePanel=()=>{
+
+  const
+    [ panelSize, set_panelSize ]= React.useState(0),
+    resizeRef= React.useRef(null),
+    dragEffect= useClickDrag(Constants.MOUSE_BTN_LEFT, resizeRef)
+
+  React.useEffect(()=>{
+    if(dragEffect.delta){
+      console.log(dragEffect.delta[0])
+    }
+  },[dragEffect])
+
+  return (
+    <div className="k--board-sidepanel k--bg-boardpanels">
+      <div className="k--sidepanel-handles">
+        <button className="k--board-btn-discrete">
+          <i className="fa fa-solid fa-square-caret-right" />
+        </button>
+        <div ref={resizeRef} className="k--sidepanel-resizer k--board-btn-discrete">
+          <i className="fa fa-solid fa-grip-lines-vertical" />
+        </div>
       </div>
-      <div className="flex h-2/3 my-auto px-4 gap-4">
-        <span className="font-bold my-auto text-xl">[People]</span>
-        <i className="fa fa-solid fa-share-nodes my-auto text-3xl" />
+      <div className="flex flex-col pr-3">
+        <div className="w-full min-h-12 border-b border-zinc-700" />
+        <div className="flex flex-col h-full pl-2 pr-4 py-2 gap-2 overflow-y-scroll hidescroll-y">
+          <div className="flex flex-col">
+            <h2 className="font-bold text-xl">Description:</h2>
+            <span className="text-sm text-zinc-400">this would be the mothafuckin board description, here you can write some short of text about what is all this shit about you know?, or better go jump out of the window, i dont give a shit, go fuck a spider nest</span>
+          </div>
+          <div className="flex justify-between mx-6">
+            <span className="font-bold text-xl"><i className="fa fa-solid fa-book text-xl" /></span>
+            <span className="font-bold text-xl"><i className="fa fa-regular fa-eye text-xl" /></span>
+            <span className="font-bold text-xl"><i className="fa fa-regular fa-bookmark text-xl" /></span>
+          </div>
+          <div className="bg-zinc-700 min-h-px w-full" />
+          <div className="flex flex-col mx-2 gap-2">
+            <SidePanelExpandable label="Tags" icon="fa-solid fa-tag">
+              { Array.from({length:100}).map((e,i)=>
+                <span key={`e-${i}`}>eat {i+1} {i==0?"dick":"dicks"}</span>
+              )}
+            </SidePanelExpandable>
+            <SidePanelExpandable label="Styles" icon="fa-solid fa-swatchbook">
+              { Array.from({length:100}).map((e,i)=>
+                <span key={`e-${i}`}>mount {i+1} {i==0?"horse":"horses"}</span>
+              )}
+            </SidePanelExpandable>
+            <SidePanelExpandable label="Elements" icon="fa-solid fa-cube">
+              { Array.from({length:100}).map((e,i)=>
+                <span key={`e-${i}`}>rape {i+1} {i==0?"kid":"kids"}</span>
+              )}
+            </SidePanelExpandable>
+          </div>
+          <div className="bg-zinc-700 h-px w-full" />
+          <div className="flex flex-col">
+            <button className="flex text-xl gap-2">
+              <i className="fa fa-solid fa-gear text-md my-auto" />
+              Board Settings
+            </button>
+            <button className="flex text-xl gap-2">
+              <i className="fa fa-solid fa-message text-md my-auto" />
+              Notify
+            </button>
+          </div>
+        </div>
+        <div className="w-full min-h-12 border-t border-zinc-700" />
       </div>
-    </section>
+    </div>
   )
 }
 
