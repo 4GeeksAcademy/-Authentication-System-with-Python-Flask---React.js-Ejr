@@ -293,7 +293,7 @@ def show_manager():
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
 
-@api.route('/create/courses', methods=['POST'])
+@api.route('/view/courses', methods=['POST'])
 def create_courses():
     try:
         
@@ -319,3 +319,47 @@ def create_courses():
 
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
+
+#Get cursos
+@api.route('/view/courses', methods=['GET'])
+def get_courses():
+    try:
+        courses = Course.query.all()
+        serialized_courses = [course.serialize() for course in courses]
+        return jsonify({"Courses": serialized_courses}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
+
+#Put cursos
+@api.route('/view/courses/<int:course_id>', methods=['PUT'])
+def put_courses(course_id):
+    try:
+        course = Course.query.get(course_id)
+        if not course:
+            return jsonify({"Error": "Course not found"}),404
+        
+        updated_data = request.json
+        for key, value in updated_data.items():
+            setattr(course, key, value)
+        db.session.commit()
+        return jsonify({"Msg": "Course updated successfully.", "Course": course.serialize()}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in updating course: " + str(err)}), 500
+
+#Delete cursos
+@api.route('/view/courses/<int:course_id>', methods=['DELETE'])
+def delete_courses(course_id):
+    try:
+        course = Course.query.get(course_id)
+
+        if not course:
+            return jsonify({"Error": "Course not found"}), 404
+        
+        db.session.delete(course)
+        db.session.commit()
+        return jsonify({"Msg": "Course delete succesfully."}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
