@@ -68,8 +68,6 @@
 footer {
     background: #a9ce68 !important;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-    text-align: center;
-    position: relative;
     left: 0;
     width: 100%;
     /* z-index: 1000;  */
@@ -88,8 +86,6 @@ footer {
 
 .body {
     background: lightgrey;
-    /* width: 100px;
-    height: 100px; */
 }  
 
 .offcanvas {
