@@ -20,6 +20,7 @@ const Constants= Object.freeze({
   DEVPREFS_SHOWSTATE: "showState",
   DEVPREFS_PANELPOSITION: "panelPosition",
   DEVPREFS_DEVRENDER: "devRender",
+  DEVPREFS_FAKEAUTH: "fakeAuth",
 
   BOARD_SIZE_PIXELS: 1048576,
 

@@ -49,6 +49,7 @@ const DevTools = () => {
   function toggle_devTools(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_SHOWSTATE)}
   function move_devToolsPanel(e, i){ Utils.cancelEvent(e); actions.setDevPref(Constants.DEVPREFS_PANELPOSITION, i)}
   function toggle_devRender(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_DEVRENDER)}
+  function toggle_fakeAuth(e){ Utils.cancelEvent(e); actions.toggleDevAuth()}
 
   function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
   function save_userPrefs(e){ Utils.cancelEvent(e); actions.saveUserPrefs() }
@@ -61,7 +62,8 @@ const DevTools = () => {
   const
     _devToolState= actions.getDevPref(Constants.DEVPREFS_SHOWSTATE),
     _devToolPosition= actions.getDevPref(Constants.DEVPREFS_PANELPOSITION),
-    _devRender= actions.getDevPref(Constants.DEVPREFS_DEVRENDER)
+    _devRender= actions.getDevPref(Constants.DEVPREFS_DEVRENDER),
+    _fakeAuth= actions.getDevPref(Constants.DEVPREFS_FAKEAUTH)
   
   return (
 		<div className={"devtools fixed text-center text-white text-xs" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
@@ -75,6 +77,7 @@ const DevTools = () => {
             <div className="flex flex-col w-36 gap-2 p-2">
               <p>-- devPrefs --</p>
               <button className="devtools-btn w-32" onClick={toggle_devRender}>devRender: {_devRender ? "true" : "false"}</button>
+              <button className="devtools-btn w-32" onClick={toggle_fakeAuth}>fake Auth: {_fakeAuth ? "true" : "false"}</button>
               <div className="flex flex-col w-28 mx-auto border border-gray-600 gap-2">
                 <div className="flex justify-between">
                   <button className="devtools-corner-btn rounded-br-3xl" onClick={(e)=>{move_devToolsPanel(e, 0)}}>TL</button>
