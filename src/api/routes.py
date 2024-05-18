@@ -297,8 +297,26 @@ def show_view_teacher():
             }
             user_list.append(user_dict)
 
+        teachers = Teacher.query.all()
+        teacher_list = []
+        for teacher in teachers:
+            teacher_dict = {
+                "id": teacher.id,
+                "email": teacher.email,
+                "is_teacher": teacher.is_teacher,
+                "name": teacher.name,
+                "lastName": teacher.last_name,
+                "username": teacher.username,
+                "numberDocument": teacher.number_document,
+                "phone": teacher.phone,
+                "age": teacher.age,
+                "gender": teacher.gender,
+                "certificateTeacher": teacher.certificate_teacher,
+                "userId": teacher.user_id
+            }
+            teacher_list.append(teacher_dict)
 
-        return jsonify({"Access_to_User": user_list}), 200
+        return jsonify({"Access_to_User": user_list, "Access_to_Teacher": teacher_list}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401

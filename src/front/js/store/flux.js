@@ -118,7 +118,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const userRole = localStorage.getItem("currentRole");
           if (token && userRole) {
             setStore({ currentRole: userRole });
-            await getActions().getUser();
+            await getActions().getUser(store.currentRole)
+            console.log('estoy en check')
           }
 
           
