@@ -247,7 +247,7 @@ def get_token_login_teacher():
 
 @api.route('/view/user')
 @jwt_required() #Decorador para requerir autenticacion con jwt
-def show_view_teacher():
+def show_view_user():
     current_token = get_jwt_identity() #obtiene la id del user del token
     if current_token:
         

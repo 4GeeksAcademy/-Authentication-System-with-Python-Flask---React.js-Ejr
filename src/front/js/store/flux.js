@@ -63,27 +63,28 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataLoginIn = await respLoginIn.json();
-          localStorage.setItem("jwt-token", dataLoginIn.access_token);
-          localStorage.setItem("currentRole", userRole);
+          localStorage.setItem("jwt-token", dataLoginIn.access_token)
+          localStorage.setItem("currentRole", userRole)
+          setStore({ ...store, currentRole: userRole});
+          await getActions().getUser()
 
-          await getActions().getUser(userRole);
         } catch (err) {
           
         } finally {
-          getActions().spinner(false);
+          getActions().spinner(false)
         }
       },
 
-      getUser: async (userRole) => {
+      getUser: async (userRol) => {
         const store = getStore();
-        getActions().updateMsgError('');
+        getActions().updateMsgError('')
         getActions().spinner(true);
         try {
-          const token = localStorage.getItem("jwt-token");
-          if (!token) throw new Error("No token found");
+          const token = localStorage.getItem("jwt-token")
+          if (!token) throw new Error("No token found")
 
           const respGetUsers = await fetch(
-            process.env.BACKEND_URL + `/api/view/` + userRole,
+            process.env.BACKEND_URL + `/api/view/` + (store.currentRole || userRol),
             {
               method: "GET",
               headers: {
@@ -96,12 +97,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!respGetUsers.ok) {
             const errorData = await respGetUsers.json()
             setStore({ ...store, error: errorData.Error })
-            throw new Error(errorData.Error || "Error al obtener los datos del usuario");
+            throw new Error(errorData.Error || "Error al obtener los datos del usuario")
           }
 
-          const dataGetUser = await respGetUsers.json();
+          const dataGetUser = await respGetUsers.json()
           console.log(dataGetUser)
-          setStore({ ...store, user: dataGetUser.Access_to_User });
+          setStore({ ...store, user: dataGetUser})
           
         } catch (err) {
           
@@ -119,6 +120,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ currentRole: userRole });
             await getActions().getUser();
           }
+
+          
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
           console.error("Error checking user session: ", err);

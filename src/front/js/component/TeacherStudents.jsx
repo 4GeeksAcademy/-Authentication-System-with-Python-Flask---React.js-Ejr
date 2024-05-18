@@ -6,7 +6,7 @@ import { Context } from '../store/appContext'
 export const TeacherStudents = () => {
     const { store, actions } = useContext(Context)
 
-    console.log(store.user)
+    console.log(store.user.Access_to_User)
     return (
         <div className=" containerd-flex  justify-content-center align-items-center p-4">
             {/* <table className="table mx-auto ">
@@ -38,9 +38,9 @@ export const TeacherStudents = () => {
                     </tr>
                 </tbody>
             </table> */}
-            {store.user.map((item, index) => {
+            {store.user.Access_to_User.map((item, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         {
                             (store.spinner)
                                 ? <div className="d-flex justify-content-center">
@@ -51,7 +51,7 @@ export const TeacherStudents = () => {
                                         <p className="text-center">Loading...</p></div>
                                 </div>
                                 
-                                : <div key={index} className='border border-primary rounded mx-5 my-2 py-3 px-3'>
+                                : <div className='border border-primary rounded mx-5 my-2 py-3 px-3'>
                                     <p>
                                         <span className='text-primary'>Id: </span>{item.id}
                                     </p>

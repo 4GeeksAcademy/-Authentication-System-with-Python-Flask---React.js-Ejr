@@ -24,10 +24,10 @@ export const TeacherDashboard = () => {
         setButtonSelected(<TeacherCourses />)
     }
 
-    
+    const [user] = useState('user') 
     const handleMyStudents =()=>{
         setButtonSelected(<TeacherStudents />)
-        actions.getUser()
+        actions.getUser(user)
     }
    
     const  handleMyFiles =()=>{
