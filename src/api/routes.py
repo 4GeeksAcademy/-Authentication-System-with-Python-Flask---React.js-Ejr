@@ -269,7 +269,7 @@ def show_view_user():
             user_list.append(user_dict)
 
 
-        return jsonify({"Access_to_User": user_list}), 200
+        return jsonify({"access_to_user": user_list}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -316,7 +316,7 @@ def show_view_teacher():
             }
             teacher_list.append(teacher_dict)
 
-        return jsonify({"Access_to_User": user_list, "Access_to_Teacher": teacher_list}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -378,7 +378,7 @@ def show_view_manager():
             }
             manager_list.append(manager_dict)
 
-        return jsonify({"Access_to_User": user_list, "Access_to_Teacher": teacher_list, "Access_to_Manager": manager_list}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
