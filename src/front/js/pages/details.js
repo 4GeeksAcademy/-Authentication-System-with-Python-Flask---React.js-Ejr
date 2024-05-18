@@ -97,7 +97,7 @@ export const Details = () => {
                                         PRECIO POR DIA
                                     </h6>
                                     <p>
-                                        {store.details.precio?.toUpperCase()}
+                                        {store.details.precio}
                                     </p>
                                 </div>
                             </div>

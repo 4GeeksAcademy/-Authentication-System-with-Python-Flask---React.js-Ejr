@@ -3,21 +3,21 @@ import React, { useState, useEffect } from "react";
 
 const ProductDisplay = () => (
   <section>
-    <div className="product">
+    <div className="product mt-5 mb-5 text-center vh-100">
       <img
         src="https://i.imgur.com/EHyR2nP.png"
         alt="The cover of Stubborn Attachments"
       />
-      <div className="description">
+      <div className="description mt-3">
       <h3>Stubborn Attachments</h3>
       <h5>$20.00</h5>
-      </div>
-    </div>
-    <form action="/create-checkout-session" method="POST">
+        <form action="/create-checkout-session" method="POST">
       <button type="submit">
         Checkout
       </button>
-    </form>
+      </form>  
+      </div>
+    </div>
   </section>
 );
 
@@ -27,7 +27,7 @@ const Message = ({ message }) => (
   </section>
 );
 
-export function App() {
+export function Payment() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {

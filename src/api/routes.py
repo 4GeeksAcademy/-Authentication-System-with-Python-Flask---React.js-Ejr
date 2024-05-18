@@ -55,6 +55,14 @@ def add_vehicle():
     tipo_cambio = request.json.get("tipo_cambio")
     asientos = request.json.get("asientos")
     precio = request.json.get("precio")
+
+# Creacion de producto en stripe
+    new_vehicles= stripe.Product.create(name=marca_modelo)
+    price_product= stripe.Price.create(
+    product= new_vehicles["id"],
+    unit_amount= precio,
+    currency="eur",
+    )
     if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
@@ -67,6 +75,7 @@ def add_vehicle():
         tipo_cambio=tipo_cambio,
         asientos=asientos,
         precio=precio,
+        precio_id_stripe=price_product["id"],
         user_id= user_id
     )
     db.session.add(new_vehicle)
@@ -206,7 +215,7 @@ def create_checkout_session():
         # return jsonify("ok"),200
     except Exception as e:
         return str(e)
-    # return jsonify("ok"),200
-    return redirect(checkout_session.url, code=303)
+    return jsonify("ok"),200
+    # return redirect(checkout_session.url, code=303)
     # return jsonify(checkout_session.url, code=303)
    
