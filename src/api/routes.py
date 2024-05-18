@@ -383,8 +383,6 @@ def show_view_manager():
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
-<<<<<<< HEAD
-=======
 
 @api.route('/view/courses', methods=['POST'])
 def create_courses():
@@ -456,4 +454,4 @@ def delete_courses(course_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
->>>>>>> edfe974494f657009fbf8cc947b2e416715b53f6
+

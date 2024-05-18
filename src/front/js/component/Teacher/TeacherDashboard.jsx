@@ -7,7 +7,7 @@ import { TeacherStudents } from './TeacherStudents.jsx';
 import { TeacherFiles } from './TeacherFiles.jsx';
 import { TeacherMyPayment } from './TeacherMyPayment.jsx';
 import { TeacherSettings } from './TeacherSettings.jsx';
-import { Certificate } from './Certificate.jsx';
+import { Certificate } from '../Certificate.jsx';
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context);
@@ -24,7 +24,6 @@ export const TeacherDashboard = () => {
         setButtonSelected(<TeacherCourses />)
     }
 
-<<<<<<< HEAD:src/front/js/component/TeacherDashboard.jsx
     const [user] = useState('user')
     const handleMyStudents = () => {
         setButtonSelected(<TeacherStudents />)
@@ -41,31 +40,13 @@ export const TeacherDashboard = () => {
     const handlePDF = () => {
         setButtonSelected(<Certificate />)
     }
-=======
-
-    const handleMyStudents = () => {
-        setButtonSelected(<TeacherStudents />)
-    }
-
-    const handleMyFiles = () => {
-        setButtonSelected(<TeacherFiles />)
-    }
-
-    const handleMyPayment = () => {
-        setButtonSelected(<TeacherMyPayment />)
-    }
-
->>>>>>> edfe974494f657009fbf8cc947b2e416715b53f6:src/front/js/component/Teacher/TeacherDashboard.jsx
 
     const handleSettings = () => {
         setButtonSelected(<TeacherSettings />)
     }
 
-<<<<<<< HEAD:src/front/js/component/TeacherDashboard.jsx
 
 
-=======
->>>>>>> edfe974494f657009fbf8cc947b2e416715b53f6:src/front/js/component/Teacher/TeacherDashboard.jsx
     return (
         <div>
             <div className='row' >
@@ -108,17 +89,12 @@ export const TeacherDashboard = () => {
                         <div className='col-12 w-100'>
 
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handleSettings}>Settings</button>
-<<<<<<< HEAD:src/front/js/component/TeacherDashboard.jsx
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>Certificate</button>
-=======
-
->>>>>>> edfe974494f657009fbf8cc947b2e416715b53f6:src/front/js/component/Teacher/TeacherDashboard.jsx
                         </div>
                     </div>
                 </div>
 
 
-<<<<<<< HEAD:src/front/js/component/TeacherDashboard.jsx
                 <div className='col border border-secondary d-flex justify-content-center align-items-center'>
                     {
                         (buttonSelected) 
@@ -130,12 +106,6 @@ export const TeacherDashboard = () => {
                     </div>
                     }
                     
-=======
-                <div className='col border border-secondary'>
-                    <div className="col-9">
-                        {buttonSelected}
-                    </div>
->>>>>>> edfe974494f657009fbf8cc947b2e416715b53f6:src/front/js/component/Teacher/TeacherDashboard.jsx
                 </div>
             </div>
         </div>
