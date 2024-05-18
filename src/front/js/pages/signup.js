@@ -13,10 +13,10 @@ export const Signup = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         let isSignup = await actions.signup(inputEmail, inputPassword) 
-        if (isSignup === "1"){
+        if (isSignup === "success"){
             swal ( "Registro con éxito" ,  "Gracias por registrarse en nuestra web!" ,  "success" )
              navigate("/");
-        } else if (isSignup === "2") {
+        } else if (isSignup === "email_exist") {
             swal ("Este email ya se encuentra registrado", "Por favor intentelo con otro email" ,  "error" )
         } else {
             swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
@@ -35,7 +35,7 @@ export const Signup = () => {
                         <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                     </div>
                     <div className="d-flex justify-content-center">
-                        <button type="submit" className="login btn-lg btn-dark"data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
+                        <button type="submit" className="login btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
                     </div>
                 </form>
             </div>

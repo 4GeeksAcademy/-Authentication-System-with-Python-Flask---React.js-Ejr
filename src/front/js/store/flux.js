@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			vehicles: [],
 			favorites: [],
 			myVehicles: [],
-			details: {}
+			details: {},
 		},
 		actions: {
 			getMessage: async () => {
@@ -77,11 +77,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					});
 					if (response.status === 201) {
-						return "1";
+						return "success";
 					} else if (response.status === 409) {
-						return "2";
+						return "email_exist";
 					} else {
-						return "3"
+						return "incomplete_data"
 					}
 				} catch (error) {
 					return false;
@@ -102,32 +102,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 		 			motor: motor,
 			 		 			tipo_cambio: tipo_cambio,
 			 		 			asientos: asientos,
-			 					precio: precio
+			 					precio: parseInt(precio)
 			 	 		})
                  	});
-					let data = await response.json()
 					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
-						return "1";
+						return "success";
 					} else if (response.status === 409) {
 						console.log(2);
-						return "2";
+						return "plate_exist";
 					} else {
 						console.log(3);
-						return "3";
+						return "incomplete_data";
 					}
 				} catch (error) {
 					return false;
 				}
 			},
-      		getVehicles: () => {
-				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+      		getVehicles: async () => {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
+				if (response.status === 200) {
+					const data = await response.json();
+					setStore({ vehicles: data.results })
+				} else {
+					return [];
+				}	
+				
 			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
@@ -198,7 +199,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 	if (response.status === 201) {
 							let listFav = getStore().favorites;
 							const allVehicles = getStore().vehicles;
-							const newFav = allVehicles.filter((vehicle) => vehicle.id === id);
+							const newFav = allVehicles.filter((vehicle) => vehicle.id == id);
 							const newListFav = listFav.concat(newFav) ;
 							setStore({favorites: newListFav})
 					} else {
@@ -220,7 +221,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 	});
 					if (response.status === 200) {
 						let listFav = getStore().favorites;
-						const newListFav = listFav.filter((vehicle) => vehicle.id !== id);
+						const newListFav = listFav.filter((vehicle) => vehicle.id != id);
 						setStore({favorites: newListFav})
 					}
 				} catch (error) {

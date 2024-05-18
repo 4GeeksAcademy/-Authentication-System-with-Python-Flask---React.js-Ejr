@@ -1,8 +1,11 @@
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, User, Vehicle, FavoriteVehicle
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager  # type: ignore
+import stripe
+import os
+
 
 api = Blueprint('api', __name__)
 
@@ -52,6 +55,14 @@ def add_vehicle():
     tipo_cambio = request.json.get("tipo_cambio")
     asientos = request.json.get("asientos")
     precio = request.json.get("precio")
+
+# Creacion de producto en stripe
+    new_vehicles= stripe.Product.create(name=marca_modelo)
+    price_product= stripe.Price.create(
+    product= new_vehicles["id"],
+    unit_amount= precio,
+    currency="eur",
+    )
     if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
@@ -64,6 +75,7 @@ def add_vehicle():
         tipo_cambio=tipo_cambio,
         asientos=asientos,
         precio=precio,
+        precio_id_stripe=price_product["id"],
         user_id= user_id
     )
     db.session.add(new_vehicle)
@@ -177,3 +189,33 @@ def get_all_rents():
             all_rents_list,
     }
     return jsonify(response_body), 200
+
+#Ruta de pago de stripe
+
+@api.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    price = request.json.get("price", None)
+    quantity = request.json.get("quantity", None)
+    print(price)
+    print(quantity)
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': "price_1PHNr401WUGKqP0MAXCQIuq7",
+                    'quantity': quantity,
+                },
+
+            ],
+            mode='payment',
+            success_url= os.getenv('BACKEND_URL')+ '?success=true',
+            cancel_url= os.getenv('BACKEND_URL') + '?canceled=true',
+        )
+        # return jsonify("ok"),200
+    except Exception as e:
+        return str(e)
+    return jsonify("ok"),200
+    # return redirect(checkout_session.url, code=303)
+    # return jsonify(checkout_session.url, code=303)
+   

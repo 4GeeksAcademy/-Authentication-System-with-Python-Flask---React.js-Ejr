@@ -1,8 +1,8 @@
 .navbar {
     background-color:  #a9ce68;
-    height: 180px;
+    height: 120px;
     /* background-color: rgb(140, 172, 140); */
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
 
 .logo {
@@ -23,23 +23,33 @@
 }
 
 .AgregarVehiculo {
-    width: 950px;
-    height: 500px;
-    margin:auto;
+    margin-left: 10vw;
+    margin-right: 10vw;
     margin-top: 80px;
     margin-bottom: 80px;
     background-color: #fff;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    justify-content: center;
+     /* justify-content: center; */
 }
 
 .subtitulos {  /*del agregarForm*/
+    color: rgb(33, 103, 33);
     font-size: 1.3rem;
 }
 
+.btn-outline-light {
+    color: #198754;
+    border-color: #198754;
+}
+
 #btnAgregarForm {
-    margin-top: 15px;
+    margin-top: 30px;
+    /* background-color: white; */
+    /* border-width: 2px; */
+    /* font-size: 2rem!important; */
+    /* color: #198754; */
+    /* border-color: #198754; */ 
 }
 
 .border-bottom {
@@ -56,13 +66,9 @@
 footer {
     background: #a9ce68 !important;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-<<<<<<< HEAD
-=======
-}
-
-.botonAlquilar {
-    background-color: #a9ce68;
->>>>>>> 394cba7deadd79fb08b6d9f1fec1c597a8023d51
+    left: 0;
+    width: 100%;
+    /* z-index: 1000;  */
 }
 
 .corazon:hover i {
@@ -71,10 +77,6 @@ footer {
 
 .imgCarousel {
     width: 75px !important;
-<<<<<<< HEAD
-=======
-    /* height: 50%; */
->>>>>>> 394cba7deadd79fb08b6d9f1fec1c597a8023d51
     background-position: center center;
     position: relative;
     justify-items: center;
@@ -86,5 +88,8 @@ body{
 =======
 .body {
     background: lightgrey;
->>>>>>> 394cba7deadd79fb08b6d9f1fec1c597a8023d51
+}  
+
+.offcanvas {
+    bottom: auto;
 }
