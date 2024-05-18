@@ -3,7 +3,7 @@ import { AgregarForm } from "../component/agregarform.js";
 
 export const AgregarVehiculo = () => {
     return (
-        <div className="AgregarVehiculo vh-100">
+        <div className="AgregarVehiculo">
             <AgregarForm />
         </div>
     )

@@ -23,7 +23,7 @@ export const Signup = () => {
         }
     };
     return (
-            <div className="contactForm vh-100">
+            <div className="contactForm">
                 <h1 className="title text-center">Signup</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
@@ -35,7 +35,7 @@ export const Signup = () => {
                         <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                     </div>
                     <div className="d-flex justify-content-center">
-                        <button type="submit" className="login btn-lg btn-dark"data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
+                        <button type="submit" className="login btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
                     </div>
                 </form>
             </div>
