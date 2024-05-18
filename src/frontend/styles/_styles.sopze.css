@@ -1,4 +1,47 @@
 /* normal css styling here */
+:root {
+  --canvas-size: 8192px;
+
+  --canvas-coords-x: 0px;
+  --canvas-coords-y: 0px;
+  --canvas-coords-transition: translate 75ms linear;
+
+  --canvas-zoom: 1.0;
+
+  --canvas-background: #32363a;
+  --canvas-background-size: 1024px;
+  
+  --list-coords-x: 0px;
+  --list-coords-y: 0px;
+}
+
+.pajuelas{
+  text-justify: distribute;
+  letter-spacing: .4ch;
+  font-family: comic sans ms;
+  background-size: "480px";
+  width: 100vw;
+  height: 100vh;
+  & a {
+    @supports (background-clip:text) or (-webkit-background-clip:text) {
+      color: transparent;
+      background: inherit;
+      background-clip: text;
+      -webkit-background-clip: text;
+      filter: invert(1.0);
+    }
+    cursor: crosshair;
+    filter: invert(2.0) blur(1px)
+  }
+}
+
+.pointer-skip {
+  pointer-events: none;
+  & > * {
+    pointer-events: auto;
+  }
+}
+
 .devtools {
   z-index: 256;
 }
@@ -6,4 +49,61 @@
 .hidescroll-y {
   margin-right: -32px;
   padding-right: 32px; 
+}
+
+#board-canvas-origin {
+  z-index: -64;
+  width: 0;
+  height: 0;
+  margin-left: calc(50vw);
+  margin-top: calc(50vh);
+  scale: var(--canvas-zoom);
+/*   transition: scale 65ms linear; */
+}
+
+#board-canvas {
+  z-index: -64;
+
+  min-width: var(--canvas-size);
+  width: var(--canvas-size);
+  max-width: var(--canvas-size);
+  min-height: var(--canvas-size);
+  height: var(--canvas-size);
+  max-height: var(--canvas-size);
+
+  translate: var(--canvas-coords-x) var(--canvas-coords-y);
+/*   transition: var(--canvas-coords-transition); */
+}
+
+#board-canvas-background {
+  pointer-events: none;
+  position: absolute;
+  z-index: -64;
+  inset: 0;
+
+  /* using an absolute path due React behavin' like a moron */
+  background: var(--canvas-background) repeat;
+  background-size: var(--canvas-background-size);
+  
+  & .marker-x {
+    width: var(--canvas-size);
+    height: 2px;
+  }
+
+  & .marker-y {
+    width: 2px;
+    height: var(--canvas-size);
+  }
+}
+
+#board-canvas-content {
+  width: 0;
+  height: 0;
+  transform: translate(calc(var(--canvas-size) * .5), calc(var(--canvas-size) * .5));
+}
+
+.k--list {
+  position: absolute;
+  transform: translate(-50%, 0);
+  translate: var(--list-coords-x) var(--list-coords-y);
 }

@@ -17,7 +17,7 @@ module.exports = merge({
     './src/frontend/styles/**/*.{html,js,jsx}',
   ],
   presets: [],
-  darkMode: ['selector', '[data-darkmode]'],
+  darkMode: ['selector', '[data-darkmode="holaquetalmedastutelefono?nov?ayapuesnadacomaseustedunano"]'],
   theme: {
     accentColor: ({ theme }) => ({
       ...theme('colors'),
