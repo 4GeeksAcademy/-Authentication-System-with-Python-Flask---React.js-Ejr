@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Teachers = () => {
+export const Teachers = () => {
   return (
     <div className=" containerd-flex  justify-content-center p-4">
             <table className="table mx-auto ">

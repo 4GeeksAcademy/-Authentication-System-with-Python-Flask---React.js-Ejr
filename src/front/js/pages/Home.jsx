@@ -4,8 +4,8 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../component/Navbar.jsx";
-import { CoursesContainer } from "../component/CoursesContainer.jsx";
-import { TeacherCourses } from "../component/TeacherCourses.jsx";
+import { CoursesContainer } from "../component/Courses/CoursesContainer.jsx";
+import { TeacherCourses } from "../component/Teacher/TeacherCourses.jsx";
 
 
 

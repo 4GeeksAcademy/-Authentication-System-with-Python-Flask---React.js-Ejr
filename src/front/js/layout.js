@@ -9,11 +9,11 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Footer } from "./component/Footer.jsx";
-import { FormUser } from "./pages/FormUser.jsx";
+import { FormUser } from "./pages/User/FormUser.jsx";
 import { LogIn } from "./component/LogIn.jsx";
-import { UserView } from "./pages/UserView.jsx";
-import { TeacherView } from "./pages/TeacherView.jsx";
-import { ManagerView } from "./pages/ManagerView.jsx";
+import { UserView } from "./pages/User/UserView.jsx";
+import { TeacherView } from "./pages/Teacher/TeacherView.jsx";
+import { ManagerView } from "./pages/Manager/ManagerView.jsx";
 import { SignOut } from "./pages/SignOut.jsx";
 
 

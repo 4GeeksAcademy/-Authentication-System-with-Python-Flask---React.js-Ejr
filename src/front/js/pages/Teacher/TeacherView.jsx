@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { Context } from "../store/appContext";
-import "../../styles/home.css";
-import { TeacherDashboard } from "../component/TeacherDashboard.jsx"
-import { TeacherNavbar } from "../component/TeacherNavbar.jsx";
-import { TeacherCourses } from "../component/TeacherCourses.jsx"
+import { Context } from "../../store/appContext.js";
+import "../../../styles/home.css";
+import { TeacherDashboard } from "../../component/Teacher/TeacherDashboard.jsx"
+import { TeacherNavbar } from "../../component/Teacher/TeacherNavbar.jsx";
+import { TeacherCourses } from "../../component/Teacher/TeacherCourses.jsx"
 
 
 

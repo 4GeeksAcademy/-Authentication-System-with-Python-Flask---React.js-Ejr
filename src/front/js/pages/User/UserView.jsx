@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Context } from '../store/appContext'
-import { CoursesContainer } from '../component/CoursesContainer.jsx'
+import { Context } from '../../store/appContext.js'
 import { FaCircleArrowLeft } from "react-icons/fa6";
-import { UserNavbar } from '../component/UserNavbar.jsx';
-import { UserDashboard } from '../component/UserDashboard.jsx';
+import { UserNavbar } from '../../component/User/UserNavbar.jsx';
+import { UserDashboard } from '../../component/User/UserDashboard.jsx';
 
 
 export const UserView = () => {
