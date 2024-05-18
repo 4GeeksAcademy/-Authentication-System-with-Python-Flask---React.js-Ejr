@@ -65,23 +65,6 @@ const PrivateCalendar = () => {
     
     
     
-    
-    
-    const handleCancelBooking = async (bookingId) => {
-        console.log("Intentando cancelar reserva con ID:", bookingId);
-        try {
-            const result = await actions.cancel_booking(bookingId);
-            if (result) {
-                console.log('Reserva cancelada con éxito', result);
-            } else {
-                console.log('Error al cancelar la reserva', result);
-            }
-        } catch (error) {
-            console.error('Error en handleCancelBooking:', error);
-        }
-    };
-    
-    
 
     return (
         <div className={styles.container}>
@@ -116,14 +99,18 @@ const PrivateCalendar = () => {
                         <h3>Persona en clase:</h3>
                         {selectedEvent.bookings && selectedEvent.bookings.map((booking, index) => (
                             <div key={index}>
-                                <p>Name: {booking.name}</p>
+                                    <p><i className="fa-solid fa-circle-user"></i> {booking.name}</p>
                             </div>
                     ))}
                     </div>
-                    <button onClick={closeModal}>Close</button>
-                    <button onClick={() => handleBookClass(selectedEvent.id)}>Book Class</button>
-                    <button onClick={() => handleCancelBooking(selectedEvent.bookingId)}>Cancel Booking</button>
-
+                    <div className={styles.buttonContainer}>
+                        <button onClick={closeModal} className={styles.buttonback}>
+                            <i className="fa-solid fa-angle-left"></i> Close
+                        </button>
+                        <button onClick={() => handleBookClass(selectedEvent.id)} className={styles.buttonadd}>
+                            <i className="fa-solid fa-plus icon"></i> Book Class
+                        </button>
+                    </div>
                 </Modal>
             )}
         </div>

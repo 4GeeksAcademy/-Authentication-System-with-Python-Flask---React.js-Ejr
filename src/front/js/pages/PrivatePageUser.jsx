@@ -7,7 +7,7 @@ import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final
 
 
 const PrivatePageUser = () => {
-    const { store, actions} = useContext(Context); // Usar useContext para acceder al contexto global
+    const { store, actions } = useContext(Context); // Usar useContext para acceder al contexto global
     const { uploadedUserData } = store; // Suponiendo que uploadedUserData contiene el objeto del usuario
 
     // Verificar si uploadedUserData contiene datos
@@ -27,7 +27,7 @@ const PrivatePageUser = () => {
     }
 
     //TRABAJAR EN MODAL PARA LA RESPUESTA DEL SERVIDOR
-    
+
 
     // Renderizar los detalles del usuario
     return (
@@ -58,10 +58,12 @@ const PrivatePageUser = () => {
                     <div className={styles.bookingsList}>
                         {uploadedUserData.bookings && uploadedUserData.bookings.map((booking, index) => (
                             <div key={index} className={styles.bookingDetail}>
-                                <p>Nombre: {booking.booking_id}</p>
-                                <p>Nombre: {booking.class_name}</p>
-                                <p>Fecha: {booking.dateTime_class}</p>
-                                <p>Hora: {booking.class_start_time}</p>
+                                <div className={styles.bookingInfo}>
+                                    <h4>{booking.class_name}</h4>
+                                    <p><strong>Coach: </strong>{booking.class_instructor}</p>
+                                    <p><strong>Fecha: </strong>{booking.dateTime_class}</p>
+                                    <p><strong>Hora: </strong>{booking.class_start_time}</p>
+                                </div>
                                 <button onClick={() => handleCancelBooking(booking.booking_id)} className={styles.deleteButton}>
                                     <i className="fa-solid fa-trash-can"></i>
                                 </button>

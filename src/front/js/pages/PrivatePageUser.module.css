@@ -42,6 +42,10 @@
     padding: 15px;
     border-radius: 8px;
 }
+.bookingInfo p {
+    color: #666;
+    line-height: 1.6;
+}
 
 .bookingsList {
     max-height: 150px;
@@ -49,12 +53,20 @@
 }
 
 .bookingDetail {
-    background-color: #fff;
+    background-color: #cbd6e114;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.bookingInfo {
+    flex: 1; /* Asegura que tome todo el espacio disponible menos el botón */
+}
+
 
 
 .deleteButton {
