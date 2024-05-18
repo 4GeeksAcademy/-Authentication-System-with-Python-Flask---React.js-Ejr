@@ -9,7 +9,7 @@ export const TeacherStudents = () => {
     console.log(store.user.Access_to_User)
     return (
         <div className=" containerd-flex  justify-content-center align-items-center p-4">
-            {/* <table className="table mx-auto ">
+            <table className="table mx-auto ">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -37,7 +37,7 @@ export const TeacherStudents = () => {
                         <td>@twitter</td>
                     </tr>
                 </tbody>
-            </table> */}
+            </table>
             {store.user.Access_to_User.map((item, index) => {
                 return (
                     <div key={index}>
