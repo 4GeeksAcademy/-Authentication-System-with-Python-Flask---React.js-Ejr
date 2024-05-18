@@ -1,11 +1,13 @@
 import CoffeeCard from "../component/coffeeCard.js";
-import { Typography, IconButton } from "@mui/material";
+import { Typography, IconButton, Button } from "@mui/material";
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const SouthAmerica = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate(); // Use useNavigate to get the navigation function
 
   const handleClick = (name, price) => {
     actions.addCoffeeToOrder({ name, price });
@@ -15,9 +17,22 @@ export const SouthAmerica = () => {
     actions.removeCoffeeFromOrder({ name, price });
   };
 
+  const handleCheckout = () => {
+    navigate('/payment'); // Navigate to the /payment page
+  };
+
+  const handleGoBack = () => {
+    navigate('/regions'); // Navigate to the /regions page
+  };
+
+  const handleLogOut = () => {
+    actions.signOut(); // Call the signOut action from the store
+    navigate('/'); // Optionally, navigate to the home page or login page after logging out
+  };
+
   return (
     <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
-      <div style={{ flex: 1, paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
+      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
         <Typography variant="h1">Orders:</Typography>
         <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
           {store.order.items.map((coffee, index) => (
@@ -32,6 +47,29 @@ export const SouthAmerica = () => {
           ))}
         </ul>
         <Typography variant="h3" style={{ marginTop: 'auto' }}>Total: ${store.order.total.toFixed(2)}</Typography>
+        <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}> {/* Changed to column layout */}
+          <Button
+            variant="contained"
+            onClick={handleCheckout} // Updated onClick handler to handleCheckout
+            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
+          >
+            Checkout {/* Changed button text to Checkout */}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleGoBack} // Updated onClick handler to handleGoBack
+            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
+          >
+            Go Back {/* Added Go Back button */}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleLogOut}
+            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
+          >
+            Log Out
+          </Button>
+        </div>
       </div>
 
       <div style={{ flex: 1, paddingLeft: '16px' }}>
@@ -52,3 +90,4 @@ export const SouthAmerica = () => {
     </div>
   );
 };
+

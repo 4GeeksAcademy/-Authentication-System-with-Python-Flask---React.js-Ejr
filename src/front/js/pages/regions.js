@@ -1,4 +1,4 @@
-import { Typography, IconButton } from "@mui/material";
+import { Typography, IconButton, Button } from "@mui/material";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -17,9 +17,14 @@ export const Regions = () => {
     actions.removeCoffeeFromOrder({ name, price });
   };
 
+  const handleLogOut = () => {
+    actions.signOut();
+    navigate('/');
+  };
+
   return (
     <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
-      <div style={{ flex: 1, paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
+      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
         <Typography variant="h1">Orders:</Typography>
         <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
           {store.order.items.map((coffee, index) => (
@@ -34,6 +39,20 @@ export const Regions = () => {
           ))}
         </ul>
         <Typography variant="h3" style={{ marginTop: 'auto' }}>Total: ${store.order.total.toFixed(2)}</Typography>
+        <Button
+          variant="contained"
+          onClick={() => navigate('/payment')}
+          style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
+        >
+          Checkout
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleLogOut}
+          style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
+        >
+          Log Out
+        </Button>
       </div>
 
       <div style={{ flex: 1, paddingLeft: '16px' }}>
