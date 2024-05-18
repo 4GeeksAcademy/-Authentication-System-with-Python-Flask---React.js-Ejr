@@ -258,7 +258,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Imprimimos el estado de la tienda después de cargar los datos (solo para depuración)
 					// console.log("Store after data loaded:", store);
 				} catch (error) {
-					console.error(error); // Se imprime cualquier error que ocurra durante el proceso
+					console.error("Error booking class:", error);
+					return { success: false, error: error.message };
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},

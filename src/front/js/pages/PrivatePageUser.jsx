@@ -10,23 +10,39 @@ const PrivatePageUser = () => {
     const { store, actions } = useContext(Context); // Usar useContext para acceder al contexto global
     const { uploadedUserData } = store; // Suponiendo que uploadedUserData contiene el objeto del usuario
 
+    // estados para el modal
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+
     // Verificar si uploadedUserData contiene datos
     if (!uploadedUserData) {
         return <div className={styles.loading}>Cargando datos del usuario...</div>;
     }
 
-    const handleCancelBooking = async (bookingId) => {
-        try {
-            await actions.cancel_booking(bookingId);
-            alert('Reserva cancelada con éxito!');
-            // Aquí podrías añadir lógica para actualizar la UI o refrescar los datos.
-        } catch (error) {
-            console.error('Error al cancelar la reserva:', error);
-            alert('Error al cancelar la reserva.');
-        }
-    }
 
-    //TRABAJAR EN MODAL PARA LA RESPUESTA DEL SERVIDOR
+    const handleCancelBooking = async (bookingId) => {
+        const result = await actions.cancel_booking(bookingId);
+        if (result) {
+            setModalMessage(store.cancelBooking.message);
+            setModalVisible(true);
+        } else {
+            setModalMessage(store.cancelBooking.error);
+            setModalVisible(true);
+        }
+    };
+
+
+    const handleModalClose = () => {
+        setModalVisible(false);
+        // SI QUEREMOS QUE HAGA ALGO DESPUES
+        // if (store.creationState.message) {
+        //     navigate("/Login");
+        // }
+    };
+
+    useEffect(() => {
+        actions.loadUserData(); // Carga las clases al montar el componente
+    }, [actions]);
 
 
     // Renderizar los detalles del usuario
@@ -73,6 +89,23 @@ const PrivatePageUser = () => {
                 </div>
             </div>
             <PrivateCalendar />
+
+            {/* Modal */}
+            <div className={`modal fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1" id={styles["modal"]}>
+                <div className="modal-dialog">
+                    <div className={styles["modal-content"]}>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Registration Status</h5>
+                        </div>
+                        <div className="modal-body">
+                            <p>{modalMessage}</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
 
         </>
     );
