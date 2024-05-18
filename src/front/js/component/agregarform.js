@@ -29,7 +29,7 @@ import "../../styles/index.css";
     };
     return (
         <div className="container lg-5">
-            <h1 className="border-bottom pb-2">Añadir Vehículo</h1>
+            <h1 className="border-bottom pb-4 text-center">Añadir Vehículo</h1>
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
