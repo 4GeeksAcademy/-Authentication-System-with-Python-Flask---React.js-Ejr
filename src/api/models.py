@@ -28,6 +28,7 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     # Relaciones sin eliminar en cascada para Membership History y Payments
     memberships_history = db.relationship('UserMembershipHistory', backref='user', lazy='dynamic')
     payments = db.relationship('Payment', backref='user', lazy=True)
+    bookings = db.relationship('Booking', backref='user', lazy=True)
 
     #NOTA: siempre que se haga un eliminacion de base de datos se debe comentar active_membership_id y active_membership ya que tiene una relacion circular y una depende de otra
 
@@ -68,6 +69,8 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     
     def serialize(self):  # Método para serializar un objeto de usuario a un diccionario JSON
         active_membership = self.get_active_membership()  # Obtiene la membresía activa usando el nuevo método
+        active_status = "Activa" if active_membership and active_membership.is_active else "No Activa"
+
         return {  # Devolver un diccionario con los atributos del usuario
             "id": self.id,
             "email": self.email,
@@ -84,10 +87,12 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
             "register_date": self.registration_date.isoformat(),  # Formato ISO de la fecha
             "account_update": self.last_update_date.isoformat(),  # Formato ISO de la fecha
             "active_membership_is_active": active_membership.is_active if active_membership else "N/A",
+            "active_membership_is_active": active_status,
             "membership_start_date": active_membership.start_date.isoformat() if active_membership else "N/A",
             "membership_end_date": active_membership.end_date.isoformat() if active_membership else "N/A",
             "membership_description": active_membership.membership.description if active_membership and active_membership.membership else "N/A",
             "membership_remaining_classes": active_membership.remaining_classes if active_membership else "N/A",
+            "bookings": [booking.serialize() for booking in self.bookings]
         }
 
     
@@ -225,6 +230,7 @@ class Training_classes(db.Model):
     instructor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Foreign key para el instructor
     
     instructor = db.relationship("User")  # Relación con la tabla de usuarios
+    bookings = db.relationship('Booking', back_populates='training_class', lazy=True)
 
     def __repr__(self):  # Método para representar un objeto de pregunta de seguridad como una cadena
         return '<Training_classes %r>' % self.id
@@ -239,6 +245,7 @@ class Training_classes(db.Model):
             "instructor":self.instructor.name if self.instructor else "",
             "available_slots": self.available_slots,
             "description": self.description,
+            "bookings": [booking.user.serialize() for booking in self.bookings if booking.user]
 
         }
 
@@ -251,8 +258,8 @@ class Booking(db.Model):
     booking_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     status = db.Column(db.String(50), nullable=True,  default='avaible')  # Por ejemplo: 'reserved', 'completed', 'cancelled'
 
-    user = db.relationship("User")
-    training_class = db.relationship("Training_classes")
+    training_class_id = db.Column(db.Integer, db.ForeignKey('training_classes.id'), nullable=False)
+    training_class = db.relationship("Training_classes", back_populates="bookings")
 
     def __repr__(self):
         return '<Booking %r>' % self.id
@@ -260,14 +267,15 @@ class Booking(db.Model):
     def serialize(self):
         return {
             "booking_id": self.id,
-            "booking_date": self.booking_date.isoformat(),  # Usar isoformat para evitar problemas de serialización
+            "booking_date": self.booking_date.isoformat(),
             "booking_status": self.status,
-            "class_id": self.training_class.id,
-            "class_name": self.training_class.name,
-            "date_class": self.training_class.date_class,
-            "class_start_time": self.training_class.start_time.isoformat(),
-            "class_instructor": self.training_class.instructor.name  # Asumiendo que 'instructor' también es un objeto serializable
+            "class_id": self.training_class.id if self.training_class else None,
+            "class_name": self.training_class.name if self.training_class else "No Class",
+            "dateTime_class": self.training_class.dateTime_class.isoformat() if self.training_class else None,
+            "class_start_time": self.training_class.start_time.strftime('%H:%M') if self.training_class else None,
+            "class_instructor": self.training_class.instructor.name if self.training_class and self.training_class.instructor else "No Instructor"
         }
+
 
     
 # Tabla de Transacciones

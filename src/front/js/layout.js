@@ -23,6 +23,8 @@ import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del c
 import Singup from "./component/Singup.jsx";
 import SingupMaster from "./component/SingupMaster.jsx";
 import Calendar from "./component/Calendar.jsx"; 
+import PrivateCalendar from "./component/PrivateCalendar.jsx"; 
+
 
 
 
@@ -50,6 +52,7 @@ const Layout = () => {
                         <Route element={<Singup />} path="/Singup" />
                         <Route element={<SingupMaster />} path="/Master-private-registration" />
                         <Route element={<Calendar />} path="/Calendar" />
+                        <Route element={<PrivateCalendar />} path="/PrivateCalendar" />
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

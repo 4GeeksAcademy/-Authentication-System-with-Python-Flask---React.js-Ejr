@@ -747,11 +747,11 @@ def book_class():  # Función que maneja la solicitud POST para crear una reserv
         if not user.consume_class():  # Intenta consumir una clase del saldo disponible del usuario.
             return jsonify({'error': "No classes left to book"}), 400  # Retorna un error si no quedan clases disponibles para reservar.
         
-        success, message = create_booking(user_id, training_class_id)  # Intenta crear la reserva y recibe un estado de éxito y un mensaje.
+        success, message, booking_id = create_booking(user_id, training_class_id)  # Intenta crear la reserva y recibe un estado de éxito y un mensaje.
         if success:
-            return jsonify({'success': True, 'message': message}), 200  # Si la reserva es exitosa, retorna un mensaje de éxito y un código de estado HTTP 200.
+            return jsonify({'status_booking': True, 'message': message, 'booking_id': booking_id}), 200  # Si la reserva es exitosa, retorna un mensaje de éxito y un código de estado HTTP 200.
         else:
-            return jsonify({'error': message}), 400  # Si falla la reserva, retorna un mensaje de error y un código de estado HTTP 400.
+            return jsonify({'status_booking': False,'error': message}), 400  # Si falla la reserva, retorna un mensaje de error y un código de estado HTTP 400.
         
     except Exception as e:  # Captura cualquier excepción que ocurra durante la ejecución.
         db.session.rollback()  # Realiza un rollback para evitar inconsistencias en la base de datos debido al error.
@@ -766,9 +766,9 @@ def cancel_booking_endpoint(booking_id):  # Función que maneja la solicitud DEL
     try:
         success, message = cancel_booking(booking_id)  # Llama a una función para intentar cancelar la reserva identificada por `booking_id`.
         if success:
-            return jsonify({'message': message}), 200  # Si la cancelación es exitosa, retorna un mensaje de éxito y un código de estado HTTP 200.
+            return jsonify({'message': message, 'status_cancele':True }), 200  # Si la cancelación es exitosa, retorna un mensaje de éxito y un código de estado HTTP 200.
         else:
-            return jsonify({'error': message}), 400  # Si la cancelación falla, retorna un mensaje de error y un código de estado HTTP 400.
+            return jsonify({'error': message, 'status_cancele':False }), 400  # Si la cancelación falla, retorna un mensaje de error y un código de estado HTTP 400.
     
     except Exception as e:  # Captura cualquier excepción que ocurra durante la ejecución.
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias como resultado del error.

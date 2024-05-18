@@ -1,0 +1,70 @@
+.userDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.userDetailsCard, .securityQuestions {
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.userDetailsCard h2, .securityQuestions h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.userDetailsCard p, .securityQuestions p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.loading {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    padding: 50px;
+}
+
+
+.bookingsContainer {
+    width: 90%;
+    max-width: 600px;
+    background-color: #f9f9fb;
+    color: black;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.bookingsList {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.bookingDetail {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.deleteButton {
+    margin-left: 10px;
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    color: darkred;
+}
