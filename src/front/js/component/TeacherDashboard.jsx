@@ -27,6 +27,7 @@ export const TeacherDashboard = () => {
     
     const handleMyStudents =()=>{
         setButtonSelected(<TeacherStudents />)
+        actions.getUser()
     }
    
     const  handleMyFiles =()=>{
@@ -43,6 +44,8 @@ export const TeacherDashboard = () => {
     const  handleSettings =()=>{
         setButtonSelected(<TeacherSettings />)
     }
+
+   
   
     return (
         <div>

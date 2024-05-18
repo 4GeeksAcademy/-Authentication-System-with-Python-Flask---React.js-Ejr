@@ -31,7 +31,7 @@ def create_signup_user():
         phone = request.json.get('phone')
         age = request.json.get('age')
         gender = request.json.get('gender')
-
+        
         #Verificacion de campos vacios
         if not email or not password or not is_user or not name or not last_name or not username or not number_document or not phone or not age or not gender:
             return({"Error":"Email, password, is_user, name, last_name, username, number_document, phone, age and gender are required"}), 400
@@ -245,9 +245,9 @@ def get_token_login_teacher():
         return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
         
-@api.route('/view/general')
+@api.route('/view/manager')
 @jwt_required() #Decorador para requerir autenticacion con jwt
-def show_teacher():
+def show_view_manager():
     current_token = get_jwt_identity() #obtiene la id del user del token
     if current_token:
         
@@ -257,11 +257,11 @@ def show_teacher():
             user_dict = {
                 "id": user.id,
                 "email": user.email,
-                "is_user": user.is_user,
+                "isUser": user.is_user,
                 "name": user.name,
-                "last_name": user.last_name,
+                "lastName": user.last_name,
                 "username": user.username,
-                "number_document": user.number_document,
+                "numberDocument": user.number_document,
                 "phone": user.phone,
                 "age": user.age,
                 "gender": user.gender
@@ -276,14 +276,14 @@ def show_teacher():
                 "email": teacher.email,
                 "is_teacher": teacher.is_teacher,
                 "name": teacher.name,
-                "last_name": teacher.last_name,
+                "lastName": teacher.last_name,
                 "username": teacher.username,
-                "number_document": teacher.number_document,
+                "numberDocument": teacher.number_document,
                 "phone": teacher.phone,
                 "age": teacher.age,
                 "gender": teacher.gender,
-                "certificate_teacher": teacher.certificate_teacher,
-                "user_id": teacher.user_id
+                "certificateTeacher": teacher.certificate_teacher,
+                "userId": teacher.user_id
             }
             teacher_list.append(teacher_dict)
 
@@ -293,17 +293,45 @@ def show_teacher():
             manager_dict = {
                 "id": manager.id,
                 "email": manager.email,
-                "is_manager": manager.is_manager,
+                "isManager": manager.is_manager,
                 "name": manager.name,
-                "last_name": manager.last_name,
+                "lastName": manager.last_name,
                 "phone": manager.phone,
-                "user_id": manager.user_id,
-                "teacher_id": manager.teacher_id
+                "userId": manager.user_id,
+                "teacherId": manager.teacher_id
             }
             manager_list.append(manager_dict)
 
-        return jsonify({"Access to User": user_list, "Access to Teacher": teacher_list, "Access to Manager": manager_list}), 200
+        return jsonify({"Access_to_User": user_list, "Access_to_Teacher": teacher_list, "Access_to_Manager": manager_list}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+@api.route('/view/teacher')
+@jwt_required() #Decorador para requerir autenticacion con jwt
+def show_view_teacher():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
+        
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email,
+                "isUser": user.is_user,
+                "name": user.name,
+                "lastName": user.last_name,
+                "username": user.username,
+                "numberDocument": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
+            }
+            user_list.append(user_dict)
+
+
+        return jsonify({"Access_to_User": user_list}), 200
+        
+    else:
+        return jsonify({"Error": "Token invalid or not exits"}), 401

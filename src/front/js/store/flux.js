@@ -83,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!token) throw new Error("No token found");
 
           const respGetUsers = await fetch(
-            process.env.BACKEND_URL + `/api/private/` + userRole,
+            process.env.BACKEND_URL + `/api/view/` + userRole,
             {
               method: "GET",
               headers: {
@@ -101,7 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const dataGetUser = await respGetUsers.json();
           console.log(dataGetUser)
-          setStore({ ...store, user: dataGetUser });
+          setStore({ ...store, user: dataGetUser.Access_to_User });
           
         } catch (err) {
           
@@ -117,7 +117,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const userRole = localStorage.getItem("currentRole");
           if (token && userRole) {
             setStore({ currentRole: userRole });
-            await getActions().getUser(store.currentRole);
+            await getActions().getUser();
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
