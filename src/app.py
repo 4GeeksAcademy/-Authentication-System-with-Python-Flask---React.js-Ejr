@@ -1,6 +1,6 @@
 import os, sys, signal
 from datetime import timedelta
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
 from backend.utils import APIException, generate_sitemap

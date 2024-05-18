@@ -89,5 +89,5 @@ if __name__ == '__main__':
       for removal in removals:
         os.remove(removal)
         
-      print("\nseems ok\n")
+      print(f"\033[1;32m\nseems ok\n\033[0m")
           

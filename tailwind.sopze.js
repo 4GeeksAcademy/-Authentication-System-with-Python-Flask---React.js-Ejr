@@ -115,9 +115,9 @@ module.exports = {
       outline: {
         dev: "1px dashed #FF00FF"
       },
-      colors: ({ colors }) => ({
+      colors:{
         devcolor: "#FF00FF"
-      })
+      }
     }
   }
 }
