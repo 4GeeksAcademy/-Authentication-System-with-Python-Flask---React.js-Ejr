@@ -7,7 +7,7 @@ import { TeacherStudents } from './TeacherStudents.jsx';
 import { TeacherFiles } from './TeacherFiles.jsx';
 import { TeacherMyPayment } from './TeacherMyPayment.jsx';
 import { TeacherSettings } from './TeacherSettings.jsx';
-import { Certificate } from '../Certificate.jsx';
+import { Certificate } from '../Manager/Certificate.jsx';
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context);
@@ -97,15 +97,15 @@ export const TeacherDashboard = () => {
 
                 <div className='col border border-secondary d-flex justify-content-center align-items-center'>
                     {
-                        (buttonSelected) 
+                        (buttonSelected)
                             ? <div className="col-9">
-                            {buttonSelected}
-                        </div>
+                                {buttonSelected}
+                            </div>
                             : <div>
-                        <h1>Contenido de Bienvenida</h1>
-                    </div>
+                                <h1>Contenido de Bienvenida</h1>
+                            </div>
                     }
-                    
+
                 </div>
             </div>
         </div>
