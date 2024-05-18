@@ -4,7 +4,7 @@ import LinkedinLogo from "../../img/icons8-linkedin-50.png";
 import "../../styles/footer.css";
 
 export const Footer = () => (
-  <footer className="footer mt-auto py-3 gym-footer">
+  <footer id="footer" className="footer mt-auto py-3 gym-footer">
     <a href="https://github.com/Marinamb19" target="_blank">
       <img src={GitHubLogo} alt="Marina github logo" />
       <span>Marina</span>

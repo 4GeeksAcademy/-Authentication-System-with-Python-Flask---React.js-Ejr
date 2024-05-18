@@ -28,7 +28,7 @@ export const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
-      alert("La contraseña no coincide");
+      alert("Incorrect password");
       return;
     }
     actions.signUp({ email, password });
@@ -49,64 +49,50 @@ export const SignUp = () => {
         {showModal && (
           <div className="modal">
             <div className="modal-content">
-              <span className="close" onClick={handleClose}></span>
-              <p className="modal-p">Sing Up</p>
+              <h2 className="signup-modal-title">Sign Up</h2>
               <form onSubmit={handleSubmit}>
-                <div className="input-container">
-                  <label htmlFor="email" className="input-label">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Email"
-                    className="input-field"
-                    required
-                  />
-                </div>
-                <div className="input-container">
-                  <label htmlFor="password" className="input-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    placeholder="Contraseña"
-                    className="input-field"
-                    required
-                  />
-                </div>
-                <div className="input-container">
-                  <label htmlFor="confirmPassword" className="input-label">
-                    Confirm Password
-                  </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={handleConfirmPassword}
-                    placeholder="Confirmar Contraseña"
-                    className="input-field"
-                    required
-                  />
-                </div>
-                <div>
-                  <button className="button-input submit" type="submit">
-                    Enviar
-                  </button>
-                </div>
-                <div>
-                  <button
-                    className="button-input close-button"
-                    onClick={handleClose}
-                  >
-                    Cerrar
-                  </button>
-                </div>
+                <label htmlFor="email">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="Email"
+                  required
+                />
+                <label htmlFor="password">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  placeholder="Contraseña"
+                  required
+                />
+                <label htmlFor="confirmPassword">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={handleConfirmPassword}
+                  placeholder="Confirmar Contraseña"
+                  required
+                />
+                <button className="button-input singup-submit-button" type="submit">
+                  Sign Up
+                </button>
+                <button
+                  className="button-input singup-close-button"
+                  onClick={handleClose}
+                >
+                  Close
+                </button>
               </form>
             </div>
           </div>
