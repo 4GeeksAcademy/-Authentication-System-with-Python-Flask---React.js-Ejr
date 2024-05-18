@@ -10,7 +10,7 @@ export const TeacherNavbar = () => {
         navigate('/SignOut')
     }
 
-    console.log(store.user.Access_to_Teacher, store.user)
+    console.log(store.user.access_to_teacher, store.user)
     return (
         <div>
             {
@@ -30,7 +30,7 @@ export const TeacherNavbar = () => {
                                 {
                                     (store.user == '')
                                         ? <p className="text-center">Loading...</p>
-                                        : store.user.Access_to_Teacher.map((item, index) => (
+                                        : store.user.access_to_teacher.map((item, index) => (
                                             <span key={index}>
                                                 <span>Welcome, 
                                                     <strong> {item.name.toUpperCase()}</strong>

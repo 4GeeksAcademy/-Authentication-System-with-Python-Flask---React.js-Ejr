@@ -5,17 +5,16 @@ import { Context } from '../store/appContext'
 
 export const TeacherStudents = () => {
     const { store, actions } = useContext(Context)
-
-    console.log(store.user)
+    const [ spinnerPanel ] = useState(false)
     return (
         <div className=" containerd-flex  justify-content-center align-items-center p-4">
 
-            {store.user.Access_to_User.map((item, index) => {
+            {store.user.access_to_user.map((item, index) => {
                 return (
                     <div key={index}>
                         {
-                            (store.spinner)
-                                ? <div className="d-flex justify-content-center">
+                            (store.spinnerl)
+                                ? <div clasName="d-flex justify-content-center">
                                     <div>
                                         <div className="spinner-border" role="status">
                                             <span className="visually-hidden">Loading...</span>

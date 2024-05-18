@@ -43,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loginIn: async (userToLogin, userRole) => {
         const store = getStore();
         getActions().updateMsgError('');
-        getActions().spinner(true);
+        getActions().spinner(true)
         try {
           const respLoginIn = await fetch(
             process.env.BACKEND_URL + `/api/login/` + userRole,
@@ -71,14 +71,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           
         } finally {
-          getActions().spinner(false)
+          getActions().spinner(false) 
         }
       },
 
       getUser: async (userRol) => {
         const store = getStore();
         getActions().updateMsgError('')
-        getActions().spinner(true);
+        getActions().spinner(true)
+
         try {
           const token = localStorage.getItem("jwt-token")
           if (!token) throw new Error("No token found")
@@ -107,7 +108,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           
         } finally {
-          getActions().spinner(false);
+          getActions().spinner(false)
         }
       },
 
@@ -134,10 +135,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ ...store, error: changesMsg }); 
       },
 
-      spinner: async (changesSpinner) => {
+      spinner: (changesSpinner) => {
         const store = getStore();
         setStore({ ...store, spinner: changesSpinner }); 
       },
+
+      
 
       /* getMessage: async () => {
         try {
