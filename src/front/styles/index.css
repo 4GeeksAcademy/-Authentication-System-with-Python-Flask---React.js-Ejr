@@ -82,10 +82,6 @@ footer {
     justify-items: center;
 }
 
-<<<<<<< HEAD
-body{
-    min-height: 100vh; /* Establece la altura mínima del cuerpo como el 100% de la altura de la ventana del navegador */
-=======
 .body {
     background: lightgrey;
 }  
