@@ -1,8 +1,8 @@
   
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../store/appContext';
-import { CoursesContainer } from '../component/CoursesContainer.jsx';
+import { Context } from '../../store/appContext.js';
+import { CoursesContainer } from '../Courses/CoursesContainer.jsx';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';

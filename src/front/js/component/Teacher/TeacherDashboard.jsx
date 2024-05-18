@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Context } from '../store/appContext';
+import { Context } from '../../store/appContext.js';
 import { FaCircleArrowLeft } from "react-icons/fa6";
-import { TeacherCourses } from '../component/TeacherCourses.jsx'
+import { TeacherCourses } from '../Teacher/TeacherCourses.jsx'
 import { TeacherStudents } from './TeacherStudents.jsx';
 import { TeacherFiles } from './TeacherFiles.jsx';
 import { TeacherMyPayment } from './TeacherMyPayment.jsx';
@@ -19,28 +19,28 @@ export const TeacherDashboard = () => {
 
     const [buttonSelected, setButtonSelected] = useState(null)
 
-    const handleMyCourses =()=>{
+    const handleMyCourses = () => {
         setButtonSelected(<TeacherCourses />)
     }
 
-    
-    const handleMyStudents =()=>{
+
+    const handleMyStudents = () => {
         setButtonSelected(<TeacherStudents />)
     }
-   
-    const  handleMyFiles =()=>{
+
+    const handleMyFiles = () => {
         setButtonSelected(<TeacherFiles />)
     }
-    
-    const  handleMyPayment =()=>{
+
+    const handleMyPayment = () => {
         setButtonSelected(<TeacherMyPayment />)
     }
 
-        
-    const  handleSettings =()=>{
+
+    const handleSettings = () => {
         setButtonSelected(<TeacherSettings />)
     }
-  
+
     return (
         <div>
             <div className='row' style={{ height: '200vh' }}>
@@ -59,40 +59,40 @@ export const TeacherDashboard = () => {
                         <div className='border-bottom w-100 mx-1 my-3 pb-3'><h5 className='fw-bolder'>Profile</h5></div>
 
                         <div className='col-12 w-100'>
-                        
+
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyCourses}>My courses</button>
                         </div>
 
                         <div className='col-12 w-100'>
-                           
+
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyStudents} >My students</button>
                         </div>
 
                         <div className='col-12 w-100'>
-                           
-                           <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyFiles} >My files</button>
-                       </div>
+
+                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyFiles} >My files</button>
+                        </div>
 
 
                         <div className='col-12 w-100'>
-                            
-                                <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyPayment}>Payment history</button>
-                            
+
+                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyPayment}>Payment history</button>
+
                         </div>
 
                         <div className='col-12 w-100'>
-                            
-                                <button className='btn btn-outline-primary my-2 w-75'onClick={handleSettings}>Settings</button>
-                            
+
+                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleSettings}>Settings</button>
+
                         </div>
                     </div>
                 </div>
 
-               
+
                 <div className='col border border-secondary'>
-                  <div className="col-9">
-                     {buttonSelected}
-            </div>
+                    <div className="col-9">
+                        {buttonSelected}
+                    </div>
                 </div>
             </div>
         </div>
