@@ -1,6 +1,6 @@
 import React from "react"
 
-export const SettingsView = () => {
+const SettingsView = () => {
 	return (
 		<div className="w-full flex-auto text-center items-center mt-5">
 			<h1>Hello world // Settings View // Requires Auth</h1>

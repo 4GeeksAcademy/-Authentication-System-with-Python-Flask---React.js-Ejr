@@ -3,10 +3,6 @@ import { useParams } from "react-router-dom"
 
 import { Context } from "../store/appContext.jsx"
 
-import Board from "../component/board.jsx"
-//import BoardToolBar from "./component/board/toolbar.jsx"
-//import TrashBin from "./component/trashbin.jsx"
-
 /**
  *  -- Board View --
  * 
@@ -19,21 +15,12 @@ import Board from "../component/board.jsx"
  *  As this is the Board View, the side panel and topbar must be added here
  * 
  */
-const BoardView= ()=>{
-  const
-    { store, actions }= React.useContext(Context),
-    { pid, bid }= useParams() // URL params
-
-  React.useEffect(()=>{
-    // TODO: flux action -- get board -- requires defining DB table
-    // actions.getBoard(pid, bid)
-    console.log(`hello world: ${pid} / ${bid}`)
-  },[])
-
-  // return the board passing it the data
-  return (
-    <Board/>
-  )
+const BoardView = () => {
+	return (
+		<div className="w-full flex-auto text-center items-center mt-5">
+			<h1>Hello world // Board View</h1>
+		</div>
+	)
 }
 
 export default BoardView
