@@ -1,7 +1,7 @@
 {
-	"name": "the-kabesa-project",
+	"name": "keqqu-web-app",
 	"engines": {
-		"node": "16.x"
+		"node": "20.x"
 	},
 	"version": "1.0.0",
 	"description": "",

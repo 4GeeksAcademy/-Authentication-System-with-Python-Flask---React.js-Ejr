@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { Constants } from "./store/flux.jsx"
+import Constants from "./app/constants.js"
 
 import DevTools from "./app/devtools.jsx"
 
@@ -19,6 +19,7 @@ import ProjectView from "./pages/projectView.jsx" // project view
 import BoardView from "./pages/boardView.jsx" // board view
 
 import { Redirector, NotFound_Generic, HealthCheck, CreamyFap } from "./app/internal.jsx" // redirector, generic 404, health check, paja a la crema
+import GlobalListener from "./app/globalListener.jsx" // redirector, generic 404, health check, paja a la crema
 
 import appContext from "./store/appContext.jsx"
 
@@ -62,6 +63,7 @@ const Layout = () => {
               </>
             } />
         </Routes>
+        <GlobalListener />
     </BrowserRouter>
   )
 }

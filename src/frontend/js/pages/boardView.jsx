@@ -3,14 +3,6 @@ import { useParams } from "react-router-dom"
 
 import { Context } from "../store/appContext.jsx"
 
-import Board from "../component/boardview/board.jsx"
-import Toolbar from "../component/boardview/toolbar.jsx"
-import SidePanel from "../component/boardview/sidepanel.jsx"
-//import TrashBin from "./component/trashbin.jsx"
-
-const icon= "https://cdn.icon-icons.com/icons2/2518/PNG/512/photo_icon_151153.png"
-
-
 /**
  *  -- Board View --
  * 
@@ -23,30 +15,12 @@ const icon= "https://cdn.icon-icons.com/icons2/2518/PNG/512/photo_icon_151153.pn
  *  As this is the Board View, the side panel and topbar must be added here
  * 
  */
-const BoardView= ()=>{
-  const
-    { store, actions }= React.useContext(Context),
-    { pid, bid }= useParams() // URL route as params
-
-  // giving href as dependency makes this also trigger on URL change, that way we can manage board-to-board links via useNavigate()
-  React.useEffect(()=>{
-    // TODO: flux action -- get board -- requires defining DB table
-    // actions.getBoard(pid, bid)
-    console.log(`hello world: ${pid} / ${bid}`)
-  },[window.location.href])
-
-  // return the board
-  return (
-    <div className="flex flex-col h-full bg-red-900 overflow-hidden relative -z-50">
-      <div className="absolute top-0 left-0 right-0 z-0">
-        <Toolbar />
-      </div>
-      <div className="absolute top-0 bottom-0 right-0 z-0">
-        <SidePanel />
-      </div>
-      <Board />
-    </div>
-  )
+const BoardView = () => {
+	return (
+		<div className="w-full flex-auto text-center items-center mt-5">
+			<h1>Hello world // Board View</h1>
+		</div>
+	)
 }
 
 export default BoardView

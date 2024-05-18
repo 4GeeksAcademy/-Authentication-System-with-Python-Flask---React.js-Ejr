@@ -6,8 +6,9 @@
 
 @layer base {
   
-  html { @apply bg-stone-900 text-stone-500 }
+  html { @apply bg-stone-900 text-stone-500 pointer-events-none }
   body { @apply overflow-hidden }
-  #main { @apply flex flex-col w-100scr h-100scr items-stretch text-white}
+  #main { @apply flex flex-col w-100scr h-100scr items-stretch text-white }
+  #main > * { @apply pointer-events-auto }
 
 }

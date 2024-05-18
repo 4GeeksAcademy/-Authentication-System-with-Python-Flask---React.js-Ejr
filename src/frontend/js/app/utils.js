@@ -47,6 +47,22 @@ const Utils= {
     const str = Array.from(bytes, b=>String.fromCodePoint(b)).join("")
     return window.btoa(str) // base64 encode
   },
+
+  // generate logarithmic zoom levels
+  generateZoomLevels: (min, max, steps, one)=>{
+    const
+      m= Math.log(min),
+      b= Math.log(1.0),
+      M= Math.log(max),
+      over= steps-one-1,
+      levels= []
+
+    for(let i=0; i < one; i++) levels.push(Math.exp(m + (b-m) * i / one))
+    levels.push(1.0)
+    for(let i=0; i < over; i++) levels.push(Math.exp(b + (M-b) * i / over))
+
+    return levels
+  }
 }
 
 export default Utils
