@@ -240,7 +240,7 @@ def get_token_login_teacher():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"Error":"Invalid Password"}, 400
+            return jsonify({"Error":"Invalid Password"}), 400
     except Exception as e:
         return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
