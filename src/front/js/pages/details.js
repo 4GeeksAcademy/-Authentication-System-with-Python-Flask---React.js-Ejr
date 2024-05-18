@@ -28,7 +28,7 @@ export const Details = () => {
 
     return (
         <>
-            <div className="d-flex container mt-3 justify-content-between align-items-center">
+            <div className="d-flex container mt-3 justify-content-between align-items-center vh-100">
                 <div className="justify-content-between align-items-center w-75">
                     <div id="carouselExample" className="carousel slide">
                         <div className="carousel-inner">

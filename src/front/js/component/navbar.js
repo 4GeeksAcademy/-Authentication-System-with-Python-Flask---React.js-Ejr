@@ -22,30 +22,28 @@ export const Navbar = () => {
 	}, [store.vehicles]);
 
 	return (
-		<nav class="navbar navbar-light">
-			<div class="container-fluid">
+		<nav className="navbar navbar-light">
+			<div className="container-fluid">
 				<div className="d-flex">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
 					</Link>
-					<div className="ms-3">
-						<h2 className="navbar-text ms-3 mt-2 mb-2 display-4 text-center"><strong>Friendly Wheels</strong></h2>
-					</div>
+						<h2 className="navbar-text ms-2 mt-3 mb-2 display-4 text-center"><strong>Friendly Wheels</strong></h2>
 				</div>
 				{token ?
 				<>
-					<button class="navbar-toggler bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
+					<button className="navbar-toggler bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
 					</button>
-					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-						<div class="offcanvas-header">
-							<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+					<div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+						<div className="offcanvas-header">
+							<h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 						</div>
-						<div class="offcanvas-body">
-							<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-								<li class="nav-item dropdown mb-3">
-									<a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<div className="offcanvas-body">
+							<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+								<li className="nav-item dropdown mb-3">
+									<a className="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 										Favoritos
 										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
 									</a>
@@ -63,8 +61,8 @@ export const Navbar = () => {
 										}
 									</ul>
 									</li>
-									<li class="nav-item dropdown mb-3">
-										<a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<li className="nav-item dropdown mb-3">
+										<a className="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 											Mis Coches
 											<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
 										</a>
@@ -82,12 +80,12 @@ export const Navbar = () => {
 											}
 										</ul>
 									</li>
-									<li class="nav-item mb-3">
+									<li className="nav-item mb-3">
 										<Link to="/agregarvehiculo" className="text-decoration-none">
 											<a className="text-black text-decoration-none">Pon tú coche en Friendly Wheels </a>
 										</Link>
 									</li>
-									<li class="nav-item">
+									<li className="nav-item">
 										<Link to="/agregarvehiculo" className="text-decoration-none">
 											<a className="text-black text-decoration-none" onClick={handleLogOut}>Cerrar sesión </a>
 										</Link>
@@ -98,22 +96,22 @@ export const Navbar = () => {
 				</>
 					: (
 						<div>
-							<button class="navbar-toggler justify-content-end bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-								<span class="navbar-toggler-icon"></span>
+							<button className="navbar-toggler justify-content-end bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+								<span className="navbar-toggler-icon"></span>
 							</button>
-							<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-								<div class="offcanvas-header">
-									<h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+							<div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+								<div className="offcanvas-header">
+									<h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 								</div>
-								<div class="offcanvas-body">
-									<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-										<li class="nav-item mb-3">
+								<div className="offcanvas-body">
+									<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+										<li className="nav-item mb-3">
 											<Link to="/signup" className="text-black text-decoration-none">
 												<a>Regístrate</a>
 											</Link>
 										</li>
-										<li class="nav-item">
+										<li className="nav-item">
 											<Link to="/login" className="text-decoration-none">
 												<a className="text-black text-decoration-none">Iniciar sesión</a>
 											</Link>
