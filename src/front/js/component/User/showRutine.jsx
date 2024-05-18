@@ -32,7 +32,12 @@ const UserRoutine = () => {
     }, []);
 
     if (!routine) {
-        return <Loader />;
+        return (
+            <>
+                <h4>Loading routine...</h4>
+                <Loader />
+            </>
+        );
     }
 
     return (

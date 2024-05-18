@@ -8,7 +8,7 @@ import SimilarExercises from '../../component/User/similarExercises.jsx'
 
 
 
-const ExerciceDetail = ({ }) => {
+const ExerciseDetail = ({ }) => {
     const { store, actions } = useContext(Context)
     const [exerciseDetail, setExerciseDetail] = useState({});
     const [exerciseVideos, setExerciseVideos] = useState([]);
@@ -50,4 +50,4 @@ const ExerciceDetail = ({ }) => {
     )
 }
 
-export default ExerciceDetail
+export default ExerciseDetail
