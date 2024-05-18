@@ -32,10 +32,10 @@ def create_booking(user_id, training_class_id):
         db.session.commit()
 
         # Retorna verdadero y un mensaje de éxito si la reserva se crea correctamente.
-        return True, "Booking successful"
+        return True, "Booking successful", booking.id  # Devolver también el ID de la reserva
     else:
         # Retorna falso y un mensaje de error si la clase está llena o no existe.
-        return False, "Class is full or does not exist"
+        return False, "Class is full or does not exist", None  # Devolver None como ID porque no se creó reserva
 
 
 
@@ -54,10 +54,11 @@ def cancel_booking(booking_id):
 
         # Verificar si el usuario aún puede cancelar la reserva según reglas de negocio.
         # Combinar la fecha y hora de la clase para obtener un datetime completo
-        class_datetime = datetime.combine(booking.training_class.date_class, booking.training_class.start_time)
+        # class_datetime = datetime.combine(booking.training_class.date_class, booking.training_class.start_time)
+        
 
         # Comprobar si faltan menos de 2 horas para la clase
-        if datetime.utcnow() > class_datetime - timedelta(hours=2):
+        if datetime.utcnow() > booking.training_class.dateTime_class - timedelta(hours=2):
             return False, "It's too late to cancel this booking"
 
         # Recuperar la clase asociada a la reserva.

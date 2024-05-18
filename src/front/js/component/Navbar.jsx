@@ -62,7 +62,7 @@ const Navbar = () => { // Definición del componente Navbar
       </div>
       <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"> {/* Menú desplegable para el perfil del usuario */}
         <div className="offcanvas-header"> {/* Cabecera del menú desplegable */}
-          <h3 className="offcanvas-title" id="offcanvasNavbarLabel">Bienvenido: {uploadedUserData.name}</h3> {/* Título del menú desplegable */}
+          <h3 className={styles["offcanvas-title"]} id="offcanvasNavbarLabel">Bienvenido: {uploadedUserData.name}</h3> {/* Título del menú desplegable */}
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button> {/* Botón para cerrar el menú desplegable */}
         </div>
         <div className="offcanvas-body"> {/* Cuerpo del menú desplegable */}
