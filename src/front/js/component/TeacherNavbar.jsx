@@ -31,7 +31,11 @@ export const TeacherNavbar = () => {
                                     (store.user == '')
                                         ? <p className="text-center">Loading...</p>
                                         : store.user.Access_to_Teacher.map((item, index) => (
-                                            <span key={index}>{item.name}</span>
+                                            <span key={index}>
+                                                <span>Welcome, 
+                                                    <strong> {item.name.toUpperCase()}</strong>
+                                                </span>
+                                            </span>
                                         ))
                                 }
                             </div>
