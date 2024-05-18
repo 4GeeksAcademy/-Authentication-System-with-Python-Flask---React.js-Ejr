@@ -37,9 +37,9 @@ export const Navbar = () => {
                                                 {
                                                     (store.user == '')
                                                         ? <p className="text-center">Loading...</p>
-                                                        : store.user.access_to_teacher.map((item, index) => (
+                                                        :  store.user[`access_to_${store.currentRole}`].map((item, index) => (
                                                             <span className='mx-2' key={index}>
-                                                                <span>Welcome,
+                                                                <span>{`Welcome ${store.currentRole}`},
                                                                     <strong> {item.name.toUpperCase()}</strong>
                                                                 </span>
                                                             </span>
