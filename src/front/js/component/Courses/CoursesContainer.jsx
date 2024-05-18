@@ -1,10 +1,7 @@
-import React, {useState, useContext} from "react";
+import React from "react";
 import '../../styles/components.css';
-import { Context } from '../store/appContext'
 
 export const CoursesContainer = () => {
-
-    
     return (
         <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
             <div className="card mx-2 shadow" style={{ width: "18rem", height: "auto", paddingTop: "20px", paddingBottom: "20px" }}>

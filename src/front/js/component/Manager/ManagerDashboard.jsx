@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
+<<<<<<< HEAD:src/front/js/component/ManagerDashboard.jsx
 import { ManagerCourses } from './ManagerCourses.jsx';
 import { ManagerProfile } from './ManagerProfile.jsx';
 import { Payments } from './Payments.jsx';
@@ -8,6 +9,14 @@ import  Teachers  from './Teachers.jsx';
 import { ActiveUsers } from './ActiveUsers.jsx';
 import { GeneralFiles } from './GeneralFiles.jsx';
 import { Certificate } from './Certificate.jsx';
+=======
+import { ManagerCourses } from '../Manager/ManagerCourses.jsx';
+import { ManagerProfile } from '../Manager/ManagerProfile.jsx';
+import { Payments } from '../Payments.jsx';
+import  {Teachers}  from '../Teacher/Teachers.jsx';
+import { ActiveUsers } from '../User/ActiveUsers.jsx';
+import { GeneralFiles } from '../Manager/GeneralFiles.jsx';
+>>>>>>> edfe974494f657009fbf8cc947b2e416715b53f6:src/front/js/component/Manager/ManagerDashboard.jsx
 
 export const ManagerDashboard = () => {
 
