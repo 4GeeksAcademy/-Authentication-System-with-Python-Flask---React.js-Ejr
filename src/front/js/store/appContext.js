@@ -29,7 +29,6 @@ const injectContext = PassedComponent => {
 			 * store, instead use actions, like this:
 			 **/
 			state.actions.fetchCoffee();
-			state.actions.signUp("test", "test", "test", "test");
 			console.log(state.store); // <---- calling this function from the flux.js actions
 		}, []);
 
