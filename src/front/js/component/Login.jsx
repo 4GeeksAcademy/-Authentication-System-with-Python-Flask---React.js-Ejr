@@ -20,8 +20,14 @@ const Login = () => {
         if (store.isAuthenticated && store.dataRole) {
             if (store.dataRole === "athlete") {
                 navigate("/PrivatePageUser");
-            } else {
-                navigate("/Master-private-registration");
+            }else if (store.dataRole === "coach") {
+                navigate("/PrivatePageUser"); 
+            }else if (store.dataRole === "admin") {
+                navigate("/PrivatePageUser"); 
+            }else if (store.dataRole === "master") {
+                navigate("/PrivatePageUser"); 
+            }else {
+                navigate("/");
             }
         }
     };
