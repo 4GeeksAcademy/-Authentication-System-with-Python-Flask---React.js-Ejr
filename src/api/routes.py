@@ -291,3 +291,31 @@ def show_manager():
         return jsonify(manager_list), 200
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
+
+
+@api.route('/create/courses', methods=['POST'])
+def create_courses():
+    try:
+        
+        title =  request.json.get('title')
+        category_title = request.json.get('categoryTitle')
+        modules_length = request.json.get('modulesLength')
+        certificate = request.json.get('certificate') 
+
+        #Verificacion de campos vacios
+        if not title or not category_title or not modules_length or not certificate :
+            return({"Error":"title, category_title, modules_length and certificate  are required"}), 400
+        
+        #Verificacion de existencia de titulo en la base de datos
+        existing_course = Course.query.filter_by(title=title).first()
+        if existing_course:
+            return jsonify({"Error":"Title already exists."}), 409
+        
+        
+        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate)
+        db.session.add(course)
+        db.session.commit()
+        return jsonify({"Msg":"Curso creado exitosamente", "Course":course.serialize()}), 200
+
+    except Exception as err:
+        return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
