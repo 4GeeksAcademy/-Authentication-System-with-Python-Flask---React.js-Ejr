@@ -9,6 +9,7 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       readyState: {
         backend: false, frontend: false
       },
+      fakeUser: null,
       userPrefs: storeDefaults.userPrefs,
       devPrefs: storeDefaults.devPrefs,
       board: storeDefaults.board,
@@ -41,19 +42,19 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       },
       
       setUserPref:(pref, value)=>{
-        const newPrefs= structuredClone(getStore().userPrefs)
-        newPrefs[pref]= value
-        setStore({ userPrefs: newPrefs })
+        const new_userPrefs= structuredClone(getStore().userPrefs)
+        new_userPrefs[pref]= value
+        setStore({ userPrefs: new_userPrefs })
       },
 
       // decode and load the userPrefs from the cookie that contains it
       loadUserPrefs:()=>{
         const data= Utils.getCookie("userPrefs")
         if(data){
-          const newUserPrefs= {
+          const new_userPrefs= {
             darkMode: data[0] != "0"
           }
-          setStore({ userPrefs: newUserPrefs })
+          setStore({ userPrefs: new_userPrefs })
         }
 
         // TODO: binary load
@@ -126,32 +127,45 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       },
       
       setDevPref:(pref, value)=>{
-        const newPrefs= structuredClone(getStore().devPrefs)
-        newPrefs[pref]= value
-        setStore({ devPrefs: newPrefs })
+        const new_prefs= structuredClone(getStore().devPrefs)
+        new_prefs[pref]= value
+        setStore({ devPrefs: new_prefs })
         // instantly save dev prefs
         getActions().saveDevPrefs()
       },
 
+      toggleDevAuth:()=>{
+        const new_prefs= structuredClone(getStore().devPrefs)
+        new_prefs.fakeAuth= !new_prefs.fakeAuth
+        setStore({ 
+          devPrefs: new_prefs,
+          fakeUser: new_prefs.fakeAuth ? {
+            username: "Paco Fiestas",
+            email: "paquitosexy69@gmail.com",
+            avatar: "https://api.dicebear.com/8.x/pixel-art/png?seed=paco"
+          }: null}
+        )
+      },
+
       loadDevPrefs:()=>{
-        const data= Utils.getCookie("devPrefs")
-        console.log("devPrefs Cookie: ", data)
-        if(data && data.length==3){
-          const newPrefs= {
-            showState: data[0] != "0",
-            panelPosition: parseInt(data[1]),
-            devRender: data[2] != "0"
+        const cur_prefs= Utils.getCookie("devPrefs")
+        console.log("devPrefs Cookie: ", cur_prefs)
+        if(cur_prefs && cur_prefs.length==3){
+          const new_prefs= {
+            showState: cur_prefs[0] != "0",
+            panelPosition: parseInt(cur_prefs[1]),
+            devRender: cur_prefs[2] != "0"
           }
-          setStore({ devPrefs: newPrefs })
+          setStore({ devPrefs: new_prefs })
         }
       },
 
       saveDevPrefs:()=>{
-        const prefs= getStore().devPrefs
+        const cur_prefs= getStore().devPrefs
         const data= [
-          prefs.showState ? '1' : '0',
-          prefs.panelPosition.toString(),
-          prefs.devRender ? '1' : '0',
+          cur_prefs.showState ? '1' : '0',
+          cur_prefs.panelPosition.toString(),
+          cur_prefs.devRender ? '1' : '0',
         ].join("")
         Utils.setCookie("devPrefs", data, [30,0,0], "/", Constants.COOKIE_SAMESITE_STRICT )
       },
