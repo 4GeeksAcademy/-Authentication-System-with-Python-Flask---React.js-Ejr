@@ -244,7 +244,65 @@ def get_token_login_teacher():
     except Exception as e:
         return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
+
+@api.route('/view/user')
+@jwt_required() #Decorador para requerir autenticacion con jwt
+def show_view_teacher():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
         
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email,
+                "isUser": user.is_user,
+                "name": user.name,
+                "lastName": user.last_name,
+                "username": user.username,
+                "numberDocument": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
+            }
+            user_list.append(user_dict)
+
+
+        return jsonify({"Access_to_User": user_list}), 200
+        
+    else:
+        return jsonify({"Error": "Token invalid or not exits"}), 401
+
+@api.route('/view/teacher')
+@jwt_required() #Decorador para requerir autenticacion con jwt
+def show_view_teacher():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
+        
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email,
+                "isUser": user.is_user,
+                "name": user.name,
+                "lastName": user.last_name,
+                "username": user.username,
+                "numberDocument": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
+            }
+            user_list.append(user_dict)
+
+
+        return jsonify({"Access_to_User": user_list}), 200
+        
+    else:
+        return jsonify({"Error": "Token invalid or not exits"}), 401
+
 @api.route('/view/manager')
 @jwt_required() #Decorador para requerir autenticacion con jwt
 def show_view_manager():
@@ -307,31 +365,3 @@ def show_view_manager():
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
-@api.route('/view/teacher')
-@jwt_required() #Decorador para requerir autenticacion con jwt
-def show_view_teacher():
-    current_token = get_jwt_identity() #obtiene la id del user del token
-    if current_token:
-        
-        users = User.query.all()
-        user_list = []
-        for user in users:
-            user_dict = {
-                "id": user.id,
-                "email": user.email,
-                "isUser": user.is_user,
-                "name": user.name,
-                "lastName": user.last_name,
-                "username": user.username,
-                "numberDocument": user.number_document,
-                "phone": user.phone,
-                "age": user.age,
-                "gender": user.gender
-            }
-            user_list.append(user_dict)
-
-
-        return jsonify({"Access_to_User": user_list}), 200
-        
-    else:
-        return jsonify({"Error": "Token invalid or not exits"}), 401
