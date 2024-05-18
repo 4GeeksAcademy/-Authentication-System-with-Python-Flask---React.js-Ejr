@@ -1,6 +1,6 @@
 .navbar {
     background-color:  #a9ce68;
-    height: 180px;
+    height: 120px;
     /* background-color: rgb(140, 172, 140); */
         text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
@@ -68,13 +68,11 @@
 footer {
     background: #a9ce68 !important;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-    height: 100px;
-    padding: 20px;
     text-align: center;
-    width: 100%;
-    /* position: fixed; */
-    bottom: 0;
+    position: relative;
     left: 0;
+    width: 100%;
+    /* z-index: 1000;  */
 }
 
 .corazon:hover i {
@@ -90,8 +88,8 @@ footer {
 
 .body {
     background: lightgrey;
-    width: 100px;
-    height: 100px;
+    /* width: 100px;
+    height: 100px; */
 }  
 
 .offcanvas {

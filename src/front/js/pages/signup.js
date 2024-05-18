@@ -23,7 +23,7 @@ export const Signup = () => {
         }
     };
     return (
-            <div className="contactForm">
+            <div className="contactForm vh-100">
                 <h1 className="title text-center">Signup</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
