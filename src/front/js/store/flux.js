@@ -102,7 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 		 			motor: motor,
 			 		 			tipo_cambio: tipo_cambio,
 			 		 			asientos: asientos,
-			 					precio: precio
+			 					precio: parseInt(precio)
 			 	 		})
                  	});
 					if (response.status === 200) {
