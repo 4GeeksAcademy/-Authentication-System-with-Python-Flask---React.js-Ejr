@@ -258,7 +258,7 @@ body {
   overflow: hidden;
 }
 
-#app {
+#main {
   display: flex;
   height: 100vh;
   width: 100vw;
@@ -520,6 +520,22 @@ body {
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  inset: 0px;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
 .bottom-4 {
   bottom: 1rem;
 }
@@ -530,6 +546,10 @@ body {
 
 .left-4 {
   left: 1rem;
+}
+
+.right-0 {
+  right: 0px;
 }
 
 .right-4 {
@@ -617,6 +637,11 @@ body {
   aspect-ratio: 1 / 1;
 }
 
+.size-8 {
+  width: 2rem;
+  height: 2rem;
+}
+
 .size-9 {
   width: 2.25rem;
   height: 2.25rem;
@@ -624,6 +649,10 @@ body {
 
 .h-1 {
   height: 0.25rem;
+}
+
+.h-12 {
+  height: 3rem;
 }
 
 .h-16 {
@@ -704,8 +733,8 @@ body {
   width: 100%;
 }
 
-.w-screen {
-  width: 100vw;
+.min-w-80 {
+  min-width: 20rem;
 }
 
 .flex-auto {
@@ -782,6 +811,10 @@ body {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .overflow-hidden {
@@ -990,18 +1023,6 @@ body {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
-}
-
-.pl-2 {
-  padding-left: 0.5rem;
-}
-
-.pr-3 {
-  padding-right: 0.75rem;
-}
-
-.pr-4 {
-  padding-right: 1rem;
 }
 
 .pl-2 {
