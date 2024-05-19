@@ -24,7 +24,7 @@ app.url_map.strict_slashes = False
 app.config["JWT_SECRET_KEY"] = "super-secret"
 jwt = JWTManager(app)
 
-stripe.api_key = 'sk_test_51PDP2q01WUGKqP0MReBFy1CQvP0hNmIOvIhfl1go8d61b8WTJJsFeE2B3FHbhVxaNYHONulV47NR20XIfKlVoYpv00W9XfutlZ'
+stripe.api_key = 'sk_test_51PH6D8By1Y4Nz1OnrvtuZxon5ohOCTrXSLYKsb0A3Qbt0UFU2vJ01L7QCCNK9ieAJ9K7xwkjKB5iV8iRGPVPpKEJ00CbDbviRr'
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

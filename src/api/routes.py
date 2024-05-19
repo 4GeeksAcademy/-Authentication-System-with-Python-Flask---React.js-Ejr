@@ -60,7 +60,7 @@ def add_vehicle():
     new_vehicles= stripe.Product.create(name=marca_modelo)
     price_product= stripe.Price.create(
     product= new_vehicles["id"],
-    unit_amount= precio,
+    unit_amount= precio * 100,
     currency="eur",
     )
     if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == ""):
@@ -97,6 +97,7 @@ def get_all_vehicles():
 @api.route('/vehicle/<int:vehicle_id>', methods=['GET'])
 def get_one_vehicle(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
+    print(vehicle)
     if vehicle is None:
         return jsonify({"msg":"El vehículo no existe"}), 404
     return jsonify(vehicle.serialize()), 200
@@ -195,30 +196,25 @@ def get_all_rents():
 
 #Ruta de pago de stripe
 
-@api.route('/create-checkout-session', methods=['POST'])
-def create_checkout_session():
-    price = request.json.get("price", None)
-    quantity = request.json.get("quantity", None)
-    print(price)
-    print(quantity)
+@api.route('/create-checkout-session/<string:stripe_id>/<int:days>', methods=['POST'])
+def create_checkout_session(stripe_id, days):
     try:
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': "price_1PHNr401WUGKqP0MAXCQIuq7",
-                    'quantity': quantity,
+                    'price': stripe_id,
+                    'quantity': days,
                 },
 
             ],
             mode='payment',
-            success_url= os.getenv('BACKEND_URL')+ '?success=true',
-            cancel_url= os.getenv('BACKEND_URL') + '?canceled=true',
+            success_url= os.getenv('FRONT_URL')+ '?success=true',
+            cancel_url= os.getenv('FRONT_URL') + '?canceled=true',
         )
         # return jsonify("ok"),200
     except Exception as e:
         return str(e)
-    return jsonify("ok"),200
-    # return redirect(checkout_session.url, code=303)
-    # return jsonify(checkout_session.url, code=303)
+    return redirect(checkout_session.url, code=303)
+   
    

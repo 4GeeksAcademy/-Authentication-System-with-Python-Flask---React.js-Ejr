@@ -15,6 +15,12 @@ export const Navbar = () => {
 	};
 
 	useEffect(() => {
+		if (store.vehicles.length === 0) {
+			actions.getVehicles();
+		}
+	}, []);
+
+	useEffect(() => {
 		if (store.vehicles.length !== 0) {
 			actions.favorites();
 			actions.myVehiclesInRent();

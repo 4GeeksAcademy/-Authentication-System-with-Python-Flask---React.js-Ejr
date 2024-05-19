@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
+			checkout: {}
 		},
 		actions: {
 			getMessage: async () => {
@@ -256,7 +257,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     return []; 
                 } 
-            }
+            },
+			totalpayment: (vehicle_id, marca_modelo, precio, days, precio_id_stripe) => {
+				setStore({
+					checkout: {
+						vehicle_id: vehicle_id,
+						marca_modelo: marca_modelo,
+						precio: precio,
+						days: days,
+						precio_id_stripe: precio_id_stripe
+					}
+				})
+			}
 		}
 	};
 };
