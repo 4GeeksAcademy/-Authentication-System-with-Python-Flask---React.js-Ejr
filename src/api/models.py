@@ -75,7 +75,7 @@ class Teacher(db.Model):
     phone = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
-    certificate_teacher = db.Column(db.String(500), nullable=True)
+    certificate_teacher = db.Column(db.String(250), nullable=True)
 
     #relations
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
