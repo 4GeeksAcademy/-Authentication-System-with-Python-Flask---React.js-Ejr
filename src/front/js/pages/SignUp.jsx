@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Context } from "../store/appContext";
+import { Context } from '../store/appContext';
+
 
 export const SignUp = () => {
     const navigate = useNavigate();
@@ -8,7 +9,9 @@ export const SignUp = () => {
 
     const [signUpData, setSignUpData] = useState({
         email: '',
-        name: '',
+        username: '',
+        firstName: '',
+        lastName: '',
         password: '',
         age: '',
         region: '',
@@ -28,7 +31,8 @@ export const SignUp = () => {
     const [error, setError] = useState(null);
 
     const handleInputChange = (e) => {
-        setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setSignUpData({ ...signUpData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
@@ -46,21 +50,28 @@ export const SignUp = () => {
     };
 
     return (
-        <div>
+        <div className="signup-container">
             <h1>Sign Up</h1>
-            {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="email">Email:</label>
                     <input type="email" id="email" name="email" value={signUpData.email} onChange={handleInputChange} required />
                 </div>
                 <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={signUpData.password} onChange={handleInputChange} required />
+                    <label htmlFor="username">Username:</label>
+                    <input type="text" id="username" name="username" value={signUpData.username} onChange={handleInputChange} required />
                 </div>
                 <div>
-                    <label htmlFor="name">Name:</label>
-                    <input type="text" id="name" name="name" value={signUpData.name} onChange={handleInputChange} required />
+                    <label htmlFor="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" value={signUpData.firstName} onChange={handleInputChange} required />
+                </div>
+                <div>
+                    <label htmlFor="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" value={signUpData.lastName} onChange={handleInputChange} required />
+                </div>
+                <div>
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" id="password" name="password" value={signUpData.password} onChange={handleInputChange} required />
                 </div>
                 <div>
                     <label htmlFor="age">Age:</label>
@@ -81,11 +92,11 @@ export const SignUp = () => {
                 </div>
                 <div>
                     <label htmlFor="languages">Languages:</label>
-                    <select id="languages" name="languages" multiple value={signUpData.languages} onChange={handleInputChange}>
+                    <select id="languages" name="languages" value={signUpData.languages} onChange={handleInputChange}>
+                        <option value="">Select</option>
                         <option value="english">English</option>
                         <option value="spanish">Spanish</option>
                         <option value="french">French</option>
-                        
                     </select>
                 </div>
                 <div>
@@ -125,6 +136,7 @@ export const SignUp = () => {
 
                 <button type="submit">Sign Up</button>
             </form>
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };
