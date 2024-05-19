@@ -20,6 +20,11 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import CoffeeImg from "../../img/coffeeLogo.png";
+
+const CoffeeLogo = ({ width, height }) => {
+    return <img src={CoffeeImg} alt="Coffee Logo" style={{ width, height }} />;
+};
 
 function SignIn() {
   const [open, setOpen] = useState(false); // State to control Snackbar open/close
