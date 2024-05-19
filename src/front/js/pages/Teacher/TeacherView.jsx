@@ -10,11 +10,10 @@ import { TeacherCourses } from "../../component/Teacher/TeacherCourses.jsx"
 
 export const TeacherView = () => {
     const { store, actions } = useContext(Context)
-    const [user] = useState('teacher')
-
+    
     useEffect(()=>{
-        actions.getUser(user)
-    },[user])
+        actions.getUser()
+    },[])
 
     return (
         <div>
