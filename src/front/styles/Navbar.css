@@ -1,0 +1,54 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 155px; /* Ajusta el padding según el diseño */
+    background-color: none; /* Fondo transparente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    backdrop-filter: blur(10px); /* Desenfoque de fondo */
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-logo {
+    font-size: 24px; /* Tamaño de fuente basado en el diseño */
+    color: #FFFFFF; /* Color de texto blanco */
+    font-weight: bold; /* Negrita para el logo */
+    text-decoration: none; /* Sin subrayado */
+}
+
+
+.navbar-link {
+    font-size: 18px; /* Tamaño de fuente basado en el diseño */
+    color: #FFFFFF; /* Color de texto blanco */
+    text-decoration: none; /* Sin subrayado */
+    transition: color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.navbar-link:hover {
+    color: #00BFFF; /* Cambia el color al pasar el mouse */
+}
+
+.navbar-right {
+    gap: 20px; /* Separación entre enlaces */
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.navbar-button {
+    font-size: 18px; /* Tamaño de fuente basado en el diseño */
+    color: #FFFFFF; /* Color de texto blanco */
+    background-color: #007BFF; /* Color de fondo del botón */
+    padding: 10px 20px; /* Padding del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.navbar-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
