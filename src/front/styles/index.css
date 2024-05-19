@@ -1,3 +1,17 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+
+body {
+    background: linear-gradient(to bottom, #000000, #131E26, #3B5F79, #629DC8);
+    
+    overflow-x: hidden;
+    
+    height: 100vh;
+    
+    margin: 0;
+    
+    font-family: Arial, sans-serif;
+    color: white
+}
+
+.room {
+    color: black
+}
