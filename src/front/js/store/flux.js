@@ -32,6 +32,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 
+			validateToken: async (token) => {
+				try {
+					const response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/validate-token", // URL del servidor
+					 {  
+						method: "GET",  // Cambio a método GET, ya que el endpoint no necesita datos de entrada adicionales
+						headers: {
+							"Authorization": `Bearer ${token}`  // Solo necesitamos el token para la autorización
+						}
+					});
+					if (response.ok) {
+						const data = await response.json();
+						if (data.user) {  // Verificamos si la respuesta contiene el objeto usuario
+							setStore({
+								isAuthenticated: true
+							});
+						} else {
+							setStore({
+								isAuthenticated: false
+							});
+							console.error("Token inválido o usuario no encontrado");
+						}
+					} else {
+						setStore({
+							isAuthenticated: false
+						});
+						console.error("Error validando el token", await response.text());  // Es útil ver el mensaje de error del servidor
+					}
+				} catch (error) {
+					console.error("Error en la función validateToken:", error);
+					setStore({
+						isAuthenticated: false
+					});
+				}
+			},
+			
+
 			loginUserV2: async (email, password) => { // Se define una función llamada handleLogin que se ejecutará al iniciar sesión
 			
 				if (email.trim() === "" || password.trim() === "") { // Verifica si el campo de email o contraseña están vacíos
@@ -107,7 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 					// Convertimos la respuesta a formato JSON para extraer los datos
 					let data = await response.json();
-					console.log(data)
+				//	console.log(data)
 					let store = getStore(); // Se obtiene el estado actual del almacén
 					setStore({ ...store, uploadedUserData: data }); // Se actualiza el estado con los datos de usuario recuperados
 			
@@ -263,6 +299,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},
+
+			updateUserData: async (userData) => {
+
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+				console.log(myToken);
+				console.log(userData);
+				// Construimos la URL para la solicitud
+				let url = `https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user`;
+		
+				// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+				let response = await fetch(url, {
+					method: "PUT", // Método de la solicitud
+					headers: {
+					"Authorization":`Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+					"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+					},
+					body: JSON.stringify(userData)
+
+				});
+
+				let data = await response.json();
+				console.log(data)
+				if (response.ok) {
+					// setStore({ ...getStore(), uploadedUserData: data.updatedUser });
+					alert('Usuario actualizado correctamente');
+				} else {
+					alert('Error al actualizar usuario: ' + data.error);
+				}
+			}
+			
 			
 		}
 	};

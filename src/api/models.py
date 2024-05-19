@@ -269,6 +269,7 @@ class Booking(db.Model):
             "booking_id": self.id,
             "booking_date": self.booking_date.isoformat(),
             "booking_status": self.status,
+            "booking_user_name": self.user.name,
             "class_id": self.training_class.id if self.training_class else None,
             "class_name": self.training_class.name if self.training_class else "No Class",
             "dateTime_class": self.training_class.dateTime_class.isoformat() if self.training_class else None,

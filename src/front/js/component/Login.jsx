@@ -19,7 +19,7 @@ const Login = () => {
         // Verificar el estado después de que se haya actualizado
         if (store.isAuthenticated && store.dataRole) {
             if (store.dataRole === "athlete") {
-                navigate("/PrivatePageUser");
+                navigate("/PrivateCalendar");
             }else if (store.dataRole === "coach") {
                 navigate("/PrivatePageUser"); 
             }else if (store.dataRole === "admin") {

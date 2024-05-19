@@ -192,8 +192,8 @@ def create_new_user():  # Define la función que manejará la solicitud
 
 
 #------ actualizar el usuario---------
-@api.route('master/users/<int:user_id>', methods=['PUT'])  # Define un endpoint para actualizar un usuario mediante una solicitud PUT
-# @jwt_required() # Requiere autenticación con JWT para acceder a esta ruta
+@api.route('/users/<int:user_id>', methods=['PUT'])  # Define un endpoint para actualizar un usuario mediante una solicitud PUT
+@jwt_required() # Requiere autenticación con JWT para acceder a esta ruta
 def update_user(user_id):  # Define la función para manejar las solicitudes PUT de actualización de usuario, con el parámetro de ID de usuario
     try:  # Inicia un bloque try-except para manejar posibles errores durante la ejecución
 
@@ -628,6 +628,51 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
     except Exception as e:  # Captura cualquier excepción que ocurra durante el proceso.
         return jsonify({'error': 'Error in user creation: ' + str(e)}), 500  # Devuelve un mensaje de error si ocurre un problema.
 
+#------ actualizar el usuario---------
+@api.route('/user', methods=['PUT'])
+@jwt_required()
+def update_data_user():
+    try:
+        user_id = get_jwt_identity()
+        data = request.json
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+        
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Flag para detectar si las preguntas de seguridad están siendo actualizadas
+        security_questions_updated = 'security_questions' in data and data['security_questions']
+
+        for key, value in data.items():
+            if hasattr(user, key):
+                if key == 'password' and value:
+                    password_hash = generate_password_hash(value).decode('utf-8')
+                    setattr(user, key, password_hash)
+                elif key == 'role' and value:
+                    role = Role.query.filter_by(name=value).first()
+                    if role:
+                        setattr(user, key, role)
+                    else:
+                        return jsonify({'error': 'Role not found'}), 404
+                elif key == 'security_questions' and security_questions_updated:
+                    # Primero elimina las preguntas antiguas solo si se están actualizando
+                    SecurityQuestion.query.filter_by(user_id=user.id).delete()
+                    new_questions = [
+                        SecurityQuestion(question=q['question'], answer=q['answer'], user=user)
+                        for q in value
+                    ]
+                    user.security_questions = new_questions
+                elif key != 'security_questions':
+                    setattr(user, key, value)
+
+        db.session.commit()
+        return jsonify({'message': 'User updated successfully'})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 #--------------------- activacion de cuenta via email----------------
 @api.route('/confirm/<string:token>', methods=['POST'])  # Define un endpoint para confirmar un email usando un token. El método permitido es POST.
@@ -649,6 +694,28 @@ def confirm_email(token):  # Función que maneja la solicitud POST para confirma
     except:  # Bloque except que captura cualquier excepción no manejada en el bloque try.
         return jsonify(message='The confirmation link is invalid or has expired.'), 400  # Devuelve un mensaje indicando que el enlace de confirmación es inválido o ha expirado, con un código de estado HTTP 400.
 
+
+#-------------------VALIDAR TOKEN  --------------------------------------------------------------------------
+
+@api.route('/validate-token', methods=['GET'])
+@jwt_required()
+def validate_token():
+    try:
+        user_id = get_jwt_identity()  # Obtiene el ID del usuario desde el token
+        user = User.query.get(user_id)  # Busca al usuario por su ID
+
+        if not user:
+            return jsonify({'error': 'User not found'}), 404  # Si el usuario no existe, devuelve error
+
+        # Devuelve la información básica del usuario para confirmar que el token es válido
+        user_info = {
+            'id': user.id,
+            'email': user.email
+        }
+        return jsonify({'message': 'Token is valid', 'user': user_info}), 200  # Devuelve un mensaje de éxito y la información del usuario
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500  # En caso de error, devuelve un error interno del servidor
 
 #-------------------CREAR  TOKEN LOGIN--------------------------------------------------------------------------
 @api.route('/token', methods=['POST'])  # Define un endpoint para agregar un nuevo usuario mediante una solicitud POST a la ruta '/users'

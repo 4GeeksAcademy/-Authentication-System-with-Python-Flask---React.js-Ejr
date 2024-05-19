@@ -17,7 +17,7 @@ const PrivateCalendar = () => {
 
     useEffect(() => {
         actions.loadTrainingClasses(); // Carga las clases al montar el componente
-    }, [actions]);
+    }, []);
 
     const events = store.trainingClasses.map(event => ({
         ...event,
@@ -26,10 +26,17 @@ const PrivateCalendar = () => {
         title: `${event.name} (${event.available_slots} slots)`
     }));
 
+    //console.log("estructura_eventos",events); // Esto mostrará la estructura de los eventos transformados en la consola
+    
     const handleEventClick = (event) => {
+      //  console.log("Evento seleccionado:", event);  // Esto te mostrará los detalles del evento en la consola
         setSelectedEvent(event);
         setModalIsOpen(true);
     };
+    
+    // useEffect(() => {
+    //     console.log("Evento actualmente seleccionado:", selectedEvent);
+    // }, [selectedEvent]);
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -68,14 +75,17 @@ const PrivateCalendar = () => {
 
     return (
         <div className={styles.container}>
-            <Calendar
-                localizer={localizer}
-                events={events}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 500 }}
-                onSelectEvent={handleEventClick}
-            />
+            <div className={styles.myCalendar}>
+                <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500 }}
+                    onSelectEvent={handleEventClick}
+                />
+            </div>
+
             {selectedEvent && (
                 <Modal
                 isOpen={modalIsOpen}
@@ -95,14 +105,31 @@ const PrivateCalendar = () => {
                     <p>Duration: {selectedEvent.start_time} minutes</p>
                     <p>Duration: {selectedEvent.duration_minutes} minutes</p>
                     <p>Available slots: {selectedEvent.available_slots}</p>
+                    
                     <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
-                        <h3>Persona en clase:</h3>
-                        {selectedEvent.bookings && selectedEvent.bookings.map((booking, index) => (
-                            <div key={index}>
-                                    <p><i className="fa-solid fa-circle-user"></i> {booking.name}</p>
-                            </div>
-                    ))}
+                        <h3>Personas en clase:</h3>
+                        {(() => {
+                            const uniqueBookings = new Set();
+                            const filteredBookings = selectedEvent.bookings.flatMap(booking => 
+                                booking.bookings.filter(b => 
+                                    b.class_id === selectedEvent.id && 
+                                    b.booking_status === "reserved" &&
+                                    !uniqueBookings.has(b.booking_id) && // Verifica si el booking_id ya fue procesado
+                                    uniqueBookings.add(b.booking_id) // Añade el booking_id al Set
+                                )
+                            );
+                            return filteredBookings.map((booking, index) => {
+                               // console.log("Reservas filtradas por evento y estado sin duplicados:", booking); // Esto mostrará en consola cada booking que cumpla las condiciones
+                                return (
+                                    <div key={index}>
+                                        {/* <p><i className="fa-solid fa-circle-user"></i> {booking.booking_status} {booking.class_id} {booking.booking_id}</p> */}
+                                        <p><i className="fa-solid fa-circle-user"></i> {booking.booking_user_name}</p>
+                                    </div>
+                                );
+                            });
+                        })()}
                     </div>
+
                     <div className={styles.buttonContainer}>
                         <button onClick={closeModal} className={styles.buttonback}>
                             <i className="fa-solid fa-angle-left"></i> Close

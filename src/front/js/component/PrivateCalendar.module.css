@@ -12,7 +12,7 @@
 
 /* Asegúrate de que tu selector sea más específico que el del calendario por defecto */
 .rbc-calendar .rbc-day-bg .rbc-today {
-  background-color: #eaf6ff8b !important;
+  background-color: #eaf6ff3b !important;
 }
 
 .rbc-calendar .rbc-off-range-bg {
@@ -113,3 +113,4 @@
 .buttonadd:hover {
   background-color: #87a8c9;
 }
+
