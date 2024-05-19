@@ -174,7 +174,7 @@ def get_current_rooms():
             for participant in room.room_participants:
                 participants.append({
                     "participant_id": participant.user.id,
-                    "participant_name": participant.user.name,
+                    "participant_name": participant.user.username,
                     "confirmed": participant.confirmed
                 })
 
@@ -182,7 +182,7 @@ def get_current_rooms():
                 "game_name": room.game.name,
                 "room_name": room.room_name,
                 "game_description": room.description,
-                "host_name": room.user.name,
+                "host_name": room.user.username,
                 "date": room.date,
                 "time": room.time,
                 "platform": room.platform,
@@ -266,4 +266,31 @@ def create_game():
     except Exception as e:
         print(str(e))
         return jsonify({"message": "Failed to create game", "error": str(e)}), 500
+    
 
+# Para obtener un room de un user particular-------------------------------------------------------------------------------------------
+
+@api.route('/room/<int:room_id>', methods=['GET'])
+@jwt_required()
+def get_room(room_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Verificar si el usuario es admin
+        current_user = User.query.get(current_user_id)
+        if not current_user:
+            return jsonify({"error": "User not found."}), 404
+
+        # Verificar si el usuario es admin o el creador del room
+        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
+        if not room and not current_user.admin:
+            return jsonify({"error": "Unauthorized."}), 403
+
+        if room:
+            return jsonify(room.serialize()), 200
+        else:
+            return jsonify({"error": "Room not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
