@@ -4,7 +4,7 @@ import swal from 'sweetalert';
 import { useNavigate} from "react-router-dom";
 import "../../styles/index.css";
 
- export const AgregarForm = () => {
+export const AgregarForm = () => {
     
     const {actions} = useContext(Context)
     const [inputMarcayModelo, setInputMarcayModelo]=useState("")
@@ -15,7 +15,7 @@ import "../../styles/index.css";
     const [inputPrecio, setInputPrecio]=useState("")
     const navigate = useNavigate();
 
-     async function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio) 
         if (respuesta === "success"){

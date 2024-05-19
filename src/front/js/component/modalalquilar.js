@@ -39,8 +39,8 @@ export const ModalAlquilar = (props) => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <Link to = "/payment">
-                                <button onClick={() => actions.payment(props.id, days, props.precio, props.marca_modelo)} type="button" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                            <Link to="/payment">
+                                <button onClick={() => actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, days, props.precio_id_stripe)} type="button" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
                             </Link>
                         </div>
                     </div>

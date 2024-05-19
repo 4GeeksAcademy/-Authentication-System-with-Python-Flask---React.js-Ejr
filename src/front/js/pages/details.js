@@ -19,7 +19,6 @@ export const Details = () => {
 
     useEffect(() => {
         actions.getDetails(params.id);
-        actions.getVehicles();
     }, []);
 
     useEffect(() => {
@@ -106,7 +105,13 @@ export const Details = () => {
                     </div>
                     <div className="d-flex justify-content-end mt-auto mb-5 pb-5">
                         <div className="d-grid gap-2 col-3 mx-auto justify-content-center">
-                            <ModalAlquilar />
+                            <ModalAlquilar
+                                vehicle_id={store.details.id}
+                                marca_modelo={store.details.marca_modelo}
+                                precio={store.details.precio}
+                                precio_id_stripe={store.details.precio_id_stripe}
+
+                            />
                         </div>
                     </div>
             </div>

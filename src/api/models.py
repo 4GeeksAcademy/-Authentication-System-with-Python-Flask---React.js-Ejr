@@ -43,7 +43,8 @@ class Vehicle(db.Model):
             "tipo_cambio": self.tipo_cambio,
             "asientos": self.asientos,
             "precio": self.precio,
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "precio_id_stripe": self.precio_id_stripe
         }
 
 class FavoriteVehicle(db.Model):
