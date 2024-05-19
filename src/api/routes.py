@@ -384,7 +384,7 @@ def post_module():
         
         existing_course = Course.query.filter_by(id=course_id).first()
         if not existing_course:
-            return jsonify({"Error": "Course does not exist."}), 404
+            return jsonify({"Error": "Course does not Exist."}), 404
 
         module = Modules(course_id=course_id, type_file=type_file, title=title, video_id=video_id, type_video=type_video,
                          text_id=text_id, type_text=type_text, image_id=image_id, type_image=type_image)
