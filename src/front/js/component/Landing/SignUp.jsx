@@ -38,6 +38,7 @@ export const SignUp = () => {
 		navigate("/user/form");
 	};
 
+
 	return (
 		<div>
 			<div>
@@ -82,7 +83,6 @@ export const SignUp = () => {
 									</button>
 								</div>
 							</form>
-
 						</div>
 					</div>
 				)}
@@ -90,3 +90,4 @@ export const SignUp = () => {
 		</div>
 	);
 };
+

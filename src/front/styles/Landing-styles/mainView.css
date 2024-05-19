@@ -3,39 +3,58 @@
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  margin-top: 50px;
 }
 
 .text-container {
   color: white;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
   width: 100%;
   padding: 0 20px;
   height: 100%;
   margin: auto;
+  user-select: none;
 }
 
-.left-text-container {
-  flex: 1;
-  padding-bottom: 1.4%;
+.text-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.left-text-container,
 .right-text-container {
   flex: 1;
+  display: flex;
+  justify-content: center;
 }
+
 
 .green-text {
   color: var(--primary-color);
 }
-.main-view-container {
-  position: relative;
-  height: 90vh;
+
+.signup-container {
   width: 100%;
   display: flex;
-  align-items: center;
+  margin-top: 10px;
+  justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .signup-container {
+    margin-right: 0;
+    margin-top: 20px;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 .background-slider {
   top: 0;
   left: 0;
@@ -51,14 +70,22 @@
 @keyframes slideshow {
   0% {
     background-image: url("https://cdn.oxygenmag.com/wp-content/uploads/2017/11/cardio.jpg?width=730");
-    /* background-image: url("../../../../src/front/img/background-img-1.webp"); */
   }
+
   50% {
     background-image: url("https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K");
-    /* background-image: url("../../../../src/front/img/background-img-2.jpg"); */
   }
+
   100% {
     background-image: url("https://www.mensjournal.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk2MTM2MzE3MDI5NDU5NDYx/howtodeadlift1.jpg");
-    /* background-image: url("../../../../src/front/img/background-img-3.jpg"); */
   }
+}
+
+.about-section {
+  margin: 5rem;
+}
+
+
+.services-section {
+  margin: 5rem;
 }

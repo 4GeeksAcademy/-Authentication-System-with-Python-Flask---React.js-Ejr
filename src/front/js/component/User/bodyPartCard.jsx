@@ -6,7 +6,10 @@ const BodyPartCard = ({ item, setBodyPart, bodyPart }) => {
   return (
     <div
       className="card body-part-card-container"
-      onClick={() => setBodyPart(item)}
+      onClick={() => {
+        setBodyPart(item)
+        window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' })
+      }}
     >
       <Dumbbell size={50} color="#02b532" strokeWidth={1.75} />
       <div className="card-body">

@@ -6,7 +6,6 @@
   align-items: center;
 }
 
-/* Modal Content */
 .modal-content {
   background-color: var(--background-color);
   display: flex;
@@ -22,56 +21,43 @@
   border-radius: 5%;
 }
 
-/* Close Button */
-.close {
-  color: var(--secondary-color);
-  font-size: 28px;
-  font-weight: bold;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-}
-.modal-p {
-  color: var(--secondary-color);
-  background-color: var(--primary-color);
-  width: 80%;
-  border-radius: 2%;
-}
-.input-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: center;
-  margin-bottom: 10px;
+.signup-modal-title {
   color: var(--primary-color);
 }
-.input-field {
-  border-radius: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+
 .button-input {
   margin: 2px;
   border-radius: 5px;
   color: var(--secondary-color);
 }
+
 .close-button {
-  background-color: #fa5137;
-  width: 80%;
-}
-.submit {
   background-color: var(--primary-color);
   width: 80%;
 }
+
+
 .button-sign-up {
+
+  width: auto;
   border-radius: 5px;
   background-color: var(--primary-color);
   color: var(--secondary-color);
+}
+
+.button-sign-up:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.singup-submit-button,
+.singup-close-button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.singup-submit-button:hover,
+.singup-close-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }

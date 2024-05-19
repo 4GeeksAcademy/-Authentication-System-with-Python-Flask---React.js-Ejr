@@ -5,9 +5,9 @@ import "../../../styles/Landing-styles/services.css";
 
 const Services = () => {
   return (
-    <section className="services-container">
+    <article className="services-container">
       <div className="left-services">
-        <img src={ServicesLeft} alt="basic fitnes section image" />
+        <img src={ServicesLeft} alt="basic fitnes section image" className="services-img" />
         <h4>
           Basic <span className="green-text">Fitness</span>
         </h4>
@@ -19,7 +19,7 @@ const Services = () => {
         </ul>
       </div>
       <div className="right-services">
-        <img src={ServicesRight} alt="Body building section image" />
+        <img src={ServicesRight} alt="Body building section image" className="services-img" />
         <h4>
           Body <span className="green-text">Body</span>
         </h4>
@@ -30,7 +30,7 @@ const Services = () => {
           <li>Women's physique</li>
         </ul>
       </div>
-    </section>
+    </article>
   );
 };
 

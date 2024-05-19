@@ -1,24 +1,54 @@
-.gym-footer {
-  background-color: black;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: space-around;
-}
-.gym-footer img {
-  height: 20px;
-}
-.linkedin-logo {
-  color: white;
-  background-color: white;
-  border-radius: 20%;
-}
-.gym-footer a,
-span {
-  text-decoration: none;
-  color: var(--primary-color);
-}
-.gym-footer span {
-  margin-left: 5px;
-}
+ .gym-footer {
+   background-color: var(--secondary-color);
+   height: auto;
+   display: flex;
+   width: 100%;
+ }
+
+
+ .linkedin-logo {
+   color: white;
+   background-color: white;
+   border-radius: 20%;
+ }
+
+ .gym-footer a,
+ span {
+   text-decoration: none;
+   color: var(--primary-color);
+ }
+
+ .gym-footer span {
+   margin-left: 5px;
+ }
+
+ .media-list {
+   list-style: none;
+   width: 100%;
+   height: 100%;
+   justify-content: center;
+   align-items: center;
+ }
+
+ .github,
+ .linkedin {
+   color: white;
+ }
+
+ .social-icon {
+   display: inline-block;
+   margin-right: 50px;
+ }
+
+ .link {
+   text-decoration: none;
+   color: var(--primary-color);
+
+ }
+
+
+ .github:hover,
+ .linkedin:hover {
+   filter: drop-shadow(0 0 10px var(--primary-color));
+   color: var(--primary-color)
+ }

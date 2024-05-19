@@ -1,13 +1,13 @@
 import React from "react";
-import { useCalendlyEventListener, InlineWidget } from "react-calendly";
+import { InlineWidget } from "react-calendly";
 
 const Calendly = () => {
   return (
-    <div className="App">
+    <div className="calendly-container">
       <InlineWidget
         url="https://calendly.com/josejoakin10"
         styles={{
-          height: "1000px",
+          height: "50rem",
         }}
         pageSettings={{
           backgroundColor: "252C44",

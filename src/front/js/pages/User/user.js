@@ -1,25 +1,40 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import Calendly from "../../component/User/calendar.jsx";
+import React, { useState } from "react";
+
 
 import PersonalData from "../../component/User/PersonalData.jsx";
 import { Context } from "../../store/appContext";
+
+import Calendly from "../../component/User/calendar.jsx";
+
 import Exercises from "../../component/User/exercises.jsx";
 import SearchExercises from "../../component/User/searchExercises.jsx";
+import UserRoutine from "../../component/User/showRutine.jsx";
+
+import "../../../styles/User-styles/userView.css"
 
 export const User = () => {
-    const { store, actions } = useContext(Context);
     const [exercises, setExercises] = useState([]);
     const [bodyPart, setBodyPart] = useState('all');
 
     return (
-        <div>
-            <Calendly />
-            <div>
+
+        <div className="user-container">
+            <div className="user-data">
                 <PersonalData classname="personalData"/>
             </div>
-            <SearchExercises setExercises={setExercises} bodyPart={bodyPart} setBodyPart={setBodyPart} />
-            <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />
+            <div className="user-routine">
+                <UserRoutine />
+            </div>
+            <div className="user-calendar">
+                <Calendly />
+            </div>
+            <div className="search-exercise">
+                <SearchExercises setExercises={setExercises} bodyPart={bodyPart} setBodyPart={setBodyPart} />
+            </div>
+            <div className="exercises">
+                <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />
+            </div>
+
         </div>
     );
 };

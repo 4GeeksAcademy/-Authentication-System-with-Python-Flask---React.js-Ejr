@@ -1,5 +1,8 @@
 import React from "react";
+
 import BodyPartCard from "./bodyPartCard.jsx";
+import ExerciseCard from "../User/exerciseCard.jsx"
+
 import "../../../styles/User-styles/horizontalScrollbar.css";
 
 const HorizontalScrollbar = ({ data, bodyParts, bodyPart, setBodyPart }) => {

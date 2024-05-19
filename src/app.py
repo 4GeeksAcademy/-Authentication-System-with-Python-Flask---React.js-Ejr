@@ -92,12 +92,12 @@ def login():
     additional_claims = {"role": role, "user_id": user_id}
     access_token = create_access_token(identity=email, additional_claims=additional_claims)
     
+
     return jsonify({ "access_token": access_token}), 200
 
 @app.route('/signup', methods=['POST'])
 def create_new_user():
     data = request.json
-    print("vista general", data)
     check_if_email_already_exists = User.query.filter_by(email=data["email"]).first()
     if check_if_email_already_exists:
         raise APIException('Email already exists', status_code=400)
@@ -111,7 +111,10 @@ def create_new_user():
 
     db.session.add(new_user)
     db.session.commit()
-    access_token = create_access_token(identity=new_user.email, additional_claims={"role": new_user.role})
+
+    new_user_id = new_user.id
+
+    access_token = create_access_token(identity=new_user_id, additional_claims={"role": new_user.role})
 
     return jsonify({'access_token': access_token}), 200
 
@@ -155,7 +158,8 @@ def add_or_update_user_data():
             user_height=data.get("user_height"),
             user_illness=data.get("user_illness"),
             user_objetives=data.get("user_objetives"),
-            user_id=get_jwt_identity() 
+            user_id=get_jwt_identity() ,
+            trainer_id=1,
         )
 
         db.session.add(new_user_data)
@@ -163,7 +167,7 @@ def add_or_update_user_data():
 
         serialized_new_user_data = new_user_data.serialize()
 
-        return jsonify(serialized_new_user_data), 201
+        return jsonify(serialized_new_user_data), 200
 
 # Trainer Endpoints
 @app.route('/trainer/<int:id>')
@@ -227,35 +231,22 @@ def set_routine_with_exercises(user_id):
     if not user:
         raise APIException('User not found', status_code=404)
         
+    routine_data = data.get("routine")
+    if not routine_data:
+        raise APIException('Routine data missing', status_code=400)
 
-    exercises_data = data.get("exercises")
-    if not exercises_data:
-        raise APIException('Exercises data missing', status_code=400)
-        
-
-    exercises = []
-    for exercise_data in exercises_data:
-        exercise_id = exercise_data.get("exercise_id")
-        exercise = Exercise.query.get(exercise_id)
-        if not exercise:
-            abort(400, description=f"Exercise with ID {exercise_id} not found")
-        exercises.append(exercise)
-
-    
     user_routine = Routines.query.filter_by(user_data_id=user_id).first()
     if not user_routine:
         new_routine = Routines(
             user_data_id=user_id,
             trainer_data_id=data["trainer_data_id"],
-            actual_routine=data["routine"],
-            historical=data["routine"],
-            exercises=exercises
+            actual_routine=routine_data,
+            historical=[routine_data]
         )
         db.session.add(new_routine)
     else:
-        user_routine.actual_routine = data["routine"]
-        user_routine.historical = f"{user_routine.historical}, {data['routine']}"
-        user_routine.exercises = exercises
+        user_routine.actual_routine = routine_data
+        user_routine.historical.append(routine_data)
 
     db.session.commit()
 
