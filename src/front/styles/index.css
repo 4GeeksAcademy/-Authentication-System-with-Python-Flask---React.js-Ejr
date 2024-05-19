@@ -1,7 +1,6 @@
 .navbar {
     background-color:  #a9ce68;
     height: 120px;
-    /* background-color: rgb(140, 172, 140); */
     text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
 
@@ -30,7 +29,6 @@
     background-color: #fff;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-     /* justify-content: center; */
 }
 
 .subtitulos {  /*del agregarForm*/
@@ -75,11 +73,7 @@ footer {
     position: relative;
     justify-items: center;
 }
-
-.body {
-    background: lightgrey;
-}  
-
+ 
 .offcanvas {
     bottom: auto;
 }

@@ -11,8 +11,6 @@ import {AgregarVehiculo } from "./pages/agregarvehiculo";
 import { Details } from "./pages/details";
 import { Payment } from "./pages/payment";
 import { DatosEmpresa } from "./pages/datosempresa";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 const Layout = () => {
@@ -30,13 +28,11 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<AgregarVehiculo />} path="/agregarvehiculo" />
-                        <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Details />} path="/details/:id" />
                         <Route element={<Payment />} path="/payment" />
                         <Route element={<DatosEmpresa />} path="/datosempresa" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
