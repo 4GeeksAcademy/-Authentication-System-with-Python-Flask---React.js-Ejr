@@ -5,7 +5,7 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
   return (
     <section >
       <h4 >
-        Watch <span style={{ color: '#02b532', textTransform: 'capitalize' }}>{name}</span> exercise videos
+        Watch <span className="green-text">{name}</span> exercise videos
       </h4>
       <div>
         {exerciseVideos?.slice(0, 3)?.map((item, index) => (

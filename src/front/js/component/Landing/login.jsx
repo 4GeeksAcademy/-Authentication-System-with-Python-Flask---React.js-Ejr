@@ -28,10 +28,10 @@ export const Login = () => {
   const handleRedirection = () => {
     switch (store.role) {
       case "user":
-        navigate("/user");
+        navigate(`/user/${store.user_id}`);
         break;
       case "trainer":
-        navigate("/trainer");
+        navigate(`/trainer/${store.user_id}`);
     }
   };
 
@@ -52,12 +52,9 @@ export const Login = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={() => setShowModal(false)}>
-              &times;
-            </span>
-            <h2>Login</h2>
+            <h2 className="login-modal-title">Login</h2>
             <form onSubmit={handleLogin}>
-              <label>Email:</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
@@ -67,7 +64,7 @@ export const Login = () => {
                 placeholder="Email"
                 required
               />
-              <label>Password:</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
@@ -77,8 +74,11 @@ export const Login = () => {
                 placeholder="Password"
                 required
               />
-              <button type="submit">Login</button>
-              <button onClick={handleLogOut}>LogOut</button>
+              <button type="submit" className="login-submit-button">Login</button>
+              <button className="login-close-button" onClick={() => {
+                setShowModal(false);
+                setData({ email: "", password: "" });
+              }}>Close</button>
             </form>
           </div>
         </div>

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, JSON
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 
@@ -81,12 +81,13 @@ class User_data(db.Model):
             "user_height": self.user_height,
             "user_illness": self.user_illness,
             "user_objetives": self.user_objetives,
+            "trainer_id": self.trainer_id
         }
 
 class Routines(db.Model):
     id = Column(Integer, primary_key=True)
-    actual_routine = Column(String(100), nullable=False)
-    historical = Column(String(250), nullable=True)
+    actual_routine = Column(JSON, nullable=False)
+    historical = Column(JSON, nullable=True)
     user_data_id = Column(Integer, ForeignKey(User_data.id), unique = True, nullable=False)
     trainer_data_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id), nullable=False)
     user_data = relationship('User_data', backref = "Routines", lazy = True )

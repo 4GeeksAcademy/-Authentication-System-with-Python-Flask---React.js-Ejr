@@ -3,7 +3,7 @@ import { InfinitySpin } from 'react-loader-spinner';
 
 const Loader = () => (
     <div >
-        <InfinitySpin color="grey" />
+        <InfinitySpin color="#02b532" />
     </div>
 );
 

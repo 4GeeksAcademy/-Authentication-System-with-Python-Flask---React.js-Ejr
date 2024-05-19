@@ -1,0 +1,46 @@
+.user-container {
+    display: grid;
+    grid-template-areas:
+        "userdata calendar"
+        "routine calendar"
+        "search search"
+        "exercises exercises";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto auto 1fr;
+    gap: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.user-data,
+.user-routine,
+.user-calendar,
+.search-exercise,
+.exercises {
+
+    padding: 10px;
+    overflow: auto;
+}
+
+.user-data {
+    grid-area: userdata;
+}
+
+.user-routine {
+    grid-area: routine;
+}
+
+.user-calendar {
+    grid-area: calendar;
+    height: auto;
+
+}
+
+.search-exercise {
+    grid-area: search;
+}
+
+.exercises {
+    grid-area: exercises;
+    overflow-y: auto;
+}
