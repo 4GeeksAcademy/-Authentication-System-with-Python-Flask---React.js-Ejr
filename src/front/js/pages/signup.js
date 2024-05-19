@@ -15,27 +15,27 @@ export const Signup = () => {
         let isSignup = await actions.signup(inputEmail, inputPassword) 
         if (isSignup === "success"){
             swal ( "Registro con éxito" ,  "Gracias por registrarse en nuestra web!" ,  "success" )
-             navigate("/");
+            navigate("/");
         } else if (isSignup === "email_exist") {
-            swal ("Este email ya se encuentra registrado", "Por favor intentelo con otro email" ,  "error" )
+            swal ( "Este correo ya se encuentra registrado", "Por favor intentelo con otro correo" ,  "error" )
         } else {
             swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
         }
     };
     return (
-            <div className="footer-view contactForm">
-                <h1 className="title text-center">Signup</h1>
+            <div className="contactForm">
+                <h1 className="title text-center pb-4">Crear cuenta</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="enter your email" onChange={(e) => setInputEmail(e.target.value)} />
+                        <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Correo electrónico</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Ingrese su correo electrónico" onChange={(e) => setInputEmail(e.target.value)} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
+                        <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Contraseña</label>
                         <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <button type="submit" className="login btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
+                    <div className="d-flex justify-content-center mt-5">
+                        <button type="submit" className="login btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Regístrate</button>
                     </div>
                 </form>
             </div>

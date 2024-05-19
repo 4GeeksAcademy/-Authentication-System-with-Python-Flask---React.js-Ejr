@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useNavigate} from "react-router-dom";
-
 import { Context } from "../store/appContext.js";
 
 export const ProductDisplay = () => {
@@ -9,7 +8,7 @@ export const ProductDisplay = () => {
 
   if (!store.checkout.precio_id_stripe) {
     navigate('/');
-  }
+  } 
 
   return (
     <section>
@@ -20,7 +19,7 @@ export const ProductDisplay = () => {
           <h5>€{store.checkout.precio * store.checkout.days}</h5>
           <form className="mt-4" action={`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/create-checkout-session/${store.checkout.precio_id_stripe}/${store.checkout.days}`} method="POST">
             <button type="submit">
-              Checkout
+              PAGO
             </button>
           </form>
         </div>
