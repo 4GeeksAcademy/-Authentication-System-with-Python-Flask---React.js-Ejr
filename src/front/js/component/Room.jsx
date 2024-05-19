@@ -4,10 +4,6 @@ import { Context } from "../store/appContext";
 export const Room = () => {
     const { store, actions } = useContext(Context);
 
-    useEffect(() => {
-        actions.fetchRooms();
-    }, []);
-
     return (
         <div>
             {store.rooms.map((room) => (

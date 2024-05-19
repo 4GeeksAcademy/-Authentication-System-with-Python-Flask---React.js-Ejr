@@ -7,7 +7,7 @@ export const Home = () => {
 
     useEffect(() => {
         actions.fetchRooms(); // Llamar a la acción de carga de salas
-    }, [actions]);
+    }, []);
 
     if (store.loadingRooms) { // Usar el estado de carga del store
         return <div>Loading...</div>;
