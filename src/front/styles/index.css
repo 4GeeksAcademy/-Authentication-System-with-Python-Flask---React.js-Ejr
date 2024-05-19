@@ -22,7 +22,7 @@
     justify-content: center;
 }
 
-.AgregarVehiculo {
+.agregar-vehiculo {
     margin-left: 10vw;
     margin-right: 10vw;
     margin-top: 80px;
@@ -45,11 +45,6 @@
 
 #btnAgregarForm {
     margin-top: 30px;
-    /* background-color: white; */
-    /* border-width: 2px; */
-    /* font-size: 2rem!important; */
-    /* color: #198754; */
-    /* border-color: #198754; */ 
 }
 
 .border-bottom {
@@ -68,7 +63,6 @@ footer {
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
     padding-left: 20px;
     width: 100%;
-    /* z-index: 1000;  */
 }
 
 .corazon:hover i {
@@ -88,4 +82,8 @@ footer {
 
 .offcanvas {
     bottom: auto;
+}
+
+.footer-view {
+    min-height: 100vh;
 }

@@ -113,7 +113,10 @@ def delete_vehicle(vehicle_id):
     else:
         vehicle_to_delete = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
         if vehicle_to_delete:
+            favorites_to_delete = FavoriteVehicle.query.filter_by(vehicle_id=vehicle_id).all()
             db.session.delete(vehicle_to_delete)
+            for favorite in favorites_to_delete:
+                db.session.delete(favorite)
             db.session.commit()
             return jsonify({"msg": "Vehículo eliminado correctamente"}), 200
         else:

@@ -152,9 +152,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 	});
 					if (response.status === 200) {
 						let allVehicles = getStore().vehicles;
+						let allFavorites = getStore().favorites;
 						const newListVehicles = allVehicles.filter((vehicle) => vehicle.id !== vehicle_id);
+						const newListFavorites = allFavorites.filter((favorite) => favorite.id !== vehicle_id);
 						setStore({
-							vehicles: newListVehicles
+							vehicles: newListVehicles,
+							favorites: newListFavorites
+
 						})
 					}
 				} catch (error) {
