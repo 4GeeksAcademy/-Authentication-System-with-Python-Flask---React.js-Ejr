@@ -67,25 +67,31 @@ def login():
     data = request.json
     if not data:
         raise APIException('Insert the correct information', status_code=400)
-        
-
+    
     email = data.get("email")
     password = data.get("password")
+    
     if not email or not password:
         raise APIException('Missing email or password', status_code=400)
-        
-
+    
     user = User.query.filter_by(email=email).first()
     trainer = Trainer.query.filter_by(email=email).first()
-
+    
     if (user and password != user.password) or (trainer and password != trainer.password):
         raise APIException('Invalid password, please try again', status_code=401)
-        
     
-    role = "user" if user else "trainer"
-
-    access_token = create_access_token(identity=email, additional_claims={"role": role})
-   
+    if user:
+        role = "user"
+        user_id = user.id  
+    elif trainer:
+        role = "trainer"
+        user_id = trainer.id  
+    else:
+        raise APIException('User not found', status_code=404)
+    
+    additional_claims = {"role": role, "user_id": user_id}
+    access_token = create_access_token(identity=email, additional_claims=additional_claims)
+    
     return jsonify({ "access_token": access_token}), 200
 
 @app.route('/signup', methods=['POST'])
