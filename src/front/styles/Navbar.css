@@ -43,7 +43,7 @@
     font-size: 18px; /* Tamaño de fuente basado en el diseño */
     color: #FFFFFF; /* Color de texto blanco */
     background-color: #007BFF; /* Color de fondo del botón */
-    padding: 10px 20px; /* Padding del botón */
+    padding: 8px 20px; /* Padding del botón */
     border-radius: 5px; /* Bordes redondeados */
     text-decoration: none; /* Sin subrayado */
     transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
