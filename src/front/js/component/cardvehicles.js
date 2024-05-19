@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext.js";
+import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/home.css";
 
 export const CardVehicles = ({ vehicle }) => {
     const token = localStorage.getItem("token");

@@ -3,11 +3,14 @@ import { Context } from "../store/appContext";
 import { CardVehicles } from "../component/cardvehicles";
 import { useNavigate} from "react-router-dom";
 import swal from 'sweetalert';
-import "../../styles/home.css";
 
 export const Home = () => {
-	const { store } = useContext(Context);
+	const { store, actions } = useContext(Context);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		actions.getVehicles();
+	}, []);
 
 	useEffect(() => {
 	   const query = new URLSearchParams(window.location.search);
