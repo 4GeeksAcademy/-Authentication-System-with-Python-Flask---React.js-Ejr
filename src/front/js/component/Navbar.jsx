@@ -11,6 +11,8 @@ export const Navbar = () => {
         navigate('/SignOut')
     }
 
+    const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
+
     return (
         <div>
             {
@@ -32,17 +34,21 @@ export const Navbar = () => {
                                             <div className='col-3'>
                                                 <a className="navbar-brand">Atlas Learning</a>
                                             </div>
-                                            
+
                                             <div className="col d-flex justify-content-end">
                                                 {
-                                                    (store.user == '')
+                                                    (!store.user)
                                                         ? <p className="text-center">Loading...</p>
-                                                        :  store.user[`access_to_${store.currentRole}`].map((item, index) => (
+                                                        : (store.user[`access_to_${store.currentRole}`]).map((item, index) => (
                                                             <span className='mx-2' key={index}>
-                                                                <span>Welcome,
-                                                                    <strong> {item.name.toUpperCase()}</strong>
-                                                                    <strong> {item.lastName.toUpperCase()}</strong>
-                                                                </span>
+                                                                {
+                                                                    (item.email === userToLogin.email)
+                                                                        ? <span>Welcome,
+                                                                            <strong> {item.name.toUpperCase()}</strong>
+                                                                            <strong> {item.lastName.toUpperCase()}</strong>
+                                                                        </span>
+                                                                        : <div></div>
+                                                                }
                                                             </span>
                                                         ))
                                                 }
@@ -62,40 +68,40 @@ export const Navbar = () => {
                         </div>
                     </div>
                     : <nav className="navbar navbar-light bg-light">
-                    <div className="container-fluid">
-                        <a className="navbar-brand">Atlas learning</a>
-                        <div className="d-flex">
-    
-                            {
-                                (localStorage.getItem('jwt-token'))
-                                    ? <div>
-                                    <Link to={`/${store.currentRole}View`}>
-                                        <button className='btn btn-outline-success m-1' >Panel</button>
-                                    </Link>
-    
-                                    <button className="btn btn-outline-danger m-1" onClick={handleHomeView}>
-                                        Sign Out
-                                    </button>
-    
-                                </div>
-                                    : <div>
-                                        <Link to='/FormUser'>
-                                            <button className='btn btn-outline-success m-1' >Sign Up</button>
-                                        </Link>
-                                        <Link to='/logIn'>
-                                            <button className="btn btn-outline-success m-1" >Log In</button>
-                                        </Link>
-                                    </div>
-                            }
-    
-    
-    
-                            <button className='btn btn-outline-success m-1'><i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49" }}></i></button>
+                        <div className="container-fluid">
+                            <a className="navbar-brand">Atlas learning</a>
+                            <div className="d-flex">
+
+                                {
+                                    (localStorage.getItem('jwt-token'))
+                                        ? <div>
+                                            <Link to={`/${store.currentRole}View`}>
+                                                <button className='btn btn-outline-success m-1' >Panel</button>
+                                            </Link>
+
+                                            <button className="btn btn-outline-danger m-1" onClick={handleHomeView}>
+                                                Sign Out
+                                            </button>
+
+                                        </div>
+                                        : <div>
+                                            <Link to='/FormUser'>
+                                                <button className='btn btn-outline-success m-1' >Sign Up</button>
+                                            </Link>
+                                            <Link to='/logIn'>
+                                                <button className="btn btn-outline-success m-1" >Log In</button>
+                                            </Link>
+                                        </div>
+                                }
+
+
+
+                                <button className='btn btn-outline-success m-1'><i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49" }}></i></button>
+                            </div>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
             }
-            
+
         </div>
     )
 }

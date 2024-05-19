@@ -12,9 +12,19 @@ export const ManagerNavbar = () => {
     }
     return (
         <div>
-            <nav className="navbar navbar-light bg-light">
-                <div className="container-fluid">
-                    <div className="col d-flex justify-content-end">
+            {
+                (store.spinner)
+                    ? <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                    <div className="text-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+                    : <nav className="navbar navbar-light bg-light">
+                        <div className="container-fluid">
+                        <div className="col d-flex justify-content-end">
                         {
                             (store.user == '')
                                 ? <p className="text-center">Loading...</p>
@@ -34,8 +44,10 @@ export const ManagerNavbar = () => {
                     <div className='border border-black rounded-pill px-3 py-1'>
                         {store.currentRole}
                     </div>
-                </div>
-            </nav>
+                        </div>
+                        
+                    </nav>
+            }
         </div>
     )
 };
