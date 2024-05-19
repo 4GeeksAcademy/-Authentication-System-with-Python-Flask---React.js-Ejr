@@ -23,7 +23,7 @@ export const Signup = () => {
         }
     };
     return (
-            <div className="contactForm">
+            <div className="footer-view contactForm">
                 <h1 className="title text-center">Signup</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">

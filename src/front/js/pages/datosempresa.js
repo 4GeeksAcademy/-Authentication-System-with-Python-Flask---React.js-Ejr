@@ -2,7 +2,7 @@ import React from "react";
 
 export const DatosEmpresa = () => {
     return (
-        <div className="vh-100 mt-4 ms-2">
+        <div className="footer-view mt-4 ms-2">
             <div>
             <h5>Contáctanos:</h5>
             <p> Email address: terms@friendlywheels.com</p>
