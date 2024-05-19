@@ -7,7 +7,12 @@ import { UserDashboard } from '../../component/User/UserDashboard.jsx';
 
 
 export const UserView = () => {
+    const { store, actions } = useContext(Context)
     
+    useEffect(()=>{
+        actions.getUser()
+    },[])
+
     return (
         <>
             <UserNavbar />

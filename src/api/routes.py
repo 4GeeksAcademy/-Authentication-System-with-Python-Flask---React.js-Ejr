@@ -31,7 +31,7 @@ def create_signup_user():
         phone = request.json.get('phone')
         age = request.json.get('age')
         gender = request.json.get('gender')
-
+        
         #Verificacion de campos vacios
         if not email or not password or not is_user or not name or not last_name or not username or not number_document or not phone or not age or not gender:
             return({"Error":"Email, password, is_user, name, last_name, username, number_document, phone, age and gender are required"}), 400
@@ -111,8 +111,6 @@ def create_signup_teacher():
     except Exception as e:
         return jsonify({"error": "Error posting teacher user" + str(e)})
 
-    
-
 @api.route('/signup/manager', methods=['POST'])
 def create_signup_manager():
     try:
@@ -155,30 +153,38 @@ def create_signup_manager():
     except Exception as e: 
         return jsonify({"Error": "Error in user manager creation" + str(e)}), 500
 
+
 @api.route('/login/user', methods=['POST'])
 def get_token_login_user():
     try:
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Email and Password are required"}), 400
+        
         #buscamos el user con ese correo
         login_user = User.query.filter_by(email=request.json['email']).one()
         if not login_user:
-            return jsonify({'error': 'invalid email'}), 400
+            return jsonify({'Error': 'Invalid Email'}), 400
+        
+
         password_from_db = login_user.password
         hashed_password_hex = password_from_db
         hashed_password_bin = bytes.fromhex(hashed_password_hex[2:])
         true_or_false = check_password_hash(hashed_password_bin, password)
+
+
         if true_or_false:
             expires = timedelta(days=1)
             user_id = login_user.id
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"error":"Clave incorrecta"}, 400
+            return {"Error":"Invalid Password"}, 400
+        
+        
     except Exception as e:
-        return jsonify({"error": "Error in user:" + str(e)}), 500
+        return jsonify({"Error": "User not exists in Data Base", "Msg": str(e)}), 500
 
 @api.route('/login/manager', methods=['POST'])
 def get_token_login_manager():
@@ -186,13 +192,13 @@ def get_token_login_manager():
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Email and Password are required"}), 400
 
         #buscamos el user con ese correo
         login_manager = Manager.query.filter_by(email=request.json['email']).one()
 
         if not login_manager:
-            return jsonify({'error': 'invalid email'}), 400
+            return jsonify({'Error': 'Invalid Email'}), 400
 
         password_from_db = login_manager.password
         hashed_password_hex = password_from_db
@@ -205,9 +211,9 @@ def get_token_login_manager():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"error":"Clave incorrecta"}, 400
+            return {"Error":"Invalid Password"}, 400
     except Exception as e:
-        return jsonify({"error": "Error in user manager:" + str(e)}), 500
+        return jsonify({"Error": "Manager not exists in Data Base" , "Msg": str(e)}), 500
 
 @api.route('/login/teacher', methods=['POST'])
 def get_token_login_teacher():
@@ -215,13 +221,13 @@ def get_token_login_teacher():
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Email and Password are required"}), 400
 
         #buscamos el user con ese correo
         login_teacher = Teacher.query.filter_by(email=request.json['email']).one()
 
         if not login_teacher:
-            return jsonify({'error': 'invalid email'}), 400
+            return jsonify({'Error': 'Invalid Email'}), 400
 
         password_from_db = login_teacher.password
         hashed_password_hex = password_from_db
@@ -234,61 +240,146 @@ def get_token_login_teacher():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             return jsonify({"access_token": access_token}), 200
         else:
-            return {"error":"Clave incorrecta"}, 400
+            return jsonify({"Error":"Invalid Password"}), 400
     except Exception as e:
-        return jsonify({"error": "Error in user teacher" + str(e)}), 500
+        return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
 
-@api.route('/private/user')
+@api.route('/view/user')
 @jwt_required() #Decorador para requerir autenticacion con jwt
-def show_user():
-    current_user_id = get_jwt_identity() #obtiene la id del user del token
-    if current_user_id:
+def show_view_user():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
+        
         users = User.query.all()
         user_list = []
         for user in users:
             user_dict = {
                 "id": user.id,
-                "email": user.email
+                "email": user.email,
+                "isUser": user.is_user,
+                "name": user.name,
+                "lastName": user.last_name,
+                "username": user.username,
+                "numberDocument": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
             }
             user_list.append(user_dict)
-        return jsonify(user_list), 200
+
+
+        return jsonify({"access_to_user": user_list}), 200
+        
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
-        
 
-@api.route('/private/teacher')
+@api.route('/view/teacher')
 @jwt_required() #Decorador para requerir autenticacion con jwt
-def show_teacher():
-    current_teacher_id = get_jwt_identity() #obtiene la id del user del token
-    if current_teacher_id:
+def show_view_teacher():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
+        
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email,
+                "isUser": user.is_user,
+                "name": user.name,
+                "lastName": user.last_name,
+                "username": user.username,
+                "numberDocument": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
+            }
+            user_list.append(user_dict)
+
         teachers = Teacher.query.all()
         teacher_list = []
         for teacher in teachers:
             teacher_dict = {
                 "id": teacher.id,
-                "email": teacher.email
+                "email": teacher.email,
+                "is_teacher": teacher.is_teacher,
+                "name": teacher.name,
+                "lastName": teacher.last_name,
+                "username": teacher.username,
+                "numberDocument": teacher.number_document,
+                "phone": teacher.phone,
+                "age": teacher.age,
+                "gender": teacher.gender,
+                "certificateTeacher": teacher.certificate_teacher,
+                "userId": teacher.user_id
             }
             teacher_list.append(teacher_dict)
-        return jsonify(teacher_list), 200
+
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list}), 200
+        
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
-
-@api.route('/private/manager')
+@api.route('/view/manager')
 @jwt_required() #Decorador para requerir autenticacion con jwt
-def show_manager():
-    current_manager_id = get_jwt_identity() #obtiene la id del user del token
-    if current_manager_id:
+def show_view_manager():
+    current_token = get_jwt_identity() #obtiene la id del user del token
+    if current_token:
+        
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "email": user.email,
+                "isUser": user.is_user,
+                "name": user.name,
+                "lastName": user.last_name,
+                "username": user.username,
+                "numberDocument": user.number_document,
+                "phone": user.phone,
+                "age": user.age,
+                "gender": user.gender
+            }
+            user_list.append(user_dict)
+
+        teachers = Teacher.query.all()
+        teacher_list = []
+        for teacher in teachers:
+            teacher_dict = {
+                "id": teacher.id,
+                "email": teacher.email,
+                "is_teacher": teacher.is_teacher,
+                "name": teacher.name,
+                "lastName": teacher.last_name,
+                "username": teacher.username,
+                "numberDocument": teacher.number_document,
+                "phone": teacher.phone,
+                "age": teacher.age,
+                "gender": teacher.gender,
+                "certificateTeacher": teacher.certificate_teacher,
+                "userId": teacher.user_id
+            }
+            teacher_list.append(teacher_dict)
+
         managers = Manager.query.all()
         manager_list = []
         for manager in managers:
             manager_dict = {
                 "id": manager.id,
-                "email": manager.email
+                "email": manager.email,
+                "isManager": manager.is_manager,
+                "name": manager.name,
+                "lastName": manager.last_name,
+                "phone": manager.phone,
+                "userId": manager.user_id,
+                "teacherId": manager.teacher_id
             }
             manager_list.append(manager_dict)
-        return jsonify(manager_list), 200
+
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list}), 200
+        
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
@@ -363,3 +454,4 @@ def delete_courses(course_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
+

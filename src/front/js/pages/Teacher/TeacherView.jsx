@@ -9,7 +9,11 @@ import { TeacherCourses } from "../../component/Teacher/TeacherCourses.jsx"
 
 
 export const TeacherView = () => {
-    const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context)
+    
+    useEffect(()=>{
+        actions.getUser()
+    },[])
 
     return (
         <div>

@@ -16,6 +16,7 @@ import { TeacherView } from "./pages/Teacher/TeacherView.jsx";
 import { ManagerView } from "./pages/Manager/ManagerView.jsx";
 import { SignOut } from "./pages/SignOut.jsx";
 
+import ProtectedRoute from "./component/ProtectedRoute.jsx";
 
 //create your first component
 const Layout = () => {
@@ -23,7 +24,7 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
@@ -32,16 +33,38 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<FormUser />} path="/FormUser" />
-                        <Route element={<TeacherView />} path="/teacherView" />
-                        <Route element={<LogIn />} path="/LogIn" /> 
-                        <Route element={<UserView />} path="/userView" />
-                        <Route element={<ManagerView />} path="/managerView" />
+                        <Route element={<LogIn />} path="/LogIn" />
                         <Route element={<SignOut />} path="/SignOut"/>
+                        
+                        {/* Protected Routes */}
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <TeacherView />
+                                </ProtectedRoute>
+                            } 
+                            path="/teacherView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UserView />
+                                </ProtectedRoute>
+                            } 
+                            path="/userView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <ManagerView />
+                                </ProtectedRoute>
+                            } 
+                            path="/managerView" 
+                        />
                         <Route element={<h1>Not found!</h1>} />
                         {/*<Route element={<Single />} path="/single/:theid" /> */}
                     </Routes>
                     <Footer />
-                    
                 </ScrollToTop>
             </BrowserRouter>
         </div>

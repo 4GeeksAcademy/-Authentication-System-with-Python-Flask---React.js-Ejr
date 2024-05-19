@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
 import { Context } from '../../store/appContext'
 
-
-export const TeacherStudents = () => {
+export const ActiveUsers = () => {
     const { store, actions } = useContext(Context)
-    
-    return (
-        <div className=" containerd-flex  justify-content-center align-items-center p-4">
+
+  return (
+    <div className=" containerd-flex  justify-content-center align-items-center p-4">
 
             {store.user.access_to_user.map((item, index) => {
                 return (
@@ -57,5 +55,6 @@ export const TeacherStudents = () => {
                 )})
             }
         </div>
-    )
+  )
 }
+
