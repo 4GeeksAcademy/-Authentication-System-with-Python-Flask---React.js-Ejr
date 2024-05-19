@@ -1,0 +1,16 @@
+.body-part-card-container {
+  align-items: center;
+  justify-content: center;
+  border-top: 4px solid var(--primary-color);
+  height: 150px;
+  width: 270px;
+  cursor: pointer;
+  margin-right: 20px;
+  padding-top: 10px;
+}
+.part-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(11, 75, 11);
+  text-transform: capitalize;
+}

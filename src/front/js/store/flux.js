@@ -1,53 +1,92 @@
-const getState = ({ getStore, getActions, setStore }) => {
+import { jwtDecode } from "jwt-decode";
+
+const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
+			token: sessionStorage.getItem("token") || "",
+			role: sessionStorage.getItem("role") || null,
+			user_id: sessionStorage.getItem("user_id") || null,
+			exerciseOptions: {
+				method: 'GET',
+				headers: {
+					'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+					'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
 				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			},
+			youtubeOptions: {
+				method: 'GET',
+				headers: {
+					'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com',
+					'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+				},
+			},
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			logOut: () => {
+				sessionStorage.removeItem("token");
+				sessionStorage.removeItem("role");
+				sessionStorage.removeItem("user_id");
+				setStore({ token: "", role: null, user_id: null });
 			},
+			login: async (loginData) => {
+				const response = await fetch(`${process.env.BACKEND_URL}/login`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(loginData),
+				});
+				if (response.ok) {
+					const data = await response.json();
+					const decoded = jwtDecode(data.access_token);
+					sessionStorage.setItem("token", data.access_token);
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+					sessionStorage.setItem("role", decoded.role);
+					sessionStorage.setItem("user_id", decoded.sub);
+					setStore({ token: data.access_token, role: decoded.role, user_id: decoded.sub });
+				} else {
+					alert("Wrong user or password");
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
+			signUp: async (email, password) => {
+				const response = await fetch(`${process.env.BACKEND_URL}/signup`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email, password }),
+				});
+				if (response.ok) {
+					const data = await response.json();
+					sessionStorage.setItem("token", data.access_token);
+				} else {
+					alert("Error al registrarse");
+				}
+			},
+			postUserData: async (formData) => {
 				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+				const response = await fetch(`${process.env.BACKEND_URL}/user_data`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${store.token}`,
+					},
+					body: JSON.stringify(formData),
 				});
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
+				if (response.ok) {
+					const decoded = jwtDecode(store.token);
+					setStore({ user_id: decoded.sub, role: decoded.role });
+				} else {
+					console.error('Error al enviar los datos');
+				}
+			},
+			fetchDataExercice: async (url, options) => {
+				const response = await fetch(url, options);
+				const data = await response.json();
+				return data;
+			},
+		},
 	};
 };
 
