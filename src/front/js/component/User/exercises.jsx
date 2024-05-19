@@ -16,19 +16,17 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       let exercisesData = [];
 
       if (bodyPart === "all") {
-        exercisesData = await actions.fetchDataExercice(
-          "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
-          store.exerciseOptions
-        );
+        exercisesData = localStorage.getItem("exercises");
       } else {
         exercisesData = await actions.fetchDataExercice(
           `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1300`,
           store.exerciseOptions
         );
       }
+    }
 
-      setExercises(exercisesData);
-    };
+    setExercises(exercisesData);
+
 
     fetchExercisesData();
   }, [bodyPart]);

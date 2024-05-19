@@ -21,6 +21,10 @@
   box-sizing: border-box;
 }
 
+.green-text {
+  color: var(--primary-color);
+}
+
 
 ::-webkit-scrollbar {
   width: 12px;

@@ -36,10 +36,10 @@ const MainView = () => {
           )}
         </article>
       </div>
-      <section id="about" className="about-container">
+      <section id="about" className="about-section">
         <About />
       </section>
-      <section id="services" className="services-container">
+      <section id="services" className="services-section">
         <Services />
       </section>
     </>

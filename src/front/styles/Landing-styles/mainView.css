@@ -43,8 +43,7 @@
   width: 100%;
   display: flex;
   margin-top: 10px;
-  justify-content: flex-end;
-  margin-right: 55rem;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -82,10 +81,11 @@
   }
 }
 
-.about-container {
+.about-section {
   margin: 5rem;
 }
 
-.services-container {
+
+.services-section {
   margin: 5rem;
 }

@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-
-import Logo from "./../../img/logo.png"
+import Logo from "./../../img/logo.png";
 import { Login } from "./Landing/login.jsx";
-
 import "./../../styles/navbar.css";
 import { CiMenuBurger } from "react-icons/ci";
 import { Link } from "react-router-dom";
-
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -22,6 +19,7 @@ export const Navbar = () => {
   const scrollTo = (id) => {
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
   };
+
   const scrollToFooter = () => {
     document.getElementById("footer").scrollIntoView({ behavior: "smooth" });
   };
@@ -30,7 +28,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg fixed-top">
       <div className="container-fluid justify-content-between align-items-center">
         <Link to={"/"} className="navbar-brand d-flex align-items-center me-0 me-lg-3">
-          <img src={Logo} alt="logo" className=" logo-svg" />
+          <img src={Logo} alt="logo" className="logo-svg" />
         </Link>
 
         <button
@@ -42,7 +40,7 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <CiMenuBurger />
+          <CiMenuBurger style={{ width: '2rem', height: '2rem' }} />
         </button>
 
         <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
@@ -63,7 +61,6 @@ export const Navbar = () => {
               </li>
             ) : (
               <li className="nav-item">
-
                 <a href="#services" className="nav-link a-services anchor" onClick={() => scrollTo("services")}>
                   SERVICES
                 </a>
@@ -74,10 +71,22 @@ export const Navbar = () => {
                 CONTACT
               </a>
             </li>
+            <li className="nav-item d-lg-none">
+              {loggedin ? (
+                <button className="btn btn-outline-light me-2 logout-btn" onClick={() => {
+                  actions.logOut();
+                  navigate("/");
+                }}>
+                  Log Out
+                </button>
+              ) : (
+                <Login className="btn login-component" />
+              )}
+            </li>
           </ul>
         </div>
 
-        <div className="d-flex align-items-center">
+        <div className="d-none d-lg-flex align-items-center">
           {loggedin ? (
             <button className="btn btn-outline-light me-2 logout-btn" onClick={() => {
               actions.logOut();
@@ -90,9 +99,6 @@ export const Navbar = () => {
           )}
         </div>
       </div>
-    </nav >
+    </nav>
   );
 };
-
-
-
