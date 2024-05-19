@@ -11,25 +11,27 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const exercisesPerPage = 9;
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
 
       if (bodyPart === "all") {
-        exercisesData = localStorage.getItem("exercises");
+        exercisesData = await actions.fetchDataExercise(
+          "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
+          store.exerciseOptions
+        );
       } else {
-        exercisesData = await actions.fetchDataExercice(
+        exercisesData = await actions.fetchDataExercise(
           `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1300`,
           store.exerciseOptions
         );
       }
-    }
 
-    setExercises(exercisesData);
-
+      setExercises(exercisesData);
+    };
 
     fetchExercisesData();
-  }, [bodyPart]);
+  }, [bodyPart]); */
 
   const indexOfLastExercise = pageNumber * exercisesPerPage + exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
@@ -40,12 +42,11 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
-    window.scrollTo({ top: 1800, behavior: 'smooth' })
   };
 
   return (
     <div id="exercises" className="exercises-container">
-      <h3 className="exercises-title">Showing Results</h3>
+      {/* <h3 className="exercises-title">Showing Results</h3>
       <div className="exercises-result-container">
         {currentExercises.length > 0 ? (
           currentExercises.map((exercise, index) => (
@@ -74,7 +75,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         containerClassName="pagination"
         activeClassName="active"
         renderOnZeroPageCount={null}
-      />
+      /> */}
     </div>
   );
 };

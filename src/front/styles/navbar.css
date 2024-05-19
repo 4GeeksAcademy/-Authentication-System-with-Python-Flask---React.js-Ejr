@@ -6,7 +6,7 @@
   animation: enhancer-navbar linear both;
   animation-timeline: scroll(root);
   animation-range: 0 200px;
-  background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+  background-image: var(--gradient-background)
 }
 
 @keyframes enhancer-navbar {
@@ -49,7 +49,7 @@
 
 .anchor {
   text-decoration: none;
-  color: white;
+  color: var(--white-text);
   font-weight: 700;
 }
 
@@ -64,7 +64,7 @@
 
 .login-component {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--white-text);
   padding: 10px 20px;
   border: none;
   cursor: pointer;
@@ -73,8 +73,9 @@
 }
 
 .login-component:hover {
-  background-color: white;
+  background-color: var(--white-text);
   color: var(--primary-color);
+
 }
 
 .logout-btn {
@@ -90,6 +91,7 @@
 .logout-btn:hover {
   background-color: var(--primary-color);
   color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
 }
 
 @media (max-width: 992px) {

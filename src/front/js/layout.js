@@ -8,12 +8,12 @@ import { Footer } from "./component/footer.jsx";
 import { Landing } from "./pages/Landing/landing";
 import { Trainer } from "./pages/Trainer/trainer";
 import { User } from "./pages/User/user";
+import UserForm from "./pages/User/userForm"
 
-import { UserForm } from "./pages/User/userForm";
-import { EditForm } from "./component/User/editForm.jsx"; 
+import { EditForm } from "./pages/User/editForm";
 
 import ScrollToTop from "./component/scrollToTop.jsx";
-import ExerciceDetail from "./pages/User/exerciseDetail.js";
+import ExerciseDetail from "./pages/User/exerciseDetail.js";
 import ProtectedRoute from "./component/protectedRoute.jsx";
 
 const Layout = () => {
@@ -29,11 +29,12 @@ const Layout = () => {
 
                         <Route path="/" element={<Landing />} />
                         <Route element={<ProtectedRoute roles={['user']} />}>
-                            <Route path="/user/:id" element={<User />} />
+                            <Route path="/user/:user_id" element={<User />} />
                             <Route path="/user_form" element={<UserForm />} />
+                            <Route path="/user/edit_form" element={<EditForm />} />
                         </Route>
                         <Route element={<ProtectedRoute roles={['user', 'trainer']} />}>
-                            <Route path="/exercise/:id" element={<ExerciceDetail />} />
+                            <Route path="/exercise/:id" element={<ExerciseDetail />} />
                         </Route>
                         <Route element={<ProtectedRoute roles={['trainer']} />}>
                             <Route path="/trainer/:id" element={<Trainer />} />

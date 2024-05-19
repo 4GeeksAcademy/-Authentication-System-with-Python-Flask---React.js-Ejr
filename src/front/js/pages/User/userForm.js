@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import "./../../../styles/User-styles/userForm.css";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
-const userForm = () => {
+
+const UserForm = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user_name: '',
-        age: '',
+        user_age: '',
         user_height: '',
         user_weight: '',
         user_illness: '',
@@ -36,7 +36,7 @@ const userForm = () => {
                 formData.user_weight === '' ||
                 formData.user_illness === ''
             ) {
-                alert('Por favor, complete todos los campos.');
+                alert('Please, complete all the required fields.');
                 return;
             } else {
                 actions.postUserData(formData);
@@ -56,7 +56,7 @@ const userForm = () => {
                 handleSubmit(e);
             }}>
                 <label>
-                    Name and Surnames:
+                    Full Name:
                     <input
                         type="text"
                         name="user_name"
@@ -71,8 +71,8 @@ const userForm = () => {
                     <input
                         type="number"
                         name="user_age"
-                        //value={formData.user_age}
-                        //onChange={handleChange}
+                        value={formData.user_age}
+                        onChange={handleChange}
                         min="16"
                         required
                     />
@@ -129,5 +129,5 @@ const userForm = () => {
 
         </div>
     );
-}
-export default userForm;
+};
+export default UserForm;

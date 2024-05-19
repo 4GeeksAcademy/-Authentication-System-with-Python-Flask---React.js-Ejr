@@ -7,7 +7,7 @@
 }
 
 .text-container {
-  color: white;
+  color: var(--white-text);
   display: flex;
   flex-direction: column;
   justify-content: center;

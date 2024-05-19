@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "../../../styles/Landing-styles/signUp.css";
 import { Context } from "../../store/appContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -9,7 +9,8 @@ export const SignUp = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const { actions } = useContext(Context);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+
 	const handleClose = () => setShowModal(false);
 	const handleShow = () => setShowModal(true);
 
@@ -22,34 +23,37 @@ export const SignUp = () => {
 	};
 	const handleConfirmPassword = (event) => {
 		setConfirmPassword(event.target.value);
-	}
+	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (password !== confirmPassword) {
-			alert("La contraseña no coincide");
+			alert("Incorrect password");
 			return;
 		}
-		actions.signUp({email, password})
+		actions.signUp({ email, password });
 		setPassword("");
 		setEmail("");
 		setConfirmPassword("");
 		handleClose();
-		navigate("/user/form");
+		navigate("/user_form");
 	};
-
 
 	return (
 		<div>
 			<div>
-				<button className="button-sign-up" onClick={handleShow}>Sign Up</button>
+				<button className="button-sign-up" onClick={handleShow}>
+					Sign Up
+				</button>
 
 				{showModal && (
 					<div className="modal">
 						<div className="modal-content">
-							<span className="close" onClick={handleClose}>&times;</span>
-							<p className="modal-p">Sing Up</p>
+							<h2 className="signup-modal-title">Sign Up</h2>
 							<form onSubmit={handleSubmit}>
+								<label htmlFor="email">
+									Email
+								</label>
 								<input
 									type="email"
 									name="email"
@@ -58,6 +62,9 @@ export const SignUp = () => {
 									placeholder="Email"
 									required
 								/>
+								<label htmlFor="password">
+									Password
+								</label>
 								<input
 									type="password"
 									name="password"
@@ -66,22 +73,26 @@ export const SignUp = () => {
 									placeholder="Contraseña"
 									required
 								/>
+								<label htmlFor="confirmPassword">
+									Confirm Password
+								</label>
 								<input
 									type="password"
-									name="ConfirPassword"
+									name="confirmPassword"
 									value={confirmPassword}
 									onChange={handleConfirmPassword}
 									placeholder="Confirmar Contraseña"
 									required
 								/>
-								<div>
-									<button className="button-input close-button" onClick={handleClose}>Cerrar</button>
-									<button
-										className="button-input submit"
-										type="submit">
-										Enviar
-									</button>
-								</div>
+								<button className="button-input singup-submit-button" type="submit">
+									Sign Up
+								</button>
+								<button
+									className="button-input singup-close-button"
+									onClick={handleClose}
+								>
+									Close
+								</button>
 							</form>
 						</div>
 					</div>
@@ -90,4 +101,3 @@ export const SignUp = () => {
 		</div>
 	);
 };
-

@@ -9,63 +9,41 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
 
-  useEffect(() => {
-    const fetchExercisesData = async () => {
-      let bodyPartsData = JSON.parse(localStorage.getItem("bodyPartsData"));
+  /*  useEffect(() => {
+     const fetchExercisesData = async () => {
+       const bodyPartsData = await actions.fetchDataExercise(
+         "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+         store.exerciseOptions
+       );
+ 
+       setBodyParts(["all", ...bodyPartsData]);
+     };
+     fetchExercisesData();
+   }, []);
+ 
+   const handleSearch = async () => {
+ 
+     if (search) {
+       const exerciseData = await actions.fetchDataExercise(
+         "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
+         store.exerciseOptions
+       );
+ 
+       const searchedExercises = exerciseData.filter(
+         (item) =>
+           item.name.toLowerCase().includes(search) ||
+           item.target.toLowerCase().includes(search) ||
+           item.equipment.toLowerCase().includes(search) ||
+           item.bodyPart.toLowerCase().includes(search)
+       );
+       setSearch("");
+       setExercises(searchedExercises);
+     }
+   }; */
 
-      if (!bodyPartsData) {
-        bodyPartsData = await actions.fetchDataExercice(
-          "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
-          store.exerciseOptions
-        );
-        localStorage.setItem("bodyPartsData", JSON.stringify(bodyPartsData));
-      }
-
-      setBodyParts(["all", ...bodyPartsData]);
-    };
-
-    fetchExercisesData();
-  }, []);;
-
-  const handleSearch = async () => {
-
-    if (search) {
-      if (localStorage.getItem("exercises")) {
-        const exerciseData = JSON.parse(localStorage.getItem("exercises"));
-
-        const searchedExercises = exerciseData.filter(
-          (item) =>
-            item.name.toLowerCase().includes(search) ||
-            item.target.toLowerCase().includes(search) ||
-            item.equipment.toLowerCase().includes(search) ||
-            item.bodyPart.toLowerCase().includes(search)
-        );
-        window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
-        setSearch("");
-        setExercises(searchedExercises);
-      }
-      else {
-        const exerciseData = await actions.fetchDataExercice(
-          "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
-          store.exerciseOptions
-        );
-        localStorage.setItem("exercises", JSON.stringify(exerciseData));
-        const searchedExercises = exerciseData.filter(
-          (item) =>
-            item.name.toLowerCase().includes(search) ||
-            item.target.toLowerCase().includes(search) ||
-            item.equipment.toLowerCase().includes(search) ||
-            item.bodyPart.toLowerCase().includes(search)
-        );
-        window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
-        setSearch("");
-        setExercises(searchedExercises);
-      };
-    };
-  };
   return (
     <section className="exercise-container">
-      <h2 className="title-exercise">Search exercises for more info</h2>
+      {/* <h2 className="title-exercise">Search exercises for more info</h2>
       <div className="input-container">
         <input
           className="search-input"
@@ -85,7 +63,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           setBodyPart={setBodyPart}
           bodyParts={bodyParts}
         />
-      </div>
+      </div> */}
     </section>
   );
 };
