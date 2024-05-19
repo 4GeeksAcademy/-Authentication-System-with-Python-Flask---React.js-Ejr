@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
             submitLogInForm: async (logInData) => {
                 try {
-                    let response = await fetch(`${apiUrl}/api/login`, {
+                    let response = await fetch(`${apiUrl}api/login`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     return true;
                 } catch (error) {
-                    console.error('Error logging user in:', error);
+                    console.error('Error logging user in user in:', error);
                     return false;
                 }
             },
