@@ -40,6 +40,7 @@ const getState = ({ getStore, setStore }) => {
 					const data = await response.json();
 					const decoded = jwtDecode(data.access_token);
 					sessionStorage.setItem("token", data.access_token);
+
 					sessionStorage.setItem("role", decoded.role);
 					sessionStorage.setItem("user_id", decoded.sub);
 					setStore({ token: data.access_token, role: decoded.role, user_id: decoded.sub });

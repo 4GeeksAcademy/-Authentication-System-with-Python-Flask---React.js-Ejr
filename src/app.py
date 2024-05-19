@@ -58,7 +58,8 @@ def serve_any_other_file(path):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
-    return response 
+
+    return response
 
 # Login & Signup Endpoints
 @app.route('/login', methods=['POST'])
@@ -66,30 +67,32 @@ def login():
     data = request.json
     if not data:
         raise APIException('Insert the correct information', status_code=400)
-        
-
+    
     email = data.get("email")
     password = data.get("password")
+    
     if not email or not password:
         raise APIException('Missing email or password', status_code=400)
-        
-
+    
     user = User.query.filter_by(email=email).first()
     trainer = Trainer.query.filter_by(email=email).first()
-
+    
     if (user and password != user.password) or (trainer and password != trainer.password):
         raise APIException('Invalid password, please try again', status_code=401)
-        
     
     if user:
-        identity = user.id
         role = "user"
-    else:
-        identity = trainer.id
+        user_id = user.id  
+    elif trainer:
         role = "trainer"
+        user_id = trainer.id  
+    else:
+        raise APIException('User not found', status_code=404)
+    
+    additional_claims = {"role": role, "user_id": user_id}
+    access_token = create_access_token(identity=email, additional_claims=additional_claims)
+    
 
-    access_token = create_access_token(identity=identity, additional_claims={"role": role})
-   
     return jsonify({ "access_token": access_token}), 200
 
 @app.route('/signup', methods=['POST'])
