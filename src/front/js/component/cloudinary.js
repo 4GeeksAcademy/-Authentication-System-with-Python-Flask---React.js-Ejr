@@ -24,7 +24,10 @@ export const Cloudinary = () => {
 
     const fs = require('fs-extra'); 
 
-    router.get('/', (req, res) => {
+//  ------------  consultar almacenamiento de fotos------
+    router.get('/', async (req, res) => {
+        const photos = await Photo.find();
+        print(photos)
         res.render('images');
     });
 

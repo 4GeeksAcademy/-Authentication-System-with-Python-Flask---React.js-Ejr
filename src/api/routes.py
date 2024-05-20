@@ -55,6 +55,7 @@ def add_vehicle():
     tipo_cambio = request.json.get("tipo_cambio")
     asientos = request.json.get("asientos")
     precio = request.json.get("precio")
+    # URL_img = request.json.get("URL_img")
 
 # Creacion de producto en stripe
     new_vehicles= stripe.Product.create(name=marca_modelo)
