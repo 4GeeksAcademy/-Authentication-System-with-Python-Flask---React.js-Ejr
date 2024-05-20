@@ -10,14 +10,14 @@
 .form {
     padding: 20px;
     border-radius: 10px;
-    background-color: white;
+    background-color: var(--white-text);
     max-width: 400px;
 }
 
 label {
     display: block;
     margin-bottom: 10px;
-    color: white; 
+    color: var(--white-text);
 }
 
 input,
@@ -31,7 +31,7 @@ button {
 
 button {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--white-text);
     border: none;
     cursor: pointer;
 }

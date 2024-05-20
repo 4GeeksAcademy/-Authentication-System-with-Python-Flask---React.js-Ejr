@@ -7,8 +7,8 @@
 
 
  .linkedin-logo {
-   color: white;
-   background-color: white;
+   color: var(--white-text);
+   background-color: var(--white-text);
    border-radius: 20%;
  }
 
@@ -32,7 +32,7 @@
 
  .github,
  .linkedin {
-   color: white;
+   color: var(--white-text);
  }
 
  .social-icon {

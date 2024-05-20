@@ -8,6 +8,8 @@
   --primary-color: #02b532;
   --secondary-color: #000501;
   --background-color: #001004;
+  --white-text: #F5F5F5;
+  --gradient-background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
 }
 
 * {
@@ -19,6 +21,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
 }
 
 .green-text {

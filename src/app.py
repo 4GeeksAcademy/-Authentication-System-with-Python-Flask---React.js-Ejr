@@ -82,15 +82,15 @@ def login():
     
     if user:
         role = "user"
-        user_id = user.id  
+        identity = user.id  
     elif trainer:
         role = "trainer"
-        user_id = trainer.id  
+        identity = trainer.id  
     else:
         raise APIException('User not found', status_code=404)
     
-    additional_claims = {"role": role, "user_id": user_id}
-    access_token = create_access_token(identity=email, additional_claims=additional_claims)
+   
+    access_token = create_access_token(identity=identity, additional_claims={"role": role})
     
 
     return jsonify({ "access_token": access_token}), 200
@@ -127,7 +127,6 @@ def get_user_data(user_id):
     if not user_data:
         raise APIException('User data not found', status_code=404)
         
-    
     serialized_user_data = user_data.serialize()
 
     return jsonify(serialized_user_data), 200

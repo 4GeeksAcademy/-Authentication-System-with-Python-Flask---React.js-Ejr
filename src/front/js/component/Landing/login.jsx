@@ -13,9 +13,7 @@ export const Login = () => {
     password: "",
   });
 
-  const handleLogOut = () => {
-    actions.logOut();
-  };
+
 
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

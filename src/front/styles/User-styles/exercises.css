@@ -1,16 +1,24 @@
 .exercises-container {
   display: flex;
+  flex-direction: column;
   margin-top: 50px;
   padding: 20px;
 }
 
 .exercises-title {
+  align-self: center;
   margin-bottom: 46px;
 }
+
 .exercises-result-container {
-  display: flex;
-  flex-direction: row;
-  margin: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+
+}
+
+.pagination {
+  margin-top: 20px;
+  align-self: center;
+
 }

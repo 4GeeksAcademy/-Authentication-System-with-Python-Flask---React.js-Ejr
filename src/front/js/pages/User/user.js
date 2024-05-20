@@ -20,7 +20,7 @@ export const User = () => {
 
         <div className="user-container">
             <div className="user-data">
-                <PersonalData classname="personalData"/>
+                <PersonalData classname="personalData" />
             </div>
             <div className="user-routine">
                 <UserRoutine />
@@ -34,7 +34,6 @@ export const User = () => {
             <div className="exercises">
                 <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />
             </div>
-
         </div>
     );
 };

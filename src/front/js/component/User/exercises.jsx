@@ -15,18 +15,29 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
 
-      if (bodyPart === "all") {
-        exercisesData = localStorage.getItem("exercises");
+      const cacheKey = bodyPart === "all" ? "allExercises" : `bodyPartExercises_${bodyPart}`;
+      const cachedData = localStorage.getItem(cacheKey);
+
+      if (cachedData) {
+        exercisesData = JSON.parse(cachedData);
       } else {
-        exercisesData = await actions.fetchDataExercice(
-          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1300`,
-          store.exerciseOptions
-        );
+        if (bodyPart === "all") {
+          exercisesData = await actions.fetchDataExercise(
+            "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
+            store.exerciseOptions
+          );
+        } else {
+          exercisesData = await actions.fetchDataExercise(
+            `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1300`,
+            store.exerciseOptions
+          );
+        }
+
+        localStorage.setItem(cacheKey, JSON.stringify(exercisesData));
       }
-    }
 
-    setExercises(exercisesData);
-
+      setExercises(exercisesData);
+    };
 
     fetchExercisesData();
   }, [bodyPart]);
@@ -40,7 +51,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
-    window.scrollTo({ top: 1800, behavior: 'smooth' })
+    scrollToTop();
   };
 
   return (
@@ -74,6 +85,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         containerClassName="pagination"
         activeClassName="active"
         renderOnZeroPageCount={null}
+        className="pagination"
       />
     </div>
   );

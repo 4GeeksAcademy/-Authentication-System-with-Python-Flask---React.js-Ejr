@@ -9,7 +9,7 @@ const userForm = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user_name: '',
-        age: '',
+        //age: '',
         user_height: '',
         user_weight: '',
         user_illness: '',
@@ -24,19 +24,19 @@ const userForm = () => {
         });
     };
 
-
+    console.log("userForm")
     const handleSubmit = async () => {
 
         try {
 
             if (
                 formData.user_name === '' ||
-                formData.user_age === '' ||
+                //formData.user_age === '' ||
                 formData.user_height === '' ||
                 formData.user_weight === '' ||
                 formData.user_illness === ''
             ) {
-                alert('Por favor, complete todos los campos.');
+                alert('Please, complete all fields.');
                 return;
             } else {
                 actions.postUserData(formData);
