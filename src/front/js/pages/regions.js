@@ -17,11 +17,6 @@ export const Regions = () => {
     actions.removeCoffeeFromOrder({ name, price });
   };
 
-  const handleLogOut = () => {
-    actions.signOut();
-    navigate('/');
-  };
-
   return (
     <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
       <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
@@ -45,13 +40,6 @@ export const Regions = () => {
           style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
         >
           Checkout
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleLogOut}
-          style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
-        >
-          Log Out
         </Button>
       </div>
 

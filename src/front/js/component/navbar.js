@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import CoffeeLogo from "./CoffeeLogo";
+import { Context } from "../store/appContext"; // Import your context
 
 export const Navbar = () => {
   const location = useLocation();
+  const { actions } = useContext(Context); // Access actions from context
 
   // Check if the current route is the sign-up page or the specified link
   const isSpecialPage = location.pathname === "/signup" || location.pathname === "/"; // Adjust the path for the specified link as necessary
@@ -24,7 +26,11 @@ export const Navbar = () => {
             <Button variant="contained" color="primary">EMPLOYEE ID</Button>
           </Link>
           {/* Render the logout button only if not on the sign-up page or the specified link */}
-          {!isSpecialPage && <Button variant="contained" color="error">LOGOUT</Button>}
+          {!isSpecialPage && (
+            <Button variant="contained" color="error" onClick={actions.signOut}>
+              LOGOUT
+            </Button>
+          )}
         </div>
       </Toolbar>
     </AppBar>
