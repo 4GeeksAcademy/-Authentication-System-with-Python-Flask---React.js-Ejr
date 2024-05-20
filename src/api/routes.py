@@ -860,9 +860,9 @@ def get_training_classes():  # Función que maneja la solicitud GET para obtener
 
 
 
-#Crear una nueva clase (POST)
+#Crear  clases (POST)
 @api.route('/training_classes', methods=['POST'])  # Define el endpoint para crear nuevas clases de entrenamiento. Se usa el método POST.
-# @jwt_required()  # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan crear clases.
+@jwt_required()  # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan crear clases.
 def create_training_classes():  # Función que maneja la solicitud POST para crear clases de entrenamiento.
     data = request.get_json()  # Obtiene los datos enviados en formato JSON.
     if not data:  # Verifica si no se proporcionaron datos.

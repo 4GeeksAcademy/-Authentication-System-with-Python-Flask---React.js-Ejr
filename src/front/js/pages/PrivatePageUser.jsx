@@ -4,7 +4,7 @@ import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./PrivatePageUser.module.css"; // Importación de estilos CSS
 
 import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/PrivateCalendar.jsx"
-import EditProfile from "../component/EditProfile.jsx";
+
 
 const PrivatePageUser = () => {
     const { store, actions } = useContext(Context); // Usar useContext para acceder al contexto global

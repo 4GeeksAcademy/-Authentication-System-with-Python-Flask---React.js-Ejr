@@ -9,6 +9,7 @@ import styles from './Calendar.module.css'; // Asegúrate de que la ruta al CSS 
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
+    
     const { store, actions } = useContext(Context);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -36,12 +37,18 @@ const MyCalendar = () => {
 
     return (
         <div className={styles.container}>
+            <h2>Calendario Publico</h2>
             <Calendar
                 localizer={localizer}
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 500 }}
+                style={{
+                    height: '500px',
+                    background: '#bebebe',
+                    borderRadius: '5px',
+                    color: 'gray'
+                  }}
                 onSelectEvent={handleEventClick}
             />
             {selectedEvent && (
@@ -60,7 +67,7 @@ const MyCalendar = () => {
                     <p>Duration: {selectedEvent.start_time} minutes</p>
                     <p>Duration: {selectedEvent.duration_minutes} minutes</p>
                     <p>Available slots: {selectedEvent.available_slots}</p>
-                    <button onClick={closeModal}>Close</button>
+                    <button className={styles.loginButton} onClick={closeModal}>close</button>
                 </Modal>
             )}
         </div>

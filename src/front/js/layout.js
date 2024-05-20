@@ -26,8 +26,9 @@ import Calendar from "./component/Calendar.jsx";
 import PrivateCalendar from "./component/PrivateCalendar.jsx";
 import UserDataDetail from "./pages/UserDataDetail.jsx"
 import UserBooking from "./pages/UserBooking.jsx"
-
-
+import CreateClasses from "./component/CreateClasses.jsx";
+import ModulePage from "./pages/ModulePage.jsx";
+import Breadcrumbs from "./component/Breadcrumb.jsx";
 
 
 
@@ -57,6 +58,8 @@ const Layout = () => {
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
                         <Route element={<UserDataDetail />} path="/UserDataDetail" />
                         <Route element={<UserBooking />} path="/UserBooking" />
+                        <Route element={<CreateClasses />} path="/CreateClasses" />
+                        <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

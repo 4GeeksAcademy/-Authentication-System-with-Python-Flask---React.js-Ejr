@@ -4,20 +4,15 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
   
+
+.container h2 {
+    color: #adb5bd;
+  }
 .inputGroup {
     position: relative;
     margin: 10px 0;
     width: 300px;
   }
-
-/* Asegúrate de que tu selector sea más específico que el del calendario por defecto */
-.rbc-calendar .rbc-day-bg .rbc-today {
-  background-color: #eaf6ff3b !important;
-}
-
-.rbc-calendar .rbc-off-range-bg {
-  background: #e6e6e633 !important;
-}
 
 
 

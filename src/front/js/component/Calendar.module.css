@@ -4,17 +4,19 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
   
+.container h2 {
+  color: #adb5bd;
+}
+
   .inputGroup {
     position: relative;
     margin: 10px 0;
     width: 300px;
   }
 
-  .rbc-day-bg rbc-today{
-      background-color: #eaf6ff9d;
-  }
+
   
-  .input {
+.input {
     border: solid 1.5px #9e9e9e;
     border-radius: 1rem;
     background: none;
@@ -26,7 +28,7 @@
   }
   
 
-  .userLabel {
+.userLabel {
     position: absolute;
     left: 15px;
     color: #e8e8e8;
@@ -34,7 +36,7 @@
   }
 
   
-  .overlay {
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -61,4 +63,18 @@
 
 .modal h2, .modal p {
     color: #333; /* Color oscuro para mejor legibilidad */
+}
+
+
+.loginButton {
+  background-color: rgb(246, 246, 246);
+  color: #5a5a5a;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 15px;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background-color: #0f0e0f;
 }

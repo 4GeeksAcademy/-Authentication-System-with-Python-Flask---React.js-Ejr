@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"; // Importación de Link para la navegac
 import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./UserBooking.module.css"; // Importación de estilos CSS
 import moment from "moment";
-const userDataDetail = () => {
+
+const UserBooking = () => {
     const { store, actions } = useContext(Context); // Usar useContext para acceder al contexto global
     const { uploadedUserData } = store; // Suponiendo que uploadedUserData contiene el objeto del usuario
 
@@ -96,6 +97,6 @@ const userDataDetail = () => {
     );
 };
 
-export default userDataDetail;
+export default UserBooking;
 
 

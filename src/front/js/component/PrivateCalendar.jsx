@@ -76,12 +76,18 @@ const PrivateCalendar = () => {
     return (
         <div className={styles.container}>
             <div className={styles.myCalendar}>
+                <h2>Calendario Privado</h2>
                 <Calendar
                     localizer={localizer}
                     events={events}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 500 }}
+                    style={{
+                        height: '500px',
+                        background: '#bebebe',
+                        borderRadius: '5px',
+                        color: 'gray'
+                      }}
                     onSelectEvent={handleEventClick}
                 />
             </div>
