@@ -7,6 +7,35 @@ const Utils= {
   isMouseRight: (e)=> __isMouseButton(e, 2),
   isMouseCenter: (e)=> __isMouseButton(e, 1),
 
+  /** clamps a number between other two */
+  clamp: (num, min, max) => { return num > min ? (num < max ? num : max) : min },
+
+  /** get the index with the closest value */
+  getClosestIndex:(arr, val) => {
+    let v=0, cur, min= Number.MAX_VALUE
+    for(let i=0; i< arr.length; i++){
+      cur= Math.abs(arr[i]-val)
+      if(cur < min) {
+        min= cur
+        v= i
+      }
+    }
+    return v
+  },
+
+  /** get the closest value within an array */
+  getClosestValue:(arr, val) => {
+    let v=arr[0], cur, min= Number.MAX_VALUE
+    for(let i=0; i< arr.length; i++){
+      cur= Math.abs(arr[i]-val)
+      if(cur < min) {
+        min= cur
+        v= arr[i]
+      }
+    }
+    return v
+  },
+
   /** read a cookie and returns it, or undefined if not found */
   getCookie: (cookie)=>{
     const result= document.cookie.split("; ")?.find(e=>e.startsWith(`${cookie}=`))

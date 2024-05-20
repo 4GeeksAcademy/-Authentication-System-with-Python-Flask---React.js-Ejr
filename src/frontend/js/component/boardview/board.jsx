@@ -5,14 +5,26 @@ import Utils from "../../app/utils.js"
 
 import { Context } from "../../store/appContext.jsx"
 
-import useMouseTrack from "../../effects/useMouseTrack.jsx"
-
 import List from "./list.jsx"
 
+import useContextualMenu from "../../effects/useContextualMenu.jsx"
+import getPointerHook from "../../effects/useGlobalPointerHook.jsx"
+
+//ITEMTYPE_WORKSPACE: 0,
+//ITEMTYPE_PROJECT: 1,
+//ITEMTYPE_TEAM: 2,
+//ITEMTYPE_USER: 3,
+//ITEMTYPE_BOARD: 4,
+//ITEMTYPE_LIST: 5,
+//ITEMTYPE_TASK: 6,
+//ITEMTYPE_TEXT: 7,
+//ITEMTYPE_MEDIA: 8,
+//ITEMTYPE_EMBED: 9,
+const _ITEMTYPE= [null, null, null, null, null, List, null, null, null, null]
+
 const
-  _CANVAS_ACTION= { abort:-2, end:-1, none:0, pan:1, panmid:2, context:3, through:4 },
-  _ZOOM_LEVELS= Utils.generateZoomLevels(.025, 10.0, 48, 24), // min, max, steps, 1.0 location
-  _ITEMTYPE= [List, null]
+  _ACTION_ID= { end:0, context:1, grab:3, resize: 4, pan:5 },
+  _ZOOM_LEVELS= Utils.generateZoomLevels(.025, 10.0, 48, 24) // min, max, steps, 1.0 location
 
 /**
  *  -- Board --
@@ -26,243 +38,363 @@ const Board= ()=>{
 
   const
     { store, actions }= React.useContext(Context),
-    originRef= React.useRef(null),
-    canvasRef= React.useRef(null),
-    pointerStateRef= useMouseTrack(canvasRef) // Custom Hook I made for handling pointer behaviour
+    [ pointer, pointerUtils ]= getPointerHook(),
+    canvasRef= React.useRef(null)
+
+  useContextualMenu(handleContextualMenu)
 
   const
-    [ canvasAction, set_canvasAction ]= React.useState(_CANVAS_ACTION.none),
-    [ canvasPosition, set_canvasPosition ]= React.useState([0,0]), // read this from userPrefs at startup ?
-    [ canvasOffset, set_canvasOffset ]= React.useState([0,0]),
-    [ canvasZoom, set_canvasZoom ]= React.useState(_ZOOM_LEVELS.indexOf(1.0))
+    [ canvasState, _scs ]= React.useState({
+      action: null,
+      item: null,
+      size: { x:0, y:0 },
+      coords: { x:0, y:0 },
+      offset: { x:0, y:0 },
+      origin: { x:0, y:0 },
+      zoom: Utils.getClosestIndex(_ZOOM_LEVELS, 1.0),
+      dirty: 0,
+      timestamp: Date.now()
+    }),
+    [boardItems, set_boardItems]= React.useState([]),
+    itemUtils= React.useRef([])
 
-  // hook contextMenu events on startup and register the mouse tracker so we can use them in lists/tasks
+  function merge_canvasState(new_state){ _scs({ ...Object.assign(canvasState, { ...new_state, timestamp: Date.now() })})}
+
   React.useEffect(()=>{
-    window.addEventListener("contextmenu", handleContextMenu)
-    //actions.setMouseTracker(pointerStateRef) // register our mouse tracker in store so we can access it easily inside subcomponents
-    return ()=>{
-      window.removeEventListener("contextmenu", handleContextMenu)
-      //actions.setMouseTracker(null) // remove mouse tracker on leave
+
+    if(store.items.length > 0){
+
+      itemUtils.current= Array(store.items.length)
+
+      const items= store.items.map((e,i)=>{
+        const Type= _ITEMTYPE[e.type]
+        return <Type key={`${e.id}|${e.bid}`} bref={[itemUtils, i]} {...e.props} />
+      })
+
+      set_boardItems(items)
+
+      console.log(`board contains ${store.items.length} items`)
     }
-  },[])
+    
+  },[store.board])
+ 
+  React.useEffect(()=>{ merge_canvasState({dirty:Constants.CANVAS_DIRTY.all}) },[canvasRef])
   
-  // initialize canvas size as soon as canvasRef gets the DOM element reference
+  // --------------------------------------------------------------- DIRTY UPDATES 
+  
+  // apply canvas changes and clear the dirty state
   React.useEffect(()=>{
-    if(originRef.current) originRef.current.style.setProperty("--canvas-size", Constants.BOARD_SIZE_PIXELS.toString() + "px")
-  },[canvasRef.current])
+    if(canvasState.dirty>0) {
+
+      const dirty= canvasState.dirty
+
+      const 
+        half= store.board.size * .5,
+        originStyle= canvasRef.current.parentNode.style,
+        canvasStyle= canvasRef.current.style
+
+      if(dirty & Constants.CANVAS_DIRTY.size){
+        originStyle.setProperty("--canvas-size", store.board.size.toString() + "px")
+        originStyle.setProperty("--canvas-size-half", half.toString() + "px")
+      }
+
+      if(dirty & Constants.CANVAS_DIRTY.zoom){
+        originStyle.setProperty("--canvas-zoom", _ZOOM_LEVELS[canvasState.zoom])
+      }
+
+      if((dirty & Constants.CANVAS_DIRTY.coords) | (dirty & Constants.CANVAS_DIRTY.origin)){
+        const 
+          coords= canvasState.coords,
+          offset= canvasState.offset,
+          origin= [half+store.board.origin[0], half+store.board.origin[1]]
+        canvasStyle.setProperty("--canvas-coords-x", (-origin[0] + coords.x+offset.x).toString() + "px" )
+        canvasStyle.setProperty("--canvas-coords-y", (-origin[1] + coords.y+offset.y).toString() + "px" )
+      }
+
+      if(dirty & Constants.CANVAS_DIRTY.style){
+      }
+
+      if(dirty & Constants.CANVAS_DIRTY.background){
+        canvasStyle.setProperty("--canvas-background", `url('${store.board.background}')` )
+      }
+      
+      if(dirty & Constants.CANVAS_DIRTY.cursor){
+        const panning= canvasState.action === _ACTION_ID.pan || canvasState.action === _ACTION_ID.panmid
+        canvasStyle.setProperty("--canvas-cursor", panning ? "grabbing" : "auto" )
+      }
+
+      merge_canvasState({dirty:0})
+    }
+  },[canvasState.timestamp])
+  
+  // --------------------------------------------------------------- CONTEXTUAL MENU 
+    
+  function handleContextualMenu(e){
+    if(pointerUtils.getZsort(canvasRef.current) === 0) {
+      console.log("board context menu!")
+      e.preventDefault()
+    }
+  }
 
   // --------------------------------------------------------------- ACTIONS
 
   // test any click event and check if we should start/end/update an action on our canvas
   React.useEffect(()=>{
     const 
-      cursor= pointerStateRef.current.cursorState?? null,
-      click= pointerStateRef.current.clickState?? null
+      click= pointer.current.click,
+      buttons= pointer.current.button,
+      zsort= pointerUtils.getZsort(canvasRef.current)
 
-    if(click && cursor){
+    if(zsort >= 0){
+      if(zsort===0 || click.button=== Constants.MOUSE_BTN_MIDDLE) _process_board_click(click, buttons, zsort)
+      else _process_item_click(click, buttons)
+    }
+  },[pointer.current.button])
 
-      const
-        zsort= pointerStateRef.current.utils.getZsort(canvasRef.current),
-        lmb= click[Constants.MOUSE_BTN_LEFT]?.stage,
-        wmb= click[Constants.MOUSE_BTN_MIDDLE]?.stage,
-        rmb= click[Constants.MOUSE_BTN_RIGHT]?.stage
-
-      if(canvasAction <= _CANVAS_ACTION.none){
-        // start an action
-        if(lmb===1) {
-          if(zsort === 1) set_canvasAction(_CANVAS_ACTION.through)
-          if(zsort === 0) { 
-            set_canvasAction(_CANVAS_ACTION.pan)
-            canvasRef.current.style.setProperty("--canvas-coords-transition", "none")
+  /** processes a click on the board canvas */
+  function _process_board_click(click, buttons, zsort){
+    if(click.button != -1){
+      const current= buttons[click.button]
+      if(!canvasState.action){
+        if(current.stage === 1){
+          if(click.button === Constants.MOUSE_BTN_LEFT && zsort === 0 || click.button === Constants.MOUSE_BTN_MIDDLE && zsort !== -1) {
+            const 
+              half= store.board.size * .475,
+              coords= canvasState.coords
+            merge_canvasState({
+              action: { 
+                id: _ACTION_ID.pan, 
+                middle: click.button === Constants.MOUSE_BTN_MIDDLE,
+                origin: click.origin,
+                limit: [
+                    [ -half - coords.x, half - coords.x ],
+                    [ -half - coords.y, half - coords.y ]
+                  ],
+                zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
+              }
+            })
           }
         }
-        else if(rmb===1 && zsort === 0) set_canvasAction(_CANVAS_ACTION.context)
-        else if(wmb===1 && zsort !== -1) {
-          set_canvasAction(_CANVAS_ACTION.panmid)
-          canvasRef.current.style.setProperty("--canvas-coords-transition", "none")
-        }
       }
-      else {
-        // end/abort current action
-        if(rmb===1) set_canvasAction(_CANVAS_ACTION.abort)
-        else switch(canvasAction){
-          case _CANVAS_ACTION.pan:
-          case _CANVAS_ACTION.panmid:
-            if((lmb===2 && wmb===1) || (lmb===1 && wmb===2)) set_canvasAction(_CANVAS_ACTION.abort) // pressed another
-            else if((lmb===0 && wmb===-1) || (lmb===-1 && wmb===0)) set_canvasAction(_CANVAS_ACTION.end) // released the original
-            break;
-          case _CANVAS_ACTION.through:
-            if(lmb===-1) set_canvasAction(_CANVAS_ACTION.end)
-            else if(wmb===1) set_canvasAction(_CANVAS_ACTION.abort)
-            break;
+      else{
+        if(current.stage === -1) merge_canvasState({action: { id: _ACTION_ID.end, abort: false }})
+        else if(buttons[Constants.MOUSE_BTN_RIGHT].stage > 0) merge_canvasState({action: { id: _ACTION_ID.end, abort: true }})
+        else if(canvasState.action.id === _ACTION_ID.pan){
+          if(buttons[Constants.MOUSE_BTN_LEFT].stage > 0 && buttons[Constants.MOUSE_BTN_MIDDLE].stage > 0) merge_canvasState({action: { id: _ACTION_ID.end, abort: true }})
         }
       }
     }
-  },[pointerStateRef.current.clickState])
+    else if(canvasState.action?.id > _ACTION_ID.end) merge_canvasState({action: { id: _ACTION_ID.end, abort: false }})
+  }
 
-  // consumable actions
+  /** processes a click on a board item, only left button allowed */
+  function _process_item_click(click, buttons){
+    if(click.button != -1){
+      const current= buttons[click.button]
+      if(!canvasState.action){
+        if(current.stage === 1 && boardItems.length > 0){
+
+          const item= itemUtils.current.find(e=>e.get().current.contains(click.element))
+          if(item) {
+    
+            const
+              node= item.get().current,
+              grab= node.querySelector("[data-knob='grab']"),
+              resize= node.querySelector("[data-knob='resize']")
+
+            if(click.element === grab || click.element === resize){
+
+              const 
+                mode= grab===click.element ? _ACTION_ID.grab : _ACTION_ID.resize,
+                overlay= canvasRef.current.querySelector("#board-canvas-overlay"),
+                ghost= node.cloneNode(true)
+  
+              node.style.setProperty("opacity", ".5")
+              overlay.style.setProperty("cursor", mode===_ACTION_ID.grab ? "move": "se-resize", "important")
+              overlay.style.setProperty("pointer-events", "auto", "important")
+              overlay.appendChild(ghost)
+
+              merge_canvasState({ 
+                item: [item, ghost], 
+                action: {
+                  id: mode,
+                  half: store.board.size * .5,
+                  coords: item.get(Constants.ITEMDATA_COORDS),
+                  origin: pointer.current.click.origin,
+                  zoom: _ZOOM_LEVELS[canvasState.zoom],
+                  zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
+                }})
+            }
+          }
+        }
+      }
+      else{
+        if(current.stage === -1) merge_canvasState({action: { id: _ACTION_ID.end, abort: false }})
+        else if(buttons[Constants.MOUSE_BTN_RIGHT].stage > 0) merge_canvasState({action: { id: _ACTION_ID.end, abort: true }})
+      }
+    }
+    else if(canvasState.action?.id > _ACTION_ID.end) merge_canvasState({action: { id: _ACTION_ID.end, abort: false }})
+  }
+
+  // action finishing
   React.useEffect(()=>{
-    if(canvasAction != _CANVAS_ACTION.none) {
-      switch(canvasAction){
-        case _CANVAS_ACTION.abort:
-          set_canvasAction(_CANVAS_ACTION.none)
-          _restore()
-          //console.log("action aborted")
-          break
-        case _CANVAS_ACTION.end:
-          set_canvasAction(_CANVAS_ACTION.none)
-          set_canvasPosition([canvasPosition[0]+canvasOffset[0], canvasPosition[1]+canvasOffset[1]]) // save offset
-          _restore()
-          //console.log("action ended")
-          break
-        case _CANVAS_ACTION.context:
-          //console.log("action started: context")
-          set_canvasAction(_CANVAS_ACTION.none)
-          break
+    if(canvasState.action?.id === _ACTION_ID.end){
+      const state= {
+        action: null, 
+        item: null,
+        offset: { x:0, y:0 },
+        dirty: Constants.CANVAS_DIRTY.transform | Constants.CANVAS_DIRTY.cursor
       }
+      if(!canvasState.action.abort) {
+        state.coords= { x: canvasState.coords.x+canvasState.offset.x, y: canvasState.coords.y+canvasState.offset.y }
+      }
+      if(canvasState.item) {
+        const overlay= canvasRef.current.querySelector("#board-canvas-overlay")
+        overlay.style.removeProperty("cursor")
+        overlay.style.removeProperty("pointer-events")
+        canvasState.item[0].get().current.style.removeProperty("opacity")
+        canvasState.item[1].remove()
+      }
+      merge_canvasState(state)
     }
-
-    function _restore(){
-      set_canvasOffset([0,0])
-      canvasRef.current.style.setProperty("--canvas-coords-transition", "translate 75ms linear")
-    }
-  },[canvasAction])
+  },[canvasState.action])
 
   // --------------------------------------------------------------- MOUSE POSITION
   
   // drive mouse position change related tasks based on current mode (panning/moving/resizing)
   React.useEffect(()=>{
 
-    if(canvasAction == _CANVAS_ACTION.pan || canvasAction == _CANVAS_ACTION.panmid) {
+    if(canvasState.action && pointer.current.click.button != -1){
 
-      //console.log(pointerStateRef.current)
+      if(canvasState.action.id === _ACTION_ID.pan) {     // PANNING
+  
+        const 
+          action= canvasState.action,
+          cursor= pointer.current.coords,
+          delta= [ cursor.x - action.origin.x, cursor.y - action.origin.y]
+  
+        merge_canvasState({
+          offset: {
+            x: Utils.clamp((delta[0] * action.zoominv) | 0, action.limit[0][0], action.limit[0][1]),
+            y: Utils.clamp((delta[1] * action.zoominv) | 0, action.limit[1][0], action.limit[1][1])
+          },
+          dirty: Constants.CANVAS_DIRTY.coords | Constants.CANVAS_DIRTY.cursor
+        })
+      }
+      else if(canvasState.action.id === _ACTION_ID.grab) {     // GRABBING
+        
+        const 
+          action= canvasState.action,
+          ghost= canvasState.item[1]
 
-      const
-        delta= pointerStateRef.current.cursorState?.delta?.size?? [0,0],
-        zoomFactor= 1.0 / _ZOOM_LEVELS[canvasZoom]
+        const
+          cursor= pointer.current.coords,
+          delta= [ cursor.x - (action.origin.x - action.coords.x * action.zoom), cursor.y - (action.origin.y - action.coords.y * action.zoom)],
+          new_coords= {
+            x: Utils.clamp((delta[0] * action.zoominv) | 0, -action.half, action.half),
+            y: Utils.clamp((delta[1] * action.zoominv) | 0, -action.half, action.half)
+          }
 
-      set_canvasOffset([(delta[0] * zoomFactor) | 0, (delta[1] * zoomFactor) | 0])
+        ghost.style.setProperty("--item-coords-x", new_coords.x + "px")
+        ghost.style.setProperty("--item-coords-y", new_coords.y + "px")
+      }
+      else if(canvasState.action.id === _ACTION_ID.resize) {     // RESIZING
+  
+        console.log("resizing")
+      }
     }
 
-  },[pointerStateRef.current.cursorState?.coords])
-  
-  // apply canvas position
-  React.useEffect(()=>{
-    const center= Constants.BOARD_SIZE_PIXELS * -.5
-    canvasRef.current.style.setProperty("--canvas-coords-x", (center + canvasPosition[0]).toString() + "px" )
-    canvasRef.current.style.setProperty("--canvas-coords-y", (center + canvasPosition[1]).toString() + "px" )
-  },[canvasPosition])
-  
-  // apply canvas offset
-  React.useEffect(()=>{
-    const center= Constants.BOARD_SIZE_PIXELS * -.5
-    //canvasRef.current.style.setProperty("--canvas-offset-x", (canvasOffset[0]).toString() + "px" )
-    //canvasRef.current.style.setProperty("--canvas-offset-y", (canvasOffset[1]).toString() + "px" )
-    canvasRef.current.style.setProperty("--canvas-coords-x", (center + canvasPosition[0]+canvasOffset[0]).toString() + "px" )
-    canvasRef.current.style.setProperty("--canvas-coords-y", (center + canvasPosition[1]+canvasOffset[1]).toString() + "px" )
-  },[canvasOffset])
+  },[pointer.current.coords])
 
   // --------------------------------------------------------------- ZOOM 
 
   // handle zoom changes
   React.useEffect(()=>{
-    const pointer= pointerStateRef.current
-
-    if(pointer.cursorState && pointer.utils.getZsort(canvasRef.current) >= 0 && canvasAction == _CANVAS_ACTION.none){
-      const delta= pointerStateRef.current.zoomDelta
+    if(pointerUtils.getZsort(canvasRef.current.parentNode) >= -1 && !canvasState.action){
+      const delta= pointer.current.wheel
       
       if(delta){
         const
-          viewHalf= [window.innerWidth*.5, window.innerHeight*.5],
-          current= pointerStateRef.current.cursorState?.coords?.client?? [0,0],
-          new_canvasZoom= delta < 0 ? canvasZoom < _ZOOM_LEVELS.length-1 ? canvasZoom+1 : canvasZoom : canvasZoom > 0 ? canvasZoom-1 : canvasZoom
+          cur_zoom= canvasState.zoom,
+          new_zoom= delta < 0 ? cur_zoom < _ZOOM_LEVELS.length-1 ? cur_zoom+1 : cur_zoom : cur_zoom > 0 ? cur_zoom-1 : cur_zoom
   
-        if(new_canvasZoom != canvasZoom) {
+        if(new_zoom != cur_zoom) {
   
           // double click functionality here:
   
           //const 
           //  zoom= _zoom_levels[new_canvasZoom],
           //  factor= delta < 0 ? -1.0 : 1.0,
-          //  new_canvasPosition= [
+          //  new_coords= [
           //    canvasPosition[0] + (current[0] - viewHalf[0]) * factor,
           //    canvasPosition[1] + (current[1] - viewHalf[1]) * factor,
           //  ]
   
           const
-            zoom= _ZOOM_LEVELS[canvasZoom],
-            new_zoom= _ZOOM_LEVELS[new_canvasZoom],
-            factor= -1.0,
-            offset= [
-              (current[0] - viewHalf[0]) * (1/zoom) * factor,
-              (current[1] - viewHalf[1]) * (1/zoom) * factor
-            ],
-            offsetb= [
-              (current[0] - viewHalf[0]) * (1/new_zoom) * factor,
-              (current[1] - viewHalf[1]) * (1/new_zoom) * factor
-            ],
-            new_canvasPosition= [
-              (canvasPosition[0] + (offset[0] - offsetb[0])) | 0,
-              (canvasPosition[1] + (offset[1] - offsetb[1])) | 0,
-            ]
-  
-          originRef.current.style.setProperty("--canvas-zoom", new_zoom)
-          
-          set_canvasPosition(new_canvasPosition) // zoom towards pointer
-          set_canvasZoom(new_canvasZoom)
+            half= store.board.size * .475,
+            cur_coords= canvasState.coords,
+            mus_coords= pointer.current.coords,
+            viewFactor= [ window.innerWidth*.5, window.innerHeight*.5 ],
+            mus_point= [ (mus_coords.x - viewFactor[0]) * -1.0, (mus_coords.y - viewFactor[1]) * -1.0 ],
+
+            cur_zoomcomp= 1/_ZOOM_LEVELS[cur_zoom],
+            new_zoomcomp= 1/_ZOOM_LEVELS[new_zoom],
+            
+            cur_offset= [ mus_point[0] * cur_zoomcomp, mus_point[1] * cur_zoomcomp ],
+            new_offset= [ mus_point[0] * new_zoomcomp, mus_point[1] * new_zoomcomp ],
+            new_coords= {
+              x: Utils.clamp((cur_coords.x + (cur_offset[0] - new_offset[0])) | 0, -half, half),
+              y: Utils.clamp((cur_coords.y + (cur_offset[1] - new_offset[1])) | 0, -half, half),
+            }
+
+          merge_canvasState({
+            coords: new_coords,
+            zoom: new_zoom,
+            dirty: Constants.CANVAS_DIRTY.coords | Constants.CANVAS_DIRTY.zoom
+          })
         }
       }
     }
-  },[pointerStateRef.current.zoomDelta])
+  },[pointer.current.wheel])
 
   // --------------------------------------------------------------- RETURN 
 
 	return (
-    <>
-      <div ref={originRef} id="board-canvas-origin" className="relative pointer-skip">
-        <div ref={canvasRef} id="board-canvas" className="flex px-8 py-4 gap-6 cursor-grab">
-          <div id="board-canvas-background" />
-          { store.devPrefs.devRender &&
-            <>
-              <div className="marker-x bg-blue-800 absolute my-auto" />
-              <div className="marker-y bg-red-800 absolute mx-auto" />
-            </>
-          }
-          <div id="board-canvas-content">
-            { store.board.itemCount > 0 &&
-              store.board.items.map((e,i)=>{
-                const Type= _ITEMTYPE[e.type]
-                return <Type key={`${i}-${e.id}`} {...e.meta} />
-              })
+    <div id="board-canvas-wrapper" className="bg-zinc-300 dark:bg-zinc-800">
+      <div id="board-canvas-origin" className="relative pointer-skip">
+        <div ref={canvasRef} id="board-canvas" className="flex px-8 py-4 gap-6 border-zinc-800 dark:border-zinc-300">
+          <div id="board-canvas-background">
+            { store.devPrefs.devRender &&
+              <>
+                <div className="marker-x bg-blue-800" />
+                <div className="marker-y bg-red-800" />
+              </>
             }
           </div>
+          <div id="board-canvas-content">
+            {boardItems}
+          </div>
+          <div id="board-canvas-overlay"><div/></div>
         </div>
       </div>
       { store.devPrefs.devRender && _getDevBoxElement() }
-    </>
+    </div>
 	)
   
-  // --------------------------------------------------------------- HELPERS & OTHER 
+  // --------------------------------------------------------------- DEVELOPER SHIT
 
-  function handleContextMenu(e){
-    const ps= pointerStateRef.current.cursorState
-    if(ps!=null && ps.zsort!== undefined && ps.zsort===0) e.preventDefault()
-  }
-
-  // dev element
+  // dev box
   function _getDevBoxElement(){
     const
-      ps= pointerStateRef.current.cursorState,
-      cs= pointerStateRef.current.clickState,
-      zd= pointerStateRef.current.zoomDelta
-
-    //console.log(ps?.target)
+      c= canvasState,
+      p= pointer.current,
+      zs= pointerUtils.getZsort(canvasRef.current?.parentElement?? null)
 
     return (
-      <div className="flex flex-col absolute bottom-8 left-4 text-stone-400 bg-black bg-opacity-40 py-1 px-2 pointer-events-none">
-        <span>canvasState= {`x:${canvasPosition[0]} y:${canvasPosition[1]} ox:${canvasOffset[0]} oy:${canvasOffset[1]} cz:${_ZOOM_LEVELS[canvasZoom]}`}</span>
-        <span>pointerState= { ps ?
-            `x:${ps.coords?.client[0]} y:${ps.coords?.client[1]} b:${ps.bounds?1:0} s:${ps.zsort} c:${cs.data[0].stage}|${cs.data[1].stage}|${cs.data[2].stage}| z:${zd}`
+      <div className="devbox flex flex-col absolute bottom-8 left-4 text-stone-400 py-1 px-2 pointer-events-none">
+        <span>canvasState= {`x:${c.coords.x} y:${c.coords.y} ox:${c.offset.x} oy:${c.offset.y} cz:${_ZOOM_LEVELS[c.zoom]}`}</span>
+        <span>pointerState= { p ?
+            `x:${p.coords.x} y:${p.coords.y} b:${zs>-2?1:0} s:${zs} c:${p.button[0].stage}|${p.button[1].stage}|${p.button[2].stage}`
             :
             "waiting for canvas ref..."
           }

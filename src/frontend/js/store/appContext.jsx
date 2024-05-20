@@ -35,7 +35,7 @@ const appContext = ReactComponent => {
     // applies darkMode changes to actual page
     React.useEffect(()=>{
       if(state.store.userPrefs.darkMode) {
-        document.body.setAttribute("data-darkmode","holaquetalmedastutelefono?nov?ayapuesnadacomaseustedunano")
+        document.body.setAttribute("data-darkmode","👍")
       }
       else document.body.removeAttribute("data-darkmode")
     },[state.store.readyState.frontend, state.store.userPrefs.darkMode])

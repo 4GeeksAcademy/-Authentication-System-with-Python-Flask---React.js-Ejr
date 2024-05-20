@@ -6,14 +6,9 @@
 
   .k--board-sidepanel {
     @apply flex border-l border-zinc-800 text-zinc-300;
-    width: 25%;
+    width: 28%;
 
-    & .k--sidepanel-expandable {
-      & > button {
-        @apply flex text-zinc-300 hover:text-zinc-100;
-      }
-    }
-
+/* 
     & .k--sidepanel-handles {
       @apply flex flex-col w-5 h-full text-xl;
 
@@ -22,9 +17,22 @@
         & i { @apply mx-2 my-auto }
       }
     }
+
+    & .k--sidepanel-body {
+
+    } */
   }
 
-  .k--board-btn-discrete {
+  .k--boardpanels-btn {
+    @apply text-zinc-300 hover:text-zinc-100;
+  }
+
+  .k--boardpanels-details {
+    & > summary { @apply text-zinc-300 }
+    &:hover > summary { @apply text-zinc-100 }
+  }
+
+  .k--boardpanels-btn-discrete {
     @apply text-zinc-700 hover:text-zinc-400;
   }
 

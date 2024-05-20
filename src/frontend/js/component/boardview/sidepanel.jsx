@@ -9,7 +9,7 @@ const SidePanelExpandable=({label, icon, expand, children})=>{
   
   return (
     <div className="k--sidepanel-expandable">
-      <button className="flex w-full text-xl justify-between" onClick={()=>{set_expanded(!expanded)}}>
+      <button className="k--boardpanels-btn flex w-full text-xl justify-between" onClick={()=>{set_expanded(!expanded)}}>
         <div className="flex gap-2">
           <i className={`fa ${icon} text-md my-auto`} />
           {label}
@@ -22,6 +22,18 @@ const SidePanelExpandable=({label, icon, expand, children})=>{
         </div>
       }
     </div>
+  )
+}
+
+const SidePanelButton=({label, icon})=>{
+  return (
+    <button className="k--boardpanels-btn k--btn-icon-left flex w-full text-xl justify-between">
+      <i className="fa fa-solid my-auto text-md fa-chevron-left" />
+      <div className="flex gap-2">
+        {label}
+        <i className={`fa ${icon} text-md my-auto`} />
+      </div>
+    </button>
   )
 }
 
@@ -40,54 +52,52 @@ const SidePanel=()=>{
 
   return (
     <div className="k--board-sidepanel k--bg-boardpanels">
-      <div className="k--sidepanel-handles">
-        <button className="k--board-btn-discrete">
-          <i className="fa fa-solid fa-square-caret-right" />
+      
+      <div className="k--sidepanel-handles flex flex-col w-5 h-full text-xl">
+        <button className="k--boardpanels-btn-discrete min-h-12 flex">
+          <i className="fa fa-solid fa-square-caret-right scale-y-150 my-auto" />
         </button>
-        <div ref={resizeRef} className="k--sidepanel-resizer k--board-btn-discrete">
-          <i className="fa fa-solid fa-grip-lines-vertical" />
+        <div ref={resizeRef} className="k--boardpanels-btn-discrete k--sidepanel-resizer flex h-full cursor-w-resize">
+          <i className="fa fa-solid fa-grip-lines-vertical mx-2 my-auto" />
         </div>
       </div>
-      <div className="flex flex-col pr-3">
+
+      <div className="k--sidepanel-body flex flex-col pr-3">
+
         <div className="w-full min-h-12 border-b border-zinc-700" />
+
         <div className="flex flex-col h-full pl-2 pr-4 py-2 gap-2 overflow-y-scroll hidescroll-y">
           <div className="flex flex-col">
             <h2 className="font-bold text-xl">Description:</h2>
             <span className="text-sm text-zinc-400">this would be the mothafuckin board description, here you can write some short of text about what is all this shit about you know?, or better go jump out of the window, i dont give a shit, go fuck a spider nest</span>
           </div>
-          <div className="flex justify-between mx-6">
-            <span className="font-bold text-xl"><i className="fa fa-solid fa-book text-xl" /></span>
-            <span className="font-bold text-xl"><i className="fa fa-regular fa-eye text-xl" /></span>
-            <span className="font-bold text-xl"><i className="fa fa-regular fa-bookmark text-xl" /></span>
+          <div className="flex justify-between mx-6 font-bold text-xl">
+            <button className="k--boardpanels-btn"><i className="fa fa-solid fa-book text-xl" /></button>
+            <button className="k--boardpanels-btn"><i className="fa fa-regular fa-eye text-xl" /></button>
+            <button className="k--boardpanels-btn"><i className="fa fa-regular fa-bookmark text-xl" /></button>
           </div>
           <div className="bg-zinc-700 min-h-px w-full" />
           <div className="flex flex-col mx-2 gap-2">
             <SidePanelExpandable label="Tags" icon="fa-solid fa-tag">
-              { Array.from({length:100}).map((e,i)=>
+              { Array.from({length:8}).map((e,i)=>
                 <span key={`e-${i}`}>eat {i+1} {i==0?"dick":"dicks"}</span>
               )}
             </SidePanelExpandable>
             <SidePanelExpandable label="Styles" icon="fa-solid fa-swatchbook">
-              { Array.from({length:100}).map((e,i)=>
+              { Array.from({length:16}).map((e,i)=>
                 <span key={`e-${i}`}>mount {i+1} {i==0?"horse":"horses"}</span>
               )}
             </SidePanelExpandable>
             <SidePanelExpandable label="Elements" icon="fa-solid fa-cube">
-              { Array.from({length:100}).map((e,i)=>
-                <span key={`e-${i}`}>rape {i+1} {i==0?"kid":"kids"}</span>
+              { Array.from({length:32}).map((e,i)=>
+                <span key={`e-${i}`}>shot {i+1} {i==0?"kid":"kids"}</span>
               )}
             </SidePanelExpandable>
           </div>
           <div className="bg-zinc-700 h-px w-full" />
-          <div className="flex flex-col">
-            <button className="flex text-xl gap-2">
-              <i className="fa fa-solid fa-gear text-md my-auto" />
-              Board Settings
-            </button>
-            <button className="flex text-xl gap-2">
-              <i className="fa fa-solid fa-message text-md my-auto" />
-              Notify
-            </button>
+          <div className="flex flex-col mx-2 gap-2">
+            <SidePanelButton label="Board Settings" icon="fa-solid fa-gear" />
+            <SidePanelButton label="Announce" icon="fa-solid fa-bullhorn" />
           </div>
         </div>
         <div className="w-full min-h-12 border-t border-zinc-700" />

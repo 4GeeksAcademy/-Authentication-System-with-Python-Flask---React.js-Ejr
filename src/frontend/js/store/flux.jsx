@@ -7,13 +7,16 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
 	return {
 		store: {
       readyState: {
-        backend: false, frontend: false
+        backend: false, frontend: false, pointer: false
       },
       fakeUser: null,
       userPrefs: storeDefaults.userPrefs,
       devPrefs: storeDefaults.devPrefs,
-      board: storeDefaults.board,
       timestamp: 0,
+      
+      // TEMP
+      board: storeDefaults.board,
+      items: storeDefaults.items,
 		},
 		actions: {
 
@@ -80,6 +83,8 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       },
 
       // ------------------------------------------------------------ PAGE BEHAVIOUR
+
+      setPointerReady: (state)=> { mergeStore({ readyState: { pointer: state }})},
 
       // ------------------------------------------------------------ THIRD PARTY APIS
 
