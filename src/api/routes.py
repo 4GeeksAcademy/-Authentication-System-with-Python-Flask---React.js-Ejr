@@ -81,6 +81,7 @@ def get_transactions():
 
 
 @api.route('/transactions', methods=['POST'])
+@jwt_required()
 def create_transaction():
     data = request.json
 

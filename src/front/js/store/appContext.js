@@ -20,7 +20,11 @@ const injectContext = PassedComponent => {
 					})
 			})
 		);
-
+		// user_id: user.user_id,
+		// total_price,
+		// products,
+		// is_cash,
+		// created
 		useEffect(() => {
 			/**
 			 * EDIT THIS!
