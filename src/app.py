@@ -122,14 +122,16 @@ def create_new_user():
 @app.route('/user_data/<int:user_id>')
 @jwt_required()
 def get_user_data(user_id):
-    user_data = User_data.query.get(user_id)
+    user = User.query.get(user_id)
+    
+    if user:
+        user_data = User_data.query.filter_by(user_id=user_id).first()
+        serialized_user_data = user_data.serialize()
 
-    if not user_data:
+        return jsonify(serialized_user_data), 200
+    else:
         raise APIException('User data not found', status_code=404)
         
-    serialized_user_data = user_data.serialize()
-
-    return jsonify(serialized_user_data), 200
 
 @app.route('/user_data', methods=['POST', 'PATCH'])
 @jwt_required()

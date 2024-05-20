@@ -51,5 +51,5 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
+  scrollbar-color: var(--primary-color) var(--secondary-color);
 }

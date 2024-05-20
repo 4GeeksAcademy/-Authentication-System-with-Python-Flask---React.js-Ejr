@@ -70,7 +70,7 @@ class User_data(db.Model):
     
 
     def __repr__(self):
-        return f'<User_data {self.id}>'
+        return f'<User_data {self.user_id}>'
 
     def serialize(self):
         return {

@@ -24,7 +24,7 @@ const userForm = () => {
         });
     };
 
-    console.log("userForm")
+
     const handleSubmit = async () => {
 
         try {
@@ -39,7 +39,7 @@ const userForm = () => {
                 alert('Please, complete all fields.');
                 return;
             } else {
-                actions.postUserData(formData);
+                await actions.postUserData(formData);
                 navigate(`/user/${store.user_id}`)
             }
         }

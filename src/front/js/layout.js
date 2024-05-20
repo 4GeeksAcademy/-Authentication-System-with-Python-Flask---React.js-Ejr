@@ -35,7 +35,7 @@ const Layout = () => {
 
                         <Route element={<ProtectedRoute roles={['user']} />}>
 
-                            <Route path="/user/:user_id" element={<User />} />
+                            <Route path="/user/:id" element={<User />} />
                             <Route path="/user/edit_form" element={<EditForm />} />
                         </Route>
                         <Route element={<ProtectedRoute roles={['user', 'trainer']} />}>
