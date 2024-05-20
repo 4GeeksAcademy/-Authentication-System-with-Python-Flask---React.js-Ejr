@@ -7,7 +7,7 @@ export const Footer = () => (
 		<div className="d-flex mt-3">
 			<p className="me-4">© 2024 Friendly Wheels,Inc</p>
 			<Link to="/datosempresa" className="text-decoration-none">
-				<div className="ms-5 text-black">Datos de la Empresa</div>
+				<div className="ms-5 text-black">Sobre Nosotros</div>
 			</Link>
 		</div>
 	</footer>
