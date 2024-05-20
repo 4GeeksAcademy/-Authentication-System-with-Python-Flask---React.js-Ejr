@@ -34,7 +34,18 @@ module.exports = {
             options: { name: '[name].[ext]' }
           }
         }, //for images
-        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
+/*         {
+          test: /\.svg\?path$/, use: {
+            loader: 'file-loader',
+          }
+        }, //for svg path
+        {
+          test: /\.svg$/, use: {
+            loader: 'svg-url-loader',
+            options: { limit: 8192 }
+          }
+        }, //for svgs */
+        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/, use: ['file-loader'] } //for fonts
     ]
   },
   resolve: {
