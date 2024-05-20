@@ -98,7 +98,7 @@ const TrainerExercise = () => {
         Sunday: routine.sunday
       }
     };
-    console.log(data)
+
     try {
       const response = await fetch(`${process.env.BACKEND_URL}/trainer/${user_id}/set_routine`, {
         method: 'POST',

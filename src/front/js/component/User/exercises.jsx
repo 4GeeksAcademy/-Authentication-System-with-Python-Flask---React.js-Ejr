@@ -51,7 +51,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
-    scrollToTop();
+    window.scrollTo({ top: 1800, behavior: 'smooth' });
   };
 
   return (

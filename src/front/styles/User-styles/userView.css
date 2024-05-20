@@ -10,7 +10,7 @@
     gap: 10px;
     padding: 20px;
     box-sizing: border-box;
-    margin-top: 70px;
+    margin-top: 90px;
 }
 
 .user-data,
@@ -26,6 +26,7 @@
 .user-data {
     grid-area: userdata;
 }
+
 
 .user-routine {
     grid-area: routine;

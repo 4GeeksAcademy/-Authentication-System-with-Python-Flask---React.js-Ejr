@@ -55,9 +55,9 @@ export const Navbar = () => {
             </li>
             {loggedin ? (
               <li className="nav-item">
-                <Link to={"/user/:id"} className="nav-link a-services anchor">
+                <p onClick={() => navigate(`/user/${store.user_id}`)} className="nav-link a-services anchor">
                   PROFILE
-                </Link>
+                </p>
               </li>
             ) : (
               <li className="nav-item">
