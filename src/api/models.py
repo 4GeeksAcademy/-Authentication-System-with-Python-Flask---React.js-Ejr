@@ -165,6 +165,7 @@ class Orders(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(250), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
     #Relations
@@ -186,11 +187,11 @@ class Modules(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     type_file = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
-    video_id = db.Column(db.Integer, nullable=False)
+    video_id = db.Column(db.Integer, nullable=True)
     type_video = db.Column(db.String(250), nullable=False)
-    text_id= db.Column(db.Integer, nullable=False)
+    text_id= db.Column(db.Integer, nullable=True)
     type_text = db.Column(db.String(250), nullable=False)
-    image_id = db.Column(db.Integer, nullable=False)
+    image_id = db.Column(db.Integer, nullable=True)
     type_image = db.Column(db.String(250), nullable=False)
     #Relations
     course = db.relationship('Course', backref=db.backref('modules', lazy=True))
