@@ -83,7 +83,11 @@ footer {
 }
 
 .mapa {
-    width:600;
+    width:800;
     height:450;
     border:0;
+}
+
+.logo-footer {
+    width: 50px;
 }
