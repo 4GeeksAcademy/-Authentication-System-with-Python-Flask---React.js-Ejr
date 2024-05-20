@@ -112,8 +112,16 @@ const getState = ({ getStore, setStore }) => {
 				}
 			},
 			fetchDataExercise: async (url, options) => {
+				const cacheKey = `exerciseData_${url}`;
+				const cachedData = localStorage.getItem(cacheKey);
+
+				if (cachedData) {
+					return JSON.parse(cachedData);
+				}
+
 				const response = await fetch(url, options);
 				const data = await response.json();
+				localStorage.setItem(cacheKey, JSON.stringify(data));
 				return data;
 			},
 			fetchDataRoutine: async () => {

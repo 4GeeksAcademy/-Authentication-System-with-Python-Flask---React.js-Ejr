@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../../store/appContext";
 import HorizontalScrollbar from "./horizontalScrollbar.jsx";
-
 import "../../../styles/User-styles/searchExercises.css";
 
 const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
@@ -9,41 +8,56 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
 
-  /*  useEffect(() => {
-     const fetchExercisesData = async () => {
-       const bodyPartsData = await actions.fetchDataExercise(
-         "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
-         store.exerciseOptions
-       );
- 
-       setBodyParts(["all", ...bodyPartsData]);
-     };
-     fetchExercisesData();
-   }, []);
- 
-   const handleSearch = async () => {
- 
-     if (search) {
-       const exerciseData = await actions.fetchDataExercise(
-         "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
-         store.exerciseOptions
-       );
- 
-       const searchedExercises = exerciseData.filter(
-         (item) =>
-           item.name.toLowerCase().includes(search) ||
-           item.target.toLowerCase().includes(search) ||
-           item.equipment.toLowerCase().includes(search) ||
-           item.bodyPart.toLowerCase().includes(search)
-       );
-       setSearch("");
-       setExercises(searchedExercises);
-     }
-   }; */
+  useEffect(() => {
+    const fetchExercisesData = async () => {
+      const cachedBodyParts = localStorage.getItem("bodyParts");
+
+      if (cachedBodyParts) {
+        setBodyParts(["all", ...JSON.parse(cachedBodyParts)]);
+      } else {
+        const bodyPartsData = await actions.fetchDataExercise(
+          "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+          store.exerciseOptions
+        );
+
+        localStorage.setItem("bodyParts", JSON.stringify(bodyPartsData));
+        setBodyParts(["all", ...bodyPartsData]);
+      }
+    };
+    fetchExercisesData();
+  }, []);
+
+  const handleSearch = async () => {
+    if (search) {
+      const cacheKey = "allExercises";
+      let exerciseData = localStorage.getItem(cacheKey);
+
+      if (!exerciseData) {
+        exerciseData = await actions.fetchDataExercise(
+          "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
+          store.exerciseOptions
+        );
+        localStorage.setItem(cacheKey, JSON.stringify(exerciseData));
+      } else {
+        exerciseData = JSON.parse(exerciseData);
+      }
+
+      const searchedExercises = exerciseData.filter(
+        (item) =>
+          item.name.toLowerCase().includes(search) ||
+          item.target.toLowerCase().includes(search) ||
+          item.equipment.toLowerCase().includes(search) ||
+          item.bodyPart.toLowerCase().includes(search)
+      );
+
+      setSearch("");
+      setExercises(searchedExercises);
+    }
+  };
 
   return (
     <section className="exercise-container">
-      {/* <h2 className="title-exercise">Search exercises for more info</h2>
+      <h2 className="title-exercise">Search exercises for more info</h2>
       <div className="input-container">
         <input
           className="search-input"
@@ -51,7 +65,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           type="text"
           placeholder="Search Exercise"
           onChange={(e) => setSearch(e.target.value.toLowerCase())}
-        ></input>
+        />
         <button className="search-btn" onClick={handleSearch}>
           Search
         </button>
@@ -63,7 +77,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           setBodyPart={setBodyPart}
           bodyParts={bodyParts}
         />
-      </div> */}
+      </div>
     </section>
   );
 };

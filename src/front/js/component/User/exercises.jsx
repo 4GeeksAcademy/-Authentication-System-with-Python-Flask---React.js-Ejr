@@ -11,27 +11,36 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const exercisesPerPage = 9;
 
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
 
-      if (bodyPart === "all") {
-        exercisesData = await actions.fetchDataExercise(
-          "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
-          store.exerciseOptions
-        );
+      const cacheKey = bodyPart === "all" ? "allExercises" : `bodyPartExercises_${bodyPart}`;
+      const cachedData = localStorage.getItem(cacheKey);
+
+      if (cachedData) {
+        exercisesData = JSON.parse(cachedData);
       } else {
-        exercisesData = await actions.fetchDataExercise(
-          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1300`,
-          store.exerciseOptions
-        );
+        if (bodyPart === "all") {
+          exercisesData = await actions.fetchDataExercise(
+            "https://exercisedb.p.rapidapi.com/exercises?limit=1300",
+            store.exerciseOptions
+          );
+        } else {
+          exercisesData = await actions.fetchDataExercise(
+            `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=1300`,
+            store.exerciseOptions
+          );
+        }
+
+        localStorage.setItem(cacheKey, JSON.stringify(exercisesData));
       }
 
       setExercises(exercisesData);
     };
 
     fetchExercisesData();
-  }, [bodyPart]); */
+  }, [bodyPart]);
 
   const indexOfLastExercise = pageNumber * exercisesPerPage + exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
@@ -46,7 +55,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   return (
     <div id="exercises" className="exercises-container">
-      {/* <h3 className="exercises-title">Showing Results</h3>
+      <h3 className="exercises-title">Showing Results</h3>
       <div className="exercises-result-container">
         {currentExercises.length > 0 ? (
           currentExercises.map((exercise, index) => (
@@ -75,7 +84,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         containerClassName="pagination"
         activeClassName="active"
         renderOnZeroPageCount={null}
-      /> */}
+      />
     </div>
   );
 };
