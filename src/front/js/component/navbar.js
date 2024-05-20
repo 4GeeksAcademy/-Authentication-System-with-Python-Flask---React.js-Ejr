@@ -22,15 +22,14 @@ export const Navbar = () => {
           CODEFUSION CAFE {/* Centered text */}
         </Typography>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <Link to="/transactions">
-            <Button variant="contained" color="primary">EMPLOYEE ID</Button>
-          </Link>
-          {/* Render the logout button only if not on the sign-up page or the specified link */}
           {!isSpecialPage && (
             <Button variant="contained" color="error" onClick={actions.signOut}>
               LOGOUT
             </Button>
           )}
+          <Link to="/transactions">
+            <Button variant="contained" color="primary">EMPLOYEE ID</Button>
+          </Link>
         </div>
       </Toolbar>
     </AppBar>
