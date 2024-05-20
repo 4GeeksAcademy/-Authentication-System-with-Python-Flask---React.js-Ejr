@@ -33,18 +33,7 @@ module.exports = {
             loader: 'file-loader',
             options: { name: '[name].[ext]' }
           }
-        }, //for images
-/*         {
-          test: /\.svg\?path$/, use: {
-            loader: 'file-loader',
-          }
-        }, //for svg path
-        {
-          test: /\.svg$/, use: {
-            loader: 'svg-url-loader',
-            options: { limit: 8192 }
-          }
-        }, //for svgs */
+        },
         { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/, use: ['file-loader'] } //for fonts
     ]
   },
