@@ -6,7 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export const OrderView = () => {
   const { store, actions } = useContext(Context);
-  const [payment, setPayment] = useState(0);
+  const [payment, setPayment] = useState('');
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const navigate = useNavigate(); // Use useNavigate to get the navigation function
@@ -16,25 +17,25 @@ export const OrderView = () => {
   };
 
   const handleCashPayment = () => {
-    if (payment < store.order.total) {
-      const difference = (store.order.total - payment).toFixed(2);
+    const paymentAmount = parseFloat(payment.replace('$', '')) || 0;
+    if (paymentAmount < store.order.total) {
+      const difference = (store.order.total - paymentAmount).toFixed(2);
       setModalContent(`Insufficient payment! You need $${difference} more.`);
       setModalOpen(true);
     } else {
-      const change = (payment - store.order.total).toFixed(2);
+      const change = (paymentAmount - store.order.total).toFixed(2);
       setModalContent(`Thank you for your payment! Your change is $${change}.`);
       setModalOpen(true);
-      actions.subtractPaymentFromTotal(store.order.total);
-      setPayment(0);
+      actions.clearOrder();  // Clear the order from the global store
+      setPayment('');
     }
   };
 
   const handleCreditCardPayment = () => {
-    // Add your credit card payment handling logic here
     setModalContent('Credit card payment processed.');
     setModalOpen(true);
-    actions.subtractPaymentFromTotal(store.order.total);
-    setPayment(0);
+    actions.clearOrder();  // Clear the order from the global store
+    setPayment('');
   };
 
   const handleCloseModal = () => {
@@ -43,42 +44,61 @@ export const OrderView = () => {
   };
 
   const handleGoBack = () => {
-    navigate('/regions'); // Navigate to the /regions page
+    navigate('/regions');
+  };
+
+  const handleFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleBlur = () => {
+    if (!payment) {
+      setIsInputFocused(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value.replace('$', '');
+    if (!isNaN(value) || value === '') {
+      setPayment(value === '' ? '' : `$${value}`);
+    }
   };
 
   return (
-    <div style={{ display: "flex", marginTop: "80px", padding: "20px" }}> {/* Added marginTop and padding */}
-      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px" }}>
+    <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
+      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
         <Typography variant="h1">Orders:</Typography>
-        <ul>
+        <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
           {store.order.items.map((coffee, index) => (
-            <li key={index}>
-              {coffee.name} - ${coffee.price}
-              <IconButton onClick={() => handleRemove(coffee.name, coffee.price)}>
+            <li key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+              <IconButton onClick={() => handleRemove(coffee.name, coffee.price)} style={{ marginRight: '16px' }}>
                 <DeleteIcon />
               </IconButton>
+              <Typography variant="h6" component="span">
+                {coffee.name} - ${coffee.price}
+              </Typography>
             </li>
           ))}
         </ul>
-        <Typography variant="h3">Total: ${store.order.total.toFixed(2)}</Typography>
-        <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}> {/* Changed to column layout */}
-          <Button
-            variant="contained"
-            onClick={handleGoBack}
-            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
-          >
-            Go Back
-          </Button>
-        </div>
+        <Typography variant="h3" style={{ marginTop: 'auto' }}>Total: ${store.order.total.toFixed(2)}</Typography>
+        <Button
+          variant="contained"
+          onClick={handleGoBack}
+          style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
+        >
+          Go Back
+        </Button>
       </div>
 
-      <div style={{ flex: 1, marginLeft: "20px", padding: "20px" }}>
-        <Typography variant="h6">Payment</Typography> {/* Payment title */}
+      <div style={{ flex: 1, paddingLeft: '16px' }}>
+        <Typography variant="h1">Payment:</Typography>
         <TextField
           label=""
-          type="number"
-          value={payment}
-          onChange={(e) => setPayment(parseFloat(e.target.value))}
+          type="text"
+          value={isInputFocused ? payment : payment || '$0.00'}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           fullWidth
           InputProps={{
             style: {
@@ -86,8 +106,9 @@ export const OrderView = () => {
               borderRadius: "4px",
             }
           }}
+          style={{ marginTop: '20px' }} // Add margin to top of TextField
         />
-        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+        <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}> {/* Add margin to top of button container */}
           <Button
             variant="contained"
             onClick={handleCashPayment}
