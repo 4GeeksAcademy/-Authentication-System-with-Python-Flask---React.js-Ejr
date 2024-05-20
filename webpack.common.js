@@ -33,8 +33,8 @@ module.exports = {
             loader: 'file-loader',
             options: { name: '[name].[ext]' }
           }
-        }, //for images
-        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
+        },
+        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/, use: ['file-loader'] } //for fonts
     ]
   },
   resolve: {
