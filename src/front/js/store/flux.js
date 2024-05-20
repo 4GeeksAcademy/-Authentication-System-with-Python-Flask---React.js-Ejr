@@ -183,6 +183,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			const data = await response.json();
 			return data;
+		},
+		fetchUserTransactions: async () => {
+			const store = getStore();
+			const { user } = store;
+
+			if (!user || !user.token) {
+				throw new Error("User is not authenticated");
+			}
+
+			const response = await fetch(`${process.env.BACKEND_URL}api/transactions`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${user.token}`
+				}
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.msg || "Error fetching transactions");
+			}
+
+			const data = await response.json();
+			setStore({ transactions: data });
+			return data;
 		}
 	  }
 	};
