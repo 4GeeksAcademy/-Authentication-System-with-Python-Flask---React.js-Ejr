@@ -137,7 +137,8 @@ def get_token():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             time_zone = getattr(login_user, 'time_zone', None)
             data_to_return = {
-                'token':access_token, 
+                'token':access_token,
+                'user_id' : login_user.id,
                 'admin': login_user.admin,
                 'email': login_user.email,
                 'username': login_user.username,
@@ -411,7 +412,6 @@ def update_user(user_id):
                 user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
 
             # Actualizar los demás campos si se proporcionan, de lo contrario, mantener los valores actuales
-            user.email = user_data.get('email', user.email)
             user.username = user_data.get('username', user.username)
             user.first_name = user_data.get('first_name', user.first_name)
             user.last_name = user_data.get('last_name', user.last_name)
