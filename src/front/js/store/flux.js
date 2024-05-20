@@ -1,19 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			isLoggedIn:false,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -33,20 +21,72 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+/* --------- De aqui en adelante van las funciones de flux  */
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
+setLogin:()=>{
+	setStore({isLoggedIn:true})
+},
+setLogout:()=>{
+	setStore({isLoggedIn:false})
+	localStorage.removeItem('token');
+	
+},
+
+register_User: (name,email, password) =>{
+	
+	fetch( 'https://super-duper-barnacle-74g6vpw66q42pwr5-3001.app.github.dev/api/signup',{
+		method:'POST',
+		headers:{
+			'Content-Type' : 'application/json'
+		},
+		body : JSON.stringify({
+			"name": name,
+			"email": email,
+			"password": password,
+		   }),
+})
+	.then(Response => Response.json())
+	.then(data => {
+		console.log(data); 
+		
+	})
+	.catch(error => console.log('Error parcero', error))
+
+},
+
+/* --------- FUNCION FLUX (fetch) PARA LOGIN----------- */
+login: async (email, password) => {
+    await fetch('https://super-duper-barnacle-74g6vpw66q42pwr5-3001.app.github.dev/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Login exitoso:', data);
+
+        localStorage.setItem('token', data.token);
+
+        getActions().setLogin();
+        return data;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        throw error;
+    });
+}
+
+
+
 		}
 	};
 };

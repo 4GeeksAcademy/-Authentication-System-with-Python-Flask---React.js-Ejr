@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../styles/login.css";
 import { Context } from "../store/appContext";
 
-export const Login = () => {
-	const {store, actions} =useContext(Context);
+export const Login=()=>{
+    const {store, actions} =useContext(Context);
     /* ------------------------------------------- */
 
     /* Estas lineas creamos los useState de los inputs */

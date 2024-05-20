@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Post, Comment, Like, Suggestion
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from flask_jwt_extended import create_access_token
 
 
 api = Blueprint('api', __name__)
@@ -34,8 +35,8 @@ def login():
     usuario = User.query.filter_by(email=email).first()
 
     if usuario and usuario.password == password:
-        """ access_token = create_access_token(identity=usuario.id) """
-        """ return jsonify({"token": access_token}), 200 """
+         access_token = create_access_token(identity=usuario.id) 
+         return jsonify({"token": access_token}), 200
     else:
         return jsonify({'mensaje': 'Usuario y Contraseña no encontrados'}), 401
 
@@ -43,7 +44,6 @@ def login():
 
 @api.route('/signup', methods=['POST'])
 def register_User():
-
     data = request.get_json()
     print(data);
     name = data["name"]
