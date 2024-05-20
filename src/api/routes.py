@@ -512,6 +512,20 @@ def delete_module(module_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
+    @api.route('/viewManager/courses', methods=['PUT'])
+def update_manager_courses():
+    data = request.get_json()
+    manager_id = data.get('manager_id')
+    courses = data.get('courses')
+
+    manager = CourseManager.query.get(manager_id)
+    if manager:
+        manager.courses = courses
+        db.session.commit()
+        return jsonify({"message": "Courses updated successfully"}), 200
+    else:
+        return jsonify({"error": "Manager not found"}), 404
+
         
 
 
