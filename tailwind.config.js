@@ -174,6 +174,7 @@ module.exports = merge({
       fuchsia: colors.fuchsia,
       pink: colors.pink,
       rose: colors.rose,
+      
     }),
     columns: {
       auto: 'auto',

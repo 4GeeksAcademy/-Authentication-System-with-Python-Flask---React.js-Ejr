@@ -1,4 +1,4 @@
-import board_default_background from "../../assets/img/board-default-bg.png"
+import board_default_background from "../../assets/img/board-default-bg.png" 
 import Constants from "../app/constants.js"
 
 // ------------------------------------------------------------ DEFAULT VALUES FOR STORE SHIT
@@ -18,7 +18,7 @@ export const storeDefaults = Object.freeze({
   board:{
     title: "Untitled",
     description: "Write a description of your board",
-    backgroundUrl: board_default_background,
+    backgroundUrl: board_default_background, 
     itemCount: 2,
     items: [
       {
