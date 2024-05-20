@@ -421,17 +421,6 @@ def get_courses():
     except Exception as err:
         return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
 
-@api.route('/view/courses', methods=['GET'])
-def get_courses():
-    try:
-        courses = Course.query.all()
-        serialized_courses = [course.serialize() for course in courses]
-        return jsonify({"Courses": serialized_courses}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
-
-
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
     try:
