@@ -25,10 +25,6 @@ export const AsiaPacific = () => {
     navigate('/regions'); // Navigate to the /regions page
   };
 
-  const handleLogOut = () => {
-    actions.signOut(); // Call the signOut action from the store
-    navigate('/'); // Optionally, navigate to the home page or login page after logging out
-  };
 
   return (
     <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
@@ -61,13 +57,6 @@ export const AsiaPacific = () => {
             style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
           >
             Go Back {/* Added Go Back button */}
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleLogOut}
-            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
-          >
-            Log Out
           </Button>
         </div>
       </div>

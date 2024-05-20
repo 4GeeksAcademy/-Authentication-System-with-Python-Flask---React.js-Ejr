@@ -46,11 +46,6 @@ export const OrderView = () => {
     navigate('/regions'); // Navigate to the /regions page
   };
 
-  const handleLogOut = () => {
-    actions.signOut(); // Call the signOut action from the store
-    navigate('/'); // Optionally, navigate to the home page or login page after logging out
-  };
-
   return (
     <div style={{ display: "flex", marginTop: "80px", padding: "20px" }}> {/* Added marginTop and padding */}
       <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px" }}>
@@ -73,13 +68,6 @@ export const OrderView = () => {
             style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
           >
             Go Back
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleLogOut}
-            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
-          >
-            Log Out
           </Button>
         </div>
       </div>
