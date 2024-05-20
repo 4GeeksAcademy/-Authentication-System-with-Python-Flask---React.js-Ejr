@@ -294,3 +294,182 @@ def get_room(room_id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+#update Room --------------------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>', methods=['PUT'])
+@jwt_required()
+def update_room(room_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Verificar si el usuario es admin
+        current_user = User.query.get(current_user_id)
+        if not current_user:
+            return jsonify({"error": "User not found."}), 404
+
+        # Verificar si el usuario es admin o el creador del room
+        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
+        if not room and not current_user.admin:
+            return jsonify({"error": "Unauthorized."}), 403
+
+        if room:
+            room_data = request.json
+            room.date = room_data.get('date', room.date)
+            room.time = room_data.get('time', room.time)
+            room.room_name = room_data.get('room_name', room.room_name)
+            room.game_id = room_data.get('game_id', room.game_id)
+            room.platform = room_data.get('platform', room.platform)
+            room.description = room_data.get('description', room.description)
+            room.mood = room_data.get('mood', room.mood)
+            room.room_size = room_data.get('room_size', room.room_size)
+
+            db.session.commit()
+            return jsonify({"message": "Room updated successfully", "room": room.serialize()}), 200
+        else:
+            return jsonify({"error": "Room not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# DELETE ROOM -------------------------------------------------------------------------------------------------------
+
+@api.route('/room/<int:room_id>', methods=['DELETE'])
+@jwt_required()
+def delete_room(room_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Verificar si el usuario es admin
+        current_user = User.query.get(current_user_id)
+        if not current_user:
+            return jsonify({"error": "User not found."}), 404
+
+        # Verificar si el usuario es admin o el creador del room
+        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
+        if not room and not current_user.admin:
+            return jsonify({"error": "Unauthorized."}), 403
+
+        if room:
+            db.session.delete(room)
+            db.session.commit()
+            return jsonify({"message": "Room deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Room not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Obteniendo la información del usuario-------------------------------------------------------------------------
+
+@api.route('/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user(user_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Verificar si el usuario solicitado es el mismo que el usuario autenticado o si el usuario autenticado es admin
+        if current_user_id != user_id:
+            current_user = User.query.get(current_user_id)
+            if not current_user or not current_user.admin:
+                return jsonify({"error": "Unauthorized."}), 403
+
+        user = User.query.get(user_id)
+        if user:
+            return jsonify(user.serialize()), 200
+        else:
+            return jsonify({"error": "User not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+# EDIT USER -------------------------------------------------------------------------------------------------------------------------
+@api.route('/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def update_user(user_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Obtener la instancia del usuario actual
+        current_user = User.query.get(current_user_id)
+
+        # Verificar si el usuario actual es admin o el mismo usuario que solicita la actualización
+        if not current_user or (current_user.id != user_id and not current_user.admin):
+            return jsonify({"error": "Unauthorized."}), 403
+
+        user = User.query.get(user_id)
+        if user:
+            user_data = request.json
+
+            # Solo actualizar el password si se proporciona uno nuevo, de lo contrario, mantener el actual
+            new_password = user_data.get('password')
+            if new_password:
+                user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
+
+            # Actualizar los demás campos si se proporcionan, de lo contrario, mantener los valores actuales
+            user.email = user_data.get('email', user.email)
+            user.username = user_data.get('username', user.username)
+            user.first_name = user_data.get('first_name', user.first_name)
+            user.last_name = user_data.get('last_name', user.last_name)
+            user.age = user_data.get('age', user.age)
+            user.region = user_data.get('region', user.region)
+            user.timezone = user_data.get('timezone', user.timezone)
+            user.languages = user_data.get('languages', user.languages)
+            user.xbox = user_data.get('xbox', user.xbox)
+            user.psn = user_data.get('psn', user.psn)
+            user.steam = user_data.get('steam', user.steam)
+            user.google_play = user_data.get('google_play', user.google_play)
+            user.nintendo = user_data.get('nintendo', user.nintendo)
+            user.epic_id = user_data.get('epic_id', user.epic_id)
+            user.bio = user_data.get('bio', user.bio)
+            user.gender = user_data.get('gender', user.gender)
+
+            # Solo permitir que los administradores actualicen el campo admin
+            if current_user.admin:
+                user.admin = user_data.get('admin', user.admin)
+
+            db.session.commit()
+            return jsonify({"message": "User updated successfully", "user": user.serialize()}), 200
+        else:
+            return jsonify({"error": "User not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    
+#--DELETE USER----------------------------------------------------------------------------------------------------------------------------------------------
+
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Obtener la instancia del usuario actual
+        current_user = User.query.get(current_user_id)
+
+        # Verificar si el usuario actual es admin o el mismo usuario que solicita la eliminación
+        if not current_user or (current_user.id != user_id and not current_user.admin):
+            return jsonify({"error": "Unauthorized."}), 403
+
+        user_to_delete = User.query.get(user_id)
+        
+        if user_to_delete:
+            # Verificar si el usuario a eliminar no es un administrador, a menos que el usuario actual sea un admin
+            if user_to_delete.admin and not current_user.admin:
+                return jsonify({"error": "Cannot delete an admin user."}), 403
+
+            db.session.delete(user_to_delete)
+            db.session.commit()
+            return jsonify({"message": "User deleted successfully"}), 200
+        else:
+            return jsonify({"error": "User not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
