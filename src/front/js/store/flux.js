@@ -4,13 +4,14 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             rooms: [],
-            loadingRooms: false 
+            loadingRooms: false,
+            user: null // Guardar la información del usuario autenticado
         },
 
         actions: {
             submitLogInForm: async (logInData) => {
                 try {
-                    let response = await fetch(`${apiUrl}api/login`, {
+                    let response = await fetch(`${apiUrl}/api/login`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -23,17 +24,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let data = await response.json();
                     localStorage.setItem("jwt-token", data.token);
+                    setStore({ user: data });
 
                     return true;
                 } catch (error) {
-                    console.error('Error logging user in user in:', error);
+                    console.error('Error logging user in:', error);
                     return false;
                 }
             },
 
             submitSignUpForm: async (signUpData) => {
                 try {
-                    let response = await fetch(`${apiUrl}api/signup`, {
+                    let response = await fetch(`${apiUrl}/api/signup`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -54,14 +56,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             fetchRooms: async () => {
                 const store = getStore();
-                setStore({ loadingRooms: true }); //
+                setStore({ loadingRooms: true });
 
                 try {
-                    let response = await fetch(`${apiUrl}api/home`); 
+                    let response = await fetch(`${apiUrl}/api/home`);
                     if (!response.ok) throw new Error("Couldn't fetch current rooms");
                     let roomsData = await response.json();
                     setStore({ 
-                        ...store, 
                         rooms: roomsData,
                         loadingRooms: false 
                     });
@@ -74,25 +75,84 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            getMessage: async () => {
-                try {
-                    const resp = await fetch(`${apiUrl}api/hello`);
-                    const data = await resp.json();
-                    setStore({ message: data.message });
+            searchRooms: (searchTerm, roomType) => {
+                const store = getStore();
+                return store.rooms.filter(room => {
+                    const matchesSearchTerm = room.room_name.toLowerCase().includes(searchTerm.toLowerCase());
+                    const matchesRoomType = roomType === 'All' || room.room_type === roomType;
+                    return matchesSearchTerm && matchesRoomType;
+                });
+            },
 
+            logout: () => {
+                localStorage.removeItem('jwt-token');
+                setStore({ user: null });
+            },
+
+            getProfile: async () => {
+                const store = getStore();
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return null;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/profile`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch profile data');
+                    const data = await response.json();
+                    setStore({ user: data });
                     return data;
                 } catch (error) {
-                    console.log("Error loading message from backend", error);
+                    console.error('Error fetching profile data:', error);
+                    return null;
                 }
             },
 
-            changeColor: (index, color) => {
-                const store = getStore();
-                const demo = store.demo.map((elm, i) => {
-                    if (i === index) elm.background = color;
-                    return elm;
-                });
-                setStore({ demo: demo });
+            updateProfile: async (profileData) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/profile`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(profileData)
+                    });
+                    if (!response.ok) throw new Error('Failed to update profile');
+                    const data = await response.json();
+                    setStore({ user: data });
+                    return true;
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    return false;
+                }
+            },
+
+            deleteProfile: async () => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/profile`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to delete profile');
+                    localStorage.removeItem('jwt-token');
+                    setStore({ user: null });
+                    return true;
+                } catch (error) {
+                    console.error('Error deleting profile:', error);
+                    return false;
+                }
             }
         }
     };

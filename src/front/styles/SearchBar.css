@@ -1,0 +1,42 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre elementos */
+    padding: 10px;
+    background-color: rgba(169, 171, 173, 0.26); /* Color de fondo basado en el diseño */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(169, 171, 173, 0.26); /* Color de fondo basado en el diseño */
+    color: #ffffff; /* Color de texto blanco */
+    outline: none;
+}
+
+.room-type-select {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(169, 171, 173, 0.26); /* Color de fondo basado en el diseño */
+    color: #ffffff; /* Color de texto blanco */
+    outline: none;
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF; /* Color de fondo del botón */
+    color: #ffffff; /* Color de texto blanco */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.search-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
