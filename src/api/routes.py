@@ -137,7 +137,8 @@ def get_token():
             access_token = create_access_token(identity=user_id, expires_delta=expires)
             time_zone = getattr(login_user, 'time_zone', None)
             data_to_return = {
-                'token':access_token, 
+                'token':access_token,
+                'user_id' : login_user.id,
                 'admin': login_user.admin,
                 'email': login_user.email,
                 'username': login_user.username,
