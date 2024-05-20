@@ -79,6 +79,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem('order', JSON.stringify(updatedOrder));
 			}
 		},
+		clearOrder: () => {
+			const defaultOrder = {
+				total: 0,
+				items: []
+			};
+			setStore({ order: defaultOrder });
+			localStorage.setItem('order', JSON.stringify(defaultOrder));
+		},
 		login: async (username, password) => {
 			const resp = await fetch(`${process.env.BACKEND_URL}api/token`, { 
 				method: "POST",
@@ -214,3 +222,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
