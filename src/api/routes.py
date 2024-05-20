@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Transactions
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
 
@@ -70,13 +70,16 @@ def create_token():
 @api.route("/transactions", methods=["GET"])
 @jwt_required()
 def get_transactions():
-    # Query all transactions from the database
-    all_transactions = Transactions.query.all()
+    current_user_id = get_jwt_identity()  # Get the user ID from the JWT token
+
+    # Query transactions for the current user
+    user_transactions = Transactions.query.filter_by(user_id=current_user_id).all()
 
     # Serialize the transactions
-    serialized_transactions = [transaction.serialize() for transaction in all_transactions]
+    serialized_transactions = [transaction.serialize() for transaction in user_transactions]
 
     return jsonify(serialized_transactions), 200
+
 
 
 
