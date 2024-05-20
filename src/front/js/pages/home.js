@@ -1,26 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect  } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	useEffect(() => {
+		actions.getPosts();
+		actions.getSuggestions();
+	}, [actions]);
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
+		<div>
+			<h1>Posts</h1>
+			<ul>
+				{store.posts.map((post, index) => (
+					<li key={index}>{post.bodytext}</li>
+				))}
+			</ul>
+
+			<h1>Suggestions</h1>
+			<ul>
+				{store.suggestions.map((suggestion, index) => (
+					<li key={index}>{suggestion.suggestion}</li>
+				))}
+			</ul>
 		</div>
 	);
 };
