@@ -30,6 +30,7 @@ class Vehicle(db.Model):
     precio_id_stripe = db.Column(db.String(50), nullable=False)   
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    url_img = db.Column(db.String(150), nullable=True)
 
     def __repr__(self):
         return f'<Vehicle {self.id}>'
@@ -44,7 +45,8 @@ class Vehicle(db.Model):
             "asientos": self.asientos,
             "precio": self.precio,
             "user_id": self.user_id,
-            "precio_id_stripe": self.precio_id_stripe
+            "precio_id_stripe": self.precio_id_stripe,
+            "url_img" : self.url_img
         }
 
 class FavoriteVehicle(db.Model):
