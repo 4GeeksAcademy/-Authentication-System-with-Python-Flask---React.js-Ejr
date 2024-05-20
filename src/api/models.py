@@ -107,9 +107,9 @@ class Course(db.Model):
     category_title = db.Column(db.String(250), nullable=False)
     modules_length = db.Column(db.Integer, nullable=False)
     certificate = db.Column(db.String(250), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
    
     #Relations
     user = db.relationship('User', backref=db.backref('courses', lazy=True))

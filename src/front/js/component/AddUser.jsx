@@ -85,7 +85,7 @@ export const AddUser = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (store.error === '' && counter === 4) {
+                if (store.error === '' && selectedRole !== '' && counter === 4) {
                     setRedirectPath('/LogIn');
                     clearInterval(interval);
                 }
@@ -103,13 +103,13 @@ export const AddUser = () => {
         <div className='container'>
             {/* Msg */}
             <div className='position-relative'>
-                <div className='d-flex justify-content-center position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
-                    {msgError === ''
+                <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
+                    {msgError === '' && selectedRole !== ''
                         ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
                             {"Sign Up Successfully"}
                         </div>
                         : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
-                            {msgError}
+                            {msgError || 'Error, Invalid Role'}
                         </div>}
                 </div>
             </div>
@@ -142,7 +142,7 @@ export const AddUser = () => {
                     </div>
                 </div>
                 {/* Name */}
-                <div className='col-md-6'>
+                <div className='col-lg-6'>
                     <label className="form-label">Name</label>
                     <input
                         type="text"
@@ -153,7 +153,7 @@ export const AddUser = () => {
                         required />
                 </div>
                 {/* Last Name */}
-                <div className='col-md-6'>
+                <div className='col-lg-6'>
                     <label className="form-label">Last name</label>
                     <input
                         type="text"
@@ -164,7 +164,7 @@ export const AddUser = () => {
                         required />
                 </div>
                 {/* Username */}
-                <div className={`${(selectedRole === 'teacher' || selectedRole === 'user') ? 'd-block col-md-12' : 'd-none'}`}>
+                <div className={`${(selectedRole === 'teacher' || selectedRole === 'user') ? 'd-block col-lg-12' : 'd-none'}`}>
                     <label className="form-label">Username</label>
                     <div className="input-group has-validation">
                         <input
@@ -177,7 +177,7 @@ export const AddUser = () => {
                     </div>
                 </div>
                 {/* Number Document */}
-                <div className={`col-md-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block'}`}>
+                <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block'}`}>
                     <label className="form-label">Number Document</label>
                     <input
                         type="text"
@@ -188,7 +188,7 @@ export const AddUser = () => {
                         required />
                 </div>
                 {/* Gender */}
-                <div className={`col-md-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block col-md-3'}`}>
+                <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block col-lg-3'}`}>
                     <label className="form-label">Gender</label>
                     <select className="form-select" name='gender' onChange={handleChange} value={userData.gender} required>
                         <option value="">--Choose--</option>
@@ -198,7 +198,7 @@ export const AddUser = () => {
                     <div className="invalid-tooltip">Please select a Gender</div>
                 </div>
                 {/* Phone */}
-                <div className={`${(selectedRole === 'manager') ? 'd-block col-md-4' : 'd-block col-md-3'}`}>
+                <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'd-block col-lg-3'}`}>
                     <label className="form-label">Phone</label>
                     <input
                         type="phone"
@@ -210,7 +210,7 @@ export const AddUser = () => {
                     <div className="invalid-tooltip">Please provide a valid Phone.</div>
                 </div>
                 {/* Age */}
-                <div className={`${(selectedRole === 'manager') ? 'd-none' : 'd-block col-md-3 '}`}>
+                <div className={`${(selectedRole === 'manager') ? 'd-none' : 'd-block col-lg-3 '}`}>
                     <label className="form-label">Age</label>
                     <input
                         type="number"
@@ -222,7 +222,7 @@ export const AddUser = () => {
                     <div className="invalid-tooltip">Please provide a valid Age.</div>
                 </div>
                 {/* Certificate */}
-                <div className={`${(selectedRole === 'teacher') ? 'd-block col-md-12' : 'd-none'}`}>
+                <div className={`${(selectedRole === 'teacher') ? 'd-block col-lg-12' : 'd-none'}`}>
                     <label className="form-label">Do you have a Certificate?</label>
                     <input
                         type="text"
@@ -234,7 +234,7 @@ export const AddUser = () => {
                     <div className="invalid-tooltip">Please provide a valid certificate.</div>
                 </div>
                 {/* Email */}
-                <div className={`${(selectedRole === 'manager') ? 'd-block col-md-4' : 'col-md-6 '}`}>
+                <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'col-lg-6 '}`}>
                     <label className="form-label">Email address</label>
                     <input
                         type="email"
@@ -246,7 +246,7 @@ export const AddUser = () => {
                     <div className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 {/* Password */}
-                <div className={`${(selectedRole === 'manager') ? 'd-block col-md-4' : 'col-md-6'}`}>
+                <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'col-lg-6'}`}>
                     <label className="form-label">Password</label>
                     <input
                         type="password"
@@ -274,7 +274,7 @@ export const AddUser = () => {
                     }
                 </button>
 
-                <div className='col-md my-3 text-center text-decoration-underline' style={{ cursor: "pointer" }}>
+                <div className='col-lg my-3 text-center text-decoration-underline' style={{ cursor: "pointer" }}>
                     <a onClick={handlerGoToLogIn}>You already have an account.</a>
                 </div>
             </form>

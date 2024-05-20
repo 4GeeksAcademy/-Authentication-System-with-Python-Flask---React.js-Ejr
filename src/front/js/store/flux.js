@@ -1,28 +1,17 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      message: '',
-      user: '',
-      error: {},
-      currentRole: '',
-      spinner: false
+      message: "",
+      user: "",
+      error: "",
+      currentRole: "",
+      spinner: false,
     },
     actions: {
-      /* getMessage: async () => {
-        try {
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-          const data = await resp.json();
-          setStore({ message: data.message });
-          return data;
-        } catch (error) {
-          console.log("Error loading message from backend", error);
-        }
-      }, */
-
       createUser: async (newUser, userRole) => {
         const store = getStore();
-        getActions().updateMsgError('')
-        getActions().spinner(true)
+        getActions().updateMsgError("");
+        getActions().spinner(true);
         try {
           const respCreateUser = await fetch(
             process.env.BACKEND_URL + `/api/signup/` + userRole,
@@ -33,25 +22,24 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
               body: JSON.stringify(newUser),
             }
-          )
+          );
 
           if (!respCreateUser.ok) {
-            throw new Error(
-              "Error al crear el usuario: " + respCreateUser.statusText
-            );
+            const errorData = await respCreateUser.json();
+            setStore({ ...store, error: errorData.Error });
+            throw new Error(errorData.Error || "Error al crear el usuario");
           }
           const dataCreateUser = await respCreateUser.json();
-          
         } catch (err) {
-          setStore({ ...store, error: "Error al crear el usuario" })
-        }finally{
-          getActions().spinner(false)
+        } finally {
+          getActions().spinner(false);
         }
       },
 
       loginIn: async (userToLogin, userRole) => {
         const store = getStore();
-        getActions().updateMsgError('')
+        localStorage.setItem("userToLogin", JSON.stringify(userToLogin))
+        getActions().updateMsgError("")
         getActions().spinner(true)
         try {
           const respLoginIn = await fetch(
@@ -66,33 +54,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           if (!respLoginIn.ok) {
-            throw new Error(
-              "Error al iniciar sesión: " + respLoginIn.statusText
-            );
+            const errorData = await respLoginIn.json()
+            setStore({ ...store, error: errorData.Error })
+            throw new Error(errorData.Error || "Error al iniciar sesión")
           }
 
-          const dataLoginIn = await respLoginIn.json();
-          localStorage.setItem("jwt-token", dataLoginIn.access_token);
-          localStorage.setItem("currentRole", userRole);
-
-          await getActions().getUser(userRole);
+          const dataLoginIn = await respLoginIn.json()
+          localStorage.setItem("jwt-token", dataLoginIn.access_token)
+          localStorage.setItem("currentRole", userRole)
+          setStore({ ...store, currentRole: userRole })
+          await getActions().getUser();
         } catch (err) {
-          setStore({ ...store, error: "Error al iniciar sesión" })
-        }finally{
-          getActions().spinner(false)
+          console.error(err)
+        } finally {
+          getActions().spinner(false);
         }
       },
 
-      getUser: async (userRole) => {
+      getUser: async (userRol) => {
         const store = getStore()
-        getActions().updateMsgError('')
+        getActions().updateMsgError("")
         getActions().spinner(true)
+
         try {
-          const token = localStorage.getItem("jwt-token");
-          if (!token) throw new Error("No token found");
+          const token = localStorage.getItem("jwt-token")
+          if (!token) throw new Error("No token found")
 
           const respGetUsers = await fetch(
-            process.env.BACKEND_URL + `/api/private/` + userRole,
+            process.env.BACKEND_URL +
+              `/api/view/` +
+              (store.currentRole || userRol),
             {
               method: "GET",
               headers: {
@@ -103,47 +94,57 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           if (!respGetUsers.ok) {
+            const errorData = await respGetUsers.json()
+            setStore({ ...store, error: errorData.Error })
             throw new Error(
-              "Error al obtener los datos del usuario: " +
-                respGetUsers.statusText
+              errorData.Error || "Error al obtener los datos del usuario"
             );
           }
 
           const dataGetUser = await respGetUsers.json()
           setStore({ ...store, user: dataGetUser })
-          
         } catch (err) {
-          setStore({ ...store, error: "Error al obtener los datos del usuario" })
-        }finally{
-          getActions().spinner(false)
+        } finally {
+          getActions().spinner(false);
         }
       },
 
       checkUserSession: async () => {
-        const store = getStore()
+        const store = getStore();
         try {
-          const token = localStorage.getItem("jwt-token");
-          const userRole = localStorage.getItem("currentRole");
-          if (token && userRole) {
-            setStore({ currentRole: userRole });
-            await getActions().getUser(store.currentRole);
+          const token = localStorage.getItem("jwt-token")
+          const userRole = localStorage.getItem("currentRole")
+          const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
+          if (token && userRole && userToLogin) {
+            setStore({ currentRole: userRole })
+            await getActions().getUser(userRole)
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" })
-          console.error("Error checking user session: ", err);
+          console.error("Error checking user session: ", err)
         }
       },
 
       updateMsgError: async (changesMsg) => {
-        const store = getStore()
-        setStore({ ...store, error: changesMsg}) 
+        const store = getStore();
+        setStore({ ...store, error: changesMsg });
       },
 
-      spinner: async (changesSpinner) => {
-        const store = getStore()
-        setStore({ ...store, spinner: changesSpinner}) 
+      spinner: (changesSpinner) => {
+        const store = getStore();
+        setStore({ ...store, spinner: changesSpinner });
       },
 
+      /* getMessage: async () => {
+        try {
+          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+          const data = await resp.json();
+          setStore({ message: data.message });
+          return data;
+        } catch (error) {
+          console.log("Error loading message from backend", error);
+        }
+      }, */
     },
   };
 };

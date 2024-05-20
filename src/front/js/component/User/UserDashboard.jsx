@@ -1,12 +1,12 @@
   
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../store/appContext';
-import { CoursesContainer } from '../component/CoursesContainer.jsx';
+import { Context } from '../../store/appContext.js';
+import { CoursesContainer } from '../Courses/CoursesContainer.jsx';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';
-import { Certificate } from './Certificate.jsx';
+
 
 export const UserDashboard = () => {
     const { store, actions } = useContext(Context);
@@ -25,9 +25,7 @@ export const UserDashboard = () => {
         setButtonSelected(<UserPayment />)
     }
 
-    const handlePDF=()=>{
-        setButtonSelected(<Certificate />)
-    }
+  
 
     const navigate = useNavigate();
 
@@ -53,7 +51,6 @@ export const UserDashboard = () => {
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyPayments}>
                     My Payments
                 </button>
-                <button className='btn btn-outline-primary my-2 w-75'onClick={handlePDF}>Certificate</button>
             </div>
             <div className="col-9">
                 {buttonSelected}
