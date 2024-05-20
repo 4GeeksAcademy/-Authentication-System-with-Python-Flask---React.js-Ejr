@@ -150,6 +150,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 			const loginResp = await getActions().login(username, password);
 			
 			return loginResp;
+		},
+		createTransaction: async (total_price, products, is_cash) => {
+			const store = getStore();
+			const { user } = store;
+
+			if (!user || !user.token) {
+				throw new Error("User is not authenticated");
+			}
+
+			const created = new Date().toISOString(); // Set the created date to the current date and time
+
+			const response = await fetch(`${process.env.BACKEND_URL}api/transactions`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${user.token}`
+				},
+				body: JSON.stringify({
+					user_id: user.user_id,
+					total_price,
+					products,
+					is_cash,
+					created
+				})
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.msg || "Error creating transaction");
+			}
+
+			const data = await response.json();
+			return data;
 		}
 	  }
 	};
