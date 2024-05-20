@@ -58,7 +58,7 @@ export const AgregarForm = () => {
                     </div>
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Precio por día</h4>
-                        <input type="text" className="form-control mb-3" id="exampleinputPrecioDia" placeholder="Ingresa precio por día" name="precio" onChange={(e) => setInputPrecio(e.target.value)} />
+                        <input type="number" className="form-control mb-3" id="exampleinputPrecioDia" placeholder="Ingresa precio por día" name="precio" onChange={(e) => setInputPrecio(e.target.value)} />
                     </div>
                 </div>
                 <div className="d-flex justify-content-center" id="btnAgregarForm">
