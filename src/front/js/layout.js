@@ -10,7 +10,7 @@ import { Login } from "./pages/login";
 import {AgregarVehiculo } from "./pages/agregarvehiculo";
 import { Details } from "./pages/details";
 import { Payment } from "./pages/payment";
-import { DatosEmpresa } from "./pages/datosempresa";
+import { SobreNosotros } from "./pages/sobrenosotros";
 import injectContext from "./store/appContext";
 
 const Layout = () => {
@@ -32,7 +32,7 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Details />} path="/details/:id" />
                         <Route element={<Payment />} path="/payment" />
-                        <Route element={<DatosEmpresa />} path="/datosempresa" />
+                        <Route element={<SobreNosotros />} path="/sobrenosotros" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
