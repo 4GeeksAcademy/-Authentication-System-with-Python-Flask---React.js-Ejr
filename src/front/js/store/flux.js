@@ -185,7 +185,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 			getUsers : async () => {
 				try {
-				  let response = await fetch("https://humble-space-funicular-5ggx7rpppw76fqj6-3000.app.github.dev/api/users", 
+				  let response = await fetch("https://didactic-rotary-phone-5ggx7rpp7v9gh479r-3001.app.github.dev/api/users", 
 				  {
 					method: "GET",
 					headers: {
@@ -205,7 +205,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  
 				  let store = getStore(); // Obtiene el estado actual del almacén
 				  setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
-			  
+				  
 				} catch (error) {
 				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
 				  // Puedes también manejar el estado del error en tu store si es necesario

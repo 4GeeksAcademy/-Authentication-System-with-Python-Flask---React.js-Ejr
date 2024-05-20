@@ -22,7 +22,7 @@ import Login from "./component/Login.jsx"; // Importación del componente Navbar
 import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del componente Navbar
 import Singup from "./component/Singup.jsx"; 
 import Users from "./pages/Users.jsx";
-
+import Oneuser from "./pages/Oneuser.jsx";
 
 
 
@@ -46,6 +46,7 @@ const Layout = () => {
                         <Route element={<Homeadmin />} path="/Admin" />
                         <Route element={<Users />} path="/users" />
                         <Route element={<Benefits />} path="/Benefits" />
+                        <Route element={<Oneuser />} path="/User/:id" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
