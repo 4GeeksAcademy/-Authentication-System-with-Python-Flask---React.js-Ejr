@@ -74,6 +74,5 @@
     <li>JWT (JSON Web Tokens): Implementación de JWT para gestionar la autenticación de los usuarios de forma segura.</li>
     <li>Bcrypt para Hash de Contraseñas: Implementación de Bcrypt para cifrar las contraseñas de los usuarios antes de almacenarlas en nuestra base de datos.</li>
     <li>Verificación de Tesoros mediante Códigos Aleatorios: Genera un código aleatorio que los usuarios deben ingresar para verificar la autenticidad de un tesoro encontrado. Esto no solo protege contra falsas reclamaciones, sino que también aumenta la emoción y la participación en la búsqueda del tesoro.</li>
-    <
 
 <h3 align="left">Vídeo de presentación: https://res.cloudinary.com/dxzhssh9m/video/upload/v1715946078/Compartir_pantalla_-_2024-05-17_13_39_52_ixmpsg.mp4</h3>
