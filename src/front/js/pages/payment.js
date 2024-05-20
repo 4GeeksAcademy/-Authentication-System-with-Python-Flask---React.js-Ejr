@@ -17,6 +17,12 @@ export const OrderView = () => {
   };
 
   const handleCashPayment = async () => {
+    if (store.order.items.length === 0) {
+      setModalContent('Transaction declined! Your order is empty.');
+      setModalOpen(true);
+      return;
+    }
+
     const paymentAmount = parseFloat(payment.replace('$', '')) || 0;
     if (paymentAmount < store.order.total) {
       const difference = (store.order.total - paymentAmount).toFixed(2);
@@ -29,10 +35,8 @@ export const OrderView = () => {
 
       setPayment('');
       try {
-        // Convert products array to JSON string
-        const productsJSON = JSON.stringify(store.order.items);
-        // Create transaction
-        await actions.createTransaction(store.order.total, productsJSON, true); // Cash payment
+        // Ensure products are stringified
+        await actions.createTransaction(store.order.total, store.order.items, true); // Cash payment
         actions.clearOrder();
       } catch (error) {
         console.error("Error creating cash transaction:", error);
@@ -42,14 +46,18 @@ export const OrderView = () => {
   };
 
   const handleCreditCardPayment = async () => {
+    if (store.order.items.length === 0) {
+      setModalContent('Transaction declined! Your order is empty.');
+      setModalOpen(true);
+      return;
+    }
+
     setModalContent('Credit card payment processed.');
     setModalOpen(true);
     setPayment('');
     try {
-      // Convert products array to JSON string
-      const productsJSON = JSON.stringify(store.order.items);
-      // Create transaction
-      await actions.createTransaction(store.order.total, productsJSON, false); // Credit card payment
+      // Ensure products are stringified
+      await actions.createTransaction(store.order.total, store.order.items, false); // Credit card payment
       actions.clearOrder();
     } catch (error) {
       console.error("Error creating credit card transaction:", error);
