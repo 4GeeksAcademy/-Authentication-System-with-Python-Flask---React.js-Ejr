@@ -174,7 +174,7 @@ def handle_get_post():
 
     return jsonify(response_body), 200
 
-#--------------------------------------------------------
+#-----------------api para wipear---------------------------------------
 @api.route('/wipeall', methods=['GET'])
 def database_wipe():
     try:

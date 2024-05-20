@@ -34,27 +34,6 @@ setLogout:()=>{
 	
 },
 
-register_User: (name,email, password) =>{
-	
-	fetch( 'https://super-duper-barnacle-74g6vpw66q42pwr5-3001.app.github.dev/api/signup',{
-		method:'POST',
-		headers:{
-			'Content-Type' : 'application/json'
-		},
-		body : JSON.stringify({
-			"name": name,
-			"email": email,
-			"password": password,
-		   }),
-})
-	.then(Response => Response.json())
-	.then(data => {
-		console.log(data); 
-		
-	})
-	.catch(error => console.log('Error parcero', error))
-
-},
 
 /* --------- FUNCION FLUX (fetch) PARA LOGIN----------- */
 login: async (email, password) => {
