@@ -17,7 +17,7 @@ export const ProductDisplay = () => {
         <div className="description my-3">
           <h3>{store.checkout.marca_modelo}</h3>
           <h5>€{store.checkout.precio * store.checkout.days}</h5>
-          <form className="mt-4" action={`https://fuzzy-goggles-pjrw5j7xg769h965g-3001.app.github.dev/api/create-checkout-session/${store.checkout.precio_id_stripe}/${store.checkout.days}`} method="POST">
+          <form className="mt-4" action={`${process.env.BACKEND_URL}/api/create-checkout-session/${store.checkout.precio_id_stripe}/${store.checkout.days}`} method="POST">
             <button type="submit">
               PAGO
             </button>
