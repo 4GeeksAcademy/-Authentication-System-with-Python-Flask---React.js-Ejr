@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	const localStorageUser = JSON.parse(localStorage.getItem('user')) || {
         isSignedIn: true,
         username: "",
-        user_id: null
+        user_id: null,
+		token: null
     };
 
 	return {
@@ -101,7 +102,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const updatedUser = {
 					isSignedIn: true,
 					username: data.username, // Assuming the API returns the username
-					user_id: data.user_id    // Assuming the API returns the user_id
+					user_id: data.user_id,
+					token: data.token  // Assuming the API returns the user_id
 				};
 				// Save user data to localStorage
 				localStorage.setItem('user', JSON.stringify(updatedUser));
