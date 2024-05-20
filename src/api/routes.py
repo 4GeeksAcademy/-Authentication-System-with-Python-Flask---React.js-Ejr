@@ -97,7 +97,8 @@ def create_transaction():
     is_cash = data.get('is_cash')
     created = data.get('created')
 
-    if not user_id or not total_price or not products or not is_cash or not created:
+    # Explicitly check for None for the is_cash field
+    if user_id is None or total_price is None or products is None or is_cash is None or created is None:
         raise APIException("Missing required fields", status_code=400)
 
     # Create a new transaction
@@ -113,6 +114,7 @@ def create_transaction():
     db.session.commit()
 
     return jsonify({"message": "Transaction added to database successfully"}), 201
+
 
 
 

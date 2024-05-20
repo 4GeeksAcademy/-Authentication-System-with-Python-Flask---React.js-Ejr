@@ -1,7 +1,7 @@
 import { Typography, IconButton, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const OrderView = () => {
@@ -10,13 +10,19 @@ export const OrderView = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
-  const navigate = useNavigate(); // Use useNavigate to get the navigation function
+  const navigate = useNavigate();
 
   const handleRemove = (name, price) => {
     actions.removeCoffeeFromOrder({ name, price });
   };
 
-  const handleCashPayment = () => {
+  const handleCashPayment = async () => {
+    if (store.order.items.length === 0) {
+      setModalContent('Transaction declined! Your order is empty.');
+      setModalOpen(true);
+      return;
+    }
+
     const paymentAmount = parseFloat(payment.replace('$', '')) || 0;
     if (paymentAmount < store.order.total) {
       const difference = (store.order.total - paymentAmount).toFixed(2);
@@ -26,16 +32,37 @@ export const OrderView = () => {
       const change = (paymentAmount - store.order.total).toFixed(2);
       setModalContent(`Thank you for your payment! Your change is $${change}.`);
       setModalOpen(true);
-      actions.clearOrder();  // Clear the order from the global store
+
       setPayment('');
+      try {
+        // Ensure products are stringified
+        await actions.createTransaction(store.order.total, store.order.items, true); // Cash payment
+        actions.clearOrder();
+      } catch (error) {
+        console.error("Error creating cash transaction:", error);
+        // Handle error (e.g., display error message)
+      }
     }
   };
 
-  const handleCreditCardPayment = () => {
+  const handleCreditCardPayment = async () => {
+    if (store.order.items.length === 0) {
+      setModalContent('Transaction declined! Your order is empty.');
+      setModalOpen(true);
+      return;
+    }
+
     setModalContent('Credit card payment processed.');
     setModalOpen(true);
-    actions.clearOrder();  // Clear the order from the global store
     setPayment('');
+    try {
+      // Ensure products are stringified
+      await actions.createTransaction(store.order.total, store.order.items, false); // Credit card payment
+      actions.clearOrder();
+    } catch (error) {
+      console.error("Error creating credit card transaction:", error);
+      // Handle error (e.g., display error message)
+    }
   };
 
   const handleCloseModal = () => {
@@ -106,9 +133,9 @@ export const OrderView = () => {
               borderRadius: "4px",
             }
           }}
-          style={{ marginTop: '20px' }} // Add margin to top of TextField
+          style={{ marginTop: '20px' }}
         />
-        <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}> {/* Add margin to top of button container */}
+        <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
           <Button
             variant="contained"
             onClick={handleCashPayment}
