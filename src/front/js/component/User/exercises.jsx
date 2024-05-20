@@ -51,6 +51,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
+    scrollToTop();
   };
 
   return (
@@ -84,6 +85,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         containerClassName="pagination"
         activeClassName="active"
         renderOnZeroPageCount={null}
+        className="pagination"
       />
     </div>
   );

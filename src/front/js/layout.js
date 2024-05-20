@@ -1,5 +1,6 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useContext } from "react"
+import { Context } from "./store/appContext";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import injectContext from "./store/appContext";
 
@@ -18,19 +19,23 @@ import ProtectedRoute from "./component/protectedRoute.jsx";
 
 const Layout = () => {
 
+    const { store } = useContext(Context);
     const basename = process.env.BASENAME || "";
 
+    const userToken = store.token;
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-
                         <Route path="/" element={<Landing />} />
+
+                        <Route element={userToken ? <UserForm /> : <Navigate to="/" />} path="/user-form" />
+
                         <Route element={<ProtectedRoute roles={['user']} />}>
+
                             <Route path="/user/:user_id" element={<User />} />
-                            <Route path="/user_form" element={<UserForm />} />
                             <Route path="/user/edit_form" element={<EditForm />} />
                         </Route>
                         <Route element={<ProtectedRoute roles={['user', 'trainer']} />}>
@@ -40,7 +45,6 @@ const Layout = () => {
                             <Route path="/trainer/:id" element={<Trainer />} />
                         </Route>
                         <Route path="*" element={<h1>Not found!</h1>} />
-
                     </Routes>
                     <Footer />
                 </ScrollToTop>

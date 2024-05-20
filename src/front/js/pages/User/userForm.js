@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import "./../../../styles/User-styles/userForm.css";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
-
-const UserForm = () => {
+const userForm = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user_name: '',
-        user_age: '',
+        //age: '',
         user_height: '',
         user_weight: '',
         user_illness: '',
@@ -24,19 +24,19 @@ const UserForm = () => {
         });
     };
 
-
+    console.log("userForm")
     const handleSubmit = async () => {
 
         try {
 
             if (
                 formData.user_name === '' ||
-                formData.user_age === '' ||
+                //formData.user_age === '' ||
                 formData.user_height === '' ||
                 formData.user_weight === '' ||
                 formData.user_illness === ''
             ) {
-                alert('Please, complete all the required fields.');
+                alert('Please, complete all fields.');
                 return;
             } else {
                 actions.postUserData(formData);
@@ -56,7 +56,7 @@ const UserForm = () => {
                 handleSubmit(e);
             }}>
                 <label>
-                    Full Name:
+                    Name and Surnames:
                     <input
                         type="text"
                         name="user_name"
@@ -71,8 +71,8 @@ const UserForm = () => {
                     <input
                         type="number"
                         name="user_age"
-                        value={formData.user_age}
-                        onChange={handleChange}
+                        //value={formData.user_age}
+                        //onChange={handleChange}
                         min="16"
                         required
                     />
@@ -129,5 +129,5 @@ const UserForm = () => {
 
         </div>
     );
-};
-export default UserForm;
+}
+export default userForm;

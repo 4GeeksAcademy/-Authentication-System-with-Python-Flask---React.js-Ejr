@@ -28,7 +28,8 @@ const getState = ({ getStore, setStore }) => {
 				sessionStorage.removeItem("token");
 				sessionStorage.removeItem("role");
 				sessionStorage.removeItem("user_id");
-				sessionStorage.removeItem("routine");
+				sessionStorage.removeItem("userRoutine");
+				sessionStorage.removeItem("user_data");
 				setStore({ token: "", role: null, user_id: null, routine: null });
 			},
 			login: async (loginData) => {
@@ -51,27 +52,30 @@ const getState = ({ getStore, setStore }) => {
 				}
 			},
 			signUp: async (email, password) => {
-				const response = await fetch(`${process.env.BACKEND_URL}/signup`, {
+				const response = await fetch(process.env.BACKEND_URL + "/signup", {
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json',
+						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({ email, password }),
-				});
+					body: JSON.stringify(email, password)
+				})
+				if (!response.ok) {
+					alert("Error registering");
+				}
 				if (response.ok) {
-					const data = await response.json();
+					const data = await response.json()
 					sessionStorage.setItem("token", data.access_token);
-				} else {
-					alert("Error during Sign Up");
+					setStore({ token: data.access_token });
+					return true;
 				}
 			},
 			postUserData: async (formData) => {
-				const store = getStore();
+				const store = getStore()
 				const response = await fetch(`${process.env.BACKEND_URL}/user_data`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${store.token}`,
+						Authorization: "Bearer " + store.token
 					},
 					body: JSON.stringify(formData),
 				});
@@ -80,7 +84,7 @@ const getState = ({ getStore, setStore }) => {
 					const decoded = jwtDecode(store.token);
 					setStore({ user_id: decoded.sub, role: decoded.role });
 				} else {
-					console.error('Error sending data');
+					console.error('Error sending user data');
 				}
 			},
 			fetchUserData: async () => {
