@@ -412,7 +412,6 @@ def update_user(user_id):
                 user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
 
             # Actualizar los demás campos si se proporcionan, de lo contrario, mantener los valores actuales
-            user.email = user_data.get('email', user.email)
             user.username = user_data.get('username', user.username)
             user.first_name = user_data.get('first_name', user.first_name)
             user.last_name = user_data.get('last_name', user.last_name)
