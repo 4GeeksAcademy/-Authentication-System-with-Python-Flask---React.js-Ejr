@@ -62,27 +62,32 @@ const SingupMaster = () => {
             <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>Master User Registration</h1>
                 <div className={styles.inputGroup}>
+                     <label className="label">First Name</label>
                     <input type="text" className="input" name="name" value={userDetails.name} onChange={handleChange} required />
-                    <label className="label">First Name</label>
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type="text" name="last_name" value={userDetails.last_name} onChange={handleChange} required />
                     <label>Last Name</label>
+                    <input type="text" name="last_name" value={userDetails.last_name} onChange={handleChange} required />
+
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type="email" name="email" value={userDetails.email} onChange={handleChange} required />
                     <label>Email</label>
+                    <input type="email" name="email" value={userDetails.email} onChange={handleChange} required />
+
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type="text" name="username" autoComplete="off" value={userDetails.username} onChange={handleChange} required />
                     <label>Username</label>
+                    <input type="text" name="username" autoComplete="off" value={userDetails.username} onChange={handleChange} required />
+
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type="password" name="password" value={userDetails.password} onChange={handleChange} required />
                     <label>Password</label>
+                    <input type="password" name="password" value={userDetails.password} onChange={handleChange} required />
+
                 </div>
                 {userDetails.security_questions.map((sq, index) => (
                     <div key={index} className={styles.inputGroup}>
+                        <label>{`Answer ${index + 1}`}</label>
                         <select name={`security_question_${index}`} value={sq.question} onChange={handleChange} required className={styles.securityQuestion}>
                             <option value="" disabled>Choose a question</option>
                             <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
@@ -90,7 +95,6 @@ const SingupMaster = () => {
                             <option value="What is the name of the city where you were born?">What is the name of the city where you were born?</option>
                         </select>
                         <input type="text" name={`security_answer_${index}`} value={sq.answer} onChange={handleChange} required />
-                        <label>{`Answer ${index + 1}`}</label>
                     </div>
                 ))}
                 <button type="submit" className={styles.buttonSave}>Sign up</button>

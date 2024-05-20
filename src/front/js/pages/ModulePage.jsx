@@ -14,6 +14,7 @@ import Singup from "../component/Singup.jsx";
 import ConfirmarEmail from "../component/ConfirmEmail.jsx";
 import Home from "./Home.jsx";
 import Login from "../component/Login.jsx";
+import Navbar from "../component/Navbar.jsx";
 
 const ModulePage = () => {
     const [show, setShow] = useState(false);
@@ -36,7 +37,10 @@ const ModulePage = () => {
         { component: <Singup />, name: "Singup " },
         { component: <ConfirmarEmail />, name: "Confirmar Email " },
         { component: <Home />, name: "Home " },
-        { component: <Login />, name: "Login " }
+        { component: <Login />, name: "Login " },
+        { component: <Navbar />, name: "Navbar " }
+
+
 
 
 
