@@ -385,7 +385,7 @@ def show_view_manager():
 
 
 @api.route('/view/courses', methods=['POST'])
-def create_courses():
+def post_courses():
     try:
         
         title =  request.json.get('title')
@@ -406,12 +406,12 @@ def create_courses():
         course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate)
         db.session.add(course)
         db.session.commit()
-        return jsonify({"Msg":"Curso creado exitosamente", "Course":course.serialize()}), 200
+        return jsonify({"Msg":"Course create", "Course":course.serialize()}), 200
 
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
 
-#Get cursos
+
 @api.route('/view/courses', methods=['GET'])
 def get_courses():
     try:
@@ -422,7 +422,7 @@ def get_courses():
     except Exception as err:
         return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
 
-#Put cursos
+
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
     try:
@@ -439,7 +439,7 @@ def put_courses(course_id):
     except Exception as err:
         return jsonify({"Error": "Error in updating course: " + str(err)}), 500
 
-#Delete cursos
+
 @api.route('/view/courses/<int:course_id>', methods=['DELETE'])
 def delete_courses(course_id):
     try:
@@ -454,4 +454,66 @@ def delete_courses(course_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
+
+
+@api.route('/module/course', methods=['POST'])
+def post_module():
+    try:
+        course_id = request.json.get('courseId')  
+        type_file = request.json.get('typeFile')
+        title = request.json.get('title')
+        video_id = request.json.get('videoId')
+        type_video = request.json.get('typeVideo')
+        text_id = request.json.get('textId')
+        type_text = request.json.get('typeText')
+        image_id = request.json.get('imageId')
+        type_image = request.json.get('typeImage')
+
+        if not course_id or not type_file or not title or not video_id or not type_video or not text_id or not type_text or not image_id or not type_image:
+            return {"Error": "courseId, typeFile, title, videoId, typeVideo, textId, typeText, imageId, and typeImage are required"}, 400
+
+        
+        existing_course = Course.query.filter_by(id=course_id).first()
+        if not existing_course:
+            return jsonify({"Error": "Course does not Exist."}), 404
+
+        module = Modules(course_id=course_id, type_file=type_file, title=title, video_id=video_id, type_video=type_video,
+                         text_id=text_id, type_text=type_text, image_id=image_id, type_image=type_image)
+        db.session.add(module)
+        db.session.commit()
+        return jsonify({"Msg": "Module created successfully", "Module": module.serialize()}), 201
+
+    except Exception as err:
+        return jsonify({"Error": "Error in module Creation: " + str(err)}), 500
+
+
+@api.route('/module/course/', methods=['GET'])
+def get_modules():
+    try:
+        modules = Modules.query.all()
+        if not modules:
+            return jsonify({"Msg": "No modules found"}), 404
+        
+        serialized_modules = [module.serialize() for module in modules]
+        return jsonify({"Modules": serialized_modules}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in fetching modules: " + str(err)})
+
+@api.route('/module/course/<int:module_id>', methods=['DELETE'])
+def delete_module(module_id):
+    try:
+        module = Modules.query.get(module_id)
+        if not module:
+            return jsonify({"Error": "Module does no exist"}), 404
+        
+        db.session.delete(module)
+        db.session.commit()
+
+        return jsonify({"Msg": "Module deleted successfully"}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
+        
+
 
