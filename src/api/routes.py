@@ -548,5 +548,6 @@ def upload_file():
                 'path': file_path
             }
             return jsonify({'message': 'File uploaded successfully', 'file': file_info}), 200
+        
     except Exception as e:
         return jsonify({'error': str(e)}), 500
