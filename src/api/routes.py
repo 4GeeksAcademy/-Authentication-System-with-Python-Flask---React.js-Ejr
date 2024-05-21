@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
+from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request, Quizzes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -528,7 +528,7 @@ def post_module():
         type_image = request.json.get('typeImage')
 
         if not course_id or not type_file or not title or not video_id or not type_video or not text_id or not type_text or not image_id or not type_image:
-            return {"Error": "courseId, typeFile, title, videoId, typeVideo, textId, typeText, imageId, and typeImage are required"}, 400
+            return {"Error": "courseId, typeFile, title, videoId, typeVideo, textId, typeText, imageId and typeImage are required"}, 400
 
         
         existing_course = Course.query.filter_by(id=course_id).first()
@@ -573,6 +573,40 @@ def delete_module(module_id):
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
         
+@api.route('/module/quizzes', methods=['POST'])
+def post_quizzes():
+    try:
+        question_title = request.json.get('questionTitle')
+        answer = request.json.get('answer')
+        module_id = request.json.get('moduleId')
+
+        if not question_title or not answer or not module_id:
+            return {"Error": "questionTitle, answer, and moduleId are required"}, 400
+        
+        existing_module = Modules.query.filter_by(id=module_id).first()
+        if not existing_module:
+            return jsonify({"Error": "Module does not exist."}), 404
+        
+        quiz = Quizzes(question_title=question_title, answer=answer, module_id=module_id)
+        db.session.add(quiz)
+        db.session.commit()
+        return jsonify({"Msg": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in quiz creation: " + str(err)}), 500
+
+@api.route('/module/quizzes', methods=['GET'])
+def get_quizzes():
+    try:
+        quizzes = Quizzes.query.all()
+        if not quizzes:
+            return jsonify({"Msg": "No quiz found"}), 404
+        
+        serialized_quizzes = [quiz.serialize() for quiz in quizzes]
+        return jsonify({"Quiz": serialized_quizzes}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
 
 # Definir la ruta de la carpeta de carga
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

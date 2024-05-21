@@ -71,8 +71,8 @@ class Teacher(db.Model):
     name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
     username = db.Column(db.String(250), unique=True, nullable=False)
-    number_document = db.Column(db.Integer, unique=True, nullable=False)
-    phone = db.Column(db.Integer, nullable=False)
+    number_document = db.Column(db.String(250), unique=True, nullable=False)
+    phone = db.Column(db.String(250), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
     certificate_teacher = db.Column(db.String(250), nullable=True)
@@ -230,4 +230,24 @@ class Request(db.Model):
             "id": self.id,
             "course_id": self.course_id,
             "user_id": self.user_id,
+        }
+    
+class Quizzes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question_title = db.Column(db.String(250), nullable=False)
+    answer = db.Column(db.String(800), nullable=False)
+    module_id = db.Column(db.Integer, db.ForeignKey('modules.id'), nullable=True)
+
+    #Relations
+    module = db.relationship('Modules', backref=db.backref('quizzes', lazy=True))
+
+    def __repr__(self):
+        return f'<Quizzes {self.id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "question_title": self.question_title,
+            "answer": self.answer,
+            "module_id": self.module_id,
         }
