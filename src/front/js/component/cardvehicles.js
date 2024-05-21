@@ -13,7 +13,7 @@ export const CardVehicles = ({ vehicle }) => {
             </Link>
             <div className="card-body p-2">
                 <h5 className="card-title mt-2 mb-4"><strong></strong> {vehicle.marca_modelo.toUpperCase()}</h5>
-                <p className="card-text mb-1"><strong>Matricula:</strong> {vehicle.matricula}</p>
+                <p className="card-text mb-1"><strong>Matricula:</strong> {vehicle.matricula.toUpperCase()}</p>
                 <p className="card-text mb-1"><strong>Precio:</strong> {vehicle.precio} €</p>
                 <p className="card-text mb-1"><strong>Asientos:</strong> {vehicle.asientos}</p>
             </div>

@@ -25,7 +25,7 @@ class Vehicle(db.Model):
     matricula = db.Column(db.String(50), nullable=False)
     motor = db.Column(db.String(50), nullable=False)
     tipo_cambio = db.Column(db.String(50), nullable=False)
-    asientos = db.Column(db.String(50), nullable=False)
+    asientos = db.Column(db.Integer, nullable=False)
     precio = db.Column(db.Integer, nullable=False)   
     precio_id_stripe = db.Column(db.String(50), nullable=False)   
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)

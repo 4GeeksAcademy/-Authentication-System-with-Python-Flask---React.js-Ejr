@@ -88,7 +88,7 @@ export const Details = () => {
                                         N° ASIENTOS
                                     </h6>
                                     <p>
-                                        {store.details.asientos?.toUpperCase()}
+                                        {store.details.asientos}
                                     </p>
                                 </div>
                                 <div className="detalle">

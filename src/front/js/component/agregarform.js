@@ -54,7 +54,7 @@ export const AgregarForm = () => {
                 <div className="row">
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Número de asientos</h4>
-                        <input type="text" className="form-control mb-3" id="exampleinputAsientos" placeholder="Ingresa el número de asientos" name="asientos" value={inputAsientos} onChange={(e) => setInputAsientos(e.target.value)} />
+                        <input type="number" className="form-control mb-3" id="exampleinputAsientos" placeholder="Ingresa el número de asientos" name="asientos" onChange={(e) => setInputAsientos(e.target.value)} />
                     </div>
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Precio por día</h4>
