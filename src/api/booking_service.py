@@ -95,18 +95,22 @@ def process_payment(payment_data):
     return True, "Payment processed successfully"
 
 #--------------------------------------------------------FUNCION PARA LA CREACIONDE LA TRANSACCION ------------------------------
-def create_transaction(user_id, membership_id, amount, payment_method):
+def create_transaction(user_id, membership_id, payment_data):
     # Crear un nuevo objeto Payment con los detalles proporcionados.
     payment = Payment(
-        user_id=user_id,  # ID del usuario que realiza el pago.
-        membership_id=membership_id,  # ID de la membresía que se está comprando.
-        amount=amount,  # Monto del pago.
-        payment_method=payment_method,  # Método de pago utilizado.
-        status='completed'  # Estado del pago. Asumimos que el pago es completado al momento de crearlo.
+        user_id=user_id,
+        membership_id=membership_id,
+        amount=payment_data['amount'],
+        payment_method=payment_data['payment_method'],
+        card_number_last4=payment_data.get('card_number', '')[-4:] if 'card_number' in payment_data else None,
+        cardholder_name=payment_data.get('cardholder_name', None),
+        card_type=payment_data.get('card_type', None),
+        payment_date=datetime.now(),
+        status='completed'
     )
 
     # Asegúrate de que el método de pago no sea None antes de proceder.
-    if payment_method is None:
+    if payment_data is None:
         raise ValueError("Payment method must be provided and not None")
 
     # Agrega el nuevo pago a la sesión de la base de datos.

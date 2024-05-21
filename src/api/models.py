@@ -284,12 +284,20 @@ class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     membership_id = db.Column(db.Integer, db.ForeignKey('membership.id'), nullable=False)
-    payment_date = db.Column(db.DateTime, default=datetime.utcnow)  # Fecha de la transacción
+    payment_date = db.Column(db.DateTime, default=datetime.utcnow)
+    confirmation_date = db.Column(db.DateTime)  # Fecha de confirmación del pago
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(50), nullable=False)
+    transaction_reference = db.Column(db.String(255))  # Referencia externa
+    currency = db.Column(db.String(3), default='USD')  # Moneda
+    description = db.Column(db.String(255))  # Descripción del pago
+    card_number_last4 = db.Column(db.String(4))  # Últimos cuatro dígitos del número de tarjeta
+    card_type = db.Column(db.String(255))  # almacenar marca de la tarjeta
+    cardholder_name = db.Column(db.String(255))  # Nombre del titular de la tarjeta
 
     payment_details = db.relationship('PaymentDetail', backref='payment', lazy=True)
+
 
     def __repr__(self):  # Método para representar un objeto de pregunta de seguridad como una cadena
         return '<Payment %r>' % self.id
@@ -309,8 +317,13 @@ class Payment(db.Model):
 class PaymentDetail(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     payment_id = db.Column(db.Integer, db.ForeignKey('payment.id'), nullable=False)
+    product_id = db.Column(db.Integer, nullable=False)  # ID del producto o servicio
+    product_description = db.Column(db.String(255))
     quantity = db.Column(db.Integer, nullable=False)
+    unit_price = db.Column(db.Float, nullable=False)
     subtotal = db.Column(db.Float, nullable=False)
+    tax_amount = db.Column(db.Float, nullable=False, default=0.0)
+    discount_amount = db.Column(db.Float, nullable=False, default=0.0)
 
     def __repr__(self):  # Método para representar un objeto de pregunta de seguridad como una cadena
         return '<PaymentDetail %r>' % self.id

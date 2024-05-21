@@ -4,6 +4,7 @@ import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./PrivatePageUser.module.css"; // Importación de estilos CSS
 
 import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/PrivateCalendar.jsx"
+import MembershipPurchase from "../component/MembershipPurchase.jsx";
 
 
 const PrivatePageUser = () => {
@@ -42,7 +43,7 @@ const PrivatePageUser = () => {
 
     useEffect(() => {
         actions.loadUserData(); // Carga las clases al montar el componente
-    }, []);
+    }, [actions]);
 
 
 
@@ -96,6 +97,8 @@ const PrivatePageUser = () => {
                 </div>
             </div>
             <PrivateCalendar />
+            <MembershipPurchase/>
+
             {/* Modal */}
             <div className={`modal fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1" id={styles["modal"]}>
                 <div className="modal-dialog">

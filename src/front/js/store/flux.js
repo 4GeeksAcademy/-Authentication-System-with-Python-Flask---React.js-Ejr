@@ -25,7 +25,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			reservedClasses: [],
 			cancelBooking: [],
 			creationTrainingClasses: [],
-			bookingData:[]
+			bookingData:[],
+			memberships: [],
+            membershipsLoading: false
+
 
 
 
@@ -443,6 +446,62 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading training classes:", error);
 				}
             },
+
+			loadMemberships: async () => {
+				let url = `${process.env.BACKEND_URL}/api/memberships`; // Asume que tienes una variable de entorno para tu URL del backend
+				try {
+					let response = await fetch(url, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`, // Asegúrate de manejar la autenticación adecuadamente
+						}
+					});
+					if (!response.ok) {
+						throw new Error("Failed to fetch memberships: " + response.statusText);
+					}
+					let memberships = await response.json();
+					setStore({
+						...getStore(),
+						memberships: memberships
+					});
+				} catch (error) {
+					console.error("Error loading memberships:", error);
+				}
+			},
+			
+
+			purchaseMembership: async (data) => {
+				console.log(data)
+				let url = `${process.env.BACKEND_URL}/api/purchase_membership`; // URL del endpoint para comprar membresía
+				try {
+					let response = await fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}` // Asegúrate de manejar la autenticación adecuadamente
+						},
+						body: JSON.stringify(data)
+					});
+
+					let result = await response.json(); // Se espera la respuesta del servidor en formato JSON
+					console.log("respuesta del servidor compra: ", result);
+			
+					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
+					if (response.ok) {
+						return { success: true, data: result };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: result.error || "Unknown error occurred." };
+					}
+			
+
+				} catch (error) {
+					console.error("Error purchasing membership:", error);
+					return { success: false, error: error.message }; // Devuelve un objeto de error si algo falla
+				}
+			}
+			
 			
 
 

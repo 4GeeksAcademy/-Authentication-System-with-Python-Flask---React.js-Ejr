@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"; // Importación de useNavigate p
 import EditProfile from "./EditProfile.jsx";
 import UserDataDetail from "../pages/UserDataDetail.jsx";
 import UserBooking from "../pages/UserBooking.jsx"
+import MembershipPurchase from "./MembershipPurchase.jsx";
 
 
 
@@ -26,7 +27,7 @@ const Navbar = () => { // Definición del componente Navbar
     };
 
     checkAuthStatus();
-  }, [actions]);
+  }, []);
 
 
   const handleCloseSession = async () => { // Función para cerrar la sesión del usuario
@@ -67,6 +68,11 @@ const Navbar = () => { // Definición del componente Navbar
           {store.isAuthenticated && ( // Condición para renderizar el botón de cierre de sesión si el usuario ha iniciado sesión
             <button className={styles.logoutButton} onClick={handleCloseSession}>Cerrar sesión</button>
           )}
+            {store.isAuthenticated && (  
+            <Link to="/PrivatePageUser">
+            <button className={styles.logoutButton}>Ir al perfil</button>
+            </Link>
+          )}
           {!store.isAuthenticated && ( // Condición para renderizar el botón de inicio de sesión si el usuario no ha iniciado sesión
             <Link to="/Login">
               <button className={styles.loginButton}>Login</button>
@@ -85,6 +91,7 @@ const Navbar = () => { // Definición del componente Navbar
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button> {/* Botón para cerrar el menú desplegable */}
         </div>
         <EditProfile />
+        <MembershipPurchase />
         <div className="offcanvas-body" style={{ maxHeight: '700px', overflowY: 'auto' }}> {/* Cuerpo del menú desplegable */}
           <UserDataDetail />
           <UserBooking />

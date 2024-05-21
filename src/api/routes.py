@@ -957,7 +957,7 @@ def delete_training_class(class_id):  # Función que maneja la solicitud DELETE 
 #-------------------------------------------------ENPOINT PARA LAS MEMBRESIAS-----------------------------------------------------------
 #Consultar todas las MEMBRESIA (GET)
 @api.route('/memberships', methods=['GET'])  # Define el endpoint para obtener todas las membresías disponibles. Se usa el método GET.
-# @jwt_required() # Comentado aquí, pero este decorador requeriría autenticación con JWT para acceder a este endpoint.
+@jwt_required() # Comentado aquí, pero este decorador requeriría autenticación con JWT para acceder a este endpoint.
 def get_memberships():  # Función que maneja la solicitud GET para obtener membresías.
     try:
         memberships = Membership.query.all()  # Consulta todas las membresías existentes en la base de datos.
@@ -1101,7 +1101,13 @@ def delete_membership(membership_id):  # Función que maneja la solicitud DELETE
 @api.route('/purchase_membership', methods=['POST'])  # Define el endpoint para la compra de una membresía. Se usa el método POST.
 @jwt_required()  # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan realizar compras.
 def purchase_membership():  # Función que maneja la solicitud POST para comprar una membresía.
+    
     user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado a partir del token JWT.
+    
+    data = request.get_json()  # Obtiene los datos enviados en formato JSON.
+    if not data:  # Verifica si no se proporcionaron datos.
+        return jsonify({'error': 'No data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos y un código de estado HTTP 400.
+
     membership_id = request.json.get('membership_id')  # Obtiene el ID de la membresía de los datos de la solicitud.
     payment_data = request.json.get('payment_data')  # Obtiene los datos de pago, que deben incluir 'amount' y 'payment_method'.
 
@@ -1122,7 +1128,7 @@ def purchase_membership():  # Función que maneja la solicitud POST para comprar
             result, message = process_payment(payment_data)  # Procesa el pago con otros métodos.
 
         if result:
-            payment = create_transaction(user_id, membership_id, payment_data['amount'], payment_data['payment_method'])  # Crea una transacción de pago.
+            payment = create_transaction(user_id, membership_id, payment_data)  # Crea una transacción de pago.
             activate_membership(user_id, membership_id, membership.duration_days, membership.classes_per_month)  # Activa la membresía para el usuario.
             return jsonify({'message': 'Purchase successful', 'payment': payment.id}), 200  # Retorna un mensaje de éxito y el ID del pago con un código de estado HTTP 200.
         else:
@@ -1132,4 +1138,50 @@ def purchase_membership():  # Función que maneja la solicitud POST para comprar
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error.
         return jsonify({'error': 'Purchase failed: ' + str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
 
+
+#-------------------------------------------------ENPOINT PARA LA COMPRA DE MEMBRESIAS MODULO ADMIN-----------------------------------------------------------
+
+@api.route('/purchase_membership_admin/<string:user_email>', methods=['POST'])  # Define el endpoint para la compra de una membresía. Se usa el método POST.
+@jwt_required()  # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan realizar compras.
+def purchase_membership_admin(user_email):  # Función que maneja la solicitud POST para comprar una membresía.
+
+    user = User.query.filter_by(email=user_email).first()  # Obtiene el objeto usuario usando el email
+    if not user:  # Verifica si el usuario existe
+        return jsonify({'error': 'User not found'}), 404
+    
+    user_id = user.id  # Obtiene el ID del usuario
+    
+    data = request.get_json()  # Obtiene los datos enviados en formato JSON.
+    if not data:  # Verifica si no se proporcionaron datos.
+        return jsonify({'error': 'No data provided'}), 400  # Retorna un mensaje de error si no se proporcionaron datos y un código de estado HTTP 400.
+
+    membership_id = request.json.get('membership_id')  # Obtiene el ID de la membresía de los datos de la solicitud.
+    payment_data = request.json.get('payment_data')  # Obtiene los datos de pago, que deben incluir 'amount' y 'payment_method'.
+
+    # Validación básica de la presencia de datos necesarios.
+    if not membership_id or not payment_data:
+        return jsonify({'error': 'Missing required parameters'}), 400  # Retorna un mensaje de error si faltan parámetros requeridos y un código de estado HTTP 400.
+
+    membership = Membership.query.get(membership_id)  # Busca la membresía en la base de datos usando el ID proporcionado.
+    if not membership:
+        return jsonify({'error': 'Membership not found'}), 404  # Retorna un mensaje de error si la membresía no se encuentra y un código de estado HTTP 404.
+
+    try:
+        # Procesamiento de pago diferenciado por método.
+        if payment_data['payment_method'] == 'cash':
+            message = 'Payment recorded, pending verification'  # Mensaje para pagos en efectivo.
+            result = True  # Asumimos que el pago en efectivo siempre es exitoso.
+        else:
+            result, message = process_payment(payment_data)  # Procesa el pago con otros métodos.
+
+        if result:
+            payment = create_transaction(user_id, membership_id, payment_data)  # Crea una transacción de pago.
+            activate_membership(user_id, membership_id, membership.duration_days, membership.classes_per_month)  # Activa la membresía para el usuario.
+            return jsonify({'message': 'Purchase successful', 'payment': payment.id}), 200  # Retorna un mensaje de éxito y el ID del pago con un código de estado HTTP 200.
+        else:
+            return jsonify({'error': message}), 400  # Retorna un mensaje de error si el proceso de pago falla y un código de estado HTTP 400.
+
+    except Exception as e:
+        db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error.
+        return jsonify({'error': 'Purchase failed: ' + str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
 
