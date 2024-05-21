@@ -129,7 +129,7 @@ const CreateClassForm = () => {
                     </Row>
                     <Row className="mb-3">
                         <Col xs={6}>
-                            <Form.Check type="checkbox" label="Crear lote de clases" checked={formData.createBatch} onChange={handleCheckboxChange} required/>
+                            <Form.Check type="checkbox" label="Crear lote de clases" checked={formData.createBatch} onChange={handleCheckboxChange}/>
                         </Col>
                         {formData.createBatch && (
                             <Col xs={6}>

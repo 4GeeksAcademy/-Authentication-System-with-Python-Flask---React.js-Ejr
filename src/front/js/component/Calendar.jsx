@@ -16,7 +16,7 @@ const MyCalendar = () => {
 
     useEffect(() => {
         actions.loadTrainingClasses(); // Carga las clases al montar el componente
-    }, [actions]);
+    }, []);
 
     const events = store.trainingClasses.map(event => ({
         ...event,
