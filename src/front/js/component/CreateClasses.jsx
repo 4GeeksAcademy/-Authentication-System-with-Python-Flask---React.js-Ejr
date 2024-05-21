@@ -97,7 +97,7 @@ const CreateClassForm = () => {
                         <Col>
                             <Form.Group>
                                 <Form.Label>ID del Instructor (opcional)</Form.Label>
-                                <Form.Control type="text" placeholder="ID del Instructor" name="instructor_id" value={formData.instructor_id} onChange={handleChange} required/>
+                                <Form.Control type="text" placeholder="ID del Instructor" name="instructor_id" value={formData.instructor_id} onChange={handleChange}/>
                             </Form.Group>
                         </Col>
                         <Col>
