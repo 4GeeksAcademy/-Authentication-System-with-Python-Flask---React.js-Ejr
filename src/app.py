@@ -11,6 +11,10 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager 
+import stripe
+from datetime import timedelta
+from flask_mail import Mail
+from flask_mail import Message
 
 # from models import Person
 
@@ -21,7 +25,20 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 app.config["JWT_SECRET_KEY"] = "super-secret"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
 jwt = JWTManager(app)
+
+stripe.api_key = 'sk_test_51PH6D8By1Y4Nz1OnrvtuZxon5ohOCTrXSLYKsb0A3Qbt0UFU2vJ01L7QCCNK9ieAJ9K7xwkjKB5iV8iRGPVPpKEJ00CbDbviRr'
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587  
+app.config['MAIL_USE_TLS'] = True  
+app.config['MAIL_USE_SSL'] = False  
+app.config['MAIL_USERNAME'] = 'cadimain1@gmail.com'
+app.config['MAIL_PASSWORD'] = 'u i s q g mg s i e w m t m t f'
+app.config['MAIL_DEFAULT_SENDER'] = 'cadimain1@gmail.com'
+mail = Mail(app)
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

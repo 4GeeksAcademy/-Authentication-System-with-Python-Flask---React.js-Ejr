@@ -1,11 +1,11 @@
 import React,{useContext, useState} from "react";
  import { Context } from "../store/appContext";
  import { useNavigate} from "react-router-dom";
+ import swal from 'sweetalert';
  import "../../styles/index.css";
 
  export const LoginForm = () => {
     const {actions} = useContext(Context)
-    const [loginError,setLoginError] = useState(false);
     const [inputEmail, setInputEmail]=useState("")
     const [inputPassword, setInputPassword]=useState("")
     const navigate = useNavigate();
@@ -17,26 +17,23 @@ import React,{useContext, useState} from "react";
             console.log('Login successful');
             navigate("/"); 
         } else {
-            setLoginError(true);
-            console.log('Login failed');
+            swal ( "Correo o Contraseña incorrectos", "Por favor intentelo de nuevo" ,  "error" )
         }
     };
     return (
         <div className="contactForm">
-            <h1 className="title text-center">Login</h1>
+            <h1 className="title text-center pb-4">Iniciar sesión</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Email</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="enter your email" onChange={(e) => setInputEmail(e.target.value)} />
+                    <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Correo electrónico</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Ingrese su correo electrónico" onChange={(e) => setInputEmail(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Password</label>
+                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Contraseña</label>
                     <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                 </div>
-                
-                {loginError ? <div className="text-danger mb-2">Wrong email or password</div> : null}
                 <div className="d-flex justify-content-center">
-                    <button type="submit" className="login btn-lg btn-dark">Login</button>
+                    <button type="submit" className="login btn-lg btn-dark mt-4">Iniciar sesión</button>
                 </div>
             </form>
         </div>

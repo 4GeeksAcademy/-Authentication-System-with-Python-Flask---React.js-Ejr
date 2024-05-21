@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			vehicles: [],
 			favorites: [],
 			myVehicles: [],
-			details: {}
+			details: {},
+			checkout: {}
 		},
 		actions: {
 			getMessage: async () => {
@@ -19,20 +20,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
 			},
 			login: async (email, password) => {
                 try {
@@ -77,11 +64,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					});
 					if (response.status === 201) {
-						return "1";
+						return "success";
 					} else if (response.status === 409) {
-						return "2";
+						return "email_exist";
 					} else {
-						return "3"
+						return "incomplete_data"
 					}
 				} catch (error) {
 					return false;
@@ -101,33 +88,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 		 			matricula: matricula,
 			 		 			motor: motor,
 			 		 			tipo_cambio: tipo_cambio,
-			 		 			asientos: asientos,
-			 					precio: precio
+			 		 			asientos: parseInt(asientos),
+			 					precio: parseInt(precio)
 			 	 		})
                  	});
-					let data = await response.json()
 					if (response.status === 200) {
-						localStorage.setItem("token", data.access_token);
-						return "1";
+						return "success";
 					} else if (response.status === 409) {
 						console.log(2);
-						return "2";
+						return "plate_exist";
 					} else {
 						console.log(3);
-						return "3";
+						return "incomplete_data";
 					}
 				} catch (error) {
 					return false;
 				}
 			},
-      		getVehicles: () => {
-				fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
+      		getVehicles: async () => {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
 					method: 'GET'
 				})
-					.then(res => res.json())
-					.then(data => setStore({ vehicles: data.results })
-					)
-					.catch((error) => console.log(error))
+				if (response.status === 200) {
+					const data = await response.json();
+					setStore({ vehicles: data.results })
+				} else {
+					return [];
+				}	
+				
 			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
@@ -151,9 +139,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 	});
 					if (response.status === 200) {
 						let allVehicles = getStore().vehicles;
+						let allFavorites = getStore().favorites;
 						const newListVehicles = allVehicles.filter((vehicle) => vehicle.id !== vehicle_id);
+						const newListFavorites = allFavorites.filter((favorite) => favorite.id !== vehicle_id);
 						setStore({
-							vehicles: newListVehicles
+							vehicles: newListVehicles,
+							favorites: newListFavorites
+
 						})
 					}
 				} catch (error) {
@@ -198,7 +190,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 	if (response.status === 201) {
 							let listFav = getStore().favorites;
 							const allVehicles = getStore().vehicles;
-							const newFav = allVehicles.filter((vehicle) => vehicle.id === id);
+							const newFav = allVehicles.filter((vehicle) => vehicle.id == id);
 							const newListFav = listFav.concat(newFav) ;
 							setStore({favorites: newListFav})
 					} else {
@@ -220,7 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 	});
 					if (response.status === 200) {
 						let listFav = getStore().favorites;
-						const newListFav = listFav.filter((vehicle) => vehicle.id !== id);
+						const newListFav = listFav.filter((vehicle) => vehicle.id != id);
 						setStore({favorites: newListFav})
 					}
 				} catch (error) {
@@ -251,7 +243,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     return []; 
                 } 
-            }
+            },
+			totalpayment: (vehicle_id, marca_modelo, precio, days, precio_id_stripe) => {
+				setStore({
+					checkout: {
+						vehicle_id: vehicle_id,
+						marca_modelo: marca_modelo,
+						precio: precio,
+						days: days,
+						precio_id_stripe: precio_id_stripe
+					}
+				})
+			}
 		}
 	};
 };

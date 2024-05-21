@@ -1,8 +1,13 @@
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, User, Vehicle, FavoriteVehicle
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager  # type: ignore
+import stripe
+import os
+from flask_mail import Mail
+from flask_mail import Message
+
 
 api = Blueprint('api', __name__)
 
@@ -52,7 +57,16 @@ def add_vehicle():
     tipo_cambio = request.json.get("tipo_cambio")
     asientos = request.json.get("asientos")
     precio = request.json.get("precio")
-    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == ""):
+    url_img = request.json.get("url_img")
+
+# Creacion de producto en stripe
+    new_vehicles= stripe.Product.create(name=marca_modelo)
+    price_product= stripe.Price.create(
+    product= new_vehicles["id"],
+    unit_amount= precio * 100,
+    currency="eur",
+    )
+    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
     if existing_vehicle:
@@ -64,7 +78,9 @@ def add_vehicle():
         tipo_cambio=tipo_cambio,
         asientos=asientos,
         precio=precio,
-        user_id= user_id
+        precio_id_stripe=price_product["id"],
+        user_id= user_id,
+        url_img = url_img 
     )
     db.session.add(new_vehicle)
     db.session.commit()
@@ -85,6 +101,7 @@ def get_all_vehicles():
 @api.route('/vehicle/<int:vehicle_id>', methods=['GET'])
 def get_one_vehicle(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
+    print(vehicle)
     if vehicle is None:
         return jsonify({"msg":"El vehículo no existe"}), 404
     return jsonify(vehicle.serialize()), 200
@@ -101,7 +118,10 @@ def delete_vehicle(vehicle_id):
     else:
         vehicle_to_delete = Vehicle.query.filter_by(id=vehicle_id, user_id=user_id).first()
         if vehicle_to_delete:
+            favorites_to_delete = FavoriteVehicle.query.filter_by(vehicle_id=vehicle_id).all()
             db.session.delete(vehicle_to_delete)
+            for favorite in favorites_to_delete:
+                db.session.delete(favorite)
             db.session.commit()
             return jsonify({"msg": "Vehículo eliminado correctamente"}), 200
         else:
@@ -177,3 +197,41 @@ def get_all_rents():
             all_rents_list,
     }
     return jsonify(response_body), 200
+
+#Ruta de pago de stripe
+
+@api.route('/create-checkout-session/<string:stripe_id>/<int:days>', methods=['POST'])
+def create_checkout_session(stripe_id, days):
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': stripe_id,
+                    'quantity': days,
+                },
+
+            ],
+            mode='payment',
+            success_url= os.getenv('FRONT_URL')+ '?success=true',
+            cancel_url= os.getenv('FRONT_URL') + '?canceled=true',
+        )
+        # return jsonify("ok"),200
+    except Exception as e:
+        return str(e)
+    return redirect(checkout_session.url, code=303)
+   
+
+
+#Flask-mail
+
+mail = Mail()
+@api.route ( "/send-confirmation-mail", methods=['POST']) 
+def  index (): 
+
+    msg  =  Message ( "Hola" , 
+                  sender = "cadimain1@gmail.com" , 
+                  recipients = [ "melomurcia@gmail.com" ])
+    mail.send(msg)
+    return jsonify("Email enviado")
+   

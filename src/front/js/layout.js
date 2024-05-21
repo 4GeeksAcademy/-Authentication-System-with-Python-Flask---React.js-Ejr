@@ -9,8 +9,8 @@ import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import {AgregarVehiculo } from "./pages/agregarvehiculo";
 import { Details } from "./pages/details";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { Payment } from "./pages/payment";
+import { SobreNosotros } from "./pages/sobrenosotros";
 import injectContext from "./store/appContext";
 
 const Layout = () => {
@@ -28,11 +28,11 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<AgregarVehiculo />} path="/agregarvehiculo" />
-                        <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Details />} path="/details/:id" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Payment />} path="/payment" />
+                        <Route element={<SobreNosotros />} path="/sobrenosotros" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

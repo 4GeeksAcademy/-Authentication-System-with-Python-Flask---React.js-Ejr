@@ -25,10 +25,12 @@ class Vehicle(db.Model):
     matricula = db.Column(db.String(50), nullable=False)
     motor = db.Column(db.String(50), nullable=False)
     tipo_cambio = db.Column(db.String(50), nullable=False)
-    asientos = db.Column(db.String(50), nullable=False)
-    precio = db.Column(db.String(50), nullable=False)    
+    asientos = db.Column(db.Integer, nullable=False)
+    precio = db.Column(db.Integer, nullable=False)   
+    precio_id_stripe = db.Column(db.String(50), nullable=False)   
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    url_img = db.Column(db.String(150), nullable=True)
 
     def __repr__(self):
         return f'<Vehicle {self.id}>'
@@ -42,7 +44,9 @@ class Vehicle(db.Model):
             "tipo_cambio": self.tipo_cambio,
             "asientos": self.asientos,
             "precio": self.precio,
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "precio_id_stripe": self.precio_id_stripe,
+            "url_img" : self.url_img
         }
 
 class FavoriteVehicle(db.Model):
