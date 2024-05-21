@@ -7,13 +7,13 @@ export const RoomDetail = () => {
     const { store, actions } = useContext(Context);
     const { roomId } = useParams();
     const navigate = useNavigate();
-    const room = store.rooms.find(room => room.id === parseInt(roomId));
+    const room = store.rooms.find(room => room.room_id === parseInt(roomId));
 
-    useEffect(() => {
+  /*   useEffect(() => {
         if (!room) {
             navigate('/'); // Redirect to home if room not found
         }
-    }, [room, navigate]);
+    }, [room, navigate]); */
 
     if (!room) {
         return <div>Loading...</div>;

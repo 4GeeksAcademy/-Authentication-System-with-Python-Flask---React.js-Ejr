@@ -14,7 +14,7 @@ export const Room = () => {
     return (
         <div>
             {store.rooms.map((room) => (
-                <div key={room.id} className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={() => handleCardClick(room.id)}>
+                <div key={room.room_id} className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={() => handleCardClick(room.room_id)}>
                     <div className="row g-0">
                         <div className="col-md-4">
                             <img src={room.imageUrl || "default_image_path.jpg"} className="img-fluid rounded-start" alt={room.room_name} />
