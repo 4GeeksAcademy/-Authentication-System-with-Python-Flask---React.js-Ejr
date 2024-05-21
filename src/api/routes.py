@@ -459,6 +459,24 @@ def delete_course():
     except Exception as err:
         return jsonify({"error": f"Error deleting course: {str(err)}"}), 500
 
+@api.route('/viewManager/courses', methods=['POST'])
+def create_course():
+    try:
+        data = request.get_json()
+        new_course = Course(
+            title=data.get('title'),
+            category_title=data.get('category_title'),
+            modules_length=data.get('modules_length'),
+            certificate=data.get('certificate'),
+            user_id=data.get('user_id'),
+            manager_id=data.get('manager_id'),
+            teacher_id=data.get('teacher_id')
+        )
+        db.session.add(new_course)
+        db.session.commit()
+        return jsonify({"message": "Course created successfully", "course_id": new_course.id}), 201
+    except Exception as err:
+        return jsonify({"error": f"Error creating course: {str(err)}"}), 500
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
