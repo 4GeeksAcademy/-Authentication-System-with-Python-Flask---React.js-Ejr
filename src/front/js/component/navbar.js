@@ -1,35 +1,69 @@
-import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import CoffeeLogo from "./CoffeeLogo";
-import { Context } from "../store/appContext"; // Import your context
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const location = useLocation();
-  const { actions } = useContext(Context); // Access actions from context
+  const navigate = useNavigate();
+  const { actions } = useContext(Context);
 
-  // Check if the current route is the sign-up page or the specified link
-  const isSpecialPage = location.pathname === "/signup" || location.pathname === "/"; // Adjust the path for the specified link as necessary
+  const handleLogOut = () => {
+    actions.signOut(); // Call the signOut action from the store
+    navigate('/'); // Optionally, navigate to the home page or login page after logging out
+  };
+
+  
+  const isSpecialPage = location.pathname === "/signup" || location.pathname === "/";
+
+  // Check if the current route is the sign-up page or the sign-in where the EMPLOYEE ID button should be hidden
+  const shouldHideEmployeeIdButton = location.pathname === "/signup" || location.pathname === "/" || location.pathname === "/https://potential-eureka-wrrr7j5j557v3g5xv-3000.app.github.dev/";
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'Sensation Light';
+        src: url('/path-to-your-font/Sensation-Light.woff2') format('woff2'),
+             url('/path-to-your-font/Sensation-Light.woff') format('woff');
+        font-weight: light;
+        font-style: light;
+      }
+    `;
+    document.head.append(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   return (
-    <AppBar position="fixed" sx={{ top: 0, backgroundColor: '#2db734', zIndex: '9999' }}>
-      <Toolbar style={{ justifyContent: 'space-between' }}>
+    <AppBar position="fixed" sx={{ top: 0, backgroundColor: '#2db734', zIndex: '9999', padding: '0 40px', width: 'calc(100% + 80px)', left: '-40px' }}>
+      <Toolbar>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
-          {/* Logo on the far left */}
-          <CoffeeLogo width="50px" height="50px" />
+          <CoffeeLogo width="85px" height="85px" />
         </Link>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-          CODEFUSION CAFE {/* Centered text */}
+        <Typography 
+          variant="h4"  // Make the text bigger
+          component="div" 
+          sx={{ 
+            flexGrow: 1, 
+            textAlign: 'center', 
+            position: 'absolute', 
+            left: '50%', 
+            transform: 'translateX(-50%)',
+            fontFamily: 'Sensation Light' 
+          }}
+        >
+          CODEFUSION CAFE
         </Typography>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          {!isSpecialPage && (
-            <Button variant="contained" color="error" onClick={actions.signOut}>
-              LOGOUT
-            </Button>
+        <div style={{ marginLeft: 'auto', display: 'flex', gap: '10px' }}>
+          {!shouldHideEmployeeIdButton && (
+            <Link to="/transactions">
+              <Button variant="contained" color="primary">EMPLOYEE ID</Button>
+            </Link>
           )}
-          <Link to="/transactions">
-            <Button variant="contained" color="primary">EMPLOYEE ID</Button>
-          </Link>
+          {!isSpecialPage && <Button variant="contained" color="error" onClick={handleLogOut}>LOGOUT</Button>}
         </div>
       </Toolbar>
     </AppBar>
