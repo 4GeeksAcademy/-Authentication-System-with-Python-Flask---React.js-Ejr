@@ -17,8 +17,13 @@ import { ManagerView } from "./pages/Manager/ManagerView.jsx";
 import { SignOut } from "./pages/SignOut.jsx";
 
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
+<<<<<<< HEAD
 import { ResetPassword } from "./component/ResetPassword.jsx";
 import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
+=======
+import Courses from "./pages/Courses/Courses.jsx";
+import Course from "./pages/Courses/Course.jsx";
+>>>>>>> 0b5c827adbdcbbf0d2d06e4a1250ce58d9423655
 
 //create your first component
 const Layout = () => {
@@ -37,9 +42,14 @@ const Layout = () => {
                         <Route element={<FormUser />} path="/FormUser" />
                         <Route element={<LogIn />} path="/LogIn" />
                         <Route element={<SignOut />} path="/SignOut"/>
+<<<<<<< HEAD
                         <Route element={<ResetPassword />} path="/ResetPassword"/>
                         <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token"/>
                         
+=======
+                        <Route element={<Courses />} path="/Courses"/>
+
+>>>>>>> 0b5c827adbdcbbf0d2d06e4a1250ce58d9423655
                         {/* Protected Routes */}
                         <Route 
                             element={
@@ -64,6 +74,14 @@ const Layout = () => {
                                 </ProtectedRoute>
                             } 
                             path="/managerView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <Course />
+                                </ProtectedRoute>
+                            } 
+                            path="/course/:id" 
                         />
                         <Route element={<h1>Not found!</h1>} />
                         {/*<Route element={<Single />} path="/single/:theid" /> */}

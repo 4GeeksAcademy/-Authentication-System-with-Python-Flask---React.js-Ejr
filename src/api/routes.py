@@ -5,9 +5,12 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
+
+from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
+
 from flask_mail import Message
 from app import mail
 import os
@@ -565,15 +568,37 @@ def post_courses():
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
 
+
 @api.route('/view/courses', methods=['GET'])
 def get_courses():
     try:
         courses = Course.query.all()
         serialized_courses = [course.serialize() for course in courses]
-        return jsonify({"Courses": serialized_courses}), 200
+        return jsonify({"courses": serialized_courses}), 200
+    
+    except Exception as err:
+        return jsonify({"error": f"Error fetching courses: {str(err)}"}), 500
+
+@api.route('/viewManager/courses', methods=['PUT'])
+def update_course():
+    try:
+        data = request.get_json()
+        course_id = data.get('course_id')
+        updated_data = data.get('updated_data')
+
+        course = Course.query.get(course_id)
+        
+        if course:
+            for key, value in updated_data.items():
+                setattr(course, key, value)
+            db.session.commit()
+            return jsonify({"message": "Course updated successfully"}), 200
+        else:
+            return jsonify({"error": "Course not found"}), 404
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
+
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
@@ -623,7 +648,7 @@ def post_module():
         type_image = request.json.get('typeImage')
 
         if not course_id or not type_file or not title or not video_id or not type_video or not text_id or not type_text or not image_id or not type_image:
-            return {"Error": "courseId, typeFile, title, videoId, typeVideo, textId, typeText, imageId, and typeImage are required"}, 400
+            return {"Error": "courseId, typeFile, title, videoId, typeVideo, textId, typeText, imageId and typeImage are required"}, 400
 
         
         existing_course = Course.query.filter_by(id=course_id).first()
@@ -666,3 +691,6 @@ def delete_module(module_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
+        
+
+
