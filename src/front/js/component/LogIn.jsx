@@ -44,6 +44,10 @@ export const LogIn = () => {
         navigate('/FormUser')
     }
 
+    function handlerResetPassword() {
+        navigate('/ResetPassword')
+    }
+
     function handlerChangeActive() {
         setActive(false)
     }
@@ -62,7 +66,7 @@ export const LogIn = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (prevCounter + 1 === 4 && store.error == '') {
+                if (prevCounter + 1 === 6 && store.error == '') {
                     setRedirectPath(`/${selectedRole}View`)
                     clearInterval(interval)
                 }
@@ -73,18 +77,19 @@ export const LogIn = () => {
         return () => clearInterval(interval)
     }, [setRedirectPath, selectedRole])
 
-    
+
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
 
     return (
         <div className=' position-relative'>
             {/* Msg */}
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {msgError === ''
-                    ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
-                        {"Log In Successfully"}
+                    ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
+                        {msg}
                     </div>
-                    : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
+                    : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
                         {msgError}
                     </div>}
             </div>
@@ -95,12 +100,12 @@ export const LogIn = () => {
                         <div className="d-flex justify-content-center align-items-center position-relative mb-5">
                             <div className='d-flex justify-content-center align-items-center mx-2 fs-4 position-absolute top-0 start-0' onClick={handlerHome} style={{ cursor: "pointer" }}>
                                 <GoArrowLeft />
-                            </div> 
+                            </div>
                             <div className='d-flex justify-content-center align-items-center position-absolute top-0 start-50 translate-middle-x'>
                                 <h1>Log In</h1>
                             </div>
                         </div>
-                        <form className='mt-5 mb-5' onSubmit={handlerLogin}>
+                        <form className='mt-5 mb-5 was-validated' onSubmit={handlerLogin}>
 
 
                             {
@@ -117,6 +122,9 @@ export const LogIn = () => {
                                                 placeholder='Ingrese email'
                                                 className="form-control"
                                             />
+                                            <div class="invalid-feedback">
+                                                Please enter your information.
+                                            </div>
                                         </div>
                                         {/* Password */}
                                         <div className='col-md my-3'>
@@ -129,6 +137,9 @@ export const LogIn = () => {
                                                 placeholder='Ingrese password'
                                                 className="form-control"
                                             />
+                                            <div class="invalid-feedback">
+                                                Please enter your information.
+                                            </div>
                                         </div>
 
                                         <div className='col-md' style={{ marginTop: '80px' }}>
@@ -142,7 +153,7 @@ export const LogIn = () => {
                                                             <span>Login In</span>
                                                         </div>
                                                     </div>
-                                                }
+                                            }
                                             </button>
                                         </div>
                                         <div className='col-md my-3 text-center'>
@@ -150,6 +161,9 @@ export const LogIn = () => {
                                         </div>
                                         <div className='col-md my-3 text-center'>
                                             <p className='text-decoration-underline' onClick={handlerChangeActive} style={{ cursor: "pointer" }}>Do you want to change roles?</p>
+                                        </div>
+                                        <div className='col-md my-3 text-center'>
+                                            <p className='text-decoration-underline' onClick={handlerResetPassword} style={{ cursor: "pointer" }}>Reset your Password</p>
                                         </div>
                                     </div>
                                     : <div className='d-flex justify-content-center my-5'>
@@ -183,6 +197,5 @@ export const LogIn = () => {
                 </div>
             </div>
         </div>
-
     );
 };
