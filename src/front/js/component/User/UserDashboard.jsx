@@ -9,6 +9,7 @@ import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';
 import { Certificate } from '../Manager/Certificate.jsx';
 
+
 export const UserDashboard = () => {
     const { store, actions } = useContext(Context);
     
@@ -26,9 +27,6 @@ export const UserDashboard = () => {
         setButtonSelected(<UserPayment />)
     }
 
-    const handleCertificate=()=>{
-        setButtonSelected(<Certificate/>)
-    }
 
     const navigate = useNavigate();
 
