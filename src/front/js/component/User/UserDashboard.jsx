@@ -3,9 +3,11 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext.js';
 import { CoursesContainer } from '../Courses/CoursesContainer.jsx';
+import Courses from '../../pages/Courses/Courses.jsx';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';
+import { Certificate } from '../Manager/Certificate.jsx';
 
 
 export const UserDashboard = () => {
@@ -14,7 +16,7 @@ export const UserDashboard = () => {
     const [buttonSelected, setButtonSelected] = useState(null)
 
     const handleMyCourses =()=>{
-        setButtonSelected(<CoursesContainer />)
+        setButtonSelected(<Courses />)
     }
     
     const handleMyProfile =()=>{
@@ -25,7 +27,6 @@ export const UserDashboard = () => {
         setButtonSelected(<UserPayment />)
     }
 
-  
 
     const navigate = useNavigate();
 
@@ -50,6 +51,9 @@ export const UserDashboard = () => {
                 </button>
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyPayments}>
                     My Payments
+                </button>
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleCertificate}>
+                    Certificate
                 </button>
             </div>
             <div className="col-9">
