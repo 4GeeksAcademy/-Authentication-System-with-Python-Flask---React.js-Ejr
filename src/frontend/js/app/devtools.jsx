@@ -19,12 +19,11 @@ const _DEV_PAGES= Object.freeze([
   ["settings", "/settings"],
   ["profile", "/profile"],
   ["profile-X", "/profile/-1"],
+  ["team-X", "/team/-1"],
   [null],
   ["dashboard", "/dashboard"],
   ["workspace-X", "/workspace/-1"],
-  ["team-X", "/team/-1"],
   ["project-X", "/project/-1"],
-  ["project-board-X", "/project/-1/-1"],
   ["board-X", "/board/-1"],
   [null],
   ["404", "/404"],
@@ -44,18 +43,6 @@ const DevTools = () => {
     { store, actions }= React.useContext(Context),
     nav= useNavigate()
 
-  function toggle_darkModeState(e){ Utils.cancelEvent(e); actions.toggleUserPref(Constants.USERPREFS_DARKMODE)}
-
-  function toggle_devTools(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_SHOWSTATE)}
-  function move_devToolsPanel(e, i){ Utils.cancelEvent(e); actions.setDevPref(Constants.DEVPREFS_PANELPOSITION, i)}
-  function toggle_devRender(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_DEVRENDER)}
-  function toggle_fakeAuth(e){ Utils.cancelEvent(e); actions.toggleDevAuth()}
-
-  function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
-  function save_userPrefs(e){ Utils.cancelEvent(e); actions.saveUserPrefs() }
-
-  function navigate_page(e, url){ Utils.cancelEvent(e); nav(url) }
-
   const 
     _userDarkMode= actions.getUserPref(Constants.USERPREFS_DARKMODE)
 
@@ -64,6 +51,23 @@ const DevTools = () => {
     _devToolPosition= actions.getDevPref(Constants.DEVPREFS_PANELPOSITION),
     _devRender= actions.getDevPref(Constants.DEVPREFS_DEVRENDER),
     _fakeAuth= actions.getDevPref(Constants.DEVPREFS_FAKEAUTH)
+
+  function toggle_darkModeState(e){ Utils.cancelEvent(e); actions.toggleUserPref(Constants.USERPREFS_DARKMODE)}
+
+  function toggle_devTools(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_SHOWSTATE)}
+  function move_devToolsPanel(e, i){ Utils.cancelEvent(e); actions.setDevPref(Constants.DEVPREFS_PANELPOSITION, i)}
+  function toggle_devRender(e){ 
+    Utils.cancelEvent(e)
+    const new_devRender= !_devRender
+    if(new_devRender) document.body.setAttribute("data-devrender", "PAJA_A_LA_CREMA")
+    else document.body.removeAttribute("data-devrender")
+    actions.toggleDevPref(Constants.DEVPREFS_DEVRENDER)
+  }
+  function toggle_fakeAuth(e){ Utils.cancelEvent(e); actions.toggleDevAuth()}
+
+  function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
+  function save_userPrefs(e){ Utils.cancelEvent(e); actions.saveUserPrefs() }
+  function navigate_page(e, url){ Utils.cancelEvent(e); nav(url) }
   
   return (
 		<div className={"devtools fixed text-center text-white text-xs" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>

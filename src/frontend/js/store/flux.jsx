@@ -6,13 +6,22 @@ import Utils from "../app/utils.js"
 const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
 	return {
 		store: {
-      readyState: {
-        backend: false, frontend: false
-      },
-      fakeUser: null,
+      // internal
+      readyState: { backend: false, frontend: false, pointer: false },
+      itemclasses: null,
+
+      // user
       userPrefs: storeDefaults.userPrefs,
+
+      // dev
       devPrefs: storeDefaults.devPrefs,
+      fakeUser: null,
+      
+      // content
       board: storeDefaults.board,
+      items: storeDefaults.items,
+
+      // tracking
       timestamp: 0,
 		},
 		actions: {
@@ -81,6 +90,9 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
 
       // ------------------------------------------------------------ PAGE BEHAVIOUR
 
+      setItemClasses: (classes)=> { setStore({ itemclasses: classes })},
+      setPointerReady: (state)=> { mergeStore({ readyState: { pointer: state }})},
+
       // ------------------------------------------------------------ THIRD PARTY APIS
 
       getFontAwesomeIconList: async()=>{
@@ -105,6 +117,20 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       },
 
       // ------------------------------------------------------------ BACKEND
+
+      loadBoard: async (bid, pid=-1)=>{
+        console.log("loading board from backend yayyy")
+      },
+
+      // create a new item of given type on the board
+      addItem: async (type, coords)=>{
+        // backend -> POST create item and get resulting element
+      },
+
+      // create a new item of given type and append it to the item with given id
+      addChildItem: async (id, type)=>{
+        // backend -> POST create item and get resulting element
+      },
 
 			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
 			checkBackendHealth: async ()=>{
@@ -137,14 +163,15 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       toggleDevAuth:()=>{
         const new_prefs= structuredClone(getStore().devPrefs)
         new_prefs.fakeAuth= !new_prefs.fakeAuth
-        setStore({ 
+        const new_store={ 
           devPrefs: new_prefs,
           fakeUser: new_prefs.fakeAuth ? {
             username: "Paco Fiestas",
             email: "paquitosexy69@gmail.com",
             avatar: "https://api.dicebear.com/8.x/pixel-art/png?seed=paco"
           }: null}
-        )
+        setStore(new_store)
+        console.log(new_prefs.fakeAuth ? `Using fake user: ${new_store.fakeUser.username} (${new_store.fakeUser.email})` : "fake user removed")
       },
 
       loadDevPrefs:()=>{

@@ -24,9 +24,9 @@ const appContext = ReactComponent => {
 
     function _merge(a, b, objectsOnly) {
       return Object.entries(b).reduce((o, [k, v]) => {
-          o[k] = v && typeof v === 'object' ? _merge(o[k] = o[k] || (!objectsOnly && (Array.isArray(v) ? [] : {})), v, objectsOnly) : v;
-          return o;
-      }, a);
+          o[k] = v && typeof v === 'object' ? _merge(o[k] = o[k] || (!objectsOnly && (Array.isArray(v) ? [] : {})), v, objectsOnly) : v
+          return o
+      }, a)
     }
 
     // call initialize on startup
@@ -39,15 +39,6 @@ const appContext = ReactComponent => {
       }
       else document.body.removeAttribute("data-darkmode")
     },[state.store.userPrefs.darkMode])
-
-    // notify about fakeuser usage
-    React.useEffect(()=>{
-      if(state.store.fakeUser) {
-        const user= state.store.fakeUser
-        console.log(`Using fake user: ${user.username} (${user.email})`)
-      }
-      else console.log(`fake user removed`)
-    },[state.store.fakeUser])
 
 		return (
 			<Context.Provider value={state}>
