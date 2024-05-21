@@ -29,6 +29,7 @@ import UserBooking from "./pages/UserBooking.jsx"
 import CreateClasses from "./component/CreateClasses.jsx";
 import ModulePage from "./pages/ModulePage.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
+import BookingView from "./component/BookingView.jsx";
 
 
 
@@ -60,6 +61,8 @@ const Layout = () => {
                         <Route element={<UserBooking />} path="/UserBooking" />
                         <Route element={<CreateClasses />} path="/CreateClasses" />
                         <Route element={<ModulePage />} path="/ModulePage" />
+                        <Route element={<BookingView />} path="/BookingView" />
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

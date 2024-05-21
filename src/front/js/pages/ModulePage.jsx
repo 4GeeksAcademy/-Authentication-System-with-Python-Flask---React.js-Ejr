@@ -15,6 +15,7 @@ import ConfirmarEmail from "../component/ConfirmEmail.jsx";
 import Home from "./Home.jsx";
 import Login from "../component/Login.jsx";
 import Navbar from "../component/Navbar.jsx";
+import BookingView from "../component/BookingView.jsx";
 
 const ModulePage = () => {
     const [show, setShow] = useState(false);
@@ -38,13 +39,8 @@ const ModulePage = () => {
         { component: <ConfirmarEmail />, name: "Confirmar Email " },
         { component: <Home />, name: "Home " },
         { component: <Login />, name: "Login " },
-        { component: <Navbar />, name: "Navbar " }
-
-
-
-
-
-
+        { component: <Navbar />, name: "Navbar " },
+        { component: <BookingView />, name: "BookingView " }
 
 
     ];

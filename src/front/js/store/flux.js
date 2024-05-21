@@ -24,7 +24,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			trainingClasses: [],  // Array para almacenar las clases
 			reservedClasses: [],
 			cancelBooking: [],
-			creationTrainingClasses: []
+			creationTrainingClasses: [],
+			bookingData:[]
 
 
 
@@ -422,6 +423,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			resetCreationTrainingClasses: () => {
 				setStore({ ...getStore(), creationTrainingClasses: [] });
 			},
+
+			getBookings: async () => {
+
+				try {
+
+					const url = process.env.BACKEND_URL + "api/booking";
+					let response = await fetch(url, {
+						method: "GET", // Método de la solicitud
+					});
+					const data = await response.json();
+					if (response.ok) {
+						setStore({ ...getStore(), bookingData: data });  // Actualiza el estado con las clases obtenidas
+						console.log(data)
+					} else {
+						throw new Error("Failed to fetch classes");
+					}
+				} catch (error) {
+					console.error("Error loading training classes:", error);
+				}
+            },
 			
 
 
