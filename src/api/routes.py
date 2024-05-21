@@ -10,6 +10,13 @@ from flask_jwt_extended import create_access_token, JWTManager, jwt_required, ge
 from datetime import timedelta
 import re
 
+from sqlalchemy.exc import SQLAlchemyError
+import jwt
+import logging
+
+
+
+
 
 api = Blueprint('api', __name__)
 
@@ -443,25 +450,19 @@ def update_user(user_id):
 
     
 #--DELETE USER----------------------------------------------------------------------------------------------------------------------------------------------
-
 @api.route('/user/<int:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
     try:
-        # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
-
-        # Obtener la instancia del usuario actual
         current_user = User.query.get(current_user_id)
 
-        # Verificar si el usuario actual es admin o el mismo usuario que solicita la eliminación
         if not current_user or (current_user.id != user_id and not current_user.admin):
             return jsonify({"error": "Unauthorized."}), 403
 
         user_to_delete = User.query.get(user_id)
-        
+
         if user_to_delete:
-            # Verificar si el usuario a eliminar no es un administrador, a menos que el usuario actual sea un admin
             if user_to_delete.admin and not current_user.admin:
                 return jsonify({"error": "Cannot delete an admin user."}), 403
 
@@ -471,9 +472,20 @@ def delete_user(user_id):
         else:
             return jsonify({"error": "User not found."}), 404
 
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        logging.error(f"Database error: {str(e)}")
+        return jsonify({"error": "Database error.", "details": str(e)}), 500
+    except jwt.ExpiredSignatureError:
+        logging.error("Token has expired.")
+        return jsonify({"error": "Token has expired."}), 401
+    except jwt.InvalidTokenError:
+        logging.error("Invalid token.")
+        return jsonify({"error": "Invalid token."}), 401
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
+        logging.error(f"Unexpected error: {str(e)}")
+        return jsonify({"error": "An unexpected error occurred.", "details": str(e)}), 500
+
 
 # ---------------------------------------JOIN a ROOM--------------------------------------------------------------
 @api.route('/room/<int:room_id>/join', methods=['POST'])
