@@ -16,7 +16,7 @@ export const Navbar = () => {
     return (
         <div>
             {
-                (localStorage.getItem('jwt-token'))
+                (localStorage.getItem('jwt-token'))  
                     ? <div>
                         <div>
                             {

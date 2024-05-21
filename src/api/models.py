@@ -75,7 +75,7 @@ class Teacher(db.Model):
     phone = db.Column(db.String(250), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
-    certificate_teacher = db.Column(db.String(500), nullable=True)
+    certificate_teacher = db.Column(db.String(250), nullable=True)
 
     #relations
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -165,6 +165,7 @@ class Orders(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(250), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
     #Relations

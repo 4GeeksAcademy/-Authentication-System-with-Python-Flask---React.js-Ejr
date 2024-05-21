@@ -6,10 +6,13 @@ from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modu
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+
 from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta
 import re
+import os
+
 
 api = Blueprint('api', __name__)
 
@@ -411,17 +414,72 @@ def post_courses():
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
 
-
-@api.route('/view/courses', methods=['GET'])
-def get_courses():
+@api.route('/viewManager/courses', methods=['GET'])
+def get_all_courses():
     try:
         courses = Course.query.all()
         serialized_courses = [course.serialize() for course in courses]
-        return jsonify({"Courses": serialized_courses}), 200
+        return jsonify({"courses": serialized_courses}), 200
     
     except Exception as err:
-        return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
+        return jsonify({"error": f"Error fetching courses: {str(err)}"}), 500
 
+@api.route('/viewManager/courses', methods=['PUT'])
+def update_course():
+    try:
+        data = request.get_json()
+        course_id = data.get('course_id')
+        updated_data = data.get('updated_data')
+
+        course = Course.query.get(course_id)
+        
+        if course:
+            for key, value in updated_data.items():
+                setattr(course, key, value)
+            db.session.commit()
+            return jsonify({"message": "Course updated successfully"}), 200
+        else:
+            return jsonify({"error": "Course not found"}), 404
+    
+    except Exception as err:
+        return jsonify({"error": f"Error updating course: {str(err)}"}), 500
+
+@api.route('/viewManager/courses', methods=['DELETE'])
+def delete_course():
+    try:
+        data = request.get_json()
+        course_id = data.get('course_id')
+        
+        course = Course.query.get(course_id)
+        
+        if course:
+            db.session.delete(course)
+            db.session.commit()
+            return jsonify({"message": "Course deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Course not found"}), 404
+    
+    except Exception as err:
+        return jsonify({"error": f"Error deleting course: {str(err)}"}), 500
+
+@api.route('/viewManager/courses', methods=['POST'])
+def create_course():
+    try:
+        data = request.get_json()
+        new_course = Course(
+            title=data.get('title'),
+            category_title=data.get('category_title'),
+            modules_length=data.get('modules_length'),
+            certificate=data.get('certificate'),
+            user_id=data.get('user_id'),
+            manager_id=data.get('manager_id'),
+            teacher_id=data.get('teacher_id')
+        )
+        db.session.add(new_course)
+        db.session.commit()
+        return jsonify({"message": "Course created successfully", "course_id": new_course.id}), 201
+    except Exception as err:
+        return jsonify({"error": f"Error creating course: {str(err)}"}), 500
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
@@ -550,4 +608,35 @@ def get_quizzes():
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
 
+# Definir la ruta de la carpeta de carga
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 
+# Asegúrate de que la carpeta 'uploads' exista
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+@api.route('/upload', methods=['POST'])
+def upload_file():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+
+        file = request.files['file']  # esta es la clave que se debe utilizar en postman
+
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+
+        if file:
+            file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+            file.save(file_path)
+            file_info = {
+                'filename': file.filename,
+                'content_type': file.content_type,
+                'size': os.path.getsize(file_path),
+                'path': file_path
+            }
+            return jsonify({'message': 'File uploaded successfully', 'file': file_info}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
