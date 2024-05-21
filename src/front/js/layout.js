@@ -16,6 +16,7 @@ import { EditForm } from "./pages/User/editForm";
 import ScrollToTop from "./component/scrollToTop.jsx";
 import ExerciseDetail from "./pages/User/exerciseDetail.js";
 import ProtectedRoute from "./component/protectedRoute.jsx";
+import TrainerUserDetail from "./pages/Trainer/trainerUserDetail.js";
 
 const Layout = () => {
 
@@ -43,6 +44,7 @@ const Layout = () => {
                         </Route>
                         <Route element={<ProtectedRoute roles={['trainer']} />}>
                             <Route path="/trainer/:id" element={<Trainer />} />
+                            <Route path="/trainer/:tainer_id/:user_id" element={<TrainerUserDetail />} />
                         </Route>
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>

@@ -74,26 +74,20 @@
     .routine-table td {
         width: auto;
         display: block;
-        text-align: left;
-        padding-left: 50%;
-        position: relative;
+
     }
 
     .routine-table th {
         text-align: center;
-        padding-left: 0;
+
     }
 
     .routine-table td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        width: calc(50% - 20px);
+
+        /*  width: calc(50% - 20px); */
         white-space: nowrap;
         font-weight: bold;
     }
 
-    .routine-table td {
-        text-align: left;
-    }
 }

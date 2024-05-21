@@ -49,7 +49,7 @@
             "search"
             "exercises";
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto 1fr;
+        grid-template-rows: auto;
         gap: 10px;
         padding: 20px;
         box-sizing: border-box;
