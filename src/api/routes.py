@@ -538,7 +538,47 @@ def show_view_manager():
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+#------------------GET AND DELETE TEACHERS------------------#
 
+@api.route('/view/manager/teachers', methods=['GET'])
+@jwt_required()  # Decorador para requerir autenticación con JWT
+def get_teachers():
+    current_token = get_jwt_identity()  # Obtiene la ID del usuario del token
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    teachers = Teacher.query.all()
+    teacher_list = [
+        {
+            "id": teacher.id,
+            "email": teacher.email,
+            "is_teacher": teacher.is_teacher,
+            "name": teacher.name,
+            "lastName": teacher.last_name,
+            "username": teacher.username,
+            "numberDocument": teacher.number_document,
+            "phone": teacher.phone,
+            "age": teacher.age,
+            "gender": teacher.gender,
+            "certificateTeacher": teacher.certificate_teacher,
+            "userId": teacher.user_id
+        }
+        for teacher in teachers
+    ]
+
+    return jsonify({"access_to_teacher": teacher_list, "message": "Access to Teachers Successfully"}), 200
+
+
+@api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
+@jwt_required()
+def delete_teacher(teacher_id):
+    current_token = get_jwt_identity() #obtiene ID del usuario del Token        
+    if not current_token:
+        return jsonify({"Error": "Teacher not found"}), 404
+
+    db.session.delete(teacher)
+    db.session.commit()
+    return jsonify({"message": "Teacher with ID {teacher.id} deleted succesfully"}), 200
 
 #-----------------------COURSES------------------------#
 @api.route('/view/courses', methods=['POST'])
