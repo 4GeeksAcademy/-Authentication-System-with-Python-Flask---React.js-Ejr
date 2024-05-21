@@ -3,13 +3,27 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/Home.jsx";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Footer } from "./component/Footer.jsx";
+import { FormUser } from "./pages/User/FormUser.jsx";
+import { LogIn } from "./component/LogIn.jsx";
+import { UserView } from "./pages/User/UserView.jsx";
+import { TeacherView } from "./pages/Teacher/TeacherView.jsx";
+import { ManagerView } from "./pages/Manager/ManagerView.jsx";
+import { SignOut } from "./pages/SignOut.jsx";
+
+import ProtectedRoute from "./component/ProtectedRoute.jsx";
+<<<<<<< HEAD
+import { ResetPassword } from "./component/ResetPassword.jsx";
+import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
+=======
+import Courses from "./pages/Courses/Courses.jsx";
+import Course from "./pages/Courses/Course.jsx";
+>>>>>>> 0b5c827adbdcbbf0d2d06e4a1250ce58d9423655
 
 //create your first component
 const Layout = () => {
@@ -17,18 +31,60 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<FormUser />} path="/FormUser" />
+                        <Route element={<LogIn />} path="/LogIn" />
+                        <Route element={<SignOut />} path="/SignOut"/>
+<<<<<<< HEAD
+                        <Route element={<ResetPassword />} path="/ResetPassword"/>
+                        <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token"/>
+                        
+=======
+                        <Route element={<Courses />} path="/Courses"/>
+
+>>>>>>> 0b5c827adbdcbbf0d2d06e4a1250ce58d9423655
+                        {/* Protected Routes */}
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <TeacherView />
+                                </ProtectedRoute>
+                            } 
+                            path="/teacherView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UserView />
+                                </ProtectedRoute>
+                            } 
+                            path="/userView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <ManagerView />
+                                </ProtectedRoute>
+                            } 
+                            path="/managerView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <Course />
+                                </ProtectedRoute>
+                            } 
+                            path="/course/:id" 
+                        />
                         <Route element={<h1>Not found!</h1>} />
+                        {/*<Route element={<Single />} path="/single/:theid" /> */}
                     </Routes>
                     <Footer />
                 </ScrollToTop>
