@@ -1,7 +1,16 @@
 import React from "react";
 import '../../../styles/components.css';
+import { useNavigate } from "react-router-dom";
 
 export const CoursesContainer = () => {
+    const navigate = useNavigate()
+    
+    // courseCard
+    
+    const handleViewCourses=()=>{
+        navigate(<Courses />)
+    }
+
     return (
         <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
             <div className="card mx-2 shadow" style={{ width: "18rem", height: "auto", paddingTop: "20px", paddingBottom: "20px" }}>
@@ -19,7 +28,7 @@ export const CoursesContainer = () => {
                     <h5 className="card-title">Become a Python Expert!</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
                             View Course
                         </button>
                         <button type="button" className="btn btn-success">
@@ -44,7 +53,7 @@ export const CoursesContainer = () => {
                     <h5 className="card-title">Personal Finances Now</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
                             View Course
                         </button>
                         <button type="button" className="btn btn-success">
@@ -69,7 +78,7 @@ export const CoursesContainer = () => {
                     <h5 className="card-title">Interior Design Mastery</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
                             View Course
                         </button>
                         <button type="button" className="btn btn-success">
@@ -93,7 +102,7 @@ export const CoursesContainer = () => {
                     <h5 className="card-title">Public Speaking</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
                             View Course
                         </button>
                         <button type="button" className="btn btn-success">
@@ -120,7 +129,7 @@ export const CoursesContainer = () => {
                     <h5 className="card-title">Mindfulness Meditation</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
                             View Course
                         </button>
                         <button type="button" className="btn btn-success">
@@ -147,7 +156,7 @@ export const CoursesContainer = () => {
                     <h5 className="card-title">Full-Stack WebDev Course</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida ac nibh ac varius. Nullam a maximus metus. Nam et ex est. </p>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
                             View Course
                         </button>
                         <button type="button" className="btn btn-success">
