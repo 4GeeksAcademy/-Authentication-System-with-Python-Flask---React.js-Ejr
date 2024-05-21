@@ -5,6 +5,8 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager  # type: ignore
 import stripe
 import os
+from flask_mail import Mail
+from flask_mail import Message
 
 
 api = Blueprint('api', __name__)
@@ -219,4 +221,17 @@ def create_checkout_session(stripe_id, days):
         return str(e)
     return redirect(checkout_session.url, code=303)
    
+
+
+#Flask-mail
+
+mail = Mail()
+@api.route ( "/send-confirmation-mail", methods=['POST']) 
+def  index (): 
+
+    msg  =  Message ( "Hola" , 
+                  sender = "cadimain1@gmail.com" , 
+                  recipients = [ "melomurcia@gmail.com" ])
+    mail.send(msg)
+    return jsonify("Email enviado")
    
