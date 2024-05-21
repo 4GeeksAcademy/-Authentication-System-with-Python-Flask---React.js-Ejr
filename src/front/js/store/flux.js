@@ -24,6 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let data = await response.json();
                     localStorage.setItem("jwt-token", data.token);
+                    localStorage.setItem("userId", data.user_id); // Guardar userId en localStorage
                     setStore({ user: data });
 
                     return true;
@@ -86,16 +87,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             logout: () => {
                 localStorage.removeItem('jwt-token');
+                localStorage.removeItem('userId'); // Eliminar userId de localStorage
                 setStore({ user: null });
             },
 
             getProfile: async () => {
                 const store = getStore();
                 const token = localStorage.getItem('jwt-token');
-                if (!token) return null;
+                const userId = localStorage.getItem('userId'); // Obtener userId de localStorage
+                if (!token || !userId) return null;
 
                 try {
-                    const response = await fetch(`${apiUrl}/api/profile`, {
+                    const response = await fetch(`${apiUrl}/api/user/${userId}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -113,10 +116,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             updateProfile: async (profileData) => {
                 const token = localStorage.getItem('jwt-token');
-                if (!token) return false;
+                const userId = localStorage.getItem('userId'); // Obtener userId de localStorage
+                if (!token || !userId) return false;
 
                 try {
-                    const response = await fetch(`${apiUrl}/api/profile`, {
+                    const response = await fetch(`${apiUrl}/api/user/${userId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -136,10 +140,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             deleteProfile: async () => {
                 const token = localStorage.getItem('jwt-token');
-                if (!token) return false;
+                const userId = localStorage.getItem('userId'); // Obtener userId de localStorage
+                if (!token || !userId) return false;
 
                 try {
-                    const response = await fetch(`${apiUrl}/api/profile`, {
+                    const response = await fetch(`${apiUrl}/api/user/${userId}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -147,6 +152,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     if (!response.ok) throw new Error('Failed to delete profile');
                     localStorage.removeItem('jwt-token');
+                    localStorage.removeItem('userId'); // Eliminar userId de localStorage
                     setStore({ user: null });
                     return true;
                 } catch (error) {
