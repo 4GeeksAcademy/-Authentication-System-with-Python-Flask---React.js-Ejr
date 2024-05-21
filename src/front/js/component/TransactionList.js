@@ -19,17 +19,13 @@ const transactions = [
   }
 ];
 
-const TransactionList = () => {
+const TransactionList = ({ onSelectTransaction }) => {
   return (
     <div>
       {transactions.map(transaction => (
-        <div key={transaction.id}>
+        <div key={transaction.id} onClick={() => onSelectTransaction(transaction)} style={{ cursor: 'pointer', marginBottom: '10px', padding: '10px', border: '1px solid #ccc' }}>
           <p>Created: {transaction.created}</p>
           <p>Transaction ID: {transaction.id}</p>
-          <p>Is Cash: {transaction.is_cash ? 'Yes' : 'No'}</p>
-          <p>Products: {transaction.products}</p>
-          <p>Total Price: ${transaction.total_price.toFixed(2)}</p>
-          <p>User ID: {transaction.user_id}</p>
         </div>
       ))}
     </div>
