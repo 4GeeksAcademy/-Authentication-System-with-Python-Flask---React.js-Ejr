@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 import PersonalData from "../../component/User/PersonalData.jsx";
-import { Context } from "../../store/appContext";
+
 
 import Calendly from "../../component/User/calendar.jsx";
 

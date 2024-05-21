@@ -11,14 +11,137 @@
 }
 
 .exercises-result-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
 
+}
+
+.exercise-card {
+  flex: 1 1 calc(33.333% - 20px);
+
+  max-width: calc(33.333% - 20px);
 }
 
 .pagination {
   margin-top: 20px;
   align-self: center;
-
+  display: flex;
+  list-style: none;
+  padding: 0;
 }
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-link {
+  color: var(--primary-color);
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--primary-color);
+  color: var(--white-text);
+}
+
+.pagination .active .page-link {
+  background-color: var(--primary-color);
+  color: var(--white-text);
+  border: 1px solid var(--primary-color);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: var(--secondary-color);
+  cursor: not-allowed;
+}
+
+@media (max-width: 1000px) and (min-width: 769px) {
+  .exercise-card {
+    flex: 1 1 calc(50% - 20px);
+
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .exercise-card {
+    flex: 1 1 100%;
+
+    max-width: 100%;
+  }
+}
+
+/* 
+.exercises-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.exercises-title {
+  align-self: center;
+  margin-bottom: 46px;
+}
+
+.exercises-result-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.pagination {
+  margin-top: 20px;
+  align-self: center;
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-link {
+  color: var(--primary-color);
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--primary-color);
+  color: var(--white-text);
+}
+
+.pagination .active .page-link {
+  background-color: var(--primary-color);
+  color: var(--white-text);
+  border: 1px solid var(--primary-color);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: var(--secondary-color);
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 1000px) and (min-width: 769px) {
+  .exercises-result-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .exercises-result-container {
+    grid-template-columns: 1fr;
+  }
+} */

@@ -51,7 +51,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
-    window.scrollTo({ top: 1800, behavior: 'smooth' });
+    window.scrollTo({ top: 1000, behavior: 'smooth' });
   };
 
   return (
@@ -60,7 +60,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       <div className="exercises-result-container">
         {currentExercises.length > 0 ? (
           currentExercises.map((exercise, index) => (
-            <ExerciseCard key={index} exercise={exercise} />
+            <ExerciseCard key={index} exercise={exercise} className="exercise-card" />
           ))
         ) : (
           <p>No exercises to display.</p>

@@ -82,6 +82,8 @@ const getState = ({ getStore, setStore }) => {
 
 				if (response.ok) {
 					const decoded = jwtDecode(store.token);
+					sessionStorage.setItem("role", decoded.role);
+					sessionStorage.setItem("user_id", decoded.sub);
 					setStore({ user_id: decoded.sub, role: decoded.role });
 				} else {
 					console.error('Error sending user data');

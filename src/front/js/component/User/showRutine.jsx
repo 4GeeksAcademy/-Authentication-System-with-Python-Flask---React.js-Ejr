@@ -32,20 +32,34 @@ const UserRoutine = () => {
     return (
         <div className='routine-container'>
             <h2 className='routine-title'>Your Current Routine</h2>
-            {weekDays.map((day) => (
-                <div key={day}>
-                    <h3 className='day-title'>{day}</h3>
-                    <ul className='exercise-list'>
-                        {routine[day] && routine[day].length > 0 ? (
-                            routine[day].map((exercise, index) => (
-                                <li key={index} className='exercise-list-item'>{exercise}</li>
-                            ))
-                        ) : (
-                            <li>Rest Day</li>
-                        )}
-                    </ul>
-                </div>
-            ))}
+            <div className='routine-table-container'>
+                <table className='routine-table'>
+                    <thead>
+                        <tr>
+                            {weekDays.map((day) => (
+                                <th key={day}>{day}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {weekDays.map((day) => (
+                                <td key={day} data-label={day}>
+                                    <ul className='exercise-list'>
+                                        {routine[day] && routine[day].length > 0 ? (
+                                            routine[day].map((exercise, index) => (
+                                                <li key={index} className='exercise-list-item'>{exercise}</li>
+                                            ))
+                                        ) : (
+                                            <li>Rest Day</li>
+                                        )}
+                                    </ul>
+                                </td>
+                            ))}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

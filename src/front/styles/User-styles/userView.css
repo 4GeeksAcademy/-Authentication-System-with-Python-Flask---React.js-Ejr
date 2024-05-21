@@ -1,11 +1,12 @@
 .user-container {
     display: grid;
+    width: 100%;
     grid-template-areas:
         "userdata calendar"
-        "routine calendar"
+        "routine routine"
         "search search"
         "exercises exercises";
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: auto auto auto 1fr;
     gap: 10px;
     padding: 20px;
@@ -13,15 +14,7 @@
     margin-top: 90px;
 }
 
-.user-data,
-.user-routine,
-.user-calendar,
-.search-exercise,
-.exercises {
 
-    padding: 10px;
-    overflow: auto;
-}
 
 .user-data {
     grid-area: userdata;
@@ -45,4 +38,22 @@
 .exercises {
     grid-area: exercises;
     overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .user-container {
+        grid-template-areas:
+            "userdata"
+            "calendar"
+            "routine"
+            "search"
+            "exercises";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-top: 90px;
+        height: auto;
+    }
 }
