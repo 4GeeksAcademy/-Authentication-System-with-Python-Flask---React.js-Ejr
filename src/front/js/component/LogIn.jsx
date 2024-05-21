@@ -112,14 +112,14 @@ export const LogIn = () => {
                                 (active)
                                     ? <div>
                                         {/* Email */}
-                                        <div className='col-md my-3'>
-                                            <label className='my-2'>Email</label>
+                                        <div className='col-md my-3 form-check'>
+                                            <label className='my-2' htmlFor="validationFormCheck1">Email</label>
                                             <input
                                                 name='email'
                                                 value={login.email}
                                                 onChange={handlerChangeLogin}
                                                 type="text"
-                                                placeholder='Ingrese email'
+                                                id="validationFormCheck1"
                                                 className="form-control"
                                             />
                                             <div className="invalid-feedback">
@@ -127,14 +127,14 @@ export const LogIn = () => {
                                             </div>
                                         </div>
                                         {/* Password */}
-                                        <div className='col-md my-3'>
-                                            <label className='my-2'>Password</label>
+                                        <div className='col-md my-3 form-check'>
+                                            <label className='my-2' htmlFor="validationFormCheck2">Password</label>
                                             <input
                                                 name='password'
                                                 value={login.password}
                                                 onChange={handlerChangeLogin}
                                                 type='password'
-                                                placeholder='Ingrese password'
+                                                id="validationFormCheck2"
                                                 className="form-control"
                                             />
                                             <div className="invalid-feedback">

@@ -5,16 +5,12 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from werkzeug.security import check_password_hash
-
-from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
-
 from flask_mail import Message
 from app import mail
 import os
-
 
 api = Blueprint('api', __name__)
 
@@ -73,7 +69,8 @@ def create_signup_user():
         return jsonify({"message":"Student has been Created Successfully", "user_create": new_user.serialize()}), 201
 
     except Exception as err:
-        return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
+        return jsonify({"Error":"Error in User Creation: " + str(err)}), 500
+
 
 @api.route('/signup/teacher', methods=['POST'])
 def create_signup_teacher():
@@ -471,7 +468,7 @@ def show_view_teacher():
             }
             teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Student and Teacher Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Teacher Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -533,7 +530,7 @@ def show_view_manager():
             }
             manager_list.append(manager_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list, "message": "Access to all User Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list, "message": "Access to Manager User Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
