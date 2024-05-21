@@ -167,7 +167,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				throw new Error("User is not authenticated");
 			}
 		
-			const created = new Date().toISOString(); // Set the created date to the current date and time
+			const created = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+
 		
 			const response = await fetch(`${process.env.BACKEND_URL}api/transactions`, {
 				method: "POST",
