@@ -6,10 +6,13 @@ from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modu
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+
 from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta
 import re
+import os
+
 
 api = Blueprint('api', __name__)
 
@@ -516,4 +519,35 @@ def delete_module(module_id):
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
         
 
+# Definir la ruta de la carpeta de carga
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 
+# Asegúrate de que la carpeta 'uploads' exista
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+@api.route('/upload', methods=['POST'])
+def upload_file():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+
+        file = request.files['file']  # esta es la clave que se debe utilizar en postman
+
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+
+        if file:
+            file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+            file.save(file_path)
+            file_info = {
+                'filename': file.filename,
+                'content_type': file.content_type,
+                'size': os.path.getsize(file_path),
+                'path': file_path
+            }
+            return jsonify({'message': 'File uploaded successfully', 'file': file_info}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
