@@ -181,6 +181,7 @@ class Payment(db.Model):
     date = db.Column(db.String(250), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
+    
     #Relations
     user = db.relationship('User', backref=db.backref('payment', lazy=True))
     manager = db.relationship('Manager', backref=db.backref('payment', lazy=True))
@@ -191,6 +192,7 @@ class Payment(db.Model):
     def serialize(self):
         return{
             "id": self.id,
+            "date": self.date,
             "user_id": self.user_id,
             "manager_id": self.manager_id
         }
