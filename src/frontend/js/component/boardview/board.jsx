@@ -5,22 +5,8 @@ import Utils from "../../app/utils.js"
 
 import { Context } from "../../store/appContext.jsx"
 
-import List from "./list.jsx"
-
 import useContextualMenu from "../../effects/useContextualMenu.jsx"
 import getPointerHook from "../../effects/useGlobalPointerHook.jsx"
-
-//ITEMTYPE_WORKSPACE: 0,
-//ITEMTYPE_PROJECT: 1,
-//ITEMTYPE_TEAM: 2,
-//ITEMTYPE_USER: 3,
-//ITEMTYPE_BOARD: 4,
-//ITEMTYPE_LIST: 5,
-//ITEMTYPE_TASK: 6,
-//ITEMTYPE_TEXT: 7,
-//ITEMTYPE_MEDIA: 8,
-//ITEMTYPE_EMBED: 9,
-const _ITEMTYPE= [null, null, null, null, null, List, null, null, null, null]
 
 const
   _ACTION_ID= { end:0, context:1, grab:3, resize: 4, pan:5 },
@@ -55,7 +41,7 @@ const Board= ()=>{
       dirty: 0,
       timestamp: Date.now()
     }),
-    [boardItems, set_boardItems]= React.useState([]),
+    [childItems, set_childItems]= React.useState([]),
     itemUtils= React.useRef([])
 
   function merge_canvasState(new_state){ _scs({ ...Object.assign(canvasState, { ...new_state, timestamp: Date.now() })})}
@@ -64,16 +50,23 @@ const Board= ()=>{
 
     if(store.items.length > 0){
 
-      itemUtils.current= Array(store.items.length)
+      const content= store.board.content
+      if(content?.length > 0){
 
-      const items= store.items.map((e,i)=>{
-        const Type= _ITEMTYPE[e.type]
-        return <Type key={`${e.id}|${e.bid}`} bref={[itemUtils, i]} {...e.props} />
-      })
+        itemUtils.current= Array(content.length)
 
-      set_boardItems(items)
+        const react= content.map((c,i)=>{
 
-      console.log(`board contains ${store.items.length} items`)
+          const item= store.items.find(e=>e.id===c)
+          if(item) {
+            const Type= store.itemclasses[item.type]
+            return <Type key={`${item.id}|${item.bid}`} id={item.id} bref={[itemUtils, i]} {...item.props} />
+          }
+        }).filter(e=>e!=null)
+        set_childItems(react)
+        console.log(`board contains ${react.length} items`)
+      }
+      else console.log(`empty board with id: ${store.board.id}`)
     }
     
   },[store.board])
@@ -107,8 +100,8 @@ const Board= ()=>{
           coords= canvasState.coords,
           offset= canvasState.offset,
           origin= [half+store.board.origin[0], half+store.board.origin[1]]
-        canvasStyle.setProperty("--canvas-coords-x", (-origin[0] + coords.x+offset.x).toString() + "px" )
-        canvasStyle.setProperty("--canvas-coords-y", (-origin[1] + coords.y+offset.y).toString() + "px" )
+        canvasStyle.setProperty("--canvas-coords-x", ((-origin[0] + coords.x+offset.x)|0) + "px" )
+        canvasStyle.setProperty("--canvas-coords-y", ((-origin[1] + coords.y+offset.y)|0) + "px" )
       }
 
       if(dirty & Constants.CANVAS_DIRTY.style){
@@ -137,6 +130,33 @@ const Board= ()=>{
   }
 
   // --------------------------------------------------------------- ACTIONS
+
+  // double click happened
+  React.useEffect(()=>{
+    if(pointer.current.double.button !== -1){
+
+      if(pointerUtils.getZsort(canvasRef.current) === 0){
+        const
+          half= store.board.size * .475,
+          cur_coords= canvasState.coords,
+          mus_coords= pointer.current.coords,
+          viewFactor= [ window.innerWidth*.5, window.innerHeight*.5 ],
+          mus_point= [ (mus_coords.x - viewFactor[0]) * -1.0, (mus_coords.y - viewFactor[1]) * -1.0 ],
+
+          zoominv= 1/_ZOOM_LEVELS[canvasState.zoom],
+
+          new_coords= {
+            x: Utils.clamp(cur_coords.x + (mus_point[0] * zoominv | 0), -half, half),
+            y: Utils.clamp(cur_coords.y + (mus_point[1] * zoominv | 0), -half, half),
+          }
+
+        merge_canvasState({
+          coords: new_coords,
+          dirty: Constants.CANVAS_DIRTY.coords
+        })
+      }
+    }
+  },[pointer.current.double])
 
   // test any click event and check if we should start/end/update an action on our canvas
   React.useEffect(()=>{
@@ -192,7 +212,7 @@ const Board= ()=>{
     if(click.button != -1){
       const current= buttons[click.button]
       if(!canvasState.action){
-        if(current.stage === 1 && boardItems.length > 0){
+        if(click.button === Constants.MOUSE_BTN_LEFT && current.stage === 1 && childItems.length > 0){
 
           const item= itemUtils.current.find(e=>e.get().current.contains(click.element))
           if(item) {
@@ -206,20 +226,23 @@ const Board= ()=>{
 
               const 
                 mode= grab===click.element ? _ACTION_ID.grab : _ACTION_ID.resize,
-                overlay= canvasRef.current.querySelector("#board-canvas-overlay"),
+                overlay= document.body.querySelector("#board-canvas-overlay"),
+                top= canvasRef.current.querySelector("#board-canvas-top"),
                 ghost= node.cloneNode(true)
   
+              top.appendChild(ghost)
+              
               node.style.setProperty("opacity", ".5")
-              overlay.style.setProperty("cursor", mode===_ACTION_ID.grab ? "move": "se-resize", "important")
-              overlay.style.setProperty("pointer-events", "auto", "important")
-              overlay.appendChild(ghost)
+
+              overlay.style.setProperty("--overlay-cursor", mode===_ACTION_ID.grab ? "move": "se-resize")
+              overlay.style.setProperty("--overlay-pointerevents", "auto")
 
               merge_canvasState({ 
                 item: [item, ghost], 
                 action: {
                   id: mode,
                   half: store.board.size * .5,
-                  coords: item.get(Constants.ITEMDATA_COORDS),
+                  coords: item.get(Constants.ITEMDATA.coords),
                   origin: pointer.current.click.origin,
                   zoom: _ZOOM_LEVELS[canvasState.zoom],
                   zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
@@ -239,23 +262,39 @@ const Board= ()=>{
   // action finishing
   React.useEffect(()=>{
     if(canvasState.action?.id === _ACTION_ID.end){
-      const state= {
+      const new_state= {
         action: null, 
         item: null,
         offset: { x:0, y:0 },
         dirty: Constants.CANVAS_DIRTY.transform | Constants.CANVAS_DIRTY.cursor
       }
       if(!canvasState.action.abort) {
-        state.coords= { x: canvasState.coords.x+canvasState.offset.x, y: canvasState.coords.y+canvasState.offset.y }
+        new_state.coords= { x: canvasState.coords.x+canvasState.offset.x, y: canvasState.coords.y+canvasState.offset.y }
       }
       if(canvasState.item) {
-        const overlay= canvasRef.current.querySelector("#board-canvas-overlay")
-        overlay.style.removeProperty("cursor")
-        overlay.style.removeProperty("pointer-events")
+        const overlay= document.body.querySelector("#board-canvas-overlay")
+
+        if(!canvasState.action.abort){
+          const new_coords= {
+            x: parseInt(canvasState.item[1].style.getPropertyValue('--item-coords-x').replace("px","")),
+            y: parseInt(canvasState.item[1].style.getPropertyValue('--item-coords-y').replace("px",""))
+          }
+  
+          canvasState.item[0].set({
+            coords: new_coords, 
+            dirty: Constants.ITEM_DIRTY.coords
+          })
+        }
+
         canvasState.item[0].get().current.style.removeProperty("opacity")
         canvasState.item[1].remove()
+
+        overlay.style.removeProperty("--overlay-cursor")
+        overlay.style.removeProperty("--overlay-pointerevents")
+
+        new_state.item=null
       }
-      merge_canvasState(state)
+      merge_canvasState(new_state)
     }
   },[canvasState.action])
 
@@ -320,16 +359,6 @@ const Board= ()=>{
   
         if(new_zoom != cur_zoom) {
   
-          // double click functionality here:
-  
-          //const 
-          //  zoom= _zoom_levels[new_canvasZoom],
-          //  factor= delta < 0 ? -1.0 : 1.0,
-          //  new_coords= [
-          //    canvasPosition[0] + (current[0] - viewHalf[0]) * factor,
-          //    canvasPosition[1] + (current[1] - viewHalf[1]) * factor,
-          //  ]
-  
           const
             half= store.board.size * .475,
             cur_coords= canvasState.coords,
@@ -372,11 +401,12 @@ const Board= ()=>{
             }
           </div>
           <div id="board-canvas-content">
-            {boardItems}
+            {childItems}
           </div>
-          <div id="board-canvas-overlay"><div/></div>
+          <div id="board-canvas-top" />
         </div>
       </div>
+      <div id="board-canvas-overlay" />
       { store.devPrefs.devRender && _getDevBoxElement() }
     </div>
 	)

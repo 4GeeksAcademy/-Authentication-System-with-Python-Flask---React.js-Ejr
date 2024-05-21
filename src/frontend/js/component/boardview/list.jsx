@@ -3,11 +3,7 @@ import Constants from "../../app/constants.js"
 
 import { Context } from "../../store/appContext.jsx"
 
-import mysvg from "../../../assets/img/Blender.svg?raw"
-
-import Element from "./element.jsx"
-
-const List = ({title, coords, bref}) => {
+const List = ({id, title, coords, bref}) => {
   
   // --------------------------------------------------------------- INITIALIZATION 
 
@@ -24,17 +20,17 @@ const List = ({title, coords, bref}) => {
       dirty: 0,
       timestamp: Date.now()
     }),
-    [ elementList, set_elementList ]= React.useState([])
+    [ childItems, set_childItems ]= React.useState([]),
+    itemUtils= React.useRef([])
   
   function merge_itemState(new_state){ _scs({ ...Object.assign(itemState, { ...new_state, timestamp: Date.now() })})}
 
   React.useEffect(()=>{ 
     bref[0].current[bref[1]]= {
       get: (prop)=> { return !prop ? itemRef : itemState[prop] }, 
-      set: (prop, value)=>{ merge_itemState(prop, value) }
+      set: (state)=>{ merge_itemState(state) }
     }
-
-    merge_itemState({dirty:Constants.ITEM_DIRTY.all})
+    merge_itemState({dirty:Constants.ITEM_DIRTY.all | Constants.ITEM_DIRTY.data})
   },[])
 
   // --------------------------------------------------------------- DIRTY UPDATES
@@ -43,7 +39,28 @@ const List = ({title, coords, bref}) => {
   React.useEffect(()=>{
     if(itemState.dirty != 0){
       const itemStyle= itemRef.current.style
-  
+
+      if(itemState.dirty & Constants.ITEM_DIRTY.data){
+        
+        const content= store.items.find(e=>e.id===parseInt(id))?.content
+        if(content?.length > 0){
+        
+          itemUtils.current= Array(content.length)
+        
+          const react= content.map((c,i)=>{
+            const item= store.items.find(e=>e.id===c)
+            if(item) {
+              const Type= store.itemclasses[item.type]
+              return <Type key={`${item.id}|${item.bid}`} id={item.id} bref={[itemUtils, i]} {...item.props} />
+            }
+          }).filter(e=>e!=null)
+        
+          set_childItems(react)
+          console.log(`item contains ${react.length} child items`)
+        }
+        else console.dirxml(`%cempty item with id: ${id}`, 'color:#ff0')
+      }
+
       if(itemState.dirty & Constants.ITEM_DIRTY.coords){
         itemStyle.setProperty("--item-coords-x", itemState.coords.x + "px" )
         itemStyle.setProperty("--item-coords-y", itemState.coords.y + "px" )
@@ -62,7 +79,7 @@ const List = ({title, coords, bref}) => {
   
       merge_itemState({dirty:0})
     }
-  },[itemState.dirty])
+  },[itemState.timestamp])
   
   // --------------------------------------------------------------- CONTEXTUAL MENU 
     
@@ -76,9 +93,11 @@ const List = ({title, coords, bref}) => {
   // --------------------------------------------------------------- BUTTON HANDLES
 
   function handleAddRowButton(e) {
-    const new_elementList= structuredClone(elementList)
-    new_elementList.push("empty row...")
-    set_elementList(new_elementList)
+    actions.addChildItem(id, Constants.ITEMTYPE.task)
+  }
+
+  function handleBuzzButton(e) {
+    console.log("buzz button")
   }
 
   function handleStylesButton(e) {
@@ -92,38 +111,34 @@ const List = ({title, coords, bref}) => {
   // --------------------------------------------------------------- RETURN 
 
 	return (
-		<div ref={itemRef} className="k--list k--ghostifyable h-min min-w-80 rounded-lg cursor-auto dark:bg-zinc-900 dark:text-white">
-    <img src={mysvg} />
+		<div ref={itemRef} className="k--list k--ghostifyable h-min min-w-80 rounded-lg cursor-auto bg-zinc-100 text-gray-700 dark:bg-zinc-900 dark:text-white">
       <div className="flex flex-col h-full justify-between">
         <div>
-          <button data-knob="grab" className="w-full h-4 cursor-move hover:text-zinc-500 pointer-skip-below dark:text-zinc-700">
-            <div className="w-fit mx-auto">
-              <i className="-translate-y-1 fa fa-solid fa-grip-lines text-xl" />
+          <button data-knob="grab" className="devknob w-full h-6 cursor-move pointer-skip-below text-gray-400 dark:text-zinc-700 overflow-hidden">
+            <div className="w-fit mx-auto my-auto">
+              <i className="-translate-y-1 fa fa-solid fa-grip-lines text-2xl" />
             </div>
           </button>
-          <h3 className="mx-4 h-8 font-bold text-xl">{itemState.title}</h3>
+          <h3 className="mx-4 h-8 font-bold text-xl" >{itemState.title}</h3>
           <div className="flex flex-col m-2 gap-2">
-            { elementList.length > 0 ? 
-              elementList.map((e,i)=>
-                <Element key={`tel-${i}`} title={e}/>
-              )
-              :
-              <div className="h-1 w-full dark:bg-zinc-800" />
-            }
+            {childItems}
           </div>
         </div>
-        <div className="flex flex-row justify-between h-6  relative text-lg dark:text-zinc-600">
-          <button className="flex dark:hover:text-zinc-400" onClick={handleAddRowButton}>
+        <div className="flex flex-row justify-between h-6 relative text-lg text-gray-400 dark:text-zinc-600">
+          <button className="flex hover:text-gray-600 dark:hover:text-zinc-500" onClick={handleAddRowButton}>
             <i className="mx-2 mb-2 fa fa-solid fa-plus my-auto" />
             <span className="-mt-1.5">Add Row</span>
           </button>
           <div className="flex">
             <div className="flex mr-4 gap-3">
-              <ListSmallButton icon="fa-solid fa-palette" onClick={handleStylesButton} />
-              <ListSmallButton icon="fa-solid fa-bars" onClick={handleMenuButton} />
+              <ListIconButton icon="fa-solid fa-bell-concierge" onClick={handleBuzzButton} />
+              <ListIconButton icon="fa-solid fa-palette" onClick={handleStylesButton} />
+              <ListIconButton icon="fa-solid fa-bars" onClick={handleMenuButton} />
             </div>
-            <i className="mx-2 mb-2 fa fa-solid fa-grip-lines my-auto scale-105 -rotate-45" />
-            <button data-knob="resize" className="absolute cursor-se-resize size-8 right-0 bottom-0" />
+            <div className="-mt-1 relative">
+              <i className="fa fa-solid fa-angles-right my-auto rotate-45 text-2xl" />
+              <button data-knob="resize" className="devknob absolute cursor-se-resize size-7 right-0 bottom-0" />
+            </div>
           </div>
         </div>
       </div>
@@ -133,10 +148,10 @@ const List = ({title, coords, bref}) => {
 
 export default List
 
-const ListSmallButton= ({ icon, onClick})=>{
+const ListIconButton= ({ icon, onClick})=>{
   return (
-    <button className="flex dark:hover:text-zinc-400" onClick={onClick}>
-      <i className={"fa " + {icon}} />
+    <button className="flex hover:text-gray-600 dark:hover:text-zinc-400" onClick={onClick}>
+      <i className={"fa " + icon} />
     </button>
   )
 }

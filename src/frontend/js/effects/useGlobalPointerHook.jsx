@@ -33,6 +33,7 @@ export const useGlobalPointerHook= ()=>{
       hover: null,
       keys: 0,
       click: _CLICK_EMPTY,
+      double: _CLICK_EMPTY,
       button: [{stage:0}, {stage:0}, {stage:0}],
       dirty: false
     })
@@ -43,6 +44,7 @@ export const useGlobalPointerHook= ()=>{
   
   React.useEffect(()=>{
     const eventListeners= [
+      ["dblclick", handleMusDouble],
       ["mousedown", handleMusPress],
       ["mouseup", handleMusRelease],
       ["mousemove", handleMusPosition],
@@ -83,7 +85,25 @@ export const useGlobalPointerHook= ()=>{
   function handleMusWheel(e){ if(!e.ctrlKey) merge_pointerState({ wheel: e.deltaY }) }
   React.useEffect(()=>{ if(pointerState.wheel != 0) merge_pointerState({ wheel: 0 }) } ,[pointerState.wheel]) // restore zoom state to neutral
   
-  // --------------------------------------------------------------- MOUSE BUTTON PRESS / HOLD / RELEASE
+  // --------------------------------------------------------------- MOUSE BUTTON PRESSES
+
+  // on button press double
+  function handleMusDouble(e){
+    if(e.button < 4){
+      if(pointerStateRef.current.double.button === -1){
+        merge_pointerState({
+          double:{
+            button: e.button,
+            origin: { x: e.clientX, y: e.clientY },
+            keys: _getEventKeys(e),
+            timestamp: e.timeStamp,
+            element: e.target
+          },
+          dirty: true
+        })
+      }
+    }
+  }
 
   // on button press
   function handleMusPress(e){
@@ -127,7 +147,7 @@ export const useGlobalPointerHook= ()=>{
       })
 
       if(pointerStateRef.current.click.button !== -1){
-        merge_pointerState({ click:_CLICK_EMPTY, button, dirty: true })
+        merge_pointerState({ click:_CLICK_EMPTY, double:_CLICK_EMPTY, button, dirty: true })
       }
       else merge_pointerState({ button, dirty: true })
     }

@@ -12,6 +12,9 @@
 
   --canvas-background: #32363a;
   --canvas-background-size: 1024px;
+
+  --overlay-cursor: auto;
+  --overlay-pointerevents: none;
   
   --list-coords-x: 0px;
   --list-coords-y: 0px;
@@ -53,6 +56,12 @@
 .devbox {
   background: #000a;
   backdrop-filter: saturate(16.0) contrast(0.25) blur(8px);
+}
+
+[data-devrender] {
+  & .devknob {
+    outline: 1px solid red; 
+  }
 }
 
 .hidescroll-y {
@@ -134,12 +143,38 @@
   }
 }
 
-#board-canvas-content, #board-canvas-overlay {
+#board-canvas-content {
   width: 0;
   height: 0;
   position: absolute;
   z-index: -4095;
   transform: translate(var(--canvas-size-half), var(--canvas-size-half));
+}
+
+#board-canvas-top {
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: -2;
+  transform: translate(var(--canvas-size-half), var(--canvas-size-half));
+  pointer-events: none;
+  & > * {
+    pointer-events: none;
+    z-index: -3;
+    transform-origin: center center;
+    animation: grab-in 75ms ease-out forwards;
+  }
+}
+
+#board-canvas-overlay {
+  content: ""; position: fixed; inset:0; z-index: -1;
+  cursor: var(--overlay-cursor);
+  pointer-events: var(--overlay-pointerevents);
+}
+
+@keyframes grab-in {
+  from{ left: 0; top: 0; box-shadow: 0 0 0 #0008 }
+  to{ top: -.3em; box-shadow: -.2em .9em .2em #0008 }
 }
 
 /* --------------------------------------------------- BOARD CONTENT */
@@ -152,4 +187,5 @@
   position: absolute;
   transform: translate(-50%, 0);
   translate: var(--item-coords-x) var(--item-coords-y);
+  resize: both;
 }
