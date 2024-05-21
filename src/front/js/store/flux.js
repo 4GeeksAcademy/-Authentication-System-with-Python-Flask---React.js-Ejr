@@ -88,7 +88,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 		 			matricula: matricula,
 			 		 			motor: motor,
 			 		 			tipo_cambio: tipo_cambio,
-			 		 			asientos: asientos,
+			 		 			asientos: parseInt(asientos),
 			 					precio: parseInt(precio)
 			 	 		})
                  	});
