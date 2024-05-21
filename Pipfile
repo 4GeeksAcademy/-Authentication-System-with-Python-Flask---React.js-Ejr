@@ -21,6 +21,7 @@ typing-extensions = "*"
 shell = "*"
 flask-jwt-extended = "*"
 stripe = "*"
+flask-mail = "*"
 
 [requires]
 python_version = "3.10"
