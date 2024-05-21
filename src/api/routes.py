@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Transactions
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
 
@@ -70,17 +70,21 @@ def create_token():
 @api.route("/transactions", methods=["GET"])
 @jwt_required()
 def get_transactions():
-    # Query all transactions from the database
-    all_transactions = Transactions.query.all()
+    current_user_id = get_jwt_identity()  # Get the user ID from the JWT token
+
+    # Query transactions for the current user
+    user_transactions = Transactions.query.filter_by(user_id=current_user_id).all()
 
     # Serialize the transactions
-    serialized_transactions = [transaction.serialize() for transaction in all_transactions]
+    serialized_transactions = [transaction.serialize() for transaction in user_transactions]
 
     return jsonify(serialized_transactions), 200
 
 
 
+
 @api.route('/transactions', methods=['POST'])
+@jwt_required()
 def create_transaction():
     data = request.json
 
@@ -93,7 +97,8 @@ def create_transaction():
     is_cash = data.get('is_cash')
     created = data.get('created')
 
-    if not user_id or not total_price or not products or not is_cash or not created:
+    # Explicitly check for None for the is_cash field
+    if user_id is None or total_price is None or products is None or is_cash is None or created is None:
         raise APIException("Missing required fields", status_code=400)
 
     # Create a new transaction
@@ -109,6 +114,7 @@ def create_transaction():
     db.session.commit()
 
     return jsonify({"message": "Transaction added to database successfully"}), 201
+
 
 
 

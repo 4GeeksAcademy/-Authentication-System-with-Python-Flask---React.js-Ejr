@@ -12,7 +12,6 @@ import { Navbar } from "./component/navbar";
 import SignUp from "./pages/signUp";
 import SignIn from "./pages/signIn";
 import {Transactions} from "./pages/Transactions"
-import { Footer } from "./component/footer";
 import OrderList from "./pages/order";
 import { Africa } from "./pages/africa";
 import { AsiaPacific } from "./pages/asiaPacific";
@@ -49,7 +48,6 @@ const Layout = () => {
                         <Route path="/payment" element={<ProtectedRoute element={<OrderView />} />} />
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

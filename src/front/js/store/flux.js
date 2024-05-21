@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	const localStorageUser = JSON.parse(localStorage.getItem('user')) || {
         isSignedIn: true,
         username: "",
-        user_id: null
+        user_id: null,
+		token: null
     };
 
 	return {
@@ -78,6 +79,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem('order', JSON.stringify(updatedOrder));
 			}
 		},
+		clearOrder: () => {
+			const defaultOrder = {
+				total: 0,
+				items: []
+			};
+			setStore({ order: defaultOrder });
+			localStorage.setItem('order', JSON.stringify(defaultOrder));
+		},
 		login: async (username, password) => {
 			const resp = await fetch(`${process.env.BACKEND_URL}api/token`, { 
 				method: "POST",
@@ -101,7 +110,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const updatedUser = {
 					isSignedIn: true,
 					username: data.username, // Assuming the API returns the username
-					user_id: data.user_id    // Assuming the API returns the user_id
+					user_id: data.user_id,
+					token: data.token  // Assuming the API returns the user_id
 				};
 				// Save user data to localStorage
 				localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -148,9 +158,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 			const loginResp = await getActions().login(username, password);
 			
 			return loginResp;
+		},
+		createTransaction: async (total_price, products, is_cash) => {
+			const store = getStore();
+			const { user } = store;
+		
+			if (!user || !user.token) {
+				throw new Error("User is not authenticated");
+			}
+		
+			const created = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+
+		
+			const response = await fetch(`${process.env.BACKEND_URL}api/transactions`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${user.token}`
+				},
+				body: JSON.stringify({
+					user_id: user.user_id,
+					total_price: total_price,
+					products: JSON.stringify(products), // Ensure products are stringified
+					is_cash: is_cash,
+					created: created
+				})
+			});
+		
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.msg || "Error creating transaction");
+			}
+		
+			const data = await response.json();
+			return data;
+		},
+		fetchUserTransactions: async () => {
+			const store = getStore();
+			const { user } = store;
+
+			if (!user || !user.token) {
+				throw new Error("User is not authenticated");
+			}
+
+			const response = await fetch(`${process.env.BACKEND_URL}api/transactions`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${user.token}`
+				}
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.msg || "Error fetching transactions");
+			}
+
+			const data = await response.json();
+			setStore({ transactions: data });
+			return data;
 		}
 	  }
 	};
 };
 
 export default getState;
+
