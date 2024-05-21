@@ -2,24 +2,25 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request, Quizzes
+from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from werkzeug.security import check_password_hash
 
-
-from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash 
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
-import re
-import os
 
+from flask_mail import Message
+from app import mail
+import os
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
 
-
+#-----------------------CREACION DE USERS------------------------#
 @api.route('/signup/user', methods=['POST'])
 def create_signup_user():
     try:
@@ -62,10 +63,17 @@ def create_signup_user():
         )
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"Message":"User Created Successfully", "user_create": new_user.serialize()}), 201
+
+        # Enviar correo de bienvenida
+        msg = Message('Welcome to Our Platform', recipients=[email])
+        msg.body = f"Hello {name},\n\nThank you for signing up on our platform. We're excited to have you on board!"
+        mail.send(msg)
+
+        return jsonify({"message":"Student has been Created Successfully", "user_create": new_user.serialize()}), 201
 
     except Exception as err:
-        return jsonify({"Error":"Error in User Creation:" + str(err)}), 500
+        return jsonify({"Error":"Error in User Creation: " + str(err)}), 500
+
 
 @api.route('/signup/teacher', methods=['POST'])
 def create_signup_teacher():
@@ -110,9 +118,15 @@ def create_signup_teacher():
         )
         db.session.add(new_teacher)
         db.session.commit()
-        return jsonify({"Message": "Teacher Created Successfully", "teacher_create": new_teacher.serialize()}), 201
+
+        # Enviar correo de bienvenida
+        msg = Message('Welcome to Our Platform, TEACHER', recipients=[email])
+        msg.body = f"Hello {name},\n\nThank you for signing up on our platform. We're excited to have you on board!"
+        mail.send(msg)
+
+        return jsonify({"message": "Teacher has been Created Successfully", "teacher_create": new_teacher.serialize()}), 201
     except Exception as e:
-        return jsonify({"error": "Error posting teacher user" + str(e)})
+        return jsonify({"Error": "Error posting teacher user", "error code": str(e)})
 
 @api.route('/signup/manager', methods=['POST'])
 def create_signup_manager():
@@ -151,12 +165,19 @@ def create_signup_manager():
         )
         db.session.add(new_manager)
         db.session.commit()
+
+        # Enviar correo de bienvenida
+        msg = Message('Welcome to Our Platform, MANAGER', recipients=[email])
+        msg.body = f"Hello {name},\n\nThank you for signing up on our platform. We're excited to have you on board!"
+        mail.send(msg)
         
-        return jsonify({"msg": "manager has been created successfully", "manager_create": new_manager.serialize()}), 201
+        return jsonify({"message": "Manager has been Created Successfully", "manager_create": new_manager.serialize()}), 201
     except Exception as e: 
         return jsonify({"Error": "Error in user manager creation" + str(e)}), 500
 
 
+
+#-----------------------LOGIN DE USERS------------------------#
 @api.route('/login/user', methods=['POST'])
 def get_token_login_user():
     try:
@@ -165,58 +186,27 @@ def get_token_login_user():
         if not email or not password:
             return jsonify({"Error": "Email and Password are required"}), 400
         
-        #buscamos el user con ese correo
-        login_user = User.query.filter_by(email=request.json['email']).one()
+        # Buscar el usuario con ese correo
+        login_user = User.query.filter_by(email=email).first()
         if not login_user:
             return jsonify({'Error': 'Invalid Email'}), 400
-        
 
+        # Obtener la contraseña desde la base de datos
         password_from_db = login_user.password
-        hashed_password_hex = password_from_db
-        hashed_password_bin = bytes.fromhex(hashed_password_hex[2:])
-        true_or_false = check_password_hash(hashed_password_bin, password)
 
+        # Verificar la contraseña
+        true_or_false = check_password_hash(password_from_db, password)
 
         if true_or_false:
             expires = timedelta(days=1)
             user_id = login_user.id
             access_token = create_access_token(identity=user_id, expires_delta=expires)
-            return jsonify({"access_token": access_token}), 200
+            return jsonify({"access_token": access_token, "message": "Log In Successfully"}), 200
         else:
-            return {"Error":"Invalid Password"}, 400
-        
+            return jsonify({"Error":"Invalid Password"}), 400
         
     except Exception as e:
         return jsonify({"Error": "User not exists in Data Base", "Msg": str(e)}), 500
-
-@api.route('/login/manager', methods=['POST'])
-def get_token_login_manager():
-    try:
-        email = request.json.get('email')
-        password = request.json.get('password')
-        if not email or not password:
-            return jsonify({"Error": "Email and Password are required"}), 400
-
-        #buscamos el user con ese correo
-        login_manager = Manager.query.filter_by(email=request.json['email']).one()
-
-        if not login_manager:
-            return jsonify({'Error': 'Invalid Email'}), 400
-
-        password_from_db = login_manager.password
-        hashed_password_hex = password_from_db
-        hashed_password_bin = bytes.fromhex(hashed_password_hex[2:])
-        true_or_false = check_password_hash(hashed_password_bin, password)
-
-        if true_or_false:
-            expires = timedelta(days=1)
-            user_id = login_manager.id
-            access_token = create_access_token(identity=user_id, expires_delta=expires)
-            return jsonify({"access_token": access_token}), 200
-        else:
-            return {"Error":"Invalid Password"}, 400
-    except Exception as e:
-        return jsonify({"Error": "Manager not exists in Data Base" , "Msg": str(e)}), 500
 
 @api.route('/login/teacher', methods=['POST'])
 def get_token_login_teacher():
@@ -226,28 +216,190 @@ def get_token_login_teacher():
         if not email or not password:
             return jsonify({"Error": "Email and Password are required"}), 400
 
-        #buscamos el user con ese correo
-        login_teacher = Teacher.query.filter_by(email=request.json['email']).one()
-
+        # Buscar el usuario con ese correo
+        login_teacher = Teacher.query.filter_by(email=email).first()
         if not login_teacher:
             return jsonify({'Error': 'Invalid Email'}), 400
 
+        # Obtener la contraseña desde la base de datos
         password_from_db = login_teacher.password
-        hashed_password_hex = password_from_db
-        hashed_password_bin = bytes.fromhex(hashed_password_hex[2:])
-        true_or_false = check_password_hash(hashed_password_bin, password)
+
+        # Verificar la contraseña
+        true_or_false = check_password_hash(password_from_db, password)
 
         if true_or_false:
             expires = timedelta(days=1)
-            user_id = login_teacher.id
-            access_token = create_access_token(identity=user_id, expires_delta=expires)
-            return jsonify({"access_token": access_token}), 200
+            teacher_id = login_teacher.id
+            access_token = create_access_token(identity=teacher_id, expires_delta=expires)
+            return jsonify({"access_token": access_token, "message": "Log In Successfully"}), 200
         else:
             return jsonify({"Error":"Invalid Password"}), 400
+        
     except Exception as e:
         return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
 
 
+@api.route('/login/manager', methods=['POST'])
+def get_token_login_manager():
+    try:
+        email = request.json.get('email')
+        password = request.json.get('password')
+        if not email or not password:
+            return jsonify({"Error": "Email and Password are required"}), 400
+
+       # Buscar el usuario con ese correo
+        login_manager = Manager.query.filter_by(email=email).first()
+        if not login_manager:
+            return jsonify({'Error': 'Invalid Email'}), 400
+
+        # Obtener la contraseña desde la base de datos
+        password_from_db = login_manager.password
+
+        # Verificar la contraseña
+        true_or_false = check_password_hash(password_from_db, password)
+
+        if true_or_false:
+            expires = timedelta(days=1)
+            manager_id = login_manager.id
+            access_token = create_access_token(identity=manager_id, expires_delta=expires)
+            return jsonify({"access_token": access_token, "message": "Log In Successfully"}), 200
+        else:
+            return jsonify({"Error":"Invalid Password"}), 400
+        
+    except Exception as e:
+        return jsonify({"Error": "Manager not exists in Data Base" , "Msg": str(e)}), 500
+
+
+
+#-----------------------RESET PASSWORD DE USERS------------------------#
+@api.route('/forgot-password/user', methods=['POST'])
+def forgot_password_user():
+    email = request.json.get('email')
+    if not email:
+        return jsonify({"Error": "Email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"Error": "User not found"}), 404
+
+    reset_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
+    frontend_url = os.getenv('FRONTEND_URL')  
+    reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
+
+    msg = Message('Password Reset Request', recipients=[email])
+    msg.body = f"To reset your password, click the following link: {reset_link}"
+    mail.send(msg)
+
+    return jsonify({"message": "Password reset link sent", "access_token": reset_token}), 200
+
+# Ruta para resetear la contraseña
+@api.route('/reset-password/user/<token>', methods=['POST'])
+def reset_password_user(token):
+    try:
+        decoded_token = decode_token(token)
+        user_id = decoded_token['sub']
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({"Error": "Invalid or expired token"}), 400
+
+        new_password = request.json.get('password')
+        if not new_password:
+            return jsonify({"Error": "Password is required"}), 400
+
+        user.password = generate_password_hash(new_password).decode('utf-8')
+        db.session.commit()
+        return jsonify({"message": "Password reset successful"}), 200
+    except Exception as e:
+        return jsonify({"Error": f"An error occurred: {str(e)}"}), 500
+
+
+@api.route('/forgot-password/teacher', methods=['POST'])
+def forgot_password_teacher():
+    email = request.json.get('email')
+    if not email:
+        return jsonify({"Error": "Email is required"}), 400
+
+    teacher = Teacher.query.filter_by(email=email).first()
+    if not teacher:
+        return jsonify({"Error": "User not found"}), 404
+
+    reset_token = create_access_token(identity=teacher.id, expires_delta=timedelta(hours=1))
+    frontend_url = os.getenv('FRONTEND_URL')  
+    reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
+
+    msg = Message('Password Reset Request', recipients=[email])
+    msg.body = f"To reset your password, click the following link: {reset_link}"
+    mail.send(msg)
+
+    return jsonify({"message": "Password reset link sent", "access_token": reset_token}), 200
+
+# Ruta para resetear la contraseña
+@api.route('/reset-password/teacher/<token>', methods=['POST'])
+def reset_password_teacher(token):
+    try:
+        decoded_token = decode_token(token)
+        teacher_id = decoded_token['sub']
+        teacher = Teacher.query.get(teacher_id)
+        
+        if not teacher:
+            return jsonify({"Error": "Invalid or expired token"}), 400
+
+        new_password = request.json.get('password')
+        if not new_password:
+            return jsonify({"Error": "Password is required"}), 400
+
+        teacher.password = generate_password_hash(new_password).decode('utf-8')
+        db.session.commit()
+        return jsonify({"message": "Password reset successful"}), 200
+    except Exception as e:
+        return jsonify({"Error": f"An error occurred: {str(e)}"}), 500
+
+
+@api.route('/forgot-password/manager', methods=['POST'])
+def forgot_password_manager():
+    email = request.json.get('email')
+    if not email:
+        return jsonify({"Error": "Email is required"}), 400
+
+    manager = Manager.query.filter_by(email=email).first()
+    if not manager:
+        return jsonify({"Error": "User not found"}), 404
+
+    reset_token = create_access_token(identity=manager.id, expires_delta=timedelta(hours=1))
+    frontend_url = os.getenv('FRONTEND_URL')  
+    reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
+
+    msg = Message('Password Reset Request', recipients=[email])
+    msg.body = f"To reset your password, click the following link: {reset_link}"
+    mail.send(msg)
+
+    return jsonify({"message": "Password reset link sent", "access_token": reset_token}), 200
+
+# Ruta para resetear la contraseña
+@api.route('/reset-password/manager/<token>', methods=['POST'])
+def reset_password_manager(token):
+    try:
+        decoded_token = decode_token(token)
+        manager_id = decoded_token['sub']
+        manager = Manager.query.get(manager_id)
+        
+        if not manager:
+            return jsonify({"Error": "Invalid or expired token"}), 400
+
+        new_password = request.json.get('password')
+        if not new_password:
+            return jsonify({"Error": "Password is required"}), 400
+
+        manager.password = generate_password_hash(new_password).decode('utf-8')
+        db.session.commit()
+        return jsonify({"message": "Password reset successful"}), 200
+    except Exception as e:
+        return jsonify({"Error": f"An error occurred: {str(e)}"}), 500
+
+
+
+#-----------------------GET DE USERS------------------------#
 @api.route('/view/user')
 @jwt_required() #Decorador para requerir autenticacion con jwt
 def show_view_user():
@@ -272,7 +424,7 @@ def show_view_user():
             user_list.append(user_dict)
 
 
-        return jsonify({"access_to_user": user_list}), 200
+        return jsonify({"access_to_user": user_list, "message": "Access to Student Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -319,7 +471,7 @@ def show_view_teacher():
             }
             teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Teacher Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -381,12 +533,14 @@ def show_view_manager():
             }
             manager_list.append(manager_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list, "message": "Access to Manager User Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
 
+
+#-----------------------COURSES------------------------#
 @api.route('/view/courses', methods=['POST'])
 def post_courses():
     try:
@@ -414,8 +568,9 @@ def post_courses():
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
 
-@api.route('/viewManager/courses', methods=['GET'])
-def get_all_courses():
+
+@api.route('/view/courses', methods=['GET'])
+def get_courses():
     try:
         courses = Course.query.all()
         serialized_courses = [course.serialize() for course in courses]
@@ -442,44 +597,8 @@ def update_course():
             return jsonify({"error": "Course not found"}), 404
     
     except Exception as err:
-        return jsonify({"error": f"Error updating course: {str(err)}"}), 500
+        return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
 
-@api.route('/viewManager/courses', methods=['DELETE'])
-def delete_course():
-    try:
-        data = request.get_json()
-        course_id = data.get('course_id')
-        
-        course = Course.query.get(course_id)
-        
-        if course:
-            db.session.delete(course)
-            db.session.commit()
-            return jsonify({"message": "Course deleted successfully"}), 200
-        else:
-            return jsonify({"error": "Course not found"}), 404
-    
-    except Exception as err:
-        return jsonify({"error": f"Error deleting course: {str(err)}"}), 500
-
-@api.route('/viewManager/courses', methods=['POST'])
-def create_course():
-    try:
-        data = request.get_json()
-        new_course = Course(
-            title=data.get('title'),
-            category_title=data.get('category_title'),
-            modules_length=data.get('modules_length'),
-            certificate=data.get('certificate'),
-            user_id=data.get('user_id'),
-            manager_id=data.get('manager_id'),
-            teacher_id=data.get('teacher_id')
-        )
-        db.session.add(new_course)
-        db.session.commit()
-        return jsonify({"message": "Course created successfully", "course_id": new_course.id}), 201
-    except Exception as err:
-        return jsonify({"error": f"Error creating course: {str(err)}"}), 500
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
@@ -497,7 +616,6 @@ def put_courses(course_id):
     except Exception as err:
         return jsonify({"Error": "Error in updating course: " + str(err)}), 500
 
-
 @api.route('/view/courses/<int:course_id>', methods=['DELETE'])
 def delete_courses(course_id):
     try:
@@ -514,6 +632,8 @@ def delete_courses(course_id):
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
 
 
+
+#-----------------------MODULES------------------------#
 @api.route('/module/course', methods=['POST'])
 def post_module():
     try:
@@ -533,7 +653,7 @@ def post_module():
         
         existing_course = Course.query.filter_by(id=course_id).first()
         if not existing_course:
-            return jsonify({"Error": "Course does not Exist."}), 404
+            return jsonify({"Error": "Course does not exist."}), 404
 
         module = Modules(course_id=course_id, type_file=type_file, title=title, video_id=video_id, type_video=type_video,
                          text_id=text_id, type_text=type_text, image_id=image_id, type_image=type_image)
@@ -543,7 +663,6 @@ def post_module():
 
     except Exception as err:
         return jsonify({"Error": "Error in module Creation: " + str(err)}), 500
-
 
 @api.route('/module/course/', methods=['GET'])
 def get_modules():
@@ -573,70 +692,5 @@ def delete_module(module_id):
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
         
-@api.route('/module/quizzes', methods=['POST'])
-def post_quizzes():
-    try:
-        question_title = request.json.get('questionTitle')
-        answer = request.json.get('answer')
-        module_id = request.json.get('moduleId')
 
-        if not question_title or not answer or not module_id:
-            return {"Error": "questionTitle, answer, and moduleId are required"}, 400
-        
-        existing_module = Modules.query.filter_by(id=module_id).first()
-        if not existing_module:
-            return jsonify({"Error": "Module does not exist."}), 404
-        
-        quiz = Quizzes(question_title=question_title, answer=answer, module_id=module_id)
-        db.session.add(quiz)
-        db.session.commit()
-        return jsonify({"Msg": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in quiz creation: " + str(err)}), 500
 
-@api.route('/module/quizzes', methods=['GET'])
-def get_quizzes():
-    try:
-        quizzes = Quizzes.query.all()
-        if not quizzes:
-            return jsonify({"Msg": "No quiz found"}), 404
-        
-        serialized_quizzes = [quiz.serialize() for quiz in quizzes]
-        return jsonify({"Quiz": serialized_quizzes}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
-
-# Definir la ruta de la carpeta de carga
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
-
-# Asegúrate de que la carpeta 'uploads' exista
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-@api.route('/upload', methods=['POST'])
-def upload_file():
-    try:
-        if 'file' not in request.files:
-            return jsonify({'error': 'No file part'}), 400
-
-        file = request.files['file']  # esta es la clave que se debe utilizar en postman
-
-        if file.filename == '':
-            return jsonify({'error': 'No selected file'}), 400
-
-        if file:
-            file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-            file.save(file_path)
-            file_info = {
-                'filename': file.filename,
-                'content_type': file.content_type,
-                'size': os.path.getsize(file_path),
-                'path': file_path
-            }
-            return jsonify({'message': 'File uploaded successfully', 'file': file_info}), 200
-        
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
