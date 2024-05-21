@@ -21,10 +21,10 @@ export const Navbar = () => {
   const shouldHideEmployeeIdButton = location.pathname === "/signup" || location.pathname === "/" || location.pathname === "/https://potential-eureka-wrrr7j5j557v3g5xv-3000.app.github.dev/";
 
   return (
-    <AppBar position="fixed" sx={{ top: 0, backgroundColor: '#2db734', zIndex: '9999' }}>
+    <AppBar position="fixed" sx={{ top: 0, backgroundColor: '#2db734', zIndex: '9999', padding: '0 40px', width: 'calc(100% + 80px)', left: '-40px' }}>
       <Toolbar>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
-          <CoffeeLogo width="50px" height="50px" />
+          <CoffeeLogo width="70px" height="70px" />
         </Link>
         <Typography 
           variant="h6" 
