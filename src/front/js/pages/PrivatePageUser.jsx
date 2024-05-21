@@ -97,8 +97,6 @@ const PrivatePageUser = () => {
                 </div>
             </div>
             <PrivateCalendar />
-            <MembershipPurchase/>
-
             {/* Modal */}
             <div className={`modal fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1" id={styles["modal"]}>
                 <div className="modal-dialog">
