@@ -30,6 +30,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		actions.getVehicles();
+		actions.getVehicles_Home();
 	}, []);
 
 	useEffect(() => {
@@ -62,7 +63,7 @@ export const Home = () => {
 		<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
 			<div className="container">
 				<div className="row Map Cards text-dark d-flex justify-content-center">
-					{store.vehicles.filter(filtrarPorAsientos).filter(filtrarPorPrecio).map((vehicle) => {
+					{store.vehicles_home.filter(filtrarPorAsientos).filter(filtrarPorPrecio).map((vehicle) => {
 						return (
 							<CardVehicles vehicle={vehicle} key={vehicle.id} />
 						)

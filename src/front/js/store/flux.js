@@ -6,7 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
-			checkout: {}
+			checkout: {},
+			vehicles_home: []
 		},
 		actions: {
 			getMessage: async () => {
@@ -254,7 +255,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 						precio_id_stripe: precio_id_stripe
 					}
 				})
-			}
+			},
+// 
+			getVehicles_Home: async () => {
+				const response = await fetch(`${process.env.BACKEND_URL}/api/vehicles_home`, {
+					method: 'GET'
+				})
+				if (response.status === 200) {
+					const data = await response.json();
+					setStore({ vehicles: data.results })
+				} else {
+					return [];
+				}	
+				
+			},
 		}
 	};
 };

@@ -34,7 +34,7 @@ export const Navbar = () => {
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
 					</Link>
-						<h2 className="navbar-text ms-2 mt-3 mb-2 display-4 text-center"><strong>Friendly Wheels</strong></h2>
+						<h2 className="navbar-text ms-2 mt-3 mb-2 display-4 text-center text-white-50"><strong>Friendly Wheels</strong></h2>
 				</div>
 				{token ?
 				<>

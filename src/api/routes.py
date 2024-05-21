@@ -7,12 +7,25 @@ import stripe
 import os
 from flask_mail import Mail
 from flask_mail import Message
-
+from datastructure import CarsStructure
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+
+vehicles_home = CarsStructure
+
+@api.route("vehicles_home", methods=['GET'])
+def handle_vehicles_home():
+    try: 
+        return jsonify(
+            vehicles_home
+        ), 200
+    except Exception as e:
+        response = {"error": str(e)}
+        return jsonify(response), 500
+
 
 @api.route('/signup', methods=['POST'])
 def signup():

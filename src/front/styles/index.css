@@ -1,7 +1,7 @@
 .navbar {
-    background-color:  #a9ce68;
+    background-color:  #050404d0;
     height: 120px;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
+    text-shadow: 2px 2px 5px rgba(247, 241, 241, 0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
 
 .logo {
@@ -57,17 +57,14 @@
 } 
 
 footer {
-    background: #a9ce68 !important;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-<<<<<<< HEAD
+    background: #050404d0 !important;
+    /* text-shadow: 1px 1px 4px rgba(0,0,0,0.5); */
 }
 
 .botonAlquilar {
     background-color: #a9ce68;
-=======
     padding-left: 20px;
     width: 100%;
->>>>>>> a3364e5efb545a2c6eb728adac0a75e72c95b164
 }
 
 .corazon:hover i {
@@ -76,10 +73,6 @@ footer {
 
 .imgCarousel {
     width: 75px !important;
-<<<<<<< HEAD
-    /* height: 50%; */
-=======
->>>>>>> a3364e5efb545a2c6eb728adac0a75e72c95b164
     background-position: center center;
     position: relative;
     justify-items: center;
@@ -89,10 +82,10 @@ footer {
     bottom: auto;
 }
 
-<<<<<<< HEAD
 body{
     min-height: 100vh; /* Establece la altura mínima del cuerpo como el 100% de la altura de la ventana del navegador */
-=======
+}
+
 .footer-view {
     min-height: 100vh;
 }
@@ -104,6 +97,5 @@ body{
 }
 
 .logo-footer {
-    width: 50px;
->>>>>>> a3364e5efb545a2c6eb728adac0a75e72c95b164
+    width:50px;
 }
