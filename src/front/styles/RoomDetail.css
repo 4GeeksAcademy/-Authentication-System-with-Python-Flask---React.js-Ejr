@@ -1,0 +1,59 @@
+.room-detail {
+    padding: 20px;
+    background-color: #333C53;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.go-back {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.room-header {
+    display: flex;
+    gap: 20px;
+}
+
+.room-image {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.room-info {
+    flex-grow: 1;
+}
+
+.room-info h1 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.room-info p {
+    margin: 5px 0;
+}
+
+.room-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.join-room {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.join-room:hover {
+    background-color: #0056b3;
+}

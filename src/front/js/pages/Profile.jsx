@@ -4,20 +4,35 @@ import { useNavigate } from 'react-router-dom';
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
-    const [profileData, setProfileData] = useState(store.user || {});
+    const [profileData, setProfileData] = useState(store.user || {
+        email: '',
+        username: '',
+        first_name: '',
+        last_name: '',
+        age: '',
+        region: '',
+        timezone: '',
+        languages: '',
+        xbox: '',
+        psn: '',
+        steam: '',
+        google_play: '',
+        nintendo: '',
+        epic_id: '',
+        bio: '',
+        gender: ''
+    });
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchProfileData = async () => {
-            const data = await actions.getProfile();
-            if (data) {
-                setProfileData(data);
-            }
-        };
-        fetchProfileData();
-    }, []);
+        if (!store.user) {
+            navigate('/login');
+        } else {
+            setProfileData(store.user);
+        }
+    }, [store.user, navigate]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,7 +44,8 @@ export const Profile = () => {
         try {
             const success = await actions.updateProfile(profileData);
             if (success) {
-                setIsEditing(false); 
+                await actions.getProfile(); // Fetch the profile again after update
+                setIsEditing(false);
             } else {
                 setError('Failed to update profile. Please try again.');
             }
@@ -76,13 +92,6 @@ export const Profile = () => {
                 </div>
             ) : (
                 <form onSubmit={handleSubmit}>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={profileData.email}
-                        onChange={handleInputChange}
-                    />
                     <label>Username:</label>
                     <input
                         type="text"
