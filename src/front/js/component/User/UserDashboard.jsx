@@ -7,6 +7,7 @@ import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';
 
+
 export const UserDashboard = () => {
     const { store, actions } = useContext(Context);
     
@@ -23,6 +24,9 @@ export const UserDashboard = () => {
     const handleMyPayments=()=>{
         setButtonSelected(<UserPayment />)
     }
+
+  
+
     const navigate = useNavigate();
 
     function handleHome() {
