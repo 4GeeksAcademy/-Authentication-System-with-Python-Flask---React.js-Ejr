@@ -8,7 +8,7 @@ export const AddUser = () => {
     const [selectedRole, setSelectedRole] = useState('');
     const [isUsers, setIsUsers] = useState(true);
     const [certificate, setCertificate] = useState('');
-    const [counter, setCounter] = useState(5);
+    const [counter, setCounter] = useState(7);
     const [redirectPath, setRedirectPath] = useState('');
     const navigate = useNavigate();
     const [userData, setUserData] = useState({
@@ -85,7 +85,7 @@ export const AddUser = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (store.error === '' && selectedRole !== '' && counter === 4) {
+                if (store.error === '' && selectedRole !== '' && counter === 6) {
                     setRedirectPath('/LogIn');
                     clearInterval(interval);
                 }
@@ -98,22 +98,23 @@ export const AddUser = () => {
 
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
 
     return (
         <div className='container'>
             {/* Msg */}
             <div className='position-relative'>
                 <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
-                    {msgError === '' && selectedRole !== ''
-                        ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-success" : "d-none"}`}>
-                            {"Sign Up Successfully"}
+                    {msgError === '' && selectedRole !== '' 
+                        ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
+                            {msg}
                         </div>
-                        : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 3) ? "alert alert-danger" : "d-none"}`}>
+                        : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
                             {msgError || 'Error, Invalid Role'}
                         </div>}
                 </div>
             </div>
-            
+
             <div className="d-flex justify-content-center align-items-center position-relative mt-3 mb-5" style={{ zIndex: 0 }}>
                 <div className='d-flex justify-content-center align-items-center mx-2 fs-4 position-absolute start-0'
                     onClick={handlerHome}
@@ -127,7 +128,7 @@ export const AddUser = () => {
 
 
 
-            <form className=" mt-5 mb-5 row g-3 needs-validation" onSubmit={handleSubmit} noValidate>
+            <form className=" mt-5 mb-5 row g-3 was-validated" onSubmit={handleSubmit} noValidate>
 
                 {/* Role */}
                 <div className='col-12'>
@@ -140,6 +141,9 @@ export const AddUser = () => {
                             <option value='manager'>Manager</option>
                         </select>
                     </div>
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Name */}
                 <div className='col-lg-6'>
@@ -151,6 +155,10 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.name}
                         required />
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
+
                 </div>
                 {/* Last Name */}
                 <div className='col-lg-6'>
@@ -162,6 +170,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.lastName}
                         required />
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Username */}
                 <div className={`${(selectedRole === 'teacher' || selectedRole === 'user') ? 'd-block col-lg-12' : 'd-none'}`}>
@@ -175,6 +186,9 @@ export const AddUser = () => {
                             value={userData.username}
                             required />
                     </div>
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Number Document */}
                 <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block'}`}>
@@ -186,6 +200,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.numberDocument}
                         required />
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Gender */}
                 <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block col-lg-3'}`}>
@@ -195,7 +212,9 @@ export const AddUser = () => {
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
                     </select>
-                    <div className="invalid-tooltip">Please select a Gender</div>
+                <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Phone */}
                 <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'd-block col-lg-3'}`}>
@@ -207,7 +226,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.phone}
                         required />
-                    <div className="invalid-tooltip">Please provide a valid Phone.</div>
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Age */}
                 <div className={`${(selectedRole === 'manager') ? 'd-none' : 'd-block col-lg-3 '}`}>
@@ -219,7 +240,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.age}
                         required />
-                    <div className="invalid-tooltip">Please provide a valid Age.</div>
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Certificate */}
                 <div className={`${(selectedRole === 'teacher') ? 'd-block col-lg-12' : 'd-none'}`}>
@@ -231,7 +254,9 @@ export const AddUser = () => {
                         onChange={(eve) => { setCertificate(eve.target.value) }}
                         value={certificate}
                         required />
-                    <div className="invalid-tooltip">Please provide a valid certificate.</div>
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
                 {/* Email */}
                 <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'col-lg-6 '}`}>
@@ -243,6 +268,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.email}
                         required />
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                     <div className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 {/* Password */}
@@ -255,6 +283,9 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.password}
                         required />
+                    <div class="invalid-feedback">
+                        Please enter your information.
+                    </div>
                 </div>
 
                 <button
