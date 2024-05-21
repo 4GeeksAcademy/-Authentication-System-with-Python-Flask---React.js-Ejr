@@ -85,7 +85,7 @@ export const AddUser = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (store.error === '' && selectedRole !== '' && counter === 6) {
+                if (store.error === '' && selectedRole !== '' && counter === 7) {
                     setRedirectPath('/LogIn');
                     clearInterval(interval);
                 }
@@ -99,7 +99,7 @@ export const AddUser = () => {
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
-
+    console.log(msg, msgError)
     return (
         <div className='container'>
             {/* Msg */}
@@ -141,7 +141,7 @@ export const AddUser = () => {
                             <option value='manager'>Manager</option>
                         </select>
                     </div>
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -155,7 +155,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.name}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
 
@@ -170,7 +170,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.lastName}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -186,7 +186,7 @@ export const AddUser = () => {
                             value={userData.username}
                             required />
                     </div>
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -200,7 +200,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.numberDocument}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -212,7 +212,7 @@ export const AddUser = () => {
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
                     </select>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -226,7 +226,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.phone}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -240,7 +240,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.age}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -254,7 +254,7 @@ export const AddUser = () => {
                         onChange={(eve) => { setCertificate(eve.target.value) }}
                         value={certificate}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
@@ -268,7 +268,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.email}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                     <div className="form-text">We'll never share your email with anyone else.</div>
@@ -283,7 +283,7 @@ export const AddUser = () => {
                         onChange={handleChange}
                         value={userData.password}
                         required />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>

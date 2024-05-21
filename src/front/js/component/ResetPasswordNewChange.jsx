@@ -116,7 +116,7 @@ export const ResetPasswordNewChange = () => {
                                                 placeholder='Ingrese password'
                                                 className="form-control"
                                             />
-                                            <div class="invalid-feedback">
+                                            <div className="invalid-feedback">
                                                 Please enter your information.
                                             </div>
                                         </div>

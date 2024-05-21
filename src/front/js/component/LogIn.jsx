@@ -66,7 +66,7 @@ export const LogIn = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (prevCounter + 1 === 6 && store.error == '') {
+                if (prevCounter + 1 === 7 && store.error == '') {
                     setRedirectPath(`/${selectedRole}View`)
                     clearInterval(interval)
                 }
@@ -122,7 +122,7 @@ export const LogIn = () => {
                                                 placeholder='Ingrese email'
                                                 className="form-control"
                                             />
-                                            <div class="invalid-feedback">
+                                            <div className="invalid-feedback">
                                                 Please enter your information.
                                             </div>
                                         </div>
@@ -137,7 +137,7 @@ export const LogIn = () => {
                                                 placeholder='Ingrese password'
                                                 className="form-control"
                                             />
-                                            <div class="invalid-feedback">
+                                            <div className="invalid-feedback">
                                                 Please enter your information.
                                             </div>
                                         </div>

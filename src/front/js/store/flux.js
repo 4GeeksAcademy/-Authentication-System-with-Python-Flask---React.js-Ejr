@@ -29,7 +29,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ ...store, error: errorData.Error });
             throw new Error(errorData.Error || "Error al crear el usuario");
           }
-          const dataCreateUser = await respCreateUser.json();
+          const dataCreateUser = await respCreateUser.json()
+          setStore({ ...store, user: dataCreateUser })
         } catch (err) {
         } finally {
           getActions().spinner(false);
@@ -63,6 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           localStorage.setItem("jwt-token", dataLoginIn.access_token)
           localStorage.setItem("currentRole", userRole)
           setStore({ ...store, currentRole: userRole })
+          setStore({ ...store, user: dataLoginIn })
           await getActions().getUser();
         } catch (err) {
           console.error(err)
