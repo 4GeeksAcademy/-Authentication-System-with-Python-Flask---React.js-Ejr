@@ -162,6 +162,17 @@ class Orders(db.Model):
             "date": self.date
             # do not serialize the password, it's a security breach
         }
+class Trolley(db.Model):
+    id = db.Column (db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+    order = db.relationship ('Orders', backref=db.backref('Trolley', lazy=True))
+    def __repr__(self):
+        return f'<Trolley {self.id}>'
+    def serialize(self):
+        return {
+            "id": self.id,
+            "order_id": self.order_id
+        }
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
