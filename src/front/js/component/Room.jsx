@@ -1,13 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Context } from "../store/appContext";
+import { useNavigate } from 'react-router-dom';
+import '../../styles/Room.css';
 
 export const Room = () => {
-    const { store, actions } = useContext(Context);
+    const { store } = useContext(Context);
+    const navigate = useNavigate();
+
+    const handleCardClick = (roomId) => {
+        navigate(`/room/${roomId}`);
+    };
 
     return (
         <div>
             {store.rooms.map((room) => (
-                <div key={room.id} className="card mb-3 room" style={{ maxWidth: "540px" }}>
+                <div key={room.id} className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={() => handleCardClick(room.id)}>
                     <div className="row g-0">
                         <div className="col-md-4">
                             <img src={room.imageUrl || "default_image_path.jpg"} className="img-fluid rounded-start" alt={room.room_name} />
