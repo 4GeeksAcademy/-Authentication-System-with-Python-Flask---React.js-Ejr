@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Fetch all posts
             getPosts: async () => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post');
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post`);
                     const data = await response.json();
                     setStore({ posts: data.img });
                 } catch (error) {
@@ -19,10 +19,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            register_User: (name,email, password) =>{
+                fetch( "https://upgraded-succotash-74g6vpw66gv3754-3001.app.github.dev/api/signup",{
+                    method:'POST',
+                    headers:{
+                        'Content-Type' : 'application/json'
+                    },
+                    body : JSON.stringify({
+                        "name": name,
+                        "email": email,
+                        "password": password,
+                       }),
+            })
+                .then(Response => Response.json())
+                .then(data => {
+                    console.log(data); 
+                    
+                })
+                .catch(error => console.log('Error parcero', error))
+    
+            },
+
             // Create a new post
             createPost: async (img, bodytext) => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post', {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ img, bodytext })
@@ -38,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Update a post
             updatePost: async (postId, img, bodytext) => {
                 try {
-                    const response = await fetch(`https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post/${postId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post/${postId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ img, bodytext })
@@ -54,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Delete a post
             deletePost: async (postId) => {
                 try {
-                    const response = await fetch(`https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post/${postId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post/${postId}`, {
                         method: 'DELETE'
                     });
                     const data = await response.json();
@@ -68,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Fetch all suggestions
             getSuggestions: async () => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/suggestion');
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/suggestion`);
                     const data = await response.json();
                     setStore({ suggestions: data.suggestion });
                 } catch (error) {
@@ -79,14 +100,23 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Create a new suggestion
             createSuggestion: async (suggestion) => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/suggestion', {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/suggestion`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ suggestion })
                     });
+            
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
                     const data = await response.json();
-                    getActions().getSuggestions(); // Refresh suggestions
-                    setStore({ message: data.msg });
+                    
+                    getActions().getSuggestions();
+                    
+                    setStore((prevState) => ({
+                        ...prevState,
+                        message: data.msg
+                    }));
                 } catch (error) {
                     console.error("Error creating suggestion:", error);
                 }
