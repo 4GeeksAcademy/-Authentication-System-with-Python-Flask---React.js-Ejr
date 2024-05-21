@@ -30,7 +30,7 @@ class User(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
+            "user_id": self.id,
             "email": self.email,
             "username": self.username,
 			"first_name": self.first_name,
@@ -72,7 +72,7 @@ class Room(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
+            "room_id": self.id,
             "user_id": self.user_id,
             "date": self.date,
             "time": self.time,
@@ -94,7 +94,7 @@ class Games(db.Model):
     
     def serialize(self):
         return {
-            "id": self.id,
+            "game_id": self.id,
             "name": self.name
         }
 
@@ -109,8 +109,28 @@ class Room_participant(db.Model):
     
     def serialize(self):
         return {
-            "id": self.id,
+            "room_participant_id": self.id,
             "room_id": self.room_id,
             "user_id": self.user_id,
             "confirmed": self.confirmed
+        }
+    
+class Room_request(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    status = db.Column(db.String, nullable=False, default='pending')
+    
+    user = db.relationship('User', backref=db.backref('requests', lazy=True))
+    room = db.relationship('Room', backref=db.backref('requests', lazy=True))
+
+    def __repr__(self):
+        return f'<RoomRequest {self.id}>'
+    
+    def serialize(self):
+        return {
+            "room_request_id": self.id,
+            "room_id": self.room_id,
+            "user_id": self.user_id,
+            "status": self.status
         }

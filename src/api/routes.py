@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Room, Games
+from api.models import db, User, Room, Games, Room_request, Room_participant
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -180,6 +180,7 @@ def get_current_rooms():
                 })
 
             serialized_room = {
+                "room_id": room.id,
                 "game_name": room.game.name,
                 "room_name": room.room_name,
                 "game_description": room.description,
@@ -469,6 +470,101 @@ def delete_user(user_id):
             return jsonify({"message": "User deleted successfully"}), 200
         else:
             return jsonify({"error": "User not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+# ---------------------------------------JOIN a ROOM--------------------------------------------------------------
+@api.route('/room/<int:room_id>/join', methods=['POST'])
+@jwt_required()
+def join_room(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+        
+        # Verificar si la solicitud ya existe
+        existing_request = Room_request.query.filter_by(room_id=room_id, user_id=current_user_id).first()
+        if existing_request:
+            return jsonify({"error": "Request already exists"}), 400
+        
+        # Crear nueva solicitud
+        new_request = Room_request(room_id=room_id, user_id=current_user_id, status='pending')
+        db.session.add(new_request)
+        db.session.commit()
+        
+        return jsonify({"message": "Request to join room sent successfully", "request": new_request.serialize()}), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#-----------------------------------PENDING "JOIN" REQUEST-------------------------------------------------
+
+@api.route('/room/<int:room_id>/requests', methods=['GET'])
+@jwt_required()
+def get_room_requests(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id:
+            current_user = User.query.get(current_user_id)
+            if not current_user or not current_user.admin:
+                return jsonify({"error": "Unauthorized"}), 403
+
+        requests = Room_request.query.filter_by(room_id=room_id, status="pending").all()
+        serialized_requests = [req.serialize() for req in requests]
+        
+        return jsonify({"requests": serialized_requests}), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#--------------ACCEPT OR REJECT "JOIN" & ROOM UPDATE-------------------------------------------
+
+@api.route('/room/<int:room_id>/requests/<int:request_id>', methods=['PUT'])
+@jwt_required()
+def update_room_request(room_id, request_id):
+    try:
+        current_user_id = get_jwt_identity()
+        
+        # Obtener el room
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id:
+            current_user = User.query.get(current_user_id)
+            if not current_user or not current_user.admin:
+                return jsonify({"error": "Unauthorized"}), 403
+
+        # Obtener la solicitud de unión
+        join_request = Room_request.query.get(request_id)
+        if not join_request or join_request.room_id != room_id:
+            return jsonify({"error": "Request not found"}), 404
+
+        response_data = request.json
+        new_status = response_data.get('status')
+        if new_status not in ["accepted", "rejected"]:
+            return jsonify({"error": "Invalid status"}), 400
+
+        join_request.status = new_status
+
+        # Si la solicitud es aceptada, añadir al usuario a los participantes del room
+        if new_status == "accepted":
+            user = User.query.get(join_request.user_id)
+            if user:
+                new_participant = Room_participant(room_id=room_id, user_id=join_request.user_id, confirmed=True)
+                db.session.add(new_participant)
+        
+        db.session.commit()
+        return jsonify({"message": "Request updated successfully"}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
