@@ -514,6 +514,36 @@ def delete_module(module_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
+    @api.route('/payment/courses', methods=['POST'])
+    def create_payment_course():
+        try:
+            data = request.get_json()
+            new_payment = Payment(
+                date=data.get('date'),
+                user_id=data.get('user_id'),
+                manager_id=data.get('manager_id')
+            )
+            db.session.add(new_payment)
+            db.session.commit()
+            return jsonify({"message": "Payment for course created successfully", "payment_id": new_payment.id}), 201
+        except Exception as err:
+            return jsonify({"error": f"Error creating payment for course: {str(err)}"}), 500
+        
+    @api.route('/payment/courses', methods=['GET'])
+    def get_all_payments_courses():
+        try:
+            payments = Paymen.query.all()
+            serialized_payments = [payment.serialize() for payment in payments]
+            return jsonify({"payments": serialized_payments}), 200
+        except Exception as err:
+            return jsonify({"error": f"Error fetching payments for courses: {str(err)}"}), 500
+        
+    
+
+
+        
+        
+        
         
 
 
