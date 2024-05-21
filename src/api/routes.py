@@ -57,7 +57,9 @@ def add_vehicle():
     tipo_cambio = request.json.get("tipo_cambio")
     asientos = request.json.get("asientos")
     precio = request.json.get("precio")
-    url_img = request.json.get("url_img")
+    url_img1 = request.json.get("url_img1")
+    url_img2 = request.json.get("url_img2")
+    url_img3 = request.json.get("url_img3")
 
 # Creacion de producto en stripe
     new_vehicles= stripe.Product.create(name=marca_modelo)
@@ -66,7 +68,7 @@ def add_vehicle():
     unit_amount= precio * 100,
     currency="eur",
     )
-    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img == ""):
+    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img1 == "" or url_img2 == "" or url_img3 == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
     if existing_vehicle:
@@ -80,7 +82,9 @@ def add_vehicle():
         precio=precio,
         precio_id_stripe=price_product["id"],
         user_id= user_id,
-        url_img = url_img 
+        url_img1 = url_img1,
+        url_img2 = url_img2,
+        url_img3 = url_img3  
     )
     db.session.add(new_vehicle)
     db.session.commit()

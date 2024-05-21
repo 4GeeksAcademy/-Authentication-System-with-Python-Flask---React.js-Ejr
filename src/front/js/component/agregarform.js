@@ -3,17 +3,80 @@ import { Context } from "../store/appContext";
 import swal from 'sweetalert';
 import { useNavigate} from "react-router-dom";
 import "../../styles/index.css";
+import imgFolder from "../../img/folder.png";
+import { Container } from "reactstrap";
+import Dropzone from "react-dropzone";
+import { array } from "prop-types";
+import axios from "axios";
 
-export const AgregarForm = () => {
+export const AgregarForm = (props) => {
     
     const {actions} = useContext(Context)
+    
     const [inputMarcayModelo, setInputMarcayModelo]=useState("")
     const [inputMatricula, setInputMatricula]=useState("")
     const [inputMotor, setInputMotor]=useState("")
     const [inputCambio, setInputCambio]=useState("")
     const [inputAsientos, setInputAsientos]=useState("")
     const [inputPrecio, setInputPrecio]=useState("")
+    
+    const [image, setImage] = useState({array: []})  //gracias a este useState({array...}) vamos a poder ver las 3 imágenes
+    const [loading, setLoading] = useState("");
+    
+    const handleDrop = (files) => {
+        const uploaders = files.map((file) => {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('tags', `codeinfuse, medium, gist`);
+            formData.append('upload_preset', 'preset_FriendlyWheels');
+            formData.append('api_key', '574539177956517');
+            formData.append('timestamp', (Date.now() / 1000)| 0);
+            setLoading("true")
+            return axios
+                .post('https://api.cloudinary.com/v1_1/dg1qrtyvd/image/upload', formData, {
+                    headers: {"X-Requested-With": "XMLHttpRequest"},
+                })
+                .then((response) => {
+                    const data = response.data
+                    const imageurl = data.secure_url
+                    let specificArrayInObject = image.array;
+                    specificArrayInObject.push(imageurl);
+                    const newObj = {...image, specificArrayInObject};
+                    setImage(newObj);
+                    console.log(image);
+                })
+        })
+        axios.all(uploaders).then(() => {
+            setLoading("false");
+        })
+    }
+
+    function imagePreview() {       {/*si tenemos imagenes seleccionadas las mostrara y si no nada */}
+        if(loading === "true") {
+            return <h4>Cargando...</h4>
+        }
+        if(loading === "false") {
+            return (<h4>
+                {image.array.length <= 0
+                ? "No tiene imágenes"
+                : image.array.map((item) => (
+                    <img alt="uploaded_image"
+                    style={{width: "320px"}}
+                    src={item}
+                    />
+                ))}   
+            </h4>)
+        }
+    }
+    // , height: "70px", backgroundSize: "cover", paddingRight:"15px"
+    const eliminarImagen = (indexImagen) => {
+         const nuevasImagenes = [...image];
+         nuevasImagenes.splice(indexImagen, 1);
+         setImage(nuevasImagenes);
+     };
+
     const navigate = useNavigate();
+    
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -29,7 +92,7 @@ export const AgregarForm = () => {
     };
     return (
         <div className="container lg-5">
-            <h1 className="border-bottom pb-4 text-center">Añadir Vehículo</h1>
+            <h1 className="border-bottom pb-4 text-center">Ponga su vehículo en alquiler</h1>
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
@@ -61,6 +124,27 @@ export const AgregarForm = () => {
                         <input type="number" className="form-control mb-3" id="exampleinputPrecioDia" placeholder="Ingresa precio por día" name="precio" onChange={(e) => setInputPrecio(e.target.value)} />
                     </div>
                 </div>
+                <div>
+                    <Container>
+                    <h4 className="upload-img-text">Seleccione tres imágenes de su vehículo</h4>
+                    <Dropzone className="dropzone"
+                    onDrop={handleDrop}
+                    onChange={(e) => setImage(e.target.value)}
+                    value={image}>
+                        {({getRootProps, getInputProps}) => (
+                            <section>
+                                <div {...getRootProps({className:"dropzone"})}>
+                                    <img className="logo" src={imgFolder} />
+                                    <p>Seleccione o arrastre aquí sus imágenes </p>
+                                </div>
+                            </section>
+                        )}
+                    </Dropzone>
+                    {imagePreview()}
+                    </Container>
+                </div>
+                {/* <button className="btn btn-outline-secondary" onClick={() => eliminarImagen(index)}> 
+                Eliminar imagen </button> */}
                 <div className="d-flex justify-content-center" id="btnAgregarForm">
                 <button type="submit" className="btn btn-outline-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
                 </div>
