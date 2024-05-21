@@ -133,7 +133,6 @@ class Course(db.Model):
             "price": self.price  # Nuevo campo en la serialización
         }
 
-
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
