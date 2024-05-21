@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
+from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request, Quizzes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import check_password_hash
@@ -714,8 +714,47 @@ def delete_module(module_id):
             return jsonify({"payments": serialized_payments}), 200
         except Exception as err:
             return jsonify({"error": f"Error fetching payments for courses: {str(err)}"}), 500
+
+
+
+#-----------------------QUIZZES------------------------#
+@api.route('/module/quizzes', methods=['POST'])
+def post_quizzes():
+
+    try:
+        question_title = request.json.get('questionTitle')
+        answer = request.json.get('answer')
+        module_id = request.json.get('moduleId')
+
+        if not question_title or not answer or not module_id:
+            return {"Error": "questionTitle, answer, and moduleId are required"}, 400
         
+        existing_module = Modules.query.filter_by(id=module_id).first()
+        if not existing_module:
+            return jsonify({"Error": "Module does not exist."}), 404
+        
+        quiz = Quizzes(question_title=question_title, answer=answer, module_id=module_id)
+        db.session.add(quiz)
+        db.session.commit()
+        return jsonify({"Msg": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
     
+    except Exception as err:
+        return jsonify({"Error": "Error in quiz creation: " + str(err)}), 500
+
+
+@api.route('/module/quizzes', methods=['GET'])
+def get_quizzes():
+    try:
+        quizzes = Quizzes.query.all()
+
+        if not quizzes:
+            return jsonify({"Msg": "No quiz found"}), 404
+        
+        serialized_quizzes = [quiz.serialize() for quiz in quizzes]
+        return jsonify({"Quiz": serialized_quizzes}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in fetching quizzes: " + str(err)})  
 
 
         
