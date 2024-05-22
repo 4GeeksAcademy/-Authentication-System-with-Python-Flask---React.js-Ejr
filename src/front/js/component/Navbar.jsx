@@ -66,24 +66,28 @@ const Navbar = () => { // Definición del componente Navbar
 
         <div> {/* Contenedor de los elementos de la barra de navegación */}
           {store.isAuthenticated && ( // Condición para renderizar el botón de cierre de sesión si el usuario ha iniciado sesión
-            <button className={styles.logoutButton} onClick={handleCloseSession}>Cerrar sesión</button>
-          )}
-            {store.isAuthenticated && (  
-            <Link to="/PrivatePageUser">
-            <button className={styles.logoutButton}>Ir al perfil</button>
-            </Link>
+            <>
+              <button className={styles.logoutButton} onClick={handleCloseSession}>Cerrar sesión</button>
+              <Link to="/PrivatePageUser">
+                <button className={styles.logoutButton}>Ir al perfil</button>
+              </Link>
+              {store.dataRole === "master" && ( // Botón exclusivo para usuarios con rol 'master'
+                <Link to="/ModulePage">
+                  <button className={styles.logoutButton}>Modulos</button>
+                </Link>
+              )}
+              <button className={styles.ProfileButton} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <i className="fa-regular fa-user"></i> {/* Icono de perfil */}
+              </button>
+            </>
           )}
           {!store.isAuthenticated && ( // Condición para renderizar el botón de inicio de sesión si el usuario no ha iniciado sesión
             <Link to="/Login">
               <button className={styles.loginButton}>Login</button>
             </Link>
           )}
-          {store.isAuthenticated && ( // Condición para renderizar el botón de perfil si el usuario ha iniciado sesión
-            <button className={styles.ProfileButton} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-              <i class="fa-regular fa-user"></i> {/* Icono de perfil */}
-            </button>
-          )}
         </div>
+
       </div>
       <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"> {/* Menú desplegable para el perfil del usuario */}
         <div className="offcanvas-header"> {/* Cabecera del menú desplegable */}
