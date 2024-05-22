@@ -556,6 +556,7 @@ def show_view_manager():
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+
 #-------------------DELETE USER--------------------#
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
 def delete_user(user_id):
@@ -907,7 +908,7 @@ def add_course_to_trolley():
 
 
 #----------------------ORDER------------------------#           
-@api.route('/order/courses', methods=['POST'])
+""" @api.route('/order/courses', methods=['POST'])
 def add_order_to_trolley():
     try:
         data = request.json
@@ -934,16 +935,12 @@ def add_order_to_trolley():
         )
         
     #Obtenermos los datos de los campos del body
-        email =  request.json.get('email')
+        price =  request.json.get('email')
         password = request.json.get('password')
-        is_user = request.json.get('isUser')
+        user_id = request.json.get('userId')
         name = request.json.get('name') 
         last_name = request.json.get('lastName')
-        username = request.json.get('username')
-        number_document = request.json.get('numberDocument')
-        phone = request.json.get('phone')
-        age = request.json.get('age')
-        gender = request.json.get('gender')
+      
         
         #Verificacion de campos vacios
         if not email or not password or not is_user or not name or not last_name or not username or not number_document or not phone or not age or not gender:
@@ -977,7 +974,7 @@ def add_order_to_trolley():
 
     
     except Exception as e:
-        return jsonify({"Error": "An error ocurred", "error fetching": {str(e)}}), 500
+        return jsonify({"Error": "An error ocurred", "error fetching": {str(e)}}), 500 """
 
 
 
