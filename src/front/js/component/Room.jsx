@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Context } from "../store/appContext";
+import '../../styles/Room.css';
 
 export const Room = ({ room }) => {
     const navigate = useNavigate();
+    const { store, actions } = useContext(Context);
 
     const handleCardClick = () => {
         navigate(`/room/${room.room_id}`);
     };
+
+    const handleEdit = () => {
+        navigate(`/edit-room/${room.room_id}`);
+    };
+
+    const handleDelete = async () => {
+        const success = await actions.deleteRoom(room.room_id);
+        if (success) {
+            actions.fetchRooms(); // Refresh the rooms list after deletion
+        }
+    };
+
+    const isHost = store.user && store.user.username === room.host_name;
 
     return (
         <div className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={handleCardClick}>
@@ -19,16 +35,22 @@ export const Room = ({ room }) => {
                         <div className="card-title">
                             <div className="d-flex justify-content-between">
                                 <span>{room.game_name}</span>
-                                <span>{room.participants.length}/4</span>
+                                <span>{room.participants} / {room.room_size} </span>
                             </div>
                             <h5>{room.room_name}</h5>
                         </div>
-                        <p className="card-text">{room.game_description}</p>
+                        <p className="card-text">{room.description}</p>
                         <p className="card-text">
                             <small className="text-body-secondary">
                                 <span>Starts: {room.date} at {room.time}</span>
                             </small>
                         </p>
+                        {isHost && (
+                            <div className="d-flex justify-content-between mt-3">
+                                <button className="btn btn-warning" onClick={(e) => { e.stopPropagation(); handleEdit(); }}>Edit</button>
+                                <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); handleDelete(); }}>Delete</button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

@@ -37,6 +37,7 @@ export const RoomDetail = () => {
                     <h1>{room.room_name}</h1>
                     <p><strong>Game:</strong> {room.game_name}</p>
                     <p><strong>Description:</strong> {room.description}</p>
+                    <p>{console.log(room.description)}</p>
                     <p><strong>Host:</strong> {room.host_name}</p>
                     <p><strong>Date:</strong> {room.date}</p>
                     <p><strong>Time:</strong> {room.time}</p>
