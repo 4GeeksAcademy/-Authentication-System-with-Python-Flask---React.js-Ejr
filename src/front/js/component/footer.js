@@ -27,8 +27,8 @@ export const Footer = () => {
 					</a>
 				</div>
 				<div>
-					<a className="text-black" href="https://x.com/FriendlyWheels5" target="_blank">
-						<i className="fa-solid fa-x mt-3 me-2"></i>
+					<a className="facebook" href="https://x.com/FriendlyWheels5" target="_blank">
+						<i className="fab fa-twitter mt-3 me-2"></i>
 					</a>
 				</div>
 			</div>
