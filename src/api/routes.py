@@ -496,6 +496,17 @@ def join_room(room_id):
         room = Room.query.get(room_id)
         if not room:
             return jsonify({"error": "Room not found"}), 404
+
+        current_user = User.query.get(current_user_id)
+
+        # Comprobar si el usuario tiene la plataforma correspondiente
+        if room.platform != 'All':
+            if room.platform == 'PC':
+                if not (current_user.steam or current_user.epic_id):
+                    return jsonify({"error": "You do not have a PC ID (Steam or Epic) associated with your profile"}), 400
+            else:
+                if not getattr(current_user, room.platform.lower(), None):
+                    return jsonify({"error": f"You do not have a {room.platform} ID associated with your profile"}), 400
         
         # Verificar si la solicitud ya existe
         existing_request = Room_request.query.filter_by(room_id=room_id, user_id=current_user_id).first()
