@@ -592,3 +592,11 @@ def update_room_request(room_id, request_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@api.route('/games', methods=['GET'])
+def get_games():
+    try:
+        games = Games.query.all()
+        return jsonify([game.serialize() for game in games]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+

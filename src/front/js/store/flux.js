@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             rooms: [],
+            games: [],
             loadingRooms: false,
             user: null // Guardar la información del usuario autenticado
         },
@@ -159,7 +160,103 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error deleting profile:', error);
                     return false;
                 }
-            }
+            },
+
+            createRoom: async (roomData) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/create_room`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(roomData)
+                    });
+                    if (!response.ok) throw new Error('Failed to create room');
+                    const data = await response.json();
+                    const store = getStore();
+                    setStore({ rooms: [...store.rooms, data.room] });
+                    return true;
+                } catch (error) {
+                    console.error('Error creating room:', error);
+                    return false;
+                }
+            },
+
+            deleteRoom: async (roomId) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to delete room');
+                    const store = getStore();
+                    setStore({ rooms: store.rooms.filter(room => room.id !== roomId) });
+                    return true;
+                } catch (error) {
+                    console.error('Error deleting room:', error);
+                    return false;
+                }
+            },
+
+            updateRoom: async (roomId, roomData) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(roomData)
+                    });
+                    if (!response.ok) throw new Error('Failed to update room');
+                    const data = await response.json();
+                    const store = getStore();
+                    setStore({ rooms: store.rooms.map(room => room.id === roomId ? data.room : room) });
+                    return true;
+                } catch (error) {
+                    console.error('Error updating room:', error);
+                    return false;
+                }
+            },
+
+            fetchGames: async () => {
+                try {
+                    const store = getStore()
+                    let response = await fetch(`${apiUrl}api/games`);
+                    if (!response.ok) throw new Error("Couldn't fetch games");
+                    let gamesData = await response.json();
+                    setStore({ games: gamesData });
+                    console.log(store.games)
+                    return true;
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }
+            },
+            initializeData: async () => {
+                const store = setStore()
+                setStore({ loading: true });
+                try {
+                    await Promise.all([getActions().fetchGames(), getActions().fetchRooms()]);
+                    setStore({ loading: false });
+                } catch (error) {
+                    console.error('Error initializing data:', error);
+                    setStore({ loading: false });
+                    console.log(store)
+                }
+            },
         }
     };
 };

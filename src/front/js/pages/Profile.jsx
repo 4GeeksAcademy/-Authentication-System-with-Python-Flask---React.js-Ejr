@@ -32,7 +32,7 @@ export const Profile = () => {
         } else {
             setProfileData(store.user);
         }
-    }, [store.user, navigate]);
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
