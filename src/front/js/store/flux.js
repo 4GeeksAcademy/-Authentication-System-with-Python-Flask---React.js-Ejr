@@ -346,7 +346,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respNewQuizz.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.Error });
-            throw new Error(errorData.Error || "Error al crear el usuario");
+            throw new Error(errorData.Error || "Error creating quizz");
           }
           const dataNewQuizz = await respNewQuizz.json();
           setStore({ ...store, msg: dataNewQuizz.message });
@@ -355,7 +355,37 @@ const getState = ({ getStore, getActions, setStore }) => {
         } finally {
           getActions().spinner(false);
         }
-      },
+    },
+    
+    
+    
+      uploadCertificate: async(file)=>{
+        try {
+          const responseUploadData = await fetch(process.env.BACKEND_URL + `/api/upload`, {
+            method: 'POST',
+            body: JSON.stringify(file),
+          });
+
+          if(!responseUploadData.ok){
+            const errorUploadData = await responseUploadData();
+            console.log(errorUploadData)
+            setStore({...store, error: errorUploadData.Error})
+            throw new Error(errorUploadData.Error || "Error posting certificate")
+          }else{
+            const uploadData = await response.json();
+            alert('File uploaded successfully: ' + JSON.stringify(uploadData));
+          }
+          const dataNewCertificate = await respNewCertificate.json()
+          setStore({...store, msg: dataNewCertificate.message})
+        } catch (error) {
+          console.error('Error during file upload:', error);
+          setError('An error occurred while uploading the file');
+          alert('An error occurred while uploading the file');
+        } finally {
+          getActions().spinner(false);
+        }
+      }  
+      
 
       /* getMessage: async () => {
         try {

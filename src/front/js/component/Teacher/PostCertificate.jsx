@@ -1,7 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from '../../store/appContext';
 
 export const PostCertificate = () => {
+  const { store, actions } = useContext(Context); 
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -10,11 +12,11 @@ export const PostCertificate = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!file) {
       alert('Please select a file first');
-      return;
+      return;  // Salida temprana si no hay archivo seleccionado
     }
 
     setLoading(true);
@@ -48,12 +50,14 @@ export const PostCertificate = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submit}>
         <input type="file" onChange={handleFileChange} />
         <button type="submit" disabled={loading}>Upload</button>
       </form>
-      {loading && <p>Uploading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <span>
+        {loading && <p>Uploading...</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+      </span>
     </div>
   );
 };
