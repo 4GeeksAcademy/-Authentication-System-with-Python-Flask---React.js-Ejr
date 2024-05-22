@@ -399,7 +399,7 @@ def reset_password_manager(token):
 
 
 
-#-----------------------GET DE USERS------------------------#
+#-----------------------GET USERS------------------------#
 @api.route('/view/user')
 @jwt_required() #Decorador para requerir autenticacion con jwt
 def show_view_user():
@@ -557,6 +557,33 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({"message": f"User with ID {user.id} deleted succesfully"}), 200
+
+
+#---------------------UPDATE USER----------------------#
+@api.route('/view/manager/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def update_user(user_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"Error": "User not found"}), 404
+
+    data = request.get_json()
+    user.email = data.get('email', user.email)
+    user.is_user = data.get('isUser', user.is_user)
+    user.name = data.get('name', user.name)
+    user.last_name = data.get('lastName', user.last_name)
+    user.username = data.get('username', user.username)
+    user.number_document = data.get('numberDocument', user.number_document)
+    user.phone = data.get('phone', user.phone)
+    user.age = data.get('age', user.age)
+    user.gender = data.get('gender', user.gender)
+
+    db.session.commit()
+    return jsonify({"message": f"User with ID {user.id} updated successfully"}), 200
 
 #------------------DELETE TEACHER------------------#
 
