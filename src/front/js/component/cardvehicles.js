@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const CardVehicles = ({ vehicle }) => {
+export const CardVehicles = ({ vehicle, imageUrls }) => {
     const token = localStorage.getItem("token");
 
     return (
         <div className="card col-md-4 mb-4 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
             <a className="cardvehicles" href="#">
-                <img className="Vehiculo mt-4" src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
+                {imageUrls.length > 0 && <img className="Vehiculo mt-4" src={imageUrls[0]} />}
             </a>
             <Link to="/details">
             </Link>

@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const { images } = useContext((Context));
 	const navigate = useNavigate();
 	const [filtroPrecio, setFiltroPrecio] = useState(null);
 	const [filtroAsientos, setFiltroAsientos] = useState(null);
@@ -36,11 +37,11 @@ export const Home = () => {
 	   const query = new URLSearchParams(window.location.search);
    
 	   if (query.get("success")) {
-		 swal("Pago realizado con éxito",  "En breve recibira un correo de confirmación", "success");
+		 swal("Pago realizado con éxito",  "En breve recibirá un correo de confirmación", "success");
 		 navigate("/");
 	   }
 	   if (query.get("canceled")) {
-		 swal("Orden cancelada", "Por favor intentelo nuevamente", "error")
+		 swal("Orden cancelada", "Por favor inténtelo nuevamente", "error")
 		 navigate("/");
 	   }
 	 }, []); 

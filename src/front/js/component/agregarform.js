@@ -13,14 +13,15 @@ export const AgregarForm = (props) => {
     
     const {actions} = useContext(Context)
     
-    const [inputMarcayModelo, setInputMarcayModelo]=useState("")
-    const [inputMatricula, setInputMatricula]=useState("")
-    const [inputMotor, setInputMotor]=useState("")
-    const [inputCambio, setInputCambio]=useState("")
-    const [inputAsientos, setInputAsientos]=useState("")
-    const [inputPrecio, setInputPrecio]=useState("")
+    const [inputMarcayModelo, setInputMarcayModelo]=useState("");
+    const [inputMatricula, setInputMatricula]=useState("");
+    const [inputMotor, setInputMotor]=useState("");
+    const [inputCambio, setInputCambio]=useState("");
+    const [inputAsientos, setInputAsientos]=useState("");
+    const [inputPrecio, setInputPrecio]=useState("");
     
     const [image, setImage] = useState({array: []})  //gracias a este useState({array...}) vamos a poder ver las 3 imágenes
+    const [imageUrl, setImageUrls] = useState([]);  //mantengo la url de las img subidas
     const [loading, setLoading] = useState("");
     
     const handleDrop = (files) => {
@@ -43,7 +44,8 @@ export const AgregarForm = (props) => {
                     specificArrayInObject.push(imageurl);
                     const newObj = {...image, specificArrayInObject};
                     setImage(newObj);
-                    console.log(image);
+                    setImageUrls(prevState => [...prevState, imageUrl]);
+                    //console.log(image);
                 })
         })
         axios.all(uploaders).then(() => {
@@ -69,11 +71,11 @@ export const AgregarForm = (props) => {
         }
     }
     // , height: "70px", backgroundSize: "cover", paddingRight:"15px"
-    const eliminarImagen = (indexImagen) => {
-         const nuevasImagenes = [...image];
-         nuevasImagenes.splice(indexImagen, 1);
-         setImage(nuevasImagenes);
-     };
+    // const eliminarImagen = (indexImagen) => {
+    //      const nuevasImagenes = [...image];
+    //      nuevasImagenes.splice(indexImagen, 1);
+    //      setImage(nuevasImagenes);
+    //  };
 
     const navigate = useNavigate();
     
@@ -85,9 +87,9 @@ export const AgregarForm = (props) => {
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");
         } else if (respuesta === "plate_exist") {
-            swal ("El vehículo con esta matrícula ya ha sido añadido" , "Por favor intentelo de nuevo",  "error" )
+            swal ("El vehículo con esta matrícula ya ha sido añadido" , "Por favor inténtelo de nuevo",  "error" )
         } else {
-            swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
+            swal ( "Todos los campos son obligatorios" ,  "Por favor inténtelo de nuevo" ,  "error" )
         }
     };
     return (
