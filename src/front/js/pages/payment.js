@@ -93,7 +93,7 @@ export const OrderView = () => {
 
   return (
     <div style={{ display: "flex", paddingTop: '64px', paddingRight: '16px' }}>
-      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px', paddingTop: '50px' }}>
+      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px', paddingTop: '50px', height: "100%" }}>
         <Typography variant="h2">Orders</Typography>
         <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
           {store.order.items.map((coffee, index) => (
