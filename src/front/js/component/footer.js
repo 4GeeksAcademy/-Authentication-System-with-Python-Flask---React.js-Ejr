@@ -4,11 +4,7 @@ import "../../styles/index.css";
 import logoImageUrl from "../../img/logoHW.png";
 
 export const Footer = () => {
-
-	const clickIconos = () => {
-		window.location.href = ('https://www.instagram.com/friendlywheels58')
-	};
-
+	
 	return (
 		<footer className="footer fs-4 d-flex justify-content-between" style={{ backgroundColor: "#a9ce68" }}>
 			<div className="d-flex mt-2">
