@@ -227,6 +227,39 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ ...store, spinner: changesSpinner });
       },
 
+      newQuizz: async(dataQuizz)=>{
+        
+        const store = getStore();
+        getActions().updateMsgError("")
+        getActions().updateMsg("")
+        getActions().spinner(true);
+        try {
+          const respNewQuizz = await fetch(
+            process.env.BACKEND_URL + '/api/module/quizzes',
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(dataQuizz),
+            }
+          )
+
+          if (!respNewQuizz.ok) {
+            const errorData = await respNewQuizz.json();
+            console.log(errorData)
+            setStore({ ...store, error: errorData.Error });
+            throw new Error(errorData.Error || "Error al crear el usuario");
+          }
+          const dataNewQuizz = await respNewQuizz.json()
+          setStore({...store, msg: dataNewQuizz.message})
+        } catch (err) {
+          console.log(err)
+        } finally {
+          getActions().spinner(false);
+        }
+    }
+
       /* getMessage: async () => {
         try {
           const resp = await fetch(process.env.BACKEND_URL + "/api/hello");

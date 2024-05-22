@@ -737,10 +737,10 @@ def post_quizzes():
         quiz = Quizzes(question_title=question_title, answer=answer, module_id=module_id)
         db.session.add(quiz)
         db.session.commit()
-        return jsonify({"Msg": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
+        return jsonify({"message": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
     
     except Exception as err:
-        return jsonify({"Error": "Error in quiz creation: " + str(err)}), 500
+        return jsonify({"Error": "Error in quiz creation: ", "fetching error": str(err)}), 500
 
 
 @api.route('/module/quizzes', methods=['GET'])
