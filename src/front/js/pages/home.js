@@ -34,6 +34,10 @@ export const Home = () => {
 	}, []);
 
 	useEffect(() => {
+		console.log(store.vehicles_home);
+	}, [store.vehicles_home]);
+
+	useEffect(() => {
 		const query = new URLSearchParams(window.location.search);
 
 		if (query.get("success")) {
@@ -48,21 +52,21 @@ export const Home = () => {
 
 	return (
 		<>
-			<div className="d-flex justify-content-center text-center mt-4 fs-4">
-				<div className="px-5 d-flex m-0">
-					<p>¿Buscas un coche? Estás en el lugar adecuado.</p>
-				<div className="me-2 px-2">
-					<FiltroAsientos
-						setFiltroAsientos={setFiltroAsientos}
-					/>
+			<div className="d-flex justify-content-center text-center mt-5 fs-4 text-grey">
+				<div className="px-5 d-flex">
+					<p><strong>¿Buscas o rentas un coche? Estás en el lugar adecuado</strong></p>
+					<div className="me-2 px-3">
+						<FiltroAsientos
+							setFiltroAsientos={setFiltroAsientos}
+						/>
+					</div>
+					<div className="me-5">
+						<FiltroPrecio
+							setFiltroPrecio={setFiltroPrecio}
+						/>
+					</div>
 				</div>
-				<div className="me-5">
-					<FiltroPrecio
-						setFiltroPrecio={setFiltroPrecio}
-					/>
-				</div>
-			</div>
-		</div >
+			</div >
 			<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
 					<div className="row Map Cards text-dark d-flex justify-content-center">

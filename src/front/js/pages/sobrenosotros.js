@@ -3,7 +3,7 @@ import React from "react";
 export const SobreNosotros = () => {
     return (
         <div className="footer-view mt-4 ms-4 fs-3">
-            <div className="mb-4 text-white-50">
+            <div className="mb-5">
             <h4>Sobre Nosotros:</h4>
                 <p>
                     Somos un equipo apasionado por los coches.Nuestra misión es poder brindarte el mejor servicio de alquiler de coches propios. <br></br>
@@ -12,12 +12,12 @@ export const SobreNosotros = () => {
                     El compromiso de nuestro equipo es satisfacer las necesidades y superar las expectativas de los clientes en cada interacción.
                 </p>
             </div>
-            <div className="mb-4">
+            <div className="mb-5">
                 <h4>Contáctanos:</h4>
                 <p> Email address: terms@friendlywheels.com</p>
                 <p>Teléfono: +34 555-123-4567</p>    
             </div>
-            <div className="mb-4">
+            <div className="mb-5">
                 <h4>Nuestra ubicación:</h4>
                 <p>Calle de Alcalá, 7, Madrid, España</p>
                 <div>

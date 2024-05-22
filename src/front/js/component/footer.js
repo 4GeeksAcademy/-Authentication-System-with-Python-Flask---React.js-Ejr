@@ -11,7 +11,7 @@ export const Footer = () => (
 		</div>
 		<div className="justify-content-end mt-3">
 			<Link to="/sobrenosotros" className="text-decoration-none">
-				<div className="me-3 text-white-80 fs-2">Sobre Nosotros</div>
+				<div className="me-3 text-warning fs-2">Sobre Nosotros</div>
 			</Link>
 		</div>
 	</footer>

@@ -7,20 +7,20 @@ import stripe
 import os
 from flask_mail import Mail
 from flask_mail import Message
-from datastructure import CarsStructure
+from api.datastructures import CarsStructure
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
 
-vehicles_home = CarsStructure
+vehicles_home = CarsStructure()
 
 @api.route("vehicles_home", methods=['GET'])
 def handle_vehicles_home():
     try: 
         return jsonify(
-            vehicles_home
+            vehicles_home.get_all_vehicles()
         ), 200
     except Exception as e:
         response = {"error": str(e)}
@@ -234,8 +234,6 @@ def create_checkout_session(stripe_id, days):
         return str(e)
     return redirect(checkout_session.url, code=303)
    
-
-
 #Flask-mail
 
 mail = Mail()

@@ -29,24 +29,24 @@ def setup_commands(app):
 
         print("All test users created")
 
-    @app.cli.command("insert-vehicles")
-    def insert_vehicles():
-        vehicle = Vehicle()
-        vehicle.marca_modelo = "Audi A3"
-        vehicle.matricula = "3691 MRH"
-        vehicle.motor = "Electrico"
-        vehicle.tipo_cambio = "Automatico"
-        vehicle.asientos = "5"
-        vehicle.precio = "000"
-        db.session.add(vehicle)
-        db.session.commit()
+    # @app.cli.command("insert-vehicles")
+    # def insert_vehicles():
+    #     vehicle = Vehicle()
+    #     vehicle.marca_modelo = "Audi A3"
+    #     vehicle.matricula = "3691 MRH"
+    #     vehicle.motor = "Electrico"
+    #     vehicle.tipo_cambio = "Automatico"
+    #     vehicle.asientos = "5"
+    #     vehicle.precio = "000"
+    #     db.session.add(vehicle)
+    #     db.session.commit()
 
-        vehicle = Vehicle()
-        vehicle.marca_modelo = "Alfa Romeo Giulia"
-        vehicle.matricula = "3692 MRH"
-        vehicle.motor = "Electrico"
-        vehicle.tipo_cambio = "Automatico"
-        vehicle.asientos = "5"
-        vehicle.precio = "000"
-        db.session.add(vehicle)
-        db.session.commit()
+    #     vehicle = Vehicle()
+    #     vehicle.marca_modelo = "Alfa Romeo Giulia"
+    #     vehicle.matricula = "3692 MRH"
+    #     vehicle.motor = "Electrico"
+    #     vehicle.tipo_cambio = "Automatico"
+    #     vehicle.asientos = "5"
+    #     vehicle.precio = "000"
+    #     db.session.add(vehicle)
+    #     db.session.commit()
