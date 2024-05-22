@@ -47,8 +47,8 @@ export const Transactions = () => {
       <Navbar />
       <Grid container spacing={2} style={{ marginTop: '10px' }}>
         <Grid item xs={6}>
-          <div className="mt-5" style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingTop: '50px' }}>
-            <Typography variant="h2">Orders</Typography>
+          <div className="mt-5" style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingTop: '50px', height: "100%" }}>
+            <Typography variant="h2">Receipt</Typography>
             {selectedTransaction ? (
               <div>
                 <Typography variant="h5">Transaction ID: {selectedTransaction.id}</Typography>
