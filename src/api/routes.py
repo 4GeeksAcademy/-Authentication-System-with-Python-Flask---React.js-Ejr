@@ -397,7 +397,7 @@ def reset_password_manager(token):
 
 
 
-#-----------------------GET DE USERS------------------------#
+#-----------------------GET USERS------------------------#
 @api.route('/view/user')
 @jwt_required() #Decorador para requerir autenticacion con jwt
 def show_view_user():
@@ -475,9 +475,9 @@ def show_view_teacher():
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
 @api.route('/view/manager')
-@jwt_required() #Decorador para requerir autenticacion con jwt
+@jwt_required()  # Decorador para requerir autenticación con jwt
 def show_view_manager():
-    current_token = get_jwt_identity() #obtiene la id del user del token
+    current_token = get_jwt_identity()  # obtiene la id del user del token
     if current_token:
         
         users = User.query.all()
@@ -531,12 +531,103 @@ def show_view_manager():
             }
             manager_list.append(manager_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "access_to_manager": manager_list, "message": "Access to Manager User Successfully"}), 200
+        return jsonify({
+            "access_to_user": user_list,
+            "access_to_teacher": teacher_list,
+            "access_to_manager": manager_list,
+            "message": "Access to Manager User Successfully"
+        }), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+#-------------------DELETE USER--------------------#
+@api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
+def delete_user(user_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not no exists"}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"Error": "User not found"}), 404
+    
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({"message": f"User with ID {user.id} deleted succesfully"}), 200
 
+
+#---------------------UPDATE USER----------------------#
+@api.route('/view/manager/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def update_user(user_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"Error": "User not found"}), 404
+
+    data = request.get_json()
+    user.email = data.get('email', user.email)
+    user.is_user = data.get('isUser', user.is_user)
+    user.name = data.get('name', user.name)
+    user.last_name = data.get('lastName', user.last_name)
+    user.username = data.get('username', user.username)
+    user.number_document = data.get('numberDocument', user.number_document)
+    user.phone = data.get('phone', user.phone)
+    user.age = data.get('age', user.age)
+    user.gender = data.get('gender', user.gender)
+
+    db.session.commit()
+    return jsonify({"message": f"User with ID {user.id} updated successfully"}), 200
+
+#------------------DELETE TEACHER------------------#
+
+@api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
+@jwt_required()
+def delete_teacher(teacher_id):
+    current_token = get_jwt_identity()  # Obtiene ID del usuario del Token
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    teacher = Teacher.query.get(teacher_id)
+    if not teacher:
+        return jsonify({"Error": "Teacher not found"}), 404
+
+    db.session.delete(teacher)
+    db.session.commit()
+    return jsonify({"message": f"Teacher with ID {teacher.id} deleted successfully"}), 200
+
+#--------------------UPDATE TEACHER--------------------#
+
+@api.route('/view/manager/teacher/<int:teacher_id>', methods=['PUT'])
+@jwt_required()
+def update_teacher(teacher_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    teacher = Teacher.query.get(teacher_id)
+    if not teacher:
+        return jsonify({"Error": "Teacher not found"}), 404
+
+    data = request.get_json()
+    teacher.email = data.get('email', teacher.email)
+    teacher.is_teacher = data.get('isTeacher', teacher.is_teacher)
+    teacher.name = data.get('name', teacher.name)
+    teacher.last_name = data.get('lastName', teacher.last_name)
+    teacher.username = data.get('username', teacher.username)
+    teacher.number_document = data.get('numberDocument', teacher.number_document)
+    teacher.phone = data.get('phone', teacher.phone)
+    teacher.age = data.get('age', teacher.age)
+    teacher.gender = data.get('gender', teacher.gender)
+    teacher.certificate_teacher = data.get('certificateTeacher', teacher.certificate_teacher)
+    teacher.user_id = data.get('userId', teacher.user_id)
+
+    db.session.commit()
+    return jsonify({"message": f"Teacher with ID {teacher.id} updated successfully"}), 200
 
 #-----------------------COURSES------------------------#
 @api.route('/view/courses', methods=['POST'])
@@ -627,7 +718,6 @@ def delete_courses(course_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
-
 
 
 #-----------------------MODULES------------------------#
@@ -737,10 +827,10 @@ def post_quizzes():
         quiz = Quizzes(question_title=question_title, answer=answer, module_id=module_id)
         db.session.add(quiz)
         db.session.commit()
-        return jsonify({"Msg": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
+        return jsonify({"message": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
     
     except Exception as err:
-        return jsonify({"Error": "Error in quiz creation: " + str(err)}), 500
+        return jsonify({"Error": "Error in quiz creation: ", "fetching error": str(err)}), 500
 
 
 @api.route('/module/quizzes', methods=['GET'])
