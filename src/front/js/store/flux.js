@@ -254,6 +254,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						precio_id_stripe: precio_id_stripe
 					}
 				})
+			},
+
+			getConfirmationMail: async () => {
+				const token = localStorage.getItem("token")	
 			}
 		}
 	};
