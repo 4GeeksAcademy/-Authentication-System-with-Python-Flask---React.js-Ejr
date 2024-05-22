@@ -10,7 +10,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       spinner: false,
     },
     actions: {
-
       createUser: async (newUser, userRole) => {
         const store = getStore();
         getActions().updateMsgError("");
@@ -128,8 +127,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
           if (token && userRole && userToLogin) {
             setStore({ currentRole: userRole });
-            await getActions().getUser(userRole)
-            await getActions().getCourse()
+            await getActions().getUser(userRole);
+            await getActions().getCourse();
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
@@ -190,12 +189,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           const tokenPassword = localStorage.getItem("jwt-token-reset");
           if (!tokenPassword) throw new Error("No token found");
 
+          const url = process.env.BACKEND_URL + `/api/reset-password/` + userRol + "/" + tokenPassword
           const respResetPassword = await fetch(
-            process.env.BACKEND_URL +
-              `/api/reset-password/` +
-              userRol +
-              "/" +
-              tokenPassword,
+            url,
             {
               method: "POST",
               headers: {
@@ -240,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsg("");
         getActions().spinner(true);
         try {
-          const url = process.env.BACKEND_URL + "/api/create/courses"
+          const url = process.env.BACKEND_URL + "/api/create/courses";
           const respCreateCourse = await fetch(url, {
             method: "POST",
             headers: {
@@ -257,8 +253,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             );
           }
           const dataCreateCourse = await respCreateCourse.json();
-          setStore({ ...store, msg: dataCreateCourse.message})
-       
+          setStore({ ...store, msg: dataCreateCourse.message });
         } catch (err) {
           console.log(err);
         } finally {
@@ -268,29 +263,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getCourse: async () => {
         const store = getStore();
-        getActions().updateMsgError("")
-        getActions().updateMsg("")
-        getActions().spinner(true)
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
         try {
-          const url = process.env.BACKEND_URL + "/api/view/courses"
-          const respGetCourse = await fetch(url)
+          const url = process.env.BACKEND_URL + "/api/view/courses";
+          const respGetCourse = await fetch(url);
 
           if (!respGetCourse.ok) {
             const errorData = await respGetCourse.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
-            throw new Error(
-              errorData.error || "Error al Obtener el Curso"
-            );
+            throw new Error(errorData.error || "Error al Obtener el Curso");
           }
 
           const dataGetCourse = await respGetCourse.json();
-          setStore({ 
-            ...store, 
+          setStore({
+            ...store,
             msg: dataGetCourse.message,
-            course: dataGetCourse 
-          })
-console.log(dataGetCourse)
+            course: dataGetCourse,
+          });
+          console.log(dataGetCourse);
         } catch (err) {
           console.log(err);
         } finally {
@@ -304,15 +297,15 @@ console.log(dataGetCourse)
         getActions().updateMsg("");
         getActions().spinner(true);
         try {
-          const url = process.env.BACKEND_URL + "/api/trolley/courses"
+          const url = process.env.BACKEND_URL + "/api/trolley/courses";
           const respAddCourse = await fetch(url, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-              body: JSON.stringify(dataAddCourse),
-            }
-          );
+            body: JSON.stringify(dataAddCourse),
+          });
+
           if (!respAddCourse.ok) {
             const errorData = await respAddCourse.json();
             console.log(errorData);
@@ -321,6 +314,7 @@ console.log(dataGetCourse)
               errorData.error || "Error al añadir el curso al carrito"
             );
           }
+
           const dataAddCourse = await respAddCourse.json();
           setStore({ ...store, msg: dataAddCourse.message });
           console.log(dataAddCourse);
@@ -331,15 +325,14 @@ console.log(dataGetCourse)
         }
       },
 
-      newQuizz: async(dataQuizz)=>{
-        
+      newQuizz: async (dataQuizz) => {
         const store = getStore();
-        getActions().updateMsgError("")
-        getActions().updateMsg("")
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
         getActions().spinner(true);
         try {
           const respNewQuizz = await fetch(
-            process.env.BACKEND_URL + '/api/module/quizzes',
+            process.env.BACKEND_URL + "/api/module/quizzes",
             {
               method: "POST",
               headers: {
@@ -347,22 +340,22 @@ console.log(dataGetCourse)
               },
               body: JSON.stringify(dataQuizz),
             }
-          )
+          );
 
           if (!respNewQuizz.ok) {
             const errorData = await respNewQuizz.json();
-            console.log(errorData)
+            console.log(errorData);
             setStore({ ...store, error: errorData.Error });
             throw new Error(errorData.Error || "Error al crear el usuario");
           }
-          const dataNewQuizz = await respNewQuizz.json()
-          setStore({...store, msg: dataNewQuizz.message})
+          const dataNewQuizz = await respNewQuizz.json();
+          setStore({ ...store, msg: dataNewQuizz.message });
         } catch (err) {
-          console.log(err)
+          console.log(err);
         } finally {
           getActions().spinner(false);
         }
-    }
+      },
 
       /* getMessage: async () => {
         try {

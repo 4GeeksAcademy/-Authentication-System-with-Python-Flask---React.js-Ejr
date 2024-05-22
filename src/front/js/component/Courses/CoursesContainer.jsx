@@ -8,11 +8,15 @@ export const CoursesContainer = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
     
-    
     const handleViewCourses=()=>{
         navigate(<Courses />)
     }
-console.log(store.course)
+
+    function handleAddTrolley() {
+        actions.addCourseToTrolley()
+    }
+
+
     return (
         <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
            {(store.course.access_to_courses == '') ? "No hay Cursos Cargados" : store.course.access_to_courses.map((item, index) => {
@@ -48,7 +52,7 @@ console.log(store.course)
                                         <button type="button" className="btn btn-primary" /* onClick={()=>navigate('/course/'+ id)} */>
                                             View Course
                                         </button>
-                                        <button type="button" className="btn btn-success">
+                                        <button type="button" className="btn btn-success" onClick={handleAddTrolley}>
                                             Buy Course
                                         </button>
                                     </div>
