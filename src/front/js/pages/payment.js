@@ -92,9 +92,9 @@ export const OrderView = () => {
   };
 
   return (
-    <div style={{ display: "flex", paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
-      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px' }}>
-        <Typography variant="h1">Orders:</Typography>
+    <div style={{ display: "flex", paddingTop: '64px', paddingRight: '16px' }}>
+      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px', paddingTop: '50px' }}>
+        <Typography variant="h1">Orders</Typography>
         <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
           {store.order.items.map((coffee, index) => (
             <li key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
@@ -117,8 +117,8 @@ export const OrderView = () => {
         </Button>
       </div>
 
-      <div style={{ flex: 1, paddingLeft: '16px' }}>
-        <Typography variant="h1">Payment:</Typography>
+      <div style={{ flex: 1, paddingLeft: '16px', paddingTop: '50px' }}>
+        <Typography variant="h1">Payment</Typography>
         <TextField
           label=""
           type="text"

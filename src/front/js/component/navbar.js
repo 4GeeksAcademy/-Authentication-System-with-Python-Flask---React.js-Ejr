@@ -37,7 +37,7 @@ export const Navbar = () => {
   return (
     <AppBar position="fixed" sx={{ top: 0, backgroundColor: '#2db734', zIndex: '9999', padding: '0 40px', width: 'calc(100% + 80px)', left: '-40px' }}>
       <Toolbar>
-        <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+        <Link to="/regions" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
           <CoffeeLogo width="85px" height="85px" />
         </Link>
         <Typography 
@@ -57,7 +57,10 @@ export const Navbar = () => {
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '10px' }}>
           {!shouldHideEmployeeIdButton && (
             <Link to="/transactions">
-              <Button variant="contained" color="primary">
+              <Button 
+                variant="contained" 
+                sx={{ backgroundColor: '#006400', color: 'white', '&:hover': { backgroundColor: '#004d00' } }} // Dark green color
+              >
                 {store.user.username ? `${store.user.username}` : 'EMPLOYEE ID'}
               </Button>
             </Link>
