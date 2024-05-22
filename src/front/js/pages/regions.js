@@ -47,7 +47,7 @@ export const Regions = () => {
         <Typography variant="h2">Regions</Typography>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "16px" }}>
           {Object.keys(store)
-            .filter((region) => region !== 'order' && region !== 'user')
+            .filter((region) => region !== 'order' && region !== 'user' && region !== 'transactions')
             .map((region) => (
               <div key={region} style={{ flex: "1 0 calc(33% - 16px)" }} onClick={() => handleClick('', 0, region)}>
                 <RegionCard image={getImageForRegion(region)} region={region}/>
