@@ -10,6 +10,7 @@ import { TeacherMyPayment } from './TeacherMyPayment.jsx';
 import { TeacherSettings } from './TeacherSettings.jsx';
 import { UploadFile } from './UploadFile.jsx';
 import { PostCourse } from './PostCourse.jsx';
+import { QuizzForm } from './QuizzForm.jsx';
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context)
@@ -48,7 +49,11 @@ export const TeacherDashboard = () => {
     }
 
     const handlePostCourse=()=>{
-        setButtonSelected(<PostCourse/>)
+        setButtonSelected(<PostCourse />)
+    }
+
+    const handleQuizzes=()=>{
+        setButtonSelected(<QuizzForm />)
     }
 
 
@@ -101,6 +106,9 @@ export const TeacherDashboard = () => {
                         </div>
                         <div>
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handlePostCourse}>Post course</button>
+                        </div>
+                        <div>
+                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleQuizzes}>Quizz</button>
                         </div>
                     </div>
                 </div>
