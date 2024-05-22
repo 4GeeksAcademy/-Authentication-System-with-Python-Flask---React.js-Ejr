@@ -27,6 +27,7 @@ export const PostCourse = () => {
         } catch (error) {
             //se caturan errores de la solicitud
             console.error('Error:', error);
+            
         }
     };
 
