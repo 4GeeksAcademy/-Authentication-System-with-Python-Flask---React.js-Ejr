@@ -41,7 +41,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			validateToken: async (token) => {
 				try {
-					const response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/validate-token", // URL del servidor
+					const url = `${process.env.BACKEND_URL}api/validate-token`;
+
+
+					const response = await fetch(url, // URL del servidor
 						{
 							method: "GET",  // Cambio a método GET, ya que el endpoint no necesita datos de entrada adicionales
 							headers: {
@@ -83,8 +86,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				try {
-					let response = await fetch( // Se envía una solicitud POST al servidor para iniciar sesión
-						"https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/token", // URL del servidor
+					const url = `${process.env.BACKEND_URL}api/token`;
+
+
+					let response = await fetch(url, // URL del servidor
 						{
 							method: "POST", // Método de la solicitud
 							headers: {
@@ -131,7 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let myToken = localStorage.getItem("token");
 
 					// Construimos la URL para la solicitud
-					let url = "https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user";
+					const url = `${process.env.BACKEND_URL}api/user`;
 
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -178,7 +183,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createUser: async (dataUser) => {
 				try {
-					let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/singup/user", {
+					const url = `${process.env.BACKEND_URL}api/singup/user`;
+
+					let response = await fetch(url, {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(dataUser)
@@ -206,7 +213,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Obtenemos el token del almacenamiento local
 					let myToken = localStorage.getItem("token");
 
-					const url = "https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/training_classes";
+					const url = `${process.env.BACKEND_URL}api/training_classes`;
 					let response = await fetch(url, {
 						method: "GET", // Método de la solicitud
 						headers: {
@@ -235,10 +242,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					// Obtenemos el token del almacenamiento local
 					let myToken = localStorage.getItem("token");
-					console.log(myToken);
-					console.log(id_class);
+					// console.log(myToken);
+					// console.log(id_class);
 					// Construimos la URL para la solicitud
-					let url = "https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/book_class";
+					let url = `${process.env.BACKEND_URL}/api/book_class`;
 
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -276,7 +283,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let myToken = localStorage.getItem("token");
 
 					// Construimos la URL para la solicitud
-					let url = `https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/cancel_booking/${booking_id}`;
+					let url = `${process.env.BACKEND_URL}api/cancel_booking/${booking_id}`;
 
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -287,23 +294,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
+					console.log("data servidor",data)
+					let store = getStore();
+					setStore({ ...store, cancelBooking: data });
 
-					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
-					if (response.ok) {
-						// Asumiendo que quieres actualizar el store aquí
-						let store = getStore();
-						setStore({ ...store, cancelBooking: data });
-						return { success: true, data: data };
-					} else {
-						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
-						return { success: false, error: data.error || "Unknown error occurred." };
-					}
 
+			
 					// Imprimimos el estado de la tienda después de cargar los datos (solo para depuración)
 					// console.log("Store after data loaded:", store);
 				} catch (error) {
 					console.error("Error booking class:", error);
-					return { success: false, error: error.message };
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},
@@ -312,10 +312,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
-				console.log(myToken);
-				console.log(userData);
+				// console.log(myToken);
+				// console.log(userData);
 				// Construimos la URL para la solicitud
-				let url = `https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user`;
+				let url = `${process.env.BACKEND_URL}api/user`;
 
 				// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 				let response = await fetch(url, {
@@ -329,7 +329,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 
 				let data = await response.json();
-				console.log(data)
+				// console.log(data)
 				if (response.ok) {
 					// setStore({ ...getStore(), uploadedUserData: data.updatedUser });
 					alert('Usuario actualizado correctamente');
@@ -343,7 +343,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 				// Construimos la URL para la solicitud
-				let url = `https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/training_classes`;
+				let url = `${process.env.BACKEND_URL}api/training_classes`;
 
 				try {
 					let response = await fetch(url, {
@@ -382,7 +382,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let startDate = new Date(formData.dateTime_class);
 				let endDate = new Date(formData.endDate);
 				let myToken = localStorage.getItem("token");
-				let url = `https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/training_classes`;
+				let url = `${process.env.BACKEND_URL}api/training_classes`;
 				let errors = [];
 				let successfulCreations = [];
 			
@@ -431,11 +431,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getBookings: async () => {
 
-				try {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
 
-					const url = process.env.BACKEND_URL + "api/booking";
+				const url =`${process.env.BACKEND_URL}api/booking`;
+
+
+				try {
 					let response = await fetch(url, {
 						method: "GET", // Método de la solicitud
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${myToken}`, // Asegúrate de manejar la autenticación adecuadamente
+						}
 					});
 					const data = await response.json();
 					if (response.ok) {
@@ -450,13 +458,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
 			loadMemberships: async () => {
-				let url = `${process.env.BACKEND_URL}/api/memberships`; // Asume que tienes una variable de entorno para tu URL del backend
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+
+				let url = `${process.env.BACKEND_URL}api/memberships`; // Asume que tienes una variable de entorno para tu URL del backend
+
 				try {
 					let response = await fetch(url, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${localStorage.getItem('token')}`, // Asegúrate de manejar la autenticación adecuadamente
+							'Authorization': `Bearer ${myToken}`, // Asegúrate de manejar la autenticación adecuadamente
 						}
 					});
 					if (!response.ok) {
@@ -474,20 +486,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 
 			purchaseMembership: async (data) => {
-				console.log(data)
-				let url = `${process.env.BACKEND_URL}/api/purchase_membership`; // URL del endpoint para comprar membresía
+				// console.log(data)
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+
+				let url = `${process.env.BACKEND_URL}api/purchase_membership`; // URL del endpoint para comprar membresía
 				try {
 					let response = await fetch(url, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${localStorage.getItem('token')}` // Asegúrate de manejar la autenticación adecuadamente
+							'Authorization': `Bearer ${myToken}` // Asegúrate de manejar la autenticación adecuadamente
 						},
 						body: JSON.stringify(data)
 					});
 
 					let result = await response.json(); // Se espera la respuesta del servidor en formato JSON
-					console.log("respuesta del servidor compra: ", result);
+					// console.log("respuesta del servidor compra: ", result);
 			
 					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
 					if (response.ok) {
@@ -506,14 +521,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 
 			getUsers : async () => {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+				
 				try {
-				  let response = await fetch("https://didactic-rotary-phone-5ggx7rpp7v9gh479r-3001.app.github.dev/api/users", 
+				  let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users", 
 				  {
 					method: "GET",
 					headers: {
 					  "Content-Type": "application/json",
 					  // Incluye el token de autorización si es necesario
-					  // Authorization: `Bearer ${token}`,
+						 Authorization: `Bearer ${myToken}`,
 					},
 				  });
 				  console.log (response)
@@ -530,22 +548,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  
 				} catch (error) {
 				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-				  // Puedes también manejar el estado del error en tu store si es necesario
-				  let store = getStore();
-				  setStore({ ...store, fetchUsersError: error.message });
+
 				}
 
 			},
 
 			getOneuser: async (id) => {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+
 				try {
-				  let response = await fetch(`https://didactic-rotary-phone-5ggx7rpp7v9gh479r-3001.app.github.dev/api/user/${id}`, 
+				  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
 				  {
 					method: "GET",
 					headers: {
 					  "Content-Type": "application/json",
 					  // Incluye el token de autorización si es necesario
-					  // Authorization: `Bearer ${token}`,
+						 Authorization: `Bearer ${myToken}`,
 					},
 				  });
 				  console.log(response);
@@ -561,9 +580,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 				} catch (error) {
 				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-				  // Puedes también manejar el estado del error en tu store si es necesario
-				  let store = getStore();
-				  setStore({ ...store, fetchUserError: error.message });
 				}
 			  },
 

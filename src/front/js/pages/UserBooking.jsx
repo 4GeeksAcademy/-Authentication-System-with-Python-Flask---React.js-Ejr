@@ -23,11 +23,11 @@ const UserBooking = () => {
 
     const handleCancelBooking = async (bookingId) => {
         const result = await actions.cancel_booking(bookingId);
-        if (result) {
+        if (store.cancelBooking.message) {
             setModalMessage(store.cancelBooking.message);
             setModalVisible(true);
-        } else {
-            setModalMessage(store.cancelBooking.error);
+        }else{
+            setModalMessage(store.cancelBooking.error); 
             setModalVisible(true);
         }
     };

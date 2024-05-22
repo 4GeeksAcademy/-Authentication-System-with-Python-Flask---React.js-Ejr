@@ -19,6 +19,7 @@ import BookingView from "../component/BookingView.jsx";
 import MembershipPurchase from "../component/MembershipPurchase.jsx";
 import Oneuser from "./Oneuser.jsx";
 import Users from "./Users.jsx";
+import Homeadmin from "./Homeadmin.jsx";
 
 const ModulePage = () => {
     const [show, setShow] = useState(false);
@@ -47,6 +48,7 @@ const ModulePage = () => {
         { component: <MembershipPurchase />, name: "MembershipPurchase " },
         { component: <Oneuser />, name: "Oneuser " },
         { component: <Users />, name: "Users " },
+        { component: <Homeadmin />, name: "Homeadmin " },
 
 
 

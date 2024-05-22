@@ -8,9 +8,11 @@ import { Context } from "../store/appContext";
 const BookingView = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
+
     useEffect(() => {
          actions.getBookings()
     }, [])
+    
     console.log(store.bookingData)
     return (
         <div>

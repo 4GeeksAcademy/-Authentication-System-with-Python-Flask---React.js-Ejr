@@ -43,7 +43,7 @@ const PrivatePageUser = () => {
 
     useEffect(() => {
         actions.loadUserData(); // Carga las clases al montar el componente
-    }, [actions]);
+    }, []);
 
 
 

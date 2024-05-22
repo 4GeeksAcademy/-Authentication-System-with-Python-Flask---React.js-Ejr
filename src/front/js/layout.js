@@ -30,9 +30,10 @@ import CreateClasses from "./component/CreateClasses.jsx";
 import ModulePage from "./pages/ModulePage.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
-import Users from "./pages/Users.jsx";
-import Oneuser from "./pages/Oneuser.jsx";
-
+import Users from "./pages/Users.jsx"; // revisar
+import Oneuser from "./pages/Oneuser.jsx"; // revisar
+// import Homeadmin from "./pages/Homeadmin.jsx"; // revisar
+import Menuadmin from "./component/Menuadmin.jsx"; // revisar
 
 //create your first component
 const Layout = () => {
@@ -68,7 +69,8 @@ const Layout = () => {
                         <Route element={<BookingView />} path="/BookingView" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<Oneuser />} path="/Oneuser" />
-
+                        {/* <Route element={<Homeadmin />} path="/Homeadmin" /> */}
+                        <Route element={<Menuadmin />} path="/Menuadmin" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
