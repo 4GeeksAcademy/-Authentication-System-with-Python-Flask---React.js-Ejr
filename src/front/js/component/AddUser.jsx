@@ -105,13 +105,19 @@ export const AddUser = () => {
             {/* Msg */}
             <div className='position-relative'>
                 <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
-                    {msgError === '' && selectedRole !== '' 
-                        ? <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
+                    {(msgError === '' && msg === '') ? (
+                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
+                            {"Internet or server connection failure"}
+                        </div>
+                    ) : (msgError === '') ? (
+                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
                             {msg}
                         </div>
-                        : <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                            {msgError || 'Error, Invalid Role'}
-                        </div>}
+                    ) : (
+                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
+                            {msgError}
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -212,7 +218,7 @@ export const AddUser = () => {
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
                     </select>
-                <div className="invalid-feedback">
+                    <div className="invalid-feedback">
                         Please enter your information.
                     </div>
                 </div>
