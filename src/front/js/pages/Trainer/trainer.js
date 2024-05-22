@@ -9,7 +9,7 @@ import TrainerExercise from "../../component/Trainer/trainerExercise.jsx";
 
 export const Trainer = () => {
     const { store, actions } = useContext(Context);
-// el trainer exercise tiene que ir en la vista individual del usuario dentro de la card 
+
     return (
         <div className="trainer-container">
             <TrainerCalendar />
