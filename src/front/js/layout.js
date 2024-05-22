@@ -13,17 +13,25 @@ import injectContext from "./store/appContext";
 
 import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
 
-import  Home  from "./pages/Home.jsx";
-import  Footer  from "./component/Footer.jsx";
-import  Plans  from "./pages/Plans.jsx";
+import Home from "./pages/Home.jsx";
+import Footer from "./component/Footer.jsx";
+import Plans from "./pages/Plans.jsx";
 import Benefits from "./pages/Benefits.jsx"
 import ConfirmEmail from "./component/ConfirmEmail.jsx"; // Importación del componente Navbar
 import Login from "./component/Login.jsx"; // Importación del componente Navbar
 import PrivatePageUser from "./pages/PrivatePageUser.jsx"; // Importación del componente Navbar
-import Singup from "./component/Singup.jsx"; 
+import Singup from "./component/Singup.jsx";
+import SingupMaster from "./component/SingupMaster.jsx";
+import Calendar from "./component/Calendar.jsx";
+import PrivateCalendar from "./component/PrivateCalendar.jsx";
+import UserDataDetail from "./pages/UserDataDetail.jsx"
+import UserBooking from "./pages/UserBooking.jsx"
+import CreateClasses from "./component/CreateClasses.jsx";
+import ModulePage from "./pages/ModulePage.jsx";
+import Breadcrumbs from "./component/Breadcrumb.jsx";
+import BookingView from "./component/BookingView.jsx";
 import Users from "./pages/Users.jsx";
 import Oneuser from "./pages/Oneuser.jsx";
-
 
 
 //create your first component
@@ -32,7 +40,7 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
@@ -49,7 +57,16 @@ const Layout = () => {
                         <Route element={<Oneuser />} path="/User/:id" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />
+                        <Route element={<SingupMaster />} path="/Master-private-registration" />
+                        <Route element={<Calendar />} path="/Calendar" />
+                        <Route element={<PrivateCalendar />} path="/PrivateCalendar" />
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
+                        <Route element={<UserDataDetail />} path="/UserDataDetail" />
+                        <Route element={<UserBooking />} path="/UserBooking" />
+                        <Route element={<CreateClasses />} path="/CreateClasses" />
+                        <Route element={<ModulePage />} path="/ModulePage" />
+                        <Route element={<BookingView />} path="/BookingView" />
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
