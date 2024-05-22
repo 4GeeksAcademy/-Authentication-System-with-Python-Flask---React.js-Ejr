@@ -543,6 +543,21 @@ def show_view_manager():
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+#-------------------DELETE USER--------------------#
+@api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
+def delete_user(user_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not no exists"}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"Error": "User not found"}), 404
+    
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({"message": f"User with ID {user.id} deleted succesfully"}), 200
+
 #------------------DELETE TEACHER------------------#
 
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
