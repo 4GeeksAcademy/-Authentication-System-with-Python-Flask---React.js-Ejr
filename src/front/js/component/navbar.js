@@ -22,7 +22,6 @@ export const Navbar = () => {
 
 	useEffect(() => {
 		if (store.vehicles.length !== 0) {
-			actions.favorites();
 			actions.myVehiclesInRent();
 		}
 	}, [store.vehicles]);
@@ -56,54 +55,40 @@ export const Navbar = () => {
 						</div>
 						<div className="offcanvas-body">
 							<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+								<li className="nav-item mb-3" data-bs-toggle="offcanvas">
+									<Link to="/favoritos" className="text-decoration-none">
+										<div className="text-black text-decoration-none">Mis Favoritos</div>
+									</Link>
+								</li>
 								<li className="nav-item dropdown mb-3">
 									<a className="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-										Favoritos
-										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.favorites.length}</span>
+										Mis Coches
+										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
 									</a>
 									<ul className="dropdown-menu">
-										{store.favorites.length === 0
+										{store.myVehicles.length === 0
 											? <li className="text-center">(empty)</li>
-											: (store.favorites.map((item, index) => (
+											: (store.myVehicles.map((item, index) => (
 												<li key={index} className="dropdown-item d-flex text-primary m-2">
 													{item.matricula}
-													<button onClick={() => actions.removeFav(item.id)} className="btn p-0 px-1">
+													<a onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
 														<i className="fas fa-trash"></i>
-													</button>
+													</a>
 												</li>
 											)))
 										}
 									</ul>
-									</li>
-									<li className="nav-item dropdown mb-3">
-										<a className="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-											Mis Coches
-											<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
-										</a>
-										<ul className="dropdown-menu">
-											{store.myVehicles.length === 0
-												? <li className="text-center">(empty)</li>
-												: (store.myVehicles.map((item, index) => (
-													<li key={index} className="dropdown-item d-flex text-primary m-2">
-														{item.matricula}
-														<a onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
-															<i className="fas fa-trash"></i>
-														</a>
-													</li>
-												)))
-											}
-										</ul>
-									</li>
-									<li className="nav-item mb-3" data-bs-toggle="offcanvas">
-										<Link to="/agregarvehiculo" className="text-decoration-none">
-											<div className="text-black text-decoration-none">Pon tú coche en Friendly Wheels</div>
-										</Link>
-									</li>
-									<li className="nav-item" data-bs-toggle="offcanvas">
-										<Link to="/" className="text-decoration-none">
-											<div className="text-black text-decoration-none" onClick={handleLogOut}>Cerrar sesión</div>
-										</Link>
-									</li>
+								</li>
+								<li className="nav-item mb-3" data-bs-toggle="offcanvas">
+									<Link to="/agregarvehiculo" className="text-decoration-none">
+										<div className="text-black text-decoration-none">Pon tú coche en Friendly Wheels</div>
+									</Link>
+								</li>
+								<li className="nav-item" data-bs-toggle="offcanvas">
+									<Link to="/" className="text-decoration-none">
+										<div className="text-black text-decoration-none" onClick={handleLogOut}>Cerrar sesión</div>
+									</Link>
+								</li>
 							</ul>
 						</div>
 					</div>

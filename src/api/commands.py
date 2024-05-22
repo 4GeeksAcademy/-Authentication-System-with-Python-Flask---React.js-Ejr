@@ -114,11 +114,11 @@ def setup_commands(app):
             
             favoriteVehicle = [
                 FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[0].id ),
-                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[0].id ),
-                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[0].id ),
-                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[0].id ),
-                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[0].id ),
-                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[0].id )
+                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[1].id ),
+                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[2].id ),
+                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[3].id ),
+                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[4].id ),
+                FavoriteVehicle(user_id=users[0].id, vehicle_id=vehicles[5].id )
                 ]
             db.session.add_all(favoriteVehicle)
             db.session.commit()
