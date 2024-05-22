@@ -10,20 +10,19 @@ export const Home = () => {
     const [searchResults, setSearchResults] = useState([]);
     const token = localStorage.getItem('jwt-token');
 
-    /* useEffect(() => {
-        actions.fetchRooms();
-    }, []); */
-/* 
     useEffect(() => {
-        setSearchResults(store.rooms);
-        console.log(store.rooms)
-    }, [store.rooms]); */
+        actions.fetchRooms();
+    }, []);
+
+    useEffect(() => {
+        setSearchResults(store.rooms)
+        console.log('estos son los rooms en el store:', store.rooms);
+    }, [store.rooms]);
 
     const handleSearch = useCallback((searchTerm, roomType) => {
         const results = actions.searchRooms(searchTerm, roomType);
-        console.log('Search Results:', results); // Log the search results for debugging
         setSearchResults(results);
-    }, []);
+    }, [actions]);
 
     const handleCreateRoom = () => {
         navigate('/create-room');
@@ -38,18 +37,17 @@ export const Home = () => {
             <div className="home-header">
                 <h1>Find your next pals to play</h1>
                 <SearchBar onSearch={handleSearch} />
-                {token && ( 
+                {token && (
                     <div className='d-flex justify-content-between align-items-center'>
                         <p className="align-self-center">All Rooms:</p>
                         <button onClick={handleCreateRoom} className="btn btn-primary mt-2">Create new room</button>
                     </div>
                 )}
             </div>
-            
             <div>
                 {searchResults.length > 0 ? (
                     searchResults.map(room => (
-                        <Room key={room.id} room={room} />
+                        <Room key={room.room_id} room={room} />
                     ))
                 ) : (
                     <p>No rooms found</p>
