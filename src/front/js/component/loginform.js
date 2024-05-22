@@ -17,7 +17,7 @@ import React,{useContext, useState} from "react";
             console.log('Login successful');
             navigate("/"); 
         } else {
-            swal ( "Correo o Contraseña incorrectos", "Por favor intentelo de nuevo" ,  "error" )
+            swal ( "Correo o contraseña incorrectos", "Por favor inténtelo de nuevo" ,  "error" )
         }
     };
     return (
