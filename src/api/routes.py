@@ -2,16 +2,15 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Manager, Teacher, Course, Orders, Trolley, Payment, Modules, Request, Quizzes
+from api.models import db, User, Manager, Teacher, Course, Orders, Trolley, Payment, Modules, Request, Quizzes 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
-from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash
+
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
 from datetime import datetime
-
 from flask_mail import Message
 from app import mail
 import os
@@ -74,7 +73,6 @@ def create_signup_user():
 
     except Exception as err:
         return jsonify({"Error":"Error in User Creation: " + str(err)}), 500
-
 
 @api.route('/signup/teacher', methods=['POST'])
 def create_signup_teacher():
@@ -324,7 +322,7 @@ def forgot_password_teacher():
     if not teacher:
         return jsonify({"Error": "User not found"}), 404
 
-    reset_token = create_access_token(identity=teacher.id, expires_delta=timedelta(hours=1))
+    reset_token = create_access_token(identity=teacher.id, expires_delta = timedelta(hours=1))
     frontend_url = os.getenv('FRONTEND_URL')  
     reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
 
@@ -640,10 +638,11 @@ def post_courses():
         category_title = request.json.get('categoryTitle')
         modules_length = request.json.get('modulesLength')
         certificate = request.json.get('certificate') 
+        price = request.json.get('price')
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not certificate :
-            return({"Error":"title, category_title, modules_length and certificate  are required"}), 400
+        if not title or not category_title or not modules_length or not certificate or not price:
+            return({"Error":"title, category_title, modules_length, certificate and price are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
@@ -651,7 +650,7 @@ def post_courses():
             return jsonify({"Error":"Title already exists."}), 409
         
         
-        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate)
+        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate, price=price)
         db.session.add(course)
         db.session.commit()
         return jsonify({"Msg":"Course create", "Course":course.serialize()}), 200
