@@ -4,7 +4,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: ({ colors }) => ({
+      colors: {
         w:"#FAFAFA",
         b:"#030303",
         dark:"#0e090f",
@@ -21,7 +21,7 @@ module.exports = {
           n:"#db9eff",
           l:""
         }
-      }),
+      },
       fontFamily: {
         'tittle': ['Poppins', 'sans-serif'],
         'body': ['Radio Canada Big', 'sans-serif']
@@ -40,6 +40,10 @@ module.exports = {
         '.f-body': {
           'font-family': 'Radio Canada Big, sans-serif',
           'font-weight': '600',
+        },
+        '.f-body-sm': {
+          'font-family': 'Radio Canada Big, sans-serif',
+          'font-weight': '500',
         },
       });
     },

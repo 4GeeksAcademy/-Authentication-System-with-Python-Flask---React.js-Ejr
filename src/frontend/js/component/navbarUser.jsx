@@ -6,7 +6,7 @@ import { animateScroll as scroll } from "react-scroll";
 import { IoMdMenu } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
 
-const Navbar = () => {
+const NavbarUser = () => {
   const [nav, setNav] = React.useState(false);
 
 
@@ -71,4 +71,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarUser;

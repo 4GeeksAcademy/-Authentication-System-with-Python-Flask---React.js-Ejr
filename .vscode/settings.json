@@ -10,7 +10,8 @@
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "editor.codeActionsOnSave": {
         
-    }
+    },
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 
     
 }
