@@ -6,7 +6,7 @@ import { TeacherStudents } from './TeacherStudents.jsx';
 import { TeacherFiles } from './TeacherFiles.jsx';
 import { TeacherMyPayment } from './TeacherMyPayment.jsx';
 import { TeacherSettings } from './TeacherSettings.jsx';
-import { UploadFile } from '../UploadFile.jsx';
+import { UploadFile } from './UploadFile.jsx';
 
 export const TeacherDashboard = () => {
 
