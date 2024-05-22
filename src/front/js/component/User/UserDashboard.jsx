@@ -1,32 +1,34 @@
-  
+
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext.js';
-import { CoursesContainer } from '../Courses/CoursesContainer.jsx';
 import Courses from '../../pages/Courses/Courses.jsx';
 import { FaCircleArrowLeft } from 'react-icons/fa6';
 import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';
-import { Certificate } from '../Manager/Certificate.jsx';
+import { Certificate } from './Certificate.jsx';
 
 
 export const UserDashboard = () => {
     const { store, actions } = useContext(Context);
-    
+
     const [buttonSelected, setButtonSelected] = useState(null)
 
-    const handleMyCourses =()=>{
+    const handleMyCourses = () => {
         setButtonSelected(<Courses />)
     }
-    
-    const handleMyProfile =()=>{
+
+    const handleMyProfile = () => {
         setButtonSelected(<UserProfile />)
     }
 
-    const handleMyPayments=()=>{
+    const handleMyPayments = () => {
         setButtonSelected(<UserPayment />)
     }
-
+    
+    const handleCertificate=()=>{
+        setButtonSelected(<Certificate />)
+    }
 
     const navigate = useNavigate();
 

@@ -107,15 +107,15 @@ class Course(db.Model):
     category_title = db.Column(db.String(250), nullable=False)
     modules_length = db.Column(db.Integer, nullable=False)
     certificate = db.Column(db.String(250), nullable=False)
+    price = db.Column(db.Integer, nullable=False)  # Nuevo campo
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
    
-    #Relations
+    # Relations
     user = db.relationship('User', backref=db.backref('courses', lazy=True))
     manager = db.relationship('Manager', backref=db.backref('courses', lazy=True))
     teacher = db.relationship('Teacher', backref=db.backref('courses', lazy=True))
-    
     
     def __repr__(self):
         return f'<Course {self.id}>'
@@ -129,10 +129,9 @@ class Course(db.Model):
             "teacher_id": self.teacher_id,
             "category_title": self.category_title,
             "modules_length": self.modules_length,
-            "certificate": self.certificate
-            # do not serialize the password, it's a security breach
+            "certificate": self.certificate,
+            "price": self.price  # Nuevo campo en la serialización
         }
-
 
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -162,12 +161,27 @@ class Orders(db.Model):
             "date": self.date
             # do not serialize the password, it's a security breach
         }
+    
+class Trolley(db.Model):
+    id = db.Column (db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+    order = db.relationship ('Orders', backref=db.backref('Trolley', lazy=True))
+
+    def __repr__(self):
+        return f'<Trolley {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "order_id": self.order_id
+        }
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(250), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
+    
     #Relations
     user = db.relationship('User', backref=db.backref('payment', lazy=True))
     manager = db.relationship('Manager', backref=db.backref('payment', lazy=True))
@@ -178,6 +192,7 @@ class Payment(db.Model):
     def serialize(self):
         return{
             "id": self.id,
+            "date": self.date,
             "user_id": self.user_id,
             "manager_id": self.manager_id
         }

@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { Context } from "../../store/appContext.js"
 
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { Certificate } from './Certificate.jsx';
+import { Certificate } from '../User/Certificate.jsx';
 
 import { ManagerCourses } from '../Manager/ManagerCourses.jsx';
 import { ManagerProfile } from '../Manager/ManagerProfile.jsx';

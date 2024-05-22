@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
+from api.models import db, User, Manager, Teacher, Course, Orders, Trolley, Payment, Modules, Request, Quizzes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import check_password_hash
@@ -10,6 +10,7 @@ from werkzeug.security import check_password_hash
 from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
+from datetime import datetime
 
 from flask_mail import Message
 from app import mail
@@ -237,7 +238,6 @@ def get_token_login_teacher():
         
     except Exception as e:
         return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
-
 
 @api.route('/login/manager', methods=['POST'])
 def get_token_login_manager():
@@ -568,7 +568,6 @@ def post_courses():
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
 
-
 @api.route('/view/courses', methods=['GET'])
 def get_courses():
     try:
@@ -598,7 +597,6 @@ def update_course():
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
-
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
@@ -691,36 +689,145 @@ def delete_module(module_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
-    @api.route('/payment/courses', methods=['POST'])
-    def create_payment_course():
-        try:
-            data = request.get_json()
-            new_payment = Payment(
-                date=data.get('date'),
-                user_id=data.get('user_id'),
-                manager_id=data.get('manager_id')
-            )
-            db.session.add(new_payment)
-            db.session.commit()
-            return jsonify({"message": "Payment for course created successfully", "payment_id": new_payment.id}), 201
-        except Exception as err:
-            return jsonify({"error": f"Error creating payment for course: {str(err)}"}), 500
+
+
+#-----------------------PAYMENT------------------------#
+@api.route('/payment/courses', methods=['POST'])
+def create_payment_course():
+    try:
+        data = request.get_json()
+        new_payment = Payment(
+            date=data.get('date'),
+            user_id=data.get('user_id'),
+            manager_id=data.get('manager_id')
+        )
+        db.session.add(new_payment)
+        db.session.commit()
+        return jsonify({"message": "Payment for course created successfully", "payment_id": new_payment.id}), 201
+    except Exception as err:
+        return jsonify({"error": f"Error creating payment for course: {str(err)}"}), 500
+
         
-    @api.route('/payment/courses', methods=['GET'])
-    def get_all_payments_courses():
-        try:
-            payments = Paymen.query.all()
-            serialized_payments = [payment.serialize() for payment in payments]
-            return jsonify({"payments": serialized_payments}), 200
-        except Exception as err:
-            return jsonify({"error": f"Error fetching payments for courses: {str(err)}"}), 500
+@api.route('/payment/courses', methods=['GET'])
+def get_all_payments_courses():
+    try:
+        payments = Payment.query.all()
+        serialized_payments = [payment.serialize() for payment in payments]
+        return jsonify({"payments": serialized_payments}), 200
+    except Exception as err:
+        return jsonify({"error": f"Error fetching payments for courses: {str(err)}"}), 500
+
+
+
+#-----------------------QUIZZES------------------------#
+@api.route('/module/quizzes', methods=['POST'])
+def post_quizzes():
+
+    try:
+        question_title = request.json.get('questionTitle')
+        answer = request.json.get('answer')
+        module_id = request.json.get('moduleId')
+
+        if not question_title or not answer or not module_id:
+            return {"Error": "questionTitle, answer, and moduleId are required"}, 400
         
+        existing_module = Modules.query.filter_by(id=module_id).first()
+        if not existing_module:
+            return jsonify({"Error": "Module does not exist."}), 404
+        
+        quiz = Quizzes(question_title=question_title, answer=answer, module_id=module_id)
+        db.session.add(quiz)
+        db.session.commit()
+        return jsonify({"Msg": "Quiz created successfully", "Quiz": quiz.serialize()}), 201
     
+    except Exception as err:
+        return jsonify({"Error": "Error in quiz creation: " + str(err)}), 500
 
 
+@api.route('/module/quizzes', methods=['GET'])
+def get_quizzes():
+    try:
+        quizzes = Quizzes.query.all()
+
+        if not quizzes:
+            return jsonify({"Msg": "No quiz found"}), 404
         
-        
-        
+        serialized_quizzes = [quiz.serialize() for quiz in quizzes]
+        return jsonify({"Quiz": serialized_quizzes}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in fetching quizzes: " + str(err)})  
         
 
+        
+#----------------------TROLLEY------------------------#           
+@api.route('/trolley/courses', methods=['POST'])
+def add_course_to_trolley():
+    try:
+        data = request.json
 
+        course_id = data.get('course_id')
+        user_id = data.get('user_id')
+        manager_id = data.get('manager_id')
+
+        if not course_id or not user_id or not manager_id:
+            return jsonify({"error": "Course ID, User ID, and Manager ID are required"}), 400
+        
+        course = Course.query.get(course_id)
+        if not course:
+            return jsonify({"error": "Course not found"}), 404
+        
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        new_order = Orders(
+            user_id=user_id,
+            manager_id=manager_id,
+            payment_id=None,
+            title_order=course.title,
+            price=course.price,
+            date=current_date
+        )
+        db.session.add(new_order)
+        db.session.commit()
+
+        new_trolley_entry = Trolley(order_id=new_order.id)
+        db.session.add(new_trolley_entry)
+        db.session.commit()
+        return jsonify({"message": "Course added to trolley succesfully", "order_id": new_order.id}), 201
+    
+    except Exception as e:
+        return jsonify({"error": f"An error ocurred: {str(e)}"}), 500
+
+
+
+#----------------------CARGA DE DOCUMENTO------------------------# 
+# Definir la ruta de la carpeta de carga
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+# Asegúrate de que la carpeta 'uploads' exista
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+
+@api.route('/upload', methods=['POST'])
+def upload_file():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+        
+        file = request.files['file'] 
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+        
+        if file:
+            file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+            file.save(file_path)
+            file_info = {
+                'filename': file.filename,
+                'content_type': file.content_type,
+                'size': os.path.getsize(file_path),
+                'path': file_path
+            }
+            return jsonify({'message': 'File uploaded successfully', 'file': file_info}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
