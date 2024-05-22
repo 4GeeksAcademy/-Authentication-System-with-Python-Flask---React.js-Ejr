@@ -4,7 +4,7 @@ import React from 'react';
 export const FileToConvertInPDF = () => {
   return (
     <div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5u-9OjXDlyaKSSE-fR7CSwC3A6EQrKW3GlGfP1t3u9GMD24_fLb86FMJ2eRUXC_oA3Ac&usqp=CAU" alt="rigo"/>
+        <img src="https://img.freepik.com/psd-gratis/elegante-plantilla-certificado-ornamental-psd-beige-negro_53876-138539.jpg?size=626&ext=jpg&ga=GA1.1.1788068356.1716336000&semt=sph" alt="rigo"/>
     </div>
   )
 }
