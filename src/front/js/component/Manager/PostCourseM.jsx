@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Context } from '../../store/appContext'
 
-export const PostCourse = () => {
+export const PostCourseM = () => {
     const { store, actions } = useContext(Context)
     const [active, setActive] = useState(false)
     const [counter, setCounter] = useState(7)
@@ -33,6 +33,10 @@ export const PostCourse = () => {
         }
     }
 
+    function handlerChangeActive() {
+        setActive(false)
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
@@ -43,11 +47,13 @@ export const PostCourse = () => {
         return () => clearInterval(interval)
     }, [])
 
+
+
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
-
+    
     return (
-        <div className=' position-relative'>
+        <div className='position-relative'>
             {/* Msg */}
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {msgError === ''
@@ -61,7 +67,7 @@ export const PostCourse = () => {
 
             <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
                 <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
-                    <div className="d-flex justify-content-center align-items-center mb-5">
+                    <div className="d-flex justify-content-center align-items-center position-relative mb-5">
                         <div className='d-flex justify-content-center align-items-center'>
                             <h1>Create Course New</h1>
                         </div>

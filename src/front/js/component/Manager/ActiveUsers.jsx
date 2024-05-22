@@ -1,13 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Context } from '../../store/appContext'
+
 
 export const ActiveUsers = () => {
     const { store, actions } = useContext(Context)
+    
+    return (
+        <div className=" containerd-flex  justify-content-center align-items-center p-4">
 
-  return (
-    <div className=" containerd-flex  justify-content-center align-items-center p-4">
-
-            {store.user.access_to_user.map((item, index) => {
+            {(store.user.access_to_teacher == '') ? "No hay Students Registrados" : store.user.access_to_user.map((item, index) => {
                 return (
                     <div key={index}>
                         {
@@ -55,6 +57,5 @@ export const ActiveUsers = () => {
                 )})
             }
         </div>
-  )
+    )
 }
-
