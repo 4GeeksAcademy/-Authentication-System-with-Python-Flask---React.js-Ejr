@@ -117,6 +117,15 @@ def create_new_user():
     access_token = create_access_token(identity=new_user_id, additional_claims={"role": new_user.role})
 
     return jsonify({'access_token': access_token}), 200
+# Delete user
+@app.route('/delete_user/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        raise APIException('User not found', status_code=404)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'message': f'User {user_id} and all associated data deleted'}), 200
 
 #User Endpoints
 @app.route('/user_data/<int:user_id>')

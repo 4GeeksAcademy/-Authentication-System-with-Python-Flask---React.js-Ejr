@@ -44,7 +44,7 @@ class User(db.Model):
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(80), nullable=False)
     role = Column(String(10), nullable=False)
-    user_data = relationship("User_data", backref="user", lazy=True)
+    user_data = relationship("User_data", backref="user",cascade="all,delete-orphan", lazy=True)
     
     def __repr__(self):
         return f'<User {self.id}>'
@@ -65,8 +65,8 @@ class User_data(db.Model):
     user_illness = Column(String(250), nullable=False)
     user_objetives = Column(String(250), nullable=True)
     trainer_data_id = Column(Integer, ForeignKey(Trainer_data.trainer_data_id))
-    exercises = relationship("Exercise", backref="user_data", lazy=True)
-    routines = relationship("Routines", backref="user_data", lazy=True)
+    exercises = relationship("Exercise", backref="user_data",cascade="all,delete-orphan", lazy=True)
+    routines = relationship("Routines", backref="user_data",cascade="all,delete-orphan", lazy=True)
     
     def __repr__(self):
         return f'<User_data {self.user_id}>'
