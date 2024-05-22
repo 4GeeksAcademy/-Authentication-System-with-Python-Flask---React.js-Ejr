@@ -17,6 +17,10 @@ import { ManagerView } from "./pages/Manager/ManagerView.jsx";
 import { SignOut } from "./pages/SignOut.jsx";
 
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
+import { ResetPassword } from "./component/ResetPassword.jsx";
+import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
+import Courses from "./pages/Courses/Courses.jsx";
+import Course from "./pages/Courses/Course.jsx";
 
 //create your first component
 const Layout = () => {
@@ -35,7 +39,11 @@ const Layout = () => {
                         <Route element={<FormUser />} path="/FormUser" />
                         <Route element={<LogIn />} path="/LogIn" />
                         <Route element={<SignOut />} path="/SignOut"/>
+                        <Route element={<ResetPassword />} path="/ResetPassword"/>
+                        <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token"/>
                         
+                        <Route element={<Courses />} path="/Courses"/>
+
                         {/* Protected Routes */}
                         <Route 
                             element={
@@ -60,6 +68,14 @@ const Layout = () => {
                                 </ProtectedRoute>
                             } 
                             path="/managerView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <Course />
+                                </ProtectedRoute>
+                            } 
+                            path="/course/:id" 
                         />
                         <Route element={<h1>Not found!</h1>} />
                         {/*<Route element={<Single />} path="/single/:theid" /> */}
