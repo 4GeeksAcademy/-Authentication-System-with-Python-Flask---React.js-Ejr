@@ -1,13 +1,13 @@
 import React from "react";
+import "../../../styles/User-styles/exerciseVideos.css";
 
 const ExerciseVideos = ({ exerciseVideos, name }) => {
-
   return (
-    <section >
-      <h4 >
-        Watch <span style={{ color: '#02b532', textTransform: 'capitalize' }}>{name}</span> exercise videos
+    <section className="videos-section">
+      <h4 className="videos-heading">
+        Watch <span className="videos-exercise-name">{name}</span> exercise videos
       </h4>
-      <div>
+      <div className="videos-container">
         {exerciseVideos?.slice(0, 3)?.map((item, index) => (
           <a
             key={index}
@@ -16,12 +16,16 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <img style={{ borderTopLeftRadius: '20px' }} src={item.video.thumbnails[0].url} alt={item.video.title} />
-            <div>
-              <h5 >
+            <img
+              className="video-thumbnail"
+              src={item.video.thumbnails[0].url}
+              alt={item.video.title}
+            />
+            <div className="video-info">
+              <h5 className="video-title">
                 {item.video.title}
               </h5>
-              <h6 >
+              <h6 className="video-channel">
                 {item.video.channelName}
               </h6>
             </div>
@@ -31,6 +35,5 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
     </section>
   );
 };
-
 
 export default ExerciseVideos;
