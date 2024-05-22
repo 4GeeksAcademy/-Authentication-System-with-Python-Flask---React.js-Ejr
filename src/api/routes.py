@@ -1185,3 +1185,10 @@ def purchase_membership_admin(user_email):  # Función que maneja la solicitud P
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error.
         return jsonify({'error': 'Purchase failed: ' + str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500 (Error Interno del Servidor).
 
+@api.route('/user/<int:id>',methods=['GET'])
+def get_Oneuser(id):
+    try:
+        user=User.query.get(id)
+        return jsonify(user.serialize()),200
+    except Exception as e:
+        return jsonify({'error':str(e)}),500

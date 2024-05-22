@@ -3,6 +3,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			users:[],
+			user:{},
 			isAuthenticated: null,
 			uploadedUserData: [],
 			isAuthenticatedMessage: null,
@@ -508,6 +510,66 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 		},
+		getUsers : async () => {
+			try {
+			  let response = await fetch("https://didactic-rotary-phone-5ggx7rpp7v9gh479r-3001.app.github.dev/api/users", 
+			  {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  // Incluye el token de autorización si es necesario
+				  // Authorization: `Bearer ${token}`,
+				},
+			  });
+			  console.log (response)
+			  if (!response.ok) {
+				throw new Error(`Error fetching users: ${response.statusText}`);
+			  }
+		  
+			  let data = await response.json();
+			  console.log(data);
+			  
+			  
+			  let store = getStore(); // Obtiene el estado actual del almacén
+			  setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
+			  
+			} catch (error) {
+			  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+			  // Puedes también manejar el estado del error en tu store si es necesario
+			  let store = getStore();
+			  setStore({ ...store, fetchUsersError: error.message });
+			}
+		  },
+		  getOneuser: async (id) => {
+			try {
+			  let response = await fetch(`https://didactic-rotary-phone-5ggx7rpp7v9gh479r-3001.app.github.dev/api/user/${id}`, 
+			  {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  // Incluye el token de autorización si es necesario
+				  // Authorization: `Bearer ${token}`,
+				},
+			  });
+			  console.log(response);
+			  if (!response.ok) {
+				throw new Error(`Error fetching user: ${response.statusText}`);
+			  }
+		
+			  let data = await response.json();
+			  console.log(data);
+		
+			  let store = getStore(); // Obtiene el estado actual del almacén
+			  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
+		
+			} catch (error) {
+			  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+			  // Puedes también manejar el estado del error en tu store si es necesario
+			  let store = getStore();
+			  setStore({ ...store, fetchUserError: error.message });
+			}
+		  },
+	}
 	}
 };
 

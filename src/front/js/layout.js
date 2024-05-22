@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
+import Homeadmin from "./pages/Homeadmin.jsx";
 // import { Home } from "./pages/home";
 
 import { Single } from "./pages/single";
@@ -30,7 +30,8 @@ import CreateClasses from "./component/CreateClasses.jsx";
 import ModulePage from "./pages/ModulePage.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
-
+import Users from "./pages/Users.jsx";
+import Oneuser from "./pages/Oneuser.jsx";
 
 
 //create your first component
@@ -50,7 +51,10 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
                         <Route element={<Plans />} path="/Plans" />
+                        <Route element={<Homeadmin />} path="/Admin" />
+                        <Route element={<Users />} path="/users" />
                         <Route element={<Benefits />} path="/Benefits" />
+                        <Route element={<Oneuser />} path="/User/:id" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />
                         <Route element={<SingupMaster />} path="/Master-private-registration" />
