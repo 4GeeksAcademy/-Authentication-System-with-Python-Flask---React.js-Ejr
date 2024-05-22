@@ -7,17 +7,14 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context); // Accessing store and actions
 
   const handleLogOut = () => {
     actions.signOut(); // Call the signOut action from the store
     navigate('/'); // Optionally, navigate to the home page or login page after logging out
   };
 
-  
   const isSpecialPage = location.pathname === "/signup" || location.pathname === "/";
-
-  // Check if the current route is the sign-up page or the sign-in where the EMPLOYEE ID button should be hidden
   const shouldHideEmployeeIdButton = location.pathname === "/signup" || location.pathname === "/" || location.pathname === "/https://potential-eureka-wrrr7j5j557v3g5xv-3000.app.github.dev/";
 
   useEffect(() => {
@@ -60,7 +57,9 @@ export const Navbar = () => {
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '10px' }}>
           {!shouldHideEmployeeIdButton && (
             <Link to="/transactions">
-              <Button variant="contained" color="primary">EMPLOYEE ID</Button>
+              <Button variant="contained" color="primary">
+                {store.user.username ? `${store.user.username}` : 'EMPLOYEE ID'}
+              </Button>
             </Link>
           )}
           {!isSpecialPage && <Button variant="contained" color="error" onClick={handleLogOut}>LOGOUT</Button>}
