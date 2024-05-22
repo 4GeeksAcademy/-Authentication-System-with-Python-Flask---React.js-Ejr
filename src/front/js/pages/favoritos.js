@@ -25,10 +25,11 @@ export const Favoritos = () => {
                             : (store.favorites.map((vehicle) => (
                                     <>
                                         <div className="card col-md-4 mb-2 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
+                                            
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
-                                                <a className="cardvehicles" href="#">
-                                                    <img className="Vehiculo mt-3" src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
-                                                </a>
+                                                <div className="cardvehicles" href="#">
+                                                    <img src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
+                                                </div>
                                                 <div className="card-body p-1">
                                                     <div>
                                                         <h5 className="card-title mt-2 mb-4"><strong></strong> {vehicle.marca_modelo.toUpperCase()}</h5>
