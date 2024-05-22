@@ -1,6 +1,7 @@
 import React from "react";
 
 export const FiltroAsientos = (props) => {
+    
     return (
         <div className="dropdown">
             <button className="btn btn-outline-warning border-4 dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -8,7 +9,7 @@ export const FiltroAsientos = (props) => {
             </button>
             <ul className="dropdown-menu ">
                 <div className="form-check ms-2">
-                    <input onChange={() => props.setFiltroAsientos(null)}  className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault0" checked/>
+                    <input onChange={() => props.setFiltroAsientos(null)}  className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault0"/>
                     <label className="form-check-label" htmlFor="flexRadioDefault0">
                         Sin Filtro
                     </label>
