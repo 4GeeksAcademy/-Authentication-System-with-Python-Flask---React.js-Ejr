@@ -569,17 +569,20 @@ def get_teachers():
     return jsonify({"access_to_teacher": teacher_list, "message": "Access to Teachers Successfully"}), 200
 
 
-@api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
+@app.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
 @jwt_required()
 def delete_teacher(teacher_id):
-    current_token = get_jwt_identity() #obtiene ID del usuario del Token        
+    current_token = get_jwt_identity()  # Obtiene ID del usuario del Token
     if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    teacher = Teacher.query.get(teacher_id)
+    if not teacher:
         return jsonify({"Error": "Teacher not found"}), 404
 
     db.session.delete(teacher)
     db.session.commit()
-    return jsonify({"message": "Teacher with ID {teacher.id} deleted succesfully"}), 200
-
+    return jsonify({"message": f"Teacher with ID {teacher.id} deleted successfully"}), 200
 #-----------------------COURSES------------------------#
 @api.route('/view/courses', methods=['POST'])
 def post_courses():
