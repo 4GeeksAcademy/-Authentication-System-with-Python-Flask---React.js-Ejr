@@ -38,8 +38,16 @@ export const Navbar = () => {
 				</div>
 				{token ?
 				<>
-					<button className="navbar-toggler bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
+					<button 
+						className="d-flex navbar-toggler bg-white align-items-center rounded-pill"
+						type="button"
+						data-bs-toggle="offcanvas"
+						data-bs-target="#offcanvasNavbar"
+						aria-controls="offcanvasNavbar"
+						aria-label="Toggle navigation"
+					>
+						<div><span className=" navbarbutton navbar-toggler-icon me-2"></span></div>
+						<div className="usericon"><i className="fas fa-user-circle"></i></div>
 					</button>
 					<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 						<div className="offcanvas-header">
