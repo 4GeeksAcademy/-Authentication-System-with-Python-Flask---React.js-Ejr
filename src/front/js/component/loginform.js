@@ -34,7 +34,7 @@ import React,{useContext, useState} from "react";
                     <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                 </div>
                 <div className="d-flex justify-content-center mb-3">
-                    <button type="submit" className="login btn-lg btn-dark mt-4">Iniciar sesión</button>
+                    <button type="submit" className="login btn-lg btn-dark mt-3">Iniciar sesión</button>
                 </div>
                 <div className="d-flex justify-content-center">
                     <ModalRecuperarContraseña />

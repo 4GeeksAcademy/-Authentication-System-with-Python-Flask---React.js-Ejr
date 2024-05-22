@@ -49,7 +49,7 @@ export const Home = () => {
 		<>
 			<div className="d-flex justify-content-center text-center mt-5 fs-4 text-grey">
 				<div className="px-5 d-flex">
-					<p><strong>¿Buscas o rentas un coche? Estás en el lugar adecuado</strong></p>
+					<p><strong>¿Buscas o rentas tú coche? Estás en el lugar adecuado</strong></p>
 					<div className="me-2 px-3">
 						<FiltroAsientos
 							setFiltroAsientos={setFiltroAsientos}
