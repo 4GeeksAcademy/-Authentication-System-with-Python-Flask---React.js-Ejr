@@ -27,7 +27,7 @@ export const Details = () => {
 
     return (
         <>
-            <div className="footer-view d-flex container mt-3 justify-content-between align-items-center">
+            <div className="footer-view d-flex container mt-5 justify-content-between align-items-center">
                 <div className="justify-content-between align-items-center w-75">
                     <div id="carouselExample" className="carousel slide">
                         <div className="carousel-inner">
@@ -51,7 +51,7 @@ export const Details = () => {
                         </button>
                     </div>
                     <div className="container-fluid p-0 bg-light">
-                        <div className="principal mb-5 mt-4 border-top border-bottom m-1 text-dark">
+                        <div className="principal mb-3 mt-4 border-top border-bottom m-1 text-dark">
                             <div className="d-flex rounded-end justify-content-between text-center mt-3 m-1">
                                 <h1>{store.details.marca_modelo?.toUpperCase()}</h1>
                                 <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
@@ -101,19 +101,16 @@ export const Details = () => {
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
-                    <div className="d-flex justify-content-end mt-auto mb-5 pb-5">
-                        <div className="d-grid gap-2 col-3 mx-auto justify-content-center">
-                            <ModalAlquilar
-                                vehicle_id={store.details.id}
-                                marca_modelo={store.details.marca_modelo}
-                                precio={store.details.precio}
-                                precio_id_stripe={store.details.precio_id_stripe}
-
-                            />
-                        </div>
+                    <div className="d-grid gap-2 col-6 mx-auto d-flex justify-content-center mt-4">
+                        <ModalAlquilar
+                            vehicle_id={store.details.id}
+                            marca_modelo={store.details.marca_modelo}
+                            precio={store.details.precio}
+                            precio_id_stripe={store.details.precio_id_stripe}
+                        />
                     </div>
+                </div>
             </div>
         </>
     );

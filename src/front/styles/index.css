@@ -1,7 +1,7 @@
 .navbar {
-    background-color:  #a9ce68;
+    background-color:  #050404d0;
     height: 120px;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
+    text-shadow: 2px 2px 5px rgba(247, 241, 241, 0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
 
 .logo {
@@ -57,11 +57,15 @@
 } 
 
 footer {
-    background: #a9ce68 !important;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    background: #050404d0 !important;
+    /* text-shadow: 1px 1px 4px rgba(0,0,0,0.5); */
+}
+
+/* .botonAlquilar {
+    background-color: #a9ce68;
     padding-left: 20px;
     width: 100%;
-}
+} */
 
 .corazon:hover i {
     color:black !important;
@@ -78,6 +82,10 @@ footer {
     bottom: auto;
 }
 
+body{
+    min-height: 100vh; /* Establece la altura mínima del cuerpo como el 100% de la altura de la ventana del navegador */
+}
+
 .footer-view {
     min-height: 100vh;
 }
@@ -89,27 +97,28 @@ footer {
 }
 
 .logo-footer {
-    width: 50px;
+    width:50px;
 }
 
 .instagram {
-    color: #bc1888
+        color: #bc1888
 }
-
+    
 .instagram:hover {
-    color: #bc1888
+        color: #bc1888
 }
-
+    
 .facebook:hover {
-    color:#0d6efd;
+        color:#0d6efd;
 }
-
+    
 .navbarbutton {
-    width: 25px;
-    height: 25px;
+        width: 25px;
+        height: 25px;
 }
-
+    
 .usericon {
-   font-size: 2rem;
-}
-     
+       font-size: 2rem;
+    }
+         
+

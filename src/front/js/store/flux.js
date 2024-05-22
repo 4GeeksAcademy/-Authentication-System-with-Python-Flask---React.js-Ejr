@@ -6,7 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
-			checkout: {}
+			checkout: {},
+			vehicles_home: []
 		},
 		actions: {
 			getMessage: async () => {
@@ -115,7 +116,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					return [];
 				}	
-				
 			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
@@ -254,7 +254,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						precio_id_stripe: precio_id_stripe
 					}
 				})
-			}
+			},
 		}
 	};
 };

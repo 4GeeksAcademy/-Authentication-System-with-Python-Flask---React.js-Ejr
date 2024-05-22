@@ -2,8 +2,8 @@ import React from "react";
 
 export const FiltroAsientos = (props) => {
     return (
-        <div className="dropdown mt-2">
-            <button className="btn btn-secondary dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="dropdown">
+            <button className="btn btn-outline-warning border-4 dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Cantidad de Asientos
             </button>
             <ul className="dropdown-menu ">

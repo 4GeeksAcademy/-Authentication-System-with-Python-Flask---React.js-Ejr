@@ -8,7 +8,6 @@ import os
 from flask_mail import Mail
 from flask_mail import Message
 
-
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -221,8 +220,6 @@ def create_checkout_session(stripe_id, days):
         return str(e)
     return redirect(checkout_session.url, code=303)
    
-
-
 #Flask-mail
 
 mail = Mail()
