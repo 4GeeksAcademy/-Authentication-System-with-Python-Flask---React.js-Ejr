@@ -559,6 +559,36 @@ def delete_teacher(teacher_id):
     db.session.delete(teacher)
     db.session.commit()
     return jsonify({"message": f"Teacher with ID {teacher.id} deleted successfully"}), 200
+
+#--------------------UPDATE TEACHER--------------------#
+
+@api.route('/view/manager/teacher/<int:teacher_id>', methods=['PUT'])
+@jwt_required()
+def update_teacher(teacher_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    teacher = Teacher.query.get(teacher_id)
+    if not teacher:
+        return jsonify({"Error": "Teacher not found"}), 404
+
+    data = request.get_json()
+    teacher.email = data.get('email', teacher.email)
+    teacher.is_teacher = data.get('isTeacher', teacher.is_teacher)
+    teacher.name = data.get('name', teacher.name)
+    teacher.last_name = data.get('lastName', teacher.last_name)
+    teacher.username = data.get('username', teacher.username)
+    teacher.number_document = data.get('numberDocument', teacher.number_document)
+    teacher.phone = data.get('phone', teacher.phone)
+    teacher.age = data.get('age', teacher.age)
+    teacher.gender = data.get('gender', teacher.gender)
+    teacher.certificate_teacher = data.get('certificateTeacher', teacher.certificate_teacher)
+    teacher.user_id = data.get('userId', teacher.user_id)
+
+    db.session.commit()
+    return jsonify({"message": f"Teacher with ID {teacher.id} updated successfully"}), 200
+
 #-----------------------COURSES------------------------#
 @api.route('/view/courses', methods=['POST'])
 def post_courses():
@@ -647,7 +677,6 @@ def delete_courses(course_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
-
 
 
 #-----------------------MODULES------------------------#
