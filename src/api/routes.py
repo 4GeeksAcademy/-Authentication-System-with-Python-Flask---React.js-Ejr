@@ -237,12 +237,20 @@ def create_checkout_session(stripe_id, days):
 #Flask-mail
 
 mail = Mail()
-@api.route ( "/send-confirmation-mail", methods=['POST']) 
-def  index (): 
+@api.route('/send-confirmation-mail', methods=['POST'])
+@jwt_required()
+def send_confirmation_mail():
+    # Obtener el email del usuario autenticado
+    email = get_jwt_identity()
+    
+    msg = Message(
+        "Confirmación de compra",
+        recipients=[email]  # Usar el email del usuario autenticado
+    )
+    msg.body = "Gracias por tu compra. Este es un correo de confirmación."
 
-    msg  =  Message ( "Hola" , 
-                  sender = "cadimain1@gmail.com" , 
-                  recipients = [ "melomurcia@gmail.com" ])
-    mail.send(msg)
-    return jsonify("Email enviado")
-   
+    try:
+        mail.send(msg)
+        return jsonify({"msg": "El email se ha enviado correctamente"}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500

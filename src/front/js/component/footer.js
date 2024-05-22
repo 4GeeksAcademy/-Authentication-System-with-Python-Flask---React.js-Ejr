@@ -22,13 +22,13 @@ export const Footer = () => {
 					</a>
 				</div>
 				<div>
-					<a href="https://www.facebook.com/people/Jo-Jo/pfbid02ebXDgWypf9v7ZJxL6zVzJAxb6gcyxEbmnicygdMGF6t7p2D6jdmMk94asJfPbMeDl" target="_blank">
+					<a className="facebook" href="https://www.facebook.com/people/Jo-Jo/pfbid02ebXDgWypf9v7ZJxL6zVzJAxb6gcyxEbmnicygdMGF6t7p2D6jdmMk94asJfPbMeDl" target="_blank">
 						<i className="fab fa-facebook mt-3 me-2" />
 					</a>
 				</div>
 				<div>
-					<a href="https://x.com/FriendlyWheels5" target="_blank">
-						<i className="fab fa-twitter mt-3 me-2" />
+					<a className="text-black" href="https://x.com/FriendlyWheels5" target="_blank">
+						<i className="fa-solid fa-x mt-3 me-2"></i>
 					</a>
 				</div>
 			</div>
