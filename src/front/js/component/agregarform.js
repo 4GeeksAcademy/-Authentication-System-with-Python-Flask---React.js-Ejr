@@ -17,7 +17,7 @@ export const AgregarForm = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio) 
+        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio) 
         if (respuesta === "success"){
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");

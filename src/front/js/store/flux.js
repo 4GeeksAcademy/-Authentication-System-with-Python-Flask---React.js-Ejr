@@ -7,7 +7,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			myVehicles: [],
 			details: {},
 			checkout: {},
-			vehicles_home: []
 		},
 		actions: {
 			getMessage: async () => {
@@ -140,11 +139,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.status === 200) {
 						let allVehicles = getStore().vehicles;
 						let allFavorites = getStore().favorites;
+						let allMyVehiclesInRent = getStore().myVehicles;
 						const newListVehicles = allVehicles.filter((vehicle) => vehicle.id !== vehicle_id);
 						const newListFavorites = allFavorites.filter((favorite) => favorite.id !== vehicle_id);
+						const newListMyVehiclesInRent = allMyVehiclesInRent.filter((vehicleinrent) => vehicleinrent.id !== vehicle_id);
 						setStore({
 							vehicles: newListVehicles,
-							favorites: newListFavorites
+							favorites: newListFavorites,
+							myVehicles: newListMyVehiclesInRent
 
 						})
 					}

@@ -31,7 +31,7 @@ def setup_commands(app):
             
             vehicles = [
                 Vehicle(marca_modelo="AUDI A3",
-                        matricula="1234 HPW", 
+                        matricula="1234HPW", 
                         motor="Hibrido", 
                         tipo_cambio= "Automatico", 
                         asientos=5, 
@@ -44,7 +44,7 @@ def setup_commands(app):
                     ),
 
                 Vehicle(marca_modelo="TOYOTA HILUX",
-                        matricula="1834 ABC", 
+                        matricula="1834ABC", 
                         motor="Gasolina", 
                         tipo_cambio= "Manual", 
                         asientos=7, 
@@ -57,7 +57,7 @@ def setup_commands(app):
                     ),
 
                 Vehicle(marca_modelo="FIAT 500",
-                        matricula="1234 ABC", 
+                        matricula="1234ABC", 
                         motor="Diesel", 
                         tipo_cambio= "Manual", 
                         asientos=4, 
@@ -70,7 +70,7 @@ def setup_commands(app):
                     ),
 
                 Vehicle(marca_modelo="TESLA S",
-                        matricula="6666 DIA", 
+                        matricula="6666DIA", 
                         motor="Electrico", 
                         tipo_cambio= "Automatico", 
                         asientos=2, 
@@ -83,7 +83,7 @@ def setup_commands(app):
                     ),
                 
                 Vehicle(marca_modelo="CITROEN C5",
-                        matricula="4561 MAR", 
+                        matricula="4561MAR", 
                         motor="Hibrido", 
                         tipo_cambio= "Manual", 
                         asientos=5, 
@@ -96,7 +96,7 @@ def setup_commands(app):
                     ),
 
                 Vehicle(marca_modelo="MERCEDES VITO",
-                        matricula="1818 MLK", 
+                        matricula="1818MLK", 
                         motor="Gasolina", 
                         tipo_cambio= "Automatico", 
                         asientos=9, 
