@@ -29,9 +29,9 @@ class Vehicle(db.Model):
     precio = db.Column(db.Integer, nullable=False)   
     precio_id_stripe = db.Column(db.String(50), nullable=False)   
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
-    url_img1 = db.Column(db.String(150), nullable=True)
-    url_img2 = db.Column(db.String(150), nullable=True)
-    url_img3 = db.Column(db.String(150), nullable=True)
+    url_img1 = db.Column(db.String(300), nullable=True)
+    url_img2 = db.Column(db.String(300), nullable=True)
+    url_img3 = db.Column(db.String(300), nullable=True)
 
     def __repr__(self):
         return f'<Vehicle {self.id}>'
