@@ -133,14 +133,13 @@ def get_user_data(user_id):
         raise APIException('User data not found', status_code=404)
         
 
-@app.route('/user_data', methods=['POST', 'PATCH'])
+@app.route('/user_data/<int:id>', methods=['POST', 'PATCH'])
 @jwt_required()
-def add_or_update_user_data():
+def add_or_update_user_data(id):
     data = request.json
-    existing_user_data = User_data.query.filter_by(user_id=get_jwt_identity()).first()
-    
+    existing_user_data = User_data.query.filter_by(user_id=id).first()
     if existing_user_data:
-        
+        print ("Existe user Data", existing_user_data)
         existing_user_data.user_name = data.get("user_name", existing_user_data.user_name)
         existing_user_data.user_weight = data.get("user_weight", existing_user_data.user_weight)
         existing_user_data.user_height = data.get("user_height", existing_user_data.user_height)
@@ -148,19 +147,19 @@ def add_or_update_user_data():
         existing_user_data.user_objetives = data.get("user_objetives", existing_user_data.user_objetives)
         db.session.commit()
         
-        updated_user_data = User_data.query.filter_by(user_id=get_jwt_identity()).first()
+        updated_user_data = User_data.query.filter_by(user_id=id).first()
         serialized_user_data = updated_user_data.serialize()
 
         return jsonify(serialized_user_data), 200
     else:
+        print ("ENTRO AQUI", existing_user_data)
         new_user_data = User_data(
             user_name=data.get("user_name"),
             user_weight=data.get("user_weight"),
             user_height=data.get("user_height"),
             user_illness=data.get("user_illness"),
             user_objetives=data.get("user_objetives"),
-            user_id=get_jwt_identity() ,
-            trainer_id=1,
+            user_id=id,
         )
 
         db.session.add(new_user_data)

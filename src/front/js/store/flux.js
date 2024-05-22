@@ -71,7 +71,8 @@ const getState = ({ getStore, setStore }) => {
 			},
 			postUserData: async (formData) => {
 				const store = getStore()
-				const response = await fetch(`${process.env.BACKEND_URL}/user_data`, {
+				const decoded = jwtDecode(store.token);
+				const response = await fetch(`${process.env.BACKEND_URL}/user_data/${decoded.sub}`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -80,8 +81,7 @@ const getState = ({ getStore, setStore }) => {
 					body: JSON.stringify(formData),
 				});
 
-				if (response.ok) {
-					const decoded = jwtDecode(store.token);
+				if (response.ok) {					
 					sessionStorage.setItem("role", decoded.role);
 					sessionStorage.setItem("user_id", decoded.sub);
 					setStore({ user_id: decoded.sub, role: decoded.role });
