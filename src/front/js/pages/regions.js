@@ -45,16 +45,34 @@ export const Regions = () => {
 
       <div style={{ flex: 1, paddingLeft: '16px', paddingTop: '50px' }}>
         <Typography variant="h2">Regions</Typography>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "16px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
           {Object.keys(store)
             .filter((region) => region !== 'order' && region !== 'user' && region !== 'transactions')
             .map((region) => (
-              <div key={region} style={{ flex: "1 0 calc(33% - 16px)" }} onClick={() => handleClick('', 0, region)}>
+              <div key={region} style={{ flex: "1 0 calc(50% - 16px)" }} onClick={() => handleClick('', 0, region)}>
                 <RegionCard image={getImageForRegion(region)} region={region}/>
               </div>
             ))}
         </div>
       </div>
+
+      {/* <div style={{ flex: 1, paddingLeft: '16px', paddingTop: '50px' }}>
+        <Typography variant="h2">Coffee</Typography>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+          {store["Africa"] && store["Africa"].map((current) => (
+            <div key={current.id} style={{ flex: "1 0 calc(50% - 16px)" }}>
+              <CoffeeCard
+                name={current.name}
+                price={current.price}
+                handleClick={handleClick}
+                image={current.image_url}
+              />
+            </div>
+          ))}
+        </div>
+      </div> */}
+
+
     </div>
   );
 };
