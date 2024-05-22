@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/Trainer-styles/trainer.css";
 
@@ -12,7 +12,9 @@ export const Trainer = () => {
     return (
         <div className="trainer-container">
             <TrainerCalendar />
-            <TrainerUserDetail />
+            {/* <div className="trainer-exercise">
+                <TrainerUserDetail />
+            </div> */}
         </div>
     );
 };
