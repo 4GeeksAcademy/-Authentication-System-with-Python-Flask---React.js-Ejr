@@ -40,19 +40,15 @@ const _DEVTOOL_POSITIONS= Object.freeze([
 
 const DevTools = () => {
   const 
-    { store, actions }= React.useContext(Context),
+    { language, store, actions }= React.useContext(Context),
     nav= useNavigate()
 
-  const 
-    _userDarkMode= actions.getUserPref(Constants.USERPREFS_DARKMODE)
-
+  // ------------------------------------------------------------------- DEV
   const
     _devToolState= actions.getDevPref(Constants.DEVPREFS_SHOWSTATE),
     _devToolPosition= actions.getDevPref(Constants.DEVPREFS_PANELPOSITION),
     _devRender= actions.getDevPref(Constants.DEVPREFS_DEVRENDER),
     _fakeAuth= actions.getDevPref(Constants.DEVPREFS_FAKEAUTH)
-
-  function toggle_darkModeState(e){ Utils.cancelEvent(e); actions.toggleUserPref(Constants.USERPREFS_DARKMODE)}
 
   function toggle_devTools(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_SHOWSTATE)}
   function move_devToolsPanel(e, i){ Utils.cancelEvent(e); actions.setDevPref(Constants.DEVPREFS_PANELPOSITION, i)}
@@ -65,10 +61,25 @@ const DevTools = () => {
   }
   function toggle_fakeAuth(e){ Utils.cancelEvent(e); actions.toggleDevAuth()}
 
+  // ------------------------------------------------------------------- USER
+  const 
+    _userDarkMode= actions.getUserPref(Constants.USERPREFS_DARKMODE),
+    _userLanguage= actions.getUserPref(Constants.USERPREFS_LANGUAGE)
+  
+  function toggle_darkModeState(e){ actions.toggleUserPref(Constants.USERPREFS_DARKMODE)}
+
+  function cycle_language(e){ 
+    if(store.readyState.language){
+      Utils.cancelEvent(e)
+      actions.setUserPref(Constants.USERPREFS_LANGUAGE, _userLanguage < Constants.LANGUAGE_FILES.length -1 ? _userLanguage+1 : 0)
+    }
+  }
+
   function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
   function save_userPrefs(e){ Utils.cancelEvent(e); actions.saveUserPrefs() }
   function navigate_page(e, url){ Utils.cancelEvent(e); nav(url) }
   
+  // ------------------------------------------------------------------- RETURN
   return (
 		<div className={"devtools fixed text-center text-white text-xs" + _DEVTOOL_POSITIONS[_devToolPosition][0]}>
       <div className={"flex" + _DEVTOOL_POSITIONS[_devToolPosition][2]}>
@@ -94,6 +105,7 @@ const DevTools = () => {
               </div>
               <p>-- userPrefs --</p>
               <button className="devtools-btn w-32" onClick={toggle_darkModeState}>{_userDarkMode ? "dark mode" : "light mode"}</button>
+              <button className="devtools-btn w-32" onClick={cycle_language}>language: {language.get("_name")}</button>
               <div className="flex gap-3">
                 <button className="devtools-btn w-20" onClick={load_userPrefs}>load</button>
                 <button className="devtools-btn w-20" onClick={save_userPrefs}>save</button>

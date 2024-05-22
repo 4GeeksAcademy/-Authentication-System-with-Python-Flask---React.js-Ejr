@@ -9,7 +9,8 @@ import Constants from "./constants.js"
 export const storeDefaults = Object.freeze({
   // user preferences
   userPrefs: {
-    darkMode: false   // site dark mode state
+    darkMode: false,  // site dark mode state
+    language: 0       // current choosen language
   },
   // dev preferences, for us, stored on cookie, remove on production or make it unaccessible for non-admins
   devPrefs: {

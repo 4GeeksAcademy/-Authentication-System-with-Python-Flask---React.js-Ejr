@@ -3,11 +3,12 @@ import { storeDefaults } from "../app/defaults.js"
 
 import Utils from "../app/utils.js"
 
-const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
+const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, setLanguage }) => {
+
 	return {
 		store: {
       // internal
-      readyState: { backend: false, frontend: false, pointer: false },
+      readyState: { backend: false, frontend: false, pointer: false, language: false },
       itemclasses: null,
 
       // user
@@ -23,7 +24,23 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
 
       // tracking
       timestamp: 0,
+      dirty: 0
 		},
+    language: {
+      get: (...path)=>{
+        const pathname= _getLanguagePath(path)
+        try {
+          let cur_language= getLanguage()
+          for(let p of pathname) {
+            cur_language= cur_language[p]
+            if(!cur_language) break
+          }
+          if(cur_language) return cur_language
+        }
+        catch(e){}
+        return null
+      }
+    },
 		actions: {
 
       // ------------------------------------------------------------ DATA MANAGEMENT
@@ -58,10 +75,11 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
 
       // decode and load the userPrefs from the cookie that contains it
       loadUserPrefs:()=>{
-        const data= Utils.getCookie("userPrefs")
-        if(data){
+        const cur_prefs= Utils.getCookie("userPrefs")
+        if(cur_prefs && cur_prefs.length==2){
           const new_userPrefs= {
-            darkMode: data[0] != "0"
+            darkMode: cur_prefs[0] != "0",
+            language: parseInt(cur_prefs[1])?? 0
           }
           setStore({ userPrefs: new_userPrefs })
         }
@@ -78,9 +96,10 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       // decode and load the userPrefs from the cookie that contains it
       saveUserPrefs:()=>{
 
-        const _userPrefs= getStore().userPrefs
+        const cur_userPrefs= getStore().userPrefs
         const data= [
-          _userPrefs.darkMode ? '1' : '0'
+          cur_userPrefs.darkMode ? '1' : '0',
+          cur_userPrefs.language
         ].join("")
 
         Utils.setCookie("userPrefs", data, [30,0,0], "/", Constants.COOKIE_SAMESITE_STRICT )
@@ -88,10 +107,34 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
         // TODO: binary save
       },
 
+      loadLanguage: async (idx)=>{
+        mergeStore({readyState: { language: false }})
+				try{
+          const 
+            lang= Constants.LANGUAGE_FILES[idx],
+            res= await fetch(`/assets/lang/${lang}.json`, {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' }
+            })
+          if(res.status!=200) throw(`server didn't responded ok for file: '${lang.toUpperCase()}'`)
+          const 
+            data= await res.json()
+            if(!data) throw(`bad json file: '${lang.toUpperCase()}'`)
+            setLanguage(data)
+            mergeStore({readyState: { language: true }})
+            return true
+        }
+				catch(e){ console.log("Couldn't load Language... fallback to EN-US", "Reason: " + e) }
+				return false
+      },
+
       // ------------------------------------------------------------ PAGE BEHAVIOUR
 
       setItemClasses: (classes)=> { setStore({ itemclasses: classes })},
       setPointerReady: (state)=> { mergeStore({ readyState: { pointer: state }})},
+
+      setStoreDirty: (state)=> { setStore({ dirty: getStore().dirty | state })},
+      unsetStoreDirty: (state)=> { setStore({ dirty: (getStore().dirty | state) ^ state })},
 
       // ------------------------------------------------------------ THIRD PARTY APIS
 
@@ -178,12 +221,12 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
         const cur_prefs= Utils.getCookie("devPrefs")
         console.log("devPrefs Cookie: ", cur_prefs)
         if(cur_prefs && cur_prefs.length==3){
-          const new_prefs= {
+          const new_devPrefs= {
             showState: cur_prefs[0] != "0",
             panelPosition: parseInt(cur_prefs[1]),
             devRender: cur_prefs[2] != "0"
           }
-          setStore({ devPrefs: new_prefs })
+          setStore({ devPrefs: new_devPrefs })
         }
       },
 
@@ -198,6 +241,19 @@ const storeState = ({ getStore, getActions, setStore, mergeStore }) => {
       },
 		}
 	}
+
+  /** converts an object array into a 'obj1.obj2.obj3' formatted string, uses toString() in objs */
+  function _getLanguagePath(path){
+    const langpath= []
+    for(let p of path) {
+      if(typeof(p)==='string'){
+        if(p.includes('.')) langpath.push(...p.split('.'))
+        else langpath.push(p)
+      }
+      else langpath.push(p.toString())
+    }
+    return langpath
+  }
 }
 
 export default storeState

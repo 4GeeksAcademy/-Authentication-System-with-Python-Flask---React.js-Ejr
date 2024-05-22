@@ -1,0 +1,55 @@
+{
+  "_name": "ES (ES)",
+  "title": {
+    "_root":      "KeQQu",
+    "_sep":       " | ",
+    "board":      "Tablero",
+    "dashboard":  "Panel",
+    "workspace":  "Espacio",
+    "project":    "Proyecto",
+    "team":       "Equipo",
+    "profile":    "Perfil",
+    "settings":   "Cuenta"
+  },
+  "common": {
+    "title":        "Título",
+    "description":  "Descripción",
+    "owner":        "Propietario",
+    "settings":     "Opciones"
+  },
+  "user": {
+    "name":         "Nombre de usuario",
+    "email":        "E-Mail",
+    "password":     "Contraseña"
+  },
+  "board": {
+    "common": {
+      "tags":       "Etiquetas",
+      "styles":     "Estilos",
+      "items":      "Items",
+      "options":    "Opciones",
+      "buzz":       "Zumbido"
+    },
+    "list": {
+      "btn-additem": "Agregar item"
+    }
+  },
+  "panel": {
+    "boardsettings": {
+      "title": "Opciones de Tabla"
+    },
+    "announce": {
+      "title": "Anunciar"
+    }
+  },
+  "default": {
+    "title-workspace":  "Espacio sin título",
+    "title-project":    "Projecto sin título",
+    "title-board":      "Tabla sin título",
+    "title-team":       "Equipo sin nombre"
+  },
+  "placeholder": {
+    "description":  "[escribe una descripción aquí...]",
+    "label-task":   "[escribe aquí...]"
+  }
+}
