@@ -4,10 +4,6 @@ import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./Home.module.css"; // Importación de estilos CSS
 
 
-
-
-
-
 const Users = () => {
   const { store, actions } = useContext(Context)
   useEffect(() => {

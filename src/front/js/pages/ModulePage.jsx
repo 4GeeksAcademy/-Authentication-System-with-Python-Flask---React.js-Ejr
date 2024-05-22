@@ -17,6 +17,8 @@ import Login from "../component/Login.jsx";
 import Navbar from "../component/Navbar.jsx";
 import BookingView from "../component/BookingView.jsx";
 import MembershipPurchase from "../component/MembershipPurchase.jsx";
+import Oneuser from "./Oneuser.jsx";
+import Users from "./Users.jsx";
 
 const ModulePage = () => {
     const [show, setShow] = useState(false);
@@ -42,7 +44,10 @@ const ModulePage = () => {
         { component: <Login />, name: "Login " },
         { component: <Navbar />, name: "Navbar " },
         { component: <BookingView />, name: "BookingView " },
-        { component: <MembershipPurchase />, name: "MembershipPurchase " }
+        { component: <MembershipPurchase />, name: "MembershipPurchase " },
+        { component: <Oneuser />, name: "Oneuser " },
+        { component: <Users />, name: "Users " },
+
 
 
 

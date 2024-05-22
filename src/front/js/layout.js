@@ -66,6 +66,8 @@ const Layout = () => {
                         <Route element={<CreateClasses />} path="/CreateClasses" />
                         <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<BookingView />} path="/BookingView" />
+                        <Route element={<Users />} path="/Users" />
+                        <Route element={<Oneuser />} path="/Oneuser" />
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
