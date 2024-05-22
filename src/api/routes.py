@@ -2,15 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Manager, Teacher, Course, Orders, Trolley, Payment, Modules, Request, Quizzes
+from api.models import db, User, Manager, Teacher, Course, Orders, Payment, Modules, Request 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
-from flask_bcrypt import bcrypt, generate_password_hash, check_password_hash
+
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
-from datetime import datetime
 
 from flask_mail import Message
 from app import mail
@@ -74,7 +73,6 @@ def create_signup_user():
 
     except Exception as err:
         return jsonify({"Error":"Error in User Creation: " + str(err)}), 500
-
 
 @api.route('/signup/teacher', methods=['POST'])
 def create_signup_teacher():
@@ -324,7 +322,7 @@ def forgot_password_teacher():
     if not teacher:
         return jsonify({"Error": "User not found"}), 404
 
-    reset_token = create_access_token(identity=teacher.id, expires_delta=timedelta(hours=1))
+    reset_token = create_access_token(identity=teacher.id, expires_delta = timedelta(hours=1))
     frontend_url = os.getenv('FRONTEND_URL')  
     reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
 

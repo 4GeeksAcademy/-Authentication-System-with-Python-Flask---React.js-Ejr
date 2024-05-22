@@ -1,17 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../../store/appContext.js'
+
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { TeacherCourses } from '../Teacher/TeacherCourses.jsx'
 import { TeacherStudents } from './TeacherStudents.jsx';
 import { TeacherFiles } from './TeacherFiles.jsx';
 import { TeacherMyPayment } from './TeacherMyPayment.jsx';
 import { TeacherSettings } from './TeacherSettings.jsx';
+import { UploadFile } from './UploadFile.jsx';
 import { Certificate } from '../Manager/Certificate.jsx';
 import { UploadFile } from '../Manager/UploadFile.jsx';
 
 export const TeacherDashboard = () => {
+    const { store, actions } = useContext(Context)
 
-    
     const navigate = useNavigate();
 
     function handleHome() {
