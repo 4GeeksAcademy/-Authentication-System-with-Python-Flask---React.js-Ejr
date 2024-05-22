@@ -9,7 +9,7 @@ export const TeacherStudents = () => {
     return (
         <div className=" containerd-flex  justify-content-center align-items-center p-4">
 
-            {store.user.access_to_user.map((item, index) => {
+            {(store.user.access_to_teacher == '') ? "No hay Students Registrados" : store.user.access_to_user.map((item, index) => {
                 return (
                     <div key={index}>
                         {
