@@ -1,34 +1,54 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
+import React, { useContext } from "react"
+import { Context } from "./store/appContext";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Navbar } from "./component/navbar.jsx";
+import { Footer } from "./component/footer.jsx";
+import { Landing } from "./pages/Landing/landing";
+import { Trainer } from "./pages/Trainer/trainer";
+import { User } from "./pages/User/user";
+import UserForm from "./pages/User/userForm"
 
-//create your first component
+import { EditForm } from "./pages/User/editForm";
+
+import ScrollToTop from "./component/scrollToTop.jsx";
+import ExerciseDetail from "./pages/User/exerciseDetail.js";
+import ProtectedRoute from "./component/protectedRoute.jsx";
+import TrainerUserDetail from "./pages/Trainer/trainerUserDetail.js";
+
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+
+    const { store } = useContext(Context);
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
-
+    const userToken = store.token;
+    console.log(store)
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route path="/" element={<Landing />} />
+
+                        <Route element={userToken ? <UserForm /> : <Navigate to="/" />} path="/user-form" />
+
+                        <Route element={<ProtectedRoute roles={['user']} />}>
+
+                            <Route path="/user/:id" element={<User />} />
+                            <Route path="/user/edit_form" element={<EditForm />} />
+                        </Route>
+                        <Route element={<ProtectedRoute roles={['user', 'trainer']} />}>
+                            <Route path="/exercise/:id" element={<ExerciseDetail />} />
+                        </Route>
+                        <Route element={<ProtectedRoute roles={['trainer']} />}>
+                        
+                            <Route path="/trainer/:id" element={<Trainer />} />
+                            <Route path="/trainer/:tainer_id/:user_id" element={<TrainerUserDetail />} />
+                        </Route>
+                        <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
@@ -38,3 +58,5 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
+
+

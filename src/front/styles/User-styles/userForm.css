@@ -1,0 +1,46 @@
+/* Estilo para el contenedor exterior */
+.container-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+
+}
+
+
+.form-container {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    background-color: var(--background-color);
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--white-text);
+}
+
+input,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: darken(var(--primary-color), 10%);
+}

@@ -1,0 +1,4 @@
+.horizontal-bar {
+  display: flex;
+  overflow-x: auto;
+}
