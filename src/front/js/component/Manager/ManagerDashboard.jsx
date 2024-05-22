@@ -11,14 +11,20 @@ import { Payments } from './Payments.jsx';
 import { Teachers } from './Teachers.jsx';
 import { ActiveUsers } from './ActiveUsers.jsx';
 import { GeneralFiles } from '../Manager/GeneralFiles.jsx';
+import { PostCourseM } from './PostCourseM.jsx';
 
 
 export const ManagerDashboard = () => {
     const { store, actions } = useContext(Context)
     const [buttonSelected, setButtonSelected] = useState(null)
 
+    const handleCreateCourse = () => {
+        setButtonSelected(<PostCourseM />)
+    }
+
     const handleMyCourses = () => {
         setButtonSelected(<ManagerCourses />)
+        actions.getCourse()
     }
 
     const handleMyProfile = () => {
@@ -60,7 +66,9 @@ export const ManagerDashboard = () => {
                     <h1>Welcome!</h1>
                     <h5>Manager</h5>
                 </div>
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>Courses</button>
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>Create Courses</button>
+
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>View Courses</button>
 
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>Profile</button>
 

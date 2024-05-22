@@ -282,7 +282,7 @@ def forgot_password_user():
 
     reset_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
     frontend_url = os.getenv('FRONTEND_URL')  
-    reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
+    reset_link = f"{frontend_url}/ResetPassword/token"  # Construir el enlace completo
 
     msg = Message('Password Reset Request', recipients=[email])
     msg.body = f"To reset your password, click the following link: {reset_link}"
@@ -305,8 +305,13 @@ def reset_password_user(token):
         if not new_password:
             return jsonify({"Error": "Password is required"}), 400
 
-        user.password = generate_password_hash(new_password).decode('utf-8')
+        user.password = generate_password_hash(new_password)
         db.session.commit()
+
+        msg = Message('Password Reset Successful', recipients=[user.email])
+        msg.body = "Your password has been successfully reset."
+        mail.send(msg)
+
         return jsonify({"message": "Password reset successful"}), 200
     except Exception as e:
         return jsonify({"Error": f"An error occurred: {str(e)}"}), 500
@@ -324,7 +329,7 @@ def forgot_password_teacher():
 
     reset_token = create_access_token(identity=teacher.id, expires_delta = timedelta(hours=1))
     frontend_url = os.getenv('FRONTEND_URL')  
-    reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
+    reset_link = f"{frontend_url}/ResetPassword/token/"  # Construir el enlace completo
 
     msg = Message('Password Reset Request', recipients=[email])
     msg.body = f"To reset your password, click the following link: {reset_link}"
@@ -347,8 +352,13 @@ def reset_password_teacher(token):
         if not new_password:
             return jsonify({"Error": "Password is required"}), 400
 
-        teacher.password = generate_password_hash(new_password).decode('utf-8')
+        teacher.password = generate_password_hash(new_password)
         db.session.commit()
+
+        msg = Message('Password Reset Successful', recipients=[teacher.email])
+        msg.body = "Your password has been successfully reset."
+        mail.send(msg)
+
         return jsonify({"message": "Password reset successful"}), 200
     except Exception as e:
         return jsonify({"Error": f"An error occurred: {str(e)}"}), 500
@@ -366,7 +376,7 @@ def forgot_password_manager():
 
     reset_token = create_access_token(identity=manager.id, expires_delta=timedelta(hours=1))
     frontend_url = os.getenv('FRONTEND_URL')  
-    reset_link = f"{frontend_url}ResetPassword/token/"  # Construir el enlace completo
+    reset_link = f"{frontend_url}/ResetPassword/token/"  # Construir el enlace completo
 
     msg = Message('Password Reset Request', recipients=[email])
     msg.body = f"To reset your password, click the following link: {reset_link}"
@@ -389,8 +399,13 @@ def reset_password_manager(token):
         if not new_password:
             return jsonify({"Error": "Password is required"}), 400
 
-        manager.password = generate_password_hash(new_password).decode('utf-8')
+        manager.password = generate_password_hash(new_password)
         db.session.commit()
+
+        msg = Message('Password Reset Successful', recipients=[manager.email])
+        msg.body = "Your password has been successfully reset."
+        mail.send(msg)
+
         return jsonify({"message": "Password reset successful"}), 200
     except Exception as e:
         return jsonify({"Error": f"An error occurred: {str(e)}"}), 500
@@ -541,6 +556,7 @@ def show_view_manager():
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+
 #-------------------DELETE USER--------------------#
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
 def delete_user(user_id):
@@ -583,8 +599,8 @@ def update_user(user_id):
     db.session.commit()
     return jsonify({"message": f"User with ID {user.id} updated successfully"}), 200
 
-#------------------DELETE TEACHER------------------#
 
+#------------------DELETE TEACHER------------------#
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
 @jwt_required()
 def delete_teacher(teacher_id):
@@ -600,8 +616,8 @@ def delete_teacher(teacher_id):
     db.session.commit()
     return jsonify({"message": f"Teacher with ID {teacher.id} deleted successfully"}), 200
 
-#--------------------UPDATE TEACHER--------------------#
 
+#--------------------UPDATE TEACHER--------------------#
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['PUT'])
 @jwt_required()
 def update_teacher(teacher_id):
@@ -629,8 +645,9 @@ def update_teacher(teacher_id):
     db.session.commit()
     return jsonify({"message": f"Teacher with ID {teacher.id} updated successfully"}), 200
 
+
 #-----------------------COURSES------------------------#
-@api.route('/view/courses', methods=['POST'])
+@api.route('/create/courses', methods=['POST'])
 def post_courses():
     try:
         
@@ -653,20 +670,23 @@ def post_courses():
         course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate, price=price)
         db.session.add(course)
         db.session.commit()
-        return jsonify({"Msg":"Course create", "Course":course.serialize()}), 200
+        return jsonify({"message":"Course has been Create Successfully", "Course": course.serialize()}), 200
 
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
+    
 
-@api.route('/view/courses', methods=['GET'])
+@api.route('/view/courses')
 def get_courses():
     try:
         courses = Course.query.all()
-        serialized_courses = [course.serialize() for course in courses]
-        return jsonify({"courses": serialized_courses}), 200
-    
+        course_list = [course.serialize() for course in courses]
+
+        return jsonify({"access_to_courses": course_list, "message": "Access to Course List Successfully"}), 200
+
     except Exception as err:
-        return jsonify({"error": f"Error fetching courses: {str(err)}"}), 500
+        return jsonify({"Error": "Error fetching courses", "errorFetching": str(err)}), 500
+    
 
 @api.route('/viewManager/courses', methods=['PUT'])
 def update_course():
@@ -683,10 +703,11 @@ def update_course():
             db.session.commit()
             return jsonify({"message": "Course updated successfully"}), 200
         else:
-            return jsonify({"error": "Course not found"}), 404
+            return jsonify({"Error": "Course not found"}), 404
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
+
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
 def put_courses(course_id):
@@ -699,10 +720,11 @@ def put_courses(course_id):
         for key, value in updated_data.items():
             setattr(course, key, value)
         db.session.commit()
-        return jsonify({"Msg": "Course updated successfully.", "Course": course.serialize()}), 200
+        return jsonify({"message": "Course updated successfully.", "Course": course.serialize()}), 200
     
     except Exception as err:
         return jsonify({"Error": "Error in updating course: " + str(err)}), 500
+
 
 @api.route('/view/courses/<int:course_id>', methods=['DELETE'])
 def delete_courses(course_id):
@@ -714,7 +736,7 @@ def delete_courses(course_id):
         
         db.session.delete(course)
         db.session.commit()
-        return jsonify({"Msg": "Course delete succesfully."}), 200
+        return jsonify({"message": "Course delete succesfully."}), 200
     
     except Exception as err:
         return jsonify({"Error": "Error in deleting course: " + str(err)}), 500
@@ -746,7 +768,7 @@ def post_module():
                          text_id=text_id, type_text=type_text, image_id=image_id, type_image=type_image)
         db.session.add(module)
         db.session.commit()
-        return jsonify({"Msg": "Module created successfully", "Module": module.serialize()}), 201
+        return jsonify({"message": "Module created successfully", "Module": module.serialize()}), 201
 
     except Exception as err:
         return jsonify({"Error": "Error in module Creation: " + str(err)}), 500
@@ -756,10 +778,10 @@ def get_modules():
     try:
         modules = Modules.query.all()
         if not modules:
-            return jsonify({"Msg": "No modules found"}), 404
+            return jsonify({"Error": "No modules found"}), 404
         
         serialized_modules = [module.serialize() for module in modules]
-        return jsonify({"Modules": serialized_modules}), 200
+        return jsonify({"message": "Module created successfully", "Modules": serialized_modules}), 200
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching modules: " + str(err)})
@@ -807,7 +829,6 @@ def get_all_payments_courses():
         return jsonify({"error": f"Error fetching payments for courses: {str(err)}"}), 500
 
 
-
 #-----------------------QUIZZES------------------------#
 @api.route('/module/quizzes', methods=['POST'])
 def post_quizzes():
@@ -847,7 +868,6 @@ def get_quizzes():
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})  
         
-
         
 #----------------------TROLLEY------------------------#           
 @api.route('/trolley/courses', methods=['POST'])
@@ -884,7 +904,77 @@ def add_course_to_trolley():
         return jsonify({"message": "Course added to trolley succesfully", "order_id": new_order.id}), 201
     
     except Exception as e:
-        return jsonify({"error": f"An error ocurred: {str(e)}"}), 500
+        return jsonify({"Error": "An error ocurred", "erro fetching": {str(e)}}), 500
+
+
+#----------------------ORDER------------------------#           
+""" @api.route('/order/courses', methods=['POST'])
+def add_order_to_trolley():
+    try:
+        data = request.json
+
+        course_id = data.get('course_id')
+        user_id = data.get('user_id')
+        manager_id = data.get('manager_id')
+
+        if not course_id or not user_id or not manager_id:
+            return jsonify({"Error": "Course ID, User ID, and Manager ID are required"}), 400
+        
+        course = Orders.query.get(course_id)
+        if not course:
+            return jsonify({"Error": "Course not found"}), 404
+        
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        new_order = Orders(
+            user_id=user_id,
+            manager_id=manager_id,
+            payment_id=None,
+            title_order=course.title,
+            price=course.price,
+            date=current_date
+        )
+        
+    #Obtenermos los datos de los campos del body
+        price =  request.json.get('email')
+        password = request.json.get('password')
+        user_id = request.json.get('userId')
+        name = request.json.get('name') 
+        last_name = request.json.get('lastName')
+      
+        
+        #Verificacion de campos vacios
+        if not email or not password or not is_user or not name or not last_name or not username or not number_document or not phone or not age or not gender:
+            return({"Error":"Email, password, is_user, name, last_name, username, number_document, phone, age and gender are required"}), 400
+        
+        #Verificacion de existencia de email en la base de datos
+        existing_user = Orders.query.filter_by(title=title).first()
+        if existing_user:
+            return jsonify({"Error":"Orders already exists."}), 409
+        
+        #Password encriptada
+        password_hash = generate_password_hash(password)
+
+        #User con password encriptada
+        new_order = Orders(
+            email=email,
+            password=password_hash,
+            is_user=is_user,
+            name=name,
+            last_name=last_name,
+            username=username,
+            number_document=number_document,
+            phone=phone,
+            age=age,
+            gender=gender
+        )
+        db.session.add(new_order)
+        db.session.commit()
+
+        return jsonify({"message":"It has been to Create a Order succesfully", "order": new_order.serialize()}), 201
+
+    
+    except Exception as e:
+        return jsonify({"Error": "An error ocurred", "error fetching": {str(e)}}), 500 """
 
 
 

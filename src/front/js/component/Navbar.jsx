@@ -11,6 +11,7 @@ export const Navbar = () => {
         navigate('/SignOut')
     }
 
+
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
 
     return (
