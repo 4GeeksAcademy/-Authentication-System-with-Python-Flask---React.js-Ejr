@@ -547,10 +547,11 @@ def post_courses():
         category_title = request.json.get('categoryTitle')
         modules_length = request.json.get('modulesLength')
         certificate = request.json.get('certificate') 
+        price = request.json.get('price')
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not certificate :
-            return({"Error":"title, category_title, modules_length and certificate  are required"}), 400
+        if not title or not category_title or not modules_length or not certificate or not price:
+            return({"Error":"title, category_title, modules_length, certificate and price are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
@@ -558,7 +559,7 @@ def post_courses():
             return jsonify({"Error":"Title already exists."}), 409
         
         
-        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate)
+        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate, price=price)
         db.session.add(course)
         db.session.commit()
         return jsonify({"Msg":"Course create", "Course":course.serialize()}), 200
