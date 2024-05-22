@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../../store/appContext.js'
+
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { TeacherCourses } from '../Teacher/TeacherCourses.jsx'
 import { TeacherStudents } from './TeacherStudents.jsx';
@@ -9,7 +11,7 @@ import { TeacherSettings } from './TeacherSettings.jsx';
 import { UploadFile } from './UploadFile.jsx';
 
 export const TeacherDashboard = () => {
-
+    const { store, actions } = useContext(Context)
 
     const navigate = useNavigate();
 
