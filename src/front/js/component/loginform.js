@@ -1,6 +1,7 @@
 import React,{useContext, useState} from "react";
  import { Context } from "../store/appContext";
  import { useNavigate} from "react-router-dom";
+ import { ModalRecuperarContraseña } from "./modalrecuperarcontraseña.js";
  import swal from 'sweetalert';
  import "../../styles/index.css";
 
@@ -36,7 +37,7 @@ import React,{useContext, useState} from "react";
                     <button type="submit" className="login btn-lg btn-dark mt-4">Iniciar sesión</button>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <a>¿Olvidaste tu contraseña?</a>
+                    <ModalRecuperarContraseña />
                 </div>
             </form>
         </div>
