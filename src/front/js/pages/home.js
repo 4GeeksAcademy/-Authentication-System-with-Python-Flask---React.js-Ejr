@@ -30,12 +30,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		actions.getVehicles();
-		// actions.getVehicles_Home();
 	}, []);
-
-	// useEffect(() => {
-	// 	console.log(store.vehicles_home);
-	// }, [store.vehicles_home]);
 
 	useEffect(() => {
 		const query = new URLSearchParams(window.location.search);
