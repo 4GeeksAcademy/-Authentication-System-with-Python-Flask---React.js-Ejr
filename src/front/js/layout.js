@@ -9,6 +9,7 @@ import { Home } from "./pages/Home.jsx";
 import { Profile } from "./pages/Profile.jsx";
 import { RoomDetail } from "./pages/RoomDetail.jsx";
 import { CreateRoom } from "./pages/CreateRoom.jsx";
+import { EditRoom } from "./pages/EditRoom.jsx"; // Import the EditRoom component
 import PrivateRoute from "./component/PrivateRoute.jsx";
 import injectContext from "./store/appContext";
 
@@ -31,6 +32,7 @@ const Layout = () => {
                         <Route element={<PrivateRoute><Profile /></PrivateRoute>} path="/profile" />
                         <Route element={<RoomDetail />} path="/room/:roomId" />
                         <Route element={<PrivateRoute><CreateRoom /></PrivateRoute>} path="/create-room" />
+                        <Route element={<PrivateRoute><EditRoom /></PrivateRoute>} path="/edit-room/:room_id" /> 
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                 </ScrollToTop>

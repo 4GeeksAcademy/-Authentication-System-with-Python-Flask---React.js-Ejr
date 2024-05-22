@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from "../store/appContext";
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export const CreateRoom = () => {
+export const EditRoom = () => {
     const { store, actions } = useContext(Context);
+    const { room_id } = useParams();
     const [roomData, setRoomData] = useState({
         room_name: '',
         game_id: '',
@@ -12,61 +13,57 @@ export const CreateRoom = () => {
         platform: '',
         description: '',
         mood: '',
-        room_size: 4 // Default room size
+        room_size: 4 // Default value set to 4
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const room = store.rooms.find(r => r.room_id === parseInt(room_id));
+        if (room) {
+            setRoomData({
+                ...room,
+                room_size: room.room_size !== undefined ? room.room_size : 4 // Ensure room_size is set correctly
+            });
+        }
+    }, [room_id, store.rooms]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setRoomData({
             ...roomData,
-            [name]: value
+            [name]: name === 'room_size' ? (value === '' ? '' : parseInt(value, 10)) : value // Ensure room_size is an integer or empty string
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('roomData:', roomData)
 
         const selectedGame = store.games.find(game => game.name === roomData.game_id);
         console.log('Selected game is:', selectedGame)
         const gameId = selectedGame.game_id
         console.log(gameId)
+
         const formattedRoomData = {
             ...roomData,
             game_id: gameId,
             date: roomData.date.toString(),
-            time: roomData.time.toString()
+            time: roomData.time.toString(),
+            room_size: parseInt(roomData.room_size, 10) || 4 // Ensure room_size is a valid number
         };
-        console.log('FORMATTED ROOMDATA',formattedRoomData)
-        const success = await actions.createRoom(formattedRoomData);
+        console.log('FormatedRoom', formattedRoomData)
+        const success = await actions.updateRoom(room_id, formattedRoomData);
         if (success) {
             navigate('/');
         } else {
-            setError('Failed to create room. Please try again.');
+            setError('Failed to update room. Please try again.');
         }
     };
 
-    useEffect(() => {
-        // Cleanup function to avoid setting state on unmounted component
-        return () => {
-            setRoomData({
-                room_name: '',
-                game_id: '',
-                date: '',
-                time: '',
-                platform: '',
-                description: '',
-                mood: '',
-                room_size: 4 // Default room size
-            });
-            setError(null);
-        };
-    }, []);
-
     return (
         <div className="container mt-5">
-            <h2>Create a New Room</h2>
+            <h2>Edit Room</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -131,12 +128,12 @@ export const CreateRoom = () => {
                         onChange={handleChange}
                         required
                     >
-                        <option value="All">All</option>
                         <option value="Xbox">Xbox</option>
                         <option value="PSN">PSN</option>
                         <option value="PC">PC</option>
                         <option value="Google Play">Google Play</option>
                         <option value="Nintendo">Nintendo</option>
+                        <option value="All">All</option>
                     </select>
                 </div>
                 <div className="mb-3">
@@ -160,7 +157,6 @@ export const CreateRoom = () => {
                         onChange={handleChange}
                         required
                     >
-                        <option value="">Select mood</option>
                         <option value="Casual">Casual</option>
                         <option value="Hardcore">Hardcore</option>
                     </select>
@@ -177,7 +173,7 @@ export const CreateRoom = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Create Room</button>
+                <button type="submit" className="btn btn-primary">Update Room</button>
             </form>
         </div>
     );

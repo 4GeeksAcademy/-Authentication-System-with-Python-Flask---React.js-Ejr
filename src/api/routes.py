@@ -188,9 +188,10 @@ def get_current_rooms():
 
             serialized_room = {
                 "room_id": room.id,
+                "room_size": room.room_size,
                 "game_name": room.game.name,
                 "room_name": room.room_name,
-                "game_description": room.description,
+                "description": room.description,
                 "host_name": room.user.username,
                 "date": room.date,
                 "time": room.time,
