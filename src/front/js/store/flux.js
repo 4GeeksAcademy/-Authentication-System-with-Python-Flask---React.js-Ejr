@@ -1,6 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
+            user: {
+                name: "Firulais",
+                age: 3,
+                breed: "Golden Retriever"
+            },
             posts: [],
             comments: [],
             likes: [],
@@ -11,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Fetch all posts
             getPosts: async () => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post');
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post`);
                     const data = await response.json();
                     setStore({ posts: data.img });
                 } catch (error) {
@@ -22,11 +27,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Create a new post
             createPost: async (img, bodytext) => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post', {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ img, bodytext })
                     });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
                     const data = await response.json();
                     getActions().getPosts(); // Refresh posts
                     setStore({ message: data.msg });
@@ -38,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Update a post
             updatePost: async (postId, img, bodytext) => {
                 try {
-                    const response = await fetch(`https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post/${postId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post/${postId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ img, bodytext })
@@ -54,7 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Delete a post
             deletePost: async (postId) => {
                 try {
-                    const response = await fetch(`https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/post/${postId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/post/${postId}`, {
                         method: 'DELETE'
                     });
                     const data = await response.json();
@@ -68,9 +76,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Fetch all suggestions
             getSuggestions: async () => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/suggestion');
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/suggestion`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
                     const data = await response.json();
                     setStore({ suggestions: data.suggestion });
+                    console.log(data)
                 } catch (error) {
                     console.error("Error fetching suggestions:", error);
                 }
@@ -79,7 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Create a new suggestion
             createSuggestion: async (suggestion) => {
                 try {
-                    const response = await fetch('https://psychic-fortnight-5gg54q5jwv67fv9gj-3001.app.github.dev/api/suggestion', {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/suggestion`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ suggestion })

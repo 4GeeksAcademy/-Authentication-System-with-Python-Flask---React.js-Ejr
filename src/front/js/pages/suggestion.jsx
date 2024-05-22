@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/suggestion.css";
 
 const Suggestions = () => {
     const { store, actions } = useContext(Context);
@@ -7,6 +8,7 @@ const Suggestions = () => {
 
     useEffect(() => {
         actions.getSuggestions();
+        console.log(store.suggestions)
     }, []);
 
     const handleSubmit = (e) => {
@@ -19,11 +21,11 @@ const Suggestions = () => {
     };
 
     return (
-        <div className="container">
-            <h1>Suggestions from users111</h1>
-            <ul className="list-group">
-                {store.suggestions.map((suggestion, index) => (
-                    <li key={index} className="list-group-item">
+        <div className="container suggestions-container">
+            <h1>Suggestions from Users</h1>
+            <ul className="list-group suggestions-list">
+                {store.suggestions?.map((suggestion, index) => (
+                    <li key={index} className="list-group-item suggestion-item">
                         {suggestion.suggestion}
                     </li>
                 ))}
@@ -31,10 +33,10 @@ const Suggestions = () => {
             <form onSubmit={handleSubmit} className="mt-4">
                 <div className="form-group">
                     <label htmlFor="suggestion">New Suggestion:</label>
-                    <input
-                        type="text"
+                    <textarea
                         className="form-control"
                         id="suggestion"
+                        rows="3"
                         value={suggestionText}
                         onChange={(e) => setSuggestionText(e.target.value)}
                     />
