@@ -91,3 +91,25 @@ footer {
 .logo-footer {
     width: 50px;
 }
+
+.instagram {
+    color: #bc1888
+}
+
+.instagram:hover {
+    color: #bc1888
+}
+
+.facebook:hover {
+    color:#0d6efd;
+}
+
+.navbarbutton {
+    width: 25px;
+    height: 25px;
+}
+
+.usericon {
+   font-size: 2rem;
+}
+     
