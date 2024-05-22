@@ -201,7 +201,7 @@ def get_single_user_from_trainer(trainer_id, user_id):
 @app.route('/user/<int:user_id>/actual_routine')
 @jwt_required()
 def get_actual_routine(user_id):
-    user_routine = Routines.query.filter_by(user_data_id=user_id).first()
+    user_routine = Routines.query.filter_by(id=user_id).first()
     if user_routine:
         return jsonify(user_routine.serialize())
     else:
@@ -228,18 +228,22 @@ def get_routine_history(user_id):
 def set_routine_with_exercises(user_id):
     data = request.json
     
-    user = User_data.query.get(user_id)
+    user = User.query.get(user_id)
     if not user:
         raise APIException('User not found', status_code=404)
         
+    user_data = User_data.query.filter_by(user_id=user.id).first()
+    if not user_data:
+        raise APIException('User data not found', status_code=404)
+
     routine_data = data.get("routine")
     if not routine_data:
         raise APIException('Routine data missing', status_code=400)
 
-    user_routine = Routines.query.filter_by(user_data_id=user_id).first()
+    user_routine = Routines.query.filter_by(user_data_id=user_data.id).first()
     if not user_routine:
         new_routine = Routines(
-            user_data_id=user_id,
+            user_data_id=user_data.id,
             trainer_data_id=data["trainer_data_id"],
             actual_routine=routine_data,
             historical=[routine_data]
@@ -252,6 +256,7 @@ def set_routine_with_exercises(user_id):
     db.session.commit()
 
     return jsonify({'message': 'Routine added with exercises'}), 201
+
 
 # Exercise Endpoints
 # Get all exercises
