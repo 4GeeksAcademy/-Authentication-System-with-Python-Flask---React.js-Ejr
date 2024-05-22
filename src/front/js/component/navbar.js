@@ -16,13 +16,14 @@ export const Navbar = () => {
 
 	useEffect(() => {
 		if (store.vehicles.length === 0) {
-			actions.getVehicles();
-		}
-	}, []);
+	 		actions.getVehicles();
+	 	}
+	 }, []);
 
 	useEffect(() => {
-		if (store.vehicles.length !== 0) {
-			actions.myVehiclesInRent();
+	 	if (store.vehicles.length !== 0) {
+	 		actions.myVehiclesInRent();
+			actions.favorites();
 		}
 	}, [store.vehicles]);
 
@@ -60,24 +61,10 @@ export const Navbar = () => {
 										<div className="text-black text-decoration-none">Mis Favoritos</div>
 									</Link>
 								</li>
-								<li className="nav-item dropdown mb-3">
-									<a className="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-										Mis Coches
-										<span className="px-1 text-dark fs-6" style={{ borderRadius: "30px" }}>{store.myVehicles.length}</span>
-									</a>
-									<ul className="dropdown-menu">
-										{store.myVehicles.length === 0
-											? <li className="text-center">(empty)</li>
-											: (store.myVehicles.map((item, index) => (
-												<li key={index} className="dropdown-item d-flex text-primary m-2">
-													{item.matricula}
-													<a onClick={() => actions.removeVehicle(item.id)} className="btn p-0 px-1">
-														<i className="fas fa-trash"></i>
-													</a>
-												</li>
-											)))
-										}
-									</ul>
+								<li className="nav-item dropdown mb-3" data-bs-toggle="offcanvas">
+									<Link to="/miscoches" className="text-decoration-none">
+										<div className="text-black text-decoration-none">Mis Coches en</div>
+									</Link>
 								</li>
 								<li className="nav-item mb-3" data-bs-toggle="offcanvas">
 									<Link to="/agregarvehiculo" className="text-decoration-none">

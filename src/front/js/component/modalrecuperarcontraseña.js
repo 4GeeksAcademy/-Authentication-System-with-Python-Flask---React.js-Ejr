@@ -16,8 +16,8 @@ export const ModalRecuperarContraseña = () => {
                         </div>
                         <div className="modal-body">
                             <p>Introduzca la dirección de correo electrónico asociado a su cuenta de Friendly Wheels.</p>
-                            <label htmlFor="exampleInputEmail1" className="form-label fw-bold">E-mail</label>
-                            <input type="email" className="form-control" id="exampleInputEmail1" placeholder="name@example.com"/>
+                            <label htmlFor="exampleInputEmail2" className="form-label fw-bold">E-mail</label>
+                            <input type="email" className="form-control" id="exampleInputEmail2" placeholder="name@example.com"/>
                         </div>
                         <div className="modal-footer justify-content-center">
                             <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Recuperar Contraseña</button>
