@@ -14,7 +14,7 @@ export const UserProfile = () => {
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Last Name</th>
-                                <th scope="col">Correo</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Number Document</th>
                                 <th scope="col">Phone</th>
                                 <th scope="col">Username</th>
