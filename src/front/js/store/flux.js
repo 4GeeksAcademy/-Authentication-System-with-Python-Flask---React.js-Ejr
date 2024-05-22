@@ -256,17 +256,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			},
 // INTEGRACION BD
-			getVehicles_Home: async () => {
-				const response = await fetch(`${process.env.BACKEND_URL}/api/vehicles_home`, {
-					method: 'GET'
-				})
-				if (response.status === 200) {
-					const data = await response.json();
-					setStore({ vehicles_home: data })
-				} else {
-					return [];
-				}	
-			},
+			// getVehicles_Home: async () => {
+			// 	const response = await fetch(`${process.env.BACKEND_URL}/api/vehicles_home`, {
+			// 		method: 'GET'
+			// 	})
+			// 	if (response.status === 200) {
+			// 		const data = await response.json();
+			// 		setStore({ vehicles_home: data })
+			// 	} else {
+			// 		return [];
+			// 	}	
+			// },
 		}
 	};
 };
