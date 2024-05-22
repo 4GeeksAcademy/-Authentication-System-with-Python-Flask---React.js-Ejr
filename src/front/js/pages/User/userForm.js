@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import "./../../../styles/User-styles/userForm.css";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
-const userForm = () => {
+
+const UserForm = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user_name: '',
-        //user_age: '',
         user_height: '',
         user_weight: '',
         user_illness: '',
@@ -24,14 +23,10 @@ const userForm = () => {
         });
     };
 
-
     const handleSubmit = async () => {
-
         try {
-
             if (
                 formData.user_name === '' ||
-                //formData.user_age === '' ||
                 formData.user_height === '' ||
                 formData.user_weight === '' ||
                 formData.user_illness === ''
@@ -42,9 +37,7 @@ const userForm = () => {
                 await actions.postUserData(formData);
                 navigate(`/user/${store.user_id}`)
             }
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error('Error de red:', error);
         }
     };
@@ -56,7 +49,7 @@ const userForm = () => {
                     e.preventDefault();
                     handleSubmit(e);
                 }}>
-                    <label>
+                    <label className="form-label">
                         Full Name:
                         <input
                             type="text"
@@ -64,22 +57,22 @@ const userForm = () => {
                             value={formData.user_name}
                             onChange={handleChange}
                             required
+                            className="form-input"
                         />
                     </label>
                     <br />
-                    <label>
+                    <label className="form-label">
                         Age
                         <input
                             type="number"
                             name="user_age"
-                            //value={formData.user_age}
-                            //onChange={handleChange}
                             min="16"
                             required
+                            className="form-input"
                         />
                     </label>
                     <br />
-                    <label>
+                    <label className="form-label">
                         Height (cm):
                         <input
                             type="number"
@@ -88,10 +81,11 @@ const userForm = () => {
                             onChange={handleChange}
                             placeholder="000"
                             required
+                            className="form-input"
                         />
                     </label>
                     <br />
-                    <label>
+                    <label className="form-label">
                         Weight (kg):
                         <input
                             type="number"
@@ -101,10 +95,11 @@ const userForm = () => {
                             pattern="\d+(\.\d{1,2})?"
                             placeholder="00.00"
                             required
+                            className="form-input"
                         />
                     </label>
                     <br />
-                    <label>
+                    <label className="form-label">
                         Illness:
                         <input
                             type="text"
@@ -112,23 +107,26 @@ const userForm = () => {
                             value={formData.user_illness}
                             onChange={handleChange}
                             required
+                            className="form-input"
                         />
                     </label>
                     <br />
-                    <label>
+                    <label className="form-label">
                         Objetives:
                         <input
                             type="text"
                             name="user_objetives"
                             value={formData.user_objetives}
                             onChange={handleChange}
+                            className="form-input"
                         />
                     </label>
                     <br />
-                    <button type="submit">Send</button>
+                    <button type="submit" className="form-button">Send</button>
                 </form>
             </div>
         </div>
     );
 }
-export default userForm;
+
+export default UserForm;
