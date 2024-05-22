@@ -19,7 +19,10 @@ export const AgregarForm = (props) => {
     const [inputCambio, setInputCambio]=useState("");
     const [inputAsientos, setInputAsientos]=useState("");
     const [inputPrecio, setInputPrecio]=useState("");
-    
+    const [inputUrl_img1, setInputUrl_img1] = useState("");
+    const [inputUrl_img2, setInputUrl_img2] = useState("");
+    const [inputUrl_img3, setInputUrl_img3] = useState("");
+
     const [image, setImage] = useState({array: []})  //gracias a este useState({array...}) vamos a poder ver las 3 imágenes
     const [imageUrl, setImageUrls] = useState([]);  //mantengo la url de las img subidas
     const [loading, setLoading] = useState("");
@@ -82,7 +85,7 @@ export const AgregarForm = (props) => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio) 
+        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, inputUrl_img1, inputUrl_img2, inputUrl_img3) 
         if (respuesta === "success"){
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");
