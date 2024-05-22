@@ -28,12 +28,15 @@ import React,{useContext, useState} from "react";
                     <label htmlFor="exampleInputEmail1" className="form-label" style={{ color: 'brown' }}>Correo electrónico</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Ingrese su correo electrónico" onChange={(e) => setInputEmail(e.target.value)} />
                 </div>
-                <div className="mb-3">
+                <div className="mb-2">
                     <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Contraseña</label>
                     <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center mb-3">
                     <button type="submit" className="login btn-lg btn-dark mt-4">Iniciar sesión</button>
+                </div>
+                <div className="d-flex justify-content-center">
+                    <a>¿Olvidaste tu contraseña?</a>
                 </div>
             </form>
         </div>
