@@ -290,7 +290,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             msg: dataGetCourse.message,
             course: dataGetCourse 
           })
-
+console.log(dataGetCourse)
         } catch (err) {
           console.log(err);
         } finally {

@@ -630,7 +630,7 @@ def update_teacher(teacher_id):
     return jsonify({"message": f"Teacher with ID {teacher.id} updated successfully"}), 200
 
 #-----------------------COURSES------------------------#
-@api.route('/view/courses', methods=['POST'])
+@api.route('/create/courses', methods=['POST'])
 def post_courses():
     try:
         
@@ -653,20 +653,24 @@ def post_courses():
         course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate, price=price)
         db.session.add(course)
         db.session.commit()
-        return jsonify({"Msg":"Course create", "Course":course.serialize()}), 200
+        return jsonify({"message":"Course has been Create Successfully", "Course": course.serialize()}), 200
 
     except Exception as err:
         return jsonify({"Error":"Error in Course Creation:" + str(err)}), 500
+    
 
-@api.route('/view/courses', methods=['GET'])
+@api.route('/view/courses')
 def get_courses():
     try:
         courses = Course.query.all()
-        serialized_courses = [course.serialize() for course in courses]
-        return jsonify({"courses": serialized_courses}), 200
-    
+        course_list = [course.serialize() for course in courses]
+
+        return jsonify({"access_to_courses": course_list, "message": "Access to Course List Successfully"}), 200
+
     except Exception as err:
-        return jsonify({"error": f"Error fetching courses: {str(err)}"}), 500
+        return jsonify({"Error": "Error fetching courses", "errorFetching": str(err)}), 500
+    
+
 
 @api.route('/viewManager/courses', methods=['PUT'])
 def update_course():

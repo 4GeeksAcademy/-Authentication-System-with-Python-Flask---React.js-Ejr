@@ -8,7 +8,6 @@ export const CoursesContainer = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
     
-    // courseCard
     
     const handleViewCourses=()=>{
         navigate(<Courses />)
@@ -16,7 +15,7 @@ export const CoursesContainer = () => {
 console.log(store.course)
     return (
         <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
-            {(store.course.access_to_courses == '') ? "No hay Cursos Cargados" : store.course.access_to_courses.map((item, index) => {
+           {(store.course.access_to_courses == '') ? "No hay Cursos Cargados" : store.course.access_to_courses.map((item, index) => {
                 return (
                     <div key={index}>
                         {
@@ -59,7 +58,6 @@ console.log(store.course)
                     </div>
                 )})
             }
-            
         </div>
     );
 };
