@@ -28,7 +28,7 @@ export const MisCoches = () => {
                                 </>
                             )
                             : (store.myVehicles.map((vehicle) => (
-                                    <>
+                                    <div key={vehicle.id}>
                                         <div className="card col-md-4 mb-2 me-4 mt-4" style={{ width: "22rem"}}>
                                             <div>
                                                 <a className="cardvehicles" href="#">
@@ -45,7 +45,7 @@ export const MisCoches = () => {
                                                 </button>
                                             </div>
                                         </div>
-                                    </>
+                                    </div>
                                 )
                             ))
                         }
