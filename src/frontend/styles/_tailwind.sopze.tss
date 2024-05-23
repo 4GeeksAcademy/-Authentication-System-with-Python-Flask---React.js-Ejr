@@ -6,7 +6,6 @@
 
   .k--board-sidepanel {
     @apply flex border-l border-zinc-800 text-zinc-300;
-    width: 28%;
 
 /* 
     & .k--sidepanel-handles {

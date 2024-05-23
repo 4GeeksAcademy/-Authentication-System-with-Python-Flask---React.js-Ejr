@@ -1,8 +1,81 @@
 import React from 'react'
 
 import Constants from "../../app/constants.js"
+import { Context } from "../../store/appContext.jsx"
 
 import useClickDrag from '../../effects/useClickDrag.jsx'
+
+const SidePanel=()=>{
+
+  const
+    { language }= React.useContext(Context),
+    [ panelSize, set_panelSize ]= React.useState(0),
+    resizeRef= React.useRef(null),
+    dragEffect= useClickDrag(Constants.MOUSE_BTN_LEFT, resizeRef)
+
+  React.useEffect(()=>{
+    if(dragEffect.delta){
+      console.log(dragEffect.delta[0])
+    }
+  },[dragEffect])
+
+  return (
+    <div className="k--board-sidepanel k--bg-boardpanels">
+      
+      <div className="k--sidepanel-handles flex flex-col w-5 h-full text-xl">
+        <button className="k--boardpanels-btn-discrete min-h-12 flex">
+          <i className="fa fa-solid fa-square-caret-right scale-y-150 my-auto" />
+        </button>
+        <div ref={resizeRef} className="k--boardpanels-btn-discrete k--sidepanel-resizer flex h-full cursor-w-resize">
+          <i className="fa fa-solid fa-grip-lines-vertical mx-2 my-auto" />
+        </div>
+      </div>
+
+      <div className="k--sidepanel-body flex flex-col w-full pr-3">
+
+        <div className="w-full min-h-12 border-b border-zinc-700" />
+
+        <div className="flex flex-col h-full pl-2 pr-4 py-2 gap-2 overflow-y-scroll hidescroll-y">
+          <div className="flex flex-col">
+            <h2 className="font-bold text-xl">{language.get("common.description")}:</h2>
+            <textarea type="text" resize="both" className="bg-transparent text-sm text-zinc-400" placeholder={language.get("placeholder.description")}/>
+          </div>
+          <div className="flex justify-between mx-6 font-bold text-xl">
+            <button className="k--boardpanels-btn"><i className="fa fa-solid fa-book text-xl" /></button>
+            <button className="k--boardpanels-btn"><i className="fa fa-regular fa-eye text-xl" /></button>
+            <button className="k--boardpanels-btn"><i className="fa fa-regular fa-bookmark text-xl" /></button>
+          </div>
+          <div className="bg-zinc-700 min-h-px w-full" />
+          <div className="flex flex-col mx-2 gap-2">
+            <SidePanelExpandable label={language.get("board.common.tags")} icon="fa-solid fa-tag">
+              { Array.from({length:8}).map((e,i)=>
+                <span key={`e-${i}`}>eat {i+1} {i==0?"dick":"dicks"}</span>
+              )}
+            </SidePanelExpandable>
+            <SidePanelExpandable label={language.get("board.common.styles")} icon="fa-solid fa-swatchbook">
+              { Array.from({length:16}).map((e,i)=>
+                <span key={`e-${i}`}>mount {i+1} {i==0?"horse":"horses"}</span>
+              )}
+            </SidePanelExpandable>
+            <SidePanelExpandable label={language.get("board.common.items")} icon="fa-solid fa-cube">
+              { Array.from({length:32}).map((e,i)=>
+                <span key={`e-${i}`}>shot {i+1} {i==0?"kid":"kids"}</span>
+              )}
+            </SidePanelExpandable>
+          </div>
+          <div className="bg-zinc-700 h-px w-full" />
+          <div className="flex flex-col mx-2 gap-2">
+            <SidePanelButton label={language.get("panel.boardsettings.title")} icon="fa-solid fa-gear" />
+            <SidePanelButton label={language.get("panel.announce.title")} icon="fa-solid fa-bullhorn" />
+          </div>
+        </div>
+        <div className="w-full min-h-12 border-t border-zinc-700" />
+      </div>
+    </div>
+  )
+}
+
+export default SidePanel
 
 const SidePanelExpandable=({label, icon, expand, children})=>{
   const [ expanded, set_expanded ]= React.useState(expand ? true : false)
@@ -36,74 +109,3 @@ const SidePanelButton=({label, icon})=>{
     </button>
   )
 }
-
-const SidePanel=()=>{
-
-  const
-    [ panelSize, set_panelSize ]= React.useState(0),
-    resizeRef= React.useRef(null),
-    dragEffect= useClickDrag(Constants.MOUSE_BTN_LEFT, resizeRef)
-
-  React.useEffect(()=>{
-    if(dragEffect.delta){
-      console.log(dragEffect.delta[0])
-    }
-  },[dragEffect])
-
-  return (
-    <div className="k--board-sidepanel k--bg-boardpanels">
-      
-      <div className="k--sidepanel-handles flex flex-col w-5 h-full text-xl">
-        <button className="k--boardpanels-btn-discrete min-h-12 flex">
-          <i className="fa fa-solid fa-square-caret-right scale-y-150 my-auto" />
-        </button>
-        <div ref={resizeRef} className="k--boardpanels-btn-discrete k--sidepanel-resizer flex h-full cursor-w-resize">
-          <i className="fa fa-solid fa-grip-lines-vertical mx-2 my-auto" />
-        </div>
-      </div>
-
-      <div className="k--sidepanel-body flex flex-col pr-3">
-
-        <div className="w-full min-h-12 border-b border-zinc-700" />
-
-        <div className="flex flex-col h-full pl-2 pr-4 py-2 gap-2 overflow-y-scroll hidescroll-y">
-          <div className="flex flex-col">
-            <h2 className="font-bold text-xl">Description:</h2>
-            <span className="text-sm text-zinc-400">this would be the mothafuckin board description, here you can write some short of text about what is all this shit about you know?, or better go jump out of the window, i dont give a shit, go fuck a spider nest</span>
-          </div>
-          <div className="flex justify-between mx-6 font-bold text-xl">
-            <button className="k--boardpanels-btn"><i className="fa fa-solid fa-book text-xl" /></button>
-            <button className="k--boardpanels-btn"><i className="fa fa-regular fa-eye text-xl" /></button>
-            <button className="k--boardpanels-btn"><i className="fa fa-regular fa-bookmark text-xl" /></button>
-          </div>
-          <div className="bg-zinc-700 min-h-px w-full" />
-          <div className="flex flex-col mx-2 gap-2">
-            <SidePanelExpandable label="Tags" icon="fa-solid fa-tag">
-              { Array.from({length:8}).map((e,i)=>
-                <span key={`e-${i}`}>eat {i+1} {i==0?"dick":"dicks"}</span>
-              )}
-            </SidePanelExpandable>
-            <SidePanelExpandable label="Styles" icon="fa-solid fa-swatchbook">
-              { Array.from({length:16}).map((e,i)=>
-                <span key={`e-${i}`}>mount {i+1} {i==0?"horse":"horses"}</span>
-              )}
-            </SidePanelExpandable>
-            <SidePanelExpandable label="Elements" icon="fa-solid fa-cube">
-              { Array.from({length:32}).map((e,i)=>
-                <span key={`e-${i}`}>shot {i+1} {i==0?"kid":"kids"}</span>
-              )}
-            </SidePanelExpandable>
-          </div>
-          <div className="bg-zinc-700 h-px w-full" />
-          <div className="flex flex-col mx-2 gap-2">
-            <SidePanelButton label="Board Settings" icon="fa-solid fa-gear" />
-            <SidePanelButton label="Announce" icon="fa-solid fa-bullhorn" />
-          </div>
-        </div>
-        <div className="w-full min-h-12 border-t border-zinc-700" />
-      </div>
-    </div>
-  )
-}
-
-export default SidePanel

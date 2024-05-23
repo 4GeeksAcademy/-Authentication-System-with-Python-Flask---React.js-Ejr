@@ -11,7 +11,7 @@ from backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
-static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
+static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../static/backend/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 print("Serving static files from: " + static_file_dir)

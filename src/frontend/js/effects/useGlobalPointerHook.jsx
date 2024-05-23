@@ -2,13 +2,24 @@ import React from 'react'
 
 import { Context } from "../store/appContext.jsx"
 
-const _CLICK_EMPTY= {
-  button: -1,
-  origin: null,
-  keys: 0,
-  timestamp: -1,
-  element: null
-}
+const _DEFAULT= Object.freeze({
+  click:{
+    button: -1,
+    origin: null,
+    keys: 0,
+    timestamp: -1,
+    element: null
+  },
+  button: [{stage:0}, {stage:0}, {stage:0}],
+  notify: {
+    onmousedown: null,
+    onmouseup: null,
+    onmousemove: null,
+    onmousedouble: null,
+    onmousewheel: null,
+    onmousechange: null
+  }
+})
 
 let _pointerHook= null
 const getPointerHook= ()=>{ return _pointerHook }
@@ -32,13 +43,13 @@ export const useGlobalPointerHook= ()=>{
       wheel: 0,
       hover: null,
       keys: 0,
-      click: _CLICK_EMPTY,
-      double: _CLICK_EMPTY,
-      button: [{stage:0}, {stage:0}, {stage:0}],
-      dirty: false
+      ..._DEFAULT,
+      double: _DEFAULT.click,
+      //dirty: false
     })
   function merge_pointerState(new_state){ set_pointerState({ ...Object.assign(pointerStateRef.current, new_state) })}
   function update_buttonState(idx, new_button){ const cur_state= pointerStateRef.current.button; return Array.from({length:3}).map((e,i)=>i===idx?new_button:cur_state[i]) }
+  function update_notify(type, e){ const new_notify= pointerStateRef.current.notify; new_notify[type]= e; return new_notify }
 
   const pointerStateRef= React.useRef(pointerState)
   
@@ -76,13 +87,22 @@ export const useGlobalPointerHook= ()=>{
   function handleMusPosition(e){
     merge_pointerState({
       coords: { x: e.clientX, y: e.clientY },
-      hover: e.target
+      hover: e.target,
+      notify: update_notify("onmousemove", e),
     })
   }
   
   // --------------------------------------------------------------- MOUSE WHEEL
 
-  function handleMusWheel(e){ if(!e.ctrlKey) merge_pointerState({ wheel: e.deltaY }) }
+  function handleMusWheel(e){ 
+    if(!e.ctrlKey) {
+      merge_pointerState({ 
+        wheel: e.deltaY,
+        notify: update_notify("onmousewheel", Date.now())
+      })
+    }
+  }
+
   React.useEffect(()=>{ if(pointerState.wheel != 0) merge_pointerState({ wheel: 0 }) } ,[pointerState.wheel]) // restore zoom state to neutral
   
   // --------------------------------------------------------------- MOUSE BUTTON PRESSES
@@ -99,7 +119,8 @@ export const useGlobalPointerHook= ()=>{
             timestamp: e.timeStamp,
             element: e.target
           },
-          dirty: true
+          notify: update_notify("onmousedouble", e),
+          //dirty: true
         })
       }
     }
@@ -127,10 +148,15 @@ export const useGlobalPointerHook= ()=>{
             keys, timestamp, element
           },
           button, 
-          dirty: true
+          notify: update_notify("onmousedown", e),
+          //dirty: true
         })
       }
-      else merge_pointerState({ button, dirty: true })
+      else merge_pointerState({ 
+        button, 
+        notify: update_notify("onmousechange", e), 
+        //dirty: true 
+      })
     }
   }
 
@@ -143,19 +169,30 @@ export const useGlobalPointerHook= ()=>{
         keys: _getEventKeys(e),
         timestamp: e.timeStamp,
         element: e.target,
-        stage: -1
+        stage: 0
       })
 
       if(pointerStateRef.current.click.button !== -1){
-        merge_pointerState({ click:_CLICK_EMPTY, double:_CLICK_EMPTY, button, dirty: true })
+        merge_pointerState({ 
+          click: _DEFAULT.click, 
+          double: _DEFAULT.click, 
+          notify: update_notify("onmouseup", e),
+          button, 
+          //dirty: true
+        })
       }
-      else merge_pointerState({ button, dirty: true })
+      else merge_pointerState({ 
+        button, 
+        notify: update_notify("onmousechange", e), 
+        //dirty: true 
+      })
     }
   }
 
   // --------------------------------------------------------------- DIRTY UPDATES
 
   // handles button stage changes, from pressed to held, from released to unset
+  /*
   React.useEffect(()=>{ 
     if(pointerState.dirty){
       const cur_button= pointerState.button
@@ -163,9 +200,12 @@ export const useGlobalPointerHook= ()=>{
         if(cur_button[btn].stage === 1) cur_button[btn].stage= 2 // held
         else if(cur_button[btn].stage === -1) cur_button[btn].stage= 0 // unset
       }
-      merge_pointerState({ button:cur_button, dirty: false })
+      merge_pointerState({ 
+        button: cur_button, 
+        dirty: false
+      })
     }
-  },[pointerState.dirty])
+  },[pointerState.dirty])*/
 
   // --------------------------------------------------------------- PUBLIC UTILS
 

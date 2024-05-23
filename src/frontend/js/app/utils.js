@@ -91,7 +91,32 @@ const Utils= {
     for(let i=0; i < over; i++) levels.push(Math.exp(b + (M-b) * i / over))
 
     return levels
-  }
+  },
+
+  waitUntil: (predicate, ms, timeout)=>{ 
+    return new Promise( (yep, nop)=>{
+      let _timeout= timeout?? Number.MAX_VALUE
+      
+      const intervalId= setInterval(()=>{
+        if(predicate() || _timeout < 0) _resolve(_timeout > 0)
+        _timeout-= ms
+      }, ms)
+
+      function _resolve(status){
+        clearInterval(intervalId)
+        if(status) yep()
+        else nop()
+      } 
+    })
+  },
+
+  wait: (ms)=>{ 
+    return new Promise( (yep, nop)=>{
+      const timeoutId= setTimeout(()=>{
+        yep()
+      }, ms)
+    })
+  },
 }
 
 export default Utils

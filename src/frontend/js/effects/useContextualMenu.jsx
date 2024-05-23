@@ -6,7 +6,6 @@ const useContextualMenu=(callback)=>{
     window.addEventListener("contextmenu", callback)
     return ()=>{ window.removeEventListener("contextmenu", callback) }
   },[])
-  
 }
 
 export default useContextualMenu

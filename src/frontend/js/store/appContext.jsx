@@ -8,15 +8,27 @@ const appContext = ReactComponent => {
 		const [state, setState] = React.useState(
 			storeState({
 				getStore: () => state.store,
+				getLanguage: () => state.language,
 				getActions: () => state.actions,
-				setStore: updatedStore => _set(Object.assign(state.store, updatedStore)),
-        mergeStore: (updatedStore, objectsOnly=true) => _set(_merge(state.store, updatedStore, objectsOnly))
+				setStore: new_store => _setstore(Object.assign(state.store, new_store)),
+        mergeStore: (new_store, objectsOnly=true) => _setstore(_merge(state.store, new_store, objectsOnly)),
+				setLanguage: new_language => _setlanguage(Object.assign(state.language, new_language)),
 			})
 		)
 
-    function _set(new_store) {
+    function _setstore(new_store) {
       setState({
         store: new_store,
+        language: { ...state.language },
+        actions: { ...state.actions },
+        timestamp: Date.now()
+      })
+    }
+
+    function _setlanguage(new_language) {
+      setState({
+        store: { ...state.store },
+        language: { ...new_language, get:state.language.get },
         actions: { ...state.actions },
         timestamp: Date.now()
       })
@@ -24,30 +36,13 @@ const appContext = ReactComponent => {
 
     function _merge(a, b, objectsOnly) {
       return Object.entries(b).reduce((o, [k, v]) => {
-          o[k] = v && typeof v === 'object' ? _merge(o[k] = o[k] || (!objectsOnly && (Array.isArray(v) ? [] : {})), v, objectsOnly) : v;
-          return o;
-      }, a);
+          o[k] = v && typeof v === 'object' ? _merge(o[k] = o[k] || (!objectsOnly && (Array.isArray(v) ? [] : {})), v, objectsOnly) : v
+          return o
+      }, a)
     }
 
     // call initialize on startup
 		React.useEffect(() => { state.actions.initialize() }, [])
-
-    // applies darkMode changes to actual page
-    React.useEffect(()=>{
-      if(state.store.userPrefs.darkMode) {
-        document.body.setAttribute("data-darkmode","👍")
-      }
-      else document.body.removeAttribute("data-darkmode")
-    },[state.store.readyState.frontend, state.store.userPrefs.darkMode])
-
-    // notify about fakeuser usage
-    React.useEffect(()=>{
-      if(state.store.fakeUser) {
-        const user= state.store.fakeUser
-        console.log(`Using fake user: ${user.username} (${user.email})`)
-      }
-      else console.log(`fake user removed`)
-    },[state.store.fakeUser])
 
 		return (
 			<Context.Provider value={state}>

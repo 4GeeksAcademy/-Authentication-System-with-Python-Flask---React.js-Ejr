@@ -112,6 +112,13 @@ module.exports = {
         "90scr": "90vh",
         "100scr": "100vh"
       },
+      spacing: {
+        "2px": '2px',
+        "4px": '4px',
+        "8px": '8px',
+        "16px": '16px',
+        "32px": '32px',
+      },
       outline: {
         dev: "1px dashed #FF00FF"
       },

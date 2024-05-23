@@ -8,7 +8,7 @@ const List = ({id, title, coords, bref}) => {
   // --------------------------------------------------------------- INITIALIZATION 
 
 	const 
-    { store, actions } = React.useContext(Context),
+    { language, store, actions } = React.useContext(Context),
     itemRef= React.useRef(null)
 
   const 
@@ -127,7 +127,7 @@ const List = ({id, title, coords, bref}) => {
         <div className="flex flex-row justify-between h-6 relative text-lg text-gray-400 dark:text-zinc-600">
           <button className="flex hover:text-gray-600 dark:hover:text-zinc-500" onClick={handleAddRowButton}>
             <i className="mx-2 mb-2 fa fa-solid fa-plus my-auto" />
-            <span className="-mt-1.5">Add Row</span>
+            <span className="-mt-1.5">{language.get("board.list.btn-additem")}</span>
           </button>
           <div className="flex">
             <div className="flex mr-4 gap-3">

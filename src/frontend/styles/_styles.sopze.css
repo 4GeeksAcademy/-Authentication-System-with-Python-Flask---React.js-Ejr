@@ -12,6 +12,11 @@
 
   --canvas-background: #32363a;
   --canvas-background-size: 1024px;
+  
+  --contextmenu-coords-x: 0px;
+  --contextmenu-coords-y: 0px;
+  --contextmenu-offset-x: 0px;
+  --contextmenu-offset-y: 0px;
 
   --overlay-cursor: auto;
   --overlay-pointerevents: none;
@@ -27,16 +32,15 @@
   background-size: "480px";
   width: 100vw;
   height: 100vh;
+  cursor: crosshair;
+  user-select: none;
   & a {
-    @supports (background-clip:text) or (-webkit-background-clip:text) {
-      color: transparent;
-      background: inherit;
-      background-clip: text;
-      -webkit-background-clip: text;
-      filter: invert(1.0);
-    }
-    cursor: crosshair;
-    filter: invert(2.0) blur(1px)
+    color: transparent;
+    background: inherit;
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: invert(1.0);
+    cursor: inherit;
   }
 }
 
@@ -83,6 +87,17 @@
     scale: 1.15;
     transition: translate 350ms cubic-bezier(.2,1.21,1,.95), scale 250ms ease-in;
   }
+}
+
+/* --------------------------------------------------- CONTEXT MENU */
+
+.k--contextmenu {
+  position: fixed;
+  left: var(--contextmenu-offset-x); 
+  top: var(--contextmenu-offset-y); 
+  z-index: 1;
+  user-select: none;
+  transform: translate(var(--contextmenu-coords-x), var(--contextmenu-coords-y));
 }
 
 /* --------------------------------------------------- BOARD CANVAS */
@@ -166,15 +181,15 @@
   }
 }
 
+@keyframes grab-in {
+  from{ left: 0; top: 0; box-shadow: 0 0 0 #0008 }
+  to{ top: -.3em; box-shadow: -.2em .9em .2em #0008 }
+}
+
 #board-canvas-overlay {
   content: ""; position: fixed; inset:0; z-index: -1;
   cursor: var(--overlay-cursor);
   pointer-events: var(--overlay-pointerevents);
-}
-
-@keyframes grab-in {
-  from{ left: 0; top: 0; box-shadow: 0 0 0 #0008 }
-  to{ top: -.3em; box-shadow: -.2em .9em .2em #0008 }
 }
 
 /* --------------------------------------------------- BOARD CONTENT */

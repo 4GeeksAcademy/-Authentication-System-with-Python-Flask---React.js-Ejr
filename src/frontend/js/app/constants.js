@@ -1,3 +1,4 @@
+
 const Constants= Object.freeze({
 
   MOUSE_BTN_LEFT: 0,
@@ -15,14 +16,24 @@ const Constants= Object.freeze({
   SESSION_MODE_RECOVER: 3,
   SESSION_MODE_DELETED: 4,
 
-  USERPREFS_DARKMODE: "darkMode",
-
   DEVPREFS_SHOWSTATE: "showState",
   DEVPREFS_PANELPOSITION: "panelPosition",
   DEVPREFS_DEVRENDER: "devRender",
   DEVPREFS_FAKEAUTH: "fakeAuth",
 
-  BOARD_SIZE_PIXELS: 1048576,
+  USERPREFS_DARKMODE: "darkMode",
+  USERPREFS_LANGUAGE: "language",
+
+  LANGUAGE_FILES: [
+    "en-us",
+    "es-es"
+  ],
+
+  STORE_DIRTY: {
+    session:      0b0000_0000_0000_0001,
+    location:     0b0000_0000_0000_0010,
+    board:        0b0000_0000_0000_0100
+  },
 
   CANVAS_DIRTY: {
     size:         0b0000_0000_0000_0001,
@@ -35,22 +46,26 @@ const Constants= Object.freeze({
 
     transform:    0b0000_0000_0000_1111,
     display:      0b0000_0000_0111_0000,
-    all:          0b0000_0000_0111_1111
+    all:          0b0000_0000_1111_1111
   },
 
-  ITEMTYPE_WORKSPACE: 0,
-  ITEMTYPE_PROJECT: 1,
-  ITEMTYPE_TEAM: 2,
-  ITEMTYPE_USER: 3,
-  ITEMTYPE_BOARD: 4,
-  ITEMTYPE_LIST: 5,
-  ITEMTYPE_TASK: 6,
-  ITEMTYPE_TEXT: 7,
-  ITEMTYPE_MEDIA: 8,
-  ITEMTYPE_EMBED: 9,
+  ITEMTYPE: {
+    workspace:  0,  
+    project:    1,  
+    team:       2,  
+    user:       3,  
+    board:      4,  
+    list:       5,  
+    task:       6,  
+    text:       7,  
+    media:      8,  
+    embed:      9
+  },
 
-  ITEMDATA_COORDS: "coords",
-  ITEMDATA_SIZE: "size",
+  ITEMDATA: {
+    coords: "coords",
+    size: "size"
+  },
 
   ITEM_DIRTY: {
     coords:       0b0000_0000_0000_0001,
@@ -60,7 +75,10 @@ const Constants= Object.freeze({
 
     transform:    0b0000_0000_0000_0011,
     display:      0b0000_0000_0000_1100,
-    all:          0b0000_0000_0000_1111
+
+    all:          0b0000_0000_0000_1111,
+
+    data:         0b1000_0000_0000_0000 // require database reload
   }
 })
 
