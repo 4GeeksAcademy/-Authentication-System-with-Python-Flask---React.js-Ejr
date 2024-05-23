@@ -527,7 +527,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let myToken = localStorage.getItem("token");
 				
 				try {
-				  let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users", 
+				  let response = await fetch(`${process.env.BACKEND_URL}/api/users`, 
 				  {
 					method: "GET",
 					headers: {
@@ -560,7 +560,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let myToken = localStorage.getItem("token");
 
 				try {
-				  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
+				  let response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}`, 
 				  {
 					method: "GET",
 					headers: {
