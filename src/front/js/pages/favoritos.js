@@ -28,7 +28,7 @@ export const Favoritos = () => {
                                             
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
                                                 <div className="cardvehicles" href="#">
-                                                    <img src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
+                                                    <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}}/>
                                                 </div>
                                                 <div className="card-body p-1">
                                                     <div>
