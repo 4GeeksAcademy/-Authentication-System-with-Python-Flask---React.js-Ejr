@@ -63,7 +63,7 @@ export const Navbar = () => {
 								</li>
 								<li className="nav-item dropdown mb-3" data-bs-toggle="offcanvas">
 									<Link to="/miscoches" className="text-decoration-none">
-										<div className="text-black text-decoration-none">Mis Coches en alquiler</div>
+										<div className="text-black text-decoration-none">Mis Coches en</div>
 									</Link>
 								</li>
 								<li className="nav-item mb-3" data-bs-toggle="offcanvas">
