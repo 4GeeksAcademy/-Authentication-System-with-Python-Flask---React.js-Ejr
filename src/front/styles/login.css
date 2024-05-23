@@ -1,0 +1,18 @@
+/* Estilos para el formulario de login */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #6c757d; /* Ajusta este color según tus preferencias */
+}
+
+/* Otros estilos generales */
+.error {
+    color: #e74c3c; /* Color para mensajes de error */
+}

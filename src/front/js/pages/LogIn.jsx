@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from 'react-router-dom';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"; // Importación de los iconos
 
 export const LogIn = () => {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ export const LogIn = () => {
         password: '',
     });
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar la contraseña
 
     const handleInputChange = (e) => {
         setLogInData({ ...logInData, [e.target.name]: e.target.value });
@@ -32,13 +34,24 @@ export const LogIn = () => {
     return (
         <div>
             <h1>Log In</h1>
-            {error && <p className="error">{error}</p>} 
+            {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input type="email" id="email" name="email" onChange={handleInputChange} required />
 
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" onChange={handleInputChange} required />
+                <div className="password-wrapper">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        onChange={handleInputChange}
+                        required
+                    />
+                    <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                    </span>
+                </div>
 
                 <button type="submit">Log In</button>
                 <Link to="/signup">
@@ -48,3 +61,4 @@ export const LogIn = () => {
         </div>
     );
 };
+

@@ -15,9 +15,6 @@ import jwt
 import logging
 
 
-
-
-
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -62,10 +59,6 @@ def new_user():
         # Convierte una variable de valor (" ") a booleano
         if admin is not None:
             admin = bool(admin)
-
-        # Las imagenes trabajan en formato Binary. Por los momento lo dejamos como none
-        # if image == '': 
-        #     image = None
 
         if not email.strip() or not password.strip():
             return jsonify({"message": "Missing required fields: email or password"}), 400
