@@ -26,6 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let data = await response.json();
                     localStorage.setItem("jwt-token", data.token);
                     localStorage.setItem("userId", data.user_id); // Guardar userId en localStorage
+                    localStorage.setItem("username", data.username)
                     setStore({ user: data });
 
                     return true;
@@ -88,7 +89,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             logout: () => {
                 localStorage.removeItem('jwt-token');
-                localStorage.removeItem('userId'); // Eliminar userId de localStorage
+                localStorage.removeItem('userId')
+                localStorage.removeItem('username'); // Eliminar userId de localStorage
                 setStore({ user: null });
             },
 
@@ -255,6 +257,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error initializing data:', error);
                     setStore({ loading: false });
                     console.log(store)
+                }
+            },
+            joinRoom: async (roomId) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/join`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error("Failed to join room");
+                    return true;
+                } catch (error) {
+                    console.error(error);
+                    return false;
                 }
             },
         }

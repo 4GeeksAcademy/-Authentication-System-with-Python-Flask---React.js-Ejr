@@ -3,7 +3,9 @@ import { Context } from "../store/appContext";
 import { useNavigate } from 'react-router-dom';
 
 export const CreateRoom = () => {
+
     const { store, actions } = useContext(Context);
+    const token = localStorage.getItem('jwt-token');
     const [roomData, setRoomData] = useState({
         room_name: '',
         game_id: '',
@@ -38,7 +40,7 @@ export const CreateRoom = () => {
             date: roomData.date.toString(),
             time: roomData.time.toString()
         };
-        console.log('FORMATTED ROOMDATA',formattedRoomData)
+        console.log('FORMATTED ROOMDATA', formattedRoomData)
         const success = await actions.createRoom(formattedRoomData);
         if (success) {
             navigate('/');
@@ -65,7 +67,8 @@ export const CreateRoom = () => {
     }, []);
 
     return (
-        <div className="container mt-5">
+        <div>
+            {token ? (<div className="container mt-5">
             <h2>Create a New Room</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
@@ -179,6 +182,11 @@ export const CreateRoom = () => {
                 </div>
                 <button type="submit" className="btn btn-primary">Create Room</button>
             </form>
+        </div>): (
+            <div><p>nop</p></div>
+        ) }
         </div>
+
+
     );
 };
