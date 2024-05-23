@@ -1,19 +1,16 @@
 
+/* Estilos generales para Playpal */
 body {
     background: linear-gradient(to bottom, #000000, #131E26, #3B5F79, #629DC8);
-    
     overflow-x: hidden;
-    
     height: 100vh;
-    
     margin: 0;
-    
     font-family: Arial, sans-serif;
-    color: white
+    color: white;
 }
 
 .room {
-    color: black
+    color: black;
 }
 
 .home-container {
@@ -27,3 +24,4 @@ body {
 .create-room-button {
     margin-left: auto; /* Para alinear el botón a la derecha */
 }
+
