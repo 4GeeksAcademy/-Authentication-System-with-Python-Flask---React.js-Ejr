@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import CoffeeLogo from "./CoffeeLogo";
 import { Context } from "../store/appContext";
+import SansationLightTTF from '../../font/Sansation-Light.ttf'; // Correct path
 
 export const Navbar = () => {
   const location = useLocation();
@@ -21,11 +22,10 @@ export const Navbar = () => {
     const style = document.createElement('style');
     style.textContent = `
       @font-face {
-        font-family: 'Sensation Light';
-        src: url('/path-to-your-font/Sensation-Light.woff2') format('woff2'),
-             url('/path-to-your-font/Sensation-Light.woff') format('woff');
-        font-weight: light;
-        font-style: light;
+        font-family: 'Sansation Light';
+        src: url(${SansationLightTTF}) format('truetype');
+        font-weight: 300;
+        font-style: normal;
       }
     `;
     document.head.append(style);
@@ -49,7 +49,7 @@ export const Navbar = () => {
             position: 'absolute', 
             left: '50%', 
             transform: 'translateX(-50%)',
-            fontFamily: 'Sensation Light' 
+            fontFamily: 'Sansation Light' 
           }}
         >
           CODEFUSION CAFE
