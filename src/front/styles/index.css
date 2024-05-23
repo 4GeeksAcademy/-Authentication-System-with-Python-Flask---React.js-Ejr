@@ -31,7 +31,14 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.border-bottom {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: rgb(7, 65, 7);
+}
+
 .subtitulos {  /*del agregarForm*/
+    margin-top: 15px;
     color: rgb(33, 103, 33);
     font-size: 1.3rem;
 }
@@ -45,10 +52,24 @@
     margin-top: 30px;
 }
 
-.border-bottom {
-    margin-bottom: 15px;
-    color: rgb(7, 65, 7);
+.dropzone {
+    text-align: center;
+    padding: 20px;
+    border: 3px dashed #eeee;
+    background-color: #fafafa;
+    color: #bdbdbd;
 }
+
+.upload-img-text {
+    color: rgb(7, 65, 7);
+} 
+
+.imagenes-subidas {
+    display: flex; /* Activar modo flexbox */
+    flex-direction: row; /* Disponer imágenes en fila horizontal */
+    justify-content: space-between; /* Distribuir imágenes con espacio entre ellas */
+    align-items: center; /* Alinear imágenes verticalmente en el centro */
+  }
 
 .container {
     min-height: 100%;

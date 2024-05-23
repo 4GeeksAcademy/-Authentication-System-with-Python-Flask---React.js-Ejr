@@ -74,7 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			addVehicle: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio) => {
+			addVehicle: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio, url_img1, url_img2, url_img3) => {
 				const token = localStorage.getItem("token")
                 try {
 			 		const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
@@ -89,7 +89,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 		 			motor: motor,
 			 		 			tipo_cambio: tipo_cambio,
 			 		 			asientos: parseInt(asientos),
-			 					precio: parseInt(precio)
+			 					precio: parseInt(precio),
+								url_img1: url_img1,
+								url_img2: url_img2,
+								url_img3: url_img3
 			 	 		})
                  	});
 					if (response.status === 200) {
