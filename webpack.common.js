@@ -11,7 +11,7 @@ module.exports = {
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'static/frontend'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
   module: {
