@@ -13,7 +13,7 @@ const diseñoChat = {
 
 }
 const handleLinkClick = (url) => {
-    window.open(url, '_blank');
+    window.location.href = url;
   };
 
 export const Chat = () => {
@@ -68,8 +68,8 @@ export const Chat = () => {
                     {
                         id:'respuesta-ayuda-perfil',
                         options: [
-                            {value:"crearcuenta", label: "Crear una cuenta", trigger: () => handleLinkClick('https://special-space-garbanzo-v6vrj6pxgp4w3xj5j-3000.app.github.dev/signup')},
-                            {value:"iniciarsesion", label: "Iniciar sesión", trigger: () => handleLinkClick('https://special-space-garbanzo-v6vrj6pxgp4w3xj5j-3000.app.github.dev/login')}
+                            {value:"crearcuenta", label: "Crear una cuenta", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/signup`)},
+                            {value:"iniciarsesion", label: "Iniciar sesión", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/login`)}
                         ]
                     },
                     {
@@ -116,19 +116,14 @@ export const Chat = () => {
                     },
                     {
                         id: 'mensaje-ayuda-recogida-entrega',
-                        message: 'Una vez que se haya aprobado tu pago, recibirás un email con la dirección de nuestra oficina. En el momento de la entrega, debes comprobar el estado del coche y ante cualquier detalle informarselo a uno de nuestros trabajadores',
+                        message: 'Deberas recoger tu coche en nuestra oficina. Clickea en Nosotros y seras redirijido a nuestra información',
                         trigger: 'respuesta-ayuda-recogida-entrega'
                     },
                     {
                         id: 'respuesta-ayuda-recogida-entrega',
-                        component: (
-                            <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
-                            </div>
-                        ),
-                        end: true
+                        options: [
+                            {value:"nosotros", label: "Nosotros", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
+                        ],
                     },
                     {
                         id: 'mensaje-ayuda-daños',
@@ -235,7 +230,7 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-entrego-mi-coche',
                         options: [
-                            {value:"nosotros", label: "Nosotros", trigger: () => handleLinkClick('https://special-space-garbanzo-v6vrj6pxgp4w3xj5j-3000.app.github.dev/sobrenosotros')},
+                            {value:"nosotros", label: "Nosotros", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
                         ],
                     },
                     {
