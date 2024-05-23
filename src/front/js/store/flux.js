@@ -29,7 +29,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			creationTrainingClasses: [],
 			bookingData:[],
 			memberships: [],
-            membershipsLoading: false
+            membershipsLoading: false,
+			images: []
+
 
 
 
@@ -582,6 +584,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
 				}
 			  },
+
+			  uploadImage: async (formData) => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/upload_img`;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                        body: formData,
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, error: data.error || "Unknown error occurred." };
+                    }
+                } catch (error) {
+                    console.error("Error uploading image:", error);
+                    return { success: false, error: error.message };
+                }
+            },
+
+			fetchImages: async () => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/all_images`;
+
+				try {
+                    const response = await fetch(url, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                    });
+                    const data = await response.json();
+                    setStore({ images: data });
+                } catch (error) {
+                    console.error('Error fetching images:', error);
+                }
+            },
 
 		},
 	}
