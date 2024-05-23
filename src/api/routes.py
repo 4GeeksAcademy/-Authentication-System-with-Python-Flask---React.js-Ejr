@@ -73,6 +73,11 @@ def add_vehicle():
     unit_amount= precio * 100,
     currency="eur",
     )
+    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img1 == "" or url_img2 == "" or url_img3 == ""):
+        return jsonify({"msg": "Todos los campos son obligatorios."}), 400
+    existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
+    if existing_vehicle:
+        return jsonify({"msg": "El vehículo con esta matrícula ya existe"}), 409
     new_vehicle = Vehicle(
         marca_modelo=marca_modelo,
         matricula=matricula,

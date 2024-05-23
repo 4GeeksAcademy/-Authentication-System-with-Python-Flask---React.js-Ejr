@@ -24,7 +24,7 @@ export const Details = () => {
     useEffect(() => {
         setIsFavorite(store.favorites.some((favorite) => favorite.id == params.id));
     }, [store.favorites]);
-
+    //console.log(store.details);
     return (
         <>
             <div className="footer-view d-flex container mt-5 justify-content-between align-items-center">
@@ -32,13 +32,13 @@ export const Details = () => {
                     <div id="carouselExample" className="carousel slide">
                         <div className="carousel-inner">
                             <div className="carousel-item active">
-                                <img src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_700/MjAxNzE0ODI3NTE1NjY4MjQ0/how-to-buy-cars-cheaply-and-sell-them-at-a-profit.jpg" className="d-block w-100 rounded-3" alt="..." />
+                                <img src={store.details?.url_img1} style={{height:"450px", objectFit: "cover"}} className="d-block w-100 rounded-3" alt="..." />
                             </div>
                             <div className="carousel-item">
-                                <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=road-car-vehicle-170811.jpg&fm=jpg" className="d-block w-100 rounded-3" alt="..." />
+                                <img src={store.details?.url_img2} style={{height:"450px", objectFit: "cover"}} className="d-block w-100 rounded-3" alt="..." />
                             </div>
                             <div className="carousel-item">
-                                <img src="https://techservicecenter.nl/wp-content/uploads/2022/11/Hoog-olieverbruik-Audi-A5.jpg" className="d-block w-100 rounded-3" alt="..." />
+                                <img src={store.details?.url_img3} style={{height:"450px", objectFit: "cover"}} className="d-block w-100 rounded-3" alt="..." />
                             </div>
                         </div>
                         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -108,6 +108,7 @@ export const Details = () => {
                             marca_modelo={store.details.marca_modelo}
                             precio={store.details.precio}
                             precio_id_stripe={store.details.precio_id_stripe}
+                            url_img1={store.details.url_img1}
                         />
                     </div>
                 </div>

@@ -13,7 +13,7 @@ export const MisCoches = () => {
         <>
             <div className="footer-view vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
-                    <h1 className="h1 pt-2"><strong>Mis Coches en renta</strong></h1>
+                    <h1 className="h1 pt-2"><strong>Mis vehículos en alquiler</strong></h1>
 					<div className="row Map Cards text-dark d-flex justify-content-center">
                         {store.myVehicles.length === 0 
                             ? (
@@ -22,7 +22,7 @@ export const MisCoches = () => {
                                     <div className="texto-favoritos">Pulsa en el botón añadir que se muestra a continuación para añadir tu primer coche</div>
                                     <Link to={`/agregarvehiculo`}>
                                         <div className="mt-3">
-                                            <button className="rounded">Añadir mi primer Coche</button>
+                                            <button className="rounded">Añadir mi primer coche</button>
                                         </div>
                                     </Link>
                                 </>
@@ -32,7 +32,7 @@ export const MisCoches = () => {
                                         <div className="card col-md-4 mb-2 me-4 mt-4" style={{ width: "22rem"}}>
                                             <div>
                                                 <a className="cardvehicles" href="#">
-                                                    <img src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
+                                                    <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
                                                 </a>
                                             </div>
                                             <div className="card-body pb-0">
