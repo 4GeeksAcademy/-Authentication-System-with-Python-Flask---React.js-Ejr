@@ -11,7 +11,7 @@ import axios from "axios";
 
 export const AgregarForm = (props) => {
     
-    const {actions} = useContext(Context)
+    const {actions} = useContext(Context);
     
     const [inputMarcayModelo, setInputMarcayModelo]=useState("");
     const [inputMatricula, setInputMatricula]=useState("");
@@ -19,12 +19,7 @@ export const AgregarForm = (props) => {
     const [inputCambio, setInputCambio]=useState("");
     const [inputAsientos, setInputAsientos]=useState("");
     const [inputPrecio, setInputPrecio]=useState("");
-    const [inputUrl_img1, setInputUrl_img1] = useState("");
-    const [inputUrl_img2, setInputUrl_img2] = useState("");
-    const [inputUrl_img3, setInputUrl_img3] = useState("");
-
-    const [image, setImage] = useState({array: []})  //gracias a este useState({array...}) vamos a poder ver las 3 imágenes
-    const [imageUrl, setImageUrls] = useState([]);  //mantengo la url de las img subidas
+    const [image, setImage] = useState({array: []});  
     const [loading, setLoading] = useState("");
     
     const handleDrop = (files) => {
@@ -42,50 +37,62 @@ export const AgregarForm = (props) => {
                 })
                 .then((response) => {
                     const data = response.data
-                    const imageurl = data.secure_url
-                    let specificArrayInObject = image.array;
-                    specificArrayInObject.push(imageurl);
-                    const newObj = {...image, specificArrayInObject};
-                    setImage(newObj);
-                    setImageUrls(prevState => [...prevState, imageUrl]);
-                    //console.log(image);
-                })
-        })
+                    const imageUrl = data.secure_url
+                    setImage(prevState => ({
+                        ...prevState, array: [...prevState.array, imageUrl].slice(0, 3)
+                    }));
+                });
+        });
         axios.all(uploaders).then(() => {
             setLoading("false");
         })
     }
+    
+    const eliminarImagen = (item) => {
+        console.log(image);
+        const nuevasImagenes = image.array.filter((img) => {
+          return img != item
+        })
+        setImage({array:nuevasImagenes});
+    };
 
-    function imagePreview() {       {/*si tenemos imagenes seleccionadas las mostrara y si no nada */}
+    function imagePreview() {
         if(loading === "true") {
-            return <h4>Cargando...</h4>
+            return <h5>Cargando...</h5>
         }
         if(loading === "false") {
-            return (<h4>
+            return (<h6>
                 {image.array.length <= 0
                 ? "No tiene imágenes"
-                : image.array.map((item) => (
-                    <img alt="uploaded_image"
+                : image.array.map((item, index) => (
+                    <>
+                        <img key={index} alt="uploaded_image"
                     style={{width: "320px"}}
                     src={item}
                     />
+                    <div onClick={() => 
+                        { 
+                            eliminarImagen(item)}
+                    }>
+                        <button  className="btn btn-outline-secondary" style={{margin:"auto"}}> Eliminar imagen </button>
+                         </div>
+                    </>
                 ))}   
-            </h4>)
+            </h6>)
         }
-    }
-    // , height: "70px", backgroundSize: "cover", paddingRight:"15px"
-    // const eliminarImagen = (indexImagen) => {
-    //      const nuevasImagenes = [...image];
-    //      nuevasImagenes.splice(indexImagen, 1);
-    //      setImage(nuevasImagenes);
-    //  };
+    };
 
     const navigate = useNavigate();
-    
 
     async function handleSubmit(e) {
-        e.preventDefault()
-        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, inputUrl_img1, inputUrl_img2, inputUrl_img3) 
+        e.preventDefault();
+        if (image.array.length !==3) {
+            swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
+            return;
+        }
+        const [url_img1, url_img2, url_img3] = image.array;
+
+        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, url_img1, url_img2, url_img3); 
         if (respuesta === "success"){
             swal ( "Vehículo añadido correctamente", ":)",  "success" )
              navigate("/");
@@ -148,8 +155,6 @@ export const AgregarForm = (props) => {
                     {imagePreview()}
                     </Container>
                 </div>
-                {/* <button className="btn btn-outline-secondary" onClick={() => eliminarImagen(index)}> 
-                Eliminar imagen </button> */}
                 <div className="d-flex justify-content-center" id="btnAgregarForm">
                 <button type="submit" className="btn btn-outline-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
                 </div>
