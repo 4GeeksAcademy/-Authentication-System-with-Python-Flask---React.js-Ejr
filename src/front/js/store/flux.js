@@ -81,10 +81,10 @@ const getState = ({ getStore, setStore }) => {
 					body: JSON.stringify(formData),
 				});
 
-				if (response.ok) {					
-					sessionStorage.setItem("role", decoded.role);
-					sessionStorage.setItem("user_id", decoded.sub);
-					setStore({ user_id: decoded.sub, role: decoded.role });
+				if (response.ok) {
+					const updatedUserData = await response.json();
+					sessionStorage.setItem("user_data", JSON.stringify(updatedUserData));
+					setStore({ user_data: updatedUserData });
 				} else {
 					console.error('Error sending user data');
 				}

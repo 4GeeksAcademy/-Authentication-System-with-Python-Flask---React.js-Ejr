@@ -139,7 +139,6 @@ def add_or_update_user_data(id):
     data = request.json
     existing_user_data = User_data.query.filter_by(user_id=id).first()
     if existing_user_data:
-        print ("Existe user Data", existing_user_data)
         existing_user_data.user_name = data.get("user_name", existing_user_data.user_name)
         existing_user_data.user_weight = data.get("user_weight", existing_user_data.user_weight)
         existing_user_data.user_height = data.get("user_height", existing_user_data.user_height)
@@ -152,7 +151,6 @@ def add_or_update_user_data(id):
 
         return jsonify(serialized_user_data), 200
     else:
-        print ("ENTRO AQUI", existing_user_data)
         new_user_data = User_data(
             user_name=data.get("user_name"),
             user_weight=data.get("user_weight"),

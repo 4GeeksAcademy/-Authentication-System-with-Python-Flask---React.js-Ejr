@@ -10,10 +10,8 @@ const PersonalData = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!store.user_data) {
-      actions.fetchUserData();
-    }
-  }, [store.user_id]);
+    actions.fetchUserData();
+  }, []);
 
   const handleEditForm = () => {
     navigate("/user/edit_form");

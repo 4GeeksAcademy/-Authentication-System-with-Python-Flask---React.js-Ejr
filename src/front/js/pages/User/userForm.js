@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "./../../../styles/User-styles/userForm.css";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const userForm = () => {
     const { store, actions } = useContext(Context);
@@ -24,11 +23,10 @@ const userForm = () => {
         });
     };
 
-
-    const handleSubmit = async () => {
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();  
         try {
-
+            
             if (
                 formData.user_name === '' ||
                 //formData.user_age === '' ||
@@ -39,12 +37,12 @@ const userForm = () => {
                 alert('Please, complete all fields.');
                 return;
             } else {
+                
                 await actions.postUserData(formData);
-                navigate(`/user/${store.user_id}`)
+                
+                navigate(`/user/${store.user_id}`);
             }
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error('Error de red:', error);
         }
     };
@@ -52,10 +50,7 @@ const userForm = () => {
     return (
         <div className="container-form">
             <div className="form-container">
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    handleSubmit(e);
-                }}>
+                <form onSubmit={handleSubmit}>
                     <label>
                         Full Name:
                         <input
@@ -67,7 +62,7 @@ const userForm = () => {
                         />
                     </label>
                     <br />
-                    <label>
+                    {/* <label>
                         Age
                         <input
                             type="number"
@@ -78,7 +73,7 @@ const userForm = () => {
                             required
                         />
                     </label>
-                    <br />
+                    <br /> */}
                     <label>
                         Height (cm):
                         <input
@@ -131,4 +126,5 @@ const userForm = () => {
         </div>
     );
 }
+
 export default userForm;
