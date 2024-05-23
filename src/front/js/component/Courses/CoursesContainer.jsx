@@ -4,12 +4,14 @@ import '../../../styles/components.css';
 import { useNavigate } from "react-router-dom";
 
 
+
+
 export const CoursesContainer = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
 
     const handleViewCourses = () => {
-        navigate(<Courses />)
+        navigate(<Course />)
     }
 
     function handleAddTrolley() {

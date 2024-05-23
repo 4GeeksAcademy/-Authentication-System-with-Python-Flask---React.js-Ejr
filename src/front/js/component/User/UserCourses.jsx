@@ -1,5 +1,5 @@
 import React from 'react'
-import { CoursesContainer } from '../Courses/CoursesContainer'
+import { CoursesContainer } from '../Courses/CoursesContainer.jsx'
 
 export const UserCourses = () => {
   return (

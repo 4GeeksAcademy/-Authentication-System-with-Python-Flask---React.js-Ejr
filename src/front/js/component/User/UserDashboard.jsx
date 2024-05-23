@@ -16,6 +16,7 @@ export const UserDashboard = () => {
 
     const handleMyCourses = () => {
         setButtonSelected(<CoursesContainer />)
+        actions.getCourse()
     }
 
     const handleMyProfile = () => {

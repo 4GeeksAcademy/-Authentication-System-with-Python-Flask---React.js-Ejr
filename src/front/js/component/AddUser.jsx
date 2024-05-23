@@ -85,10 +85,14 @@ export const AddUser = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (store.error === '' && selectedRole !== '' && counter === 7) {
-                    setRedirectPath('/LogIn');
-                    clearInterval(interval);
+                if (msgError === '' && msg === ''){
+                    return
+                      
+                }else if(store.error === '' && selectedRole !== '' && counter === 7){
+                    setRedirectPath(`/${selectedRole}View`)
+                    clearInterval(interval)
                 }
+                
                 return prevCounter + 1;
             });
         }, 500);
