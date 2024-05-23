@@ -249,14 +249,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return []; 
                 } 
             },
-			totalpayment: (vehicle_id, marca_modelo, precio, days, precio_id_stripe) => {
+			totalpayment: (vehicle_id, marca_modelo, precio, days, precio_id_stripe, url_img1) => {
 				setStore({
 					checkout: {
 						vehicle_id: vehicle_id,
 						marca_modelo: marca_modelo,
 						precio: precio,
 						days: days,
-						precio_id_stripe: precio_id_stripe
+						precio_id_stripe: precio_id_stripe,
+						url_img1: url_img1
 					}
 				})
 			},
