@@ -54,7 +54,8 @@ export const Profile = () => {
         try {
             const success = await actions.updateProfile(profileData);
             if (success) {
-                await actions.getProfile(); // Fetch the profile again after update
+                const updatedProfile = await actions.getProfile(); // Fetch the profile again after update
+                localStorage.setItem('username', updatedProfile.username); // Update username in localStorage
                 setIsEditing(false);
             } else {
                 setError('Failed to update profile. Please try again.');
