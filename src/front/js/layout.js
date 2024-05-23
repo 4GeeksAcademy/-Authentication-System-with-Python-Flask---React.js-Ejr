@@ -28,6 +28,8 @@ import UserDataDetail from "./pages/UserDataDetail.jsx"
 import UserBooking from "./pages/UserBooking.jsx"
 import CreateClasses from "./component/CreateClasses.jsx";
 import ModulePage from "./pages/ModulePage.jsx";
+import EditProfile from "./component/EditProfile.jsx";
+import MembershipPurchase from "./component/MembershipPurchase.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
 import Users from "./pages/Users.jsx"; // revisar
@@ -64,6 +66,8 @@ const Layout = () => {
                         <Route element={<PrivatePageUser />} path="/PrivatePageUser" />
                         <Route element={<UserDataDetail />} path="/UserDataDetail" />
                         <Route element={<UserBooking />} path="/UserBooking" />
+                        <Route element={<EditProfile />} path="/EditProfile" />
+                        <Route element={<MembershipPurchase />} path="/MembershipPurchase" />
                         <Route element={<CreateClasses />} path="/CreateClasses" />
                         <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<BookingView />} path="/BookingView" />

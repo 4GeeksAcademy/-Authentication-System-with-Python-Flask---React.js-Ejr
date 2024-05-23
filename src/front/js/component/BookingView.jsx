@@ -9,9 +9,9 @@ const BookingView = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
 
-    useEffect(() => {
-         actions.getBookings()
-    }, [])
+    // useEffect(() => {
+    //      actions.getBookings()
+    // }, [])
     
     console.log(store.bookingData)
     return (
