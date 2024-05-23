@@ -5,6 +5,8 @@ import { FiltroAsientos } from "../component/filtroasientos";
 import { FiltroPrecio } from "../component/filtroprecio";
 import { useNavigate } from "react-router-dom";
 import swal from 'sweetalert';
+import { Chat } from "../component/chat";
+import "../../styles/index.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -74,6 +76,9 @@ export const Home = () => {
 						}
 					</div>
 				</div>
+			</div>
+			<div className="chatbot">
+				<Chat />
 			</div>
 		</>
 	);

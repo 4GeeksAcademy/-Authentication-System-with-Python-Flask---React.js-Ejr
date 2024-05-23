@@ -145,5 +145,14 @@ body{
 .texto-favoritos {
     font: 16px;
 }
-         
+
+.iconos {
+    margin-right: 100px;
+}
+
+.chatbot {
+    text-align: center;
+    display: flex;
+    justify-content: end;
+}
 
