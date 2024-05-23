@@ -66,7 +66,10 @@ export const LogIn = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (prevCounter + 1 === 7 && store.error == '') {
+                if (msgError === '' && msg === ''){
+                    return
+                      
+                }else if(prevCounter + 1 === 7 && store.error == ''){
                     setRedirectPath(`/${selectedRole}View`)
                     clearInterval(interval)
                 }
@@ -74,7 +77,7 @@ export const LogIn = () => {
             });
         }, 500);
 
-        return () => clearInterval(interval)
+        return () => clearInterval(interval)  
     }, [setRedirectPath, selectedRole])
 
 
