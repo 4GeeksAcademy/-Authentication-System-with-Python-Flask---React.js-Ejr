@@ -1,13 +1,13 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const ModalAlquilar = (props) => {
-    const {actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const [days, setDays] = useState(null);
     return (
         <>
-            <button type="button" className="botonAlquilar btn btn-outline-success btn-lg border-2 mb-5 fs-2 justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" className="botonAlquilar btn btn-outline-success text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Alquiler
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -19,19 +19,19 @@ export const ModalAlquilar = (props) => {
                         </div>
                         <div className="modal-body">
                             <div className="form-check">
-                                <input onClick={() => setDays(7)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                <input onClick={() => setDays(7)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                                     7 días
                                 </label>
                             </div>
                             <div className="form-check">
-                                <input onClick={() => setDays(15)}className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
+                                <input onClick={() => setDays(15)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
                                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                                     15 días
                                 </label>
                             </div>
                             <div className="form-check">
-                                <input onClick={() => setDays(30)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"/>
+                                <input onClick={() => setDays(30)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
                                 <label className="form-check-label" htmlFor="flexRadioDefault3">
                                     30 días
                                 </label>
@@ -45,7 +45,7 @@ export const ModalAlquilar = (props) => {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </>
     );
 };

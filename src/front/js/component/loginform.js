@@ -1,6 +1,7 @@
 import React,{useContext, useState} from "react";
  import { Context } from "../store/appContext";
  import { useNavigate} from "react-router-dom";
+ import { ModalRecuperarContraseña } from "./modalrecuperarcontraseña.js";
  import swal from 'sweetalert';
  import "../../styles/index.css";
 
@@ -33,10 +34,10 @@ import React,{useContext, useState} from "react";
                     <input type="password" className="form-control" id="exampleInputPassword" placeholder="xxxxxxx" onChange={(e) => setInputPassword(e.target.value)} />
                 </div>
                 <div className="d-flex justify-content-center mb-3">
-                    <button type="submit" className="login btn-lg btn-dark mt-4">Iniciar sesión</button>
+                    <button type="submit" className="login btn-lg btn-dark mt-3">Iniciar sesión</button>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <a>¿Olvidaste tu contraseña?</a>
+                    <ModalRecuperarContraseña />
                 </div>
             </form>
         </div>

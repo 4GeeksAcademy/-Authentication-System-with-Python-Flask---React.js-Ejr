@@ -13,9 +13,8 @@ export const CardVehicles = ({ vehicle, imageUrls }) => {
             </Link>
             <div className="card-body p-2">
                 <h5 className="card-title mt-2 mb-4"><strong></strong> {vehicle.marca_modelo.toUpperCase()}</h5>
-                <p className="card-text mb-1"><strong>Matricula:</strong> {vehicle.matricula.toUpperCase()}</p>
-                <p className="card-text mb-1"><strong>Precio:</strong> {vehicle.precio} €</p>
                 <p className="card-text mb-1"><strong>Asientos:</strong> {vehicle.asientos}</p>
+                <p className="card-text mb-1"><strong>Precio:</strong> {vehicle.precio} €</p>
             </div>
                 {token ?
                     <div className="d-flex justify-content-end mt-auto pb-3">

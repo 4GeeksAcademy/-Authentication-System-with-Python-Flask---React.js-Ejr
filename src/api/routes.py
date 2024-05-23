@@ -8,7 +8,6 @@ import os
 from flask_mail import Mail
 from flask_mail import Message
 
-
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -61,14 +60,20 @@ def add_vehicle():
     url_img2 = request.json.get("url_img2")
     url_img3 = request.json.get("url_img3")
 
-# Creacion de producto en stripe
+    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img1 == "" or url_img2 == "" or url_img3 == ""):
+        return jsonify({"msg": "Todos los campos son obligatorios."}), 400
+    existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
+    if existing_vehicle:
+        return jsonify({"msg": "El vehículo con esta matrícula ya existe"}), 409
+    
+    # Creacion de producto en stripe
     new_vehicles= stripe.Product.create(name=marca_modelo)
     price_product= stripe.Price.create(
     product= new_vehicles["id"],
     unit_amount= precio * 100,
     currency="eur",
     )
-    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img1 == "" or url_img2 == "" or url_img3 == ""):
+    if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
     existing_vehicle = Vehicle.query.filter_by(matricula=matricula).first()
     if existing_vehicle:
@@ -84,7 +89,8 @@ def add_vehicle():
         user_id= user_id,
         url_img1 = url_img1,
         url_img2 = url_img2,
-        url_img3 = url_img3  
+        url_img3 = url_img3
+
     )
     db.session.add(new_vehicle)
     db.session.commit()
@@ -225,8 +231,6 @@ def create_checkout_session(stripe_id, days):
         return str(e)
     return redirect(checkout_session.url, code=303)
    
-
-
 #Flask-mail
 
 mail = Mail()
