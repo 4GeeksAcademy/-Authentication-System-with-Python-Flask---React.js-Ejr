@@ -54,8 +54,6 @@ const Layout = () => {
                   <Route strict path="/workspace/:wid" element={<WorkspaceView />} />
                   <Route strict path="/team/:tid" element={<TeamView />} />
                   <Route strict path="/project/:pid" element={<ProjectView />} exact />
-      
-                  <Route strict path="/project/:pid/:bid" element={<BoardView />} />
                   <Route strict path="/board/:bid" element={<BoardView />}/>
                   
                   <Route path="*" element={<Redirector url="/404" replace/>} />

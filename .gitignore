@@ -83,5 +83,4 @@ __pycache__/
 migrations/
 
 # tailwind built stuff
-*/tailwind.css
-
+tailwind.css
