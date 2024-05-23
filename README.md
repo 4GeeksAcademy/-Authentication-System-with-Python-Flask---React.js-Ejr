@@ -1,81 +1,78 @@
-# WebApp boilerplate with React JS and Flask API
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+<!-- Descripción -->
+<h1 align="center">Urban Treasures</h1>
+<h3 align="center">Plataforma web interactiva donde los usuarios pueden registrarse para esconder o descubrir "tesoros urbanos"</h3>
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+<!-- Imagen Principal -->
+<p align="center">
+    <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946972/Captura_de_pantalla_2024-05-17_134616_bescnw.png" alt="Urban Treasures" width="100%"/>
+</p>
 
-### 1) Installation:
+<!-- Funcionalidades -->
+1. **Registro y login:**
+    - El usuario rellena un formulario con los datos necesarios para crear su cuenta, y posteriormente se le redirige al login para que inicie sesión.
+    <p align="center">
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715947422/Captura_de_pantalla_2024-05-17_135930_tezard.png" alt="Rankings de Usuarios" width="650px"/>
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715947424/Captura_de_pantalla_2024-05-17_135945_gaaw3n.png" alt="Rankings de Usuarios" width="650px"/>
+    </p>
+2. **Formulario para Esconder Tesoros:**
+    - Los usuarios pueden ocultar objetos y compartir su ubicación mediante la aplicación de Google Maps, junto con un nombre descriptivo, imagen y pistas para encontrarlos.
+    <p align="center">
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946972/Captura_de_pantalla_2024-05-17_134742_kkibwg.png" alt="Formulario para Esconder Tesoros" width="650px"/>
+    </p>
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+3. **Listado de Tesoros Ocultos:**
+    - Esta sección muestra todos los tesoros escondidos, permitiendo a los usuarios filtrar la búsqueda por ciudad para encontrar los más cercanos.
+    <p align="center">
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946972/Captura_de_pantalla_2024-05-17_134722_pryhte.png" alt="Listado de Tesoros Ocultos" width="650px"/>
+    </p>
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
+4. **Rankings de Usuarios:**
+    - Cada vez que un usuario esconde o encuentra un tesoro, se le suman 10 puntos. Los diez usuarios con mayores puntuaciones aparecen en los rankings. También reciben status especiales a través de un sistema de gamificación.
+    <p align="center">
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946971/Captura_de_pantalla_2024-05-17_134809_rapnwo.png" alt="Rankings de Usuarios" width="650px"/>
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946971/Captura_de_pantalla_2024-05-17_134827_trbssy.png" alt="Rankings de Usuarios" width="650px"/>
+    </p>
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+5. **Sección para Empresas:**
+    - Las empresas pueden participar escondiendo "Tickets Dorados" y registrándolos en nuestro sitio. Los usuarios pueden encontrar estos tickets y canjearlos por productos en promoción, generando atención hacia las campañas publicitarias de la empresa.
+    <p align="center">
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946972/Captura_de_pantalla_2024-05-17_134934_o0btsu.png" alt="Sección para Empresas" width="650px"/>
+    </p>
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+6. **Perfil de Usuario:**
+    - Los usuarios pueden visualizar y editar su información personal, puntos acumulados, status, tesoros ocultos y encontrados, así como actualizar su foto de perfil y nombre de usuario.
+    <p align="center">
+        <img src="https://res.cloudinary.com/dxzhssh9m/image/upload/v1715946971/Captura_de_pantalla_2024-05-17_134848_pfdstg.png" alt="Perfil de Usuario" width="650px"/>
+    </p>
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+7. **Adicionales:**
+    - Formulario de Contacto: Para consultas o dudas sobre nuestro servicio.
+    - Sección Sobre Nosotros: Para conocer más sobre nuestro equipo.
+    - Flask mail: El usuario recibe un correo de bienvenida al registrarse y un correo cuando otro usuario encuentra un tesoro escondido por él.
+    - Video de presentación: Añadido un vídeo a la sección principal, presentando brevemente la web y sus funciones para darle un toque más dinámico y llamativo.
+    - Chat Bot: Añadido un chat bot con una serie de preguntas comunes y sus respuestas
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+<!-- Tecnologías utilizadas -->
+<h3 align="left">Tecnologías utilizadas:</h3>
 
-### Undo a migration
+<!-- Frontend -->
+<h4 align="left">Frontend</h4>
+<p align="left">
+    - React, Javascript, HTML, CSS, Bootstrap
+</p>
 
-You are also able to undo a migration by running
+<!-- Backend -->
+<h4 align="left">Backend</h4>
+<p align="left">
+    - Python, Flask, Flask SQLAlchemy, JWT, PostgreSQL
+</p>
 
-```sh
-$ pipenv run downgrade
-```
+<!-- Seguridad de la Plataforma -->
+<h3 align="left">Seguridad de la Plataforma:</h3>
+<ul>
+    <li>JWT (JSON Web Tokens): Implementación de JWT para gestionar la autenticación de los usuarios de forma segura.</li>
+    <li>Bcrypt para Hash de Contraseñas: Implementación de Bcrypt para cifrar las contraseñas de los usuarios antes de almacenarlas en nuestra base de datos.</li>
+    <li>Verificación de Tesoros mediante Códigos Aleatorios: Genera un código aleatorio que los usuarios deben ingresar para verificar la autenticidad de un tesoro encontrado. Esto no solo protege contra falsas reclamaciones, sino que también aumenta la emoción y la participación en la búsqueda del tesoro.</li>
 
-### Backend Populate Table Users
-
-To insert test users in the database execute the following command:
-
-```sh
-$ flask insert-test-users 5
-```
-
-And you will see the following message:
-
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
-
-### **Important note for the database and the data inside it**
-
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
-
-### Front-End Manual Installation:
-
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
-
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
-
-## Publish your website!
-
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
-
-### Contributors
-
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+<h3 align="left">Vídeo de presentación: https://res.cloudinary.com/dxzhssh9m/video/upload/v1715946078/Compartir_pantalla_-_2024-05-17_13_39_52_ixmpsg.mp4</h3>
