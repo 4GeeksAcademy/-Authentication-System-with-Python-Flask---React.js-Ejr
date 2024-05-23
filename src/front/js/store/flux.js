@@ -6,7 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
-			checkout: {}
+			checkout: {},
+			mail:{}
 		},
 		actions: {
 			getMessage: async () => {
@@ -255,11 +256,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 			},
+			sendConfirmationEmail: async () => {
+                try {
+                    const token = localStorage.getItem("token");
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/send-confirmation-mail`, {
+                        method: 'POST',
+                        headers:{
+                            'Content-Type':'application/json',
+                            'Authorization': "Bearer " + token
+                        }
+                    });
+                    if (response.status === 200) {
+                        const data = await response.json();
+                        console.log(data); 
+                        return true; 
+                    } else {
+                        return false; 
+                    }
+                } catch (error) {
+                    console.error("Error sending confirmation email:", error);
+                    return false;
+                }
+            },
 
-			getConfirmationMail: async () => {
-				const token = localStorage.getItem("token")	
-			}
-		}
-	};
+        }
+    };
 };
+			
 export default getState;

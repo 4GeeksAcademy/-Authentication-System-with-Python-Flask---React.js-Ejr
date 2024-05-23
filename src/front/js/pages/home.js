@@ -37,6 +37,7 @@ export const Home = () => {
    
 	   if (query.get("success")) {
 		 swal("Pago realizado con éxito",  "En breve recibira un correo de confirmación", "success");
+		 actions.sendConfirmationEmail()
 		 navigate("/");
 	   }
 	   if (query.get("canceled")) {
