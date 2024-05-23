@@ -4,6 +4,8 @@ import { Context } from "../store/appContext";
 import '../../styles/Room.css';
 
 export const Room = ({ room }) => {
+    const token = localStorage.getItem('jwt-token');
+    const username = localStorage.getItem('username')
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
 
@@ -22,7 +24,7 @@ export const Room = ({ room }) => {
         }
     };
 
-    const isHost = store.user && store.user.username === room.host_name;
+    const isHost = username === room.host_name;
 
     return (
         <div className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={handleCardClick}>

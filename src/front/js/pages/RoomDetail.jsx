@@ -9,22 +9,33 @@ export const RoomDetail = () => {
     const navigate = useNavigate();
     const room = store.rooms.find(room => room.room_id === parseInt(roomId));
 
-  /*   useEffect(() => {
+    useEffect(() => {
         if (!room) {
             navigate('/'); // Redirect to home if room not found
         }
-    }, [room, navigate]); */
+    }, [room, navigate]);
 
     if (!room) {
         return <div>Loading...</div>;
     }
 
-    const handleJoinRoom = () => {
+    const handleJoinRoom = async () => {
         const token = localStorage.getItem('jwt-token');
         if (!token) {
             navigate('/login');
         } else {
-            actions.joinRoom(room.id);
+            const success = await actions.joinRoom(room.room_id);
+            if (success) {
+                alert('Joined the room successfully!');
+                // Actualizar la lista de participantes
+                const updatedRoom = {
+                    ...room,
+                    participants: [...room.participants, { participant_id: store.user.user_id, participant_name: store.user.username, confirmed: false }]
+                };
+                store.rooms = store.rooms.map(r => r.room_id === room.room_id ? updatedRoom : r);
+            } else {
+                alert('Failed to join the room.');
+            }
         }
     };
 
