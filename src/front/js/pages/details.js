@@ -108,6 +108,7 @@ export const Details = () => {
                             marca_modelo={store.details.marca_modelo}
                             precio={store.details.precio}
                             precio_id_stripe={store.details.precio_id_stripe}
+                            url_img1={store.details.url_img1}
                         />
                     </div>
                 </div>

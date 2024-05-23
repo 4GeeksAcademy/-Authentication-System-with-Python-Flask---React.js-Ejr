@@ -7,7 +7,7 @@ export const ModalAlquilar = (props) => {
     const [days, setDays] = useState(null);
     return (
         <>
-            <button type="button" className="botonAlquilar btn btn-outline-success text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" className="btn btn-outline-success btn-lg text-center mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Alquiler
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -40,7 +40,7 @@ export const ModalAlquilar = (props) => {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <Link to="/payment">
-                                <button onClick={() => actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, days, props.precio_id_stripe)} type="button" className="btn btn-primary" data-bs-dismiss="modal">Alquilar</button>
+                                <button onClick={() => actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, days, props.precio_id_stripe,props.url_img1)} type="button" className="btn btn-success" data-bs-dismiss="modal">Alquilar</button>
                             </Link>
                         </div>
                     </div>
