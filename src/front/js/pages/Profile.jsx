@@ -27,11 +27,21 @@ export const Profile = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!store.user) {
-            navigate('/login');
-        } else {
-            setProfileData(store.user);
-        }
+        const fetchProfile = async () => {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                navigate('/login'); // Redirige si no hay userId en localStorage
+                return;
+            }
+            const userData = await actions.getProfile(); // Llama a la acción para obtener los datos del perfil
+            if (userData) {
+                setProfileData(userData); // Actualiza el estado local con los datos obtenidos
+            } else {
+                navigate('/login'); // Redirige si no se pudieron obtener los datos del usuario
+            }
+        };
+    
+        fetchProfile(); // Ejecuta la función para obtener los datos del perfil al montar el componente
     }, []);
 
     const handleInputChange = (e) => {
@@ -44,7 +54,8 @@ export const Profile = () => {
         try {
             const success = await actions.updateProfile(profileData);
             if (success) {
-                await actions.getProfile(); // Fetch the profile again after update
+                const updatedProfile = await actions.getProfile(); // Fetch the profile again after update
+                localStorage.setItem('username', updatedProfile.username); // Update username in localStorage
                 setIsEditing(false);
             } else {
                 setError('Failed to update profile. Please try again.');
