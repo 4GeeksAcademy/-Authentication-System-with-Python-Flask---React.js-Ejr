@@ -125,4 +125,10 @@ body{
     font: 16px;
 }
          
+.principal{
+    background-color: rgb(220, 221, 224);
+}
 
+.row{
+    width:100%;
+}

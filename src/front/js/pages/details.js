@@ -50,7 +50,7 @@ export const Details = () => {
                             <span className="visually-hidden">Next</span>
                         </button>
                     </div>
-                    <div className="container-fluid p-0 bg-light">
+                    <div className="container-fluid p-0">
                         <div className="principal mb-3 mt-4 border-top border-bottom m-1 text-dark">
                             <div className="d-flex rounded-end justify-content-between text-center mt-3 m-1">
                                 <h1>{store.details.marca_modelo?.toUpperCase()}</h1>
