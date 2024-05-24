@@ -33,7 +33,7 @@ export const storeDefaults = Object.freeze({
 
     size: 4096,
     background: board_default_background,
-    origin: [0, 0, 1.0],
+    origin: [0, 0],
     zoom: 1.0,
 
     styles: {},

@@ -9,13 +9,13 @@ import { Context } from "../store/appContext.jsx"
 const _DEV_PAGES= Object.freeze([
 // label, url
   ["landing", "/"],
-    [null],
+  [null],
   ["sesmgr-signup", "/signup"],
   ["sesmgr-login", "/login"],
   ["sesmgr-logout", "/logout"],
   ["sesmgr-recover", "/recover"],
   ["sesmgr-farewell", "/farewell"],
-    [null],
+  [null],
   ["settings", "/settings"],
   ["profile", "/profile"],
   ["profile-X", "/profile/-1"],
@@ -25,7 +25,7 @@ const _DEV_PAGES= Object.freeze([
   ["workspace-X", "/workspace/-1"],
   ["project-X", "/project/-1"],
   ["board-X", "/board/-1"],
-    [null],
+  [null],
   ["404", "/404"],
   ["healthcheck", "/healthcheck"],
   ["creamyfap", "/creamyfap"]

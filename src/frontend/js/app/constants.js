@@ -35,6 +35,25 @@ const Constants= Object.freeze({
     board:        0b0000_0000_0000_0100
   },
 
+  SITENAME: "KeQQu",
+
+  PAGETITLE: {
+    settings:   "Settings",
+    dashboard:  "Dashboard",
+    workspace:  "Workspace",
+    project:    "Project",
+    board:      "Board",
+    team:       "Team",
+    profile:    "Profile",
+    login:      "Login",
+    signup:     "SignUp",
+    logout:     "Come back soon!",
+    delete:     "Farewell! :(",
+    recover:    "Account recovery"
+  },
+
+  BOARD_SIZE_PIXELS: 1048576,
+
   CANVAS_DIRTY: {
     size:         0b0000_0000_0000_0001,
     origin:       0b0000_0000_0000_0010,
@@ -46,7 +65,9 @@ const Constants= Object.freeze({
 
     transform:    0b0000_0000_0000_1111,
     display:      0b0000_0000_0111_0000,
-    all:          0b0000_0000_1111_1111
+    all:          0b0000_0000_0111_1111,
+
+    data:         0b1000_0000_0000_0000 // require database reload
   },
 
   ITEMTYPE: {
@@ -75,7 +96,6 @@ const Constants= Object.freeze({
 
     transform:    0b0000_0000_0000_0011,
     display:      0b0000_0000_0000_1100,
-
     all:          0b0000_0000_0000_1111,
 
     data:         0b1000_0000_0000_0000 // require database reload

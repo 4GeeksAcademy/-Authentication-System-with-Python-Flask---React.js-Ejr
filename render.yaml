@@ -1,0 +1,33 @@
+services:
+- type: web
+  region: frankfurt
+  name: keqqu-webapp
+  runtime: python
+  buildCommand: "./render_build.sh"
+  startCommand: "gunicorn render_wsgi"
+  healthCheckPath: "/healthcheck"
+  plan: free
+  numInstances: 1
+  buildFilter:
+    paths :
+    - .buildver
+  envVars:
+  - key: BASENAME
+    value: /
+  - key: DEBUG
+    value: "FALSE"
+  - key: FLASK_APP
+    value: src/app.py
+  - key: FLASK_DEBUG
+    value: 0
+  - key: FLASK_APP_KEY
+    generateValue: true
+  - key: PYTHON_VERSION
+    value: 3.10.6
+  - key: DATABASE_URL
+    value: sqlite:///database.db
+  - key: BACKEND_URL
+    fromService:
+      name: keqqu-webapp
+      type: web
+      property: host

@@ -22,7 +22,9 @@ const GlobalListener=()=>{
     setTimeout(refreshPageTitle, 25)
   },[location])
   
-  React.useEffect(()=>{ refreshPageTitle() },[language])
+  React.useEffect(()=>{
+    refreshPageTitle()
+  },[language])
 
   React.useEffect(()=>{
     if(store.userPrefs.language !== undefined) actions.loadLanguage(store.userPrefs.language)
@@ -46,7 +48,7 @@ const GlobalListener=()=>{
   function handleHoverBox(e){
     if(e.target){
       const t= e.target
-      if(t && t.getAttribute && t.getAttribute("data-hover")){
+      if(t.getAttribute("data-hover")){
         
       }
     }

@@ -1,0 +1,40 @@
+services:
+- type: web
+  region: frankfurt
+  name: keqqu-webapp
+  runtime: python
+  buildCommand: "./render_build.sh"
+  startCommand: "gunicorn wsgi --chdir ./src/"
+  healthCheckPath: "/healtcheck"
+  plan: free
+  numInstances: 1
+  buildFilter:
+    paths :
+    - .buildver
+  envVars:
+  - key: BASENAME
+    value: /
+  - key: FLASK_APP
+    value: src/app.py
+  - key: FLASK_DEBUG
+    value: 0
+  - key: FLASK_APP_KEY
+    generateValue: true
+  - key: PYTHON_VERSION
+    value: 3.10.6
+  - key: DATABASE_URL
+    fromDatabase:
+      name: postgresql-keqqu-240524
+      property: connectionString
+  - key: BACKEND_URL
+    fromService:
+      name: keqqu-webapp
+      type: web
+      property: host
+databases:
+- name: postgresql-keqqu-240524
+  databaseName: kdb
+  user: main
+  region: frankfurt
+  ipAllowList: []
+  plan: free
