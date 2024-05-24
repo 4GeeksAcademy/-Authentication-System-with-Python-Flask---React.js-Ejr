@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const FiltroPrecio = (props) => {
+
     return (
-        <div className="dropdown mt-2">
-            <button className="btn btn-secondary dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="dropdown">
+            <button className="btn btn-outline-warning border-4 dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Precio por día
             </button>
             <ul className="dropdown-menu ">
                 <div className="form-check ms-2">
-                    <input onChange={() => props.setFiltroPrecio(null)}  className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault5" checked/>
+                    <input onChange={() => props.setFiltroPrecio(null)}  className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault5"/>
                     <label className="form-check-label" htmlFor="flexRadioDefault5">
                         Sin Filtro
                     </label>

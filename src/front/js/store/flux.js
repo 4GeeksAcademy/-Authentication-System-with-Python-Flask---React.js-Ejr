@@ -6,8 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
-			checkout: {},
-			mail:{}
+			checkout: {}
 		},
 		actions: {
 			getMessage: async () => {
@@ -116,7 +115,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					return [];
 				}	
-				
 			},
 			getDetails: (id) => {
 				fetch(`${process.env.BACKEND_URL}/api/vehicle/${id}`, {
@@ -141,11 +139,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.status === 200) {
 						let allVehicles = getStore().vehicles;
 						let allFavorites = getStore().favorites;
+						let allMyVehiclesInRent = getStore().myVehicles;
 						const newListVehicles = allVehicles.filter((vehicle) => vehicle.id !== vehicle_id);
 						const newListFavorites = allFavorites.filter((favorite) => favorite.id !== vehicle_id);
+						const newListMyVehiclesInRent = allMyVehiclesInRent.filter((vehicleinrent) => vehicleinrent.id !== vehicle_id);
 						setStore({
 							vehicles: newListVehicles,
-							favorites: newListFavorites
+							favorites: newListFavorites,
+							myVehicles: newListMyVehiclesInRent
 
 						})
 					}
@@ -255,32 +256,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						precio_id_stripe: precio_id_stripe
 					}
 				})
-			},
-			sendConfirmationEmail: async () => {
-                try {
-                    const token = localStorage.getItem("token");
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/send-confirmation-mail`, {
-                        method: 'POST',
-                        headers:{
-                            'Content-Type':'application/json',
-                            'Authorization': "Bearer " + token
-                        }
-                    });
-                    if (response.status === 200) {
-                        const data = await response.json();
-                        console.log(data); 
-                        return true; 
-                    } else {
-                        return false; 
-                    }
-                } catch (error) {
-                    console.error("Error sending confirmation email:", error);
-                    return false;
-                }
-            },
-
-        }
-    };
+			}
+		}
+	};
 };
 			
 export default getState;
