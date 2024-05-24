@@ -150,7 +150,7 @@ const MembershipPurchase = () => {
                                     <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
                                     <Dropdown.Item onClick={() => setPaymentMethod('debit_card')}><i className="fa-solid fa-credit-card"></i> Debit Card</Dropdown.Item>
                                     <Dropdown.Item onClick={() => setPaymentMethod('paypal')}><i className="fa-brands fa-paypal"></i> PayPal</Dropdown.Item>
-                                    {['admin', 'master'].includes(store.dataRole) && (
+                                    {['admin', 'master'].includes(store.uploadedUserData.role) && (
                                         <Dropdown.Item onClick={() => setPaymentMethod('cash')}><i className="fa-regular fa-money-bill-1"></i> Cash</Dropdown.Item>
                                     )}
                                 </DropdownButton>

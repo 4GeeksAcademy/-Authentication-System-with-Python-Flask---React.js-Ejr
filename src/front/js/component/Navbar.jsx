@@ -54,7 +54,7 @@ const NavigationBar = () => {
                             <Link to="/">
                                 <Button className={styles.ProfileButton}>Ir al perfil</Button>
                             </Link>
-                            {store.dataRole === 'master' && (
+                            {store.uploadedUserData.role === 'master' && (
                                 <Link to="/ModulePage">
                                     <Button className={styles.logoutButton}>Modulos</Button>
                                 </Link>
