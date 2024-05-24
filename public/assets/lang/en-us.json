@@ -34,6 +34,13 @@
       "btn-additem": "Add item"
     }
   },
+  "contextmenu": {
+    "addlist":      "Add list here",
+    "additem":      "Add item here",
+    "toorigin":     "Go to origin",
+    "setorigin":    "Set origin",
+    "resetorigin":  "Reset origin"
+  },
   "panel": {
     "boardsettings": {
       "title": "Board Settings"
