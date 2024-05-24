@@ -663,7 +663,32 @@ def create_comment(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#------------------UPDATE COMMENT----------------------------------------------------------------------------------------------
+@api.route('/comments/<int:comment_id>', methods=['PUT'])
+@jwt_required()
+def update_comment(comment_id):
+    try:
+        current_user_id = get_jwt_identity()
+        comment = Comment.query.get(comment_id)
+        if not comment:
+            return jsonify({"error": "Comment not found"}), 404
 
+        if comment.user_id != current_user_id:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        comment_data = request.json
+        content = comment_data.get('content')
+        if not content:
+            return jsonify({"error": "Content is required"}), 400
+
+        comment.content = content
+        comment.is_edited = True
+
+        db.session.commit()
+        return jsonify({"message": "Comment updated successfully", "comment": comment.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 
