@@ -37,24 +37,25 @@ def new_user():
         sign_up_data = request.json
         print("Datos recibidos en la solicitud:", sign_up_data)
 
-        email = request.json.get('email')
-        password = request.json.get('password')
-        username = request.json.get('username')
-        first_name = request.json.get('firstName')
-        last_name = request.json.get('lastName')
-        age = request.json.get('age')
-        region = request.json.get('region')
-        timezone = request.json.get('timezone')
-        languages = request.json.get('languages')
-        xbox = request.json.get('xbox')
-        psn = request.json.get('psn')
-        steam = request.json.get('steam')
-        google_play = request.json.get('googlePlay')
-        nintendo = request.json.get('nintendo')
-        epic_id = request.json.get('epicId')
-        bio = request.json.get('bio')
-        gender = request.json.get('gender')
-        admin = request.json.get('admin')
+        # Obtener los datos del formulario de registro
+        email = sign_up_data.get('email')
+        password = sign_up_data.get('password')
+        username = sign_up_data.get('username')
+        first_name = sign_up_data.get('firstName')
+        last_name = sign_up_data.get('lastName')
+        age = sign_up_data.get('age')
+        region = sign_up_data.get('region')
+        timezone = sign_up_data.get('timezone')
+        languages = sign_up_data.get('languages')
+        xbox = sign_up_data.get('xbox')
+        psn = sign_up_data.get('psn')
+        steam = sign_up_data.get('steam')
+        google_play = sign_up_data.get('googlePlay')
+        nintendo = sign_up_data.get('nintendo')
+        epic_id = sign_up_data.get('epicId')
+        bio = sign_up_data.get('bio')
+        gender = sign_up_data.get('gender')
+        admin = sign_up_data.get('admin')
     
         # Convierte una variable de valor (" ") a booleano
         if admin is not None:
@@ -120,25 +121,21 @@ def get_token():
             return jsonify({'error': 'Email and password are required.'}), 400
         
         if not validate_email(email):
-            return jsonify({'error': 'Invalid email format.'}), 404
+            return jsonify({'error': 'Invalid email format.'}), 400
         
-        login_user = User.query.filter_by(email=request.json['email']).one()
+        login_user = User.query.filter_by(email=email).one_or_none()
 
         if not login_user:
-            return jsonify({'error': 'email/user not found.'}), 404
-        
+            return jsonify({'error': 'Email/user not found.'}), 404
 
-        true_o_false = bcrypt.check_password_hash(login_user.password, password)
-        
-        # Si es verdadero generamos un token y lo devuelve en una respuesta JSON:
-        if true_o_false:
+        if bcrypt.check_password_hash(login_user.password, password):
             expires = timedelta(hours=1)  # pueden ser "hours", "minutes", "days","seconds"
             user_id = login_user.id
             access_token = create_access_token(identity=user_id, expires_delta=expires)
-            time_zone = getattr(login_user, 'time_zone', None)
+            time_zone = getattr(login_user, 'timezone', None)
             data_to_return = {
-                'token':access_token,
-                'user_id' : login_user.id,
+                'token': access_token,
+                'user_id': login_user.id,
                 'admin': login_user.admin,
                 'email': login_user.email,
                 'username': login_user.username,
@@ -159,10 +156,11 @@ def get_token():
             }
             return jsonify(data_to_return), 200
         else:
-            return {"Error":"Contraseña  incorrecta"},404
+            return jsonify({"error": "Incorrect password"}), 404
     
     except Exception as e:
-        return {"Error":"El email proporcionado no corresponde a ninguno registrado: " + str(e)}, 500
+        return jsonify({"error": "The provided email does not correspond to any registered user: " + str(e)}), 500
+
 
 @api.route('/home', methods=['GET'])
 def get_current_rooms():
