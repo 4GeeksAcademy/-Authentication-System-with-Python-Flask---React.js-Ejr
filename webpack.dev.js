@@ -21,7 +21,7 @@ module.exports = merge(common, {
         allowedHosts: "all",
         historyApiFallback: true,
         static: {
-          directory: path.resolve(__dirname, "static/frontend"),
+          directory: path.resolve(__dirname, "static"),
         },
         client: {
           webSocketURL: publicUrl

@@ -2,6 +2,7 @@
 set -o errexit
 
 npm install
+npm run tailwind
 npm run build
 
 pipenv install
