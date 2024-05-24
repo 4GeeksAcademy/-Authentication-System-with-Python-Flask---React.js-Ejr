@@ -156,7 +156,7 @@ export const AgregarForm = (props) => {
                     </Container>
                 </div>
                 <div className="d-flex justify-content-center" id="btnAgregarForm">
-                    <button type="submit" className="btn btn-outline-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
+                    <button type="submit" className="btn-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
                 </div>
             </form>
         </div>

@@ -19,7 +19,7 @@ export const CardVehicles = ({ vehicle }) => {
                 {token ?
                     <div className="d-flex justify-content-end mt-auto pb-3">
                         <Link to={`/details/${vehicle.id}`}>
-                            <button className="btn btn-outline-success border-2"><strong>Más Detalles</strong></button>
+                            <button className="btn-success border-2"><strong>Más Detalles</strong></button>
                         </Link>
                         </div>
                     : null

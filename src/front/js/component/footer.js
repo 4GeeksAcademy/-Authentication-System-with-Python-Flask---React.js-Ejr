@@ -6,7 +6,7 @@ import logoImageUrl from "../../img/logoHW.png";
 export const Footer = () => {
 
 	return (
-		<footer className="footer fs-4 d-flex justify-content-between">
+		<footer className="footer fs-4 d-flex justify-content-between m-auto p-auto">
 			<div className="d-flex mt-2 ms-5 mb-2">
 				<img className="logo-footer" src={logoImageUrl} />
 				<p className=" fs-3 me-4 ms-3 mt-3 text-white">© 2024 Friendly Wheels,Inc</p>
