@@ -1,7 +1,7 @@
-import React,{useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import swal from 'sweetalert';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 import imgFolder from "../../img/folder.png";
 import { Container } from "reactstrap";
@@ -10,18 +10,18 @@ import { array } from "prop-types";
 import axios from "axios";
 
 export const AgregarForm = (props) => {
-    
-    const {actions} = useContext(Context);
-    
-    const [inputMarcayModelo, setInputMarcayModelo]=useState("");
-    const [inputMatricula, setInputMatricula]=useState("");
-    const [inputMotor, setInputMotor]=useState("");
-    const [inputCambio, setInputCambio]=useState("");
-    const [inputAsientos, setInputAsientos]=useState("");
-    const [inputPrecio, setInputPrecio]=useState("");
-    const [image, setImage] = useState({array: []});  
+
+    const { actions } = useContext(Context);
+
+    const [inputMarcayModelo, setInputMarcayModelo] = useState("");
+    const [inputMatricula, setInputMatricula] = useState("");
+    const [inputMotor, setInputMotor] = useState("");
+    const [inputCambio, setInputCambio] = useState("");
+    const [inputAsientos, setInputAsientos] = useState("");
+    const [inputPrecio, setInputPrecio] = useState("");
+    const [image, setImage] = useState({ array: [] });
     const [loading, setLoading] = useState("");
-    
+
     const handleDrop = (files) => {
         const uploaders = files.map((file) => {
             const formData = new FormData();
@@ -29,11 +29,11 @@ export const AgregarForm = (props) => {
             formData.append('tags', `codeinfuse, medium, gist`);
             formData.append('upload_preset', 'preset_FriendlyWheels');
             formData.append('api_key', '574539177956517');
-            formData.append('timestamp', (Date.now() / 1000)| 0);
+            formData.append('timestamp', (Date.now() / 1000) | 0);
             setLoading("true")
             return axios
                 .post('https://api.cloudinary.com/v1_1/dg1qrtyvd/image/upload', formData, {
-                    headers: {"X-Requested-With": "XMLHttpRequest"},
+                    headers: { "X-Requested-With": "XMLHttpRequest" },
                 })
                 .then((response) => {
                     const data = response.data
@@ -47,37 +47,37 @@ export const AgregarForm = (props) => {
             setLoading("false");
         })
     }
-    
+
     const eliminarImagen = (item) => {
         console.log(image);
         const nuevasImagenes = image.array.filter((img) => {
-          return img != item
+            return img != item
         })
-        setImage({array:nuevasImagenes});
+        setImage({ array: nuevasImagenes });
     };
 
     function imagePreview() {
-        if(loading === "true") {
+        if (loading === "true") {
             return <h5>Cargando...</h5>
         }
-        if(loading === "false") {
+        if (loading === "false") {
             return (<h6>
                 {image.array.length <= 0
-                ? "No tiene imágenes"
-                : image.array.map((item, index) => (
-                    <>
-                        <img key={index} alt="uploaded_image"
-                    style={{width: "320px"}}
-                    src={item}
-                    />
-                    <div onClick={() => 
-                        { 
-                            eliminarImagen(item)}
-                    }>
-                        <button  className="btn btn-outline-secondary" style={{margin:"auto"}}> Eliminar imagen </button>
-                         </div>
-                    </>
-                ))}   
+                    ? "No tiene imágenes"
+                    : image.array.map((item, index) => (
+                        <>
+                            <img key={index} alt="uploaded_image"
+                                style={{ width: "320px" }}
+                                src={item}
+                            />
+                            <div onClick={() => {
+                                eliminarImagen(item)
+                            }
+                            }>
+                                <button className="btn btn-outline-secondary" style={{ margin: "auto" }}> Eliminar imagen </button>
+                            </div>
+                        </>
+                    ))}
             </h6>)
         }
     };
@@ -86,20 +86,20 @@ export const AgregarForm = (props) => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (image.array.length !==3) {
+        if (image.array.length !== 3) {
             swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
             return;
         }
         const [url_img1, url_img2, url_img3] = image.array;
 
-        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, url_img1, url_img2, url_img3); 
-        if (respuesta === "success"){
-            swal ( "Vehículo añadido correctamente", ":)",  "success" )
-             navigate("/");
+        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, url_img1, url_img2, url_img3);
+        if (respuesta === "success") {
+            swal("Vehículo añadido correctamente", ":)", "success")
+            navigate("/");
         } else if (respuesta === "plate_exist") {
-            swal ("El vehículo con esta matrícula ya ha sido añadido" , "Por favor inténtelo de nuevo",  "error" )
+            swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
         } else {
-            swal ( "Todos los campos son obligatorios" ,  "Por favor inténtelo de nuevo" ,  "error" )
+            swal("Todos los campos son obligatorios", "Por favor inténtelo de nuevo", "error")
         }
     };
     return (
@@ -138,25 +138,25 @@ export const AgregarForm = (props) => {
                 </div>
                 <div>
                     <Container>
-                    <h4 className="upload-img-text">Seleccione tres imágenes de su vehículo</h4>
-                    <Dropzone className="dropzone"
-                    onDrop={handleDrop}
-                    onChange={(e) => setImage(e.target.value)}
-                    value={image}>
-                        {({getRootProps, getInputProps}) => (
-                            <section>
-                                <div {...getRootProps({className:"dropzone"})}>
-                                    <img className="logo" src={imgFolder} />
-                                    <p>Seleccione o arrastre aquí sus imágenes </p>
-                                </div>
-                            </section>
-                        )}
-                    </Dropzone>
-                    {imagePreview()}
+                        <h4 className="upload-img-text">Seleccione tres imágenes de su vehículo</h4>
+                        <Dropzone className="dropzone"
+                            onDrop={handleDrop}
+                            onChange={(e) => setImage(e.target.value)}
+                            value={image}>
+                            {({ getRootProps, getInputProps }) => (
+                                <section>
+                                    <div {...getRootProps({ className: "dropzone" })}>
+                                        <img className="logo" src={imgFolder} />
+                                        <p>Seleccione o arrastre aquí sus imágenes </p>
+                                    </div>
+                                </section>
+                            )}
+                        </Dropzone>
+                        {imagePreview()}
                     </Container>
                 </div>
                 <div className="d-flex justify-content-center" id="btnAgregarForm">
-                <button type="submit" className="btn btn-outline-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
+                    <button type="submit" className="btn btn-outline-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
                 </div>
             </form>
         </div>

@@ -52,13 +52,13 @@ export const Details = () => {
                     </div>
                     <div className="container-fluid p-0">
                         <div className="principal mb-3 mt-4 border-top border-bottom m-1 text-dark">
-                            <div className="d-flex rounded-end justify-content-between text-center mt-3 m-1">
+                            <div className="d-flex rounded-end justify-content-between text-center mt-3 m-1 ms-3 me-3">
                                 <h1>{store.details.marca_modelo?.toUpperCase()}</h1>
                                 <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
                                     <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                                 </button>
                             </div>
-                            <div className="d-flex justify-content-between text-center mt-4 p-0">
+                            <div className="d-flex justify-content-between text-center mt-4 p-0 ms-3 me-3">
                                 <div className="detalle">
                                     <h6>
                                         MATRICULA

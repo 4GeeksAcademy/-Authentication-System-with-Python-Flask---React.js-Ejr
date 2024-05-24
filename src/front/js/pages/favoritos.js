@@ -13,8 +13,8 @@ export const Favoritos = () => {
         <>
             <div className="footer-view vehicles mb-5 mt-3 justify-content-center bg-light">
 				<div className="container">
-                    <h1 className="fs-1 mt-4 pt-2 text-dark-50 border text-center text-success-emphasis"><strong>Favoritos</strong></h1>
-					<div className="row Map Cards text-dark justify-content-center">
+                    <h4 className="mt-3 text-dark-50 text-decoration-underline"><strong>Favoritos</strong></h4>
+					<div className="row Map Cards text-dark d-flex justify-content-center">
                         {store.favorites.length === 0 
                             ? (
                                 <>
@@ -23,15 +23,15 @@ export const Favoritos = () => {
                                 </>
                             )
                             : (store.favorites.map((vehicle) => (
-                                    <div key={vehicle.id}>
-                                        <div className="card col-md-4 mb-2 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
+                                    // <div key={vehicle.id}>
+                                        <div key={vehicle.id} className="card col-md-4 mb-2 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
                                                 <div className="cardvehicles text-center mt-3" href="#">
                                                     <img src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
                                                 </div>
                                                 <div className="card-body ms-2">
                                                     <div>
-                                                        <h5 className="card-title mt-2"><strong></strong> {vehicle.marca_modelo.toUpperCase()}</h5>
+                                                        <h5 className="card-title mb-3"><strong></strong> {vehicle.marca_modelo.toUpperCase()}</h5>
                                                         <p className="card-text mb-1"><strong>Tipo de motor:</strong> {vehicle.motor}</p>
                                                         <p className="card-text mb-1"><strong>Tipo de cambio:</strong> {vehicle.tipo_cambio}</p>
                                                         <p className="card-text mb-1"><strong>Asientos:</strong> {vehicle.asientos}</p>
@@ -45,9 +45,8 @@ export const Favoritos = () => {
                                                     </div>
                                                     </div>
                                             </Link>
-                                           
                                         </div>
-                                    </div>
+                                    // </div>
                                 )
                             ))
                         }

@@ -13,7 +13,7 @@ export const MisCoches = () => {
         <>
             <div className="footer-view vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
-                    <h1 className="h1 pt-2"><strong>Mis vehículos en alquiler</strong></h1>
+                    <h5 className="h5 mt-3 text-dark-50 text-decoration-underline"><strong>Mis vehículos en alquiler</strong></h5>
 					<div className="row Map Cards text-dark d-flex justify-content-center">
                         {store.myVehicles.length === 0 
                             ? (
@@ -28,24 +28,24 @@ export const MisCoches = () => {
                                 </>
                             )
                             : (store.myVehicles.map((vehicle) => (
-                                    <div key={vehicle.id}>
-                                        <div className="card col-md-4 mb-2 me-4 mt-4" style={{ width: "22rem"}}>
+                                    // <div key={vehicle.id}>
+                                        <div className="card col-md-4 mb-2 me-5 mt-4 ms-2" style={{ width: "22rem"}}>
                                             <div>
                                                 <a className="cardvehicles" href="#">
-                                                    <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
+                                                    <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem", marginTop: "15px"}} />
                                                 </a>
                                             </div>
                                             <div className="card-body pb-0">
-                                                <h5 className="card-title"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h5>
+                                                <h5 className="card-title mb-3"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h5>
                                                 <p className="card-text"><strong>Matrícula:</strong> {vehicle.matricula.toUpperCase()}</p>
                                             </div>
-                                            <div className="d-flex justify-content-end mb-2">
-                                                <button onClick={() => actions.removeVehicle(vehicle.id)} className="btn-dark rounded">
+                                            <div className="d-flex justify-content-end mb-3 me-3">
+                                                <button onClick={() => actions.removeVehicle(vehicle.id)} className="btn-success rounded">
                                                     Eliminar
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    /* </div> */
                                 )
                             ))
                         }
