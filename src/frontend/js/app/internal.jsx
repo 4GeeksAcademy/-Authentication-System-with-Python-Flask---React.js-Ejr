@@ -11,9 +11,23 @@ export const Redirector=({ url, replace })=>{
 }
 
 export const NotFound_Generic=()=>{
+
+	const nav= useNavigate();
+
 	return (
-		<div className="w-full flex-auto text-center items-center mt-5">
-			<h1>404 PAGE NOT FOUND</h1>
+		<div className="bg-dark select-none w-screen h-screen flex flex-col justify-center items-center">
+			<div className="mb-[8rem] flex flex-col justify-center items-center">
+				<p className="text-7xl text-accent-n font-bold mb-4">404</p>
+				<p className="text-3xl text-gray-400 mb-4">Page Not Found</p>
+				<p className="text-lg text-gray-300 mb-8">Oops! The page you're looking for does not seem to exist.</p>
+				
+				<button 
+					onClick={() => nav('/')} 
+					className="px-8 py-3 rounded-3xl bg-gradient-to-r border-2 border-accent-n from-accent-n to-accent-l text-dark shadow-lg hover:bg-none hover:text-accent-n transition duration-700 ease-in-out"
+				>
+					Go Home
+				</button>
+			</div>
 		</div>
 	)
 }
