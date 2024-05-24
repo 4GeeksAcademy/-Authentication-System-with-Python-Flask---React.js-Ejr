@@ -51,10 +51,11 @@ export const Home = () => {
 
 	return (
 		<>
-			<div className="d-flex justify-content-center text-center mt-5 fs-4 text-grey">
-				<div className="px-5 d-flex">
+				<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
 					<p><strong>¿Buscas o rentas tú coche? Estás en el lugar adecuado</strong></p>
-					<div className="me-2 px-3">
+				</div>
+			<div className="d-flex justify-content-center text-center mt-2 fs-4 text-dark-80">
+					<div className="d-flex me-2 px-3">
 						<FiltroAsientos
 							setFiltroAsientos={setFiltroAsientos}
 						/>
@@ -65,7 +66,6 @@ export const Home = () => {
 						/>
 					</div>
 				</div>
-			</div >
 			<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
 					<div className="row Map Cards text-dark d-flex justify-content-center">

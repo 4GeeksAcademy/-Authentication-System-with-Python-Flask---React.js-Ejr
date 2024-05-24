@@ -7,7 +7,7 @@ export const ModalAlquilar = (props) => {
     const [days, setDays] = useState(null);
     return (
         <>
-            <button type="button" className="btn btn-outline-success btn-lg text-center mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" className="botonAlquilar btn-success text-center btn-lg border-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Alquiler
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

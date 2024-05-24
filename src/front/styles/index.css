@@ -1,11 +1,10 @@
 .navbar {
     background-color:  #050404d0;
-    height: 120px;
     text-shadow: 2px 2px 5px rgba(247, 241, 241, 0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
 }
 
 .logo {
-    width: 80px;
+    width: 60px;
     margin-left: 20px;
 }
 
@@ -116,11 +115,15 @@ body{
 }
 
 .instagram {
-    color: #bc1888
+    color: white
 }
     
 .instagram:hover {
     color: #bc1888
+}
+
+.facebook {
+    color: white;
 }
     
 .facebook:hover {
@@ -148,5 +151,8 @@ body{
     text-align: center;
     display: flex;
     justify-content: end;
+}
+.principal{
+    background-color: rgb(220, 221, 224);
 }
 

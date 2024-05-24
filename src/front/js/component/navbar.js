@@ -29,12 +29,12 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-light">
-			<div className="container-fluid">
-				<div className="d-flex">
+			<div className="container-fluid" style={{ maxWidth: "1500px"}}>
+				<div className="d-flex gap-3">
 					<Link to="/">
-						<img className="logo" src={logoImageUrl} />
+						<img className="logo ms-0" src={logoImageUrl} />
 					</Link>
-						<h2 className="navbar-text ms-2 mt-3 mb-2 display-4 text-center text-white-50"><strong>Friendly Wheels</strong></h2>
+						<h2 className="navbar-text ms-2 mt-3 mb-2 display-4 text-center text-white fs-2"><strong>Friendly Wheels</strong></h2>
 				</div>
 				{token ?
 				<>
