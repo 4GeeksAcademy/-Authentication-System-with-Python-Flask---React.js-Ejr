@@ -61,9 +61,15 @@ export const Transactions = () => {
     setConfirmRefundOpen(false);
   };
 
-  const handleConfirmSecondRefund = () => {
-    // Implement refund functionality
-    setConfirmRefundSecondOpen(false);
+  const handleConfirmSecondRefund = async () => {
+    if (selectedTransaction) {
+      try {
+        await actions.refundTransaction(selectedTransaction.id);
+        setConfirmRefundSecondOpen(false);
+      } catch (error) {
+        console.error("Error refunding transaction:", error);
+      }
+    }
   };
 
   const handleCancelSecondRefund = () => {
@@ -88,6 +94,9 @@ export const Transactions = () => {
                   ))}
                 </div>
                 <Typography variant="h5" style={{ marginTop: '20px' }}>Total Price: ${selectedTransaction.total_price?.toFixed(2)}</Typography>
+                {selectedTransaction.is_refunded && (
+                  <Typography variant="h5" style={{ color: "red", marginTop: '10px' }}>REFUNDED</Typography>
+                )}
               </div>
             ) : (
               <Typography variant="body1">Select a transaction to view details</Typography>
@@ -147,7 +156,13 @@ const TransactionList = ({ transactions, onSelectTransaction }) => {
       {transactions && transactions.length > 0 ? (
         transactions.map((transaction) => (
           <ListItem button key={transaction.id} onClick={() => onSelectTransaction(transaction)}>
-            <ListItemText primary={`Transaction ID: ${transaction.id} | ${formatDate(transaction.created)}`} secondary={`Total: $${transaction.total_price?.toFixed(2)}`} />
+            <ListItemText
+              primary={`Transaction ID: ${transaction.id} | ${formatDate(transaction.created)}`}
+              secondary={`Total: $${transaction.total_price?.toFixed(2)}${transaction.is_refunded ? ' | ' : ''}`}
+            />
+            {transaction.is_refunded && (
+              <Typography variant="body1" style={{ color: "red", marginLeft: '10px' }}>REFUNDED</Typography>
+            )}
           </ListItem>
         ))
       ) : (
@@ -156,6 +171,3 @@ const TransactionList = ({ transactions, onSelectTransaction }) => {
     </List>
   );
 };
-
-
-
