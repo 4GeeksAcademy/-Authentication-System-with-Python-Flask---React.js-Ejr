@@ -8,8 +8,6 @@ import * as Yup from 'yup';
 
 export const SignupForm = () => {
     const { actions } = useContext(Context);
-    // const [inputEmail, setInputEmail]=useState("")
-    // const [inputPassword, setInputPassword]=useState("")
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -29,27 +27,12 @@ export const SignupForm = () => {
                     navigate("/");
                 } else if (isSignup === "email_exist") {
                     swal("Este correo ya se encuentra registrado", "Por favor intentelo con otro correo", "error")
-                } else {
-                    swal("Todos los campos son obligatorios", "Por favor intentelo de nuevo", "error")
-                }
+                } 
             };
             handleSubmit()
         },
     });
 
-
-    // async function handleSubmit(e) {
-    //     e.preventDefault()
-    //     let isSignup = await actions.signup(inputEmail, inputPassword) 
-    //     if (isSignup === "success"){
-    //         swal ( "Registro con éxito" ,  "Gracias por registrarse en nuestra web!" ,  "success" )
-    //         navigate("/");
-    //     } else if (isSignup === "email_exist") {
-    //         swal ( "Este correo ya se encuentra registrado", "Por favor intentelo con otro correo" ,  "error" )
-    //     } else {
-    //         swal ( "Todos los campos son obligatorios" ,  "Por favor intentelo de nuevo" ,  "error" )
-    //     }
-    // };
     return (
         <div className="contactForm">
             <h1 className="title text-center pb-4">Crear cuenta</h1>

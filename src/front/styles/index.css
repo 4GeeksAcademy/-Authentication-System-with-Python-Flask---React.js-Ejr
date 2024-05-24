@@ -1,6 +1,6 @@
 .navbar {
     background-color:  #050404d0;
-    text-shadow: 2px 2px 5px rgba(247, 241, 241, 0.5); /* Desplazamiento horizontal, desplazamiento vertical, desenfoque y color de la sombra */
+    text-shadow: 2px 2px 5px rgba(247, 241, 241, 0.5);
 }
 
 .logo {
@@ -36,7 +36,7 @@
     color: rgb(7, 65, 7);
 }
 
-.subtitulos {  /*del agregarForm*/
+.subtitulos { 
     margin-top: 15px;
     color: rgb(33, 103, 33);
     font-size: 1.3rem;
@@ -64,10 +64,10 @@
 } 
 
 .imagenes-subidas {
-    display: flex; /* Activar modo flexbox */
-    flex-direction: row; /* Disponer imágenes en fila horizontal */
-    justify-content: space-between; /* Distribuir imágenes con espacio entre ellas */
-    align-items: center; /* Alinear imágenes verticalmente en el centro */
+    display: flex; 
+        flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
   }
 
 .container {
@@ -78,7 +78,6 @@
 
 footer {
     background: #050404d0 !important;
-    /* text-shadow: 1px 1px 4px rgba(0,0,0,0.5); */
 }
 
 .corazon:hover i {
@@ -97,7 +96,7 @@ footer {
 }
 
 body{
-    min-height: 100vh; /* Establece la altura mínima del cuerpo como el 100% de la altura de la ventana del navegador */
+    min-height: 100vh; 
 }
 
 .footer-view {

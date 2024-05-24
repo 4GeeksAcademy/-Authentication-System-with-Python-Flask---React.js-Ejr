@@ -10,7 +10,6 @@ import "../../styles/index.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const { images } = useContext((Context));
 	const navigate = useNavigate();
 	const [filtroPrecio, setFiltroPrecio] = useState(null);
 	const [filtroAsientos, setFiltroAsientos] = useState(null);
@@ -20,7 +19,6 @@ export const Home = () => {
 			return true;
 		}
 		return (vehicle.precio > filtroPrecio.min && vehicle.precio <= filtroPrecio.max);
-
 	}
 
 	const filtrarPorAsientos = (vehicle) => {
@@ -28,7 +26,6 @@ export const Home = () => {
 			return true;
 		}
 		return vehicle.asientos >= filtroAsientos;
-
 	}
 
 	useEffect(() => {
@@ -51,21 +48,21 @@ export const Home = () => {
 
 	return (
 		<>
-				<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
-					<p><strong>¿Buscas o rentas tú coche? Estás en el lugar adecuado</strong></p>
-				</div>
+			<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
+				<p><strong>¿Buscas o rentas tú coche? Estás en el lugar adecuado</strong></p>
+			</div>
 			<div className="d-flex justify-content-center text-center mt-2 fs-4 text-dark-80">
-					<div className="d-flex me-2 px-3">
-						<FiltroAsientos
-							setFiltroAsientos={setFiltroAsientos}
-						/>
-					</div>
-					<div className="me-5">
-						<FiltroPrecio
-							setFiltroPrecio={setFiltroPrecio}
-						/>
-					</div>
+				<div className="d-flex me-2 px-3">
+					<FiltroAsientos
+						setFiltroAsientos={setFiltroAsientos}
+					/>
 				</div>
+				<div className="me-5">
+					<FiltroPrecio
+						setFiltroPrecio={setFiltroPrecio}
+					/>
+				</div>
+			</div>
 			<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
 					<div className="row Map Cards text-dark d-flex justify-content-center">
