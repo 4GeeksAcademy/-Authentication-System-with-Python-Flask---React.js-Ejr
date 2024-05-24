@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Room, Games, Room_request, Room_participant
+from api.models import db, User, Room, Games, Room_request, Room_participant, Comment
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -37,24 +37,25 @@ def new_user():
         sign_up_data = request.json
         print("Datos recibidos en la solicitud:", sign_up_data)
 
-        email = request.json.get('email')
-        password = request.json.get('password')
-        username = request.json.get('username')
-        first_name = request.json.get('firstName')
-        last_name = request.json.get('lastName')
-        age = request.json.get('age')
-        region = request.json.get('region')
-        timezone = request.json.get('timezone')
-        languages = request.json.get('languages')
-        xbox = request.json.get('xbox')
-        psn = request.json.get('psn')
-        steam = request.json.get('steam')
-        google_play = request.json.get('googlePlay')
-        nintendo = request.json.get('nintendo')
-        epic_id = request.json.get('epicId')
-        bio = request.json.get('bio')
-        gender = request.json.get('gender')
-        admin = request.json.get('admin')
+        # Obtener los datos del formulario de registro
+        email = sign_up_data.get('email')
+        password = sign_up_data.get('password')
+        username = sign_up_data.get('username')
+        first_name = sign_up_data.get('firstName')
+        last_name = sign_up_data.get('lastName')
+        age = sign_up_data.get('age')
+        region = sign_up_data.get('region')
+        timezone = sign_up_data.get('timezone')
+        languages = sign_up_data.get('languages')
+        xbox = sign_up_data.get('xbox')
+        psn = sign_up_data.get('psn')
+        steam = sign_up_data.get('steam')
+        google_play = sign_up_data.get('googlePlay')
+        nintendo = sign_up_data.get('nintendo')
+        epic_id = sign_up_data.get('epicId')
+        bio = sign_up_data.get('bio')
+        gender = sign_up_data.get('gender')
+        admin = sign_up_data.get('admin')
     
         # Convierte una variable de valor (" ") a booleano
         if admin is not None:
@@ -120,25 +121,21 @@ def get_token():
             return jsonify({'error': 'Email and password are required.'}), 400
         
         if not validate_email(email):
-            return jsonify({'error': 'Invalid email format.'}), 404
+            return jsonify({'error': 'Invalid email format.'}), 400
         
-        login_user = User.query.filter_by(email=request.json['email']).one()
+        login_user = User.query.filter_by(email=email).one_or_none()
 
         if not login_user:
-            return jsonify({'error': 'email/user not found.'}), 404
-        
+            return jsonify({'error': 'Email/user not found.'}), 404
 
-        true_o_false = bcrypt.check_password_hash(login_user.password, password)
-        
-        # Si es verdadero generamos un token y lo devuelve en una respuesta JSON:
-        if true_o_false:
+        if bcrypt.check_password_hash(login_user.password, password):
             expires = timedelta(hours=1)  # pueden ser "hours", "minutes", "days","seconds"
             user_id = login_user.id
             access_token = create_access_token(identity=user_id, expires_delta=expires)
-            time_zone = getattr(login_user, 'time_zone', None)
+            time_zone = getattr(login_user, 'timezone', None)
             data_to_return = {
-                'token':access_token,
-                'user_id' : login_user.id,
+                'token': access_token,
+                'user_id': login_user.id,
                 'admin': login_user.admin,
                 'email': login_user.email,
                 'username': login_user.username,
@@ -159,15 +156,16 @@ def get_token():
             }
             return jsonify(data_to_return), 200
         else:
-            return {"Error":"Contraseña  incorrecta"},404
+            return jsonify({"error": "Incorrect password"}), 404
     
     except Exception as e:
-        return {"Error":"El email proporcionado no corresponde a ninguno registrado: " + str(e)}, 500
+        return jsonify({"error": "The provided email does not correspond to any registered user: " + str(e)}), 500
+
 
 @api.route('/home', methods=['GET'])
 def get_current_rooms():
     try:
-        current_rooms = Room.query.all()
+        current_rooms = Room.query.filter_by(is_deleted=False).all()
         serialized_rooms = []
 
         for room in current_rooms:
@@ -194,7 +192,7 @@ def get_current_rooms():
             }
             serialized_rooms.append(serialized_room)
 
-        return jsonify(serialized_rooms)
+        return jsonify(serialized_rooms), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -209,6 +207,12 @@ def create_room():
         
         # Obtener los datos de la solicitud JSON
         room_data = request.json
+        
+        # Verificar que todos los campos necesarios estén presentes
+        required_fields = ['date', 'time', 'room_name', 'game_id', 'platform', 'description', 'mood', 'room_size']
+        for field in required_fields:
+            if field not in room_data or not room_data[field]:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
         
         # Crear una nueva instancia de Room con los datos proporcionados
         new_room = Room(
@@ -280,23 +284,25 @@ def get_room(room_id):
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
 
-        # Verificar si el usuario es admin
+        # Verificar si el usuario existe
         current_user = User.query.get(current_user_id)
         if not current_user:
             return jsonify({"error": "User not found."}), 404
 
-        # Verificar si el usuario es admin o el creador del room
-        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
-        if not room and not current_user.admin:
+        # Verificar si el usuario es el creador del room o un administrador
+        room = Room.query.filter_by(id=room_id).first()
+        if not room:
+            return jsonify({"error": "Room not found."}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id and not current_user.admin:
             return jsonify({"error": "Unauthorized."}), 403
 
-        if room:
-            return jsonify(room.serialize()), 200
-        else:
-            return jsonify({"error": "Room not found."}), 404
+        return jsonify(room.serialize()), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
     
 
 #update Room --------------------------------------------------------------------------------------------------------------
@@ -307,34 +313,37 @@ def update_room(room_id):
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
 
-        # Verificar si el usuario es admin
+        # Verificar si el usuario existe
         current_user = User.query.get(current_user_id)
         if not current_user:
             return jsonify({"error": "User not found."}), 404
 
-        # Verificar si el usuario es admin o el creador del room
-        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
-        if not room and not current_user.admin:
+        # Verificar si el room existe
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found."}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id and not current_user.admin:
             return jsonify({"error": "Unauthorized."}), 403
 
-        if room:
-            room_data = request.json
-            room.date = room_data.get('date', room.date)
-            room.time = room_data.get('time', room.time)
-            room.room_name = room_data.get('room_name', room.room_name)
-            room.game_id = room_data.get('game_id', room.game_id)
-            room.platform = room_data.get('platform', room.platform)
-            room.description = room_data.get('description', room.description)
-            room.mood = room_data.get('mood', room.mood)
-            room.room_size = room_data.get('room_size', room.room_size)
+        # Actualizar los datos del room
+        room_data = request.json
+        room.date = room_data.get('date', room.date)
+        room.time = room_data.get('time', room.time)
+        room.room_name = room_data.get('room_name', room.room_name)
+        room.game_id = room_data.get('game_id', room.game_id)
+        room.platform = room_data.get('platform', room.platform)
+        room.description = room_data.get('description', room.description)
+        room.mood = room_data.get('mood', room.mood)
+        room.room_size = room_data.get('room_size', room.room_size)
 
-            db.session.commit()
-            return jsonify({"message": "Room updated successfully", "room": room.serialize()}), 200
-        else:
-            return jsonify({"error": "Room not found."}), 404
+        db.session.commit()
+        return jsonify({"message": "Room updated successfully", "room": room.serialize()}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # DELETE ROOM -------------------------------------------------------------------------------------------------------
 
@@ -345,25 +354,28 @@ def delete_room(room_id):
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
 
-        # Verificar si el usuario es admin
+        # Verificar si el usuario existe
         current_user = User.query.get(current_user_id)
         if not current_user:
             return jsonify({"error": "User not found."}), 404
 
-        # Verificar si el usuario es admin o el creador del room
-        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
-        if not room and not current_user.admin:
+        # Verificar si el room existe
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found."}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id and not current_user.admin:
             return jsonify({"error": "Unauthorized."}), 403
 
-        if room:
-            db.session.delete(room)
-            db.session.commit()
-            return jsonify({"message": "Room deleted successfully"}), 200
-        else:
-            return jsonify({"error": "Room not found."}), 404
+        # Eliminación lógica del room
+        room.is_deleted = True
+        db.session.commit()
+        return jsonify({"message": "Room deleted successfully (logical delete)"}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # Obteniendo la información del usuario-------------------------------------------------------------------------
 
@@ -451,18 +463,27 @@ def delete_user(user_id):
         current_user_id = get_jwt_identity()
         current_user = User.query.get(current_user_id)
 
+        # Verificar si el usuario autenticado es admin o es el mismo usuario que solicita la eliminación
         if not current_user or (current_user.id != user_id and not current_user.admin):
             return jsonify({"error": "Unauthorized."}), 403
 
         user_to_delete = User.query.get(user_id)
 
         if user_to_delete:
+            # Verificar si se está intentando eliminar a un usuario admin sin ser admin
             if user_to_delete.admin and not current_user.admin:
                 return jsonify({"error": "Cannot delete an admin user."}), 403
 
-            db.session.delete(user_to_delete)
-            db.session.commit()
-            return jsonify({"message": "User deleted successfully"}), 200
+            if current_user.admin:
+                # Si el usuario autenticado es admin, eliminar físicamente el usuario
+                db.session.delete(user_to_delete)
+                db.session.commit()
+                return jsonify({"message": "User deleted physically by admin"}), 200
+            else:
+                # Si el usuario no es admin, realizar eliminación lógica
+                user_to_delete.is_deleted = True
+                db.session.commit()
+                return jsonify({"message": "User deleted logically"}), 200
         else:
             return jsonify({"error": "User not found."}), 404
 
@@ -547,6 +568,7 @@ def get_room_requests(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 #--------------ACCEPT OR REJECT "JOIN" & ROOM UPDATE-------------------------------------------
 
 @api.route('/room/<int:room_id>/requests/<int:request_id>', methods=['PUT'])
@@ -591,6 +613,7 @@ def update_room_request(room_id, request_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#--------GET GAMES--------------------------------------------------------------------------------------------------------------
 @api.route('/games', methods=['GET'])
 def get_games():
     try:
@@ -598,4 +621,49 @@ def get_games():
         return jsonify([game.serialize() for game in games]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+#------------------USER COMMENTS-------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/comments', methods=['POST'])
+@jwt_required()
+def create_comment(room_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Verificar si el room existe
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar si el usuario es participante del room
+        participant = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
+        if not participant:
+            return jsonify({"error": "Unauthorized. Only participants can comment."}), 403
+
+        # Obtener los datos del comentario
+        comment_data = request.json
+        content = comment_data.get('content')
+        if not content:
+            return jsonify({"error": "Missing required field: content"}), 400
+
+        # Crear una nueva instancia de Comment con los datos proporcionados
+        new_comment = Comment(
+            room_id=room_id,
+            user_id=current_user_id,
+            content=content
+        )
+
+        # Agregar el nuevo comentario a la base de datos y confirmar la transacción
+        db.session.add(new_comment)
+        db.session.commit()
+
+        return jsonify({"message": "Comment created successfully", "comment": new_comment.serialize()}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
 

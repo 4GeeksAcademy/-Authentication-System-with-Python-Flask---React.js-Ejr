@@ -22,8 +22,10 @@ class User(db.Model):
     bio = db.Column(db.String)
     gender = db.Column(db.String)
     admin = db.Column(db.Boolean, unique=False, nullable=True)
+    is_deleted = db.Column(db.Boolean, default=False)
 
-    Room_participants = db.relationship('Room_participant', backref='user', lazy=True)
+    room_participants = db.relationship('Room_participant', backref='user', lazy=True)
+    comments = db.relationship('Comment', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -33,8 +35,8 @@ class User(db.Model):
             "user_id": self.id,
             "email": self.email,
             "username": self.username,
-			"first_name": self.first_name,
-			"last_name": self.last_name,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
             "age": self.age,
             "region": self.region,
             "timezone": self.timezone,
@@ -47,7 +49,8 @@ class User(db.Model):
             "epic_id": self.epic_id,
             "bio": self.bio,
             "gender": self.gender,
-            "admin": self.admin
+            "admin": self.admin,
+            "is_deleted": self.is_deleted
         }
     
 class Room(db.Model):
@@ -62,8 +65,10 @@ class Room(db.Model):
     mood = db.Column(db.String, nullable=False)
     reviews = db.Column(db.String)
     room_size = db.Column(db.Integer, nullable=False)
+    is_deleted = db.Column(db.Boolean, default=False)
 
     room_participants = db.relationship('Room_participant', backref='room', lazy=True)
+    comments = db.relationship('Comment', backref='room', lazy=True)
     user = db.relationship('User', backref=db.backref('hosted_rooms', lazy=True))
     game = db.relationship('Games', backref=db.backref('rooms', lazy=True))
 
@@ -82,7 +87,8 @@ class Room(db.Model):
             "description": self.description,
             "mood": self.mood,
             "reviews": self.reviews,
-            "room_size": self.room_size
+            "room_size": self.room_size,
+            "is_deleted": self.is_deleted
         }
     
 class Games(db.Model):
@@ -103,10 +109,10 @@ class Room_participant(db.Model):
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     confirmed = db.Column(db.Boolean(), unique=False, nullable=False)
-   
+
     def __repr__(self):
-        return f'<Room_participant {self.id}>'
-    
+        return f'<Room_Participant {self.id}>'
+
     def serialize(self):
         return {
             "room_participant_id": self.id,
@@ -114,6 +120,7 @@ class Room_participant(db.Model):
             "user_id": self.user_id,
             "confirmed": self.confirmed
         }
+    
     
 class Room_request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -125,7 +132,7 @@ class Room_request(db.Model):
     room = db.relationship('Room', backref=db.backref('requests', lazy=True))
 
     def __repr__(self):
-        return f'<RoomRequest {self.id}>'
+        return f'<Room_request {self.id}>'
     
     def serialize(self):
         return {
@@ -133,4 +140,29 @@ class Room_request(db.Model):
             "room_id": self.room_id,
             "user_id": self.user_id,
             "status": self.status
+        }
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    is_deleted = db.Column(db.Boolean, default=False)
+    is_edited = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<Comment {self.id}>'
+
+    def serialize(self):
+        return {
+            "comment_id": self.id,
+            "room_id": self.room_id,
+            "user_id": self.user_id,
+            "content": self.content,
+            "is_deleted": self.is_deleted,
+            "is_edited": self.is_edited,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
         }
