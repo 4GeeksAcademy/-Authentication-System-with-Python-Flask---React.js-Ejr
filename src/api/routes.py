@@ -284,23 +284,25 @@ def get_room(room_id):
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
 
-        # Verificar si el usuario es admin
+        # Verificar si el usuario existe
         current_user = User.query.get(current_user_id)
         if not current_user:
             return jsonify({"error": "User not found."}), 404
 
-        # Verificar si el usuario es admin o el creador del room
-        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
-        if not room and not current_user.admin:
+        # Verificar si el usuario es el creador del room o un administrador
+        room = Room.query.filter_by(id=room_id).first()
+        if not room:
+            return jsonify({"error": "Room not found."}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id and not current_user.admin:
             return jsonify({"error": "Unauthorized."}), 403
 
-        if room:
-            return jsonify(room.serialize()), 200
-        else:
-            return jsonify({"error": "Room not found."}), 404
+        return jsonify(room.serialize()), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
     
 
 #update Room --------------------------------------------------------------------------------------------------------------
@@ -311,34 +313,37 @@ def update_room(room_id):
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
 
-        # Verificar si el usuario es admin
+        # Verificar si el usuario existe
         current_user = User.query.get(current_user_id)
         if not current_user:
             return jsonify({"error": "User not found."}), 404
 
-        # Verificar si el usuario es admin o el creador del room
-        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
-        if not room and not current_user.admin:
+        # Verificar si el room existe
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found."}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id and not current_user.admin:
             return jsonify({"error": "Unauthorized."}), 403
 
-        if room:
-            room_data = request.json
-            room.date = room_data.get('date', room.date)
-            room.time = room_data.get('time', room.time)
-            room.room_name = room_data.get('room_name', room.room_name)
-            room.game_id = room_data.get('game_id', room.game_id)
-            room.platform = room_data.get('platform', room.platform)
-            room.description = room_data.get('description', room.description)
-            room.mood = room_data.get('mood', room.mood)
-            room.room_size = room_data.get('room_size', room.room_size)
+        # Actualizar los datos del room
+        room_data = request.json
+        room.date = room_data.get('date', room.date)
+        room.time = room_data.get('time', room.time)
+        room.room_name = room_data.get('room_name', room.room_name)
+        room.game_id = room_data.get('game_id', room.game_id)
+        room.platform = room_data.get('platform', room.platform)
+        room.description = room_data.get('description', room.description)
+        room.mood = room_data.get('mood', room.mood)
+        room.room_size = room_data.get('room_size', room.room_size)
 
-            db.session.commit()
-            return jsonify({"message": "Room updated successfully", "room": room.serialize()}), 200
-        else:
-            return jsonify({"error": "Room not found."}), 404
+        db.session.commit()
+        return jsonify({"message": "Room updated successfully", "room": room.serialize()}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # DELETE ROOM -------------------------------------------------------------------------------------------------------
 
@@ -349,25 +354,28 @@ def delete_room(room_id):
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
 
-        # Verificar si el usuario es admin
+        # Verificar si el usuario existe
         current_user = User.query.get(current_user_id)
         if not current_user:
             return jsonify({"error": "User not found."}), 404
 
-        # Verificar si el usuario es admin o el creador del room
-        room = Room.query.filter_by(id=room_id, user_id=current_user_id).first()
-        if not room and not current_user.admin:
+        # Verificar si el room existe
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found."}), 404
+
+        # Verificar permisos
+        if room.user_id != current_user_id and not current_user.admin:
             return jsonify({"error": "Unauthorized."}), 403
 
-        if room:
-            db.session.delete(room)
-            db.session.commit()
-            return jsonify({"message": "Room deleted successfully"}), 200
-        else:
-            return jsonify({"error": "Room not found."}), 404
+        # Eliminación lógica del room
+        room.is_deleted = True
+        db.session.commit()
+        return jsonify({"message": "Room deleted successfully (logical delete)"}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # Obteniendo la información del usuario-------------------------------------------------------------------------
 
