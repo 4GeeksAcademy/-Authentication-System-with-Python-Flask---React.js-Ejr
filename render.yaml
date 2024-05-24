@@ -10,7 +10,7 @@ services:
   numInstances: 1
   buildFilter:
     paths :
-    - ./.buildver
+    - .buildver
   envVars:
   - key: BASENAME
     value: /
