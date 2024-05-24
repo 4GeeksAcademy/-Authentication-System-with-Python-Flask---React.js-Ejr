@@ -629,6 +629,75 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            uploadProfileImage: async (formData) => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/upload_img_profile`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, message: data.error };
+                    }
+                } catch (error) {
+                    return { success: false, message: error.message };
+                }
+            },
+
+            updateProfileImage: async (formData) => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/update_profile_image`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, message: data.error };
+                    }
+                } catch (error) {
+                    return { success: false, message: error.message };
+                }
+            },
+
+            deleteProfileImage: async () => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/delete_profile_image`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        }
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, message: data.error };
+                    }
+                } catch (error) {
+                    return { success: false, message: error.message };
+                }
+            },
+
+
 		},
 	}
 	

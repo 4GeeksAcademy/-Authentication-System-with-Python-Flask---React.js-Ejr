@@ -110,3 +110,18 @@ background: #d3d3d338;
   text-decoration: none;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
 }
+
+.profileImage {
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  width: 40px; /* Ajusta el tamaño de la imagen */
+  height: 40px; /* Asegúrate de que la altura coincida con el ancho */
+  margin-left: 10px; /* Espacio entre el nombre y la imagen */
+  object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+}
+
+.profileImageButton {
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  width: 30px;
+  height: 30px;
+  object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+}

@@ -38,6 +38,7 @@ import Oneuser from "./pages/Oneuser.jsx"; // revisar
 import Menuadmin from "./component/Menuadmin.jsx"; // revisar
 import UploadForm from "./component/UploadForm.jsx";
 import ImageGallery from "./component/ImageGallery.jsx";
+import ProfileImageUpload from "./component/ProfileImageUpload.jsx";
 
 //create your first component
 const Layout = () => {
@@ -79,6 +80,7 @@ const Layout = () => {
                         <Route element={<Menuadmin />} path="/Menuadmin" />
                         <Route element={<UploadForm />} path="/UploadForm" />
                         <Route element={<ImageGallery />} path="/ImageGallery" />
+                        <Route element={<ProfileImageUpload />} path="/ProfileImageUpload" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

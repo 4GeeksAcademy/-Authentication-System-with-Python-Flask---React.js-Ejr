@@ -4,6 +4,7 @@ from sqlalchemy import LargeBinary
 
 from datetime import datetime  # Importación del módulo datetime para trabajar con fechas y horas
 import json  # Importación del módulo json para trabajar con datos en formato JSON
+import base64  # Importación del módulo base64 para la codificación de imágenes
 db = SQLAlchemy()
     
 
@@ -23,11 +24,15 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     last_update_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)  # Nueva columna para la fecha de última modificación
     image_url = db.Column(db.String(255), nullable=True)  # Almacena la ruta de la imagen
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='SET NULL'), nullable=True)
+    profile_image_id = db.Column(db.Integer, db.ForeignKey('profile_image.id'), nullable=True)  # Clave foránea para la imagen de perfil
+
 
     # Relación con SecurityQuestion configurada para eliminar en cascada
     security_questions = db.relationship('SecurityQuestion', back_populates='user', cascade='all, delete-orphan')
     role = db.relationship("Role")  # Relación con la tabla de módulos
-    
+    profile_image = db.relationship('ProfileImage', back_populates='user', uselist=False)  # Relación uno a uno
+
+
     # Relaciones sin eliminar en cascada para Membership History y Payments
     memberships_history = db.relationship('UserMembershipHistory', backref='user', lazy='dynamic')
     payments = db.relationship('Payment', backref='user', lazy=True)
@@ -95,7 +100,9 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
             "membership_end_date": active_membership.end_date.isoformat() if active_membership else "N/A",
             "membership_description": active_membership.membership.description if active_membership and active_membership.membership else "N/A",
             "membership_remaining_classes": active_membership.remaining_classes if active_membership else "N/A",
-            "bookings": [booking.serialize() for booking in self.bookings]
+            "bookings": [booking.serialize() for booking in self.bookings],
+            "profile_image_url": self.profile_image.img_url if self.profile_image else None  # Añadido para la URL de la imagen de perfil
+
         }
 
     
@@ -349,4 +356,24 @@ class MovementImages(db.Model):
             "img_id": self.id,
             "name": self.name,
             "description": self.description
+        }
+
+
+class ProfileImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    img_data = db.Column(LargeBinary, nullable=False)
+    
+    user = db.relationship('User', back_populates='profile_image', uselist=False)  # Relación uno a uno
+
+    @property
+    def img_url(self):
+        return f"data:image/jpeg;base64,{base64.b64encode(self.img_data).decode('utf-8')}"
+
+    def __repr__(self):
+        return '<ProfileImage %r>' % self.id
+
+    def serialize(self):
+        return {
+            "img_id": self.id,
+            "img_url": self.img_url
         }

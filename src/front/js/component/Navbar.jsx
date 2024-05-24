@@ -2,12 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Offcanvas, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import styles from './Navbar.module.css';  // Asegúrate de que el path es correcto
+
 
 import EditProfile from './EditProfile.jsx';
 import UserDataDetail from '../pages/UserDataDetail.jsx';
 import UserBooking from '../pages/UserBooking.jsx';
 import MembershipPurchase from './MembershipPurchase.jsx';
-import styles from './Navbar.module.css';  // Asegúrate de que el path es correcto
+import ProfileImageUpload from './ProfileImageUpload.jsx';
 
 const NavigationBar = () => {
     const { store, actions } = useContext(Context);
@@ -44,7 +46,7 @@ const NavigationBar = () => {
                         <Nav.Link href="/" className={styles.logonavbar}>Home</Nav.Link>
                         <Nav.Link href="/plans" className={styles.logonavbar}>Plans</Nav.Link>
                         <Nav.Link href="/Benefits" className={styles.logonavbar}>About</Nav.Link>
-                        <Nav.Link href="/BookingView" className={styles.logonavbar}>Calendar</Nav.Link>
+                        <Nav.Link href="/Calendar" className={styles.logonavbar}>Calendar</Nav.Link>
                     </Nav>
                     {store.isAuthenticated && (
                         <>
@@ -57,7 +59,17 @@ const NavigationBar = () => {
                                     <Button className={styles.logoutButton}>Modulos</Button>
                                 </Link>
                             )}
-                            <Button onClick={handleShow} className={styles.ProfileButton}><i className="fa-regular fa-user"></i></Button>
+                            <Button onClick={handleShow} className={styles.ProfileButton}>
+                                {store.uploadedUserData.profile_image_url ? (
+                                    <img
+                                        src={store.uploadedUserData.profile_image_url}
+                                        alt="Profile"
+                                        className={styles.profileImageButton}
+                                    />
+                                ) : (
+                                    <i className="fa-regular fa-user"></i>
+                                )}
+                            </Button>
                         </>
                     )}
                     {!store.isAuthenticated && (
@@ -70,9 +82,19 @@ const NavigationBar = () => {
 
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton className={styles.offcanvasHeader}>
-                    <Offcanvas.Title>Bienvenido: {store.uploadedUserData.name}</Offcanvas.Title>
+                <Offcanvas.Title>
+                        Bienvenido: {store.uploadedUserData.name}
+                        {store.uploadedUserData.profile_image_url && (
+                            <img
+                                src={store.uploadedUserData.profile_image_url}
+                                alt="Profile"
+                                className={styles.profileImage}
+                            />
+                        )}
+                    </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
+                    <ProfileImageUpload />
                     <EditProfile />
                     <MembershipPurchase />
                     <UserDataDetail />

@@ -4,8 +4,6 @@ import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./PrivatePageUser.module.css"; // Importación de estilos CSS
 
 import PrivateCalendar from "../component/PrivateCalendar.jsx";
-import MembershipPurchase from "../component/MembershipPurchase.jsx";
-import EditProfile from "../component/EditProfile.jsx";
 
 
 const PrivatePageUser = () => {
