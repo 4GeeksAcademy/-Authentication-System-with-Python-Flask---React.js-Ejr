@@ -237,12 +237,12 @@ mail = Mail()
 @api.route('/send-confirmation-mail', methods=['POST'])
 @jwt_required()
 def send_confirmation_mail():
-    # Obtener el email del usuario autenticado
+
     email = get_jwt_identity()
     
     msg = Message(
         "Confirmación de compra",
-        recipients=[email]  # Usar el email del usuario autenticado
+        recipients=[email]  
     )
     msg.body = "Gracias por tu compra. Este es un correo de confirmación."
 
@@ -251,3 +251,6 @@ def send_confirmation_mail():
         return jsonify({"msg": "El email se ha enviado correctamente"}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+    
+    
+

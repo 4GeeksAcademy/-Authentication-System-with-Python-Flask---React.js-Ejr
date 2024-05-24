@@ -9,7 +9,7 @@ export const ProductDisplay = () => {
   if (!store.checkout.precio_id_stripe) {
     navigate('/');
   } 
-
+  console.log(store.checkout.precio_id_stripe, store.checkout.days);
   return (
     <section>
       <div className="product mt-5 mb-5 text-center vh-100">

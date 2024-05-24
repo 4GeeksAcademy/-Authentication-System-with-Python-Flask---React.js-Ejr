@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
-			checkout: {},
+			checkout: {}
 		},
 		actions: {
 			getMessage: async () => {
@@ -260,8 +260,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						url_img1: url_img1
 					}
 				})
-			},
+			}
 		}
 	};
 };
+			
 export default getState;
