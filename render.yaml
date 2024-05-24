@@ -5,7 +5,7 @@ services:
   runtime: python
   buildCommand: "./render_build.sh"
   startCommand: "gunicorn render_wsgi"
-  healthCheckPath: "/healtcheck"
+  healthCheckPath: "/healthcheck"
   plan: free
   numInstances: 1
   buildFilter:
