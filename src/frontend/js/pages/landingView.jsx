@@ -1,10 +1,8 @@
 import React, {useState} from "react"
 import { Link } from "react-router-dom";
-import { animateScroll as scroll } from "react-scroll";
 import Accordion from "../component/Accordion.jsx";
 
 //--- icons ------------------------------------
-import { HiOutlinePlus } from "react-icons/hi";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaYoutube } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa6";
@@ -15,7 +13,7 @@ import { FaRegClock } from "react-icons/fa6";
 import { HiOutlineCheck } from "react-icons/hi";
 
 //--- icons ------------------------------------
-import bricks from "../../assets/img/home-view-images/bricks.svg"
+import bricks from "../../assets/img/home-view-images/bricks.png"
 import vieja from "../../assets/img/image.png"
 
 

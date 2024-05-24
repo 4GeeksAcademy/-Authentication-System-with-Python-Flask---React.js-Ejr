@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {Link as NavTo} from "react-scroll" ;
 import { Context } from "../store/appContext.jsx";
 
@@ -9,7 +9,7 @@ import { IoMdMenu } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
 
   //--- login ---------------------
   const { store, actions }= React.useContext(Context)
@@ -35,22 +35,11 @@ const Navbar = () => {
       <div className="sticky top-0 bg-dark w-full flex z-[999]">
         <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
           <div className="flex items-center">
-            <Link to="/">
-              <p className=" text-2xl f-body font-[600] mr-20">KeQQu</p>  
-            </Link>
-            {(location.pathname === "/dashboard" || location.pathname === "/workspace") && (
-              <div className="flex">
-                <p className="f-body">Workspace</p>
-                {location.pathname === "/dashboard" && (
-                  <>
-                    <span className="mx-3 f-body">--&#62;</span>
-                    <p className="f-body">Project</p>
-                    <p className="pl-8">"this should load by views"</p>
-                  </>
-                )}
-              </div>
-            )}
-
+            
+            <p onClick={()=>navigate('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
+            
+            <p onClick={()=>navigate('dashboard')} className="f-body cursor-pointer">Dashboard</p>
+            <button className=""></button>
           </div>
             <div className="ml-10 flex items-center">
               <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
@@ -62,18 +51,18 @@ const Navbar = () => {
                       <div className="bg-dark rounded-xl p-2 flex flex-col gap-2">
                           <div className="px-5 mt-2">
                               <ul>
-                                  <li className="f-body">name</li>
-                                  <li className="f-body">your@email.com</li>
+                                  <li className="f-body text-gray-300">name</li>
+                                  <li className="f-body text-gray-300">your@email.com</li>
                               </ul>
                           </div>
                           <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
                           <div className="px-5">
                               <ul className="grid gap-2">
                                   <Link to="accountsettings">
-                                  <li onClick={handleDrop} className="f.body hover:bg-violet-950">Account settings</li>
+                                  <li onClick={handleDrop} className="f-body hover:bg-violet-950">Account settings</li>
                                   </Link>
                                   <Link to="support">
-                                      <li onClick={handleDrop} className="f.body hover:bg-violet-950">Support</li>
+                                      <li onClick={handleDrop} className="f-body hover:bg-violet-950">Support</li>
                                   </Link>
                               </ul>
                           </div>
@@ -81,7 +70,7 @@ const Navbar = () => {
                           <div className="px-5 mb-2">
                               <ul>
                                   <Link to="/logout">
-                                      <li onClick={handleDrop} className="f.body text-red-700 hover:bg-red-950">Log Out</li>
+                                      <li onClick={handleDrop} className="f-body text-red-600 hover:bg-red-950">Log Out</li>
                                   </Link>
                               </ul>
                           </div>
@@ -142,7 +131,7 @@ const Navbar = () => {
           </div>
 
 
-        <div onClick={handleNav} className="black">
+        <div onClick={handleNav} className="black hidden">
           {nav ? <AiOutlineClose size={18} /> : <IoMdMenu size={18} />} 
         </div>
         <div className={nav ? 'fixed left-0 top-0 h-full bg-white w-80 border-l border-r-gray-600 ease-and-out duration-500' : 'fixed top-0 h-full left-[-30rem] ease-and-out duration-700'}>
@@ -155,8 +144,7 @@ const Navbar = () => {
             <li className="border-b border-black p-5">Pricing</li>
             <li className="border-b border-black p-5">FAQ</li>
             <li className="p-5 border-b border-black">Contact</li>
-            <li className="border-b border-black p-5">This should only show for mobile devices
-            but for now...</li>
+            <li className="border-b border-black p-5">This should only show for mobile devices but for now...</li>
           </ul>
         </div>
       </div>
