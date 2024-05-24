@@ -165,7 +165,7 @@ def get_token():
 @api.route('/home', methods=['GET'])
 def get_current_rooms():
     try:
-        current_rooms = Room.query.all()
+        current_rooms = Room.query.filter_by(is_deleted=False).all()
         serialized_rooms = []
 
         for room in current_rooms:
@@ -192,7 +192,7 @@ def get_current_rooms():
             }
             serialized_rooms.append(serialized_room)
 
-        return jsonify(serialized_rooms)
+        return jsonify(serialized_rooms), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -207,6 +207,12 @@ def create_room():
         
         # Obtener los datos de la solicitud JSON
         room_data = request.json
+        
+        # Verificar que todos los campos necesarios estén presentes
+        required_fields = ['date', 'time', 'room_name', 'game_id', 'platform', 'description', 'mood', 'room_size']
+        for field in required_fields:
+            if field not in room_data or not room_data[field]:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
         
         # Crear una nueva instancia de Room con los datos proporcionados
         new_room = Room(
