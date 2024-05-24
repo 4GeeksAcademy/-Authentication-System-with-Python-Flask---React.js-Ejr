@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Room, Games, Room_request, Room_participant
+from api.models import db, User, Room, Games, Room_request, Room_participant, Comment
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -463,18 +463,27 @@ def delete_user(user_id):
         current_user_id = get_jwt_identity()
         current_user = User.query.get(current_user_id)
 
+        # Verificar si el usuario autenticado es admin o es el mismo usuario que solicita la eliminación
         if not current_user or (current_user.id != user_id and not current_user.admin):
             return jsonify({"error": "Unauthorized."}), 403
 
         user_to_delete = User.query.get(user_id)
 
         if user_to_delete:
+            # Verificar si se está intentando eliminar a un usuario admin sin ser admin
             if user_to_delete.admin and not current_user.admin:
                 return jsonify({"error": "Cannot delete an admin user."}), 403
 
-            db.session.delete(user_to_delete)
-            db.session.commit()
-            return jsonify({"message": "User deleted successfully"}), 200
+            if current_user.admin:
+                # Si el usuario autenticado es admin, eliminar físicamente el usuario
+                db.session.delete(user_to_delete)
+                db.session.commit()
+                return jsonify({"message": "User deleted physically by admin"}), 200
+            else:
+                # Si el usuario no es admin, realizar eliminación lógica
+                user_to_delete.is_deleted = True
+                db.session.commit()
+                return jsonify({"message": "User deleted logically"}), 200
         else:
             return jsonify({"error": "User not found."}), 404
 
@@ -554,6 +563,7 @@ def get_room_requests(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 #--------------ACCEPT OR REJECT "JOIN" & ROOM UPDATE-------------------------------------------
 
 @api.route('/room/<int:room_id>/requests/<int:request_id>', methods=['PUT'])
@@ -598,6 +608,7 @@ def update_room_request(room_id, request_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#--------GET GAMES--------------------------------------------------------------------------------------------------------------
 @api.route('/games', methods=['GET'])
 def get_games():
     try:
@@ -605,4 +616,49 @@ def get_games():
         return jsonify([game.serialize() for game in games]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+#------------------USER COMMENTS-------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/comments', methods=['POST'])
+@jwt_required()
+def create_comment(room_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Verificar si el room existe
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar si el usuario es participante del room
+        participant = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
+        if not participant:
+            return jsonify({"error": "Unauthorized. Only participants can comment."}), 403
+
+        # Obtener los datos del comentario
+        comment_data = request.json
+        content = comment_data.get('content')
+        if not content:
+            return jsonify({"error": "Missing required field: content"}), 400
+
+        # Crear una nueva instancia de Comment con los datos proporcionados
+        new_comment = Comment(
+            room_id=room_id,
+            user_id=current_user_id,
+            content=content
+        )
+
+        # Agregar el nuevo comentario a la base de datos y confirmar la transacción
+        db.session.add(new_comment)
+        db.session.commit()
+
+        return jsonify({"message": "Comment created successfully", "comment": new_comment.serialize()}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
 
