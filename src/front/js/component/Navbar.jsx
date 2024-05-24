@@ -20,6 +20,7 @@ export const Navbar = () => {
             </div>
             <div className="navbar-right">
                 <Link to="/" className="navbar-link">Rooms</Link>
+                <Link to="/my-rooms" className="navbar-link">My Rooms</Link>
                 <Link to="/games" className="navbar-link">Games</Link>
                 {token ? (
                     

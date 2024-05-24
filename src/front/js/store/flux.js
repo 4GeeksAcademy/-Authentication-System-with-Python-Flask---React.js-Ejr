@@ -267,16 +267,60 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/join`, {
                         method: 'POST',
                         headers: {
+                            'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         }
                     });
                     if (!response.ok) throw new Error("Failed to join room");
+                    const data = await response.json();
                     return true;
                 } catch (error) {
                     console.error(error);
                     return false;
                 }
             },
+
+            fetchRoomRequests: async (roomId) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return [];
+            
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/requests`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch room requests');
+                    const data = await response.json();
+                    return data.requests;
+                } catch (error) {
+                    console.error('Error fetching room requests:', error);
+                    return [];
+                }
+            },
+
+            updateRoomRequest: async (roomId, requestId, status) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/requests/${requestId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ status })
+                    });
+                    if (!response.ok) throw new Error('Failed to update room request');
+                    return true;
+                } catch (error) {
+                    console.error('Error updating room request:', error);
+                    return false;
+                }
+            },
+
         }
     };
 };

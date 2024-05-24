@@ -535,8 +535,13 @@ def get_room_requests(room_id):
                 return jsonify({"error": "Unauthorized"}), 403
 
         requests = Room_request.query.filter_by(room_id=room_id, status="pending").all()
-        serialized_requests = [req.serialize() for req in requests]
-        
+        serialized_requests = []
+        for req in requests:
+            user = User.query.get(req.user_id)
+            serialized_request = req.serialize()
+            serialized_request['participant_name'] = user.username
+            serialized_requests.append(serialized_request)
+
         return jsonify({"requests": serialized_requests}), 200
     
     except Exception as e:

@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { LogIn } from "./pages/LogIn.jsx";
 import { SignUp } from "./pages/SignUp.jsx";
 import { Home } from "./pages/Home.jsx";
+import { MyRooms } from "./pages/MyRooms.jsx";
 import { Profile } from "./pages/Profile.jsx";
 import { RoomDetail } from "./pages/RoomDetail.jsx";
 import { CreateRoom } from "./pages/CreateRoom.jsx";
@@ -30,6 +31,7 @@ const Layout = () => {
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<SignUp />} path="/signup" />
                         <Route element={<PrivateRoute><Profile /></PrivateRoute>} path="/profile" />
+                        <Route element={<PrivateRoute><MyRooms /></PrivateRoute>} path="/my-rooms" />
                         <Route element={<RoomDetail />} path="/room/:roomId" />
                         <Route element={<CreateRoom />} path="/create-room" />
                         <Route element={<PrivateRoute><EditRoom /></PrivateRoute>} path="/edit-room/:room_id" /> 
