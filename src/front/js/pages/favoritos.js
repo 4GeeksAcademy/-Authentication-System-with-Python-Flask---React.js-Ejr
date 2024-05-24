@@ -36,7 +36,7 @@ export const Favoritos = () => {
                                                         <p className="card-text mb-1"><strong>Tipo de cambio:</strong> {vehicle.tipo_cambio}</p>
                                                         <p className="card-text mb-1"><strong>Asientos:</strong> {vehicle.asientos}</p>
                                                         <p className="card-text mb-1"><strong>Precio:</strong> {vehicle.precio} €</p>
-                                                    
+
                                                     <div className="d-flex justify-content-end btn-lg p-0">
                                                 <button onClick={() => actions.removeFav(vehicle.id)} className="btn-success rounded">
                                                     Eliminar
@@ -52,8 +52,7 @@ export const Favoritos = () => {
                         }
                     </div>
                 </div>
-            </div>
-                    
+            </div>     
         </>
     );
 };
