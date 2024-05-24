@@ -690,5 +690,37 @@ def update_comment(comment_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#----------DELETE COMMENT ------------------------------------------------------------------------------------
+@api.route('/comments/<int:comment_id>', methods=['DELETE'])
+@jwt_required()
+def delete_comment(comment_id):
+    try:
+        current_user_id = get_jwt_identity()
+        comment = Comment.query.get(comment_id)
+        if not comment:
+            return jsonify({"error": "Comment not found"}), 404
+
+        current_user = User.query.get(current_user_id)
+        if not current_user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Verificar si el usuario es el autor del comentario o un administrador
+        if comment.user_id != current_user_id and not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        # Si es admin, eliminar el comentario físicamente
+        if current_user.admin:
+            db.session.delete(comment)
+            db.session.commit()
+            return jsonify({"message": "Comment deleted permanently by admin"}), 200
+        else:
+            # Si no es admin, realizar una eliminación lógica
+            comment.is_deleted = True
+            db.session.commit()
+            return jsonify({"message": "Comment deleted successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
