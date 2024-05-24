@@ -38,12 +38,12 @@ def setup_commands(app):
                         precio= 50,
                         user_id= users[0].id, 
                         precio_id_stripe= "price_1PJD3SBy1Y4Nz1OnX0QwLuGy", 
-                        url_img1= "https://s03.s3c.es/imag/_v0/1754x857/9/0/d/1024x_AudiA3Allstreet-3.jpg",
-                        url_img2= "https://www.cochesyconcesionarios.com/media/cache/1170x780/uploads/audi/a3/4/ha/audi-a3-sportback-06-0894eac007d60ea7fb591a5db75aeadfafcad408.jpeg",
-                        url_img3= "https://cdn.motor1.com/images/mgl/nRVvk/s3/audi-a3-sportback-2020-on-location.jpg"
+                        url_img1= "https://prod.pictures.autoscout24.net/listing-images/ecade580-ca4e-44ca-bf97-22060506b48a_dd9be07f-a887-4b28-aded-f07a5acb5159.jpg/720x540.webp",
+                        url_img2= "https://prod.pictures.autoscout24.net/listing-images/ecade580-ca4e-44ca-bf97-22060506b48a_837ede51-3651-4ea4-bebb-81c531534541.jpg/720x540.webp",
+                        url_img3= "https://prod.pictures.autoscout24.net/listing-images/ecade580-ca4e-44ca-bf97-22060506b48a_7aa273df-b678-41dd-8aa6-55766095f6b4.jpg/720x540.webp"
                     ),
 
-                Vehicle(marca_modelo="TOYOTA HILUX",
+                Vehicle(marca_modelo="TOYOTA AURIS",
                         matricula="1834ABC", 
                         motor="Gasolina", 
                         tipo_cambio= "Manual", 
@@ -51,9 +51,9 @@ def setup_commands(app):
                         precio= 70,
                         user_id= users[0].id, 
                         precio_id_stripe= "price_1PJDCTBy1Y4Nz1OnYrUnaAfx", 
-                        url_img1= "https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2024/04/16/toyota-hilux-2024.jpeg",
-                        url_img2= "https://www.autoscout24.es/cms-content-assets/1va66VHm7QTdnwscJMXrgt-9a035eaccb44b7cdd5b4a4e649438bea-prueba-toyota-hilux-gr-768.sport",
-                        url_img3= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqa2qptUXL9Z1Jket4pbqKOK8K-IEwhGMp4A&s"
+                        url_img1= "https://prod.pictures.autoscout24.net/listing-images/7649d4fe-2bc9-4709-bb74-9a67af815cf0_f8c352b2-f659-4b26-b101-abe4c8079440.jpg/720x540.webp",
+                        url_img2= "https://prod.pictures.autoscout24.net/listing-images/7649d4fe-2bc9-4709-bb74-9a67af815cf0_9c14e1f4-6da7-418f-9fbb-f488330c70db.jpg/720x540.webp",
+                        url_img3= "https://prod.pictures.autoscout24.net/listing-images/7649d4fe-2bc9-4709-bb74-9a67af815cf0_5a7ac744-18d1-4844-8d64-4e7bfc5569f2.jpg/720x540.webp"
                     ),
 
                 Vehicle(marca_modelo="FIAT 500",
@@ -64,9 +64,9 @@ def setup_commands(app):
                         precio= 30,
                         user_id= users[0].id, 
                         precio_id_stripe= "price_1PJDEWBy1Y4Nz1OnNzfFhOIr", 
-                        url_img1= "https://www.bonavalcar-fcagroup.es/content/dam/ddp-dws/it/master-italia/model_pages_2022/fiat/500_electric/500bev_3_1_RoseGold_modelpage_top.png",
-                        url_img2= "https://static.motor.es/fotos-jato/abarth/uploads/abarth-500-651741c4df8ad.jpg",
-                        url_img3= "https://www.media.stellantis.com/cache/2/8/9/d/b/289db34041d9f6b4aa5c18646b0e94f66e8f3762.jpeg"
+                        url_img1= "https://prod.pictures.autoscout24.net/listing-images/9bdef8ca-9258-4522-96c0-5fbaca49e4e4_d9d89502-07c1-466d-a303-cb919f5a06db.jpg/720x540.webp",
+                        url_img2= "https://prod.pictures.autoscout24.net/listing-images/9bdef8ca-9258-4522-96c0-5fbaca49e4e4_0e6b3cd2-d095-4e18-93bd-723152911bf7.jpg/720x540.webp",
+                        url_img3= "https://prod.pictures.autoscout24.net/listing-images/9bdef8ca-9258-4522-96c0-5fbaca49e4e4_3aa18080-7fce-45f9-93d9-548474ea2904.jpg/720x540.webp"
                     ),
 
                 Vehicle(marca_modelo="TESLA S",
@@ -77,9 +77,9 @@ def setup_commands(app):
                         precio= 105,
                         user_id= users[0].id, 
                         precio_id_stripe= "price_1PJDGOBy1Y4Nz1OnSi8mTu5Z", 
-                        url_img1= "https://imagenes.km77.com/fotos/bbtcontent/clippingnew/KM7KPH20190909_0023/full-original.jpg",
-                        url_img2= "https://img.remediosdigitales.com/55c7f7/tesla-model-s-2021/840_560.jpeg",
-                        url_img3= "https://static.motor.es/fotos-jato/tesla/uploads/tesla-model-s-64d8c5fb2b66d.jpg"
+                        url_img1= "https://prod.pictures.autoscout24.net/listing-images/4d108279-6d01-4841-bc62-3c4fbf53ad18_25ad9d38-5565-448b-8513-ce840ad7b042.jpg/720x540.webp",
+                        url_img2= "https://prod.pictures.autoscout24.net/listing-images/4d108279-6d01-4841-bc62-3c4fbf53ad18_8daf0b4a-c267-45a6-8365-df49787e3286.jpg/720x540.webp",
+                        url_img3= "https://prod.pictures.autoscout24.net/listing-images/4d108279-6d01-4841-bc62-3c4fbf53ad18_76df16ca-deed-453b-a9ad-909f78a34555.jpg/720x540.webp"
                     ),
                 
                 Vehicle(marca_modelo="CITROEN C5",
@@ -90,9 +90,9 @@ def setup_commands(app):
                         precio= 60,
                         user_id= users[0].id, 
                         precio_id_stripe= "price_1PJDI6By1Y4Nz1OnIaQVCnsZ", 
-                        url_img1= "https://www.avtogermes.ru/images/marks/citroen/c5-aircross/i-restajling/colors/dzm0/001af687d9c759a9ed9e2a58dfe58679.png",
-                        url_img2= "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Citroen_C5_Aircross%2C_Paris_Motor_Show_2018%2C_IMG_0197.jpg/1200px-Citroen_C5_Aircross%2C_Paris_Motor_Show_2018%2C_IMG_0197.jpg",
-                        url_img3= "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Citroen_C5_Aircross%2C_Paris_Motor_Show_2018%2C_IMG_0197.jpg/1200px-Citroen_C5_Aircross%2C_Paris_Motor_Show_2018%2C_IMG_0197.jpg"
+                        url_img1= "https://prod.pictures.autoscout24.net/listing-images/ddf48611-f142-4bf8-b89d-5332dad87ab8_4edb25e6-c691-4f9d-9e47-46f12dba100c.jpg/1920x1080.webp",
+                        url_img2= "https://prod.pictures.autoscout24.net/listing-images/ddf48611-f142-4bf8-b89d-5332dad87ab8_1931e889-0bd6-49ef-9f01-64c13eabe809.jpg/1920x1080.webp",
+                        url_img3= "https://prod.pictures.autoscout24.net/listing-images/ddf48611-f142-4bf8-b89d-5332dad87ab8_0f22a46e-b069-41fb-92f4-220e12a88e17.jpg/1920x1080.webp"
                     ),
 
                 Vehicle(marca_modelo="MERCEDES VITO",
@@ -103,9 +103,9 @@ def setup_commands(app):
                         precio= 120,
                         user_id= users[0].id, 
                         precio_id_stripe= "price_1PJDI6By1Y4Nz1OnIaQVCnsZ", 
-                        url_img1= "https://www.diariomotor.com/imagenes/2020/03/mercedes-vito-2020-p.jpg",
-                        url_img2= "https://d2e5b8shawuel2.cloudfront.net/vehicle/304841/hrv/original.jpg",
-                        url_img3= "https://cdn.drivek.com/configurator-imgs/cars/es/Original/MERCEDES/VITO/44175_VAN-4-DOORS/mercedes-benz-vito-tourer-front-view.jpg"
+                        url_img1= "https://prod.pictures.autoscout24.net/listing-images/4eb68efd-9ed1-407c-b2c5-6df67e95fc60_895fbe2d-bd13-4a92-af56-57d2acba41bb.jpg/1920x1080.webp",
+                        url_img2= "https://prod.pictures.autoscout24.net/listing-images/4eb68efd-9ed1-407c-b2c5-6df67e95fc60_0bfb4e0d-9719-4379-9cd4-fc16f5acac27.jpg/1920x1080.webp",
+                        url_img3= "https://prod.pictures.autoscout24.net/listing-images/4eb68efd-9ed1-407c-b2c5-6df67e95fc60_217b4232-b470-49dc-9a62-10359f3eaa0e.jpg/1920x1080.webp"
                     ) 
             ]
             db.session.add_all(vehicles)
