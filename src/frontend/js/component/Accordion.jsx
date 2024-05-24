@@ -12,7 +12,7 @@ const Accordion = ({question, answer}) => {
         className="flex w-full h-full justify-between items-center"
       >
         <p className="f-tittle text-w flex">{question}</p>
-        {!accordionOpen ? <span><HiOutlinePlus className="text-yellow-400 text-3xl"/></span> : <span className="text-yellow-400 text-3xl"><HiOutlineMinus /></span>}
+        {!accordionOpen ? <span><HiOutlinePlus className="text-yellow-400 text-3xl transition duration-700 ease-in-out"/></span> : <span className="text-yellow-400 text-3xl transition duration-500 ease-in-out"><HiOutlineMinus /></span>}
      
       </button>
       <div

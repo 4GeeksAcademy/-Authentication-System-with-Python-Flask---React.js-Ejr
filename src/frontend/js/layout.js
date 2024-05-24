@@ -39,7 +39,7 @@ const Layout = () => {
               <Navbar />
               <Routes>
                   <Route path="/" element={<LandingView />} exact />
-      
+                  
                   <Route strict path="/signup" element={<SessionManagerView mode={Constants.SESSION_MODE_SIGNUP}/>} />
                   <Route strict path="/login" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGIN}/>} />
                   <Route strict path="/logout" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGOUT}/>} />
@@ -54,8 +54,6 @@ const Layout = () => {
                   <Route strict path="/workspace/:wid" element={<WorkspaceView />} />
                   <Route strict path="/team/:tid" element={<TeamView />} />
                   <Route strict path="/project/:pid" element={<ProjectView />} exact />
-      
-                  <Route strict path="/project/:pid/:bid" element={<BoardView />} />
                   <Route strict path="/board/:bid" element={<BoardView />}/>
                   
                   <Route path="*" element={<Redirector url="/404" replace/>} />

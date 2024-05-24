@@ -32,12 +32,12 @@ const LandingView = () => {
     <div className="bg-dark w-full p-0 m-0 absolute ">
       <div className="pt-[60px] w-[1440px] mx-auto">
     {/*--- hero section ------------------------------------ */}
-        <div id="heroSection" className="w-full grid grid-cols-2 p-5">
-          <div className="mx-auto">
+        <div id="heroSection" className="w-full grid grid-cols-2 p-5 items-center">
+          <div className="mx-auto my-8">
             <h1 className="f-tittle text-[64px] py-8">Organizing your tasks has never been easier and more convinient</h1>
             <p className="f-body text-xl py-2 w-8/12">Create a workspace and plan your way to go<br/> Your goals are just a few "checks" away from you </p>
             <Link to="/login">
-              <button className="border rounded-[10rem] px-10 py-4 f-tittle text-xl bg-accent-l text-black mt-10">Get started - its free!</button>
+              <button className="border rounded-[10rem] px-10 py-4 f-tittle text-xl bg-accent-l text-black mt-10 hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started - its free!</button>
             </Link>
           </div>
           <div className="mx-auto bg-b">
@@ -132,7 +132,7 @@ const LandingView = () => {
               <div id="bottom" className="mt-auto mx-auto"> 
                 <p className="f-tittle flex justify-center text-2xl pb-3">0.00€</p>
                 <Link to="/signup">
-                  <button className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black">Get started</button>
+                  <button className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started</button>
                 </Link>
               </div>
             </div>
@@ -161,7 +161,7 @@ const LandingView = () => {
               <div id="bottom" className="mt-auto mx-auto"> 
                 <p className="f-tittle flex justify-center text-2xl pb-3">0.00€</p>
                 <Link to="/signup">
-                  <button className=" f-body border border-accent-l rounded-[30px] px-8 py-3 text-accent-l">Get started</button>
+                  <button className=" f-body border border-accent-l rounded-[30px] px-8 py-3 text-accent-l hover:bg-white hover:text-black transition duration-300 ease-in-out">Get started</button>
                 </Link>
               </div>
             </div>
@@ -186,7 +186,7 @@ const LandingView = () => {
               <div id="bottom" className="mt-auto mx-auto"> 
                 <p className="f-tittle flex justify-center text-2xl pb-3">0.00€</p>
                 <Link to="/signup">
-                  <button className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black">Get started</button>
+                  <button className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started</button>
                 </Link>
               </div> 
             </div>
@@ -202,7 +202,7 @@ const LandingView = () => {
             </div>
             <div className="w-3/5 p-10">
              <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
-              <Accordion question='Here goes a question' answer='Here goes the anwer to that question lol'/>
+              <Accordion question='Is it free?' answer='Yes, this software is 100% free.'/>
               </div>
               <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
               <Accordion question='Here goes a question' answer='Here goes the anwer to that question lol'/>
@@ -218,7 +218,7 @@ const LandingView = () => {
         </div>
 
         {/*--- Footer ----------------------------------------------------*/}
-        <div id="footerSection" className="bg-dark w-full py-28 text-black">
+        <div id="footerSection"className="bg-dark w-full py-28 text-black">
           <div className="bg-primary-d w-[1360px] px-10 rounded-[3rem] mx-auto py-4 text-white">
             <div className="w-4/5 m-10 mx-auto flex justify-around">
               <h3 className="f-tittle text-[32px]">KeQQu</h3>
@@ -228,12 +228,12 @@ const LandingView = () => {
                 <li className="f-tittle text-lg mx-auto">Support</li>
               </ul>
               <div className="flex items-center pl-10">
-                <div> {/* here should go an input */}
-                  <input type="email" placeholder="join our newsletter!" className="border-none outline-none bg-transparent placeholder-[#fff5c2] p-0 mx-2 placeholder:italic"  />
-                  {/* <p className="px-2 f-tittle text-lg text-[#fff5c2]">join our newsletter!</p> */}
+                <div> 
+                  <input type="email" placeholder="join our newsletter!" className="border-none outline-none bg-transparent placeholder-[#fff5c2] p-0 mx-2 placeholder:"  />
+                 
                   <div className="bg-accent-l h-[1px] w-56"></div>
                 </div>
-                <button className="mx-4 f-body border rounded-[30px] px-5  bg-[#fff5c2] text-black text-2xl">⟶</button>
+                <button className="mx-4 f-body border rounded-[30px] px-5  bg-[#fff5c2] text-black text-2xl  hover:text-white hover:bg-transparent transition duration-500 ease-in-out">⟶</button>
               </div>
             </div>
             <div className="bg-gray-400 w-5/6 mx-auto h-1"></div>
@@ -273,8 +273,6 @@ const LandingView = () => {
         </div>
       </div> 
 
-      
-        <a href="#pricingSection">damn son wtf </a>
       
     </div>
   </div>

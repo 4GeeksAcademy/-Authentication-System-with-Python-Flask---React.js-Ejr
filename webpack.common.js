@@ -11,30 +11,46 @@ module.exports = {
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'static/frontend'),
     publicPath: '/'
   },
   module: {
     rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: ['babel-loader']
-        },
-        {
-          test: /\.(css|scss)$/, use: [{
-              loader: "style-loader" // creates style nodes from JS strings
-          }, {
-              loader: "css-loader" // translates CSS into CommonJS
-          }]
-        }, //css only files
-        {
-          test: /\.(png|svg|jpg|gif|jpeg|webp)$/, use: {
-            loader: 'file-loader',
-            options: { name: '[name].[ext]' }
-          }
-        }, //for images
-        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/, use: ['file-loader'] } //for fonts
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.(css|scss)$/, use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif|jpeg|webp)$/,
+        loader: 'file-loader',
+        options: { name: 'assets/img/[name].[ext]' }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'file-loader',
+        options: { name: 'assets/svg/[name].[ext]' }
+      },
+      {
+        test: /\.(txt|xml)$/,
+        loader: 'file-loader',
+        options: { name: 'assets/raw/[name].[ext]' }
+      },
+      {
+        test: /\.json$/,
+        loader: 'file-loader',
+        options: { name: 'assets/json/[name].[ext]' }
+      },
+      { 
+        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/,
+        loader: 'file-loader'
+      }
     ]
   },
   resolve: {
@@ -42,8 +58,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-        favicon: 'favicon.ico',
-        template: 'index.html'
+      favicon: 'favicon.ico',
+      template: 'index.html'
     }),
     new Dotenv({ safe: "./.env.default", systemvars: true })
   ]
