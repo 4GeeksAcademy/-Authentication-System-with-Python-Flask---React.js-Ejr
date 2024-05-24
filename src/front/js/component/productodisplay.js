@@ -18,7 +18,7 @@ export const ProductDisplay = () => {
           <h3>{store.checkout.marca_modelo}</h3>
           <h5>€{store.checkout.precio * store.checkout.days}</h5>
           <form className="mt-4" action={`${process.env.BACKEND_URL}/api/create-checkout-session/${store.checkout.precio_id_stripe}/${store.checkout.days}`} method="POST">
-            <button type="submit" className="btn btn-outline-success btn-lg">
+            <button type="submit" className="btn-success btn-lg">
               PAGO
             </button>
           </form>
