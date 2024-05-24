@@ -3,15 +3,15 @@ from datetime import timedelta
 from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
-from backend.utils import APIException, generate_sitemap
-from backend.models import db
-from backend.routes import root, api
-from backend.admin import setup_admin
-from backend.commands import setup_commands
+from .backend.utils import APIException, generate_sitemap
+from .backend.models import db
+from .backend.routes import root, api
+from .backend.admin import setup_admin
+from .backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
-static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../static/backend/')
+static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 print("Serving static files from: " + static_file_dir)
@@ -63,10 +63,9 @@ def handle_invalid_usage(error):
 
 # main
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+  app.run()
 
 with app.app_context():
-    if 'run' in sys.argv and len(db.engine.table_names()) == 0:
-        print("\n\033[1;93mPlease initialize your DB first using \033[91mpipenv run upgrade\033[93m|\033[91mremake\n\033[0m")
-        os.kill(os.getpid(), signal.SIGTERM)
+  if 'run' in sys.argv and len(db.engine.table_names()) == 0:
+    print("\n\033[1;93mPlease initialize your DB first using \033[91mpipenv run upgrade\033[93m|\033[91mremake\n\033[0m")
+    os.kill(os.getpid(), signal.SIGTERM)

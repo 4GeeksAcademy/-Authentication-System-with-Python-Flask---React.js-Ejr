@@ -11,7 +11,7 @@ module.exports = {
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'static/frontend'),
+    path: path.resolve(__dirname, 'public'),
     publicPath: '/'
   },
   module: {
@@ -59,7 +59,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       favicon: 'favicon.ico',
-      template: 'index.html'
+      template: 'template.html'
     }),
     new Dotenv({ safe: "./.env.default", systemvars: true })
   ]
