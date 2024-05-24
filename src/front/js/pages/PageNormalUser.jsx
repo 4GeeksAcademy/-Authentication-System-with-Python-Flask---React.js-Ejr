@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
-import styles from "./ModulePage.module.css"; // Asegúrate que el path de importación es correcto
+import styles from "./PageNormalUser.module.css"; // Asegúrate que el path de importación es correcto
 
 import { Context } from "../store/appContext";
 import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/PrivateCalendar.jsx"
@@ -26,7 +26,7 @@ import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
 
-const ModulePage = () => {
+const PageNormalUser = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -34,7 +34,7 @@ const ModulePage = () => {
 
     useEffect(() => {
         // Verificar si el usuario tiene el rol adecuado
-        if (store.dataRole !== "master") {
+        if (store.dataRole !== "athlete") {
             navigate("/"); // Redirigir si no es un usuario master
         }
     }, [store.dataRole, navigate]);
@@ -47,26 +47,26 @@ const ModulePage = () => {
     const handleCloseModal = () => setShow(false);
 
     const components = [
-        { component: <CreateClasses />, name: "Create Classes" },
-        { component: <MyCalendar />, name: "My Calendar" },
+        // { component: <CreateClasses />, name: "Create Classes" },
+        // { component: <MyCalendar />, name: "My Calendar" },
         { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
-        { component: <UserBooking />, name: "User Booking" },
-        { component: <BookingView />, name: "BookingView " },
-        { component: <PrivatePageUser />, name: "Private Page User" },
-        { component: <SingupMaster />, name: "Singup Master" },
-        { component: <UserCreator />, name: "UserCreator " },
-        { component: <MembershipPurchase />, name: "MembershipPurchase " },
+        // { component: <UserBooking />, name: "User Booking" },
+        // { component: <BookingView />, name: "BookingView " },
+        // { component: <PrivatePageUser />, name: "Private Page User" },
+        // { component: <SingupMaster />, name: "Singup Master" },
+        // { component: <UserCreator />, name: "UserCreator " },
+        // { component: <MembershipPurchase />, name: "MembershipPurchase " },
         // { component: <Oneuser />, name: "Oneuser " }, eliminar
         // { component: <Homeadmin />, name: "Homeadmin " }, eliminar
-        { component: <UploadForm />, name: "UploadForm " },
+        // { component: <UploadForm />, name: "UploadForm " },
         { component: <ImageGallery />, name: "ImageGallery " },
-        { component: <TransactionsTable />, name: "TransactionsTable " },
-        { component: <Users />, name: "Users " },
+        // { component: <TransactionsTable />, name: "TransactionsTable " },
+        // { component: <Users />, name: "Users " },
     ];
 
     return (
         <>
-            <h1> Module Page</h1>
+            <h1>User Page</h1>
             <Breadcrumbs />
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
@@ -89,4 +89,4 @@ const ModulePage = () => {
     );
 };
 
-export default ModulePage;
+export default PageNormalUser;

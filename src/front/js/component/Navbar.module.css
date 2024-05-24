@@ -15,6 +15,13 @@ background: #d3d3d338;
     padding: 12px 0;
   }
   
+.logonavbar{
+  color: #333;
+  font-size: 20px;
+  font-weight: 900;
+  text-shadow: 1px 1px 3px #e9ecef;
+}
+
   a {
     color: inherit;
     text-decoration: none;
@@ -102,4 +109,19 @@ background: #d3d3d338;
   color: rgba(0, 0, 0, 0.74);
   text-decoration: none;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.profileImage {
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  width: 40px; /* Ajusta el tamaño de la imagen */
+  height: 40px; /* Asegúrate de que la altura coincida con el ancho */
+  margin-left: 10px; /* Espacio entre el nombre y la imagen */
+  object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+}
+
+.profileImageButton {
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  width: 30px;
+  height: 30px;
+  object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
 }

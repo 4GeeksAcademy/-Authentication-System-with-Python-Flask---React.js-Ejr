@@ -4,7 +4,7 @@ Este módulo se encarga de iniciar el servidor API, cargar la base de datos y ag
 
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect, url_for, render_template  # Importación de Flask y funciones relacionadas
-from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Payment, PaymentDetail, UserMembershipHistory, MovementImages  # Importación de los modelos de la base de datos
+from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Payment, PaymentDetail, UserMembershipHistory, MovementImages, ProfileImage  # Importación de los modelos de la base de datos
 from api.utils import generate_sitemap, APIException  # Importación de funciones de utilidad y excepciones personalizadas
 from flask_cors import CORS  # Importación de CORS para permitir solicitudes desde otros dominios
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity  # Importación de JWT para autenticación y autorización basada en tokens
@@ -1331,7 +1331,105 @@ def get_all_images():
     return jsonify(results), 200
 
 
-#-------------------------------------------------ENPOINT PARA LA CARGA DE ARCHIVOS-----------------------------------------------------------
+#-------------------------------------------------ENPOINT PARA LA CARGA DE IMAGEN DE PERFIL-----------------------------------------------------------
+
+# Define una ruta de API para subir imágenes utilizando el método POST
+@api.route('/upload_img_profile', methods=['POST'])
+@jwt_required()  # Decorador para requerir autenticación con JWT
+def upload_img_profile():
+    try:
+        # Verifica si el archivo está presente en la solicitud
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+        
+        file = request.files['file']  # Obtiene el archivo de la solicitud
+        
+        if file.filename == '':  # Verifica si no se seleccionó ningún archivo
+            return jsonify({'error': 'No selected file'}), 400
+        
+        user_id = get_jwt_identity()  # Obtiene el ID del usuario desde el token
+        user = User.query.get(user_id)  # Busca al usuario por su ID
+        if not user:
+            return jsonify({'error': 'User not found'}), 404  # Si el usuario no existe, devuelve error
+        
+        if file and allowed_file(file.filename):  # Verifica si el archivo está presente y tiene un formato permitido
+            file_data = file.read()  # Lee los datos del archivo
+            
+            new_img = ProfileImage(img_data=file_data)  # Crea un nuevo registro en la base de datos con los datos del archivo
+            db.session.add(new_img)
+            user.profile_image = new_img
+            db.session.commit()  # Guarda los cambios en la base de datos
+            
+            return jsonify({'message': 'File uploaded successfully'}), 200
+        
+        return jsonify({'error': 'Invalid file format'}), 400  # Si el archivo no tiene un formato permitido, retorna un mensaje de error
+    except Exception as e:
+        db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error
+        return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500
+
+# Define una ruta de API para actualizar imágenes utilizando el método PUT
+@api.route('/update_profile_image', methods=['PUT'])
+@jwt_required()  # Decorador para requerir autenticación con JWT
+def update_profile_image():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+        
+        user_id = get_jwt_identity()  # Obtiene el ID del usuario desde el token
+        user = User.query.get(user_id)  # Busca al usuario por su ID
+        if not user:
+            return jsonify({'error': 'User not found'}), 404  # Si el usuario no existe, devuelve error
+        
+        if file and allowed_file(file.filename):  # Verifica si el archivo está presente y tiene un formato permitido
+            file_data = file.read()  # Lee los datos del archivo
+
+        if user.profile_image:
+            user.profile_image.img_data = file_data
+        else:
+            new_image = ProfileImage(img_data=file_data)
+            db.session.add(new_image)
+            user.profile_image = new_image
+        db.session.commit()  # Guarda los cambios en la base de datos
+        return jsonify({'message': 'Profile image updated successfully'}), 200
+    except Exception as e:
+        db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error
+        return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500
+
+# Define una ruta de API para eliminar imágenes utilizando el método DELETE
+@api.route('/delete_profile_image', methods=['DELETE'])
+@jwt_required()  # Decorador para requerir autenticación con JWT
+def delete_profile_image():
+    try:
+        user_id = get_jwt_identity()  # Obtiene el ID del usuario desde el token
+        user = User.query.get(user_id)  # Busca al usuario por su ID
+        if not user:
+            return jsonify({'error': 'User not found'}), 404  # Si el usuario no existe, devuelve error
+        
+        if user.profile_image:
+            db.session.delete(user.profile_image)
+            db.session.commit()  # Guarda los cambios en la base de datos
+        return jsonify({'message': 'Profile image deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error
+        return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500
 
 
+    
+#-------------------------------------------------ENPOINT PARA LA CARGA DE PAYMENTS-----------------------------------------------------------
+@api.route('/Payments', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_all_payments():
+    try:
+        users = Payment.query.all()
+        if not users:
+            return jsonify({'message': 'No Payments found'}), 404
+        
+        response_body = [user.serialize() for user in users]
+        return jsonify(response_body), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 

@@ -30,7 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			bookingData:[],
 			memberships: [],
             membershipsLoading: false,
-			images: []
+			images: [],
+			payments: []
 
 
 
@@ -279,7 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			cancel_booking: async (booking_id) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 
-				console.log("id_que_se_pasa", booking_id)
+				// console.log("id_que_se_pasa", booking_id)
 				try {
 					// Obtenemos el token del almacenamiento local
 					let myToken = localStorage.getItem("token");
@@ -318,25 +319,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// console.log(userData);
 				// Construimos la URL para la solicitud
 				let url = `${process.env.BACKEND_URL}api/user`;
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(userData)
 
-				// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
-				let response = await fetch(url, {
-					method: "PUT", // Método de la solicitud
-					headers: {
-						"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
-						"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
-					},
-					body: JSON.stringify(userData)
-
-				});
-
-				let data = await response.json();
-				// console.log(data)
-				if (response.ok) {
-					// setStore({ ...getStore(), uploadedUserData: data.updatedUser });
-					alert('Usuario actualizado correctamente');
-				} else {
-					alert('Error al actualizar usuario: ' + data.error);
+					});
+					let data = await response.json();
+					console.log(data)
+					if (response.ok) {
+						// Asumiendo que quieres actualizar el store aquí
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar los datos:", error);
+					return { success: false, error: error.message };
 				}
 			},
 
@@ -536,13 +541,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						 Authorization: `Bearer ${myToken}`,
 					},
 				  });
-				  console.log (response)
+				//   console.log (response)
 				  if (!response.ok) {
 					throw new Error(`Error fetching users: ${response.statusText}`);
 				  }
 			  
 				  let data = await response.json();
-				  console.log(data);
+				//   console.log(data);
 				  
 				  
 				  let store = getStore(); // Obtiene el estado actual del almacén
@@ -554,6 +559,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+
 
 			getOneuser: async (id) => {
 				// Obtenemos el token del almacenamiento local
@@ -573,17 +579,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  if (!response.ok) {
 					throw new Error(`Error fetching user: ${response.statusText}`);
 				  }
+
 			
-				  let data = await response.json();
-				  console.log(data);
+			// 	  let data = await response.json();
+			// 	  console.log(data);
 			
-				  let store = getStore(); // Obtiene el estado actual del almacén
-				  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
+			// 	  let store = getStore(); // Obtiene el estado actual del almacén
+			// 	  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
 			
-				} catch (error) {
-				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-				}
-			  },
+			// 	} catch (error) {
+			// 	  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+			// 	}
+			//   },
 
 			  uploadImage: async (formData) => {
                 const myToken = localStorage.getItem("token");
@@ -628,6 +635,100 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error fetching images:', error);
                 }
             },
+
+            uploadProfileImage: async (formData) => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/upload_img_profile`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, message: data.error };
+                    }
+                } catch (error) {
+                    return { success: false, message: error.message };
+                }
+            },
+
+            updateProfileImage: async (formData) => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/update_profile_image`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, message: data.error };
+                    }
+                } catch (error) {
+                    return { success: false, message: error.message };
+                }
+            },
+
+            deleteProfileImage: async () => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}api/delete_profile_image`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        }
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, message: data.error };
+                    }
+                } catch (error) {
+                    return { success: false, message: error.message };
+                }
+            },
+
+			getAllPayments: async () => {
+				try {
+					// Obtenemos el token del almacenamiento local
+					let myToken = localStorage.getItem("token");
+
+					const url = `${process.env.BACKEND_URL}api/Payments`;
+					let response = await fetch(url, {
+						method: "GET", // Método de la solicitud
+						headers: {
+							Authorization: `Bearer ${myToken}`
+							// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+						},
+					});
+					const data = await response.json();
+
+					if (response.ok) {
+						setStore({ ...getStore(), payments: data });  // Actualiza el estado con las clases obtenidas
+					} else {
+						throw new Error("Failed to fetch payments");
+					}
+				} catch (error) {
+					console.error("Error loading training payments:", error);
+				}
+			},
+
 
 		},
 	}
