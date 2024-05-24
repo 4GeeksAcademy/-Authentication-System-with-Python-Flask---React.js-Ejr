@@ -663,7 +663,114 @@ def create_comment(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#------------------UPDATE COMMENT----------------------------------------------------------------------------------------------
+@api.route('/comments/<int:comment_id>', methods=['PUT'])
+@jwt_required()
+def update_comment(comment_id):
+    try:
+        current_user_id = get_jwt_identity()
+        comment = Comment.query.get(comment_id)
+        if not comment:
+            return jsonify({"error": "Comment not found"}), 404
 
+        if comment.user_id != current_user_id:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        comment_data = request.json
+        content = comment_data.get('content')
+        if not content:
+            return jsonify({"error": "Content is required"}), 400
+
+        comment.content = content
+        comment.is_edited = True
+
+        db.session.commit()
+        return jsonify({"message": "Comment updated successfully", "comment": comment.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#----------DELETE COMMENT ------------------------------------------------------------------------------------
+@api.route('/comments/<int:comment_id>', methods=['DELETE'])
+@jwt_required()
+def delete_comment(comment_id):
+    try:
+        current_user_id = get_jwt_identity()
+        comment = Comment.query.get(comment_id)
+        if not comment:
+            return jsonify({"error": "Comment not found"}), 404
+
+        current_user = User.query.get(current_user_id)
+        if not current_user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Verificar si el usuario es el autor del comentario o un administrador
+        if comment.user_id != current_user_id and not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        # Si es admin, eliminar el comentario físicamente
+        if current_user.admin:
+            db.session.delete(comment)
+            db.session.commit()
+            return jsonify({"message": "Comment deleted permanently by admin"}), 200
+        else:
+            # Si no es admin, realizar una eliminación lógica
+            comment.is_deleted = True
+            db.session.commit()
+            return jsonify({"message": "Comment deleted successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#-------------ALL COMMENTS FOR ADMIN---------------------------------------------------------------------------
+@api.route('/admin/comments', methods=['GET'])
+@jwt_required()
+def get_all_comments():
+    try:
+        current_user_id = get_jwt_identity()
+        current_user = User.query.get(current_user_id)
+        if not current_user or not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        comments = Comment.query.all()
+        return jsonify([comment.serialize() for comment in comments]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+#-------------ALL USERS FOR ADMIN---------------------------------------------------------------------------
+@api.route('/admin/users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    try:
+        current_user_id = get_jwt_identity()
+        current_user = User.query.get(current_user_id)
+        if not current_user or not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        users = User.query.all()
+        return jsonify([user.serialize() for user in users]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+#---------------ALL ROOMS FOR ADMIN-------------------------------------------------------------------------------------------
+@api.route('/admin/rooms', methods=['GET'])
+@jwt_required()
+def get_all_rooms():
+    try:
+        current_user_id = get_jwt_identity()
+        current_user = User.query.get(current_user_id)
+        if not current_user or not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        rooms = Room.query.all()
+        return jsonify([room.serialize() for room in rooms]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 
