@@ -76,6 +76,7 @@
 		"@cloudinary/react": "^1.13.0",
 		"@cloudinary/url-gen": "^1.19.0",
 		"axios": "^1.7.2",
+		"formik": "^2.4.6",
 		"fs-extra": "^11.2.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.14.0",
@@ -86,6 +87,7 @@
 		"react-simple-chatbot": "^0.6.1",
 		"reactstrap": "^9.2.2",
 		"styled-components": "^6.1.11",
-		"sweetalert": "^2.1.2"
+		"sweetalert": "^2.1.2",
+		"yup": "^1.4.0"
 	}
 }
