@@ -3,11 +3,11 @@ from datetime import timedelta
 from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
-from .backend.utils import APIException, generate_sitemap
-from .backend.models import db
-from .backend.routes import root, api
-from .backend.admin import setup_admin
-from .backend.commands import setup_commands
+from backend.utils import APIException, generate_sitemap
+from backend.models import db
+from backend.routes import root, api
+from backend.admin import setup_admin
+from backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
@@ -63,7 +63,8 @@ def handle_invalid_usage(error):
 
 # main
 if __name__ == '__main__':
-  app.run()
+  PORT = int(os.environ.get('PORT', 3001))
+  app.run(host='0.0.0.0', port=PORT, debug=True)
 
 with app.app_context():
   if 'run' in sys.argv and len(db.engine.table_names()) == 0:
