@@ -48,7 +48,6 @@ export const AgregarForm = (props) => {
     }
 
     const eliminarImagen = (item) => {
-        console.log(image);
         const nuevasImagenes = image.array.filter((img) => {
             return img != item
         })
