@@ -25,6 +25,7 @@ export const Room = ({ room }) => {
     };
 
     const isHost = username === room.host_name;
+    const participantsCount = room.participants ? room.participants.length : 0;
 
     return (
         <div className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={handleCardClick}>
@@ -37,7 +38,7 @@ export const Room = ({ room }) => {
                         <div className="card-title">
                             <div className="d-flex justify-content-between">
                                 <span>{room.game_name}</span>
-                                <span>{room.participants.length} / {room.room_size} </span>
+                                <span>{participantsCount} / {room.room_size} </span>
                             </div>
                             <h5>{room.room_name}</h5>
                         </div>
@@ -47,7 +48,6 @@ export const Room = ({ room }) => {
                                 <span>Starts: {room.date} at {room.time}</span>
                             </small>
                         </p>
-                        
                         {isHost && (
                             <div className="d-flex justify-content-between mt-3">
                                 <button className="btn btn-warning" onClick={(e) => { e.stopPropagation(); handleEdit(); }}>Edit</button>
