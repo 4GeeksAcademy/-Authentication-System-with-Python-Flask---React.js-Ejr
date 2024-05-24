@@ -84,3 +84,6 @@ migrations/
 
 # tailwind built stuff
 tailwind.css
+
+# render build trigger
+!.buildver
