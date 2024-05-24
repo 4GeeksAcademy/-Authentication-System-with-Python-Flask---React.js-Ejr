@@ -10,10 +10,10 @@ const Plans = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-8 mx-auto text-center">
-            <h2 className={styles["text-uppercase"]}>Planes</h2>
+            <h2 className={styles["text-uppercase"]}>Plans</h2>
             <p className="crossfy-texto-home">
-              Sin límite de permanencia. Descuentos por pagos semestrales y
-              anuales. Período de prueba gratuito y sin compromiso!
+              No permanence limit. Discounts for semiannual payments and
+              annual. Free, no-obligation trial period!
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@ const Plans = () => {
               aria-controls="argentina"
               aria-selected="false"
             >
-              Otros Paises
+              Other countries
             </a>
           </li>
         </ul>
@@ -54,26 +54,26 @@ const Plans = () => {
           >
             <div className="row">
 
-            <div className="col-lg-4 mb-4">
+              <div className="col-lg-4 mb-4">
                 <div className="price-box">
                   <div className="price-header">
-                    <h3 className="text-uppercase">Mensual</h3>
+                    <h3 className="text-uppercase">Monthly</h3>
                     <h4 className="precio-home">$00</h4>
-                    <p className="text-uppercase">Pago mensual</p>
+                    <p className="text-uppercase">Monthly payment</p>
                   </div>
                   <ul className="list-unstyled price-features">
-                    <li>Precio expresado en U$S</li>
-                    <li>Sin costo de lanzamiento</li>
-                    <li>Sin límites de atletas</li>
-                    <li>Diseño incluído</li>
-                    <li>Soporte directo</li>
+                    <li>Price expressed inU$S</li>
+                    <li>No launch cost</li>
+                    <li>No athlete limits</li>
+                    <li>Design included</li>
+                    <li>Direct support</li>
                   </ul>
                   <div className="price-footer">
                     <a
                       className="btn btn-primary btn-xl btn-rounded"
                       href=""
                     >
-                      <i className="fa-brands fa-whatsapp"></i> lo quiero!
+                      <i className="fa-brands fa-whatsapp"></i> I want it!
                     </a>
                   </div>
                 </div>
@@ -81,23 +81,29 @@ const Plans = () => {
               <div className="col-lg-4 mb-4">
                 <div className="price-box">
                   <div className="price-header">
-                    <h3 className="text-uppercase">Semestral</h3>
+                    <h3 className="text-uppercase">
+                      Biannual</h3>
                     <h4 className="precio-home">$00</h4>
-                    <p className="text-uppercase">Un único pago de $000</p>
+                    <p className="text-uppercase">A single payment of $000</p>
                   </div>
                   <ul className="list-unstyled price-features">
-                    <li>Precio expresado en U$S</li>
-                    <li>Sin costo de lanzamiento</li>
-                    <li>Sin límites de atletas</li>
-                    <li>Diseño incluído</li>
-                    <li>Soporte directo</li>
+                    <li>
+                      Price expressed in U$S</li>
+                    <li>
+                      No launch cost</li>
+                    <li>
+                      No athlete limits</li>
+                    <li>
+                      Design included</li>
+                    <li>
+                      Direct support</li>
                   </ul>
                   <div className="price-footer">
                     <a
                       className="btn btn-primary btn-xl btn-rounded"
                       href=""
                     >
-                      <i className="fa-brands fa-whatsapp"></i> lo quiero!
+                      <i className="fa-brands fa-whatsapp"></i> I want it!
                     </a>
                   </div>
                 </div>
@@ -106,23 +112,28 @@ const Plans = () => {
               <div className="col-lg-4 mb-4">
                 <div className="price-box best-plan text-white">
                   <div className="price-header">
-                    <h3 className="text-uppercase">Anual</h3>
+                    <h3 className="text-uppercase">
+                      Annual</h3>
                     <h4 className="precio-home">$00</h4>
-                    <p className="text-uppercase">Un único pago de $000</p>
+                    <p className="text-uppercase">A single payment of $000</p>
                   </div>
                   <ul className="list-unstyled price-features">
-                    <li>Precio expresado en U$S</li>
-                    <li>Sin costo de lanzamiento</li>
-                    <li>Sin límites de atletas</li>
-                    <li>Diseño incluído</li>
-                    <li>Soporte directo</li>
+                    <li>
+                      Price expressed in U$S</li>
+                    <li>No launch cost</li>
+                    <li>
+                      No athlete limits</li>
+                    <li>
+                      Design included</li>
+                    <li>
+                      Direct support</li>
                   </ul>
                   <div className="price-footer">
                     <a
                       className="btn btn-light btn-xl btn-rounded"
                       href=""
                     >
-                      <i className="fa-brands fa-whatsapp"></i> lo quiero!
+                      <i className="fa-brands fa-whatsapp"></i> Iwant it!
                     </a>
                   </div>
                 </div>
@@ -138,13 +149,15 @@ const Plans = () => {
           >
             <div className="row">
 
-            <div className="col-lg-4 mb-4">
+              <div className="col-lg-4 mb-4">
                 <div className="price-box">
                   <div className="price-header">
-                    <h3 className="text-uppercase">Mensual</h3>
+                    <h3 className="text-uppercase">
+                      Monthly</h3>
                     <h4 className="precio-home">$000</h4>
-                    <p className="text-uppercase">$000 Pago mensual</p>
-                    <p className="text-uppercase">(IVA incluído)</p>
+                    <p className="text-uppercase">$000
+                      Monthly payment</p>
+                    <p className="text-uppercase">(IVA included)</p>
                   </div>
                   <ul className="list-unstyled price-features">
                     <li>Precio expresado en $Moneda</li>
