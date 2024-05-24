@@ -4,7 +4,7 @@ services:
   name: keqqu-webapp
   runtime: python
   buildCommand: "./render_build.sh"
-  startCommand: "gunicorn app --chdir ./src/"
+  startCommand: "gunicorn render_wsgi"
   healthCheckPath: "/healtcheck"
   plan: free
   numInstances: 1

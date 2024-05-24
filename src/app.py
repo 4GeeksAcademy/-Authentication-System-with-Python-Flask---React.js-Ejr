@@ -3,11 +3,11 @@ from datetime import timedelta
 from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
-from backend.utils import APIException, generate_sitemap
-from backend.models import db
-from backend.routes import root, api
-from backend.admin import setup_admin
-from backend.commands import setup_commands
+from .backend.utils import APIException, generate_sitemap
+from .backend.models import db
+from .backend.routes import root, api
+from .backend.admin import setup_admin
+from .backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
