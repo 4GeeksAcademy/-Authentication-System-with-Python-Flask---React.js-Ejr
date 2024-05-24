@@ -191,7 +191,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           throw new Error("User is not authenticated");
         }
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}api/transactions/${transactionId}/refund`, {
+          const response = await fetch(`${process.env.BACKEND_URL}api/transactions/${transactionId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
