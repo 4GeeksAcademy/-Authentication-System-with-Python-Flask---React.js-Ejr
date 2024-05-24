@@ -722,5 +722,55 @@ def delete_comment(comment_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#-------------ALL COMMENTS FOR ADMIN---------------------------------------------------------------------------
+@api.route('/admin/comments', methods=['GET'])
+@jwt_required()
+def get_all_comments():
+    try:
+        current_user_id = get_jwt_identity()
+        current_user = User.query.get(current_user_id)
+        if not current_user or not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        comments = Comment.query.all()
+        return jsonify([comment.serialize() for comment in comments]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+#-------------ALL USERS FOR ADMIN---------------------------------------------------------------------------
+@api.route('/admin/users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    try:
+        current_user_id = get_jwt_identity()
+        current_user = User.query.get(current_user_id)
+        if not current_user or not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        users = User.query.all()
+        return jsonify([user.serialize() for user in users]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+#---------------ALL ROOMS FOR ADMIN-------------------------------------------------------------------------------------------
+@api.route('/admin/rooms', methods=['GET'])
+@jwt_required()
+def get_all_rooms():
+    try:
+        current_user_id = get_jwt_identity()
+        current_user = User.query.get(current_user_id)
+        if not current_user or not current_user.admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        rooms = Room.query.all()
+        return jsonify([room.serialize() for room in rooms]), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
