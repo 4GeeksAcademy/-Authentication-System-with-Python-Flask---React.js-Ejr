@@ -107,6 +107,7 @@ def create_transaction():
         total_price=total_price,
         products=products,
         is_cash=is_cash,
+        is_refunded=False,
         created=created
     )
 
