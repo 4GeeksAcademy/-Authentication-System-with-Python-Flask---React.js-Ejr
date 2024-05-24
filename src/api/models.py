@@ -39,6 +39,7 @@ class Transactions(db.Model):
             "total_price": self.total_price,
             "products": self.products,
             "is_cash": self.is_cash,
+            "is_refunded": self.is_refunded,
             "created": self.created
             # do not serialize the password, its a security breach
         }
