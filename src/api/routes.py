@@ -1416,3 +1416,20 @@ def delete_profile_image():
     except Exception as e:
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error
         return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500
+
+
+    
+#-------------------------------------------------ENPOINT PARA LA CARGA DE PAYMENTS-----------------------------------------------------------
+@api.route('/Payments', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_all_payments():
+    try:
+        users = Payment.query.all()
+        if not users:
+            return jsonify({'message': 'No Payments found'}), 404
+        
+        response_body = [user.serialize() for user in users]
+        return jsonify(response_body), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+

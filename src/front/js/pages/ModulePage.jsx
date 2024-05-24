@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
-import Slider from 'react-slick';
 import styles from "./ModulePage.module.css"; // Asegúrate que el path de importación es correcto
 
+import { Context } from "../store/appContext";
 import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/PrivateCalendar.jsx"
 import CreateClasses from "../component/CreateClasses.jsx";
 import MyCalendar from "../component/Calendar.jsx";
@@ -17,15 +18,26 @@ import Login from "../component/Login.jsx";
 import Navbar from "../component/Navbar.jsx";
 import BookingView from "../component/BookingView.jsx";
 import MembershipPurchase from "../component/MembershipPurchase.jsx";
-import Oneuser from "./Oneuser.jsx";
+// import Oneuser from "./Oneuser.jsx";
 import Users from "./Users.jsx";
-import Homeadmin from "./Homeadmin.jsx";
+// import Homeadmin from "./Homeadmin.jsx";
 import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
+import TransactionsTable from "../component/TransactionsTable.jsx";
+import UserCreator from "../component/UserCreator.jsx";
 
 const ModulePage = () => {
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+        // Verificar si el usuario tiene el rol adecuado
+        if (store.dataRole !== "master") {
+            navigate("/"); // Redirigir si no es un usuario master
+        }
+    }, [store.dataRole, navigate]);
 
     const handleOpenModal = (index) => {
         setCurrentSlide(index);
@@ -39,30 +51,23 @@ const ModulePage = () => {
         { component: <MyCalendar />, name: "My Calendar" },
         { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
         { component: <UserBooking />, name: "User Booking" },
+        { component: <BookingView />, name: "BookingView " },
         { component: <PrivatePageUser />, name: "Private Page User" },
         { component: <SingupMaster />, name: "Singup Master" },
-        { component: <Singup />, name: "Singup " },
-        { component: <ConfirmarEmail />, name: "Confirmar Email " },
-        { component: <Home />, name: "Home " },
-        { component: <Login />, name: "Login " },
-        { component: <Navbar />, name: "Navbar " },
-        { component: <BookingView />, name: "BookingView " },
+        { component: <UserCreator />, name: "UserCreator " },
         { component: <MembershipPurchase />, name: "MembershipPurchase " },
-        { component: <Oneuser />, name: "Oneuser " },
-        { component: <Users />, name: "Users " },
-        { component: <Homeadmin />, name: "Homeadmin " },
+        // { component: <Oneuser />, name: "Oneuser " }, eliminar
+        // { component: <Homeadmin />, name: "Homeadmin " }, eliminar
         { component: <UploadForm />, name: "UploadForm " },
         { component: <ImageGallery />, name: "ImageGallery " },
-
-
-
-
+        { component: <TransactionsTable />, name: "TransactionsTable " },
+        { component: <Users />, name: "Users " },
     ];
 
     return (
         <>
             <h1> Module Page</h1>
-            <Breadcrumbs/>
+            <Breadcrumbs />
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
                     <div key={index} className={styles.securityQuestions} onClick={() => handleOpenModal(index)}>
@@ -84,4 +89,4 @@ const ModulePage = () => {
     );
 };
 
-export default ModulePage
+export default ModulePage;

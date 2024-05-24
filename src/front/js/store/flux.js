@@ -30,7 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			bookingData:[],
 			memberships: [],
             membershipsLoading: false,
-			images: []
+			images: [],
+			payments: []
 
 
 
@@ -536,13 +537,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						 Authorization: `Bearer ${myToken}`,
 					},
 				  });
-				  console.log (response)
+				//   console.log (response)
 				  if (!response.ok) {
 					throw new Error(`Error fetching users: ${response.statusText}`);
 				  }
 			  
 				  let data = await response.json();
-				  console.log(data);
+				//   console.log(data);
 				  
 				  
 				  let store = getStore(); // Obtiene el estado actual del almacén
@@ -555,35 +556,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			getOneuser: async (id) => {
-				// Obtenemos el token del almacenamiento local
-				let myToken = localStorage.getItem("token");
+			// getOneuser: async (id) => {
+			// 	// Obtenemos el token del almacenamiento local
+			// 	let myToken = localStorage.getItem("token");
 
-				try {
-				  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
-				  {
-					method: "GET",
-					headers: {
-					  "Content-Type": "application/json",
-					  // Incluye el token de autorización si es necesario
-						 Authorization: `Bearer ${myToken}`,
-					},
-				  });
-				  console.log(response);
-				  if (!response.ok) {
-					throw new Error(`Error fetching user: ${response.statusText}`);
-				  }
+			// 	try {
+			// 	  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
+			// 	  {
+			// 		method: "GET",
+			// 		headers: {
+			// 		  "Content-Type": "application/json",
+			// 		  // Incluye el token de autorización si es necesario
+			// 			 Authorization: `Bearer ${myToken}`,
+			// 		},
+			// 	  });
+			// 	  console.log(response);
+			// 	  if (!response.ok) {
+			// 		throw new Error(`Error fetching user: ${response.statusText}`);
+			// 	  }
 			
-				  let data = await response.json();
-				  console.log(data);
+			// 	  let data = await response.json();
+			// 	  console.log(data);
 			
-				  let store = getStore(); // Obtiene el estado actual del almacén
-				  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
+			// 	  let store = getStore(); // Obtiene el estado actual del almacén
+			// 	  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
 			
-				} catch (error) {
-				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-				}
-			  },
+			// 	} catch (error) {
+			// 	  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+			// 	}
+			//   },
 
 			  uploadImage: async (formData) => {
                 const myToken = localStorage.getItem("token");
@@ -696,6 +697,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: error.message };
                 }
             },
+
+			getAllPayments: async () => {
+				try {
+					// Obtenemos el token del almacenamiento local
+					let myToken = localStorage.getItem("token");
+
+					const url = `${process.env.BACKEND_URL}api/Payments`;
+					let response = await fetch(url, {
+						method: "GET", // Método de la solicitud
+						headers: {
+							Authorization: `Bearer ${myToken}`
+							// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+						},
+					});
+					const data = await response.json();
+
+					if (response.ok) {
+						setStore({ ...getStore(), payments: data });  // Actualiza el estado con las clases obtenidas
+					} else {
+						throw new Error("Failed to fetch payments");
+					}
+				} catch (error) {
+					console.error("Error loading training payments:", error);
+				}
+			},
 
 
 		},

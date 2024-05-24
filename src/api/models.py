@@ -297,7 +297,7 @@ class Payment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     membership_id = db.Column(db.Integer, db.ForeignKey('membership.id'), nullable=False)
     payment_date = db.Column(db.DateTime, default=datetime.utcnow)
-    confirmation_date = db.Column(db.DateTime)  # Fecha de confirmación del pago
+    confirmation_date = db.Column(db.DateTime, default=datetime.utcnow)  # Fecha de confirmación del pago
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(50), nullable=False)
@@ -318,8 +318,15 @@ class Payment(db.Model):
         return {  # Devolver un diccionario con los atributos de la pregunta de seguridad
             "payment_id": self.id,
             "user_id": self.user.id,
+            "user_name": self.user.name,
+            "user_email": self.user.email,
+            "payment_date": self.payment_date,
             "amount": self.amount,
+            "currency": self.currency,
             "payment_method": self.payment_method,
+            "card_number": self.card_number_last4,
+            "card_type": self.card_type,
+            "cardholder_name": self.cardholder_name,
             "status": self.status
 
         }
@@ -341,7 +348,7 @@ class PaymentDetail(db.Model):
         return '<PaymentDetail %r>' % self.id
 
 
-
+# Tabla para cargar imagenes de movimientos disponibles en la app
 class MovementImages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
@@ -358,7 +365,7 @@ class MovementImages(db.Model):
             "description": self.description
         }
 
-
+# Tabla para cargar la imagen de perfil de usuario
 class ProfileImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     img_data = db.Column(LargeBinary, nullable=False)
