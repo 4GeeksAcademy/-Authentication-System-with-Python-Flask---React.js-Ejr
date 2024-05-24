@@ -30,7 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			bookingData:[],
 			memberships: [],
             membershipsLoading: false,
-			images: []
+			images: [],
+			classesData: []
 
 
 
@@ -450,6 +451,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					if (response.ok) {
 						setStore({ ...getStore(), bookingData: data });  // Actualiza el estado con las clases obtenidas
+						console.log(data)
+					} else {
+						throw new Error("Failed to fetch classes");
+					}
+				} catch (error) {
+					console.error("Error loading training classes:", error);
+				}
+            },
+
+			//funcion asincrona para la vista que trae las clases de entrenamiento 
+			getClasses: async () => {
+
+				
+				let myToken = localStorage.getItem("token");
+
+				const url =`${process.env.BACKEND_URL}/api/training_classes`;
+
+
+				try {
+					let response = await fetch(url, {
+						method: "GET", // Método de la solicitud
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${myToken}`, // Asegúrate de manejar la autenticación adecuadamente
+						}
+					});
+					const data = await response.json();
+					if (response.ok) {
+						setStore({ ...getStore(), classesData: data });  // Actualiza el estado con las clases obtenidas
 						console.log(data)
 					} else {
 						throw new Error("Failed to fetch classes");
