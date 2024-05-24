@@ -280,7 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			cancel_booking: async (booking_id) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 
-				console.log("id_que_se_pasa", booking_id)
+				// console.log("id_que_se_pasa", booking_id)
 				try {
 					// Obtenemos el token del almacenamiento local
 					let myToken = localStorage.getItem("token");
@@ -319,25 +319,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// console.log(userData);
 				// Construimos la URL para la solicitud
 				let url = `${process.env.BACKEND_URL}api/user`;
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(userData)
 
-				// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
-				let response = await fetch(url, {
-					method: "PUT", // Método de la solicitud
-					headers: {
-						"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
-						"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
-					},
-					body: JSON.stringify(userData)
-
-				});
-
-				let data = await response.json();
-				// console.log(data)
-				if (response.ok) {
-					// setStore({ ...getStore(), uploadedUserData: data.updatedUser });
-					alert('Usuario actualizado correctamente');
-				} else {
-					alert('Error al actualizar usuario: ' + data.error);
+					});
+					let data = await response.json();
+					console.log(data)
+					if (response.ok) {
+						// Asumiendo que quieres actualizar el store aquí
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar los datos:", error);
+					return { success: false, error: error.message };
 				}
 			},
 

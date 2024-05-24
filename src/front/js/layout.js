@@ -42,6 +42,8 @@ import ProfileImageUpload from "./component/ProfileImageUpload.jsx";
 import TransactionsTable from "./component/TransactionsTable.jsx";
 import UserCreator from "./component/UserCreator.jsx";
 
+import PageNormalUser from "./pages/PageNormalUser.jsx";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -85,6 +87,7 @@ const Layout = () => {
                         <Route element={<ProfileImageUpload />} path="/ProfileImageUpload" />
                         <Route element={<TransactionsTable />} path="/TransactionsTable" />
                         <Route element={<UserCreator />} path="/UserCreator" />
+                        <Route element={<PageNormalUser />} path="/Userpage" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

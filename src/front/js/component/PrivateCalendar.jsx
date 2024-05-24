@@ -49,14 +49,14 @@ const PrivateCalendar = () => {
 
 
     const handleBookClass = async (classId) => {
-        console.log("Intentando reservar clase con ID:", classId);
+        // console.log("Intentando reservar clase con ID:", classId);
         try {
             const result = await actions.book_class(classId);
             if (result.success) {
-                setBookingMessage("Reserva realizada con éxito");
+                setBookingMessage("Reservation made successfully");
                 setShowMessage(true);
             } else {
-                setBookingMessage(result.error || "Error al reservar la clase");
+                setBookingMessage(result.error || "Error booking class");
                 setShowMessage(true);
             }
         } catch (error) {

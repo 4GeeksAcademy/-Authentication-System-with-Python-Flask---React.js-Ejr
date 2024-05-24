@@ -21,15 +21,21 @@
     color: #333;
 }
 
-.paymentMethodDropdown {
-    background-color: #f8f9fa;
-    border-color: #ced4da;
+.modalFooter {
+    background-color: #f4f4f4;
 }
 
-.alertProcessing {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
+.membershipItem {
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.membershipItem:hover {
+    background-color: #ddd;
 }
 
 .alertResultSuccess {
@@ -42,4 +48,19 @@
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
+}
+
+.alertProcessing {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.closeButton {
+    background-color: #6c757d;
+    color: white;
+}
+
+.paymentMethodDropdown {
+    width: 100%;
 }
