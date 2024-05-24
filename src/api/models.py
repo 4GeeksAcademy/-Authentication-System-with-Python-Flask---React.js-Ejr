@@ -27,6 +27,7 @@ class Transactions(db.Model):
     total_price = db.Column(db.Float, nullable=False)
     products = db.Column(db.Text, nullable=False)
     is_cash = db.Column(db.Boolean, nullable=False)
+    is_refunded = db.Column(db.Boolean, nullable=False)
     created = db.Column(db.Date, nullable=False)
 
     user = db.relationship('User', backref=db.backref('transactions', lazy=True))

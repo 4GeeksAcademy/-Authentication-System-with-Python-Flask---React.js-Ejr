@@ -107,6 +107,7 @@ def create_transaction():
         total_price=total_price,
         products=products,
         is_cash=is_cash,
+        is_refunded=False,
         created=created
     )
 
@@ -114,6 +115,24 @@ def create_transaction():
     db.session.commit()
 
     return jsonify({"message": "Transaction added to database successfully"}), 201
+
+@api.route('/transactions/<int:transaction_id>', methods=['PUT'])
+@jwt_required()
+def refund_transaction(transaction_id):
+    current_user_id = get_jwt_identity()  # Get the user ID from the JWT token
+
+    # Retrieve the transaction by ID
+    transaction = Transactions.query.filter_by(id=transaction_id, user_id=current_user_id).first()
+
+    if not transaction:
+        raise APIException("Transaction not found or does not belong to the current user", status_code=404)
+
+    # Update the is_refunded field
+    transaction.is_refunded = True
+
+    db.session.commit()
+
+    return jsonify({"message": "Transaction refunded successfully"}), 200
 
 
 
