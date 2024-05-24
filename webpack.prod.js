@@ -7,7 +7,7 @@ const
 module.exports = merge(common, {
     mode: 'production',
     output: {
-        path: path.resolve(__dirname, 'static', '../public'),
+        path: path.resolve(__dirname, 'public'),
         publicPath: '/'
     },
     plugins: [
