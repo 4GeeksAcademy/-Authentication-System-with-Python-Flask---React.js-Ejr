@@ -183,10 +183,38 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error(error);
         }
+      },
+      refundTransaction: async (transactionId) => {
+        const store = getStore();
+        const { user } = store;
+        if (!user || !user.token) {
+          throw new Error("User is not authenticated");
+        }
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}api/transactions/${transactionId}/refund`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${user.token}`
+            }
+          });
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.msg || "Error refunding transaction");
+          }
+          const data = await response.json();
+          // Optionally, update the local store with the refunded transaction
+          const updatedTransactions = store.transactions.map(transaction =>
+            transaction.id === transactionId ? { ...transaction, is_refunded: true } : transaction
+          );
+          setStore({ transactions: updatedTransactions });
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   };
 };
 
 export default getState;
-
