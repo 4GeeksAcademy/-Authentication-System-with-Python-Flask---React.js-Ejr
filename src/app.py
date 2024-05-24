@@ -63,10 +63,9 @@ def handle_invalid_usage(error):
 
 # main
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+  app.run()
 
 with app.app_context():
-    if 'run' in sys.argv and len(db.engine.table_names()) == 0:
-        print("\n\033[1;93mPlease initialize your DB first using \033[91mpipenv run upgrade\033[93m|\033[91mremake\n\033[0m")
-        os.kill(os.getpid(), signal.SIGTERM)
+  if 'run' in sys.argv and len(db.engine.table_names()) == 0:
+    print("\n\033[1;93mPlease initialize your DB first using \033[91mpipenv run upgrade\033[93m|\033[91mremake\n\033[0m")
+    os.kill(os.getpid(), signal.SIGTERM)
