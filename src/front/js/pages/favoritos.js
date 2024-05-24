@@ -27,7 +27,7 @@ export const Favoritos = () => {
                                         <div key={vehicle.id} className="card col-md-4 mb-2 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
                                                 <div className="cardvehicles text-center mt-3" href="#">
-                                                    <img src="https://somoselectricos.com/wp-content/uploads/modelos/Audi-e_tron.png" />
+                                                <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}}/>
                                                 </div>
                                                 <div className="card-body ms-2">
                                                     <div>
