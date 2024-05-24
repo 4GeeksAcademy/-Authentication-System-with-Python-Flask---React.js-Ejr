@@ -216,7 +216,6 @@ def create_checkout_session(stripe_id, days):
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                     'price': stripe_id,
                     'quantity': days,
                 },
@@ -226,7 +225,6 @@ def create_checkout_session(stripe_id, days):
             success_url= os.getenv('FRONT_URL')+ '?success=true',
             cancel_url= os.getenv('FRONT_URL') + '?canceled=true',
         )
-        # return jsonify("ok"),200
     except Exception as e:
         return str(e)
     return redirect(checkout_session.url, code=303)

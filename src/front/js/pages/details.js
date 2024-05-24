@@ -24,7 +24,7 @@ export const Details = () => {
     useEffect(() => {
         setIsFavorite(store.favorites.some((favorite) => favorite.id == params.id));
     }, [store.favorites]);
-    //console.log(store.details);
+
     return (
         <>
             <div className="footer-view d-flex container mt-5 justify-content-between align-items-center">
@@ -32,13 +32,13 @@ export const Details = () => {
                     <div id="carouselExample" className="carousel slide">
                         <div className="carousel-inner">
                             <div className="carousel-item active">
-                                <img src={store.details?.url_img1} style={{height:"450px", objectFit: "cover"}} className="d-block w-100 rounded-3" alt="..." />
+                                <img src={store.details?.url_img1} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
                             </div>
                             <div className="carousel-item">
-                                <img src={store.details?.url_img2} style={{height:"450px", objectFit: "cover"}} className="d-block w-100 rounded-3" alt="..." />
+                                <img src={store.details?.url_img2} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
                             </div>
                             <div className="carousel-item">
-                                <img src={store.details?.url_img3} style={{height:"450px", objectFit: "cover"}} className="d-block w-100 rounded-3" alt="..." />
+                                <img src={store.details?.url_img3} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
                             </div>
                         </div>
                         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
