@@ -6,6 +6,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(50), nullable=False)
+    email_stripe = db.Column(db.String(250), unique=True, nullable=False)
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='user', lazy=True)
     vehicle = db.relationship('Vehicle', backref='user', lazy=True)
     
@@ -15,7 +16,8 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email
+            "email": self.email,
+            "email_stripe": self.email_stripe
         }
 
 class Vehicle(db.Model):
