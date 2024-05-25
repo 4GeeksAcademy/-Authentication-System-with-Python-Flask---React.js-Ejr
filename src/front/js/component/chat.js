@@ -170,8 +170,7 @@ export const Chat = () => {
                             {value:"multa", label: "Multa", trigger:"mensaje-ayuda-multa"},
                             {value:"limpieza", label: "Limpieza", trigger:"mensaje-ayuda-limpieza"},
                             {value:"entregadecoche", label: "Donde entrego mi coche", trigger:"mensaje-ayuda-donde-entrego-mi-coche"},
-                            {value:"eliminar", label: "Eliminar coche", trigger:"mensaje-ayuda-eliminar-coche"},
-                            {value:"editar", label: "Editar coche", trigger:"mensaje-ayuda-editar-coche"}
+                            {value:"eliminar", label: "Eliminar coche", trigger:"mensaje-ayuda-eliminar-coche"}
                         ]
                     },
                     {
@@ -259,29 +258,7 @@ export const Chat = () => {
                             </div>
                         ),
                         end: true
-                    },
-                    {
-                        id: 'mensaje-ayuda-editar-coche',
-                        component: (
-                            <div className="text-center">
-                                <p>1. Inicia sesión.</p>
-                                <p>2. En el menú, clickea Mis Coches.</p>
-                                <p>3. Clickea sobre el botón editar.</p>
-                            </div>
-                          ),
-                        trigger: 'respuesta-pasos-editar-coche'
-                    },
-                    {
-                        id: 'respuesta-pasos-editar-coche',
-                        component: (
-                            <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
-                            </div>
-                        ),
-                        end: true
-                    },
+                    }
                 ]}
                 floating={true.toString()}
             />
