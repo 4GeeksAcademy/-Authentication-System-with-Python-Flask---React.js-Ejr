@@ -166,3 +166,26 @@ class Comment(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reviewed_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    score = db.Column(db.Integer, nullable=False)  
+    content = db.Column(db.Text, nullable=True)  
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<Review {self.id}>'
+
+    def serialize(self):
+        return {
+            "review_id": self.id,
+            "room_id": self.room_id,
+            "reviewer_id": self.reviewer_id,
+            "reviewed_user_id": self.reviewed_user_id,
+            "score": self.score,
+            "content": self.content,
+            "created_at": self.created_at
+        }
