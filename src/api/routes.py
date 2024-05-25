@@ -622,9 +622,11 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
 
         # Generación del token y envío del correo electrónico
         token = generate_confirmation_token_email(new_user.email)
+        # Obtener la URL base del archivo .env
+        BASE_URL = os.getenv('BACKEND_URL')
         # html = render_template('activate.html', confirm_url=confirm_url)
-        confirm_url = url_for('api.confirm_email', token=token, _external=True)
-        confirm_url = f"https://fantastic-xylophone-wrr5p4xqpjxj35x7-3000.app.github.dev/ConfirmEmail?token={token}"
+        # confirm_url = url_for('api.confirm_email', token=token, _external=True)
+        confirm_url = f"{BASE_URL}/ConfirmEmail?token={token}"
         html = f"""
         <!DOCTYPE html>
         <html>

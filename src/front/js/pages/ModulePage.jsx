@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap';
 import styles from "./ModulePage.module.css"; // Asegúrate que el path de importación es correcto
 
 import { Context } from "../store/appContext";
-import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/PrivateCalendar.jsx"
+import PrivateCalendar from "../component/PrivateCalendar.jsx";
 import CreateClasses from "../component/CreateClasses.jsx";
 import MyCalendar from "../component/Calendar.jsx";
 import UserBooking from "./UserBooking.jsx";
