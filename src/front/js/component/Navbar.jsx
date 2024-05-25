@@ -20,16 +20,13 @@ export const Navbar = () => {
             </div>
             <div className="navbar-right">
                 <Link to="/" className="navbar-link">Rooms</Link>
-                <Link to="/my-rooms" className="navbar-link">My Rooms</Link>
                 <Link to="/games" className="navbar-link">Games</Link>
                 {token ? (
-                    
                     <>
                         <Link to="/profile" className="navbar-link">Profile</Link>
                         <button onClick={handleLogout} className="navbar-button">Logout</button>
                     </>
                 ) : (
-                    
                     <>
                         <Link to="/login" className="navbar-link">Login</Link>
                         <Link to="/signup" className="navbar-button">Create account</Link>

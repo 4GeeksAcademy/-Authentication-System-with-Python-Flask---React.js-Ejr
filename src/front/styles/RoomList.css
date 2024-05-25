@@ -1,0 +1,31 @@
+.toggle-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.toggle-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.toggle-button.active {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+}
+
+.create-room-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.rooms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

@@ -9,27 +9,39 @@ export const RoomDetail = () => {
     const navigate = useNavigate();
     const [showRequests, setShowRequests] = useState(false);
     const [requests, setRequests] = useState([]);
-    const [participants, setParticipants] = useState([]);
+    const [requestStatus, setRequestStatus] = useState(null);
     const room = store.rooms.find(room => room.room_id === parseInt(roomId));
     const username = localStorage.getItem('username');
 
     useEffect(() => {
         if (!room) {
             navigate('/'); // Redirect to home if room not found
-        } else {
-            setParticipants(room.participants);
         }
     }, [room, navigate]);
 
     useEffect(() => {
         const fetchRequests = async () => {
             if (showRequests && room) {
-                const fetchedRequests = await actions.fetchRoomRequests(room.room_id);
+                const fetchedRequests = await actions.getRoomRequests(room.room_id);
                 setRequests(fetchedRequests);
             }
         };
         fetchRequests();
     }, [showRequests, room]);
+
+    useEffect(() => {
+        const fetchRequestStatus = async () => {
+            if (room) {
+                const status = await actions.checkRequestStatus(room.room_id);
+                setRequestStatus(status);
+            }
+        };
+        fetchRequestStatus();
+    }, [showRequests, room]);
+
+    if (!room) {
+        return <div>Loading...</div>;
+    }
 
     const handleJoinRoom = async () => {
         const token = localStorage.getItem('jwt-token');
@@ -39,10 +51,20 @@ export const RoomDetail = () => {
             const success = await actions.joinRoom(room.room_id);
             if (success) {
                 alert('Join request sent successfully!');
-
+                setRequestStatus('pending');
             } else {
                 alert('Failed to send join request.');
             }
+        }
+    };
+
+    const handleWithdrawRequest = async () => {
+        const success = await actions.withdrawRequest(room.room_id);
+        if (success) {
+            alert('Request withdrawn successfully!');
+            setRequestStatus(null);
+        } else {
+            alert('Failed to withdraw request.');
         }
     };
 
@@ -53,26 +75,20 @@ export const RoomDetail = () => {
     const handleRequestAction = async (requestId, action) => {
         const success = await actions.updateRoomRequest(room.room_id, requestId, action);
         if (success) {
-            setRequests(prevRequests => 
-                prevRequests.filter(req => req.room_request_id !== requestId)
+            setRequests(prevRequests =>
+                prevRequests.map(req => req.id === requestId ? { ...req, status: action } : req)
             );
             if (action === 'accepted') {
-                const acceptedRequest = requests.find(req => req.room_request_id === requestId);
-                const newParticipant = {
-                    participant_id: acceptedRequest.user_id,
-                    participant_name: acceptedRequest.participant_name,
-                    confirmed: true
-                };
-                setParticipants(prevParticipants => [...prevParticipants, newParticipant]);
+                const participant = requests.find(req => req.id === requestId);
+                setRoom(prevRoom => ({
+                    ...prevRoom,
+                    participants: [...prevRoom.participants, participant]
+                }));
             }
         } else {
             alert('Failed to update request.');
         }
     };
-
-    if (!room) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="room-detail">
@@ -90,17 +106,20 @@ export const RoomDetail = () => {
                     <p><strong>Mood:</strong> {room.mood}</p>
                     <p><strong>Participants:</strong></p>
                     <ul>
-                        {participants.map(participant => (
+                        {room.participants.map(participant => (
                             <li key={participant.participant_id}>
-                                {participant.participant_name}
+                                {participant.participant_name} {participant.confirmed ? '(Confirmed)' : '(Pending)'}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
             <div className="room-actions">
-                {room.host_name !== username && (
+                {room.host_name !== username && !requestStatus && (
                     <button className="join-room" onClick={handleJoinRoom}>Join this room</button>
+                )}
+                {room.host_name !== username && requestStatus === 'pending' && (
+                    <button className="withdraw-request" onClick={handleWithdrawRequest}>Withdraw Request</button>
                 )}
                 {room.host_name === username && (
                     <button className="btn btn-secondary" onClick={handleToggleRequests}>
@@ -113,10 +132,10 @@ export const RoomDetail = () => {
                     <h3>Join Requests</h3>
                     <ul>
                         {requests.map(request => (
-                            <li key={request.room_request_id}>
+                            <li key={request.id}>
                                 {request.participant_name} - {request.status}
-                                <button className="btn btn-success" onClick={() => handleRequestAction(request.room_request_id, 'accepted')}>Accept</button>
-                                <button className="btn btn-danger" onClick={() => handleRequestAction(request.room_request_id, 'rejected')}>Reject</button>
+                                <button className="btn btn-success" onClick={() => handleRequestAction(request.id, 'accepted')}>Accept</button>
+                                <button className="btn btn-danger" onClick={() => handleRequestAction(request.id, 'rejected')}>Reject</button>
                             </li>
                         ))}
                     </ul>
