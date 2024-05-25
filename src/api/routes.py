@@ -613,6 +613,20 @@ def update_room_request(room_id, request_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#---------------Cancel Room_Request Join-------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/request_status', methods=['GET'])
+@jwt_required()
+def check_request_status(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        existing_request = Room_request.query.filter_by(room_id=room_id, user_id=current_user_id).first()
+        if existing_request:
+            return jsonify({"request_status": existing_request.status}), 200
+        else:
+            return jsonify({"request_status": "Cancelled"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 #--------GET GAMES--------------------------------------------------------------------------------------------------------------
 @api.route('/games', methods=['GET'])
 def get_games():
