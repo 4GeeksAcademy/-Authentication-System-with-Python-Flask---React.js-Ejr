@@ -254,10 +254,10 @@ def send_confirmation_mail():
     email = get_jwt_identity()
     
     msg = Message(
-        "Confirmación de compra",
+        "Confirmación de compra en Friendly Wheels",
         recipients=[email]  
     )
-    msg.body = "Gracias por tu compra. Este es un correo de confirmación."
+    msg.body = "Gracias por tu compra en Friendly Wheels 🚗." + "          " + "Tu reserva se encuentra confirmada."
 
     try:
         mail.send(msg)

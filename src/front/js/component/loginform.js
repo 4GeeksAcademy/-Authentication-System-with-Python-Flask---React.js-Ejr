@@ -10,16 +10,18 @@ import * as Yup from 'yup';
 export const LoginForm = () => {
     const { actions } = useContext(Context)
     const navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             inputEmail: '',
             inputPassword: ''
         },
         validationSchema: Yup.object({
-            inputEmail: Yup.string().email('Invalid email address').required('Required'),
+            inputEmail: Yup.string().email('email invalido').required('El email es obligatorio'),
             inputPassword: Yup.string().max(8, 'Debe tener 8 caracteres máximo').min(6, 'Debe tener 6 caracteres mínimo')
-                .required('Required'),
+                .required('La contraseña es obligatoria'),
         }),
+
         onSubmit: values => {
             async function handleSubmit() {
                 let isLogged = await actions.login(values.inputEmail, values.inputPassword)

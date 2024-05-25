@@ -92,7 +92,7 @@ export const AgregarForm = (props) => {
 
         let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, url_img1, url_img2, url_img3);
         if (respuesta === "success") {
-            swal("Vehículo añadido correctamente", ":)", "success")
+            swal("Vehículo añadido correctamente", "", "success")
             navigate("/");
         } else if (respuesta === "plate_exist") {
             swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
