@@ -14,6 +14,8 @@ from datetime import datetime
 from flask_mail import Message
 from app import mail
 import os
+import cloudinary
+import cloudinary.uploader
 
 api = Blueprint('api', __name__)
 
@@ -1010,3 +1012,28 @@ def upload_file():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+#----------------------CLOUDINARY ENDPOINT------------------------# 
+atlas = Flask(__name__)
+
+cloudinary.config(
+    cloud_name=os.getenv('dfoegvmld'),
+    api_key=os.getenv('979734725363914'),
+    api_secret=os.getenv('EdILqI1LeRpZAjEw5MnNMHX_Ppo')
+)
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    if file:
+        upload_result = cloudinary.uploader.upload(file)
+        return jsonify(upload_result), 200
+
+    return jsonify({"error": "Upload failed"}), 500
