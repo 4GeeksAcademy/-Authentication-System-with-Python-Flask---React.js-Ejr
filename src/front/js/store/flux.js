@@ -341,6 +341,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return null;
                 }
             },
+            withdrawRequest: async (roomId) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return null;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/withdraw_request`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to withdraw request');
+                    const data = await response.json();
+                    setStore({ requestStatus: null });
+                    return true;
+                } catch (error) {
+                    console.error('Error withdrawing request:', error);
+                    return false;
+                }
+            },
         }
     };
 };
