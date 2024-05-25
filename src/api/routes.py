@@ -136,7 +136,7 @@ def create_signup_manager():
         name = request.json.get('name')
         last_name = request.json.get('lastName')  
         phone = request.json.get('phone')
-        number_document = request.json.get(numberDocument)
+        number_document = request.json.get('numberDocument')
         user_id = request.json.get('userId')  
         teacher_id = request.json.get('teacherId')  
 
@@ -144,7 +144,7 @@ def create_signup_manager():
         if len(email) > 80:
             return jsonify({"Error": "Email too long"}), 400
 
-        if not email or not password or not is_manager or not name or not last_name or not phone:
+        if not email or not password or not is_manager or not name or not last_name or not phone or not number_document or not user_id or not teacher_id  :
             return jsonify({"msg": "email, password, is_manager, name, last_name, phone, number_document, user_id and teacher_id are required"})
         
         existing_manager = Manager.query.filter_by(email=email).first()
@@ -207,7 +207,7 @@ def get_token_login_user():
             return jsonify({"Error":"Invalid Password"}), 400
         
     except Exception as e:
-        return jsonify({"Error": "User not exists in Data Base", "Msg": str(e)}), 500
+        return jsonify({"Error": "User not exists in Data Base", "message": str(e)}), 500
 
 @api.route('/login/teacher', methods=['POST'])
 def get_token_login_teacher():
@@ -237,37 +237,9 @@ def get_token_login_teacher():
             return jsonify({"Error":"Invalid Password"}), 400
         
     except Exception as e:
-        return jsonify({"Error": "Teacher not exists in Data Base" , "Msg": str(e)}), 500
+        return jsonify({"Error": "Teacher not exists in Data Base" , "message": str(e)}), 500
 
-@api.route('/login/manager', methods=['POST'])
-def get_token_login_manager():
-    try:
-        email = request.json.get('email')
-        password = request.json.get('password')
-        if not email or not password:
-            return jsonify({"Error": "Email and Password are required"}), 400
-
-       # Buscar el usuario con ese correo
-        login_manager = Manager.query.filter_by(email=email).first()
-        if not login_manager:
-            return jsonify({'Error': 'Invalid Email'}), 400
-
-        # Obtener la contraseña desde la base de datos
-        password_from_db = login_manager.password
-
-        # Verificar la contraseña
-        true_or_false = check_password_hash(password_from_db, password)
-
-        if true_or_false:
-            expires = timedelta(days=1)
-            manager_id = login_manager.id
-            access_token = create_access_token(identity=manager_id, expires_delta=expires)
-            return jsonify({"access_token": access_token, "message": "Log In Successfully"}), 200
-        else:
-            return jsonify({"Error":"Invalid Password"}), 400
-        
-    except Exception as e:
-        return jsonify({"Error": "Manager not exists in Data Base" , "Msg": str(e)}), 500
+ 
 
 
 
@@ -893,41 +865,49 @@ def get_quizzes():
 def add_course_to_trolley():
     try:
         data = request.json
-
         title_course = data.get('titleCourse')
         price = data.get('price')
-        date = data.get('date')
-        course_id = data.get('course_id')
-        user_id = data.get('user_id')
-        manager_id = data.get('manager_id')
+        course_id = data.get('courseId')
+        user_id = data.get('userId')
 
-        if not title_course or not price or not date or not  course_id or not user_id or not manager_id:
-            return jsonify({"Error": "Course ID, User ID, and Manager ID are required"}), 400
+        if not title_course or not price or not course_id or not user_id:
+            return jsonify({"Error": "Course ID, User ID, and Course ID are required"}), 400
         
-        course = Course.query.get(course_id)
+        course = Course.query.filter_by(id=course_id).first()
         if not course:
-            return jsonify({"Error": "Course not found"}), 404
+            return jsonify({"Error": "Course ID does not exist"}), 404
+        
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({"Error": "User ID does not exist"}), 404
+        
+        trolley = Trolley.query.filter_by(title_course=title_course).first()
+        if trolley:
+            return jsonify({"Error": "Course already exists in the trolley"}), 409
         
         current_date = datetime.now().strftime('%Y-%m-%d')
-        new_order = Orders(
-            user_id=user_id,
-            manager_id=manager_id,
-            payment_id=None,
-            title_order=course.title,
-            price=course.price,
-            date=current_date
+        new_trolley = Trolley(
+            title_course=title_course,
+            price=price,
+            date=current_date,
+            course_id=course_id,
+            user_id=user_id
         )
-        db.session.add(new_order)
+        db.session.add(new_trolley)
         db.session.commit()
-
-        new_trolley_entry = Trolley(order_id=new_order.id)
-        db.session.add(new_trolley_entry)
-        db.session.commit()
-        return jsonify({"message": "Course added to trolley succesfully", "order_id": new_order.id}), 201
-    
+        return jsonify({"message": "Course added to trolley successfully", "order_id": new_trolley.serialize()}), 201
     except Exception as e:
-        return jsonify({"Error": "An error ocurred", "erro fetching": {str(e)}}), 500
+        return jsonify({"Error": "An error occurred", "error fetching": str(e)}), 500
+    
 
+@api.route('/order/courses', methods=['GET'])
+def get_trolley():
+    try:
+        orders = Orders.query.all()
+        serialized_orders = [order.serialize() for order in orders]
+        return jsonify(serialized_orders), 200
+    except Exception as e:
+        return jsonify({"Error": "An error occurred while fetching orders", "error_details": str(e)}), 500
 
 #----------------------ORDER------------------------#           
 @api.route('/order/courses', methods=['POST'])
@@ -936,22 +916,22 @@ def add_order_to_trolley():
         data = request.json
         title_order = data.get('titleOrder')
         price = data.get('price')
-        date = data.get('date')
         total = data.get('total')
-        user_id = data.get('user_id')
-        manager_id = data.get('manager_id')
-        payment_id = data.get('paymentId')
+        user_id = data.get('userId')
 
-        if not title_order or not price or not date or not total or not user_id or not manager_id or not payment_id:
-            return jsonify({"Error": "titleOrder, price, date, total, user_id, manager_id, and payment_id are required"}), 400
+        if not title_order or not price or not total or not user_id:
+            return jsonify({"Error": "titleOrder, price, total and userId are required"}), 400
+        
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({"Error": "User ID does not exist"}), 404
         
         current_date = datetime.now().strftime('%Y-%m-%d')
         new_order = Orders(
             user_id=user_id,
-            manager_id=manager_id,
-            payment_id=payment_id,
             title_order=title_order,
             price=price,
+            total=total,
             date=current_date
         )
         
@@ -967,6 +947,15 @@ def add_order_to_trolley():
     
     except Exception as e:
         return jsonify({"Error": "An error occurred", "error_fetching": str(e)}), 500
+
+@api.route('/trolley/courses', methods=['GET'])
+def get_orders():
+    try:
+        trolleys = Trolley.query.all()
+        serialized_trolley = [trolley.serialize() for trolley in trolleys]
+        return jsonify(serialized_trolley), 200
+    except Exception as e:
+        return jsonify({"Error": "An error occurred while fetching trolleys", "error_details": str(e)}), 500
     
 
 #----------------------CARGA DE DOCUMENTO------------------------# 
@@ -1001,3 +990,60 @@ def upload_file():
         
     except Exception as e:
         return jsonify({'Error': str(e)}), 500
+
+#----------------------Category------------------------#    
+@api.route('/courses/categories', methods=['POST'])
+def post_category():
+    try:
+        data = request.json
+
+        title_category = data.get('titleCategory')
+        sub_category = data.get('subCategory')
+        category_length = data.get('categoryLength')
+        course_more_current = data.get('courseMoreCurrent')
+        course_more_sold = data.get('courseMoreSold')
+        user_id = data.get('userId')
+        manager_id = data.get('managerId')
+        teacher_id = data.get('teacherId')
+
+       
+        if not all([title_category, sub_category, category_length, course_more_current, course_more_sold]):
+            return jsonify({"Error": "titleCategory, subCategory, categoryLength, courseMoreCurrent, and courseMoreSold are required"}), 400
+
+        
+        new_category = Category(
+            title_category=title_category,
+            sub_category=sub_category,
+            category_length=category_length,
+            course_more_current=course_more_current,
+            course_more_sold=course_more_sold,
+            user_id=user_id,
+            manager_id=manager_id,
+            teacher_id=teacher_id
+        )
+
+       
+        db.session.add(new_category)
+        db.session.commit()
+
+    
+        return jsonify({"message": "Category created successfully", "category": new_category.serialize()}), 201
+
+    except Exception as e:
+    
+        return jsonify({"Error": "An error occurred", "error_details": str(e)}), 500
+
+
+@api.route('/courses/categories', methods=['GET'])
+def get_categories():
+    try:
+        category = Category.query.all()
+
+        if not category:
+            return jsonify({"message": "No category found"}), 404
+        
+        serialized_quizzes = [category.serialize() for category in category]
+        return jsonify({"Category": serialized_quizzes}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in fetching category: " + str(err)}) 
