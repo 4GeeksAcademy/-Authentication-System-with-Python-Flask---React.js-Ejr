@@ -6,7 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             rooms: [],
             games: [],
             loadingRooms: false,
-            user: null // Guardar la información del usuario autenticado
+            user: null,
+            requestStatus: null
         },
 
         actions: {
@@ -320,7 +321,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            checkRequestStatus: async (roomId) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return null;
 
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/request_status`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch request status');
+                    const data = await response.json();
+                    setStore({ requestStatus: data.request_status });
+                    return data.request_status;
+                } catch (error) {
+                    console.error('Error fetching request status:', error);
+                    return null;
+                }
+            },
         }
     };
 };
