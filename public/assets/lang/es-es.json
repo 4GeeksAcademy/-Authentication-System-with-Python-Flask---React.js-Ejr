@@ -51,5 +51,10 @@
   "placeholder": {
     "description":  "[escribe una descripción aquí...]",
     "label-task":   "[escribe aquí...]"
+  },
+  "404": {
+    "notfound": "Página No Encontrada",
+    "message":  "Oops! La página que buscas aparentemente no existe.",
+    "back":     "Volver"
   }
 }
