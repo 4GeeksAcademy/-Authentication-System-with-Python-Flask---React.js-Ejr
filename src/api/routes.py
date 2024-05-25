@@ -831,4 +831,25 @@ def review_users(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#---------------GET REVIEW-----------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/reviews', methods=['GET'])
+@jwt_required()
+def get_room_reviews(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar si el usuario es participante del room o admin
+        participation = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id).first()
+        if not participation and not User.query.get(current_user_id).admin:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        reviews = Review.query.filter_by(room_id=room_id).all()
+        serialized_reviews = [review.serialize() for review in reviews]
+        return jsonify({"reviews": serialized_reviews}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
