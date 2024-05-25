@@ -806,7 +806,7 @@ def review_users(room_id):
         for review_data in reviews_data:
             reviewed_user_id = review_data.get('user_id')
             score = review_data.get('score')
-            comment = review_data.get('comment', '')  # Obtener el comentario, si se proporciona
+            content = review_data.get('content', '')  # Obtener el comentario, si se proporciona
 
             # Evitar que el usuario se califique a sí mismo
             if reviewed_user_id == current_user_id:
@@ -821,7 +821,7 @@ def review_users(room_id):
                 reviewer_id=current_user_id,
                 reviewed_user_id=reviewed_user_id,
                 score=score,
-                comment=comment
+                content=content
             )
             db.session.add(new_review)
 

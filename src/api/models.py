@@ -173,7 +173,7 @@ class Review(db.Model):
     reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     reviewed_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     score = db.Column(db.Integer, nullable=False)  
-    comment = db.Column(db.Text, nullable=True)  
+    content = db.Column(db.Text, nullable=True)  
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     def __repr__(self):
@@ -186,6 +186,6 @@ class Review(db.Model):
             "reviewer_id": self.reviewer_id,
             "reviewed_user_id": self.reviewed_user_id,
             "score": self.score,
-            "comment": self.comment,
+            "content": self.content,
             "created_at": self.created_at
         }
