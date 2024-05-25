@@ -155,3 +155,8 @@ body{
     background-color: rgb(220, 221, 224);
 }
 
+.vehiculo {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
