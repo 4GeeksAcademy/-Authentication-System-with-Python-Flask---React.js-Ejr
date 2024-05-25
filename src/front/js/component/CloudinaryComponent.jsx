@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CloudinaryComponent = () => {
+ export const CloudinaryComponent = () => {
   const preset_name = "jptixrge";
   const cloud_name = "dfoegvmld";
 
@@ -32,15 +32,14 @@ const CloudinaryComponent = () => {
 
   return (
     <div>
-      <h1>Upload Image to Cloudinary</h1>
+      <h2>Upload Image to Cloudinary</h2>
       <input type="file" name="file" placeholder="Upload an image" onChange={(e)=>uploadImage(e)} />
       {loading ? (
         <h3>Loading...</h3>
       ) : (
-        image && <img src={`res.cloudinary.com/dfoegvmld/image/upload/v1715818521/cld-sample-3.jpg`} style={{ width: '300px' }} alt="Uploaded" />  
+        image && <img src={image} style={{ width: '400px' }} alt="Uploaded" />  
       )}
     </div>
   );
 };
 
-export default CloudinaryComponent;
