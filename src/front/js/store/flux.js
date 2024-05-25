@@ -79,13 +79,20 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            searchRooms: (searchTerm, roomType) => {
+            searchRooms: (searchTerm, mood) => {
                 const store = getStore();
-                return store.rooms.filter(room => {
-                    const matchesSearchTerm = room.room_name.toLowerCase().includes(searchTerm.toLowerCase());
-                    const matchesRoomType = roomType === 'All' || room.room_type === roomType;
-                    return matchesSearchTerm && matchesRoomType;
-                });
+                let filteredRooms = store.rooms;
+                if (searchTerm) {
+                    filteredRooms = filteredRooms.filter(room =>
+                        room.room_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        room.game_name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+
+                if (mood) {
+                    filteredRooms = filteredRooms.filter(room => room.mood.toLowerCase() === mood.toLowerCase());
+                }
+                return filteredRooms;
             },
 
             logout: () => {
