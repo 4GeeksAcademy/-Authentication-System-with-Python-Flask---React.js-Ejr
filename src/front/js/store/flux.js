@@ -98,10 +98,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.status === 200) {
 						return "success";
 					} else if (response.status === 409) {
-						console.log(2);
 						return "plate_exist";
 					} else {
-						console.log(3);
 						return "incomplete_data";
 					}
 				} catch (error) {
@@ -273,7 +271,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     if (response.status === 200) {
                         const data = await response.json();
-                        console.log(data); 
                         return true; 
                     } else {
                         return false; 
@@ -283,6 +280,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+			checkout: async (precio_id_stripe, days) => {
+				const token = localStorage.getItem("token")
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/create-checkout-session/${precio_id_stripe}/${days}`, {
+						method: 'POST',
+						headers:{
+							'Content-Type':'application/json',
+							'Authorization': "Bearer " + token
+						},
+                	});
+					const data = await response.json()
+						return data
+                } catch (error) {
+                    return false; 
+                }
+			},
 		}
 	};
 };

@@ -23,7 +23,6 @@ export const Favoritos = () => {
                                 </>
                             )
                             : (store.favorites.map((vehicle) => (
-                                    // <div key={vehicle.id}>
                                         <div key={vehicle.id} className="card col-md-4 mb-2 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
                                                 <div className="cardvehicles text-center mt-3" href="#">
@@ -46,7 +45,6 @@ export const Favoritos = () => {
                                                     </div>
                                             </Link>
                                         </div>
-                                    // </div>
                                 )
                             ))
                         }

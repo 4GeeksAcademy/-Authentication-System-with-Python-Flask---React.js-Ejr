@@ -6,7 +6,6 @@ import "../../styles/index.css";
 import imgFolder from "../../img/folder.png";
 import { Container } from "reactstrap";
 import Dropzone from "react-dropzone";
-import { array } from "prop-types";
 import axios from "axios";
 
 export const AgregarForm = (props) => {
@@ -49,7 +48,6 @@ export const AgregarForm = (props) => {
     }
 
     const eliminarImagen = (item) => {
-        console.log(image);
         const nuevasImagenes = image.array.filter((img) => {
             return img != item
         })

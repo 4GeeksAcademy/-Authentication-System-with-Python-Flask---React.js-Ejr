@@ -17,13 +17,23 @@ CORS(api)
 def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
+
     user_exist = User.query.filter_by(email=email).first()
     if email == "" or password == "":
         return jsonify({"msg": "El email y password son obligatorios"}), 400
+    
+     # Creacion de usuario en stripe
+    new_user_stripe= stripe.Customer.create(
+        name = "J",
+        email = email,
+    )
+    print(new_user_stripe)
+
     if user_exist is None:
         new_user = User(
             email=email,
-            password=password
+            password=password,
+            email_stripe= new_user_stripe["email"],
         )
         db.session.add(new_user)
         db.session.commit()
@@ -211,25 +221,28 @@ def get_all_rents():
 #Ruta de pago de stripe
 
 @api.route('/create-checkout-session/<string:stripe_id>/<int:days>', methods=['POST'])
+@jwt_required()
 def create_checkout_session(stripe_id, days):
+    email =  get_jwt_identity()
+    user_exist = User.query.filter_by(email=email).first()
+    if user_exist is None:
+        return jsonify("El usuario debe tener una cuenta creada para realizar el pago"), 404
     try:
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                     'price': stripe_id,
                     'quantity': days,
                 },
-
             ],
             mode='payment',
+            customer_email = email,
             success_url= os.getenv('FRONT_URL')+ '?success=true',
             cancel_url= os.getenv('FRONT_URL') + '?canceled=true',
         )
-        # return jsonify("ok"),200
     except Exception as e:
         return str(e)
-    return redirect(checkout_session.url, code=303)
+    return jsonify(checkout_session.url), 303
    
 #Flask-mail
 

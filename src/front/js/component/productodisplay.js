@@ -3,13 +3,18 @@ import { useNavigate} from "react-router-dom";
 import { Context } from "../store/appContext.js";
 
 export const ProductDisplay = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
   if (!store.checkout.precio_id_stripe) {
     navigate('/');
   } 
-  console.log(store.checkout.precio_id_stripe, store.checkout.days);
+  
+  const handlecheckout = async (e) => {
+    e.preventDefault()
+    let url = await actions.checkout(store.checkout.precio_id_stripe, store.checkout.days);
+    window.location.href = url;
+  }
   return (
     <section>
       <div className="product mt-5 mb-5 text-center vh-100">
@@ -17,7 +22,7 @@ export const ProductDisplay = () => {
         <div className="description my-3">
           <h3>{store.checkout.marca_modelo}</h3>
           <h5>€{store.checkout.precio * store.checkout.days}</h5>
-          <form className="mt-4" action={`${process.env.BACKEND_URL}/api/create-checkout-session/${store.checkout.precio_id_stripe}/${store.checkout.days}`} method="POST">
+          <form onSubmit={handlecheckout} className="mt-4">
             <button type="submit" className="btn-success btn-lg">
               PAGO
             </button>
