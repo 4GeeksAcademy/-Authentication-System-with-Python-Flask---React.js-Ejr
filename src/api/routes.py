@@ -1017,9 +1017,9 @@ def upload_file():
 atlas = Flask(__name__)
 
 cloudinary.config(
-    cloud_name=os.getenv('cloud_name'),
-    api_key=os.getenv('api_key'),
-    api_secret=os.getenv('api_secret')
+    cloud_name=os.getenv('dfoegvmld'),
+    api_key=os.getenv('979734725363914'),
+    api_secret=os.getenv('EdILqI1LeRpZAjEw5MnNMHX_Ppo')
 )
 
 @api.route('/upload', methods=['POST'])
