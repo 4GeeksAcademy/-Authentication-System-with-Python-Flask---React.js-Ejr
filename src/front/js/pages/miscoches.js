@@ -20,7 +20,7 @@ export const MisCoches = () => {
         <>
             <div className="footer-view vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
-                    <h5 className="h5 mt-3 text-dark-50 text-decoration-underline"><strong>Mis vehículos en alquiler</strong></h5>
+                    <h4 className="mt-3 mb-2 text-success"><strong>MIS VEHICULOS EN ALQUILER</strong></h4>
 					<div className="row Map Cards text-dark d-flex justify-content-center">
                         {store.myVehicles.length === 0 
                             ? (
@@ -35,18 +35,14 @@ export const MisCoches = () => {
                                 </>
                             )
                             : (store.myVehicles.map((vehicle) => (
-                                <div key={vehicle.id} className="card col-md-4 mb-2 me-5 mt-4 ms-2" style={{ width: "22rem"}}>
-                                    <div>
-                                        <a className="cardvehicles" href="#">
-                                            <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem", marginTop: "15px"}} />
-                                        </a>
+                                <div key={vehicle.id} className="vehiculo card col-md-4 mb-4 me-5" style={{ width: "22rem", height: "26rem"}}>
+                                        <img src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
+                                    <div className="card-body p-2">
+                                        <h3 className="card-title mb-3 text-success mt-2"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h3>
+                                        <p className="card-text fs-5"><strong>Matrícula:</strong> {vehicle.matricula.toUpperCase()}</p>
                                     </div>
-                                    <div className="card-body pb-0">
-                                        <h5 className="card-title mb-3"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h5>
-                                        <p className="card-text"><strong>Matrícula:</strong> {vehicle.matricula.toUpperCase()}</p>
-                                    </div>
-                                    <div className="d-flex justify-content-end mb-3 me-3">
-                                        <button onClick={() => eliminarVehiculo(vehicle.id)} className="btn-success rounded">
+                                    <div className="d-flex justify-content-end mt-auto pb-3">
+                                        <button onClick={() => eliminarVehiculo(vehicle.id)} className="btn-success btn-lg border-2 rounded me-3">
                                             Eliminar
                                         </button>
                                     </div>
