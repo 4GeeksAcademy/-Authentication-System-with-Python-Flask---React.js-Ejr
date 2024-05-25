@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../component/Navbar.jsx";
 import { CoursesContainer } from "../component/Courses/CoursesContainer.jsx";
 import { TeacherCourses } from "../component/Teacher/TeacherCourses.jsx";
+import { CloudinaryComponent} from "../component/CloudinaryComponent.jsx"
 
 
 
@@ -39,6 +40,7 @@ export const Home = () => {
                 </button>
             </div>
             <CoursesContainer />
+            <CloudinaryComponent />
         </div>
     );
 }

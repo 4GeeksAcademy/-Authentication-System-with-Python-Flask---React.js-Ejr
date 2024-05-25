@@ -1022,7 +1022,7 @@ cloudinary.config(
     api_secret=os.getenv('EdILqI1LeRpZAjEw5MnNMHX_Ppo')
 )
 
-@app.route('/upload', methods=['POST'])
+@api.route('/upload', methods=['POST'])
 def upload_image():
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
