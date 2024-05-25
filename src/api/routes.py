@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Room, Games, Room_request, Room_participant, Comment
+from api.models import db, User, Room, Games, Room_request, Room_participant, Comment, Review
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -786,5 +786,49 @@ def get_all_rooms():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+#-------------POST REVIEW------------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/review', methods=['POST'])
+@jwt_required()
+def review_users(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar si el usuario es participante del room
+        participation = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id).first()
+        if not participation:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        reviews_data = request.json.get('reviews', [])
+        for review_data in reviews_data:
+            reviewed_user_id = review_data.get('user_id')
+            score = review_data.get('score')
+            comment = review_data.get('comment', '')  # Obtener el comentario, si se proporciona
+
+            # Evitar que el usuario se califique a sí mismo
+            if reviewed_user_id == current_user_id:
+                continue
+
+            # Evitar puntuaciones inválidas
+            if score < 1 or score > 5:
+                return jsonify({"error": "Score must be between 1 and 5"}), 400
+
+            new_review = Review(
+                room_id=room_id,
+                reviewer_id=current_user_id,
+                reviewed_user_id=reviewed_user_id,
+                score=score,
+                comment=comment
+            )
+            db.session.add(new_review)
+
+        db.session.commit()
+        return jsonify({"message": "Reviews submitted successfully"}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
