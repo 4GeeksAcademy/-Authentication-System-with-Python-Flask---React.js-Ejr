@@ -13,12 +13,16 @@ const Navbar = () => {
 
   //--- login ---------------------
   const { store, actions }= React.useContext(Context)
-  const [openDrop, setOpenDrop] = React.useState(false)
+  const[dropCreate, setDropCreate] = React.useState(false)
 
   const handleDrop = () => {
-      setOpenDrop(!openDrop)
+      setdropProfile(!dropProfile)
       console.log("dropped down")
     }
+
+  const handleCreate = () => {
+    //this should create a new board, or open an mini tab from where u can put the name of the board...
+  }
 
 
 
@@ -36,47 +40,54 @@ const Navbar = () => {
         <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
           <div className="flex items-center">
             
-            <p onClick={()=>navigate('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
+            <p onClick={()=>navigate('/')} className="cursor-pointer text-2xl f-body font-[600] mr-28">KeQQu</p>  
             
-            <p onClick={()=>navigate('dashboard')} className="f-body cursor-pointer">Dashboard</p>
-            <button className=""></button>
+            <p onClick={()=>navigate('dashboard')} className="f-body cursor-pointer mr-10">Dashboard</p>
+
+            <button onClick={handleCreate}
+            className="w-8 h-8 rounded-md border-[1px] border-w hover:bg-transparent bg-w text-b text-xl flex items-center justify-center transition-all ease-in-out duration-500">
+              <i class="fa-solid fa-plus p-0 hover:text-w"></i>
+            </button>
+                
+
+
           </div>
             <div className="ml-10 flex items-center">
               <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
               <button onClick={handleDrop}>
                   <img className="w-9 h-9 rounded-full" src="https://i.pinimg.com/564x/12/1a/cc/121acc97cbe3c4b1a8483e85af18d377.jpg" alt="" />
               </button>
-              {openDrop && (
-                  <div className="absolute mt-[20rem] w-48 rounded-xl">
-                      <div className="bg-dark rounded-xl p-2 flex flex-col gap-2">
-                          <div className="px-5 mt-2">
-                              <ul>
-                                  <li className="f-body text-gray-300">name</li>
-                                  <li className="f-body text-gray-300">your@email.com</li>
-                              </ul>
-                          </div>
-                          <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
-                          <div className="px-5">
-                              <ul className="grid gap-2">
-                                  <Link to="accountsettings">
-                                  <li onClick={handleDrop} className="f-body hover:bg-violet-950">Account settings</li>
-                                  </Link>
-                                  <Link to="support">
-                                      <li onClick={handleDrop} className="f-body hover:bg-violet-950">Support</li>
-                                  </Link>
-                              </ul>
-                          </div>
-                          <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
-                          <div className="px-5 mb-2">
-                              <ul>
-                                  <Link to="/logout">
-                                      <li onClick={handleDrop} className="f-body text-red-600 hover:bg-red-950">Log Out</li>
-                                  </Link>
-                              </ul>
+                  {dropProfile && (
+                      <div className="absolute mt-[20rem] w-48 rounded-xl">
+                          <div className="bg-dark rounded-xl p-2 flex flex-col gap-2">
+                              <div className="px-5 mt-2">
+                                  <ul>
+                                      <li className="f-body text-gray-300">name</li>
+                                      <li className="f-body text-gray-300">your@email.com</li>
+                                  </ul>
+                              </div>
+                              <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
+                              <div className="px-5">
+                                  <ul className="grid gap-2">
+                                      <Link to="accountsettings">
+                                      <li onClick={handleDrop} className="f-body hover:bg-violet-950">Account settings</li>
+                                      </Link>
+                                      <Link to="support">
+                                          <li onClick={handleDrop} className="f-body hover:bg-violet-950">Support</li>
+                                      </Link>
+                                  </ul>
+                              </div>
+                              <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
+                              <div className="px-5 mb-2">
+                                  <ul>
+                                      <Link to="/logout">
+                                          <li onClick={handleDrop} className="f-body text-red-600 hover:bg-red-950">Log Out</li>
+                                      </Link>
+                                  </ul>
+                              </div>
                           </div>
                       </div>
-                  </div>
-              )}
+                  )}
             </div>
           <div onClick={handleNav} className="black hidden">
             {nav ? <AiOutlineClose size={18} /> : <IoMdMenu size={18} />} 

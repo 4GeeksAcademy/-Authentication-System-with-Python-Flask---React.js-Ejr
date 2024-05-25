@@ -10,7 +10,10 @@ const DashboardView = () => {
 						<i className="fa-solid fa-house text-2xl mr-5"></i>
 						<p className="text-2xl f-body">Home</p>
 					</li>
-					<li></li>
+					<li className="flex items-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
+						<i className="fa-solid fa-house text-2xl mr-5"></i>
+						<p className="text-2xl f-body">Home</p>
+					</li>
 				</ul>
 
 
