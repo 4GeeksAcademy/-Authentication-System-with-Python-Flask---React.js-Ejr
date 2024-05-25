@@ -1,6 +1,11 @@
 import React from "react";
 
 export const ModalRecuperarContraseña = () => {
+
+    const recuperarContraseña = () => {
+        swal("En breve recibira un email de recuperación de contraseña", "", "success")
+    }
+
     return (
         <>
             <span type="button" className="btn text-primary justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -19,7 +24,7 @@ export const ModalRecuperarContraseña = () => {
                             <input type="email" className="form-control" id="exampleInputEmail2" placeholder="name@example.com"/>
                         </div>
                         <div className="modal-footer justify-content-center">
-                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Recuperar Contraseña</button>
+                            <button onClick={() => recuperarContraseña()} type="button" className="btn btn-primary" data-bs-dismiss="modal">Recuperar Contraseña</button>
                         </div>
                     </div>
                 </div>
