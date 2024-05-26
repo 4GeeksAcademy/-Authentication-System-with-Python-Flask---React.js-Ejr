@@ -4,6 +4,7 @@ import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./PrivatePageUser.module.css"; // Importación de estilos CSS
 
 import PrivateCalendar from "../component/PrivateCalendar.jsx";
+import PRRecord from "../component/PRRecord.jsx";
 
 
 const PrivatePageUser = () => {
@@ -66,7 +67,7 @@ const PrivatePageUser = () => {
                 </div>
             </div> */}
             <PrivateCalendar />
-
+            <PRRecord />
         </>
     );
 };

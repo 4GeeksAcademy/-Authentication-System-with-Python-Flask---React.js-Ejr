@@ -25,6 +25,10 @@ import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
+import PRRecord from "../component/PRRecord.jsx";
+import AdminMembershipPurchase from "../component/AdminMembershipPurchase.jsx";
+
+
 
 const ModulePage = () => {
     const { store, actions } = useContext(Context);
@@ -33,11 +37,13 @@ const ModulePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     useEffect(() => {
-        // Verificar si el usuario tiene el rol adecuado
-        if (store.dataRole !== "master") {
-            navigate("/"); // Redirigir si no es un usuario master
+        const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
+        const dataRole = localStorage.getItem("dataRole");
+
+        if (!isAuthenticated || dataRole !== "master") {
+            navigate("/");
         }
-    }, [store.dataRole, navigate]);
+    }, [navigate]);
 
     const handleOpenModal = (index) => {
         setCurrentSlide(index);
@@ -62,6 +68,10 @@ const ModulePage = () => {
         { component: <ImageGallery />, name: "ImageGallery " },
         { component: <TransactionsTable />, name: "TransactionsTable " },
         { component: <Users />, name: "Users " },
+        { component: <PRRecord />, name: "PRRecord " },
+        { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
+
+
     ];
 
     return (

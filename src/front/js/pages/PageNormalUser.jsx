@@ -25,6 +25,7 @@ import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
+import PRRecord from "../component/PRRecord.jsx";
 
 const PageNormalUser = () => {
     const { store, actions } = useContext(Context);
@@ -33,12 +34,15 @@ const PageNormalUser = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     useEffect(() => {
-        // Verificar si el usuario tiene el rol adecuado
-        if (store.dataRole !== "athlete") {
-            navigate("/"); // Redirigir si no es un usuario master
-        }
-    }, [store.dataRole, navigate]);
+        const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
+        const dataRole = localStorage.getItem("dataRole");
 
+        if (!isAuthenticated || (dataRole !== "athlete" && dataRole !== "master")) {
+            navigate("/");
+        }
+    }, [navigate]);
+
+    
     const handleOpenModal = (index) => {
         setCurrentSlide(index);
         setShow(true);
@@ -62,6 +66,7 @@ const PageNormalUser = () => {
         { component: <ImageGallery />, name: "ImageGallery " },
         // { component: <TransactionsTable />, name: "TransactionsTable " },
         // { component: <Users />, name: "Users " },
+        { component: <PRRecord />, name: "PRRecord " },
     ];
 
     return (

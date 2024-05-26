@@ -32,7 +32,6 @@ const NavigationBar = () => {
 
     const handleCloseSession = async () => {
         await actions.closeSession();
-        localStorage.removeItem('token');
         navigate('/');
     };
 
@@ -51,7 +50,7 @@ const NavigationBar = () => {
                     {store.isAuthenticated && (
                         <>
                             <Button onClick={handleCloseSession} className={styles.logoutButton}>Cerrar sesión</Button>
-                            <Link to="/">
+                            <Link to="/PRRecord">
                                 <Button className={styles.ProfileButton}>Ir al perfil</Button>
                             </Link>
                             {store.uploadedUserData.role === 'master' && (

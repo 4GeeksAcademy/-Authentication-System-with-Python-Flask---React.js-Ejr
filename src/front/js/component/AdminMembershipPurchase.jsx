@@ -3,7 +3,7 @@ import { Modal, Button, Form, DropdownButton, Dropdown, Alert } from 'react-boot
 import { Context } from '../store/appContext';
 import styles from "./MembershipPurchase.module.css"; // Importa los estilos CSS
 
-const MembershipPurchase = () => {
+const AdminMembershipPurchase = () => {
     const { store, actions } = useContext(Context);
     const [showSelectionModal, setShowSelectionModal] = useState(false);
     const [selectedMembership, setSelectedMembership] = useState(null);
@@ -18,18 +18,14 @@ const MembershipPurchase = () => {
     const [processing, setProcessing] = useState(false);
     const [purchaseResult, setPurchaseResult] = useState(null);
     const [showResultModal, setShowResultModal] = useState(false); // Nuevo estado para mostrar el modal de resultado
+    const [userEmail, setUserEmail] = useState(''); // Nuevo estado para almacenar el email del usuario
 
     useEffect(() => {
         actions.loadMemberships();
     }, []);
 
     const handleBuyClick = () => {
-        if (store.uploadedUserData.active_membership_is_active !== "No Activa") {
-            setPurchaseResult({ success: false, error: 'You already have an active membership!' });
-            setShowResultModal(true); // Muestra el modal de resultado
-        } else {
-            setShowSelectionModal(true);
-        }
+        setShowSelectionModal(true);
     };
 
     const handleMembershipSelect = (membership) => {
@@ -42,6 +38,10 @@ const MembershipPurchase = () => {
             ...creditCardDetails,
             [event.target.name]: event.target.value
         });
+    };
+
+    const handleEmailChange = (event) => {
+        setUserEmail(event.target.value);
     };
 
     const handleFormSubmit = async (event) => {
@@ -60,7 +60,7 @@ const MembershipPurchase = () => {
                 payment_method: paymentMethod
             };
 
-            const result = await actions.purchaseMembership({ membership_id: selectedMembership.id, payment_data: paymentData });
+            const result = await actions.adminPurchaseMembership({ email: userEmail, membership_id: selectedMembership.id, payment_data: paymentData });
 
             if (result.success) {
                 // Simular redireccionamiento a PayPal
@@ -92,7 +92,7 @@ const MembershipPurchase = () => {
             })
         };
 
-        const result = await actions.purchaseMembership({ membership_id: selectedMembership.id, payment_data: paymentData });
+        const result = await actions.adminPurchaseMembership({ email: userEmail, membership_id: selectedMembership.id, payment_data: paymentData });
 
         setPurchaseResult(result);
         setShowResultModal(true); // Muestra el modal de resultado
@@ -161,6 +161,10 @@ const MembershipPurchase = () => {
                     <Modal.Body className={styles.modalBody}>
                         <Form onSubmit={handleFormSubmit}>
                             <Form.Group>
+                                <Form.Label>User Email</Form.Label>
+                                <Form.Control type="email" placeholder="Enter user's email" value={userEmail} onChange={handleEmailChange} required />
+                            </Form.Group>
+                            <Form.Group>
                                 <Form.Label>Payment Method</Form.Label>
                                 <DropdownButton id="dropdown-payment-method" title={paymentMethod || 'Select Method'} className={styles.paymentMethodDropdown}>
                                     <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
@@ -187,18 +191,13 @@ const MembershipPurchase = () => {
                     {processing && <Alert className={styles.alertProcessing}>Processing...</Alert>}
                     {purchaseResult && (
                         <Alert className={purchaseResult.success ? styles.alertResultSuccess : styles.alertResultDanger}>
-                            {purchaseResult.success ? `Purchase successful! Payment ID: ${purchaseResult.data.payment}` : `Purchase failed: ${purchaseResult.error}`}
+                            {purchaseResult.success ? 'Membership purchased successfully!' : `Purchase failed: ${purchaseResult.error}`}
                         </Alert>
                     )}
                 </Modal.Body>
-                <Modal.Footer className={styles.modalFooter}>
-                    <Button variant="secondary" onClick={() => setShowResultModal(false)} className={styles.closeButton}>
-                        Close
-                    </Button>
-                </Modal.Footer>
             </Modal>
         </>
     );
 };
 
-export default MembershipPurchase;
+export default AdminMembershipPurchase;
