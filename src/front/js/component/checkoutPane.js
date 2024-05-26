@@ -1,10 +1,11 @@
+// src/components/OrdersPane.js
 import React, { useContext } from 'react';
 import { Typography, IconButton, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 
-const OrdersPane = () => {
+const CheckoutPane = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
@@ -35,18 +36,9 @@ const OrdersPane = () => {
       </div>
       <div style={{ paddingTop: '16px', backgroundColor: 'lightgray' }}>
         <Typography variant="h3">Total: ${store.order.total.toFixed(2)}</Typography>
-        <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-          <Button
-            variant="contained"
-            onClick={handleCheckout}
-            style={{ backgroundColor: '#2DB734', color: 'white', height: '50px', width: '300px', fontSize: "1.2rem" }}
-          >
-            Checkout
-          </Button>
-        </div>
       </div>
     </div>
   );
 };
 
-export default OrdersPane;
+export default CheckoutPane;

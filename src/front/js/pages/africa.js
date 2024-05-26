@@ -15,7 +15,7 @@ export const Africa = () => {
   };
 
   return (
-    <div style={{ display: 'flex', paddingTop: '64px', paddingRight: '16px' }}>
+    <div style={{ display: 'flex', height: '100vh', paddingTop: '64px', paddingRight: '16px' }}>
       <OrdersPane />
 
       <div style={{ flex: 1, paddingLeft: '16px', paddingTop: '50px' }}>
