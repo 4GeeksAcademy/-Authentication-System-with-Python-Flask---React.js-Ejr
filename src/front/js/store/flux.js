@@ -31,7 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			memberships: [],
             membershipsLoading: false,
 			images: [],
-			classesData: []
+			classesData: [],
+			currentEdit: {}
 
 
 
@@ -488,6 +489,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading training classes:", error);
 				}
             },
+
+			//funcion para el boton de la lista de clases para vista de admin
+			saveCurrentEdit: (item) => {
+				let store=getStore()
+				setStore({...store, currentEdit:item})
+			},
+
 
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local

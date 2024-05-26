@@ -40,6 +40,7 @@ import UploadForm from "./component/UploadForm.jsx";
 import ImageGallery from "./component/ImageGallery.jsx";
 import ProfileImageUpload from "./component/ProfileImageUpload.jsx";
 import ClassesView from "./component/ClassesView.jsx";
+import EditClasses from "./pages/EditClasses.jsx"
 
 //create your first component
 const Layout = () => {
@@ -76,6 +77,7 @@ const Layout = () => {
                         <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<BookingView />} path="/BookingView" />
                         <Route element={<ClassesView />} path="/ClassesView" />
+                        <Route element={<EditClasses />} path="/classEdit" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<Oneuser />} path="/Oneuser" />
                         {/* <Route element={<Homeadmin />} path="/Homeadmin" /> */}
