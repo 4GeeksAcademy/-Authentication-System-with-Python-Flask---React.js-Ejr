@@ -1,4 +1,4 @@
-const apiUrl = process.env.BACKEND_URL;
+const apiUrl = process.env.BACKEND_URL; // Ensure this does not end with a slash
 
 const getState = ({ getStore, getActions, setStore }) => {
     return {
@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             games: [],
             loadingRooms: false,
             user: null,
-            requestStatus: null
+            requestStatus: null,
+            comments: [] // New state to store comments
         },
 
         actions: {
@@ -66,26 +67,33 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let response = await fetch(`${apiUrl}/api/home`);
                     if (!response.ok) throw new Error("Couldn't fetch current rooms");
                     let roomsData = await response.json();
-                    setStore({ 
+                    setStore({
                         rooms: roomsData,
-                        loadingRooms: false 
+                        loadingRooms: false
                     });
                     console.log(store.rooms);
-                    return true; 
+                    return true;
                 } catch (error) {
                     console.error(error);
                     setStore({ loadingRooms: false });
-                    return false; 
+                    return false;
                 }
             },
 
-            searchRooms: (searchTerm, roomType) => {
+            searchRooms: (searchTerm, mood) => {
                 const store = getStore();
-                return store.rooms.filter(room => {
-                    const matchesSearchTerm = room.room_name.toLowerCase().includes(searchTerm.toLowerCase());
-                    const matchesRoomType = roomType === 'All' || room.room_type === roomType;
-                    return matchesSearchTerm && matchesRoomType;
-                });
+                let filteredRooms = store.rooms;
+                if (searchTerm) {
+                    filteredRooms = filteredRooms.filter(room =>
+                        room.room_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        room.game_name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+
+                if (mood) {
+                    filteredRooms = filteredRooms.filter(room => room.mood.toLowerCase() === mood.toLowerCase());
+                }
+                return filteredRooms;
             },
 
             logout: () => {
@@ -237,7 +245,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             fetchGames: async () => {
                 try {
                     const store = getStore()
-                    let response = await fetch(`${apiUrl}api/games`);
+                    let response = await fetch(`${apiUrl}/api/games`);
                     if (!response.ok) throw new Error("Couldn't fetch games");
                     let gamesData = await response.json();
                     setStore({ games: gamesData });
@@ -284,7 +292,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             fetchRoomRequests: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return [];
-            
+
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/requests`, {
                         method: 'GET',
@@ -361,6 +369,48 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+
+            getComments: async (roomId) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return [];
+            
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/comments`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch comments');
+                    const data = await response.json();
+            
+                    return data.comments;
+                } catch (error) {
+                    console.error('Error fetching comments:', error);
+                    return [];
+                }
+            },
+            addComment: async (roomId, content) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/comments`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ content })
+                    });
+                    if (!response.ok) throw new Error('Failed to add comment');
+                    return true;
+                } catch (error) {
+                    console.error('Error adding comment:', error);
+                    return false;
+                }
+            },
+
         }
     };
 };

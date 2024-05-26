@@ -158,13 +158,13 @@ class Comment(db.Model):
     def serialize(self):
         return {
             "comment_id": self.id,
-            "room_id": self.room_id,
-            "user_id": self.user_id,
             "content": self.content,
+            "created_at": self.created_at,
             "is_deleted": self.is_deleted,
             "is_edited": self.is_edited,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "room_id": self.room_id,
+            "user_id": self.user_id,
+            "username": self.user.username 
         }
 
 class Review(db.Model):

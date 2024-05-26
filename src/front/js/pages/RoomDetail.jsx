@@ -10,38 +10,75 @@ export const RoomDetail = () => {
     const [showRequests, setShowRequests] = useState(false);
     const [requests, setRequests] = useState([]);
     const [requestStatus, setRequestStatus] = useState(null);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [loading, setLoading] = useState(true);
     const room = store.rooms.find(room => room.room_id === parseInt(roomId));
     const username = localStorage.getItem('username');
+    const userId = parseInt(localStorage.getItem('userId'));
 
     useEffect(() => {
         if (!room) {
+            console.log("Room not found, navigating to home");
             navigate('/'); // Redirect to home if room not found
+        } else {
+            console.log("Fetching data for RoomDetail...");
+            fetchData();
         }
-    }, [room, navigate]);
+    }, [room, navigate, userId]);
 
-    useEffect(() => {
-        const fetchRequests = async () => {
-            if (showRequests && room) {
-                const fetchedRequests = await actions.getRoomRequests(room.room_id);
-                setRequests(fetchedRequests);
+    const fetchData = async () => {
+        try {
+            await checkRequestStatus();
+            await fetchComments();
+            setLoading(false);
+            console.log("Data fetched successfully");
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+        }
+    };
+
+    const checkParticipation = () => {
+        if (room) {
+            const isHost = room.host_name === username;
+            const participant = room.participants.find(p => p.participant_name === username && p.confirmed);
+            console.log(`isHost: ${isHost}, isParticipant: ${!!participant}`);
+            return isHost || !!participant;
+        }
+        return false;
+    };
+
+    const checkRequestStatus = async () => {
+        const status = await actions.checkRequestStatus(room.room_id);
+        setRequestStatus(status);
+        console.log("Request status:", status);
+    };
+
+    const fetchComments = async () => {
+        try {
+            const fetchedComments = await actions.getComments(room.room_id);
+            setComments(fetchedComments);
+            console.log("Fetched comments:", fetchedComments);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            if (checkParticipation()) {
+                setComments([]);
             }
-        };
-        fetchRequests();
-    }, [showRequests, room]);
+        }
+    };
 
-    useEffect(() => {
-        const fetchRequestStatus = async () => {
-            if (room) {
-                const status = await actions.checkRequestStatus(room.room_id);
-                setRequestStatus(status);
-            }
-        };
-        fetchRequestStatus();
-    }, [showRequests, room]);
-
-    if (!room) {
-        return <div>Loading...</div>;
-    }
+    const handleAddComment = async () => {
+        if (newComment.trim() === '') return;
+        const success = await actions.addComment(room.room_id, newComment);
+        if (success) {
+            setNewComment('');
+            fetchComments();
+            console.log("Comment added successfully");
+        } else {
+            alert('Failed to add comment.');
+        }
+    };
 
     const handleJoinRoom = async () => {
         const token = localStorage.getItem('jwt-token');
@@ -52,6 +89,7 @@ export const RoomDetail = () => {
             if (success) {
                 alert('Join request sent successfully!');
                 setRequestStatus('pending');
+                console.log("Join request sent successfully");
             } else {
                 alert('Failed to send join request.');
             }
@@ -63,6 +101,7 @@ export const RoomDetail = () => {
         if (success) {
             alert('Request withdrawn successfully!');
             setRequestStatus(null);
+            console.log("Request withdrawn successfully");
         } else {
             alert('Failed to withdraw request.');
         }
@@ -70,6 +109,7 @@ export const RoomDetail = () => {
 
     const handleToggleRequests = () => {
         setShowRequests(prevShowRequests => !prevShowRequests);
+        console.log("Toggled requests view:", !showRequests);
     };
 
     const handleRequestAction = async (requestId, action) => {
@@ -85,10 +125,18 @@ export const RoomDetail = () => {
                     participants: [...prevRoom.participants, participant]
                 }));
             }
+            console.log("Request updated successfully:", action);
         } else {
             alert('Failed to update request.');
         }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    const isParticipantOrHost = checkParticipation();
+    console.log(`isParticipantOrHost: ${isParticipantOrHost}`);
 
     return (
         <div className="room-detail">
@@ -139,6 +187,27 @@ export const RoomDetail = () => {
                             </li>
                         ))}
                     </ul>
+                </div>
+            )}
+            {isParticipantOrHost && (
+                <div className="comments-section">
+                    <h3>Comments</h3>
+                    <div className="comments-list">
+                        {comments.map(comment => (
+                            <div key={comment.comment_id} className="comment">
+                                <p><strong>{comment.username}</strong>: {comment.content}</p>
+                                <p><small>{comment.created_at}</small></p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="add-comment">
+                        <textarea
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            placeholder="Add a comment"
+                        />
+                        <button onClick={handleAddComment}>Submit</button>
+                    </div>
                 </div>
             )}
         </div>

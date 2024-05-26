@@ -3,7 +3,8 @@ import { Room } from '../component/Room.jsx';
 import { SearchBar } from '../component/SearchBar.jsx';
 import { Context } from "../store/appContext";
 import { useNavigate } from 'react-router-dom';
-import '../../styles/RoomList.css'; // Assuming this file contains the styles for toggle buttons and other styles
+import '../../styles/RoomList.css'
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -21,15 +22,14 @@ export const Home = () => {
         setSearchResults(store.rooms);
     }, [store.rooms]);
 
-    const handleSearch = useCallback((searchTerm, roomType, mood) => {
-        const results = actions.searchRooms(searchTerm, roomType, mood);
+    const handleSearch = useCallback((searchTerm, mood) => {
+        const results = actions.searchRooms(searchTerm, mood);
         setSearchResults(results);
     }, []);
 
     const handleCreateRoom = () => {
         navigate('/create-room');
     };
-
     const toggleRooms = (showMyRooms) => {
         setShowMyRooms(showMyRooms);
         if (showMyRooms) {
@@ -63,7 +63,7 @@ export const Home = () => {
                                 My Rooms
                             </button>
                         </div>
-                        <button onClick={handleCreateRoom} className="btn btn-primary mt-2">Create new room</button>
+                        <button onClick={handleCreateRoom} className="create-room-button"><IoIosAddCircleOutline /> Create new room</button>
                     </div>
                 )}
             </div>

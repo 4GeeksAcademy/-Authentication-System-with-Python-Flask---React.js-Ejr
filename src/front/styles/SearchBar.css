@@ -1,6 +1,8 @@
 .search-bar {
     display: flex;
     align-items: center;
+    width: 820px;
+    
     gap: 10px; /* Espacio entre elementos */
     padding: 10px;
     background-color: rgba(169, 171, 173, 0.26); /* Color de fondo basado en el diseño */

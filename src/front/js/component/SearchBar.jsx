@@ -1,41 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import { IoIosSearch } from "react-icons/io";
 import '../../styles/SearchBar.css';
 
 export const SearchBar = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [roomType, setRoomType] = useState('All');
+    const [mood, setMood] = useState('');
 
     const handleInputChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const handleSelectChange = (e) => {
-        setRoomType(e.target.value);
+    const handleMoodChange = (e) => {
+        setMood(e.target.value);
     };
 
-    
     useEffect(() => {
         if (onSearch) {
-            onSearch(searchTerm, roomType);
+            onSearch(searchTerm, mood);
         }
-    }, [searchTerm, roomType, onSearch]);
+    }, [searchTerm, mood, onSearch]);
 
     return (
         <div className="search-bar">
             <input
                 type="text"
-                placeholder="Search rooms"
+                placeholder='&#x1F50E; Search rooms or games'
                 value={searchTerm}
                 onChange={handleInputChange}
                 className="search-input"
             />
-            <select value={roomType} onChange={handleSelectChange} className="room-type-select">
-                <option value="All">All</option>
-                <option value="Casual Rooms">Casual Rooms</option>
-                <option value="Hardcore Rooms">Hardcore Rooms</option>
+            <select value={mood} onChange={handleMoodChange} className="mood-select">
+                <option value="">All Moods</option>
+                <option value="casual">Casual</option>
+                <option value="hardcore">Hardcore</option>
             </select>
         </div>
     );
 };
-
-
