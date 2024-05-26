@@ -622,9 +622,11 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
 
         # Generación del token y envío del correo electrónico
         token = generate_confirmation_token_email(new_user.email)
+        # Obtener la URL base del archivo .env
+        BASE_URL = os.getenv('BACKEND_URL')
         # html = render_template('activate.html', confirm_url=confirm_url)
-        confirm_url = url_for('api.confirm_email', token=token, _external=True)
-        confirm_url = f"https://fantastic-xylophone-wrr5p4xqpjxj35x7-3000.app.github.dev/ConfirmEmail?token={token}"
+        # confirm_url = url_for('api.confirm_email', token=token, _external=True)
+        confirm_url = f"{BASE_URL}/ConfirmEmail?token={token}"
         html = f"""
         <!DOCTYPE html>
         <html>
@@ -1416,3 +1418,20 @@ def delete_profile_image():
     except Exception as e:
         db.session.rollback()  # Realiza un rollback en la base de datos para evitar inconsistencias debido al error
         return jsonify({'error': str(e)}), 500  # Retorna un mensaje de error con el código de estado HTTP 500
+
+
+    
+#-------------------------------------------------ENPOINT PARA LA CARGA DE PAYMENTS-----------------------------------------------------------
+@api.route('/Payments', methods=['GET'])
+# @jwt_required() # Decorador para requerir autenticación con JWT
+def get_all_payments():
+    try:
+        users = Payment.query.all()
+        if not users:
+            return jsonify({'message': 'No Payments found'}), 404
+        
+        response_body = [user.serialize() for user in users]
+        return jsonify(response_body), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+

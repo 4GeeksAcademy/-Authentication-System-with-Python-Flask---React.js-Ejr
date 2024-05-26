@@ -26,6 +26,10 @@ const injectContext = PassedComponent => {
 			state.actions.loadTrainingClasses(); // Carga las clases al montar el componente
 			state.actions.loadMemberships();
 			state.actions.getBookings()
+			state.actions.fetchImages();
+			state.actions.getUsers();
+
+
 
 
 

@@ -32,9 +32,12 @@ const EditProfile = () => {
     }, [store.uploadedUserData]);
 
     const [show, setShow] = useState(false);
+    const [confirmShow, setConfirmShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleConfirmClose = () => setConfirmShow(false);
+    const handleConfirmShow = () => setConfirmShow(true);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,6 +52,10 @@ const EditProfile = () => {
         }
     };
 
+    const [updateMessage, setUpdateMessage] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
+
+
     const handleSubmit = async () => {
         const updatedData = Object.keys(formData).reduce((acc, key) => {
             if (formData[key] && (formData[key] !== store.uploadedUserData[key] || key === 'password' && formData[key])) {
@@ -56,15 +63,33 @@ const EditProfile = () => {
             }
             return acc;
         }, {});
-        await actions.updateUserData(updatedData);
+        
+        try {
+            const result = await actions.updateUserData(updatedData);
+            if (result.success) {
+                setUpdateMessage("updating made successfully");
+                setShowMessage(true);
+            } else {
+                setUpdateMessage(result.error || "Error updating data");
+                setShowMessage(true);
+            }
+        } catch (error) {
+            console.error('Error en handleBookClass:', error);
+            setBookingMessage("Error en el sistema: " + error.message);
+            setShowMessage(true);
+        } finally {
+            setTimeout(() => {
+                setShowMessage(false);
+                setUpdateMessage("");
+                handleClose();
+            }, 2000); // Oculta el mensaje después de 3 segundos
+        }
+        
     };
 
     const handleConfirm = async () => {
-        const confirm = window.confirm("¿Estás seguro de que deseas guardar los cambios?");
-        if (confirm) {
-            await handleSubmit();
-            handleClose();
-        }
+        await handleSubmit();
+        handleConfirmClose();
     };
 
     return (
@@ -73,39 +98,61 @@ const EditProfile = () => {
                 Editar Perfil
             </Button>
 
-            <Modal show={show} onHide={handleClose} centered className={styles.modal}>
+            <Modal show={show} onHide={handleClose} centered className={styles.modal + " modal-centered"}>
                 <Modal.Header closeButton className={styles.modalHeader}>
                     <Modal.Title className={styles.modalTitle}>Editar Perfil</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
-                    <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
-                        <label>Email</label>
-                        <input type="text" name="email" placeholder="Email" className="form-control" value={formData.email} onChange={handleChange} />
-                        <label>name</label>
-                        <input type="text" name="name" placeholder="Nombre" className="form-control" value={formData.name} onChange={handleChange} />
-                        <label>last_name</label>
-                        <input type="text" name="last_name" placeholder="Apellido" className="form-control" value={formData.last_name} onChange={handleChange} />
-                        <label>username</label>
-                        <input type="text" name="username" placeholder="Nombre de usuario" className="form-control" value={formData.username} onChange={handleChange} />
-                        <label>password</label>
-                        <input type="password" name="password" placeholder="Contraseña nueva" className="form-control" value={formData.password} onChange={handleChange} />
-                        <label><strong>Segurity questions: </strong></label>
-                        <label>question 1</label>
-                        <input type="text" name="question1" placeholder="Pregunta de seguridad 1" className="form-control" value={formData.security_questions[0].question} onChange={handleChange} />
-                        <label>answer 1</label>
-                        <input type="text" name="answer1" placeholder="Respuesta 1" className="form-control" value={formData.security_questions[0].answer} onChange={handleChange} />
-                        <label>question 2</label>
-                        <input type="text" name="question2" placeholder="Pregunta de seguridad 2" className="form-control" value={formData.security_questions[1].question} onChange={handleChange} />
-                        <label>answer 2</label>
-                        <input type="text" name="answer2" placeholder="Respuesta 2" className="form-control" value={formData.security_questions[1].answer} onChange={handleChange} />
-                    </form>
+                    <div className={styles.messageContainer}>
+                        {showMessage && (
+                            <h3 className={styles.updateMessage}><strong>{updateMessage}</strong></h3>
+                        )}
+                        <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
+                            <label>Email</label>
+                            <input type="text" name="email" placeholder="Email" className="form-control" value={formData.email} onChange={handleChange} />
+                            <label>name</label>
+                            <input type="text" name="name" placeholder="Nombre" className="form-control" value={formData.name} onChange={handleChange} />
+                            <label>last_name</label>
+                            <input type="text" name="last_name" placeholder="Apellido" className="form-control" value={formData.last_name} onChange={handleChange} />
+                            <label>username</label>
+                            <input type="text" name="username" placeholder="Nombre de usuario" className="form-control" value={formData.username} onChange={handleChange} />
+                            <label>password</label>
+                            <input type="password" name="password" placeholder="Contraseña nueva" className="form-control" value={formData.password} onChange={handleChange} />
+                            <label><strong>Segurity questions: </strong></label>
+                            <label>question 1</label>
+                            <input type="text" name="question1" placeholder="Pregunta de seguridad 1" className="form-control" value={formData.security_questions[0].question} onChange={handleChange} />
+                            <label>answer 1</label>
+                            <input type="text" name="answer1" placeholder="Respuesta 1" className="form-control" value={formData.security_questions[0].answer} onChange={handleChange} />
+                            <label>question 2</label>
+                            <input type="text" name="question2" placeholder="Pregunta de seguridad 2" className="form-control" value={formData.security_questions[1].question} onChange={handleChange} />
+                            <label>answer 2</label>
+                            <input type="text" name="answer2" placeholder="Respuesta 2" className="form-control" value={formData.security_questions[1].answer} onChange={handleChange} />
+                        </form>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer className={styles.modalFooter}>
                     <Button variant="secondary" onClick={handleClose} className={styles.closeButton}>
                         Cerrar
                     </Button>
-                    <Button variant="primary" onClick={handleConfirm} className={styles.saveButton}>
+                    <Button variant="primary" onClick={handleConfirmShow} className={styles.saveButton}>
                         Guardar Cambios
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={confirmShow} onHide={handleConfirmClose} centered className={styles.modal + " modal-centered"}>
+                <Modal.Header closeButton className={styles.modalHeader}>
+                    <Modal.Title className={styles.modalTitle}>Confirmar Cambios</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className={styles.modalBody}>
+                    <p>¿Estás seguro de que quieres guardar los cambios?</p>
+                </Modal.Body>
+                <Modal.Footer className={styles.modalFooter}>
+                    <Button variant="secondary" onClick={handleConfirmClose} className={styles.closeButton}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={handleConfirm} className={styles.saveButton}>
+                        Confirmar
                     </Button>
                 </Modal.Footer>
             </Modal>

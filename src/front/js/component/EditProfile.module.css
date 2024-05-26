@@ -46,3 +46,22 @@ input:focus, input:valid {
     outline: none;
     border: 1.5px solid #b8b8b8 !important; /* Añade !important para forzar la aplicación de esta regla */
 }
+
+.modal-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.updateMessage {
+    color: #333333; /* Dark Gray */
+    font-size: 1.2em;
+    text-align: center;
+}
+

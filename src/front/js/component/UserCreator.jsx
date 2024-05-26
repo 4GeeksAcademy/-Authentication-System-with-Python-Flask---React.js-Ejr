@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Modal, Button } from "react-bootstrap";
-import styles from "./Singup.module.css"; // Importa los estilos CSS
+import { Modal, Button } from "react-bootstrap"; // Importación de Modal y Button de react-bootstrap
+import styles from "./UserCreator.module.css";
 
-const Signup = () => {
+const UserCreator = () => {
     const { store, actions } = useContext(Context);
     const { creationState } = store;
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Signup = () => {
         password: "",
         name: "",
         last_name: "",
-        role: "athlete",
+        role: "",
         security_questions: [
             { question: "", answer: "" },
             { question: "", answer: "" }
@@ -44,24 +44,23 @@ const Signup = () => {
         const result = await actions.createUser(userDetails);
         if (result) {
             setModalMessage(store.creationState.message);
-            setModalVisible(true);
         } else {
             setModalMessage(store.creationState.error);
-            setModalVisible(true);
         }
+        setModalVisible(true);
     };
 
     const handleModalClose = () => {
         setModalVisible(false);
-        if (store.creationState.message) {
-            navigate("/Login");
-        }
+        // if (store.creationState.message) {
+        //     navigate("/Login");
+        // }
     };
 
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit} className={styles.form}>
-                <h1>REGISTER</h1>
+                <h1>User Creator</h1>
                 <div className={styles.inputGroup}>
                     <label className={styles.label}>First Name</label>
                     <input type="text" className={styles.input} name="name" value={userDetails.name} onChange={handleChange} required />
@@ -82,6 +81,15 @@ const Signup = () => {
                     <label className={styles.label}>Password</label>
                     <input type="password" className={styles.input} name="password" value={userDetails.password} onChange={handleChange} required />
                 </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>Role</label>
+                    <select name="role" value={userDetails.role} onChange={handleChange} className={styles.securityQuestion} required>
+                        <option value="master">Master</option>
+                        <option value="admin">Admin</option>
+                        <option value="coach">Coach</option>
+                        <option value="athlete">Athlete</option>
+                    </select>
+                </div>
                 {userDetails.security_questions.map((sq, index) => (
                     <div key={index} className={styles.inputGroup}>
                         <label className={styles.label}>{`Security Question ${index + 1}`}</label>
@@ -95,9 +103,6 @@ const Signup = () => {
                     </div>
                 ))}
                 <button type="submit" className={styles.buttonSave}>Sign up</button>
-                <p>
-                    Have an account? <Link to="/LoginUserV2" className={styles.link}>Login Here</Link>
-                </p>
             </form>
 
             {/* Modal */}
@@ -118,4 +123,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default UserCreator;

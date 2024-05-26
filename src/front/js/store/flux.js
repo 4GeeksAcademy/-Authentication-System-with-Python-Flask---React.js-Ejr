@@ -33,6 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			images: [],
 			classesData: [],
 			currentEdit: {}
+			payments: []
 
 
 
@@ -281,7 +282,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			cancel_booking: async (booking_id) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 
-				console.log("id_que_se_pasa", booking_id)
+				// console.log("id_que_se_pasa", booking_id)
 				try {
 					// Obtenemos el token del almacenamiento local
 					let myToken = localStorage.getItem("token");
@@ -320,25 +321,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// console.log(userData);
 				// Construimos la URL para la solicitud
 				let url = `${process.env.BACKEND_URL}api/user`;
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(userData)
 
-				// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
-				let response = await fetch(url, {
-					method: "PUT", // Método de la solicitud
-					headers: {
-						"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
-						"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
-					},
-					body: JSON.stringify(userData)
-
-				});
-
-				let data = await response.json();
-				// console.log(data)
-				if (response.ok) {
-					// setStore({ ...getStore(), uploadedUserData: data.updatedUser });
-					alert('Usuario actualizado correctamente');
-				} else {
-					alert('Error al actualizar usuario: ' + data.error);
+					});
+					let data = await response.json();
+					console.log(data)
+					if (response.ok) {
+						// Asumiendo que quieres actualizar el store aquí
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar los datos:", error);
+					return { success: false, error: error.message };
 				}
 			},
 
@@ -574,13 +579,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						 Authorization: `Bearer ${myToken}`,
 					},
 				  });
-				  console.log (response)
+				//   console.log (response)
 				  if (!response.ok) {
 					throw new Error(`Error fetching users: ${response.statusText}`);
 				  }
 			  
 				  let data = await response.json();
-				  console.log(data);
+				//   console.log(data);
 				  
 				  
 				  let store = getStore(); // Obtiene el estado actual del almacén
@@ -593,35 +598,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			getOneuser: async (id) => {
-				// Obtenemos el token del almacenamiento local
-				let myToken = localStorage.getItem("token");
+			// getOneuser: async (id) => {
+			// 	// Obtenemos el token del almacenamiento local
+			// 	let myToken = localStorage.getItem("token");
 
-				try {
-				  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
-				  {
-					method: "GET",
-					headers: {
-					  "Content-Type": "application/json",
-					  // Incluye el token de autorización si es necesario
-						 Authorization: `Bearer ${myToken}`,
-					},
-				  });
-				  console.log(response);
-				  if (!response.ok) {
-					throw new Error(`Error fetching user: ${response.statusText}`);
-				  }
+			// 	try {
+			// 	  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
+			// 	  {
+			// 		method: "GET",
+			// 		headers: {
+			// 		  "Content-Type": "application/json",
+			// 		  // Incluye el token de autorización si es necesario
+			// 			 Authorization: `Bearer ${myToken}`,
+			// 		},
+			// 	  });
+			// 	  console.log(response);
+			// 	  if (!response.ok) {
+			// 		throw new Error(`Error fetching user: ${response.statusText}`);
+			// 	  }
 			
-				  let data = await response.json();
-				  console.log(data);
+			// 	  let data = await response.json();
+			// 	  console.log(data);
 			
-				  let store = getStore(); // Obtiene el estado actual del almacén
-				  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
+			// 	  let store = getStore(); // Obtiene el estado actual del almacén
+			// 	  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
 			
-				} catch (error) {
-				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-				}
-			  },
+			// 	} catch (error) {
+			// 	  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+			// 	}
+			//   },
 
 			  uploadImage: async (formData) => {
                 const myToken = localStorage.getItem("token");
@@ -734,6 +739,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: error.message };
                 }
             },
+
+			getAllPayments: async () => {
+				try {
+					// Obtenemos el token del almacenamiento local
+					let myToken = localStorage.getItem("token");
+
+					const url = `${process.env.BACKEND_URL}api/Payments`;
+					let response = await fetch(url, {
+						method: "GET", // Método de la solicitud
+						headers: {
+							Authorization: `Bearer ${myToken}`
+							// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+						},
+					});
+					const data = await response.json();
+
+					if (response.ok) {
+						setStore({ ...getStore(), payments: data });  // Actualiza el estado con las clases obtenidas
+					} else {
+						throw new Error("Failed to fetch payments");
+					}
+				} catch (error) {
+					console.error("Error loading training payments:", error);
+				}
+			},
 
 
 		},
