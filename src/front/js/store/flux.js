@@ -572,7 +572,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let myToken = localStorage.getItem("token");
 				
 				try {
+
 				  let response = await fetch(`${process.env.BACKEND_URL}api/users`, 
+
 				  {
 					method: "GET",
 					headers: {
