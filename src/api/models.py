@@ -189,13 +189,11 @@ class Orders(db.Model):
     total = db.Column(db.String(250), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
-    payment_id = db.Column(db.Integer, db.ForeignKey('payment.id'), nullable=True)
+   
 
     #Relations
     user = db.relationship('User', backref=db.backref('orders', lazy=True))
-    manager = db.relationship('Manager', backref=db.backref('orders', lazy=True))
-    payment = db.relationship('Payment', backref=db.backref('orders', lazy=True))
+    
 
     def __repr__(self):
         return f'<Orders {self.id}>'
@@ -208,9 +206,7 @@ class Orders(db.Model):
             "date": self.date,
             "total": self.total,
             "userId": self.user_id,
-            "managerId": self.manager_id,
-            "paymentId": self.payment_id,
-
+            
             # do not serialize the password, it's a security breach
         }
     
@@ -220,14 +216,14 @@ class Trolley(db.Model):
     price = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String(250), unique=True, nullable=False)
 
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    
 
     #Relations
     course = db.relationship('Course', backref=db.backref('Trolley', lazy=True))
     user = db.relationship('User', backref=db.backref('Trolley', lazy=True))
-    order = db.relationship ('Orders', backref=db.backref('Trolley', lazy=True))
+    
 
     def __repr__(self):
         return f'<Trolley {self.id}>'
@@ -235,7 +231,6 @@ class Trolley(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "orderId": self.order_id,
             "titleCourse": self.title_course,
             "price": self.price,
             "date": self.date,
