@@ -50,13 +50,6 @@ export const Africa = () => {
           >
             Checkout {/* Changed button text to Checkout */}
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleGoBack} // Updated onClick handler to handleGoBack
-            style={{ backgroundColor: "#2DB734", color: "white", height: "50px" }}
-          >
-            Go Back {/* Added Go Back button */}
-          </Button>
         </div>
       </div>
 

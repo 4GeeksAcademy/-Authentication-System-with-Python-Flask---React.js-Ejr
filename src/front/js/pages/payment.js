@@ -108,13 +108,6 @@ export const OrderView = () => {
           ))}
         </ul>
         <Typography variant="h3" style={{ marginTop: 'auto' }}>Total: ${store.order.total.toFixed(2)}</Typography>
-        <Button
-          variant="contained"
-          onClick={handleGoBack}
-          style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
-        >
-          Go Back
-        </Button>
       </div>
 
       <div style={{ flex: 1, paddingLeft: '16px', paddingTop: '50px' }}>
