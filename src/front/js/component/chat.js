@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 
 const diseñoChat = {
     background: 'white',
-    headerBgColor: '#3598EE',
+    headerBgColor: 'green',
     headerFontColor: 'white',
     headerFontSize: '20px',
     botBubbleColor: 'lightgrey',

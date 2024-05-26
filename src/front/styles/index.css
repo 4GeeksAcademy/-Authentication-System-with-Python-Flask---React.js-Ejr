@@ -18,6 +18,7 @@
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     justify-content: center;
+    border-radius: 1.25rem;
 }
 
 .agregar-vehiculo {
@@ -158,5 +159,11 @@ body{
 .vehiculo {
     padding-right: 0px !important;
     padding-left: 0px !important;
+    border-radius: 1.25rem;
+}
+
+.imagen1 {
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
 }
 

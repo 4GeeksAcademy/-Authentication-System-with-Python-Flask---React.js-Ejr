@@ -24,7 +24,7 @@ export const ModalRecuperarContraseña = () => {
                             <input type="email" className="form-control" id="exampleInputEmail2" placeholder="name@example.com"/>
                         </div>
                         <div className="modal-footer justify-content-center mt-2">
-                            <button onClick={() => recuperarContraseña()} type="button" className="btn btn-primary" data-bs-dismiss="modal">Recuperar Contraseña</button>
+                            <button onClick={() => recuperarContraseña()} type="button" className="btn btn-success" data-bs-dismiss="modal">Recuperar Contraseña</button>
                         </div>
                     </div>
                 </div>
