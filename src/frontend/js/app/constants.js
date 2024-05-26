@@ -1,5 +1,33 @@
 
+import keqqu_white        from "../../assets/icon/keqqu-white.svg"
+import keqqu_white_bg     from "../../assets/icon/keqqu-white-bg.svg"
+import keqqu_black        from "../../assets/icon/keqqu-black.svg"
+import keqqu_black_bg     from "../../assets/icon/keqqu-black-bg.svg"
+import keqqu_light        from "../../assets/icon/keqqu-light.svg"
+import keqqu_light_bg     from "../../assets/icon/keqqu-light-bg.svg"
+import keqqu_dark        from "../../assets/icon/keqqu-dark.svg"
+import keqqu_dark_bg     from "../../assets/icon/keqqu-dark-bg.svg"
+import keqqu_purple       from "../../assets/icon/keqqu-purple.svg"
+import keqqu_purple_bg    from "../../assets/icon/keqqu-purple-bg.svg"
+import keqqu_yellow       from "../../assets/icon/keqqu-yellow.svg"
+import keqqu_yellow_bg    from "../../assets/icon/keqqu-yellow-bg.svg"
+
 const Constants= Object.freeze({
+
+  LOGO: {
+    white:      keqqu_white,
+    whitebg:    keqqu_white_bg,
+    black:      keqqu_black,
+    blackbg:    keqqu_black_bg,
+    light:      keqqu_light,    
+    lightbg:    keqqu_light_bg,
+    dark:       keqqu_dark, 
+    darkbg:     keqqu_dark_bg,
+    purple:     keqqu_purple,
+    purplebg:   keqqu_purple_bg,
+    yellow:     keqqu_yellow,
+    yellowbg:   keqqu_yellow_bg
+  },
 
   MOUSE_BTN_LEFT: 0,
   MOUSE_BTN_MIDDLE: 1,

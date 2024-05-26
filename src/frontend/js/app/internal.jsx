@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom"
 
 import pajuelas from "../../assets/img/pajuelas.jpg"
 
+import { Context } from "../store/appContext.jsx"
+import Constants from "./constants.js"
+
 // component to redirect the navigator
 export const Redirector=({ url, replace })=>{
 	const nav= useNavigate()
@@ -11,21 +14,24 @@ export const Redirector=({ url, replace })=>{
 }
 
 export const NotFound_Generic=()=>{
-
-	const nav= useNavigate();
+	const 
+    { language, actions }= React.useContext(Context),
+    nav= useNavigate(),
+    imagesrc= actions.getUserPref(Constants.USERPREFS_DARKMODE) ? Constants.LOGO.white : Constants.LOGO.black
 
 	return (
-		<div className="bg-dark select-none w-screen h-screen flex flex-col justify-center items-center">
-			<div className="mb-[8rem] flex flex-col justify-center items-center">
-				<p className="text-7xl text-accent-n font-bold mb-4">404</p>
-				<p className="text-3xl text-gray-400 mb-4">Page Not Found</p>
-				<p className="text-lg text-gray-300 mb-8">Oops! The page you're looking for does not seem to exist.</p>
+		<div className="bg-gray-100 dark:bg-dark select-none w-screen h-screen flex flex-col justify-center items-center">
+      <img src={imagesrc} className="absolute h-90scr m-auto opacity-5 blur-sm" />
+			<div className="mb-32 flex flex-col justify-center items-center z-10">
+				<p className="text-7xl text-primary-n dark:text-accent-n font-bold mb-4">404</p>
+				<p className="text-3xl text-gray-800 dark:text-gray-400 mb-4">{language.get("404.notfound")}</p>
+				<p className="text-lg text-gray-600 dark:text-gray-300 mb-8">{language.get("404.message")}</p>
 				
 				<button 
 					onClick={() => nav('/')} 
-					className="px-8 py-3 rounded-3xl bg-gradient-to-r border-2 border-accent-n from-accent-n to-accent-l text-dark shadow-lg hover:bg-none hover:text-accent-n transition duration-700 ease-in-out"
+					className="px-8 py-3 rounded-3xl bg-gradient-to-r border-2 border-accent-n from-accent-n to-accent-l text-dark shadow-lg hover:bg-none hover:bg-black hover:bg-opacity-30 hover:text-accent-n transition duration-700 ease-in-out hover:transition-none"
 				>
-					Go Home
+					{language.get("404.back")}
 				</button>
 			</div>
 		</div>

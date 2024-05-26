@@ -58,5 +58,10 @@
   "placeholder": {
     "description":  "[write a description here...]",
     "label-task":   "[enter a label...]"
+  },
+  "404": {
+    "notfound": "Page Not Found",
+    "message":  "Oops! The page you're looking for does not seem to exist.",
+    "back":     "Go Home"
   }
 }

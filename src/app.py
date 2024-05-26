@@ -5,25 +5,36 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from backend.utils import APIException, generate_sitemap
 from backend.models import db
-from backend.routes import root, api
+from backend.routes import accounts, workspaces, boards, api
 from backend.admin import setup_admin
 from backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
+import backend.api_utils as api_utils
+
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
-app = Flask(__name__)
+app = Flask(__name__, subdomain_matching=True)
 app.url_map.strict_slashes = False
 print("Serving static files from: " + static_file_dir)
 
 # config
+app.config['SERVER_NAME'] = "localhost.com:3001"
+app.url_map.default_subdomain = "www"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["JWT_SECRET_KEY"]= "una_paja_a_la_crema_es_una_buena_paja"
+
+app.config["JWT_SECRET_KEY"]= api_utils.APP_SECRET_KEY
 app.config["JWT_TOKEN_LOCATION"]= ('headers')
-app.config["JWT_HEADER_NAME"]= "Auth-Token"
+app.config["JWT_HEADER_NAME"]= api_utils.AUTH_TOKEN_HEADER
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
+
+# backend routes blueprints
+app.register_blueprint(accounts, subdomain='accounts')
+app.register_blueprint(workspaces, subdomain='workspaces')
+app.register_blueprint(boards, subdomain='boards')
+app.register_blueprint(api, subdomain='api')
 
 MIGRATE = Migrate(app, db, compare_type=True)
 CORS(app)
@@ -32,10 +43,6 @@ setup_admin(app)
 setup_commands(app)
 
 jwt = JWTManager(app)
-
-# backend routes blueprints
-app.register_blueprint(root)
-app.register_blueprint(api, url_prefix='/api')
 
 # root
 @app.route('/')

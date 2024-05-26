@@ -178,7 +178,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
 			checkBackendHealth: async ()=>{
 				try{
-					const res = await fetch(process.env.BACKEND_URL + "/healthcheck", { method: "GET", cors: "no-cors" })
+					const res = await fetch("www" + process.env.BACKEND_URL + "/healthcheck", { method: "GET", cors: "no-cors" })
           mergeStore({ readyState: { backend: res.status===200 } })
           return true
 				}
