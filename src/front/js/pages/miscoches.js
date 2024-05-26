@@ -28,7 +28,7 @@ export const MisCoches = () => {
                                 <div className="texto-favoritos">Pulsa en el botón añadir que se muestra a continuación para añadir tu primer coche</div>
                                 <Link to={`/agregarvehiculo`}>
                                     <div className="mt-3">
-                                        <button className="rounded">Añadir mi primer coche</button>
+                                        <button className="rounded btn-lg btn-success">Añadir mi primer coche</button>
                                     </div>
                                 </Link>
                             </>
