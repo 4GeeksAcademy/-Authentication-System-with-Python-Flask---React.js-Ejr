@@ -107,7 +107,7 @@ export const OrderView = () => {
           fullWidth
           InputProps={{
             style: {
-              border: "2px solid black",
+              border: "2px solid #2DB734",
               borderRadius: "4px",
             }
           }}
@@ -117,14 +117,14 @@ export const OrderView = () => {
           <Button
             variant="contained"
             onClick={handleCashPayment}
-            style={{ backgroundColor: "#2DB734", color: "white", flex: 1, height: "50px" }}
+            style={{ backgroundColor: "#2DB734", color: "white", flex: 1, height: "50px", fontSize: "1.2rem" }}
           >
             Cash
           </Button>
           <Button
             variant="contained"
             onClick={handleCreditCardPayment}
-            style={{ backgroundColor: "#2DB734", color: "white", flex: 1, height: "50px" }}
+            style={{ backgroundColor: "#2DB734", color: "white", flex: 1, height: "50px", fontSize: "1.2rem" }}
           >
             Credit Card
           </Button>
