@@ -12,7 +12,7 @@ class User(db.Model):
   email = db.Column(db.String(32), nullable=False, unique=True)
   avatarurl = db.Column(db.String(256))
   password = db.Column(db.LargeBinary, nullable=False) # password is stored hashed, in binary
-  permission= db.Column(db.Integer, nullable=False, default=0) # to test basic permission levels (its just 0=user, 1=admin)
+  permission= db.Column(db.Integer, nullable=False, default=0) # 0 user 1 admin
   timestamp = db.Column(db.Integer, nullable=False, default=0)
 
   def __repr__(self):

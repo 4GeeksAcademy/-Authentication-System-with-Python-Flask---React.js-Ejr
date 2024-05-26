@@ -1,7 +1,7 @@
-import json, os, re, fnvhash
+import json, os, re, fnvhash, time
 from types import SimpleNamespace
 from flask import jsonify, request
-from flask_jwt_extended import create_refresh_token, create_access_token
+from flask_jwt_extended import create_refresh_token, create_access_token, get_jwt_identity
 from scrypt import hash
 from . import utils
 from .models import User
@@ -74,18 +74,24 @@ def json_object_safe(obj):
 def create_new_tokens(user):
   _identity= {"u":user.username, "e":user.email, "p":user.permission, "t":user.timestamp}
   return (
-      create_refresh_token(identity=_identity), 
-      create_access_token(identity=_identity)
+    create_refresh_token(identity=_identity), 
+    create_access_token(identity=_identity)
   )
 
-# just to have everything organized in this module
-def refresh_token(identity_):
+# rotates the tokens
+def rotate_tokens(identity_, full):
   user_identity= identity_.copy()
   user_identity['t']= utils.current_millis_time()
-  return create_access_token(identity=user_identity)
+  return (
+    create_refresh_token(identity=user_identity) if full else None,
+    create_access_token(identity=user_identity)
+  )
 
 # check valid access for a token and returns the user
-def get_user_with_check_access(identity):
+def get_user_with_check_access(identity=None):
+  if not identity: 
+    identity = get_jwt_identity()
+    if not identity: return None, response_401() # unauthorized -- NOT logged-in
   user= User.query.filter((User.username==identity['u'] and User.email==identity['e'])).first()
   if not user: return None, response(400, "bad token") # shouldn't ever happen
   t= parse_int(identity['t'])
@@ -94,28 +100,41 @@ def get_user_with_check_access(identity):
   return user, None
 
 # check valid access for a token
-def check_user_access(identity):
-  _, error= get_user_with_check_access(identity)
-  return error
+def check_user_forbidden(level=0):
+  user_identity = get_jwt_identity()
+  if not user_identity: return response_401() # unauthorized -- NOT logged-in
+  _, error= get_user_with_check_access(user_identity)
+  if error: return error
+  if user_identity['p'] < level: return response_403() # forbidden -- NOT allowed
+  return None
     
+#encrypt a password
 def hash_password(password):
   return hash(password, APP_SECRET_KEY)
 
+#test a password
 def check_password(input, hashed):
   if input == str(hashed): return True
   _new_hash= hash(input, APP_SECRET_KEY)
   return _new_hash == hashed
 
+# parse an int
 def parse_int(v, default=-1):
   try: return int(v) if type(v) != int else v
   except: return default
 
-def parse_bool(v, default=False): # asdfsdfasdfasdf
+# parse a bool
+def parse_bool(v, default=False):
   if type(v) == bool: return v
   if not v or v=="": return default
   if v.isnumeric(): return float(v) > .0
   return v.lower() in ('true', 'yes', 't', 'y', 'claro', 'aro', 'aha', 'mhm', 'sure', 'yep', 'yup', 'sip', 'sipi', 'dale', 'enga', 'check', '100%', 'bet', 'ok', 'k', 'letsago', 'fap', 'lemme_smash')
 
+# gets the current time in millis, since epoch (1/1/1970)
+def current_millis_time():
+  return int(time.time() * 1000)
+
+# hashes data, several levels
 def fnv132(data):
   if type(data) == str: data= bytes(data, 'utf-8')
   value= fnvhash.fnv(
