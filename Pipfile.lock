@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "39f07006016752a1ea8028a7ef8fa0ac358fdeb4888143a2090c2e2ba33eae89"
+            "sha256": "3736516746ff5c2e144b5912b554f53649c0bab31e7e21741b56bebf7529781c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -200,12 +200,12 @@
             "index": "pypi",
             "version": "==0.2.14"
         },
-        "fnv": {
+        "fnvhash": {
             "hashes": [
-                "sha256:b9c720bd3d94ee174531014d33e0b553b0412e90e0d33ecf93358e17ce78f54e"
+                "sha256:3e82d505054f9f3987b2b5b649f7e7b6f48349f6af8a1b8e4d66779699c85a8e"
             ],
             "index": "pypi",
-            "version": "==0.2.0"
+            "version": "==0.1.0"
         },
         "greenlet": {
             "hashes": [

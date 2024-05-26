@@ -30,7 +30,7 @@ const Utils= {
     })() : ""
     const cpath= path ? (";Path=" + path) : ""
     const csamesite= samesite ? (";SameSite=" + samesite) : ""
-    const result= `${cookie}=${value}${cexpire}${cpath}${csamesite}`
+    const result= `${cookie}=${value}${cexpire}${cpath}${csamesite};domain=${process.env.FRONTEND_URL}`
     console.log("saved cookie:", result)
     document.cookie= result
   },
