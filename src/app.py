@@ -19,7 +19,7 @@ app.url_map.strict_slashes = False
 print("Serving static files from: " + static_file_dir)
 
 # config
-app.config['SERVER_NAME'] = "localhost.com:3001"
+app.config['SERVER_NAME']= os.environ.get("SERVER_NAME", "localhost.com:3001")
 app.url_map.default_subdomain = "www"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
