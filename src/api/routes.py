@@ -659,40 +659,42 @@ def get_games():
 @jwt_required()
 def create_comment(room_id):
     try:
-        # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
+        print(f"Current User ID: {current_user_id}")
 
-        # Verificar si el room existe
         room = Room.query.get(room_id)
         if not room:
             return jsonify({"error": "Room not found"}), 404
 
-        # Verificar si el usuario es participante del room
-        participant = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
-        if not participant:
-            return jsonify({"error": "Unauthorized. Only participants can comment."}), 403
-
-        # Obtener los datos del comentario
         comment_data = request.json
+        is_host = comment_data.get('isHost', False)  # Obtener el indicador isHost del frontend
         content = comment_data.get('content')
+        print(f"is_Host {is_host}")
         if not content:
             return jsonify({"error": "Missing required field: content"}), 400
 
-        # Crear una nueva instancia de Comment con los datos proporcionados
+        participant = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
+        print(f"Participant: {participant}")
+
+        if not participant and not is_host:
+            return jsonify({"error": "Unauthorized. Only participants or hosts can comment."}), 403
+
         new_comment = Comment(
             room_id=room_id,
             user_id=current_user_id,
             content=content
         )
 
-        # Agregar el nuevo comentario a la base de datos y confirmar la transacción
         db.session.add(new_comment)
         db.session.commit()
 
         return jsonify({"message": "Comment created successfully", "comment": new_comment.serialize()}), 201
 
     except Exception as e:
+        print(f"Exception: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+
 
 #------------------GET COMMENT----------------------------------------------------------------------------------------------
 @api.route('/room/<int:room_id>/comments', methods=['GET'])

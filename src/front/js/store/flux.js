@@ -390,10 +390,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return [];
                 }
             },
-            addComment: async (roomId, content) => {
+            addComment: async (roomId, content, isHost) => {
                 const token = localStorage.getItem('jwt-token');
-                if (!token) return false;
-
+                if (!token) {
+                    console.error('No JWT token found');
+                    return false;
+                }
+            
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/comments`, {
                         method: 'POST',
@@ -401,7 +404,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify({ content })
+                        body: JSON.stringify({ content, isHost })
                     });
                     if (!response.ok) throw new Error('Failed to add comment');
                     return true;
@@ -410,6 +413,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            
+            
 
         }
     };
