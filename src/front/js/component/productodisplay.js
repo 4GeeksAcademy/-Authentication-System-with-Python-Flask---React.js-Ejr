@@ -26,7 +26,7 @@ export const ProductDisplay = () => {
           <h3><strong>Precio Total:</strong> {store.checkout.precio * store.checkout.days}€</h3>
           <form onSubmit={handlecheckout} className="mt-4">
             <button type="submit" className="btn-success btn-lg fs-4 mt-4">
-              PAGO
+              PAGAR
             </button>
           </form>
         </div>

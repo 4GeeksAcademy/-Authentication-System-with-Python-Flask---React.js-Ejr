@@ -28,7 +28,7 @@ export const Details = () => {
     return (
         <>
             <div className="d-flex footer-view mt-4">
-                <div id="carouselExample" className="carousel slide w-75 me-4 ms-3">
+                <div id="carouselExample" className="carousel slide w-75 me-4 ms-3 carousel-dark slide">
                     <div className="carousel-inner">
                         <div className="carousel-item active">
                             <img src={store.details?.url_img1} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
@@ -41,18 +41,18 @@ export const Details = () => {
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="carousel-control-prev-icon bg-success" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
                     </button>
                     <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="carousel-control-next-icon bg-success" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
                     </button>
                 </div>
                 <div>
                     <div>
                         <div className= "d-flex text-success mb-4">
-                            <h1 className="me-3"><strong>{store.details.marca_modelo?.toUpperCase()}</strong></h1>
+                            <h1 className="me-1"><strong>{store.details.marca_modelo?.toUpperCase()}</strong></h1>
                             <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
                                 <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                             </button>
