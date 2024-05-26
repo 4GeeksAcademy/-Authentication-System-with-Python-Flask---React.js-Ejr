@@ -114,7 +114,7 @@ def get_Oneuser(id):
         if not user:
             return jsonify({'message': 'No users found'}), 404
         
-        response_body = [user.serialize() for user in user]
+        response_body = user.serialize() 
         return jsonify(response_body), 200
     except Exception as e:
         return jsonify({'error':str(e)}),500

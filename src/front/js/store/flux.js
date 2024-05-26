@@ -532,7 +532,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let myToken = localStorage.getItem("token");
 				
 				try {
-				  let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users", 
+				  let response = await fetch(`${process.env.BACKEND_URL}/api/users`, 
 				  {
 					method: "GET",
 					headers: {
@@ -560,24 +560,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			// getOneuser: async (id) => {
-			// 	// Obtenemos el token del almacenamiento local
-			// 	let myToken = localStorage.getItem("token");
 
-			// 	try {
-			// 	  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
-			// 	  {
-			// 		method: "GET",
-			// 		headers: {
-			// 		  "Content-Type": "application/json",
-			// 		  // Incluye el token de autorización si es necesario
-			// 			 Authorization: `Bearer ${myToken}`,
-			// 		},
-			// 	  });
-			// 	  console.log(response);
-			// 	  if (!response.ok) {
-			// 		throw new Error(`Error fetching user: ${response.statusText}`);
-			// 	  }
+			getOneuser: async (id) => {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+
+				try {
+				  let response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}`, 
+				  {
+					method: "GET",
+					headers: {
+					  "Content-Type": "application/json",
+					  // Incluye el token de autorización si es necesario
+						 Authorization: `Bearer ${myToken}`,
+					},
+				  });
+				  console.log(response);
+				  if (!response.ok) {
+					throw new Error(`Error fetching user: ${response.statusText}`);
+				  }
+
 			
 			// 	  let data = await response.json();
 			// 	  console.log(data);
