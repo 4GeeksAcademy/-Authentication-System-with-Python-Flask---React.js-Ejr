@@ -100,14 +100,14 @@ export const Navbar = () => {
 								</div>
 								<div className="offcanvas-body">
 									<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-										<li className="nav-item mb-3" data-bs-toggle="offcanvas">
-											<Link to="/signup" className="text-decoration-none">
-												<div className="text-black fs-5"><i className="fas fa-user-plus pe-3"/>Regístrate</div>
-											</Link>
-										</li>
 										<li className="nav-item mb-2" data-bs-toggle="offcanvas">
 											<Link to="/login" className="text-decoration-none">
 												<div className="text-black fs-5"><i className="fas fa-sign-in-alt pe-3"/>Inicia sesión</div>
+											</Link>
+										</li>
+										<li className="nav-item mb-3" data-bs-toggle="offcanvas">
+											<Link to="/signup" className="text-decoration-none">
+												<div className="text-black fs-5"><i className="fas fa-user-plus pe-3"/>Regístrate</div>
 											</Link>
 										</li>
 									</ul>
