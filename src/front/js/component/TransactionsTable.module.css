@@ -1,0 +1,32 @@
+/* TransactionsTable.module.css */
+.tableContainer {
+    padding: 20px;
+    background-color: var(--table-background);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Asegura que la tabla pueda desplazarse horizontalmente en pantallas pequeñas */
+}
+
+.tableContainer .form-control {
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+}
+
+.tableContainer .table {
+    margin-top: 20px;
+}
+
+.tableContainer .table th,
+.tableContainer .table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.tableContainer .table th {
+    background-color: var(--gray-background);
+    color: var(--primary);
+}
+
+.tableContainer .table tr:nth-child(even) {
+    background-color: var(--odd-row);
+}

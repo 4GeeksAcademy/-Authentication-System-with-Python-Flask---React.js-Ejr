@@ -1,0 +1,79 @@
+/* Estilo para el contenedor principal */
+.container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para el título */
+  .title {
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para la tabla */
+  .table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  /* Estilo para las filas de la tabla */
+  .tableRow {
+    transition: background-color 0.2s;
+  }
+  
+  .tableRow:hover {
+    background-color: #495057;
+  }
+  
+  /* Estilo para el contenido del modal */
+  .modalContent {
+    width: 100%;
+  }
+  
+  /* Estilo para la tarjeta del modal */
+  .card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para la imagen de perfil */
+  .profileImage {
+    width: 100%;
+    height: auto;
+    border-radius: 10px 0 0 10px;
+  }
+  
+  /* Estilo para el cuerpo de la tarjeta */
+  .cardBody {
+    padding: 20px;
+  }
+
+  .cardBody h5{
+    font-size: 10px;
+  }
+  
+  /* Estilo para los botones */
+  .button {
+    margin: 5px;
+    transition: background-color 0.2s;
+  }
+  
+  .button:hover {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .userImagen {
+    border-radius: 50%; /* Hace que la imagen sea redonda */
+    width: 30px;
+    height: 30px;
+    object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+  }
