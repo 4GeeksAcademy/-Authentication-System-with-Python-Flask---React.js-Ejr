@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 
 export const CloudinaryComponent = () => {
-  const { actions } = useContext(Context);
   const preset_name = "jptixrge";
   const cloud_name = "dfoegvmld";
 
+  console.log('CloudinaryComponent rendered');
+  
   const [media, setMedia] = useState('');
   const [mediaType, setMediaType] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,6 @@ export const CloudinaryComponent = () => {
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', preset_name);
-    actions.uploadCloudinaryMedia(files[0]);
 
     setLoading(true);
 
