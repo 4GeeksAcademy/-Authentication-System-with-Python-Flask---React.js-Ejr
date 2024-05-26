@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-export const CloudinaryComponent = () => {
+export const CloudinaryComponent = () => { 
   const preset_name = "jptixrge";
   const cloud_name = "dfoegvmld";
 
