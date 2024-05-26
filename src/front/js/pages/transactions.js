@@ -118,13 +118,6 @@ export const Transactions = () => {
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="contained"
-                onClick={handleGoBack}
-                style={{ backgroundColor: "#2DB734", color: "white", marginRight: '10px', width: '200px' }}
-              >
-                Go Back
-              </Button>
-              <Button
-                variant="contained"
                 onClick={handleRefund}
                 style={{ backgroundColor: selectedTransaction && selectedTransaction.is_refunded ? "gray" : "red", color: "white", width: '200px' }}
                 disabled={selectedTransaction && selectedTransaction.is_refunded}

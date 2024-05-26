@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import RegionCard from "../component/RegionCard";
 import DeleteIcon from '@mui/icons-material/Delete';
+import OrdersPane from "../component/ordersPane"
 
 export const Regions = () => {
   const { store, actions } = useContext(Context);
@@ -19,29 +20,7 @@ export const Regions = () => {
 
   return (
     <div style={{ display: "flex", paddingTop: '64px', paddingRight: '16px' }}>
-      <div style={{ flex: 1, backgroundColor: "lightgray", padding: "20px", paddingRight: '16px', display: 'flex', flexDirection: 'column', paddingLeft: '16px', paddingTop: '50px', height: "100%" }}>
-        <Typography variant="h2">Orders</Typography>
-        <ul style={{ padding: 0, listStyle: 'none', flex: 1, marginTop: '16px' }}>
-          {store.order.items.map((coffee, index) => (
-            <li key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-              <IconButton onClick={() => handleRemove(coffee.name, coffee.price)} style={{ marginRight: '16px' }}>
-                <DeleteIcon />
-              </IconButton>
-              <Typography variant="h6" component="span">
-                {coffee.name} - ${coffee.price}
-              </Typography>
-            </li>
-          ))}
-        </ul>
-        <Typography variant="h3" style={{ marginTop: 'auto' }}>Total: ${store.order.total.toFixed(2)}</Typography>
-        <Button
-          variant="contained"
-          onClick={() => navigate('/payment')}
-          style={{ backgroundColor: "#2DB734", color: "white", height: "50px", marginTop: "20px" }}
-        >
-          Checkout
-        </Button>
-      </div>
+      <OrdersPane />
 
       <div style={{ flex: 1, paddingLeft: '16px', paddingTop: '50px' }}>
         <Typography variant="h2">Regions</Typography>
