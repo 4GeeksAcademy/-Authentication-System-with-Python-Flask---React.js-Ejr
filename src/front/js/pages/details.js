@@ -29,6 +29,11 @@ export const Details = () => {
         <>
             <div className="d-flex footer-view mt-4">
                 <div id="carouselExample" className="carousel slide w-75 me-4 ms-3 carousel-dark slide">
+                    <div id="favorite-btn-carousel" className="position-absolute">
+                        <button className="corazon btn btn-outline-success btn-lg" onClick={addOrRemove}>
+                            <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
+                        </button>
+                    </div>
                     <div className="carousel-inner">
                         <div className="carousel-item active">
                             <img src={store.details?.url_img1} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
@@ -53,9 +58,6 @@ export const Details = () => {
                     <div>
                         <div className= "d-flex text-success mb-4">
                             <h1 className="me-1"><strong>{store.details.marca_modelo?.toUpperCase()}</strong></h1>
-                            <button className={`corazon btn btn-outline-success`} onClick={addOrRemove}>
-                                <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
-                            </button>
                         </div>
                         <div>
                             <div className="d-flex mb-4">

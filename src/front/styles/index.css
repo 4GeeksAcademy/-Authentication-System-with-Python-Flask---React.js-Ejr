@@ -79,6 +79,7 @@
 
 footer {
     background: #050404d0 !important;
+    height: 110px
 }
 
 .corazon:hover i {
@@ -129,6 +130,14 @@ body{
 .facebook:hover {
     color:#0d6efd;
 }
+
+.twitter {
+    color: white;
+}
+
+.twitter:hover {
+    color:#0d6efd;
+}
     
 .navbarbutton {
     width: 25px;
@@ -167,3 +176,12 @@ body{
     border-top-right-radius: 1.25rem;
 }
 
+#favorite-btn-carousel  {
+    z-index: 99;
+    right: 10px;
+    top: 10px;
+}
+
+#carouselExample {
+    z-index:0
+}

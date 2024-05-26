@@ -16,7 +16,7 @@ export const CardVehicles = ({ vehicle }) => {
                 <p className="card-text fs-5 mb-3"><strong>Precio:</strong> {vehicle.precio} €</p>
             </div>
                 {token ?
-                    <div className="d-flex justify-content-end mb-2 me-4">
+                    <div className="d-flex justify-content-end mb-5 me-4">
                         <Link to={`/details/${vehicle.id}`}>
                             <button className="btn-success btn-lg border-2 rounded-4"><strong>Más Detalles</strong></button>
                         </Link>

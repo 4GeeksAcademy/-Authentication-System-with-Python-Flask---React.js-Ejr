@@ -58,22 +58,22 @@ export const Navbar = () => {
 								<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
 									<li className="nav-item mb-3" data-bs-toggle="offcanvas">
 										<Link to="/favoritos" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none">Mis Favoritos <i class="fas fa-heart"></i></div>
+											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-heart pe-3"></i>Mis Favoritos</div>
 										</Link>
 									</li>
 									<li className="nav-item dropdown mb-3" data-bs-toggle="offcanvas">
 										<Link to="/miscoches" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none">Mis Coches <i class="fas fa-car"></i></div>
+											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-car pe-3"></i>Mis Coches</div>
 										</Link>
 									</li>
 									<li className="nav-item mb-4" data-bs-toggle="offcanvas">
 										<Link to="/agregarvehiculo" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none">Pon tu coche en Friendly Wheels <i class="fas fa-plus-circle"></i></div>
+											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-plus-circle pe-3"></i>Pon tu coche en Friendly Wheels</div>
 										</Link>
 									</li>
 									<li className="nav-item mb-1" data-bs-toggle="offcanvas">
 										<Link to="/" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none" onClick={handleLogOut}>Cerrar sesión  <i className="fas fa-sign-out-alt pt-3"></i></div>
+											<div className="fs-5 text-black text-decoration-none" onClick={handleLogOut}><i className="fas fa-sign-out-alt pt-3 pe-3"></i>Cerrar sesión</div>
 										</Link>
 									</li>
 								</ul>
@@ -102,12 +102,12 @@ export const Navbar = () => {
 									<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
 										<li className="nav-item mb-3" data-bs-toggle="offcanvas">
 											<Link to="/signup" className="text-decoration-none">
-												<div className="text-black fs-5">Regístrate <i class="fas fa-user-plus"></i></div>
+												<div className="text-black fs-5"><i className="fas fa-user-plus pe-3"/>Regístrate</div>
 											</Link>
 										</li>
 										<li className="nav-item mb-2" data-bs-toggle="offcanvas">
 											<Link to="/login" className="text-decoration-none">
-												<div className="text-black fs-5">Inicia sesión <i class="fas fa-sign-in-alt"></i></div>
+												<div className="text-black fs-5"><i className="fas fa-sign-in-alt pe-3"/>Inicia sesión</div>
 											</Link>
 										</li>
 									</ul>
