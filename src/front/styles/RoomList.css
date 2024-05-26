@@ -1,3 +1,7 @@
+:root {
+    --BLUE-BTN: #0094FF;
+}
+
 .toggle-buttons {
     display: flex;
     justify-content: space-between;
@@ -5,23 +9,32 @@
 }
 
 .toggle-button {
-    padding: 10px 20px;
-    margin-right: 10px;
+    padding: 12px 20px;
     cursor: pointer;
+    border: none;
+    background-color: #333C53;
+    color: white;
 }
 
 .toggle-button.active {
-    background-color: #007BFF;
+    background-color: var(--BLUE-BTN);
     color: white;
     border: none;
 }
 
 .create-room-button {
-    background-color: #28a745;
+    background-color: var(--BLUE-BTN);
     color: white;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
+    font-weight: 500;
+    line-height: 24px;
+    border-radius: 5px;
 }
 
 .rooms-container {

@@ -694,6 +694,30 @@ def create_comment(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#------------------GET COMMENT----------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/comments', methods=['GET'])
+@jwt_required()
+def get_room_comments(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        # Verificar si el usuario es participante del room o el host
+        participation = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
+        is_host = room.user_id == current_user_id
+        if not participation and not is_host:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        comments = Comment.query.filter_by(room_id=room_id).all()
+        serialized_comments = [comment.serialize() for comment in comments]
+        return jsonify({"comments": serialized_comments}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 #------------------UPDATE COMMENT----------------------------------------------------------------------------------------------
 @api.route('/comments/<int:comment_id>', methods=['PUT'])
 @jwt_required()

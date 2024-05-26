@@ -3,12 +3,16 @@ import { Room } from '../component/Room.jsx';
 import { SearchBar } from '../component/SearchBar.jsx';
 import { Context } from "../store/appContext";
 import { useNavigate } from 'react-router-dom';
+import '../../styles/RoomList.css'
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 export const Home = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
     const [searchResults, setSearchResults] = useState([]);
+    const [showMyRooms, setShowMyRooms] = useState(false);
     const token = localStorage.getItem('jwt-token');
+    const username = localStorage.getItem('username');
 
     useEffect(() => {
         actions.fetchRooms();
@@ -26,6 +30,15 @@ export const Home = () => {
     const handleCreateRoom = () => {
         navigate('/create-room');
     };
+    const toggleRooms = (showMyRooms) => {
+        setShowMyRooms(showMyRooms);
+        if (showMyRooms) {
+            const userRooms = store.rooms.filter(room => room.host_name === username);
+            setSearchResults(userRooms);
+        } else {
+            setSearchResults(store.rooms);
+        }
+    };
 
     if (store.loadingRooms) {
         return <div>Loading...</div>;
@@ -38,8 +51,19 @@ export const Home = () => {
                 <SearchBar onSearch={handleSearch} />
                 {token && (
                     <div className='d-flex justify-content-between align-items-center'>
-                        <p className="align-self-center">All Rooms:</p>
-                        <button onClick={handleCreateRoom} className="btn btn-primary mt-2">Create new room</button>
+                        <div>
+                            <button 
+                                className={`toggle-button ${!showMyRooms ? 'active' : ''}`} 
+                                onClick={() => toggleRooms(false)}>
+                                All Rooms
+                            </button>
+                            <button 
+                                className={`toggle-button ${showMyRooms ? 'active' : ''}`} 
+                                onClick={() => toggleRooms(true)}>
+                                My Rooms
+                            </button>
+                        </div>
+                        <button onClick={handleCreateRoom} className="create-room-button"><IoIosAddCircleOutline /> Create new room</button>
                     </div>
                 )}
             </div>

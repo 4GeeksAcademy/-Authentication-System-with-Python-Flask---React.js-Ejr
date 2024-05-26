@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { IoIosSearch } from "react-icons/io";
 import '../../styles/SearchBar.css';
 
 export const SearchBar = ({ onSearch }) => {
@@ -23,7 +24,7 @@ export const SearchBar = ({ onSearch }) => {
         <div className="search-bar">
             <input
                 type="text"
-                placeholder="Search rooms or games"
+                placeholder='&#x1F50E; Search rooms or games'
                 value={searchTerm}
                 onChange={handleInputChange}
                 className="search-input"
