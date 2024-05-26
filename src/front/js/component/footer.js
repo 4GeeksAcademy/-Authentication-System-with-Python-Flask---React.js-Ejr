@@ -13,11 +13,11 @@ export const Footer = () => {
 
 	return (
 		<footer className="footer fs-4 d-flex justify-content-between">
-			<div className="d-flex mt-2 ms-3 mb-2">
+			<div className="d-flex mt-2 ms-5 mb-2 ps-3">
 				<img src={logoImageUrl} />
 				<p className=" fs-3 me-4 ms-3 mt-4 text-white">© 2024 Friendly Wheels,Inc</p>
 			</div>
-			<div className="d-flex justify-content-end mt-4 ">
+			<div className="d-flex justify-content-end mt-4">
 				<Link to="/sobrenosotros" style={linkStyle} onMouseOver={() => setAboutUsHover(true)} onMouseLeave={() => setAboutUsHover(false)}>
 					<div className="me-3 mt-2 fs-3">Sobre Nosotros</div>
 				</Link>
