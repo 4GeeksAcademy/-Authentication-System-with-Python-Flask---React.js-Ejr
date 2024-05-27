@@ -214,7 +214,7 @@ def endpoint_safe(
           if __type=="json": # parse json
             try: __parsed_data__['json']= request.get_json(force=True)
             except: return response(400, "body contains no valid JSON")
-            if __parsed_data__['json']: return response(400, "body contains no JSON")
+            if not __parsed_data__['json']: return response(400, "body contains no JSON")
           if __type=="multipart": # parse multipart json + files
             try: __parsed_data__['json']= json.loads(request.form['json'])
             except: pass
