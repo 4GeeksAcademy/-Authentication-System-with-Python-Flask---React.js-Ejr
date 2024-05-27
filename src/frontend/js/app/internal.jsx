@@ -1,8 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
-import TailwindFooler from "./tailwindFooler.jsx"
-
 import pajuelas from "../../assets/img/pajuelas.jpg"
 
 import { Context } from "../store/appContext.jsx"

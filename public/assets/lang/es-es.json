@@ -34,6 +34,13 @@
       "btn-additem": "Agregar item"
     }
   },
+  "contextmenu": {
+    "addlist":      "Agregar lista aquí",
+    "additem":      "Agregar item aquí",
+    "toorigin":     "Volver al origen",
+    "setorigin":    "Establecer origen",
+    "resetorigin":  "Reiniciar origen"
+  },
   "panel": {
     "boardsettings": {
       "title": "Opciones de Tabla"

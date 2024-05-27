@@ -12,6 +12,8 @@ services:
     paths :
     - .buildver
   envVars:
+  - key: SERVER_NAME
+    value: keqqu.com
   - key: BASENAME
     value: /
   - key: DEBUG
@@ -26,8 +28,7 @@ services:
     value: 3.10.6
   - key: DATABASE_URL
     value: sqlite:///database.db
+  - key: FRONTEND_URL
+    value: .keqqu.com
   - key: BACKEND_URL
-    fromService:
-      name: keqqu-webapp
-      type: web
-      property: host
+    value: .keqqu.com

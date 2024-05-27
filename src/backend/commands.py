@@ -1,36 +1,34 @@
 
-import click
+import random, click
 from .models import db, User
+from . import api_utils
 
-"""
-In this file, you can add as many commands as you want using the @app.cli.command decorator
-Flask commands are usefull to run cronjobs or tasks outside of the API but sill in integration 
-with youy database, for example: Import the price of bitcoin every night as 12am
-"""
 def setup_commands(app):
     
-    """ 
-    This is an example command "insert-test-users" that you can run from the command line
-    by typing: $ flask insert-test-users 5
-    Note: 5 is the number of users to add
-    """
-    @app.cli.command("insert-test-users") # name of our command
-    @click.argument("count") # argument of out command
-    def insert_test_users(count):
-        print("Creating test users")
+    @app.cli.command("devins-users")
+    @click.argument("count")
+    def devins_users(count):
+        print(f"Creating {count} test users")
+        s= (" "*len("  User created: ")," "*(24-len("username")), " "*(32-len("email")))
+        print(f"  USERNAME{s[1]}EMAIL{s[2]}PASSWORD\n {('-'*64)}")
         for x in range(1, int(count) + 1):
+            password= "123456"
             user = User()
+            user.username = f"username_user_{x}"
             user.email = "test_user" + str(x) + "@test.com"
-            user.password = "123456"
-            user.is_active = True
+            user.password = api_utils.hash_password(password)
+            user.is_active = random.random > .5
             db.session.add(user)
             db.session.commit()
-            print("User: ", user.email, " created.")
+
+            s= ({" "*(24-len(user.username))}, {" "*(24-len(user.email))})
+
+            print(f"  {user.username}{s[0]}{user.email}{s[1]}{password}{s[1]}")
 
         print("All test users created")
 
-    @app.cli.command("insert-test-data")
-    def insert_test_data():
+    @app.cli.command("devins-board")
+    def insert_board():
         pass
 
     # this one wipes the db, dont use it

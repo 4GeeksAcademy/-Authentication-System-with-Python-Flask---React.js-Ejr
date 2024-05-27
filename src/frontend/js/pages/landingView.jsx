@@ -26,6 +26,12 @@ const LandingView = () => {
 
 
 
+
+
+
+
+
+
 	return (
     <div className="bg-dark w-full p-0 m-0 absolute ">
       <div className="pt-[60px] w-[1440px] mx-auto">

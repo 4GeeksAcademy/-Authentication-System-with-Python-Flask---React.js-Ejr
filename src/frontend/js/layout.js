@@ -10,12 +10,12 @@ import LandingView from "./pages/landingView.jsx" // Landing page when logged ou
 import SessionManagerView from "./pages/sessionManagerView.jsx" // signup / login / forgot password / logout screen / account removed screen
 
 import SettingsView from "./pages/settingsView.jsx" // profile/account settings
-import ProfileView from "./pages/profileView.jsx" // user's public profile
+//import ProfileView from "./pages/profileView.jsx" // user's public profile
 
 import DashboardView from "./pages/dashboardView.jsx" // landing page when logged in
 import WorkspaceView from "./pages/workspaceView.jsx" // workspace manager
-import TeamView from "./pages/teamView.jsx" // team manager
-import ProjectView from "./pages/projectView.jsx" // project view
+//import TeamView from "./pages/teamView.jsx" // team manager
+//import ProjectView from "./pages/projectView.jsx" // project view
 import BoardView from "./pages/boardView.jsx" // board view
 
 import { Redirector, NotFound_Generic, HealthCheck, CreamyFap } from "./app/internal.jsx" // redirector, generic 404, health check, paja a la crema
@@ -47,13 +47,13 @@ const Layout = () => {
                   <Route strict path="/farewell" element={<SessionManagerView mode={Constants.SESSION_MODE_DELETED}/>} />
       
                   <Route strict path="/settings" element={<SettingsView />} />
-                  <Route strict path="/profile" element={<ProfileView self/>} exact />
-                  <Route strict path="/profile/:uid" element={<ProfileView />} />
+                  {/* <Route strict path="/profile" element={<ProfileView self/>} exact /> */}
+                  {/* <Route strict path="/profile/:uid" element={<ProfileView />} /> */}
       
                   <Route strict path="/dashboard" element={<DashboardView />} />
                   <Route strict path="/workspace/:wid" element={<WorkspaceView />} />
-                  <Route strict path="/team/:tid" element={<TeamView />} />
-                  <Route strict path="/project/:pid" element={<ProjectView />} exact />
+                  {/* <Route strict path="/team/:tid" element={<TeamView />} /> */}
+                  {/* <Route strict path="/project/:pid" element={<ProjectView />} exact /> */}
                   <Route strict path="/board/:bid" element={<BoardView />}/>
                   
                   <Route path="*" element={<Redirector url="/404" replace/>} />

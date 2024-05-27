@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { HiOutlinePlus } from "react-icons/hi";
-import { HiOutlineMinus } from "react-icons/hi";
+//import { HiOutlinePlus } from "react-icons/hi";
+//import { HiOutlineMinus } from "react-icons/hi";
 
 const Accordion = ({question, answer}) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
@@ -12,7 +12,7 @@ const Accordion = ({question, answer}) => {
         className="flex w-full h-full justify-between items-center"
       >
         <p className="f-tittle text-w flex">{question}</p>
-        {!accordionOpen ? <span><HiOutlinePlus className="text-yellow-400 text-3xl transition duration-700 ease-in-out"/></span> : <span className="text-yellow-400 text-3xl transition duration-500 ease-in-out"><HiOutlineMinus /></span>}
+        {!accordionOpen ? <span><i className="fa fa-solid fa-circle-plus text-yellow-400 text-3xl"/></span> : <span className="text-yellow-400 text-3xl"><i className="fa fa-solid fa-circle-minus" /></span>}
      
       </button>
       <div
