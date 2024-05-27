@@ -27,7 +27,6 @@ def signup():
         name = "J",
         email = email,
     )
-    print(new_user_stripe)
 
     if user_exist is None:
         new_user = User(
@@ -121,7 +120,6 @@ def get_all_vehicles():
 @api.route('/vehicle/<int:vehicle_id>', methods=['GET'])
 def get_one_vehicle(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
-    print(vehicle)
     if vehicle is None:
         return jsonify({"msg":"El vehículo no existe"}), 404
     return jsonify(vehicle.serialize()), 200

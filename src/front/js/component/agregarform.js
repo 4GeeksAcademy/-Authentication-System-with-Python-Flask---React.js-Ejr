@@ -7,19 +7,15 @@ import imgFolder from "../../img/folder.png";
 import { Container } from "reactstrap";
 import Dropzone from "react-dropzone";
 import axios from "axios";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 export const AgregarForm = (props) => {
 
     const { actions } = useContext(Context);
-
-    const [inputMarcayModelo, setInputMarcayModelo] = useState("");
-    const [inputMatricula, setInputMatricula] = useState("");
-    const [inputMotor, setInputMotor] = useState("");
-    const [inputCambio, setInputCambio] = useState("");
-    const [inputAsientos, setInputAsientos] = useState("");
-    const [inputPrecio, setInputPrecio] = useState("");
     const [image, setImage] = useState({ array: [] });
     const [loading, setLoading] = useState("");
+    
 
     const handleDrop = (files) => {
         const uploaders = files.map((file) => {
@@ -81,57 +77,110 @@ export const AgregarForm = (props) => {
     };
 
     const navigate = useNavigate();
+    const formik = useFormik({
+        initialValues: {
+            inputMarcayModelo: '',
+            inputMatricula: '',
+            inputMotor: '',
+            inputCambio: '',
+            inputAsientos: '',
+            inputPrecio: '',
+        },
+        validationSchema: Yup.object({
+            inputMarcayModelo: Yup.string().min(8, 'La marca o modelo debe tener mínimo 8 carácteres').required('Campo obligatorio'),
+            inputMatricula: Yup.string().matches(/^\S*$/, 'No se permiten espacios en la matrícula').max(7, 'Debe tener 7 caracteres máximo').required('Campo obligatorio'),
+            inputMotor: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Campo obligatorio'),
+            inputCambio: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Campo obligatorio'),
+            inputAsientos: Yup.number().min(2, 'El vehículo debe tener mínimo 2 asientos').required('Campo obligatorio'),
+            inputPrecio: Yup.number().max(999, 'El precio de su alquiler no debe exceder las 3 cifras').min(1, 'El precio de su alquiler debe ser mayor a 0').required('Campo obligatorio'),
+        }),
+        onSubmit: values => {
+            async function handleSubmit() {   
+                       if (image.array.length !== 3) {
+                       swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
+                       return;
+               }
+               const [url_img1, url_img2, url_img3] = image.array;
+               let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3);
+                   if (respuesta === "success") {
+                       swal("Vehículo añadido correctamente", ":)", "success")
+                       navigate("/");
+                   } else if (respuesta === "plate_exist") {
+                       swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
+                   }
+               };
+               handleSubmit();
+        },
+      });
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        if (image.array.length !== 3) {
-            swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
-            return;
-        }
-        const [url_img1, url_img2, url_img3] = image.array;
-
-        let respuesta = await actions.addVehicle(inputMarcayModelo, inputMatricula.replaceAll(" ", "").toUpperCase(), inputMotor, inputCambio, inputAsientos, inputPrecio, url_img1, url_img2, url_img3);
-        if (respuesta === "success") {
-            swal("Vehículo añadido correctamente", "", "success")
-            navigate("/");
-        } else if (respuesta === "plate_exist") {
-            swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
-        } else {
-            swal("Todos los campos son obligatorios", "Por favor inténtelo de nuevo", "error")
-        }
-    };
     return (
         <div className="container lg-5">
-            <h1 className="border-bottom pb-4 text-center">Ponga su vehículo en alquiler</h1>
-            <form onSubmit={handleSubmit}>
+            <h1 className="border-bottom pb-4 text-success text-center"><strong>PONGA SU VEHÍCULO EN ALQUILER</strong></h1>
+            <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Marca y modelo del vehículo</h4>
-                        <input type="text" className="form-control mb-3" id="exampleinputMarcayModelo" placeholder="Ingresa la marca y modelo del vehículo" name="marcaymodelo" onChange={(e) => setInputMarcayModelo(e.target.value)} />
+                        <input type="text" className="form-control mb-3" id="inputMarcayModelo" placeholder="Ingresa la marca y modelo del vehículo" name="inputMarcayModelo" onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.inputMarcayModelo}
+                        />
+                        {formik.touched.inputMarcayModelo && formik.errors.inputMarcayModelo ? (
+                            <div className="text-danger">{formik.errors.inputMarcayModelo}</div>
+                        ) : null}
                     </div>
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Matrícula de vehículo</h4>
-                        <input type="text" className="form-control mb-3" id="exampleinputMatricula" placeholder="Ingresa la matrícula del vehículo" name="matricula" onChange={(e) => setInputMatricula(e.target.value)} />
+                        <input type="text" className="form-control mb-3" id="inputMatricula" placeholder="Ingresa la matrícula del vehículo, ej.:1234ABC" name="inputMatricula" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.inputMatricula}
+                        />
+                        {formik.touched.inputMatricula && formik.errors.inputMatricula ? (
+                        <div className="text-danger">{formik.errors.inputMatricula}</div>
+                    ) : null}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Tipo de motor</h4>
-                        <input type="text" className="form-control mb-3" id="exampleinputMotor" placeholder="Ingresa el tipo de motor del vehículo" name="motor" onChange={(e) => setInputMotor(e.target.value)} />
+                        <input type="text" className="form-control mb-3" id="inputMotor" placeholder="Ingresa el tipo de motor del vehículo" name="inputMotor" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.inputMotor}
+                        />
+                        {formik.touched.inputMotor && formik.errors.inputMotor ? (
+                        <div className="text-danger">{formik.errors.inputMotor}</div>
+                    ) : null}
                     </div>
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Tipo de cambio</h4>
-                        <input type="text" className="form-control mb-3" id="exampleinputCambio" placeholder="Ingresa el tipo de cambio del vehículo" name="cambio" onChange={(e) => setInputCambio(e.target.value)} />
+                        <input type="text" className="form-control mb-3" id="inputCambio" placeholder="Ingresa el tipo de cambio del vehículo" name="inputCambio" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.inputCambio}
+                        />
+                        {formik.touched.inputCambio && formik.errors.inputCambio ? (
+                        <div className="text-danger">{formik.errors.inputCambio}</div>
+                    ) : null}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Número de asientos</h4>
-                        <input type="number" className="form-control mb-3" id="exampleinputAsientos" placeholder="Ingresa el número de asientos" name="asientos" onChange={(e) => setInputAsientos(e.target.value)} />
+                        <input type="number" className="form-control mb-3" id="inputAsientos" placeholder="Ingresa el número de asientos" name="inputAsientos" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.inputAsientos}
+                        />
+                        {formik.touched.inputAsientos && formik.errors.inputAsientos ? (
+                        <div className="text-danger">{formik.errors.inputAsientos}</div>
+                    ) : null}
                     </div>
                     <div className="col-lg-6 mb-3">
                         <h4 className="subtitulos">Precio por día</h4>
-                        <input type="number" className="form-control mb-3" id="exampleinputPrecioDia" placeholder="Ingresa precio por día" name="precio" onChange={(e) => setInputPrecio(e.target.value)} />
+                        <input type="number" className="form-control mb-3" id="inputPrecio" placeholder="Ingresa precio por día" name="inputPrecio" onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.inputPrecio}
+                        />
+                        {formik.touched.inputPrecio && formik.errors.inputPrecio ? (
+                        <div className="text-danger">{formik.errors.inputPrecio}</div>
+                    ) : null}
                     </div>
                 </div>
                 <div>

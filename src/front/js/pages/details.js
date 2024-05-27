@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import { ModalAlquilar } from "../component/modalalquilar.js";
 import "../../styles/index.css";
-// ines la peor de todo el bootcamp
+
 export const Details = () => {
     const { store, actions } = useContext(Context);
     const [isFavorite, setIsFavorite] = useState(false);
