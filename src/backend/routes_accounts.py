@@ -18,47 +18,45 @@ def handle_accounts(): return "accounts subdomain", 200
 # optional ?remember=0 -- 1 to login a long session (up to 30 days)
 @accounts.route('/signup', methods=['POST'])
 @api_utils.jwt_forbidden(400, "already logged in")
-def handle_accounts_signup():
-  def __endpoint__(shell):
+@api_utils.endpoint_safe( content_type="application/json", required_props=("username", "displayname", "email", "password"))
+def handle_accounts_signup(json):
 
-    json= shell.data.json
-    login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 1))
+  login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 1))
 
-    # check if user exists
-    user, mode= api_utils.get_user_by_username_or_email(json['account'])
-    if user: 
-      # if login=1, just try to login
-      if login and api_utils.check_password(json['password'], user.password):
-        return perform_login(user, False) # dont do a long session here
-      return api_utils.response(400, "username already registered" if mode==1 else "email already registered")
-    
-    loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
-    remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 1))
+  # check if user exists
+  user, mode= api_utils.get_user_by_username_or_email(json['account'])
+  if user: 
+    # if login=1, just try to login
+    if login and api_utils.check_password(json['password'], user.password):
+      return perform_login(user, False) # dont do a long session here
+    return api_utils.response(400, "username already registered" if mode==1 else "email already registered")
+  
+  loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
+  remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 1))
 
-    # user doesnt exist, so we creating it
-    user= User(
-      username= json['username'],
-      displayname= json['displayname'],
-      password= api_utils.hash_password(json['password']),
-      email= json['email'],
-      avatar= json['avatar'] if 'avatar' in json else None,
-      permission= 1 if 'creamyfapxd2024' in json else 0,
-      verification= 0
-    )
+  # user doesnt exist, so we creating it
+  user= User(
+    username= json['username'],
+    displayname= json['displayname'],
+    password= api_utils.hash_password(json['password']),
+    email= json['email'],
+    avatar= json['avatar'] if 'avatar' in json else None,
+    permission= 1 if 'creamyfapxd2024' in json else 0,
+    verification= 0
+  )
 
-    # send verification email, only in production
-    if api_utils.ENV == "prod":
-      user.vericode= generate_vericode() # email verification code
-      request_verification_email(user)
+  # send verification email, only in production
+  if api_utils.ENV == "prod":
+    user.vericode= generate_vericode() # email verification code
+    request_verification_email(user)
 
-    db.session.add(user)
+  db.session.add(user)
 
-    # login after creation is optional, but defaults to true, prioritizes json over url
-    if loginafter: return perform_login(user, remember) # <- this already do .commit()
+  # login after creation is optional, but defaults to true, prioritizes json over url
+  if loginafter: return perform_login(user, remember) # <- this already do .commit()
 
-    db.session.commit()
-    return api_utils.response_201(user.serialize()) 
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="application/json", props=["username", "displayname", "email", "password"]))
+  db.session.commit()
+  return api_utils.response_201(user.serialize()) 
 
 # -------------------------------------- /login
 # opposite to logout 
