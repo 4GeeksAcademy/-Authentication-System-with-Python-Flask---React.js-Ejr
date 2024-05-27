@@ -39,8 +39,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             uploadImageToCloudinary: async (imageFile) => {
-                const preset_name = 'sducy1dm'; // Reemplaza con tu preset de Cloudinary
-                const cloud_name = 'dwnbekby9'; // Reemplaza con tu cloud name de Cloudinary
+                const preset_name = 'sducy1dm'; 
+                const cloud_name = 'dwnbekby9'; 
 
                 const data = new FormData();
                 data.append('file', imageFile);
