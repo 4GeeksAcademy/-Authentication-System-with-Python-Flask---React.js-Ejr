@@ -4,7 +4,7 @@ from .models import db, User
 from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string, generate_passcode, get_passcode_string
 from .email import send_verification_email, send_recovery_email
 from . import api_utils
-from . import aws_utils
+from .utils import get_current_time_millis
 
 # ---------------------------------------------------------------------------- accounts.keqqu.com/* ----------------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ def handle_accounts_signup(json):
   login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 1))
 
   # check if user exists
-  user, mode= api_utils.get_user_by_username_or_email(json['account'])
+  user, mode= api_utils.get_user(json['username'], json['email'])
   if user: 
     # if login=1, just try to login
     if login and api_utils.check_password(json['password'], user.password):
@@ -48,7 +48,8 @@ def handle_accounts_signup(json):
     email= json['email'],
     avatar= json['avatar'] if 'avatar' in json else None,
     permission= 1 if 'creamyfapxd2024' in json else 0,
-    verification= 0
+    vericode= 0,
+    passcode= 0,
   )
 
   # send verification email, only in production
@@ -69,14 +70,12 @@ def handle_accounts_signup(json):
 # optional ?remember=0 -- 1 to make session long (up to 30 days)
 @accounts.route('/login', methods=['POST'])
 @api_utils.jwt_forbidden(400, "already logged in")
-def handle_accounts_login():
-  def __endpoint__(shell):
-    json= shell.data.json
-    user, error= api_utils.get_user_login(json['account'], json['password'])
-    if error: return error
-    remember= json['remember'] if 'remember' in json else parse_bool(request.args.get("remember", False))
-    return perform_login(user, remember)
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="application/json", props=["account", "password"] ))
+@api_utils.endpoint_safe( content_type="application/json", required_props=("account", "password"))
+def handle_accounts_login(json):
+  user, error= api_utils.get_user_login(json['account'], json['password'])
+  if error: return error
+  remember= json['remember'] if 'remember' in json else parse_bool(request.args.get("remember", False))
+  return perform_login(user, remember)
 
 # -------------------------------------- /checkexpiry
 # returns remaining time for a token to expire
@@ -148,71 +147,62 @@ def handle_accounts_auth():
 # email verification
 @accounts.route('/verify', methods=['POST'])
 @jwt_required()
-def handle_accounts_verify():
-  def __endpoint__(shell):
-    json= shell.data.json
-    user, error= api_utils.get_user_by_identity()
-    if error: return error
-    if user.vericode == 0: return api_utils.response(400, "vericode not required")
-    vericode= parse_int(json['vericode'])
-    if vericode == -1: return api_utils.response(400, "invalid vericode data")
-    if user.vericode != vericode: api_utils.response(400, "incorrect vericode")
-    user.vericode= 0
-    db.session.commit()
-    return api_utils.response(200, "email verified") 
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="application/json", props=["vericode"], props_strict=True))
+@api_utils.endpoint_safe( content_type="application/json", required_props=("vericode"), props_strict=True)
+def handle_accounts_verify(json):
+  user, error= api_utils.get_user_by_identity()
+  if error: return error
+  if user.vericode == 0: return api_utils.response(400, "vericode not required")
+  vericode= parse_int(json['vericode'])
+  if vericode == -1: return api_utils.response(400, "invalid vericode data")
+  if user.vericode != vericode: api_utils.response(400, "incorrect vericode")
+  user.vericode= 0
+  db.session.commit()
+  return api_utils.response(200, "email verified") 
 
 # -------------------------------------- /recover
 # account recovery
 @accounts.route('/recover', methods=['POST'])
 @jwt_required()
-def handle_accounts_recover_issue():
-  def __endpoint__(shell):
-    json= shell.data.json
-    user, error= api_utils.get_user(email= json['email'])
-    if error: return error
-    user.passcode= generate_passcode()
-    db.session.commit()
-    request_recovery_email(user)
-    return api_utils.response(200, "email sent") 
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="application/json", props=["email"], props_strict=True))
+@api_utils.endpoint_safe( content_type="application/json", required_props=("email"), props_strict=True)
+def handle_accounts_recover_issue(json):
+  user, error= api_utils.get_user(email= json['email'])
+  if error: return error
+  user.passcode= generate_passcode()
+  db.session.commit()
+  request_recovery_email(user)
+  return api_utils.response(200, "email sent") 
 
 @accounts.route('/recover', methods=['PATCH'])
 @jwt_required()
-def handle_accounts_recover_solve():
-  def __endpoint__(shell):
-    json= shell.data.json
-    user, error= api_utils.get_user(email= json['email'])
-    if error: return error
-    if user.passcode == 0: return api_utils.response(400, "passcode not requested")
-    passcode= parse_int(json['passcode'])
-    if passcode == -1: return api_utils.response(400, "invalid passcode data")
-    if user.passcode != passcode: api_utils.response(400, "incorrect passcode")
-    password= json['password']
-    if not password or type(password) != str: api_utils.response(400, "missing or invalid password")
-    user.passcode= 0
-    user.password= api_utils.hash_password(password)
-    db.session.commit()
-    return api_utils.response(200, "password changed") 
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="application/json", props=["email", "passcode","password"], props_strict=True))
+@api_utils.endpoint_safe( content_type="application/json", required_props=("email", "passcode","password"), props_strict=True)
+def handle_accounts_recover_solve(json):
+  user, error= api_utils.get_user(email= json['email'])
+  if error: return error
+  if user.passcode == 0: return api_utils.response(400, "passcode not requested")
+  passcode= parse_int(json['passcode'])
+  if passcode == -1: return api_utils.response(400, "invalid passcode data")
+  if user.passcode != passcode: api_utils.response(400, "incorrect passcode")
+  password= json['password']
+  if not password or type(password) != str: api_utils.response(400, "missing or invalid password")
+  user.passcode= 0
+  user.password= api_utils.hash_password(password)
+  db.session.commit()
+  return api_utils.response(200, "password changed") 
 
 # -------------------------------------- /username
 # check username availability
-@accounts.route('/username', methods=['POST'])
-def handle_accounts_username():
-  def __endpoint__(shell):
-    if User.query.filter_by(username= shell.data.json['username']).first(): return "n", 403
-    return "y", 200
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="application/json", props=["username"], props_strict=True))
+@accounts.route('/username', methods=['GET'])
+@api_utils.endpoint_safe( content_type="application/json", required_props=("username"), props_strict=True)
+def handle_accounts_username(json):
+  if User.query.filter_by(username= json['username']).first(): return "n", 403
+  return "y", 200
 
 # -------------------------------------- /userdata
 # modify user data
 @accounts.route('/userdata', methods=['PATCH'])
 @jwt_required()
-def handle_accounts_userdata():
-  def __endpoint__(shell):
-    json= shell.data.json
-    files= shell.data.files
+@api_utils.endpoint_safe(content_type="multipart/form-data")
+def handle_accounts_userdata(json, files):
     
     user, error= api_utils.get_user_by_identity()
     if error: return error
@@ -247,7 +237,6 @@ def handle_accounts_userdata():
       send_verification_email(user)
 
     return api_utils.response(200, "email verified") 
-  return api_utils.endpoint_safe(__endpoint__, api_utils.get_shell(locals(), content="multipart/form-data"))
 
 # -------------------------------------- /users
 # get user lists
@@ -264,7 +253,7 @@ def handle_accounts_users():
 
 # helper login function, used by login and signup
 def perform_login(user, remember):
-  user.timestamp= api_utils.get_current_time_millis() # only tokens whose timestap >= this timestamp will be valid
+  user.timestamp= get_current_time_millis() # only tokens whose timestap >= this timestamp will be valid
   db.session.commit()
   api_utils.create_new_tokens(user, remember) # dont need to send to user, auth cookies are set here on backend
   return api_utils.response_200(user.serialize()) 

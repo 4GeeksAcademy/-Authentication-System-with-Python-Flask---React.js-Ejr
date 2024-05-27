@@ -39,7 +39,7 @@ def handle_objects_fetch(json):
 # -------------------------------------- /pull
 # get all styles &| tags from a list of ids
 @objects.route('/pull', methods=['GET'])
-@api_utils.endpoint_safe( content_type="application/json", required_props=["tags", "styles"], props_strict=True  )
+@api_utils.endpoint_safe( content_type="application/json", required_props=["tags", "styles"], props_strict=True )
 def handle_objects_pull(json):
   result= {}
   intags= json['tags']

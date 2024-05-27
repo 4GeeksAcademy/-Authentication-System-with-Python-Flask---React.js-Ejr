@@ -13,50 +13,6 @@ ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 CONTENT_TYPE_JSON= {'Content-Type': 'application/json'}
 CONTENT_TYPE_MULTIPART= {'Content-Type': 'multipart/form-data'}
 
-##--- common configurable tests for endpoints, just to avoid writing it everytime
-#def endpoint_safe(f, shell):
-#  #try:
-#    body= None 
-#    data= {}
-#    # force content to be given type
-#    if 'content' in shell.options:
-#      content= shell.options["content"]
-#      if not 'Content-Type' in request.headers or not request.headers['Content-Type'] == content: return response(400, f"Content-Type is not '{content}'")
-#      if 'data' in shell.options: return response(400, "cannot define shell data-type if content-type is beign defined")
-#      if content == 'application/json':
-#        if not request.data: return response(400, "body must contain data")
-#        body= "json"
-#      if content == 'multipart/form-data':
-#        if not request.form and not request.files: return response(400, "body must contain data")
-#        body= "multipart"
-#    elif 'data' in shell.options: body= shell.options['data']
-#    # load data automatically
-#    if body=="json":
-#      try: data['json']= request.get_json(force=True)
-#      except: return response(400, "body contains no valid JSON")
-#      if not data['json']: return response(400, "body contains no JSON")
-#    if body=="multipart":
-#      try: data['json']= json.loads(request.form['json'])
-#      except: pass
-#      try: data['files']= request.files
-#      except: pass
-#      if not data['json'] and not data['files']: return response(400, "body contains no data")
-#    # check missing or invalid properties
-#    if 'props' in shell.options:
-#      if not data['json']: return response(400, "given required properties but no data received")
-#      props= shell.options["props"]
-#      json= data['json']
-#      for p in props:
-#        if not p in json: return response(400, f"missing required property '{p}'")
-#        if not json[p] or (type(json[p])== str and json[p]== ""): return response(400, f"empty required property '{p}'")
-#      if 'props_strict' in shell.options and len(json.keys()) > len(props): return response(400, f"json contains extra garbage properties")
-#    # execute the endpoint function if everything else went right
-#    shell.data= SimpleNamespace(**data)
-#    return f(shell)
-#  #except Exception as e:
-#  #  print(e)
-#  #  return response_500(repr(e))
-
 #--- check a list of properties against data
 def check_missing_properties_manual(data, props):
   for p in props:
@@ -85,15 +41,14 @@ def json_object_safe(obj):
 
 #--- get the user by acount
 def get_user_by_username_or_email(account):
-  user= get_user(account, account)
-  mode= None
-  if user: mode= 1 if user.username==account else 2
-  return user, mode
+  return get_user(account, account)
 
 #--- get the user with given username and email
 def get_user(username=None, email=None):
   user= User.query.filter(User.email==email or User.username==username).first()
-  return user
+  mode= None
+  if user: mode= 1 if user.username==username else 2
+  return user, mode
 
 #--- get the user by current jwt identity
 def get_user_by_identity():
@@ -124,7 +79,7 @@ def test_rotate_tokens(apayload, identity):
   
   # refresh token
   target_timestamp = get_current_time_seconds() + timedelta(minutes=30)
-  user= get_user(identity['u'], identity['e'])
+  user, _= get_user(identity['u'], identity['e'])
   if user and user.refreshtoken:
     rpayload= decode_token(str(user.refreshtoken, 'utf-8'))
     if target_timestamp > rpayload['exp']:
@@ -139,7 +94,7 @@ def test_rotate_tokens(apayload, identity):
 def create_new_refresh_token(identity, remember):
   # refresh token -- lifespan: 30 days if 'remember', 16 hours if not
   rtoken = create_refresh_token(identity, additional_claims={'r':remember}, expires_delta=None if remember else timedelta(hours=16)) # expires= None means 30 days by our jwt settings
-  user= get_user(identity['u'], identity['e'])
+  user, _= get_user(identity['u'], identity['e'])
   if user:
     user.refreshtoken= bytes(rtoken, 'utf-8')
     db.session.commit()
@@ -200,48 +155,48 @@ def endpoint_safe(
       __parsed_data__= {}
       __type= data_type
       
-      try:
-        if content_type: # check for content_type
-          if not 'Content-Type' in request.headers or not request.headers['Content-Type'] == content_type: return response(400, f"Content-Type is not '{content_type}'")
-          if __type: return response(400, "cannot define shell data-type if content-type is beign defined")
-          if content_type == 'application/json':
-            if not request.data: return response(400, "body must contain data")
-            __type= "json"
-          elif content_type == 'multipart/form-data':
-            if not request.form and not request.files: return response(400, "body must contain data")
-            __type= "multipart"
-        if __type:
-          if __type=="json": # parse json
-            try: __parsed_data__['json']= request.get_json(force=True)
-            except: return response(400, "body contains no valid JSON")
-            if not __parsed_data__['json']: return response(400, "body contains no JSON")
-          if __type=="multipart": # parse multipart json + files
-            try: __parsed_data__['json']= json.loads(request.form['json'])
-            except: pass
-            try: __parsed_data__['files']= request.files
-            except: pass
-            if __parsed_data__['json'] and not __parsed_data__['files']: return response(400, "body contains no data")
-          if required_props: # check required json properties
-            if not __parsed_data__['json']: return response(400, "given required properties but no data received")
-            __json= __parsed_data__['json']
-            for p in required_props:
-              if not p in __json: return response(400, f"missing required property '{p}'")
-              if not __json[p] or (type(__json[p])== str and __json[p]== ""): return response(400, f"empty required property '{p}'")
-            if props_strict and len(__json.keys()) > len(required_props): return response(400, f"too many json properties")
-        if required_params: # check required url parameters
-          __params= {}
-          for p in required_params:
-            if not p in request.args: return response(400, f"missing required url parameter '{p}'")
-            if not request.args[p] or (type(request.args[p])== str and request.args[p]== ""): return response(400, f"empty required url parameter '{p}'")
-            __params[p]= request.args[p]
-          if params_strict and len(__params.keys()) > len(required_params): return response(400, f"too many url parameters")
-          __parsed_data__['params']= __params
+      #try:
+      if content_type: # check for content_type
+        if not 'Content-Type' in request.headers or not request.headers['Content-Type'] == content_type: return response(400, f"Content-Type is not '{content_type}'")
+        if __type: return response(400, "cannot define shell data-type if content-type is beign defined")
+        if content_type == 'application/json':
+          if not request.data: return response(400, "body must contain data")
+          __type= "json"
+        elif content_type == 'multipart/form-data':
+          if not request.form and not request.files: return response(400, "body must contain data")
+          __type= "multipart"
+      if __type:
+        if __type=="json": # parse json
+          try: __parsed_data__['json']= request.get_json(force=True)
+          except: return response(400, "body contains no valid JSON")
+          if not __parsed_data__['json']: return response(400, "body contains no JSON")
+        if __type=="multipart": # parse multipart json + files
+          try: __parsed_data__['json']= json.loads(request.form['json'])
+          except: pass
+          try: __parsed_data__['files']= request.files
+          except: pass
+          if __parsed_data__['json'] and not __parsed_data__['files']: return response(400, "body contains no data")
+        if required_props: # check required json properties
+          if not __parsed_data__['json']: return response(400, "given required properties but no data received")
+          __json= __parsed_data__['json']
+          for p in required_props:
+            if not p in __json: return response(400, f"missing required property '{p}'")
+            if not __json[p] or (type(__json[p])== str and __json[p]== ""): return response(400, f"empty required property '{p}'")
+          if props_strict and len(__json.keys()) > len(required_props): return response(400, f"too many json properties")
+      if required_params: # check required url parameters
+        __params= {}
+        for p in required_params:
+          if not p in request.args: return response(400, f"missing required url parameter '{p}'")
+          if not request.args[p] or (type(request.args[p])== str and request.args[p]== ""): return response(400, f"empty required url parameter '{p}'")
+          __params[p]= request.args[p]
+        if params_strict and len(__params.keys()) > len(required_params): return response(400, f"too many url parameters")
+        __parsed_data__['params']= __params
 
-        return current_app.ensure_sync(fn)(*args, **kwargs, **__parsed_data__) # execute the actual endpoint function
+      return current_app.ensure_sync(fn)(*args, **kwargs, **__parsed_data__) # execute the actual endpoint function
       
-      except Exception as e: # any unhandled error (even in endpoint function) ends up here
-        print(e)
-        return response_500(repr(e))
+      #except Exception as e: # any unhandled error (even in endpoint function) ends up here
+      #  print(e)
+      #  return response_500(repr(e))
       
     return decorator
 
