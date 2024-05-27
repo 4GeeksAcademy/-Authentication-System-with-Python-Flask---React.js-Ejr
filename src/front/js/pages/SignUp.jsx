@@ -25,18 +25,26 @@ export const SignUp = () => {
         epicId: '',
         bio: '',
         gender: '',
-        admin: false
+        admin: false,
+        imageFile: null
     });
 
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setSignUpData({ ...signUpData, [name]: value });
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSignUpData({ ...signUpData, imageFile: file });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             let success = await actions.submitSignUpForm(signUpData);
             if (success) {
@@ -46,6 +54,8 @@ export const SignUp = () => {
             }
         } catch (error) {
             setError('An unexpected error occurred. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -133,9 +143,14 @@ export const SignUp = () => {
                     <label htmlFor="epicId">Epic ID:</label>
                     <input type="text" id="epicId" name="epicId" value={signUpData.epicId} onChange={handleInputChange} />
                 </div>
+                <div>
+                    <label htmlFor="image">Profile Image:</label>
+                    <input type="file" id="image" name="image" onChange={handleFileChange} />
+                </div>
 
                 <button type="submit">Sign Up</button>
             </form>
+            {loading && <p>Loading...</p>}
             {error && <p className="error-message">{error}</p>}
         </div>
     );

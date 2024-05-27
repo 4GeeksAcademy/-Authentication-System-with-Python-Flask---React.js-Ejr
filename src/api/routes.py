@@ -441,6 +441,7 @@ def update_user(user_id):
             user.epic_id = user_data.get('epic_id', user.epic_id)
             user.bio = user_data.get('bio', user.bio)
             user.gender = user_data.get('gender', user.gender)
+            user.url_image = user_data.get('url_image', user.url_image)
 
             # Solo permitir que los administradores actualicen el campo admin
             if current_user.admin:
