@@ -14,8 +14,16 @@ from sqlalchemy.exc import SQLAlchemyError
 import jwt
 import logging
 
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer
 
 api = Blueprint('api', __name__)
+
+# Configurar Flask-Mail
+mail = Mail()
+
+# Configurar URLSafeTimedSerializer para generación de tokens
+s = URLSafeTimedSerializer("YourSecretKey")
 
 # Allow CORS requests to this API
 CORS(api)
@@ -160,6 +168,34 @@ def get_token():
     
     except Exception as e:
         return jsonify({"error": "The provided email does not correspond to any registered user: " + str(e)}), 500
+    
+
+@api.route('/request-reset-password', methods=['POST'])
+def request_reset_password():
+    email = request.json.get('email')
+    user = User.query.filter_by(email=email).first()
+    if user:
+        token = s.dumps(email, salt='password-reset-salt')
+        link = url_for('api.reset_password', token=token, _external=True)
+        msg = Message("Password Reset Request", recipients=[email])
+        msg.body = f"Please click the link to reset your password: {link}"
+        mail.send(msg)
+    return jsonify(message="Password reset link sent"), 200
+
+@api.route('/reset-password/<token>', methods=['POST'])
+def reset_password(token):
+    try:
+        email = s.loads(token, salt='password-reset-salt', max_age=3600)  # Token válido por 1 hora
+    except Exception as e:
+        return jsonify(message="Token is invalid or expired"), 400
+
+    new_password = request.json.get('password')
+    user = User.query.filter_by(email=email).first()
+    if user:
+        user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        db.session.commit()
+        return jsonify(message="Password updated successfully"), 200
+    return jsonify(message="User not found"), 404
 
 
 @api.route('/home', methods=['GET'])
