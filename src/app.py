@@ -1,6 +1,6 @@
 import os, sys, signal
 from datetime import timedelta
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, Blueprint, request, redirect
 from flask_migrate import Migrate
 from flask_cors import CORS
 from backend.utils import APIException, generate_sitemap_v2
@@ -21,7 +21,7 @@ print("Serving static files from: " + static_file_dir)
 
 # config
 app.config['SERVER_NAME']= os.environ.get("SERVER_NAME", "localhost.com:3001")
-app.url_map.default_subdomain = "www"
+app.url_map.default_subdomain = ""
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -37,6 +37,9 @@ app.register_blueprint(workspaces, subdomain='workspaces')
 app.register_blueprint(boards, subdomain='boards')
 app.register_blueprint(api, subdomain='api')
 
+www= Blueprint('www', __name__, subdomain='www')
+app.register_blueprint(www, subdomain='www')
+
 MIGRATE = Migrate(app, db, compare_type=True)
 CORS(app)
 db.init_app(app)
@@ -47,6 +50,14 @@ jwt = JWTManager(app)
 
 api_utils.current_app= app
 
+@app.before_request
+def redirect_www():
+    """Redirect www requests to non-www."""
+    urlparts = request.host.split('.')
+    if urlparts[0].lower() == 'www':
+        new_url = request.url.replace('www.', '', 1)
+        return redirect(new_url, code=301)
+    
 # root
 @app.route('/')
 def sitemap():
