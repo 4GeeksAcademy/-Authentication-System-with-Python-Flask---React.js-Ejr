@@ -1,14 +1,21 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const ModalAlquilar = (props) => {
     const { actions } = useContext(Context);
     const [days, setDays] = useState(null);
+    const navigate = useNavigate();
+
+    const handlePayment = () => {
+        actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, days, props.precio_id_stripe,props.url_img1);
+		navigate('/payment');
+	};
+
     return (
         <>
-            <button type="button" className="botonAlquilar btn-success text-center btn-lg border-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Alquiler
+            <button type="button" className="botonAlquilar btn-success text-center btn-lg border-2 mt-4 fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Alquilar
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -39,9 +46,7 @@ export const ModalAlquilar = (props) => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <Link to="/payment">
-                                <button onClick={() => actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, days, props.precio_id_stripe,props.url_img1)} type="button" className="btn btn-success" data-bs-dismiss="modal">Alquilar</button>
-                            </Link>
+                            <button disabled={days == null ? true : false} onClick={handlePayment} type="button" className="btn btn-success" data-bs-dismiss="modal">Alquilar</button>
                         </div>
                     </div>
                 </div>

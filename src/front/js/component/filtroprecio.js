@@ -4,7 +4,7 @@ export const FiltroPrecio = (props) => {
 
     return (
         <div className="dropdown">
-            <button className="btn btn-outline border-4 dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button className="btn btn-outline-success border-2 dropdown-toggle bg-white text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Precio por día
             </button>
             <ul className="dropdown-menu ">

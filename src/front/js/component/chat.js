@@ -1,15 +1,18 @@
+import { border } from "@cloudinary/url-gen/qualifiers/background";
 import React from "react";
 import ChatBot from "react-simple-chatbot"
 import { ThemeProvider } from "styled-components";
 
 const diseñoChat = {
     background: 'white',
-    headerBgColor: '#3598EE',
+    headerBgColor: 'green',
     headerFontColor: 'white',
-    headerFontSize: '20px',
-    botBubbleColor: 'lightgrey',
-    userBubbleColor: 'darkblue',
+    headerFontSize: '25px',
+    botBubbleColor: '#B1D79C',
+    botFontColor: 'black',
+    userBubbleColor: 'lightblue',
     userFontColor: 'white',
+
 
 }
 const handleLinkClick = (url) => {
@@ -20,14 +23,14 @@ export const Chat = () => {
     return (
         <ThemeProvider theme={diseñoChat}>
             <ChatBot 
-                headerTitle= "Friendly Wheels Bot 🤖"
+                headerTitle= <strong>🚘 Friendly Wheels Bot</strong>
                 steps={[
                     {
                         id: 'intro estatica',
                         component: (
                             <div>
-                            <p className="fs-4"><strong>Hola</strong> 👋🏼</p>
-                            <p>Soy el chatbot de Friendly Wheels.</p>
+                            <p className="fs-3 text-success"><strong>Hola</strong> 👋🏼</p>
+                            <p className="text-success"><cite>Soy el chatbot de Friendly Wheels.</cite></p>
                             </div>
                           ),
                         trigger: 'intro'
@@ -68,8 +71,8 @@ export const Chat = () => {
                     {
                         id:'respuesta-ayuda-perfil',
                         options: [
-                            {value:"crearcuenta", label: "Crear una cuenta", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/signup`)},
-                            {value:"iniciarsesion", label: "Iniciar sesión", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/login`)}
+                            {value:"crearcuenta", label: "Crear una cuenta ➕", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/signup`)},
+                            {value:"iniciarsesion", label: "Iniciar sesión ➡️", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/login`)}
                         ]
                     },
                     {
@@ -80,8 +83,8 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-alquiler',
                         options: [
-                            {value:"arrendatario", label: "Arrendatario", trigger:"mensaje-ayuda-arrendatario"},
-                            {value:"propietario", label: "Propietario", trigger:"mensaje-ayuda-propietario"},
+                            {value:"arrendatario", label: "Arrendatario 👤", trigger:"mensaje-ayuda-arrendatario"},
+                            {value:"propietario", label: "Propietario 👤", trigger:"mensaje-ayuda-propietario"},
                         ]
                     },
                     {
@@ -92,10 +95,10 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-arrendatario',
                         options: [
-                            {value:"formapago", label: "Forma de Pago", trigger:"mensaje-ayuda-forma-pago"},
-                            {value:"entrega", label: "Recogida y entrega", trigger:"mensaje-ayuda-recogida-entrega"},
-                            {value:"daños", label: "Daños", trigger:"mensaje-ayuda-daños"},
-                            {value:"asistenciacarretera", label: "Asistencia en carretera", trigger:"mensaje-ayuda-asistencia-carretera"}
+                            {value:"formapago", label: "Forma de Pago 💳", trigger:"mensaje-ayuda-forma-pago"},
+                            {value:"entrega", label: "Recogida y entrega 🔑", trigger:"mensaje-ayuda-recogida-entrega"},
+                            {value:"daños", label: "Daños 🛠️", trigger:"mensaje-ayuda-daños"},
+                            {value:"asistenciacarretera", label: "Asistencia en carretera 🆘", trigger:"mensaje-ayuda-asistencia-carretera"}
 
                         ]
                     },
@@ -108,9 +111,9 @@ export const Chat = () => {
                         id: 'respuesta-ayuda-forma-pago',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                         ),
                     },
@@ -122,7 +125,7 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-recogida-entrega',
                         options: [
-                            {value:"nosotros", label: "Nosotros", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
+                            {value:"nosotros", label: "Nosotros 📍", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
                         ],
                     },
                     {
@@ -134,9 +137,9 @@ export const Chat = () => {
                         id: 'respuesta-ayuda-daños',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                         ),
                         end: true
@@ -151,10 +154,10 @@ export const Chat = () => {
                         id: 'respuesta-ayuda-asistencia-carretera',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
-                            </div>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
+                        </div>
                         ),
                         end: true
                     },
@@ -166,12 +169,11 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-propietario',
                         options: [
-                            {value:"daño", label: "Daño", trigger:"mensaje-ayuda-daño"},
-                            {value:"multa", label: "Multa", trigger:"mensaje-ayuda-multa"},
-                            {value:"limpieza", label: "Limpieza", trigger:"mensaje-ayuda-limpieza"},
-                            {value:"entregadecoche", label: "Donde entrego mi coche", trigger:"mensaje-ayuda-donde-entrego-mi-coche"},
-                            {value:"eliminar", label: "Eliminar coche", trigger:"mensaje-ayuda-eliminar-coche"},
-                            {value:"editar", label: "Editar coche", trigger:"mensaje-ayuda-editar-coche"}
+                            {value:"daño", label: "Daño 🛠️", trigger:"mensaje-ayuda-daño"},
+                            {value:"multa", label: "Multa 🛂", trigger:"mensaje-ayuda-multa"},
+                            {value:"limpieza", label: "Limpieza 🧹", trigger:"mensaje-ayuda-limpieza"},
+                            {value:"entregadecoche", label: "Donde entrego mi coche 🔑", trigger:"mensaje-ayuda-donde-entrego-mi-coche"},
+                            {value:"eliminar", label: "Eliminar coche ✖️", trigger:"mensaje-ayuda-eliminar-coche"}
                         ]
                     },
                     {
@@ -183,9 +185,9 @@ export const Chat = () => {
                         id: 'respuesta-ayuda-daño',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                         ),
                         end: true
@@ -199,9 +201,9 @@ export const Chat = () => {
                         id: 'respuesta-ayuda-multa',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                         ),
                         end: true
@@ -215,9 +217,9 @@ export const Chat = () => {
                         id: 'respuesta-ayuda-limpieza',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                         ),
                         end: true
@@ -230,7 +232,7 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-entrego-mi-coche',
                         options: [
-                            {value:"nosotros", label: "Nosotros", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
+                            {value:"nosotros", label: "Nosotros 📍", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
                         ],
                     },
                     {
@@ -241,10 +243,10 @@ export const Chat = () => {
                     {
                         id: 'pasos-eliminar-coche',
                         component: (
-                            <div className="text-center">
-                                <p>1. Inicia sesión.</p>
-                                <p>2. En el menú, clickea Mis Coches.</p>
-                                <p>3. Clickea sobre el botón eliminar.</p>
+                            <div>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                           ),
                         trigger:'respuesta-pasos-eliminar-coche'
@@ -253,35 +255,13 @@ export const Chat = () => {
                         id: 'respuesta-pasos-eliminar-coche',
                         component: (
                             <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
+                                <p className="text-success"><strong>Espero haber sido de ayuda.</strong></p>
+                                <p className="text-success"><cite>Hasta la próxima 👋🏼</cite></p>
+                                <a href="/" className="text-decoration-none fs-4"><strong>Nuevo Chat 🆕</strong></a>
                             </div>
                         ),
                         end: true
-                    },
-                    {
-                        id: 'mensaje-ayuda-editar-coche',
-                        component: (
-                            <div className="text-center">
-                                <p>1. Inicia sesión.</p>
-                                <p>2. En el menú, clickea Mis Coches.</p>
-                                <p>3. Clickea sobre el botón editar.</p>
-                            </div>
-                          ),
-                        trigger: 'respuesta-pasos-editar-coche'
-                    },
-                    {
-                        id: 'respuesta-pasos-editar-coche',
-                        component: (
-                            <div>
-                                <p>Espero haberte sido de ayuda.</p>
-                                <p>Hasta la próxima 👋🏼</p>
-                                <a href="/">Nuevo Chat</a>
-                            </div>
-                        ),
-                        end: true
-                    },
+                    }
                 ]}
                 floating={true.toString()}
             />

@@ -21,7 +21,7 @@
 }
 
 .contactForm2 {
-    width: 400px;
+    width: 450px;
     height: 450px;
     margin:auto;
     margin-top: 80px;
@@ -30,6 +30,7 @@
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     justify-content: center;
+    border-radius: 1.25rem;
 }
 
 .agregar-vehiculo {
@@ -90,6 +91,7 @@
 
 footer {
     background: #050404d0 !important;
+    height: 110px
 }
 
 .corazon:hover i {
@@ -140,6 +142,14 @@ body{
 .facebook:hover {
     color:#0d6efd;
 }
+
+.twitter {
+    color: white;
+}
+
+.twitter:hover {
+    color:#0d6efd;
+}
     
 .navbarbutton {
     width: 25px;
@@ -166,4 +176,26 @@ body{
 .principal{
     background-color: rgb(220, 221, 224);
 }
+
+.vehiculo {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    border-radius: 1.25rem;
+}
+
+.imagen1 {
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+}
+
+#favorite-btn-carousel  {
+    z-index: 99;
+    right: 10px;
+    top: 10px;
+}
+
+#carouselExample {
+    z-index:0
+}
+
 

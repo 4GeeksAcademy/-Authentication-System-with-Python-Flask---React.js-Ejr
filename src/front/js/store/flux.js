@@ -150,6 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							myVehicles: newListMyVehiclesInRent
 
 						})
+						return "success"
 					}
 				} catch (error) {
 					return []; 
@@ -217,6 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						let listFav = getStore().favorites;
 						const newListFav = listFav.filter((vehicle) => vehicle.id != id);
 						setStore({favorites: newListFav})
+						return "success"
 					}
 				} catch (error) {
 					return []; 
