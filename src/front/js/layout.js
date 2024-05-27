@@ -14,6 +14,8 @@ import PrivateRoute from "./component/PrivateRoute.jsx";
 import injectContext from "./store/appContext"; 
 
 import { Navbar } from "./component/Navbar.jsx";
+import { BuyMeACoffee } from "./pages/BuyMeACoffee.jsx";
+
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -34,6 +36,7 @@ const Layout = () => {
                         <Route element={<CreateRoom />} path="/create-room" />
                         <Route element={<PrivateRoute><EditRoom /></PrivateRoute>} path="/edit-room/:room_id" /> 
                         <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route element={<BuyMeACoffee />} path="/buymeacoffee" />
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>
