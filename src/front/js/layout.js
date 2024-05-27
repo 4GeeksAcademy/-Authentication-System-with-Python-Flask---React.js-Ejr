@@ -81,7 +81,7 @@ const Layout = () => {
                         <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<BookingView />} path="/BookingView" />
                         <Route element={<ClassesView />} path="/ClassesView" />
-                        <Route element={<EditClasses />} path="/classEdit" />
+                        <Route element={<EditClasses />} path="/classEdit/:id" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<Oneuser />} path="/Oneuser" />
                         {/* <Route element={<Homeadmin />} path="/Homeadmin" /> */}

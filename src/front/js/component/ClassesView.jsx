@@ -12,9 +12,10 @@ const ClassesView = () => {
         actions.getClasses()
     }, [])
     //guarda la informacion y navega
-    const handlerEdit = (item) =>{
-        actions.saveCurrentEdit(item)  
-        navigate("/classEdit")
+    const handlerEdit = (item) => {
+        actions.saveCurrentEdit(item)
+        let url="/classEdit/"+item.id
+        navigate(url)
     }
     console.log(store.classesData)
     return (
@@ -27,32 +28,36 @@ const ClassesView = () => {
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Class Instructor ID</th>
+
                         <th scope="col">Datetime class</th>
                         <th scope="col">Start time </th>
                         <th scope="col">Duration minutes</th>
                         <th scope="col">Available slots </th>
-
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         store.classesData && store.classesData.map((item) => (
-                            <div>
 
-                                <tr key={item.name}>
-                                    <td>{item.description}</td>
-                                    <td>{item.instructor_id}</td>
-                                    <td>{item.dateTime_class}</td>
-                                    <td>{item.start_time}</td>
-                                    <td>{item.duration_minutes}</td>
-                                    <td>{item.available_slots}</td>
-                                </tr>
 
-                                <button onClick= {()=> handlerEdit(item)}>
-                                    Editar clase
-                                </button>
-                            </div>
+                            <tr key={item.name}>
+                                <td>{item.name}</td>
+                                <td>{item.description}</td>
+
+                                <td>{item.dateTime_class}</td>
+                                <td>{item.start_time}</td>
+                                <td>{item.duration_minutes}</td>
+                                <td>{item.available_slots}</td>
+                                <td>
+                                    <button onClick={() => handlerEdit(item)}>
+                                        Editar clase
+                                    </button>
+                                </td>
+                            </tr>
+
+
+
                         ))
                     }
                 </tbody>

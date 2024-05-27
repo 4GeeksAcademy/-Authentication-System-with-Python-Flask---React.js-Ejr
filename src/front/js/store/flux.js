@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             membershipsLoading: false,
 			images: [],
 			classesData: [],
-			currentEdit: {}
+			currentEdit: {},
 			payments: []
 
 
@@ -474,13 +474,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const url =`${process.env.BACKEND_URL}/api/training_classes`;
 
-
 				try {
 					let response = await fetch(url, {
-						method: "GET", // Método de la solicitud
+						method: "GET", 
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${myToken}`, // Asegúrate de manejar la autenticación adecuadamente
+							'Authorization': `Bearer ${myToken}`, 
 						}
 					});
 					const data = await response.json();
@@ -499,6 +498,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 			saveCurrentEdit: (item) => {
 				let store=getStore()
 				setStore({...store, currentEdit:item})
+			},
+
+			//funcion asincrona para editar el fomulario de clases de entrenamiento
+			updateEditForm: async (classesData) => {
+
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+				// console.log(myToken);
+				// console.log(userData);
+				// Construimos la URL para la solicitud
+				let url = `${process.env.BACKEND_URL}api/training_classes`;
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(data)
+
+					});
+					let data = await response.json();
+					console.log(data)
+					if (response.ok) {
+						// Asumiendo que quieres actualizar el store aquí
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar tus datos:", error);
+					return { success: false, error: error.message };
+				}
 			},
 
 
