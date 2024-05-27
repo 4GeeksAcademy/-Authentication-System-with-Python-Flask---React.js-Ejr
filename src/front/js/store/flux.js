@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			users:[],
 			user:{},
+			
 			isAuthenticated: null,
 			uploadedUserData: [],
 			isAuthenticatedMessage: null,
@@ -33,17 +34,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			images: [],
 			classesData: [],
 			currentEdit: {},
-			payments: []
-
-
-
-
+			payments: [],
+			userRecords: []
 
 
 
 		},
 		actions: {
-
+//---------------------------------------------------------FUNCION PARA VALIDAR TOKEN--------------------------------------------------------------------------
 			validateToken: async (token) => {
 				try {
 					const url = `${process.env.BACKEND_URL}api/validate-token`;
@@ -82,6 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+//---------------------------------------------------------FUNCION PARA LOGIN--------------------------------------------------------------------------
 
 			loginUserV2: async (email, password) => { // Se define una función llamada handleLogin que se ejecutará al iniciar sesión
 
@@ -108,6 +107,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(data)
 					if (data.access_token) { // Si se recibe un token de acceso en la respuesta
 						localStorage.setItem("token", data.access_token);
+						localStorage.setItem("isAuthenticated", JSON.stringify(true));
+						localStorage.setItem("dataRole", data.role);
+						localStorage.setItem("user_id", data.user_id);
+				
 						let store = getStore();
 						setStore({
 							...store, isAuthenticated: true, isAuthenticatedMessage: true, loginError: null, dataRole: data.role // Asumiendo que 'data' incluye 'role'
@@ -134,6 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
 				}
 			},
+//-------------------------------FUNCION PARA CARGAR LOS DATOS DEL USARIO AL HACER LOGIN--------------------------------------------------------------------------
 
 			loadUserData: async () => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 				try {
@@ -171,9 +175,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CERRAR SESION--------------------------------------------------------------------------
 
 			closeSession: () => { // Se define una función llamada closeSession que se utilizará para cerrar la sesión del usuario
 				// Eliminar la información de inicio de sesión del almacenamiento local y restablecer los datos del usuario
+				localStorage.removeItem("token");
+				localStorage.removeItem("isAuthenticated");
+				localStorage.removeItem("dataRole");
 
 				// Ocultar el error después de 1.5 segundos
 				setTimeout(() => {
@@ -185,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// console.log(store); // Se imprime el estado actualizado en la consola (para propósitos de depuración)
 			},
-
+//---------------------------------------------------------FUNCION PARA CREAR USER--------------------------------------------------------------------------
 			createUser: async (dataUser) => {
 				try {
 					const url = `${process.env.BACKEND_URL}api/singup/user`;
@@ -212,7 +220,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
+//---------------------------------------------------------FUNCION PARA CARGAR CLASES--------------------------------------------------------------------------
 			loadTrainingClasses: async () => {
 				try {
 					// Obtenemos el token del almacenamiento local
@@ -237,9 +245,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading training classes:", error);
 				}
 			},
+//---------------------------------------------------------FUNCION PARA RESERVAR CLASE --------------------------------------------------------------------------
 
-			book_class: async (classId) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
-
+			book_class: async (classId) => { 
 				let id_class = { training_class_id: classId };
 				console.log(id_class);
 
@@ -279,6 +287,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CANCELAR CLASE--------------------------------------------------------------------------
 
 			cancel_booking: async (booking_id) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 
@@ -312,6 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},
+//---------------------------------------------------------FUNCION PARA ACTUALIZAR DATOS DE USUARIO --------------------------------------------------------------------------
 
 			updateUserData: async (userData) => {
 
@@ -346,6 +356,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCIONES PARA CREAR CLASES --------------------------------------------------------------------------
 
 			// Función para crear una clase individual
 			createTrainingClasses: async (dataClasses) => {
@@ -437,6 +448,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			resetCreationTrainingClasses: () => {
 				setStore({ ...getStore(), creationTrainingClasses: [] });
 			},
+//---------------------------------------------------------FUNCION PARA CARGAR LAS RESERVAS DE CLASES--------------------------------------------------------------------------
 
 			getBookings: async () => {
 
@@ -465,6 +477,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading training classes:", error);
 				}
             },
+//---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
 
 			//funcion asincrona para la vista que trae las clases de entrenamiento 
 			getClasses: async () => {
@@ -563,6 +576,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			
+//---------------------------------------------------------FUNCION PARA COMPRAR MEMBRESIAS USER --------------------------------------------------------------------------
 
 			purchaseMembership: async (data) => {
 				// console.log(data)
@@ -597,14 +611,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message }; // Devuelve un objeto de error si algo falla
 				}
 			},
-			
+//---------------------------------------------------------FUNCION PARA COMPRAR MEMBRESIAS MODULO ADMIN--------------------------------------------------------------------------
 
+			adminPurchaseMembership: async (data) => {
+				let myToken = localStorage.getItem("token");
+				let url = `${process.env.BACKEND_URL}api/admin_purchase_membership`; // URL del nuevo endpoint para comprar membresía por administrador
+				try {
+					let response = await fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${myToken}` // Asegúrate de manejar la autenticación adecuadamente
+						},
+						body: JSON.stringify(data)
+					});
+			
+					let result = await response.json(); // Se espera la respuesta del servidor en formato JSON
+			
+					if (response.ok) {
+						return { success: true, data: result };
+					} else {
+						return { success: false, error: result.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error purchasing membership:", error);
+					return { success: false, error: error.message }; // Devuelve un objeto de error si algo falla
+				}
+			},
+//---------------------------------------------------------FUNCION PARA CARGAR USUARIOS --------------------------------------------------------------------------			
 			getUsers : async () => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 				
 				try {
-				  let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users", 
+
+				  let response = await fetch(`${process.env.BACKEND_URL}api/users`, 
+
 				  {
 					method: "GET",
 					headers: {
@@ -631,36 +673,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
-
-			// getOneuser: async (id) => {
-			// 	// Obtenemos el token del almacenamiento local
-			// 	let myToken = localStorage.getItem("token");
-
-			// 	try {
-			// 	  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
-			// 	  {
-			// 		method: "GET",
-			// 		headers: {
-			// 		  "Content-Type": "application/json",
-			// 		  // Incluye el token de autorización si es necesario
-			// 			 Authorization: `Bearer ${myToken}`,
-			// 		},
-			// 	  });
-			// 	  console.log(response);
-			// 	  if (!response.ok) {
-			// 		throw new Error(`Error fetching user: ${response.statusText}`);
-			// 	  }
-			
-			// 	  let data = await response.json();
-			// 	  console.log(data);
-			
-			// 	  let store = getStore(); // Obtiene el estado actual del almacén
-			// 	  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
-			
-			// 	} catch (error) {
-			// 	  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-			// 	}
-			//   },
+//---------------------------------------------------------FUNCION PARA CARGAR IMAGENES DE ENTRENAMIENTOS--------------------------------------------------------------------------
 
 			  uploadImage: async (formData) => {
                 const myToken = localStorage.getItem("token");
@@ -687,6 +700,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, error: error.message };
                 }
             },
+//---------------------------------------------------------FUNCION PARA OBTENER IMAGENES --------------------------------------------------------------------------
 
 			fetchImages: async () => {
                 const myToken = localStorage.getItem("token");
@@ -705,7 +719,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error fetching images:', error);
                 }
             },
-
+//---------------------------------------------------------FUNCIONES PARA CARGAR FOTO DE PERFIL USER--------------------------------------------------------------------------
+			//CARGAR FOTO
             uploadProfileImage: async (formData) => {
                 const myToken = localStorage.getItem("token");
                 const url = `${process.env.BACKEND_URL}api/upload_img_profile`;
@@ -729,6 +744,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+			//CAMBIAR FOTO
             updateProfileImage: async (formData) => {
                 const myToken = localStorage.getItem("token");
                 const url = `${process.env.BACKEND_URL}api/update_profile_image`;
@@ -752,6 +768,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+			//ELIMINAR FOTO
             deleteProfileImage: async () => {
                 const myToken = localStorage.getItem("token");
                 const url = `${process.env.BACKEND_URL}api/delete_profile_image`;
@@ -773,6 +790,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: error.message };
                 }
             },
+//---------------------------------------------------------FUNCION PARA OBTENER TRANSACCIONES--------------------------------------------------------------------------
 
 			getAllPayments: async () => {
 				try {
@@ -799,6 +817,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+	
+			
+			
 
 		},
 	}
