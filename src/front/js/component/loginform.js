@@ -36,25 +36,25 @@ export const LoginForm = () => {
     });
 
     return (
-        <div className="contactForm">
+        <div className="contactForm2">
             <h1 className="title text-center pb-4">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="inputEmail" className="form-label" style={{ color: 'brown' }}>Correo electrónico</label>
+                    <label htmlFor="inputEmail" className="form-label" style={{ color: 'green' }}>Correo electrónico</label>
                     <input type="email" className="form-control" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputEmail} />
                     {formik.touched.inputEmail && formik.errors.inputEmail ? (
-                        <div>{formik.errors.inputEmail}</div>
+                        <div className="text-danger">{formik.errors.inputEmail}</div>
                     ) : null}
                 </div>
                 <div className="mb-2">
-                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Contraseña</label>
+                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'green' }}>Contraseña</label>
                     <input type="password" className="form-control" name="inputPassword" id="inputPassword" placeholder="xxxxxxx" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputPassword} />
                     {formik.touched.inputPassword && formik.errors.inputPassword ? (
-                        <div>{formik.errors.inputPassword}</div>
+                        <div className="text-danger">{formik.errors.inputPassword}</div>
                     ) : null}
                 </div>
                 <div className="d-flex justify-content-center mb-3">

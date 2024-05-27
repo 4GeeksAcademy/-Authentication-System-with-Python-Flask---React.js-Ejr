@@ -26,7 +26,7 @@ export const SignupForm = () => {
                     swal("Registro con éxito", "Gracias por registrarse en nuestra web!", "success")
                     navigate("/");
                 } else if (isSignup === "email_exist") {
-                    swal("Este correo ya se encuentra registrado", "Por favor intentelo con otro correo", "error")
+                    swal("Este correo ya se encuentra registrado", "Por favor inténtelo con otro correo", "error")
                 } 
             };
             handleSubmit()
@@ -38,21 +38,21 @@ export const SignupForm = () => {
             <h1 className="title text-center pb-4">Crear cuenta</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="InputEmail" className="form-label" style={{ color: 'brown' }}>Correo electrónico</label>
+                    <label htmlFor="InputEmail" className="form-label" style={{ color: 'green' }}>Correo electrónico</label>
                     <input type="email" className="form-control" name="inputEmail" id="inputEmail" placeholder="Ingrese su correo electrónico" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputEmail} />
                     {formik.touched.inputEmail && formik.errors.inputEmail ? (
-                        <div>{formik.errors.inputEmail}</div>
+                        <div className="text-danger">{formik.errors.inputEmail}</div>
                     ) : null}
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="InputPassword" className="form-label" style={{ color: 'brown' }}>Contraseña</label>
+                    <label htmlFor="InputPassword" className="form-label" style={{ color: 'green' }}>Contraseña</label>
                     <input type="password" className="form-control" name="inputPassword" id="inputPassword" placeholder="xxxxxxx" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputPassword} />
                     {formik.touched.inputPassword && formik.errors.inputPassword ? (
-                        <div>{formik.errors.inputPassword}</div>
+                        <div className="text-danger">{formik.errors.inputPassword}</div>
                     ) : null}
                 </div>
                 <div className="d-flex justify-content-center mt-5">
