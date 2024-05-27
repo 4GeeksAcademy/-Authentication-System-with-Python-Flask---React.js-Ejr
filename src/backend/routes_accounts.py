@@ -12,12 +12,6 @@ accounts= Blueprint('accounts', __name__, subdomain='accounts')
 @accounts.route('/', methods=['GET'])
 def handle_accounts(): return "accounts subdomain", 200
 
-# -------------------------------------- /healthcheck
-# basic health check
-@accounts.route('/healthcheck', methods=['GET'])
-def handle_accounts_healthcheck():
-  return "accounts ok", 200
-
 # -------------------------------------- /signup
 # optional ?login=0 -- 1 to just login if account already exists and fields are correct
 # optional ?loginafter=1 -- 1 to login after creation
@@ -261,6 +255,12 @@ def handle_accounts_users():
   users= User.query.all()
   if not users or len(users)==0: return "", 204
   return api_utils.response_200([user.serialize() for user in users])
+
+# -------------------------------------- /healthcheck
+# basic health check
+@accounts.route('/healthcheck', methods=['GET'])
+def handle_accounts_healthcheck():
+  return "accounts ok", 200
 
 # ---------------------------------------------------------------------------- Helpers
 

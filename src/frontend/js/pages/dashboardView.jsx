@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 const DashboardView = () => {
 	//change all useNavigate links
+	
+	//useEffect => fetch a action.getUserWorkSpaces
+
+	
+	getUserWorkSpaces();
+	
 
 	const navigate=useNavigate();
 
