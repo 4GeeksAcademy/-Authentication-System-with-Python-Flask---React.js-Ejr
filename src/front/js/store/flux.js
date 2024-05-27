@@ -271,7 +271,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             joinRoom: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return false;
-
+            
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/join`, {
                         method: 'POST',
@@ -280,11 +280,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-                    if (!response.ok) throw new Error("Failed to join room");
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error joining room:', errorData);
+                        throw new Error(errorData.error);
+                    }
                     const data = await response.json();
                     return true;
                 } catch (error) {
-                    console.error(error);
+                    console.error('Error joining room:', error);
                     return false;
                 }
             },
@@ -413,8 +417,58 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            updateParticipantStatus: async (roomId, participantId, status) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) {
+                    console.error('No JWT token found');
+                    return false;
+                }
             
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/update_participant_status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ participant_id: participantId, status })
+                    });
+                    if (!response.ok) throw new Error(`Failed to update participant status to ${status}`);
+                    return true;
+                } catch (error) {
+                    console.error(`Error updating participant status to ${status}:`, error);
+                    return false;
+                }
+            },
             
+            updateParticipantStatus: async (roomId, participantId, status) => {
+                const token = localStorage.getItem('jwt-token');
+                if (!token) {
+                    console.error('No JWT token found');
+                    return false;
+                }
+            
+                try {
+                    const response = await fetch(`${apiUrl}/api/room/${roomId}/update_participant_status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ participant_id: participantId, status })
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error updating participant status:', errorData);
+                        throw new Error(errorData.error);
+                    }
+                    const data = await response.json();
+                    return true;
+                } catch (error) {
+                    console.error('Error updating participant status:', error);
+                    return false;
+                }
+            },
 
         }
     };

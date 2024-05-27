@@ -526,7 +526,12 @@ def join_room(room_id):
         # Verificar si la solicitud ya existe
         existing_request = Room_request.query.filter_by(room_id=room_id, user_id=current_user_id).first()
         if existing_request:
-            return jsonify({"error": "Request already exists"}), 400
+            if existing_request.status == 'abandoned':
+                existing_request.status = 'pending'
+                db.session.commit()
+                return jsonify({"message": "Rejoin request sent successfully", "request": existing_request.serialize()}), 200
+            else:
+                return jsonify({"error": "Request already exists"}), 400
         
         # Crear nueva solicitud
         new_request = Room_request(room_id=room_id, user_id=current_user_id, status='pending')
@@ -894,5 +899,47 @@ def get_room_reviews(room_id):
         return jsonify({"reviews": serialized_reviews}), 200
 
     except Exception as e:
+        return jsonify({"error": str(e)}), 500
+#---------------Put Kick or Abandon participant-----------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/update_participant_status', methods=['PUT'])
+@jwt_required()
+def update_participant_status(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        participant_id = request.json.get('participant_id')
+        status = request.json.get('status')
+        if not participant_id or not status:
+            return jsonify({"error": "Missing participant_id or status"}), 400
+
+        room_request = Room_request.query.filter_by(room_id=room_id, user_id=participant_id).first()
+        if not room_request:
+            return jsonify({"error": "Room request not found"}), 404
+
+        # Verificar permisos
+        if status == 'kicked' and room.user_id != current_user_id:
+            return jsonify({"error": "Unauthorized. Only the host can kick participants."}), 403
+        if status == 'abandoned' and current_user_id != participant_id:
+            return jsonify({"error": "Unauthorized. Only the participant can abandon the room."}), 403
+
+        room_request.status = status
+
+        room_participant = Room_participant.query.filter_by(room_id=room_id, user_id=participant_id).first()
+        if room_participant and status in ['kicked', 'abandoned']:
+            db.session.delete(room_participant)
+        
+        db.session.commit()
+
+        return jsonify({"message": f"Participant status updated to {status} successfully"}), 200
+
+    except Exception as e:
+        print(f"Exception: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+    except Exception as e:
+        print(f"Exception: {str(e)}")
         return jsonify({"error": str(e)}), 500
 

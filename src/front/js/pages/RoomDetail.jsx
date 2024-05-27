@@ -28,7 +28,7 @@ export const RoomDetail = () => {
         };
 
         fetchData();
-    }, [roomId]);
+    }, [roomId, store.rooms.participants]);
 
     useEffect(() => {
         if (showRequests) {
@@ -72,7 +72,7 @@ export const RoomDetail = () => {
             console.error('No JWT token found');
             return;
         }
-    
+
         if (newComment.trim() === '') return;
         const isHost = room.host_name === username;
         console.log('isHost:', isHost);  // Asegúrate de que esto imprima true/false correctamente
@@ -85,7 +85,26 @@ export const RoomDetail = () => {
             alert('Failed to add comment.');
         }
     };
+    const handleKickParticipant = async (participantId) => {
+        const token = localStorage.getItem('jwt-token');
+        if (!token) {
+            console.error('No JWT token found');
+            return;
+        }
 
+        const success = await actions.updateParticipantStatus(roomId, participantId, 'kicked');
+        if (success) {
+            setRoom(prevRoom => ({
+                ...prevRoom,
+                participants: prevRoom.participants.map(p =>
+                    p.participant_id === participantId ? { ...p, confirmed: false, status: 'kicked' } : p
+                ).filter(p => p.status !== 'kicked')
+            }));
+            alert('Participant kicked successfully!');
+        } else {
+            alert('Failed to kick participant.');
+        }
+    };
     const handleJoinRoom = async () => {
         const token = localStorage.getItem('jwt-token');
         if (!token) {
@@ -98,6 +117,26 @@ export const RoomDetail = () => {
             } else {
                 alert('Failed to send join request.');
             }
+        }
+    };
+
+    const handleAbandonRoom = async () => {
+        const token = localStorage.getItem('jwt-token');
+        if (!token) {
+            console.error('No JWT token found');
+            return;
+        }
+
+        const success = await actions.updateParticipantStatus(roomId, userId, 'abandoned');
+        if (success) {
+            setRoom(prevRoom => ({
+                ...prevRoom,
+                participants: prevRoom.participants.filter(p => p.participant_id !== userId)
+            }));
+            alert('You have successfully abandoned the room');
+            navigate('/');
+        } else {
+            alert('Failed to abandon the room.');
         }
     };
 
@@ -163,18 +202,24 @@ export const RoomDetail = () => {
                     <ul>
                         {room.participants.map(participant => (
                             <li key={participant.participant_id}>
-                                {participant.participant_name} {participant.confirmed ? '(Confirmed)' : '(Pending)'}
+                                {participant.participant_name}
+                                {isHost && (
+                                    <button className="kick-button" onClick={() => handleKickParticipant(participant.participant_id)}>Kick</button>
+                                )}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
             <div className="room-actions">
-                {!isParticipantOrHost && requestStatus === 'None' && !isHost && (
+                {!isParticipantOrHost && (requestStatus === 'None' || requestStatus === 'abandoned') && !isHost && (
                     <button className="join-room" onClick={handleJoinRoom}>Join this room</button>
                 )}
                 {!isParticipantOrHost && requestStatus === 'pending' && !isHost && (
                     <button className="withdraw-request" onClick={handleWithdrawRequest}>Withdraw Request</button>
+                )}
+                {isParticipantOrHost && !isHost && (
+                    <button className="abandon-room" onClick={handleAbandonRoom}>Abandon Room</button>
                 )}
                 {isHost && (
                     <button className="btn btn-secondary" onClick={handleToggleRequests}>
