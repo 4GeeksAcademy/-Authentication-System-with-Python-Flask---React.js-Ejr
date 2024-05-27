@@ -28,35 +28,38 @@ export const Room = ({ room }) => {
     const participantsCount = room.participants ? room.participants.length : 0;
 
     return (
-        <div className="card mb-3 room" style={{ maxWidth: "540px" }} onClick={handleCardClick}>
-            <div className="row g-0">
-                <div className="col-md-4">
-                    <img src={room.imageUrl || "default_image_path.jpg"} className="img-fluid rounded-start" alt={room.room_name} />
+        <div className="p-1 row justify-content-center room-card" onClick={handleCardClick}>
+            <div className="col-14 row justify-content-center d-flex">
+                <div className="col-12 row justify-content-between align-items-center">
+                    <p className="text-info fs-6 fw-semibold font-family-Inter col-1 m-0 px-3 py-2">{room.game_name}</p>
+                    <div className="col-1 row justify-content-end align-items-center d-flex">
+                        <p className="text-info fs-6 fw-semibold font-family-Inter col-6 m-0 px-3 py-2">{participantsCount}/{room.room_size}</p>
+                        <div className="p-1 col-5 justify-content-center align-items-center d-flex"></div>
+                    </div>
                 </div>
-                <div className="col-md-8">
-                    <div className="card-body">
-                        <div className="card-title">
-                            <div className="d-flex justify-content-between">
-                                <span>{room.game_name}</span>
-                                <span>{participantsCount} / {room.room_size} </span>
-                            </div>
-                            <h5>{room.room_name}</h5>
-                        </div>
-                        <p className="card-text">{room.description}</p>
-                        <p className="card-text">
-                            <small className="text-body-secondary">
-                                <span>Starts: {room.date} at {room.time}</span>
-                            </small>
-                        </p>
-                        {isHost && (
-                            <div className="d-flex justify-content-between mt-3">
-                                <button className="btn btn-warning" onClick={(e) => { e.stopPropagation(); handleEdit(); }}>Edit</button>
-                                <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); handleDelete(); }}>Delete</button>
-                            </div>
-                        )}
+                <p className="text-white fs-5 fw-semibold font-family-Inter col-5 m-0 px-3 py-2">{room.room_name}</p>
+            </div>
+            <div className="col-14 row d-flex">
+                <p className="col-11 m-0 px-3 py-2">
+                    <span className="text-success-subtle fs-6 fw-normal font-family-Inter">I’m looking for fellow gamers to join me in creating a party of 4 for a casual gaming session tonight. If you're interested in some relaxed... </span>
+                    <span className="text-white text-opacity-75 fs-6 fw-normal font-family-Inter text-decoration-underline">Continue Reading</span>
+                </p>
+                <div className="col-12 row justify-content-between align-items-center">
+                    <p className="text-info fs-6 fw-medium font-family-Inter col-7 m-0 px-3 py-2">Starts: {room.date} at {room.time}</p>
+                    <div className="col-3 row align-items-end d-flex">
+                        <div className="p-1 col-2 justify-content-center align-items-center d-flex"></div>
+                        <div className="px-px py-1 col-2 justify-content-center align-items-center d-flex"></div>
+                        <div className="p-0.5 col-2 justify-content-center align-items-center d-flex"></div>
+                        <div className="p-0.5 col-3"></div>
                     </div>
                 </div>
             </div>
+            {isHost && (
+                <div className="col-12 row justify-content-between mt-3">
+                    <button className="btn btn-warning" onClick={(e) => { e.stopPropagation(); handleEdit(); }}>Edit</button>
+                    <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); handleDelete(); }}>Delete</button>
+                </div>
+            )}
         </div>
     );
 };

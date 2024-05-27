@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import '../../styles/Navbar.css';
 
+
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
@@ -14,24 +15,41 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="navbar">
-            <div className="navbar-left">
-                <p className="navbar-logo">PlayPal</p>
-            </div>
-            <div className="navbar-right">
-                <Link to="/" className="navbar-link">Rooms</Link>
-                <Link to="/games" className="navbar-link">Games</Link>
-                {token ? (
-                    <>
-                        <Link to="/profile" className="navbar-link">Profile</Link>
-                        <button onClick={handleLogout} className="navbar-button">Logout</button>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login" className="navbar-link">Login</Link>
-                        <Link to="/signup" className="navbar-button">Create account</Link>
-                    </>
-                )}
+        <nav className="navbar navbar-expand-lg">
+            <div className="container-fluid container-max-width">
+                <Link to="/" className="navbar-brand">PlayPal</Link>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <Link to="/" className="nav-link">Rooms</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/games" className="nav-link">Games</Link>
+                        </li>
+                        {token ? (
+                            <>
+                                <li className="nav-item">
+                                    <Link to="/profile" className="nav-link">Profile</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <button onClick={handleLogout} className="btn nav-link">Logout</button>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="nav-item">
+                                    <Link to="/login" className="nav-link">Login</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to="/signup" className="btn btn-primary nav-link">Create account</Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </div>
             </div>
         </nav>
     );

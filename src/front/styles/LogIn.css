@@ -1,0 +1,51 @@
+.login-page {
+    min-height: 100vh;
+     /* Fondo oscuro para la página de inicio de sesión */
+}
+
+.login-form {
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.password-toggle-icon {
+    color: #ffffff; /* Color blanco para el icono */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    padding-left: 10px;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+.bg-dark {
+    background-color: #333C53 !important; /* Fondo oscuro */
+}
+
+.bg-primary {
+    background-color: #007BFF !important; /* Color primario */
+}
+
+.btn-primary {
+    background-color: #007BFF !important; /* Color primario */
+    border-color: #007BFF !important;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3 !important; /* Color primario más oscuro al pasar el mouse */
+    border-color: #0056b3 !important;
+}
+
+.text-decoration-underline {
+    text-decoration: underline !important;
+}
+
+@media (max-width: 767px) {
+    .login-form {
+        padding: 10px;
+    }
+}

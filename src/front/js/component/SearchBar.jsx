@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { IoIosSearch } from "react-icons/io";
 import '../../styles/SearchBar.css';
+
 
 export const SearchBar = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [mood, setMood] = useState('');
+    const [dropdownTitle, setDropdownTitle] = useState('All');
 
     const handleInputChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const handleMoodChange = (e) => {
-        setMood(e.target.value);
+    const handleMoodChange = (mood, title) => {
+        setMood(mood);
+        setDropdownTitle(title);
     };
 
     useEffect(() => {
@@ -22,18 +24,25 @@ export const SearchBar = ({ onSearch }) => {
 
     return (
         <div className="search-bar">
+            
             <input
                 type="text"
-                placeholder='&#x1F50E; Search rooms or games'
+                placeholder="Search rooms or games"
                 value={searchTerm}
                 onChange={handleInputChange}
                 className="search-input"
             />
-            <select value={mood} onChange={handleMoodChange} className="mood-select">
-                <option value="">All Moods</option>
-                <option value="casual">Casual</option>
-                <option value="hardcore">Hardcore</option>
-            </select>
+            <div className="dropdown">
+                <button className="btn btn-secondary dropdown-toggle dropdown-toggle-split" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span className="dropdown-title">{dropdownTitle}</span>
+                    
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><button className="dropdown-item" type="button" onClick={() => handleMoodChange('', 'All')}>All</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => handleMoodChange('casual', 'Casual Rooms')}>Casual Rooms</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => handleMoodChange('hardcore', 'Hardcore Rooms')}>Hardcore Rooms</button></li>
+                </ul>
+            </div>
         </div>
     );
 };
