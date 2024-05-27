@@ -38,26 +38,65 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            uploadImageToCloudinary: async (imageFile) => {
+                const preset_name = 'sducy1dm'; // Reemplaza con tu preset de Cloudinary
+                const cloud_name = 'dwnbekby9'; // Reemplaza con tu cloud name de Cloudinary
+
+                const data = new FormData();
+                data.append('file', imageFile);
+                data.append('upload_preset', preset_name);
+
+                try {
+                    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+                        method: 'POST',
+                        body: data
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to upload image');
+                    }
+
+                    const file = await response.json();
+                    return file.secure_url;
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    return null;
+                }
+            },
+
             submitSignUpForm: async (signUpData) => {
                 try {
+                    // Extrae imageFile de signUpData y guarda el resto de los datos en 'rest'
+                    const { imageFile, ...rest } = signUpData;
+            
+                    let imageUrl = null;
+                    if (imageFile) {
+                        // Si hay un archivo de imagen, súbelo a Cloudinary usando la acción uploadImageToCloudinary
+                        imageUrl = await getActions().uploadImageToCloudinary(imageFile);
+                        if (!imageUrl) throw new Error('Failed to upload image to Cloudinary');
+                    }
+            
+                    // Crea el signUpData de datos para el registro, incluyendo la URL de la imagen si existe
+                    const updatedSignUpData = { ...rest, url_image: imageUrl };
                     let response = await fetch(`${apiUrl}/api/signup`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(signUpData)
+                        body: JSON.stringify(updatedSignUpData)
                     });
-
+            
                     if (!response.ok) {
                         throw new Error('Failed to create user');
                     }
-
+            
                     return true;
                 } catch (error) {
                     console.error('Error creating user:', error);
                     return false;
                 }
             },
+            
 
             fetchRooms: async () => {
                 const store = getStore();

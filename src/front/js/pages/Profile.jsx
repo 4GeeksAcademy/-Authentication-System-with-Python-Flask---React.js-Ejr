@@ -20,8 +20,10 @@ export const Profile = () => {
         nintendo: '',
         epic_id: '',
         bio: '',
-        gender: ''
+        gender: '',
+        url_image: '' // Añadir url_image al estado inicial
     });
+    const [imageFile, setImageFile] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -40,7 +42,7 @@ export const Profile = () => {
                 navigate('/login'); // Redirige si no se pudieron obtener los datos del usuario
             }
         };
-    
+
         fetchProfile(); // Ejecuta la función para obtener los datos del perfil al montar el componente
     }, []);
 
@@ -49,13 +51,30 @@ export const Profile = () => {
         setProfileData({ ...profileData, [name]: value });
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setImageFile(file);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
         try {
-            const success = await actions.updateProfile(profileData);
+            let updatedProfileData = { ...profileData };
+
+            if (imageFile) {
+                const imageUrl = await actions.uploadImageToCloudinary(imageFile);
+                if (!imageUrl) {
+                    throw new Error('Failed to upload image to Cloudinary');
+                }
+                updatedProfileData.url_image = imageUrl;
+            }
+
+            const success = await actions.updateProfile(updatedProfileData);
             if (success) {
                 const updatedProfile = await actions.getProfile(); // Fetch the profile again after update
                 localStorage.setItem('username', updatedProfile.username); // Update username in localStorage
+                setProfileData(updatedProfile);
                 setIsEditing(false);
             } else {
                 setError('Failed to update profile. Please try again.');
@@ -83,6 +102,9 @@ export const Profile = () => {
             <h1>Profile</h1>
             {!isEditing ? (
                 <div>
+                    {profileData.url_image && (
+                        <img src={profileData.url_image} alt="Profile" style={{ width: '150px', height: '150px' }} />
+                    )}
                     <p>Email: {profileData.email}</p>
                     <p>Username: {profileData.username}</p>
                     <p>First Name: {profileData.first_name}</p>
@@ -207,6 +229,8 @@ export const Profile = () => {
                         value={profileData.gender}
                         onChange={handleInputChange}
                     />
+                    <label>Profile Image:</label>
+                    <input type="file" name="image" onChange={handleFileChange} />
                     <button type="submit">Update Profile</button>
                     <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
                 </form>
