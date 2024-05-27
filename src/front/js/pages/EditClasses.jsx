@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Form, Row, Col, Button} from "react-bootstrap";
-import { useParams } from "react-router-dom";
+
 
 const EditClasses = () => {
     const { actions, store } = useContext(Context);
-    const params = useParams()
+    const {id} = useParams()
 
     useEffect(() => {
 
@@ -24,14 +24,15 @@ const EditClasses = () => {
 
     const handleChange = (e) => {
 
-        setFormData({ ...formData, [name]: value });
+        setFormData({ ...formData, [e.target.name]:e.target.value });
 
     };
 
     const handleSubmit = () => {
-
+        e.preventDefault();
+        actions.updateEditForm(id,formData)
     }
-    console.log(store.currentEdit)
+    //console.log(store.currentEdit)
     return (
 
         <div>Componente de Edicion de Clases de entrenamiento
@@ -94,7 +95,7 @@ const EditClasses = () => {
                 </Row>
 
                 <div>
-                    <Button variant="primary" type="submit">Editar cambios</Button>
+                    <Button variant="primary" type="submit">Aceptar cambios</Button>
                     <Button variant="primary" type="submit">Cancelar clase</Button>
                     </div>
 

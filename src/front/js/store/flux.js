@@ -514,14 +514,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//funcion asincrona para editar el fomulario de clases de entrenamiento
-			updateEditForm: async (classesData) => {
-
+			updateEditForm: async (id,formData) => {
+				console.log("activa el fetch")
+				console.log(formData)
+				console.log(id)
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 				// console.log(myToken);
 				// console.log(userData);
 				// Construimos la URL para la solicitud
-				let url = `${process.env.BACKEND_URL}api/training_classes`;
+				let url = `${process.env.BACKEND_URL}api/training_classes/${id}`;
 				try {
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -530,7 +532,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
 							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
 						},
-						body: JSON.stringify(data)
+						body: JSON.stringify(formData)
 
 					});
 					let data = await response.json();
