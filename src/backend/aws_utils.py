@@ -1,32 +1,36 @@
-import io, os, botocore, boto3, struct
-import api_utils
+import io, os, botocore, boto3, struct, re
+from .utils import fnv164, fnv132
 from PIL import Image
 
 FILE_ALLOW_FORMATS= ('JPEG','JPEG2000','PNG','WEBP','GIF','ICO','TGA','PCX','BMP','TIFF','DDS')
-
 s3b= None
 
 def initializeClientRemote():
   s3b= boto3.client('s3').Bucket(os.environ.get("AWS_BUCKET"))
 
-def _resolve_filename_for(type, name):
-  type= type.lower()
-  name= name.lower()
+def _resolve_filename_for(type, name, ext):
+  _type= type.lower()
+  _name= name.lower()
 
   hashes= (
-    api_utils.fnv164(f"{os.environ.get("FLASK_APP_KEY").lower()}::{type}::{name}"),
-    api_utils.fnv132(f"{type}::{name}")
+    fnv164(f"{os.environ.get('FLASK_APP_KEY').lower()}::{_type}::{_name}", text=True),
+    fnv132(f"{_type}::{_name}", text=True)
   )
 
-  return 
+  return "".join([v for v in hashes]) + f"{_type}{_name}.{ext}"
 
-def uploadFile(infile, type, filename):
-  if type == 'avatar':
-    infile = convert_avatar_image(infile)
+def uploadFile(filestorage, type, destname):
 
-  s3path= _resolve_filename_for(type, filename)
+  srcname= re.findall(r"([^/:?]+\.(.*)|[^/:?]+)$", filestorage.filename)
+  if not srcname[1]: ext= srcname[0]
+  else: ext= srcname[1]
+
+  if type == 'avatar': infile = convert_avatar_image(infile)
+
+  s3path= _resolve_filename_for(type, destname, ext)
 
   s3b.upload_fileobj(infile, os.environ.get("AWS_BUCKET"), s3path)
+  return s3path
 
 def convert_avatar_image(file):
   with open(file, 'rb') as infile:
@@ -50,8 +54,8 @@ def convert_avatar_image(file):
         img= img.crop((factor, 0, factor+128, 128) if sides[1] == 0 else (0, factor, 128, factor+128))
 
       # dump the new image into a file-like object in WEBP format
-      iobytes= io.BytesIO()
-      img.save(iobytes, format='WEBP', quality=33)
-      iobytes.seek(0)
+      outdata= io.BytesIO()
+      img.save(outdata, format='WEBP', quality=33)
+      outdata.seek(0)
 
-      return iobytes
+      return outdata

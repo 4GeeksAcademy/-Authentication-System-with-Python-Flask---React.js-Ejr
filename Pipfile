@@ -25,6 +25,7 @@ boto3 = "*"
 pillow = "*"
 webp = "*"
 fnvhash = "*"
+urllib3 = "*"
 
 [requires]
 python_version = "3.10.6"

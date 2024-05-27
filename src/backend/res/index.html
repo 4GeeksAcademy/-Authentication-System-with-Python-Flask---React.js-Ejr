@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link href="/admin/static/bootstrap/bootstrap3/swatch/%SWATCH%/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <style>
+      %CSS%
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <script>document.write('<input class="location" type="text" value="'+window.location.href+'" />');</script>
+      %ADMIN_LINK%
+      <div class="flex-a">
+        <div class="flex flex-b">
+          <section class="flex-col public">
+            <h4>GET Endpoints</h4>
+            <div class="list">
+              %ENDPOINT_LINK%
+            </div>
+        </section>
+        <section class="flex-col private">
+          <h4>Other Endpoints</h4>
+          <div class="list">
+              %ENDPOINT_SPAN%
+          </div>
+        </section>
+        </div>
+        <div class="flex flex-c">
+          <section class="flex-col tools">
+            <h4>Developer Tools</h4>
+            <div class="list">
+              %TOOL_LIST%
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
