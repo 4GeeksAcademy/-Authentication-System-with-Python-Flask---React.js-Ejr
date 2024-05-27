@@ -10,7 +10,7 @@ export const CardVehicles = ({ vehicle }) => {
                     <img className="imagen1" src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
                 </a>
             </div>
-            <div className="card-body p-2">
+            <div className="card-body ms-2 p-2">
                 <h3 className="card-title mt-2 mb-4 text-success"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h3>
                 <p className="card-text mb-3 fs-5"><strong>Asientos:</strong> {vehicle.asientos}</p>
                 <p className="card-text fs-5 mb-3"><strong>Precio:</strong> {vehicle.precio} €</p>

@@ -36,7 +36,7 @@ export const Favoritos = () => {
                                         <div key={vehicle.id} className="vehiculo card col-md-4 mb-4 me-5" style={{ width: "22rem", height: "27rem" }}>
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
                                                     <img className="imagen1" src={vehicle.url_img1} style={{ width: "100%", objectFit: "cover", height: "12rem" }} />
-                                                <div className="card-body p-2">
+                                                <div className="card-body ms-2 p-2">
                                                         <h3 className="card-title mb-3 text-success mt-2"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h3>
                                                         <p className="card-text mb-1"><strong>Tipo de motor:</strong> {vehicle.motor}</p>
                                                         <p className="card-text mb-1"><strong>Tipo de cambio:</strong> {vehicle.tipo_cambio}</p>
