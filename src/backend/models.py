@@ -55,14 +55,14 @@ styles_tasks_association= db.Table('sta',
 class User(db.Model):
   __tablename__="users"
   # public
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   username = db.Column(db.String(32), nullable=False, unique=True)
   displayname = db.Column(db.String(64), nullable=False)
   email = db.Column(db.String(32), nullable=False, unique=True)
   avatar = db.Column(db.String(256))
   settings= db.Column(db.String(16))
-  last_workspace_id = db.Column(db.Integer, db.ForeignKey('workspaces.id'))
-  last_board_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
+  last_workspace_id = db.Column(db.Integer)
+  last_board_id = db.Column(db.Integer)
   last_seen = db.Column(db.Integer, nullable=False, default=0)
   timestamp = db.Column(db.Integer, nullable=False, default=0)
   # private
@@ -101,7 +101,7 @@ class User(db.Model):
 #region ---------------------------------------------------------------------------- WORKSPACE
 class Workspace(db.Model):
   __tablename__="workspaces"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   title = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
   thumbnail = db.Column(db.String(256))
@@ -110,7 +110,7 @@ class Workspace(db.Model):
   timestamp = db.Column(db.Integer, nullable=False, default=0)
 
   # owner
-  owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   owner_ = db.relationship("User", back_populates="workspaces_owned_", foreign_keys="[Workspace.owner_id]")
   
   # read_write_rules
@@ -127,10 +127,10 @@ class Workspace(db.Model):
     return {
       "id": self.id,
       "rws": self.rws,
-      "title": self.name,
+      "title": self.title,
       "icon": self.icon,
       "thumbnail": self.thumbnail,
-      "settings": self.thumbnail,
+      "settings": self.settings,
       "rwr_id": self.rwr_id,
       "owner_id": self.owner_id,
       "archived": self.archived,
@@ -142,7 +142,7 @@ class Workspace(db.Model):
 #region ---------------------------------------------------------------------------- BOARD
 class Board(db.Model):
   __tablename__="boards"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   name = db.Column(db.String(64), nullable=False)
   description = db.Column(db.String(1024), nullable=False)
   icon = db.Column(db.String(256))
@@ -156,7 +156,7 @@ class Board(db.Model):
   rwr_ = db.relationship("ReadWriteRules", remote_side="[ReadWriteRules.id]", uselist=False)
 
   # owner
-  owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   owner_ = db.relationship("User", back_populates="boards_owned_", foreign_keys="[Board.owner_id]")
   
   # workspaces
@@ -193,7 +193,7 @@ class Board(db.Model):
 #region ---------------------------------------------------------------------------- LIST
 class List(db.Model):
   __tablename__="lists"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   label = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
   archived = db.Column(db.Boolean, nullable=False, default=False)
@@ -231,7 +231,7 @@ class List(db.Model):
 #region ---------------------------------------------------------------------------- TASK
 class Task(db.Model):
   __tablename__="tasks"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   label = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
   description = db.Column(db.String(1024))
@@ -269,7 +269,7 @@ class Task(db.Model):
 #region ---------------------------------------------------------------------------- TAG
 class Tag(db.Model):
   __tablename__="tags"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   label = db.Column(db.String(32))
   color_fg = db.Column(db.Integer, nullable=False)
   color_bg = db.Column(db.Integer, nullable=False)
@@ -300,7 +300,7 @@ class Tag(db.Model):
 #region ---------------------------------------------------------------------------- STYLE
 class Style(db.Model):
   __tablename__="styles"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   name = db.Column(db.String(32))
   css = db.Column(db.String(64))
   archived = db.Column(db.Boolean, nullable=False, default=False)
@@ -329,7 +329,7 @@ class Style(db.Model):
 #region ---------------------------------------------------------------------------- READ-WRITE RULES
 class ReadWriteRules(db.Model):
   __tablename__="read_write_rules"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   flags_rw = db.Column(db.Integer, nullable=False, default=0)
   enabled = db.Column(db.Boolean, nullable=False, default=True)
   timestamp = db.Column(db.Integer, nullable=False, default=0)
@@ -350,7 +350,7 @@ class ReadWriteRules(db.Model):
 #region ---------------------------------------------------------------------------- USER READ-WRITE RULE
 class UserReadWriteRule(db.Model):
   __tablename__="user_read_write_rules"
-  id = db.Column(db.Integer, nullable=False, primary_key=True)
+  id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   flags_rw = db.Column(db.Integer, nullable=False, default=0)
   enabled = db.Column(db.Boolean, nullable=False, default=True)
   timestamp = db.Column(db.Integer, nullable=False, default=0)

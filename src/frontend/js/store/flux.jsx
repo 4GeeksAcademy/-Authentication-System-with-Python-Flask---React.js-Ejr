@@ -9,7 +9,6 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 		store: {
       // internal
       readyState: { backend: false, frontend: false, pointer: false, language: false },
-      itemclasses: null,
 
       // user
       userPrefs: storeDefaults.userPrefs,
@@ -19,7 +18,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       fakeUser: null,
       
       // content
-      board: storeDefaults.board,
+      board: null,
       items: storeDefaults.items,
 
       // tracking
@@ -130,9 +129,9 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 
       // ------------------------------------------------------------ PAGE BEHAVIOUR
 
-      setItemClasses: (classes)=> { setStore({ itemclasses: classes })},
       setPointerReady: (state)=> { mergeStore({ readyState: { pointer: state }})},
 
+      getStoreDirty: (state)=> { return getStore().dirty & state },
       setStoreDirty: (state)=> { setStore({ dirty: getStore().dirty | state })},
       unsetStoreDirty: (state)=> { setStore({ dirty: (getStore().dirty | state) ^ state })},
 

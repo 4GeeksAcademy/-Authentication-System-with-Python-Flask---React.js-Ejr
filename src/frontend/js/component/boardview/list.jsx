@@ -2,6 +2,7 @@ import React from "react"
 import Constants from "../../app/constants.js"
 
 import { Context } from "../../store/appContext.jsx"
+import Task from "./task.jsx"
 
 const List = ({id, title, coords, bref}) => {
   
@@ -50,8 +51,7 @@ const List = ({id, title, coords, bref}) => {
           const react= content.map((c,i)=>{
             const item= store.items.find(e=>e.id===c)
             if(item) {
-              const Type= store.itemclasses[item.type]
-              return <Type key={`${item.id}|${item.bid}`} id={item.id} bref={[itemUtils, i]} {...item.props} />
+              return <Task key={`${item.id}|${item.bid}`} id={item.id} bref={[itemUtils, i]} {...item.props} />
             }
           }).filter(e=>e!=null)
         

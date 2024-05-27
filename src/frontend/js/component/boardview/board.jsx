@@ -6,10 +6,11 @@ import Utils from "../../app/utils.js"
 import { Context } from "../../store/appContext.jsx"
 
 import getPointerHook from "../../effects/useGlobalPointerHook.jsx"
+import List from "./list.jsx"
 
 const
   _ACTION_TYPE= { end:0, item:1, board:2 },
-  _ACTION_ID= { pan:0, move:1, resize:2 },
+  _ACTION_ID= { pan:0, grab:1, resize:2 },
   _ZOOM_LEVELS= Utils.generateZoomLevels(.025, 10.0, 48, 24), // min, max, steps, 1.0 location
   _CONTEXTMENU_CALLBACK_EVENT= "k-oncontextaction"
 
@@ -30,6 +31,7 @@ const Board= ()=>{
   const
     [ canvasState, _scs ]= React.useState({
       action: null,
+      lastaction: null,
       item: null,
       size: { x:0, y:0 },
       coords: { x:0, y:0 },
@@ -45,6 +47,7 @@ const Board= ()=>{
     itemUtils= React.useRef([])
 
   function merge_canvasState(new_state){ _scs({ ...Object.assign(canvasStateRef.current, { ...new_state, timestamp: Date.now() })})}
+  function set_currentAction(new_action){ _scs({ ...Object.assign(canvasStateRef.current, { lastaction: canvasStateRef.current.action, action: new_action, timestamp: Date.now() })})}
 
   React.useEffect(()=>{
 
@@ -59,8 +62,7 @@ const Board= ()=>{
 
           const item= store.items.find(e=>e.id===c)
           if(item) {
-            const Type= store.itemclasses[item.type]
-            return <Type key={`${item.id}|${item.bid}`} id={item.id} bref={[itemUtils, i]} {...item.props} />
+            return <List key={`${item.id}|${item.bid}`} id={item.id} bref={[itemUtils, i]} {...item.props} />
           }
         }).filter(e=>e!=null)
         set_childItems(react)
@@ -101,7 +103,7 @@ const Board= ()=>{
     }
 
     if(checkAction()) {
-      merge_canvasState({action: { type: _ACTION_TYPE.end, abort: Constants.MOUSE_BTN_RIGHT }})
+      set_currentAction({ type: _ACTION_TYPE.end, abort: Constants.MOUSE_BTN_RIGHT })
       return
     }
     
@@ -112,13 +114,56 @@ const Board= ()=>{
 
   // mouseup
   React.useEffect(()=>{ function handle(){
-    if(checkAction()) merge_canvasState({action: { type: _ACTION_TYPE.end, abort: false }})
+    if(checkAction()) set_currentAction({ type: _ACTION_TYPE.end, abort: false })
   } handle() },[pointer.current.notify.onmouseup])
 
   // mousechange (secondary clicks / click state changes)
   React.useEffect(()=>{ function handle(){
-    
+    const 
+      click= pointer.current.click,
+      buttons= pointer.current.button
+
+    if(checkAction()){
+
+      if(click.button != Constants.MOUSE_BTN_RIGHT && buttons[Constants.MOUSE_BTN_RIGHT].stage > 0) {
+        set_currentAction({ type: _ACTION_TYPE.end, abort: true })
+        console.log("aborting...")
+        return
+      }
+
+      if(checkAction(_ACTION_TYPE.board, _ACTION_ID.pan)){
+        if(buttons[Constants.MOUSE_BTN_LEFT].stage > 0 && buttons[Constants.MOUSE_BTN_MIDDLE].stage > 0) {
+          set_currentAction({ type: _ACTION_TYPE.end, abort: true })
+          console.log("aborting too")
+          return
+        }
+      }
+    }
   } handle() },[pointer.current.notify.onmousechange])
+
+  /** processes a click on the board canvas */
+  function _process_board_click(click, buttons, zsort){
+    if(!checkAction()){
+      if(click.button === Constants.MOUSE_BTN_LEFT && zsort === 0 || click.button === Constants.MOUSE_BTN_MIDDLE && zsort >= -2) {
+        const 
+          half= store.board.size * .475,
+          coords= canvasState.coords
+        merge_canvasState({
+          action: { 
+            type: _ACTION_TYPE.board,
+            id: _ACTION_ID.pan, 
+            middle: click.button === Constants.MOUSE_BTN_MIDDLE,
+            origin: click.origin,
+            limit: [
+                [ -half - coords.x, half - coords.x ],
+                [ -half - coords.y, half - coords.y ]
+              ],
+            zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
+          }
+        })
+      }
+    }
+  }
 
   // double click
   React.useEffect(()=>{
@@ -147,33 +192,6 @@ const Board= ()=>{
     }
   },[pointer.current.notify.onmousedouble])
 
-  /** processes a click on the board canvas */
-  function _process_board_click(click, buttons, zsort){
-    if(!checkAction()){
-      if(click.button === Constants.MOUSE_BTN_LEFT && zsort === 0 || click.button === Constants.MOUSE_BTN_MIDDLE && zsort >= -2) {
-        const 
-          half= store.board.size * .475,
-          coords= canvasState.coords
-        merge_canvasState({
-          action: { 
-            type: _ACTION_TYPE.board,
-            id: _ACTION_ID.pan, 
-            middle: click.button === Constants.MOUSE_BTN_MIDDLE,
-            origin: click.origin,
-            limit: [
-                [ -half - coords.x, half - coords.x ],
-                [ -half - coords.y, half - coords.y ]
-              ],
-            zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
-          }
-        })
-      }
-    }
-    else if(checkAction(_ACTION_TYPE.board, _ACTION_ID.pan)){
-      if(buttons[Constants.MOUSE_BTN_LEFT].stage > 0 && buttons[Constants.MOUSE_BTN_MIDDLE].stage > 0) merge_canvasState({action: { type: _ACTION_TYPE.end, abort: true }})
-    }
-  }
-
   /** processes a click on a board item, only left button allowed */
   function _process_item_click(click, buttons){
     if(!checkAction()){
@@ -190,7 +208,7 @@ const Board= ()=>{
           if(click.element === grab || click.element === resize){
 
             const 
-              mode= grab===click.element ? _ACTION_TYPE.grab : _ACTION_TYPE.resize,
+              mode= grab===click.element ? _ACTION_ID.grab : _ACTION_ID.resize,
               overlay= document.body.querySelector("#board-canvas-overlay"),
               top= canvasRef.current.querySelector("#board-canvas-top"),
               ghost= node.cloneNode(true)
@@ -199,20 +217,19 @@ const Board= ()=>{
             
             node.style.setProperty("opacity", ".5")
 
-            overlay.style.setProperty("--overlay-cursor", mode===_ACTION_TYPE.grab ? "move": "se-resize")
+            overlay.style.setProperty("--overlay-cursor", mode===_ACTION_ID.grab ? "move": "se-resize")
             overlay.style.setProperty("--overlay-pointerevents", "auto")
 
-            merge_canvasState({
-              item: [item, ghost],
-              action: {
-                type: _ACTION_TYPE.item,
-                id: _ACTION_ID.move,
-                half: store.board.size * .5,
-                coords: item.get(Constants.ITEMDATA.coords),
-                origin: pointer.current.click.origin,
-                zoom: _ZOOM_LEVELS[canvasState.zoom],
-                zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
-              }})
+            set_currentAction({
+              type: _ACTION_TYPE.item,
+              id: mode,
+              half: store.board.size * .5,
+              coords: item.get(Constants.ITEMDATA.coords),
+              origin: pointer.current.click.origin,
+              zoom: _ZOOM_LEVELS[canvasState.zoom],
+              zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom],
+              item: [item, ghost]
+            })
           }
         }
       }
@@ -240,11 +257,11 @@ const Board= ()=>{
           dirty: Constants.CANVAS_DIRTY.coords | Constants.CANVAS_DIRTY.cursor
         })
       }
-      else if(checkAction(_ACTION_TYPE.item, _ACTION_ID.move)) {     // GRABBING
+      else if(checkAction(_ACTION_TYPE.item, _ACTION_ID.grab)) {     // GRABBING
         
         const 
           action= canvasState.action,
-          ghost= canvasState.item[1]
+          ghost= canvasState.action.item[1]
 
         const
           cursor= mus.coords,
@@ -257,7 +274,7 @@ const Board= ()=>{
         ghost.style.setProperty("--item-coords-x", new_coords.x + "px")
         ghost.style.setProperty("--item-coords-y", new_coords.y + "px")
       }
-      else if(checkAction(_ACTION_TYPE.board, _ACTION_ID.resize)) {     // RESIZING
+      else if(checkAction(_ACTION_TYPE.item, _ACTION_ID.resize)) {     // RESIZING
   
         console.log("resizing")
       }
@@ -271,6 +288,7 @@ const Board= ()=>{
   // action finishing
   React.useEffect(()=>{
     if(checkAction(_ACTION_TYPE.end)){
+      const last= canvasState.lastaction?? {}
       const new_state= {
         action: null,
         item: null,
@@ -280,23 +298,23 @@ const Board= ()=>{
       if(!canvasState.action.abort) {
         new_state.coords= { x: canvasState.coords.x+canvasState.offset.x, y: canvasState.coords.y+canvasState.offset.y }
       }
-      if(canvasState.item) {
+      if(last.item) {
         const overlay= document.body.querySelector("#board-canvas-overlay")
 
         if(!canvasState.action.abort){
           const new_coords= {
-            x: parseInt(canvasState.item[1].style.getPropertyValue('--item-coords-x').replace("px","")),
-            y: parseInt(canvasState.item[1].style.getPropertyValue('--item-coords-y').replace("px",""))
+            x: parseInt(last.item[1].style.getPropertyValue('--item-coords-x').replace("px","")),
+            y: parseInt(last.item[1].style.getPropertyValue('--item-coords-y').replace("px",""))
           }
   
-          canvasState.item[0].set({
+          last.item[0].set({
             coords: new_coords, 
             dirty: Constants.ITEM_DIRTY.coords
           })
         }
 
-        canvasState.item[0].get().current.style.removeProperty("opacity")
-        canvasState.item[1].remove()
+        last.item[0].get().current.style.removeProperty("opacity")
+        last.item[1].remove()
 
         overlay.style.removeProperty("--overlay-cursor")
         overlay.style.removeProperty("--overlay-pointerevents")
@@ -447,7 +465,7 @@ const Board= ()=>{
         originStyle.setProperty("--canvas-zoom", _ZOOM_LEVELS[canvasState.zoom])
       }
 
-      if((dirty & Constants.CANVAS_DIRTY.coords) | (dirty & Constants.CANVAS_DIRTY.origin)){
+      if((dirty & Constants.CANVAS_DIRTY.coords) || (dirty & Constants.CANVAS_DIRTY.origin)){
         const 
           coords= canvasState.coords,
           offset= canvasState.offset,

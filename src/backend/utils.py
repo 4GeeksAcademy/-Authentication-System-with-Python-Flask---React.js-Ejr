@@ -207,11 +207,12 @@ def parseurl(url):
 def _get_url_color(url):
   if "healthcheck" in url: return "other"
   if "admin" in url: return "admin"
+  if "accounts" in url: return "accounts"
+  if "workspaces" in url: return "workspaces"
+  if "boards" in url: return "boards"
+  if "objects" in url: return "objects"
   if "api" in url: return "api"
-  elif "accounts" in url: return "accounts"
-  elif "workspaces" in url: return "workspaces"
-  elif "boards" in url: return "boards"
-  elif url == "/": return "root"
+  if url == "/": return "root"
   return "other"
 
 def _get_method(methods):

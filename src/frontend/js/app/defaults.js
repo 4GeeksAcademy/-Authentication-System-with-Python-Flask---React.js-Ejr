@@ -16,7 +16,8 @@ export const storeDefaults = Object.freeze({
   devPrefs: {
     showState: false, // current show state of the devtools panel
     panelPosition: 3, // corner of the devtools panel (0:TL 1:TR 2:BL 3:BR)
-    devRender: false  // general purpose usage, toggleable in dev panel
+    devRender: false, // general purpose usage, toggleable in dev panel
+    fakeOwner: false  // renders everything if you were the owner
   },
   // board data
   board: {

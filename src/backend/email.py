@@ -2,6 +2,8 @@ import os, smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from .utils import parse_bool
+
 APP_ACCOUNT= os.environ.get("APP_GMAIL_ACCOUNT", None)
 APP_PASSWORD= os.environ.get("APP_GMAIL_PASSWORD", None)
 
@@ -16,7 +18,7 @@ def send_verification_email(data):
   html = html.replace("%_2_%", data['vericode'])
   message.attach(MIMEText(html, "html"))
 
-  send_email(message, data['email'])
+  return send_email(message, data['email'])
 
 def send_recovery_email(data):
 
@@ -29,21 +31,24 @@ def send_recovery_email(data):
   html = html.replace("%_2_%", data['passcode'])
   message.attach(MIMEText(html, "html"))
 
-  send_email(message, data['email'])
+  return send_email(message, data['email'])
 
 def send_email(message, dest):
 
   if APP_ACCOUNT and APP_PASSWORD:
     
-    message["From"] = os.environ.get("APP_GMAIL_ACCOUNT", None)
+    message["From"] = APP_ACCOUNT
     message["To"] = dest
 
     sv= create_SMTP_server("smtp.gmail.com", APP_ACCOUNT, APP_PASSWORD)
     sv.sendmail(APP_ACCOUNT, dest, message.as_string())
     sv.quit()
 
+    return 200, "email sent"
+  else: return 500, "server email credentials is not defined"
+
 def create_SMTP_server(host, account, password):
-  SSL= os.environ.get("SMPT_SSL", False)
+  SSL= parse_bool(os.environ.get("SMPT_SSL", False))
   
   if SSL:
     context= ssl.create_default_context()

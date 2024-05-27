@@ -1,17 +1,22 @@
-import os, sys, signal
+import os, sys, signal, urllib3
 from datetime import timedelta
+
 from flask import Flask, jsonify, send_from_directory, Blueprint, request, redirect
 from flask_migrate import Migrate
 from flask_cors import CORS
-from backend.utils import APIException, generate_sitemap_v2
-from backend.models import db
-from backend.routes_accounts import accounts
-from backend.routes import workspaces, boards, api
-from backend.admin import setup_admin
-from backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
+from backend.utils import APIException, generate_sitemap_v2
+from backend.models import db
+from backend.admin import setup_admin
+from backend.commands import setup_commands
 import backend.api_utils as api_utils
+
+from backend.routes_accounts import accounts
+from backend.routes_workspaces import workspaces
+from backend.routes_boards import boards
+from backend.routes_objects import objects
+from backend.routes import api
 
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
@@ -35,6 +40,7 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
 app.register_blueprint(accounts, subdomain='accounts')
 app.register_blueprint(workspaces, subdomain='workspaces')
 app.register_blueprint(boards, subdomain='boards')
+app.register_blueprint(objects, subdomain='objects')
 app.register_blueprint(api, subdomain='api')
 
 www= Blueprint('www', __name__, subdomain='www')
@@ -52,11 +58,8 @@ api_utils.current_app= app
 
 @app.before_request
 def redirect_www():
-    """Redirect www requests to non-www."""
-    urlparts = request.host.split('.')
-    if urlparts[0].lower() == 'www':
-        new_url = request.url.replace('www.', '', 1)
-        return redirect(new_url, code=301)
+  if 'www.' in request.host:
+    return redirect(request.url.replace('www.', '', 1), code=301)
     
 # root
 @app.route('/')
@@ -67,7 +70,10 @@ def sitemap():
 # basic health check
 @app.route('/healthcheck', methods=['GET'])
 def handle_health():
-  return "ok", 200
+  domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
+  subdomains= ("accounts", "workspaces", "boards", "objects", "api")
+  responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
+  return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day", 200
 
 # for every unused path
 @app.route('/<path:path>', methods=['GET'])
