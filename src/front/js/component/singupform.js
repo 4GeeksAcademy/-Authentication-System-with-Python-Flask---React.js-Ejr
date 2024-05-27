@@ -15,9 +15,9 @@ export const SignupForm = () => {
             inputPassword: ''
         },
         validationSchema: Yup.object({
-            inputEmail: Yup.string().email('Invalid email address').required('Required'),
+            inputEmail: Yup.string().email('Correo no válido').required('Obligatorio'),
             inputPassword: Yup.string().max(8, 'Debe tener 8 caracteres máximo').min(6, 'Debe tener 6 caracteres mínimo')
-                .required('Required'),
+                .required('Obligatorio'),
         }),
         onSubmit: values => {
             async function handleSubmit() {
@@ -26,7 +26,7 @@ export const SignupForm = () => {
                     swal("Registro con éxito", "Gracias por registrarse en nuestra web!", "success")
                     navigate("/");
                 } else if (isSignup === "email_exist") {
-                    swal("Este correo ya se encuentra registrado", "Por favor intentelo con otro correo", "error")
+                    swal("Este correo ya se encuentra registrado", "Por favor inténtelo con otro correo", "error")
                 } 
             };
             handleSubmit()

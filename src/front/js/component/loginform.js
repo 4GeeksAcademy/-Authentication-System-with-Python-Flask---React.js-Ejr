@@ -16,9 +16,9 @@ export const LoginForm = () => {
             inputPassword: ''
         },
         validationSchema: Yup.object({
-            inputEmail: Yup.string().email('Invalid email address').required('Required'),
+            inputEmail: Yup.string().email('Correo no válido').required('Obligatorio'),
             inputPassword: Yup.string().max(8, 'Debe tener 8 caracteres máximo').min(6, 'Debe tener 6 caracteres mínimo')
-                .required('Required'),
+                .required('Obligatorio'),
         }),
         onSubmit: values => {
             async function handleSubmit() {
@@ -34,7 +34,7 @@ export const LoginForm = () => {
     });
 
     return (
-        <div className="contactForm">
+        <div className="contactForm2">
             <h1 className="title text-center pb-4">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
