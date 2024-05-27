@@ -29,8 +29,9 @@ def parse_int(v, default=-1):
 
 #--- parse a bool
 def parse_bool(v, default=False):
-  if type(v) == bool: return v
   if not v or v=="": return default
+  if type(v) == bool: return v
+  if type(v) == int or type(v) == float: return v > 0
   if v.isnumeric(): return float(v) > .0
   return v.lower() in ('true', 'yes', 't', 'y', 'claro', 'aro', 'aha', 'mhm', 'sure', 'yep', 'yup', 'sip', 'sipi', 'dale', 'enga', 'check', '100%', 'bet', 'ok', 'k', 'letsago', 'fap', 'lemme_smash')
 
@@ -43,19 +44,19 @@ def unpack_array_int(bytes):
 
 #--- gets the current time in millis, since epoch (1/1/1970)
 def get_current_time_millis():
-  return get_millis_since(datetime.now(timezone.utc))
+  return int(datetime.now(timezone.utc).timestamp()*1000)
 
 #--- gets the passed time in millis, since timestamp (in seconds)
 def get_millis_since(timestamp):
-  return int(datetime.fromtimestamp(timestamp, timezone.utc).replace(tzinfo=timezone.utc).timestamp() * 1000)
+  return int(datetime.fromtimestamp(timestamp, tz=timezone.utc).timestamp() * 1000)
 
 #--- gets the current time in millis, since epoch (1/1/1970)
 def get_current_time_seconds():
-  return get_seconds_since(datetime.now(timezone.utc))
+  return int(datetime.now(timezone.utc).timestamp())
 
 #--- gets the passed time in millis, since timestamp (in seconds)
 def get_seconds_since(timestamp):
-  return int(datetime.fromtimestamp(timestamp, timezone.utc).replace(tzinfo=timezone.utc).timestamp())
+  return int(datetime.fromtimestamp(timestamp, tz=timezone.utc).timestamp())
 
 #--- format time in millis, and timestamp (in seconds)
 def format_time_millis(millis): return datetime.fromtimestamp(millis*.001, timezone.utc).ctime()

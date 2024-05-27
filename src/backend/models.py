@@ -93,7 +93,7 @@ class User(db.Model):
       "last_workspace_id": self.last_workspace_id,
       "last_board_id": self.last_board_id,
       "last_seen": self.last_seen,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "timestamp": self.timestamp if self.timestamp > 0 else 0 # stores the last modified time
     }
   def __repr__(self): return f'<User {self.id}::{self.email}::{self.username} ({self.displayname})>'
 #endregion
