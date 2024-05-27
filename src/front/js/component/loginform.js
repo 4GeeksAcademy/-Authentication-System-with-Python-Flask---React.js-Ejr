@@ -40,7 +40,7 @@ export const LoginForm = () => {
             <h1 className="title text-center pb-4">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="inputEmail" className="form-label" style={{ color: 'brown' }}>Correo electrónico</label>
+                    <label htmlFor="inputEmail" className="form-label" style={{ color: 'green' }}>Correo electrónico</label>
                     <input type="email" className="form-control" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputEmail} />
@@ -49,7 +49,7 @@ export const LoginForm = () => {
                     ) : null}
                 </div>
                 <div className="mb-2">
-                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'brown' }}>Contraseña</label>
+                    <label htmlFor="exampleInputPassword" className="form-label" style={{ color: 'green' }}>Contraseña</label>
                     <input type="password" className="form-control" name="inputPassword" id="inputPassword" placeholder="xxxxxxx" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputPassword} />

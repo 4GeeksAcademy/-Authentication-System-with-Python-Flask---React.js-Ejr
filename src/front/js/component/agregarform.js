@@ -87,12 +87,12 @@ export const AgregarForm = (props) => {
             inputPrecio: '',
         },
         validationSchema: Yup.object({
-            inputMarcayModelo: Yup.string().min(8, 'La marca o modelo debe tener mínimo 8 carácteres').required('Obligatorio'),
-            inputMatricula: Yup.string().matches(/^\S*$/, 'No se permiten espacios en la matrícula').max(7, 'Debe tener 7 caracteres máximo').required('Obligatorio'),
-            inputMotor: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Obligatorio'),
-            inputCambio: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Obligatorio'),
-            inputAsientos: Yup.number().min(2, 'El vehículo debe tener mínimo 2 asientos').required('Obligatorio'),
-            inputPrecio: Yup.number().max(999, 'El precio de su alquiler no debe exceder las 3 cifras').required('Obligatorio'),
+            inputMarcayModelo: Yup.string().min(8, 'La marca o modelo debe tener mínimo 8 carácteres').required('Campo obligatorio'),
+            inputMatricula: Yup.string().matches(/^\S*$/, 'No se permiten espacios en la matrícula').max(7, 'Debe tener 7 caracteres máximo').required('Campo obligatorio'),
+            inputMotor: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Campo obligatorio'),
+            inputCambio: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Campo obligatorio'),
+            inputAsientos: Yup.number().min(2, 'El vehículo debe tener mínimo 2 asientos').required('Campo obligatorio'),
+            inputPrecio: Yup.number().max(999, 'El precio de su alquiler no debe exceder las 3 cifras').min(1, 'El precio de su alquiler debe ser mayor a 0').required('Campo obligatorio'),
         }),
         onSubmit: values => {
             async function handleSubmit() {   
@@ -115,7 +115,7 @@ export const AgregarForm = (props) => {
 
     return (
         <div className="container lg-5">
-            <h1 className="border-bottom pb-4 text-center">Ponga su vehículo en alquiler</h1>
+            <h1 className="border-bottom pb-4 text-success text-center"><strong>PONGA SU VEHÍCULO EN ALQUILER</strong></h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
