@@ -1,11 +1,14 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, send_file
 from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
+
+import requests
+import base64
 
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
@@ -136,7 +139,8 @@ def create_signup_manager():
         password = request.json.get('password')
         is_manager = request.json.get('isManager')  
         name = request.json.get('name')
-        last_name = request.json.get('lastName')  
+        last_name = request.json.get('lastName')
+        number_document = request.json.get('numberDocument')  
         phone = request.json.get('phone')
         number_document = request.json.get('numberDocument')
         user_id = request.json.get('userId')  
@@ -146,8 +150,8 @@ def create_signup_manager():
         if len(email) > 80:
             return jsonify({"Error": "Email too long"}), 400
 
-        if not email or not password or not is_manager or not name or not last_name or not phone or not number_document or not user_id or not teacher_id  :
-            return jsonify({"msg": "email, password, is_manager, name, last_name, phone, number_document, user_id and teacher_id are required"})
+        if not email or not password or not is_manager or not name or not last_name or not phone:
+            return jsonify({"msg": "email, password, is_manager, name, last_name, phone, user_id and teacher_id are required"})
         
         existing_manager = Manager.query.filter_by(email=email).first()
         if existing_manager:
@@ -161,6 +165,7 @@ def create_signup_manager():
             is_manager=is_manager,
             name=name,
             last_name=last_name,
+            number_document=number_document,
             phone=phone,
             number_document=number_document,
             user_id=user_id,
@@ -631,19 +636,12 @@ def post_courses():
         title =  request.json.get('title')
         category_title = request.json.get('categoryTitle')
         modules_length = request.json.get('modulesLength')
-        title_certificate_to_get = request.json.get('titleCertificateToGet')
+        certificate = request.json.get('certificate') 
         price = request.json.get('price')
-        description = request.json.get('description')
-        assessment = request.json.get('assessment')
-        create_date = request.json.get('createDate')
-        title_Teacher = request.json.get('titleTeacher')
-        date_expiration = request.json.get('dateExpiration')
-         
-        
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not create_date or not title_Teacher or not date_expiration:
-            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, create_date, title_Teacher and date_expiration are required"}), 400
+        if not title or not category_title or not modules_length or not certificate or not price:
+            return({"Error":"title, category_title, modules_length, certificate and price are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
@@ -651,7 +649,7 @@ def post_courses():
             return jsonify({"Error":"Title already exists."}), 409
         
         
-        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=create_date, title_Teacher=title_Teacher, date_expiration=date_expiration)
+        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate, price=price)
         db.session.add(course)
         db.session.commit()
         return jsonify({"message":"Course has been Create Successfully", "Course": course.serialize()}), 200
@@ -867,49 +865,38 @@ def get_quizzes():
 def add_course_to_trolley():
     try:
         data = request.json
-        title_course = data.get('titleCourse')
-        price = data.get('price')
-        course_id = data.get('courseId')
-        user_id = data.get('userId')
 
-        if not title_course or not price or not course_id or not user_id:
-            return jsonify({"Error": "Course ID, User ID, and Course ID are required"}), 400
+        course_id = data.get('course_id')
+        user_id = data.get('user_id')
+        manager_id = data.get('manager_id')
+
+        if not course_id or not user_id or not manager_id:
+            return jsonify({"error": "Course ID, User ID, and Manager ID are required"}), 400
         
-        course = Course.query.filter_by(id=course_id).first()
+        course = Course.query.get(course_id)
         if not course:
-            return jsonify({"Error": "Course ID does not exist"}), 404
-        
-        user = User.query.filter_by(id=user_id).first()
-        if not user:
-            return jsonify({"Error": "User ID does not exist"}), 404
-        
-        trolley = Trolley.query.filter_by(title_course=title_course).first()
-        if trolley:
-            return jsonify({"Error": "Course already exists in the trolley"}), 409
+            return jsonify({"error": "Course not found"}), 404
         
         current_date = datetime.now().strftime('%Y-%m-%d')
-        new_trolley = Trolley(
-            title_course=title_course,
-            price=price,
-            date=current_date,
-            course_id=course_id,
-            user_id=user_id
+        new_order = Orders(
+            user_id=user_id,
+            manager_id=manager_id,
+            payment_id=None,
+            title_order=course.title,
+            price=course.price,
+            date=current_date
         )
-        db.session.add(new_trolley)
+        db.session.add(new_order)
         db.session.commit()
-        return jsonify({"message": "Course added to trolley successfully", "order_id": new_trolley.serialize()}), 201
-    except Exception as e:
-        return jsonify({"Error": "An error occurred", "error fetching": str(e)}), 500
-    
 
-@api.route('/order/courses', methods=['GET'])
-def get_trolley():
-    try:
-        orders = Orders.query.all()
-        serialized_orders = [order.serialize() for order in orders]
-        return jsonify(serialized_orders), 200
+        new_trolley_entry = Trolley(order_id=new_order.id)
+        db.session.add(new_trolley_entry)
+        db.session.commit()
+        return jsonify({"message": "Course added to trolley succesfully", "order_id": new_order.id}), 201
+    
     except Exception as e:
-        return jsonify({"Error": "An error occurred while fetching orders", "error_details": str(e)}), 500
+        return jsonify({"Error": "An error ocurred", "erro fetching": {str(e)}}), 500
+
 
 #----------------------ORDER------------------------#           
 @api.route('/order/courses', methods=['POST'])
@@ -991,87 +978,4 @@ def upload_file():
             return jsonify({'message': 'File uploaded successfully', 'file': file_info}), 200
         
     except Exception as e:
-        return jsonify({'Error': str(e)}), 500
-
-#----------------------Category------------------------#    
-@api.route('/courses/categories', methods=['POST'])
-def post_category():
-    try:
-        data = request.json
-
-        title_category = data.get('titleCategory')
-        sub_category = data.get('subCategory')
-        category_length = data.get('categoryLength')
-        course_more_current = data.get('courseMoreCurrent')
-        course_more_sold = data.get('courseMoreSold')
-        user_id = data.get('userId')
-        manager_id = data.get('managerId')
-        teacher_id = data.get('teacherId')
-
-       
-        if not all([title_category, sub_category, category_length, course_more_current, course_more_sold]):
-            return jsonify({"Error": "titleCategory, subCategory, categoryLength, courseMoreCurrent, and courseMoreSold are required"}), 400
-
-        
-        new_category = Category(
-            title_category=title_category,
-            sub_category=sub_category,
-            category_length=category_length,
-            course_more_current=course_more_current,
-            course_more_sold=course_more_sold,
-            user_id=user_id,
-            manager_id=manager_id,
-            teacher_id=teacher_id
-        )
-
-       
-        db.session.add(new_category)
-        db.session.commit()
-
-    
-        return jsonify({"message": "Category created successfully", "category": new_category.serialize()}), 201
-
-    except Exception as e:
-    
-        return jsonify({"Error": "An error occurred", "error_details": str(e)}), 500
-
-
-@api.route('/courses/categories', methods=['GET'])
-def get_categories():
-    try:
-        category = Category.query.all()
-
-        if not category:
-            return jsonify({"message": "No category found"}), 404
-        
-        serialized_quizzes = [category.serialize() for category in category]
-        return jsonify({"Category": serialized_quizzes}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in fetching category: " + str(err)}) 
-       
-    
-#----------------------CLOUDINARY ENDPOINT------------------------# 
-atlas = Flask(__name__)
-
-cloudinary.config(
-    cloud_name=os.getenv('dfoegvmld'),
-    api_key=os.getenv('979734725363914'),
-    api_secret=os.getenv('EdILqI1LeRpZAjEw5MnNMHX_Ppo')
-)
-
-@api.route('/upload', methods=['POST'])
-def upload_image():
-    if 'file' not in request.files:
-        return jsonify({"error": "No file part"}), 400
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-
-    if file:
-        upload_result = cloudinary.uploader.upload(file)
-        return jsonify(upload_result), 200
-
-    return jsonify({"error": "Upload failed"}), 500
+        return jsonify({'error': str(e)}), 500
