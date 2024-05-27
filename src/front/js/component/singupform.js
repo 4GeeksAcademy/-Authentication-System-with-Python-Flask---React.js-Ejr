@@ -43,7 +43,7 @@ export const SignupForm = () => {
                         onBlur={formik.handleBlur}
                         value={formik.values.inputEmail} />
                     {formik.touched.inputEmail && formik.errors.inputEmail ? (
-                        <div>{formik.errors.inputEmail}</div>
+                        <div className="text-danger">{formik.errors.inputEmail}</div>
                     ) : null}
                 </div>
                 <div className="mb-3">
@@ -52,7 +52,7 @@ export const SignupForm = () => {
                         onBlur={formik.handleBlur}
                         value={formik.values.inputPassword} />
                     {formik.touched.inputPassword && formik.errors.inputPassword ? (
-                        <div>{formik.errors.inputPassword}</div>
+                        <div className="text-danger">{formik.errors.inputPassword}</div>
                     ) : null}
                 </div>
                 <div className="d-flex justify-content-center mt-5">
