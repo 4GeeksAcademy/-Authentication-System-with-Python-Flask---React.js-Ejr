@@ -14,15 +14,16 @@ const Navbar = () => {
   //--- login ---------------------
   const { store, actions }= React.useContext(Context)
   const[dropCreate, setDropCreate] = React.useState(false)
-
+  const[dropProfile, setDropProfile] = React.useState(false)
+  
   const handleDrop = () => {
-      setdropProfile(!dropProfile)
+      setDropProfile(!dropProfile)
       console.log("dropped down")
     }
 
   const handleCreate = () => {
     //this should create a new board, or open an mini tab from where u can put the name of the board...
-  }
+  } 
 
 
 
@@ -37,17 +38,19 @@ const Navbar = () => {
     <>
     {store.fakeUser ? 
       <div className="sticky top-0 bg-dark w-full flex z-[999]">
-        <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
+        <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 border-b-[1px] border-gray-600">
           <div className="flex items-center">
             
             <p onClick={()=>navigate('/')} className="cursor-pointer text-2xl f-body font-[600] mr-28">KeQQu</p>  
             
             <p onClick={()=>navigate('dashboard')} className="f-body cursor-pointer mr-10">Dashboard</p>
-
-            <button onClick={handleCreate}
-            className="w-8 h-8 rounded-md border-[1px] border-w hover:bg-transparent bg-w text-b text-xl flex items-center justify-center transition-all ease-in-out duration-500">
-              <i class="fa-solid fa-plus p-0 hover:text-w"></i>
-            </button>
+            <div className="flex items-center">
+              <button onClick={handleCreate}
+              className="w-8 h-8 rounded-md border-[1px] border-w hover:bg-transparent bg-w text-b text-xl flex items-center justify-center transition-all ease-in-out duration-500">
+                <i className="fa-solid fa-plus p-0 hover:text-w"> </i>
+              </button> 
+              <p className="ml-2 text-gray-400 text-xs">create a new workspace</p>
+            </div>
                 
 
 
@@ -110,7 +113,7 @@ const Navbar = () => {
 
     : 
 
-    <div className="sticky top-0 bg-dark w-full flex z-[999]">
+    <div className="sticky top-0 bg-dark w-full flex z-[999] border-b-[1px] border-gray-600">
       <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
           <Link to="/">
             <p className=" text-2xl f-body font-[600] mr-24">KeQQu</p>  
