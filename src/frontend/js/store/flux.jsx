@@ -239,6 +239,22 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         ].join("")
         Utils.setCookie("devPrefs", data, [30,0,0], "/", Constants.COOKIE_SAMESITE_STRICT )
       },
+      getUserWorkSpaces: async()=>{
+				try{
+          const res= await fetch('workspaces' + process.env.BACKEND_URL + '/fetch' , {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            })
+          if(res.status==200){
+            const 
+              data = await res.json(),
+              workspaces = data.res      //workspaces
+              return workspaces
+          }
+        }
+				catch(e){ console.log("Couldn't get workspaces data", e) }
+				return false
+      },
 		}
 	}
 

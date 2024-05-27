@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {Link as NavTo} from "react-scroll" ;
 import { Context } from "../store/appContext.jsx";
 
@@ -10,7 +10,9 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
+  
   //--- login ---------------------
   const { store, actions }= React.useContext(Context)
   const[dropCreate, setDropCreate] = React.useState(false)
@@ -49,7 +51,11 @@ const Navbar = () => {
               className="w-8 h-8 rounded-md border-[1px] border-w hover:bg-transparent bg-w text-b text-xl flex items-center justify-center transition-all ease-in-out duration-500">
                 <i className="fa-solid fa-plus p-0 hover:text-w"> </i>
               </button> 
-              <p className="ml-2 text-gray-400 text-xs">create a new workspace</p>
+            {/* { location.host = "/dashboard" && (
+                <p className="ml-2 text-gray-400 text-xs">create a new workspace</p>
+              )
+              } */}
+              <p className="ml-2 text-gray-400 text-xs">create a new board</p>
             </div>
                 
 
@@ -170,4 +176,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-export default Navbar;
+

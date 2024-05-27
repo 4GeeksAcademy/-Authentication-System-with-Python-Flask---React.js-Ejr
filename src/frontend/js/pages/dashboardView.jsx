@@ -9,7 +9,7 @@ const DashboardView = () => {
 	return (
 		<div className="w-full bg-dark flex h-full">
 {/*--------- Side NavBar --------------------------------------------------------------------------------*/}
-			<div className="w-1/6 border-r-2 flex flex-col p-3 sticky h-full">
+			<div className="w-1/6 border-r-[1px] border-gray-500 flex flex-col p-3 sticky h-full">
 				<ul>
 					<li className="flex items-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
 						<i className="fa-solid fa-house text-sm mr-5"></i>
@@ -101,7 +101,7 @@ const DashboardView = () => {
 							</div>
 							<div className="flex flex-col gap-3">
 								<p className="ml-1 text-sm">This should go after the map, so u can create a new one easily</p>
-								<button className="w-60 h-36 bg-gray-600 rounded-xl flex items-center justify-center">Create a new workspace</button>
+								<button className="w-60 h-36 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gray-700">Create a new workspace</button>
 							</div>
 						</div>
 					</div>
@@ -132,7 +132,7 @@ const DashboardView = () => {
 							</div>
 							<div className="flex flex-col gap-3">
 								<p className="ml-1 text-sm">This should go after the map, so u can create a new one easily</p>
-								<button className="w-60 h-36 bg-gray-600 rounded-xl flex items-center justify-center">Create a new board</button>
+								<button className="w-60 h-36 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gray-700">Create a new board</button>
 							</div>
 						</div>
 					</div>
