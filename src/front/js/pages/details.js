@@ -34,18 +34,17 @@ export const Details = () => {
                             <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
                         </button>
                     </div>
-                    <div className="carousel-inner">
+                    <div className="carousel-inner rounded-2">
                         <div className="carousel-item active">
-                            <img src={store.details?.url_img1} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
+                            <img src={store.details?.url_img1} style={{ height: "500px", objectFit: "cover" }} className="d-block w-100 ms-5 ps-3 rounded-2" alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src={store.details?.url_img2} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
+                            <img src={store.details?.url_img2} style={{ height: "500px", objectFit: "cover" }} className="d-block w-100 ms-5 ps-3 rounded-2" alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src={store.details?.url_img3} style={{ height: "450px", objectFit: "cover" }} className="d-block w-100 rounded-3" alt="..." />
+                            <img src={store.details?.url_img3} style={{ height: "500px", objectFit: "cover" }} className="d-block w-100 ms-5 ps-3 rounded-2" alt="..." />
                         </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <button className="carousel-control-prev justify-center ms-5" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon bg-success" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
                     </button>
@@ -53,6 +52,7 @@ export const Details = () => {
                         <span className="carousel-control-next-icon bg-success" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
                     </button>
+                    </div>
                 </div>
                 <div>
                     <div>
