@@ -255,7 +255,7 @@ def send_confirmation_mail():
         "Confirmación de compra en Friendly Wheels",
         recipients=[email]  
     )
-    msg.body = "Gracias por tu compra en Friendly Wheels 🚗." + "          " + "Tu reserva se encuentra confirmada."
+    msg.body = "Gracias por tu compra en Friendly Wheels.\nTu reserva se encuentra confirmada.\nCódigo de confirmación: AUXD923\n\nEquipo de Friendly Wheels,Inc"
 
     try:
         mail.send(msg)
