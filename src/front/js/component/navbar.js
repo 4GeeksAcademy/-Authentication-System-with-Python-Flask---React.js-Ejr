@@ -28,7 +28,7 @@ export const Navbar = () => {
 	}, [store.vehicles]);
 
 	return (
-		<nav className="navbar navbar-light">
+		<nav className="navbar navbar-light mb-5">
 			<div className="container-fluid mx-5" style={{ maxWidth: "1500px" }}>
 				<div className="d-flex gap-3">
 					<Link to="/">

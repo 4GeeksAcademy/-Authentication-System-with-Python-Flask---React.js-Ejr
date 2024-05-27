@@ -103,10 +103,11 @@ footer {
     background-position: center center;
     position: relative;
     justify-items: center;
+    border-radius: 3px;
 }
  
 .offcanvas {
-    bottom: auto;
+    bottom: auto !important;
 }
 
 body{
@@ -128,7 +129,7 @@ body{
 }
 
 .instagram {
-    color: white
+    color: white;
 }
     
 .instagram:hover {
@@ -195,7 +196,7 @@ body{
 }
 
 #carouselExample {
-    z-index:0
+    z-index:0;
 }
 
 
