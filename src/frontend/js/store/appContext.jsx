@@ -46,7 +46,9 @@ const appContext = ReactComponent => {
 
 		return (
 			<Context.Provider value={state}>
-				<ReactComponent {...props} />
+        { state.store.readyState.frontend &&
+				  <ReactComponent {...props} />
+        }
 			</Context.Provider>
 		)
 	}

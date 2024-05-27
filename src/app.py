@@ -3,9 +3,10 @@ from datetime import timedelta
 from flask import Flask, jsonify, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
-from backend.utils import APIException, generate_sitemap
+from backend.utils import APIException, generate_sitemap_v2
 from backend.models import db
-from backend.routes import accounts, workspaces, boards, api
+from backend.routes_accounts import accounts
+from backend.routes import workspaces, boards, api
 from backend.admin import setup_admin
 from backend.commands import setup_commands
 from flask_jwt_extended import JWTManager
@@ -24,11 +25,11 @@ app.url_map.default_subdomain = "www"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config["JWT_SECRET_KEY"]= api_utils.APP_SECRET_KEY
-app.config["JWT_TOKEN_LOCATION"]= ('headers')
-app.config["JWT_HEADER_NAME"]= api_utils.AUTH_TOKEN_HEADER
+app.config["JWT_SECRET_KEY"]= os.environ.get("FLASK_APP_KEY", "la_coyuntura_de_los_afluentes_tamizados")
+app.config["JWT_TOKEN_LOCATION"]= ('cookies')
+app.config["JWT_COOKIE_SECURE"] = ENV == "prod" # cookies must be sent over https in production
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
 
 # backend routes blueprints
 app.register_blueprint(accounts, subdomain='accounts')
@@ -44,29 +45,36 @@ setup_commands(app)
 
 jwt = JWTManager(app)
 
+api_utils.current_app= app
+
 # root
 @app.route('/')
 def sitemap():
-    if ENV == "dev": return generate_sitemap(app)
-    return send_from_directory(static_file_dir, 'index.html')
+  if ENV == "dev": return generate_sitemap_v2(app)
+  return send_from_directory(static_file_dir, 'index.html')
 
 # basic health check
 @app.route('/healthcheck', methods=['GET'])
 def handle_health():
-    return "ok", 200
+  return "ok", 200
 
 # for every unused path
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
-    if not os.path.isfile(os.path.join(static_file_dir, path)): path = 'index.html'
-    response = send_from_directory(static_file_dir, path)
-    response.cache_control.max_age = 0  # avoid cache memory
-    return response
+  if not os.path.isfile(os.path.join(static_file_dir, path)): path = 'index.html'
+  response = send_from_directory(static_file_dir, path)
+  response.cache_control.max_age = 0  # avoid cache memory
+  return response
 
 # error handling
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
+
+# custom override for when no valid token given on a jwt_required() endpoint
+@jwt.unauthorized_loader
+def handle_missing_required_jwt(header):
+  return api_utils.response_401()
 
 # main
 if __name__ == '__main__':

@@ -1,6 +1,8 @@
-/* normal css styling here */
+/* --------------------------------------------------- GENERAL */
+
 :root {
   --canvas-size: 8192px;
+  --canvas-size-half: 4096px;
 
   --canvas-coords-x: 0px;
   --canvas-coords-y: 0px;
@@ -10,6 +12,14 @@
 
   --canvas-background: #32363a;
   --canvas-background-size: 1024px;
+  
+  --contextmenu-coords-x: 0px;
+  --contextmenu-coords-y: 0px;
+  --contextmenu-offset-x: 0px;
+  --contextmenu-offset-y: 0px;
+
+  --overlay-cursor: auto;
+  --overlay-pointerevents: none;
   
   --list-coords-x: 0px;
   --list-coords-y: 0px;
@@ -22,28 +32,40 @@
   background-size: "480px";
   width: 100vw;
   height: 100vh;
+  cursor: crosshair;
+  user-select: none;
   & a {
-    @supports (background-clip:text) or (-webkit-background-clip:text) {
-      color: transparent;
-      background: inherit;
-      background-clip: text;
-      -webkit-background-clip: text;
-      filter: invert(1.0);
-    }
-    cursor: crosshair;
-    filter: invert(2.0) blur(1px)
+    color: transparent;
+    background: inherit;
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: invert(1.0);
+    cursor: inherit;
   }
 }
 
 .pointer-skip {
   pointer-events: none;
-  & > * {
-    pointer-events: auto;
-  }
+  & > * { pointer-events: auto; }
+}
+
+.pointer-skip-below * {
+  pointer-events: none;
 }
 
 .devtools {
   z-index: 256;
+}
+
+.devbox {
+  background: #000a;
+  backdrop-filter: saturate(16.0) contrast(0.25) blur(8px);
+}
+
+[data-devrender] {
+  & .devknob {
+    outline: 1px solid red; 
+  }
 }
 
 .hidescroll-y {
@@ -51,18 +73,52 @@
   padding-right: 32px; 
 }
 
+/* --------------------------------------------------- ANIM */
+
+/* sidepanel left arrow buttons */
+.k--btn-icon-left {
+  &>i {
+    translate: 0 0;
+    scale: 1.0;
+    transition: translate 350ms cubic-bezier(.96,-0.8,.71,.89), scale 450ms ease-out;
+  }
+  &:hover>i {
+    translate: -.5em 0;
+    scale: 1.15;
+    transition: translate 350ms cubic-bezier(.2,1.21,1,.95), scale 250ms ease-in;
+  }
+}
+
+/* --------------------------------------------------- CONTEXT MENU */
+
+.k--contextmenu {
+  position: fixed;
+  left: var(--contextmenu-offset-x); 
+  top: var(--contextmenu-offset-y); 
+  z-index: 1;
+  user-select: none;
+  transform: translate(var(--contextmenu-coords-x), var(--contextmenu-coords-y));
+}
+
+/* --------------------------------------------------- BOARD CANVAS */
+
+#board-canvas-wrapper {
+  z-index: -4096;
+  width: 100%;
+  height: 100%;
+}
+
 #board-canvas-origin {
-  z-index: -64;
+  z-index: -4096;
   width: 0;
   height: 0;
   margin-left: calc(50vw);
   margin-top: calc(50vh);
   scale: var(--canvas-zoom);
-/*   transition: scale 65ms linear; */
 }
 
 #board-canvas {
-  z-index: -64;
+  z-index: -4096;
 
   min-width: var(--canvas-size);
   width: var(--canvas-size);
@@ -72,38 +128,79 @@
   max-height: var(--canvas-size);
 
   translate: var(--canvas-coords-x) var(--canvas-coords-y);
-/*   transition: var(--canvas-coords-transition); */
+  cursor: var(--canvas-cursor);
+
+  border-width: calc(1.0 /var(--canvas-zoom) * 2px);
+  border-style: solid;
 }
 
 #board-canvas-background {
   pointer-events: none;
   position: absolute;
-  z-index: -64;
+  z-index: -4096;
   inset: 0;
 
-  /* using an absolute path due React behavin' like a moron */
   background: var(--canvas-background) repeat;
   background-size: var(--canvas-background-size);
   
   & .marker-x {
     width: var(--canvas-size);
-    height: 2px;
+    height: 8px;
+    margin-top: -4px;
+    transform: translate(0, var(--canvas-size-half));
   }
 
   & .marker-y {
-    width: 2px;
+    width: 8px;
     height: var(--canvas-size);
+    margin-left: -4px;
+    transform: translate(var(--canvas-size-half), 0);
   }
 }
 
 #board-canvas-content {
   width: 0;
   height: 0;
-  transform: translate(calc(var(--canvas-size) * .5), calc(var(--canvas-size) * .5));
+  position: absolute;
+  z-index: -4095;
+  transform: translate(var(--canvas-size-half), var(--canvas-size-half));
+}
+
+#board-canvas-top {
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: -2;
+  transform: translate(var(--canvas-size-half), var(--canvas-size-half));
+  pointer-events: none;
+  & > * {
+    pointer-events: none;
+    z-index: -3;
+    transform-origin: center center;
+    animation: grab-in 75ms ease-out forwards;
+  }
+}
+
+@keyframes grab-in {
+  from{ left: 0; top: 0; box-shadow: 0 0 0 #0008 }
+  to{ top: -.3em; box-shadow: -.2em .9em .2em #0008 }
+}
+
+#board-canvas-overlay {
+  content: ""; position: fixed; inset:0; z-index: -1;
+  cursor: var(--overlay-cursor);
+  pointer-events: var(--overlay-pointerevents);
+}
+
+/* --------------------------------------------------- BOARD CONTENT */
+
+.k--ghostifyable {
+  transition: opacity 250ms ease-out;
 }
 
 .k--list {
   position: absolute;
   transform: translate(-50%, 0);
-  translate: var(--list-coords-x) var(--list-coords-y);
+  translate: var(--item-coords-x) var(--item-coords-y);
+  resize: both;
 }
