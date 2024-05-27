@@ -1,11 +1,14 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, send_file
 from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
+
+import requests
+import base64
 
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
@@ -134,7 +137,8 @@ def create_signup_manager():
         password = request.json.get('password')
         is_manager = request.json.get('isManager')  
         name = request.json.get('name')
-        last_name = request.json.get('lastName')  
+        last_name = request.json.get('lastName')
+        number_document = request.json.get('numberDocument')  
         phone = request.json.get('phone')
         user_id = request.json.get('userId')  
         teacher_id = request.json.get('teacherId')  
@@ -143,8 +147,8 @@ def create_signup_manager():
         if len(email) > 80:
             return jsonify({"Error": "Email too long"}), 400
 
-        if not email or not password or not is_manager or not name or not last_name or not phone:
-            return jsonify({"msg": "email, password, is_manager, name, last_name, phone, user_id and teacher_id are required"})
+        if not email or not password or not is_manager or not name or not last_name or not number_document or not phone:
+            return jsonify({"msg": "email, password, is_manager, name, last_name and phone are required"})
         
         existing_manager = Manager.query.filter_by(email=email).first()
         if existing_manager:
@@ -158,6 +162,7 @@ def create_signup_manager():
             is_manager=is_manager,
             name=name,
             last_name=last_name,
+            number_document=number_document,
             phone=phone,
             user_id=user_id,
             teacher_id=teacher_id
@@ -654,12 +659,15 @@ def post_courses():
         title =  request.json.get('title')
         category_title = request.json.get('categoryTitle')
         modules_length = request.json.get('modulesLength')
-        certificate = request.json.get('certificate') 
+        title_certificate_to_get = request.json.get('titleCertificateToGet') 
         price = request.json.get('price')
+        description = request.json.get('description')
+        title_teacher = request.json.get('titleTeacher')
+
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not certificate or not price:
-            return({"Error":"title, category_title, modules_length, certificate and price are required"}), 400
+        if not title or not category_title or not modules_length or not certificate or not price or not description or not title_teacher:
+            return({"Error":"title, category_title, modules_length, titleCertificateToGet and price are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
@@ -667,7 +675,7 @@ def post_courses():
             return jsonify({"Error":"Title already exists."}), 409
         
         
-        course = Course(title=title, category_title=category_title, modules_length=modules_length, certificate=certificate, price=price)
+        course = Course(title=title, category_title=category_title, modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price, description=description, title_teacher=title_teacher)
         db.session.add(course)
         db.session.commit()
         return jsonify({"message":"Course has been Create Successfully", "Course": course.serialize()}), 200
@@ -874,37 +882,44 @@ def get_quizzes():
 def add_course_to_trolley():
     try:
         data = request.json
-
-        course_id = data.get('course_id')
-        user_id = data.get('user_id')
-        manager_id = data.get('manager_id')
-
-        if not course_id or not user_id or not manager_id:
-            return jsonify({"error": "Course ID, User ID, and Manager ID are required"}), 400
+        title_course = data.get('titleCourse')
+        price = data.get('price')
+        course_id = data.get('courseId')
+        user_id = data.get('userId')
         
-        course = Course.query.get(course_id)
+        if not title_course or not price or not course_id or not user_id:
+            return jsonify({"Error": "Course ID, User ID, and Course ID are required"}), 400
+        
+        # Verificar si el curso existe
+        course = Course.query.filter_by(id=course_id).first()
         if not course:
-            return jsonify({"error": "Course not found"}), 404
+            return jsonify({"Error": "Course ID does not exist"}), 404
+    
+        # Verificar si el curso existe
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({"Error": "User ID does not exist"}), 404
+        
+        trolley = Trolley.query.filter_by(title_course=title_course).first()
+        if trolley:
+            return jsonify({"Error": "Course already exists in the trolley"}), 409
         
         current_date = datetime.now().strftime('%Y-%m-%d')
-        new_order = Orders(
-            user_id=user_id,
-            manager_id=manager_id,
-            payment_id=None,
-            title_order=course.title,
-            price=course.price,
-            date=current_date
+        new_trolley = Trolley(
+            title_course=title_course,
+            price=price,
+            date=current_date,
+            course_id=course_id,
+            user_id=user_id
         )
-        db.session.add(new_order)
+        
+        db.session.add(new_trolley)
         db.session.commit()
-
-        new_trolley_entry = Trolley(order_id=new_order.id)
-        db.session.add(new_trolley_entry)
-        db.session.commit()
-        return jsonify({"message": "Course added to trolley succesfully", "order_id": new_order.id}), 201
-    
+        
+        return jsonify({"message": "Course added to trolley successfully", "order_id": new_trolley.serialize()}), 201
     except Exception as e:
-        return jsonify({"Error": "An error ocurred", "erro fetching": {str(e)}}), 500
+        return jsonify({"Error": "An error occurred", "error fetching": str(e)}), 500
+
 
 
 #----------------------ORDER------------------------#           
@@ -1010,3 +1025,117 @@ def upload_file():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+#----------------PAYPAL----------------------------#
+
+PAYPAL_CLIENT_ID = os.getenv("CLIENT_ID")
+PAYPAL_CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+BASE_URL = "https://api-m.sandbox.paypal.com"
+PORT = int(os.getenv("PORT", 8888))
+
+def generate_access_token():
+    try:
+        if not PAYPAL_CLIENT_ID or not PAYPAL_CLIENT_SECRET:
+            raise Exception("MISSING_API_CREDENTIALS")
+        
+        auth = base64.b64encode((PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET).encode()).decode()
+        response = requests.post(f"{BASE_URL}/v1/oauth2/token", 
+                                 data={"grant_type": "client_credentials"}, 
+                                 headers={"Authorization": f"Basic {auth}"})
+        
+        data = response.json()
+        return data.get("access_token")
+    except Exception as e:
+        print("Failed to generate Access Token:", e)
+        return None
+
+def handle_response(response):
+    try:
+        jsonResponse = response.json()
+        return {"jsonResponse": jsonResponse, "httpStatusCode": response.status_code}
+    except Exception as e:
+        errorMessage = response.text
+        raise Exception(errorMessage)
+
+def create_order(cart):
+    try:
+        access_token = generate_access_token()
+        if not access_token:
+            raise Exception("Failed to generate Access Token")
+
+        url = f"{BASE_URL}/v2/checkout/orders"
+        payload = {
+            "intent": "CAPTURE",
+            "purchase_units": [
+                {
+                    "amount": {
+                        "currency_code": "USD",
+                        "value": "100"
+                    }
+                }
+            ]
+        }
+        
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}"
+        }
+
+        response = requests.post(url, json=payload, headers=headers)
+        return handle_response(response)
+    except Exception as e:
+        print("Failed to create order:", e)
+        return None
+
+def capture_order(order_id):
+    try:
+        access_token = generate_access_token()
+        if not access_token:
+            raise Exception("Failed to generate Access Token")
+
+        url = f"{BASE_URL}/v2/checkout/orders/{order_id}/capture"
+        
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}"
+        }
+
+        response = requests.post(url, headers=headers)
+        return handle_response(response)
+    except Exception as e:
+        print("Failed to capture order:", e)
+        return None
+
+@api.route("/orders", methods=["POST"])
+def api_create_order():
+    try:
+        cart = request.json.get("cart")
+        if not cart:
+            raise Exception("Cart information missing")
+
+        result = create_order(cart)
+        if not result:
+            return jsonify({"error": "Failed to create order"}), 500
+
+        return jsonify(result.get("jsonResponse")), result.get("httpStatusCode")
+    except Exception as e:
+        print("Error creating order:", e)
+        return jsonify({"error": "Failed to create order"}), 500
+
+@api.route("/orders/<order_id>/capture", methods=["POST"])
+def api_capture_order(order_id):
+    try:
+        result = capture_order(order_id)
+        if not result:
+            return jsonify({"error": "Failed to capture order"}), 500
+
+        return jsonify(result.get("jsonResponse")), result.get("httpStatusCode")
+    except Exception as e:
+        print("Error capturing order:", e)
+        return jsonify({"error": "Failed to capture order"}), 500
+
+@api.route("/")
+def serve_index():
+    return send_file("checkout.html")
+

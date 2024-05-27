@@ -201,7 +201,7 @@ export const AddUser = () => {
                     </div>
                 </div>
                 {/* Number Document */}
-                <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-none' : 'd-block'}`}>
+                <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-block' : 'd-block'}`}>
                     <label className="form-label">Number Document</label>
                     <input
                         type="text"

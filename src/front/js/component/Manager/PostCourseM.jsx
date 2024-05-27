@@ -11,8 +11,10 @@ export const PostCourseM = () => {
         title: '',
         categoryTitle: '',
         modulesLength: '',
-        certificate: '',
-        price: ''
+        titleCertificateToGet: '',
+        price: '',
+        description: '',
+        titleTeacher: ''
     });
 
     const handleChange = (e) => {
@@ -113,11 +115,11 @@ export const PostCourseM = () => {
                             </div>
                         </div>
                         <div>
-                            <label>Certificate:</label>
+                            <label>Title Certificate To Get:</label>
                             <input
                                 type="text"
-                                name="certificate"
-                                value={courseData.certificate}
+                                name="titleCertificateToGet"
+                                value={courseData.titleCertificateToGet}
                                 onChange={handleChange}
                                 id="validationFormCheck1"
                                 className="form-control" />
@@ -131,6 +133,32 @@ export const PostCourseM = () => {
                                 type="number"
                                 name="price"
                                 value={courseData.price}
+                                onChange={handleChange}
+                                id="validationFormCheck1"
+                                className="form-control" />
+                            <div className="invalid-feedback">
+                                Please enter your information.
+                            </div>
+                        </div>
+                        <div>
+                            <label>description:</label>
+                            <input
+                                type="number"
+                                name="description"
+                                value={courseData.description}
+                                onChange={handleChange}
+                                id="validationFormCheck1"
+                                className="form-control" />
+                            <div className="invalid-feedback">
+                                Please enter your information.
+                            </div>
+                        </div>
+                        <div>
+                            <label>title Teacher:</label>
+                            <input
+                                type="number"
+                                name="titleTeacher"
+                                value={courseData.titleTeacher}
                                 onChange={handleChange}
                                 id="validationFormCheck1"
                                 className="form-control" />
