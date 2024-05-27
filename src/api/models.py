@@ -23,6 +23,7 @@ class User(db.Model):
     gender = db.Column(db.String)
     admin = db.Column(db.Boolean, unique=False, nullable=True)
     is_deleted = db.Column(db.Boolean, default=False)
+    url_image = db.Column(db.String(1024))
 
     room_participants = db.relationship('Room_participant', backref='user', lazy=True)
     comments = db.relationship('Comment', backref='user', lazy=True)
@@ -50,7 +51,8 @@ class User(db.Model):
             "bio": self.bio,
             "gender": self.gender,
             "admin": self.admin,
-            "is_deleted": self.is_deleted
+            "is_deleted": self.is_deleted,
+            "url_image": self.url_image
         }
     
 class Room(db.Model):

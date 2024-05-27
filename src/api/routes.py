@@ -56,15 +56,13 @@ def new_user():
         bio = sign_up_data.get('bio')
         gender = sign_up_data.get('gender')
         admin = sign_up_data.get('admin')
+        url_image = sign_up_data.get('url_image')
     
         # Convierte una variable de valor (" ") a booleano
         if admin is not None:
             admin = bool(admin)
 
         if not email.strip() or not password.strip():
-            return jsonify({"message": "Missing required fields: email or password"}), 400
-    
-        if not email or not password:
             return jsonify({"message": "Missing required fields: email or password"}), 400
         
         existing_user = User.query.filter_by(email=email).first()
@@ -93,7 +91,8 @@ def new_user():
             epic_id = epic_id,
             bio = bio,
             gender = gender,
-            admin = admin
+            admin = admin,
+            url_image = url_image
             )
 
         db.session.add(new_user)
@@ -104,6 +103,7 @@ def new_user():
     except Exception as e:
         print(str(e))
         return jsonify({"message": "Failed to create user", "error": str(e)}), 500
+
     
 
 @api.route('/login', methods=['POST'])
