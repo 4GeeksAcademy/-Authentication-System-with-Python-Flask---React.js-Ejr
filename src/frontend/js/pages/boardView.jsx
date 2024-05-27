@@ -12,23 +12,7 @@ import ContextMenu from "../component/contextmenu/contextmenu.jsx"
 
 import { useGlobalPointerHook } from "../effects/useGlobalPointerHook.jsx"
 
-/* had to make this here as circular imports aren't allowed */
-import List from "../component/boardview/list.jsx"
-import Task from "../component/boardview/task.jsx"
 import Utils from "../app/utils.js"
-
-const _ITEMCLASSES= Object.freeze([
-  null,  
-  null,  
-  null,  
-  null,  
-  null,  
-  List,  
-  Task,  
-  null,  
-  null,  
-  null
-])
 
 /**
  *  -- Board View --
@@ -45,11 +29,6 @@ const BoardView= ()=>{
 
   // custom stateless React Hook I made for handling pointer behaviour
   useGlobalPointerHook()
-
-  // register item classes
-  React.useEffect(()=>{ 
-    if(!store.itemclasses) actions.setItemClasses(_ITEMCLASSES) 
-  },[])
 
   // register custom event listener
   React.useEffect(()=>{ 
@@ -71,28 +50,30 @@ const BoardView= ()=>{
     }
   }
 
-  React.useEffect(()=>{ 
-    if(store.dirty & Constants.STORE_DIRTY.location) {
-      // TODO: load the board from database then store the data in some React state
-      //    something like actions.getBoard(pid, bid)
-      //    then pass that data to the Board component
-      console.log(`boardView: load board ${bid}`)
-      //actions.getFontAwesomeIconList()
-    }
-  },[store.dirty])
+  React.useEffect(()=>{ async function handle(){
+    if(actions.getStoreDirty(Constants.STORE_DIRTY.location))
+      if(!store.board || store.board.id !== bid || bid < 0) {
 
-  React.useEffect(()=>{
-    // TODO: load the board from database then store the data in some React state
-    //    something like actions.getBoard(pid, bid)
-    //    then pass that data to the Board component
-    console.log(`boardView: load board ${bid}`)
-    //actions.getFontAwesomeIconList()
+        console.log(`loading board: ${bid}`)
+        await actions.loadBoard(bid)
 
-  },[store.dirty.location])
+        const tickIntervalId= setInterval(async ()=>{
+          console.log(`fetch changes, upload changes | boardid: ${bid}`)
+          changes= await actions.fetchBoard(bid)
+          if(changes.length > 0){
+            // apply changes
+            console.log("board changed remotelly, downloading changes")
+          }
+        }, 1000)
+
+        return ()=>{ clearInterval(tickIntervalId) }
+        //actions.getFontAwesomeIconList()
+      }
+  } handle() },[store.dirty])
 
   return (
-    <div ref={selfRef} className="flex flex-col h-full overflow-hidden relative -z-50">
-      { store.itemclasses && store.readyState.pointer && store.board &&
+    <div ref={selfRef} className="flex flex-col h-full overflow-hidden relative -z-50 select-none">
+      { store.readyState.pointer && store.board &&
         <>
           <div className="pointer-skip absolute inset-0 flex">
 {/*             <Toolbar />

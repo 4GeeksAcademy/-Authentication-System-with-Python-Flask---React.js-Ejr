@@ -48,6 +48,7 @@ const Constants= Object.freeze({
   DEVPREFS_PANELPOSITION: "panelPosition",
   DEVPREFS_DEVRENDER: "devRender",
   DEVPREFS_FAKEAUTH: "fakeAuth",
+  DEVPREFS_FAKEOWNER: "fakeOwner",
 
   USERPREFS_DARKMODE: "darkMode",
   USERPREFS_LANGUAGE: "language",

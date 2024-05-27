@@ -84,11 +84,12 @@ p:has(.admin) { margin-inline: 5%; padding: 8px }
     font-size: 20px;
     & span { color: #ffff00 }
 }
-.apilink-api { color: #66e466 }
+.apilink-accounts { color: #e3de61 }
 .apilink-workspaces { color: #f56a6a }
 .apilink-boards { color: #67bbe5 }
-.apilink-accounts { color: #e3de61 }
-.apilink-other { color: #b07fd8 }
+.apilink-objects { color: #d386e9 }
+.apilink-api { color: #66e466 }
+.apilink-other { color: #a8a6b5 }
 .method { display: inline-block; width: 4vw }
 .method-get { color: #8f8 }
 .method-put { color: #ba44ff }
