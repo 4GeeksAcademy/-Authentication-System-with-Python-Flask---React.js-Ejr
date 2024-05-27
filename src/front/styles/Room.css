@@ -1,0 +1,19 @@
+.room-card {
+    max-width: 1114px;
+    cursor: pointer;
+    background-color: #333C53; /* Color de fondo personalizado */
+    border-radius: 8px; /* Bordes redondeados */
+    margin: 20px 0; /* Margen vertical */
+    padding: 20px; /* Padding interno */
+    transition: transform 0.3s; /* Transición suave */
+}
+
+.room-card:hover {
+    transform: scale(1.02); /* Efecto de agrandar al pasar el ratón */
+}
+
+.font-family-Inter {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Otros estilos personalizados según sea necesario */

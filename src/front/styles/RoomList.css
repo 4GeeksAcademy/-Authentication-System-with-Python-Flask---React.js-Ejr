@@ -1,5 +1,27 @@
+
+
 :root {
     --BLUE-BTN: #0094FF;
+}
+
+.home-header {
+    width: 820px;
+    height: 150px;
+    margin-top: 20px;
+}
+.home-body {
+    width: 1114px;
+}
+.home-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 8px;
+    border: 8px;
+    gap: 30px;
+    margin-top: 20px;
+}
+.main-title {
+    margin-bottom: 30px;
 }
 
 .toggle-buttons {
@@ -32,13 +54,15 @@
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 24px;
     border-radius: 5px;
 }
 
-.rooms-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.rooms-cards {
+    width: 1114px;
+    height: 234px;
+} 
+.pals {
+    color: var(--BLUE-BTN);
 }

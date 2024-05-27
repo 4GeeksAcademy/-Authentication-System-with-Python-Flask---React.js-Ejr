@@ -13,95 +13,138 @@ export const RoomDetail = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
-    const room = store.rooms.find(room => room.room_id === parseInt(roomId));
+    const [room, setRoom] = useState(null);
     const username = localStorage.getItem('username');
     const userId = parseInt(localStorage.getItem('userId'));
 
     useEffect(() => {
-        if (!room) {
-            console.log("Room not found, navigating to home");
-            navigate('/'); // Redirect to home if room not found
-        } else {
-            console.log("Fetching data for RoomDetail...");
-            fetchData();
-        }
-    }, [room, navigate, userId]);
-
-    const fetchData = async () => {
-        try {
+        const fetchData = async () => {
+            await actions.fetchRooms();
+            const fetchedRoom = store.rooms.find(room => room.room_id === parseInt(roomId));
+            setRoom(fetchedRoom);
             await checkRequestStatus();
             await fetchComments();
             setLoading(false);
-            console.log("Data fetched successfully");
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            setLoading(false);
-        }
-    };
+        };
 
-    const checkParticipation = () => {
-        if (room) {
-            const isHost = room.host_name === username;
-            const participant = room.participants.find(p => p.participant_name === username && p.confirmed);
-            console.log(`isHost: ${isHost}, isParticipant: ${!!participant}`);
-            return isHost || !!participant;
+        fetchData();
+    }, [roomId, store.rooms.participants]);
+
+    useEffect(() => {
+        if (showRequests) {
+            fetchRequests();
         }
-        return false;
-    };
+    }, [showRequests]);
 
     const checkRequestStatus = async () => {
-        const status = await actions.checkRequestStatus(room.room_id);
+        console.log('Checking request status');
+        const status = await actions.checkRequestStatus(roomId);
+        console.log('Request status:', status);
         setRequestStatus(status);
-        console.log("Request status:", status);
+    };
+
+    const fetchRequests = async () => {
+        try {
+            console.log('Fetching requests');
+            const fetchedRequests = await actions.fetchRoomRequests(roomId);
+            setRequests(fetchedRequests);
+            console.log('Fetched requests:', fetchedRequests);
+        } catch (error) {
+            console.error('Error fetching requests:', error);
+        }
     };
 
     const fetchComments = async () => {
         try {
-            const fetchedComments = await actions.getComments(room.room_id);
+            console.log('Fetching comments');
+            const fetchedComments = await actions.getComments(roomId);
             setComments(fetchedComments);
-            console.log("Fetched comments:", fetchedComments);
+            console.log('Fetched comments:', fetchedComments);
         } catch (error) {
             console.error('Error fetching comments:', error);
-            if (checkParticipation()) {
-                setComments([]);
-            }
         }
     };
 
     const handleAddComment = async () => {
+        console.log('Adding comment:', newComment);
+        const token = localStorage.getItem('jwt-token');
+        if (!token) {
+            console.error('No JWT token found');
+            return;
+        }
+
         if (newComment.trim() === '') return;
-        const success = await actions.addComment(room.room_id, newComment);
+        const isHost = room.host_name === username;
+        console.log('isHost:', isHost);  // Asegúrate de que esto imprima true/false correctamente
+        const success = await actions.addComment(roomId, newComment, isHost);
+        console.log('Comment add success:', success);
         if (success) {
             setNewComment('');
             fetchComments();
-            console.log("Comment added successfully");
         } else {
             alert('Failed to add comment.');
         }
     };
+    const handleKickParticipant = async (participantId) => {
+        const token = localStorage.getItem('jwt-token');
+        if (!token) {
+            console.error('No JWT token found');
+            return;
+        }
 
+        const success = await actions.updateParticipantStatus(roomId, participantId, 'kicked');
+        if (success) {
+            setRoom(prevRoom => ({
+                ...prevRoom,
+                participants: prevRoom.participants.map(p =>
+                    p.participant_id === participantId ? { ...p, confirmed: false, status: 'kicked' } : p
+                ).filter(p => p.status !== 'kicked')
+            }));
+            alert('Participant kicked successfully!');
+        } else {
+            alert('Failed to kick participant.');
+        }
+    };
     const handleJoinRoom = async () => {
         const token = localStorage.getItem('jwt-token');
         if (!token) {
             navigate('/login');
         } else {
-            const success = await actions.joinRoom(room.room_id);
+            const success = await actions.joinRoom(roomId);
             if (success) {
                 alert('Join request sent successfully!');
                 setRequestStatus('pending');
-                console.log("Join request sent successfully");
             } else {
                 alert('Failed to send join request.');
             }
         }
     };
 
+    const handleAbandonRoom = async () => {
+        const token = localStorage.getItem('jwt-token');
+        if (!token) {
+            console.error('No JWT token found');
+            return;
+        }
+
+        const success = await actions.updateParticipantStatus(roomId, userId, 'abandoned');
+        if (success) {
+            setRoom(prevRoom => ({
+                ...prevRoom,
+                participants: prevRoom.participants.filter(p => p.participant_id !== userId)
+            }));
+            alert('You have successfully abandoned the room');
+            navigate('/');
+        } else {
+            alert('Failed to abandon the room.');
+        }
+    };
+
     const handleWithdrawRequest = async () => {
-        const success = await actions.withdrawRequest(room.room_id);
+        const success = await actions.withdrawRequest(roomId);
         if (success) {
             alert('Request withdrawn successfully!');
             setRequestStatus(null);
-            console.log("Request withdrawn successfully");
         } else {
             alert('Failed to withdraw request.');
         }
@@ -109,34 +152,37 @@ export const RoomDetail = () => {
 
     const handleToggleRequests = () => {
         setShowRequests(prevShowRequests => !prevShowRequests);
-        console.log("Toggled requests view:", !showRequests);
     };
 
     const handleRequestAction = async (requestId, action) => {
-        const success = await actions.updateRoomRequest(room.room_id, requestId, action);
+        console.log(`Updating request ${requestId} to ${action}`);
+        const success = await actions.updateRoomRequest(roomId, requestId, action);
+        console.log(`Request update status: ${success}`);
         if (success) {
-            setRequests(prevRequests =>
-                prevRequests.map(req => req.id === requestId ? { ...req, status: action } : req)
-            );
+            setRequests(prevRequests => prevRequests.filter(req => req.room_request_id !== requestId));
             if (action === 'accepted') {
-                const participant = requests.find(req => req.id === requestId);
+                const participant = requests.find(req => req.room_request_id === requestId);
                 setRoom(prevRoom => ({
                     ...prevRoom,
                     participants: [...prevRoom.participants, participant]
                 }));
             }
-            console.log("Request updated successfully:", action);
         } else {
             alert('Failed to update request.');
         }
     };
 
-    if (loading) {
+    if (loading || !room) {
         return <div>Loading...</div>;
     }
 
-    const isParticipantOrHost = checkParticipation();
-    console.log(`isParticipantOrHost: ${isParticipantOrHost}`);
+    const isHost = room.host_name === username;
+    const isParticipantOrHost = isHost || room.participants.some(p => p.participant_id === userId && p.confirmed);
+
+    console.log('room:', room);
+    console.log('requestStatus:', requestStatus);
+    console.log('isParticipantOrHost:', isParticipantOrHost);
+    console.log('host:', isHost)
 
     return (
         <div className="room-detail">
@@ -156,20 +202,26 @@ export const RoomDetail = () => {
                     <ul>
                         {room.participants.map(participant => (
                             <li key={participant.participant_id}>
-                                {participant.participant_name} {participant.confirmed ? '(Confirmed)' : '(Pending)'}
+                                {participant.participant_name}
+                                {isHost && (
+                                    <button className="kick-button" onClick={() => handleKickParticipant(participant.participant_id)}>Kick</button>
+                                )}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
             <div className="room-actions">
-                {room.host_name !== username && !requestStatus && (
+                {!isParticipantOrHost && (requestStatus === 'None' || requestStatus === 'abandoned') && !isHost && (
                     <button className="join-room" onClick={handleJoinRoom}>Join this room</button>
                 )}
-                {room.host_name !== username && requestStatus === 'pending' && (
+                {!isParticipantOrHost && requestStatus === 'pending' && !isHost && (
                     <button className="withdraw-request" onClick={handleWithdrawRequest}>Withdraw Request</button>
                 )}
-                {room.host_name === username && (
+                {isParticipantOrHost && !isHost && (
+                    <button className="abandon-room" onClick={handleAbandonRoom}>Abandon Room</button>
+                )}
+                {isHost && (
                     <button className="btn btn-secondary" onClick={handleToggleRequests}>
                         {showRequests ? 'Hide Requests' : 'Show Requests'}
                     </button>
@@ -180,10 +232,10 @@ export const RoomDetail = () => {
                     <h3>Join Requests</h3>
                     <ul>
                         {requests.map(request => (
-                            <li key={request.id}>
+                            <li key={request.room_request_id}>
                                 {request.participant_name} - {request.status}
-                                <button className="btn btn-success" onClick={() => handleRequestAction(request.id, 'accepted')}>Accept</button>
-                                <button className="btn btn-danger" onClick={() => handleRequestAction(request.id, 'rejected')}>Reject</button>
+                                <button className="btn btn-success" onClick={() => handleRequestAction(request.room_request_id, 'accepted')}>Accept</button>
+                                <button className="btn btn-danger" onClick={() => handleRequestAction(request.room_request_id, 'rejected')}>Reject</button>
                             </li>
                         ))}
                     </ul>

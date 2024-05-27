@@ -526,7 +526,12 @@ def join_room(room_id):
         # Verificar si la solicitud ya existe
         existing_request = Room_request.query.filter_by(room_id=room_id, user_id=current_user_id).first()
         if existing_request:
-            return jsonify({"error": "Request already exists"}), 400
+            if existing_request.status == 'abandoned':
+                existing_request.status = 'pending'
+                db.session.commit()
+                return jsonify({"message": "Rejoin request sent successfully", "request": existing_request.serialize()}), 200
+            else:
+                return jsonify({"error": "Request already exists"}), 400
         
         # Crear nueva solicitud
         new_request = Room_request(room_id=room_id, user_id=current_user_id, status='pending')
@@ -659,40 +664,42 @@ def get_games():
 @jwt_required()
 def create_comment(room_id):
     try:
-        # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
+        print(f"Current User ID: {current_user_id}")
 
-        # Verificar si el room existe
         room = Room.query.get(room_id)
         if not room:
             return jsonify({"error": "Room not found"}), 404
 
-        # Verificar si el usuario es participante del room
-        participant = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
-        if not participant:
-            return jsonify({"error": "Unauthorized. Only participants can comment."}), 403
-
-        # Obtener los datos del comentario
         comment_data = request.json
+        is_host = comment_data.get('isHost', False)  # Obtener el indicador isHost del frontend
         content = comment_data.get('content')
+        print(f"is_Host {is_host}")
         if not content:
             return jsonify({"error": "Missing required field: content"}), 400
 
-        # Crear una nueva instancia de Comment con los datos proporcionados
+        participant = Room_participant.query.filter_by(room_id=room_id, user_id=current_user_id, confirmed=True).first()
+        print(f"Participant: {participant}")
+
+        if not participant and not is_host:
+            return jsonify({"error": "Unauthorized. Only participants or hosts can comment."}), 403
+
         new_comment = Comment(
             room_id=room_id,
             user_id=current_user_id,
             content=content
         )
 
-        # Agregar el nuevo comentario a la base de datos y confirmar la transacción
         db.session.add(new_comment)
         db.session.commit()
 
         return jsonify({"message": "Comment created successfully", "comment": new_comment.serialize()}), 201
 
     except Exception as e:
+        print(f"Exception: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+
 
 #------------------GET COMMENT----------------------------------------------------------------------------------------------
 @api.route('/room/<int:room_id>/comments', methods=['GET'])
@@ -892,5 +899,47 @@ def get_room_reviews(room_id):
         return jsonify({"reviews": serialized_reviews}), 200
 
     except Exception as e:
+        return jsonify({"error": str(e)}), 500
+#---------------Put Kick or Abandon participant-----------------------------------------------------------------------------------------------------
+@api.route('/room/<int:room_id>/update_participant_status', methods=['PUT'])
+@jwt_required()
+def update_participant_status(room_id):
+    try:
+        current_user_id = get_jwt_identity()
+        room = Room.query.get(room_id)
+        if not room:
+            return jsonify({"error": "Room not found"}), 404
+
+        participant_id = request.json.get('participant_id')
+        status = request.json.get('status')
+        if not participant_id or not status:
+            return jsonify({"error": "Missing participant_id or status"}), 400
+
+        room_request = Room_request.query.filter_by(room_id=room_id, user_id=participant_id).first()
+        if not room_request:
+            return jsonify({"error": "Room request not found"}), 404
+
+        # Verificar permisos
+        if status == 'kicked' and room.user_id != current_user_id:
+            return jsonify({"error": "Unauthorized. Only the host can kick participants."}), 403
+        if status == 'abandoned' and current_user_id != participant_id:
+            return jsonify({"error": "Unauthorized. Only the participant can abandon the room."}), 403
+
+        room_request.status = status
+
+        room_participant = Room_participant.query.filter_by(room_id=room_id, user_id=participant_id).first()
+        if room_participant and status in ['kicked', 'abandoned']:
+            db.session.delete(room_participant)
+        
+        db.session.commit()
+
+        return jsonify({"message": f"Participant status updated to {status} successfully"}), 200
+
+    except Exception as e:
+        print(f"Exception: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+    except Exception as e:
+        print(f"Exception: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
