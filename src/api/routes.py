@@ -666,13 +666,12 @@ def post_courses():
         price = request.json.get('price')
         description = request.json.get('description')
         assessment = request.json.get('assessment')
-        create_date = request.json.get('createDate')
         title_Teacher = request.json.get('titleTeacher')
         date_expiration = request.json.get('dateExpiration')
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not create_date or not title_Teacher or not date_expiration:
-            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, create_date, title_Teacher and date_expiration are required"}), 400
+        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not title_Teacher or not date_expiration:
+            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, title_Teacher and date_expiration are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
