@@ -388,33 +388,122 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       /* STORE-object states & ACTIONS-arrow function OF CLOUDINARYCOMPONENT*/
-      uploadCloudinaryMedia: async (file) => {
+      uploadCloudinaryMedia: async (fileList) => {
         const preset_name = "jptixrge";
         const cloud_name = "dfoegvmld";
-
+      
+        const file = fileList[0]; // Asegurarse de tomar solo el primer archivo
+      
         const data = new FormData();
-        data.append('file', file);
+        data.append('file', file); 
         data.append('upload_preset', preset_name);
-
+      
         setStore({ loading: true });
-
+      
         const fileType = file.type.split('/')[0];
         setStore({ mediaType: fileType });
-
+      
         try {
           const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
             method: 'POST',
             body: data
           });
-
+      
+          if (!response.ok) {
+            throw new Error('Error uploading media');
+          }
+      
           const uploadedMedia = await response.json();
           setStore({ media: uploadedMedia.secure_url, loading: false });
-          console.log(uploadedMedia)
+          console.log(uploadedMedia);
         } catch (error) {
           console.error('Error uploading media:', error);
           setStore({ loading: false });
         }
-      }
+      },
+
+      updateUser: async (dataUpdate, userRol, userId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const url = process.env.BACKEND_URL + "/api/view/manager/"+ userRol + "/" + userId;
+          const respUpdateUser = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(dataUpdate),
+          })
+
+          if (!respUpdateUser.ok) {
+            const errorData = await respUpdateUser.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al añadir el curso al carrito"
+            )
+          }
+
+          const dataUpdateUser = await respUpdateUser.json()
+          setStore({ ...store, msg: dataUpdateUser.message })
+
+          await getActions().getUser(userRole);
+          
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      deleteUser: async (userId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const url = process.env.BACKEND_URL + "/api/view/manager/user/"+ userId;
+          const respDelUser = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          })
+
+
+          if (!respDelUser.ok) {
+            const errorData = await respDelUser.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al añadir el curso al carrito"
+            );
+          }
+
+
+          const dataDelUser = await respDelUser.json();
+          setStore({ ...store, msg: dataDelUser.message });
+
+          await getActions().getUser();
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+      
     }
   };
 }

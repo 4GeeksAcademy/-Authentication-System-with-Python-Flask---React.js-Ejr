@@ -566,6 +566,7 @@ def show_view_manager():
 
 #-------------------DELETE USER--------------------#
 @api.route('/view/manager/user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
     current_token = get_jwt_identity()
     if not current_token:
@@ -605,6 +606,7 @@ def update_user(user_id):
 
     db.session.commit()
     return jsonify({"message": f"User with ID {user.id} updated successfully"}), 200
+    
 
 
 #------------------DELETE TEACHER------------------#
