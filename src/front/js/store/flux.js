@@ -186,13 +186,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().spinner(true);
 
         try {
-          console.log(
-            process.env.BACKEND_URL + `/api/forgot-password/` + tokenPassword
-          );
           const tokenPassword = localStorage.getItem("jwt-token-reset");
           if (!tokenPassword) throw new Error("No token found");
 
-          const url = process.env.BACKEND_URL + `/api/reset-password/` + userRol + "/" + tokenPassword
+          const url = process.env.BACKEND_URL + `/api/reset-password/` + userRol + "/" + tokenPassword;
           const respResetPassword = await fetch(
             url,
             {
@@ -361,6 +358,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       
       uploadCertificate: async (file) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
         try {
           const responseUploadData = await fetch(process.env.BACKEND_URL + `/api/upload`, {
             method: 'POST',
@@ -369,15 +370,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!responseUploadData.ok) {
             const errorUploadData = await responseUploadData();
-            console.log(errorUploadData)
-            setStore({ ...store, error: errorUploadData.Error })
-            throw new Error(errorUploadData.Error || "Error posting certificate")
+            console.log(errorUploadData);
+            setStore({ ...store, error: errorUploadData.Error });
+            throw new Error(errorUploadData.Error || "Error posting certificate");
           } else {
-            const uploadData = await response.json();
+            const uploadData = await responseUploadData.json();
             alert('File uploaded successfully: ' + JSON.stringify(uploadData));
           }
-          const dataNewCertificate = await respNewCertificate.json()
-          setStore({ ...store, msg: dataNewCertificate.message })
+          const dataNewCertificate = await responseUploadData.json();
+          setStore({ ...store, msg: dataNewCertificate.message });
         } catch (error) {
           console.error('Error during file upload:', error);
           setError('An error occurred while uploading the file');
@@ -387,8 +388,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      /* STORE-object states & ACTIONS-arrow function OF CLOUDINARYCOMPONENT*/
       uploadCloudinaryMedia: async (file) => {
+        const store = getStore();
         const preset_name = "jptixrge";
         const cloud_name = "dfoegvmld";
 
@@ -412,34 +413,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ loading: false });
         }
       }
-    },
-
-    uploadCloudinaryMedia: async (file) => {
-      const preset_name = "jptixrge";
-      const cloud_name = "dfoegvmld";
-
-      const data = new FormData();
-      data.append('file', file);
-      data.append('upload_preset', preset_name);
-
-      setStore({ loading: true });
-
-      const fileType = file.type.split('/')[0];
-      setStore({ mediaType: fileType });
-      try {
-        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
-          method: 'POST',
-          body: data
-        });
-
-        const uploadedMedia = await response.json();
-        setStore({ media: uploadedMedia.secure_url, loading: false });
-      } catch (error) {
-        console.error('Error uploading media:', error);
-        setStore({ loading: false });
-      }
     }
-  }
+  };
 };
-  
+
 export default getState;
