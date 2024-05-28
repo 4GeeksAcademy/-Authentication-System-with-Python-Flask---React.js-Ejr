@@ -142,14 +142,13 @@ export const PostCourseM = () => {
                         </div>
                         <div>
                             <label>description:</label>
-                            <textarea
-                                type="text"
+                            <input
+                                type="number"
                                 name="description"
                                 value={courseData.description}
                                 onChange={handleChange}
                                 id="validationFormCheck1"
-                                className="form-control" >
-                            </textarea>
+                                className="form-control" />
                             <div className="invalid-feedback">
                                 Please enter your information.
                             </div>
@@ -157,7 +156,7 @@ export const PostCourseM = () => {
                         <div>
                             <label>title Teacher:</label>
                             <input
-                                type="text"
+                                type="number"
                                 name="titleTeacher"
                                 value={courseData.titleTeacher}
                                 onChange={handleChange}
