@@ -359,9 +359,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
-
-
-
       uploadCertificate: async (file) => {
         try {
           const responseUploadData = await fetch(process.env.BACKEND_URL + `/api/upload`, {
@@ -389,7 +386,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-
       /* STORE-object states & ACTIONS-arrow function OF CLOUDINARYCOMPONENT*/
       uploadCloudinaryMedia: async (file) => {
         const preset_name = "jptixrge";
@@ -398,12 +394,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = new FormData();
         data.append('file', file);
         data.append('upload_preset', preset_name);
-
         setStore({ loading: true });
 
         const fileType = file.type.split('/')[0];
         setStore({ mediaType: fileType });
-
         try {
           const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
             method: 'POST',
@@ -432,7 +426,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       const fileType = file.type.split('/')[0];
       setStore({ mediaType: fileType });
-
       try {
         const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
           method: 'POST',
