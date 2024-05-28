@@ -87,7 +87,7 @@ class User(db.Model):
       "username": self.username,
       "displayname": self.displayname,
       "email": self.email,
-      "avatar": get_public_link(self.avatar) if not 'dicebear.com' in self.avatar else self.avatar,
+      "avatar": get_public_link(self.avatar) if not '://' in self.avatar else self.avatar,
       "settings": self.settings,
       "last_visits": [self.last_workspace_id, self.last_board_id],
 
@@ -149,7 +149,7 @@ class Board(db.Model):
   description = db.Column(db.String(1024), nullable=False)
   icon = db.Column(db.String(256))
   thumbnail = db.Column(db.String(256))
-  settings= db.Column(db.String(16))
+  settings= db.Column(db.String(256))
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)
 

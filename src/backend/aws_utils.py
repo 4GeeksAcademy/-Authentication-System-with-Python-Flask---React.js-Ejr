@@ -7,6 +7,20 @@ FILE_ALLOW_FORMATS= ('JPEG','JPEG2000','PNG','WEBP','GIF','ICO','TGA','PCX','BMP
 AWS_BUCKET= os.environ.get("AWS_BUCKET")
 AWS_BUCKET_HOST= os.environ.get("AWS_BUCKET_HOST")
 
+DEFAULT_AVATAR= "9b91c73edab5806d5cdcf677workspace0.png",
+
+DEFAULT_ICON= {
+  "workspace": "9b91c73edab5806d5cdcf677workspace0.png",
+  "project": "2661dec0e01b1ff5495e106fproject0.png",
+  "board": "8ee818bb02ce3a8c2d87071aboard0.png"
+}
+
+DEFAULT_THUMBNAIL= {
+  "workspace": "9b91c73edab5806d5cdcf677workspace0.png",
+  "project": "2661dec0e01b1ff5495e106fproject0.png",
+  "board": "8ee818bb02ce3a8c2d87071aboard0.png"
+}
+
 aws_client= boto3.client('s3')
 
 def _resolve_filename_for(type, name, ext):

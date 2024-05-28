@@ -6,7 +6,8 @@ from . import api_utils
 
 # ---------------------------------------------------------------------------- workspaces.keqqu.com/* ----------------------------------------------------------------------------
 
-workspaces= Blueprint('workspaces', __name__, subdomain='workspaces')
+workspaces= Blueprint('workspaces', __name__, subdomain='workspaces') if api_utils.IS_PRODUCTION else Blueprint('workspaces', __name__, url_prefix='/workspaces')
+
 @workspaces.route('/', methods=['GET'])
 def handle_workspaces(): return "workspaces subdomain", 200
 

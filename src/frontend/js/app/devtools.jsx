@@ -60,7 +60,9 @@ const DevTools = () => {
     else document.body.removeAttribute("data-devrender")
     actions.toggleDevPref(Constants.DEVPREFS_DEVRENDER)
   }
-  function toggle_fakeAuth(e){ Utils.cancelEvent(e); actions.toggleDevAuth()}
+  function toggle_fakeAuth(e){ 
+    actions.accounts_signup("username", "displayname", "email@email.com", "cojones33", false, true)
+    Utils.cancelEvent(e); actions.toggleDevAuth()}
   function toggle_fakeOwner(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_FAKEOWNER)}
 
   // ------------------------------------------------------------------- USER

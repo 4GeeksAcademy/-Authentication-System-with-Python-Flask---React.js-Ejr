@@ -9,7 +9,8 @@ from .utils import get_current_millistamp
 
 # ---------------------------------------------------------------------------- accounts.keqqu.com/* ----------------------------------------------------------------------------
 
-accounts= Blueprint('accounts', __name__, subdomain='accounts')
+accounts= Blueprint('accounts', __name__, subdomain='accounts') if api_utils.IS_PRODUCTION else Blueprint('accounts', __name__, url_prefix='/accounts')
+  
 @accounts.route('/', methods=['GET'])
 def handle_accounts(): return "accounts subdomain", 200
 
@@ -247,13 +248,13 @@ def handle_accounts_username(name):
 # -------------------------------------- /userlist
 # get user lists
 @accounts.route('/userlist', methods=['GET'])
-@jwt_required()
+@jwt_required(optional=True)
 def handle_accounts_users():
   #if api_utils.ENV == "prod":
   #  error= api_utils.check_user_forbidden(1) # check if admin
   #  if error: return error
   users= User.query.all()
-  if not users or len(users)==0: return "", 204
+  if not users or len(users)==0: return api_utils.response(204, "no users")
   return api_utils.response_200([user.serialize() for user in users])
 
 # -------------------------------------- /healthcheck

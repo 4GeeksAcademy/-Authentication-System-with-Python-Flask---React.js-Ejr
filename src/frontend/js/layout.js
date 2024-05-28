@@ -23,12 +23,16 @@ import GlobalListener from "./app/globalListener.jsx" // redirector, generic 404
 
 import appContext, { Context } from "./store/appContext.jsx"
 
+const noAuthBase= <Redirector url="/login" replace/>
+
 const Layout = () => {
   const 
     { store }= React.useContext(Context),
-    auth= store.userData != null
+    [ auth, set_auth ]= React.useState(null)
 
-  const noAuthBase= <Redirector url="/login" replace/>
+  React.useEffect(()=>{
+    set_auth(store.userData != null)
+  },[store.userData])
 
   function onlyAuth(element){ return auth ? element : noAuthBase }
 

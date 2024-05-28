@@ -1,8 +1,21 @@
 const Utils= {
   /** get the backend url */
   getBackendUrl(domain=null, url=null){
-    domain= domain ? (domain+".") : ""
-    return process.env.PROTOCOL + domain + process.env.BACKEND_URL + (url??"")
+
+    const
+      isLocal= process.env.BACKEND_URL.includes('localhost'),
+      protocol= isLocal ? "http://" : process.env.PROTOCOL
+    
+    domain= domain ? (isLocal ? ("/"+domain) : (domain+".")) : ""
+
+    const result= isLocal ? 
+      ("http://localhost:3001" + domain + (url??""))
+        :
+      (protocol + domain + process.env.BACKEND_URL + (url??""))
+
+    console.log(result)
+
+    return result
   },
 
   /** short for writing preventDefault and stopPropagation */
