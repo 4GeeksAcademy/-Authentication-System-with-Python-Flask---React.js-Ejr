@@ -54,27 +54,26 @@ const AdminMembershipPurchase = () => {
         }
 
         if (paymentMethod === 'paypal') {
-            // Simulamos un redireccionamiento a PayPal
             const paymentData = {
+                membership_id: selectedMembership.id,
                 amount: selectedMembership.price,
-                payment_method: paymentMethod
+                currency: 'USD',  // Adjust currency if needed
+                email: userEmail  // Incluir el email del usuario en los datos de pago
             };
 
-            const result = await actions.adminPurchaseMembership({ email: userEmail, membership_id: selectedMembership.id, payment_data: paymentData });
+            const result = await actions.initiatePaypalPaymentAdmin(paymentData);
 
             if (result.success) {
-                // Simular redireccionamiento a PayPal
-                window.location.href = 'https://www.paypal.com'; // Aquí debes redirigir a la URL real de PayPal
+                window.location.href = result.data.approval_url;
             } else {
                 setPurchaseResult(result);
                 setShowResultModal(true);
             }
             return;
         }
-
         if (paymentMethod !== 'cash' && (!creditCardDetails.cardNumber || !creditCardDetails.expirationDate || !creditCardDetails.cvv || !creditCardDetails.cardType)) {
             setPurchaseResult({ success: false, error: 'Please complete all payment details.' });
-            setShowResultModal(true); // Muestra el modal de resultado
+            setShowResultModal(true);
             return;
         }
 
@@ -83,6 +82,7 @@ const AdminMembershipPurchase = () => {
         const paymentData = {
             amount: selectedMembership.price,
             payment_method: paymentMethod,
+            // email: userEmail,  // Incluir el email del usuario en los datos de pago
             ...(paymentMethod !== 'cash' && {
                 card_number: creditCardDetails.cardNumber,
                 cardholder_name: creditCardDetails.cardHolderName,
@@ -92,10 +92,10 @@ const AdminMembershipPurchase = () => {
             })
         };
 
-        const result = await actions.adminPurchaseMembership({ email: userEmail, membership_id: selectedMembership.id, payment_data: paymentData });
+        const result = await actions.adminPurchaseMembership({ membership_id: selectedMembership.id, payment_data: paymentData, email: userEmail });
 
         setPurchaseResult(result);
-        setShowResultModal(true); // Muestra el modal de resultado
+        setShowResultModal(true);
         setProcessing(false);
     };
 
