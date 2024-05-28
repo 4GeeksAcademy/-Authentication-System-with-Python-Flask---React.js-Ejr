@@ -179,23 +179,35 @@ def request_reset_password():
         link = url_for('api.reset_password', token=token, _external=True)
         msg = Message("Password Reset Request", recipients=[email])
         msg.body = f"Please click the link to reset your password: {link}"
+        print(link)  # Imprime el link en la consola
         mail.send(msg)
-    return jsonify(message="Password reset link sent"), 200
+        return jsonify(message="Password reset link sent"), 200
+    return jsonify(message="Email not found"), 404
+
 
 @api.route('/reset-password/<token>', methods=['POST'])
 def reset_password(token):
     try:
+        # Limpiar el token de caracteres inesperados
+        token = token.strip()
         email = s.loads(token, salt='password-reset-salt', max_age=3600)  # Token válido por 1 hora
     except Exception as e:
+        print(f"Error loading token: {e}")
         return jsonify(message="Token is invalid or expired"), 400
 
     new_password = request.json.get('password')
+    if not new_password:
+        return jsonify(message="New password is required"), 400
+
     user = User.query.filter_by(email=email).first()
     if user:
         user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
         db.session.commit()
         return jsonify(message="Password updated successfully"), 200
+
     return jsonify(message="User not found"), 404
+
+
 
 
 @api.route('/home', methods=['GET'])
