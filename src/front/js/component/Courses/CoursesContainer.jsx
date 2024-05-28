@@ -39,7 +39,7 @@ export const CoursesContainer = () => {
                                         <div className="card-img-top">
                                             <div className="course-thumbnail">
                                                 <img
-                                                    src="https://i.blogs.es/1d8a5b/python1/1024_2000.jpg"
+                                                    src={store.media}
                                                     className="img-fluid"
                                                     alt="python-course"
                                                     style={{ objectFit: 'cover', width: '100%', height: '180px' }}
