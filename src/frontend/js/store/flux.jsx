@@ -336,17 +336,23 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
           const
             endpointData= /(?:^([A-z]+)\||^)(?:([^:]+):|)(.*)/.exec(endpoint)
             location= Utils.getBackendUrl(...([endpointData[2]??"", endpointData[3]]))
-          
-				  res= await fetch(Utils.getBackendUrl(location), {
-            method: endpointData[0],
-            ...(credentials? {credentials: include} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
+
+          const shit= {
+            method: endpointData[1],
+            cors: "no-cors",
+            ...(credentials? {credentials: "include"} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
             ...(body? {
               headers: { 'Content-Type': mimetype?? 'application/json' },
               body: JSON.stringify(body)
             } : {})
-          })
+          }
+
+          console.log(endpointData[1])
+          console.debug(shit)
+
+				  res= await fetch(Utils.getBackendUrl(location), shit)
         }
-				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}`, e) }
+				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}`, e, res) }
         return res? {status: res.status, msg: res.msg} : {status: -1, msg: "internal error"}
       },
 
