@@ -25,6 +25,7 @@ import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
+import MembershipManager from "../component/MembershipManager.jsx";
 
 const ModulePage = () => {
     const { store, actions } = useContext(Context);
@@ -62,6 +63,7 @@ const ModulePage = () => {
         { component: <ImageGallery />, name: "ImageGallery " },
         { component: <TransactionsTable />, name: "TransactionsTable " },
         { component: <Users />, name: "Users " },
+        { component: <MembershipManager />, name: "MembershipManager" },
     ];
 
     return (

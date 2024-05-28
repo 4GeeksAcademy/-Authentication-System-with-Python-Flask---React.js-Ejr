@@ -43,6 +43,7 @@ import TransactionsTable from "./component/TransactionsTable.jsx";
 import UserCreator from "./component/UserCreator.jsx";
 
 import PageNormalUser from "./pages/PageNormalUser.jsx";
+import MembershipManager from "./component/MembershipManager.jsx";
 
 //create your first component
 const Layout = () => {
@@ -89,6 +90,7 @@ const Layout = () => {
                         <Route element={<UserCreator />} path="/UserCreator" />
                         <Route element={<PageNormalUser />} path="/Userpage" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<MembershipManager />} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -3,8 +3,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			users:[],
-			user:{},
+			users: [],
+			user: {},
 			isAuthenticated: null,
 			uploadedUserData: [],
 			isAuthenticatedMessage: null,
@@ -27,9 +27,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			reservedClasses: [],
 			cancelBooking: [],
 			creationTrainingClasses: [],
-			bookingData:[],
+			bookingData: [],
 			memberships: [],
-            membershipsLoading: false,
+			membershipsLoading: false,
 			images: [],
 			payments: []
 
@@ -297,12 +297,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-					console.log("data servidor",data)
+					console.log("data servidor", data)
 					let store = getStore();
 					setStore({ ...store, cancelBooking: data });
 
 
-			
+
 					// Imprimimos el estado de la tienda después de cargar los datos (solo para depuración)
 					// console.log("Store after data loaded:", store);
 				} catch (error) {
@@ -375,10 +375,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
 						return { success: false, error: data.error || "Unknown error occurred." };
 					}
-					
+
 					// console.log('data after setTimeout',data)
 
-				}catch (error) {
+				} catch (error) {
 					// console.error(error);
 					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
 				}
@@ -392,13 +392,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let url = `${process.env.BACKEND_URL}api/training_classes`;
 				let errors = [];
 				let successfulCreations = [];
-			
+
 				while (startDate <= endDate) {
 					let classData = {
 						...formData,
 						dateTime_class: startDate.toISOString().split('T')[0] + ' ' + formData.start_time
 					};
-			
+
 					try {
 						let response = await fetch(url, {
 							method: "POST",
@@ -417,10 +417,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} catch (error) {
 						errors.push({ error: error.message, date: startDate.toISOString() });
 					}
-			
+
 					startDate.setDate(startDate.getDate() + 1); // Incrementa el día
 				}
-			
+
 				// Actualiza el store al final del proceso
 				let store = getStore(); // Obtiene el estado actual del store
 				setStore({ ...store, creationTrainingClasses: successfulCreations }); // Actualiza el store con las nuevas clases creadas
@@ -429,7 +429,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, messageError: 'Some errors occurred.', errors: errors };
 				}
 				return { success: true, message: 'All classes were created successfully' };
-				
+
 			},
 
 			resetCreationTrainingClasses: () => {
@@ -441,7 +441,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 
-				const url =`${process.env.BACKEND_URL}api/booking`;
+				const url = `${process.env.BACKEND_URL}api/booking`;
 
 
 				try {
@@ -462,7 +462,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error("Error loading training classes:", error);
 				}
-            },
+			},
 
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local
@@ -490,7 +490,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading memberships:", error);
 				}
 			},
-			
+
 
 			purchaseMembership: async (data) => {
 				// console.log(data)
@@ -510,7 +510,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					let result = await response.json(); // Se espera la respuesta del servidor en formato JSON
 					// console.log("respuesta del servidor compra: ", result);
-			
+
 					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
 					if (response.ok) {
 						return { success: true, data: result };
@@ -518,43 +518,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
 						return { success: false, error: result.error || "Unknown error occurred." };
 					}
-			
+
 
 				} catch (error) {
 					console.error("Error purchasing membership:", error);
 					return { success: false, error: error.message }; // Devuelve un objeto de error si algo falla
 				}
 			},
-			
 
-			getUsers : async () => {
+
+			getUsers: async () => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
-				
+
 				try {
-				  let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users", 
-				  {
-					method: "GET",
-					headers: {
-					  "Content-Type": "application/json",
-					  // Incluye el token de autorización si es necesario
-						 Authorization: `Bearer ${myToken}`,
-					},
-				  });
-				//   console.log (response)
-				  if (!response.ok) {
-					throw new Error(`Error fetching users: ${response.statusText}`);
-				  }
-			  
-				  let data = await response.json();
-				//   console.log(data);
-				  
-				  
-				  let store = getStore(); // Obtiene el estado actual del almacén
-				  setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
-				  
+					let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users",
+						{
+							method: "GET",
+							headers: {
+								"Content-Type": "application/json",
+								// Incluye el token de autorización si es necesario
+								Authorization: `Bearer ${myToken}`,
+							},
+						});
+					//   console.log (response)
+					if (!response.ok) {
+						throw new Error(`Error fetching users: ${response.statusText}`);
+					}
+
+					let data = await response.json();
+					//   console.log(data);
+
+
+					let store = getStore(); // Obtiene el estado actual del almacén
+					setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
+
 				} catch (error) {
-				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+					console.error(error); // Maneja cualquier error que ocurra durante el proceso
 
 				}
 
@@ -578,129 +578,129 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	  if (!response.ok) {
 			// 		throw new Error(`Error fetching user: ${response.statusText}`);
 			// 	  }
-			
+
 			// 	  let data = await response.json();
 			// 	  console.log(data);
-			
+
 			// 	  let store = getStore(); // Obtiene el estado actual del almacén
 			// 	  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
-			
+
 			// 	} catch (error) {
 			// 	  console.error(error); // Maneja cualquier error que ocurra durante el proceso
 			// 	}
 			//   },
 
-			  uploadImage: async (formData) => {
-                const myToken = localStorage.getItem("token");
-                const url = `${process.env.BACKEND_URL}api/upload_img`;
-                
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${myToken}`,
-                        },
-                        body: formData,
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        return { success: true, message: data.message };
-                    } else {
-                        return { success: false, error: data.error || "Unknown error occurred." };
-                    }
-                } catch (error) {
-                    console.error("Error uploading image:", error);
-                    return { success: false, error: error.message };
-                }
-            },
-
-			fetchImages: async () => {
-                const myToken = localStorage.getItem("token");
-                const url = `${process.env.BACKEND_URL}api/all_images`;
+			uploadImage: async (formData) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}api/upload_img`;
 
 				try {
-                    const response = await fetch(url, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": `Bearer ${myToken}`,
-                        },
-                    });
-                    const data = await response.json();
-                    setStore({ images: data });
-                } catch (error) {
-                    console.error('Error fetching images:', error);
-                }
-            },
+					const response = await fetch(url, {
+						method: "POST",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						},
+						body: formData,
+					});
 
-            uploadProfileImage: async (formData) => {
-                const myToken = localStorage.getItem("token");
-                const url = `${process.env.BACKEND_URL}api/upload_img_profile`;
+					const data = await response.json();
 
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${myToken}`,
-                        },
-                        body: formData,
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        return { success: true, message: data.message };
-                    } else {
-                        return { success: false, message: data.error };
-                    }
-                } catch (error) {
-                    return { success: false, message: error.message };
-                }
-            },
+					if (response.ok) {
+						return { success: true, message: data.message };
+					} else {
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error uploading image:", error);
+					return { success: false, error: error.message };
+				}
+			},
 
-            updateProfileImage: async (formData) => {
-                const myToken = localStorage.getItem("token");
-                const url = `${process.env.BACKEND_URL}api/update_profile_image`;
+			fetchImages: async () => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}api/all_images`;
 
-                try {
-                    const response = await fetch(url, {
-                        method: "PUT",
-                        headers: {
-                            "Authorization": `Bearer ${myToken}`,
-                        },
-                        body: formData,
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        return { success: true, message: data.message };
-                    } else {
-                        return { success: false, message: data.error };
-                    }
-                } catch (error) {
-                    return { success: false, message: error.message };
-                }
-            },
+				try {
+					const response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						},
+					});
+					const data = await response.json();
+					setStore({ images: data });
+				} catch (error) {
+					console.error('Error fetching images:', error);
+				}
+			},
 
-            deleteProfileImage: async () => {
-                const myToken = localStorage.getItem("token");
-                const url = `${process.env.BACKEND_URL}api/delete_profile_image`;
+			uploadProfileImage: async (formData) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}api/upload_img_profile`;
 
-                try {
-                    const response = await fetch(url, {
-                        method: "DELETE",
-                        headers: {
-                            "Authorization": `Bearer ${myToken}`,
-                        }
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        return { success: true, message: data.message };
-                    } else {
-                        return { success: false, message: data.error };
-                    }
-                } catch (error) {
-                    return { success: false, message: error.message };
-                }
-            },
+				try {
+					const response = await fetch(url, {
+						method: "POST",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						},
+						body: formData,
+					});
+					const data = await response.json();
+					if (response.ok) {
+						return { success: true, message: data.message };
+					} else {
+						return { success: false, message: data.error };
+					}
+				} catch (error) {
+					return { success: false, message: error.message };
+				}
+			},
+
+			updateProfileImage: async (formData) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}api/update_profile_image`;
+
+				try {
+					const response = await fetch(url, {
+						method: "PUT",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						},
+						body: formData,
+					});
+					const data = await response.json();
+					if (response.ok) {
+						return { success: true, message: data.message };
+					} else {
+						return { success: false, message: data.error };
+					}
+				} catch (error) {
+					return { success: false, message: error.message };
+				}
+			},
+
+			deleteProfileImage: async () => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}api/delete_profile_image`;
+
+				try {
+					const response = await fetch(url, {
+						method: "DELETE",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						}
+					});
+					const data = await response.json();
+					if (response.ok) {
+						return { success: true, message: data.message };
+					} else {
+						return { success: false, message: data.error };
+					}
+				} catch (error) {
+					return { success: false, message: error.message };
+				}
+			},
 
 			getAllPayments: async () => {
 				try {
@@ -728,9 +728,84 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
+			// Función para crear una clase individual
+			createTrainingClasses: async (dataClasses) => {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+				// Construimos la URL para la solicitud
+				let url = `${process.env.BACKEND_URL}api/training_classes`;
+
+				try {
+					let response = await fetch(url, {
+						method: "POST", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(dataClasses)
+
+					});
+					let data = await response.json(); // Se espera la respuesta del servidor en formato JSON
+					console.log(data)
+
+					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
+					if (response.ok) {
+						// Asumiendo que quieres actualizar el store aquí
+						let store = getStore();
+						setStore({ ...store, creationTrainingClasses: data });
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+
+					// console.log('data after setTimeout',data)
+
+				} catch (error) {
+					// console.error(error);
+					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
+				}
+			},
+
+			createMembership: async (membershipData) => {
+				// Obtenemos el token del almacenamiento local
+				const myToken = localStorage.getItem("token");
+
+				// Construimos la URL para la solicitud
+				const url = `${process.env.BACKEND_URL}/api/memberships`;
+
+				try {
+					// Realizamos la solicitud POST a la API
+					const response = await fetch(url, {
+						method: "POST",
+						headers: {
+							"Authorization": `Bearer ${myToken}`, // Se incluye el token de autorización en los encabezados
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(membershipData), // Enviamos los datos de la membresía en el cuerpo de la solicitud
+					});
+
+					const data = await response.json(); // Obtenemos la respuesta en formato JSON
+
+					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
+					if (response.ok) {
+						// Puedes actualizar el store aquí si es necesario
+						let store = getStore();
+						setStore({ ...store, createdMembership: data });
+						return { success: true, data }; // Retornamos la respuesta exitosa
+					} else {
+						// En caso de error, retornamos un objeto con la información del error
+						return { success: false, error: data.error || "Ocurrió un error desconocido" };
+					}
+				} catch (error) {
+					// Manejamos cualquier error que ocurra durante el proceso de creación de la membresía
+					throw new Error(`Error al crear la membresía: ${error.message}`);
+				}
+			},
+
 		},
 	}
-	
+
 };
 
 export default getState;
