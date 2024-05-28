@@ -50,7 +50,7 @@ const ClassesView = () => {
                                 <td>{item.duration_minutes}</td>
                                 <td>{item.available_slots}</td>
                                 <td>
-                                    <button onClick={() => handlerEdit(item)}>
+                                    <button className="btn-secondary mx-2" onClick={() => handlerEdit(item)}>
                                         Editar clase
                                     </button>
                                 </td>

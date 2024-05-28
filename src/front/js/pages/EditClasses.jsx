@@ -117,7 +117,7 @@ const EditClasses = () => {
                     </Col>
                 </Row>
 
-                <Row className="justify-content-center mt-3">
+                <Row className="d-flex justify-content-around mt-3">
                     <Col xs="auto">
                         <Button variant="primary" type="button" className="btn-secondary mx-2" onClick={handleSubmit}>Aceptar cambios</Button>
                     </Col>
