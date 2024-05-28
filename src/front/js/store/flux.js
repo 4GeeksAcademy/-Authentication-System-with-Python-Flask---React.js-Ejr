@@ -513,6 +513,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({...store, currentEdit:item})
 			},
 
+			
 			//funcion asincrona para editar el fomulario de clases de entrenamiento
 			updateEditForm: async (id,formData) => {
 				console.log("activa el fetch")
@@ -523,7 +524,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// console.log(myToken);
 				// console.log(userData);
 				// Construimos la URL para la solicitud
-				let url = `${process.env.BACKEND_URL}api/training_classes/${id}`;
+				let url = `${process.env.BACKEND_URL}/api/training_classes/${id}`;
+				console.log(url, "Esta es la url")
 				try {
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -536,8 +538,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-					console.log(data)
-					if (response.ok) {
+					console.log("HOLA SOY LA DATA DE LA RESPUESTA DE EDITAR",data)
+					if (data.message) {
 						// Asumiendo que quieres actualizar el store aquí
 						return { success: true, data: data };
 					} else {

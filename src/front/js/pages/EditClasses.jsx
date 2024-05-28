@@ -1,16 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Form, Row, Col, Button} from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 
 
 const EditClasses = () => {
     const { actions, store } = useContext(Context);
-    const {id} = useParams()
-
-    useEffect(() => {
-
-    }, [])
+    const { classesToFilter, setClassesToFilter } = useState(store.classesData);
+    const { id } = useParams()
 
     const [formData, setFormData] = useState({
         name: "",
@@ -22,22 +19,44 @@ const EditClasses = () => {
 
     });
 
+    useEffect(() => {
+        // Buscar la clase por ID y establecer el estado
+        let foundClass = store.classesData.find((c) => c.id === parseInt(id));
+        if (foundClass) {
+            setFormData({
+                name: foundClass.name || "",
+                description: foundClass.description || "",
+                dateTime_class: foundClass.dateTime_class || "",
+                start_time: foundClass.start_time || "",
+                duration_minutes: foundClass.duration_minutes || "",
+                available_slots: foundClass.available_slots || ""
+            });
+        }
+    }, [id, store.classesData]);
+
     const handleChange = (e) => {
 
-        setFormData({ ...formData, [e.target.name]:e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
     };
+    let navigate = useNavigate()
+    const handleSubmit = async () => {
+        //e.preventDefault();
 
-    const handleSubmit = () => {
-        e.preventDefault();
-        actions.updateEditForm(id,formData)
+        let response = await actions.updateEditForm(id, formData)
+        if (response.success) {
+            alert("el usuario se edito correctamente")
+            navigate("/ClassesView")
+        } else {
+            alert("error al editar el usuario")
+        }
     }
     //console.log(store.currentEdit)
     return (
 
         <div>Componente de Edicion de Clases de entrenamiento
             <h3>{store.currentEdit.name}</h3>
-            <Form onSubmit={handleSubmit}>
+            <Form>
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
@@ -95,9 +114,9 @@ const EditClasses = () => {
                 </Row>
 
                 <div>
-                    <Button variant="primary" type="submit">Aceptar cambios</Button>
-                    <Button variant="primary" type="submit">Cancelar clase</Button>
-                    </div>
+                    <Button variant="primary" type="button" onClick={handleSubmit}>Aceptar cambios</Button>
+                    <Button variant="primary" type="button">Cancelar clase</Button>
+                </div>
 
             </Form>
 
