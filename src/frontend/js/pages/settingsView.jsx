@@ -8,19 +8,20 @@ const SettingsView = () => {
 	return (
 		<div className="w-full flex-auto text-center items-center mt-5">
       <h1>Hello world // Settings View // Requires Auth</h1>
-      { store.fakeUser ?
+      { store.userData ?
         <div className="py-5">
-          <img className="mx-auto" src={store.fakeUser.avatar} />
-          <p>username: {store.fakeUser.username}</p>
-          <p>email: {store.fakeUser.username}</p>
+          <img className="mx-auto" src={store.userData.avatar} />
+          <p>username: {store.userData.username}</p>
+          <p>alias: {store.userData.displayname}</p>
+          <p>email: {store.userData.email}</p>
         </div>
         :
         <p>no user logged</p>
       }
-      { store.fakeUser &&
-        <p>fakeUser active</p>
+      { store.userData &&
+        <p>user!</p>
       }
-      { !store.fakeUser &&
+      { !store.userData &&
         <p>please log in</p>
       }
     </div>

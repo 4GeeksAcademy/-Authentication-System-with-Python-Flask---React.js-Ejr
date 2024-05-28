@@ -2,17 +2,18 @@ import os, smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-from .utils import parse_bool
+from .utils import read_file, parse_bool
 
 APP_ACCOUNT= os.environ.get("APP_GMAIL_ACCOUNT", None)
 APP_PASSWORD= os.environ.get("APP_GMAIL_PASSWORD", None)
 
 def send_verification_email(data):
 
+  html= read_file("email/vericode.html")
+
   message = MIMEMultipart()
   message["Subject"] = "Email verification code @ Keqqu"
 
-  html= open("src/backend/template/verification.html",'r').read()
   html = html.replace("%_0_%", data['username'])
   html = html.replace("%_1_%", data['email'])
   html = html.replace("%_2_%", data['vericode'])
@@ -22,10 +23,11 @@ def send_verification_email(data):
 
 def send_recovery_email(data):
 
+  html= read_file("email/passcode.html")
+
   message = MIMEMultipart()
   message["Subject"] = "Account recovery code @ Keqqu"
 
-  html= open("src/backend/template/recovery.html",'r').read()
   html = html.replace("%_0_%", data['username'])
   html = html.replace("%_1_%", data['email'])
   html = html.replace("%_2_%", data['passcode'])

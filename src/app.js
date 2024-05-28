@@ -8,3 +8,4 @@ import "./frontend/styles/styles.css"
 
 const main = createRoot(document.getElementById('main'))
 main.render(<Layout />);
+

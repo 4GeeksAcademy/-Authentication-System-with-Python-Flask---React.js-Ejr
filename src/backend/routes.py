@@ -1,6 +1,5 @@
-from flask import Flask, request, jsonify, url_for, Blueprint
-from .models import db, User
-from .utils import generate_sitemap, APIException
+from flask import Blueprint
+from .models import db
 
 # ---------------------------------------------------------------------------- api.keqqu.com/* ----------------------------------------------------------------------------
 

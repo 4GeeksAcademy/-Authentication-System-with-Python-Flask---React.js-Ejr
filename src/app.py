@@ -4,10 +4,10 @@ from datetime import timedelta
 from flask import Flask, jsonify, send_from_directory, Blueprint, request, redirect
 from flask_migrate import Migrate
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import *
 
 from backend.utils import APIException, generate_sitemap_v2
-from backend.models import db
+from backend.models import db, User
 from backend.admin import setup_admin
 from backend.commands import setup_commands
 import backend.api_utils as api_utils
@@ -73,7 +73,7 @@ def handle_health():
   domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
   subdomains= ("accounts", "workspaces", "boards", "objects", "api")
   responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
-  return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day", 200
+  return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day</pre>", 200
 
 # for every unused path
 @app.route('/<path:path>', methods=['GET'])
@@ -92,6 +92,30 @@ def handle_invalid_usage(error):
 @jwt.unauthorized_loader
 def handle_missing_required_jwt(header):
   return api_utils.response_401()
+
+# custom override for when trying to access a auth-required endpoint with an expired token
+@jwt.expired_token_loader
+def handle_expired_token(jwt_header, jwt_payload):
+  if jwt_payload['type'] == 'access':
+    identity = get_jwt_identity()
+    user= db.session.get(User, identity['i'])
+    rtoken= str(user.refreshtoken, 'utf-8') if user.refreshtoken != None else None
+    if rtoken:
+      fres= api_utils.response_119() # session refreshed // not standard HTTP
+      return api_utils.create_new_access_token(fres, identity)
+
+  return api_utils.response_419() # session expired
+
+# //-- after-request --// automatic token rotator -- cookies
+@app.after_request
+def refresh_expiring_tokens(response):
+  try:
+    payload= get_jwt()
+    identity= get_jwt_identity()
+    if payload and identity: # user has a valid login session
+      api_utils.test_rotate_tokens(response, payload, identity)
+  except: pass
+  return response
 
 # main
 if __name__ == '__main__':

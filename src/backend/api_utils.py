@@ -2,7 +2,7 @@ import json, os, functools
 from .utils import get_current_time_seconds, parse_int, parse_bool
 from datetime import timedelta
 from types import SimpleNamespace
-from flask import jsonify, request
+from flask import jsonify, request, Response
 from flask_jwt_extended import *
 from scrypt import hash
 from .models import db, User
@@ -10,8 +10,13 @@ from .models import db, User
 current_app= None
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 
-CONTENT_TYPE_JSON= {'Content-Type': 'application/json'}
-CONTENT_TYPE_MULTIPART= {'Content-Type': 'multipart/form-data'}
+MIMETYPE_PLAIN= 'text/plain'
+MIMETYPE_JSON= 'application/json'
+MIMETYPE_MULTIPART= 'multipart/form-data'
+
+CONTENT_TYPE_PLAIN= {'Content-Type': MIMETYPE_PLAIN}
+CONTENT_TYPE_JSON= {'Content-Type': MIMETYPE_JSON}
+CONTENT_TYPE_MULTIPART= {'Content-Type': MIMETYPE_MULTIPART}
 
 #--- check a list of properties against data
 def check_missing_properties_manual(data, props):
@@ -20,19 +25,24 @@ def check_missing_properties_manual(data, props):
       return f"missing required property '{p}'"
   return None
 
-def get_shell(locals, **options): return SimpleNamespace(**{ "namespace": SimpleNamespace(**locals), "data": {}, "options": options})
+def response_plain(status:int, data=None) -> Response:
+  return Response( data, status, mimetype= MIMETYPE_PLAIN )
 
-def response(status:int, msg:str, data=None, debug=None) -> tuple[dict, int, dict]:
+def response(status:int, msg:str, data=None, debug=None) -> Response:
   obj= { "msg": msg }
   if data: obj['res']= data
   if debug: obj['_']= json.loads(json.dumps(debug, default=json_object_safe))
-  return jsonify(obj), status, CONTENT_TYPE_JSON
+  return Response( json.dumps(obj, default=json_object_safe), status, mimetype= MIMETYPE_JSON )
+
+def response_119(): return response(119, "session refreshed", None, None) # non-standard HTTP status code
 
 def response_200(data=None, debug=None): return response(200, "ok", data, debug)
 def response_201(data=None, debug=None): return response(201, "created", data, debug)
 def response_400(data=None, debug=None): return response(400, "bad request", data, debug)
 def response_401(data=None, debug=None): return response(401, "unauthorized", data, debug)
 def response_403(data=None, debug=None): return response(403, "forbidden", data, debug)
+def response_404(): return response(404, "not found", None, None)
+def response_419(): return response(404, "session expired", None, None)
 def response_500(data=None, debug=None): return response(500, "server error", data, debug)
 
 def json_object_safe(obj):
@@ -40,18 +50,18 @@ def json_object_safe(obj):
   return dict if dict else type(obj).__name__
 
 #--- get the user by acount
-def get_user_by_username_or_email(account):
+def get_user_by_username_or_email(account:str) -> tuple[User|None, int|None]:
   return get_user(account, account)
 
 #--- get the user with given username and email
-def get_user(username=None, email=None):
+def get_user(username:str=None, email:str=None) -> tuple[User|None, int|None]:
   user= User.query.filter(User.email==email or User.username==username).first()
   mode= None
   if user: mode= 1 if user.username==username else 2
   return user, mode
 
 #--- get the user by current jwt identity
-def get_user_by_identity():
+def get_user_by_identity() -> tuple[User|None, Response|None]:
   try:
     identity= get_jwt_identity()
     user= User.query.filter(User.email==identity['e'] or User.username==identity['u']).first()
@@ -60,7 +70,7 @@ def get_user_by_identity():
   return user, None
 
 #--- check the user's login
-def get_user_login(account, password):
+def get_user_login(account:str, password:str) -> tuple[User|None, Response|None]:
   user, _= get_user_by_username_or_email(account)
   if not user: return None, response(400, "invalid credentials")
   # bad password returns a 401 unauthorized instead of 400 bad request just so we can do a fast check to prompt a "forgot password" shit in frontend
@@ -68,14 +78,19 @@ def get_user_login(account, password):
   return user, None
 
 #--- create both refresh and access tokens for a given user -- called ONLY on login
-def create_new_tokens(user, remember):
-  identity= {"u":user.username, "e":user.email, "p":user.permission, "t":user.timestamp}
-
+def create_new_tokens(response:Response, user:str, remember:bool) -> Response:
+  identity= {
+    'i': user.id,
+    'u': user.username, 
+    'e': user.email, 
+    'p': user.permission, 
+    't': user.timestamp
+  }
   create_new_refresh_token(identity, remember)
-  return create_new_access_token(identity)
+  return create_new_access_token(response, identity)
 
 #--- checks and tries to rotate (renew) the tokens automatically if their expiry date is coming
-def test_rotate_tokens(apayload, identity):
+def test_rotate_tokens(response:Response, apayload:dict, identity) -> Response:
   
   # refresh token
   target_timestamp = get_current_time_seconds() + timedelta(minutes=30)
@@ -88,38 +103,41 @@ def test_rotate_tokens(apayload, identity):
   # access token
   target_timestamp = get_current_time_seconds() + timedelta(minutes=5)
   if target_timestamp > apayload['exp']:
-    return create_new_access_token(identity)
+    return create_new_access_token(response, identity)
 
 #--- creates a new refresh token
-def create_new_refresh_token(identity, remember):
+def create_new_refresh_token(identity, remember:bool):
   # refresh token -- lifespan: 30 days if 'remember', 16 hours if not
   rtoken = create_refresh_token(identity, additional_claims={'r':remember}, expires_delta=None if remember else timedelta(hours=16)) # expires= None means 30 days by our jwt settings
-  user, _= get_user(identity['u'], identity['e'])
+  user= db.session.get(User, identity['i'])
   if user:
     user.refreshtoken= bytes(rtoken, 'utf-8')
     db.session.commit()
 
 #--- creates a new access token
-def create_new_access_token(identity):
+def create_new_access_token(response:Response, identity) -> Response:
   # access token -- lifespan: 15 min
-  response= jsonify({})
   atoken = create_access_token(identity)
-  return set_access_cookies(response, atoken, max_age=timedelta(minutes=15)) # access token is saved on cookie, if not 'remember', its deleted on session end (navigator close)
+  set_access_cookies(response, atoken, max_age=timedelta(minutes=30), domain=current_app.config['SERVER_NAME']) # access token is saved on cookie, if not 'remember', its deleted on session end (navigator close)
+  return response
+
+#--- remove user tokens
+def remove_token_cookie() -> Response:
+  fres= Response()
+  unset_jwt_cookies(fres, domain=current_app.config['SERVER_NAME'])
+  return fres
 
 #--- check valid access for a token and returns the user
-def get_user_with_check_access(identity=None):
+def get_user_with_check_access(identity:str=None) -> tuple[User|None, Response|None]:
   if not identity: 
     identity = get_jwt_identity()
     if not identity: return None, response_401() # unauthorized -- NOT logged-in
   user= User.query.filter((User.username==identity['u'] and User.email==identity['e'])).first()
   if not user: return None, response(400, "bad token") # shouldn't ever happen
-  t= parse_int(identity['t'])
-  if t is None: return None, response(400, "bad timestamp") # shouldn't ever happen
-  if user.timestamp==0 or t < user.timestamp: None, response(401, "expired", {"token":t, "user":user.timestamp})
   return user, None
 
 #--- check valid access for a token
-def check_user_forbidden(level=0):
+def check_user_forbidden(level:int=0) -> Response|None:
   user_identity = get_jwt_identity()
   if not user_identity: return response_401() # unauthorized -- NOT logged-in
   _, error= get_user_with_check_access(user_identity)
@@ -128,11 +146,11 @@ def check_user_forbidden(level=0):
   return None
     
 #--- encrypt a password
-def hash_password(password):
+def hash_password(password:str) -> bytes:
   return hash(password, current_app.config["JWT_SECRET_KEY"])
 
 #--- test a password
-def check_password(input, hashed):
+def check_password(input:str, hashed:bytes) -> bool:
   if input == str(hashed): return True
   _new_hash= hash(input, current_app.config["JWT_SECRET_KEY"])
   return _new_hash == hashed

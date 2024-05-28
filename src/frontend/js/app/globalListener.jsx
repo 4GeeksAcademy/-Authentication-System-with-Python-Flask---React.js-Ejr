@@ -1,5 +1,5 @@
 import React from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
 import Constants from "./constants.js"
 
@@ -13,14 +13,36 @@ import Constants from "./constants.js"
 const GlobalListener=()=>{
   const 
     { language, store, actions }= React.useContext(Context),
-    location= useLocation()
+    loc= useLocation(),
+    nav= useNavigate()
+
+  // this effect is for testing anything, executed on page refresh
+  React.useEffect(()=>{
+    
+  },[])
+
+  /** -------------------------------------------------------------------------- AUTH RELATED THINGS */
+
+  React.useEffect(()=>{
+    // dunno what to do with on-user-auth changed xd
+  },[store.userData])
 
   /** -------------------------------------------------------------------------- LANG/STATE EFFECTS */
 
   React.useEffect(()=>{
+
+    // saves current page on store.activePage, can be tested against Constants.PAGE.***
+    const 
+      path= window.location.pathname.toLowerCase(),
+      page= Object.keys(Constants.PAGEURLS).find(e=> path.includes(Constants.PAGEURLS[e])),
+      idx= Constants.PAGE[page?? Constants.PAGE.login]
+
+    actions.setActivePage(idx)
+    //if(!store.userData && idx > Constants.PAGE.recover) nav("/")
+
     actions.setStoreDirty(Constants.STORE_DIRTY.location)
     setTimeout(refreshPageTitle, 25)
-  },[location])
+  },[loc])
   
   React.useEffect(()=>{
     refreshPageTitle()

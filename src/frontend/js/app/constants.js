@@ -66,19 +66,42 @@ const Constants= Object.freeze({
 
   SITENAME: "KeQQu",
 
-  PAGETITLE: {
-    settings:   "Settings",
-    dashboard:  "Dashboard",
-    workspace:  "Workspace",
-    project:    "Project",
-    board:      "Board",
-    team:       "Team",
-    profile:    "Profile",
-    login:      "Login",
-    signup:     "SignUp",
-    logout:     "Come back soon!",
-    delete:     "Farewell! :(",
-    recover:    "Account recovery"
+  PAGE: {
+    // globally available pages
+    healthcheck:  0,
+    404:          1,
+    creamyfap:    2,
+    // public pages
+    landing:      3,
+    signup:       4,
+    login:        5,
+    farewell:     6,
+    recover:      7,
+    // private pages
+    logout:       8,
+    settings:     9,
+    dashboard:    10,
+    workspace:    11,
+    board:        12
+  },
+
+  PAGEURLS: {
+    // globally available pages
+    healthcheck:  "/healthcheck",
+    404:          "/404",
+    creamyfap:    "/creamyfap",
+    // public pages
+    landing:      "NA",
+    signup:       "/signup",
+    login:        "/login",
+    // auth pages
+    logout:       "/logout",
+    recover:      "/recover",
+    farewell:     "/farewell",
+    settings:     "/settings",
+    dashboard:    "/dashboard",
+    workspace:    "/workspace",
+    board:        "/board"
   },
 
   BOARD_SIZE_PIXELS: 1048576,

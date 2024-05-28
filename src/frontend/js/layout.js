@@ -21,9 +21,16 @@ import BoardView from "./pages/boardView.jsx" // board view
 import { Redirector, NotFound_Generic, HealthCheck, CreamyFap } from "./app/internal.jsx" // redirector, generic 404, health check, paja a la crema
 import GlobalListener from "./app/globalListener.jsx" // redirector, generic 404, health check, paja a la crema
 
-import appContext from "./store/appContext.jsx"
+import appContext, { Context } from "./store/appContext.jsx"
 
 const Layout = () => {
+  const 
+    { store }= React.useContext(Context),
+    auth= store.userData != null
+
+  const noAuthBase= <Redirector url="/login" replace/>
+
+  function onlyAuth(element){ return auth ? element : noAuthBase }
 
   // strict means it wont accept trailing slashes, so "/settings" works while "/settings/" not
   // exact means exact, needed in some cases where we don't want "parent" routes to interfere in children ones
@@ -42,19 +49,15 @@ const Layout = () => {
                   
                   <Route strict path="/signup" element={<SessionManagerView mode={Constants.SESSION_MODE_SIGNUP}/>} />
                   <Route strict path="/login" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGIN}/>} />
-                  <Route strict path="/logout" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGOUT}/>} />
+                  <Route strict path="/logout" element={onlyAuth(<SessionManagerView mode={Constants.SESSION_MODE_LOGOUT}/>)} />
                   <Route strict path="/recover" element={<SessionManagerView mode={Constants.SESSION_MODE_RECOVER}/>} />
                   <Route strict path="/farewell" element={<SessionManagerView mode={Constants.SESSION_MODE_DELETED}/>} />
       
-                  <Route strict path="/settings" element={<SettingsView />} />
-                  {/* <Route strict path="/profile" element={<ProfileView self/>} exact /> */}
-                  {/* <Route strict path="/profile/:uid" element={<ProfileView />} /> */}
-      
-                  <Route strict path="/dashboard" element={<DashboardView />} />
-                  <Route strict path="/workspace/:wid" element={<WorkspaceView />} />
-                  {/* <Route strict path="/team/:tid" element={<TeamView />} /> */}
-                  {/* <Route strict path="/project/:pid" element={<ProjectView />} exact /> */}
-                  <Route strict path="/board/:bid" element={<BoardView />}/>
+                  <Route strict path="/settings" element={onlyAuth(<SettingsView />)} />
+
+                  <Route strict path="/dashboard" element={onlyAuth(<DashboardView />)} />
+                  <Route strict path="/workspace/:wid" element={onlyAuth(<WorkspaceView />)} />
+                  <Route strict path="/board/:bid" element={onlyAuth(<BoardView />)}/>
                   
                   <Route path="*" element={<Redirector url="/404" replace/>} />
               </Routes>

@@ -1,6 +1,7 @@
 import json
 from flask_sqlalchemy import SQLAlchemy
 from .utils import get_millis_since, pack_array_int, unpack_array_int
+from .aws_utils import get_public_link
 
 db = SQLAlchemy()
 
@@ -88,11 +89,15 @@ class User(db.Model):
       "username": self.username,
       "displayname": self.displayname,
       "email": self.email,
-      "avatar": self.avatar,
+      "avatar": get_public_link(self.avatar) if not 'dicebear.com' in self.avatar else self.avatar,
       "settings": self.settings,
-      "last_workspace_id": self.last_workspace_id,
-      "last_board_id": self.last_board_id,
+      "last_visits": [self.last_workspace_id, self.last_board_id],
       "last_seen": self.last_seen,
+
+      "permission": self.permission,
+      "vericode": self.vericode,
+      "passcode": self.passcode,
+
       "timestamp": self.timestamp if self.timestamp > 0 else 0 # stores the last modified time
     }
   def __repr__(self): return f'<User {self.id}::{self.email}::{self.username} ({self.displayname})>'

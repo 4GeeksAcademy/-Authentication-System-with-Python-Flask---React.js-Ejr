@@ -3,10 +3,11 @@ from .utils import fnv164, fnv132
 from PIL import Image
 
 FILE_ALLOW_FORMATS= ('JPEG','JPEG2000','PNG','WEBP','GIF','ICO','TGA','PCX','BMP','TIFF','DDS')
-s3b= None
 
-def initializeClientRemote():
-  s3b= boto3.client('s3').Bucket(os.environ.get("AWS_BUCKET"))
+AWS_BUCKET= os.environ.get("AWS_BUCKET")
+AWS_BUCKET_HOST= os.environ.get("AWS_BUCKET_HOST")
+
+aws_client= boto3.client('s3')
 
 def _resolve_filename_for(type, name, ext):
   _type= type.lower()
@@ -19,6 +20,9 @@ def _resolve_filename_for(type, name, ext):
 
   return "".join([v for v in hashes]) + f"{_type}{_name}.{ext}"
 
+def get_public_link(filename):
+  return f"{AWS_BUCKET_HOST}/{AWS_BUCKET}/{filename}"
+
 def uploadFile(filestorage, type, destname):
 
   srcname= re.findall(r"([^/:?]+\.(.*)|[^/:?]+)$", filestorage.filename)
@@ -29,7 +33,7 @@ def uploadFile(filestorage, type, destname):
 
   s3path= _resolve_filename_for(type, destname, ext)
 
-  s3b.upload_fileobj(infile, os.environ.get("AWS_BUCKET"), s3path)
+  aws_client.upload_fileobj(infile, AWS_BUCKET, s3path)
   return s3path
 
 def convert_avatar_image(file):
