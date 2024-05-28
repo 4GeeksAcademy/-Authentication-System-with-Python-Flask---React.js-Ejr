@@ -657,6 +657,7 @@ def update_teacher(teacher_id):
 
 #-----------------------COURSES------------------------#
 @api.route('/create/courses', methods=['POST'])
+@jwt_required()
 def post_courses():
     try:
         title =  request.json.get('title')
