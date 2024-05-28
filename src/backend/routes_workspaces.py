@@ -22,8 +22,8 @@ def handle_workspaces_healthcheck():
 # the implementation is intentional, this has to be as fast as possible
 @workspaces.route('/timestamp', methods=['GET'])
 def handle_workspaces_timestamp():
-  try: return Workspace.get(parse_int(request.args.get("id", -1))).timestamp, 200
-  except: return -1, 200
+  try: return db.session.get(Workspace, parse_int(request.args.get("id", -1))).timestamp, 200, 
+  except: return api_utils.response_plain(200, "-1")
 
 # -------------------------------------- /fetch
 # get all styles & tags id's that require an update for a given board and timestamp

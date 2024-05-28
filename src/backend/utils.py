@@ -1,4 +1,4 @@
-import os, re, fnvhash, random, struct
+import os, re, fnvhash, random, struct, urllib3
 from datetime import datetime, timezone
 from flask import jsonify, url_for
 
@@ -169,32 +169,12 @@ def fnv11024(data, text=False):
   if len(hexv) < 256: hexv= "0"*(256-len(hexv))
   return hexv
 
-# generates the basic sitemap
-def generate_sitemap(app):
-    links = ['/admin/']
-    for rule in app.url_map.iter_rules():
-        # Filter out rules we can't navigate to in a browser
-        # and rules that require parameters
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            url = url_for(rule.endpoint, **(rule.defaults or {}))
-            if "/admin/" not in url:
-                links.append(url)
-
-    links_html = "".join(["<li><a href='" + y + "'>" + y + "</a></li>" for y in links])
-    return f"""
-    <head>
-        <title>-- BACKEND --</title>
-        <link href="/admin/static/bootstrap/bootstrap3/swatch/slate/bootstrap.min.css?v=3.3.5" rel="stylesheet">
-    </head>
-    <body>
-        <div style="text-align: center;">
-            <p>HOST: <script>document.write('<input style="padding: 5px; width: 300px" type="text" value="'+window.location.href+'" />');</script></p>
-            <ul style="text-align: left;">
-                {links_html}
-            </ul>
-        </div>
-    </body>"""
-
+#-- reads a file from backend static
+def read_file(url):
+  http = urllib3.PoolManager()
+  full_url = f"{os.environ.get('PROTOCOL','https://')}{os.environ.get('SERVER_NAME')}/{url}"
+  response = http.request('GET', full_url)
+  return str(response.data, 'utf-8')
 
 def _get_link(url): return [url, _get_url_color(url), parseurl(url)]
 
@@ -203,7 +183,6 @@ def parseurl(url):
   if finds: finds= finds[0]
   if finds and len(finds) == 2: return finds[0] + ":" + finds[1]
   else: return url
-
 
 def _get_url_color(url):
   if "healthcheck" in url: return "other"
@@ -254,15 +233,14 @@ def generate_sitemap_v2(app, entitytypes=None):
   if entitytypes:
     endpoint_link+= "".join([f"<li><div class=\"method method-get\">GET</div><a class=\"apilink-api\" href=\"{l}\">{l}</a></li>" for l in entitytypes])
 
-  html= open("src/backend/res/index.html",'r').read()
-  css= open("src/backend/res/styles.css",'r').read()
+  html= read_file("res/index.html")
+  #css= read_file("res/styles.css")
 
-  page= html
-  page= page.replace("%SWATCH%", os.environ.get('BOOTSTRAP_THEME', 'slate'))
-  page= page.replace("%CSS%",css)
-  page= page.replace("%ADMIN_LINK%",admin_link)
-  page= page.replace("%ENDPOINT_LINK%",endpoint_link)
-  page= page.replace("%ENDPOINT_SPAN%",endpoint_span)
-  #page= page.replace("%TOOL_LIST%",tool_list)
+  html= html.replace("%SWATCH%", os.environ.get('BOOTSTRAP_THEME', 'slate'))
+  #html= html.replace("%CSS%",css)
+  html= html.replace("%ADMIN_LINK%",admin_link)
+  html= html.replace("%ENDPOINT_LINK%",endpoint_link)
+  html= html.replace("%ENDPOINT_SPAN%",endpoint_span)
+  html= html.replace("%TOOL_LIST%","UNA BUENA PAJA A LA CREMA")
 
-  return page
+  return html
