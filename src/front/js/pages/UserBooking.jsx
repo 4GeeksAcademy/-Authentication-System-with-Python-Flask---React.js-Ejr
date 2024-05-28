@@ -14,7 +14,7 @@ const UserBooking = () => {
 
     // Verificar si uploadedUserData contiene datos
     if (!uploadedUserData) {
-        return <div className={styles.loading}>Cargando datos del usuario...</div>;
+        return <div className={styles.loading}>Loading user data...</div>;
     }
 
     const FormattedDate = ({ dateTime }) => {
