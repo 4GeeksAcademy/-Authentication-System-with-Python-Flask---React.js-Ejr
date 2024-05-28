@@ -516,16 +516,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			//funcion asincrona para editar el fomulario de clases de entrenamiento
 			updateEditForm: async (id,formData) => {
-				console.log("activa el fetch")
-				console.log(formData)
-				console.log(id)
+				
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
-				// console.log(myToken);
-				// console.log(userData);
-				// Construimos la URL para la solicitud
+			
 				let url = `${process.env.BACKEND_URL}/api/training_classes/${id}`;
-				console.log(url, "Esta es la url")
+				
 				try {
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -542,6 +538,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (data.message) {
 						// Asumiendo que quieres actualizar el store aquí
 						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar tus datos:", error);
+					return { success: false, error: error.message };
+				}
+			},
+
+			//Funcion asincrona para el boton de cancelar clase en el formulario de edicion EditClasses
+			cancelClass: async (id) => {
+				
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+			
+				let url = `${process.env.BACKEND_URL}/api/cancel_class/${id}`;
+				
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+
+					});
+					let data = await response.json();
+					console.log(data)
+					if (data.message) {
+						// Asumiendo que quieres actualizar el store aquí
+						//return { success: true, data: data };
 					} else {
 						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
 						return { success: false, error: data.error || "Unknown error occurred." };

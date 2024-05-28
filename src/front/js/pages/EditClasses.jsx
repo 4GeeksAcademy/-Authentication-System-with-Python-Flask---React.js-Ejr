@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Form, Row, Col, Button } from "react-bootstrap";
+import Swal from 'sweetalert2'
+
 
 
 const EditClasses = () => {
@@ -41,16 +43,27 @@ const EditClasses = () => {
     };
     let navigate = useNavigate()
     const handleSubmit = async () => {
-        //e.preventDefault();
 
         let response = await actions.updateEditForm(id, formData)
         if (response.success) {
-            alert("el usuario se edito correctamente")
+            //alert("el usuario se edito correctamente")
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Tus cambios se han guardado",
+                showConfirmButton: false,
+                timer: 1500
+            });
             navigate("/ClassesView")
         } else {
             alert("error al editar el usuario")
         }
     };
+
+    const handleCancel = async() => {
+        await actions.cancelClass(id)
+        navigate("/ClassesView");
+    }
 
     const handleClose = () => {
         navigate("/ClassesView");
@@ -120,6 +133,9 @@ const EditClasses = () => {
                 <Row className="d-flex justify-content-around mt-3">
                     <Col xs="auto">
                         <Button variant="primary" type="button" className="btn-secondary mx-2" onClick={handleSubmit}>Aceptar cambios</Button>
+                    </Col>
+                    <Col xs="auto">
+                        <Button variant="primary" type="button" className="btn-danger mx-2" onClick={handleCancel}>Cancelar Clase</Button>
                     </Col>
                     <Col xs="auto">
                         <Button variant="primary" type="button" className="btn-secondary mx-2" onClick={handleClose}>Volver</Button>
