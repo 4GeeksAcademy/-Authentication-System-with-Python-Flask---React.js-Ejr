@@ -40,14 +40,14 @@ const Board= ()=>{
       zoom: Utils.getClosestIndex(_ZOOM_LEVELS, 1.0),
       dirty: 0,
       contextmenu: -1,
-      timestamp: Date.now()
+      millistamp: Date.now()
     }),
     canvasStateRef= React.useRef(canvasState),
     [childItems, set_childItems]= React.useState([]),
     itemUtils= React.useRef([])
 
-  function merge_canvasState(new_state){ _scs({ ...Object.assign(canvasStateRef.current, { ...new_state, timestamp: Date.now() })})}
-  function set_currentAction(new_action){ _scs({ ...Object.assign(canvasStateRef.current, { lastaction: canvasStateRef.current.action, action: new_action, timestamp: Date.now() })})}
+  function merge_canvasState(new_state){ _scs({ ...Object.assign(canvasStateRef.current, { ...new_state, millistamp: Date.now() })})}
+  function set_currentAction(new_action){ _scs({ ...Object.assign(canvasStateRef.current, { lastaction: canvasStateRef.current.action, action: new_action, millistamp: Date.now() })})}
 
   React.useEffect(()=>{
 
@@ -487,7 +487,7 @@ const Board= ()=>{
 
       merge_canvasState({dirty:0})
     }
-  },[canvasState.timestamp])
+  },[canvasState.millistamp])
 
   // #endregion
 

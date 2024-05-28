@@ -16,17 +16,17 @@ def handle_workspaces(): return "workspaces subdomain", 200
 def handle_workspaces_healthcheck():
     return "workspaces ok", 200
 
-# -------------------------------------- /timestamp
-# get timestamp
-# required ?id -- the workspaces id to get the timestamp from
+# -------------------------------------- /millistamp
+# get millistamp
+# required ?id -- the workspaces id to get the millistamp from
 # the implementation is intentional, this has to be as fast as possible
-@workspaces.route('/timestamp', methods=['GET'])
-def handle_workspaces_timestamp():
-  try: return db.session.get(Workspace, parse_int(request.args.get("id", -1))).timestamp, 200, 
+@workspaces.route('/millistamp', methods=['GET'])
+def handle_workspaces_millistamp():
+  try: return db.session.get(Workspace, parse_int(request.args.get("id", -1))).millistamp, 200, 
   except: return api_utils.response_plain(200, "-1")
 
 # -------------------------------------- /fetch
-# get all styles & tags id's that require an update for a given board and timestamp
+# get all styles & tags id's that require an update for a given board and millistamp
 @workspaces.route('/fetch', methods=['GET'])
 @jwt_required()
 @api_utils.endpoint_safe( content_type="application/json",)

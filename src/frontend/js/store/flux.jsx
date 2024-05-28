@@ -23,7 +23,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       items: storeDefaults.items,
 
       // tracking
-      timestamp: 0,
+      millistamp: 0,
       dirty: 0
 		},
     language: {
@@ -83,14 +83,6 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
           }
           setStore({ userPrefs: new_userPrefs })
         }
-
-        // TODO: binary load
-        //const data= Utils.base64str2bytes(Utils.getCookie("userPrefs"))
-        //if(data){
-        //  newUserPrefs= {
-        //    darkMode: data[0] & 0b1
-        //  }
-        //}
       },
 
       // decode and load the userPrefs from the cookie that contains it
@@ -141,14 +133,14 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 
       getTimestamp: async(subdomain, id)=>{
 				try{
-          const res= await fetch(Utils.getBackendUrl("workspaces", "/timestamp?id=" + id), { method: "GET", cors: "no-cors" })
+          const res= await fetch(Utils.getBackendUrl("workspaces", "/millistamp?id=" + id), { method: "GET", cors: "no-cors" })
           if(res.status==200){
             const data= await res.text()
-            console.log("got timestamp:", data)
+            console.log("got millistamp:", data)
             return data
           }
         }
-				catch(e){ console.log(`Unable to get timestamp for: ${subdomain}-${id}`, e) }
+				catch(e){ console.log(`Unable to get millistamp for: ${subdomain}-${id}`, e) }
 				return false
       },
       //#endregion

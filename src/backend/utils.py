@@ -42,24 +42,23 @@ def pack_array_int(arr):
 def unpack_array_int(bytes):
   return [struct.unpack('!I', bytes[i:i+4])[0] for i in range(0, len(bytes), 4)]
 
-#--- gets the current time in millis, since epoch (1/1/1970)
-def get_current_time_millis():
-  return int(datetime.now(timezone.utc).timestamp()*1000)
-
-#--- gets the passed time in millis, since timestamp (in seconds)
-def get_millis_since(timestamp):
-  return int(datetime.fromtimestamp(timestamp, tz=timezone.utc).timestamp() * 1000)
-
-#--- gets the current time in millis, since epoch (1/1/1970)
-def get_current_time_seconds():
+#--- gets the current time in seconds, since epoch (1/1/1970)
+def get_current_timestamp():
   return int(datetime.now(timezone.utc).timestamp())
 
-#--- gets the passed time in millis, since timestamp (in seconds)
+#--- gets the current time in milliseconds, since epoch (1/1/1970)
+def get_current_millistamp():
+  return int(datetime.now(timezone.utc).timestamp()*1000)
+
+#--- gets the passed time in seconds, since timestamp (in seconds)
 def get_seconds_since(timestamp):
   return int(datetime.fromtimestamp(timestamp, tz=timezone.utc).timestamp())
 
-#--- format time in millis, and timestamp (in seconds)
-def format_time_millis(millis): return datetime.fromtimestamp(millis*.001, timezone.utc).ctime()
+#--- gets the passed time in milliseconds, since millistamp
+def get_milliseconds_since(millistamp):
+  return int(datetime.fromtimestamp(millistamp*.001, tz=timezone.utc).timestamp()*1000)
+
+#--- format time strgin from timestamp (in seconds)
 def format_timestamp(timestamp): return datetime.fromtimestamp(timestamp, timezone.utc).ctime()
 
 # verification code functions
@@ -214,21 +213,14 @@ def generate_sitemap_v2(app, entitytypes=None):
   forbiddens=  ("serve_any_other_file")
 
   for rule in app.url_map.iter_rules():
-    if "GET" in rule.methods and has_no_empty_params(rule) and not re.search(r'wipe|execute', rule.endpoint):
+    if has_no_empty_params(rule) and not re.search(r'wipe|execute|admin', rule.endpoint):
       link= _get_link(url_for(rule.endpoint, **(rule.defaults or {})))
       if 'admin' not in link[0]:
         endpoint_raw_link.append([_get_method(rule.methods)] + link)
-    else:
-      str= rule.__str__()
-      if not re.search(r'static|export|admin', str):
-        if rule.endpoint in forbiddens: continue
-        link= _get_link(url_for(rule.endpoint, **(rule.defaults or {})))
-        endpoint_raw_span.append([_get_method(rule.methods)] + link)
 
   admin_link= f"<p><a class=\"admin\" href=\"{admin_raw_link}\">Site admin: <span>{admin_raw_link}</span></a></p>"
   endpoint_link = "".join([f"<li><div class=\"method method-{y[0].lower()}\">{y[0]}</div><a class=\"apilink-{y[2]}\" href=\"{y[1]}\">{y[3]}</a></li>" for y in endpoint_raw_link])
   endpoint_span = "".join([f"<li><div class=\"method method-{y[0].lower()}\">{y[0]}</div>{y[3]}</li>" for y in endpoint_raw_span])
-  #tool_list = "".join([f"<li>{t}</li>" for t in tools.generate_html_links()])
 
   if entitytypes:
     endpoint_link+= "".join([f"<li><div class=\"method method-get\">GET</div><a class=\"apilink-api\" href=\"{l}\">{l}</a></li>" for l in entitytypes])

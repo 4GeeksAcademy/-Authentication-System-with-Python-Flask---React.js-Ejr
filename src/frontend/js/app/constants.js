@@ -58,12 +58,6 @@ const Constants= Object.freeze({
     "es-es"
   ],
 
-  STORE_DIRTY: {
-    session:      0b0000_0000_0000_0001,
-    location:     0b0000_0000_0000_0010,
-    board:        0b0000_0000_0000_0100
-  },
-
   SITENAME: "KeQQu",
 
   PAGE: {
