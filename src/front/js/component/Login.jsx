@@ -6,7 +6,7 @@ import { Context } from "../store/appContext";
 const Login = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
-    
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,13 +20,13 @@ const Login = () => {
         if (store.isAuthenticated && store.dataRole) {
             if (store.dataRole === "athlete") {
                 navigate("/Userpage");
-            }else if (store.dataRole === "coach") {
-                navigate("/PrivatePageUser"); 
-            }else if (store.dataRole === "admin") {
-                navigate("/PrivatePageUser"); 
-            }else if (store.dataRole === "master") {
-                navigate("/ModulePage"); 
-            }else {
+            } else if (store.dataRole === "coach") {
+                navigate("/PrivatePageUser");
+            } else if (store.dataRole === "admin") {
+                navigate("/PrivatePageUser");
+            } else if (store.dataRole === "master") {
+                navigate("/ModulePage");
+            } else {
                 navigate("/");
             }
         }
@@ -74,15 +74,19 @@ const Login = () => {
                     <input type="email" name="email" className="inputs" value={email.trim()} onChange={e => setEmail(e.target.value)} required />
                 </label>
                 <label className="labels">
-                    Contraseña:
+                    Password:
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>
-                <button type="submit" className={styles.submitButtonLogin}>Iniciar sesión</button>
-                <Link to="/Master-private-registration">¿Olvidaste la contraseña?</Link>
+                <button type="submit" className={styles.submitButtonLogin}>Log in</button>
+                <Link to="/Master-private-registration">
+                    Forgot your password?</Link>
                 <div className="rememberMe">
                     <input type="checkbox" />
-                    <span>Recuérdame</span>
-                    <p>¿Es tu primera vez aquí? <Link to="/Singup">Regístrate ahora.</Link></p>
+                    <span>
+                        Remember me</span>
+                    <p>
+                        Is this your first time here? <Link to="/Singup">
+                            Register now.</Link></p>
                 </div>
             </form>
         </div>

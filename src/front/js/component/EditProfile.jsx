@@ -63,7 +63,7 @@ const EditProfile = () => {
             }
             return acc;
         }, {});
-        
+
         try {
             const result = await actions.updateUserData(updatedData);
             if (result.success) {
@@ -84,7 +84,7 @@ const EditProfile = () => {
                 handleClose();
             }, 2000); // Oculta el mensaje después de 3 segundos
         }
-        
+
     };
 
     const handleConfirm = async () => {
@@ -135,24 +135,27 @@ const EditProfile = () => {
                         Cerrar
                     </Button>
                     <Button variant="primary" onClick={handleConfirmShow} className={styles.saveButton}>
-                        Guardar Cambios
+                        Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>
 
             <Modal show={confirmShow} onHide={handleConfirmClose} centered className={styles.modal + " modal-centered"}>
                 <Modal.Header closeButton className={styles.modalHeader}>
-                    <Modal.Title className={styles.modalTitle}>Confirmar Cambios</Modal.Title>
+                    <Modal.Title className={styles.modalTitle}>
+                        Confirm Changes</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
-                    <p>¿Estás seguro de que quieres guardar los cambios?</p>
+                    <p>Are you sure you want to save the changes?</p>
                 </Modal.Body>
                 <Modal.Footer className={styles.modalFooter}>
                     <Button variant="secondary" onClick={handleConfirmClose} className={styles.closeButton}>
-                        Cancelar
+
+                        Cancel
                     </Button>
                     <Button variant="primary" onClick={handleConfirm} className={styles.saveButton}>
-                        Confirmar
+
+                        Confirm
                     </Button>
                 </Modal.Footer>
             </Modal>
