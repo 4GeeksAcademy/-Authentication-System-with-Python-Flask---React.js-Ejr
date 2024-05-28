@@ -17,31 +17,41 @@ const Login = () => {
         await actions.loadUserData();
 
         // Verificar el estado después de que se haya actualizado
-        if (store.isAuthenticated && store.dataRole) {
-            if (store.dataRole === "athlete") {
+        const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
+        const dataRole = localStorage.getItem('dataRole');
+
+
+        if (isAuthenticated && dataRole) {
+            if (dataRole === "athlete") {
                 navigate("/Userpage");
-            } else if (store.dataRole === "coach") {
-                navigate("/PrivatePageUser");
-            } else if (store.dataRole === "admin") {
-                navigate("/PrivatePageUser");
-            } else if (store.dataRole === "master") {
-                navigate("/ModulePage");
-            } else {
+            }else if (dataRole === "coach") {
+                navigate("/PrivatePageUser"); 
+            }else if (dataRole === "admin") {
+                navigate("/PrivatePageUser"); 
+            }else if (dataRole === "master") {
+                navigate("/ModulePage"); 
+            }else {
                 navigate("/");
             }
         }
     };
 
-    // useEffect(() => {
-    //     if (store.isAuthenticated && store.dataRole) {
-    //         if (store.dataRole === "athlete") {
-    //             navigate("/PrivatePageUser");
-    //         } else {
-    //             navigate("/Master-private-registration");
-    //         }
-    //     }
-    // }, [store.isAuthenticated, store.dataRole, navigate]);
+    useEffect(() => {
+        const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
+        const dataRole = localStorage.getItem("dataRole");
 
+        if (isAuthenticated && dataRole) {
+            if (dataRole === "athlete") {
+                navigate("/Userpage");
+            } else if (dataRole === "coach" || dataRole === "admin") {
+                navigate("/PrivatePageUser");
+            } else if (dataRole === "master") {
+                navigate("/ModulePage");
+            } else {
+                navigate("/");
+            }
+        }
+    }, [navigate]);
 
 
     const renderLoginResponse = () => { // Función para renderizar la respuesta del inicio de sesión

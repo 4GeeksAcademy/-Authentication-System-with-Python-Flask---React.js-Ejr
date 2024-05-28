@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8fa2e74d115e
+Revision ID: 907f2b2f369d
 Revises: 
-Create Date: 2024-05-17 23:44:46.128702
+Create Date: 2024-05-25 11:29:41.940608
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8fa2e74d115e'
+revision = '907f2b2f369d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,10 +27,22 @@ def upgrade():
     sa.Column('classes_per_month', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('movement_images',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=128), nullable=False),
+    sa.Column('description', sa.Text(), nullable=True),
+    sa.Column('img_data', sa.LargeBinary(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('permission',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('profile_image',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('img_data', sa.LargeBinary(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('role',
@@ -59,6 +71,8 @@ def upgrade():
     sa.Column('last_update_date', sa.DateTime(), nullable=True),
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.Column('profile_image_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['profile_image_id'], ['profile_image.id'], ),
     sa.ForeignKeyConstraint(['role_id'], ['role.id'], ondelete='SET NULL'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
@@ -68,9 +82,16 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('membership_id', sa.Integer(), nullable=False),
     sa.Column('payment_date', sa.DateTime(), nullable=True),
+    sa.Column('confirmation_date', sa.DateTime(), nullable=True),
     sa.Column('amount', sa.Float(), nullable=False),
     sa.Column('payment_method', sa.String(length=50), nullable=False),
     sa.Column('status', sa.String(length=50), nullable=False),
+    sa.Column('transaction_reference', sa.String(length=255), nullable=True),
+    sa.Column('currency', sa.String(length=3), nullable=True),
+    sa.Column('description', sa.String(length=255), nullable=True),
+    sa.Column('card_number_last4', sa.String(length=4), nullable=True),
+    sa.Column('card_type', sa.String(length=255), nullable=True),
+    sa.Column('cardholder_name', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['membership_id'], ['membership.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -88,6 +109,7 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('dateTime_class', sa.DateTime(), nullable=True),
+    sa.Column('Class_is_active', sa.Boolean(), nullable=True),
     sa.Column('start_time', sa.Time(), nullable=False),
     sa.Column('duration_minutes', sa.Integer(), nullable=False),
     sa.Column('available_slots', sa.Integer(), nullable=False),
@@ -110,9 +132,9 @@ def upgrade():
     op.create_table('booking',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('training_class_id', sa.Integer(), nullable=False),
     sa.Column('booking_date', sa.DateTime(), nullable=False),
     sa.Column('status', sa.String(length=50), nullable=True),
-    sa.Column('training_class_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['training_class_id'], ['training_classes.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -120,8 +142,13 @@ def upgrade():
     op.create_table('payment_detail',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('payment_id', sa.Integer(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=False),
+    sa.Column('product_description', sa.String(length=255), nullable=True),
     sa.Column('quantity', sa.Integer(), nullable=False),
+    sa.Column('unit_price', sa.Float(), nullable=False),
     sa.Column('subtotal', sa.Float(), nullable=False),
+    sa.Column('tax_amount', sa.Float(), nullable=False),
+    sa.Column('discount_amount', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['payment_id'], ['payment.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -139,6 +166,8 @@ def downgrade():
     op.drop_table('user')
     op.drop_table('role_permission')
     op.drop_table('role')
+    op.drop_table('profile_image')
     op.drop_table('permission')
+    op.drop_table('movement_images')
     op.drop_table('membership')
     # ### end Alembic commands ###

@@ -32,7 +32,6 @@ const NavigationBar = () => {
 
     const handleCloseSession = async () => {
         await actions.closeSession();
-        localStorage.removeItem('token');
         navigate('/');
     };
 
