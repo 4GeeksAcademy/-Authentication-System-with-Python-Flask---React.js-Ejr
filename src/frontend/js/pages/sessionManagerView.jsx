@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from "react"
 import Constants from "../app/constants"
+import SessionLogin from "../component/sessionLogin.jsx"
 
 
 /* import { Context } from "../store/appContext"; */
@@ -45,7 +46,11 @@ const SessionManagerView = ({ mode }) => {
 						navigate('/')
 					}
 
-
+					if(mode <= 1) {
+						return (
+							<SessionLogin mode = {mode} />
+						)
+					}
 
 	return (
 		<div className="w-full flex-auto text-center items-center">
@@ -98,7 +103,11 @@ const SessionManagerView = ({ mode }) => {
 				</div>
 			)}
 
-			{ mode === Constants.SESSION_MODE_LOGIN || Constants.SESSION_MODE_SIGNUP && (
+			
+
+			
+
+			 {/* { mode === Constants.SESSION_MODE_LOGIN || Constants.SESSION_MODE_SIGNUP && (
 						<div className="session-login-container">
 						<div className={`container ${isSignUp ? 'active' : ''}`} id="container">
 							<div className={`form-container ${isSignUp ? 'sign-up' : 'sign-in'}`}>
@@ -149,7 +158,7 @@ const SessionManagerView = ({ mode }) => {
 							</div>
 						</div>
 					</div>
-			)}
+			)}  */}
 		</div>
 	)
 }
