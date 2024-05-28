@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Context } from "../store/appContext";
+import combinedFrame from '../../img/login-frame.png'; // Importa la imagen combinada correctamente
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"; // Importación de los iconos
 import '../../styles/LogIn.css';
@@ -33,20 +34,20 @@ export const LogIn = () => {
     };
 
     return (
-        <div className="container-fluid row align-items-center login-page">
-            <div className="py-1 col-xl-5 justify-content-center align-items-center">
-                <div className="pb-1 rounded-1 col-12 row d-flex login-form">
-                    <div className="px-1 col-12 row justify-content-center d-flex">
-                        <div className="bg-white bg-opacity-10 col-8 justify-content-center d-flex">
-                            <p className="text-center text-white fs-2 fw-medium font-family-Inter col-12 m-0 px-3 py-2">Find Pals to Play Today!</p>
+        <div className="container-fluid login-page">
+            <div className="row align-items-center justify-content-center">
+                <div className="col-lg-6 col-md-8 col-sm-10 py-1 d-flex flex-column align-items-center">
+                    <div className="login-form pb-1 rounded-1 col-12 d-flex flex-column align-items-center">
+                        <div className="col-12 d-flex flex-column align-items-center">
+                            <div className="col-12 text-center">
+                                <p className="login-title text-white fs-2 fw-medium font-family-Inter col-12 m-0 px-3 py-2">Find Pals to Play Today!</p>
+                            </div>
+                            <div className="col-12 text-center">
+                                <p className="text-white fs-6 fw-normal font-family-Inter col-12 m-0 px-3 py-2">Please sign in or create an account to start</p>
+                            </div>
                         </div>
-                        <div className="bg-white bg-opacity-10 col-7 justify-content-center d-flex">
-                            <p className="text-center text-white fs-6 fw-normal font-family-Inter col-12 m-0 px-3 py-2">Please sign in or create an account to start</p>
-                        </div>
-                    </div>
-                    <form className="p-1 col-12 row justify-content-center align-items-center d-flex" onSubmit={handleSubmit}>
-                        <div className="col-8 row d-flex">
-                            <div className="col-12 row d-flex mb-3">
+                        <form className="col-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+                            <div className="col-12 mb-3">
                                 <label className="text-white fs-6 fw-normal font-family-Inter col-12 m-0 px-3 py-2" htmlFor="email">Email Address</label>
                                 <div className="rounded-1 col-12 align-items-center">
                                     <div className="px-1 py-1 bg-dark rounded-1 border border-1 border-primary col-12 align-items-center d-flex">
@@ -61,7 +62,7 @@ export const LogIn = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-12 row d-flex mb-3">
+                            <div className="col-12 mb-3">
                                 <label className="text-white fs-6 fw-normal font-family-Inter col-12 m-0 px-3 py-2" htmlFor="password">Password</label>
                                 <div className="rounded-1 col-12 align-items-center">
                                     <div className="px-1 py-1 bg-dark rounded-1 border border-1 border-primary col-12 align-items-center d-flex">
@@ -79,23 +80,23 @@ export const LogIn = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-white bg-opacity-10 col-12 align-items-center">
-                                <button type="submit" className="btn btn-primary w-100">
+                            <div className="col-12 mb-3">
+                                <button type="submit" className="btn login-btn">
                                     Login
                                 </button>
                             </div>
-                        </div>
-                        <div className="bg-white bg-opacity-10 col-8 justify-content-center d-flex mt-3">
+                        </form>
+                        <div className="col-12 text-center">
                             <p className="col-12 m-0 px-3 py-2">
                                 <span className="text-white fs-6 fw-normal font-family-Inter">Don’t have an account? </span>
                                 <Link to="/signup" className="text-white fs-6 fw-normal font-family-Inter text-decoration-underline">create a new account</Link>
                             </p>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-            <div className="position-relative col-xl-7 row d-none d-xl-block">
-                <img className="position-absolute rounded-3 shadow border border-1 border-white border-opacity-75 col-7" src="../img/login-frame.png" alt="placeholder" />
+                <div className="col-lg-5 d-none d-lg-block position-relative">
+                    <img className="img-fluid larger-image" src={combinedFrame} alt="placeholder" />
+                </div>
             </div>
         </div>
     );
