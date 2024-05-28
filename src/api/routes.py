@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
 from datetime import timedelta
 import re
+import os
 
 from sqlalchemy.exc import SQLAlchemyError
 import jwt
@@ -176,14 +177,16 @@ def request_reset_password():
     user = User.query.filter_by(email=email).first()
     if user:
         token = s.dumps(email, salt='password-reset-salt')
-        link = url_for('api.reset_password', token=token, _external=True)
+        
+        # Usar la URL del frontend del archivo .env
+        frontend_url = os.getenv('FRONTEND_URL')
+        link = f"{frontend_url}/reset-password/{token}"
         msg = Message("Password Reset Request", recipients=[email])
         msg.body = f"Please click the link to reset your password: {link}"
-        print(link)  # Imprime el link en la consola
+        print(link)  # Imprime el link en la consola para verificarlo
         mail.send(msg)
         return jsonify(message="Password reset link sent"), 200
     return jsonify(message="Email not found"), 404
-
 
 @api.route('/reset-password/<token>', methods=['POST'])
 def reset_password(token):
