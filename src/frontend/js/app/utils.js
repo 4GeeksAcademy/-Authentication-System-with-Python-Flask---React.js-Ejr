@@ -1,4 +1,10 @@
 const Utils= {
+  /** get the backend url */
+  getBackendUrl(domain=null, url=null){
+    domain= domain ? (domain+".") : ""
+    return process.env.PROTOCOL + domain + process.env.BACKEND_URL + (url??"")
+  },
+
   /** short for writing preventDefault and stopPropagation */
   cancelEvent: (e)=> { e.preventDefault(); e.stopPropagation() },
   

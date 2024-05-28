@@ -9,13 +9,14 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 		store: {
       // internal
       readyState: { backend: false, frontend: false, pointer: false, language: false },
+      activePage: null,
 
       // user
       userPrefs: storeDefaults.userPrefs,
+      userData: null,
 
       // dev
       devPrefs: storeDefaults.devPrefs,
-      fakeUser: null,
       
       // content
       board: null,
@@ -42,7 +43,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
     },
 		actions: {
 
-      // ------------------------------------------------------------ DATA MANAGEMENT
+      // #region ----------------------------------------------------------------------------------------- DATA MANAGEMENT
 
       // initialization tasks, on page loading or refreshing (f5)
       initialize: async ()=>{
@@ -126,8 +127,11 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 				catch(e){ console.log("Couldn't load Language... fallback to EN-US", "Reason: " + e) }
 				return false
       },
+      //#endregion
 
-      // ------------------------------------------------------------ PAGE BEHAVIOUR
+      // #region ----------------------------------------------------------------------------------------- PAGE BEHAVIOUR
+
+      setActivePage: (idx)=> setStore({ activePage: idx }),
 
       setPointerReady: (state)=> { mergeStore({ readyState: { pointer: state }})},
 
@@ -135,7 +139,21 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       setStoreDirty: (state)=> { setStore({ dirty: getStore().dirty | state })},
       unsetStoreDirty: (state)=> { setStore({ dirty: (getStore().dirty | state) ^ state })},
 
-      // ------------------------------------------------------------ THIRD PARTY APIS
+      getTimestamp: async(subdomain, id)=>{
+				try{
+          const res= await fetch(Utils.getBackendUrl("workspaces", "/timestamp?id=" + id), { method: "GET", cors: "no-cors" })
+          if(res.status==200){
+            const data= await res.text()
+            console.log("got timestamp:", data)
+            return data
+          }
+        }
+				catch(e){ console.log(`Unable to get timestamp for: ${subdomain}-${id}`, e) }
+				return false
+      },
+      //#endregion
+
+      // #region ----------------------------------------------------------------------------------------- THIRD PARTY APIS
 
       getFontAwesomeIconList: async()=>{
 				try{
@@ -157,8 +175,190 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 				catch(e){ console.log("Couldn't get FontAwesome icon list", e) }
 				return false
       },
+      //#endregion
 
-      // ------------------------------------------------------------ BACKEND
+      // #region ----------------------------------------------------------------------------------------- ACCOUNTS
+
+      /** registers a new account */
+      accounts_signup: async (username, displayname, email, password, remember)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|accounts:/signup",
+          body: {
+            username: username,
+            displayname: displayname?? username,
+            email: email,
+            password: password,
+            login: 0,
+            loginafter: loginafter,
+            remember: remember ? 1 : 0
+          }
+        })
+        if((200,201).includes(res.status) && loginafter){
+          const data= await res.json()
+          setStore({userData: data.res})
+        }
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** login into the account with given credentials */
+      accounts_login: async (account, password, remember)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|accounts:/login",
+          body: {
+            account: account,
+            password: password,
+            remember: remember ? 1 : 0
+          }
+        })
+        if(res.status==200) {
+          const data= res.json()
+          if(data.res) setStore({userData: res})
+        }
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** logs out of current session */
+      accounts_logout: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|accounts:/logout"
+        })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** rotates the tokens (refresh) -- this makes up to 4 retries */ 
+      accounts_tokenRotate: async ()=>{
+        let res;
+        for(let i=4; i> 0; i--){
+          res= await getActions().simpleBackendRequest({
+            endpoint:"GET|accounts:/rotate_4da6b724968255957637bec4"
+          })
+          if(res.status===119) continue;
+          if((419,200,-1).includes(res.status) || i<=0) break;
+        }
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** get current user from backend */
+      accounts_currentUser: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|accounts:/user"
+        })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** get if username is registered */
+      accounts_usernameRegistered: async (name)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:`GET|accounts:/username/${name}`
+        })
+        return res.status===200
+      },
+
+      /** deletes an account forever // requires credentials token + manually entered credentials data */
+      accounts_delete: async (email, password)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|accounts:/delete",
+          body:{
+            email: email,
+            password: password
+          }
+        })
+        if(res.status==200) setStore({userData: null})
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** gets permission // easy bypass-able -- dont use for sensitive content */
+      accounts_auth: async (level)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|accounts:/auth",
+          body: {level:level}
+        })
+				if(res.status===200) setStore({ userAuthLevel: res.status===200 })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** request verification email */
+      accounts_verify_request: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|accounts:/verify"
+        })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** submit verification email code */
+      accounts_verify_submit: async (vericode)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|accounts:/verify",
+          body: {
+            vericode: vericode
+          }
+        })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** request recovery email */
+      accounts_recover_request: async (email)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|accounts:/recover",
+          body: {
+            email: email
+          }
+        })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** submit recovery email code */
+      accounts_recover_submit: async (email, passcode, newPassword)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|accounts:/recover",
+          body: {
+            email: email,
+            passcode: passcode,
+            password: newPassword
+          }
+        })
+        return {status: res.status, msg: res.msg}
+      },
+
+      /** modify account data */
+      accounts_modify: async (new_userData, password)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"PATCH|accounts:/user",
+          body: {
+            current_password: password,
+            ...new_userData
+          },
+          mimetype:'multipart/form-data'
+        })
+        if(res.status===200){
+          const data= await res.json()
+          setStore({userData: data.res})
+        }
+        return {status: res.status, msg: res.msg}
+      },
+      //#endregion
+
+      simpleBackendRequest: async ({endpoint, body=null, credentials=true, mimetype=null})=>{
+        let res= null
+        try{
+          const
+            endpointData= /(?:^([A-z]+)\||^)(?:([^:]+):|)(.*)/.exec(endpoint)
+            location= Utils.getBackendUrl(...([endpointData[2]??"", endpointData[3]]))
+          
+				  res= await fetch(Utils.getBackendUrl(location), {
+            method: endpointData[0],
+            ...(credentials? {credentials: include} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
+            ...(body? {
+              headers: { 'Content-Type': mimetype?? 'application/json' },
+              body: JSON.stringify(body)
+            } : {})
+          })
+        }
+				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}`, e) }
+        return res? {status: res.status, msg: res.msg} : {status: -1, msg: "internal error"}
+      },
+
+      // #region ----------------------------------------------------------------------------------------- BOARDS
 
       loadBoard: async (bid, pid=-1)=>{
         console.log("loading board from backend yayyy")
@@ -177,7 +377,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
 			checkBackendHealth: async ()=>{
 				try{
-					const res = await fetch("www" + process.env.BACKEND_URL + "/healthcheck", { method: "GET", cors: "no-cors" })
+					const res = await fetch(Utils.getBackendUrl("", "/healthcheck"), { method: "GET", cors: "no-cors" })
           mergeStore({ readyState: { backend: res.status===200 } })
           return true
 				}
@@ -185,8 +385,9 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         mergeStore({ readyState: { backend: false } })
 				return false
 			},
+      //#endregion
 
-      // ------------------------------------------------------------ DEVELOPER ONLY
+      // #region ----------------------------------------------------------------------------------------- DEVELOPER ONLY
       
       getDevPref:(pref)=>{ return getStore().devPrefs[pref]?? null },
       
@@ -203,17 +404,27 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       },
 
       toggleDevAuth:()=>{
-        const new_prefs= structuredClone(getStore().devPrefs)
-        new_prefs.fakeAuth= !new_prefs.fakeAuth
-        const new_store={ 
-          devPrefs: new_prefs,
-          fakeUser: new_prefs.fakeAuth ? {
-            username: "Paco Fiestas",
-            email: "paquitosexy69@gmail.com",
-            avatar: "https://api.dicebear.com/8.x/pixel-art/png?seed=paco"
-          }: null}
-        setStore(new_store)
-        console.log(new_prefs.fakeAuth ? `Using fake user: ${new_store.fakeUser.username} (${new_store.fakeUser.email})` : "fake user removed")
+
+        const cur_user= getStore().userData
+
+        if(!cur_user || cur_user.fake){
+          const new_prefs= structuredClone(getStore().devPrefs)
+          new_prefs.fakeAuth= !new_prefs.fakeAuth
+          const new_store={ 
+            devPrefs: new_prefs,
+            userData: new_prefs.fakeAuth ? {
+              id: 0,
+              username: "paco69",
+              displayname: "Paco Fiestas",
+              email: "paquitosexy69@gmail.com",
+              last_visits: [0, 0],
+              avatar: "https://api.dicebear.com/8.x/pixel-art/png?seed=paco",
+              fake: true
+            }: null}
+          setStore(new_store)
+          console.log(new_prefs.fakeAuth ? `Using fake user: ${new_store.userData.username} (${new_store.userData.email})` : "fake user removed")
+        }
+        else console.log("current user is not fake, i'm out of this shit not gonna do anything...")
       },
 
       loadDevPrefs:()=>{
@@ -238,6 +449,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         ].join("")
         Utils.setCookie("devPrefs", data, [30,0,0], "/", Constants.COOKIE_SAMESITE_STRICT )
       },
+
+      //#endregion
 		}
 	}
 

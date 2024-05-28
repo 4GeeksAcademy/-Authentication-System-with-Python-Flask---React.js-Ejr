@@ -237,12 +237,11 @@ def handle_accounts_recover_solve(json):
   return api_utils.response(200, "password changed")
 
 # -------------------------------------- /username
-# check username availability
-@accounts.route('/username', methods=['GET'])
-@api_utils.endpoint_safe( content_type="application/json", required_props=("username"), props_strict=True)
-def handle_accounts_username(json):
-  if User.query.filter_by(username= json['username']).first(): return "n", 403
-  return "y", 200
+# check username registered
+@accounts.route('/username/<name>', methods=['GET'])
+def handle_accounts_username(name):
+  if db.session.query(User).filter(User.username== name).first(): return "1", 200
+  return "0", 204
 
 # -------------------------------------- /users
 # get user lists

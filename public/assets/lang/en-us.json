@@ -9,7 +9,9 @@
     "project":    "Project",
     "team":       "Team",
     "profile":    "Profile",
-    "settings":   "Account"
+    "settings":   "Account",
+    "404":        "Whoopitiwhoops!",
+    "creamyfap":  "Fapping, that's it!"
   },
   "common": {
     "title":        "Title",
