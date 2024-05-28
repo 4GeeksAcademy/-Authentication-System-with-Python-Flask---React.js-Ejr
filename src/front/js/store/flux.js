@@ -409,6 +409,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const uploadedMedia = await response.json();
           setStore({ media: uploadedMedia.secure_url, loading: false });
+          console.log(uploadedMedia)
         } catch (error) {
           console.error('Error uploading media:', error);
           setStore({ loading: false });
