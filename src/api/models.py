@@ -114,7 +114,7 @@ class Course(db.Model):
     price = db.Column(db.Integer, nullable=False)  
     description = db.Column(db.String(500), nullable=False)
     assessment = db.Column(db.Integer, nullable=True) 
-    create_date = db.Column(db.String(300), unique=True, nullable=True)
+    create_date = db.Column(db.String(300), unique=False, nullable=True)
     title_Teacher = db.Column(db.String(250), nullable=False)
     date_expiration = db.Column(db.String(300), unique=False, nullable=True) 
 
@@ -184,7 +184,7 @@ class Category(db.Model):
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title_order = db.Column(db.String(250), nullable=False)
-    price = db.Column(db.Integer, unique=True, nullable=False)
+    price = db.Column(db.Integer, unique=False, nullable=False)
     date = db.Column(db.String(250), nullable=False)
     total = db.Column(db.String(250), nullable=False)
 
@@ -214,7 +214,7 @@ class Trolley(db.Model):
     id = db.Column (db.Integer, primary_key=True)
     title_course = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.String(250), unique=True, nullable=False)
+    date = db.Column(db.String(250), unique=False, nullable=False)
 
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -240,7 +240,7 @@ class Trolley(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(250), unique=True, nullable=False)
+    date = db.Column(db.String(250), unique=False, nullable=False)
     title_course = db.Column(db.String(250), nullable=False)
     pad_amount = db.Column(db.String(250), nullable=False)
     type_payment = db.Column(db.String(250), nullable=False) 
@@ -307,7 +307,7 @@ class Quizzes(db.Model):
     question_title = db.Column(db.String(250), nullable=False)
     answer_teacher = db.Column(db.String(800), nullable=False)
     answer_user = db.Column(db.Boolean(), unique=False, nullable=False)
-    approved = db.Column(db.Boolean(), unique=True, nullable=False)
+    approved = db.Column(db.Boolean(), unique=False, nullable=False)
     approval_percentage_user = db.Column(db.String(800), nullable=False)
     approval_percentage_number = db.Column(db.String(800), nullable=False)
     approval_percentage = db.Column(db.Boolean(), unique=False, nullable=False)
