@@ -50,8 +50,12 @@ const EditClasses = () => {
         } else {
             alert("error al editar el usuario")
         }
-    }
-    //console.log(store.currentEdit)
+    };
+
+    const handleClose = () => {
+        navigate("/ClassesView");
+    };
+
     return (
 
         <div>Componente de Edicion de Clases de entrenamiento
@@ -113,11 +117,14 @@ const EditClasses = () => {
                     </Col>
                 </Row>
 
-                <div>
-                    <Button variant="primary" type="button" onClick={handleSubmit}>Aceptar cambios</Button>
-                    <Button variant="primary" type="button">Cancelar clase</Button>
-                </div>
-
+                <Row className="justify-content-center mt-3">
+                    <Col xs="auto">
+                        <Button variant="primary" type="button" className="btn-secondary mx-2" onClick={handleSubmit}>Aceptar cambios</Button>
+                    </Col>
+                    <Col xs="auto">
+                        <Button variant="primary" type="button" className="btn-secondary mx-2" onClick={handleClose}>Volver</Button>
+                    </Col>
+                </Row>
             </Form>
 
         </div>
