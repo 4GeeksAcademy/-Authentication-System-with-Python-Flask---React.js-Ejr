@@ -413,7 +413,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       }
     },
 
-   /* STORE-object states & ACTIONS-arrow function OF CLOUDINARYCOMPONENT*/
     uploadCloudinaryMedia: async (file) => {
       const preset_name = "jptixrge";
       const cloud_name = "dfoegvmld";
