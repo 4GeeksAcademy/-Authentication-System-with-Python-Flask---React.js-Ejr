@@ -50,7 +50,7 @@ const NavigationBar = () => {
                     {store.isAuthenticated && (
                         <>
                             <Button onClick={handleCloseSession} className={styles.logoutButton}>Cerrar sesión</Button>
-                            <Link to="/PRRecord">
+                            <Link to="/Userpage">
                                 <Button className={styles.ProfileButton}>Ir al perfil</Button>
                             </Link>
                             {store.uploadedUserData.role === 'master' && (
