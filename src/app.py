@@ -36,13 +36,14 @@ MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
 # Configuración de Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.example.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'your-email@example.com'
-app.config['MAIL_PASSWORD'] = 'your-email-password'
-app.config['MAIL_DEFAULT_SENDER'] = 'your-email@example.com'
+app.config['MAIL_USERNAME'] = 'babypractic@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ybzq vfld dege gzei'
+app.config['MAIL_DEFAULT_SENDER'] = 'babypractic@gmail.com'
+
 
 mail = Mail(app)
 
