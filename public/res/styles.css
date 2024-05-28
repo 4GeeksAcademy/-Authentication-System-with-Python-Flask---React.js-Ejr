@@ -76,16 +76,16 @@ p:has(.admin) { margin-inline: 5%; padding: 8px }
   font-size: 20px;
   & span { color: #ffff00 }
 }
-.apilink-accounts { color: #e3de61 }
-.apilink-workspaces { color: #f56a6a }
-.apilink-boards { color: #67bbe5 }
-.apilink-objects { color: #d386e9 }
-.apilink-api { color: #66e466 }
-.apilink-other { color: #a8a6b5 }
+.apilink-accounts { color: #e3de61; &::selection { background: #e3de61; color: #000 } }
+.apilink-workspaces { color: #f56a6a; &::selection { background: #f56a6a; color: #000 } }
+.apilink-boards { color: #67bbe5; &::selection { background: #67bbe5; color: #000 } }
+.apilink-objects { color: #d386e9; &::selection { background: #d386e9; color: #000 } }
+.apilink-api { color: #66e466; &::selection { background: #66e466; color: #000 } }
+.apilink-other { color: #a8a6b5; &::selection { background: #a8a6b5; color: #000 } }
 .method { display: inline-block; width: 4vw }
-.method-get, .method-head { color: #34eb7d }
-.method-post { color: #e2bc32 }
-.method-put { color: #418ce8 }
-.method-patch { color: #ae7ef2 }
-.method-delete { color: #ED6250 }
-.method-options { color: #DA57A0 }
+.method-get, .method-head { color: #34eb7d; &::selection { background: #34eb7d; color: #000 } }
+.method-post { color: #e2bc32; &::selection { background: #e2bc32; color: #000 } }
+.method-put { color: #418ce8; &::selection { background: #418ce8; color: #000 } }
+.method-patch { color: #ae7ef2; &::selection { background: #ae7ef2; color: #000 } }
+.method-delete { color: #ED6250; &::selection { background: #ED6250; color: #000 } }
+.method-options { color: #DA57A0; &::selection { background: #DA57A0; color: #000 } }
