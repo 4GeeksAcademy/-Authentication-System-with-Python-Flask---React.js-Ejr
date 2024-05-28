@@ -260,7 +260,7 @@ const LandingView = () => {
 
     
       {/*--- colors --------------------------------------------------------*/}
-      <div className="w-full flex-auto text-center items-center mt-24">
+      {/* <div className="w-full flex-auto text-center items-center mt-24">
         <div className=" mx-auto grid-cols-2 md:flex py-5 md:h-screen">   
           <div className="w-48 h-48 bg-w"></div>
           <div className="w-48 h-48 bg-b"></div>
@@ -275,7 +275,7 @@ const LandingView = () => {
 
           <div className="w-48 h-48 bg-secondary-n"></div> 
         </div>
-      </div> 
+      </div>  */}
 
       
     </div>

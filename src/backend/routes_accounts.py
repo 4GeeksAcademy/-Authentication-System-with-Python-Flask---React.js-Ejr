@@ -235,10 +235,10 @@ def handle_accounts_userdata(json, files):
 # -------------------------------------- /users
 # get user lists
 @accounts.route('/users', methods=['GET'])
-@jwt_required()
+#@jwt_required()
 def handle_accounts_users():
-  error= api_utils.check_user_forbidden(1) # check if admin
-  if error: return error
+ # error= api_utils.check_user_forbidden(1) # check if admin
+  #if error: return error
   users= User.query.all()
   if not users or len(users)==0: return "", 204
   return api_utils.response_200([user.serialize() for user in users])

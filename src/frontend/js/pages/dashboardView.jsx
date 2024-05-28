@@ -7,7 +7,7 @@ const DashboardView = () => {
 	//useEffect => fetch a action.getUserWorkSpaces
 
 	
-	getUserWorkSpaces();
+	/* getUserWorkSpaces(); */
 	
 
 	const navigate=useNavigate();
