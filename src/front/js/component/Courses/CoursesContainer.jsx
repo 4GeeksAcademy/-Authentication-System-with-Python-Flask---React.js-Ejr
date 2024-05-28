@@ -18,6 +18,7 @@ export const CoursesContainer = () => {
         actions.addCourseToTrolley()
     }
 
+    console.log(store.media)
 
     return (
         <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">

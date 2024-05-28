@@ -116,7 +116,7 @@ class Course(db.Model):
     assessment = db.Column(db.Integer, nullable=True) 
     create_date = db.Column(db.String(300), unique=True, nullable=True)
     title_Teacher = db.Column(db.String(250), nullable=False)
-    date_expiration = db.Column(db.String(300), unique=True, nullable=True) 
+    date_expiration = db.Column(db.String(300), unique=False, nullable=True) 
 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
