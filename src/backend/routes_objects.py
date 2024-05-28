@@ -16,18 +16,18 @@ def handle_objects_healthcheck():
     return "objects ok", 200
 
 # -------------------------------------- /fetch
-# get all styles & tags id's that require an update for a given board and timestamp
+# get all styles & tags id's that require an update for a given board and millistamp
 @objects.route('/fetch', methods=['GET'])
-@api_utils.endpoint_safe( content_type="application/json", required_props=["board_id", "timestamp"], props_strict=True )
+@api_utils.endpoint_safe( content_type="application/json", required_props=["board_id", "millistamp"], props_strict=True )
 def handle_objects_fetch(json):
   
   bid= parse_int(json['board_id'])
-  timestamp= parse_int(json['timestamp'])
+  millistamp= parse_int(json['millistamp'])
 
   board= db.session.get(Board, bid)
 
-  styles= board.styles_.query.filter(Style.timestamp > timestamp).all()
-  tags= board.tags_.query.filter(Tag.timestamp > timestamp).all()
+  styles= board.styles_.query.filter(Style.millistamp > millistamp).all()
+  tags= board.tags_.query.filter(Tag.millistamp > millistamp).all()
 
   result= {
      "styles": [v.id for v in styles],

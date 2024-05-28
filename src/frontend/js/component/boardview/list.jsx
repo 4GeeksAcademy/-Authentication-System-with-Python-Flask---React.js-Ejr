@@ -19,12 +19,12 @@ const List = ({id, title, coords, bref}) => {
       offset: { x:0, y:0 },
       size: { x:0, y:0 },
       dirty: 0,
-      timestamp: Date.now()
+      millistamp: Date.now()
     }),
     [ childItems, set_childItems ]= React.useState([]),
     itemUtils= React.useRef([])
   
-  function merge_itemState(new_state){ _scs({ ...Object.assign(itemState, { ...new_state, timestamp: Date.now() })})}
+  function merge_itemState(new_state){ _scs({ ...Object.assign(itemState, { ...new_state, millistamp: Date.now() })})}
 
   React.useEffect(()=>{ 
     bref[0].current[bref[1]]= {
@@ -79,7 +79,7 @@ const List = ({id, title, coords, bref}) => {
   
       merge_itemState({dirty:0})
     }
-  },[itemState.timestamp])
+  },[itemState.millistamp])
   
   // --------------------------------------------------------------- CONTEXTUAL MENU 
     

@@ -1,6 +1,5 @@
 import json
 from flask_sqlalchemy import SQLAlchemy
-from .utils import get_millis_since, pack_array_int, unpack_array_int
 from .aws_utils import get_public_link
 
 db = SQLAlchemy()
@@ -64,8 +63,7 @@ class User(db.Model):
   settings= db.Column(db.String(16))
   last_workspace_id = db.Column(db.Integer)
   last_board_id = db.Column(db.Integer)
-  last_seen = db.Column(db.Integer, nullable=False, default=0)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
   # private
   password = db.Column(db.LargeBinary, nullable=False) # password is stored hashed
   permission= db.Column(db.Integer, nullable=False, default=0) # 0 user 1 admin
@@ -92,13 +90,12 @@ class User(db.Model):
       "avatar": get_public_link(self.avatar) if not 'dicebear.com' in self.avatar else self.avatar,
       "settings": self.settings,
       "last_visits": [self.last_workspace_id, self.last_board_id],
-      "last_seen": self.last_seen,
 
       "permission": self.permission,
       "vericode": self.vericode,
       "passcode": self.passcode,
 
-      "timestamp": self.timestamp if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<User {self.id}::{self.email}::{self.username} ({self.displayname})>'
 #endregion
@@ -112,7 +109,7 @@ class Workspace(db.Model):
   thumbnail = db.Column(db.String(256))
   settings= db.Column(db.String(16))
   archived = db.Column(db.Boolean, nullable=False, default=False)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
 
   # owner
   owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -139,7 +136,7 @@ class Workspace(db.Model):
       "rwr_id": self.rwr_id,
       "owner_id": self.owner_id,
       "archived": self.archived,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Workspace {self.id}::{self.title}>'
 #endregion
@@ -154,7 +151,7 @@ class Board(db.Model):
   thumbnail = db.Column(db.String(256))
   settings= db.Column(db.String(16))
   archived = db.Column(db.Boolean, nullable=False, default=False)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
 
   # read_write_rules
   rwr_id = db.Column(db.Integer, db.ForeignKey('read_write_rules.id'))
@@ -190,7 +187,7 @@ class Board(db.Model):
       "rwr_id": self.rwr_id,
       "workspace_id": self.workspace_id,
       "archived": self.archived,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Board {self.id}::{self.name}>'
 #endregion
@@ -202,7 +199,7 @@ class List(db.Model):
   label = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
   archived = db.Column(db.Boolean, nullable=False, default=False)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
 
   # read_write_rules
   rwr_id = db.Column(db.Integer, db.ForeignKey('read_write_rules.id'))
@@ -228,7 +225,7 @@ class List(db.Model):
       "rwr_id": self.rwr_id,
       "board_id": self.board_id,
       "archived": self.archived,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<List {self.id}::{self.label}>'
 #endregion
@@ -242,7 +239,7 @@ class Task(db.Model):
   description = db.Column(db.String(1024))
   due_date = db.Column(db.Integer)
   archived = db.Column(db.Boolean, nullable=False, default=False)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
   
   # read_write_rules
   rwr_id = db.Column(db.Integer, db.ForeignKey('read_write_rules.id'))
@@ -266,7 +263,7 @@ class Task(db.Model):
       "list_id": self.list_id,
       "due_date": self.due_date,
       "archived": self.archived,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Task {self.id}::{self.label}>'
 #endregion
@@ -279,7 +276,7 @@ class Tag(db.Model):
   color_fg = db.Column(db.Integer, nullable=False)
   color_bg = db.Column(db.Integer, nullable=False)
   archived = db.Column(db.Boolean, nullable=False, default=False)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
 
   # boards
   board_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
@@ -297,7 +294,7 @@ class Tag(db.Model):
       "color_bg": self.color_bg,
       "board_id": self.board_id,
       "archived": self.archived,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Tag {self.id}::{self.name}>'
 #endregion
@@ -309,7 +306,7 @@ class Style(db.Model):
   name = db.Column(db.String(32))
   css = db.Column(db.String(64))
   archived = db.Column(db.Boolean, nullable=False, default=False)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
 
   # boards
   board_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
@@ -326,7 +323,7 @@ class Style(db.Model):
       "css": self.css,
       "board_id": self.board_id,
       "archived": self.archived,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Style {self.id}::{self.name}>'
 #endregion
@@ -337,7 +334,7 @@ class ReadWriteRules(db.Model):
   id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   flags_rw = db.Column(db.Integer, nullable=False, default=0)
   enabled = db.Column(db.Boolean, nullable=False, default=True)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
   
   user_rules_ = db.relationship('UserReadWriteRule', back_populates="rwr_")
 
@@ -347,7 +344,7 @@ class ReadWriteRules(db.Model):
       "name": self.label,
       "flags_rw": self.flags_rw,
       "enabled": self.enabled,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Style {self.id}::{self.label}>'
 #endregion
@@ -358,7 +355,7 @@ class UserReadWriteRule(db.Model):
   id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   flags_rw = db.Column(db.Integer, nullable=False, default=0)
   enabled = db.Column(db.Boolean, nullable=False, default=True)
-  timestamp = db.Column(db.Integer, nullable=False, default=0)
+  millistamp = db.Column(db.Integer, nullable=False, default=0)
 
   # read_write_rules
   rwr_id = db.Column(db.Integer, db.ForeignKey('read_write_rules.id'), nullable=False)
@@ -375,7 +372,7 @@ class UserReadWriteRule(db.Model):
       "flags_rw": self.flags_rw,
       "user_id": self.user_id,
       "enabled": self.enabled,
-      "timestamp": get_millis_since(self.timestamp) if self.timestamp > 0 else 0 # stores the last modified time
+      "millistamp": self.millistamp
     }
   def __repr__(self): return f'<Style {self.id}::{self.label}>'
 #endregion

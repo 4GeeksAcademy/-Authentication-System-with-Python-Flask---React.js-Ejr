@@ -22,6 +22,7 @@ ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
 app = Flask(__name__, subdomain_matching=True)
 app.url_map.strict_slashes = False
+app.url_map.redirect_defaults= False
 print("Serving static files from: " + static_file_dir)
 
 # config

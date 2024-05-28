@@ -1,5 +1,5 @@
 import json, os, functools
-from .utils import get_current_time_seconds, parse_int, parse_bool
+from .utils import get_current_timestamp, parse_int, parse_bool
 from datetime import timedelta
 from types import SimpleNamespace
 from flask import jsonify, request, Response
@@ -78,13 +78,13 @@ def get_user_login(account:str, password:str) -> tuple[User|None, Response|None]
   return user, None
 
 #--- create both refresh and access tokens for a given user -- called ONLY on login
-def create_new_tokens(response:Response, user:str, remember:bool) -> Response:
+def create_new_tokens(response:Response, user:User, remember:bool) -> Response:
   identity= {
     'i': user.id,
     'u': user.username, 
     'e': user.email, 
     'p': user.permission, 
-    't': user.timestamp
+    't': user.millistamp
   }
   create_new_refresh_token(identity, remember)
   return create_new_access_token(response, identity)
@@ -93,7 +93,7 @@ def create_new_tokens(response:Response, user:str, remember:bool) -> Response:
 def test_rotate_tokens(response:Response, apayload:dict, identity) -> Response:
   
   # refresh token
-  target_timestamp = get_current_time_seconds() + timedelta(minutes=30)
+  target_timestamp = get_current_timestamp() + timedelta(minutes=30)
   user, _= get_user(identity['u'], identity['e'])
   if user and user.refreshtoken:
     rpayload= decode_token(str(user.refreshtoken, 'utf-8'))
@@ -101,7 +101,7 @@ def test_rotate_tokens(response:Response, apayload:dict, identity) -> Response:
       create_new_refresh_token(identity, rpayload['r'])
 
   # access token
-  target_timestamp = get_current_time_seconds() + timedelta(minutes=5)
+  target_timestamp = get_current_timestamp() + timedelta(minutes=5)
   if target_timestamp > apayload['exp']:
     return create_new_access_token(response, identity)
 

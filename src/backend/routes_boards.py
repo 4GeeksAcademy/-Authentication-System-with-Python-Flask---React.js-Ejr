@@ -15,30 +15,30 @@ def handle_boards(): return "boards subdomain", 200
 def handle_boards_healthcheck():
     return "boards ok", 200
 
-# -------------------------------------- /timestamp
-# get timestamp
-# required ?id -- the boards id to get the timestamp from
+# -------------------------------------- /millistamp
+# get millistamp
+# required ?id -- the boards id to get the millistamp from
 # the implementation is intentional, this has to be as fast as possible
-@boards.route('/timestamp', methods=['GET'])
-def handle_boards_timestamp():
-  try: return Board.get(parse_int(request.args.get("id", -1))).timestamp, 200
+@boards.route('/millistamp', methods=['GET'])
+def handle_boards_millistamp():
+  try: return Board.get(parse_int(request.args.get("id", -1))).millistamp, 200
   except: return -1, 200
   
 # -------------------------------------- /fetch
-# get the 'types' ids that require an update for a given 'board_id' and 'timestamp', gets everything if 'timestamp' < 0
+# get the 'types' ids that require an update for a given 'board_id' and 'millistamp', gets everything if 'millistamp' < 0
 @boards.route('/fetch', methods=['POST'])
-@api_utils.endpoint_safe( content_type="application/json", required_props=["board_id", "timestamp"] )
+@api_utils.endpoint_safe( content_type="application/json", required_props=["board_id", "millistamp"] )
 def handle_boards_fecth(json):
   
   bid= parse_int(json['board_id'])
-  timestamp= parse_int(json['timestamp'])
+  millistamp= parse_int(json['millistamp'])
 
   board= db.session.get(Board, bid)
 
   _objects= { "lists": [], "styles": [], "tags": [] }
-  if json['lists']: _objects['lists']= board.lists_.query.filter(List.timestamp > timestamp).all()
-  if json['tags']: _objects['tags']= board.tags_.query.filter(Tag.timestamp > timestamp).all()
-  if json['styles']: _objects['styles']= board.styles_.query.filter(Style.timestamp > timestamp).all()
+  if json['lists']: _objects['lists']= board.lists_.query.filter(List.millistamp > millistamp).all()
+  if json['tags']: _objects['tags']= board.tags_.query.filter(Tag.millistamp > millistamp).all()
+  if json['styles']: _objects['styles']= board.styles_.query.filter(Style.millistamp > millistamp).all()
 
   result= {
      "lists": [v.id for v in _objects['lists']],

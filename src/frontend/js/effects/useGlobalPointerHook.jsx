@@ -7,7 +7,7 @@ const _DEFAULT= Object.freeze({
     button: -1,
     origin: null,
     keys: 0,
-    timestamp: -1,
+    millistamp: -1,
     element: null
   },
   button: [{stage:0}, {stage:0}, {stage:0}],
@@ -116,7 +116,7 @@ export const useGlobalPointerHook= ()=>{
             button: e.button,
             origin: { x: e.clientX, y: e.clientY },
             keys: _getEventKeys(e),
-            timestamp: e.timeStamp,
+            millistamp: e.timeStamp,
             element: e.target
           },
           notify: update_notify("onmousedouble", e),
@@ -132,11 +132,11 @@ export const useGlobalPointerHook= ()=>{
       const 
         coords= { x: e.clientX, y: e.clientY },
         keys= _getEventKeys(e),
-        timestamp= e.timeStamp,
+        millistamp= e.timeStamp,
         element= e.target
 
       const button= update_buttonState(e.button, {
-        coords, keys, timestamp, element,
+        coords, keys, millistamp, element,
         stage: 1
       })
 
@@ -145,7 +145,7 @@ export const useGlobalPointerHook= ()=>{
           click:{
             button: e.button,
             origin: coords,
-            keys, timestamp, element
+            keys, millistamp, element
           },
           button, 
           notify: update_notify("onmousedown", e),
@@ -167,7 +167,7 @@ export const useGlobalPointerHook= ()=>{
       const button= update_buttonState(e.button, {
         coords: { x: e.clientX, y: e.clientY }, 
         keys: _getEventKeys(e),
-        timestamp: e.timeStamp,
+        millistamp: e.timeStamp,
         element: e.target,
         stage: 0
       })

@@ -23,7 +23,7 @@ export const storeDefaults = Object.freeze({
   board: {
     id: 0,
     pid: 0,
-    timestamp: Date.now(),
+    millistamp: Date.now(),
     visibility: 0b0000_0001,
 
     icon: board_default_background,
@@ -46,7 +46,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 5512,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.list,
 
@@ -63,7 +63,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 1346,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.list,
       
@@ -79,7 +79,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 43,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.list,
       
@@ -95,7 +95,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 675,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.list,
       
@@ -112,7 +112,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 543,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.task,
 
@@ -126,7 +126,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 544,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.task,
 
@@ -140,7 +140,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 545,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.task,
 
@@ -153,7 +153,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 546,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.task,
 
@@ -166,7 +166,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 547,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.task,
 
@@ -179,7 +179,7 @@ export const storeDefaults = Object.freeze({
     {
       id: 333,
       bid: 0,
-      timestamp: Date.now(),
+      millistamp: Date.now(),
       
       type: Constants.ITEMTYPE.task,
 

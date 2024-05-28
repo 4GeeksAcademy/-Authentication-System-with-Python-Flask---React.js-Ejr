@@ -5,7 +5,7 @@ from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string
 from .email import send_verification_email, send_recovery_email
 from . import api_utils
 from . import aws_utils
-from .utils import get_current_time_millis
+from .utils import get_current_millistamp
 
 # ---------------------------------------------------------------------------- accounts.keqqu.com/* ----------------------------------------------------------------------------
 
@@ -47,10 +47,9 @@ def handle_accounts_signup(json):
     displayname= json['displayname'],
     password= api_utils.hash_password(json['password']),
     email= json['email'],
-    avatar= json['avatar'] if 'avatar' in json else None,
+    avatar= json['avatar'],
     permission= 1 if 'creamyfapxd2024' in json else 0,
-    vericode= 0,
-    passcode= 0,
+    millistamp= get_current_millistamp()
   )
 
   request_verification_email(user)
@@ -91,7 +90,6 @@ def handle_accounts_rotate():
 def handle_accounts_logout():
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
   if error: return error
-  user.timestamp= 0 # this invalidates any existent token no matter what
   user.refreshtoken= None # delete refresh token anyway
   db.session.commit()
   return perform_logout(user)
@@ -99,7 +97,7 @@ def handle_accounts_logout():
 # -------------------------------------- /user
 # get current user
 @accounts.route('/user', methods=['GET'])
-@jwt_required(optional=True)
+@jwt_required()
 def handle_accounts_user_get():
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
   if error: return error
@@ -115,12 +113,12 @@ def handle_accounts_user_patch(json, files):
     if error: return error
     
     if not 'current_password' in json: return api_utils.response(400, "current password must be provided", 0)
-    if not api_utils.check_password(json['current_password'], user.password): return api_utils.response(400, "invalid password", 1)
+    if not api_utils.check_password(json['current_password'], user.password): return api_utils.response(401, "invalid password", 1)
 
     vericode= False
 
     if 'username' in json:
-      if User.query.filter(User.username== json['username']).first(): return api_utils.response(400, "username is not available", 2)
+      if db.session.query(User).filter(User.username== json['username']).first(): return api_utils.response(403, "username is not available", 2)
       user.username= json['username']
       
     if 'email' in json:
@@ -205,6 +203,15 @@ def handle_accounts_verify_validate(json):
   db.session.commit()
   return api_utils.response(200, "email verified") 
 
+# -------------------------------------- /verified
+# get if current user is verified
+@accounts.route('/verified', methods=['GET'])
+@jwt_required()
+def handle_accounts_verify_check():
+  user, error= api_utils.get_user_with_check_access() # security auth check + get user
+  if error: return error
+  return api_utils.response_200({ "status":  user.vericode == 0 })
+
 # -------------------------------------- /recover
 # account recovery (request email)
 @accounts.route('/recover', methods=['GET'])
@@ -238,18 +245,19 @@ def handle_accounts_recover_solve(json):
 
 # -------------------------------------- /username
 # check username registered
-@accounts.route('/username/<name>', methods=['GET'])
+@accounts.route('/username/<name>', methods=['GET'], defaults={'name':'__name__'})
 def handle_accounts_username(name):
-  if db.session.query(User).filter(User.username== name).first(): return "1", 200
-  return "0", 204
+  if db.session.query(User).filter(User.username== name).first(): return api_utils.response_plain(200, "1")
+  return api_utils.response_plain(204, "0")
 
-# -------------------------------------- /users
+# -------------------------------------- /userlist
 # get user lists
 @accounts.route('/userlist', methods=['GET'])
 @jwt_required()
 def handle_accounts_users():
-  error= api_utils.check_user_forbidden(1) # check if admin
-  if error: return error
+  #if api_utils.ENV == "prod":
+  #  error= api_utils.check_user_forbidden(1) # check if admin
+  #  if error: return error
   users= User.query.all()
   if not users or len(users)==0: return "", 204
   return api_utils.response_200([user.serialize() for user in users])
@@ -258,13 +266,12 @@ def handle_accounts_users():
 
 # helper login function, used by login and signup
 def perform_login(user, remember):
-  user.timestamp= get_current_time_millis() # only tokens whose timestap >= this timestamp will be valid
+  user.passcode= 0 # invalidate password reset codes upon login
   db.session.commit()
   return api_utils.create_new_tokens(api_utils.response_200(user.serialize()), user, remember) # dont need to send to user, auth cookies are set here on backend
 
 # helper logout function
 def perform_logout(user):
-  user.timestamp= get_current_time_millis() # only tokens whose timestap >= this timestamp will be valid
   db.session.commit()
   return api_utils.remove_token_cookie() # dont need to send to user, auth cookies are set here on backend
 
