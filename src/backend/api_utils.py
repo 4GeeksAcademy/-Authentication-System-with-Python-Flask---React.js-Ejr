@@ -1,14 +1,17 @@
 import json, os, functools
-from .utils import get_current_timestamp, parse_int, parse_bool
 from datetime import timedelta
 from types import SimpleNamespace
 from flask import jsonify, request, Response
+from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import *
 from scrypt import hash
+from .utils import get_current_timestamp, get_current_millistamp, read_file
 from .models import db, User
+from .aws_utils import get_public_link, DEFAULT_AVATAR, DEFAULT_ICON, DEFAULT_THUMBNAIL
 
 current_app= None
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
+IS_PRODUCTION= ENV=="prod"
 
 MIMETYPE_PLAIN= 'text/plain'
 MIMETYPE_JSON= 'application/json'
@@ -235,3 +238,81 @@ def jwt_forbidden(
     return decorator
 
   return wrapper
+
+# load obvects from a json file
+def load_rows_from_file(filepath):
+
+  json= json.loads(read_file(filepath))
+
+  # User
+  if 'users' in json:
+
+    default_avatar= get_public_link(DEFAULT_AVATAR)
+
+    for data in json["users"]:
+      
+      try:
+
+        # skip if already exists
+        if db.session.query(User).filter(
+          User.username== data['username'] or
+          User.email== data['email']
+        ).first(): continue
+
+        # random avatar
+        avatar= data['avatar'].lower() if data['avatar'] else 'default'
+        if avatar == 'default': data['avatar']= default_avatar
+        elif avatar == 'random': data['avatar']= f"https://api.dicebear.com/8.x/pixel-art/png?seed={data['username']}"
+        
+        data['password']= hash_password(data['password'])
+
+        # add to database
+        db.session.add(User(
+          **data,
+          millistamp= get_current_millistamp()
+        ))
+
+      except Exception as e:
+        print(f"---- couldn't add user...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+
+  # Workspace
+  if 'workspaces' in json:
+    for data in json["workspaces"]:
+      
+      try:
+
+        # random avatar
+        if data['avatar'].lower() == 'default':
+          data['avatar']= f"https://api.dicebear.com/8.x/pixel-art/png?seed={data['username']}"
+
+        newuser= Workspace(
+          username= data['username'],
+          displayname= data['displayname'],
+          email= data['email'],
+          avatar= data['avatar'],
+          password= hash_password(data['password']),
+          millistamp= get_current_millistamp()
+        )
+
+        # add to database
+        db.session.add(newuser)
+
+      except Exception as e:
+        print(f"---- couldn't add workspace...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+
+  db.session.commit()
+
+#--- clears all data in the database
+def clear_database(commit):
+  for table in db.metadata.sorted_tables:
+    db.session.execute(table.delete())
+  if commit:
+    db.session.commit()

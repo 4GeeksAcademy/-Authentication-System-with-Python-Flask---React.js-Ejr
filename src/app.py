@@ -18,34 +18,40 @@ from backend.routes_boards import boards
 from backend.routes_objects import objects
 from backend.routes import api
 
-ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
-app = Flask(__name__, subdomain_matching=True)
+app = Flask(__name__, subdomain_matching= api_utils.IS_PRODUCTION )
 app.url_map.strict_slashes = False
 app.url_map.redirect_defaults= False
 print("Serving static files from: " + static_file_dir)
 
 # config
-app.config['SERVER_NAME']= os.environ.get("SERVER_NAME", "localhost.com:3001")
-app.url_map.default_subdomain = ""
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 app.config["JWT_SECRET_KEY"]= os.environ.get("FLASK_APP_KEY", "la_coyuntura_de_los_afluentes_tamizados")
 app.config["JWT_TOKEN_LOCATION"]= ('cookies')
-app.config["JWT_COOKIE_SECURE"] = ENV == "prod" # cookies must be sent over https in production
+app.config["JWT_COOKIE_SECURE"] = api_utils.IS_PRODUCTION # cookies must be sent over https in production
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
 
 # backend routes blueprints
-app.register_blueprint(accounts, subdomain='accounts')
-app.register_blueprint(workspaces, subdomain='workspaces')
-app.register_blueprint(boards, subdomain='boards')
-app.register_blueprint(objects, subdomain='objects')
-app.register_blueprint(api, subdomain='api')
+if api_utils.IS_PRODUCTION:
+  app.config['SERVER_NAME']= os.environ.get("SERVER_NAME", "www.localhost.com:3001")
+  app.url_map.default_subdomain = ""
 
-www= Blueprint('www', __name__, subdomain='www')
-app.register_blueprint(www, subdomain='www')
+  app.register_blueprint(accounts, subdomain='accounts')
+  app.register_blueprint(workspaces, subdomain='workspaces')
+  app.register_blueprint(boards, subdomain='boards')
+  app.register_blueprint(objects, subdomain='objects')
+  app.register_blueprint(api, subdomain='api')
+  
+  www= Blueprint('www', __name__, subdomain='www')
+  app.register_blueprint(www, subdomain='www')
+else:
+  app.register_blueprint(accounts, url_prefix='/accounts')
+  app.register_blueprint(workspaces, url_prefix='/workspaces')
+  app.register_blueprint(boards, url_prefix='/boards')
+  app.register_blueprint(objects, url_prefix='/objects')
+  app.register_blueprint(api, url_prefix='/api')
 
 MIGRATE = Migrate(app, db, compare_type=True)
 CORS(app)
@@ -57,23 +63,43 @@ jwt = JWTManager(app)
 
 api_utils.current_app= app
 
-@app.before_request
-def redirect_www():
-  if 'www.' in request.host:
-    return redirect(request.url.replace('www.', '', 1), code=301)
+if api_utils.IS_PRODUCTION:
+  @app.before_request
+  def redirect_www():
+    if 'www.' in request.host:
+      return redirect(request.url.replace('www.', '', 1), code=301)
     
 # root
 @app.route('/')
 def sitemap():
-  if ENV == "dev": return generate_sitemap_v2(app)
+  if not api_utils.IS_PRODUCTION: return generate_sitemap_v2(app)
   return send_from_directory(static_file_dir, 'index.html')
+
+@app.route('/reset_database')
+def database_reset():
+  api_utils.load_rows_from_file("res/defaults.json")
+  return api_utils.response_plain(204, "ok")
+  
+@app.route('/clear_database')
+def database_clear():
+  api_utils.clear_database(True)
+  return api_utils.response_plain(204, "ok")
+  
+@app.route('/rollback_database')
+def database_rollback():
+  db.session.rollback()
+  db.session.commit()
+  return api_utils.response_plain(204, "ok")
 
 # basic health check
 @app.route('/healthcheck', methods=['GET'])
 def handle_health():
-  domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
   subdomains= ("accounts", "workspaces", "boards", "objects", "api")
-  responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
+  if api_utils.IS_PRODUCTION:
+    domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
+    responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
+  else:
+    responses= [str(urllib3.request('GET', f"http://localhost:3001/{s}/healthcheck").data, 'utf-8') for s in subdomains]
   return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day</pre>", 200
 
 # for every unused path

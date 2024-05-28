@@ -16,14 +16,11 @@ const GlobalListener=()=>{
     loc= useLocation(),
     nav= useNavigate()
 
-  // this effect is for testing anything, executed on page refresh
-  React.useEffect(()=>{
-  },[])
-
   /** -------------------------------------------------- AUTH RELATED THINGS */
 
   React.useEffect(()=>{
-    console.log("user state changed: ")
+    if(store.userData != null){
+    }
   },[store.userData])
 
   /** -------------------------------------------------- LANGUAGE UPDATER */
