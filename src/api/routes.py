@@ -666,12 +666,11 @@ def post_courses():
         price = request.json.get('price')
         description = request.json.get('description')
         assessment = request.json.get('assessment')
-        create_date = request.json.get('createDate')
         title_Teacher = request.json.get('titleTeacher')
         date_expiration = request.json.get('dateExpiration')
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not create_date or not title_Teacher or not date_expiration:
+        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not title_Teacher or not date_expiration:
             return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, create_date, title_Teacher and date_expiration are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
@@ -895,69 +894,8 @@ def get_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
-
-
-@api.route('/module/quizzes/<int:id>', methods=['PUT'])
-def update_quizzes(id):
-    try:
-        data = request.json
-        question_title = data.get('questionTitle')
-        answer_teacher = data.get('answerTeacher')
-        answer_user = data.get('answerUser')
-        approved = data.get('approved')
-        approval_percentage_user = data.get('approvalPercentageUser')
-        approval_percentage_number = data.get('approvalPercentageNumber')
-        approval_percentage = data.get('approvalPercentage')
-        module_id = data.get('moduleId')
-
-        quiz = Quizzes.query.get(id)
-        if not quiz:
-            return jsonify({"Error": "Quiz not found"}), 404
-
-        if question_title is not None:
-            quiz.question_title = question_title
-        if answer_teacher is not None:
-            quiz.answer_teacher = answer_teacher
-        if answer_user is not None:
-            quiz.answer_user = answer_user
-        if approved is not None:
-            quiz.approved = approved
-        if approval_percentage_user is not None:
-            quiz.approval_percentage_user = approval_percentage_user
-        if approval_percentage_number is not None:
-            quiz.approval_percentage_number = approval_percentage_number
-        if approval_percentage is not None:
-            quiz.approval_percentage = approval_percentage
-        if module_id is not None:
-            existing_module = Modules.query.filter_by(id=module_id).first()
-            if not existing_module:
-                return jsonify({"Error": "Module does not exist."}), 404
-            quiz.module_id = module_id
-
-        db.session.commit()
-
-        return jsonify({"message": "Quiz updated successfully", "Quiz": quiz.serialize()}), 200
-
-    except Exception as err:
-        return jsonify({"Error": "Error in updating quiz: ", "fetching error": str(err)}), 500
-
-
-@api.route('/module/quizzes/<int:id>', methods=['DELETE'])
-def delete_quiz(id):
-    try:
-        quiz = Quizzes.query.get(id)
-        if not quiz:
-            return jsonify({"Error": "Quiz not found"}), 404
-
-        db.session.delete(quiz)
-        db.session.commit()
-
-        return jsonify({"message": "Quiz deleted successfully"}), 200
-
-    except Exception as err:
-        return jsonify({"Error": "Error in deleting quiz: " + str(err)}), 500
         
-
+        
 #----------------------TROLLEY------------------------#
 @api.route('/trolley/courses', methods=['POST'])
 def add_course_to_trolley():
