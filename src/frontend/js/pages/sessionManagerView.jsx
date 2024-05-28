@@ -21,30 +21,7 @@ const SessionManagerView = ({ mode }) => {
         setIsSignUp(mode);
     }, [location]);
 
-	const toggleForm = () => {
-        setIsSignUp(!isSignUp);
-    };
 
-					const handleClick = async(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						
-						console.log(email, password)
-						const triedToLogin = await actions.loginUser(email, password);
-						if (triedToLogin) {
-							navigate("/private")
-							console.log(store)
-						}
-						else {
-							return ({"error": "Login failed. Please check your credentials."});
-						}
-				
-				
-					}
-				
-					const handleGoToSignUp = (e) => {
-						navigate('/')
-					}
 
 					if(mode <= 1) {
 						return (

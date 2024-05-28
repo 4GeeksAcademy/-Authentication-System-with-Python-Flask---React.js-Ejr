@@ -1,11 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext.jsx";
 import "../../styles/_styles.miguel.css";
 
 function SessionLogin({ mode }) {
+    const { store, actions } = useContext(Context);
+
     const [isSignUp, setIsSignUp] = useState(mode);
     const location = useLocation();
     const navigate = useNavigate();
+
+    //--- inputs ----------------------------------
+    const [username, setUsername] = useState("");
+	const [displayname, setDisplayname] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [remember, setRemember] = useState("true");
+    
+
+    const handleLogIn = async(e) =>{
+        e.preventDefault();
+		e.stopPropagation();
+		
+		console.log(email, password)
+        
+         const account = email;
+		const triedToLogin = await actions.accounts_login(account, password, remember);
+		if (triedToLogin) {
+			 navigate("/dashboard") 
+			console.log(store)
+    }} 
+
+    const handleSignUp = async(e) =>{
+        e.preventDefault();
+		e.stopPropagation();
+		
+		console.log(email, password)
+
+		const triedToSignUp = await actions.accounts_signup(username, displayname, email, password, remember);
+		if (triedToSignUp) {
+			/* navigate("/dashboard") */
+			console.log(store)
+    }}
+    //------------------------------------------
 
     useEffect(() => {
         setIsSignUp(mode);
@@ -17,7 +54,7 @@ function SessionLogin({ mode }) {
     };
 
     return (
-        <div className="session-login-container">
+        <div className="session-login-container bg-dark h-full">
 						<div className={`container ${isSignUp ? 'active' : ''}`} id="container">
 							<div className={`form-container ${isSignUp ? 'sign-up' : 'sign-in'}`}>
 								<form>
@@ -32,11 +69,19 @@ function SessionLogin({ mode }) {
 										<>
 											<div className="w-5/6 mb-2">
                                                 <input className="text-black"
-                                                type="email" placeholder="Email" />
+                                                        type="email"
+                                                        value={email}   
+                                                        onChange={(e)=> setEmail(e.target.value)}                                   
+                                                        placeholder="Email" />
                                                 <input className="text-black"
-                                                type="password" placeholder="Password" />
+                                                        type="password" 
+                                                        value={password}
+                                                        onChange={(e)=> setPassword(e.target.value)}
+                                                        placeholder="Password"
+                                                />
                                             </div>
-											<button className="f-body bg-primary-n border-[1px] border-primary-n hover:bg-transparent hover:text-black transition-all ease-in-out duration-500">
+											<button type="button" className="f-body bg-primary-n border-[1px] border-primary-n hover:bg-transparent hover:text-black transition-all ease-in-out duration-500"
+                                              onClick={handleLogIn} >
                                                     Login
                                             </button>
 											<div className="mt-1"><a className="f-body-sm" 
@@ -47,13 +92,28 @@ function SessionLogin({ mode }) {
 										<>
 											<div className="w-5/6 mb-2">
                                                 <input className="text-black"
-                                                type="text" placeholder="Name" />
+                                                        type="text" 
+                                                        value={username}
+                                                        onChange={(e)=> {setUsername(e.target.value);
+                                                                         setDisplayname(e.target.value);} 
+                                                        }
+                                                        placeholder="Name" 
+                                                />
                                                 <input className="text-black"
-                                                type="email" placeholder="Email" />
+                                                        type="email" 
+                                                        value={email}
+                                                        onChange={(e)=> setEmail(e.target.value)}
+                                                        placeholder="Email" 
+                                                />
                                                 <input className="text-black"
-                                                type="password" placeholder="Password" />
+                                                        type="password" 
+                                                        value={password}
+                                                        onChange={(e)=> setPassword(e.target.value)}
+                                                        placeholder="Password" 
+                                                />
                                             </div>
-											<button className="f-body bg-primary-n border-[1px] border-primary-n hover:bg-transparent hover:text-black transition-all ease-in-out duration-500">
+											<button type="button" className="f-body bg-primary-n border-[1px] border-primary-n hover:bg-transparent hover:text-black transition-all ease-in-out duration-500"
+                                             onClick={handleSignUp}>
                                                 Sign Up
                                             </button>
 										</>
