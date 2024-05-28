@@ -172,7 +172,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       // #region ----------------------------------------------------------------------------------------- ACCOUNTS
 
       /** registers a new account */
-      accounts_signup: async (username, displayname, email, password, remember)=>{
+      accounts_signup: async (username, displayname, email, password, remember, loginafter)=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"POST|accounts:/signup",
           body: {
