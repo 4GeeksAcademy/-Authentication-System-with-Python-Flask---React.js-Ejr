@@ -8,6 +8,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       course: "",
       currentRole: "",
       spinner: false,
+      media: "",
+      loading: false,
+      mediaType: "",
     },
     actions: {
       createUser: async (newUser, userRole) => {
@@ -91,8 +94,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const respGetUsers = await fetch(
             process.env.BACKEND_URL +
-              `/api/view/` +
-              (store.currentRole || userRol),
+            `/api/view/` +
+            (store.currentRole || userRol),
             {
               method: "GET",
               headers: {
@@ -355,28 +358,26 @@ const getState = ({ getStore, getActions, setStore }) => {
         } finally {
           getActions().spinner(false);
         }
-    },
-    
-    
-    
-      uploadCertificate: async(file)=>{
+      },
+
+      uploadCertificate: async (file) => {
         try {
           const responseUploadData = await fetch(process.env.BACKEND_URL + `/api/upload`, {
             method: 'POST',
             body: JSON.stringify(file),
           });
 
-          if(!responseUploadData.ok){
+          if (!responseUploadData.ok) {
             const errorUploadData = await responseUploadData();
             console.log(errorUploadData)
-            setStore({...store, error: errorUploadData.Error})
+            setStore({ ...store, error: errorUploadData.Error })
             throw new Error(errorUploadData.Error || "Error posting certificate")
-          }else{
+          } else {
             const uploadData = await response.json();
             alert('File uploaded successfully: ' + JSON.stringify(uploadData));
           }
           const dataNewCertificate = await respNewCertificate.json()
-          setStore({...store, msg: dataNewCertificate.message})
+          setStore({ ...store, msg: dataNewCertificate.message })
         } catch (error) {
           console.error('Error during file upload:', error);
           setError('An error occurred while uploading the file');
@@ -384,9 +385,38 @@ const getState = ({ getStore, getActions, setStore }) => {
         } finally {
           getActions().spinner(false);
         }
-      }  
-    },
+      },
+
+      /* STORE-object states & ACTIONS-arrow function OF CLOUDINARYCOMPONENT*/
+      uploadCloudinaryMedia: async (file) => {
+        const preset_name = "jptixrge";
+        const cloud_name = "dfoegvmld";
+
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', preset_name);
+
+        setStore({ loading: true });
+
+        const fileType = file.type.split('/')[0];
+        setStore({ mediaType: fileType });
+
+        try {
+          const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
+            method: 'POST',
+            body: data
+          });
+
+          const uploadedMedia = await response.json();
+          setStore({ media: uploadedMedia.secure_url, loading: false });
+          console.log(uploadedMedia)
+        } catch (error) {
+          console.error('Error uploading media:', error);
+          setStore({ loading: false });
+        }
+      }
+    }
   };
-};
+}
 
 export default getState;

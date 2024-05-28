@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Context } from '../../store/appContext'
+import { CloudinaryComponent } from '../CloudinaryComponent.jsx';
 
 export const PostCourseM = () => {
     const { store, actions } = useContext(Context)
@@ -14,7 +15,9 @@ export const PostCourseM = () => {
         titleCertificateToGet: '',
         price: '',
         description: '',
-        titleTeacher: ''
+        assessment: '',
+        titleTeacher: '',
+        dateExpiration: ''
     });
 
     const handleChange = (e) => {
@@ -76,6 +79,9 @@ export const PostCourseM = () => {
                     </div>
                     <form onSubmit={handlerCreateCourse}>
                         <div>
+                            <div>
+                                <CloudinaryComponent />
+                            </div>
                             <label>Title:</label>
                             <input
                                 type="text"
@@ -141,11 +147,25 @@ export const PostCourseM = () => {
                             </div>
                         </div>
                         <div>
-                            <label>description:</label>
-                            <input
-                                type="number"
+                            <label>Description:</label>
+                            <textarea
+                                type="text"
                                 name="description"
                                 value={courseData.description}
+                                onChange={handleChange}
+                                id="validationFormCheck1"
+                                className="form-control" >
+                            </textarea>
+                            <div className="invalid-feedback">
+                                Please enter your information.
+                            </div>
+                        </div>
+                        <div>
+                            <label>title Teacher:</label>
+                            <input
+                                type="text"
+                                name="titleTeacher"
+                                value={courseData.titleTeacher}
                                 onChange={handleChange}
                                 id="validationFormCheck1"
                                 className="form-control" />
@@ -154,11 +174,24 @@ export const PostCourseM = () => {
                             </div>
                         </div>
                         <div>
-                            <label>title Teacher:</label>
+                            <label>Assessment:</label>
                             <input
-                                type="number"
-                                name="titleTeacher"
-                                value={courseData.titleTeacher}
+                                type="text"
+                                name="assessment"
+                                value={courseData.assessment}
+                                onChange={handleChange}
+                                id="validationFormCheck1"
+                                className="form-control" />
+                            <div className="invalid-feedback">
+                                Please enter your information.
+                            </div>
+                        </div>
+                        <div>
+                            <label>Date Expiration:</label>
+                            <input
+                                type="date"
+                                name="dateExpiration"
+                                value={courseData.dateExpiration}
                                 onChange={handleChange}
                                 id="validationFormCheck1"
                                 className="form-control" />

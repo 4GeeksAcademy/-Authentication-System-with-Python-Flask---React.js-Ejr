@@ -47,45 +47,45 @@ const Layout = () => {
 
                         <Route element={<Courses />} path="/Courses"/>
 
-                        {/* Protected Routes */}
-                        <Route 
-                            element={
-                                <ProtectedRoute>
-                                    <TeacherView />
-                                </ProtectedRoute>
-                            } 
-                            path="/teacherView" 
-                        />
-                        <Route 
-                            element={
-                                <ProtectedRoute>
-                                    <UserView />
-                                </ProtectedRoute>
-                            } 
-                            path="/userView" 
-                        />
-                        <Route 
-                            element={
-                                <ProtectedRoute>
-                                    <ManagerView />
-                                </ProtectedRoute>
-                            } 
-                            path="/managerView" 
-                        />
-                        <Route 
-                            element={
-                                <ProtectedRoute>
-                                    <Course />
-                                </ProtectedRoute>
-                            } 
-                            path="/course/:id" 
-                        />
-                        <Route element={<h1>Not found!</h1>} />
-                        {/*<Route element={<Single />} path="/single/:theid" /> */}
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
+                            {/* Protected Routes */}
+                            <Route 
+                                element={
+                                    <ProtectedRoute>
+                                        <TeacherView />
+                                    </ProtectedRoute>
+                                } 
+                                path="/teacherView" 
+                            />
+                            <Route 
+                                element={
+                                    <ProtectedRoute>
+                                        <UserView />
+                                    </ProtectedRoute>
+                                } 
+                                path="/userView" 
+                            />
+                            <Route 
+                                element={
+                                    <ProtectedRoute>
+                                        <ManagerView />
+                                    </ProtectedRoute>
+                                } 
+                                path="/managerView" 
+                            />
+                            <Route 
+                                element={
+                                    <ProtectedRoute>
+                                        <Course />
+                                    </ProtectedRoute>
+                                } 
+                                path="/course/:id" 
+                            />
+                            <Route element={<h1>Not found!</h1>} />
+                            {/*<Route element={<Single />} path="/single/:theid" /> */}
+                        </Routes>
+                        <Footer />
+                    </ScrollToTop>
+                </BrowserRouter>
         </div>
     );
 };
