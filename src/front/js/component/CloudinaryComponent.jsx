@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
-export const CloudinaryComponent = () => {
+export const CloudinaryComponent = () => { 
   const preset_name = "jptixrge";
   const cloud_name = "dfoegvmld";
 
+  console.log('CloudinaryComponent rendered');
+  
   const [media, setMedia] = useState('');
   const [mediaType, setMediaType] = useState('');
   const [loading, setLoading] = useState(false);

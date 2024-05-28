@@ -8,6 +8,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       course: "",
       currentRole: "",
       spinner: false,
+      media: "",
+      loading: false,
+      mediaType: "",
     },
     actions: {
       createUser: async (newUser, userRole) => {
@@ -384,9 +387,38 @@ const getState = ({ getStore, getActions, setStore }) => {
         } finally {
           getActions().spinner(false);
         }
-      }  
-    },
+      },
+      
+
+      /* STORE-object states & ACTIONS-arrow function OF CLOUDINARYCOMPONENT*/
+      uploadCloudinaryMedia: async (file) => {
+        const preset_name = "jptixrge";
+        const cloud_name = "dfoegvmld";
+
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', preset_name);
+
+        setStore({ loading: true });
+
+        const fileType = file.type.split('/')[0]; 
+        setStore({ mediaType: fileType });
+
+        try {
+          const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
+            method: 'POST',
+            body: data
+          });
+
+          const uploadedMedia = await response.json();
+          setStore({ media: uploadedMedia.secure_url, loading: false });
+        } catch (error) {
+          console.error('Error uploading media:', error);
+          setStore({ loading: false });
+        }
+      }
+    }
   };
-};
+}
 
 export default getState;

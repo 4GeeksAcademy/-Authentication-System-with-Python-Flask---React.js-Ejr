@@ -11,7 +11,6 @@ import { PaypalPayment } from "../component/PaypalPayment.jsx";
 
 
 
-
 export const Home = () => {
     const { store, actions } = useContext(Context);
 
