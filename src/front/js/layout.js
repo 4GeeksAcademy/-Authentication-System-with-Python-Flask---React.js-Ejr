@@ -48,6 +48,13 @@ import PageNormalUser from "./pages/PageNormalUser.jsx";
 import ClassesView from "./component/ClassesView.jsx";
 import EditClasses from "./pages/EditClasses.jsx"
 
+import ExecutePayment from "./component/ExecutePayment.jsx";
+import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
+import  CancelPayment  from "./component/ExecutePayment.jsx";
+
+import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
+import ResetPassword from "./component/ResetPassword.jsx";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -96,6 +103,12 @@ const Layout = () => {
                         <Route element={<PageNormalUser />} path="/Userpage" />
                         <Route element={<PRRecord />} path="/PRRecord" />
                         <Route element={<AdminMembershipPurchase />} path="/AdminMembershipPurchase" />
+                        <Route element={<ExecutePayment />} path="/paypal_payment/execute" />
+                        <Route element={<ExecutePaymentAdmin />} path="/paypal_payment/execute_admin" />
+                        <Route element={<CancelPayment />} path="/paypal_payment/cancel" />
+                        <Route element={<PasswordResetRequest />} path="/PasswordResetRequest" />
+                        <Route element={<ResetPassword />} path="/ResetPassword" />
+
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

@@ -71,7 +71,7 @@ const PRRecord = () => {
     const fetchUserRecords = async () => {
         try {
             const token = localStorage.getItem('token'); // Obtener el token de autenticación del localStorage
-            const response = await fetch(`${process.env.BACKEND_URL}api/pr_records/user`, { // Hacer una solicitud GET a la API
+            const response = await fetch(`${process.env.BACKEND_URL}/api/pr_records/user`, { // Hacer una solicitud GET a la API
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Incluir el token en la cabecera
@@ -162,7 +162,7 @@ const PRRecord = () => {
     const saveUserRecord = async (record) => {
         try {
             const token = localStorage.getItem('token'); // Obtener el token de autenticación del localStorage
-            const response = await fetch(`${process.env.BACKEND_URL}api/pr_records`, { // Hacer una solicitud POST a la API
+            const response = await fetch(`${process.env.BACKEND_URL}/api/pr_records`, { // Hacer una solicitud POST a la API
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Incluir el token en la cabecera
@@ -211,7 +211,7 @@ const PRRecord = () => {
         if (movementToDelete !== null) {
             try {
                 const token = localStorage.getItem('token'); // Obtener el token de autenticación del localStorage
-                const response = await fetch(`${process.env.BACKEND_URL}api/pr_records/movement/${movementToDelete}`, { // Hacer una solicitud DELETE a la API
+                const response = await fetch(`${process.env.BACKEND_URL}/api/pr_records/movement/${movementToDelete}`, { // Hacer una solicitud DELETE a la API
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`, // Incluir el token en la cabecera
