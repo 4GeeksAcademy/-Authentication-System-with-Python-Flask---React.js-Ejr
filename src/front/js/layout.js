@@ -42,6 +42,8 @@ const Layout = () => {
                             <Route element={<ResetPassword />} path="/ResetPassword"/>
                             <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token"/>
                             
+                            <Route element={<PaypalPayment />} path="/Paypal" />
+                            
                             <Route element={<Courses />} path="/Courses"/>
 
                             {/* Protected Routes */}
