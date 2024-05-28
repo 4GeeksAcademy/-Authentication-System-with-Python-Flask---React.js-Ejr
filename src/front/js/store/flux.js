@@ -359,6 +359,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
+      
       uploadCertificate: async (file) => {
         try {
           const responseUploadData = await fetch(process.env.BACKEND_URL + `/api/upload`, {
