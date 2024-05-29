@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <>
-    {store.userState == null ? 
+    {store.userState ? 
       <div className="sticky top-0 bg-dark w-full flex z-[999]">
         <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 border-b-[1px] border-gray-600">
           <div className="flex items-center">
