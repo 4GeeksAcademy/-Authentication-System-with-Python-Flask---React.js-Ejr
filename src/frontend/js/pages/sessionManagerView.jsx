@@ -70,7 +70,6 @@ const SessionManagerView = ({ mode }) => {
 									Reset password
 								</button>
 								</form>
-							
 						</div>
 
 						<div className="absolute w-[800px] h-[800px] rounded-full bg-dark right-[60%] flex items-center"> 
@@ -80,62 +79,6 @@ const SessionManagerView = ({ mode }) => {
 				</div>
 			)}
 
-			
-
-			
-
-			 {/* { mode === Constants.SESSION_MODE_LOGIN || Constants.SESSION_MODE_SIGNUP && (
-						<div className="session-login-container">
-						<div className={`container ${isSignUp ? 'active' : ''}`} id="container">
-							<div className={`form-container ${isSignUp ? 'sign-up' : 'sign-in'}`}>
-								<form>
-									<h1 className="text-b">{isSignUp ? 'Sign In' : 'Create an Account'}</h1>
-									<div className="social-icons">
-										<a href="#" className="icon"><i className="fa-brands fa-google-plus-g"></i></a>
-										<a href="#" className="icon"><i className="fa-brands fa-facebook-f"></i></a>
-										<a href="#" className="icon"><i className="fa-brands fa-github"></i></a>
-										<a href="#" className="icon"><i className="fa-brands fa-linkedin-in"></i></a>
-									</div>
-									{isSignUp == 1 && (
-										<>
-											<div><input className="text-black"
-											 type="email" placeholder="Email" /></div>
-											<div><input className="text-black"
-											 type="password" placeholder="Password" /></div>
-											<div><button className="text-black">Login</button></div>
-											<div><a href="/recover">Forget Your Password?</a></div>
-										</>
-									)}
-									{isSignUp == 0 && (
-										<>
-											<div><input className="text-black"
-											 type="text" placeholder="Name" /></div>
-											<div><input className="text-black"
-											 type="email" placeholder="Email" /></div>
-											<div><input className="text-black"
-											 type="password" placeholder="Password" /></div>
-											<div><button>Sign Up</button></div>
-										</>
-									)}
-								</form>
-							</div>
-							<div className="toggle-container">
-								<div className="toggle">
-									<div className={`toggle-panel toggle-left ${isSignUp ? 'hidden' : ''}`}>
-										<h1>Hello, Friend!</h1>
-										<p>Create an account to access all site features</p>
-										<button onClick={() => { navigate("/signup"); toggleForm(); }}>Sign up</button>
-									</div>
-									<div className={`toggle-panel toggle-right ${isSignUp ? '' : 'hidden'}`}>
-										<h1>Welcome Back!</h1>
-										<p>Enter your credentials to access all site features</p>
-										<button onClick={() => { navigate("/login"); toggleForm(); }}>Login</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-			)}  */}
 		</div>
 	)
 }

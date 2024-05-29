@@ -38,7 +38,7 @@ app.config["JWT_COOKIE_SECURE"] = ENV == "prod" # cookies must be sent over http
 app.config["JWT_COOKIE_DOMAIN"] = app.config['SERVER_NAME']
 app.config["JWT_COOKIE_SAMESITE"] = "strict"
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 
 # backend routes blueprints
 app.register_blueprint(accounts, subdomain='accounts')
