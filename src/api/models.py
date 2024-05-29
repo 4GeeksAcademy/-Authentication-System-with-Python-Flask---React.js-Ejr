@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy  # Importación del módulo SQLAlchemy p
 from sqlalchemy import LargeBinary
 
 
+
 from datetime import datetime  # Importación del módulo datetime para trabajar con fechas y horas
 import json  # Importación del módulo json para trabajar con datos en formato JSON
 import base64  # Importación del módulo base64 para la codificación de imágenes

@@ -32,6 +32,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			memberships: [],
             membershipsLoading: false,
 			images: [],
+			classesData: [],
+			currentEdit: {},
 			payments: [],
 			userRecords: []
 
@@ -478,6 +480,109 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
             },
 //---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
+
+			//funcion asincrona para la vista que trae las clases de entrenamiento 
+			getClasses: async () => {
+
+				
+				let myToken = localStorage.getItem("token");
+
+				const url =`${process.env.BACKEND_URL}/api/training_classes`;
+
+				try {
+					let response = await fetch(url, {
+						method: "GET", 
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${myToken}`, 
+						}
+					});
+					const data = await response.json();
+					if (response.ok) {
+						setStore({ ...getStore(), classesData: data });  // Actualiza el estado con las clases obtenidas
+						console.log(data)
+					} else {
+						throw new Error("Failed to fetch classes");
+					}
+				} catch (error) {
+					console.error("Error loading training classes:", error);
+				}
+            },
+
+			//funcion para el boton de la lista de clases para vista de admin
+			saveCurrentEdit: (item) => {
+				let store=getStore()
+				setStore({...store, currentEdit:item})
+			},
+
+			
+			//funcion asincrona para editar el fomulario de clases de entrenamiento
+			updateEditForm: async (id,formData) => {
+				
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+			
+				let url = `${process.env.BACKEND_URL}/api/training_classes/${id}`;
+				
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(formData)
+
+					});
+					let data = await response.json();
+					console.log("HOLA SOY LA DATA DE LA RESPUESTA DE EDITAR",data)
+					if (data.message) {
+						// Asumiendo que quieres actualizar el store aquí
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar tus datos:", error);
+					return { success: false, error: error.message };
+				}
+			},
+
+			//Funcion asincrona para el boton de cancelar clase en el formulario de edicion EditClasses
+			cancelClass: async (id) => {
+				
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+			
+				let url = `${process.env.BACKEND_URL}/api/cancel_class/${id}`;
+				
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+
+					});
+					let data = await response.json();
+					console.log(data)
+					if (data.message) {
+						// Asumiendo que quieres actualizar el store aquí
+						//return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar tus datos:", error);
+					return { success: false, error: error.message };
+				}
+			},
+
 
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local

@@ -45,6 +45,8 @@ import PRRecord from "./component/PRRecord.jsx";
 import AdminMembershipPurchase from "./component/AdminMembershipPurchase.jsx";
 
 import PageNormalUser from "./pages/PageNormalUser.jsx";
+import ClassesView from "./component/ClassesView.jsx";
+import EditClasses from "./pages/EditClasses.jsx"
 
 import ExecutePayment from "./component/ExecutePayment.jsx";
 import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
@@ -87,6 +89,8 @@ const Layout = () => {
                         <Route element={<CreateClasses />} path="/CreateClasses" />
                         <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<BookingView />} path="/BookingView" />
+                        <Route element={<ClassesView />} path="/ClassesView" />
+                        <Route element={<EditClasses />} path="/classEdit/:id" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<Oneuser />} path="/Oneuser" />
                         {/* <Route element={<Homeadmin />} path="/Homeadmin" /> */}
