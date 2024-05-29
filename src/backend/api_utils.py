@@ -230,22 +230,6 @@ def endpoint_safe(
 
   return wrapper
 
-#--- custom decorator, the inverse of jwt_required
-def jwt_forbidden(
-    status: int = 401,
-    message: str = "auth forbidden"
-) -> any:
-  
-  def wrapper(fn):
-    @functools.wraps(fn)
-    def decorator(*args, **kwargs):
-      if verify_jwt_in_request(optional=True): return response(status, message)
-      return current_app.ensure_sync(fn)(*args, **kwargs)
-
-    return decorator
-
-  return wrapper
-
 # load obvects from a json file
 def load_rows_from_file(filepath):
 

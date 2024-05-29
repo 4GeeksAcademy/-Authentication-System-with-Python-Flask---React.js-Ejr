@@ -105,9 +105,8 @@ class Workspace(db.Model):
   __tablename__="workspaces"
   id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   title = db.Column(db.String(64), nullable=False)
-  icon = db.Column(db.String(256))
-  thumbnail = db.Column(db.String(256))
-  settings= db.Column(db.String(256), nullable=False)
+  thumbnail = db.Column(db.String(256), nullable=False)
+  settings= db.Column(db.String(256))
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)
 
@@ -129,7 +128,6 @@ class Workspace(db.Model):
     return {
       "id": self.id,
       "title": self.title,
-      "icon": self.icon,
       "thumbnail": self.thumbnail,
       "settings": self.settings,
       "rwr_id": self.rwr_id,
@@ -147,8 +145,8 @@ class Board(db.Model):
   name = db.Column(db.String(64), nullable=False)
   description = db.Column(db.String(1024), nullable=False)
   icon = db.Column(db.String(256))
-  thumbnail = db.Column(db.String(256))
-  settings= db.Column(db.String(256), nullable=False)
+  thumbnail = db.Column(db.String(256), nullable= False)
+  settings= db.Column(db.String(256))
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)
 
@@ -185,6 +183,7 @@ class Board(db.Model):
       "thumbnail": self.thumbnail,
       "settings": self.settings,
       "rwr_id": self.rwr_id,
+      "owner_id": self.owner_id,
       "workspace_id": self.workspace_id,
       "archived": self.archived,
       "millistamp": self.millistamp

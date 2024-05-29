@@ -1,7 +1,7 @@
 from flask import request, Blueprint, Response
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required
-from .models import db, User
+from .models import db, User, Workspace, Board
 from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string, generate_passcode, get_passcode_string
 from .email import send_verification_email, send_recovery_email
 from . import api_utils
@@ -14,20 +14,17 @@ accounts= Blueprint('accounts', __name__, subdomain='accounts')
 @accounts.route('/', methods=['GET'])
 def handle_accounts(): return "accounts subdomain", 200
 
-# -------------------------------------- /healthcheck
-# basic health check
-@accounts.route('/healthcheck', methods=['GET'])
-def handle_accounts_healthcheck():
-  return "accounts ok", 200
-
 # -------------------------------------- /signup
 # optional ?login=0 -- 1 to just login if account already exists and fields are correct
 # optional ?loginafter=1 -- 1 to login after creation
 # optional ?remember=0 -- 1 to login a long session (up to 30 days)
 @accounts.route('/signup', methods=['POST'])
-@api_utils.jwt_forbidden(400, "already logged in")
+@jwt_required(optional=True)
 @api_utils.endpoint_safe( content_type="application/json", required_props=("username", "displayname", "email", "password"))
 def handle_accounts_signup(json):
+
+  user, _= api_utils.get_user_with_check_access()
+  if user: return api_utils.response(401, "already logged in")
 
   login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 0))
 
@@ -39,8 +36,8 @@ def handle_accounts_signup(json):
       return perform_login(Response(), user, False) # dont do a long session here
     return api_utils.response(400, "username already registered" if mode==1 else "email already registered")
   
-  loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
-  remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
+
+  millistamp= get_current_millistamp()
 
   # user doesnt exist, so we creating it
   user= User(
@@ -50,17 +47,38 @@ def handle_accounts_signup(json):
     email= json['email'],
     avatar= DEFAULT_ICON['user'],
     permission= 1 if 'creamyfapxd2024' in json else 0,
-    millistamp= get_current_millistamp()
+    millistamp= millistamp
   )
-
-  request_verification_email(user)
   db.session.add(user)
 
-  workspace= workspace(
-    title="$default.first-workspace",
-    thumbnail= DEFAULT_THUMBNAIL['workspace']
-  )
+  templates= parse_bool(json['templates'] if 'templates' in json else request.args.get("templates", 0))
 
+  if templates:
+    db.session.flush()
+
+    workspace= Workspace(
+      title="$default.first-workspace",
+      thumbnail= DEFAULT_THUMBNAIL['workspace'],
+      owner_id=user.id,
+      millistamp= millistamp
+    )
+    db.session.add(workspace)
+    db.session.flush()
+    
+    board= Board(
+      title="$default.first-board",
+      icon= DEFAULT_ICON['board'],
+      thumbnail= DEFAULT_THUMBNAIL['board'],
+      owner_id= user.id,
+      workspace_id= workspace.id,
+      millistamp= millistamp
+    )
+    db.session.add(board)
+  
+  request_verification_email(user)
+
+  loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
+  remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
 
   # login after creation
   if loginafter: return perform_login(user, remember) # <- this already do .commit() too
@@ -72,9 +90,11 @@ def handle_accounts_signup(json):
 # opposite to logout 
 # optional ?remember=0 -- 1 to make session long (up to 30 days)
 @accounts.route('/login', methods=['POST'])
-@api_utils.jwt_forbidden(400, "already logged in")
+@jwt_required(optional=True)
 @api_utils.endpoint_safe( content_type="application/json", required_props=("account", "password"))
 def handle_accounts_login(json):
+  user, _= api_utils.get_user_with_check_access()
+  if user: return api_utils.response(401, "already logged in")
   user, error= api_utils.get_user_login(json['account'], json['password'])
   if error: return error
   remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
@@ -95,9 +115,8 @@ def handle_accounts_rotate():
 @accounts.route('/logout', methods=['GET'])
 @jwt_required()
 def handle_accounts_logout():
-  print("mipolla")
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
-  if user: return api_utils.response(401, "already logged in")
+  if error: return api_utils.response(401, "not logged in")
   user.refreshtoken= None # delete refresh token anyway
   db.session.commit()
   return perform_logout(user)
@@ -258,19 +277,34 @@ def handle_accounts_username(name):
   if db.session.query(User).filter(User.username== name).first(): return api_utils.response_plain(200, "1")
   return api_utils.response_plain(204, "0")
 
-# -------------------------------------- /userlist
-# get user lists
-@accounts.route('/userlist', methods=['GET'])
+# -------------------------------------- /list
+# get users list
+@accounts.route('/list', methods=['GET'])
 @jwt_required(optional=True)
-def handle_accounts_users():
-  #if api_utils.ENV == "prod":
-  #  error= api_utils.check_user_forbidden(1) # check if admin
-  #  if error: return error
-  users= User.query.all()
+def handle_accounts_list():
+  if api_utils.ENV == "prod":
+    error= api_utils.check_user_forbidden(1) # check if admin if we on production
+    if error: return error
+  users= db.session.query(User).all()
   if not users or len(users)==0: return api_utils.response(204, "no users")
-  return api_utils.response_200([user.serialize() for user in users])
+  return api_utils.response_200([v.serialize() for v in users])
 
-# ---------------------------------------------------------------------------- Helpers
+# -------------------------------------- /millistamp
+# get millistamp
+# required ?id -- the user id to get the millistamp from
+# the implementation is intentional, this has to be as fast as possible
+@accounts.route('/millistamp', methods=['GET'])
+def handle_boards_millistamp():
+  try: return User.get(parse_int(request.args.get("id"))).millistamp, 200
+  except: return -1, 200
+
+# -------------------------------------- /healthcheck
+# basic health check
+@accounts.route('/healthcheck', methods=['GET'])
+def handle_accounts_healthcheck():
+  return "accounts ok", 200
+
+# ---------------------------------------------------------------------------- HELPERS ----------------------------------------------------------------------------
 
 # helper login function, used by login and signup
 def perform_login(user, remember):
