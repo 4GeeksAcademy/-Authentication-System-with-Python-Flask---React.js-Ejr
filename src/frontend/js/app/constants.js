@@ -1,5 +1,33 @@
 
+import keqqu_white        from "../../assets/icon/keqqu-white.svg"
+import keqqu_white_bg     from "../../assets/icon/keqqu-white-bg.svg"
+import keqqu_black        from "../../assets/icon/keqqu-black.svg"
+import keqqu_black_bg     from "../../assets/icon/keqqu-black-bg.svg"
+import keqqu_light        from "../../assets/icon/keqqu-light.svg"
+import keqqu_light_bg     from "../../assets/icon/keqqu-light-bg.svg"
+import keqqu_dark        from "../../assets/icon/keqqu-dark.svg"
+import keqqu_dark_bg     from "../../assets/icon/keqqu-dark-bg.svg"
+import keqqu_purple       from "../../assets/icon/keqqu-purple.svg"
+import keqqu_purple_bg    from "../../assets/icon/keqqu-purple-bg.svg"
+import keqqu_yellow       from "../../assets/icon/keqqu-yellow.svg"
+import keqqu_yellow_bg    from "../../assets/icon/keqqu-yellow-bg.svg"
+
 const Constants= Object.freeze({
+
+  LOGO: {
+    white:      keqqu_white,
+    whitebg:    keqqu_white_bg,
+    black:      keqqu_black,
+    blackbg:    keqqu_black_bg,
+    light:      keqqu_light,    
+    lightbg:    keqqu_light_bg,
+    dark:       keqqu_dark, 
+    darkbg:     keqqu_dark_bg,
+    purple:     keqqu_purple,
+    purplebg:   keqqu_purple_bg,
+    yellow:     keqqu_yellow,
+    yellowbg:   keqqu_yellow_bg
+  },
 
   MOUSE_BTN_LEFT: 0,
   MOUSE_BTN_MIDDLE: 1,
@@ -20,6 +48,7 @@ const Constants= Object.freeze({
   DEVPREFS_PANELPOSITION: "panelPosition",
   DEVPREFS_DEVRENDER: "devRender",
   DEVPREFS_FAKEAUTH: "fakeAuth",
+  DEVPREFS_FAKEOWNER: "fakeOwner",
 
   USERPREFS_DARKMODE: "darkMode",
   USERPREFS_LANGUAGE: "language",
@@ -29,27 +58,44 @@ const Constants= Object.freeze({
     "es-es"
   ],
 
-  STORE_DIRTY: {
-    session:      0b0000_0000_0000_0001,
-    location:     0b0000_0000_0000_0010,
-    board:        0b0000_0000_0000_0100
-  },
-
   SITENAME: "KeQQu",
 
-  PAGETITLE: {
-    settings:   "Settings",
-    dashboard:  "Dashboard",
-    workspace:  "Workspace",
-    project:    "Project",
-    board:      "Board",
-    team:       "Team",
-    profile:    "Profile",
-    login:      "Login",
-    signup:     "SignUp",
-    logout:     "Come back soon!",
-    delete:     "Farewell! :(",
-    recover:    "Account recovery"
+  PAGE: {
+    // globally available pages
+    healthcheck:  0,
+    404:          1,
+    creamyfap:    2,
+    // public pages
+    landing:      3,
+    signup:       4,
+    login:        5,
+    farewell:     6,
+    recover:      7,
+    // private pages
+    logout:       8,
+    settings:     9,
+    dashboard:    10,
+    workspace:    11,
+    board:        12
+  },
+
+  PAGEURLS: {
+    // globally available pages
+    healthcheck:  "/healthcheck",
+    404:          "/404",
+    creamyfap:    "/creamyfap",
+    // public pages
+    landing:      "NA",
+    signup:       "/signup",
+    login:        "/login",
+    // auth pages
+    logout:       "/logout",
+    recover:      "/recover",
+    farewell:     "/farewell",
+    settings:     "/settings",
+    dashboard:    "/dashboard",
+    workspace:    "/workspace",
+    board:        "/board"
   },
 
   BOARD_SIZE_PIXELS: 1048576,

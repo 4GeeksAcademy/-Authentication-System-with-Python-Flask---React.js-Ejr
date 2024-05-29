@@ -1,15 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {Link as NavTo} from "react-scroll" ;
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.jsx";
-
-
 
 import { IoMdMenu } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
+import Constants from "../app/constants.js";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const nav = useNavigate();
 
   //--- login ---------------------
   const { store, actions }= React.useContext(Context)
@@ -20,14 +18,10 @@ const Navbar = () => {
       console.log("dropped down")
     }
 
-
-
-//--- no login --------------------
-  const [nav, setNav] = React.useState(false);
-
-  const handleNav = () => {
-    setNav(!nav);
-  };
+  function handleAnchor(obj){
+    if(store.activePage == Constants.PAGE.landing) nav(obj)
+    else nav("/" + obj)
+  }
 
   return (
     <>
@@ -36,9 +30,9 @@ const Navbar = () => {
         <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
           <div className="flex items-center">
             
-            <p onClick={()=>navigate('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
+            <p onClick={()=>{nav('/')}} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
             
-            <p onClick={()=>navigate('dashboard')} className="f-body cursor-pointer">Dashboard</p>
+            <p onClick={()=>{nav('/dashboard')}} className="f-body cursor-pointer">Dashboard</p>
             <button className=""></button>
           </div>
             <div className="ml-10 flex items-center">
@@ -105,21 +99,11 @@ const Navbar = () => {
             <p className=" text-2xl f-body font-[600] mr-24">KeQQu</p>  
           </Link>
           <ul className="md:flex max-h-[60px] w-max-1/2 whitespace-nowrap hidden space-x-8">
-            <NavTo to="whyKeqquSection" smooth={true}  offset={50} duration={500} > 
-              <li className="m-5 mx-auto f-tittle cursor-pointer">Why KeQQu</li>
-            </NavTo> 
-            <NavTo to="howItWorksSection" smooth={true}  offset={50} duration={500} > 
-              <li className="m-5 mx-auto f-tittle cursor-pointer">How it works</li>
-            </NavTo> 
-            <NavTo to="pricingSection" smooth={true}  offset={50} duration={500} > 
-              <li className="m-5 mx-auto f-tittle cursor-pointer">Pricing</li>
-            </NavTo> 
-            <NavTo to="faqSection" smooth={true}  offset={50} duration={500} > 
-              <li className="m-5 mx-auto f-tittle cursor-pointer">FAQ</li>
-            </NavTo> 
-            <NavTo to="footerSection" smooth={true}  offset={50} duration={500} > 
-              <li className="m-5 mx-auto f-tittle cursor-pointer">Contact</li>
-            </NavTo> 
+            <li onClick={()=>{handleAnchor("#anchor-whykeqqu")}} className="m-5 mx-auto f-tittle cursor-pointer">Why KeQQu</li>
+            <li onClick={()=>{handleAnchor("#anchor-howitworks")}} className="m-5 mx-auto f-tittle cursor-pointer">How it works</li>
+            <li onClick={()=>{handleAnchor("#anchor-pricing")}} className="m-5 mx-auto f-tittle cursor-pointer">Pricing</li>
+            <li onClick={()=>{handleAnchor("#anchor-faq")}} className="m-5 mx-auto f-tittle cursor-pointer">FAQ</li>
+            <li onClick={()=>{handleAnchor("#anchor-footer")}} className="m-5 mx-auto f-tittle cursor-pointer">Contact</li>
           </ul>
           <div className="ml-10">
             <Link to="/signup">
