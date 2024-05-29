@@ -1,36 +1,34 @@
-import React, {useState} from "react"
-import { Link } from "react-router-dom";
+import React from "react"
+import { useNavigate } from "react-router-dom";
 import Accordion from "../component/Accordion.jsx";
-
-//--- icons ------------------------------------
-import { AiFillInstagram } from "react-icons/ai";
-import { FaYoutube } from "react-icons/fa";
-import { FaDiscord } from "react-icons/fa6";
-import { FaTiktok } from "react-icons/fa6";
-import { FaTwitter } from "react-icons/fa";
-import { FaRegCircleCheck } from "react-icons/fa6";
-import { FaRegClock } from "react-icons/fa6";
-import { HiOutlineCheck } from "react-icons/hi";
+import { Context } from "../store/appContext.jsx";
+import Constants from "../app/constants.js";
 
 //--- icons ------------------------------------
 import bricks from "../../assets/img/home-view-images/bricks.png"
 import vieja from "../../assets/img/image.png"
 
-
-
-// @dreisup copy your -Home- contents to this file
 const LandingView = () => {
+  const
+    { store, actions }= React.useContext(Context),
+    nav= useNavigate()
+    
+  React.useEffect(()=>{
+    setTimeout(()=>{
+      const 
+        urlParams = new URLSearchParams(window.location.search),
+        href= urlParams.get('href')
 
-
-
-
-
-
-
-
-
-
-
+      if(href && href != "") {
+    
+        const item= document.querySelector("#" + href)
+        if(item) {
+          const y= item.getBoundingClientRect().top
+          window.scrollTo({ top: y, left: 0, behavior: "smooth" })
+        }
+      }
+    }, 125)
+  },[])
 
 	return (
     <div className="bg-dark w-full p-0 m-0 absolute ">
@@ -40,9 +38,9 @@ const LandingView = () => {
           <div className="mx-auto my-8">
             <h1 className="f-tittle text-[64px] py-8">Organizing your tasks has never been easier and more convinient</h1>
             <p className="f-body text-xl py-2 w-8/12">Create a workspace and plan your way to go<br/> Your goals are just a few "checks" away from you </p>
-            <Link to="/login">
-              <button className="border rounded-[10rem] px-10 py-4 f-tittle text-xl bg-accent-l text-black mt-10 hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started - its free!</button>
-            </Link>
+
+            <button onClick={()=>{nav("/login")}} className="border rounded-[10rem] px-10 py-4 f-tittle text-xl bg-accent-l text-black mt-10 hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started - its free!</button>
+          
           </div>
           <div className="mx-auto bg-b">
             <img src={vieja} alt="" />
@@ -64,7 +62,7 @@ const LandingView = () => {
         </div>
 
         {/*--- Why KeQQu?  ------------------------------------*/}
-        <div id="whyKeqquSection" className=" w-full py-28">
+        <div id="whykeqqu" className=" w-full py-28">
           <h2 className="flex justify-center py-10 f-tittle text-[48px]">Why KeQQu?</h2>
           <div className="grid grid-cols-3 py-10">
             <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5">
@@ -74,13 +72,13 @@ const LandingView = () => {
               <p className="f-body-sm p-5 mt-3">Customize KeQQu to fit your needs, the freedom is in your hands.</p>
             </div>
             <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5">
-              <FaRegCircleCheck className="text-7xl mx-auto my-[12px]" />
+              <i className="fa fa-icons fa-circle-check text-7xl mx-auto my-[12px]" />
               <p className="flex justify-center f-tittle text-xl pt-2">Simple to use</p>
               <div className="w-4/6 mx-auto h-2 bg-accent-n"></div>
               <p className="f-body-sm p-5 mt-3">Not hard to understand, not hard to start using. Super intuitive and practic.</p>
             </div>
             <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5">
-              <FaRegClock className="text-7xl mx-auto my-[12px]"/>
+              <i className="fa fa-icons fa-clock text-7xl mx-auto my-[12px]"/>
               <p className="flex justify-center f-tittle text-xl pt-2">Save a lot of time</p>
               <div className="w-4/6 mx-auto rounded-r-lg h-2 bg-accent-n"></div>
               <p className="f-body-sm p-5 mt-3" >Save time and space in your mind. Keeps you organized, no more wasting time.</p>
@@ -89,7 +87,7 @@ const LandingView = () => {
         </div>
 
         {/*--- How does it work? -----------------------------------*/}
-        <div id="howItWorksSection" className=" w-full py-28 text-black">
+        <div id="howitworks" className=" w-full py-28 text-black">
           <div className="bg-accent-l w-full px-20 h-[24rem] rounded-[3rem] mx-auto py-12 flex">
             <div className="w-2/6 pr-10">
               <h2 className="f-tittle text-[32px]">How Does it Work?</h2>
@@ -117,7 +115,7 @@ const LandingView = () => {
         </div>
 
         {/*--- Plans & Pricing ------------------------------------*/}
-        <div id="pricingSection" className="w-full py-28">
+        <div id="pricing" className="w-full py-28">
           <h2 className="flex justify-center py-10 f-tittle text-[48px] ">Plans & Pricing</h2>
           <div className="grid lg:grid-cols-3 py-10">
             <div className="bg-primary-d w-[26rem] h-[36rem] rounded-xl mx-auto px-10 pt-10 pb-16 flex flex-col">
@@ -125,19 +123,17 @@ const LandingView = () => {
               <div className="w-full h-1 bg-accent-n mb-10 rounded-l-xl"></div>
               <div className="w-4/5 mx-auto">
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Unlimited workspaces</p>
                 </div>
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Unlimited lists</p>
                 </div>
               </div>
               <div id="bottom" className="mt-auto mx-auto"> 
                 <p className="f-tittle flex justify-center text-2xl pb-3">0.00€</p>
-                <Link to="/signup">
-                  <button className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started</button>
-                </Link>
+                <button onClick={()=>{nav("/signup")}} className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started</button>
               </div>
             </div>
 
@@ -146,27 +142,25 @@ const LandingView = () => {
               <div className="w-full h-1 bg-accent-n mb-10"></div>
               <div className="w-4/5 mx-auto">
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Unlimited workspaces</p>
                 </div>
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Unlimited lists</p>
                 </div>
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Unlimited groups</p>
                 </div>
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Unlimited productivity</p>
                 </div>
               </div>
               <div id="bottom" className="mt-auto mx-auto"> 
                 <p className="f-tittle flex justify-center text-2xl pb-3">0.00€</p>
-                <Link to="/signup">
-                  <button className=" f-body border border-accent-l rounded-[30px] px-8 py-3 text-accent-l hover:bg-white hover:text-black transition duration-300 ease-in-out">Get started</button>
-                </Link>
+                <button onClick={()=>{nav("/signup")}} className=" f-body border border-accent-l rounded-[30px] px-8 py-3 text-accent-l hover:bg-white hover:text-black transition duration-300 ease-in-out">Get started</button>
               </div>
             </div>
 
@@ -175,30 +169,28 @@ const LandingView = () => {
               <div className="w-full h-1 bg-accent-n mb-10 rounded-r-xl"></div>
               <div className="w-4/5 mx-auto">
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">Same features</p>
                 </div>
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl text-accent-n"/>
+                  <i className="fa fa-solid fa-check text-6xl text-accent-n"/>
                   <p className="f-body justify-item-end">Same but in yellow</p>
                 </div>
                 <div className="flex items-center">
-                  <HiOutlineCheck className="text-6xl"/>
+                  <i className="fa fa-solid fa-check text-6xl"/>
                   <p className="f-body justify-item-end">100% free</p>
                 </div>
               </div>
               <div id="bottom" className="mt-auto mx-auto"> 
                 <p className="f-tittle flex justify-center text-2xl pb-3">0.00€</p>
-                <Link to="/signup">
-                  <button className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started</button>
-                </Link>
+                <button onClick={()=>{nav("/signup")}} className=" f-body border rounded-[30px] px-8 py-3 bg-accent-l text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Get started</button>
               </div> 
             </div>
           </div>
         </div>
 
           {/*--- FAQ -----------------------------------*/}
-        <div id="faqSection" className="w-full py-28 text-black">
+        <div id="faq" className="w-full py-28 text-black">
           <div className="bg-accent-l w-full px-20 rounded-[3rem] mx-auto py-4 flex ">
             <div className="w-2/5 py-14">
               <h2 className="f-tittle text-[48px]">FAQ</h2>
@@ -222,7 +214,7 @@ const LandingView = () => {
         </div>
 
         {/*--- Footer ----------------------------------------------------*/}
-        <div id="footerSection"className="bg-dark w-full py-28 text-black">
+        <div id="footer" className="bg-dark w-full py-28 text-black">
           <div className="bg-primary-d w-[1360px] px-10 rounded-[3rem] mx-auto py-4 text-white">
             <div className="w-4/5 m-10 mx-auto flex justify-around">
               <h3 className="f-tittle text-[32px]">KeQQu</h3>
@@ -244,11 +236,11 @@ const LandingView = () => {
             <div className="flex w-9/12 mx-auto mt-5 mb-8 px-20 justify-between">
               <p className="f-body">2024 - Keqqu,Inc.</p>
               <div className="flex items-center">
-              <AiFillInstagram  className="text-2xl mx-2" />
-              <FaYoutube className="text-2xl mx-2" />
-              <FaDiscord className="text-2xl mx-2" />
-              <FaTiktok className="text-xl mx-2" />
-              <FaTwitter className="text-xl mx-2" />
+              <i className="fa fa-brands fa-square-instagram text-2xl mx-2" />
+              <i className="fa fa-brands fa-youtube text-2xl mx-2" />
+              <i className="fa fa-brands fa-discord text-2xl mx-2" />
+              <i className="fa fa-brands fa-tiktok text-2xl mx-2" />
+              <i className="fa fa-brands fa-twitter text-2xl mx-2" />
 
               </div>
 

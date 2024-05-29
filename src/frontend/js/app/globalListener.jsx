@@ -69,11 +69,11 @@ const GlobalListener=()=>{
     // saves current page on store.activePage, can be tested against Constants.PAGE.***
     const 
       path= window.location.pathname.toLowerCase(),
-      page= Object.keys(Constants.PAGEURLS).find(e=> path.includes(Constants.PAGEURLS[e])),
-      idx= Constants.PAGE[page?? Constants.PAGE.login]
+      page= Object.keys(Constants.PAGEURLS).find(e=> path.includes(e)),
+      idx= page ? Constants.PAGE[page] : Constants.PAGE.landing
 
     actions.setActivePage(idx)
-  },[loc, window.location.pathname])
+  },[loc, window.location.href])
   
   function refreshPageTitle(){ // from location effect
     const 
