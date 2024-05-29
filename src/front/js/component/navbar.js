@@ -29,7 +29,7 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-light mb-5">
-			<div className="container-fluid mx-5" style={{ maxWidth: "1500px" }}>
+			<div className="container-fluid mx-2">
 				<div className="d-flex gap-3">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
@@ -39,7 +39,7 @@ export const Navbar = () => {
 				{token ?
 					<>
 						<button
-							className="d-flex navbar-toggler bg-white align-items-center rounded-pill"
+							className="d-flex me-4 navbar-toggler bg-white align-items-center rounded-pill"
 							type="button"
 							data-bs-toggle="offcanvas"
 							data-bs-target="#offcanvasNavbar"
@@ -102,12 +102,12 @@ export const Navbar = () => {
 									<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
 										<li className="nav-item mb-2" data-bs-toggle="offcanvas">
 											<Link to="/login" className="text-decoration-none">
-												<div className="text-black fs-5"><i className="fas fa-sign-in-alt pe-3"/>Inicia sesión</div>
+												<div className="text-black fs-5"><i className="fas fa-sign-in-alt pe-3" />Inicia sesión</div>
 											</Link>
 										</li>
 										<li className="nav-item mb-3" data-bs-toggle="offcanvas">
 											<Link to="/signup" className="text-decoration-none">
-												<div className="text-black fs-5"><i className="fas fa-user-plus pe-3"/>Regístrate</div>
+												<div className="text-black fs-5"><i className="fas fa-user-plus pe-3" />Regístrate</div>
 											</Link>
 										</li>
 									</ul>
