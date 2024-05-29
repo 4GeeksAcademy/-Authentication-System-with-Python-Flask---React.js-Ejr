@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react"
 import Constants from "../app/constants"
 import SessionLogin from "../component/sessionLogin.jsx"
+import SessionLogout from "../component/sessionLogout.jsx";
 
 
 /* import { Context } from "../store/appContext"; */
@@ -31,6 +32,10 @@ const SessionManagerView = ({ mode }) => {
 
 	return (
 		<div className="w-full flex-auto text-center items-center">
+
+			{ mode === Constants.SESSION_MODE_LOGOUT && (
+				<SessionLogout/>
+			)}
 
 			{ mode === Constants.SESSION_MODE_RECOVER && (
 

@@ -28,11 +28,6 @@ function SessionLogin({ mode }) {
 		e.stopPropagation();
 		
 		console.log(email, password)
-        
-        if (!validarEmail(email)) {
-			alert("Por favor, introduce un email válido.");
-			return;
-		  }
 
         const account = email;
 		const triedToLogin = await actions.accounts_login(account, password, remember);
@@ -84,7 +79,6 @@ function SessionLogin({ mode }) {
                             <>
                                 <div className="w-5/6 mb-2">
                                     <input className="text-black"
-                                            pattern={/^[\w.-]+@[\w-]+.[A-z.]+$/} required
                                             type="email" 
                                             value={email}   
                                             onChange={(e)=> setEmail(e.target.value)}                                   

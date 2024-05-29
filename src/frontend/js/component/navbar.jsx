@@ -45,8 +45,8 @@ const Navbar = () => {
   return (
     <>
     {store.userData ? 
-      <div className="sticky top-0 bg-dark w-full flex z-[999]">
-        <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 border-b-[1px] border-gray-600">
+      <div className="sticky top-0 bg-dark w-full flex z-[999] border-b-[1px] border-gray-600">
+        <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 ">
           <div className="flex items-center">
             
             <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
@@ -61,15 +61,15 @@ const Navbar = () => {
             <div className="ml-10 flex items-center">
               <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
               <button onClick={handleDrop}>
-                  <img className="w-9 h-9 rounded-full" src="https://i.pinimg.com/564x/12/1a/cc/121acc97cbe3c4b1a8483e85af18d377.jpg" alt="" />
+                  <img className="w-9 h-9 rounded-full" src={store.userData.avatar} alt="" />
               </button>
                   {dropProfile && (
-                      <div className="absolute mt-[20rem] w-48 rounded-xl">
+                      <div className="absolute mt-[20rem] min-w-48 rounded-xl">
                           <div className="bg-dark rounded-xl p-2 flex flex-col gap-2">
-                              <div className="px-5 mt-2">
+                              <div className="mx-5 mt-2">
                                   <ul>
-                                      <li className="f-body text-gray-300">name</li>
-                                      <li className="f-body text-gray-300">your@email.com</li>
+                                      <li className="f-body text-gray-300">{store.userData.username}</li>
+                                      <li className="f-body-sm text-gray-300 mx-auto">{store.userData.email}</li>
                                   </ul>
                               </div>
                               <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
@@ -84,7 +84,7 @@ const Navbar = () => {
                               <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
                               <div className="px-5 mb-2">
                                   <ul>
-                                  <li onClick={()=>{nav("/logout")}} className="f-body text-red-600 hover:bg-red-950">Log Out</li>
+                                  <li onClick={()=>{nav("/logout")}} className="f-body text-red-600 hover:bg-red-950 cursor-pointer">Log Out</li>
 
                                   </ul>
                               </div>
@@ -160,7 +160,6 @@ const Navbar = () => {
     </div>
     }
     
-    <div id="fakeNav" className="bg-red-500 h-16" ></div>
     </>
   )
 }
