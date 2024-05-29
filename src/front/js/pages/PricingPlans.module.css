@@ -1,0 +1,149 @@
+/* src/front/js/component/PricingPlans.module.css */
+:root {
+    --primary-blue: #3F8CFF;
+    --primary-blue-dark: #4361ee;
+    --text-white: #F7FAFF;
+    --text-gray: #B5B8BC;
+    --text-color: #303651;
+    --text-color-neutral: #697089;
+    --card-bg: #222429;
+    --bg: #141419;
+  }
+  
+  *::selection {
+    background: var(--primary-blue);
+    color: var(--text-white);
+  }
+  
+  html {
+    font-size: 16px;
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: 0.75px;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: var(--bg);
+    padding: 1.5rem;
+    padding-top: 3.5rem;
+    margin: 0;
+    height: 100vh;
+  }
+  
+  .pricingContainer {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2rem; /* Adjust the gap between cards */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  
+  .pricingCard {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    max-width: 30rem;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    background: var(--card-bg);
+    color: var(--text-gray);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .pricingCard:hover {
+    transform: translateY(-2rem);
+  }
+  
+  .pricingCardPrimary {
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+  
+  .pricingCardPrice {
+    color: var(--text-white);
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  
+  .pricingCardBanner {
+    width: 100%;
+    min-height: 2.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    background: var(--primary-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: white;
+    position: absolute;
+    top: -2.5rem;
+  }
+  
+  .pricingCardPriceOriginal {
+    color: var(--text-gray);
+    font-weight: 500;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
+  
+  .pricingCard h3 {
+    margin: 0;
+    font-weight: 700;
+    text-align: center;
+    font-size: 2rem;
+    color: var(--text-white);
+  }
+  
+  .enroll {
+    display: block;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    border-radius: 0.5rem;
+    color: var(--text-white);
+    margin-top: auto;
+    text-decoration: none;
+    letter-spacing: 0.75px;
+    border: 1px solid var(--primary-blue);
+    background: var(--primary-blue);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .enroll:hover {
+    background: var(--primary-blue-dark);
+  }
+  
+  .pricingCard ul {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 2.5rem 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .pricingCard ul li {
+    position: relative;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .pricingCard ul li::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2.25rem;
+    width: 2rem;
+    height: 2rem;
+    background-repeat: no-repeat;
+  }
+  
