@@ -14,12 +14,6 @@ accounts= Blueprint('accounts', __name__, subdomain='accounts')
 @accounts.route('/', methods=['GET'])
 def handle_accounts(): return "accounts subdomain", 200
 
-# -------------------------------------- /healthcheck
-# basic health check
-@accounts.route('/healthcheck', methods=['GET'])
-def handle_accounts_healthcheck():
-  return "accounts ok", 200
-
 # -------------------------------------- /signup
 # optional ?login=0 -- 1 to just login if account already exists and fields are correct
 # optional ?loginafter=1 -- 1 to login after creation
@@ -42,8 +36,6 @@ def handle_accounts_signup(json):
       return perform_login(Response(), user, False) # dont do a long session here
     return api_utils.response(400, "username already registered" if mode==1 else "email already registered")
   
-  loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
-  remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
 
   millistamp= get_current_millistamp()
 
@@ -58,28 +50,35 @@ def handle_accounts_signup(json):
     millistamp= millistamp
   )
   db.session.add(user)
-  db.session.flush()
 
-  workspace= Workspace(
-    title="$default.first-workspace",
-    thumbnail= DEFAULT_THUMBNAIL['workspace'],
-    owner_id=user.id,
-    millistamp= millistamp
-  )
-  db.session.add(workspace)
-  db.session.flush()
-  
-  board= Board(
-    title="$default.first-board",
-    icon= DEFAULT_ICON['board'],
-    thumbnail= DEFAULT_THUMBNAIL['board'],
-    owner_id= user.id,
-    workspace_id= workspace.id,
-    millistamp= millistamp
-  )
-  db.session.add(board)
+  templates= parse_bool(json['templates'] if 'templates' in json else request.args.get("templates", 0))
+
+  if templates:
+    db.session.flush()
+
+    workspace= Workspace(
+      title="$default.first-workspace",
+      thumbnail= DEFAULT_THUMBNAIL['workspace'],
+      owner_id=user.id,
+      millistamp= millistamp
+    )
+    db.session.add(workspace)
+    db.session.flush()
+    
+    board= Board(
+      title="$default.first-board",
+      icon= DEFAULT_ICON['board'],
+      thumbnail= DEFAULT_THUMBNAIL['board'],
+      owner_id= user.id,
+      workspace_id= workspace.id,
+      millistamp= millistamp
+    )
+    db.session.add(board)
   
   request_verification_email(user)
+
+  loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
+  remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
 
   # login after creation
   if loginafter: return perform_login(user, remember) # <- this already do .commit() too
@@ -278,19 +277,34 @@ def handle_accounts_username(name):
   if db.session.query(User).filter(User.username== name).first(): return api_utils.response_plain(200, "1")
   return api_utils.response_plain(204, "0")
 
-# -------------------------------------- /userlist
-# get user lists
-@accounts.route('/userlist', methods=['GET'])
+# -------------------------------------- /list
+# get users list
+@accounts.route('/list', methods=['GET'])
 @jwt_required(optional=True)
-def handle_accounts_users():
-  #if api_utils.ENV == "prod":
-  #  error= api_utils.check_user_forbidden(1) # check if admin
-  #  if error: return error
-  users= User.query.all()
+def handle_accounts_list():
+  if api_utils.ENV == "prod":
+    error= api_utils.check_user_forbidden(1) # check if admin if we on production
+    if error: return error
+  users= db.session.query(User).all()
   if not users or len(users)==0: return api_utils.response(204, "no users")
-  return api_utils.response_200([user.serialize() for user in users])
+  return api_utils.response_200([v.serialize() for v in users])
 
-# ---------------------------------------------------------------------------- Helpers
+# -------------------------------------- /millistamp
+# get millistamp
+# required ?id -- the user id to get the millistamp from
+# the implementation is intentional, this has to be as fast as possible
+@accounts.route('/millistamp', methods=['GET'])
+def handle_boards_millistamp():
+  try: return User.get(parse_int(request.args.get("id"))).millistamp, 200
+  except: return -1, 200
+
+# -------------------------------------- /healthcheck
+# basic health check
+@accounts.route('/healthcheck', methods=['GET'])
+def handle_accounts_healthcheck():
+  return "accounts ok", 200
+
+# ---------------------------------------------------------------------------- HELPERS ----------------------------------------------------------------------------
 
 # helper login function, used by login and signup
 def perform_login(user, remember):
