@@ -242,7 +242,6 @@ def handle_accounts_verify_check():
 # -------------------------------------- /recover
 # account recovery (request email)
 @accounts.route('/recover', methods=['GET'])
-@api_utils.jwt_forbidden()
 @api_utils.endpoint_safe( content_type="application/json", required_props=("email"), props_strict=True)
 def handle_accounts_recover_issue(json):
   user, error= api_utils.get_user(email= json['email'])
@@ -254,7 +253,6 @@ def handle_accounts_recover_issue(json):
 
 # account recovery (submit code & password)
 @accounts.route('/recover', methods=['POST'])
-@api_utils.jwt_forbidden()
 @api_utils.endpoint_safe( content_type="application/json", required_props=("email", "passcode", "password"), props_strict=True)
 def handle_accounts_recover_solve(json):
   user, error= api_utils.get_user(email= json['email'])
