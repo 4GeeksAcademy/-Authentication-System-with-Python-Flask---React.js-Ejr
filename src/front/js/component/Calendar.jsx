@@ -32,7 +32,7 @@ const MyCalendar = () => {
 
     return (
         <div className={styles.container}>
-            <h2>Calendario Publico</h2>
+            <h2>Public Calendar</h2>
             <Calendar
                 localizer={localizer}
                 events={events}

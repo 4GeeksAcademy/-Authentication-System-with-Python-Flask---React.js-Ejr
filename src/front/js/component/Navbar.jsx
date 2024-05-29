@@ -48,13 +48,17 @@ const NavigationBar = () => {
                     </Nav>
                     {store.isAuthenticated && (
                         <>
-                            <Button onClick={handleCloseSession} className={styles.logoutButton}>Cerrar sesión</Button>
-                            <Link to="/userpage">
-                                <Button className={styles.ProfileButton}>Ir al perfil</Button>
+
+                            <Button onClick={handleCloseSession} className={styles.logoutButton}>
+                                Sign off</Button>
+                            <Link to="/Userpage">
+                                <Button className={styles.ProfileButton}>Go to profile</Button>
+
                             </Link>
                             {store.uploadedUserData.role === 'master' && (
-                                <Link to="/modulepage">
-                                    <Button className={styles.logoutButton}>Modulos</Button>
+                                <Link to="/ModulePage">
+                                    <Button className={styles.logoutButton}>
+                                        Modules</Button>
                                 </Link>
                             )}
                             <Button onClick={handleShow} className={styles.ProfileButton}>
