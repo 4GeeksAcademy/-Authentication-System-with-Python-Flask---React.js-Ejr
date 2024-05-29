@@ -1,0 +1,40 @@
+.container {
+    /* padding: 20px; Asegura un poco de padding alrededor del contenido */
+     /* margin-bottom: 50px; Agrega espacio entre este componente y el siguiente */
+    background: rgba(123, 123, 123, 0.37);
+    width: 100%;
+  }
+  
+  .features {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Centra el texto en dispositivos móviles */
+    padding: 20px; /* Añade un poco de espacio interior */
+  }
+  
+  .icon-block {
+    margin-bottom: 30px; /* Aumenta el margen inferior para más espacio entre íconos */
+  }
+  
+  
+  #icons {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 3rem;
+    color: #768a9d;
+  }
+  
+  h2.text-uppercase {
+    font-size: 2rem; /* Tamaño adaptable para móviles */
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    h2.text-uppercase {
+        font-size: 2rem; /* Más pequeño en dispositivos móviles */
+    }
+  }
+  

@@ -1,0 +1,67 @@
+.editButton {
+    background-color: #7f7f7f; /* Gray */
+    color: white;
+    border: none;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 4px;
+}
+
+.modal {
+    color: #383838; /* Charcoal */
+}
+
+.modalHeader {
+    background-color: #9a9a9a;
+}
+
+.modalTitle {
+    color: #373737; /* Dark Gray */
+}
+
+.modalBody {
+    background-color: #bebebe;
+}
+
+.modalFooter {
+    background-color: #9a9a9a;
+}
+
+.closeButton, .saveButton {
+    border-radius: 0;
+    border: none;
+}
+
+.form-control {
+    margin-bottom: 10px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input:focus, input:valid {
+    outline: none;
+    border: 1.5px solid #b8b8b8 !important; /* Añade !important para forzar la aplicación de esta regla */
+}
+
+.modal-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.updateMessage {
+    color: #333333; /* Dark Gray */
+    font-size: 1.2em;
+    text-align: center;
+}
+
