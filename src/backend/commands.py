@@ -1,5 +1,4 @@
 
-import click
 import random, click
 from .models import db, User
 from . import api_utils

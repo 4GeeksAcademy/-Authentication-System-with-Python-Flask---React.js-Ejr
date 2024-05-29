@@ -26,16 +26,31 @@ const Navbar = () => {
 
   const itF = 'italic font-medium'
 
+  function handleAnchor(obj){
+    if(store.activePage == Constants.PAGE.landing) {
+      const item= document.querySelector("#" + obj)
+      if(item) {
+        const y= item.getBoundingClientRect().top
+        window.scrollTo({ top: y, left: 0, behavior: "smooth" })
+      }
+    }
+    else nav("/?href=" + obj)
+  }
+
+  function toggleNavbarState(){
+    setNavbarState(!navbarState)
+  }
+
   return (
     <>
-    {store.userState == null ? 
+    {store.userData ? 
       <div className="sticky top-0 bg-dark w-full flex z-[999]">
         <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 border-b-[1px] border-gray-600">
           <div className="flex items-center">
             
-            <p onClick={()=>navigate('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
+            <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
             
-            <p onClick={()=>navigate('dashboard')} className="f-body cursor-pointer">Dashboard</p>
+            <p onClick={()=>nav('dashboard')} className="f-body cursor-pointer">Dashboard</p>
             <button className=""></button>
           </div>
             <div className="ml-10 flex items-center">
