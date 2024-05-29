@@ -25,9 +25,9 @@ const Login = () => {
             if (dataRole === "athlete") {
                 navigate("/Userpage");
             }else if (dataRole === "coach") {
-                navigate("/PrivatePageUser"); 
+                navigate("/Userpage"); 
             }else if (dataRole === "admin") {
-                navigate("/PrivatePageUser"); 
+                navigate("/Userpage"); 
             }else if (dataRole === "master") {
                 navigate("/ModulePage"); 
             }else {

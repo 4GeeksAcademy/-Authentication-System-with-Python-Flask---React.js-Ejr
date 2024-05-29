@@ -77,9 +77,8 @@ const ModulePage = () => {
         { component: <UploadForm />, name: "UploadForm " },
         { component: <ImageGallery />, name: "ImageGallery " },
 
-        { component: <UserBooking />, name: "User Booking" },
+        // { component: <UserBooking />, name: "User Booking" },
         { component: <PRRecord />, name: "PRRecord " },
-        { component: <ResetPassword />, name: "ResetPassword " },
 
 
 

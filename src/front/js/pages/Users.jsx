@@ -112,6 +112,7 @@ const Users = () => {
                         {selectedUser.name} {selectedUser.last_name}
                       </h3>
                       <h5>User Role: {selectedUser.role}</h5>
+                      <h5>Status account: {selectedUser.is_active ? "Active" : "disabled"}</h5>
                       <h5>User name: {selectedUser.username}</h5>
                       <h5>Email: {selectedUser.email}</h5>
                       <h5>Register date: <FormattedDate dateTime={selectedUser.register_date} /></h5>

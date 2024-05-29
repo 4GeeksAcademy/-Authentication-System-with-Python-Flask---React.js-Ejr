@@ -43,43 +43,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 //---------------------------------------------------------FUNCION PARA VALIDAR TOKEN--------------------------------------------------------------------------
-			validateToken: async (token) => {
-				try {
-					const url = `${process.env.BACKEND_URL}/api/validate-token`;
+		validateToken: async (token) => {
+			try {
+				const url = `${process.env.BACKEND_URL}/api/validate-token`;
 
-
-					const response = await fetch(url, // URL del servidor
-						{
-							method: "GET",  // Cambio a método GET, ya que el endpoint no necesita datos de entrada adicionales
-							headers: {
-								"Authorization": `Bearer ${token}`  // Solo necesitamos el token para la autorización
-							}
-						});
-					if (response.ok) {
-						const data = await response.json();
-						if (data.user) {  // Verificamos si la respuesta contiene el objeto usuario
-							setStore({
-								isAuthenticated: true
-							});
-						} else {
-							setStore({
-								isAuthenticated: false
-							});
-							console.error("Token inválido o usuario no encontrado");
-						}
-					} else {
-						setStore({
-							isAuthenticated: false
-						});
-						console.error("Error validando el token", await response.text());  // Es útil ver el mensaje de error del servidor
+				const response = await fetch(url, {
+					method: "GET",
+					headers: {
+						"Authorization": `Bearer ${token}`
 					}
-				} catch (error) {
-					console.error("Error en la función validateToken:", error);
-					setStore({
-						isAuthenticated: false
-					});
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					if (data.user) {
+						setStore({
+							isAuthenticated: true,
+							uploadedUserData: data.user // Guarda los datos del usuario en el estado global
+						});
+						return { isAuthenticated: true };
+					} else {
+						console.error("Token inválido o usuario no encontrado");
+						getActions().closeSession();
+						return { isAuthenticated: false };
+					}
+				} else {
+					console.error("Error validando el token", await response.text());
+					getActions().closeSession();
+					return { isAuthenticated: false };
 				}
-			},
+			} catch (error) {
+				console.error("Error en la función validateToken:", error);
+				getActions().closeSession();
+				return { isAuthenticated: false };
+			}
+		},
+
+
 
 //---------------------------------------------------------FUNCION PARA LOGIN--------------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					);
 
 					let data = await response.json(); // Se espera la respuesta del servidor en formato JSON
-					console.log(data)
+					// console.log(data)
 					if (data.access_token) { // Si se recibe un token de acceso en la respuesta
 						localStorage.setItem("token", data.access_token);
 						localStorage.setItem("isAuthenticated", JSON.stringify(true));

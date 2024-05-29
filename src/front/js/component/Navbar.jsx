@@ -23,7 +23,12 @@ const NavigationBar = () => {
         const checkAuthStatus = async () => {
             const token = localStorage.getItem('token');
             if (token) {
-                await actions.validateToken(token);
+                const result = await actions.validateToken(token);
+                // console.log(result);
+                if (!result.isAuthenticated) {
+                    navigate('/');
+                }
+            } else {
             }
         };
         checkAuthStatus();
@@ -76,7 +81,7 @@ const NavigationBar = () => {
                     )}
                     {!store.isAuthenticated && (
                         <Link to="/login">
-                            <Button className={styles.loginButton}>Login</Button>
+                            <Button className={styles.loginButton}>Login / Register</Button>
                         </Link>
                     )}
                 </Navbar.Collapse>

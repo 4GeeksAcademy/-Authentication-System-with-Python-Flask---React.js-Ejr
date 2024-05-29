@@ -670,16 +670,19 @@ def create_normal_user_token():  # Define la función que manejará la solicitud
         if not existing_user:  # Verifica si ya existe un usuario con el mismo email
             return jsonify({'error': 'Email does not exist.'}), 400  # Devuelve un error con código de estado 409 si ya existe un usuario con el mismo email
 
+        if not existing_user.is_active:  # Verifica si la cuenta del usuario está activa
+            return jsonify({'error': 'Account deleted or not active'}), 400  # Devuelve un error si la cuenta no está activa
+
         password_user_db = existing_user.password  # Extraemos la contraseña almacenada del usuario existente en la base de datos
 
         true_o_false = check_password_hash(password_user_db, data['password'])  # Comparamos la contraseña ingresada en el formulario con la contraseña almacenada en la base de datos, después de descifrarla
 
         if true_o_false:  # Si la comparación es verdadera, es decir, las contraseñas coinciden
-            expires = timedelta(days=1)  # Configuramos la duración del token de acceso
+            expires = timedelta(hours=1)  # Configuramos la duración del token de acceso
             user_id = existing_user.id  # Obtenemos el ID del usuario existente en la base de datos
-            role = existing_user.role.name  # Obtenemos el ID del usuario existente en la base de datos
+            role = existing_user.role.name  # Obtenemos el rol del usuario existente en la base de datos
             access_token = create_access_token(identity=user_id, expires_delta=expires)  # Creamos un token de acceso para el usuario
-            return jsonify({'access_token': access_token, 'login': True, 'role':role, 'user_id':user_id}), 200  # Devolvemos el token de acceso como respuesta exitosa
+            return jsonify({'access_token': access_token, 'login': True, 'role': role, 'user_id': user_id}), 200  # Devolvemos el token de acceso como respuesta exitosa
         else:  # Si la comparación de contraseñas es falsa, es decir, las contraseñas no coinciden
             return jsonify({'error': 'Incorrect password'}), 400  # Devolvemos un mensaje de error indicando que la contraseña es incorrecta
 
@@ -1732,46 +1735,47 @@ def execute_paypal_payment_admin():
 @api.route('/class-reservation-frequency', methods=['GET'])
 def get_class_reservation_frequency():
     try:
-        filter_by = request.args.get('filter_by', 'all')  # Obtiene el parámetro 'filter_by' de la solicitud, con valor por defecto 'all'
-        reservation_type = request.args.get('reservation_type', 'all')  # Obtiene el parámetro 'reservation_type' de la solicitud, con valor por defecto 'all'
+        # Obtiene el parámetro 'filter_by' de la solicitud, con valor por defecto 'all' si no se proporciona
+        filter_by = request.args.get('filter_by', 'all')
+        # Obtiene el parámetro 'reservation_type' de la solicitud, con valor por defecto 'all' si no se proporciona
+        reservation_type = request.args.get('reservation_type', 'all')
 
-        # Define la consulta inicial para obtener la hora de la clase y la frecuencia de reservas
+        # Determina la columna por la cual se agruparán los resultados basado en el filtro
+        if filter_by == 'date':
+            # Agrupa por fecha en formato 'YYYY-MM-DD'
+            group_by_column = func.to_char(Training_classes.dateTime_class, 'YYYY-MM-DD')
+        elif filter_by == 'time':
+            # Agrupa por hora en formato de 24 horas 'HH24'
+            group_by_column = func.to_char(Training_classes.dateTime_class, 'HH24')
+        elif filter_by == 'day':
+            # Agrupa por día de la semana, e.g., 'Monday'
+            group_by_column = func.to_char(Training_classes.dateTime_class, 'Day')
+        else:
+            # Si no se especifica filtro, agrupa por la fecha y hora exacta de la clase
+            group_by_column = Training_classes.dateTime_class
+
+        # Construye la consulta para obtener la frecuencia de reservas agrupada por la columna especificada
         query = db.session.query(
-            func.date_part('hour', Training_classes.dateTime_class).label('class_hour'),
-            db.func.count(Booking.id).label('frequency')
-        ).join(Booking)
+            group_by_column.label('class_time'),  # Alias 'class_time' para la columna agrupada
+            db.func.count(Booking.id).label('frequency')  # Cuenta el número de reservas y lo alias como 'frequency'
+        ).join(Booking)  # Une la tabla de clases con la tabla de reservas
 
-        # Aplica el filtro por tipo de reserva si no es 'all'
+        # Si el tipo de reserva no es 'all', aplica el filtro para el tipo de reserva especificado
         if reservation_type != 'all':
             query = query.filter(Booking.status == reservation_type)
 
-        # Agrupa los resultados según el filtro seleccionado
-        if filter_by == 'date':
-            query = query.group_by(
-                func.date(Training_classes.dateTime_class),
-                Training_classes.dateTime_class
-            ).order_by(func.date(Training_classes.dateTime_class))
-        elif filter_by == 'time':
-            query = query.group_by(
-                func.date_part('hour', Training_classes.dateTime_class)
-            ).order_by(func.date_part('hour', Training_classes.dateTime_class))
-        else:
-            query = query.group_by(
-                Training_classes.dateTime_class
-            ).order_by(Training_classes.dateTime_class)
+        # Agrupa los resultados por la columna especificada y ordena por la misma columna
+        query = query.group_by(group_by_column).order_by(group_by_column)
 
-        result = query.all()  # Ejecuta la consulta y obtiene todos los resultados
-
-        data = []
-        for r in result:
-            data.append({
-                'class_hour': int(r.class_hour),  # Convierte a int para horas específicas
-                'frequency': r.frequency  # Frecuencia de reservas
-            })
-
-        return jsonify(data), 200  # Devuelve los datos en formato JSON con código de estado 200
+        # Ejecuta la consulta y obtiene todos los resultados
+        result = query.all()
+        # Convierte los resultados en una lista de diccionarios con las claves 'class_time' y 'frequency'
+        data = [{'class_time': r.class_time, 'frequency': r.frequency} for r in result]
+        # Devuelve los datos en formato JSON con código de estado 200 (OK)
+        return jsonify(data), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 500  # Devuelve un mensaje de error en caso de excepción con código de estado 500
+        # En caso de una excepción, devuelve un mensaje de error en formato JSON con código de estado 500 (Internal Server Error)
+        return jsonify({'error': str(e)}), 500
 
 
     
