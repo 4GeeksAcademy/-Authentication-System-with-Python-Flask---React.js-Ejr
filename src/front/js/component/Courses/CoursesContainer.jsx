@@ -13,6 +13,7 @@ export const CoursesContainer = () => {
     
 
     function handleAddTrolley() {
+        // verificación de token
         actions.addCourseToTrolley()
     }
 
