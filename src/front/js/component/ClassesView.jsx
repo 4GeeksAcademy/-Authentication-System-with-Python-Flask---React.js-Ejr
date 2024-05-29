@@ -1,99 +1,110 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Form, Row, Col, Button} from "react-bootstrap";
-
+import { Form, Row, Col, Button, Modal } from "react-bootstrap";
+import styles from "./ClassesView.module.css";
+import EditClasses from "../pages/EditClasses.jsx";
 const ClassesView = () => {
     const { actions, store } = useContext(Context);
-    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedClass, setSelectedClass] = useState(null);
 
     useEffect(() => {
-        actions.getClasses()
-    }, [])
-    //guarda la informacion y navega
+        actions.getClasses();
+    }, [actions]);
+
     const handlerEdit = (item) => {
-        actions.saveCurrentEdit(item)
-        let url="/classEdit/"+item.id
-        navigate(url)
-    }
-    console.log(store.classesData)
+        setSelectedClass(item);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedClass(null);
+    };
 
     return (
-
-        <div className="container">
-            <h1>Clases Activas</h1>
-            <table className="table table-dark table-striped table-responsive">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th className="text-center" scope="col">Date class</th>
-                        <th className="text-center" scope="col">Start time </th>
-                        <th className="text-center" scope="col">Duration minutes</th>
-                        <th className="text-center" scope="col">Available slots </th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        store.classesData && store.classesData.filter(item => item.Class_is_active).map((item) => (
-                            
-
-                            <tr key={item.name}>
+        <div className={`container-fluid ${styles.classesViewContainer}`}>
+            <h1 className={styles.title}>Clases Activas</h1>
+            <div className="table-responsive">
+                <table className={`table ${styles.table}`}>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th className="text-center" scope="col">Date class</th>
+                            <th className="text-center" scope="col">Start time</th>
+                            <th className="text-center" scope="col">Duration minutes</th>
+                            <th className="text-center" scope="col">Available slots</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {store.classesData && store.classesData.filter(item => item.Class_is_active).map((item) => (
+                            <tr key={item.name} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-
-                                <td className="text-center">{item.dateTime_class.slice(0,16)}</td>
+                                <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
                                 <td>
-                                    <button className="btn-secondary mx-2" onClick={() => handlerEdit(item)}>
+                                    <Button
+                                        variant="secondary"
+                                        className={styles.editButton}
+                                        onClick={() => handlerEdit(item)}
+                                    >
                                         Editar clase
-                                    </button>
+                                    </Button>
                                 </td>
                             </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-
-
-                        ))
-                    }
-                </tbody>
-            </table>
-
-            <br />
-            <h1>Clases canceladas</h1>
-            <table className="table table-dark table-striped table-responsive">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Description</th>
-                        <th className="text-center" scope="col">Date class</th>
-                        <th className="text-center" scope="col">Start time </th>
-                        <th className="text-center" scope="col">Duration minutes</th>
-                        <th className="text-center" scope="col">Available slots </th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {store.classesData && store.classesData.filter(item => !item.Class_is_active).map((item) => (
-                            <tr key={item.name}>
+            <h1 className={styles.title}>Clases canceladas</h1>
+            <div className="table-responsive">
+                <table className={`table ${styles.table}`}>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th className="text-center" scope="col">Date class</th>
+                            <th className="text-center" scope="col">Start time</th>
+                            <th className="text-center" scope="col">Duration minutes</th>
+                            <th className="text-center" scope="col">Available slots</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {store.classesData && store.classesData.filter(item => !item.Class_is_active).map((item) => (
+                            <tr key={item.name} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-                                <td className="text-center">{item.dateTime_class.slice(0,16)}</td>
+                                <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
-                                
                             </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-
-
-                        ))
-                    }
-                </tbody>
-            </table>
+            <Modal show={showModal} onHide={handleCloseModal} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title className={styles.titlemodal}>Editar Clase</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {selectedClass && (
+                        <EditClasses
+                            classData={selectedClass}
+                            onClose={handleCloseModal}
+                        />
+                    )}
+                </Modal.Body>
+            </Modal>
         </div>
-    )
+    );
 };
+
 export default ClassesView;
