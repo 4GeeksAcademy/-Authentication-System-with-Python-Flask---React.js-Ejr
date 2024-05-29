@@ -243,6 +243,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsgError("");
         getActions().updateMsg("");
         getActions().spinner(true);
+
+        console.log(dataCourse)
         try {
           const url = process.env.BACKEND_URL + "/api/create/courses";
           const respCreateCourse = await fetch(url, {

@@ -669,10 +669,11 @@ def post_courses():
         assessment = request.json.get('assessment')
         title_Teacher = request.json.get('titleTeacher')
         date_expiration = request.json.get('dateExpiration')
+        title_url_media = request.json.get('titleUrlMedia')
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not title_Teacher or not date_expiration:
-            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, title_Teacher and date_expiration are required"}), 400
+        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not title_Teacher or not date_expiration or not title_url_media:
+            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, title_Teacher, date_expiration and title_url_media are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
@@ -680,7 +681,7 @@ def post_courses():
             return jsonify({"Error":"Title already exists."}), 409
         
         current_date = datetime.now().strftime('%Y-%m-%d')
-        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date, title_Teacher=title_Teacher, date_expiration=date_expiration)
+        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date, title_Teacher=title_Teacher, date_expiration=date_expiration, title_url_media=title_url_media)
         db.session.add(course)
         db.session.commit()
 
