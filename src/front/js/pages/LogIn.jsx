@@ -91,6 +91,10 @@ export const LogIn = () => {
                                 <span className="text-white fs-6 fw-normal font-family-Inter">Don’t have an account? </span>
                                 <Link to="/signup" className="text-white fs-6 fw-normal font-family-Inter text-decoration-underline">create a new account</Link>
                             </p>
+                            <p className="col-12 m-0 px-3 py-2">
+                                <span className="text-white fs-6 fw-normal font-family-Inter">Forgot your password? </span>
+                                <Link to="/forgot-password" className="text-white fs-6 fw-normal font-family-Inter text-decoration-underline">Reset it here</Link>
+                            </p>
                         </div>
                     </div>
                 </div>

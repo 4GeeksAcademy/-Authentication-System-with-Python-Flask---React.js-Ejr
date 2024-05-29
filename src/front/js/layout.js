@@ -15,6 +15,8 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/Navbar.jsx";
 import { BuyMeACoffee } from "./pages/BuyMeACoffee.jsx";
+import { ForgotPassword } from "./component/ForgotPassword.jsx";
+import { ResetPassword } from "./component/ResetPassword.jsx";
 
 
 const Layout = () => {
@@ -31,6 +33,8 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<SignUp />} path="/signup" />
+                        <Route element={<ForgotPassword />} path="/forgot-password" />
+                        <Route element={<ResetPassword />} path="/reset-password/:token" />
                         <Route element={<PrivateRoute><Profile /></PrivateRoute>} path="/profile" />
                         <Route element={<RoomDetail />} path="/room/:roomId" />
                         <Route element={<CreateRoom />} path="/create-room" />

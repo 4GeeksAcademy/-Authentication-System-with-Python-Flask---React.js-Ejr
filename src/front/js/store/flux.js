@@ -97,6 +97,45 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             
+            requestResetPassword: async (email) => {
+                try {
+                    const response = await fetch(`${apiUrl}/api/request-reset-password`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email })
+                    });
+
+                    if (!response.ok) throw new Error("Failed to send password reset email");
+
+                    console.log("Password reset email sent.");
+                    return true;
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }
+            },
+
+            resetPassword: async (token, password) => {
+                try {
+                    const response = await fetch(`${apiUrl}/api/reset-password/${token}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ password })
+                    });
+
+                    if (!response.ok) throw new Error("Failed to reset password");
+
+                    console.log("Password has been reset.");
+                    return true;
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }
+            },
 
             fetchRooms: async () => {
                 const store = getStore();
