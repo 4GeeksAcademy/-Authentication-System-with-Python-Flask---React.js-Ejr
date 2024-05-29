@@ -1,3 +1,4 @@
+import React from "react"
 import { useNavigate } from "react-router-dom"
 
 const WorkspaceCard= ({id, title, thumbnail})=>{
@@ -15,3 +16,4 @@ const WorkspaceCard= ({id, title, thumbnail})=>{
 }
 
 export default WorkspaceCard
+
