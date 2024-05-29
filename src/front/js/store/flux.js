@@ -3,9 +3,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			users:[],
-			user:{},
-			
+
+			users: [],
+			user: {},
+
 			isAuthenticated: null,
 			uploadedUserData: [],
 			isAuthenticatedMessage: null,
@@ -28,9 +29,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			reservedClasses: [],
 			cancelBooking: [],
 			creationTrainingClasses: [],
-			bookingData:[],
+			bookingData: [],
 			memberships: [],
-            membershipsLoading: false,
+			membershipsLoading: false,
 			images: [],
 			classesData: [],
 			currentEdit: {},
@@ -310,12 +311,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-					console.log("data servidor",data)
+					console.log("data servidor", data)
 					let store = getStore();
 					setStore({ ...store, cancelBooking: data });
 
 
-			
+
 					// Imprimimos el estado de la tienda después de cargar los datos (solo para depuración)
 					// console.log("Store after data loaded:", store);
 				} catch (error) {
@@ -390,10 +391,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
 						return { success: false, error: data.error || "Unknown error occurred." };
 					}
-					
+
 					// console.log('data after setTimeout',data)
 
-				}catch (error) {
+				} catch (error) {
 					// console.error(error);
 					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
 				}
@@ -407,13 +408,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let url = `${process.env.BACKEND_URL}/api/training_classes`;
 				let errors = [];
 				let successfulCreations = [];
-			
+
 				while (startDate <= endDate) {
 					let classData = {
 						...formData,
 						dateTime_class: startDate.toISOString().split('T')[0] + ' ' + formData.start_time
 					};
-			
+
 					try {
 						let response = await fetch(url, {
 							method: "POST",
@@ -432,10 +433,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} catch (error) {
 						errors.push({ error: error.message, date: startDate.toISOString() });
 					}
-			
+
 					startDate.setDate(startDate.getDate() + 1); // Incrementa el día
 				}
-			
+
 				// Actualiza el store al final del proceso
 				let store = getStore(); // Obtiene el estado actual del store
 				setStore({ ...store, creationTrainingClasses: successfulCreations }); // Actualiza el store con las nuevas clases creadas
@@ -444,7 +445,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, messageError: 'Some errors occurred.', errors: errors };
 				}
 				return { success: true, message: 'All classes were created successfully' };
-				
+
 			},
 
 			resetCreationTrainingClasses: () => {
@@ -457,7 +458,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 
+
 				const url =`${process.env.BACKEND_URL}/api/booking`;
+
 
 
 				try {
@@ -478,8 +481,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error("Error loading training classes:", error);
 				}
+
             },
 //---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
+
 
 			//funcion asincrona para la vista que trae las clases de entrenamiento 
 			getClasses: async () => {
@@ -533,13 +538,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
 						},
 						body: JSON.stringify(formData)
-
 					});
 					let data = await response.json();
 					console.log("HOLA SOY LA DATA DE LA RESPUESTA DE EDITAR",data)
 					if (data.message) {
 						// Asumiendo que quieres actualizar el store aquí
 						return { success: true, data: data };
+
 					} else {
 						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
 						return { success: false, error: data.error || "Unknown error occurred." };
@@ -583,7 +588,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
@@ -614,37 +618,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getUsers : async () => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
-				
+
 				try {
 
-				  let response = await fetch(`${process.env.BACKEND_URL}/api/users`, 
+            let response = await fetch(`${process.env.BACKEND_URL}/api/users`, 
 
-				  {
-					method: "GET",
-					headers: {
-					  "Content-Type": "application/json",
-					  // Incluye el token de autorización si es necesario
-						 Authorization: `Bearer ${myToken}`,
-					},
-				  });
-				//   console.log (response)
-				  if (!response.ok) {
-					throw new Error(`Error fetching users: ${response.statusText}`);
-				  }
-			  
-				  let data = await response.json();
-				//   console.log(data);
-				  
-				  
-				  let store = getStore(); // Obtiene el estado actual del almacén
-				  setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
+            {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Incluye el token de autorización si es necesario
+               Authorization: `Bearer ${myToken}`,
+            },
+            });
+          //   console.log (response)
+            if (!response.ok) {
+            throw new Error(`Error fetching users: ${response.statusText}`);
+            }
+
+            let data = await response.json();
+          //   console.log(data);
+            let store = getStore(); // Obtiene el estado actual del almacén
+            setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
 				  
 				} catch (error) {
-				  console.error(error); // Maneja cualquier error que ocurra durante el proceso
+					console.error(error); // Maneja cualquier error que ocurra durante el proceso
 
 				}
 
 			},
+
 //---------------------------------------------------------FUNCION PARA CARGAR IMAGENES DE ENTRENAMIENTOS--------------------------------------------------------------------------
 
 			  uploadImage: async (formData) => {
@@ -951,9 +954,127 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			
 
+			// Función para crear una clase individual
+			createTrainingClasses: async (dataClasses) => {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+				// Construimos la URL para la solicitud
+				let url = `${process.env.BACKEND_URL}api/training_classes`;
+
+				try {
+					let response = await fetch(url, {
+						method: "POST", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(dataClasses)
+
+					});
+					let data = await response.json(); // Se espera la respuesta del servidor en formato JSON
+					console.log(data)
+
+					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
+					if (response.ok) {
+						// Asumiendo que quieres actualizar el store aquí
+						let store = getStore();
+						setStore({ ...store, creationTrainingClasses: data });
+						return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+
+					// console.log('data after setTimeout',data)
+
+				} catch (error) {
+					// console.error(error);
+					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
+				}
+			},
+
+			createMembership: async (membershipData) => {
+				const myToken = localStorage.getItem("token");
+
+				const url = `${process.env.BACKEND_URL}/api/memberships`;
+
+				try {
+					const response = await fetch(url, {
+						method: "POST",
+						headers: {
+							"Authorization": `Bearer ${myToken}`, // Se incluye el token de autorización en los encabezados
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(membershipData), // Enviamos los datos de la membresía en el cuerpo de la solicitud
+					});
+
+					const data = await response.json(); // Obtenemos la respuesta en formato JSON
+
+					if (response.ok) {
+						let store = getStore();
+						setStore({ ...store, createdMembership: data });
+						return { success: true, data }; // Retornamos la respuesta exitosa
+					} else {
+						return { success: false, error: data.error || "Ocurrió un error desconocido" };
+					}
+				} catch (error) {
+					throw new Error(`Error al crear la membresía: ${error.message}`);
+				}
+			},
+
+			editMembership: async (membershipId, updatedMembershipData) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/api/memberships/${membershipId}`;
+
+				try {
+					const response = await fetch(url, {
+						method: "PUT",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(updatedMembershipData),
+					});
+
+					const data = await response.json();
+
+					if (response.ok) {
+						return { success: true, data };
+					} else {
+						return { success: false, error: data.error || "Ocurrió un error desconocido" };
+					}
+				} catch (error) {
+					throw new Error(`Error al editar la membresía: ${error.message}`);
+				}
+			},
+
+			deleteMembership: async (membershipId) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/api/memberships/${membershipId}`;
+
+				try {
+					const response = await fetch(url, {
+						method: "DELETE",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						},
+					});
+
+					const data = await response.json();
+
+					if (response.ok) {
+						return { success: true, data };
+					} else {
+						return { success: false, error: data.error || "Ocurrió un error desconocido" };
+					}
+				} catch (error) {
+					throw new Error(`Error al eliminar la membresía: ${error.message}`);
+				}
+			},
+
 		},
 	}
-	
+
 };
 
 export default getState;

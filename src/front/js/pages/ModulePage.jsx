@@ -25,10 +25,14 @@ import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
+
+import MembershipManager from "../component/MembershipManager.jsx";
+
 import PRRecord from "../component/PRRecord.jsx";
 import AdminMembershipPurchase from "../component/AdminMembershipPurchase.jsx";
 import ResetPassword from "../component/ResetPassword.jsx";
 import ClassesView from "../component/ClassesView.jsx";
+
 
 
 const ModulePage = () => {
@@ -69,10 +73,14 @@ const ModulePage = () => {
         { component: <ImageGallery />, name: "ImageGallery " },
         { component: <TransactionsTable />, name: "TransactionsTable " },
         { component: <Users />, name: "Users " },
+
+        { component: <MembershipManager />, name: "MembershipManager" },
+
         { component: <PRRecord />, name: "PRRecord " },
         { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
         { component: <ResetPassword />, name: "ResetPassword " },
         { component: <ClassesView />, name: "ClassesView " },
+
 
 
     ];

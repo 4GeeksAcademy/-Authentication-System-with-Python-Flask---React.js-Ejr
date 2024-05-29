@@ -45,6 +45,9 @@ import PRRecord from "./component/PRRecord.jsx";
 import AdminMembershipPurchase from "./component/AdminMembershipPurchase.jsx";
 
 import PageNormalUser from "./pages/PageNormalUser.jsx";
+
+import MembershipManager from "./component/MembershipManager.jsx";
+
 import ClassesView from "./component/ClassesView.jsx";
 import EditClasses from "./pages/EditClasses.jsx"
 
@@ -54,6 +57,7 @@ import  CancelPayment  from "./component/ExecutePayment.jsx";
 
 import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
+
 
 //create your first component
 const Layout = () => {
@@ -111,6 +115,7 @@ const Layout = () => {
 
 
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<MembershipManager />} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
