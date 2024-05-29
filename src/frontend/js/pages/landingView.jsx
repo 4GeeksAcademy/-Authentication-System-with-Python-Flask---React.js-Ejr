@@ -201,13 +201,13 @@ const LandingView = () => {
               <Accordion question='Is it free?' answer='Yes, this software is 100% free.'/>
               </div>
               <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
-              <Accordion question='Here goes a question' answer='Here goes the anwer to that question lol'/>
+              <Accordion question='Do i have to sign up to use it?' answer='Yes, for being able to use this tool, you will need to sign up and then log in with your account'/>
               </div>
               <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
-              <Accordion question='Here goes a question' answer='Here goes the anwer to that question lol'/>
+              <Accordion question='How do i start using Keqqu?' answer='I suggest you to read the "How does it work" section. You will se it if you scroll up'/>
               </div>
               <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
-              <Accordion question='Here goes a question' answer='Here goes the anwer to that question lol, but this one is larger so we can see how this fits into the "button" pajapajpajapajapajapajapajapajapajapajapajapajapajapajapajapajapajapajapaj'/>
+              <Accordion question='Is there a premium version of Keqqu?' answer='Currently, Keqqu is completely free and we have no immediate plans for a premium version. We want to ensure that everyone can access our basic features at no cost.'/>
               </div>
             </div>
           </div>
@@ -248,27 +248,6 @@ const LandingView = () => {
             
           </div>
         </div>
-
-
-    
-      {/*--- colors --------------------------------------------------------*/}
-      <div className="w-full flex-auto text-center items-center mt-24">
-        <div className=" mx-auto grid-cols-2 md:flex py-5 md:h-screen">   
-          <div className="w-48 h-48 bg-w"></div>
-          <div className="w-48 h-48 bg-b"></div>
-          <div className="w-48 h-48 bg-dark"></div>
-
-          <div className="w-48 h-48 bg-primary-n"></div>
-          <div className="w-48 h-48 bg-primary-l"></div>
-          <div className="w-48 h-48 bg-primary-d"></div>
-
-          <div className="w-48 h-48 bg-accent-n"></div>
-          <div className="w-48 h-48 bg-accent-l"></div>
-
-          <div className="w-48 h-48 bg-secondary-n"></div> 
-        </div>
-      </div> 
-
       
     </div>
   </div>
