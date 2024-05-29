@@ -39,8 +39,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             uploadImageToCloudinary: async (imageFile) => {
-                const preset_name = 'sducy1dm'; 
-                const cloud_name = 'dwnbekby9'; 
+                const preset_name = 'sducy1dm';
+                const cloud_name = 'dwnbekby9';
 
                 const data = new FormData();
                 data.append('file', imageFile);
@@ -68,14 +68,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     // Extrae imageFile de signUpData y guarda el resto de los datos en 'rest'
                     const { imageFile, ...rest } = signUpData;
-            
+
                     let imageUrl = null;
                     if (imageFile) {
                         // Si hay un archivo de imagen, súbelo a Cloudinary usando la acción uploadImageToCloudinary
                         imageUrl = await getActions().uploadImageToCloudinary(imageFile);
                         if (!imageUrl) throw new Error('Failed to upload image to Cloudinary');
                     }
-            
+
                     // Crea el signUpData de datos para el registro, incluyendo la URL de la imagen si existe
                     const updatedSignUpData = { ...rest, url_image: imageUrl };
                     let response = await fetch(`${apiUrl}/api/signup`, {
@@ -85,19 +85,20 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(updatedSignUpData)
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Failed to create user');
                     }
-            
+
                     return true;
                 } catch (error) {
                     console.error('Error creating user:', error);
                     return false;
                 }
             },
-            
+
             requestResetPassword: async (email) => {
+                const store = getStore();
                 try {
                     const response = await fetch(`${apiUrl}/api/request-reset-password`, {
                         method: "POST",
@@ -107,18 +108,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify({ email })
                     });
 
-                    if (!response.ok) throw new Error("Failed to send password reset email");
+                    if (!response.ok) throw new Error("Failed to request password reset");
 
-                    console.log("Password reset email sent.");
-                    return true;
+                    const data = await response.json();
+                    if (data.token) {
+                        // Guardar el token de alguna manera, por ejemplo, en el localStorage
+                        localStorage.setItem('resetToken', data.token);
+                        return true;
+                    }
+                    return false;
                 } catch (error) {
                     console.error(error);
                     return false;
                 }
             },
 
-            resetPassword: async (token, password) => {
+            resetPassword: async (password) => {
+                const store = getStore();
                 try {
+                    // Obtener el token desde el localStorage
+                    const token = localStorage.getItem('resetToken');
+                    if (!token) throw new Error("No reset token found");
+
                     const response = await fetch(`${apiUrl}/api/reset-password/${token}`, {
                         method: "POST",
                         headers: {
@@ -130,12 +141,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (!response.ok) throw new Error("Failed to reset password");
 
                     console.log("Password has been reset.");
+                    // Eliminar el token del localStorage después de usarlo
+                    localStorage.removeItem('resetToken');
                     return true;
                 } catch (error) {
                     console.error(error);
                     return false;
                 }
             },
+
 
             fetchRooms: async () => {
                 const store = getStore();
@@ -349,7 +363,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             joinRoom: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return false;
-            
+
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/join`, {
                         method: 'POST',
@@ -455,7 +469,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getComments: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return [];
-            
+
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/comments`, {
                         method: 'GET',
@@ -465,7 +479,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     if (!response.ok) throw new Error('Failed to fetch comments');
                     const data = await response.json();
-            
+
                     return data.comments;
                 } catch (error) {
                     console.error('Error fetching comments:', error);
@@ -478,7 +492,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('No JWT token found');
                     return false;
                 }
-            
+
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/comments`, {
                         method: 'POST',
@@ -501,7 +515,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('No JWT token found');
                     return false;
                 }
-            
+
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/update_participant_status`, {
                         method: 'PUT',
@@ -518,14 +532,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-            
+
             updateParticipantStatus: async (roomId, participantId, status) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) {
                     console.error('No JWT token found');
                     return false;
                 }
-            
+
                 try {
                     const response = await fetch(`${apiUrl}/api/room/${roomId}/update_participant_status`, {
                         method: 'PUT',
