@@ -503,9 +503,60 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
+
+      postModule: async (formData) => {
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/module/course`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData); 
+                throw new Error(errorData.error || "Error al crear el módulo");
+            }
+    
+            return await response.json();
+        } catch (error) {
+            
+            throw error;
+        }
+    },
+     
+    // postQuizzes: async (formData) => {
+    //   try {
+    //     const response = await fetch(`${process.env.BACKEND_URL}/api/module/quizzes`, {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(formData)
+    //     });
+    
+    //     if (!response.ok) {
+    //       const errorData = await response.json();
+    //       console.log("Error de servidor:", errorData);
+    //       throw new Error(errorData.error || "Error al crear la Evaluación");
+    //     }
+    
+    //     return await response.json();
+    //   } catch (error) {
+    //     console.error("Error en la solicitud:", error);
+    //     throw error;
+    //   }
+    // }
+    
+  
+
+    
       
     }
   };
 }
 
+    
 export default getState;
