@@ -31,19 +31,19 @@ export const CloudinaryComponent = () => {
       </div>
       <div className="row justify-content-center my-4">
         <div className="col-md-8">
-          {loading ? (
+          {store.loading ? (
             <div className="text-center">
               <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
           ) : (
-            media && (
-              mediaType === 'image' ? (
-                <img src={media} className="img-fluid" alt="Uploaded" />
+            store.media && (
+              store.mediaType === 'image' ? (
+                <img src={store.media} className="img-fluid" alt="Uploaded" />
               ) : (
                 <video controls className="img-fluid">
-                  <source src={media} type="video/mp4" />
+                  <source src={store.media} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               )

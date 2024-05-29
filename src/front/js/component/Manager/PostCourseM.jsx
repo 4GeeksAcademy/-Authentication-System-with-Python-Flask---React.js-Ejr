@@ -1,13 +1,12 @@
-
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Context } from '../../store/appContext'
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../../store/appContext';
 import { CloudinaryComponent } from '../CloudinaryComponent.jsx';
 
 export const PostCourseM = () => {
-    const { store, actions } = useContext(Context)
-    const [active, setActive] = useState(false)
-    const [counter, setCounter] = useState(7)
+    const { store, actions } = useContext(Context);
+    const [active, setActive] = useState(false);
+    const [counter, setCounter] = useState(7);
     const [courseData, setCourseData] = useState({
         title: '',
         categoryTitle: '',
@@ -17,8 +16,13 @@ export const PostCourseM = () => {
         description: '',
         assessment: '',
         titleTeacher: '',
-        dateExpiration: ''
+        dateExpiration: '',
+        titleUrlMedia: `${store.media}`
     });
+
+    const [media, setMedia] = useState('');
+    const [mediaType, setMediaType] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,35 +32,63 @@ export const PostCourseM = () => {
         });
     };
 
+    const resetCourseData = () => {
+        setCourseData({
+            title: '',
+            categoryTitle: '',
+            modulesLength: '',
+            titleCertificateToGet: '',
+            price: '',
+            description: '',
+            assessment: '',
+            titleTeacher: '',
+            dateExpiration: '',
+            titleUrlMedia: ''
+        });
+    };
+
     async function handlerCreateCourse(e) {
         e.preventDefault();
-        if (courseData.title !== '' && courseData.categoryTitle !== '' && courseData.modulesLength !== '' && courseData.certificate !== '' && courseData.price !== '') {
-            await actions.createCourseNew(courseData)
-            setCounter(0)
+        if (courseData.title !== '' && courseData.categoryTitle !== '' && courseData.modulesLength !== '' && courseData.titleCertificateToGet !== '' && courseData.price !== '') {
+            console.log("Creating course with data:", courseData);
+            await actions.createCourseNew(courseData);
+            setCounter(0);
+            resetCourseData()
         } else {
-            alert('Ingrese todo los campos')
+            alert('Ingrese todos los campos');
         }
-    }
-
-    function handlerChangeActive() {
-        setActive(false)
     }
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCounter(prevCounter => {
-                return prevCounter + 1;
-            });
+            setCounter(prevCounter => prevCounter + 1);
         }, 500);
 
-        return () => clearInterval(interval)
-    }, [])
+        return () => clearInterval(interval);
+    }, []);
 
+    const uploadMedia = async (e) => {
+        const files = e.target.files;
+        if (files.length > 0) {
+            await actions.uploadCloudinaryMedia(files);
+            console.log("Uploaded media:", store.media);
+        }
+    };
 
+    useEffect(() => {
+        console.log("Media updated:", store.media);
+        setMedia(store.media);
+        setMediaType(store.mediaType);
+        setLoading(store.loading);
+        setCourseData(prevData => ({
+            ...prevData,
+            titleUrlMedia: store.media
+        }));
+    }, [store.media, store.mediaType, store.loading]);
 
-    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
-    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
-    
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
+
     return (
         <div className='position-relative'>
             {/* Msg */}
@@ -85,9 +117,37 @@ export const PostCourseM = () => {
                     </div>
                     <form onSubmit={handlerCreateCourse}>
                         <div>
-                            <div>
-                                <CloudinaryComponent />
+                            <div className="container">
+                                <h2 className="text-center my-4">Upload Media</h2>
+                                <div className="row justify-content-center">
+                                    <div className="col-md-6">
+                                        <input type="file" className="form-control" onChange={uploadMedia} />
+                                    </div>
+                                </div>
+                                <div className="row justify-content-center my-4">
+                                    <div className="col-md-8">
+                                        {store.loading ? (
+                                            <div className="text-center">
+                                                <div className="spinner-border" role="status">
+                                                    <span className="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            store.media && (
+                                                store.mediaType === 'image' ? (
+                                                    <img src={store.media} className="img-fluid" alt="Uploaded" />
+                                                ) : (
+                                                    <video controls className="img-fluid">
+                                                        <source src={store.media} type="video/mp4" />
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                )
+                                            )
+                                        )}
+                                    </div>
+                                </div>
                             </div>
+
                             <label>Title:</label>
                             <input
                                 type="text"
@@ -167,7 +227,7 @@ export const PostCourseM = () => {
                             </div>
                         </div>
                         <div>
-                            <label>title Teacher:</label>
+                            <label>Title Teacher:</label>
                             <input
                                 type="text"
                                 name="titleTeacher"
@@ -209,9 +269,6 @@ export const PostCourseM = () => {
                     </form>
                 </div>
             </div>
-
         </div>
     );
 };
-
-
