@@ -52,6 +52,7 @@
     }
   },
   "default": {
+    "first-workspace":  "My first workspace",
     "title-workspace":  "Untitled Workspace",
     "title-project":    "Untitled Project",
     "title-board":      "Untitled Board",

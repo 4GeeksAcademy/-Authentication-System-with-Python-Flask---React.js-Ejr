@@ -23,13 +23,16 @@ import GlobalListener from "./app/globalListener.jsx" // redirector, generic 404
 
 import appContext, { Context } from "./store/appContext.jsx"
 
-const noAuthBase= <Redirector url="/login" replace/>
+const 
+  authBase= <Redirector url="/dashboard" replace/>,
+  noAuthBase= <Redirector url="/login" replace/>
 
 const Layout = () => {
   const 
     { store }= React.useContext(Context)
 
-  function onlyAuth(element){ return store.userData ? element : noAuthBase }
+  function preventAuth(element){ return !store.userData ? element : authBase }
+  function preventVisitor(element){ return store.userData ? element : noAuthBase }
 
   // strict means it wont accept trailing slashes, so "/settings" works while "/settings/" not
   // exact means exact, needed in some cases where we don't want "parent" routes to interfere in children ones
@@ -44,19 +47,19 @@ const Layout = () => {
               <>
               <Navbar />
               <Routes>
-                  <Route path="/" element={<LandingView />} exact />
+                  <Route path="/" element={preventAuth(<LandingView />)} exact />
                   
-                  <Route strict path="/signup" element={<SessionManagerView mode={Constants.SESSION_MODE_SIGNUP}/>} />
-                  <Route strict path="/login" element={<SessionManagerView mode={Constants.SESSION_MODE_LOGIN}/>} />
-                  <Route strict path="/logout" element={onlyAuth(<SessionManagerView mode={Constants.SESSION_MODE_LOGOUT}/>)} />
+                  <Route strict path="/signup" element={preventAuth(<SessionManagerView mode={Constants.SESSION_MODE_SIGNUP}/>)} />
+                  <Route strict path="/login" element={preventAuth(<SessionManagerView mode={Constants.SESSION_MODE_LOGIN}/>)} />
+                  <Route strict path="/logout" element={preventVisitor(<SessionManagerView mode={Constants.SESSION_MODE_LOGOUT}/>)} />
                   <Route strict path="/recover" element={<SessionManagerView mode={Constants.SESSION_MODE_RECOVER}/>} />
                   <Route strict path="/farewell" element={<SessionManagerView mode={Constants.SESSION_MODE_DELETED}/>} />
       
-                  <Route strict path="/settings" element={onlyAuth(<SettingsView />)} />
+                  <Route strict path="/settings" element={preventVisitor(<SettingsView />)} />
 
-                  <Route strict path="/dashboard" element={onlyAuth(<DashboardView />)} />
-                  <Route strict path="/workspace/:wid" element={onlyAuth(<WorkspaceView />)} />
-                  <Route strict path="/board/:bid" element={onlyAuth(<BoardView />)}/>
+                  <Route strict path="/dashboard" element={preventVisitor(<DashboardView />)} />
+                  <Route strict path="/workspace/:wid" element={preventVisitor(<WorkspaceView />)} />
+                  <Route strict path="/board/:bid" element={preventVisitor(<BoardView />)}/>
                   
                   <Route path="*" element={<Redirector url="/404" replace/>} />
               </Routes>
