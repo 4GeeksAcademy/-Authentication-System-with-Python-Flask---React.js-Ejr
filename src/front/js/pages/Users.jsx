@@ -1,16 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Table, FormControl, InputGroup } from "react-bootstrap";
 import styles from "./Users.module.css";
+import moment from "moment";
 
 const Users = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [search, setSearch] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
-  // useEffect(() => {
-  //   actions.getUsers();
-  // }, []);
+  const FormattedDate = ({ dateTime }) => {
+    return <span>{moment(dateTime).format('LL')}</span>;
+  };
+
+  useEffect(() => {
+    if (store.users) {
+      setFilteredUsers(store.users.filter(user =>
+        user.email.toLowerCase().includes(search.toLowerCase()) ||
+        user.name.toLowerCase().includes(search.toLowerCase()) ||
+        user.username.toLowerCase().includes(search.toLowerCase())
+      ));
+    }
+  }, [search, store.users]);
 
   const handleShowModal = (user) => {
     setSelectedUser(user);
@@ -25,8 +38,15 @@ const Users = () => {
   return (
     <div className={`${styles.container} container-fluid`}>
       <h3 className={`d-flex justify-content-center ${styles.title}`}>Users List</h3>
+      <InputGroup className={`mb-3 ${styles.searchInput}`}>
+        <FormControl
+          placeholder="Search by email, name, username"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </InputGroup>
       <div className="table-responsive">
-        <table className={`table table-dark table-striped-columns ${styles.table}`}>
+        <Table striped bordered hover responsive className={styles.table}>
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -41,7 +61,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {store.users.map((user, index) => (
+            {filteredUsers.map((user, index) => (
               <tr key={index} className={styles.tableRow}>
                 <th scope="row">{user.id}</th>
                 <td>{user.profile_image_url ? (
@@ -57,17 +77,17 @@ const Users = () => {
                 <td>{user.last_name}</td>
                 <td>{user.name}</td>
                 <td>{user.username}</td>
-                <td>{user.register_date}</td>
+                <td><FormattedDate dateTime={user.register_date} /></td>
                 <td>{user.role}</td>
                 <td>
-                  <Button variant="primary" onClick={() => handleShowModal(user)}>
+                  <Button variant="primary" onClick={() => handleShowModal(user)} className={styles.button}>
                     Learn more
                   </Button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
       <Modal show={showModal} onHide={handleCloseModal} centered>
@@ -94,9 +114,9 @@ const Users = () => {
                       <h5>User Role: {selectedUser.role}</h5>
                       <h5>User name: {selectedUser.username}</h5>
                       <h5>Email: {selectedUser.email}</h5>
-                      <h5>Register date: {selectedUser.register_date}</h5>
-                      <h5>Membership start date: {selectedUser.membership_start_date}</h5>
-                      <h5>Membership end date: {selectedUser.membership_end_date}</h5>
+                      <h5>Register date: <FormattedDate dateTime={selectedUser.register_date} /></h5>
+                      <h5>Membership start date: <FormattedDate dateTime={selectedUser.membership_start_date} /></h5>
+                      <h5>Membership end date: <FormattedDate dateTime={selectedUser.membership_end_date} /></h5>
                       <h5>Membership description: {selectedUser.membership_description}</h5>
                     </div>
                   </div>
@@ -106,7 +126,7 @@ const Users = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={handleCloseModal} className={styles.button}>
             Close
           </Button>
         </Modal.Footer>

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Offcanvas, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
+import { Offcanvas, Nav, Navbar, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import styles from './Navbar.module.css';  // Asegúrate de que el path es correcto
-
 
 import EditProfile from './EditProfile.jsx';
 import UserDataDetail from '../pages/UserDataDetail.jsx';
@@ -42,19 +41,19 @@ const NavigationBar = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/" className={styles.logonavbar}>Home</Nav.Link>
-                        <Nav.Link href="/plans" className={styles.logonavbar}>Plans</Nav.Link>
-                        <Nav.Link href="/Benefits" className={styles.logonavbar}>About</Nav.Link>
-                        <Nav.Link href="/Calendar" className={styles.logonavbar}>Calendar</Nav.Link>
+                        <Nav.Link as={Link} to="/" className={styles.navLink}>Home</Nav.Link>
+                        <Nav.Link as={Link} to="/plans" className={styles.navLink}>Plans</Nav.Link>
+                        <Nav.Link as={Link} to="/benefits" className={styles.navLink}>About</Nav.Link>
+                        <Nav.Link as={Link} to="/calendar" className={styles.navLink}>Calendar</Nav.Link>
                     </Nav>
                     {store.isAuthenticated && (
                         <>
                             <Button onClick={handleCloseSession} className={styles.logoutButton}>Cerrar sesión</Button>
-                            <Link to="/Userpage">
+                            <Link to="/userpage">
                                 <Button className={styles.ProfileButton}>Ir al perfil</Button>
                             </Link>
                             {store.uploadedUserData.role === 'master' && (
-                                <Link to="/ModulePage">
+                                <Link to="/modulepage">
                                     <Button className={styles.logoutButton}>Modulos</Button>
                                 </Link>
                             )}
@@ -72,7 +71,7 @@ const NavigationBar = () => {
                         </>
                     )}
                     {!store.isAuthenticated && (
-                        <Link to="/Login">
+                        <Link to="/login">
                             <Button className={styles.loginButton}>Login</Button>
                         </Link>
                     )}
@@ -81,7 +80,7 @@ const NavigationBar = () => {
 
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton className={styles.offcanvasHeader}>
-                <Offcanvas.Title>
+                    <Offcanvas.Title>
                         Bienvenido: {store.uploadedUserData.name}
                         {store.uploadedUserData.profile_image_url && (
                             <img

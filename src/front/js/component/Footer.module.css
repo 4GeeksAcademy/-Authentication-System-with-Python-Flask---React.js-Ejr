@@ -1,8 +1,7 @@
 .footer {
-    background-color: #D3D3D3;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    align-items: center;
-  }
-  
+  background-color: #3C403F; /* Ajustado a la paleta de colores */
+  color: #E6E6E9; /* Texto en color claro */
+  padding: 20px 0;
+  text-align: center;
+  align-items: center;
+}

@@ -1,5 +1,5 @@
 .editButton {
-    background-color: #7f7f7f; /* Gray */
+    background-color: #5D7266; /* Gray */
     color: white;
     border: none;
     padding: 5px;
@@ -16,7 +16,7 @@
 }
 
 .modalHeader {
-    background-color: #9a9a9a;
+    background-color: #A8A7A8;
 }
 
 .modalTitle {
@@ -24,11 +24,11 @@
 }
 
 .modalBody {
-    background-color: #bebebe;
+    background-color: #E6E6E9;
 }
 
 .modalFooter {
-    background-color: #9a9a9a;
+    background-color: #A8A7A8;
 }
 
 .closeButton, .saveButton {
@@ -44,7 +44,7 @@
 
 input:focus, input:valid {
     outline: none;
-    border: 1.5px solid #b8b8b8 !important; /* Añade !important para forzar la aplicación de esta regla */
+    border: 1.5px solid #B8B8B8 !important; /* Añade !important para forzar la aplicación de esta regla */
 }
 
 .modal-centered {
@@ -64,4 +64,3 @@ input:focus, input:valid {
     font-size: 1.2em;
     text-align: center;
 }
-

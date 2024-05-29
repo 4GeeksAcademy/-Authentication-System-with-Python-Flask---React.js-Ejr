@@ -11,7 +11,7 @@
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.2s;
-    background: adb5bd0f;
+    background: #adb5bd; /* Ajustado a la paleta de colores */
 }
 
 .card:hover {
@@ -26,7 +26,7 @@
 .title {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #333;
+    color: #3C403F; /* Ajustado a la paleta de colores */
 }
 
 .description {

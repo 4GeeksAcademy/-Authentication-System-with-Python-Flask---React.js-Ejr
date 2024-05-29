@@ -1,5 +1,5 @@
 .buttonBuy {
-    background-color: #4CAF50; /* Green */
+    background-color: #5D7266; /* Ajustado a la paleta de colores */
     color: white;
     border: none;
     padding: 5px;
@@ -12,52 +12,52 @@
 }
 
 .modalHeader {
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #E6E6E9; /* Ajustado a la paleta de colores */
+    color: #3C403F; /* Ajustado a la paleta de colores */
 }
 
 .modalBody {
-    background-color: #e9ecef;
-    color: #333;
+    background-color: #E6E6E9; /* Ajustado a la paleta de colores */
+    color: #3C403F; /* Ajustado a la paleta de colores */
 }
 
 .modalFooter {
-    background-color: #f4f4f4;
+    background-color: #E6E6E9; /* Ajustado a la paleta de colores */
 }
 
 .membershipItem {
     padding: 10px;
     margin: 5px 0;
     cursor: pointer;
-    background-color: #fff;
+    background-color: #FFF;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .membershipItem:hover {
-    background-color: #ddd;
+    background-color: #A8A7A8; /* Ajustado a la paleta de colores */
 }
 
 .alertResultSuccess {
     color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    background-color: #D4EDDA;
+    border-color: #C3E6CB;
 }
 
 .alertResultDanger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    color: #721C24;
+    background-color: #F8D7DA;
+    border-color: #F5C6CB;
 }
 
 .alertProcessing {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
+    color: #0C5460;
+    background-color: #D1ECF1;
+    border-color: #BEE5EB;
 }
 
 .closeButton {
-    background-color: #6c757d;
+    background-color: #3C403F; /* Ajustado a la paleta de colores */
     color: white;
 }
 

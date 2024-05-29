@@ -53,6 +53,8 @@ import  CancelPayment  from "./component/ExecutePayment.jsx";
 import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
 
+import ClassFrequencyChart from "./component/ClassFrequencyChart.jsx";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -104,11 +106,11 @@ const Layout = () => {
                         <Route element={<CancelPayment />} path="/paypal_payment/cancel" />
                         <Route element={<PasswordResetRequest />} path="/PasswordResetRequest" />
                         <Route element={<ResetPassword />} path="/ResetPassword" />
+                        <Route element={<ClassFrequencyChart />} path="/ClassFrequencyChart" />
 
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

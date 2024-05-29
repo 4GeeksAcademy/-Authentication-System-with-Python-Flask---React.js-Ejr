@@ -28,6 +28,7 @@ import UserCreator from "../component/UserCreator.jsx";
 import PRRecord from "../component/PRRecord.jsx";
 import AdminMembershipPurchase from "../component/AdminMembershipPurchase.jsx";
 import ResetPassword from "../component/ResetPassword.jsx";
+import ClassFrequencyChart from "../component/ClassFrequencyChart.jsx";
 
 
 
@@ -72,6 +73,7 @@ const ModulePage = () => {
         { component: <PRRecord />, name: "PRRecord " },
         { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
         { component: <ResetPassword />, name: "ResetPassword " },
+        { component: <ClassFrequencyChart />, name: "ClassFrequencyChart " },
 
 
     ];

@@ -3,68 +3,67 @@
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-}
-
-.securityQuestions {
-    background-color: #f3f4f6;
-    color: gray;
+  }
+  
+  .securityQuestions {
+    background-color: var(--color-light);
+    color: var(--color-grey);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 10px;
     width: calc(33% - 20px);
     cursor: pointer;
     text-align: center;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  @media (max-width: 768px) {
     .securityQuestions {
-        width: calc(50% - 20px);
+      width: calc(50% - 20px);
     }
-}
-
-@media (max-width: 480px) {
+  }
+  
+  @media (max-width: 480px) {
     .securityQuestions {
-        width: 100%;
+      width: 100%;
     }
-}
-
-.sliderContent {
+  }
+  
+  .sliderContent {
     padding: 20px;
     text-align: center;
-}
-
-.modalCustom{
+  }
+  
+  .modalCustom {
     z-index: 1050;
-}
-
-.modalCustom .modal-content {
-    background-color: #f3f4f6;
-    color: gray;
-}
-
-.modalHeader {
-    border-bottom: 1px solid #dee2e6; /* Utiliza los colores según tu diseño */
-}
-
-.modalTitle {
-    color: rgb(85, 83, 83); /* Ajusta según necesites */
-}
-
-.modalBody {
+  }
+  
+  .modalCustom .modal-content {
+    background-color: var(--color-light);
+    color: var(--color-grey);
+  }
+  
+  .modalHeader {
+    border-bottom: 1px solid var(--color-dark);
+  }
+  
+  .modalTitle {
+    color: var(--color-dark);
+  }
+  
+  .modalBody {
     padding: 20px;
-}
-
-.modalContent {
+  }
+  
+  .modalContent {
     position: relative;
     display: flex;
     flex-direction: column;
-    /* width: 100%; */
     pointer-events: auto;
-    background-color: #fff;
+    background-color: var(--color-light);
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, .2);
     border-radius: .3rem;
     outline: 0;
-}
-
+  }
+  

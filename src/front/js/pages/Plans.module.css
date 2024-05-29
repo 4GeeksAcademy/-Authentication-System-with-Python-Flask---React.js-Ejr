@@ -1,48 +1,47 @@
 .container {
-    /* padding: 20px;
-    margin-bottom: 50px; */
     background: rgba(123, 123, 123, 0.37);
     width: 100%;
-
-}
-
-
-h2.text-uppercase {
-    font-size: 2rem; /* Tamaño adaptable para móviles */
+  }
+  
+  h2.text-uppercase {
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
+    color: var(--color-dark);
   }
-
-.price-box {
-    margin-bottom: 20px; /* Asegura suficiente espacio entre cajas en pantallas pequeñas */
-    border: 1px solid #ccc; /* Opcional: añade un borde para definir mejor las cajas */
-    padding: 20px; /* Espacio interior para que el contenido no esté apretado */
-    background-color: #f8f8f8; /* Un fondo claro para destacar las cajas */
-}
-
-/* .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #53565b;
-} */
-
-.nav-item{
-    color:rgba(123, 123, 123, 0.264);
-}
-
-.price-header {
-    margin-bottom: 15px; /* Espacio entre el encabezado y el contenido de la caja */
-}
-
-.btn-rounded {
-    border-radius: 20px; /* Botones con bordes redondeados */
-}
-
-@media (max-width: 768px) {
+  
+  .price-box {
+    margin-bottom: 20px;
+    border: 1px solid var(--color-grey);
+    padding: 20px;
+    background-color: var(--color-light);
+  }
+  
+  .nav-item {
+    color: rgba(123, 123, 123, 0.264);
+  }
+  
+  .price-header {
+    margin-bottom: 15px;
+  }
+  
+  .btn-rounded {
+    border-radius: 20px;
+    background-color: var(--color-green);
+    color: var(--color-light);
+  }
+  
+  .btn-rounded:hover {
+    background-color: var(--color-brown);
+  }
+  
+  @media (max-width: 768px) {
     .price-box {
-        padding: 10px; /* Menos padding en móviles */
+      padding: 10px;
     }
-
+  
     h3.text-uppercase, .precio-home {
-        font-size: 2rem; /* Tamaño de fuente más pequeño para móviles */
+      font-size: 2rem;
     }
-}
+  }
+  

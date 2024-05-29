@@ -20,3 +20,12 @@ body {
     height: 100%;
     z-index: -1; /* Coloca el pseudo-elemento detrás del contenido del cuerpo */
   }
+
+  :root {
+    --color-light: #E6E6E9;
+    --color-grey: #A8A7A8;
+    --color-green: #5D7266;
+    --color-brown: #937863;
+    --color-dark: #3C403F;
+  }
+  
