@@ -211,9 +211,10 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
             remember: remember ? 1 : 0
           }
         })
-        const data= await res.json()
-        if([200,201].includes(res.status) && loginafter) setStore({userData: data.res})
-        return {status: res.status, msg: data.msg}
+        if([200,201].includes(res.status) && loginafter) {
+          setStore({userData: res.data})
+        }
+        return {status: res.status, msg: res.msg}
       },
 
       /** login into the account with given credentials */

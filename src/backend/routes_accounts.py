@@ -1,6 +1,6 @@
 from flask import request, Blueprint, Response
 from flask_cors import cross_origin
-from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from .models import db, User
 from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string, generate_passcode, get_passcode_string
 from .email import send_verification_email, send_recovery_email
@@ -172,9 +172,9 @@ def handle_accounts_delete(json):
 # optional: ?level=0 -- the minimum permission level to pass
 @accounts.route('/auth', methods=['GET'])
 @jwt_required(optional=True)
-@api_utils.endpoint_safe(data_type='json')
-def handle_accounts_auth(json):
-  auth_level= parse_int(json['level'] if 'level' in json else request.args.get('level', 0))
+@api_utils.endpoint_safe()
+def handle_accounts_auth():
+  auth_level= parse_int(request.args.get('level', 0))
   if auth_level == -1: return api_utils.response_400()
   error= api_utils.check_user_forbidden(auth_level) # check auth level
   if error: return error
