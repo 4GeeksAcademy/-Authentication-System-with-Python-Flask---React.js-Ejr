@@ -49,10 +49,12 @@ const NavigationBar = () => {
                     </Nav>
                     {store.isAuthenticated && (
                         <>
+
                             <Button onClick={handleCloseSession} className={styles.logoutButton}>
                                 Sign off</Button>
-                            <Link to="/">
+                            <Link to="/Userpage">
                                 <Button className={styles.ProfileButton}>Go to profile</Button>
+
                             </Link>
                             {store.uploadedUserData.role === 'master' && (
                                 <Link to="/ModulePage">

@@ -16,7 +16,7 @@ function ConfirmarEmail() { // Define el componente React para confirmar el emai
 
   useEffect(() => { // React hook que se ejecuta cuando el componente se monta o las dependencias cambian.
     if (token) { // Verifica si el token está presente.
-      fetch(`${process.env.BACKEND_URL}api/confirm/${token}`, { method: 'POST' }) // Realiza una solicitud POST para confirmar el email con el token.
+      fetch(`${process.env.BACKEND_URL}/api/confirm/${token}`, { method: 'POST' }) // Realiza una solicitud POST para confirmar el email con el token.
         .then(response => response.json()) // Transforma la respuesta en JSON.
         .then(data => { // Procesa los datos recibidos.
           if (data.confirm_email) { // Verifica si el email fue confirmado con éxito.

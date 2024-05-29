@@ -14,21 +14,26 @@ from api.admin import setup_admin  # Importar la función para configurar el pan
 from api.commands import setup_commands  # Importar la función para configurar comandos de Flask
 
 
-#------------------verificar con david --------------------------------
+#------------------carga de imagenes --------------------------------
 from werkzeug.utils import secure_filename # importacion de secure_filename para manejar imagen
 
 UPLOAD_FOLDER = '/path/to/the/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
-
+#------------------autenticacion --------------------------------
 
 # Importar JWTManager para manejar la autenticación JWT
 from flask_jwt_extended import JWTManager
 
+#------------------envio de email --------------------------------
 # Importar dangeus y flask_email para manejar el envio de email
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask_mail import Mail, Message
+
+#------------------importacion de paypal--------------------------------
+# Importar PayPal SDK
+import paypalrestsdk
 
 # Configurar el entorno de desarrollo o producción y el directorio para archivos estáticos
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"  # Configurar el entorno según la variable de entorno FLASK_DEBUG
@@ -65,10 +70,19 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 
-#------------------verificar con david --------------------------------
+#------------------para el manejo de la carga de imagenes--------------------------------
 app.config['UPLOAD_FOLDER'] = 'path/to/upload/directory'  # Asegúrate de que este directorio exista y tenga permisos adecuados
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB de tamaño máximo de archivo
 # ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+#------------------configuracion paypal--------------------------------
+# Configurar PayPal SDK
+paypalrestsdk.configure({
+  "mode": os.getenv("MODE_TYPE"),  # Cambia a "live" en producción
+  "client_id": os.getenv("PAYPAL_CLIENT_ID"),
+  "client_secret": os.getenv("PAYPAL_CLIENT_SECRET_PASSWORD")
+})
 
 
 # Configurar la base de datos
@@ -113,6 +127,17 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)  # Servir el archivo desde el directorio de archivos estáticos
     response.cache_control.max_age = 0  # Evitar el almacenamiento en caché del archivo
     return response  # Retornar la respuesta
+
+
+# @app.after_request
+# def set_csp(response):
+#     response.headers['Content-Security-Policy'] = (
+#         "default-src 'self'; "
+#         "img-src 'self' https://www.paypal.com data:; "
+#         "script-src 'self' https://www.paypal.com; "
+#         "connect-src 'self' https://www.paypal.com;"
+#     )
+#     return response
 
 # Este bloque se ejecuta solo si se ejecuta `$ python src/main.py`
 if __name__ == '__main__':

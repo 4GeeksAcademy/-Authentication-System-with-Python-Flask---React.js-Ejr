@@ -27,7 +27,8 @@ import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
 import PRRecord from "../component/PRRecord.jsx";
 import AdminMembershipPurchase from "../component/AdminMembershipPurchase.jsx";
-
+import ResetPassword from "../component/ResetPassword.jsx";
+import ClassesView from "../component/ClassesView.jsx";
 
 
 const ModulePage = () => {
@@ -70,6 +71,8 @@ const ModulePage = () => {
         { component: <Users />, name: "Users " },
         { component: <PRRecord />, name: "PRRecord " },
         { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
+        { component: <ResetPassword />, name: "ResetPassword " },
+        { component: <ClassesView />, name: "ClassesView " },
 
 
     ];

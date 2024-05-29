@@ -4,6 +4,7 @@ import styles from "./EditProfile.module.css"; // Importación de estilos CSS
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
+
 const EditProfile = () => {
     const { store, actions } = useContext(Context);
     const [formData, setFormData] = useState({

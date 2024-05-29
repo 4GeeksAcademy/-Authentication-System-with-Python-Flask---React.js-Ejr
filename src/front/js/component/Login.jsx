@@ -87,9 +87,11 @@ const Login = () => {
                     Password:
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>
+
                 <button type="submit" className={styles.submitButtonLogin}>Log in</button>
-                <Link to="/Master-private-registration">
+                <Link to="/PasswordResetRequest">
                     Forgot your password?</Link>
+
                 <div className="rememberMe">
                     <input type="checkbox" />
                     <span>

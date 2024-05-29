@@ -45,6 +45,15 @@ import PRRecord from "./component/PRRecord.jsx";
 import AdminMembershipPurchase from "./component/AdminMembershipPurchase.jsx";
 
 import PageNormalUser from "./pages/PageNormalUser.jsx";
+import ClassesView from "./component/ClassesView.jsx";
+import EditClasses from "./pages/EditClasses.jsx"
+
+import ExecutePayment from "./component/ExecutePayment.jsx";
+import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
+import  CancelPayment  from "./component/ExecutePayment.jsx";
+
+import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
+import ResetPassword from "./component/ResetPassword.jsx";
 
 //create your first component
 const Layout = () => {
@@ -80,6 +89,8 @@ const Layout = () => {
                         <Route element={<CreateClasses />} path="/CreateClasses" />
                         <Route element={<ModulePage />} path="/ModulePage" />
                         <Route element={<BookingView />} path="/BookingView" />
+                        <Route element={<ClassesView />} path="/ClassesView" />
+                        <Route element={<EditClasses />} path="/classEdit/:id" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<Oneuser />} path="/Oneuser" />
                         {/* <Route element={<Homeadmin />} path="/Homeadmin" /> */}
@@ -92,6 +103,12 @@ const Layout = () => {
                         <Route element={<PageNormalUser />} path="/Userpage" />
                         <Route element={<PRRecord />} path="/PRRecord" />
                         <Route element={<AdminMembershipPurchase />} path="/AdminMembershipPurchase" />
+                        <Route element={<ExecutePayment />} path="/paypal_payment/execute" />
+                        <Route element={<ExecutePaymentAdmin />} path="/paypal_payment/execute_admin" />
+                        <Route element={<CancelPayment />} path="/paypal_payment/cancel" />
+                        <Route element={<PasswordResetRequest />} path="/PasswordResetRequest" />
+                        <Route element={<ResetPassword />} path="/ResetPassword" />
+
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
