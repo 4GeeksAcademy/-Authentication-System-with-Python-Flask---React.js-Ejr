@@ -59,7 +59,7 @@ def new_user():
         xbox = sign_up_data.get('xbox')
         psn = sign_up_data.get('psn')
         steam = sign_up_data.get('steam')
-        google_play = sign_up_data.get('googlePlay')
+        discord = sign_up_data.get('discord')
         nintendo = sign_up_data.get('nintendo')
         epic_id = sign_up_data.get('epicId')
         bio = sign_up_data.get('bio')
@@ -95,7 +95,7 @@ def new_user():
             xbox = xbox,
             psn = psn,
             steam = steam,
-            google_play = google_play,
+            discord = discord,
             nintendo = nintendo,
             epic_id = epic_id,
             bio = bio,
@@ -157,7 +157,7 @@ def get_token():
                 'xbox': login_user.xbox,
                 'psn': login_user.psn,
                 'steam': login_user.steam,
-                'google_play': login_user.google_play,
+                'discord': login_user.discord,
                 'nintendo': login_user.nintendo,
                 'epic_id': login_user.epic_id,
                 'bio': login_user.bio,
