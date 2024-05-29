@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import Cropper from 'react-easy-crop';
+import getCroppedImg from './cropImage'; // Una función que escribiremos para obtener la imagen recortada
 import '../../styles/Modals.css'; // Importa los estilos
 
+
 const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignUpData, onComplete }) => {
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [imageSrc, setImageSrc] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
+
+
+
     const handleChange = (e) => {
         setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
     };
@@ -9,11 +21,33 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSignUpData({ ...signUpData, imageFile: file });
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageSrc(reader.result);
+            setIsCropping(true); // Cambiar a modo de recorte cuando se carga una imagen
+        };
     };
 
-    const handleSubmit = (e) => {
+    const handleComplete = async () => {
+        try {
+            const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
+            setCroppedImage(croppedImage);
+            setSignUpData({ ...signUpData, imageFile: croppedImage });
+            setIsCropping(false); // Salir del modo de recorte y ocultar el Cropper
+            setImageSrc(null); // Ocultar el Cropper
+        } catch (error) {
+            console.error('Error cropping image:', error);
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onComplete();
+        if (!croppedImage) {
+            await handleComplete(); // Obtener la imagen recortada si aún no se ha hecho
+        }
+        onComplete(); // Continuar con el flujo de completar el registro
     };
 
     return (
@@ -35,6 +69,21 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
                                     name="imageFile"
                                     onChange={handleFileChange}
                                 />
+                                {imageSrc && isCropping && (
+                                    <div>
+                                        <Cropper
+                                            image={imageSrc}
+                                            crop={crop}
+                                            zoom={zoom}
+                                            aspect={1}
+                                            onCropChange={setCrop}
+                                            onCropComplete={(_, croppedAreaPixels) => setCroppedAreaPixels(croppedAreaPixels)}
+                                            onZoomChange={setZoom}
+                                        />
+                                    </div>
+                                )}
+
+
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="username" className="form-label">Username</label>
@@ -76,7 +125,13 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={handlePrev}>Go Back</button>
+                        <button
+                            type="button"
+                            className={`btn ${isCropping ? 'btn-success' : 'btn-secondary'}`}
+                            onClick={isCropping ? handleComplete : handlePrev}
+                        >
+                            {isCropping ? 'Confirm Crop' : 'Go Back'}
+                        </button>
                     </div>
                 </div>
             </div>
