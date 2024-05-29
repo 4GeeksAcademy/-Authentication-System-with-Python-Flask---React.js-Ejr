@@ -100,13 +100,24 @@ const DevTools = () => {
   async function execute(i){
     switch(i){
       case 0: 
+        console.log("accounts:/signup")
         console.log( await actions.accounts_signup("userxx", "display xx", "feliznavidad@fakemail.com", "cojones44", false, true))
         break
       case 1: 
+        console.log("accounts:/login")
         console.log( await actions.accounts_login("userxx", "cojones44", true))
         break
       case 2: 
-        console.log( await actions.accounts_logout())
+        console.log("accounts:/login (admin account)")
+        console.log( await actions.accounts_login("admin", "pajoteslejanos", true))
+        break
+      case 3: 
+        console.log("accounts:/logout")
+        console.log( await actions.accounts_logout() )
+        break
+      case 4:
+        console.log("accounts:/user")
+        console.log( await actions.accounts_currentUser() )
         break
     }
    
@@ -164,10 +175,11 @@ const DevTools = () => {
                   <div className="h-1"></div>
                   <button className="devtools-btn w-32" onClick={()=>{execute(0)}}>signup</button>
                   <button className="devtools-btn w-32" onClick={()=>{execute(1)}}>login</button>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(2)}}>logout</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(2)}}>login admin</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(3)}}>logout</button>
                   <div className="h-1"></div>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(3)}}>get user</button>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(4)}}>delete</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(4)}}>get user</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(5)}}>delete</button>
                 </>
               }
               </div>
