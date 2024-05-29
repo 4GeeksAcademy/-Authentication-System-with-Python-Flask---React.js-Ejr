@@ -1,10 +1,17 @@
 .room-detail {
-    padding: 20px;
     background-color: #333C53;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    max-width: 1114px;
+    margin: 0 auto;
+    min-height: 752px;
+    font-family: 'Inter', sans-serif;
 }
-
+.back {
+    max-width: 1114px;
+    margin: auto;
+}
 .go-back {
     background: none;
     border: none;
@@ -16,15 +23,27 @@
 
 .room-header {
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    /* gap: 20px; */
 }
-
 .room-image {
-    width: 200px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 100%;
     height: auto;
-    border-radius: 8px;
+    padding: 0;
+    margin: 0;
+    max-height: 221.65px; /* Añadido: Establecer altura máxima */
+    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor */
+    object-position: top; /* Muestra la parte superior de la imagen */
 }
+.room-content {
+    flex-grow: 1; /* Permite que el contenido crezca y ocupe disponible, empujando las acciones hacia abajo */
+    margin-bottom: auto; /* Empuja todo lo que sigue hacia abajo */
 
+    overflow-y: auto; /* Permite desplazarse si el contenido es demasiado largo */
+    
+}
 .room-info {
     flex-grow: 1;
 }
@@ -39,13 +58,14 @@
 }
 
 .room-actions {
-    margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    align-items: center; /* Alinea los botones verticalmente en el centro si es necesario */
+    padding: 10px; /* Añade un poco de espacio alrededor de los botones */
 }
 
 .join-room {
-    background-color: #007bff;
+    background-color: #0096D2;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -56,4 +76,20 @@
 
 .join-room:hover {
     background-color: #0056b3;
+}
+
+.go-back, .join-room, .withdraw-request {
+    margin-left: 10px; /* Asegura un espaciado uniforme entre los botones */
+}
+
+.back-btn {
+    color: white;
+    border-color: #0096D2;
+}
+.back-btn:hover {
+    background-color: #0096D2;;
+}
+
+.room-detail-small {
+    height: 752px; /* Altura más pequeña para usuarios que no son participantes ni host */
 }
