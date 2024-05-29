@@ -66,3 +66,22 @@ def handle_workspaces_fetch(json):
   }
   
   return api_utils.response_200(result)
+
+# -------------------------------------- /new
+# create a workspace
+@workspaces.route('/new', methods=['POST'])
+@jwt_required()
+@api_utils.endpoint_safe( content_type="application/json", required_props= )
+def handle_workspaces_get(json):
+  
+  user, error= api_utils.get_user_by_identity()
+  if error: return error
+
+  last= db.session.get(Workspace, user.last_workspace_id)
+  result= {
+    "last": last.serialize() if last else None,
+    "owned": [v.serialize() for v in user.workspaces_owned_] if user.workspaces_owned_ else {},
+    "active": [v.serialize() for v in user.workspaces_] if user.workspaces_owned_ else {},
+  }
+  
+  return api_utils.response_200(result)

@@ -53,6 +53,7 @@
   },
   "default": {
     "first-workspace":  "Mi primer espacio",
+    "first-board":      "Mi primer tablero",
     "title-workspace":  "Espacio sin título",
     "title-project":    "Projecto sin título",
     "title-board":      "Tabla sin título",

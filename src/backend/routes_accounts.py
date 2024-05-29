@@ -1,7 +1,7 @@
 from flask import request, Blueprint, Response
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required
-from .models import db, User
+from .models import db, User, Workspace, Board
 from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string, generate_passcode, get_passcode_string
 from .email import send_verification_email, send_recovery_email
 from . import api_utils
@@ -25,9 +25,12 @@ def handle_accounts_healthcheck():
 # optional ?loginafter=1 -- 1 to login after creation
 # optional ?remember=0 -- 1 to login a long session (up to 30 days)
 @accounts.route('/signup', methods=['POST'])
-@api_utils.jwt_forbidden(400, "already logged in")
+@jwt_required(optional=True)
 @api_utils.endpoint_safe( content_type="application/json", required_props=("username", "displayname", "email", "password"))
 def handle_accounts_signup(json):
+
+  user, _= api_utils.get_user_with_check_access()
+  if user: return api_utils.response(401, "already logged in")
 
   login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 0))
 
@@ -42,6 +45,8 @@ def handle_accounts_signup(json):
   loginafter= parse_bool(json['loginafter'] if 'loginafter' in json else request.args.get("loginafter", 1))
   remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
 
+  millistamp= get_current_millistamp()
+
   # user doesnt exist, so we creating it
   user= User(
     username= json['username'],
@@ -50,17 +55,31 @@ def handle_accounts_signup(json):
     email= json['email'],
     avatar= DEFAULT_ICON['user'],
     permission= 1 if 'creamyfapxd2024' in json else 0,
-    millistamp= get_current_millistamp()
+    millistamp= millistamp
   )
-
-  request_verification_email(user)
   db.session.add(user)
+  db.session.flush()
 
-  workspace= workspace(
+  workspace= Workspace(
     title="$default.first-workspace",
-    thumbnail= DEFAULT_THUMBNAIL['workspace']
+    thumbnail= DEFAULT_THUMBNAIL['workspace'],
+    owner_id=user.id,
+    millistamp= millistamp
   )
-
+  db.session.add(workspace)
+  db.session.flush()
+  
+  board= Board(
+    title="$default.first-board",
+    icon= DEFAULT_ICON['board'],
+    thumbnail= DEFAULT_THUMBNAIL['board'],
+    owner_id= user.id,
+    workspace_id= workspace.id,
+    millistamp= millistamp
+  )
+  db.session.add(board)
+  
+  request_verification_email(user)
 
   # login after creation
   if loginafter: return perform_login(user, remember) # <- this already do .commit() too
@@ -72,9 +91,11 @@ def handle_accounts_signup(json):
 # opposite to logout 
 # optional ?remember=0 -- 1 to make session long (up to 30 days)
 @accounts.route('/login', methods=['POST'])
-@api_utils.jwt_forbidden(400, "already logged in")
+@jwt_required(optional=True)
 @api_utils.endpoint_safe( content_type="application/json", required_props=("account", "password"))
 def handle_accounts_login(json):
+  user, _= api_utils.get_user_with_check_access()
+  if user: return api_utils.response(401, "already logged in")
   user, error= api_utils.get_user_login(json['account'], json['password'])
   if error: return error
   remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
@@ -95,9 +116,8 @@ def handle_accounts_rotate():
 @accounts.route('/logout', methods=['GET'])
 @jwt_required()
 def handle_accounts_logout():
-  print("mipolla")
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
-  if user: return api_utils.response(401, "already logged in")
+  if error: return api_utils.response(401, "not logged in")
   user.refreshtoken= None # delete refresh token anyway
   db.session.commit()
   return perform_logout(user)
