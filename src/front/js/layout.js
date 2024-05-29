@@ -23,6 +23,7 @@ import Course from "./pages/Courses/Course.jsx";
 import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
 import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
+import { Trolley } from "./component/User/Trolley.jsx";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -91,7 +92,8 @@ const Layout = () => {
                             } 
                             path="/course/:id" 
                         />
-                        
+                        {/* Ruta para el componente Trolley */}
+                        <Route element={<Trolley />} path="/trolley" />
 
                         {/* Fallback Route */}
                         <Route element={<h1>Not found!</h1>} path="*" />

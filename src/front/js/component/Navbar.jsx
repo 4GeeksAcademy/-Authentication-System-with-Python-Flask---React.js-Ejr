@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 export const Navbar = () => {
-    const { store, actions } = useContext(Context)
-    const navigate = useNavigate()
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
 
     function handleHomeView() {
-        localStorage.removeItem('jwt-token')
-        navigate('/SignOut')
+        localStorage.removeItem('jwt-token');
+        navigate('/SignOut');
     }
 
-
-    const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
+    const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
 
     return (
         <div>
@@ -57,6 +56,11 @@ export const Navbar = () => {
                                             <Link to={`/${store.currentRole}View`}>
                                                 <button className='btn btn-outline-success m-1 mx-2' >Panel</button>
                                             </Link>
+                                            <Link to="/workspaces/Atlas_elearning/src/front/js/component/User/T/trolleyrolley.jsx">
+                                                <button className='btn btn-outline-success m-1'>
+                                                    <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49" }}></i>
+                                                </button>
+                                            </Link>
                                             <button className="btn btn-outline-danger m-1 mx-2" onClick={handleHomeView}>
                                                 Sign Out
                                             </button>
@@ -94,15 +98,16 @@ export const Navbar = () => {
                                             </Link>
                                         </div>
                                 }
-
-
-
-                                <button className='btn btn-outline-success m-1'><i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49" }}></i></button>
+                                <Link to="/trolley">
+                                    <button className='btn btn-outline-success m-1'>
+                                        <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49" }}></i>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </nav>
             }
-
         </div>
-    )
-}
+    );
+};
+
