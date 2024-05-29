@@ -1,7 +1,10 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import { Context } from "../../store/appContext.jsx"
 
 const WorkspaceCard= ({id, title, thumbnail})=>{
+  
+
   const 
     { language }= React.useContext(Context),
     nav= useNavigate()

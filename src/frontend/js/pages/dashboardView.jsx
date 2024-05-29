@@ -14,7 +14,15 @@ const DashboardView = () => {
 	const [boards, SetBoards] = useState([]);
 
 	
-	
+	const handleCreateNewWorkspace = async(e) =>{
+        e.preventDefault();
+		e.stopPropagation();
+
+		const triedToCreateNewWorkspace = {id:0, title:"newWorkspace", thumbnail:"https://i.pinimg.com/564x/dc/64/5b/dc645b7e040258898be8de9c930c589b.jpg"};
+		if (triedToCreateNewWorkspace) {
+			console.log("u are a whore")
+			SetWorkspaces(workspaces.concat(triedToCreateNewWorkspace))
+    }}
 
 	const handleCreateNewBoard = async(e) =>{
         e.preventDefault();
@@ -24,16 +32,6 @@ const DashboardView = () => {
 		if (triedToCreateNewBoard) {
 			console.log("u are a whore")
 			SetBoards(boards.concat(triedToCreateNewBoard))
-    }}
-
-	const handleCreateNewWorkspace = async(e) =>{
-        e.preventDefault();
-		e.stopPropagation();
-
-		const triedToCreateNewWorkspace = {id:0, title:"newWorkspace", thumbnail:"https://i.pinimg.com/564x/dc/64/5b/dc645b7e040258898be8de9c930c589b.jpg"};
-		if (triedToCreateNewWorkspace) {
-			console.log("u are a whore")
-			SetWorkspaces(workspaces.concat(triedToCreateNewWorkspace))
     }}
 
 	return (

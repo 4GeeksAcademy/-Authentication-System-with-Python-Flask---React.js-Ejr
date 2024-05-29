@@ -1,6 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import { Context } from "../../store/appContext"
+import { Context } from "../../store/appContext.jsx"
 
 const BoardCard= ({id, name, thumbnail})=>{
   const 
