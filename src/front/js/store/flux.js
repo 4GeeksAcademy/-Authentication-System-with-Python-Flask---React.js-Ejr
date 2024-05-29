@@ -796,7 +796,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			editMembership: async (membershipId, updatedMembershipData) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/api/memberships/${membershipId}`;
+
+				try {
+					const response = await fetch(url, {
+						method: "PUT",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(updatedMembershipData),
+					});
+
+					const data = await response.json();
+
+					if (response.ok) {
+						return { success: true, data };
+					} else {
+						return { success: false, error: data.error || "Ocurrió un error desconocido" };
+					}
+				} catch (error) {
+					throw new Error(`Error al editar la membresía: ${error.message}`);
+				}
+			},
+
 			
+		},
 	}
 
 };
