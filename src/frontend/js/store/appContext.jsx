@@ -21,7 +21,7 @@ const appContext = ReactComponent => {
         store: new_store,
         language: { ...state.language },
         actions: { ...state.actions },
-        timestamp: Date.now()
+        millistamp: Date.now()
       })
     }
 
@@ -30,7 +30,7 @@ const appContext = ReactComponent => {
         store: { ...state.store },
         language: { ...new_language, get:state.language.get },
         actions: { ...state.actions },
-        timestamp: Date.now()
+        millistamp: Date.now()
       })
     }
 
@@ -46,7 +46,9 @@ const appContext = ReactComponent => {
 
 		return (
 			<Context.Provider value={state}>
-				<ReactComponent {...props} />
+        { state.store.readyState.frontend &&
+				  <ReactComponent {...props} />
+        }
 			</Context.Provider>
 		)
 	}

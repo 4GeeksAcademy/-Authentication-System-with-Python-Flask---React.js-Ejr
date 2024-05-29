@@ -20,12 +20,18 @@ flask-admin = "*"
 typing-extensions = "*"
 colorama = "*"
 flask-jwt-extended = "*"
-fnv = "*"
+scrypt = "*"
+boto3 = "*"
+pillow = "*"
+webp = "*"
+fnvhash = "*"
+urllib3 = "*"
 
 [requires]
 python_version = "3.10.6"
 
 [scripts]
+test="python test.py"
 dev="python src/render_wsgi.py"
 start="flask run -p 3001 -h 0.0.0.0"
 init="flask db init"

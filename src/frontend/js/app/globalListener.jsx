@@ -1,5 +1,5 @@
 import React from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
 import Constants from "./constants.js"
 
@@ -13,14 +13,18 @@ import Constants from "./constants.js"
 const GlobalListener=()=>{
   const 
     { language, store, actions }= React.useContext(Context),
-    location= useLocation()
+    loc= useLocation(),
+    nav= useNavigate()
 
-  /** -------------------------------------------------------------------------- LANG/STATE EFFECTS */
+  // this effect is for testing anything, executed on page refresh
+  React.useEffect(()=>{
+  },[])
+
+  /** -------------------------------------------------- LANGUAGE UPDATER */
 
   React.useEffect(()=>{
-    actions.setStoreDirty(Constants.STORE_DIRTY.location)
-    setTimeout(refreshPageTitle, 25)
-  },[location])
+    refreshPageTitle()
+  },[store.activePage])
   
   React.useEffect(()=>{
     refreshPageTitle()
@@ -30,7 +34,7 @@ const GlobalListener=()=>{
     if(store.userPrefs.language !== undefined) actions.loadLanguage(store.userPrefs.language)
   },[store.userPrefs.language])
 
-  /** -------------------------------------------------------------------------- DARKMODE */
+  /** -------------------------------------------------- DARKMODE */
 
   // applies darkMode changes to actual page
   React.useEffect(()=>{
@@ -38,8 +42,9 @@ const GlobalListener=()=>{
     else document.body.removeAttribute("data-darkmode")
   },[store.readyState.frontend, store.userPrefs.darkMode])
 
-  /** -------------------------------------------------------------------------- HOVER BOX */
+  /** -------------------------------------------------- HOVER BOX */
 
+  /* 
   React.useEffect(()=>{
     window.addEventListener("mousemove", handleHoverBox)
     return ()=>{ window.removeEventListener("mousemove", handleHoverBox)}
@@ -53,8 +58,22 @@ const GlobalListener=()=>{
       }
     }
   }
+ */
 
-  /** -------------------------------------------------------------------------- TITLE UPDATER */
+  /** -------------------------------------------------------------------------- PAGE SHIT */
+
+  React.useEffect(()=>{
+
+    console.log("hi there")
+
+    // saves current page on store.activePage, can be tested against Constants.PAGE.***
+    const 
+      path= window.location.pathname.toLowerCase(),
+      page= Object.keys(Constants.PAGEURLS).find(e=> path.includes(Constants.PAGEURLS[e])),
+      idx= Constants.PAGE[page?? Constants.PAGE.login]
+
+    actions.setActivePage(idx)
+  },[loc, window.location.pathname])
   
   function refreshPageTitle(){ // from location effect
     const 
@@ -76,11 +95,7 @@ const GlobalListener=()=>{
   /** -------------------------------------------------------------------------- TODO: global redirect listener */
 
   /** -------------------------------------------------------------------------- TODO: global userState listener */
-  
 
-  /** -------------------------------------------------------------------------- SIDE EFFECTS */
-
-  React.useEffect(()=>{ if(store.dirty & Constants.STORE_DIRTY.location) actions.unsetStoreDirty(Constants.STORE_DIRTY.location) },[store.dirty])
 }
 
 export default GlobalListener

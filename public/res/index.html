@@ -1,0 +1,112 @@
+<html>
+  <head>
+    <link href="/admin/static/bootstrap/bootstrap3/swatch/%SWATCH%/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+  </head>
+  <style>
+* { box-sizing: border-box }
+:root { color: #eee }
+html { font-family: sans-serif }
+h2 { font-size: 2.75rem; margin-bottom: 0 }
+h3 { margin-inline: auto; width: max-content; padding-inline: 64px }
+h4 { font-weight: 700; font-size: 1.5rem; margin: 4px; color: #E4E480 }
+a { text-decoration: none; font-weight: 700 }
+section {
+  width: 100%;
+  padding: 12px;
+  background: #fff1;
+  text-align: center;
+  font-family: monospace;
+}
+.list { 
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%; 
+  min-height: calc(100% - 24px);
+  padding: 16px; 
+  background: #fff1; 
+  text-align: left; 
+  list-style-type: none;
+  border-radius: 10px;
+  border: 1px solid #0005;
+}
+
+.list li {
+  display: flex; 
+  padding: .2rem;
+  min-width: 50%;
+  color:#A6A6A6; 
+  font-weight: 700;
+  & > a { width: 100% }
+}
+
+*:has(> a:hover) { background: #fff1 }
+.arg { color:#22aaFF }
+.location {
+  text-align: center;
+  background: #fff2;
+  color: #fff;
+  border: 1px solid black;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 8px;
+  &:focus { outline: none; border: 1px solid #7f0 }
+  &::selection { background: #380; color: #7f0 }
+}
+.container { 
+  width: auto;
+  margin-inline: 15%; 
+  padding-bottom: 32px;
+  text-align: center;
+  padding-top: 16px;
+}
+.location { width: 80%; font-size: 1.5em; }
+.flex { display: flex; }
+.flex-a { display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; box-shadow: 0 0 16px #0004}
+.flex-b { display: flex; flex-direction: column; width: 100% }
+.list li { font-size: calc(6px + 0.42vw); }
+@media screen and (max-width:1200px) {
+  .location { width: 100%; font-size: 1.8vw}
+  .section.public, .section.private { width: 50% }
+  .list li { font-size: calc(4px + 0.85vw); }
+}
+@media screen and (max-width:768px) {
+  .location { width: 100%; font-size: 12px}
+  .section.public, .section.private { width: 100% }
+  .list li { font-size: 2.25vw; }
+}
+p:has(.admin) { margin-inline: 5%; padding: 8px }
+.admin { 
+  width: 100%;
+  color: #a3a3a3; 
+  font-size: 20px;
+  & span { color: #ffff00 }
+}
+.apilink-accounts { color: #e3de61; &::selection { background: #e3de61; color: #000 } }
+.apilink-workspaces { color: #f56a6a; &::selection { background: #f56a6a; color: #000 } }
+.apilink-boards { color: #67bbe5; &::selection { background: #67bbe5; color: #000 } }
+.apilink-objects { color: #d386e9; &::selection { background: #d386e9; color: #000 } }
+.apilink-api { color: #66e466; &::selection { background: #66e466; color: #000 } }
+.apilink-other { color: #a8a6b5; &::selection { background: #a8a6b5; color: #000 } }
+.method { display: inline-block; width: 4vw }
+.method-get, .method-head { color: #34eb7d; &::selection { background: #34eb7d; color: #000 } }
+.method-post { color: #e2bc32; &::selection { background: #e2bc32; color: #000 } }
+.method-put { color: #418ce8; &::selection { background: #418ce8; color: #000 } }
+.method-patch { color: #ae7ef2; &::selection { background: #ae7ef2; color: #000 } }
+.method-delete { color: #ED6250; &::selection { background: #ED6250; color: #000 } }
+.method-options { color: #DA57A0; &::selection { background: #DA57A0; color: #000 } }
+  </style>
+  <body>
+    <div class="container">
+      <script>document.write('<input class="location" type="text" value="'+window.location.href+'" />');</script>
+      %ADMIN_LINK%
+      <div class="flex-a">
+        <section class="flex-b public">
+          <h4>Endpoints</h4>
+          <div class="list">
+            %ENDPOINT_LINK%
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

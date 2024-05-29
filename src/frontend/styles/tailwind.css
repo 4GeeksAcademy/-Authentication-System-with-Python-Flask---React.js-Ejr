@@ -1910,6 +1910,7 @@ html{
 .hover\:text-accent-n:hover{
   --tw-text-opacity: 1;
   color: rgb(255 213 0 / var(--tw-text-opacity));
+  color: rgb(255 213 0 / var(--tw-text-opacity));
 }
 
 .hover\:text-black:hover{

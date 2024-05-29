@@ -9,7 +9,9 @@
     "project":    "Proyecto",
     "team":       "Equipo",
     "profile":    "Perfil",
-    "settings":   "Cuenta"
+    "settings":   "Cuenta",
+    "404":        "Mecachis!!!",
+    "creamyfap":  "Las pajas, eso es!"
   },
   "common": {
     "title":        "Título",
@@ -34,6 +36,13 @@
       "btn-additem": "Agregar item"
     }
   },
+  "contextmenu": {
+    "addlist":      "Agregar lista aquí",
+    "additem":      "Agregar item aquí",
+    "toorigin":     "Volver al origen",
+    "setorigin":    "Establecer origen",
+    "resetorigin":  "Reiniciar origen"
+  },
   "panel": {
     "boardsettings": {
       "title": "Opciones de Tabla"
@@ -51,5 +60,10 @@
   "placeholder": {
     "description":  "[escribe una descripción aquí...]",
     "label-task":   "[escribe aquí...]"
+  },
+  "404": {
+    "notfound": "Página No Encontrada",
+    "message":  "Oops! La página que buscas aparentemente no existe.",
+    "back":     "Volver"
   }
 }

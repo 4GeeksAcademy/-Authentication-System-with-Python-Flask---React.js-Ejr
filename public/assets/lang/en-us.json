@@ -9,7 +9,9 @@
     "project":    "Project",
     "team":       "Team",
     "profile":    "Profile",
-    "settings":   "Account"
+    "settings":   "Account",
+    "404":        "Whoopitiwhoops!",
+    "creamyfap":  "Fapping, that's it!"
   },
   "common": {
     "title":        "Title",
@@ -34,6 +36,13 @@
       "btn-additem": "Add item"
     }
   },
+  "contextmenu": {
+    "addlist":      "Add list here",
+    "additem":      "Add item here",
+    "toorigin":     "Go to origin",
+    "setorigin":    "Set origin",
+    "resetorigin":  "Reset origin"
+  },
   "panel": {
     "boardsettings": {
       "title": "Board Settings"
@@ -51,5 +60,10 @@
   "placeholder": {
     "description":  "[write a description here...]",
     "label-task":   "[enter a label...]"
+  },
+  "404": {
+    "notfound": "Page Not Found",
+    "message":  "Oops! The page you're looking for does not seem to exist.",
+    "back":     "Go Home"
   }
 }
