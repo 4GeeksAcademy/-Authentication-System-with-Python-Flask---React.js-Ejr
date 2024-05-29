@@ -657,7 +657,7 @@ def update_teacher(teacher_id):
 
 #-----------------------COURSES------------------------#
 @api.route('/create/courses', methods=['POST'])
-@jwt_required()
+
 def post_courses():
     try:
         title =  request.json.get('title')
@@ -701,7 +701,7 @@ def get_courses():
         return jsonify({"Error": "Error fetching courses", "errorFetching": str(err)}), 500
     
 
-@api.route('/viewManager/courses', methods=['PUT'])
+@api.route('/viewManager/courses/<int:course_id>', methods=['PUT'])
 def update_course():
     try:
         data = request.get_json()
