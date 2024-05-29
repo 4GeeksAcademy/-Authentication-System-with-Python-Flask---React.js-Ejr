@@ -1060,9 +1060,10 @@ def post_category():
         manager_id = data.get('managerId')
         teacher_id = data.get('teacherId')
 
-        if not all([title_category, sub_category, category_length, course_more_current, course_more_sold]):
-            return jsonify({"Error": "titleCategory, subCategory, categoryLength, courseMoreCurrent, and courseMoreSold are required"}), 400
+        if not title_category or not sub_category:
+            return jsonify({"Error": "titleCategory and subCategory are required"}), 400
         
+        current_date = datetime.now().strftime('%Y-%m-%d')
         new_category = Category(
             title_category=title_category,
             sub_category=sub_category,
@@ -1071,7 +1072,8 @@ def post_category():
             course_more_sold=course_more_sold,
             user_id=user_id,
             manager_id=manager_id,
-            teacher_id=teacher_id
+            teacher_id=teacher_id,
+            create_date=current_date
         )
 
         db.session.add(new_category)
@@ -1084,7 +1086,7 @@ def post_category():
         return jsonify({"Error": "An error occurred", "error_details": str(e)}), 500
 
 
-@api.route('/courses/categories', methods=['GET'])
+@api.route('/courses/categories')
 def get_categories():
     try:
 

@@ -154,6 +154,7 @@ class Category(db.Model):
     title_category = db.Column(db.String(250), nullable=False)
     sub_category = db.Column(db.String(250), nullable=False)
     category_length = db.Column(db.String(300), nullable=False)
+    create_date = db.Column(db.String(300), unique=False, nullable=True)
     course_more_current = db.Column(db.String(250), nullable=False)
     course_more_sold = db.Column(db.String(250), nullable=False)  
 
@@ -173,6 +174,7 @@ class Category(db.Model):
         return {
             "id": self.id,
             "titleCategory": self.title_category,
+            "subCategory": self.sub_category,
             "userId": self.user_id,
             "managerId": self.manager_id,
             "teacherId": self.teacher_id,

@@ -11,7 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       media: "",
       loading: false,
       mediaType: "",
-      courseFavorite: ""
+      courseFavorite: "",
+      category: ""
     },
     actions: {
       createUser: async (newUser, userRole) => {
@@ -134,6 +135,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getUser(userRole);
             await getActions().getCourse()
             await getActions().getTrolleyToOrder()
+            await getActions().getCategory()
 
           }
         } catch (err) {
@@ -324,7 +326,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ ...store, error: errorData.error });
 
             await getActions().getTrolleyToOrder()
-            
+
             throw new Error(
               errorData.error || "Error al añadir el curso al carrito"
             );
@@ -687,6 +689,75 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
 
           throw error;
+        }
+      },
+
+      createCategory: async (dataCategory) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        console.log(dataCategory)
+        try {
+          const url = process.env.BACKEND_URL + "/api/courses/categories";
+          const respAddCategory = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataCategory),
+          });
+
+          if (!respAddCategory.ok) {
+            const errorData = await respAddCategory.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+
+            await getActions().getTrolleyToOrder()
+            
+            throw new Error(
+              errorData.error || "Error al añadir la Category"
+            );
+          }
+
+          const dataAddCategory = await respAddCategory.json();
+          setStore({ ...store, msg: dataAddCategory.message});
+          console.log(dataAddCategory);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+      
+      getCategory: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const url = process.env.BACKEND_URL + "/api/courses/categories";
+          const respGetCategory = await fetch(url);
+
+          if (!respGetCategory.ok) {
+            const errorData = await respGetCategory.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error al Obtener la Category");
+          }
+
+          const dataGetCategory = await respGetCategory.json();
+          setStore({
+            ...store,
+            msg: dataGetCategory.message,
+            category: dataGetCategory.Category,
+          });
+          console.log(dataGetCategory);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
         }
       },
 
