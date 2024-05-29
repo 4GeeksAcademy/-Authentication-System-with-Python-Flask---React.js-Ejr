@@ -822,7 +822,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			
+			deleteMembership: async (membershipId) => {
+				const myToken = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/api/memberships/${membershipId}`;
+
+				try {
+					const response = await fetch(url, {
+						method: "DELETE",
+						headers: {
+							"Authorization": `Bearer ${myToken}`,
+						},
+					});
+
+					const data = await response.json();
+
+					if (response.ok) {
+						return { success: true, data };
+					} else {
+						return { success: false, error: data.error || "Ocurrió un error desconocido" };
+					}
+				} catch (error) {
+					throw new Error(`Error al eliminar la membresía: ${error.message}`);
+				}
+			},
+
 		},
 	}
 
