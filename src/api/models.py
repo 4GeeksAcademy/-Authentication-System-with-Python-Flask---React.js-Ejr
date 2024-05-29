@@ -16,7 +16,7 @@ class User(db.Model):
     xbox = db.Column(db.String)
     psn = db.Column(db.String)
     steam = db.Column(db.String)
-    google_play = db.Column(db.String)
+    discord = db.Column(db.String)
     nintendo = db.Column(db.String)
     epic_id = db.Column(db.String)
     bio = db.Column(db.String)
@@ -45,7 +45,7 @@ class User(db.Model):
             "xbox": self.xbox,
             "psn": self.psn,
             "steam": self.steam,
-            "google_play": self.google_play,
+            "discord": self.discord,
             "nintendo": self.nintendo,
             "epic_id": self.epic_id,
             "bio": self.bio,
