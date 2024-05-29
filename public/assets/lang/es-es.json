@@ -55,9 +55,7 @@
     "first-workspace":  "Mi primer espacio",
     "first-board":      "Mi primer tablero",
     "title-workspace":  "Espacio sin título",
-    "title-project":    "Projecto sin título",
-    "title-board":      "Tabla sin título",
-    "title-team":       "Equipo sin nombre"
+    "title-board":      "Tablero sin título"
   },
   "placeholder": {
     "description":  "[escribe una descripción aquí...]",

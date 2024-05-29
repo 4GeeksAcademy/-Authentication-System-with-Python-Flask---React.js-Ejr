@@ -100,6 +100,15 @@ def handle_accounts_login(json):
   remember= parse_bool(json['remember'] if 'remember' in json else request.args.get("remember", 0))
   return perform_login(user, remember)
 
+# -------------------------------------- /logout
+# opposite to login xd
+@accounts.route('/logout', methods=['GET'])
+@jwt_required()
+def handle_accounts_logout():
+  user, error= api_utils.get_user_with_check_access() # security auth check + get user
+  if error: return api_utils.response(401, "not logged in")
+  return perform_logout(user)
+
 # -------------------------------------- /rotate
 # manually triggers the token refresher
 # the strange name is so nobody randomly navigatest here to exploit token rotation
@@ -109,17 +118,6 @@ def handle_accounts_rotate():
   _, error= api_utils.get_user_with_check_access() # security auth check + get user
   if error: return error
   return api_utils.current_app.refresh_expiring_tokens(Response())
-
-# -------------------------------------- /logout
-# opposite to login xd
-@accounts.route('/logout', methods=['GET'])
-@jwt_required()
-def handle_accounts_logout():
-  user, error= api_utils.get_user_with_check_access() # security auth check + get user
-  if error: return api_utils.response(401, "not logged in")
-  user.refreshtoken= None # delete refresh token anyway
-  db.session.commit()
-  return perform_logout(user)
 
 # -------------------------------------- /user
 # get current user
@@ -237,7 +235,8 @@ def handle_accounts_verify_validate(json):
 def handle_accounts_verify_check():
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
   if error: return error
-  return api_utils.response_200({ "status":  user.vericode == 0 })
+  if user.vericode > 0 and user.vericode < 1000000: return api_utils.response(200, "0") 
+  return api_utils.response(200, "1") 
 
 # -------------------------------------- /recover
 # account recovery (request email)
@@ -272,8 +271,8 @@ def handle_accounts_recover_solve(json):
 # check username registered
 @accounts.route('/username/<name>', methods=['GET'], defaults={'name':'__name__'})
 def handle_accounts_username(name):
-  if db.session.query(User).filter(User.username== name).first(): return api_utils.response_plain(200, "1")
-  return api_utils.response_plain(204, "0")
+  if not db.session.query(User).filter(User.username== name).first(): return api_utils.response(200, "0")
+  return api_utils.response(200, "1")
 
 # -------------------------------------- /list
 # get users list
@@ -293,8 +292,10 @@ def handle_accounts_list():
 # the implementation is intentional, this has to be as fast as possible
 @accounts.route('/millistamp', methods=['GET'])
 def handle_boards_millistamp():
-  try: return User.get(parse_int(request.args.get("id"))).millistamp, 200
-  except: return -1, 200
+  millis= -1
+  try: millis= db.session.get(User, parse_int(request.args.get("id", -1))).millistamp
+  except: return api_utils.response_plain(200, str(millis))
+
 
 # -------------------------------------- /healthcheck
 # basic health check
@@ -312,6 +313,7 @@ def perform_login(user, remember):
 
 # helper logout function
 def perform_logout(user):
+  user.refreshtoken= None # delete refresh token anyway
   db.session.commit()
   return api_utils.remove_token_cookie() # dont need to send to user, auth cookies are set here on backend
 

@@ -54,10 +54,8 @@
   "default": {
     "first-workspace":  "My first workspace",
     "first-board":      "My first board",
-    "title-workspace":  "Untitled Workspace",
-    "title-project":    "Untitled Project",
-    "title-board":      "Untitled Board",
-    "title-team":       "Untitled Team"
+    "title-workspace":  "Untitled workspace",
+    "title-board":      "Untitled board"
   },
   "placeholder": {
     "description":  "[write a description here...]",

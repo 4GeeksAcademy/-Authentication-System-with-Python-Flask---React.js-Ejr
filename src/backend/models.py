@@ -124,14 +124,17 @@ class Workspace(db.Model):
   # users
   users_ = db.relationship("User", secondary=users_workspaces_association, back_populates='workspaces_')
 
-  def serialize(self):
+  def __get_owner(self, deep):
+    return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
+
+  def serialize(self, deep=False):
     return {
       "id": self.id,
       "title": self.title,
       "thumbnail": self.thumbnail,
       "settings": self.settings,
       "rwr_id": self.rwr_id,
-      "owner_id": self.owner_id,
+      "owner_id": self.__get_owner(deep),
       "archived": self.archived,
       "millistamp": self.millistamp
     }
@@ -174,7 +177,13 @@ class Board(db.Model):
   # users
   users_ = db.relationship("User", secondary=users_boards_association, back_populates='boards_')
 
-  def serialize(self):
+  def __get_owner(self, deep):
+    return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
+
+  def __get_workspace(self, deep):
+    return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
+
+  def serialize(self, deep=False):
     return {
       "id": self.id,
       "name": self.name,
@@ -183,7 +192,7 @@ class Board(db.Model):
       "thumbnail": self.thumbnail,
       "settings": self.settings,
       "rwr_id": self.rwr_id,
-      "owner_id": self.owner_id,
+      "owner_id": self.__get_owner(deep),
       "workspace_id": self.workspace_id,
       "archived": self.archived,
       "millistamp": self.millistamp

@@ -1,8 +1,10 @@
-from flask import request, jsonify, Blueprint
+from flask import request, Blueprint
 from flask_jwt_extended import jwt_required
 from .models import db, Board, List, Style, Tag
-from .utils import parse_int
+from .utils import parse_int, parse_bool
 from . import api_utils
+from .aws_utils import uploadFile, DEFAULT_THUMBNAIL
+from .utils import get_current_millistamp
 
 # ---------------------------------------------------------------------------- boards.keqqu.com/* ----------------------------------------------------------------------------
 
@@ -10,20 +12,23 @@ boards= Blueprint('boards', __name__, subdomain='boards')
 @boards.route('/', methods=['GET'])
 def handle_boards(): return "boards subdomain", 200
 
-# -------------------------------------- /healthcheck
-# basic health check
-@boards.route('/healthcheck', methods=['GET'])
-def handle_boards_healthcheck():
-    return "boards ok", 200
+# -------------------------------------- /user
+# get all boards available for the current user
+@boards.route('/user', methods=['GET'])
+@jwt_required()
+def handle_workspaces_user():
+  
+  user, error= api_utils.get_user_by_identity()
+  if error: return error
 
-# -------------------------------------- /millistamp
-# get millistamp
-# required ?id -- the boards id to get the millistamp from
-# the implementation is intentional, this has to be as fast as possible
-@boards.route('/millistamp', methods=['GET'])
-def handle_boards_millistamp():
-  try: return Board.get(parse_int(request.args.get("id", -1))).millistamp, 200
-  except: return -1, 200
+  last= db.session.get(Board, user.last_board_id)
+  result= {
+    "last": last.serialize() if last else None,
+    "owned": [v.serialize() for v in user.boards_owned_] if user.boards_owned_ else {},
+    "active": [v.serialize() for v in user.boards_] if user.boards_owned_ else {},
+  }
+  
+  return api_utils.response_200(result)
 
 # -------------------------------------- /get
 # get the actual objects from a list of ids
@@ -85,11 +90,38 @@ def handle_boards_pull(json):
 def handle_boards_push(json):
   result= {}
 
-  
-
   return api_utils.response_200(result)
 
-# ---------------------------------------------------------------------------- HELPERS
+# -------------------------------------- /list
+# get boards list
+@boards.route('/list', methods=['GET'])
+@jwt_required(optional=True)
+def handle_boards_list():
+  if api_utils.ENV == "prod":
+    error= api_utils.check_user_forbidden(1) # check if admin if we on production
+    if error: return error
+  boards= db.session.query(Board).all()
+  if not boards or len(boards)==0: return api_utils.response(204, "no boards")
+  return api_utils.response_200([v.serialize() for v in boards])
+
+# -------------------------------------- /millistamp
+# get millistamp
+# required ?id -- the boards id to get the millistamp from
+# the implementation is intentional, this has to be as fast as possible
+@boards.route('/millistamp', methods=['GET'])
+def handle_boards_millistamp():
+  millis= -1
+  try: millis= db.session.get(Board, parse_int(request.args.get("id", -1))).millistamp
+  except: return api_utils.response_plain(200, str(millis))
+
+
+# -------------------------------------- /healthcheck
+# basic health check
+@boards.route('/healthcheck', methods=['GET'])
+def handle_boards_healthcheck():
+    return "boards ok", 200
+
+# ---------------------------------------------------------------------------- HELPERS ----------------------------------------------------------------------------
 
 def get_board_by_id(string_id):
   bid= parse_int(string_id)
