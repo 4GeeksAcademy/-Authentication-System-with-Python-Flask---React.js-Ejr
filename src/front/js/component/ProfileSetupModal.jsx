@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/Modals.css'; // Importa los estilos
 
-const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignUpData }) => {
+const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignUpData, onComplete }) => {
     const handleChange = (e) => {
         setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
     };
@@ -11,20 +11,9 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
         setSignUpData({ ...signUpData, imageFile: file });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            let success = await actions.submitSignUpForm(signUpData);
-            if (success) {
-                navigate('/login');
-            } else {
-                setError('Failed to create user. Please try again.');
-            }
-        } catch (error) {
-            setError('An unexpected error occurred. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+        onComplete();
     };
 
     return (
@@ -36,7 +25,7 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
                         <button type="button" className="btn-close" onClick={handleClose}></button>
                     </div>
                     <div className="modal-body">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="imageFile" className="form-label">Upload Profile Picture</label>
                                 <input
@@ -48,24 +37,13 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
                                 />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="firstName" className="form-label">First Name</label>
+                                <label htmlFor="username" className="form-label">Username</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="firstName"
-                                    name="firstName"
-                                    value={signUpData.firstName}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="lastName" className="form-label">Last Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="lastName"
-                                    name="lastName"
-                                    value={signUpData.lastName}
+                                    id="username"
+                                    name="username"
+                                    value={signUpData.username}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -94,11 +72,11 @@ const ProfileSetupModal = ({ show, handleClose, handlePrev, signUpData, setSignU
                                     <option value="other">Other</option>
                                 </select>
                             </div>
+                            <button type="submit" className="btn btn-primary">Complete</button>
                         </form>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={handlePrev}>Go Back</button>
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Complete</button>
                     </div>
                 </div>
             </div>

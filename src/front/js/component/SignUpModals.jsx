@@ -43,6 +43,22 @@ const SignUpModals = ({ handleClose }) => {
         handleClose();
     };
 
+    const handleComplete = async () => {
+        try {
+            setLoading(true);
+            let success = await actions.submitSignUpForm(signUpData);
+            if (success) {
+                handleClose();
+            } else {
+                setError('Failed to create user. Please try again.');
+            }
+        } catch (error) {
+            setError('An unexpected error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             {currentModal === 1 && (
@@ -70,6 +86,7 @@ const SignUpModals = ({ handleClose }) => {
                     handlePrev={handlePrev}
                     signUpData={signUpData}
                     setSignUpData={setSignUpData}
+                    onComplete={handleComplete}
                 />
             )}
         </>

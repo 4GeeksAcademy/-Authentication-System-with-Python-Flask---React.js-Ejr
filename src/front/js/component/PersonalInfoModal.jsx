@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/Modals.css'; // Importa los estilos
+import '../../styles/Modals.css';
 
 const PersonalInfoModal = ({ show, handleClose, handleNext, onInputChange, signUpData }) => {
     const [birthDate, setBirthDate] = useState('');
@@ -21,7 +21,17 @@ const PersonalInfoModal = ({ show, handleClose, handleNext, onInputChange, signU
             onInputChange('age', age); // Set the calculated age in the signUpData
         }
     };
- 
+
+    const calculateAge = (birthdate) => {
+        const today = new Date();
+        const birthDate = new Date(birthdate);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    };
 
     return (
         <div className={`modal ${show ? 'show' : ''}`} style={{ display: show ? 'block' : 'none' }} tabIndex="-1">
@@ -34,13 +44,25 @@ const PersonalInfoModal = ({ show, handleClose, handleNext, onInputChange, signU
                     <div className="modal-body">
                         <form>
                             <div className="mb-3">
-                                <label htmlFor="username" className="form-label">Name</label>
+                                <label htmlFor="first-name" className="form-labe l">First Name</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="username"
-                                    name="username"
-                                    value={signUpData.username}
+                                    id="first-name"
+                                    name="firstName"
+                                    value={signUpData.firstName}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="last-name" className="form-labe l">Last Name</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="last-name"
+                                    name="lastName"
+                                    value={signUpData.lastName}
                                     onChange={handleChange}
                                     required
                                 />
@@ -70,16 +92,17 @@ const PersonalInfoModal = ({ show, handleClose, handleNext, onInputChange, signU
                                 />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="age" className="form-label">Date of Birth</label>
+                                <label htmlFor="birthdate" className="form-label">Date of Birth</label>
                                 <input
                                     type="date"
                                     className="form-control"
-                                    id="age"
-                                    name="age"
-                                    value={signUpData.age}
-                                    onChange={handleChange}
+                                    id="birthdate"
+                                    name="birthdate"
+                                    value={birthDate}
+                                    onChange={handleDateChange}
                                     required
                                 />
+                                {error && <div className="text-danger">{error}</div>}
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="region" className="form-label">Region</label>
@@ -94,7 +117,7 @@ const PersonalInfoModal = ({ show, handleClose, handleNext, onInputChange, signU
                                 />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="languages" className="form-label">Language</label>
+                                <label htmlFor="languages" className="form-label">Main Language</label>
                                 <select
                                     className="form-select"
                                     id="languages"
@@ -104,9 +127,14 @@ const PersonalInfoModal = ({ show, handleClose, handleNext, onInputChange, signU
                                     required
                                 >
                                     <option value="">Select</option>
-                                    <option value="english">English</option>
-                                    <option value="spanish">Spanish</option>
-                                    <option value="french">French</option>
+                                    <option value="English">English</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="French">French</option>
+                                    <option value="German">German</option>
+                                    <option value="Portuguese">Portuguese</option>
+                                    <option value="Italian">Italian</option>
+                                    <option value="Russian">Russian</option>
+                                    <option value="Chinese">Chinese</option>
                                 </select>
                             </div>
                         </form>
