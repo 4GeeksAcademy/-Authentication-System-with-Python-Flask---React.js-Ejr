@@ -1,29 +1,29 @@
-  
-    
-    .marco {
-    border-radius: 30px;
-    background: black;
-    padding: 30px;
-    border: 5px solid white;
-      min-height: 100vh;
+.cuerpo {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 300%;
   font-family: calibri;
   color: white;
-  background: linear-gradient(skyblue,white);
-  }
-  
-  .botones-contenedor {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .btn {
-    cursor: pointer;
-    display: inline-block;
-    font-size: 60%;
-    padding: 20px;
-  }
-  
+  background: linear-gradient(skyblue, white);
+}
+
+.marco {
+  border-radius: 30px;
+  background: black;
+  padding: 30px;
+  border: 5px solid white;
+}
+
+.botones-contenedor {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 60%;
+  padding: 20px;
+}

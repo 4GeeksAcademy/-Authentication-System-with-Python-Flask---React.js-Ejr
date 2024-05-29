@@ -66,18 +66,20 @@ const TabataTimer = () => {
   };
 
   return (
-    <div className="marco table-responsive text-center">
-      <h1>Tabata Timer</h1>
-      <div>
-        <span>{isWork ? 'Trabajo' : 'Descanso'}: {formatTime(time)}</span>
-      </div>
-      <div>
-        <span>Ronda: {round} / 8</span>
-      </div>
-      <div className="botones-contenedor">
-        <button className="btn" onClick={handleStart}>Iniciar</button>
-        <button className="btn" onClick={handleStop}>Detener</button>
-        <button className="btn" onClick={handleReset}>Reiniciar</button>
+    <div className="cuerpo">
+      <div className="marco text-center">
+        <h1>Tabata Timer</h1>
+        <div>
+          <span>{isWork ? 'Entrenamiento' : 'Descanso'}: {formatTime(time)}</span>
+        </div>
+        <div>
+          <span>Ronda: {round} / 8</span>
+        </div>
+        <div className="botones-contenedor">
+          <button className="btn" onClick={handleStart}>Iniciar</button>
+          <button className="btn" onClick={handleStop}>Detener</button>
+          <button className="btn" onClick={handleReset}>Reiniciar</button>
+        </div>
       </div>
     </div>
   );
