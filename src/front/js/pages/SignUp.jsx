@@ -22,7 +22,7 @@ export const SignUp = () => {
         xbox: '',
         psn: '',
         steam: '',
-        googlePlay: '',
+        discord: '',
         nintendo: '',
         epicId: '',
         bio: '',
@@ -337,6 +337,18 @@ export const SignUp = () => {
                             onChange={handleInputChange}
                         />
                         {errors.psn && <div className="invalid-feedback">{errors.psn}</div>}
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="discord" className="form-label">Discord:</label>
+                        <input
+                            type="text"
+                            className={`form-control ${errors.discord ? 'is-invalid' : ''}`}
+                            id="discord"
+                            name="discord"
+                            value={signUpData.discord}
+                            onChange={handleInputChange}
+                        />
+                        {errors.discord && <div className="invalid-feedback">{errors.discord}</div>}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="steam" className="form-label">Steam:</label>
