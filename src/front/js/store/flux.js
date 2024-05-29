@@ -768,14 +768,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			createMembership: async (membershipData) => {
-				// Obtenemos el token del almacenamiento local
 				const myToken = localStorage.getItem("token");
 
-				// Construimos la URL para la solicitud
 				const url = `${process.env.BACKEND_URL}/api/memberships`;
 
 				try {
-					// Realizamos la solicitud POST a la API
 					const response = await fetch(url, {
 						method: "POST",
 						headers: {
@@ -787,23 +784,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					const data = await response.json(); // Obtenemos la respuesta en formato JSON
 
-					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
 					if (response.ok) {
-						// Puedes actualizar el store aquí si es necesario
 						let store = getStore();
 						setStore({ ...store, createdMembership: data });
 						return { success: true, data }; // Retornamos la respuesta exitosa
 					} else {
-						// En caso de error, retornamos un objeto con la información del error
 						return { success: false, error: data.error || "Ocurrió un error desconocido" };
 					}
 				} catch (error) {
-					// Manejamos cualquier error que ocurra durante el proceso de creación de la membresía
 					throw new Error(`Error al crear la membresía: ${error.message}`);
 				}
 			},
 
-		},
+			
 	}
 
 };
