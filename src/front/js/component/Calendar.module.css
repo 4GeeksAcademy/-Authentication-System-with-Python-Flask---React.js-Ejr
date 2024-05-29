@@ -5,7 +5,7 @@
 }
 
 .container h2 {
-  color: #adb5bd;
+  color: #3C403F;
 }
 
 .inputGroup {
@@ -15,12 +15,12 @@
 }
 
 .input {
-  border: solid 1.5px #9e9e9e;
+  border: solid 1.5px #A8A7A8;
   border-radius: 1rem;
   background: none;
   padding: 1rem;
   font-size: 1rem;
-  color: #f5f5f5;
+  color: #3C403F;
   width: 100%;
   box-sizing: border-box;
 }
@@ -28,7 +28,7 @@
 .userLabel {
   position: absolute;
   left: 15px;
-  color: #e8e8e8;
+  color: #A8A7A8;
   transform: translateY(1rem);
 }
 
@@ -50,7 +50,7 @@
   width: 40%; /* Ancho del modal como porcentaje del ancho de la ventana */
   max-height: 80vh; /* Altura máxima del modal */
   overflow-y: auto; /* Permite scroll si el contenido es muy largo */
-  background-color: #fff;
+  background-color: #FFF;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -62,12 +62,12 @@
 }
 
 .modal h2, .modal p {
-  color: #333; /* Color oscuro para mejor legibilidad */
+  color: #3C403F; /* Color oscuro para mejor legibilidad */
 }
 
 .loginButton {
-  background-color: rgb(246, 246, 246);
-  color: #5a5a5a;
+  background-color: #E6E6E9;
+  color: #5A5A5A;
   border: none;
   border-radius: 5px;
   padding: 6px 15px;
@@ -75,5 +75,5 @@
 }
 
 .loginButton:hover {
-  background-color: #0f0e0f;
+  background-color: #937863;
 }

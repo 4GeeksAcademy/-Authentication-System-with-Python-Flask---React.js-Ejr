@@ -2,8 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* min-height: 100vh; */
-    background-color: #f0f2f5;
+    background-color: #F0F2F5;
     padding: 10px;
 }
 
@@ -17,20 +16,20 @@
 }
 
 .uploadlabel {
-    color: #6c6c6c;
+    color: #6C6C6C;
     font: 12px;
 }
 
 .heading {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #333;
+    color: #3C403F;
 }
 
 .uploadButton {
     width: 100%;
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color: #5D7266; /* Ajustado a la paleta de colores */
     border: none;
     border-radius: 4px;
     color: white;
@@ -41,11 +40,11 @@
 }
 
 .uploadButton:hover {
-    background-color: #0056b3;
+    background-color: #3C403F; /* Ajustado a la paleta de colores */
 }
 
 .message {
     margin-top: 15px;
     font-size: 14px;
-    color: #333;
+    color: #3C403F;
 }

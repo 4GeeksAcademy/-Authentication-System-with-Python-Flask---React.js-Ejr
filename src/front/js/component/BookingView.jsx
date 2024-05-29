@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Table, Form, InputGroup, FormControl } from 'react-bootstrap';
 import styles from './BookingView.module.css';
+import moment from "moment";
+
 
 const BookingView = () => {
     const { actions, store } = useContext(Context);
@@ -11,6 +13,11 @@ const BookingView = () => {
     // useEffect(() => {
     //     actions.getAllBookings();
     // }, []);
+
+    const FormattedDate = ({ dateTime }) => {
+        return <span>{moment(dateTime).format('LL')}</span>;
+        };
+
 
     useEffect(() => {
         if (store.bookingData) {
@@ -49,7 +56,7 @@ const BookingView = () => {
                 <tbody>
                     {filteredBookings.map((item) => (
                         <tr key={item.booking_id}>
-                            <td>{item.booking_date}</td>
+                            <td><FormattedDate dateTime={item.booking_date}/></td>
                             <td>{item.booking_id}</td>
                             <td>{item.booking_status}</td>
                             <td>{item.class_id}</td>
@@ -57,7 +64,7 @@ const BookingView = () => {
                             <td>{item.booking_user_name}</td>
                             <td>{item.class_name}</td>
                             <td>{item.class_start_time}</td>
-                            <td>{item.dateTime_class}</td>
+                            <td><FormattedDate dateTime={item.dateTime_class}/></td>
                         </tr>
                     ))}
                 </tbody>

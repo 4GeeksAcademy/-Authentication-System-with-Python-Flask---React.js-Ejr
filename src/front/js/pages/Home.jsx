@@ -6,6 +6,7 @@ import styles from "./Home.module.css"; // Importación de estilos CSS
 
 import Benefits from './Benefits.jsx';
 import Plans from './Plans.jsx';
+import Footer from "../component/Footer.jsx";
 
 
 
@@ -18,6 +19,7 @@ const Home = () => {
       <div className={styles.content}>
         <Benefits/>
         <Plans/>
+        <Footer />
       </div>
     </div>
   );

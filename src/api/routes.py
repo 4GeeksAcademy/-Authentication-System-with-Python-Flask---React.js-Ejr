@@ -16,6 +16,8 @@ from flask import send_file
 from io import BytesIO
 import base64
 import paypalrestsdk
+from sqlalchemy import func, create_engine
+from datetime import datetime
 
 
 
@@ -1722,3 +1724,66 @@ def execute_paypal_payment_admin():
     except Exception as e:
         print(f"Error in execute_paypal_payment: {e}")  # Imprime el error para depuración
         return jsonify({'error': str(e)}), 500  # Devuelve un error 500 en caso de excepción
+
+
+#-------------------------------------------------ENPOINT PARA GRAFICO FRECUENCIA DE CLASES------------------------------------------------------------------------------------
+
+# Endpoint para frecuencia de reservaciones por horario de clase
+@api.route('/class-reservation-frequency', methods=['GET'])
+def get_class_reservation_frequency():
+    try:
+        filter_by = request.args.get('filter_by', 'all')  # Obtiene el parámetro 'filter_by' de la solicitud, con valor por defecto 'all'
+        reservation_type = request.args.get('reservation_type', 'all')  # Obtiene el parámetro 'reservation_type' de la solicitud, con valor por defecto 'all'
+
+        # Define la consulta inicial para obtener la hora de la clase y la frecuencia de reservas
+        query = db.session.query(
+            func.date_part('hour', Training_classes.dateTime_class).label('class_hour'),
+            db.func.count(Booking.id).label('frequency')
+        ).join(Booking)
+
+        # Aplica el filtro por tipo de reserva si no es 'all'
+        if reservation_type != 'all':
+            query = query.filter(Booking.status == reservation_type)
+
+        # Agrupa los resultados según el filtro seleccionado
+        if filter_by == 'date':
+            query = query.group_by(
+                func.date(Training_classes.dateTime_class),
+                Training_classes.dateTime_class
+            ).order_by(func.date(Training_classes.dateTime_class))
+        elif filter_by == 'time':
+            query = query.group_by(
+                func.date_part('hour', Training_classes.dateTime_class)
+            ).order_by(func.date_part('hour', Training_classes.dateTime_class))
+        else:
+            query = query.group_by(
+                Training_classes.dateTime_class
+            ).order_by(Training_classes.dateTime_class)
+
+        result = query.all()  # Ejecuta la consulta y obtiene todos los resultados
+
+        data = []
+        for r in result:
+            data.append({
+                'class_hour': int(r.class_hour),  # Convierte a int para horas específicas
+                'frequency': r.frequency  # Frecuencia de reservas
+            })
+
+        return jsonify(data), 200  # Devuelve los datos en formato JSON con código de estado 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500  # Devuelve un mensaje de error en caso de excepción con código de estado 500
+
+
+    
+    
+# # Endpoint para registros de PR de un usuario
+# @api.route('/pr_records/user/<int:user_id>', methods=['GET'])
+# def get_user_pr_records(user_id):
+#     try:
+#         records = PRRecord.query.filter_by(user_id=user_id).all()
+#         data = [record.serialize() for record in records]
+#         return jsonify(data), 200
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+

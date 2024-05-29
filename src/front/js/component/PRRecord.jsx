@@ -4,7 +4,7 @@ import { Form, Button, Table, Modal } from 'react-bootstrap'; // Importar compon
 import styles from "./PRRecord.module.css"; // Importar los estilos del componente
 import moment from 'moment'; // Importar la librería moment para el manejo de fechas
 
-const PRRecord = () => { 
+const PRRecord = () => {
     const { store } = useContext(Context); // Obtener el estado global de la aplicación
     const { uploadedUserData } = store; // Extraer los datos de usuario del estado global
 
@@ -348,35 +348,51 @@ const PRRecord = () => {
                 </Button>
             </Form>
 
-            <Table striped bordered hover className={styles.prRecordTable}>
-                <thead>
-                    <tr>
-                        <th>Movement</th>
-                        <th>Value</th>
-                        <th>Time (min)</th>
-                        <th>Weight (kg)</th>
-                        <th>Weight (lb)</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {userRecords.map(record => (
-                        <tr key={record.id}>
-                            <td>{movements.find(m => m.id === record.movement_id)?.name || "N/A"}</td>
-                            <td>{record.value}</td>
-                            <td>{record.time}</td>
-                            <td>{record.kg}</td>
-                            <td>{record.lb}</td>
-                            <td><FormattedDate dateTime={record.date} /></td>
-                            <td>
-                                <Button variant="warning" onClick={() => handleEdit(record)} className={styles.actionButtonEdit}>Edit</Button>
-                                <Button variant="danger" onClick={() => handleDeleteClick(record.movement_id)} className={styles.actionButtonDelete}>Delete</Button>
-                            </td>
+            <div className={styles.tableContainer}>
+                <Table striped bordered hover className={styles.prRecordTable}>
+                    <thead>
+                        <tr>
+                            <th>Movement</th>
+                            <th>Value</th>
+                            <th>Time (min)</th>
+                            <th>Weight (kg)</th>
+                            <th>Weight (lb)</th>
+                            <th>Date</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {userRecords.map(record => (
+                            <tr key={record.id}>
+                                <td>{movements.find(m => m.id === record.movement_id)?.name || "N/A"}</td>
+                                <td>{record.value}</td>
+                                <td>{record.time}</td>
+                                <td>{record.kg}</td>
+                                <td>{record.lb}</td>
+                                <td><FormattedDate dateTime={record.date} /></td>
+                                <td>
+                                    <Button
+                                        variant="warning"
+                                        onClick={() => handleEdit(record)}
+                                        className={styles.actionButtonEdit}
+                                        title="Edit"
+                                    >
+                                        Update
+                                    </Button>
+                                    <Button
+                                        variant="danger"
+                                        onClick={() => handleDeleteClick(record.movement_id)}
+                                        className={styles.actionButtonDelete}
+                                        title="Delete"
+                                    >
+                                        Delete
+                                    </Button>                               
+                                     </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <div className={styles.modalcontent}>
@@ -400,7 +416,7 @@ const PRRecord = () => {
 
             <Modal show={showDeleteModal} onHide={cancelDelete} centered>
                 <div className={styles.modalcontent}>
-                    <Modal.Header >
+                    <Modal.Header>
                         <Modal.Title>Confirm Deletion</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
