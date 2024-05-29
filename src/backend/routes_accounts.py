@@ -91,6 +91,7 @@ def handle_accounts_rotate():
 @accounts.route('/logout', methods=['GET'])
 @jwt_required()
 def handle_accounts_logout():
+  print("mipolla")
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
   if error: return error
   user.refreshtoken= None # delete refresh token anyway

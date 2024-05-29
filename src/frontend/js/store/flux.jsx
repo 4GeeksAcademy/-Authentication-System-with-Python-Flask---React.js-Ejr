@@ -238,9 +238,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|accounts:/logout"
         })
-        if(res.status==200) {
-          if(res.data) setStore({userData: res.data})
-        }
+        if(res.status==200) setStore({userData: null})
         return {status: res.status, msg: res.msg}
       },
 
