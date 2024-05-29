@@ -61,24 +61,27 @@ export function PaypalPayment() {
   }
 
   return (
-    <div className="App">
-      <h1>Total: ${totalPrice.toFixed(2)}</h1>
-      <PayPalScriptProvider options={initialOptions}>
-        <PayPalButtons
-          forceReRender={[totalPrice]}
-          style={{
-            shape: "pill",
-            layout: "vertical",
-            color: "silver",
-            label: "paypal",
-          }}
-          createOrder={createOrder}
-          onApprove={onApprove}
-          onError={onError}
-        />
-      </PayPalScriptProvider>
-      <Message content={message} />
+    <div className="container mt-5">
+      <div className="card shadow-sm p-4">
+        <h1 className="mb-4">Total: ${totalPrice.toFixed(2)}</h1>
+        <PayPalScriptProvider options={initialOptions}>
+          <PayPalButtons
+            forceReRender={[totalPrice]}
+            style={{
+              shape: "pill",
+              layout: "vertical",
+              color: "silver",
+              label: "paypal",
+            }}
+            createOrder={createOrder}
+            onApprove={onApprove}
+            onError={onError}
+          />
+        </PayPalScriptProvider>
+        <Message content={message} />
+      </div>
     </div>
   );
 }
+
 

@@ -66,29 +66,36 @@ export const Trolley = () => {
   return (
     <div>
       <UserNavbar />
-      <h2>Shopping Cart</h2>
-      <div className="row">
-        {trolleyItems.map(item => (
-          <div key={item.id} className="col-md-4">
-            <CourseCard
-              id={item.id}
-              img={item.img}
-              title={item.title}
-              description={item.description}
-              price={item.price}
-            />
-            <button className="btn btn-danger" onClick={() => removeFromTrolley(item.id)}>Remove</button>
-          </div>
-        ))}
+      <div className="container mt-5">
+        <h2 className="mb-4">Shopping Cart</h2>
+        <div className="row">
+          {trolleyItems.map(item => (
+            <div key={item.id} className="col-md-4 mb-4">
+              <div className="card shadow-sm">
+                <CourseCard
+                  id={item.id}
+                  img={item.img}
+                  title={item.title}
+                  description={item.description}
+                  price={item.price}
+                />
+                <div className="card-body">
+                  <button className="btn btn-danger btn-block" onClick={() => removeFromTrolley(item.id)}>Remove</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="card shadow-sm p-3">
+          <h3>Total: ${calculateTotalPrice()}</h3>
+          <button className="btn btn-success btn-block" onClick={handleCheckout}>Checkout</button>
+        </div>
+        <button className="btn btn-primary mt-3" onClick={() => addToTrolley(1, 1, 'Curso de Python', 120)}>Add Course</button>
       </div>
-      <div>
-        <h3>Total: ${calculateTotalPrice()}</h3>
-        <button className="btn btn-success" onClick={handleCheckout}>Checkout</button>
-      </div>
-      <button className="btn btn-primary" onClick={() => addToTrolley(1, 1, 'Curso de Python', 120)}>Add Course</button>
     </div>
   );
 };
+
 
 
 
