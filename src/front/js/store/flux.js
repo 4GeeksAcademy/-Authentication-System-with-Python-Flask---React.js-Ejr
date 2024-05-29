@@ -733,7 +733,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             msg: dataGetModules.message,
             modules: dataGetModules,
           });
-          console.log(dataGetModules);
+          console.log(store.modules);
         } catch (err) {
           console.log(err);
         } finally {

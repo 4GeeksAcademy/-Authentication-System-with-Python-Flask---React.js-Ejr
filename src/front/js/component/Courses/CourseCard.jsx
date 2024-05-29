@@ -47,7 +47,7 @@ export const CourseCard = () => {
                                         <div className="card-img-top">
                                             <div className="course-thumbnail">
                                                 <img
-                                                    src={store.media}
+                                                    src={item.titleUrlMedia}
                                                     className="img-fluid"
                                                     alt="python-course"
                                                     style={{ objectFit: 'cover', width: '100%', height: '180px' }}
