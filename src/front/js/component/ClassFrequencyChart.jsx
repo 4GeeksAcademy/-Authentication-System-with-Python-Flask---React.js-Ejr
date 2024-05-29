@@ -8,69 +8,66 @@ import moment from 'moment';  // Importamos moment para el formateo de fechas
 Chart.register(CategoryScale, LinearScale, BarElement);
 
 const ClassFrequencyChart = () => {
-    const [chartData, setChartData] = useState(null);  // Estado para almacenar los datos del gráfico
-    const [error, setError] = useState(null);  // Estado para manejar errores
-    const [filter, setFilter] = useState('all');  // Estado para el filtro de fecha u hora
-    const [reservationType, setReservationType] = useState('all');  // Estado para el tipo de reserva
+    // Definimos los estados para almacenar los datos del gráfico, errores, el filtro seleccionado y el tipo de reserva
+    const [chartData, setChartData] = useState(null);
+    const [error, setError] = useState(null);
+    const [filter, setFilter] = useState('all');
+    const [reservationType, setReservationType] = useState('all');
 
+    // useEffect se ejecuta después de que el componente se monta y cuando cambian 'filter' o 'reservationType'
     useEffect(() => {
         const fetchData = async () => {
             try {
+                // Obtenemos el token almacenado en el localStorage
                 let myToken = localStorage.getItem("token");
+                // Creamos la URL para la solicitud GET
                 const url = new URL(`${process.env.BACKEND_URL}/api/class-reservation-frequency`);
+                // Añadimos los parámetros de filtro a la URL
                 url.searchParams.append('filter_by', filter);
                 url.searchParams.append('reservation_type', reservationType);
-    
+
+                // Realizamos la solicitud fetch con el token de autorización
                 const response = await fetch(url, {
                     headers: {
                         Authorization: `Bearer ${myToken}`
                     }
                 });
-    
+
+                // Si la respuesta no es OK, lanzamos un error
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new Error(`Network response was not ok: ${errorText}`);
                 }
-    
+
+                // Convertimos la respuesta en JSON
                 const data = await response.json();
-                console.log(data);
-    
-                if (Array.isArray(data)) {
-                    // Modificamos esta parte para ajustar las etiquetas según el filtro
-                    const classTimes = data.map(item => {
-                        if (filter === 'date') {
-                            // Formato de fecha y hora completa
-                            return moment(item.class_time).format('DD MMM YYYY, HH:mm');
-                        } else if (filter === 'time') {
-                            // Solo hora
-                            return `${item.class_hour}:00`;
-                        } else {
-                            // Por defecto, solo hora
-                            return `${item.class_hour}:00`;
-                        }
-                    });
-                    const frequencies = data.map(item => item.frequency);
-    
-                    setChartData({
-                        labels: classTimes,
-                        datasets: [{
-                            label: 'Frequency of Reservations',
-                            data: frequencies,
-                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    });
-                }
+
+                // Mapeamos los datos recibidos para obtener los tiempos de clase y las frecuencias
+                const classTimes = data.map(item => item.class_time);
+                const frequencies = data.map(item => item.frequency);
+
+                // Establecemos los datos del gráfico en el estado chartData
+                setChartData({
+                    labels: classTimes,
+                    datasets: [{
+                        label: 'Frequency of Reservations',
+                        data: frequencies,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                });
             } catch (error) {
+                // Si ocurre un error, lo registramos en la consola y establecemos el estado de error
                 console.error('Error fetching class reservation frequency data:', error);
                 setError(error.message);
             }
         };
-    
+
+        // Llamamos a la función fetchData para obtener los datos
         fetchData();
-    }, [filter, reservationType]);  // Dependencias incluyen filter y reservationType para reaccionar a sus cambios
-    
+    }, [filter, reservationType]);  // El efecto se ejecuta cada vez que cambian 'filter' o 'reservationType'
+
     return (
         <div className={styles.container}>  
             {error ? ( 
@@ -88,11 +85,12 @@ const ClassFrequencyChart = () => {
                                 <option value="all">All</option>
                                 <option value="date">By Date</option>
                                 <option value="time">By Time</option>
+                                <option value="day">By Day</option>
                             </select>
                         </label>
                         <label>
                             Reservation Type:
-                            <select value={reservationType} onChange={(e) => setReservationType(e.target.value)}> 
+                            <select value={reservationType} onChange={(e) => setReservationType(e.target.value)}>  
                                 <option value="all">All</option>
                                 <option value="reserved">Reserved</option>
                                 <option value="completed">Completed</option>
@@ -100,10 +98,10 @@ const ClassFrequencyChart = () => {
                             </select>
                         </label>
                     </div>
-                    {chartData ? ( 
+                    {chartData ? (  
                         <Bar data={chartData} />  
                     ) : (
-                        <p>Loading...</p>  
+                        <p>Loading...</p> 
                     )}
                 </div>
             )}

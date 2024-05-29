@@ -87,6 +87,7 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
             "email": self.email,
             "image": self.image_url,
             "username": self.username,
+            "is_active": self.is_active,
             "name": self.name,
             "last_name": self.last_name,
             "role": self.role.name if self.role else "N/A",  # Mostrar "N/A" si no hay rol
@@ -287,6 +288,7 @@ class Booking(db.Model):
             "booking_date": self.booking_date.isoformat(),
             "booking_status": self.status,
             "booking_user_name": self.user.name,
+            "booking_user_profile_image": self.user.profile_image.img_url if self.user.profile_image else None,
             "class_id": self.training_class.id if self.training_class else None,
             "class_name": self.training_class.name if self.training_class else "No Class",
             "dateTime_class": self.training_class.dateTime_class.isoformat() if self.training_class else None,
