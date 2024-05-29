@@ -1,104 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import CourseCard from '../Courses/CourseCard.jsx';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Context } from '../../store/appContext.js';
+
+import { CourseCard } from '../Courses/CourseCard.jsx';
 import { UserNavbar } from '../../component/User/UserNavbar.jsx';
 
 export const Trolley = () => {
-  const [trolleyItems, setTrolleyItems] = useState([]);
-  const navigate = useNavigate();
+    const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    fetch('/api/trolley/courses')
-      .then(response => response.json())
-      .then(data => setTrolleyItems(data))
-      .catch(error => console.error('Error fetching trolley:', error));
-  }, []);
+    const [price, setPrice] = useState(0);
+    const navigate = useNavigate();
 
-  const addToTrolley = async (courseId, userId, titleCourse, price) => {
-    try {
-      const response = await fetch('/api/trolley/courses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          courseId,
-          userId,
-          titleCourse,
-          price
-        })
-      });
-      if (response.ok) {
-        const newData = await response.json();
-        setTrolleyItems([...trolleyItems, newData]);
-      } else {
-        console.error('Failed to add course to trolley:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error adding course to trolley:', error);
-    }
-  };
+    const calculateTotalPrice = () => {
+        return store.courseFavorite.reduce((total, item) => total + item.price, 0);
+    };
 
-  const removeFromTrolley = async (itemId) => {
-    try {
-      const response = await fetch(`/api/trolley/courses/${itemId}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        setTrolleyItems(trolleyItems.filter(item => item.id !== itemId));
-      } else {
-        console.error('Failed to remove course from trolley:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error removing course from trolley:', error);
-    }
-  };
+    useEffect(() => {
+        const totalPrice = calculateTotalPrice();
+        setPrice(totalPrice);
+    }, [store.courseFavorite]);
 
-  const calculateTotalPrice = () => {
-    return trolleyItems.reduce((total, item) => total + item.price, 0);
-  };
+    const handleCheckout = () => {
+        navigate('/paypal', { state: { totalPrice: price } });
+    };
 
-  const handleCheckout = () => {
-    const totalPrice = calculateTotalPrice();
-    navigate('/paypal', { state: { totalPrice } });
-  };
-
-  return (
-    <div>
-      <UserNavbar />
-      <div className="container mt-5">
-        <h2 className="mb-4">Shopping Cart</h2>
-        <div className="row">
-          {trolleyItems.map(item => (
-            <div key={item.id} className="col-md-4 mb-4">
-              <div className="card shadow-sm">
-                <CourseCard
-                  id={item.id}
-                  img={item.img}
-                  title={item.title}
-                  description={item.description}
-                  price={item.price}
-                />
-                <div className="card-body">
-                  <button className="btn btn-danger btn-block" onClick={() => removeFromTrolley(item.id)}>Remove</button>
+    return (
+        <div>
+            <UserNavbar />
+            <div className="container mt-5">
+                <h1>Your Course</h1>
+                <div className="col-3">
+                    <h1><strong>$</strong>{price}</h1>
                 </div>
-              </div>
+                <div className="col-9">
+                    {store.courseFavorite.length === 0 ? "No hay Cursos Cargados" :
+                    store.courseFavorite.map((item, index) => (
+                            <div key={index}>
+                                <table className="table mx-auto ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title Course</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">EDIT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">{item.id}</th>
+                                            <td>{item.titleCourse}</td>
+                                            <td>{item.price}</td>
+                                            <td>{item.date}</td>
+                                            <td onClick={() => actions.deleteTrolley(item.id)}>{"Del"}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className="col-12 text-right">
+                    <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
+                </div>
             </div>
-          ))}
         </div>
-        <div className="card shadow-sm p-3">
-          <h3>Total: ${calculateTotalPrice()}</h3>
-          <button className="btn btn-success btn-block" onClick={handleCheckout}>Checkout</button>
-        </div>
-        <button className="btn btn-primary mt-3" onClick={() => addToTrolley(1, 1, 'Curso de Python', 120)}>Add Course</button>
-      </div>
-    </div>
-  );
+    );
 };
-
-
-
-
-
-
-

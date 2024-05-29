@@ -889,30 +889,32 @@ def get_quizzes():
 @api.route('/trolley/courses', methods=['POST'])
 def add_course_to_trolley():
     try:
+        if not request.is_json:
+            return jsonify({"Error": "Request must be JSON"}), 400
+    
         data = request.json
 
+        # Extract data from the request
         title_course = data.get('titleCourse')
         price = data.get('price')
         course_id = data.get('courseId')
         user_id = data.get('userId')
 
-        if not title_course or not price or not course_id or not user_id:
-            return jsonify({"Error": "Course ID, User ID, and Course ID are required"}), 400
+        # Check for missing required fields
+        if not title_course or not price or not course_id :
+            return jsonify({"Error": "titleCourse, price, courseId, and userId are required"}), 400
         
-        course = Course.query.filter_by(id=course_id).first()
+        # Validate the course ID
+        #course = Course.query.filter_by(id=course_id).first()
+        #if not course:
+            #return jsonify({"Error": "Course ID does not exist"}), 404
 
-        if not course:
-            return jsonify({"Error": "Course ID does not exist"}), 404
-        
-        user = User.query.filter_by(id=user_id).first()
-
-        if not user:
-            return jsonify({"Error": "User ID does not exist"}), 404
+        # Check if the course is already in the trolley
         trolley = Trolley.query.filter_by(title_course=title_course).first()
-
         if trolley:
             return jsonify({"Error": "Course already exists in the trolley"}), 409
         
+       # Create a new trolley entry
         current_date = datetime.now().strftime('%Y-%m-%d')
         new_trolley = Trolley(
             title_course=title_course,
@@ -924,20 +926,39 @@ def add_course_to_trolley():
         db.session.add(new_trolley)
         db.session.commit()
 
-        return jsonify({"message": "Course added to trolley successfully", "order_id": new_trolley.serialize()}), 201
-    
+        return jsonify({"message": "Course added to trolley successfully", "order": new_trolley.serialize()}), 201
+
     except Exception as e:
+        return jsonify({"Error": "An error occurred", "details": str(e)}), 500
+    
 
-        return jsonify({"Error": "An error occurred", "error fetching": str(e)}), 500
-
-@api.route('/trolley/courses', methods=['GET'])
+@api.route('/trolley/courses')
 def get_trolley():
     try:
         trolleys = Trolley.query.all()
         serialized_trolley = [trolley.serialize() for trolley in trolleys]
         return jsonify(serialized_trolley), 200
+    
     except Exception as e:
         return jsonify({"Error": "An error occurred while fetching trolleys", "error_details": str(e)}), 500
+    
+@api.route('/view/trolley/<int:trolley_id>', methods=['DELETE'])
+
+def delete_trolley(trolley_id):
+    try:
+        trolley = Trolley.query.get(trolley_id)
+
+        if not trolley:
+            return jsonify({"Error": "Trolley not found"}), 404
+        
+        db.session.delete(trolley)
+        db.session.commit()
+
+        return jsonify({"message": "Trolley delete succesfully."}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in deleting trolley: " + str(err)}), 500
+
     
 
 #----------------------ORDER------------------------#
@@ -950,13 +971,13 @@ def add_order_to_trolley():
         total = data.get('total')
         user_id = data.get('userId')
 
-        if not title_order or not price or not total or not user_id:
+        if not title_order or not price or not total:
             return jsonify({"Error": "titleOrder, price, total and userId are required"}), 400
         
-        user = User.query.filter_by(id=user_id).first()
+        """ user = User.query.filter_by(id=user_id).first()
 
         if not user:
-            return jsonify({"Error": "User ID does not exist"}), 404
+            return jsonify({"Error": "User ID does not exist"}), 404 """
         
         current_date = datetime.now().strftime('%Y-%m-%d')
         new_order = Orders(

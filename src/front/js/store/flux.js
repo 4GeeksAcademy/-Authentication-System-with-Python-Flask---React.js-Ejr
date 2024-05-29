@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       media: "",
       loading: false,
       mediaType: "",
+      courseFavorite: ""
     },
     actions: {
       createUser: async (newUser, userRole) => {
@@ -131,7 +132,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (token && userRole && userToLogin) {
             setStore({ currentRole: userRole });
             await getActions().getUser(userRole);
-            await getActions().getCourse();
+            await getActions().getCourse()
+            await getActions().getTrolleyToOrder()
+
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
@@ -294,23 +297,98 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      addCourseToTrolley: async (dataAddCourse) => {
+      addCourseToTrolley: async (titleCourse, courseId, price) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        console.log(titleCourse, courseId, price)
+        try {
+          const url = process.env.BACKEND_URL + "/api/trolley/courses";
+          const respAddTrolley = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              titleCourse: titleCourse,
+              courseId: courseId,
+              price: price,
+              userId: store.userId  
+            }),
+          });
+
+          if (!respAddTrolley.ok) {
+            const errorData = await respAddTrolley.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+
+            await getActions().getTrolleyToOrder()
+            
+            throw new Error(
+              errorData.error || "Error al añadir el curso al carrito"
+            );
+          }
+
+          const dataAddTrolley = await respAddTrolley.json();
+          setStore({ ...store, msg: dataAddTrolley.message});
+          console.log(dataAddTrolley);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      getTrolleyToOrder: async () => {
         const store = getStore();
         getActions().updateMsgError("");
         getActions().updateMsg("");
         getActions().spinner(true);
         try {
           const url = process.env.BACKEND_URL + "/api/trolley/courses";
-          const respAddCourse = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(dataAddCourse),
-          });
+          const respGetOrder = await fetch(url);
 
-          if (!respAddCourse.ok) {
-            const errorData = await respAddCourse.json();
+          if (!respGetOrder.ok) {
+            const errorData = await respGetOrder.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error al Obtener el Curso");
+          }
+
+          const dataGetOrder = await respGetOrder.json();
+          setStore({
+            ...store,
+            msg: dataGetOrder.message,
+            courseFavorite: dataGetOrder,
+          });
+          console.log(dataGetOrder);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      deleteTrolley: async (trolleyId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+
+          const url = process.env.BACKEND_URL + "/api/view/trolley/" + trolleyId;
+          const respDelTrolley = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+
+
+          if (!respDelTrolley.ok) {
+            const errorData = await respDelTrolley.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
@@ -318,9 +396,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             );
           }
 
-          const dataAddCourse = await respAddCourse.json();
-          setStore({ ...store, msg: dataAddCourse.message });
-          console.log(dataAddCourse);
+
+          const dataDelTrolley = await respDelTrolley.json();
+          setStore({ ...store, msg: dataDelTrolley.message });
+
+          await getActions().getTrolleyToOrder();
+
         } catch (err) {
           console.log(err);
         } finally {
@@ -391,28 +472,28 @@ const getState = ({ getStore, getActions, setStore }) => {
       uploadCloudinaryMedia: async (fileList) => {
         const preset_name = "jptixrge";
         const cloud_name = "dfoegvmld";
-      
+
         const file = fileList[0]; // Asegurarse de tomar solo el primer archivo
-      
+
         const data = new FormData();
-        data.append('file', file); 
+        data.append('file', file);
         data.append('upload_preset', preset_name);
-      
+
         setStore({ loading: true });
-      
+
         const fileType = file.type.split('/')[0];
         setStore({ mediaType: fileType });
-      
+
         try {
           const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${fileType}/upload`, {
             method: 'POST',
             body: data
           });
-      
+
           if (!response.ok) {
             throw new Error('Error uploading media');
           }
-      
+
           const uploadedMedia = await response.json();
           setStore({ media: uploadedMedia.secure_url, loading: false });
           console.log(uploadedMedia);
@@ -432,7 +513,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const token = localStorage.getItem("jwt-token");
           if (!token) throw new Error("No token found");
 
-          const url = process.env.BACKEND_URL + "/api/view/manager/"+ userRol + "/" + userId;
+          const url = process.env.BACKEND_URL + "/api/view/manager/" + userRol + "/" + userId;
           const respUpdateUser = await fetch(url, {
             method: "PUT",
             headers: {
@@ -455,7 +536,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ ...store, msg: dataUpdateUser.message })
 
           await getActions().getUser(userRole);
-          
+
         } catch (err) {
           console.log(err);
         } finally {
@@ -472,7 +553,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const token = localStorage.getItem("jwt-token");
           if (!token) throw new Error("No token found");
 
-          const url = process.env.BACKEND_URL + "/api/view/manager/user/"+ userId;
+          const url = process.env.BACKEND_URL + "/api/view/manager/user/" + userId;
           const respDelUser = await fetch(url, {
             method: "DELETE",
             headers: {
@@ -537,7 +618,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ ...store, msg: dataUpdateCourse.message })
 
           await getActions().getUser();
-          
+
         } catch (err) {
           console.log(err);
         } finally {
@@ -585,59 +666,60 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
+
       postModule: async (formData) => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/module/course`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData)
-            });
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.log(errorData); 
-                throw new Error(errorData.error || "Error al crear el módulo");
-            }
-    
-            return await response.json();
-        } catch (error) {
-            
-            throw error;
-        }
-    },
-     
-    // postQuizzes: async (formData) => {
-    //   try {
-    //     const response = await fetch(`${process.env.BACKEND_URL}/api/module/quizzes`, {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(formData)
-    //     });
-    
-    //     if (!response.ok) {
-    //       const errorData = await response.json();
-    //       console.log("Error de servidor:", errorData);
-    //       throw new Error(errorData.error || "Error al crear la Evaluación");
-    //     }
-    
-    //     return await response.json();
-    //   } catch (error) {
-    //     console.error("Error en la solicitud:", error);
-    //     throw error;
-    //   }
-    // }
-    
-  
+          const response = await fetch(`${process.env.BACKEND_URL}/api/module/course`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData)
+          });
 
-    
-      
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.log(errorData);
+            throw new Error(errorData.error || "Error al crear el módulo");
+          }
+
+          return await response.json();
+        } catch (error) {
+
+          throw error;
+        }
+      },
+
+      // postQuizzes: async (formData) => {
+      //   try {
+      //     const response = await fetch(`${process.env.BACKEND_URL}/api/module/quizzes`, {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify(formData)
+      //     });
+
+      //     if (!response.ok) {
+      //       const errorData = await response.json();
+      //       console.log("Error de servidor:", errorData);
+      //       throw new Error(errorData.error || "Error al crear la Evaluación");
+      //     }
+
+      //     return await response.json();
+      //   } catch (error) {
+      //     console.error("Error en la solicitud:", error);
+      //     throw error;
+      //   }
+      // }
+
+
+
+
+
     }
   };
 }
 
-    
+
 export default getState;

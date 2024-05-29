@@ -10,10 +10,10 @@ import Course from "../../pages/Courses/Course.jsx";
 export const CoursesContainer = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
-    
 
-    function handleAddTrolley() {
-        actions.addCourseToTrolley()
+
+    function handleAddTrolley(titleCourse, courseId, price) {
+        actions.addCourseToTrolley(titleCourse, courseId, price)
     }
 
     console.log(store.media)
@@ -53,7 +53,7 @@ export const CoursesContainer = () => {
                                                 <button type="button" className="btn btn-primary" onClick={() => navigate(`/course/${item.id}`)}>
                                                     View Course
                                                 </button>
-                                                <button type="button" className="btn btn-success" onClick={handleAddTrolley}>
+                                                <button type="button" className="btn btn-success" onClick={() => handleAddTrolley(item.title, item.id, item.price)}>
                                                     Add to trolley
                                                 </button>
                                             </div>

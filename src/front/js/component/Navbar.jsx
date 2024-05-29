@@ -56,7 +56,7 @@ export const Navbar = () => {
                                             <Link to={`/${store.currentRole}View`}>
                                                 <button className='btn btn-outline-success m-1 mx-2' >Panel</button>
                                             </Link>
-                                            <Link to="/workspaces/Atlas_elearning/src/front/js/component/User/T/trolleyrolley.jsx">
+                                            <Link to="/trolley">
                                                 <button className='btn btn-outline-success m-1'>
                                                     <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#13ec49" }}></i>
                                                 </button>
