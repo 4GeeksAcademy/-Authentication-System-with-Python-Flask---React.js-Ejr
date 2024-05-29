@@ -920,7 +920,7 @@ def create_training_classes():  # Función que maneja la solicitud POST para cre
 #     "available_slots": 15,
 # }
 @api.route('/training_classes/<int:class_id>', methods=['PUT'])
-@jwt_required()
+#@jwt_required()
 def update_training_class(class_id):
     try:
         data = request.get_json()  # Asegúrate de que esto esté importado y configurado correctamente.
