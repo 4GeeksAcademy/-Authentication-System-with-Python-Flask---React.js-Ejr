@@ -503,6 +503,88 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
+
+      updateCourse: async (dataUpdate, courseId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const url = process.env.BACKEND_URL + "/api/view/courses/" + courseId;
+          const respUpdateCourse = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(dataUpdate),
+          })
+
+          if (!respUpdateCourse.ok) {
+            const errorData = await respUpdateCourse.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al Update"
+            )
+          }
+
+          const dataUpdateCourse = await respUpdateCourse.json()
+          setStore({ ...store, msg: dataUpdateCourse.message })
+
+          await getActions().getUser();
+          
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      deleteCourse: async (courseId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const url = process.env.BACKEND_URL + "/api/view/courses/" + courseId;
+          const respDelCourse = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          })
+
+
+          if (!respDelCourse.ok) {
+            const errorData = await respDelCourse.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al Delete"
+            );
+          }
+
+
+          const dataDelCourse = await respDelCourse.json();
+          setStore({ ...store, msg: dataDelCourse.message });
+
+          await getActions().getUser();
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
       
     }
   };

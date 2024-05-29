@@ -12,6 +12,7 @@ import { Teachers } from './Teachers.jsx';
 import { ActiveUsers } from './ActiveUsers.jsx';
 import { GeneralFiles } from '../Manager/GeneralFiles.jsx';
 import { PostCourseM } from './PostCourseM.jsx';
+import { CourseCard } from '../Courses/CourseCard.jsx';
 
 
 export const ManagerDashboard = () => {
@@ -20,6 +21,10 @@ export const ManagerDashboard = () => {
 
     const handleCreateCourse = () => {
         setButtonSelected(<PostCourseM />)
+    }
+
+    const handleUpdateCourse = () => {
+        setButtonSelected(<CourseCard />)
     }
 
     const handleMyCourses = () => {
@@ -67,6 +72,8 @@ export const ManagerDashboard = () => {
                     <h5>Manager</h5>
                 </div>
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>Create Courses</button>
+
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>Update Courses</button>
 
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>View Courses</button>
 

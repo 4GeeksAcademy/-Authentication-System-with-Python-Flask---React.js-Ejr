@@ -17,7 +17,6 @@ export const ActiveUsers = () => {
     }
 
     function deleteUser(userId) {
-        
 		actions.deleteUser(userId)
 	}
 

@@ -698,49 +698,37 @@ def get_courses():
     
     except Exception as err:
         return jsonify({"Error": "Error fetching courses", "errorFetching": str(err)}), 500
-    
-
-@api.route('/viewManager/courses', methods=['PUT'])
-def update_course():
-    try:
-        data = request.get_json()
-        course_id = data.get('course_id')
-        updated_data = data.get('updated_data')
-
-        course = Course.query.get(course_id)
-        if course:
-            for key, value in updated_data.items():
-                setattr(course, key, value)
-            db.session.commit()
-
-            return jsonify({"message": "Course updated successfully"}), 200
-        else:
-            return jsonify({"Error": "Course not found"}), 404
-        
-    except Exception as err:
-        return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
-    
+      
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
+@jwt_required()
 def put_courses(course_id):
-    try:
-        course = Course.query.get(course_id)
+    current_token = get_jwt_identity()
 
-        if not course:
-            return jsonify({"Error": "Course not found"}), 404
-        
-        updated_data = request.json
-        for key, value in updated_data.items():
-            setattr(course, key, value)
-        db.session.commit()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
 
-        return jsonify({"message": "Course updated successfully.", "Course": course.serialize()}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in updating course: " + str(err)}), 500
+    course = Course.query.get(course_id)
+    if not course:
+        return jsonify({"Error": "Course not found"}), 404
+
+    data = request.get_json()
+    course.title = data.get('title', course.title)
+    course.category_title = data.get('category_title', course.category_title)
+    course.modules_length = data.get('modules_length', course.modules_length)
+    course.title_certificate_to_get = data.get('title_certificate_to_get', course.title_certificate_to_get)
+    course.price = data.get('price', course.price)
+    course.description = data.get('description', course.description)
+    course.assessment = data.get('assessment', course.assessment)
+    course.create_date = data.get('create_date', course.create_date)
+    course.title_Teacher = data.get('title_Teacher', course.title_Teacher)
+
+    db.session.commit()
+    return jsonify({"message": f"User with ID {course.id} updated successfully"}), 200
     
 
 @api.route('/view/courses/<int:course_id>', methods=['DELETE'])
+@jwt_required()
 def delete_courses(course_id):
     try:
         course = Course.query.get(course_id)
@@ -828,7 +816,7 @@ def create_payment_course():
             title_course=data.get('titleCourse'),
             pad_amount=data.get('padAmount'),
             type_payment=data.get('typePayment'),
-            user_id=data.get('user_id'),
+            course_id=data.get('course_id'),
             manager_id=data.get('manager_id')
         )
         db.session.add(new_payment)
