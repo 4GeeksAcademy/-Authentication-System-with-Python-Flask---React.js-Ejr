@@ -23,9 +23,6 @@ export const ManagerDashboard = () => {
     const { store, actions } = useContext(Context)
     const [buttonSelected, setButtonSelected] = useState(null)
 
-    const handleCreateVideo = () => {
-        setButtonSelected(<PostCourseM />)
-    }
 
     const handleCreateCourse = () => {
         setButtonSelected(<PostCourseM />)

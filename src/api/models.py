@@ -277,13 +277,13 @@ class Modules(db.Model):
     description_content = db.Column(db.String(500), nullable=False)
     title = db.Column(db.String(250), nullable=False)
     url_video = db.Column(db.String(1024), nullable=False)  
-    video_id = db.Column(db.Integer, nullable=True)
-    image_id = db.Column(db.Integer, nullable=True)
+    video_id = db.Column(db.String(250), nullable=True)
+    image_id = db.Column(db.String(250), nullable=True)
     total_video = db.Column(db.String(250), nullable=True)
     date_create = db.Column(db.String(250), nullable=False)
     token_module = db.Column(db.String(1024), nullable=True)
 
-    #Relations
+    #String(250)ns
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     course = db.relationship('Course', backref=db.backref('modules', lazy=True))
 
@@ -295,14 +295,13 @@ class Modules(db.Model):
             "id": self.id,
             "courseId": self.course_id,
             "descriptionContent": self.description_content,
-            "typeFile": self.type_file,
             "title": self.title,
+            "urlVideo": self.url_video,
             "videoId": self.video_id,
-            "typeVideo": self.type_video,
-            "textId": self.text_id,
-            "typeText": self.type_text,
             "imageId": self.image_id,
-            "typeImage": self.type_image
+            "totalVideo": self.total_video,
+            "dateCreate": self. date_create,
+            "tokenModule": self.token_module
         }
     
 class Quizzes(db.Model):

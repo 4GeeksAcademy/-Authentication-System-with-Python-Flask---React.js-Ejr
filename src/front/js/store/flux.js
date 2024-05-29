@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       loading: false,
       mediaType: "",
       courseFavorite: "",
-      category: ""
+      category: "",
+      modules: ""
     },
     actions: {
       createUser: async (newUser, userRole) => {
@@ -136,7 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getCourse()
             await getActions().getTrolleyToOrder()
             await getActions().getCategory()
-
+            await getActions().getModules()
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
@@ -318,7 +319,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               titleCourse: titleCourse,
               courseId: courseId,
               price: price,
-              userId: store.userId  
+              userId: store.userId
             }),
           });
 
@@ -335,7 +336,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataAddTrolley = await respAddTrolley.json();
-          setStore({ ...store, msg: dataAddTrolley.message});
+          setStore({ ...store, msg: dataAddTrolley.message });
           console.log(dataAddTrolley);
 
         } catch (err) {
@@ -671,26 +672,72 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      postModule: async (formData) => {
+      postModule: async (dataModule) => {
+        const store = getStore();
+        const actions = getActions();
+        actions.updateMsgError("");
+        actions.updateMsg("");
+        actions.spinner(true);
+
+        console.log(dataModule);
+
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/module/course`, {
+          const url = process.env.BACKEND_URL + "/api/module/course";
+          const respAddModule = await fetch(url, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json"
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(dataModule),
           });
 
-          if (!response.ok) {
-            const errorData = await response.json();
-            console.log(errorData);
-            throw new Error(errorData.error || "Error al crear el módulo");
+          if (!respAddModule.ok) {
+            const errorData = await respAddModule.json();
+            console.error(errorData);
+            setStore({ ...store, error: errorData.Error });
+
+            throw new Error(errorData.Error || "Error creating module");
           }
 
-          return await response.json();
-        } catch (error) {
+          const dataAddModule = await respAddModule.json();
+          setStore({ ...store, msg: dataAddModule.message });
+          console.log(dataAddModule);
 
-          throw error;
+        } catch (err) {
+          console.error("Error in postModule:", err);
+          setStore({ ...store, error: err.message });
+        } finally {
+          actions.spinner(false);
+        }
+      },
+
+      getModules: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const url = process.env.BACKEND_URL + "/api/module/courses";
+          const respGetModules = await fetch(url);
+
+          if (!respGetModules.ok) {
+            const errorData = await respGetModules.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error al Obtener el Modules");
+          }
+
+          const dataGetModules = await respGetModules.json();
+          setStore({
+            ...store,
+            msg: dataGetModules.message,
+            modules: dataGetModules,
+          });
+          console.log(dataGetModules);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
         }
       },
 
@@ -716,14 +763,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ ...store, error: errorData.error });
 
             await getActions().getTrolleyToOrder()
-            
+
             throw new Error(
               errorData.error || "Error al añadir la Category"
             );
           }
 
           const dataAddCategory = await respAddCategory.json();
-          setStore({ ...store, msg: dataAddCategory.message});
+          setStore({ ...store, msg: dataAddCategory.message });
           console.log(dataAddCategory);
 
         } catch (err) {
@@ -732,7 +779,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
-      
+
       getCategory: async () => {
         const store = getStore();
         getActions().updateMsgError("");

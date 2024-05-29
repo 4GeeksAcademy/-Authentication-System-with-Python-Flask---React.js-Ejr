@@ -762,13 +762,13 @@ def post_module():
         token_module = request.json.get('tokenModule')
         
 
-        if not course_id or not description_content or not url_video or not title or not video_id or not total_video:
-            return {"Error": "descriptionContent,title, videoId, textId, imageId, and totalVideo are required"}, 400
+        if not description_content or not url_video or not title or not video_id or not total_video:
+            return {"Error": "descriptionContent,title, videoId, imageId, and totalVideo are required"}, 400
 
         
-        existing_course = Course.query.filter_by(id=course_id).first()
-        if not existing_course:
-            return jsonify({"Error": "Course does not exist."}), 404
+        existing_module = Modules.query.filter_by(title=title).first()
+        if existing_module:
+            return jsonify({"Error": "Modules already exists."}), 404
 
         current_date = datetime.now().strftime('%Y-%m-%d')
         module = Modules(course_id=course_id, description_content=description_content, url_video=url_video, title=title, video_id=video_id, image_id=image_id, date_create=current_date, total_video=total_video, token_module=token_module )
@@ -779,7 +779,7 @@ def post_module():
     except Exception as err:
         return jsonify({"Error": "Error in module Creation: " + str(err)}), 500
 
-@api.route('/module/course/', methods=['GET'])
+@api.route('/module/courses/', methods=['GET'])
 def get_modules():
     try:
         modules = Modules.query.all()
