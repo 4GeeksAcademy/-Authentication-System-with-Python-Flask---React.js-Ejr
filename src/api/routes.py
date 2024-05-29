@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint, send_file
+from flask import Flask, request, jsonify, url_for, Blueprint, send_file, send_from_directory
 from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes 
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -1016,7 +1016,8 @@ def get_order():
 #----------------------CARGA DE DOCUMENTO------------------------# 
 # Definir la ruta de la carpeta de carga
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+# UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 # Asegúrate de que la carpeta 'uploads' exista
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -1045,8 +1046,22 @@ def upload_file():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@api.route('/uploads/<path:filename>')
+def show_file(filename):
+    try:
+        return send_from_directory(UPLOAD_FOLDER, filename), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     
 
+@api.route('/uploads', methods=['GET'])
+def list_files():
+    try:
+        files = os.listdir(UPLOAD_FOLDER)
+        return jsonify(files), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 #----------------------Category------------------------#
 @api.route('/courses/categories', methods=['POST'])
 def post_category():
