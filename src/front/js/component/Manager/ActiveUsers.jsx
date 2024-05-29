@@ -17,7 +17,6 @@ export const ActiveUsers = () => {
     }
 
     function deleteUser(userId) {
-        
 		actions.deleteUser(userId)
 	}
 
@@ -55,21 +54,7 @@ export const ActiveUsers = () => {
                                                 <th scope="col">EDIT</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">{item.id}</th>
-                                                <td>{item.name}</td>
-                                                <td>{item.lastName}</td>
-                                                <td>{item.email}</td>
-                                                <td>{item.numberDocument}</td>
-                                                <td>{item.phone}</td>
-                                                <td>{item.username}</td>
-                                                <td>{item.gender}</td>
-                                                <td>{item.age}</td>
-                                                <td onClick={() => handleUpdateUser(item.id)}>{"Edit"} </td>
-                                                <td onClick={() => deleteUser(item.id)}>{"Del"}</td>
-                                            </tr>
-                                        </tbody>
+                                        
                                     </table>
                                 }
                             </div>
