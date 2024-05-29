@@ -6,6 +6,8 @@
     margin: 20px 0; /* Margen vertical */
     padding: 20px; /* Padding interno */
     transition: transform 0.3s; /* Transición suave */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .room-card:hover {
@@ -16,4 +18,21 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Otros estilos personalizados según sea necesario */
+
+
+/* Media queries para asegurar que el diseño sea responsive */
+@media (max-width: 768px) {
+    .room-card {
+        flex-direction: column;
+    }
+
+    .room-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .room-content {
+        padding-left: 0;
+        padding-top: 20px;
+    }
+}
