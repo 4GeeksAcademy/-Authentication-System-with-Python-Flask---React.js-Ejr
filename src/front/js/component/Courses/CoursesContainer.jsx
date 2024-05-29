@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from '../../store/appContext'
 import '../../../styles/components.css';
 import { useNavigate } from "react-router-dom";
+import Course from "../../pages/Courses/Course.jsx";
 
 
 
@@ -9,10 +10,7 @@ import { useNavigate } from "react-router-dom";
 export const CoursesContainer = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
-
-    const handleViewCourses = () => {
-        navigate(<Course />)
-    }
+    
 
     function handleAddTrolley() {
         actions.addCourseToTrolley()
@@ -52,11 +50,11 @@ export const CoursesContainer = () => {
                                             <p className="card-text"><strong>$</strong>{item.price}</p>
                                             <p>Modulos: {item.modulesLength}</p>
                                             <div className="d-flex justify-content-between">
-                                                <button type="button" className="btn btn-primary" onClick={handleViewCourses}>
+                                                <button type="button" className="btn btn-primary" onClick={() => navigate(`/course/${item.id}`)}>
                                                     View Course
                                                 </button>
                                                 <button type="button" className="btn btn-success" onClick={handleAddTrolley}>
-                                                    Buy Course
+                                                    Add to trolley
                                                 </button>
                                             </div>
                                         </div>
