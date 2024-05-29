@@ -5,7 +5,7 @@ from .models import db, User
 from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string, generate_passcode, get_passcode_string
 from .email import send_verification_email, send_recovery_email
 from . import api_utils
-from .aws_utils import uploadFile, DEFAULT_ICON
+from .aws_utils import uploadFile, DEFAULT_ICON, DEFAULT_THUMBNAIL
 from .utils import get_current_millistamp
 
 # ---------------------------------------------------------------------------- accounts.keqqu.com/* ----------------------------------------------------------------------------
@@ -28,8 +28,6 @@ def handle_accounts_healthcheck():
 @api_utils.jwt_forbidden(400, "already logged in")
 @api_utils.endpoint_safe( content_type="application/json", required_props=("username", "displayname", "email", "password"))
 def handle_accounts_signup(json):
-  
-  print("reached")
 
   login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 0))
 
@@ -57,6 +55,12 @@ def handle_accounts_signup(json):
 
   request_verification_email(user)
   db.session.add(user)
+
+  workspace= workspace(
+    title="$default.first-workspace",
+    thumbnail= DEFAULT_THUMBNAIL['workspace']
+  )
+
 
   # login after creation
   if loginafter: return perform_login(user, remember) # <- this already do .commit() too
@@ -93,7 +97,7 @@ def handle_accounts_rotate():
 def handle_accounts_logout():
   print("mipolla")
   user, error= api_utils.get_user_with_check_access() # security auth check + get user
-  if error: return error
+  if user: return api_utils.response(401, "already logged in")
   user.refreshtoken= None # delete refresh token anyway
   db.session.commit()
   return perform_logout(user)
