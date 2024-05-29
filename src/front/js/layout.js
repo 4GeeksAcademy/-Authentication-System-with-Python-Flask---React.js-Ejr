@@ -9,7 +9,7 @@ import injectContext from "./store/appContext";
 // import { Navbar } from "./component/navbar";
 // import { Footer } from "./component/footer";
 
-import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
+//import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
 
 import Home from "./pages/Home.jsx";
 import Footer from "./component/Footer.jsx";
@@ -48,7 +48,7 @@ import EditClasses from "./pages/EditClasses.jsx"
 
 import ExecutePayment from "./component/ExecutePayment.jsx";
 import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
-import  CancelPayment  from "./component/ExecutePayment.jsx";
+import CancelPayment from "./component/ExecutePayment.jsx";
 
 import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
@@ -68,7 +68,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar /> {/* Renderiza el componente Navbar */}
+
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
