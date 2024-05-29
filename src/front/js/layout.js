@@ -19,10 +19,10 @@ import { SignOut } from "./pages/SignOut.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import { ResetPassword } from "./component/ResetPassword.jsx";
 import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
-import Courses from "./pages/Courses/Courses.jsx";
 import Course from "./pages/Courses/Course.jsx";
 import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
+import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
 import { Trolley } from "./component/User/Trolley.jsx";
 
 const Layout = () => {
@@ -42,7 +42,6 @@ const Layout = () => {
                         <Route element={<ResetPassword />} path="/ResetPassword" />
                         <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token" />
                         <Route element={<PaypalPayment />} path="/Paypal" />
-                        <Route element={<Courses />} path="/Courses" />
 
                         {/* Protected Routes */}
                         <Route 
@@ -76,6 +75,14 @@ const Layout = () => {
                                 </ProtectedRoute>
                             } 
                             path="/UpdateUser/:userId" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UpdateCourse />
+                                </ProtectedRoute>
+                            } 
+                            path="/UpdateCourse/:courseId" 
                         />
                         <Route 
                             element={

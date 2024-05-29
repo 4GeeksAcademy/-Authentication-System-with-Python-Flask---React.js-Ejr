@@ -116,7 +116,8 @@ class Course(db.Model):
     assessment = db.Column(db.Integer, nullable=True) 
     create_date = db.Column(db.String(300), unique=False, nullable=True)
     title_Teacher = db.Column(db.String(250), nullable=False)
-    date_expiration = db.Column(db.String(300), unique=False, nullable=True) 
+    date_expiration = db.Column(db.String(300), unique=False, nullable=True)
+    title_url_media = db.Column(db.String(1024), nullable=False) 
 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -146,7 +147,9 @@ class Course(db.Model):
             "assessment": self.assessment,
             "createDate": self.create_date,
             "titleTeacher": self.title_Teacher,
-            "dateExpiration": self.date_expiration
+            "dateExpiration": self.date_expiration,
+            "titleUrlMedia": self.title_url_media
+
         }
 
 class Category(db.Model):
@@ -154,6 +157,7 @@ class Category(db.Model):
     title_category = db.Column(db.String(250), nullable=False)
     sub_category = db.Column(db.String(250), nullable=False)
     category_length = db.Column(db.String(300), nullable=False)
+    create_date = db.Column(db.String(300), unique=False, nullable=True)
     course_more_current = db.Column(db.String(250), nullable=False)
     course_more_sold = db.Column(db.String(250), nullable=False)  
 
@@ -173,6 +177,7 @@ class Category(db.Model):
         return {
             "id": self.id,
             "titleCategory": self.title_category,
+            "subCategory": self.sub_category,
             "userId": self.user_id,
             "managerId": self.manager_id,
             "teacherId": self.teacher_id,
@@ -270,17 +275,15 @@ class Payment(db.Model):
 class Modules(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description_content = db.Column(db.String(500), nullable=False)
-    type_file = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
-    video_id = db.Column(db.Integer, nullable=True)
-    type_video = db.Column(db.String(250), nullable=False)
-    text_id = db.Column(db.Integer, nullable=True)
-    type_text = db.Column(db.String(250), nullable=False)
-    image_id = db.Column(db.Integer, nullable=True)
-    type_image = db.Column(db.String(250), nullable=False)
+    url_video = db.Column(db.String(1024), nullable=False)  
+    video_id = db.Column(db.String(250), nullable=True)
+    image_id = db.Column(db.String(250), nullable=True)
     total_video = db.Column(db.String(250), nullable=True)
+    date_create = db.Column(db.String(250), nullable=False)
+    token_module = db.Column(db.String(1024), nullable=True)
 
-    #Relations
+    #String(250)ns
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     course = db.relationship('Course', backref=db.backref('modules', lazy=True))
 
@@ -292,14 +295,13 @@ class Modules(db.Model):
             "id": self.id,
             "courseId": self.course_id,
             "descriptionContent": self.description_content,
-            "typeFile": self.type_file,
             "title": self.title,
+            "urlVideo": self.url_video,
             "videoId": self.video_id,
-            "typeVideo": self.type_video,
-            "textId": self.text_id,
-            "typeText": self.type_text,
             "imageId": self.image_id,
-            "typeImage": self.type_image
+            "totalVideo": self.total_video,
+            "dateCreate": self. date_create,
+            "tokenModule": self.token_module
         }
     
 class Quizzes(db.Model):

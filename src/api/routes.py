@@ -669,10 +669,11 @@ def post_courses():
         assessment = request.json.get('assessment')
         title_Teacher = request.json.get('titleTeacher')
         date_expiration = request.json.get('dateExpiration')
+        title_url_media = request.json.get('titleUrlMedia')
 
         #Verificacion de campos vacios
-        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not title_Teacher or not date_expiration:
-            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, title_Teacher and date_expiration are required"}), 400
+        if not title or not category_title or not modules_length or not title_certificate_to_get or not price or not description or not assessment or not title_Teacher or not date_expiration or not title_url_media:
+            return({"Error":"title, category_title, modules_length, title_certificate_to_get, price, description, assessment, title_Teacher, date_expiration and title_url_media are required"}), 400
         
         #Verificacion de existencia de titulo en la base de datos
         existing_course = Course.query.filter_by(title=title).first()
@@ -680,7 +681,7 @@ def post_courses():
             return jsonify({"Error":"Title already exists."}), 409
         
         current_date = datetime.now().strftime('%Y-%m-%d')
-        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date, title_Teacher=title_Teacher, date_expiration=date_expiration)
+        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date, title_Teacher=title_Teacher, date_expiration=date_expiration, title_url_media=title_url_media)
         db.session.add(course)
         db.session.commit()
 
@@ -699,49 +700,37 @@ def get_courses():
     
     except Exception as err:
         return jsonify({"Error": "Error fetching courses", "errorFetching": str(err)}), 500
-    
-
-@api.route('/viewManager/courses/<int:course_id>', methods=['PUT'])
-def update_course():
-    try:
-        data = request.get_json()
-        course_id = data.get('course_id')
-        updated_data = data.get('updated_data')
-
-        course = Course.query.get(course_id)
-        if course:
-            for key, value in updated_data.items():
-                setattr(course, key, value)
-            db.session.commit()
-
-            return jsonify({"message": "Course updated successfully"}), 200
-        else:
-            return jsonify({"Error": "Course not found"}), 404
-        
-    except Exception as err:
-        return jsonify({"Error": "Error in fetching courses: " + str(err)}), 500
-    
+      
 
 @api.route('/view/courses/<int:course_id>', methods=['PUT'])
+@jwt_required()
 def put_courses(course_id):
-    try:
-        course = Course.query.get(course_id)
+    current_token = get_jwt_identity()
 
-        if not course:
-            return jsonify({"Error": "Course not found"}), 404
-        
-        updated_data = request.json
-        for key, value in updated_data.items():
-            setattr(course, key, value)
-        db.session.commit()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
 
-        return jsonify({"message": "Course updated successfully.", "Course": course.serialize()}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in updating course: " + str(err)}), 500
+    course = Course.query.get(course_id)
+    if not course:
+        return jsonify({"Error": "Course not found"}), 404
+
+    data = request.get_json()
+    course.title = data.get('title', course.title)
+    course.category_title = data.get('category_title', course.category_title)
+    course.modules_length = data.get('modules_length', course.modules_length)
+    course.title_certificate_to_get = data.get('title_certificate_to_get', course.title_certificate_to_get)
+    course.price = data.get('price', course.price)
+    course.description = data.get('description', course.description)
+    course.assessment = data.get('assessment', course.assessment)
+    course.create_date = data.get('create_date', course.create_date)
+    course.title_Teacher = data.get('title_Teacher', course.title_Teacher)
+
+    db.session.commit()
+    return jsonify({"message": f"User with ID {course.id} updated successfully"}), 200
     
 
 @api.route('/view/courses/<int:course_id>', methods=['DELETE'])
+@jwt_required()
 def delete_courses(course_id):
     try:
         course = Course.query.get(course_id)
@@ -764,25 +753,25 @@ def post_module():
     try:
         course_id = request.json.get('courseId')  
         description_content = request.json.get('descriptionContent')
-        type_file = request.json.get('typeFile')
         title = request.json.get('title')
         video_id = request.json.get('videoId')
-        type_video = request.json.get('typeVideo')
-        text_id = request.json.get('textId')
-        type_text = request.json.get('typeText')
+        url_video = request.json.get('urlVideo')
+        video_id = request.json.get('videoId')
         image_id = request.json.get('imageId')
-        type_image = request.json.get('typeImage')
         total_video = request.json.get('totalVideo')
+        token_module = request.json.get('tokenModule')
+        
 
-        if not course_id or not description_content or not type_file or not title or not video_id or not type_video or not text_id or not type_text or not image_id or not type_image or not total_video:
-            return {"Error": "courseId, descriptionContent, typeFile, title, videoId, typeVideo, textId, typeText, imageId, typeImage and totalVideo  are required"}, 400
+        if not description_content or not url_video or not title or not video_id or not total_video:
+            return {"Error": "descriptionContent,title, videoId, imageId, and totalVideo are required"}, 400
 
         
-        existing_course = Course.query.filter_by(id=course_id).first()
-        if not existing_course:
-            return jsonify({"Error": "Course does not exist."}), 404
+        existing_module = Modules.query.filter_by(title=title).first()
+        if existing_module:
+            return jsonify({"Error": "Modules already exists."}), 404
 
-        module = Modules(course_id=course_id, description_content=description_content,  type_file=type_file, title=title, video_id=video_id, type_video=type_video, text_id=text_id, type_text=type_text, image_id=image_id, type_image=type_image,total_video=total_video )
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        module = Modules(course_id=course_id, description_content=description_content, url_video=url_video, title=title, video_id=video_id, image_id=image_id, date_create=current_date, total_video=total_video, token_module=token_module )
         db.session.add(module)
         db.session.commit()
         return jsonify({"message": "Module created successfully", "Module": module.serialize()}), 201
@@ -790,7 +779,7 @@ def post_module():
     except Exception as err:
         return jsonify({"Error": "Error in module Creation: " + str(err)}), 500
 
-@api.route('/module/course/', methods=['GET'])
+@api.route('/module/courses/', methods=['GET'])
 def get_modules():
     try:
         modules = Modules.query.all()
@@ -829,7 +818,7 @@ def create_payment_course():
             title_course=data.get('titleCourse'),
             pad_amount=data.get('padAmount'),
             type_payment=data.get('typePayment'),
-            user_id=data.get('user_id'),
+            course_id=data.get('course_id'),
             manager_id=data.get('manager_id')
         )
         db.session.add(new_payment)
@@ -895,97 +884,38 @@ def get_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
-
-
-@api.route('/module/quizzes/<int:id>', methods=['PUT'])
-def update_quizzes(id):
-    try:
-        data = request.json
-        question_title = data.get('questionTitle')
-        answer_teacher = data.get('answerTeacher')
-        answer_user = data.get('answerUser')
-        approved = data.get('approved')
-        approval_percentage_user = data.get('approvalPercentageUser')
-        approval_percentage_number = data.get('approvalPercentageNumber')
-        approval_percentage = data.get('approvalPercentage')
-        module_id = data.get('moduleId')
-
-        quiz = Quizzes.query.get(id)
-        if not quiz:
-            return jsonify({"Error": "Quiz not found"}), 404
-
-        if question_title is not None:
-            quiz.question_title = question_title
-        if answer_teacher is not None:
-            quiz.answer_teacher = answer_teacher
-        if answer_user is not None:
-            quiz.answer_user = answer_user
-        if approved is not None:
-            quiz.approved = approved
-        if approval_percentage_user is not None:
-            quiz.approval_percentage_user = approval_percentage_user
-        if approval_percentage_number is not None:
-            quiz.approval_percentage_number = approval_percentage_number
-        if approval_percentage is not None:
-            quiz.approval_percentage = approval_percentage
-        if module_id is not None:
-            existing_module = Modules.query.filter_by(id=module_id).first()
-            if not existing_module:
-                return jsonify({"Error": "Module does not exist."}), 404
-            quiz.module_id = module_id
-
-        db.session.commit()
-
-        return jsonify({"message": "Quiz updated successfully", "Quiz": quiz.serialize()}), 200
-
-    except Exception as err:
-        return jsonify({"Error": "Error in updating quiz: ", "fetching error": str(err)}), 500
-
-
-@api.route('/module/quizzes/<int:id>', methods=['DELETE'])
-def delete_quiz(id):
-    try:
-        quiz = Quizzes.query.get(id)
-        if not quiz:
-            return jsonify({"Error": "Quiz not found"}), 404
-
-        db.session.delete(quiz)
-        db.session.commit()
-
-        return jsonify({"message": "Quiz deleted successfully"}), 200
-
-    except Exception as err:
-        return jsonify({"Error": "Error in deleting quiz: " + str(err)}), 500
         
-
+        
 #----------------------TROLLEY------------------------#
 @api.route('/trolley/courses', methods=['POST'])
 def add_course_to_trolley():
     try:
+        if not request.is_json:
+            return jsonify({"Error": "Request must be JSON"}), 400
+    
         data = request.json
 
+        # Extract data from the request
         title_course = data.get('titleCourse')
         price = data.get('price')
         course_id = data.get('courseId')
         user_id = data.get('userId')
 
-        if not title_course or not price or not course_id or not user_id:
-            return jsonify({"Error": "Course ID, User ID, and Course ID are required"}), 400
+        # Check for missing required fields
+        if not title_course or not price or not course_id :
+            return jsonify({"Error": "titleCourse, price, courseId, and userId are required"}), 400
         
-        course = Course.query.filter_by(id=course_id).first()
+        # Validate the course ID
+        #course = Course.query.filter_by(id=course_id).first()
+        #if not course:
+            #return jsonify({"Error": "Course ID does not exist"}), 404
 
-        if not course:
-            return jsonify({"Error": "Course ID does not exist"}), 404
-        
-        user = User.query.filter_by(id=user_id).first()
-
-        if not user:
-            return jsonify({"Error": "User ID does not exist"}), 404
+        # Check if the course is already in the trolley
         trolley = Trolley.query.filter_by(title_course=title_course).first()
-
         if trolley:
             return jsonify({"Error": "Course already exists in the trolley"}), 409
         
+       # Create a new trolley entry
         current_date = datetime.now().strftime('%Y-%m-%d')
         new_trolley = Trolley(
             title_course=title_course,
@@ -997,20 +927,39 @@ def add_course_to_trolley():
         db.session.add(new_trolley)
         db.session.commit()
 
-        return jsonify({"message": "Course added to trolley successfully", "order_id": new_trolley.serialize()}), 201
-    
+        return jsonify({"message": "Course added to trolley successfully", "order": new_trolley.serialize()}), 201
+
     except Exception as e:
+        return jsonify({"Error": "An error occurred", "details": str(e)}), 500
+    
 
-        return jsonify({"Error": "An error occurred", "error fetching": str(e)}), 500
-
-@api.route('/trolley/courses', methods=['GET'])
+@api.route('/trolley/courses')
 def get_trolley():
     try:
         trolleys = Trolley.query.all()
         serialized_trolley = [trolley.serialize() for trolley in trolleys]
         return jsonify(serialized_trolley), 200
+    
     except Exception as e:
         return jsonify({"Error": "An error occurred while fetching trolleys", "error_details": str(e)}), 500
+    
+@api.route('/view/trolley/<int:trolley_id>', methods=['DELETE'])
+
+def delete_trolley(trolley_id):
+    try:
+        trolley = Trolley.query.get(trolley_id)
+
+        if not trolley:
+            return jsonify({"Error": "Trolley not found"}), 404
+        
+        db.session.delete(trolley)
+        db.session.commit()
+
+        return jsonify({"message": "Trolley delete succesfully."}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in deleting trolley: " + str(err)}), 500
+
     
 
 #----------------------ORDER------------------------#
@@ -1023,13 +972,13 @@ def add_order_to_trolley():
         total = data.get('total')
         user_id = data.get('userId')
 
-        if not title_order or not price or not total or not user_id:
+        if not title_order or not price or not total:
             return jsonify({"Error": "titleOrder, price, total and userId are required"}), 400
         
-        user = User.query.filter_by(id=user_id).first()
+        """ user = User.query.filter_by(id=user_id).first()
 
         if not user:
-            return jsonify({"Error": "User ID does not exist"}), 404
+            return jsonify({"Error": "User ID does not exist"}), 404 """
         
         current_date = datetime.now().strftime('%Y-%m-%d')
         new_order = Orders(
@@ -1127,9 +1076,10 @@ def post_category():
         manager_id = data.get('managerId')
         teacher_id = data.get('teacherId')
 
-        if not all([title_category, sub_category, category_length, course_more_current, course_more_sold]):
-            return jsonify({"Error": "titleCategory, subCategory, categoryLength, courseMoreCurrent, and courseMoreSold are required"}), 400
+        if not title_category or not sub_category:
+            return jsonify({"Error": "titleCategory and subCategory are required"}), 400
         
+        current_date = datetime.now().strftime('%Y-%m-%d')
         new_category = Category(
             title_category=title_category,
             sub_category=sub_category,
@@ -1138,7 +1088,8 @@ def post_category():
             course_more_sold=course_more_sold,
             user_id=user_id,
             manager_id=manager_id,
-            teacher_id=teacher_id
+            teacher_id=teacher_id,
+            create_date=current_date
         )
 
         db.session.add(new_category)
@@ -1151,7 +1102,7 @@ def post_category():
         return jsonify({"Error": "An error occurred", "error_details": str(e)}), 500
 
 
-@api.route('/courses/categories', methods=['GET'])
+@api.route('/courses/categories')
 def get_categories():
     try:
 
