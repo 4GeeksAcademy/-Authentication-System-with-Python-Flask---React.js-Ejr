@@ -1,11 +1,12 @@
 import json, os, functools
-from .utils import get_current_timestamp, parse_int, parse_bool
 from datetime import timedelta
 from types import SimpleNamespace
 from flask import jsonify, request, Response
 from flask_jwt_extended import *
 from scrypt import hash
-from .models import db, User
+from .aws_utils import get_public_link, DEFAULT_ICON, DEFAULT_THUMBNAIL
+from .utils import get_current_timestamp, get_current_millistamp, read_file
+from .models import db, User, Workspace, Board, List, Task
 
 current_app= None
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
@@ -32,9 +33,9 @@ def response(status:int, msg:str, data=None, debug=None) -> Response:
   obj= { "msg": msg }
   if data: obj['res']= data
   if debug: obj['_']= json.loads(json.dumps(debug, default=json_object_safe))
-  return Response( json.dumps(obj, default=json_object_safe), status, mimetype= MIMETYPE_JSON )
+  return Response( json.dumps(obj), status, mimetype= MIMETYPE_JSON )
 
-def response_119(): return response(119, "session refreshed", None, None) # non-standard HTTP status code
+def response_119(user:dict): return response(119, "session refreshed", user, None) # non-standard HTTP status code
 
 def response_200(data=None, debug=None): return response(200, "ok", data, debug)
 def response_201(data=None, debug=None): return response(201, "created", data, debug)
@@ -49,30 +50,39 @@ def json_object_safe(obj):
   dict= obj.__dict__
   return dict if dict else type(obj).__name__
 
-#--- get the user by acount
-def get_user_by_username_or_email(account:str) -> tuple[User|None, int|None]:
-  return get_user(account, account)
-
 #--- get the user with given username and email
 def get_user(username:str=None, email:str=None) -> tuple[User|None, int|None]:
-  user= User.query.filter(User.email==email or User.username==username).first()
+  user= db.session.query(User).filter(User.email==email or User.username==username).first()
   mode= None
   if user: mode= 1 if user.username==username else 2
   return user, mode
+
+#--- get the user by acount
+def get_user_by_username_or_email(account:str) -> tuple[User|None, int|None]:
+  return get_user(account, account)
 
 #--- get the user by current jwt identity
 def get_user_by_identity() -> tuple[User|None, Response|None]:
   try:
     identity= get_jwt_identity()
-    user= User.query.filter(User.email==identity['e'] or User.username==identity['u']).first()
+    user= db.session.query(User).filter(User.email==identity['e'] or User.username==identity['u']).first()
     if not user: None, response(400, "invalid or expired session")
   except Exception as e: return None, response_500(repr(e))
   return user, None
 
+def get_user_by_username(username:str):
+  return db.session.query(User).filter(User.username==username).first()
+
+def get_user_by_email(email:str):
+  return db.session.query(User).filter(User.email==email).first()
+
 #--- check the user's login
 def get_user_login(account:str, password:str) -> tuple[User|None, Response|None]:
-  user, _= get_user_by_username_or_email(account)
+  user= get_user_by_username(account)
+  print("hello")
+  if not user: user= get_user_by_email(account)
   if not user: return None, response(400, "invalid credentials")
+  print(user.serialize())
   # bad password returns a 401 unauthorized instead of 400 bad request just so we can do a fast check to prompt a "forgot password" shit in frontend
   if not check_password(password, user.password): return None, response(401, "invalid password")
   return user, None
@@ -118,12 +128,12 @@ def create_new_refresh_token(identity, remember:bool):
 def create_new_access_token(response:Response, identity) -> Response:
   # access token -- lifespan: 15 min
   atoken = create_access_token(identity)
-  set_access_cookies(response, atoken, max_age=timedelta(minutes=30), domain=current_app.config['SERVER_NAME']) # access token is saved on cookie, if not 'remember', its deleted on session end (navigator close)
+  set_access_cookies(response, atoken, max_age=timedelta(minutes=30)) # access token is saved on cookie, if not 'remember', its deleted on session end (navigator close)
   return response
 
 #--- remove user tokens
 def remove_token_cookie() -> Response:
-  fres= Response()
+  fres= response_200()
   unset_jwt_cookies(fres, domain=current_app.config['SERVER_NAME'])
   return fres
 
@@ -173,48 +183,48 @@ def endpoint_safe(
       __parsed_data__= {}
       __type= data_type
       
-      #try:
-      if content_type: # check for content_type
-        if not 'Content-Type' in request.headers or not request.headers['Content-Type'] == content_type: return response(400, f"Content-Type is not '{content_type}'")
-        if __type: return response(400, "cannot define shell data-type if content-type is beign defined")
-        if content_type == 'application/json':
-          if not request.data: return response(400, "body must contain data")
-          __type= "json"
-        elif content_type == 'multipart/form-data':
-          if not request.form and not request.files: return response(400, "body must contain data")
-          __type= "multipart"
-      if __type:
-        if __type=="json": # parse json
-          try: __parsed_data__['json']= request.get_json(force=True)
-          except: return response(400, "body contains no valid JSON")
-          if not __parsed_data__['json']: return response(400, "body contains no JSON")
-        if __type=="multipart": # parse multipart json + files
-          try: __parsed_data__['json']= json.loads(request.form['json'])
-          except: pass
-          try: __parsed_data__['files']= request.files
-          except: pass
-          if __parsed_data__['json'] and not __parsed_data__['files']: return response(400, "body contains no data")
-        if required_props: # check required json properties
-          if not __parsed_data__['json']: return response(400, "given required properties but no data received")
-          __json= __parsed_data__['json']
-          for p in required_props:
-            if not p in __json: return response(400, f"missing required property '{p}'")
-            if not __json[p] or (type(__json[p])== str and __json[p]== ""): return response(400, f"empty required property '{p}'")
-          if props_strict and len(__json.keys()) > len(required_props): return response(400, f"too many json properties")
-      if required_params: # check required url parameters
-        __params= {}
-        for p in required_params:
-          if not p in request.args: return response(400, f"missing required url parameter '{p}'")
-          if not request.args[p] or (type(request.args[p])== str and request.args[p]== ""): return response(400, f"empty required url parameter '{p}'")
-          __params[p]= request.args[p]
-        if params_strict and len(__params.keys()) > len(required_params): return response(400, f"too many url parameters")
-        __parsed_data__['params']= __params
+      try:
+        if content_type: # check for content_type
+          if not 'Content-Type' in request.headers or request.headers['Content-Type'] != content_type: return response(400, f"Content-Type is not '{content_type}'")
+          if __type: return response(400, "cannot define shell data-type if content-type is beign defined")
+          if content_type == 'application/json':
+            if not request.data: return response(400, "body must contain data")
+            __type= "json"
+          elif content_type == 'multipart/form-data':
+            if not request.form and not request.files: return response(400, "body must contain data")
+            __type= "multipart"
+        if __type:
+          if __type=="json": # parse json
+            try: __parsed_data__['json']= request.get_json(force=True)
+            except: return response(400, "body contains no valid JSON")
+            if not __parsed_data__['json']: return response(400, "body contains no JSON")
+          if __type=="multipart": # parse multipart json + files
+            try: __parsed_data__['json']= json.loads(request.form['json'])
+            except: pass
+            try: __parsed_data__['files']= request.files
+            except: pass
+            if __parsed_data__['json'] and not __parsed_data__['files']: return response(400, "body contains no data")
+          if required_props: # check required json properties
+            if not __parsed_data__['json']: return response(400, "given required properties but no data received")
+            __json= __parsed_data__['json']
+            for p in required_props:
+              if not p in __json: return response(400, f"missing required property '{p}'")
+              if not __json[p] or (type(__json[p])== str and __json[p]== ""): return response(400, f"empty required property '{p}'")
+            if props_strict and len(__json.keys()) > len(required_props): return response(400, f"too many json properties")
+        if required_params: # check required url parameters
+          __params= {}
+          for p in required_params:
+            if not p in request.args: return response(400, f"missing required url parameter '{p}'")
+            if not request.args[p] or (type(request.args[p])== str and request.args[p]== ""): return response(400, f"empty required url parameter '{p}'")
+            __params[p]= request.args[p]
+          if params_strict and len(__params.keys()) > len(required_params): return response(400, f"too many url parameters")
+          __parsed_data__['params']= __params
 
-      return current_app.ensure_sync(fn)(*args, **kwargs, **__parsed_data__) # execute the actual endpoint function
+        return current_app.ensure_sync(fn)(*args, **kwargs, **__parsed_data__) # execute the actual endpoint function
       
-      #except Exception as e: # any unhandled error (even in endpoint function) ends up here
-      #  print(e)
-      #  return response_500(repr(e))
+      except Exception as e: # any unhandled error (even in endpoint function) ends up here
+        print(e)
+        return response_500(repr(e))
       
     return decorator
 
@@ -235,3 +245,138 @@ def jwt_forbidden(
     return decorator
 
   return wrapper
+
+# load obvects from a json file
+def load_rows_from_file(filepath):
+
+  jdata= json.loads(read_file(filepath))
+
+  # User
+  if 'users' in jdata:
+
+    for data in jdata["users"]:
+      
+      try:
+
+        # skip if already exists
+        if db.session.query(User).filter(
+          User.username== data['username'] or
+          User.email== data['email']
+        ).first(): continue
+
+        # random avatar
+        avatar= data['avatar'].lower() if data['avatar'] else 'default'
+        if avatar == 'default': data['avatar']= DEFAULT_ICON['user']
+        elif avatar == 'random': data['avatar']= f"https://api.dicebear.com/8.x/pixel-art/png?seed={data['username']}"
+        
+        data['password']= hash_password(data['password'])
+
+        # add to database
+        db.session.add(User(
+          **data,
+          millistamp= get_current_millistamp()
+        ))
+
+      except Exception as e:
+        print(f"---- couldn't add user...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+
+  # Workspace
+  if 'workspaces' in jdata:
+    for data in jdata["workspaces"]:
+      
+      try:
+        
+        icon= data['icon'].lower() if data['icon'] else 'default'
+        if icon == 'default': data['icon']= DEFAULT_ICON['workspace']
+        
+        thumbnail= data['thumbnail'].lower() if data['thumbnail'] else 'default'
+        if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['workspace']
+        
+        # add to database
+        db.session.add(Workspace(
+          **data,
+          millistamp= get_current_millistamp()
+        ))
+
+      except Exception as e:
+        print(f"---- couldn't add workspace...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+      
+  # Board
+  if 'boards' in jdata:
+    for data in jdata["boards"]:
+      
+      try:
+        
+        icon= data['icon'].lower() if data['icon'] else 'default'
+        if icon == 'default': data['icon']= DEFAULT_ICON['workspace']
+        
+        thumbnail= data['thumbnail'].lower() if data['thumbnail'] else 'default'
+        if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['workspace']
+        
+        # add to database
+        db.session.add(Board(
+          **data,
+          millistamp= get_current_millistamp()
+        ))
+
+      except Exception as e:
+        print(f"---- couldn't add board...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+      
+  # List
+  if 'lists' in jdata:
+    for data in jdata["lists"]:
+      
+      try:
+
+        # add to database
+        db.session.add(List(
+          **data,
+          millistamp= get_current_millistamp()
+        ))
+
+      except Exception as e:
+        print(f"---- couldn't add list...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+      
+  # Task
+  if 'tasks' in jdata:
+    for data in jdata["tasks"]:
+      
+      try:
+        
+        # add to database
+        db.session.add(Task(
+          **data,
+          millistamp= get_current_millistamp()
+        ))
+
+      except Exception as e:
+        print(f"---- couldn't add task...\n")
+        print(data)
+        print(type(e), e.__repr__())
+        print('\n')
+        continue
+
+  db.session.commit()
+
+#--- clears all data in the database
+def clear_database(commit):
+  for table in db.metadata.sorted_tables:
+    db.session.execute(table.delete())
+  if commit:
+    db.session.commit()

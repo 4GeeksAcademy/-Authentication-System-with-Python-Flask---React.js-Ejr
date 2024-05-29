@@ -42,6 +42,11 @@ const Utils= {
     return v
   },
 
+  /** select only the auth cookies */
+  getCredentialCookies: ()=>{
+    return (document.cookie.split("; ")?.filter(e=>e.startsWith(`access_token_cookie=`) || e.startsWith(`csrf_access_token=`)))?.join()??""
+  },
+
   /** read a cookie and returns it, or undefined if not found */
   getCookie: (cookie)=>{
     const result= document.cookie.split("; ")?.find(e=>e.startsWith(`${cookie}=`))

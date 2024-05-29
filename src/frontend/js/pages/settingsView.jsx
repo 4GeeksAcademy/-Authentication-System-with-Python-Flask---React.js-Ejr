@@ -10,7 +10,7 @@ const SettingsView = () => {
       <h1>Hello world // Settings View // Requires Auth</h1>
       { store.userData ?
         <div className="py-5">
-          <img className="mx-auto" src={store.userData.avatar} />
+          <img className="mx-auto min-w-40" src={store.userData.avatar} />
           <p>username: {store.userData.username}</p>
           <p>alias: {store.userData.displayname}</p>
           <p>email: {store.userData.email}</p>

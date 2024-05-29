@@ -43,23 +43,49 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
     },
 		actions: {
 
-      // #region ----------------------------------------------------------------------------------------- DATA MANAGEMENT
+      // #region ----------------------------------------------------------------------------------------- INITIALIZATION
 
       // initialization tasks, on page loading or refreshing (f5)
       initialize: async ()=>{
 
         const _actions= getActions()
-
+        
         _actions.loadUserPrefs()
         _actions.loadDevPrefs()
 
         // do initialization tasks
+
+        await _actions.fetchUpdateUser()
 				
         // keep this following lines at the end of the function
         mergeStore({ readyState: { frontend: true }}) // mark frontend as ready
-        await getActions().checkBackendHealth() // check if backend is ready, and set it accordly
-        if(!getStore().readyState.backend) console.log("Couldn't connect to backend, page will render in offline mode")
+        getActions().checkBackendHealth() // check if backend is ready, and set it accordly
       },
+
+			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
+			checkBackendHealth: async ()=>{
+				try{
+					const res = await fetch(Utils.getBackendUrl("", "/healthcheck"), { method: "GET", mode: "no-cors" })
+          mergeStore({ readyState: { backend: res.status===200 } })
+          return true
+				}
+				catch(e){ console.log("BackEnd error:", e) }
+        mergeStore({ readyState: { backend: false } })
+        console.log("Couldn't connect to backend, page will render in offline mode")
+				return false
+			},
+
+      fetchUpdateUser: async ()=>{ 
+        const user= await getActions().accounts_currentUser()
+        console.log(user)
+        if(user && user != getStore().userData) {
+          console.log("gotcha!")
+          setStore({userData: user})
+        }
+      },
+      // #endregion
+
+      // #region ----------------------------------------------------------------------------------------- DATA MANAGEMENT
 
       getUserPref:(pref)=>{ return getStore().userPrefs[pref]?? null },
       
@@ -172,7 +198,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       // #region ----------------------------------------------------------------------------------------- ACCOUNTS
 
       /** registers a new account */
-      accounts_signup: async (username, displayname, email, password, remember)=>{
+      accounts_signup: async (username, displayname, email, password, remember, loginafter)=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"POST|accounts:/signup",
           body: {
@@ -181,15 +207,13 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
             email: email,
             password: password,
             login: 0,
-            loginafter: loginafter,
+            loginafter: loginafter ? 1 : 0,
             remember: remember ? 1 : 0
           }
         })
-        if((200,201).includes(res.status) && loginafter){
-          const data= await res.json()
-          setStore({userData: data.res})
-        }
-        return {status: res.status, msg: res.msg}
+        const data= await res.json()
+        if([200,201].includes(res.status) && loginafter) setStore({userData: data.res})
+        return {status: res.status, msg: data.msg}
       },
 
       /** login into the account with given credentials */
@@ -203,8 +227,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
           }
         })
         if(res.status==200) {
-          const data= res.json()
-          if(data.res) setStore({userData: res})
+          if(res.data) setStore({userData: res.data})
         }
         return {status: res.status, msg: res.msg}
       },
@@ -214,6 +237,9 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|accounts:/logout"
         })
+        if(res.status==200) {
+          if(res.data) setStore({userData: res.data})
+        }
         return {status: res.status, msg: res.msg}
       },
 
@@ -224,8 +250,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
           res= await getActions().simpleBackendRequest({
             endpoint:"GET|accounts:/rotate_4da6b724968255957637bec4"
           })
-          if(res.status===119) continue;
-          if((419,200,-1).includes(res.status) || i<=0) break;
+          if([419,200,-1].includes(res.status) || i<=0) break;
         }
         return {status: res.status, msg: res.msg}
       },
@@ -235,7 +260,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|accounts:/user"
         })
-        return {status: res.status, msg: res.msg}
+        if(res.status==200 && res.data) return res.data
+        return null
       },
 
       /** get if username is registered */
@@ -330,24 +356,34 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       },
       //#endregion
 
-      simpleBackendRequest: async ({endpoint, body=null, credentials=true, mimetype=null})=>{
+      simpleBackendRequest: async ({endpoint, body=null, credentials=true, mimetype='application/json'})=>{
         let res= null
         try{
           const
-            endpointData= /(?:^([A-z]+)\||^)(?:([^:]+):|)(.*)/.exec(endpoint)
-            location= Utils.getBackendUrl(...([endpointData[2]??"", endpointData[3]]))
-          
-				  res= await fetch(Utils.getBackendUrl(location), {
-            method: endpointData[0],
-            ...(credentials? {credentials: include} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
-            ...(body? {
-              headers: { 'Content-Type': mimetype?? 'application/json' },
+            endpointData= /(?:^([A-z]+)\||^)(?:([^:]+):|)(.*)/.exec(endpoint),
+            endpointLocation= Utils.getBackendUrl(...([endpointData[2]??"", endpointData[3]]))
+
+				  res= await fetch(endpointLocation, {
+            method: endpointData[1],
+            mode: "cors",
+            ...(credentials? {credentials: 'include'} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
+            ...(body ? {
+              headers: { 
+                'Cookie': Utils.getCredentialCookies(),
+                'Content-Type': mimetype
+              },
               body: JSON.stringify(body)
             } : {})
           })
+          const data= await res.json()
+          if(res.status === 119){
+            setStore({userData: data.res})
+            return await actions.simpleBackendRequest(endpoint, body, credentials, mimetype)
+          }
+          return { status: res.status, msg: data?.msg??"missing message", data: data?.res??null}
         }
-				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}`, e) }
-        return res? {status: res.status, msg: res.msg} : {status: -1, msg: "internal error"}
+				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}\n`, e) }
+        return { status: -1, msg:"unhandled error" }
       },
 
       // #region ----------------------------------------------------------------------------------------- BOARDS
@@ -365,18 +401,6 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       addChildItem: async (id, type)=>{
         // backend -> POST create item and get resulting element
       },
-
-			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
-			checkBackendHealth: async ()=>{
-				try{
-					const res = await fetch(Utils.getBackendUrl("", "/healthcheck"), { method: "GET", cors: "no-cors" })
-          mergeStore({ readyState: { backend: res.status===200 } })
-          return true
-				}
-				catch(e){ console.log("BackEnd error:", e) }
-        mergeStore({ readyState: { backend: false } })
-				return false
-			},
       //#endregion
 
       // #region ----------------------------------------------------------------------------------------- DEVELOPER ONLY

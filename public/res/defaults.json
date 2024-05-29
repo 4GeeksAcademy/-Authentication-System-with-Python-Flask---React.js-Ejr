@@ -1,0 +1,88 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "displayname": "SuperpowersMan",
+      "email": "admin_keqqu@fakemail.com",
+      "password": "pajoteslejanos",
+      "avatar": "random",
+      "permission": 1
+    },
+    {
+      "username": "firstuser",
+      "displayname": "The First User",
+      "email": "hello_world@fakemail.com",
+      "password": "whatever",
+      "avatar": "random"
+    },
+    {
+      "username": "calitony",
+      "displayname": "Antonio Calimero Quinto",
+      "email": "retrantonio@fakemail.com",
+      "password": "calimero69",
+      "avatar": "random"
+    }
+  ],
+  "workspaces": [
+    {
+      "title": "a workspace",
+      "icon": "default",
+      "thumbnail": "default",
+      "owner_id": 0,
+      "settings": "0"
+    }
+  ],
+  "boards": [
+    {
+      "name": "the firt db board",
+      "description": "this is a description for a board, nice",
+      "icon": "default",
+      "thumbnail": "default",
+      "owner_id": 0,
+      "workspace_id": 0,
+      "settings": "1024|2048|0|0|1.0|#333"
+    }
+  ],
+  "lists": [
+    {
+      "title": "first db list",
+      "board_id": 0,
+      "settings": "128|256|-1|-1"
+    },
+    {
+      "title": "second db list",
+      "board_id": 0,
+      "settings": "-320|100|-1|-1"
+    }
+  ],
+  "tasks": [
+    {
+      "label": "shit bricks",
+      "description": "a description",
+      "icon": null,
+      "position": 0,
+      "list_id": 0
+    },
+    {
+      "label": "below bricks",
+      "description": "a description",
+      "icon": null,
+      "position": 1,
+      "list_id": 0
+    },
+    {
+      "label": "the last",
+      "description": "a description",
+      "icon": null,
+      "position": 2,
+      "list_id": 0
+    },
+    {
+      "label": "in other list",
+      "description": "a description",
+      "icon": null,
+      "position": 0,
+      "list_id": 1
+    }
+  ]
+}

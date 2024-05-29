@@ -87,7 +87,7 @@ class User(db.Model):
       "username": self.username,
       "displayname": self.displayname,
       "email": self.email,
-      "avatar": get_public_link(self.avatar) if not 'dicebear.com' in self.avatar else self.avatar,
+      "avatar": get_public_link(self.avatar) if not '://' in self.avatar else self.avatar,
       "settings": self.settings,
       "last_visits": [self.last_workspace_id, self.last_board_id],
 
@@ -107,18 +107,18 @@ class Workspace(db.Model):
   title = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
   thumbnail = db.Column(db.String(256))
-  settings= db.Column(db.String(16))
+  settings= db.Column(db.String(256), nullable=False)
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)
+
+  # read_write_rules
+  rwr_id = db.Column(db.Integer, db.ForeignKey('read_write_rules.id'))
+  rwr_ = db.relationship("ReadWriteRules", remote_side="[ReadWriteRules.id]", uselist=False)
 
   # owner
   owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   owner_ = db.relationship("User", back_populates="workspaces_owned_", foreign_keys="[Workspace.owner_id]")
   
-  # read_write_rules
-  rwr_id = db.Column(db.Integer, db.ForeignKey('read_write_rules.id'))
-  rwr_ = db.relationship("ReadWriteRules", remote_side="[ReadWriteRules.id]", uselist=False)
-
   # boards
   boards_ = db.relationship("Board", back_populates="workspace_")
 
@@ -128,7 +128,6 @@ class Workspace(db.Model):
   def serialize(self):
     return {
       "id": self.id,
-      "rws": self.rws,
       "title": self.title,
       "icon": self.icon,
       "thumbnail": self.thumbnail,
@@ -149,7 +148,7 @@ class Board(db.Model):
   description = db.Column(db.String(1024), nullable=False)
   icon = db.Column(db.String(256))
   thumbnail = db.Column(db.String(256))
-  settings= db.Column(db.String(16))
+  settings= db.Column(db.String(256), nullable=False)
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)
 
@@ -181,9 +180,10 @@ class Board(db.Model):
     return {
       "id": self.id,
       "name": self.name,
+      "description": self.description,
       "icon": self.icon,
       "thumbnail": self.thumbnail,
-      "settings": self.thumbnail,
+      "settings": self.settings,
       "rwr_id": self.rwr_id,
       "workspace_id": self.workspace_id,
       "archived": self.archived,
@@ -196,8 +196,9 @@ class Board(db.Model):
 class List(db.Model):
   __tablename__="lists"
   id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-  label = db.Column(db.String(64), nullable=False)
+  title = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
+  settings= db.Column(db.String(256), nullable=False)
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)
 
@@ -220,8 +221,9 @@ class List(db.Model):
   def serialize(self):
     return {
       "id": self.id,
-      "label": self.label,
+      "title": self.title,
       "icon": self.icon,
+      "settings": self.settings,
       "rwr_id": self.rwr_id,
       "board_id": self.board_id,
       "archived": self.archived,
@@ -237,6 +239,7 @@ class Task(db.Model):
   label = db.Column(db.String(64), nullable=False)
   icon = db.Column(db.String(256))
   description = db.Column(db.String(1024))
+  position = db.Column(db.Integer, nullable=False)
   due_date = db.Column(db.Integer)
   archived = db.Column(db.Boolean, nullable=False, default=False)
   millistamp = db.Column(db.Integer, nullable=False, default=0)

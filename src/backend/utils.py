@@ -170,7 +170,7 @@ def fnv11024(data, text=False):
 
 #-- reads a file from backend static
 def read_file(url):
-  http = urllib3.PoolManager()
+  http = urllib3.PoolManager(cert_reqs='CERT_NONE')
   full_url = f"{os.environ.get('PROTOCOL','https://')}{os.environ.get('SERVER_NAME')}/{url}"
   response = http.request('GET', full_url)
   return str(response.data, 'utf-8')
@@ -210,8 +210,6 @@ def generate_sitemap_v2(app, entitytypes=None):
   endpoint_raw_link= []
   endpoint_raw_span= []
 
-  forbiddens=  ("serve_any_other_file")
-
   for rule in app.url_map.iter_rules():
     if has_no_empty_params(rule) and not re.search(r'wipe|execute|admin', rule.endpoint):
       link= _get_link(url_for(rule.endpoint, **(rule.defaults or {})))
@@ -225,11 +223,9 @@ def generate_sitemap_v2(app, entitytypes=None):
   if entitytypes:
     endpoint_link+= "".join([f"<li><div class=\"method method-get\">GET</div><a class=\"apilink-api\" href=\"{l}\">{l}</a></li>" for l in entitytypes])
 
-  html= read_file("res/index.html")
-  #css= read_file("res/styles.css")
+  html= open("public/res/index.html").read()
 
   html= html.replace("%SWATCH%", os.environ.get('BOOTSTRAP_THEME', 'slate'))
-  #html= html.replace("%CSS%",css)
   html= html.replace("%ADMIN_LINK%",admin_link)
   html= html.replace("%ENDPOINT_LINK%",endpoint_link)
   html= html.replace("%ENDPOINT_SPAN%",endpoint_span)

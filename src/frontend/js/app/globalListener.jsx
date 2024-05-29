@@ -20,12 +20,6 @@ const GlobalListener=()=>{
   React.useEffect(()=>{
   },[])
 
-  /** -------------------------------------------------- AUTH RELATED THINGS */
-
-  React.useEffect(()=>{
-    console.log("user state changed: ")
-  },[store.userData])
-
   /** -------------------------------------------------- LANGUAGE UPDATER */
 
   React.useEffect(()=>{
@@ -70,6 +64,8 @@ const GlobalListener=()=>{
 
   React.useEffect(()=>{
 
+    console.log("hi there")
+
     // saves current page on store.activePage, can be tested against Constants.PAGE.***
     const 
       path= window.location.pathname.toLowerCase(),
@@ -77,7 +73,7 @@ const GlobalListener=()=>{
       idx= Constants.PAGE[page?? Constants.PAGE.login]
 
     actions.setActivePage(idx)
-  },[loc])
+  },[loc, window.location.pathname])
   
   function refreshPageTitle(){ // from location effect
     const 
