@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/profile.css';
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
@@ -103,7 +104,7 @@ export const Profile = () => {
             {!isEditing ? (
                 <div>
                     {profileData.url_image && (
-                        <img src={profileData.url_image} alt="Profile" style={{ width: '150px', height: '150px' }} />
+                        <img src={profileData.url_image} alt="Profile"  className="profile-image"/>
                     )}
                     <p>Email: {profileData.email}</p>
                     <p>Username: {profileData.username}</p>

@@ -59,21 +59,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const file = await response.json();
                     const originalUrl = file.secure_url;
             
-                    // Aplica transformaciones a la URL de la imagen
-                    const transformations = 'ar_1:1,c_auto,g_auto,w_500,r_max';
-                    const transformedUrl = originalUrl.replace('/upload/', `/upload/${transformations}/`);
-                    
-                    console.log("Transformed URL: ", transformedUrl); // Verificar la URL transformada
+                    console.log("Original URL: ", originalUrl); // Verificar la URL original
             
-                    return transformedUrl;
+                    return originalUrl;
                 } catch (error) {
                     console.error('Error uploading image:', error);
                     return null;
                 }
             },
             
-            
-
+                       
             submitSignUpForm: async (signUpData) => {
                 try {
                     // Extrae imageFile de signUpData y guarda el resto de los datos en 'rest'
@@ -82,8 +77,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let imageUrl = null;
                     if (imageFile) {
                         // Si hay un archivo de imagen, súbelo a Cloudinary usando la acción uploadImageToCloudinary
-                        imageUrl = await getActions().uploadImageToCloudinary(imageFile);
-                        if (!imageUrl) throw new Error('Failed to upload image to Cloudinary');
+                        const originalUrl = await getActions().uploadImageToCloudinary(imageFile);
+                        if (!originalUrl) throw new Error('Failed to upload image to Cloudinary');
+            
+                        console.log("Original URL from Cloudinary: ", originalUrl);
+            
+                        // Aplica transformaciones a la URL de la imagen
+                        const transformations = 'ar_1:1,c_auto,g_auto,w_500,r_max';
+                        imageUrl = originalUrl.replace('/upload/', `/upload/${transformations}/`);
+            
+                        console.log("Transformed URL: ", imageUrl); // Verificar la URL transformada
+                    }
+            
+                    // Si no hay imagen, establecer un valor predeterminado o manejar el caso como prefieras
+                    if (!imageUrl) {
+                        imageUrl = 'default_image_url'; // Cambia esto según sea necesario
                     }
             
                     console.log("Image URL to be saved: ", imageUrl); // Verificar la URL antes de guardarla

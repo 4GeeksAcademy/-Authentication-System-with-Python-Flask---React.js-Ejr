@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import Cropper from 'react-easy-crop';
+import getCroppedImg from './cropImage'; // Asegúrate de tener la función cropImage en este archivo
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"; // Importación de los iconos
 import "../../styles/SignUp.css";
 
@@ -36,6 +38,12 @@ export const SignUp = () => {
     const [passwordStrength, setPasswordStrength] = useState(0);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [imageSrc, setImageSrc] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
 
     const validateForm = () => {
         const errors = {};
@@ -87,6 +95,26 @@ export const SignUp = () => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSignUpData({ ...signUpData, imageFile: file });
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageSrc(reader.result);
+            setIsCropping(true); // Cambiar a modo de recorte cuando se carga una imagen
+        };
+    };
+
+    const handleComplete = async () => {
+        try {
+            const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
+            const croppedImageUrl = URL.createObjectURL(croppedImage);
+            setCroppedImage(croppedImageUrl);
+            setSignUpData({ ...signUpData, imageFile: croppedImage });
+            setIsCropping(false); // Salir del modo de recorte y ocultar el Cropper
+            setImageSrc(null); // Ocultar el Cropper
+        } catch (error) {
+            console.error('Error cropping image:', error);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -94,6 +122,9 @@ export const SignUp = () => {
         if (validateForm()) {
             setLoading(true);
             try {
+                if (isCropping) {
+                    await handleComplete(); // Asegurar que la imagen recortada esté lista
+                }
                 let success = await actions.submitSignUpForm(signUpData);
                 if (success) {
                     navigate('/login');
@@ -395,6 +426,25 @@ export const SignUp = () => {
                             name="image"
                             onChange={handleFileChange}
                         />
+                        {imageSrc && isCropping && (
+                            <div>
+                                <Cropper
+                                    image={imageSrc}
+                                    crop={crop}
+                                    zoom={zoom}
+                                    aspect={1}
+                                    onCropChange={setCrop}
+                                    onCropComplete={(_, croppedAreaPixels) => setCroppedAreaPixels(croppedAreaPixels)}
+                                    onZoomChange={setZoom}
+                                />
+                                <button type="button" className="btn btn-success mt-2" onClick={handleComplete}>
+                                    Confirm Crop
+                                </button>
+                            </div>
+                        )}
+                        {croppedImage && (
+                            <img src={croppedImage} alt="Cropped" className="profile-image" />
+                        )}
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100 mt-3">Sign Up</button>
@@ -409,4 +459,3 @@ export const SignUp = () => {
         </div>
     );
 };
-
