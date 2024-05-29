@@ -19,17 +19,26 @@ from backend.routes_objects import objects
 from backend.routes import api
 
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
-app = Flask(__name__, subdomain_matching= api_utils.IS_PRODUCTION )
+#app = Flask(__name__, subdomain_matching=True)
+app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.url_map.redirect_defaults= False
 print("Serving static files from: " + static_file_dir)
 
+# Definir ENV antes de usarlo
+ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
+IS_PRODUCTION = ENV == "prod"
+
 # config
+app.url_map.default_subdomain = ""
+app.config['SERVER_NAME']= os.environ.get("SERVER_NAME", "localhost.com:3001")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["JWT_SECRET_KEY"]= os.environ.get("FLASK_APP_KEY", "la_coyuntura_de_los_afluentes_tamizados")
 app.config["JWT_TOKEN_LOCATION"]= ('cookies')
-app.config["JWT_COOKIE_SECURE"] = api_utils.IS_PRODUCTION # cookies must be sent over https in production
+app.config["JWT_COOKIE_SECURE"] = ENV == "prod" # cookies must be sent over https in production
+app.config["JWT_COOKIE_DOMAIN"] = app.config['SERVER_NAME']
+app.config["JWT_COOKIE_SAMESITE"] = "strict"
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)
 
@@ -54,7 +63,8 @@ else:
   app.register_blueprint(api, url_prefix='/api')
 
 MIGRATE = Migrate(app, db, compare_type=True)
-CORS(app)
+CORS(app, supports_credentials=True)
+app.config['CORS_HEADERS'] = 'Content-Type'
 db.init_app(app)
 setup_admin(app)
 setup_commands(app)
@@ -72,24 +82,25 @@ if api_utils.IS_PRODUCTION:
 # root
 @app.route('/')
 def sitemap():
-  if not api_utils.IS_PRODUCTION: return generate_sitemap_v2(app)
+  print("hello")
+  if ENV == "dev": return generate_sitemap_v2(app)
   return send_from_directory(static_file_dir, 'index.html')
 
 @app.route('/reset_database')
 def database_reset():
   api_utils.load_rows_from_file("res/defaults.json")
-  return api_utils.response_plain(204, "ok")
+  return api_utils.response_plain(200, "ok")
   
 @app.route('/clear_database')
 def database_clear():
   api_utils.clear_database(True)
-  return api_utils.response_plain(204, "ok")
+  return api_utils.response_plain(200, "ok")
   
 @app.route('/rollback_database')
 def database_rollback():
   db.session.rollback()
   db.session.commit()
-  return api_utils.response_plain(204, "ok")
+  return api_utils.response_plain(200, "ok")
 
 # basic health check
 @app.route('/healthcheck', methods=['GET'])
@@ -124,11 +135,11 @@ def handle_missing_required_jwt(header):
 @jwt.expired_token_loader
 def handle_expired_token(jwt_header, jwt_payload):
   if jwt_payload['type'] == 'access':
-    identity = get_jwt_identity()
+    identity = jwt_payload['sub']
     user= db.session.get(User, identity['i'])
     rtoken= str(user.refreshtoken, 'utf-8') if user.refreshtoken != None else None
     if rtoken:
-      fres= api_utils.response_119() # session refreshed // not standard HTTP
+      fres= api_utils.response_119(user.serialize()) # session refreshed // not standard HTTP
       return api_utils.create_new_access_token(fres, identity)
 
   return api_utils.response_419() # session expired

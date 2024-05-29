@@ -16,12 +16,9 @@ const GlobalListener=()=>{
     loc= useLocation(),
     nav= useNavigate()
 
-  /** -------------------------------------------------- AUTH RELATED THINGS */
-
+  // this effect is for testing anything, executed on page refresh
   React.useEffect(()=>{
-    if(store.userData != null){
-    }
-  },[store.userData])
+  },[])
 
   /** -------------------------------------------------- LANGUAGE UPDATER */
 
@@ -67,6 +64,8 @@ const GlobalListener=()=>{
 
   React.useEffect(()=>{
 
+    console.log("hi there")
+
     // saves current page on store.activePage, can be tested against Constants.PAGE.***
     const 
       path= window.location.pathname.toLowerCase(),
@@ -74,7 +73,7 @@ const GlobalListener=()=>{
       idx= Constants.PAGE[page?? Constants.PAGE.login]
 
     actions.setActivePage(idx)
-  },[loc])
+  },[loc, window.location.pathname])
   
   function refreshPageTitle(){ // from location effect
     const 

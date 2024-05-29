@@ -7,9 +7,8 @@ FILE_ALLOW_FORMATS= ('JPEG','JPEG2000','PNG','WEBP','GIF','ICO','TGA','PCX','BMP
 AWS_BUCKET= os.environ.get("AWS_BUCKET")
 AWS_BUCKET_HOST= os.environ.get("AWS_BUCKET_HOST")
 
-DEFAULT_AVATAR= "9b91c73edab5806d5cdcf677workspace0.png",
-
 DEFAULT_ICON= {
+  "user": "3216b3625168ff177d32469davatar0.png",
   "workspace": "9b91c73edab5806d5cdcf677workspace0.png",
   "project": "2661dec0e01b1ff5495e106fproject0.png",
   "board": "8ee818bb02ce3a8c2d87071aboard0.png"

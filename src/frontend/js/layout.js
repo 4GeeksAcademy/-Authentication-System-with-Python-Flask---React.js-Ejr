@@ -27,14 +27,9 @@ const noAuthBase= <Redirector url="/login" replace/>
 
 const Layout = () => {
   const 
-    { store }= React.useContext(Context),
-    [ auth, set_auth ]= React.useState(null)
+    { store }= React.useContext(Context)
 
-  React.useEffect(()=>{
-    set_auth(store.userData != null)
-  },[store.userData])
-
-  function onlyAuth(element){ return auth ? element : noAuthBase }
+  function onlyAuth(element){ return store.userData ? element : noAuthBase }
 
   // strict means it wont accept trailing slashes, so "/settings" works while "/settings/" not
   // exact means exact, needed in some cases where we don't want "parent" routes to interfere in children ones

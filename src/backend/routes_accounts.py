@@ -1,10 +1,11 @@
 from flask import request, Blueprint, Response
+from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
 from .models import db, User
 from .utils import parse_int, parse_bool, generate_vericode, get_vericode_string, generate_passcode, get_passcode_string
 from .email import send_verification_email, send_recovery_email
 from . import api_utils
-from . import aws_utils
+from .aws_utils import uploadFile, DEFAULT_ICON
 from .utils import get_current_millistamp
 
 # ---------------------------------------------------------------------------- accounts.keqqu.com/* ----------------------------------------------------------------------------
@@ -22,6 +23,8 @@ def handle_accounts(): return "accounts subdomain", 200
 @api_utils.jwt_forbidden(400, "already logged in")
 @api_utils.endpoint_safe( content_type="application/json", required_props=("username", "displayname", "email", "password"))
 def handle_accounts_signup(json):
+  
+  print("reached")
 
   login= parse_bool(json['login'] if 'login' in json else request.args.get("login", 0))
 
@@ -42,7 +45,7 @@ def handle_accounts_signup(json):
     displayname= json['displayname'],
     password= api_utils.hash_password(json['password']),
     email= json['email'],
-    avatar= json['avatar'],
+    avatar= DEFAULT_ICON['user'],
     permission= 1 if 'creamyfapxd2024' in json else 0,
     millistamp= get_current_millistamp()
   )
@@ -125,7 +128,7 @@ def handle_accounts_user_patch(json, files):
 
     if 'avatar' in files:
       filestorage = files['avatar']
-      s3path= aws_utils.uploadFile(filestorage, "avatar", user.username)
+      s3path= uploadFile(filestorage, "avatar", user.username)
       user.avatar= s3path
       pass
 

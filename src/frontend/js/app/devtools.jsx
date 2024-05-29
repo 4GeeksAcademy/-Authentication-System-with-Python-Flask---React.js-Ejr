@@ -38,9 +38,15 @@ const _DEVTOOL_POSITIONS= Object.freeze([
   [[" bottom-4 right-4"],   [" flex-row-reverse mt-2"],   [" flex-col-reverse"]]
 ])
 
+const _MODENAMES= Object.freeze([
+  "GENERAL",
+  "ENPOINTS"
+])
+
 const DevTools = () => {
   const 
     { language, store, actions }= React.useContext(Context),
+    [ mode, set_mode ]= React.useState(0),
     nav= useNavigate()
 
   // ------------------------------------------------------------------- DEV
@@ -64,6 +70,9 @@ const DevTools = () => {
     actions.accounts_signup("username", "displayname", "email@email.com", "cojones33", false, true)
     Utils.cancelEvent(e); actions.toggleDevAuth()}
   function toggle_fakeOwner(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_FAKEOWNER)}
+  
+  async function execute_test(e){ 
+  }
 
   // ------------------------------------------------------------------- USER
   const 
@@ -79,9 +88,31 @@ const DevTools = () => {
     }
   }
 
+  function cycle_mode(e){ 
+    if(store.readyState.language){
+      Utils.cancelEvent(e)
+      set_mode(mode < _MODENAMES.length -1 ? mode+1 : 0)
+    }
+  }
+
   function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
   function save_userPrefs(e){ Utils.cancelEvent(e); actions.saveUserPrefs() }
   function navigate_page(e, url){ Utils.cancelEvent(e); nav(url) }
+  
+  async function execute(i){
+    switch(i){
+      case 0: 
+        console.log( await actions.accounts_signup("userxx", "display xx", "feliznavidad@fakemail.com", "cojones44", false, true))
+        break
+      case 1: 
+        console.log( await actions.accounts_login("userxx", "cojones44", true))
+        break
+      case 2: 
+        console.log( await actions.accounts_logout())
+        break
+    }
+   
+  }
   
   // ------------------------------------------------------------------- RETURN
   return (
@@ -91,41 +122,60 @@ const DevTools = () => {
           <button className="bg-slate-400 px-0.5 rounded-md w-7 aspect-square" onClick={toggle_devTools}>{_devToolState ? "❌" : "🛠️"}</button>
         </div>
         { _devToolState &&
-        <div className="max-h-70scr w-36 overflow-hidden bg-black bg-opacity-50 border border-slate-600 rounded-xl">
-          <div className="max-h-70scr hidescroll-y overflow-x-hidden overflow-y-scroll">
-            <div className="flex flex-col w-36 gap-2 p-2">
-              <p>-- devPrefs --</p>
-              <button className="devtools-btn w-32" onClick={toggle_devRender}>devRender: {_devRender ? "true" : "false"}</button>
-              <button className="devtools-btn w-32" onClick={toggle_fakeAuth}>fake auth: {_fakeAuth ? "true" : "false"}</button>
-              <button className="devtools-btn w-32" onClick={toggle_fakeOwner}>fake owner: {_fakeOwner ? "true" : "false"}</button>
-              <div className="flex flex-col w-28 mx-auto border border-gray-600 gap-2">
-                <div className="flex justify-between">
-                  <button className="devtools-corner-btn rounded-br-3xl" onClick={(e)=>{move_devToolsPanel(e, 0)}}>TL</button>
-                  <button className="devtools-corner-btn rounded-bl-3xl" onClick={(e)=>{move_devToolsPanel(e, 1)}}>TR</button>
-                </div>
-                <div className="flex justify-between">
-                  <button className="devtools-corner-btn rounded-tr-3xl" onClick={(e)=>{move_devToolsPanel(e, 2)}}>BL</button>
-                  <button className="devtools-corner-btn rounded-tl-3xl" onClick={(e)=>{move_devToolsPanel(e, 3)}}>BR</button>
-                </div>
-              </div>
-              <p>-- userPrefs --</p>
-              <button className="devtools-btn w-32" onClick={toggle_darkModeState}>{_userDarkMode ? "dark mode" : "light mode"}</button>
-              <button className="devtools-btn w-32" onClick={cycle_language}>language: {language.get("_name")}</button>
-              <div className="flex gap-3">
-                <button className="devtools-btn w-20" onClick={load_userPrefs}>load</button>
-                <button className="devtools-btn w-20" onClick={save_userPrefs}>save</button>
-              </div>
-              <p>-- navigation --</p>
-              <div className="flex flex-col gap-1">
-                { _DEV_PAGES.map((p,i)=> p[0] ?
-                  <button key={`nav-${i}-${p[0]}`} className={"devtools-btn w-32 " + (window.location.pathname.toLowerCase()===p[1] ? "active" : "")} onClick={(e)=>{navigate_page(e, p[1])}}>{p[0]}</button>
-                  :
-                  <div key={`sep-${i}`} className="h-1"></div>
-                )}
+        <>
+          <button className="devtools-btn w-32" onClick={cycle_mode}>mode: {_MODENAMES[mode]}</button>
+          <div className="max-h-70scr w-36 overflow-hidden bg-black bg-opacity-50 border border-slate-600 rounded-xl">
+            <div className="max-h-70scr hidescroll-y overflow-x-hidden overflow-y-scroll">
+              <div className="flex flex-col w-36 gap-2 p-2">
+              { mode=== 0 &&
+                <>
+                  <p>-- devPrefs --</p>
+                  <button className="devtools-btn w-32" onClick={toggle_devRender}>devRender: {_devRender ? "true" : "false"}</button>
+                  <button className="devtools-btn w-32" onClick={toggle_fakeAuth}>fake auth: {_fakeAuth ? "true" : "false"}</button>
+                  <button className="devtools-btn w-32" onClick={toggle_fakeOwner}>fake owner: {_fakeOwner ? "true" : "false"}</button>
+                  <div className="flex flex-col w-28 mx-auto border border-gray-600 gap-2">
+                    <div className="flex justify-between">
+                      <button className="devtools-corner-btn rounded-br-3xl" onClick={(e)=>{move_devToolsPanel(e, 0)}}>TL</button>
+                      <button className="devtools-corner-btn rounded-bl-3xl" onClick={(e)=>{move_devToolsPanel(e, 1)}}>TR</button>
+                    </div>
+                    <div className="flex justify-between">
+                      <button className="devtools-corner-btn rounded-tr-3xl" onClick={(e)=>{move_devToolsPanel(e, 2)}}>BL</button>
+                      <button className="devtools-corner-btn rounded-tl-3xl" onClick={(e)=>{move_devToolsPanel(e, 3)}}>BR</button>
+                    </div>
+                  </div>
+                  <p>-- userPrefs --</p>
+                  <button className="devtools-btn w-32" onClick={toggle_darkModeState}>{_userDarkMode ? "dark mode" : "light mode"}</button>
+                  <button className="devtools-btn w-32" onClick={cycle_language}>language: {language.get("_name")}</button>
+                  <div className="flex gap-3">
+                    <button className="devtools-btn w-20" onClick={load_userPrefs}>load</button>
+                    <button className="devtools-btn w-20" onClick={save_userPrefs}>save</button>
+                  </div>
+                  <p>-- navigation --</p>
+                  <div className="flex flex-col gap-1">
+                    { _DEV_PAGES.map((p,i)=> p[0] ?
+                      <button key={`nav-${i}-${p[0]}`} className={"devtools-btn w-32 " + (window.location.pathname.toLowerCase()===p[1] ? "active" : "")} onClick={(e)=>{navigate_page(e, p[1])}}>{p[0]}</button>
+                      :
+                      <div key={`sep-${i}`} className="h-1"></div>
+                    )}
+                  </div>
+                </>
+              }
+              { mode === 1 &&
+                <>
+                <button className="devtools-btn w-32" onClick={()=>{execute_test()}}>execute code test</button>
+                  <div className="h-1"></div>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(0)}}>signup</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(1)}}>login</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(2)}}>logout</button>
+                  <div className="h-1"></div>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(3)}}>get user</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(4)}}>delete</button>
+                </>
+              }
               </div>
             </div>
           </div>
-        </div>
+        </>
         }
       </div>
 		</div>

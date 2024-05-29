@@ -170,7 +170,7 @@ def fnv11024(data, text=False):
 
 #-- reads a file from backend static
 def read_file(url):
-  http = urllib3.PoolManager()
+  http = urllib3.PoolManager(cert_reqs='CERT_NONE')
   full_url = f"{os.environ.get('PROTOCOL','https://')}{os.environ.get('SERVER_NAME')}/{url}"
   response = http.request('GET', full_url)
   return str(response.data, 'utf-8')
@@ -223,7 +223,7 @@ def generate_sitemap_v2(app, entitytypes=None):
   if entitytypes:
     endpoint_link+= "".join([f"<li><div class=\"method method-get\">GET</div><a class=\"apilink-api\" href=\"{l}\">{l}</a></li>" for l in entitytypes])
 
-  html= read_file("res/index.html")
+  html= open("public/res/index.html").read()
 
   html= html.replace("%SWATCH%", os.environ.get('BOOTSTRAP_THEME', 'slate'))
   html= html.replace("%ADMIN_LINK%",admin_link)
