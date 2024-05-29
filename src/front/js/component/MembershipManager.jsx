@@ -33,13 +33,13 @@ const MembershipManager = () => {
                 : await actions.createMembership(formData);
 
             if (response.success) {
-                setModalMessage(editingMembership ? "Membresía editada exitosamente" : "Membresía creada exitosamente");
+                setModalMessage(editingMembership ? "Membership edited successfully" : "Membership created successfully");
             } else {
-                setModalMessage(response.error || "Ocurrió un error desconocido");
+                setModalMessage(response.error || "An unknown error occurred");
             }
             setShowModal(true);
         } catch (error) {
-            setModalMessage(`Error al ${editingMembership ? 'editar' : 'crear'} la membresía: ${error.message}`);
+            setModalMessage(`Error al ${editingMembership ? 'edit' : 'create'}  membership: ${error.message}`);
             setShowModal(true);
         }
         // Resetear el formulario después de enviar
@@ -73,69 +73,69 @@ const MembershipManager = () => {
         try {
             const response = await actions.deleteMembership(membershipId);
             if (response.success) {
-                setModalMessage("Membresía eliminada exitosamente");
+                setModalMessage("Membership successfully deleted");
             } else {
-                setModalMessage(response.error || "Ocurrió un error desconocido");
+                setModalMessage(response.error || "An unknown error occurred");
             }
             setShowModal(true);
         } catch (error) {
-            setModalMessage(`Error al eliminar la membresía: ${error.message}`);
+            setModalMessage(`Error deleting membership: ${error.message}`);
             setShowModal(true);
         }
     };
 
     return (
         <Container className={styles.formContainer}>
-            <h2>Administrar Membresías</h2>
+            <h2>Membership Admin</h2>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label>Nombre de la membresía</Form.Label>
-                            <Form.Control type="text" placeholder="Nombre" name="name" value={formData.name} onChange={handleChange} required />
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" placeholder="Name" name="name" value={formData.name} onChange={handleChange} required />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Descripción</Form.Label>
-                            <Form.Control type="text" placeholder="Descripción" name="description" value={formData.description} onChange={handleChange} required />
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control type="text" placeholder="Description" name="description" value={formData.description} onChange={handleChange} required />
                         </Form.Group>
                     </Col>
                 </Row>
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label>Precio</Form.Label>
-                            <Form.Control type="number" placeholder="Precio" name="price" value={formData.price} onChange={handleChange} required />
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control type="number" placeholder="Price" name="price" value={formData.price} onChange={handleChange} required />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Duración en días</Form.Label>
-                            <Form.Control type="number" placeholder="Duración en días" name="duration_days" value={formData.duration_days} onChange={handleChange} required />
+                            <Form.Label>Duration in days</Form.Label>
+                            <Form.Control type="number" placeholder="Duration in days" name="duration_days" value={formData.duration_days} onChange={handleChange} required />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Clases por mes</Form.Label>
-                            <Form.Control type="number" placeholder="Clases por mes" name="classes_per_month" value={formData.classes_per_month} onChange={handleChange} required />
+                            <Form.Label>Classes per month</Form.Label>
+                            <Form.Control type="number" placeholder="Classes per month" name="classes_per_month" value={formData.classes_per_month} onChange={handleChange} required />
                         </Form.Group>
                     </Col>
                 </Row>
                 <Button variant="primary" type="submit">
-                    {editingMembership ? 'Editar Membresía' : 'Crear Membresía'}
+                    {editingMembership ? 'Edit Membership' : 'Create Membership'}
                 </Button>
             </Form>
 
             <Table>
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Duración (días)</th>
-                        <th>Clases/Mes</th>
-                        <th>Acciones</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Duration (days)</th>
+                        <th>Classes/Month</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,10 +148,10 @@ const MembershipManager = () => {
                             <td>{membership.classes_per_month}</td>
                             <td>
                                 <Button variant="primary" onClick={() => handleEditMembership(membership)}>
-                                    Editar
+                                    Edit
                                 </Button>
                                 <Button variant="danger" onClick={() => handleDeleteMembership(membership.id)}>
-                                    Eliminar
+                                    Delete
                                 </Button>
                             </td>
                         </tr>
@@ -161,12 +161,12 @@ const MembershipManager = () => {
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Membresia creada</Modal.Title>
+                    <Modal.Title>Membership Created</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{modalMessage}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>
-                        Cerrar
+                        Close
                     </Button>
                 </Modal.Footer>
             </Modal>
