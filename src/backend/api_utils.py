@@ -2,7 +2,6 @@ import json, os, functools
 from datetime import timedelta
 from types import SimpleNamespace
 from flask import jsonify, request, Response
-from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import *
 from scrypt import hash
 from .aws_utils import get_public_link, DEFAULT_ICON, DEFAULT_THUMBNAIL
@@ -11,7 +10,6 @@ from .models import db, User, Workspace, Board, List, Task
 
 current_app= None
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
-IS_PRODUCTION= ENV=="prod"
 
 MIMETYPE_PLAIN= 'text/plain'
 MIMETYPE_JSON= 'application/json'
