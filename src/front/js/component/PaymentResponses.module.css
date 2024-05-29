@@ -1,0 +1,47 @@
+/* PaymentResponses.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f0f4f8;
+}
+
+.message {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+button {
+    background-color: #0f5132;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0c4128;
+}

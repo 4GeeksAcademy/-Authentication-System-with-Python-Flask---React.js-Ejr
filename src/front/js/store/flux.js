@@ -3,8 +3,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+
 			users: [],
 			user: {},
+
 			isAuthenticated: null,
 			uploadedUserData: [],
 			isAuthenticatedMessage: null,
@@ -31,20 +33,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			memberships: [],
 			membershipsLoading: false,
 			images: [],
-			payments: []
-
-
-
-
+			classesData: [],
+			currentEdit: {},
+			payments: [],
+			userRecords: []
 
 
 
 		},
 		actions: {
-
+//---------------------------------------------------------FUNCION PARA VALIDAR TOKEN--------------------------------------------------------------------------
 			validateToken: async (token) => {
 				try {
-					const url = `${process.env.BACKEND_URL}api/validate-token`;
+					const url = `${process.env.BACKEND_URL}/api/validate-token`;
 
 
 					const response = await fetch(url, // URL del servidor
@@ -80,6 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+//---------------------------------------------------------FUNCION PARA LOGIN--------------------------------------------------------------------------
 
 			loginUserV2: async (email, password) => { // Se define una función llamada handleLogin que se ejecutará al iniciar sesión
 
@@ -89,7 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				try {
-					const url = `${process.env.BACKEND_URL}api/token`;
+					const url = `${process.env.BACKEND_URL}/api/token`;
 
 
 					let response = await fetch(url, // URL del servidor
@@ -106,6 +108,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(data)
 					if (data.access_token) { // Si se recibe un token de acceso en la respuesta
 						localStorage.setItem("token", data.access_token);
+						localStorage.setItem("isAuthenticated", JSON.stringify(true));
+						localStorage.setItem("dataRole", data.role);
+						localStorage.setItem("user_id", data.user_id);
+				
 						let store = getStore();
 						setStore({
 							...store, isAuthenticated: true, isAuthenticatedMessage: true, loginError: null, dataRole: data.role // Asumiendo que 'data' incluye 'role'
@@ -132,6 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
 				}
 			},
+//-------------------------------FUNCION PARA CARGAR LOS DATOS DEL USARIO AL HACER LOGIN--------------------------------------------------------------------------
 
 			loadUserData: async () => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 				try {
@@ -139,7 +146,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let myToken = localStorage.getItem("token");
 
 					// Construimos la URL para la solicitud
-					const url = `${process.env.BACKEND_URL}api/user`;
+					const url = `${process.env.BACKEND_URL}/api/user`;
 
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -169,9 +176,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CERRAR SESION--------------------------------------------------------------------------
 
 			closeSession: () => { // Se define una función llamada closeSession que se utilizará para cerrar la sesión del usuario
 				// Eliminar la información de inicio de sesión del almacenamiento local y restablecer los datos del usuario
+				localStorage.removeItem("token");
+				localStorage.removeItem("isAuthenticated");
+				localStorage.removeItem("dataRole");
 
 				// Ocultar el error después de 1.5 segundos
 				setTimeout(() => {
@@ -183,10 +194,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// console.log(store); // Se imprime el estado actualizado en la consola (para propósitos de depuración)
 			},
-
+//---------------------------------------------------------FUNCION PARA CREAR USER--------------------------------------------------------------------------
 			createUser: async (dataUser) => {
 				try {
-					const url = `${process.env.BACKEND_URL}api/singup/user`;
+					const url = `${process.env.BACKEND_URL}/api/singup/user`;
 
 					let response = await fetch(url, {
 						method: "POST",
@@ -210,13 +221,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
+//---------------------------------------------------------FUNCION PARA CARGAR CLASES--------------------------------------------------------------------------
 			loadTrainingClasses: async () => {
 				try {
 					// Obtenemos el token del almacenamiento local
 					let myToken = localStorage.getItem("token");
 
-					const url = `${process.env.BACKEND_URL}api/training_classes`;
+					const url = `${process.env.BACKEND_URL}/api/training_classes`;
 					let response = await fetch(url, {
 						method: "GET", // Método de la solicitud
 						headers: {
@@ -235,9 +246,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading training classes:", error);
 				}
 			},
+//---------------------------------------------------------FUNCION PARA RESERVAR CLASE --------------------------------------------------------------------------
 
-			book_class: async (classId) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
-
+			book_class: async (classId) => { 
 				let id_class = { training_class_id: classId };
 				console.log(id_class);
 
@@ -277,6 +288,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CANCELAR CLASE--------------------------------------------------------------------------
 
 			cancel_booking: async (booking_id) => { // Se define una función llamada userDataHelp que se ejecutará para obtener datos de usuario con ayuda del token
 
@@ -286,13 +298,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let myToken = localStorage.getItem("token");
 
 					// Construimos la URL para la solicitud
-					let url = `${process.env.BACKEND_URL}api/cancel_booking/${booking_id}`;
+					let url = `${process.env.BACKEND_URL}/api/cancel_booking/${booking_id}`;
 
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
 						method: "DELETE", // Método de la solicitud
 						headers: {
-							Authorization: `Bearer ${myToken}`// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+
 						},
 
 					});
@@ -310,6 +324,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Si ocurre algún error durante el proceso, lo capturamos y lo mostramos en la consola
 				}
 			},
+//---------------------------------------------------------FUNCION PARA ACTUALIZAR DATOS DE USUARIO --------------------------------------------------------------------------
 
 			updateUserData: async (userData) => {
 
@@ -318,7 +333,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// console.log(myToken);
 				// console.log(userData);
 				// Construimos la URL para la solicitud
-				let url = `${process.env.BACKEND_URL}api/user`;
+				let url = `${process.env.BACKEND_URL}/api/user`;
 				try {
 					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
 					let response = await fetch(url, {
@@ -344,13 +359,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCIONES PARA CREAR CLASES --------------------------------------------------------------------------
 
 			// Función para crear una clase individual
 			createTrainingClasses: async (dataClasses) => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 				// Construimos la URL para la solicitud
-				let url = `${process.env.BACKEND_URL}api/training_classes`;
+				let url = `${process.env.BACKEND_URL}/api/training_classes`;
 
 				try {
 					let response = await fetch(url, {
@@ -389,7 +405,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let startDate = new Date(formData.dateTime_class);
 				let endDate = new Date(formData.endDate);
 				let myToken = localStorage.getItem("token");
-				let url = `${process.env.BACKEND_URL}api/training_classes`;
+				let url = `${process.env.BACKEND_URL}/api/training_classes`;
 				let errors = [];
 				let successfulCreations = [];
 
@@ -435,13 +451,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			resetCreationTrainingClasses: () => {
 				setStore({ ...getStore(), creationTrainingClasses: [] });
 			},
+//---------------------------------------------------------FUNCION PARA CARGAR LAS RESERVAS DE CLASES--------------------------------------------------------------------------
 
 			getBookings: async () => {
 
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 
-				const url = `${process.env.BACKEND_URL}api/booking`;
+
+				const url =`${process.env.BACKEND_URL}/api/booking`;
+
 
 
 				try {
@@ -462,13 +481,118 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error("Error loading training classes:", error);
 				}
+
+            },
+//---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
+
+
+			//funcion asincrona para la vista que trae las clases de entrenamiento 
+			getClasses: async () => {
+
+				
+				let myToken = localStorage.getItem("token");
+
+				const url =`${process.env.BACKEND_URL}/api/training_classes`;
+
+				try {
+					let response = await fetch(url, {
+						method: "GET", 
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${myToken}`, 
+						}
+					});
+					const data = await response.json();
+					if (response.ok) {
+						setStore({ ...getStore(), classesData: data });  // Actualiza el estado con las clases obtenidas
+						console.log(data)
+					} else {
+						throw new Error("Failed to fetch classes");
+					}
+				} catch (error) {
+					console.error("Error loading training classes:", error);
+				}
+            },
+
+			//funcion para el boton de la lista de clases para vista de admin
+			saveCurrentEdit: (item) => {
+				let store=getStore()
+				setStore({...store, currentEdit:item})
+			},
+
+			
+			//funcion asincrona para editar el fomulario de clases de entrenamiento
+			updateEditForm: async (id,formData) => {
+				
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+			
+				let url = `${process.env.BACKEND_URL}/api/training_classes/${id}`;
+				
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+						body: JSON.stringify(formData)
+					});
+					let data = await response.json();
+					console.log("HOLA SOY LA DATA DE LA RESPUESTA DE EDITAR",data)
+					if (data.message) {
+						// Asumiendo que quieres actualizar el store aquí
+						return { success: true, data: data };
+
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar tus datos:", error);
+					return { success: false, error: error.message };
+				}
+			},
+
+			//Funcion asincrona para el boton de cancelar clase en el formulario de edicion EditClasses
+			cancelClass: async (id) => {
+				
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
+			
+				let url = `${process.env.BACKEND_URL}/api/cancel_class/${id}`;
+				
+				try {
+					// Realizamos una solicitud a la URL usando fetch, incluyendo el token de autorización en los encabezados
+					let response = await fetch(url, {
+						method: "PUT", // Método de la solicitud
+						headers: {
+							"Authorization": `Bearer ${myToken}`,// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
+							"Content-Type": "application/json", // Especifica que el cuerpo de la solicitud es JSON
+						},
+
+					});
+					let data = await response.json();
+					console.log(data)
+					if (data.message) {
+						// Asumiendo que quieres actualizar el store aquí
+						//return { success: true, data: data };
+					} else {
+						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error al actualizar tus datos:", error);
+					return { success: false, error: error.message };
+				}
 			},
 
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 
-				let url = `${process.env.BACKEND_URL}api/memberships`; // Asume que tienes una variable de entorno para tu URL del backend
+				let url = `${process.env.BACKEND_URL}/api/memberships`; // Asume que tienes una variable de entorno para tu URL del backend
 
 				try {
 					let response = await fetch(url, {
@@ -490,14 +614,248 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading memberships:", error);
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CARGAR USUARIOS --------------------------------------------------------------------------			
+			getUsers : async () => {
+				// Obtenemos el token del almacenamiento local
+				let myToken = localStorage.getItem("token");
 
+				try {
+
+            let response = await fetch(`${process.env.BACKEND_URL}/api/users`, 
+
+            {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Incluye el token de autorización si es necesario
+               Authorization: `Bearer ${myToken}`,
+            },
+            });
+          //   console.log (response)
+            if (!response.ok) {
+            throw new Error(`Error fetching users: ${response.statusText}`);
+            }
+
+            let data = await response.json();
+          //   console.log(data);
+            let store = getStore(); // Obtiene el estado actual del almacén
+            setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
+				  
+				} catch (error) {
+					console.error(error); // Maneja cualquier error que ocurra durante el proceso
+
+				}
+
+			},
+
+//---------------------------------------------------------FUNCION PARA CARGAR IMAGENES DE ENTRENAMIENTOS--------------------------------------------------------------------------
+
+			  uploadImage: async (formData) => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}/api/upload_img`;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                        body: formData,
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        return { success: true, message: data.message };
+                    } else {
+                        return { success: false, error: data.error || "Unknown error occurred." };
+                    }
+                } catch (error) {
+                    console.error("Error uploading image:", error);
+                    return { success: false, error: error.message };
+                }
+            },
+//---------------------------------------------------------FUNCION PARA OBTENER IMAGENES --------------------------------------------------------------------------
+
+			fetchImages: async () => {
+                const myToken = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}/api/all_images`;
+
+				try {
+                    const response = await fetch(url, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${myToken}`,
+                        },
+                    });
+                    const data = await response.json();
+                    setStore({ images: data });
+                } catch (error) {
+                    console.error('Error fetching images:', error);
+                }
+            },
+//---------------------------------------------------------FUNCIONES PARA CARGAR FOTO DE PERFIL USER--------------------------------------------------------------------------
+			// Función para cargar la foto de perfil
+			uploadProfileImage: async (formData) => {
+				// Obtener el token de autenticación del almacenamiento local
+				const myToken = localStorage.getItem("token");
+				// Construir la URL del endpoint para cargar la imagen de perfil
+				const url = `${process.env.BACKEND_URL}/api/upload_img_profile`;
+
+				try {
+					// Realizar una solicitud POST al endpoint de carga de imagen
+					const response = await fetch(url, {
+						method: "POST",  // Especificar el método HTTP como POST
+						headers: {
+							"Authorization": `Bearer ${myToken}`,  // Incluir el token de autenticación en los encabezados
+						},
+						body: formData,  // Incluir el formulario de datos en el cuerpo de la solicitud
+					});
+					// Analizar la respuesta JSON
+					const data = await response.json();
+					// Verificar si la solicitud fue exitosa
+					if (response.ok) {
+						return { success: true, message: data.message };  // Retornar un objeto con éxito y el mensaje de la respuesta
+					} else {
+						return { success: false, message: data.error };  // Retornar un objeto con éxito falso y el error de la respuesta
+					}
+				} catch (error) {
+					return { success: false, message: error.message };  // Retornar un objeto con éxito falso y el mensaje de error
+				}
+			},
+
+			// Función para actualizar la foto de perfil
+			updateProfileImage: async (formData) => {
+				// Obtener el token de autenticación del almacenamiento local
+				const myToken = localStorage.getItem("token");
+				// Construir la URL del endpoint para actualizar la imagen de perfil
+				const url = `${process.env.BACKEND_URL}/api/update_profile_image`;
+
+				try {
+					// Realizar una solicitud PUT al endpoint de actualización de imagen
+					const response = await fetch(url, {
+						method: "PUT",  // Especificar el método HTTP como PUT
+						headers: {
+							"Authorization": `Bearer ${myToken}`,  // Incluir el token de autenticación en los encabezados
+						},
+						body: formData,  // Incluir el formulario de datos en el cuerpo de la solicitud
+					});
+					// Analizar la respuesta JSON
+					const data = await response.json();
+					// Verificar si la solicitud fue exitosa
+					if (response.ok) {
+						return { success: true, message: data.message };  // Retornar un objeto con éxito y el mensaje de la respuesta
+					} else {
+						return { success: false, message: data.error };  // Retornar un objeto con éxito falso y el error de la respuesta
+					}
+				} catch (error) {
+					return { success: false, message: error.message };  // Retornar un objeto con éxito falso y el mensaje de error
+				}
+			},
+
+			// Función para eliminar la foto de perfil
+			deleteProfileImage: async () => {
+				// Obtener el token de autenticación del almacenamiento local
+				const myToken = localStorage.getItem("token");
+				// Construir la URL del endpoint para eliminar la imagen de perfil
+				const url = `${process.env.BACKEND_URL}/api/delete_profile_image`;
+
+				try {
+					// Realizar una solicitud DELETE al endpoint de eliminación de imagen
+					const response = await fetch(url, {
+						method: "DELETE",  // Especificar el método HTTP como DELETE
+						headers: {
+							"Authorization": `Bearer ${myToken}`,  // Incluir el token de autenticación en los encabezados
+						}
+					});
+					// Analizar la respuesta JSON
+					const data = await response.json();
+					// Verificar si la solicitud fue exitosa
+					if (response.ok) {
+						return { success: true, message: data.message };  // Retornar un objeto con éxito y el mensaje de la respuesta
+					} else {
+						return { success: false, message: data.error };  // Retornar un objeto con éxito falso y el error de la respuesta
+					}
+				} catch (error) {
+					return { success: false, message: error.message };  // Retornar un objeto con éxito falso y el mensaje de error
+				}
+			},
+//---------------------------------------------------------FUNCION PARA OBTENER TRANSACCIONES--------------------------------------------------------------------------
+
+			// Función para obtener todas las transacciones
+			getAllPayments: async () => {
+				try {
+					// Obtener el token de autenticación del almacenamiento local
+					let myToken = localStorage.getItem("token");
+					// Construir la URL del endpoint para obtener las transacciones
+					const url = `${process.env.BACKEND_URL}/api/Payments`;
+					// Realizar una solicitud GET al endpoint de transacciones
+					let response = await fetch(url, {
+						method: "GET",  // Especificar el método HTTP como GET
+						headers: {
+							Authorization: `Bearer ${myToken}`  // Incluir el token de autenticación en los encabezados
+						},
+					});
+					// Analizar la respuesta JSON
+					const data = await response.json();
+
+					// Verificar si la solicitud fue exitosa
+					if (response.ok) {
+						setStore({ ...getStore(), payments: data });  // Actualizar el estado con las transacciones obtenidas
+					} else {
+						throw new Error("Failed to fetch payments");  // Lanzar un error si la solicitud no fue exitosa
+					}
+				} catch (error) {
+					console.error("Error loading training payments:", error);  // Registrar el error en la consola
+				}
+			},
+//---------------------------------------------------------FUNCIONES PARA INTEGRACION CON PAYPAL--------------------------------------------------------------------------
+			initiatePaypalPayment: async (paymentData) => {
+				try {
+					// Obtener el token de autenticación del almacenamiento local
+					let myToken = localStorage.getItem("token");
+
+					// Construir la URL del endpoint de creación de pagos de PayPal
+					const url = `${process.env.BACKEND_URL}/api/paypal_payment`;
+
+					// Realizar una solicitud POST al endpoint de creación de pagos de PayPal
+					let response = await fetch(url, {
+						method: 'POST',  // Especificar el método HTTP como POST
+						headers: {
+							'Content-Type': 'application/json',  // Establecer el tipo de contenido a JSON
+							'Authorization': `Bearer ${myToken}`  // Incluir el token de autenticación en los encabezados
+						},
+						// Convertir los datos de pago a una cadena JSON y establecerla como cuerpo de la solicitud
+						body: JSON.stringify(paymentData)
+					});
+
+					// Analizar la respuesta JSON
+					const result = await response.json();
+
+					// Verificar si la solicitud fue exitosa
+					if (response.ok) {
+						// Si la solicitud fue exitosa, devolver un objeto con éxito y los datos de la respuesta
+						return { success: true, data: result };
+					} else {
+						// Si la solicitud no fue exitosa, devolver un objeto con éxito falso y el error de la respuesta
+						return { success: false, error: result.error };
+					}
+				} catch (error) {
+					// En caso de error en el proceso, registrar el error en la consola
+					console.error("Error paypal payments:", error);
+					// Devolver un objeto con éxito falso y el mensaje de error
+					return { success: false, error: error.message };
+				}
+			},
+
+//---------------------------------------------------------FUNCIONES PARA PROCESAR COMPRAS JUGUETES MEMBRESIAS--------------------------------------------------------------------------
 
 			purchaseMembership: async (data) => {
 				// console.log(data)
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 
-				let url = `${process.env.BACKEND_URL}api/purchase_membership`; // URL del endpoint para comprar membresía
+				let url = `${process.env.BACKEND_URL}/api/purchase_membership`; // URL del endpoint para comprar membresía
 				try {
 					let response = await fetch(url, {
 						method: 'POST',
@@ -510,7 +868,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					let result = await response.json(); // Se espera la respuesta del servidor en formato JSON
 					// console.log("respuesta del servidor compra: ", result);
-
+			
 					// Verificamos si la respuesta de la solicitud es exitosa (status code 200-299)
 					if (response.ok) {
 						return { success: true, data: result };
@@ -518,215 +876,83 @@ const getState = ({ getStore, getActions, setStore }) => {
 						// Incluir la respuesta en la acción puede ayudar a manejar el estado más localmente
 						return { success: false, error: result.error || "Unknown error occurred." };
 					}
-
+			
 
 				} catch (error) {
 					console.error("Error purchasing membership:", error);
 					return { success: false, error: error.message }; // Devuelve un objeto de error si algo falla
 				}
 			},
+//---------------------------------------------------------FUNCION PARA COMPRAR MEMBRESIAS MODULO ADMIN--------------------------------------------------------------------------
 
-
-			getUsers: async () => {
-				// Obtenemos el token del almacenamiento local
+			adminPurchaseMembership: async (data) => {
+				// console.log(data)
 				let myToken = localStorage.getItem("token");
-
+				let url = `${process.env.BACKEND_URL}/api/admin_purchase_membership`; // URL del nuevo endpoint para comprar membresía por administrador
 				try {
-					let response = await fetch("https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/users",
-						{
-							method: "GET",
-							headers: {
-								"Content-Type": "application/json",
-								// Incluye el token de autorización si es necesario
-								Authorization: `Bearer ${myToken}`,
-							},
-						});
-					//   console.log (response)
-					if (!response.ok) {
-						throw new Error(`Error fetching users: ${response.statusText}`);
+					let response = await fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${myToken}` // Asegúrate de manejar la autenticación adecuadamente
+						},
+						body: JSON.stringify(data)
+					});
+			
+					let result = await response.json(); // Se espera la respuesta del servidor en formato JSON
+			
+					if (response.ok) {
+						return { success: true, data: result };
+					} else {
+						return { success: false, error: result.error || "Unknown error occurred." };
 					}
-
-					let data = await response.json();
-					//   console.log(data);
-
-
-					let store = getStore(); // Obtiene el estado actual del almacén
-					setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
-
 				} catch (error) {
-					console.error(error); // Maneja cualquier error que ocurra durante el proceso
-
+					console.error("Error purchasing membership:", error);
+					return { success: false, error: error.message }; // Devuelve un objeto de error si algo falla
 				}
-
 			},
 
-			// getOneuser: async (id) => {
-			// 	// Obtenemos el token del almacenamiento local
-			// 	let myToken = localStorage.getItem("token");
-
-			// 	try {
-			// 	  let response = await fetch(`https://fantastic-xylophone-wrr5p4xqpjxj35x7-3001.app.github.dev/api/user/${id}`, 
-			// 	  {
-			// 		method: "GET",
-			// 		headers: {
-			// 		  "Content-Type": "application/json",
-			// 		  // Incluye el token de autorización si es necesario
-			// 			 Authorization: `Bearer ${myToken}`,
-			// 		},
-			// 	  });
-			// 	  console.log(response);
-			// 	  if (!response.ok) {
-			// 		throw new Error(`Error fetching user: ${response.statusText}`);
-			// 	  }
-
-			// 	  let data = await response.json();
-			// 	  console.log(data);
-
-			// 	  let store = getStore(); // Obtiene el estado actual del almacén
-			// 	  setStore({ ...store, user: data }); // Actualiza el estado con el usuario obtenido
-
-			// 	} catch (error) {
-			// 	  console.error(error); // Maneja cualquier error que ocurra durante el proceso
-			// 	}
-			//   },
-
-			uploadImage: async (formData) => {
-				const myToken = localStorage.getItem("token");
-				const url = `${process.env.BACKEND_URL}api/upload_img`;
-
+			initiatePaypalPaymentAdmin: async (paymentData) => {
 				try {
-					const response = await fetch(url, {
-						method: "POST",
+					// Obtener el token de autenticación del almacenamiento local
+					let myToken = localStorage.getItem("token");
+
+					// Construir la URL del endpoint de creación de pagos de PayPal
+					const url = `${process.env.BACKEND_URL}/api/paypal_payment_admin`;
+
+					// Realizar una solicitud POST al endpoint de creación de pagos de PayPal
+					let response = await fetch(url, {
+						method: 'POST',  // Especificar el método HTTP como POST
 						headers: {
-							"Authorization": `Bearer ${myToken}`,
+							'Content-Type': 'application/json',  // Establecer el tipo de contenido a JSON
+							'Authorization': `Bearer ${myToken}`  // Incluir el token de autenticación en los encabezados
 						},
-						body: formData,
+						// Convertir los datos de pago a una cadena JSON y establecerla como cuerpo de la solicitud
+						body: JSON.stringify(paymentData)
 					});
 
-					const data = await response.json();
+					// Analizar la respuesta JSON
+					const result = await response.json();
 
+					// Verificar si la solicitud fue exitosa
 					if (response.ok) {
-						return { success: true, message: data.message };
+						// Si la solicitud fue exitosa, devolver un objeto con éxito y los datos de la respuesta
+						return { success: true, data: result };
 					} else {
-						return { success: false, error: data.error || "Unknown error occurred." };
+						// Si la solicitud no fue exitosa, devolver un objeto con éxito falso y el error de la respuesta
+						return { success: false, error: result.error };
 					}
 				} catch (error) {
-					console.error("Error uploading image:", error);
+					// En caso de error en el proceso, registrar el error en la consola
+					console.error("Error paypal payments:", error);
+					// Devolver un objeto con éxito falso y el mensaje de error
 					return { success: false, error: error.message };
 				}
 			},
 
-			fetchImages: async () => {
-				const myToken = localStorage.getItem("token");
-				const url = `${process.env.BACKEND_URL}api/all_images`;
-
-				try {
-					const response = await fetch(url, {
-						method: "GET",
-						headers: {
-							"Authorization": `Bearer ${myToken}`,
-						},
-					});
-					const data = await response.json();
-					setStore({ images: data });
-				} catch (error) {
-					console.error('Error fetching images:', error);
-				}
-			},
-
-			uploadProfileImage: async (formData) => {
-				const myToken = localStorage.getItem("token");
-				const url = `${process.env.BACKEND_URL}api/upload_img_profile`;
-
-				try {
-					const response = await fetch(url, {
-						method: "POST",
-						headers: {
-							"Authorization": `Bearer ${myToken}`,
-						},
-						body: formData,
-					});
-					const data = await response.json();
-					if (response.ok) {
-						return { success: true, message: data.message };
-					} else {
-						return { success: false, message: data.error };
-					}
-				} catch (error) {
-					return { success: false, message: error.message };
-				}
-			},
-
-			updateProfileImage: async (formData) => {
-				const myToken = localStorage.getItem("token");
-				const url = `${process.env.BACKEND_URL}api/update_profile_image`;
-
-				try {
-					const response = await fetch(url, {
-						method: "PUT",
-						headers: {
-							"Authorization": `Bearer ${myToken}`,
-						},
-						body: formData,
-					});
-					const data = await response.json();
-					if (response.ok) {
-						return { success: true, message: data.message };
-					} else {
-						return { success: false, message: data.error };
-					}
-				} catch (error) {
-					return { success: false, message: error.message };
-				}
-			},
-
-			deleteProfileImage: async () => {
-				const myToken = localStorage.getItem("token");
-				const url = `${process.env.BACKEND_URL}api/delete_profile_image`;
-
-				try {
-					const response = await fetch(url, {
-						method: "DELETE",
-						headers: {
-							"Authorization": `Bearer ${myToken}`,
-						}
-					});
-					const data = await response.json();
-					if (response.ok) {
-						return { success: true, message: data.message };
-					} else {
-						return { success: false, message: data.error };
-					}
-				} catch (error) {
-					return { success: false, message: error.message };
-				}
-			},
-
-			getAllPayments: async () => {
-				try {
-					// Obtenemos el token del almacenamiento local
-					let myToken = localStorage.getItem("token");
-
-					const url = `${process.env.BACKEND_URL}api/Payments`;
-					let response = await fetch(url, {
-						method: "GET", // Método de la solicitud
-						headers: {
-							Authorization: `Bearer ${myToken}`
-							// Se incluye el token de autorización en los encabezados concatenamos con el nombre del tipo de token "BearerToken"
-						},
-					});
-					const data = await response.json();
-
-					if (response.ok) {
-						setStore({ ...getStore(), payments: data });  // Actualiza el estado con las clases obtenidas
-					} else {
-						throw new Error("Failed to fetch payments");
-					}
-				} catch (error) {
-					console.error("Error loading training payments:", error);
-				}
-			},
-
+	
+			
+			
 
 			// Función para crear una clase individual
 			createTrainingClasses: async (dataClasses) => {

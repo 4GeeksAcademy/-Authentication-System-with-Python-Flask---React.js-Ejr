@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"; // Importación de React y algunos hooks
+ import React, { useState, useEffect, useContext } from "react"; // Importación de React y algunos hooks
 import { Link } from "react-router-dom"; // Importación de Link para la navegación
 import { Context } from "../store/appContext"; // Importación del contexto
 import styles from "./UserBooking.module.css"; // Importación de estilos CSS
@@ -14,7 +14,7 @@ const UserBooking = () => {
 
     // Verificar si uploadedUserData contiene datos
     if (!uploadedUserData) {
-        return <div className={styles.loading}>Cargando datos del usuario...</div>;
+        return <div className={styles.loading}>Loading user data...</div>;
     }
 
     const FormattedDate = ({ dateTime }) => {

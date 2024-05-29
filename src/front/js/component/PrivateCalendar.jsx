@@ -14,7 +14,7 @@ const PrivateCalendar = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
 
-    
+
 
     // useEffect(() => {
     //     actions.loadTrainingClasses(); // Carga las clases al montar el componente
@@ -28,13 +28,13 @@ const PrivateCalendar = () => {
     }));
 
     //console.log("estructura_eventos",events); // Esto mostrará la estructura de los eventos transformados en la consola
-    
+
     const handleEventClick = (event) => {
-      //  console.log("Evento seleccionado:", event);  // Esto te mostrará los detalles del evento en la consola
+        //  console.log("Evento seleccionado:", event);  // Esto te mostrará los detalles del evento en la consola
         setSelectedEvent(event);
         setModalIsOpen(true);
     };
-    
+
     // useEffect(() => {
     //     console.log("Evento actualmente seleccionado:", selectedEvent);
     // }, [selectedEvent]);
@@ -70,86 +70,87 @@ const PrivateCalendar = () => {
             }, 5000); // Oculta el mensaje después de 3 segundos
         }
     };
-    
-    
-    
+
+
+
 
     return (
         <>
-        <div className={styles.container}>
-            <div className={styles.myCalendar}>
-                <h2>Calendario Privado</h2>
-                <Calendar
-                    localizer={localizer}
-                    events={events}
-                    startAccessor="start"
-                    endAccessor="end"
-                    style={{
-                        height: '500px',
-                        background: '#bebebe',
-                        borderRadius: '5px',
-                        color: 'gray'
-                      }}
-                    onSelectEvent={handleEventClick}
-                />
-            </div>
+            <div className={styles.container}>
+                <div className={styles.myCalendar}>
+                    <h2>
+                        Private Calendar</h2>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        startAccessor="start"
+                        endAccessor="end"
+                        style={{
+                            height: '500px',
+                            background: '#bebebe',
+                            borderRadius: '5px',
+                            color: 'gray'
+                        }}
+                        onSelectEvent={handleEventClick}
+                    />
+                </div>
 
-            {selectedEvent && (
-                <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                contentLabel="Class Details"
-                className={`${styles.modal} ${styles.customModal}`}
-                overlayClassName={styles.overlay}
-                shouldCloseOnOverlayClick={true}
-                shouldReturnFocusAfterClose={true}
-            >
-                    <h2>{selectedEvent.title}</h2>
-                    {showMessage && (
-                        <h3 id='bookigMenssage'>{bookingMessage}</h3>
-                    )}
-                    <p>Description: {selectedEvent.description}</p>
-                    <p>Instructor: {selectedEvent.instructor}</p>
-                    <p>Duration: {selectedEvent.start_time} minutes</p>
-                    <p>Duration: {selectedEvent.duration_minutes} minutes</p>
-                    <p>Available slots: {selectedEvent.available_slots}</p>
-                    
-                    <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
-                        <h3>Personas en clase:</h3>
-                        {(() => {
-                            const uniqueBookings = new Set();
-                            const filteredBookings = selectedEvent.bookings.flatMap(booking => 
-                                booking.bookings.filter(b => 
-                                    b.class_id === selectedEvent.id && 
-                                    b.booking_status === "reserved" &&
-                                    !uniqueBookings.has(b.booking_id) && // Verifica si el booking_id ya fue procesado
-                                    uniqueBookings.add(b.booking_id) // Añade el booking_id al Set
-                                )
-                            );
-                            return filteredBookings.map((booking, index) => {
-                               // console.log("Reservas filtradas por evento y estado sin duplicados:", booking); // Esto mostrará en consola cada booking que cumpla las condiciones
-                                return (
-                                    <div key={index}>
-                                        {/* <p><i className="fa-solid fa-circle-user"></i> {booking.booking_status} {booking.class_id} {booking.booking_id}</p> */}
-                                        <p><i className="fa-solid fa-circle-user"></i> {booking.booking_user_name}</p>
-                                    </div>
+                {selectedEvent && (
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="Class Details"
+                        className={`${styles.modal} ${styles.customModal}`}
+                        overlayClassName={styles.overlay}
+                        shouldCloseOnOverlayClick={true}
+                        shouldReturnFocusAfterClose={true}
+                    >
+                        <h2>{selectedEvent.title}</h2>
+                        {showMessage && (
+                            <h3 id='bookigMenssage'>{bookingMessage}</h3>
+                        )}
+                        <p>Description: {selectedEvent.description}</p>
+                        <p>Instructor: {selectedEvent.instructor}</p>
+                        <p>Duration: {selectedEvent.start_time} minutes</p>
+                        <p>Duration: {selectedEvent.duration_minutes} minutes</p>
+                        <p>Available slots: {selectedEvent.available_slots}</p>
+
+                        <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
+                            <h3>Personas en clase:</h3>
+                            {(() => {
+                                const uniqueBookings = new Set();
+                                const filteredBookings = selectedEvent.bookings.flatMap(booking =>
+                                    booking.bookings.filter(b =>
+                                        b.class_id === selectedEvent.id &&
+                                        b.booking_status === "reserved" &&
+                                        !uniqueBookings.has(b.booking_id) && // Verifica si el booking_id ya fue procesado
+                                        uniqueBookings.add(b.booking_id) // Añade el booking_id al Set
+                                    )
                                 );
-                            });
-                        })()}
-                    </div>
+                                return filteredBookings.map((booking, index) => {
+                                    // console.log("Reservas filtradas por evento y estado sin duplicados:", booking); // Esto mostrará en consola cada booking que cumpla las condiciones
+                                    return (
+                                        <div key={index}>
+                                            {/* <p><i className="fa-solid fa-circle-user"></i> {booking.booking_status} {booking.class_id} {booking.booking_id}</p> */}
+                                            <p><i className="fa-solid fa-circle-user"></i> {booking.booking_user_name}</p>
+                                        </div>
+                                    );
+                                });
+                            })()}
+                        </div>
 
-                    <div className={styles.buttonContainer}>
-                        <button onClick={closeModal} className={styles.buttonback}>
-                            <i className="fa-solid fa-angle-left"></i> Close
-                        </button>
-                        <button onClick={() => handleBookClass(selectedEvent.id)} className={styles.buttonadd}>
-                            <i className="fa-solid fa-plus icon"></i> Book Class
-                        </button>
-                    </div>
-                </Modal>
-            )}
-        </div>
-        {/* <MembershipManager/> */}
+                        <div className={styles.buttonContainer}>
+                            <button onClick={closeModal} className={styles.buttonback}>
+                                <i className="fa-solid fa-angle-left"></i> Close
+                            </button>
+                            <button onClick={() => handleBookClass(selectedEvent.id)} className={styles.buttonadd}>
+                                <i className="fa-solid fa-plus icon"></i> Book Class
+                            </button>
+                        </div>
+                    </Modal>
+                )}
+            </div>
+            {/* <MembershipManager/> */}
         </>
     );
 };

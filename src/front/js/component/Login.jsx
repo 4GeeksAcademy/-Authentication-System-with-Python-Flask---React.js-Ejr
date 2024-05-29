@@ -6,7 +6,7 @@ import { Context } from "../store/appContext";
 const Login = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
-    
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,14 +17,18 @@ const Login = () => {
         await actions.loadUserData();
 
         // Verificar el estado después de que se haya actualizado
-        if (store.isAuthenticated && store.dataRole) {
-            if (store.dataRole === "athlete") {
+        const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
+        const dataRole = localStorage.getItem('dataRole');
+
+
+        if (isAuthenticated && dataRole) {
+            if (dataRole === "athlete") {
                 navigate("/Userpage");
-            }else if (store.dataRole === "coach") {
+            }else if (dataRole === "coach") {
                 navigate("/PrivatePageUser"); 
-            }else if (store.dataRole === "admin") {
+            }else if (dataRole === "admin") {
                 navigate("/PrivatePageUser"); 
-            }else if (store.dataRole === "master") {
+            }else if (dataRole === "master") {
                 navigate("/ModulePage"); 
             }else {
                 navigate("/");
@@ -32,16 +36,22 @@ const Login = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (store.isAuthenticated && store.dataRole) {
-    //         if (store.dataRole === "athlete") {
-    //             navigate("/PrivatePageUser");
-    //         } else {
-    //             navigate("/Master-private-registration");
-    //         }
-    //     }
-    // }, [store.isAuthenticated, store.dataRole, navigate]);
+    useEffect(() => {
+        const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
+        const dataRole = localStorage.getItem("dataRole");
 
+        if (isAuthenticated && dataRole) {
+            if (dataRole === "athlete") {
+                navigate("/Userpage");
+            } else if (dataRole === "coach" || dataRole === "admin") {
+                navigate("/PrivatePageUser");
+            } else if (dataRole === "master") {
+                navigate("/ModulePage");
+            } else {
+                navigate("/");
+            }
+        }
+    }, [navigate]);
 
 
     const renderLoginResponse = () => { // Función para renderizar la respuesta del inicio de sesión
@@ -74,15 +84,21 @@ const Login = () => {
                     <input type="email" name="email" className="inputs" value={email.trim()} onChange={e => setEmail(e.target.value)} required />
                 </label>
                 <label className="labels">
-                    Contraseña:
+                    Password:
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>
-                <button type="submit" className={styles.submitButtonLogin}>Iniciar sesión</button>
-                <Link to="/Master-private-registration">¿Olvidaste la contraseña?</Link>
+
+                <button type="submit" className={styles.submitButtonLogin}>Log in</button>
+                <Link to="/PasswordResetRequest">
+                    Forgot your password?</Link>
+
                 <div className="rememberMe">
                     <input type="checkbox" />
-                    <span>Recuérdame</span>
-                    <p>¿Es tu primera vez aquí? <Link to="/Singup">Regístrate ahora.</Link></p>
+                    <span>
+                        Remember me</span>
+                    <p>
+                        Is this your first time here? <Link to="/Singup">
+                            Register now.</Link></p>
                 </div>
             </form>
         </div>

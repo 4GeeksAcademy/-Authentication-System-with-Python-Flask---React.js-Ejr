@@ -32,7 +32,6 @@ const NavigationBar = () => {
 
     const handleCloseSession = async () => {
         await actions.closeSession();
-        localStorage.removeItem('token');
         navigate('/');
     };
 
@@ -50,13 +49,17 @@ const NavigationBar = () => {
                     </Nav>
                     {store.isAuthenticated && (
                         <>
-                            <Button onClick={handleCloseSession} className={styles.logoutButton}>Cerrar sesión</Button>
-                            <Link to="/">
-                                <Button className={styles.ProfileButton}>Ir al perfil</Button>
+
+                            <Button onClick={handleCloseSession} className={styles.logoutButton}>
+                                Sign off</Button>
+                            <Link to="/Userpage">
+                                <Button className={styles.ProfileButton}>Go to profile</Button>
+
                             </Link>
                             {store.uploadedUserData.role === 'master' && (
                                 <Link to="/ModulePage">
-                                    <Button className={styles.logoutButton}>Modulos</Button>
+                                    <Button className={styles.logoutButton}>
+                                        Modules</Button>
                                 </Link>
                             )}
                             <Button onClick={handleShow} className={styles.ProfileButton}>
@@ -82,7 +85,7 @@ const NavigationBar = () => {
 
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton className={styles.offcanvasHeader}>
-                <Offcanvas.Title>
+                    <Offcanvas.Title>
                         Bienvenido: {store.uploadedUserData.name}
                         {store.uploadedUserData.profile_image_url && (
                             <img

@@ -1,0 +1,152 @@
+/* PRRecord.module.css */
+.prRecordContainer {
+    background-color: #f7f7f7; /* Fondo gris claro */
+}
+
+.prRecordForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.formGroup {
+    flex: 1 1 200px;
+    min-width: 200px;
+}
+
+.formLabel {
+    font-weight: bold;
+    color: #4a4a4a;
+    margin-bottom: 0%;
+}
+
+.formControl {
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+}
+
+.formButton {
+    background-color: #5d7266; /* Verde claro */
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.formButton:hover {
+    background-color: #3c403c; /* Verde un poco más oscuro */
+}
+
+.prRecordTable {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; /* Asegura que la tabla sea responsiva */
+}
+
+.prRecordTable th, .prRecordTable td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.prRecordTable th {
+    background-color: #e0e0e0; /* Fondo gris claro */
+}
+
+.prRecordTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.actionButtonEdit {
+    margin-right: 5px;
+    width: 30%;
+    background-color: #a8a7a8;
+    border: none;
+    font-size: 12px;
+    
+    
+}
+
+
+
+.actionButtonDelete {
+    margin-right: 5px;
+    width: 40%;
+    background-color: #937863;
+    border: none;
+    font-size: 12px;
+
+
+}
+
+@media (max-width: 768px) {
+
+
+    .formGroup {
+        width: 100%;
+    }
+
+    .prRecordTable {
+        font-size: 10px;
+        overflow-x: auto;
+    }
+
+    .formControl {
+        font-size: 12px; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+    }
+
+    .actionButtonEdit {
+        font-size: 2px;
+    }
+    
+    
+    
+    .actionButtonDelete {
+        font-size: 2px;
+
+
+    
+}}
+
+.modalcontent{
+
+    background-color: #f3f4f6;
+    color: #333;
+
+}
+
+.modalBody {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    z-index: 1050; /* Incrementa este valor */
+
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    max-width: 600px;
+    font-size: small;
+
+
+}
+
+.movementButton {
+    border-color: #4a4a4a6d;
+    font-size: 12px;
+    color: #666;
+
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 3px 7px rgb(0 0 0 / 22%);
+    font-size: small;
+
+}
+
+.movementButton:hover {
+    background-color: #9d9e9b; /* Verde un poco más oscuro */
+    border-color: #9d9e9b;
+
+}

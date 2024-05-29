@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap';
 import styles from "./ModulePage.module.css"; // Asegúrate que el path de importación es correcto
 
 import { Context } from "../store/appContext";
-import PrivateCalendar from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/PrivateCalendar.jsx"
+import PrivateCalendar from "../component/PrivateCalendar.jsx";
 import CreateClasses from "../component/CreateClasses.jsx";
 import MyCalendar from "../component/Calendar.jsx";
 import UserBooking from "./UserBooking.jsx";
@@ -25,7 +25,15 @@ import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
+
 import MembershipManager from "../component/MembershipManager.jsx";
+
+import PRRecord from "../component/PRRecord.jsx";
+import AdminMembershipPurchase from "../component/AdminMembershipPurchase.jsx";
+import ResetPassword from "../component/ResetPassword.jsx";
+import ClassesView from "../component/ClassesView.jsx";
+
+
 
 const ModulePage = () => {
     const { store, actions } = useContext(Context);
@@ -34,11 +42,13 @@ const ModulePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     useEffect(() => {
-        // Verificar si el usuario tiene el rol adecuado
-        if (store.dataRole !== "master") {
-            navigate("/"); // Redirigir si no es un usuario master
+        const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
+        const dataRole = localStorage.getItem("dataRole");
+
+        if (!isAuthenticated || dataRole !== "master") {
+            navigate("/");
         }
-    }, [store.dataRole, navigate]);
+    }, [navigate]);
 
     const handleOpenModal = (index) => {
         setCurrentSlide(index);
@@ -63,7 +73,16 @@ const ModulePage = () => {
         { component: <ImageGallery />, name: "ImageGallery " },
         { component: <TransactionsTable />, name: "TransactionsTable " },
         { component: <Users />, name: "Users " },
+
         { component: <MembershipManager />, name: "MembershipManager" },
+
+        { component: <PRRecord />, name: "PRRecord " },
+        { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
+        { component: <ResetPassword />, name: "ResetPassword " },
+        { component: <ClassesView />, name: "ClassesView " },
+
+
+
     ];
 
     return (

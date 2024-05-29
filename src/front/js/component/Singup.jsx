@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Modal, Button } from "react-bootstrap";
-import styles from "/workspaces/app_gestion_gym_crossfit_proyecto_final_pt28/src/front/js/component/Singup.module.css";
+import styles from "./Singup.module.css"; // Importa los estilos CSS
 
 const Signup = () => {
     const { store, actions } = useContext(Context);

@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy  # Importación del módulo SQLAlchemy p
 from sqlalchemy import LargeBinary
 
 
+
 from datetime import datetime  # Importación del módulo datetime para trabajar con fechas y horas
 import json  # Importación del módulo json para trabajar con datos en formato JSON
 import base64  # Importación del módulo base64 para la codificación de imágenes
@@ -37,6 +38,8 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
     memberships_history = db.relationship('UserMembershipHistory', backref='user', lazy='dynamic')
     payments = db.relationship('Payment', backref='user', lazy=True)
     bookings = db.relationship('Booking', backref='user', lazy=True)
+    pr_records = db.relationship('PRRecord', backref='user', lazy=True)
+
 
     #NOTA: siempre que se haga un eliminacion de base de datos se debe comentar active_membership_id y active_membership ya que tiene una relacion circular y una depende de otra
 
@@ -101,7 +104,9 @@ class User(db.Model):  # Define una clase que representa la tabla de usuarios en
             "membership_description": active_membership.membership.description if active_membership and active_membership.membership else "N/A",
             "membership_remaining_classes": active_membership.remaining_classes if active_membership else "N/A",
             "bookings": [booking.serialize() for booking in self.bookings],
-            "profile_image_url": self.profile_image.img_url if self.profile_image else None  # Añadido para la URL de la imagen de perfil
+            "profile_image_url": self.profile_image.img_url if self.profile_image else None,  # Añadido para la URL de la imagen de perfil
+            "pr_records": [record.serialize() for record in self.pr_records]
+
 
         }
 
@@ -383,4 +388,35 @@ class ProfileImage(db.Model):
         return {
             "img_id": self.id,
             "img_url": self.img_url
+        }
+    
+
+
+# Tabla para almacenar los registros de PR/RM de los usuarios
+class PRRecord(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    movement_id = db.Column(db.Integer, nullable=False)
+    value = db.Column(db.Float, nullable=True)
+    time = db.Column(db.Float, nullable=True)  # En minutos
+    kg = db.Column(db.Float, nullable=True)
+    lb = db.Column(db.Float, nullable=True)
+    unit = db.Column(db.String(50), nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+    def __repr__(self):
+        return '<PRRecord %r>' % self.id
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "movement_id": self.movement_id,
+            "value": self.value,
+            "time": self.time,
+            "kg": self.kg,
+            "lb": self.lb,
+            "unit": self.unit,
+            "date": self.date.isoformat()  # Mantén la fecha completa
         }

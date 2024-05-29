@@ -1,69 +1,83 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Modal, Button, Form, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
-import { Context } from '../store/appContext';
+import React, { useState, useContext, useEffect } from 'react'; // Importa React y los hooks useState, useContext, y useEffect
+import { Modal, Button, Form, DropdownButton, Dropdown, Alert } from 'react-bootstrap'; // Importa componentes de react-bootstrap
+import { Context } from '../store/appContext'; // Importa el contexto de la aplicación
 import styles from "./MembershipPurchase.module.css"; // Importa los estilos CSS
 
 const MembershipPurchase = () => {
-    const { store, actions } = useContext(Context);
-    const [showSelectionModal, setShowSelectionModal] = useState(false);
-    const [selectedMembership, setSelectedMembership] = useState(null);
-    const [paymentMethod, setPaymentMethod] = useState('');
-    const [creditCardDetails, setCreditCardDetails] = useState({
+    const { store, actions } = useContext(Context); // Obtiene el estado y las acciones del contexto global
+    const [showSelectionModal, setShowSelectionModal] = useState(false); // Estado para controlar la visibilidad del modal de selección de membresía
+    const [selectedMembership, setSelectedMembership] = useState(null); // Estado para almacenar la membresía seleccionada
+    const [paymentMethod, setPaymentMethod] = useState(''); // Estado para almacenar el método de pago seleccionado
+    const [creditCardDetails, setCreditCardDetails] = useState({ // Estado para almacenar los detalles de la tarjeta de crédito
         cardNumber: '',
         cardHolderName: '',
         expirationDate: '',
         cvv: '',
         cardType: ''
     });
-    const [processing, setProcessing] = useState(false);
-    const [purchaseResult, setPurchaseResult] = useState(null);
-    const [showResultModal, setShowResultModal] = useState(false); // Nuevo estado para mostrar el modal de resultado
+    const [processing, setProcessing] = useState(false); // Estado para indicar si el pago se está procesando
+    const [purchaseResult, setPurchaseResult] = useState(null); // Estado para almacenar el resultado de la compra
+    const [showResultModal, setShowResultModal] = useState(false); // Estado para controlar la visibilidad del modal de resultado
 
-    
-    // Descomentar si necesitas cargar las membresías desde una API
-    useEffect(() => {
-        actions.loadMemberships();
-    }, []);
+    useEffect(() => { // Hook useEffect para cargar las membresías cuando el componente se monta
+        actions.loadMemberships(); // Llama a la acción para cargar las membresías
+    }, [actions]);
 
-
-    // Maneja el clic del botón para comprar una membresía
-    const handleBuyClick = () => {
-        if (store.uploadedUserData.active_membership_is_active !== "No Activa") {
-            setPurchaseResult({ success: false, error: 'You already have an active membership!' });
+    const handleBuyClick = () => { // Función para manejar el clic en el botón de compra
+        if (store.uploadedUserData.active_membership_is_active !== "No Activa") { // Verifica si el usuario ya tiene una membresía activa
+            setPurchaseResult({ success: false, error: 'You already have an active membership!' }); // Establece el resultado de la compra
             setShowResultModal(true); // Muestra el modal de resultado
         } else {
-            setShowSelectionModal(true);
+            setShowSelectionModal(true); // Muestra el modal de selección de membresía
         }
     };
 
-    const handleMembershipSelect = (membership) => {
-        setSelectedMembership(membership);
-        setShowSelectionModal(false);
+    const handleMembershipSelect = (membership) => { // Función para manejar la selección de una membresía
+        setSelectedMembership(membership); // Establece la membresía seleccionada
+        setShowSelectionModal(false); // Oculta el modal de selección de membresía
     };
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event) => { // Función para manejar los cambios en los campos de entrada de la tarjeta de crédito
         setCreditCardDetails({
             ...creditCardDetails,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value // Actualiza el estado de los detalles de la tarjeta de crédito
         });
     };
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
+    const handleFormSubmit = async (event) => { // Función para manejar el envío del formulario de pago
+        event.preventDefault(); // Previene el comportamiento predeterminado del formulario
 
-        if (!paymentMethod) {
-            setPurchaseResult({ success: false, error: 'Please select a payment method.' });
+        if (!paymentMethod) { // Verifica si no se ha seleccionado un método de pago
+            setPurchaseResult({ success: false, error: 'Please select a payment method.' }); // Establece el resultado de la compra
             setShowResultModal(true); // Muestra el modal de resultado
             return;
         }
 
-        if (paymentMethod !== 'cash' && (!creditCardDetails.cardNumber || !creditCardDetails.expirationDate || !creditCardDetails.cvv || !creditCardDetails.cardType)) {
-            setPurchaseResult({ success: false, error: 'Please complete all payment details.' });
+        if (paymentMethod === 'paypal') { // Verifica si el método de pago es PayPal
+            const paymentData = {
+                membership_id: selectedMembership.id,
+                amount: selectedMembership.price,
+                currency: 'USD'  // Ajusta la moneda si es necesario
+            };
+
+            const result = await actions.initiatePaypalPayment(paymentData); // Llama a la acción para iniciar el pago con PayPal
+
+            if (result.success) { // Verifica si el pago con PayPal fue exitoso
+                window.location.href = result.data.approval_url; // Redirige al usuario a la URL de aprobación de PayPal
+            } else {
+                setPurchaseResult(result); // Establece el resultado de la compra
+                setShowResultModal(true); // Muestra el modal de resultado
+            }
+            return;
+        }
+
+        if (paymentMethod !== 'cash' && (!creditCardDetails.cardNumber || !creditCardDetails.expirationDate || !creditCardDetails.cvv || !creditCardDetails.cardType)) { // Verifica si faltan detalles de la tarjeta de crédito
+            setPurchaseResult({ success: false, error: 'Please complete all payment details.' }); // Establece el resultado de la compra
             setShowResultModal(true); // Muestra el modal de resultado
             return;
         }
 
-        setProcessing(true);
+        setProcessing(true); // Establece el estado de procesamiento a true
 
         const paymentData = {
             amount: selectedMembership.price,
@@ -77,14 +91,14 @@ const MembershipPurchase = () => {
             })
         };
 
-        const result = await actions.purchaseMembership({membership_id: selectedMembership.id,payment_data: paymentData});
+        const result = await actions.purchaseMembership({ membership_id: selectedMembership.id, payment_data: paymentData }); // Llama a la acción para comprar la membresía
 
-        setPurchaseResult(result);
+        setPurchaseResult(result); // Establece el resultado de la compra
         setShowResultModal(true); // Muestra el modal de resultado
-        setProcessing(false);
+        setProcessing(false); // Establece el estado de procesamiento a false
     };
 
-    const renderCreditCardForm = () => (
+    const renderCreditCardForm = () => ( // Función para renderizar el formulario de la tarjeta de crédito
         <>
             <Form.Group>
                 <Form.Label>Card Holder Name</Form.Label>
@@ -104,15 +118,8 @@ const MembershipPurchase = () => {
             </Form.Group>
             <Form.Group>
                 <Form.Label>Expiration Date</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="MM/YY"
-                    name="expirationDate"
-                    value={creditCardDetails.expirationDate}
-                    onChange={handleInputChange}
-                    pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
-                    required
-                />            </Form.Group>
+                <Form.Control type="text" placeholder="MM/YY" name="expirationDate" value={creditCardDetails.expirationDate} onChange={handleInputChange} required />
+            </Form.Group>
             <Form.Group>
                 <Form.Label>CVV</Form.Label>
                 <Form.Control type="text" placeholder="CVV" name="cvv" value={creditCardDetails.cvv} onChange={handleInputChange} required />
@@ -122,7 +129,7 @@ const MembershipPurchase = () => {
 
     return (
         <>
-            <Button className={styles.buttonBuy} onClick={handleBuyClick}>Buy Membership</Button>
+            <Button className={styles.buttonBuy} onClick={handleBuyClick}>Buy Membership</Button> {/* Botón para iniciar el proceso de compra */}
             {showSelectionModal && (
                 <Modal show={true} onHide={() => setShowSelectionModal(false)} className={styles.modal}>
                     <Modal.Header closeButton className={styles.modalHeader}>
@@ -148,37 +155,36 @@ const MembershipPurchase = () => {
                                 <Form.Label>Payment Method</Form.Label>
                                 <DropdownButton id="dropdown-payment-method" title={paymentMethod || 'Select Method'} className={styles.paymentMethodDropdown}>
                                     <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => setPaymentMethod('debit_card')}><i className="fa-solid fa-credit-card"></i> Debit Card</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => setPaymentMethod('cash')}><i className="fa-solid fa-money-bill-wave"></i> Cash</Dropdown.Item>
                                     <Dropdown.Item onClick={() => setPaymentMethod('paypal')}><i className="fa-brands fa-paypal"></i> PayPal</Dropdown.Item>
-                                    {['admin', 'master'].includes(store.uploadedUserData.role) && (
-                                        <Dropdown.Item onClick={() => setPaymentMethod('cash')}><i className="fa-regular fa-money-bill-1"></i> Cash</Dropdown.Item>
-                                    )}
                                 </DropdownButton>
                             </Form.Group>
-                            {(paymentMethod === 'credit_card' || paymentMethod === 'debit_card') && renderCreditCardForm()}
-                            <Button type="submit">Process Payment</Button>
+                            {paymentMethod === 'credit_card' && renderCreditCardForm()}
+                            <Button type="submit" disabled={processing} className={styles.buttonSubmit}>
+                                {processing ? 'Processing...' : 'Confirm Purchase'}
+                            </Button>
                         </Form>
                     </Modal.Body>
                 </Modal>
             )}
-            <Modal show={showResultModal} onHide={() => setShowResultModal(false)} centered className={styles.modal}>
-                <Modal.Header closeButton className={styles.modalHeader}>
-                    <Modal.Title>Payment Status</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className={styles.modalBody}>
-                    {processing && <Alert className={styles.alertProcessing}>Processing...</Alert>}
-                    {purchaseResult && (
-                        <Alert className={purchaseResult.success ? styles.alertResultSuccess : styles.alertResultDanger}>
-                            {purchaseResult.success ? `Purchase successful! Payment ID: ${purchaseResult.data.payment}` : `Purchase failed: ${purchaseResult.error}`}
-                        </Alert>
-                    )}
-                </Modal.Body>
-                <Modal.Footer className={styles.modalFooter}>
-                    <Button variant="secondary" onClick={() => setShowResultModal(false)} className={styles.closeButton}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {showResultModal && (
+                <Modal show={true} onHide={() => setShowResultModal(false)} className={styles.modal}>
+                    <Modal.Header closeButton className={styles.modalHeader}>
+                        <Modal.Title>Purchase {purchaseResult?.success ? 'Successful' : 'Failed'}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className={styles.modalBody}>
+                        {purchaseResult?.success ? (
+                            <Alert variant="success">
+                                Your purchase was successful!
+                            </Alert>
+                        ) : (
+                            <Alert variant="danger">
+                                {purchaseResult?.error || 'There was an error processing your purchase.'}
+                            </Alert>
+                        )}
+                    </Modal.Body>
+                </Modal>
+            )}
         </>
     );
 };
