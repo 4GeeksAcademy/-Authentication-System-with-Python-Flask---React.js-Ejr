@@ -275,15 +275,13 @@ class Payment(db.Model):
 class Modules(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description_content = db.Column(db.String(500), nullable=False)
-    type_file = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
+    url_video = db.Column(db.String(1024), nullable=False)  
     video_id = db.Column(db.Integer, nullable=True)
-    type_video = db.Column(db.String(250), nullable=False)
-    text_id = db.Column(db.Integer, nullable=True)
-    type_text = db.Column(db.String(250), nullable=False)
     image_id = db.Column(db.Integer, nullable=True)
-    type_image = db.Column(db.String(250), nullable=False)
     total_video = db.Column(db.String(250), nullable=True)
+    date_create = db.Column(db.String(250), nullable=False)
+    token_module = db.Column(db.String(1024), nullable=True)
 
     #Relations
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)

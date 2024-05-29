@@ -753,25 +753,25 @@ def post_module():
     try:
         course_id = request.json.get('courseId')  
         description_content = request.json.get('descriptionContent')
-        type_file = request.json.get('typeFile')
         title = request.json.get('title')
         video_id = request.json.get('videoId')
-        type_video = request.json.get('typeVideo')
-        text_id = request.json.get('textId')
-        type_text = request.json.get('typeText')
+        url_video = request.json.get('urlVideo')
+        video_id = request.json.get('videoId')
         image_id = request.json.get('imageId')
-        type_image = request.json.get('typeImage')
         total_video = request.json.get('totalVideo')
+        token_module = request.json.get('tokenModule')
+        
 
-        if not course_id or not description_content or not type_file or not title or not video_id or not type_video or not text_id or not type_text or not image_id or not type_image or not total_video:
-            return {"Error": "courseId, descriptionContent, typeFile, title, videoId, typeVideo, textId, typeText, imageId, typeImage and totalVideo  are required"}, 400
+        if not course_id or not description_content or not url_video or not title or not video_id or not total_video:
+            return {"Error": "descriptionContent,title, videoId, textId, imageId, and totalVideo are required"}, 400
 
         
         existing_course = Course.query.filter_by(id=course_id).first()
         if not existing_course:
             return jsonify({"Error": "Course does not exist."}), 404
 
-        module = Modules(course_id=course_id, description_content=description_content,  type_file=type_file, title=title, video_id=video_id, type_video=type_video, text_id=text_id, type_text=type_text, image_id=image_id, type_image=type_image,total_video=total_video )
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        module = Modules(course_id=course_id, description_content=description_content, url_video=url_video, title=title, video_id=video_id, image_id=image_id, date_create=current_date, total_video=total_video, token_module=token_module )
         db.session.add(module)
         db.session.commit()
         return jsonify({"message": "Module created successfully", "Module": module.serialize()}), 201
