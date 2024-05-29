@@ -16,7 +16,7 @@ export const Profile = () => {
         xbox: '',
         psn: '',
         steam: '',
-        google_play: '',
+        discord: '',
         nintendo: '',
         epic_id: '',
         bio: '',
@@ -116,7 +116,7 @@ export const Profile = () => {
                     <p>Xbox: {profileData.xbox}</p>
                     <p>PSN: {profileData.psn}</p>
                     <p>Steam: {profileData.steam}</p>
-                    <p>Google Play: {profileData.google_play}</p>
+                    <p>Discord: {profileData.discord}</p>
                     <p>Nintendo: {profileData.nintendo}</p>
                     <p>Epic ID: {profileData.epic_id}</p>
                     <p>Bio: {profileData.bio}</p>
@@ -195,11 +195,11 @@ export const Profile = () => {
                         value={profileData.steam}
                         onChange={handleInputChange}
                     />
-                    <label>Google Play:</label>
+                    <label>Discord:</label>
                     <input
                         type="text"
-                        name="google_play"
-                        value={profileData.google_play}
+                        name="discord"
+                        value={profileData.discord}
                         onChange={handleInputChange}
                     />
                     <label>Nintendo:</label>
