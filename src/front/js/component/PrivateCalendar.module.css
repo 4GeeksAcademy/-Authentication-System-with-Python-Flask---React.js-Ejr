@@ -62,7 +62,7 @@
   flex: 1;
 }
 
-.modal h2, .modal p {
+.modal h2, .modal p, .modal h4 {
   color: #3C403F; /* Color oscuro para mejor legibilidad */
 }
 

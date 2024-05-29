@@ -474,7 +474,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					if (response.ok) {
 						setStore({ ...getStore(), bookingData: data });  // Actualiza el estado con las clases obtenidas
-						console.log(data)
+						// console.log(data)
 					} else {
 						throw new Error("Failed to fetch classes");
 					}
@@ -949,10 +949,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-
-	
-			
-			
+//---------------------------------------------------------FUNCION PARA CREAR CLASES--------------------------------------------------------------------------
 
 			// Función para crear una clase individual
 			createTrainingClasses: async (dataClasses) => {
@@ -992,6 +989,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(`Error login: ${error.message}`); // Se maneja cualquier error que ocurra durante el proceso de inicio de sesión
 				}
 			},
+//---------------------------------------------------------FUNCION PARA PARA EL MANEJO DE MEMBRESIAS--------------------------------------------------------------------------
 
 			createMembership: async (membershipData) => {
 				const myToken = localStorage.getItem("token");

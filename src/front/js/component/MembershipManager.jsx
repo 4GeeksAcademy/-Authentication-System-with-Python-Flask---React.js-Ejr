@@ -18,8 +18,8 @@ const MembershipManager = () => {
     const [editingMembership, setEditingMembership] = useState(null);
 
     useEffect(() => {
-        // Fetch memberships from the server and update the store
-    }, []);
+        actions.loadMemberships(); // Fetch memberships from the server and update the store
+    }, [actions]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,7 +39,7 @@ const MembershipManager = () => {
             }
             setShowModal(true);
         } catch (error) {
-            setModalMessage(`Error al ${editingMembership ? 'edit' : 'create'}  membership: ${error.message}`);
+            setModalMessage(`Error al ${editingMembership ? 'edit' : 'create'} membership: ${error.message}`);
             setShowModal(true);
         }
         // Resetear el formulario después de enviar
@@ -86,89 +86,141 @@ const MembershipManager = () => {
 
     return (
         <Container className={styles.formContainer}>
-            <h2>Membership Admin</h2>
+            <h2 className={styles.title}>Membership Admin</h2>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Name" name="name" value={formData.name} onChange={handleChange} required />
+                            <Form.Label className={styles.label}>Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                                className={styles.input}
+                            />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control type="text" placeholder="Description" name="description" value={formData.description} onChange={handleChange} required />
+                            <Form.Label className={styles.label}>Description</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                required
+                                className={styles.input}
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label>Price</Form.Label>
-                            <Form.Control type="number" placeholder="Price" name="price" value={formData.price} onChange={handleChange} required />
+                            <Form.Label className={styles.label}>Price</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Price"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleChange}
+                                required
+                                className={styles.input}
+                            />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Duration in days</Form.Label>
-                            <Form.Control type="number" placeholder="Duration in days" name="duration_days" value={formData.duration_days} onChange={handleChange} required />
+                            <Form.Label className={styles.label}>Duration in days</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Duration in days"
+                                name="duration_days"
+                                value={formData.duration_days}
+                                onChange={handleChange}
+                                required
+                                className={styles.input}
+                            />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Classes per month</Form.Label>
-                            <Form.Control type="number" placeholder="Classes per month" name="classes_per_month" value={formData.classes_per_month} onChange={handleChange} required />
+                            <Form.Label className={styles.label}>Classes per month</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Classes per month"
+                                name="classes_per_month"
+                                value={formData.classes_per_month}
+                                onChange={handleChange}
+                                required
+                                className={styles.input}
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className={styles.button}>
                     {editingMembership ? 'Edit Membership' : 'Create Membership'}
                 </Button>
             </Form>
 
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Duration (days)</th>
-                        <th>Classes/Month</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {store.memberships.map((membership) => (
-                        <tr key={membership.id}>
-                            <td>{membership.name}</td>
-                            <td>{membership.description}</td>
-                            <td>{membership.price}</td>
-                            <td>{membership.duration_days}</td>
-                            <td>{membership.classes_per_month}</td>
-                            <td>
-                                <Button variant="primary" onClick={() => handleEditMembership(membership)}>
-                                    Edit
-                                </Button>
-                                <Button variant="danger" onClick={() => handleDeleteMembership(membership.id)}>
-                                    Delete
-                                </Button>
-                            </td>
+            <div className="table-responsive">
+                <Table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Duration (days)</th>
+                            <th>Classes/Month</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {store.memberships.map((membership) => (
+                            <tr key={membership.id} className={styles.tableRow}>
+                                <td>{membership.name}</td>
+                                <td>{membership.description}</td>
+                                <td>{membership.price}</td>
+                                <td>{membership.duration_days}</td>
+                                <td>{membership.classes_per_month}</td>
+                                <td>
+                                    <Button
+                                        variant="primary"
+                                        onClick={() => handleEditMembership(membership)}
+                                        className={styles.editButton}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        variant="danger"
+                                        onClick={() => handleDeleteMembership(membership.id)}
+                                        className={styles.deleteButton}
+                                    >
+                                        Delete
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
 
             <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Membership Created</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>{modalMessage}</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        Close
-                    </Button>
-                </Modal.Footer>
+                <div className={styles.titlemodal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Membership Created</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{modalMessage}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </div>
             </Modal>
         </Container>
     );

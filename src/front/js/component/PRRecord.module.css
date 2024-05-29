@@ -53,6 +53,7 @@
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    font-size: small;
 }
 
 .prRecordTable th {
@@ -89,7 +90,7 @@
     }
 
     .formControl {
-        font-size: 12px; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+        font-size: 10px; /* Tamaño de fuente más pequeño en pantallas pequeñas */
     }
 
     .actionButtonEdit, .actionButtonDelete {

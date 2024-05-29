@@ -109,6 +109,7 @@ const PrivateCalendar = () => {
                         {showMessage && (
                             <h3 id='bookigMenssage'>{bookingMessage}</h3>
                         )}
+                        <h4>Class status: {selectedEvent.Class_is_active ? "Active" : "cancelled"}</h4>
                         <p>Description: {selectedEvent.description}</p>
                         <p>Instructor: {selectedEvent.instructor}</p>
                         <p>Duration: {selectedEvent.start_time} minutes</p>
@@ -143,7 +144,8 @@ const PrivateCalendar = () => {
                             <button onClick={closeModal} className={styles.buttonback}>
                                 <i className="fa-solid fa-angle-left"></i> Close
                             </button>
-                            <button onClick={() => handleBookClass(selectedEvent.id)} className={styles.buttonadd}>
+                            <button
+                                onClick={() => handleBookClass(selectedEvent.id)} className={styles.buttonadd} disabled={!selectedEvent.Class_is_active}>
                                 <i className="fa-solid fa-plus icon"></i> Book Class
                             </button>
                         </div>

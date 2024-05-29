@@ -18,9 +18,7 @@ import Login from "../component/Login.jsx";
 import Navbar from "../component/Navbar.jsx";
 import BookingView from "../component/BookingView.jsx";
 import MembershipPurchase from "../component/MembershipPurchase.jsx";
-// import Oneuser from "./Oneuser.jsx";
 import Users from "./Users.jsx";
-// import Homeadmin from "./Homeadmin.jsx";
 import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
@@ -61,28 +59,27 @@ const ModulePage = () => {
 
     const components = [
         { component: <CreateClasses />, name: "Create Classes" },
+        { component: <MembershipManager />, name: "MembershipManager" },
+        { component: <BookingView />, name: "BookingView " },
+        { component: <ClassesView />, name: "ClassesView " },
+        { component: <ClassFrequencyChart />, name: "ClassFrequencyChart " },
+        { component: <Users />, name: "Users " },
+        { component: <TransactionsTable />, name: "TransactionsTable " },
+        { component: <MembershipPurchase />, name: "MembershipPurchase " },
+        { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
+
+
         { component: <MyCalendar />, name: "My Calendar" },
         { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
-        { component: <UserBooking />, name: "User Booking" },
-        { component: <BookingView />, name: "BookingView " },
         { component: <PrivatePageUser />, name: "Private Page User" },
-        { component: <SingupMaster />, name: "Singup Master" },
+        // { component: <SingupMaster />, name: "Singup Master" },
         { component: <UserCreator />, name: "UserCreator " },
-        { component: <MembershipPurchase />, name: "MembershipPurchase " },
-        // { component: <Oneuser />, name: "Oneuser " }, eliminar
-        // { component: <Homeadmin />, name: "Homeadmin " }, eliminar
         { component: <UploadForm />, name: "UploadForm " },
         { component: <ImageGallery />, name: "ImageGallery " },
-        { component: <TransactionsTable />, name: "TransactionsTable " },
-        { component: <Users />, name: "Users " },
 
-        { component: <MembershipManager />, name: "MembershipManager" },
-
+        { component: <UserBooking />, name: "User Booking" },
         { component: <PRRecord />, name: "PRRecord " },
-        { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
         { component: <ResetPassword />, name: "ResetPassword " },
-        { component: <ClassFrequencyChart />, name: "ClassFrequencyChart " },
-        { component: <ClassesView />, name: "ClassesView " },
 
 
 

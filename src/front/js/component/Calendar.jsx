@@ -58,6 +58,7 @@ const MyCalendar = () => {
         
                 >
                     <h2>{selectedEvent.title}</h2>
+                    <h4>Class status: {selectedEvent.Class_is_active ? "Active" : "cancelled"}</h4>
                     <p>Description: {selectedEvent.description}</p>
                     <p>Instructor: {selectedEvent.instructor}</p>
                     <p>Duration: {selectedEvent.start_time} minutes</p>

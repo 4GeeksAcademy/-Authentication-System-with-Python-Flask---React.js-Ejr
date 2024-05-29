@@ -2,10 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-import Homeadmin from "./pages/Homeadmin.jsx";
 // import { Home } from "./pages/home";
 
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 // import { Navbar } from "./component/navbar";
@@ -33,9 +31,6 @@ import MembershipPurchase from "./component/MembershipPurchase.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
 import Users from "./pages/Users.jsx"; // revisar
-import Oneuser from "./pages/Oneuser.jsx"; // revisar
-// import Homeadmin from "./pages/Homeadmin.jsx"; // revisar
-import Menuadmin from "./component/Menuadmin.jsx"; // revisar
 import UploadForm from "./component/UploadForm.jsx";
 import ImageGallery from "./component/ImageGallery.jsx";
 import ProfileImageUpload from "./component/ProfileImageUpload.jsx";
@@ -78,10 +73,8 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
                         <Route element={<Plans />} path="/Plans" />
-                        <Route element={<Homeadmin />} path="/Admin" />
                         <Route element={<Users />} path="/users" />
                         <Route element={<Benefits />} path="/Benefits" />
-                        <Route element={<Oneuser />} path="/User/:id" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Singup />} path="/Singup" />
                         <Route element={<SingupMaster />} path="/Master-private-registration" />
@@ -98,9 +91,6 @@ const Layout = () => {
                         <Route element={<ClassesView />} path="/ClassesView" />
                         <Route element={<EditClasses />} path="/classEdit/:id" />
                         <Route element={<Users />} path="/Users" />
-                        <Route element={<Oneuser />} path="/Oneuser" />
-                        {/* <Route element={<Homeadmin />} path="/Homeadmin" /> */}
-                        <Route element={<Menuadmin />} path="/Menuadmin" />
                         <Route element={<UploadForm />} path="/UploadForm" />
                         <Route element={<ImageGallery />} path="/ImageGallery" />
                         <Route element={<ProfileImageUpload />} path="/ProfileImageUpload" />
@@ -115,8 +105,6 @@ const Layout = () => {
                         <Route element={<PasswordResetRequest />} path="/PasswordResetRequest" />
                         <Route element={<ResetPassword />} path="/ResetPassword" />
                         <Route element={<ClassFrequencyChart />} path="/ClassFrequencyChart" />
-
-
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<MembershipManager />} />
                     </Routes>
