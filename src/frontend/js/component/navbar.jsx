@@ -73,9 +73,9 @@ const Navbar = () => {
                               <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
                               <div className="px-5">
                                   <ul className="grid gap-2">
-                                  <li onClick={()=>{nav("/settings")}} className="f-body hover:bg-violet-950">Account settings</li>
+                                  <li onClick={()=>{nav("/settings")}} className="f-body hover:bg-violet-950 cursor-pointer">Account settings</li>
 
-                                      <li onClick={()=>{handleAnchor("footer")}} className="f-body hover:bg-violet-950">Support</li>
+                                      <li onClick={()=>{handleAnchor("footer")}} className="f-body hover:bg-violet-950 cursor-pointer">Support</li>
 
                                   </ul>
                               </div>

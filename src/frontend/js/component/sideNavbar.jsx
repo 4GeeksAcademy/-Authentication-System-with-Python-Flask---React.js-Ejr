@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 const SideNavbar = ({workspaces, boards}) => {
 
+    const nav = useNavigate();
    
 
   return (
-    <div className="w-1/6 border-r-[1px] border-gray-500 flex flex-col p-3 sticky h-full">
+    <div className="w-1/6 border-r-[1px] border-gray-500 flex flex-col p-3 sticky h-full overflow-auto">
 				<ul>
-					<li className="flex items-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
+					<li onClick={()=>nav(`/dashboard`)} className="flex items-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
 						<i className="fa-solid fa-house text-sm mr-5"></i>
-						<p className="text-sm f-body">Home</p>
+						<p  className="text-sm f-body">Home</p>
 					</li>
 				</ul>
 				<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
