@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Modal } from "react-bootstrap";
 import Swal from 'sweetalert2';
 import styles from './EditClasses.module.css';
 
@@ -18,18 +18,26 @@ const EditClasses = ({ classData, onClose }) => {
         available_slots: ""
     });
 
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+
     useEffect(() => {
         if (classData) {
             setFormData({
                 name: classData.name || "",
                 description: classData.description || "",
-                dateTime_class: classData.dateTime_class || "",
+                dateTime_class: formatDateTime(classData.dateTime_class) || "",
                 start_time: classData.start_time || "",
                 duration_minutes: classData.duration_minutes || "",
                 available_slots: classData.available_slots || ""
             });
         }
     }, [classData]);
+
+    const formatDateTime = (dateTime) => {
+        const date = new Date(dateTime);
+        const formattedDate = date.toISOString().slice(0, 16);
+        return formattedDate;
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,6 +62,19 @@ const EditClasses = ({ classData, onClose }) => {
     const handleCancel = async () => {
         await actions.cancelClass(id);
         onClose();
+    };
+
+    const handleConfirmCancel = () => {
+        setShowConfirmModal(true);
+    };
+
+    const handleCloseConfirmModal = () => {
+        setShowConfirmModal(false);
+    };
+
+    const handleConfirmCancelClass = async () => {
+        await handleCancel();
+        setShowConfirmModal(false);
     };
 
     return (
@@ -153,7 +174,7 @@ const EditClasses = ({ classData, onClose }) => {
                         </Button>
                     </Col>
                     <Col xs="auto">
-                        <Button variant="danger" type="button" onClick={handleCancel} className={`mx-2 ${styles.button}`}>
+                        <Button variant="danger" type="button" onClick={handleConfirmCancel} className={`mx-2 ${styles.button}`}>
                             Cancelar Clase
                         </Button>
                     </Col>
@@ -164,6 +185,25 @@ const EditClasses = ({ classData, onClose }) => {
                     </Col>
                 </Row>
             </Form>
+
+            <Modal show={showConfirmModal} onHide={handleCloseConfirmModal} centered>
+                <div className={styles.modalAlert}>
+                <Modal.Header >
+                    <Modal.Title>Confirmar Cancelación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>¿Estás seguro de que deseas cancelar esta clase?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseConfirmModal}>
+                        No
+                    </Button>
+                    <Button variant="danger" onClick={handleConfirmCancelClass}>
+                        Sí, Cancelar Clase
+                    </Button>
+                </Modal.Footer>
+                </div>
+            </Modal>
         </div>
     );
 };

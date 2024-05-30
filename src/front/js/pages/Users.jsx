@@ -7,6 +7,7 @@ import moment from "moment";
 const Users = () => {
   const { store, actions } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [search, setSearch] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -14,6 +15,10 @@ const Users = () => {
   const FormattedDate = ({ dateTime }) => {
     return <span>{moment(dateTime).format('LL')}</span>;
   };
+
+    useEffect(() => {
+    actions.getUsers();
+  }, []);
 
   useEffect(() => {
     if (store.users) {
@@ -33,6 +38,28 @@ const Users = () => {
   const handleCloseModal = () => {
     setSelectedUser(null);
     setShowModal(false);
+  };
+
+  const toggleUserActivation = () => {
+    actions.updateUserActivation(selectedUser.id, !selectedUser.is_active)
+      .then(response => {
+        if (response.success) {
+          // Reload users or update local state here to reflect the change
+          setShowConfirmModal(false);
+          setShowModal(false);
+          actions.getUsers();
+        } else {
+          alert(`Error: ${response.error}`);
+        }
+      });
+  };
+
+  const handleShowConfirmModal = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleCloseConfirmModal = () => {
+    setShowConfirmModal(false);
   };
 
   return (
@@ -91,7 +118,7 @@ const Users = () => {
       </div>
 
       <Modal show={showModal} onHide={handleCloseModal} centered>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -112,13 +139,16 @@ const Users = () => {
                         {selectedUser.name} {selectedUser.last_name}
                       </h3>
                       <h5>User Role: {selectedUser.role}</h5>
-                      <h5>Status account: {selectedUser.is_active ? "Active" : "disabled"}</h5>
+                      <h5>Status account: {selectedUser.is_active ? "Active" : "Disabled"}</h5>
                       <h5>User name: {selectedUser.username}</h5>
                       <h5>Email: {selectedUser.email}</h5>
                       <h5>Register date: <FormattedDate dateTime={selectedUser.register_date} /></h5>
                       <h5>Membership start date: <FormattedDate dateTime={selectedUser.membership_start_date} /></h5>
                       <h5>Membership end date: <FormattedDate dateTime={selectedUser.membership_end_date} /></h5>
                       <h5>Membership description: {selectedUser.membership_description}</h5>
+                      <Button variant="warning" onClick={handleShowConfirmModal} className={styles.buttonActivation}>
+                        Account Active Status
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -131,6 +161,25 @@ const Users = () => {
             Close
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal show={showConfirmModal} onHide={handleCloseConfirmModal} centered>
+      <div className={styles.modalactivation}>
+        <Modal.Header >
+          <Modal.Title>Confirm Action</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to {selectedUser && selectedUser.is_active ? 'deactivate' : 'activate'} this account?
+        </Modal.Body>
+        <Modal.Footer>
+        <Button variant="danger" onClick={toggleUserActivation}>
+            Yes, {selectedUser && selectedUser.is_active ? 'Deactivate' : 'Activate'}
+          </Button>
+          <Button variant="secondary" onClick={handleCloseConfirmModal}>
+            No
+          </Button>
+        </Modal.Footer>
+        </div>
       </Modal>
     </div>
   );
