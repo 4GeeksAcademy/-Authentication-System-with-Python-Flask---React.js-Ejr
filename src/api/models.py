@@ -257,8 +257,10 @@ class Training_classes(db.Model):
             "id": self.id,
             "name": self.name,
             "Class_is_active": self.Class_is_active,
-            "dateTime_class": self.dateTime_class,
-            "start_time": self.start_time.strftime('%H:%M'),  # Formato de hora como HH:MM
+            "dateTime_class": self.dateTime_class.strftime('%Y-%m-%d %H:%M:%S') if self.dateTime_class else None,
+            "start_time": self.start_time.strftime('%H:%M') if self.start_time else None,
+            # "dateTime_class": self.dateTime_class,
+            # "start_time": self.start_time.strftime('%H:%M'),  # Formato de hora como HH:MM
             "duration_minutes": self.duration_minutes,
             "instructor":self.instructor.name if self.instructor else "",
             "available_slots": self.available_slots,

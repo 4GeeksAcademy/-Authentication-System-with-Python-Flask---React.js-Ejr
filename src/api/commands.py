@@ -41,15 +41,18 @@ Nota: 5 es el número de usuarios a agregar
 #     def insert_test_data():
 #         pass
 
-# Define una función para configurar comandos de Flask
-# flask create-permissions
-# flask create-roles-and-permissions
-# flask create-users
-# flask create-memberships
-# flask assign-memberships
-# flask create-classes
-# flask create-bookings
+"""
+Comandos de Flask para creacion de usuarios
 
+flask create-permissions
+flask create-roles-and-permissions
+flask create-users
+flask create-memberships
+flask assign-memberships
+flask create-classes
+flask create-bookings
+
+"""
 
 def setup_commands(app):
     @app.cli.command("create-permissions")
@@ -100,11 +103,11 @@ def setup_commands(app):
         """Crear usuarios maestro y atletas en la base de datos."""
         print("Creating users...")
         master_user = User(
-            email="usuariomaster2@gmail.com",
-            name="Master2",
+            email="usuariomaster@gmail.com",
+            name="Master",
             last_name="Usuario",
-            username="masteruser2",
-            password="secure_password",
+            username="masteruser",
+            password="11",
             is_active=True,
             role_id=1  # ID de rol 'master'
         )
@@ -193,7 +196,10 @@ def setup_commands(app):
         users = User.query.filter(User.role_id == 5).all()  # Todos los usuarios atletas
         classes = Training_classes.query.all()
         for training_class in classes:
-            num_bookings = random.randint(1, min(training_class.available_slots, 15))  # Reservas aleatorias
+            if not users:
+                print("No users available for bookings.")
+                return  # Salir si no hay usuarios
+            num_bookings = random.randint(1, min(len(users), training_class.available_slots))  # Ajusta aquí para no superar el número de usuarios
             booked_users = random.sample(users, num_bookings)  # Usuarios aleatorios para reservas
             for user in booked_users:
                 booking = Booking(
@@ -217,3 +223,56 @@ def setup_commands(app):
         create_classes()
         create_bookings()
         print("All test data created successfully!")
+
+
+
+""""
+    1. Definición de Comandos
+    Cada función decorada con @app.cli.command() define un comando que puede ser ejecutado desde la línea de comandos. Esto permite realizar tareas específicas como crear usuarios, roles, permisos, etc.
+
+    2. Comandos Específicos
+    create-permissions
+    Propósito: Crear permisos básicos en la base de datos que serán usados para controlar el acceso a diferentes funciones de la aplicación.
+    Proceso:
+    Define una lista de permisos con su nombre y descripción.
+    Itera sobre esta lista, creando instancias del modelo Permission y guardándolas en la base de datos.
+    create-roles-and-permissions
+    Propósito: Establecer roles y asignar los permisos creados a estos roles.
+    Proceso:
+    Define una lista de roles con su descripción.
+    Por cada rol, crea una instancia y la guarda en la base de datos.
+    Una vez que todos los roles están creados y guardados, asigna permisos a cada rol. Esto se hace iterando sobre todos los permisos y roles, y creando relaciones a través del modelo RolePermission.
+    create-users
+    Propósito: Crear usuarios de prueba, incluyendo un usuario maestro y varios usuarios con el rol de atleta.
+    Proceso:
+    Crea un usuario maestro con un rol específico.
+    Crea varios usuarios atletas, usando la biblioteca faker para generar nombres y apellidos ficticios.
+    A cada usuario atleta, se le asignan preguntas de seguridad.
+    create-memberships
+    Propósito: Crear diferentes tipos de membresías que los usuarios pueden adquirir.
+    Proceso:
+    Define una lista de membresías con detalles como nombre, descripción, precio, duración y clases permitidas por mes.
+    Crea y guarda cada membresía en la base de datos.
+    assign-memberships
+    Propósito: Asignar membresías a los usuarios atletas.
+    Proceso:
+    Obtiene todos los usuarios con rol de atleta y todas las membresías disponibles.
+    Asigna aleatoriamente una membresía a cada usuario atleta, estableciendo fechas de inicio y fin basadas en la duración de la membresía.
+    create-classes
+    Propósito: Crear clases programadas que los usuarios pueden reservar.
+    Proceso:
+    Programa clases para cada día de la semana en intervalos de dos horas.
+    Guarda cada clase en la base de datos.
+    create-bookings
+    Propósito: Crear reservas para las clases.
+    Proceso:
+    Obtiene todos los usuarios atletas y todas las clases creadas.
+    Para cada clase, selecciona un número aleatorio de usuarios y crea una reserva para cada uno.
+    Maneja adecuadamente la cantidad de usuarios para evitar errores cuando hay más reservas posibles que usuarios.
+    insert-test-data
+    Propósito: Ejecutar todos los comandos anteriores en secuencia para poblar la base de datos con datos de prueba.
+    Proceso:
+    Llama secuencialmente a cada uno de los comandos definidos anteriormente.
+    3. Ejecución de Comandos
+    Para ejecutar cualquier comando, utilizas la interfaz de línea de comandos de Flask con el prefijo flask, por ejemplo:
+"""
