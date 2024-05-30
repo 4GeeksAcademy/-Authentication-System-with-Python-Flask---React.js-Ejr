@@ -39,7 +39,8 @@ const Course = () => {
                 <div className="card-body">
                   <h5 className="card-title">{course.title}</h5>
                   <p className="card-text">{course.description}</p>
-                  <p className="card-text"><small className="text-body-secondary">{course.assessment}</small></p>
+                  <p className="card-text"><small className="text-body-secondary">Number of assesments: {course.assessment}</small></p>
+                  <div className="card-text"><small className="text-body-secondary">You will get: {course.titleCertificateToGet}</small></div>
                 </div>
               </div>
             </div>
@@ -47,6 +48,7 @@ const Course = () => {
           <div className="container">
             <div className="row">
               <div className="col border-end border-warning border-4">{course.titleTeacher}</div>
+              <div className="col border-end border-warning border-4">{course.createDate}</div>
               <div className="col border-end border-warning border-4">{course.dateExpiration}</div>
             </div>
           </div>

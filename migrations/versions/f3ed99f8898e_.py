@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: afe2897c0c60
+Revision ID: f3ed99f8898e
 Revises: 
-Create Date: 2024-05-29 16:10:03.838794
+Create Date: 2024-05-29 22:03:12.037956
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'afe2897c0c60'
+revision = 'f3ed99f8898e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -110,6 +110,7 @@ def upgrade():
     sa.Column('create_date', sa.String(length=300), nullable=True),
     sa.Column('title_Teacher', sa.String(length=250), nullable=False),
     sa.Column('date_expiration', sa.String(length=300), nullable=True),
+    sa.Column('title_url_media', sa.String(length=1024), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('manager_id', sa.Integer(), nullable=True),
     sa.Column('teacher_id', sa.Integer(), nullable=True),
@@ -133,15 +134,13 @@ def upgrade():
     op.create_table('modules',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description_content', sa.String(length=500), nullable=False),
-    sa.Column('type_file', sa.String(length=250), nullable=False),
     sa.Column('title', sa.String(length=250), nullable=False),
-    sa.Column('video_id', sa.Integer(), nullable=True),
-    sa.Column('type_video', sa.String(length=250), nullable=False),
-    sa.Column('text_id', sa.Integer(), nullable=True),
-    sa.Column('type_text', sa.String(length=250), nullable=False),
-    sa.Column('image_id', sa.Integer(), nullable=True),
-    sa.Column('type_image', sa.String(length=250), nullable=False),
+    sa.Column('url_video', sa.String(length=1024), nullable=False),
+    sa.Column('video_id', sa.String(length=250), nullable=True),
+    sa.Column('image_id', sa.String(length=250), nullable=True),
     sa.Column('total_video', sa.String(length=250), nullable=True),
+    sa.Column('date_create', sa.String(length=250), nullable=False),
+    sa.Column('token_module', sa.String(length=1024), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['course_id'], ['course.id'], ),
     sa.PrimaryKeyConstraint('id')
