@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './Chronometer.css';
+
 
 const TabataTimer = () => {
   // esto hace que los Estados manejen el tiempo, si está corriendo, la ronda actual y el estado de trabajo/descanso.
@@ -65,9 +65,40 @@ const TabataTimer = () => {
     return `${minutes}:${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}`;
   };
 
+  const cuerpoStyle = {
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '300%',
+    fontFamily: 'calibri',
+    color: 'white',
+    background: 'linear-gradient(skyblue, white)'
+  };
+
+  const marcoStyle = {
+    borderRadius: '30px',
+    background: 'black',
+    padding: '30px',
+    border: '5px solid white',
+    textAlign: 'center'
+  };
+
+  const botonesContenedorStyle = {
+    display: 'flex',
+    justifyContent: 'space-around'
+  };
+
+  const btnStyle = {
+    cursor: 'pointer',
+    display: 'inline-block',
+    fontSize: '60%',
+    padding: '20px'
+  };
+
   return (
-    <div className="cuerpo">
-      <div className="marco text-center">
+    <div style={cuerpoStyle}>
+      <div style={marcoStyle}>
         <h1>Tabata Timer</h1>
         <div>
           <span>{isWork ? 'Entrenamiento' : 'Descanso'}: {formatTime(time)}</span>
@@ -75,10 +106,10 @@ const TabataTimer = () => {
         <div>
           <span>Ronda: {round} / 8</span>
         </div>
-        <div className="botones-contenedor">
-          <button className="btn" onClick={handleStart}>Iniciar</button>
-          <button className="btn" onClick={handleStop}>Detener</button>
-          <button className="btn" onClick={handleReset}>Reiniciar</button>
+        <div style={botonesContenedorStyle}>
+          <button style={btnStyle} onClick={handleStart}>Iniciar</button>
+          <button style={btnStyle} onClick={handleStop}>Detener</button>
+          <button style={btnStyle} onClick={handleReset}>Reiniciar</button>
         </div>
       </div>
     </div>
