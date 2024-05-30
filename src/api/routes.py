@@ -606,8 +606,6 @@ def update_user(user_id):
 
     db.session.commit()
     return jsonify({"message": f"User with ID {user.id} updated successfully"}), 200
-    
-
 
 #------------------DELETE TEACHER------------------#
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
@@ -653,6 +651,48 @@ def update_teacher(teacher_id):
 
     db.session.commit()
     return jsonify({"message": f"Teacher with ID {teacher.id} updated successfully"}), 200
+
+#------------------DELETE MANAGER------------------#
+@api.route('/view/manager/manager/<int:manager_id>', methods=['DELETE'])
+@jwt_required()
+def delete_manager(manager_id):
+    current_token = get_jwt_identity()  # Obtiene ID del usuario del Token
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    manager = Manager.query.get(manager_id)
+    if not manager:
+        return jsonify({"Error": "Teacher not found"}), 404
+
+    db.session.delete(manager)
+    db.session.commit()
+    return jsonify({"message": f"Teacher with ID {manager.id} deleted successfully"}), 200
+
+
+#--------------------UPDATE MANAGER--------------------#
+@api.route('/view/manager/manager/<int:manager_id>', methods=['PUT'])
+@jwt_required()
+def update_manager(manager_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    manager = Manager.query.get(manager_id)
+    if not manager:
+        return jsonify({"Error": "Manager not found"}), 404
+
+    data = request.get_json()
+    manager.email = data.get('email', manager.email)
+    manager.is_manager = data.get('isManager', manager.is_manager)
+    manager.name = data.get('name', manager.name)
+    manager.last_name = data.get('lastName', manager.last_name)
+    manager.number_document = data.get('numberDocument', manager.number_document)
+    manager.phone = data.get('phone', manager.phone)
+    manager.teacher_id = data.get('teacherId', manager.teacher_id)
+    manager.user_id = data.get('userId', manager.user_id)
+
+    db.session.commit()
+    return jsonify({"message": f"Manager with ID {manager.id} updated successfully"}), 200
 
 
 #-----------------------COURSES------------------------#
@@ -809,7 +849,7 @@ def delete_module(module_id):
 
 
 #-----------------------PAYMENT------------------------#
-@api.route('/payment/courses', methods=['POST'])
+@api.route('/payment/courses', methods=['POST', 'GET'])
 def create_payment_course():
     try:
         data = request.get_json()
@@ -818,19 +858,17 @@ def create_payment_course():
             title_course=data.get('titleCourse'),
             pad_amount=data.get('padAmount'),
             type_payment=data.get('typePayment'),
-            course_id=data.get('course_id'),
-            manager_id=data.get('manager_id')
+            course_id=data.get('courseId'),
+            manager_id=1
         )
         db.session.add(new_payment)
         db.session.commit()
 
-        return jsonify({"message": "Payment for course created successfully", "payment_id": new_payment.id}), 201
+        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.id}), 201
     
     except Exception as err:
         return jsonify({"Error": f"Error creating payment for course: {str(err)}"}), 500
-    
 
-@api.route('/payment/courses', methods=['GET'])
 def get_all_payments_courses():
     try:
         payments = Payment.query.all()
@@ -838,7 +876,11 @@ def get_all_payments_courses():
         return jsonify({"payments": serialized_payments}), 200
     
     except Exception as err:
-        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500
+        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500   
+    
+
+""" @api.route('/payment/courses', methods=['GET']) """
+
 
 
 #-----------------------QUIZZES------------------------#
@@ -847,22 +889,31 @@ def post_quizzes():
     try:
         question_title = request.json.get('questionTitle')
         answer_teacher = request.json.get('answerTeacher')
-        answer_user = request.json.get('answerUser')
-        approved = request.json.get('approved')
+        answer_user = request.json.get('answerUser')  # Debe ser booleano
+        approved = request.json.get('approved')  # Debe ser booleano
         approval_percentage_user = request.json.get('approvalPercentageUser')
         approval_percentage_number = request.json.get('approvalPercentageNumber')
-        approval_percentage = request.json.get('approvalPercentage')
+        approval_percentage = request.json.get('approvalPercentage')  # Debe ser booleano
         module_id = request.json.get('moduleId')
 
-        if not question_title or not answer_teacher or not answer_user or not approved or not approval_percentage_user or not approval_percentage_number or not approval_percentage or not module_id:
-            return {"Error": "questionTitle, answer, answerTeacher, answerUser, approved, approvalPercentageUser, approvalPercentageNumber, approvalPercentage and moduleId are required"}, 400
+        if not question_title or not answer_teacher or answer_user is None or approved is None or not approval_percentage_user or not approval_percentage_number or approval_percentage is None or not module_id:
+            return {"Error": "questionTitle, answerTeacher, answerUser, approved, approvalPercentageUser, approvalPercentageNumber, approvalPercentage and moduleId are required"}, 400
         
         existing_module = Modules.query.filter_by(id=module_id).first()
 
         if not existing_module:
             return jsonify({"Error": "Module does not exist."}), 404
         
-        quiz = Quizzes(question_title=question_title, answer_teacher=answer_teacher, answer_user=answer_user, approved=approved, approval_percentage_user=approval_percentage_user, approval_percentage_number=approval_percentage_number, approval_percentage=approval_percentage, module_id=module_id)
+        quiz = Quizzes(
+            question_title=question_title,
+            answer_teacher=answer_teacher,
+            answer_user=answer_user,
+            approved=approved,
+            approval_percentage_user=approval_percentage_user,
+            approval_percentage_number=approval_percentage_number,
+            approval_percentage=approval_percentage,
+            module_id=module_id
+        )
         db.session.add(quiz)
         db.session.commit()
 
@@ -871,7 +922,8 @@ def post_quizzes():
     except Exception as err:
         return jsonify({"Error": "Error in quiz creation: ", "fetching error": str(err)}), 500
     
-@api.route('/module/quizzes', methods=['GET'])
+
+@api.route('/module/quizzes')
 def get_quizzes():
     try:
         quizzes = Quizzes.query.all()
@@ -883,7 +935,49 @@ def get_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
+    
+@api.route('/module/quizzes/<int:quiz_id>', methods=['PUT'])
+def put_quizzes(quiz_id):
+    try:
+        question_title = request.json.get('questionTitle')
+        answer_teacher = request.json.get('answerTeacher')
+        answer_user = request.json.get('answerUser')
+        approved = request.json.get('approved')
+        approval_percentage_user = request.json.get('approvalPercentageUser')
+        approval_percentage_number = request.json.get('approvalPercentageNumber')
+        approval_percentage = request.json.get('approvalPercentage')
+        module_id = request.json.get('moduleId')
+        if not quiz_id:
+            return jsonify({"Error": "quizId is required"}), 400
+        quiz = Quizzes.query.get(quiz_id)
+        if not quiz:
+            return jsonify({"Error": "Quiz not found"}), 404
+        quiz.question_title = question_title
+        quiz.answer_teacher = answer_teacher
+        quiz.answer_user = answer_user
+        quiz.approved = approved
+        quiz.approval_percentage_user = approval_percentage_user
+        quiz.approval_percentage_number = approval_percentage_number
+        quiz.approval_percentage = approval_percentage
+        quiz.module_id = module_id
+        db.session.commit()
+        return jsonify({"message": "Quiz updated successfully", "Quiz": quiz.serialize()}), 200
+    except Exception as err:
+        return jsonify({"Error": "Error in quiz update: " + str(err)}), 500 
 
+@api.route('/module/quizzes/<int:quiz_id>', methods=['DELETE'])
+def delete_quiz(quiz_id):
+    try:
+        quiz = Quizzes.query.get(quiz_id)
+        if not quiz:
+            return jsonify({"Error": "Quiz not found"}), 404
+        db.session.delete(quiz)
+        db.session.commit()
+        return jsonify({"message": "Quiz deleted successfully"}), 200
+    except Exception as err:
+        return jsonify({"Error": "Error deleting quiz", "details": str(err)}), 500
+        
+        
 #----------------------TROLLEY------------------------#
 @api.route('/trolley/courses', methods=['POST'])
 def add_course_to_trolley():

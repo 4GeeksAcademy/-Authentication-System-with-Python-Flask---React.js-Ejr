@@ -16,6 +16,7 @@ import { CourseCard } from '../Courses/CourseCard.jsx';
 import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
+import { GetQuizzes } from './GetQuizzes.jsx';
 
 
 
@@ -36,15 +37,21 @@ export const ManagerDashboard = () => {
         setButtonSelected(<ManagerCourses />)
         actions.getCourse()
     }
-    
+
     const handleMyModule = () => {
         setButtonSelected(<ModuleCourse />)
-        actions.getCourse()
+        actions.getModules()
     }
+
 
     const handleMyQuizzes = () => {
         setButtonSelected(<QuizzesCourse />)
-        actions.getCourse()
+        actions.getQuizzes()
+    }
+
+    const handleGetQuizzes = () => {
+        setButtonSelected(<GetQuizzes />)
+        actions.getQuizzes()
     }
 
     const handleMyProfile = () => {
@@ -73,7 +80,7 @@ export const ManagerDashboard = () => {
         setButtonSelected(<Certificate />)
     }
 
-    const handleCreateCategory= () => {
+    const handleCreateCategory = () => {
         setButtonSelected(<CreateCategory />)
     }
 
@@ -82,39 +89,52 @@ export const ManagerDashboard = () => {
         navigate('/')
     }
     return (
-        <div className="row" style={{ height: '200vh' }}>
-            <div className="col-3 text-center">
-                <p>Dashboard</p>
-                <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
-                    <FaCircleArrowLeft />
-                    <h1>Welcome!</h1>
-                    <h5>Manager</h5>
+        <div className="row">
+            <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">CLICK</button>
+
+            <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div className="offcanvas-header">
+                    <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>Create Courses</button>
-                
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyModule}>Create Modules</button>
-                
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>Create Quizzes</button>
+                <div className="offcanvas-body">
+                    <div className="text-center">
+                        <p>Dashboard</p>
+                        <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
+                            <FaCircleArrowLeft />
+                            <h1>Welcome!</h1>
+                            <h5>Manager</h5>
+                        </div>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>Create Courses</button>
 
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>Update Courses</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyModule}>Create Modules</button>
 
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>View Courses</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>Create Quizzes</button>
 
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>Profile</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetQuizzes}>View Quizzes</button>
 
-                <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments}>Payments </button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>Update Courses</button>
 
-                <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>Teachers</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>View Courses</button>
 
-                <button className='btn btn-outline-primary my-2 w-75' onClick={handleUsers}>Users</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>Profile</button>
 
-                <button className='btn btn-outline-primary my-2 w-75' onClick={HandleFiles}>Files</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments}>Payments </button>
 
-                <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>Certificate</button>
+                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>Teachers</button>
 
-                <button className='btn btn-outline-primary my-2 w-75' onClick={handleCreateCategory}>Create Category</button>
+                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleUsers}>Users</button>
+
+                        <button className='btn btn-outline-primary my-2 w-75' onClick={HandleFiles}>Files</button>
+
+                        <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>Certificate</button>
+
+                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleCreateCategory}>Create Category</button>
+                    </div>
+                </div>
             </div>
-            <div className="col-9">
+            
+            <div className="d-flex justify-content-center bg-warning">
                 {buttonSelected}
             </div>
         </div>

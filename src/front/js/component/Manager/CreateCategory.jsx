@@ -72,7 +72,7 @@ export const CreateCategory= () => {
                 )}
             </div>
 
-            <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
+            <div className='d-flex justify-content-center align-items-start'>
                 <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
                     <div className="d-flex justify-content-center align-items-center position-relative mb-5">
                         <div className='d-flex justify-content-center align-items-center'>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 
-export const ManagerProfile = () => {
+export const TeacherProfile = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 

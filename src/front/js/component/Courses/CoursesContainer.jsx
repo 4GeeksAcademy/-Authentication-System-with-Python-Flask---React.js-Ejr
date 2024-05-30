@@ -70,7 +70,6 @@ export const CoursesContainer = () => {
                                 <p>{item.title}</p>
                                 <video controls className="img-fluid">
                                     <source src={item.urlVideo} type="video/mp4" />
-                                    Your browser does not support the video tag.
                                 </video>
                             </div>
                         ))

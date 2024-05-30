@@ -11,6 +11,7 @@ import { TeacherSettings } from './TeacherSettings.jsx';
 import { UploadFile } from './UploadFile.jsx';
 import { PostCourse } from './PostCourse.jsx';
 import { QuizzForm } from './QuizzForm.jsx';
+import { TeacherProfile } from './TeacherProfile.jsx';
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context)
@@ -27,7 +28,10 @@ export const TeacherDashboard = () => {
         setButtonSelected(<TeacherCourses />)
     }
 
-    const [user] = useState('user')
+    const handleProfile = () => {
+        setButtonSelected(<TeacherProfile />)
+    }
+
     const handleMyStudents = () => {
         setButtonSelected(<TeacherStudents />)
         actions.getUser()
@@ -48,11 +52,11 @@ export const TeacherDashboard = () => {
         setButtonSelected(<TeacherSettings />)
     }
 
-    const handlePostCourse=()=>{
+    const handlePostCourse = () => {
         setButtonSelected(<PostCourse />)
     }
 
-    const handleQuizzes=()=>{
+    const handleQuizzes = () => {
         setButtonSelected(<QuizzForm />)
     }
 
@@ -72,7 +76,11 @@ export const TeacherDashboard = () => {
                         </div>
                     </div>
                     <div>
-                        <div className='border-bottom w-100 mx-1 my-3 pb-3'><h5 className='fw-bolder'>Profile</h5></div>
+                        <div className='col-12 w-100'>
+
+                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleProfile}>Profile</button>
+                        </div>
+                        
 
                         <div className='col-12 w-100'>
 
@@ -99,7 +107,7 @@ export const TeacherDashboard = () => {
                         <div className='col-12 w-100'>
 
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handleSettings}>Settings</button>
-                            
+
                         </div>
                         <div>
                             <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>Certificate</button>

@@ -102,7 +102,7 @@ export const UpdateCourse = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
-                if (msgError === '' && msg === '') {
+                if (msgError === '' && msg2 === '') {
                     return
 
                 } else if (store.error === ''  && counter === 7) {
@@ -115,23 +115,23 @@ export const UpdateCourse = () => {
         }, 500);
 
         return () => clearInterval(interval);
-    }, [setRedirectPath, store.error, counter]);
+    }, [setRedirectPath, store.error, counter, msg2, msgError]);
 
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
-    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
+    const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2)
 
     return (
         <div className="container mt-4 w-50">
             {/* Msg */}
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
-                {(msgError === '' && msg === '') ? (
+                {(msgError === '' && msg2 === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
                         {"Internet or server connection failure"}
                     </div>
                 ) : (msgError === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
-                        {msg}
+                        {msg2}
                     </div>
                 ) : (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
