@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
 
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
 import Constants from "../app/constants.js"
 import NavbarBreadcumb from "./navbarBreadcumb.jsx"
 import ProfileDropDown from "./profileDropDown.jsx"
@@ -59,7 +61,11 @@ const Navbar = () => {
               <NavbarBreadcumb />
           </div>
             <div className="ml-10 flex items-center">
-              <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
+              <div data-tooltip-id="my-tooltip-1"
+                className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white"
+              >
+                  ?
+              </div>
               <button className="w-9 h-9 rounded-full overflow-hidden" onClick={()=>{set_profileDropDown(!profileDropDown)}}>
                 <img className="size-full" src={store.userData.avatar} alt="user avatar" />
               </button>
@@ -104,7 +110,7 @@ const Navbar = () => {
             <li onClick={()=>{handleAnchor("howitworks")}} className="m-5 mx-auto f-tittle cursor-pointer">How it works</li>
             <li onClick={()=>{handleAnchor("pricing")}} className="m-5 mx-auto f-tittle cursor-pointer">Pricing</li>
             <li onClick={()=>{handleAnchor("faq")}} className="m-5 mx-auto f-tittle cursor-pointer">FAQ</li>
-            <li onClick={()=>{handleAnchor("footer")}} className="m-5 mx-auto f-tittle cursor-pointer">Contact</li>
+            <li onClick={() => nav("/contact")} className="m-5 mx-auto f-tittle cursor-pointer">Contact</li>
           </ul>
           <div className="ml-10">
             <button onClick={()=>{nav("/signup")}} className="f-body border rounded-[30px] px-7 py-1 bg-w text-black hover:bg-transparent hover:text-white transition duration-300 ease-in-out">Register</button>
@@ -137,6 +143,14 @@ const Navbar = () => {
       </div>
     </div>
     }
+
+
+    <ReactTooltip
+      className="w-16"
+      id="my-tooltip-1"
+      place="bottom"
+      content={<p>Don't know how to use Keqqu?<br></br>Don't worry, soon you will have tutorial videos! </p>}
+    />
     
     </>
   )

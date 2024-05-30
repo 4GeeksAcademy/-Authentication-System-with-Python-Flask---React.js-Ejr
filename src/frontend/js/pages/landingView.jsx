@@ -213,8 +213,10 @@ const LandingView = () => {
                   <h3 className="f-tittle text-[32px]">KeQQu</h3>
                   <ul className="flex w-2/5 items-center">
                     <li className="f-tittle text-lg mx-auto">About</li>
-                    <li className="f-tittle text-lg mx-auto">Contact</li>
-                    <li className="f-tittle text-lg mx-auto">Support</li>
+                    <li onClick={() => nav("/contact")}
+                      className="f-tittle text-lg mx-auto">Contact</li>
+                    <li onClick={() => nav("/contact")}
+                      className="f-tittle text-lg mx-auto">Support</li>
                   </ul>
                   <div className="flex items-center pl-10">
                     <div> 
