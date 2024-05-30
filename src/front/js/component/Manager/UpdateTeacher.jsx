@@ -22,10 +22,23 @@ export const UpdateTeacher = () => {
                 numberDocument: teacherToUpdate.numberDocument,
                 phone: teacherToUpdate.phone,
                 age: teacherToUpdate.age,
-                gender: teacherToUpdate.gender
-            });
+                gender: teacherToUpdate.gender,
+                certificateTeacher: teacherToUpdate.certificateTeacher
+            })
+        } else {
+            return {
+                email: '',
+                name: '',
+                lastName: '',
+                username: '',
+                numberDocument: '',
+                phone: '',
+                age: '',
+                gender: '',
+                certificateTeacher: ''
+            };
         }
-    }, [teacherId, store.user.access_to_teacher]);
+    }, [userId, store.user.access_to_teacher]);
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -37,7 +50,8 @@ export const UpdateTeacher = () => {
                 setTeacherData(prevState => ({
                     ...prevState,
                     ...updatedData,
-                    isTeacher: undefined
+                    isTeacher: undefined,
+                    isManager: undefined
                 }));
             } else if (value === 'teacher') {
                 updatedData = { isTeacher: true };
@@ -45,12 +59,16 @@ export const UpdateTeacher = () => {
                     ...prevState,
                     ...updatedData,
                     isUser: undefined,
+                    isManager: undefined,
                     certificateTeacher: certificate
                 }));
-            } else {
+            } else if (value === 'manager') {
+                updatedData = { isManager: true };
                 setTeacherData(prevState => ({
                     ...prevState,
-                    [name]: value
+                    ...updatedData,
+                    isUser: undefined,
+                    isManager: undefined
                 }));
             }
         } else {
@@ -76,7 +94,7 @@ export const UpdateTeacher = () => {
             setCounter(prevCounter => {
                 if (store.error === '' && store.msg2 !== '' && prevCounter === 0) {
                     setTimeout(() => {
-                        navigate('/managerView');
+                        setRedirectPath(`/${store.currentRole}View`)
                     }, 5000);
                 }
                 return prevCounter + 1;
@@ -116,7 +134,7 @@ export const UpdateTeacher = () => {
                             <select className="form-select" name='isPeople' onChange={handleChange} value={selectedRole} required>
                                 <option value="">--Choose--</option>
                                 <option value='teacher'>Teacher</option>
-                                <option value='user'>Student</option>
+                                {/* <option value='user'>Student</option> */}
                             </select>
                         </div>
                         <div className="invalid-feedback">
@@ -261,3 +279,4 @@ export const UpdateTeacher = () => {
         </div>
     );
 };
+

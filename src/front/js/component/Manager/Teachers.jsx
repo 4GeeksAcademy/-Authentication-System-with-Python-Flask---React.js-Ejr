@@ -3,18 +3,20 @@ import { Context } from '../../store/appContext';
 
 import { AddUser } from '../AddUser.jsx'
 import { useNavigate } from 'react-router-dom';
+import { UpdateUser } from './UpdateUser.jsx';
 
 export const Teachers = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate()
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState(false)
+    const [rol, setRol] = useState("teacher");
 
     const handleUpdateTeacher = (teacherId) => {
-        navigate(`/UpdateTeacher/${teacherId}`);
+        navigate(`/userUpdate/${teacherId}`)
     };
 
-    const deleteTeacher = (teacherId) => {
-        actions.deleteTeacher(teacherId);
+    const deleteTeacher = (rol, teacherId) => {
+        actions.deleteUser(rol, teacherId);
     };
 
     const toggleActive = () => {
@@ -48,6 +50,7 @@ export const Teachers = () => {
                                     <th scope="col">Phone</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Gender</th>
+                                    <th scope="col">Certificate</th>
                                     <th scope="col">EDIT</th>
                                 </tr>
                             </thead>
@@ -62,9 +65,10 @@ export const Teachers = () => {
                                         <td>{item.phone}</td>
                                         <td>{item.username}</td>
                                         <td>{item.gender}</td>
+                                        <td>{item.certificateTeacher}</td>
                                         <td>
-                                            <button onClick={() => handleUpdateTeacher(item.id)}>Edit</button>
-                                            <button onClick={() => deleteTeacher(item.id)}>Del</button>
+                                            <button onClick={() => handleUpdateTeacher(item.id, )}>Edit</button>
+                                            <button onClick={() => deleteTeacher(rol, item.id)}>Del</button>
                                         </td>
                                     </tr>
                                 ))}

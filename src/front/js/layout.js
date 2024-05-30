@@ -24,7 +24,7 @@ import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
 import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
 import { Trolley } from "./component/User/Trolley.jsx";
-import { UpdateTeacher } from "./component/Manager/UpdateTeacher.jsx";
+// import { UpdateTeacher } from "./component/Manager/UpdateTeacher.jsx";
 import { UpdateQuizzes } from "./component/Manager/UpdateQuizzes.jsx";
 
 const Layout = () => {
@@ -76,7 +76,7 @@ const Layout = () => {
                                     <UpdateUser />
                                 </ProtectedRoute>
                             } 
-                            path="/UpdateUser/:userId" 
+                            path="/userUpdate/:userId" 
                         />
                         <Route 
                             element={
@@ -86,14 +86,15 @@ const Layout = () => {
                             } 
                             path="/UpdateCourse/:courseId" 
                         />
-                        <Route 
+                        {/* <Route 
                             element={
                                 <ProtectedRoute>
                                     <UpdateTeacher />
                                 </ProtectedRoute>
                             } 
-                            path="/UpdateTeacher/:teacherId" 
-                        />
+                            path="/teacherUpdate/:teacherId" 
+                        /> */}
+                        
                         <Route 
                             element={
                                 <ProtectedRoute>

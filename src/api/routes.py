@@ -606,8 +606,6 @@ def update_user(user_id):
 
     db.session.commit()
     return jsonify({"message": f"User with ID {user.id} updated successfully"}), 200
-    
-
 
 #------------------DELETE TEACHER------------------#
 @api.route('/view/manager/teacher/<int:teacher_id>', methods=['DELETE'])
@@ -653,6 +651,48 @@ def update_teacher(teacher_id):
 
     db.session.commit()
     return jsonify({"message": f"Teacher with ID {teacher.id} updated successfully"}), 200
+
+#------------------DELETE MANAGER------------------#
+@api.route('/view/manager/manager/<int:manager_id>', methods=['DELETE'])
+@jwt_required()
+def delete_manager(manager_id):
+    current_token = get_jwt_identity()  # Obtiene ID del usuario del Token
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    manager = Manager.query.get(manager_id)
+    if not manager:
+        return jsonify({"Error": "Teacher not found"}), 404
+
+    db.session.delete(manager)
+    db.session.commit()
+    return jsonify({"message": f"Teacher with ID {manager.id} deleted successfully"}), 200
+
+
+#--------------------UPDATE MANAGER--------------------#
+@api.route('/view/manager/manager/<int:manager_id>', methods=['PUT'])
+@jwt_required()
+def update_manager(manager_id):
+    current_token = get_jwt_identity()
+    if not current_token:
+        return jsonify({"Error": "Token invalid or not exists"}), 401
+
+    manager = Manager.query.get(manager_id)
+    if not manager:
+        return jsonify({"Error": "Manager not found"}), 404
+
+    data = request.get_json()
+    manager.email = data.get('email', manager.email)
+    manager.is_manager = data.get('isManager', manager.is_manager)
+    manager.name = data.get('name', manager.name)
+    manager.last_name = data.get('lastName', manager.last_name)
+    manager.number_document = data.get('numberDocument', manager.number_document)
+    manager.phone = data.get('phone', manager.phone)
+    manager.teacher_id = data.get('teacherId', manager.teacher_id)
+    manager.user_id = data.get('userId', manager.user_id)
+
+    db.session.commit()
+    return jsonify({"message": f"Manager with ID {manager.id} updated successfully"}), 200
 
 
 #-----------------------COURSES------------------------#
@@ -818,13 +858,13 @@ def create_payment_course():
             title_course=data.get('titleCourse'),
             pad_amount=data.get('padAmount'),
             type_payment=data.get('typePayment'),
-            course_id=data.get('course_id'),
-            manager_id=data.get('manager_id')
+            course_id=data.get('courseId'),
+            manager_id=data.get('managerId')
         )
         db.session.add(new_payment)
         db.session.commit()
 
-        return jsonify({"message": "Payment for course created successfully", "payment_id": new_payment.id}), 201
+        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.id}), 201
     
     except Exception as err:
         return jsonify({"Error": f"Error creating payment for course: {str(err)}"}), 500

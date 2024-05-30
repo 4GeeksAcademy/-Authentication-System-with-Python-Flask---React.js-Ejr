@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 
 import { AddNewUser } from './AddNewUser.jsx';
@@ -8,22 +8,23 @@ export const ActiveUsers = () => {
     const { store, actions } = useContext(Context);
 
     const [active, setActive] = useState(false);
+    const [rol, setRol] = useState("user");
 
     const navigate = useNavigate();
 
     const handleUpdateUser = (userId) => {
-        navigate(`/UpdateUser/${userId}`);
+        navigate(`/userUpdate/${userId}`);
     };
 
-    const deleteUser = (userId) => {
-        actions.deleteUser(userId);
+    const deleteUser = (rol, userId) => {
+        actions.deleteUser(rol, userId);
     };
 
     const toggleActive = () => {
         setActive(!active);
     };
 
-    console.log(store.user.access_to_user);
+    
 
     return (
         <div className="container d-flex justify-content-center align-items-center p-4">
@@ -69,7 +70,7 @@ export const ActiveUsers = () => {
                                             <td>{item.gender}</td>
                                             <td>
                                                 <button onClick={() => handleUpdateUser(item.id)}>Edit</button>
-                                                <button onClick={() => deleteUser(item.id)}>Del</button>
+                                                <button onClick={() => deleteUser(rol, item.id)}>Del</button>
                                             </td>
                                         </tr>
                                     ))}
