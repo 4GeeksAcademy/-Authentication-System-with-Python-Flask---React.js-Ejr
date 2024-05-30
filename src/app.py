@@ -1,4 +1,4 @@
-import os, sys, signal, urllib3
+import re, os, sys, signal, urllib3
 from datetime import timedelta
 
 from flask import Flask, jsonify, send_from_directory, Blueprint, request, redirect
@@ -61,10 +61,14 @@ www= Blueprint('www', __name__, subdomain='www')
 app.register_blueprint(www, subdomain='www')
 
 MIGRATE = Migrate(app, db, compare_type=True)
-CORS(app, supports_credentials=True)
-app.config['CORS_HEADERS'] = 'Content-Type'
+
+CORS(app,
+     allow_headers= ['Content-Type', 'Cookie', 'X-CSRF-TOKEN'],
+     supports_credentials=True
+)
+
 db.init_app(app)
-setup_admin(app)
+setup_admin(app, static_file_dir + "index.html")
 setup_commands(app)
 
 jwt = JWTManager(app)
@@ -108,7 +112,7 @@ def database_intitialize():
 def database_reset():
   api_utils.clear_database(commit=False)
   database_intitialize()
-  api_utils.load_rows_from_file("res/defaults.json")
+  api_utils.load_rows_from_file("/res/defaults.json")
   return api_utils.response_plain(200, "ok")
   
 @app.route('/clear_database', methods=['GET'])

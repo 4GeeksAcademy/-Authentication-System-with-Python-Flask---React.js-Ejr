@@ -146,7 +146,7 @@ const Board= ()=>{
     if(!checkAction()){
       if(click.button === Constants.MOUSE_BTN_LEFT && zsort === 0 || click.button === Constants.MOUSE_BTN_MIDDLE && zsort >= -2) {
         const 
-          half= store.board.size * .475,
+          half= store.board.half,
           coords= canvasState.coords
         merge_canvasState({
           action: { 
@@ -155,8 +155,8 @@ const Board= ()=>{
             middle: click.button === Constants.MOUSE_BTN_MIDDLE,
             origin: click.origin,
             limit: [
-                [ -half - coords.x, half - coords.x ],
-                [ -half - coords.y, half - coords.y ]
+                [ -half.x - coords.x, half.x - coords.x ],
+                [ -half.y - coords.y, half.y - coords.y ]
               ],
             zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
           }
@@ -171,7 +171,7 @@ const Board= ()=>{
 
       if(pointerUtils.getZsort(canvasRef.current) === 0){
         const
-          half= store.board.size * .475,
+          half= store.board.half,
           cur_coords= canvasState.coords,
           mus_coords= pointer.current.coords,
           viewFactor= [ window.innerWidth*.5, window.innerHeight*.5 ],
@@ -180,8 +180,8 @@ const Board= ()=>{
           zoominv= 1/_ZOOM_LEVELS[canvasState.zoom],
 
           new_coords= {
-            x: Utils.clamp(cur_coords.x + (mus_point[0] * zoominv | 0), -half, half),
-            y: Utils.clamp(cur_coords.y + (mus_point[1] * zoominv | 0), -half, half),
+            x: Utils.clamp(cur_coords.x + (mus_point[0] * zoominv | 0), -half.x, half.x),
+            y: Utils.clamp(cur_coords.y + (mus_point[1] * zoominv | 0), -half.y, half.y),
           }
 
         merge_canvasState({
@@ -223,7 +223,7 @@ const Board= ()=>{
             set_currentAction({
               type: _ACTION_TYPE.item,
               id: mode,
-              half: store.board.size * .5,
+              half: store.board.half,
               coords: item.get(Constants.ITEMDATA.coords),
               origin: pointer.current.click.origin,
               zoom: _ZOOM_LEVELS[canvasState.zoom],
@@ -349,7 +349,7 @@ const Board= ()=>{
         if(new_zoom != cur_zoom) {
   
           const
-            half= store.board.size * .475,
+            half= store.board.half,
             cur_coords= canvasState.coords,
             mus_coords= pointer.current.coords,
             viewFactor= [ window.innerWidth*.5, window.innerHeight*.5 ],
@@ -361,8 +361,8 @@ const Board= ()=>{
             cur_offset= [ mus_point[0] * cur_zoomcomp, mus_point[1] * cur_zoomcomp ],
             new_offset= [ mus_point[0] * new_zoomcomp, mus_point[1] * new_zoomcomp ],
             new_coords= {
-              x: Utils.clamp((cur_coords.x + (cur_offset[0] - new_offset[0])) | 0, -half, half),
-              y: Utils.clamp((cur_coords.y + (cur_offset[1] - new_offset[1])) | 0, -half, half),
+              x: Utils.clamp((cur_coords.x + (cur_offset[0] - new_offset[0])) | 0, -half.x, half.x),
+              y: Utils.clamp((cur_coords.y + (cur_offset[1] - new_offset[1])) | 0, -half.y, half.y),
             }
 
           merge_canvasState({
@@ -452,13 +452,16 @@ const Board= ()=>{
     if(canvasState.dirty>0) {
       const 
         dirty= canvasState.dirty,
-        half= store.board.size * .5,
+        size= store.board.size,
+        half= store.board.half,
         originStyle= canvasRef.current.parentNode.style,
         canvasStyle= canvasRef.current.style
 
       if(dirty & Constants.CANVAS_DIRTY.size){
-        originStyle.setProperty("--canvas-size", store.board.size.toString() + "px")
-        originStyle.setProperty("--canvas-size-half", half.toString() + "px")
+        originStyle.setProperty("--canvas-size-x", size.x.toString() + "px")
+        originStyle.setProperty("--canvas-size-y", size.y.toString() + "px")
+        originStyle.setProperty("--canvas-size-x-half", half.x.toString() + "px")
+        originStyle.setProperty("--canvas-size-y-half", half.y.toString() + "px")
       }
 
       if(dirty & Constants.CANVAS_DIRTY.zoom){
@@ -469,7 +472,7 @@ const Board= ()=>{
         const 
           coords= canvasState.coords,
           offset= canvasState.offset,
-          origin= [half+store.board.origin[0], half+store.board.origin[1]]
+          origin= [half.x+store.board.origin[0], half.y+store.board.origin[1]]
         canvasStyle.setProperty("--canvas-coords-x", ((-origin[0] + coords.x+offset.x)|0) + "px" )
         canvasStyle.setProperty("--canvas-coords-y", ((-origin[1] + coords.y+offset.y)|0) + "px" )
       }
@@ -478,7 +481,7 @@ const Board= ()=>{
       }
 
       if(dirty & Constants.CANVAS_DIRTY.background){
-        canvasStyle.setProperty("--canvas-background", `url('${store.board.background}')` )
+        canvasStyle.setProperty("--canvas-background", store.board.background )
       }
       
       if(dirty & Constants.CANVAS_DIRTY.cursor){

@@ -9,7 +9,7 @@ APP_PASSWORD= os.environ.get("APP_GMAIL_PASSWORD", None)
 
 def send_verification_email(data):
 
-  html= read_file("email/vericode.html")
+  html= read_file("/email/vericode.html")
 
   message = MIMEMultipart()
   message["Subject"] = "Email verification code @ Keqqu"
@@ -23,7 +23,7 @@ def send_verification_email(data):
 
 def send_recovery_email(data):
 
-  html= read_file("email/passcode.html")
+  html= read_file("/email/passcode.html")
 
   message = MIMEMultipart()
   message["Subject"] = "Account recovery code @ Keqqu"

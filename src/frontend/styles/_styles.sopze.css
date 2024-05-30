@@ -1,8 +1,10 @@
 /* --------------------------------------------------- GENERAL */
 
 :root {
-  --canvas-size: 8192px;
-  --canvas-size-half: 4096px;
+  --canvas-size-x: 8192px;
+  --canvas-size-y: 8192px;
+  --canvas-size-x-half: 4096px;
+  --canvas-size-y-half: 4096px;
 
   --canvas-coords-x: 0px;
   --canvas-coords-y: 0px;
@@ -120,12 +122,12 @@
 #board-canvas {
   z-index: -4096;
 
-  min-width: var(--canvas-size);
-  width: var(--canvas-size);
-  max-width: var(--canvas-size);
-  min-height: var(--canvas-size);
-  height: var(--canvas-size);
-  max-height: var(--canvas-size);
+  min-width: var(--canvas-size-x);
+  width: var(--canvas-size-x);
+  max-width: var(--canvas-size-x);
+  min-height: var(--canvas-size-y);
+  height: var(--canvas-size-y);
+  max-height: var(--canvas-size-y);
 
   translate: var(--canvas-coords-x) var(--canvas-coords-y);
   cursor: var(--canvas-cursor);
