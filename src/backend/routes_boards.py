@@ -53,6 +53,7 @@ def handle_boards_instance_create(json):
     thumbnail= DEFAULT_THUMBNAIL['board'],
     owner_id= user.id,
     workspace_id= wid,
+    settings="2048|2048|0|0|1.0|#777",
     millistamp= get_current_millistamp()
   )
 

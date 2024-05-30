@@ -1,32 +1,17 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.jsx";
+import React from "react"
+import { useNavigate } from "react-router-dom"
+import { Context } from "../store/appContext.jsx"
 
-import Constants from "../app/constants.js";
-import NavbarBreadcumb from "./navbarBreadcumb.jsx";
+import Constants from "../app/constants.js"
+import NavbarBreadcumb from "./navbarBreadcumb.jsx"
+import ProfileDropDown from "./profileDropDown.jsx"
 
 const Navbar = () => {
-  const nav = useNavigate();
-  
-
-  //--- login ---------------------
-  const { language, store, actions }= React.useContext(Context)
-  
-  const [navbarState, setNavbarState] = React.useState(false);
-
-  const[dropCreate, setDropCreate] = React.useState(false)
-  const[dropProfile, setDropProfile] = React.useState(false)
-
-  const handleDrop = () => {
-      setDropProfile(!dropProfile)
-      console.log("dropped down")
-    }
-
-  const handleCreate = () => {
-    //this should create a new board, or open an mini tab from where u can put the name of the board...
-  }
-
-  const itF = 'italic font-medium'
+  const 
+    { language, store, actions }= React.useContext(Context),
+    [navbarState, setNavbarState] = React.useState(false),
+    [profileDropDown, set_profileDropDown] = React.useState(false),
+    nav = useNavigate()
 
   function handleAnchor(obj){
     if(store.activePage == Constants.PAGE.landing) {
@@ -39,18 +24,14 @@ const Navbar = () => {
     else nav("/?href=" + obj)
   }
 
-  function toggleNavbarState(){
-    setNavbarState(!navbarState)
-  }
-
   return (
     <>
     {store.userData ? 
-      <div className="sticky top-0 bg-dark w-full flex z-[999] border-b-[1px] border-gray-600">
+      <div className="sticky top-0 bg-stone-200 dark:bg-dark text-stone-800 dark:text-zinc-400 w-full flex z-50 border-b border-gray-600">
         <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 ">
           <div className="flex items-center">
             
-            <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
+            <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20 text-dark dark:text-white">KeQQu</p>  
             
             <NavbarBreadcumb />
 
@@ -58,39 +39,14 @@ const Navbar = () => {
           </div>
             <div className="ml-10 flex items-center">
               <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
-              <button onClick={handleDrop}>
-                  <img className="w-9 h-9 rounded-full" src={store.userData.avatar} alt="" />
+              <button className="w-9 h-9 rounded-full overflow-hidden" onClick={()=>{set_profileDropDown(!profileDropDown)}}>
+                  <img src={store.userData.avatar} alt="user avatar" />
               </button>
-                  {dropProfile && (
-                      <div className="absolute mt-[20rem] min-w-48 rounded-xl">
-                          <div className="bg-dark rounded-xl p-2 flex flex-col gap-2">
-                              <div className="mx-5 mt-2">
-                                  <ul>
-                                      <li className="f-body text-gray-300">{store.userData.username}</li>
-                                      <li className="f-body-sm text-gray-300 mx-auto">{store.userData.email}</li>
-                                  </ul>
-                              </div>
-                              <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
-                              <div className="px-5">
-                                  <ul className="grid gap-2">
-                                  <li onClick={()=>{nav("/settings")}} className="f-body hover:bg-violet-950 cursor-pointer">Account settings</li>
-
-                                      <li onClick={()=>{handleAnchor("footer")}} className="f-body hover:bg-violet-950 cursor-pointer">Support</li>
-
-                                  </ul>
-                              </div>
-                              <span className="h-[2px] bg-gray-700 w-full mx-auto rounded-full my-1"></span>
-                              <div className="px-5 mb-2">
-                                  <ul>
-                                  <li onClick={()=>{nav("/logout")}} className="f-body text-red-600 hover:bg-red-950 cursor-pointer">Log Out</li>
-
-                                  </ul>
-                              </div>
-                          </div>
-                      </div>
-                  )}
+                  {profileDropDown && 
+                    <ProfileDropDown />
+                  }
             </div>
-          <div onClick={()=>{toggleNavbarState()}} className="black hidden">
+          <div onClick={()=>{setNavbarState(!navbarState)}} className="black hidden">
           {navbarState ? 
             <i className="fa fa-regular fa-circle-mark" size={18} /> 
             : 

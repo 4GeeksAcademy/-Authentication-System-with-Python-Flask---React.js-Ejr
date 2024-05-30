@@ -12,17 +12,15 @@ const NavbarBreadcumb= ()=>{
     <div className="flex p-2">
       { store.navbarBreadcumb && 
         <>
-          <div className="breadcumb flex font-bold text-xl">
+          <div className="flex font-body font-bold text-xl text-stone-600 dark:text-zinc-500 select-none gap-2">
             {
               store.navbarBreadcumb.map((e,i)=>{
                 const last= store.navbarBreadcumb.length -1 == i
                 return (
-                  <>
-                    <button key={`ncb-${i}`} onClick={()=>{nav(e[1])}}><LocalizedString label={e[0]} /></button>
-                    { !last && 
-                      <span className="font-black text-3xl text-primary-n dark:text-accent-n">&gt;</span>
-                    }
-                  </>
+                  <div key={`bci-${i}`} className="flex gap-2">
+                    <span className="whitespace-pre font-black text-2xl text-purple-800 dark:text-accent-n scale-y-150 -mt-1">&gt;</span>
+                    <button key={`ncb-${i}`} onClick={e[1] ? ()=>{nav(e[1])} : null}><LocalizedString label={e[0]} /></button>
+                  </div>
                 )
 
               }

@@ -28,6 +28,10 @@ const DashboardView = () => {
 
     set_workspaces([ ..._workspaces?.owned??[], ..._workspaces?.active??[] ])
     set_boards([ ..._boards?.owned??[], ..._boards?.active??[] ])
+    
+    actions.setNavbarBreadcumb([
+      ["/title.dashboard", "/dashboard"]
+    ])
       
   } handle() },[])
 	

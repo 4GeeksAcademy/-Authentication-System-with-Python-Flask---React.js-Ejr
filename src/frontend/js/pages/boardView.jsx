@@ -33,12 +33,22 @@ const BoardView= ()=>{
   useGlobalPointerHook()
 
   React.useEffect(()=>{
-    if(store.readyState.board){
 
+    if(store.readyState.board){
+        
+      actions.setNavbarBreadcumb(
+        store.board.workspace_id != -1 ?
+        [
+          ["/title.dashboard", "/dashboard"],
+          [store.board.workspace.title, `/workspace/${store.board.workspace_id}`],
+          [store.board.name, null]
+        ] : [
+          ["/title.dashboard", "/dashboard"],
+          [store.board.name, null]
+        ]
+      )
     }
-    else actions.setNavbarBreadcumb([
-      ["/title.dashboard", "/dashboard"]
-    ], true)
+    else actions.setNavbarBreadcumb([ ["/common.loading", null] ])
   },[store.board])
 
   // register custom event listener
@@ -90,7 +100,10 @@ const BoardView= ()=>{
 
       await actions.boards_instance_get(idnum) // board gets into 'store.board'
       
-      if(store.board){
+      if(!store.failure.board){
+        
+        console.log(store.board)
+
         const millis= store.board.millis
         set_lastUpdate({ millistamp:millis, interval:250 })
         //actions.getFontAwesomeIconList()
@@ -111,9 +124,17 @@ const BoardView= ()=>{
               <Board/>
             </>
             :
-            <div className="flex h-full">
-              <div className="m-auto size-fit">{language.get("common.loading")}</div>
-            </div>
+            <>
+            { store.errorState.board ?
+              <div className="flex h-full">
+                <div className="m-auto size-fit">{language.get("error.boardnotfound")}</div>
+              </div>
+              :
+              <div className="flex h-full">
+                <div className="m-auto size-fit">{language.get("common.loading")}</div>
+              </div>
+            }
+            </>
           }
         </>
       }

@@ -25,13 +25,18 @@ const WorkspaceView = () => {
     set_boards(workspace.boards)
     workspace.boards= null;
     set_workspace(workspace)
+
+    actions.setNavbarBreadcumb([
+      ["/title.dashboard", "/dashboard"],
+      [workspace.title, null]
+    ])
       
   } handle() },[])
 
 	const handleCreateNewBoard = async(e) =>{
     e.preventDefault(); e.stopPropagation()
 
-		const new_board = await actions.boards_instance_create();
+		const new_board = await actions.boards_instance_create(workspace.id);
 		if(new_board) set_boards([new_board, ...boards]) // put new on the left
   }
 

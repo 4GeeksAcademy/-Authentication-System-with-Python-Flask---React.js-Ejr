@@ -67,5 +67,8 @@
     "notfound": "Página No Encontrada",
     "message":  "Oops! La página que buscas aparentemente no existe.",
     "back":     "Volver"
+  },
+  "error": {
+    "boardnotfound": "Este tablero no existe"
   }
 }

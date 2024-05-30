@@ -15,6 +15,14 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         language: false, 
         board: false 
       },
+      errorState: { 
+        backend: false, 
+        frontend: false, 
+        pointer: false, 
+        language: false, 
+        board: false 
+      },
+
       activePage: null,
       navbarBreadcumb: null,
 
@@ -165,13 +173,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       setStoreDirty: (state)=> { setStore({ dirty: getStore().dirty | state })},
       unsetStoreDirty: (state)=> { setStore({ dirty: (getStore().dirty | state) ^ state })},
 
-      setNavbarBreadcumb: (element, replace)=> {
-        if(replace) setStore({navbarBreadcumb: element ? Array.isArray(element[0]) ? element : [element] : null})
-        else{
-          new_breadcumb= [...getStore().navbarBreadcumb]
-          new_breadcumb.concat(element)
-          setStore({navbarBreadcumb: new_breadcumb})
-        }
+      setNavbarBreadcumb: (element)=> {
+        setStore({navbarBreadcumb: element ? Array.isArray(element[0]) ? element : [element] : null})
       },
 
       getTimestamp: async(subdomain, id)=>{
@@ -433,7 +436,10 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         const raw= res.data??null
         setStore({ board: raw ? getActions().getBoardFromRawData(raw, true) : null })
 
-        mergeStore({readyState: { board: raw != null }})
+        mergeStore({
+          errorState: { board: raw == null },
+          readyState: { board: raw != null }
+        })
 
         return raw != null
       },

@@ -67,5 +67,8 @@
     "notfound": "Page Not Found",
     "message":  "Oops! The page you're looking for does not seem to exist.",
     "back":     "Go Home"
+  },
+  "error": {
+    "boardnotfound": "This board doesn't exist"
   }
 }
