@@ -197,18 +197,10 @@ const LandingView = () => {
               <p className="f-body my-2">Answers to some questions you may have</p>
             </div>
             <div className="w-3/5 p-10">
-             <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
               <Accordion question='Is it free?' answer='Yes, this software is 100% free.'/>
-              </div>
-              <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
               <Accordion question='Do i have to sign up to use it?' answer='Yes, for being able to use this tool, you will need to sign up and then log in with your account'/>
-              </div>
-              <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
               <Accordion question='How do i start using Keqqu?' answer='I suggest you to read the "How does it work" section. You will se it if you scroll up'/>
-              </div>
-              <div className="bg-primary-n px-10 py-5 rounded-[3rem] my-8">
               <Accordion question='Is there a premium version of Keqqu?' answer='Currently, Keqqu is completely free and we have no immediate plans for a premium version. We want to ensure that everyone can access our basic features at no cost.'/>
-              </div>
             </div>
           </div>
         </div>
