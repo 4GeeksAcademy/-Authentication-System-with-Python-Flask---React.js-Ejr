@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useRef, useState, useEffect} from "react"
 import { useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
 
@@ -6,6 +6,7 @@ const ProfileDropDown= ()=>{
   const
     { store, actions }= React.useContext(Context),
     nav = useNavigate()
+
   
   return (
     <div className="absolute right-2 top-16 min-w-48">
@@ -24,9 +25,9 @@ const ProfileDropDown= ()=>{
               </ul>
           </div>
           <span className="h-[2px] bg-gray-400 dark:bg-gray-700 w-full mx-auto rounded-full my-1"></span>
-          <div className="mb-2">
+          <div className="mb-2 w-full">
               <ul>
-                <button onClick={()=>{nav("/logout")}} className="f-body text-red-600 hover:bg-red-950 cursor-pointer px-5">Log Out</button>
+                <button onClick={()=>{nav("/logout")}} className="text-left w-full f-body text-red-600 hover:bg-red-950 cursor-pointer px-5">Log Out</button>
               </ul>
           </div>
       </div>

@@ -34,13 +34,12 @@ const Navbar = () => {
             <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20 text-dark dark:text-white">KeQQu</p>  
             
             <NavbarBreadcumb />
-
-            <button className=""></button>
+            
           </div>
             <div className="ml-10 flex items-center">
               <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
               <button className="w-9 h-9 rounded-full overflow-hidden" onClick={()=>{set_profileDropDown(!profileDropDown)}}>
-                  <img src={store.userData.avatar} alt="user avatar" />
+                  <img className="w-9 h-9" src={store.userData.avatar} alt="user avatar" />
               </button>
                   {profileDropDown && 
                     <ProfileDropDown />

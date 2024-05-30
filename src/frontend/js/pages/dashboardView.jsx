@@ -90,15 +90,15 @@ const DashboardView = () => {
 						</div>
 						<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
 						<div className="flex items-center gap-10 my-4 w-full flex-wrap">
+							
+							<div onClick={handleCreateNewWorkspace} className="flex flex-col gap-3">
+								<p className="ml-1 text-sm">+</p>
+								<button className="w-60 h-36 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gray-700">Create a new workspace</button>
+							</div>
 
 							{workspaces && workspaces.map((e, i)=> e ?
 								<WorkspaceCard key={`wc-${i}`} data={e} /> : null
 							)}
-							
-							<div onClick={handleCreateNewWorkspace} className="flex flex-col gap-3">
-								<p className="ml-1 text-sm">This should go after the map, so u can create a new one easily</p>
-								<button className="w-60 h-36 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gray-700">Create a new workspace</button>
-							</div>
 						</div>
 					</div>
 					<div>
@@ -116,14 +116,14 @@ const DashboardView = () => {
 						<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
 						<div className="flex items-center gap-10 my-4 w-full flex-wrap">
 							
+							<div onClick={handleCreateNewBoard} className="flex flex-col gap-3">
+								<p className="ml-1 text-sm">+</p>
+								<button className="w-60 h-36 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gray-700">Create a new board</button>
+							</div>
 							{boards && boards.map((e, i)=> e ?
 								<BoardCard key={`bc-${i}`} data={e} /> : null	
 							)}
 
-							<div onClick={handleCreateNewBoard} className="flex flex-col gap-3">
-								<p className="ml-1 text-sm">This should go after the map, so u can create a new one easily</p>
-								<button className="w-60 h-36 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gray-700">Create a new board</button>
-							</div>
 						</div>
 					</div>
 				</div>
