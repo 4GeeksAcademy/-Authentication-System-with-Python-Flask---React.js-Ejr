@@ -14,7 +14,7 @@ export const CreateRoom = () => {
         platform: '',
         description: '',
         mood: '',
-        room_size: 4 // Default room size
+        room_size: 4 
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();

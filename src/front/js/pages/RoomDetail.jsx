@@ -10,6 +10,8 @@ import { FaUser } from "react-icons/fa";
 import '../../styles/RoomDetail.css';
 import RoomDetailsView from '../component/RoomInfoComponent.jsx';
 import ParticipantsView from '../component/ParticipantsInfoComponent.jsx';
+import CommentsSection from '../component/CommentsSection.jsx';
+
 
 export const RoomDetail = () => {
     const { store, actions } = useContext(Context);
@@ -247,7 +249,7 @@ export const RoomDetail = () => {
                 <button className="go-back" onClick={() => navigate('/')}>Go back</button>
             </div>
 
-            <div className={`room-detail ${!isParticipantOrHost ? 'room-detail-small' : ''}`}>
+            <div className={`${!isParticipantOrHost ? 'room-detail-small' : 'room-detail'}`}>
                 <div className="room-header">
                     <img src={fortniteImage} alt="Room Image" className="room-image" />
                     <div className="room-info">
@@ -285,46 +287,21 @@ export const RoomDetail = () => {
                     </div>
                 </div>
                 {!isParticipantOrHost && (
-                    
+
                     <div className="room-actions">
                         <button className="back-btn btn btn-outline-primary" onClick={() => navigate('/')}>Go Back</button>
-                        {requestStatus === 'None' && <button className="join-room"onClick={handleJoinRoom}>Join Room</button>}
-                        {requestStatus === 'pending' && <button onClick={handleWithdrawRequest}>Withdraw Request</button>}
+                        {requestStatus === 'None' && <button className="join-room" onClick={handleJoinRoom}>Join Room</button>}
+                        {requestStatus === 'pending' && <button className='btn-danger withdraw' onClick={handleWithdrawRequest}>Withdraw Request</button>}
                     </div>
                 )}
                 {isParticipantOrHost && (
-                    <div className="comments-section">
-                        <h3>Comments</h3>
-                        <div className="comments-list">
-                            {comments.map(comment => (
-                                <div key={comment.comment_id} className="comment">
-                                    <p><strong>{comment.username}</strong>: {comment.content}</p>
-                                    <p><small>{comment.created_at}</small></p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="add-comment">
-                            <textarea
-                                value={newComment}
-                                onChange={(e) => setNewComment(e.target.value)}
-                                placeholder="Add a comment"
-                            />
-                            <button onClick={handleAddComment}>Submit</button>
-                        </div>
-                    </div>
-                )}
-
-                {isHost && (
-                    <div>
-                        <button onClick={handleToggleRequests}>{showRequests ? 'Hide Requests' : 'Show Requests'}</button>
-                        {showRequests && requests.map(request => (
-                            <div key={request.room_request_id}>
-                                <p>{request.username} wants to join</p>
-                                <button onClick={() => handleRequestAction(request.room_request_id, 'accepted')}>Accept</button>
-                                <button onClick={() => handleRequestAction(request.room_request_id, 'rejected')}>Reject</button>
-                            </div>
-                        ))}
-                    </div>
+                    <CommentsSection
+                        roomId={roomId}
+                        token={token}
+                        username={username}
+                        room={room}
+                        actions={actions}
+                    />
                 )}
 
                 {isParticipantOrHost && !isHost && (

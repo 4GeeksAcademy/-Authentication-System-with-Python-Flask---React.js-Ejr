@@ -62,8 +62,8 @@ export const Room = ({ room }) => {
     };
 
     return (
-        <div className="room-card p-0" onClick={handleCardClick}>
-            <div className="row g-0">
+        <div className="room-card p-0 w-100" onClick={handleCardClick}>
+            <div className="row g-0 col-12">
                 <div className="col-md-4">
                     <img src={fortniteImage} alt={room.game_name} className="img-fluid p-0 w-100 height-auto rounded-start room-image" />
                 </div>
@@ -75,11 +75,11 @@ export const Room = ({ room }) => {
                                 <p className="text-info fs-6 fw-semibold font-family-Inter m-0 "><FaUser />  {participantsCount}/{room.room_size}</p>
                             </div>
                             <h4 className="text-white font-family-Inter">{room.room_name}</h4>
-                            <p className="text-success-subtle font-family-Inter">
+                            <p className="text-success-subtle font-family-Inter w-100">
                                 {truncatedDescription}
                                 {room.description.length > maxLength && (
                                     <span 
-                                        className="text-white text-opacity-75 fs-6 fw-normal font-family-Inter text-decoration-underline"
+                                        className="text-white text-opacity-75 fs-6 fw-normal  font-family-Inter text-decoration-underline"
                                         onClick={handleCardClick}
                                     >
                                         Continue Reading

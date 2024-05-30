@@ -5,12 +5,15 @@
 
 body {
     background: linear-gradient(to bottom, #000000, #131E26, #3B5F79, #629DC8);
+    
+    background-attachment: fixed; /* Ensure the background stays fixed while scrolling */
     overflow-x: hidden;
-    height: 100vh;
     margin: 0;
     font-family: "Inter", sans-serif;
     color: white;
+    height: 100vh;
 }
+
 
 .room {
     color: black;
