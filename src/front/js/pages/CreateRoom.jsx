@@ -14,7 +14,7 @@ export const CreateRoom = () => {
         platform: '',
         description: '',
         mood: '',
-        room_size: 4 // Default room size
+        room_size: 4 
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -136,7 +136,7 @@ export const CreateRoom = () => {
                     >
                         <option value="All">All</option>
                         <option value="Xbox">Xbox</option>
-                        <option value="PSN">PSN</option>
+                        <option value="PlayStation">PlayStation</option>
                         <option value="PC">PC</option>
                         <option value="Google Play">Google Play</option>
                         <option value="Nintendo">Nintendo</option>

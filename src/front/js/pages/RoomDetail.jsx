@@ -10,6 +10,8 @@ import { FaUser } from "react-icons/fa";
 import '../../styles/RoomDetail.css';
 import RoomDetailsView from '../component/RoomInfoComponent.jsx';
 import ParticipantsView from '../component/ParticipantsInfoComponent.jsx';
+import CommentsSection from '../component/CommentsSection.jsx';
+
 
 export const RoomDetail = () => {
     const { store, actions } = useContext(Context);
@@ -25,8 +27,14 @@ export const RoomDetail = () => {
     const [currentView, setCurrentView] = useState('details');
     const username = localStorage.getItem('username');
     const userId = parseInt(localStorage.getItem('userId'));
+    const token = localStorage.getItem('jwt-token');
 
     useEffect(() => {
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchData = async () => {
             await actions.fetchRooms();
             const fetchedRoom = store.rooms.find(room => room.room_id === parseInt(roomId));
@@ -37,7 +45,7 @@ export const RoomDetail = () => {
         };
 
         fetchData();
-    }, [roomId, store.rooms.participants]);
+    }, [token]);
 
     useEffect(() => {
         if (showRequests) {
@@ -69,7 +77,6 @@ export const RoomDetail = () => {
     };
 
     const handleAddComment = async () => {
-        const token = localStorage.getItem('jwt-token');
         if (!token) {
             console.error('No JWT token found');
             return;
@@ -87,7 +94,6 @@ export const RoomDetail = () => {
     };
 
     const handleKickParticipant = async (participantId) => {
-        const token = localStorage.getItem('jwt-token');
         if (!token) {
             console.error('No JWT token found');
             return;
@@ -108,22 +114,21 @@ export const RoomDetail = () => {
     };
 
     const handleJoinRoom = async () => {
-        const token = localStorage.getItem('jwt-token');
         if (!token) {
             navigate('/login');
+            return;
+        }
+
+        const success = await actions.joinRoom(roomId);
+        if (success) {
+            alert('Join request sent successfully!');
+            setRequestStatus('pending');
         } else {
-            const success = await actions.joinRoom(roomId);
-            if (success) {
-                alert('Join request sent successfully!');
-                setRequestStatus('pending');
-            } else {
-                alert('Failed to send join request.');
-            }
+            alert('Failed to send join request.');
         }
     };
 
     const handleAbandonRoom = async () => {
-        const token = localStorage.getItem('jwt-token');
         if (!token) {
             console.error('No JWT token found');
             return;
@@ -178,8 +183,6 @@ export const RoomDetail = () => {
 
     const formatDateTime = (startDate, startTime, endDate = null, endTime = null) => {
         const startDateTime = new Date(`${startDate} ${startTime}`);
-        console.log("Start Date:", startDate, "Start Time:", startTime); // Debugging
-        console.log("Parsed Start DateTime:", startDateTime); // Debugging
         const formattedStart = startDateTime.toLocaleString('en-US', {
             month: 'long',
             day: 'numeric',
@@ -190,8 +193,6 @@ export const RoomDetail = () => {
 
         if (endDate && endTime) {
             const endDateTime = new Date(`${endDate} ${endTime}`);
-            console.log("End Date:", endDate, "End Time:", endTime); // Debugging
-            console.log("Parsed End DateTime:", endDateTime); // Debugging
             const formattedEnd = endDateTime.toLocaleString('en-US', {
                 month: 'long',
                 day: 'numeric',
@@ -212,7 +213,7 @@ export const RoomDetail = () => {
                 return <img src={xboxIcon} alt="Xbox" style={iconStyle} />;
             case 'switch':
                 return <img src={switchIcon} alt="Switch" style={iconStyle} />;
-            case 'playstation':
+            case 'PlayStation':
                 return <img src={playstationIcon} alt="PlayStation" style={iconStyle} />;
             case 'pc':
                 return <img src={pcIcon} alt="PC" style={iconStyle} />;
@@ -221,8 +222,17 @@ export const RoomDetail = () => {
         }
     };
 
+    const countPendingRequests = () => {
+        return requests.filter(request => request.status === 'pending').length;
+    };
+
+    const handleToggleView = (view) => {
+        setCurrentView(view);
+    };
+
     const isHost = room.host_name === username;
     const isParticipantOrHost = isHost || room.participants.some(p => p.participant_id === userId && p.confirmed);
+    console.log(isParticipantOrHost)
 
     const participantsCount = room.participants ? room.participants.length : 0;
 
@@ -233,15 +243,13 @@ export const RoomDetail = () => {
 
     const formattedDateTime = formatDateTime(startDate, startTime, endDate, endTime);
 
-    const handleToggleView = (view) => {
-        setCurrentView(view);
-    };
-
     return (
         <div>
-            <div className="back"><button className="go-back" onClick={() => navigate('/')}>Go back</button></div>
+            <div className="back">
+                <button className="go-back" onClick={() => navigate('/')}>Go back</button>
+            </div>
 
-            <div className={`room-detail ${!isParticipantOrHost ? 'room-detail-small' : ''}`}>
+            <div className={`${!isParticipantOrHost ? 'room-detail-small' : 'room-detail'}`}>
                 <div className="room-header">
                     <img src={fortniteImage} alt="Room Image" className="room-image" />
                     <div className="room-info">
@@ -251,11 +259,14 @@ export const RoomDetail = () => {
                                 <FaUser /> {participantsCount}/{room.room_size}
                             </p>
                         </div>
-                        <div className="room-pills">
-                            <button className={`pill-detail ${currentView === 'details' ? 'active' : ''}`} onClick={() => handleToggleView('details')}>Details</button>
-                            <button className={`pill-participants ${currentView === 'participants' ? 'active' : ''}`} onClick={() => handleToggleView('participants')}>Participants</button>
-                        </div>
-
+                        {isHost && (
+                            <div className="room-pills">
+                                <button className={`pill-detail ${currentView === 'details' ? 'active' : ''}`} onClick={() => handleToggleView('details')}>Room Details</button>
+                                <button className={`pill-participants ${currentView === 'participants' ? 'active' : ''}`} onClick={() => handleToggleView('participants')}>
+                                    Members & Requests ({countPendingRequests()})
+                                </button>
+                            </div>
+                        )}
                         {currentView === 'details' && (
                             <RoomDetailsView
                                 room={room}
@@ -275,46 +286,22 @@ export const RoomDetail = () => {
                         )}
                     </div>
                 </div>
+                {!isParticipantOrHost && (
 
-
-                <div className="comments-section">
-                    <h3>Comments</h3>
-                    <div className="comments-list">
-                        {comments.map(comment => (
-                            <div key={comment.comment_id} className="comment">
-                                <p><strong>{comment.username}</strong>: {comment.content}</p>
-                                <p><small>{comment.created_at}</small></p>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="add-comment">
-                        <textarea
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Add a comment"
-                        />
-                        <button onClick={handleAddComment}>Submit</button>
-                    </div>
-                </div>
-
-                {isHost && (
-                    <div>
-                        <button onClick={handleToggleRequests}>{showRequests ? 'Hide Requests' : 'Show Requests'}</button>
-                        {showRequests && requests.map(request => (
-                            <div key={request.room_request_id}>
-                                <p>{request.username} wants to join</p>
-                                <button onClick={() => handleRequestAction(request.room_request_id, 'accepted')}>Accept</button>
-                                <button onClick={() => handleRequestAction(request.room_request_id, 'rejected')}>Reject</button>
-                            </div>
-                        ))}
+                    <div className="room-actions">
+                        <button className="back-btn btn btn-outline-primary" onClick={() => navigate('/')}>Go Back</button>
+                        {requestStatus === 'None' && <button className="join-room" onClick={handleJoinRoom}>Join Room</button>}
+                        {requestStatus === 'pending' && <button className='btn-danger withdraw' onClick={handleWithdrawRequest}>Withdraw Request</button>}
                     </div>
                 )}
-
-                {!isParticipantOrHost && (
-                    <div>
-                        {requestStatus === null && <button onClick={handleJoinRoom}>Join Room</button>}
-                        {requestStatus === 'pending' && <button onClick={handleWithdrawRequest}>Withdraw Request</button>}
-                    </div>
+                {isParticipantOrHost && (
+                    <CommentsSection
+                        roomId={roomId}
+                        token={token}
+                        username={username}
+                        room={room}
+                        actions={actions}
+                    />
                 )}
 
                 {isParticipantOrHost && !isHost && (

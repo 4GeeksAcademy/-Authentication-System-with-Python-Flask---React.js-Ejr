@@ -5,9 +5,41 @@
     color: #fff;
     max-width: 1114px;
     margin: 0 auto;
-    min-height: 752px;
+    max-height: 1500px;
     font-family: 'Inter', sans-serif;
 }
+
+.room-detail-small {
+    max-height: 1500px; /* Altura más pequeña para usuarios que no son participantes ni host */
+    max-width: 1114px;
+    background-color: #333C53;
+    margin: 0 auto;
+    font-family: 'Inter', sans-serif;
+}
+.room-pills {
+    margin: 17px 0px 32px;
+    gap: 10px
+}
+
+.room-pills button {
+    background-color: #444C63;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.room-pills button.active {
+    background-color: #0096D2;
+}
+
+.room-pills button:hover {
+    background-color: #0056b3;
+}
+
 .back {
     max-width: 1114px;
     margin: auto;
@@ -68,10 +100,21 @@
     background-color: #0096D2;
     color: #fff;
     border: none;
+    height: 48px;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+}
+.withdraw {
+    background-color:#B40000 ;
+    border: none;
+    height: 48px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+
 }
 
 .join-room:hover {
@@ -83,13 +126,14 @@
 }
 
 .back-btn {
+    margin-right: 12px;
     color: white;
+    padding: 10px 20px;
+    height: 48px;
     border-color: #0096D2;
 }
 .back-btn:hover {
     background-color: #0096D2;;
 }
 
-.room-detail-small {
-    height: 752px; /* Altura más pequeña para usuarios que no son participantes ni host */
-}
+
