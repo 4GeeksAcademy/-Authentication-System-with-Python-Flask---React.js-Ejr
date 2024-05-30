@@ -45,7 +45,7 @@ const GlobalListener=()=>{
     const 
       path= window.location.pathname.toLowerCase(),
       page= Object.keys(Constants.PAGEURLS).find(e=> path.includes(Constants.PAGEURLS[e])),
-      idx= Constants.PAGE[page?? Constants.PAGE.login]
+      idx= Constants.PAGE[page?? 'landing']
 
     actions.setActivePage(idx)
   },[loc, window.location.pathname])

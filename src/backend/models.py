@@ -193,7 +193,7 @@ class Board(db.Model):
     return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
 
   def __get_workspace(self, deep):
-    return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
+    return self.workspace_.serialize() if deep and self.workspace_ else self.workspace_id,
 
   def serialize(self, deep=False):
     return {
@@ -238,14 +238,20 @@ class List(db.Model):
   # tasks
   tasks_ = db.relationship("Task", back_populates="list_")
 
-  def serialize(self):
+  def __get_rwr(self, deep=0):
+    return self.rwr_.serialize(deep-1) if deep and self.rwr_ else self.rwr_id,
+
+  def __get_board(self, deep):
+    return self.board_.serialize() if deep and self.board_ else self.board_id,
+
+  def serialize(self, deep=0):
     return {
       "id": self.id,
       "title": self.title,
       "icon": get_public_link(self.icon) if not '://' in self.icon else self.icon,
       "settings": self.settings,
-      "rwr_id": self.rwr_id,
-      "board_id": self.board_id,
+      "rwr": self.__get_rwr(deep),
+      "board": self.__get_board(deep),
       "archived": self.archived,
       "millistamp": self.millistamp
     }
@@ -277,13 +283,19 @@ class Task(db.Model):
   tags_ = db.relationship("Tag", secondary=tags_tasks_association, back_populates='tasks_')
   styles_ = db.relationship('Style', secondary=styles_tasks_association, back_populates='tasks_')
 
-  def serialize(self):
+  def __get_rwr(self, deep=0):
+    return self.rwr_.serialize(deep-1) if deep and self.rwr_ else self.rwr_id,
+
+  def __get_list(self, deep):
+    return self.list_.serialize() if deep and self.list_ else self.list_id,
+
+  def serialize(self, deep=0):
     return {
       "id": self.id,
       "label": self.label,
       "description": self.description,
-      "rwr_id": self.rwr_id,
-      "list_id": self.list_id,
+      "rwr": self.__get_rwr(deep),
+      "list": self.__get_list(deep),
       "due_date": self.due_date,
       "archived": self.archived,
       "millistamp": self.millistamp

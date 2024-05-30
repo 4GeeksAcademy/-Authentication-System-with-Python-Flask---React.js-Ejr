@@ -32,7 +32,7 @@ const LandingView = () => {
 
 	return (
     <div className="bg-dark w-full p-0 m-0 absolute ">
-      <div className="pt-[60px] w-[1440px] mx-auto">
+      <div className="pt-[60px] lg:w-[1440px] mx-auto">
     {/*--- hero section ------------------------------------ */}
         <div id="heroSection" className="w-full grid grid-cols-2 p-5 items-center">
           <div className="mx-auto my-8">
@@ -65,19 +65,19 @@ const LandingView = () => {
         <div id="whykeqqu" className=" w-full py-28">
           <h2 className="flex justify-center py-10 f-tittle text-[48px]">Why KeQQu?</h2>
           <div className="grid grid-cols-3 py-10">
-            <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5">
-              <img className="w-24 h-24 mx-auto" src={bricks} alt="" /> 
+            <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5 flex flex-col">
+              <i className="fa-solid fa-trowel-bricks text-7xl mx-auto my-[12px]" />
               <p className="flex justify-center f-tittle text-xl pt-2">Customize as you want</p>
               <div className="w-4/6 mx-auto rounded-l-lg h-2 bg-accent-n"></div>
               <p className="f-body-sm p-5 mt-3">Customize KeQQu to fit your needs, the freedom is in your hands.</p>
             </div>
-            <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5">
+            <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5 flex flex-col">
               <i className="fa fa-icons fa-circle-check text-7xl mx-auto my-[12px]" />
               <p className="flex justify-center f-tittle text-xl pt-2">Simple to use</p>
               <div className="w-4/6 mx-auto h-2 bg-accent-n"></div>
               <p className="f-body-sm p-5 mt-3">Not hard to understand, not hard to start using. Super intuitive and practic.</p>
             </div>
-            <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5">
+            <div className="bg-primary-d w-[28rem] h-[18rem] rounded-xl mx-auto p-5 flex flex-col">
               <i className="fa fa-icons fa-clock text-7xl mx-auto my-[12px]"/>
               <p className="flex justify-center f-tittle text-xl pt-2">Save a lot of time</p>
               <div className="w-4/6 mx-auto rounded-r-lg h-2 bg-accent-n"></div>
@@ -122,12 +122,12 @@ const LandingView = () => {
               <h4 className="f-tittle text-4xl flex justify-center">BASIC</h4>
               <div className="w-full h-1 bg-accent-n mb-10 rounded-l-xl"></div>
               <div className="w-4/5 mx-auto">
-                <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                <div className="flex items-center w-full">
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Unlimited workspaces</p>
                 </div>
-                <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                <div className="flex items-center w-full ">
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Unlimited lists</p>
                 </div>
               </div>
@@ -142,19 +142,19 @@ const LandingView = () => {
               <div className="w-full h-1 bg-accent-n mb-10"></div>
               <div className="w-4/5 mx-auto">
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Unlimited workspaces</p>
                 </div>
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Unlimited lists</p>
                 </div>
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Unlimited groups</p>
                 </div>
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Unlimited productivity</p>
                 </div>
               </div>
@@ -169,15 +169,15 @@ const LandingView = () => {
               <div className="w-full h-1 bg-accent-n mb-10 rounded-r-xl"></div>
               <div className="w-4/5 mx-auto">
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">Same features</p>
                 </div>
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl text-accent-n"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4 text-accent-n"/>
                   <p className="f-body justify-item-end">Same but in yellow</p>
                 </div>
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-6xl"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
                   <p className="f-body justify-item-end">100% free</p>
                 </div>
               </div>
@@ -236,7 +236,7 @@ const LandingView = () => {
             <div className="flex w-9/12 mx-auto mt-5 mb-8 px-20 justify-between">
               <p className="f-body">2024 - Keqqu,Inc.</p>
               <div className="flex items-center">
-              <i className="fa fa-brands fa-square-instagram text-2xl mx-2" />
+              <i className="fa fa-brands fa-instagram text-2xl mx-2" />
               <i className="fa fa-brands fa-youtube text-2xl mx-2" />
               <i className="fa fa-brands fa-discord text-2xl mx-2" />
               <i className="fa fa-brands fa-tiktok text-2xl mx-2" />

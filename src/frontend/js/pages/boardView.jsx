@@ -14,6 +14,14 @@ import { useGlobalPointerHook } from "../effects/useGlobalPointerHook.jsx"
 
 import Utils from "../app/utils.js"
 
+const _READYSTATE= Object.freeze({
+  check: "check",
+  requireLoad: "requireload",
+  loading: "loading",
+  errored: "errored",
+  ready: "ready"
+})
+
 /**
  *  -- Board View --
  * 
@@ -24,6 +32,7 @@ const BoardView= ()=>{
   const
     { language, store, actions }= React.useContext(Context),
     [ contextMenu, set_contextMenu ]= React.useState(null),
+    [ localState, set_localState ]= React.useState(-1),
     [ lastUpdate, set_lastUpdate ]= React.useState({ millistamp:0, interval:1 }),
     { bid }= useParams(),
     lastUpdateRef= React.useRef(lastUpdate),
@@ -33,9 +42,52 @@ const BoardView= ()=>{
   useGlobalPointerHook()
 
   React.useEffect(()=>{
+    if(selfRef.current) {
+      window.addEventListener("k-contextmenu", onContexMenu)
+      set_localState(_READYSTATE.check)
+      return ()=>{
+        window.removeEventListener("k-contextmenu", onContexMenu)
+      }
+    }
+  },[self.current, bid])
 
-    if(store.readyState.board){
-        
+  // state updates
+  React.useEffect(()=> { async function handle(){
+    console.log("readyState:", localState)
+    if(localState== _READYSTATE.check){
+      console.log("readystate-check")
+      if(store.readyState.board) {
+        console.log("clearing previous board")
+        actions.clearBoard()
+      } 
+      actions.setNavbarBreadcumb([ 
+        ["/title.dashboard", "/dashboard"]
+      ])
+      set_localState(_READYSTATE.requireLoad)
+    }
+    else if(localState== _READYSTATE.requireLoad) {
+      console.log("readystate-requireLoad")
+      const idnum= Number(bid??"-1")
+      if(idnum > 0) {
+        set_localState(_READYSTATE.loading)
+        console.log("loading board")
+        const result= await actions.boards_instance_get(idnum) // board gets into 'store.board'
+        set_localState(result ? _READYSTATE.ready: _READYSTATE.errored)
+      }
+      else {
+        set_localState(_READYSTATE.errored)
+        console.log("invalid board id, not loading")
+      }
+    }
+    else if(localState == _READYSTATE.loading){
+      console.log("readystate-loading")
+      actions.setNavbarBreadcumb([ 
+        ["/title.dashboard", "/dashboard"],
+        ["/common.loading", null] 
+      ])
+    }
+    else if(localState === _READYSTATE.ready){
+      console.log("readystate-ready")
       actions.setNavbarBreadcumb(
         store.board.workspace_id != -1 ?
         [
@@ -48,18 +100,35 @@ const BoardView= ()=>{
         ]
       )
     }
-    else actions.setNavbarBreadcumb([ ["/common.loading", null] ])
-  },[store.board])
-
-  // register custom event listener
-  React.useEffect(()=>{ 
-    if(selfRef.current) {
-      window.addEventListener("k-contextmenu", onContexMenu)
-      return ()=>{
-        window.removeEventListener("k-contextmenu", onContexMenu)
-      }
+    else if(localState == _READYSTATE.errored){
+      console.log("readystate-errored")
+      actions.setNavbarBreadcumb([ 
+        ["/title.dashboard", "/dashboard"],
+        ["/error.boardnotfound", null] 
+      ])
     }
-  },[selfRef.current])
+  } handle() },[localState])
+
+/*
+  React.useEffect(()=>{
+    const last= lastUpdateRef.current?? null
+    if(store.board && last){
+
+      setTimeout(async ()=>{
+
+        const idnum= Number(bid??"-1")
+
+        console.log(`fetch changes, upload changes | boardid: ${bid}`)
+        const res= await actions.boards_fetch(idnum, lastUpdateRef.current??0)
+        //console.log(res)
+        
+        const new_interval= Utils.clamp((res ? lastUpdate[1]*2 : lastUpdate[1]*res*.85)|0, 250, 5000)
+        set_lastUpdate({millistamp: res ? Date.now() : last.millistamp, interval: new_interval})
+  
+      }, last.interval)
+    }
+  },[lastUpdateRef.current?.interval]) 
+*/
 
   async function onContexMenu(e){
     const props= e.detail
@@ -71,51 +140,11 @@ const BoardView= ()=>{
     }
   }
 
-  React.useEffect(()=>{
-    const last= lastUpdateRef.current?? null
-    if(store.board && last){
-
-      setTimeout(async ()=>{
-
-        const idnum= Number(bid??"-1")
-
-        console.log(`fetch changes, upload changes | boardid: ${bid}`)
-        const res= await actions.boards_fetch(idnum, lastUpdateRef.current??0)
-        console.log(res)
-        
-        const new_interval= Utils.clamp((res ? lastUpdate[1]*2 : lastUpdate[1]*res*.85)|0, 250, 5000)
-        set_lastUpdate({millistamp: res ? Date.now() : last.millistamp, interval: new_interval})
-  
-      }, last.interval)
-    }
-  },[lastUpdateRef.current?.interval])
-
-  React.useEffect(()=>{ async function handle(){
-    
-    const idnum= Number(bid??"-1")
-    if(!store.board || store.board.id !== idnum || idnum < 0) {
-
-      console.log(store.board!=null, store.board?.id??null, idnum)
-      console.log(!store.board==null, store.board?.id??null !== Number(idnum), idnum < 0)
-
-      await actions.boards_instance_get(idnum) // board gets into 'store.board'
-      
-      if(!store.failure.board){
-        
-        console.log(store.board)
-
-        const millis= store.board.millis
-        set_lastUpdate({ millistamp:millis, interval:250 })
-        //actions.getFontAwesomeIconList()
-      }
-    }
-  } handle() },[bid])
-
   return (
     <div ref={selfRef} className="flex flex-col h-full overflow-hidden relative -z-50 select-none">
       { store.readyState.pointer &&
         <>
-          { store.readyState.board ?
+          { localState== _READYSTATE.ready ?
             <>
               <div className="pointer-skip absolute inset-0 flex">
                 <Toolbar />
@@ -125,11 +154,12 @@ const BoardView= ()=>{
             </>
             :
             <>
-            { store.errorState.board ?
+            { localState== _READYSTATE.errored &&
               <div className="flex h-full">
-                <div className="m-auto size-fit">{language.get("error.boardnotfound")}</div>
+                <div className="m-auto size-fit font-black text-red-400 text-4xl max-w-50">{language.get("error.boardnotfound")}</div>
               </div>
-              :
+            }
+            { localState== _READYSTATE.loading &&
               <div className="flex h-full">
                 <div className="m-auto size-fit">{language.get("common.loading")}</div>
               </div>
