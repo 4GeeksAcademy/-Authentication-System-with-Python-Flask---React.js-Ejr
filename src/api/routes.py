@@ -538,7 +538,7 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
         BASE_URL_FRONT = os.getenv('FRONTEND_URL')
         # html = render_template('activate.html', confirm_url=confirm_url)
         confirm_url = url_for('api.confirm_email', token=token, _external=True)
-        confirm_url = f"{BASE_URL_FRONT}ConfirmEmail?token={token}"
+        confirm_url = f"{BASE_URL_FRONT}/ConfirmEmail?token={token}"
         html = f"""
         <!DOCTYPE html>
         <html>
