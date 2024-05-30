@@ -90,25 +90,27 @@ export const PostCourseM = () => {
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
 
     return (
-        <div className='position-relative'>
-            {/* Msg */}
-            <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
-                {(msgError === '' && msg === '') ? (
-                    <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                        {"Internet or server connection failure"}
-                    </div>
-                ) : (msgError === '') ? (
-                    <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
-                        {msg}
-                    </div>
-                ) : (
-                    <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                        {msgError}
-                    </div>
-                )}
+        <div>
+            <div className='position-relative'>
+                {/* Msg */}
+                <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
+                    {(msgError === '' && msg === '') ? (
+                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
+                            {"Internet or server connection failure"}
+                        </div>
+                    ) : (msgError === '') ? (
+                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
+                            {msg}
+                        </div>
+                    ) : (
+                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
+                            {msgError}
+                        </div>
+                    )}
+                </div>
             </div>
 
-            <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
+            <div className='container-fluid d-flex justify-content-center align-items-start'>
                 <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
                     <div className="d-flex justify-content-center align-items-center position-relative mb-5">
                         <div className='d-flex justify-content-center align-items-center'>

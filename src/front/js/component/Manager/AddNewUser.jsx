@@ -293,7 +293,10 @@ export const AddNewUser = () => {
                 <button
                     type="submit"
                     className="btn btn-primary"
-                    onClick={handleSubmit}>
+                    onClick={()=>{
+                        handleSubmit()
+                        actions.getUser()
+                    }}>
                     {
                         (store.spinner)
                             ? <div className="spinner-border" role="status">

@@ -1,57 +1,81 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 
 export const UserProfile = () => {
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+
+    const handleUpdateUser = (userId) => {
+        navigate(`/userUpdate/${userId}`);
+    };
+
+    if (!store.user || !store.user.access_to_user) {
+        return <div>Loading user data...</div>;
+    }
 
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
-    console.log(userToLogin);
 
-    if(!store.user || !store.user.access_to_user){
-        return <p>No user ata available</p>;
-    }
-    
-    const currentUser = store.user.access_to_user.find(user=>user.email == userToLogin.email);
-    
-    if (!currentUser) {
-        return <p>No user data available</p>;
-    }
-
-    
     return (
-        <div className="container d-flex justify-content-center align-items-center p-4">
-            <div className='border border-primary rounded mx-5 my-2 py-3 px-3 text-center'>
-                <table className="table mx-auto">
-                    <thead>
-                        <tr>
-                            <th scope='col'>#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Number Document</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">EDIT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{currentUser.id}</td>
-                            <td>{currentUser.name}</td>
-                            <td>{currentUser.last_name}</td>
-                            <td>{currentUser.email}</td>
-                            <td>{currentUser.numberDocument}</td>
-                            <td>{currentUser.phone}</td>
-                            <td>{currentUser.username}</td>
-                            <td>{currentUser.gender}</td>
-                            <td>{"Edit"} {"Del"}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div className="user-profile-container">
+            <table className="table mx-auto">
+                <thead>
+                    <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {store.user[`access_to_${store.currentRole}`].map((item, index) => (
+                        item.email === userToLogin.email && (
+                            <React.Fragment key={item.id || index}>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher' || store.currentRole === 'manager') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">ID</th>
+                                    <td>{item.id}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher' || store.currentRole === 'manager') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Name</th>
+                                    <td>{item.name}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher' || store.currentRole === 'manager') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Last Name</th>
+                                    <td>{item.lastName}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher' || store.currentRole === 'manager') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Email</th>
+                                    <td>{item.email}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher' || store.currentRole === 'manager') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Number Document</th>
+                                    <td>{item.numberDocument}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher' || store.currentRole === 'manager') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Phone</th>
+                                    <td>{item.phone}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Username</th>
+                                    <td>{item.username}</td>
+                                </tr>
+                                <tr className={`${(store.currentRole === 'user' || store.currentRole === 'teacher') ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Gender</th>
+                                    <td>{item.gender}</td>
+                                </tr>
+                                <tr className={`${store.currentRole === 'teacher' ? 'd-block' : 'd-none'}`}>
+                                    <th scope="row">Certificate</th>
+                                    <td>{item.certificateTeacher}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Actions</th>
+                                    <td>
+                                        <button onClick={() => handleUpdateUser(item.id)}>Edit</button>
+                                    </td>
+                                </tr>
+                            </React.Fragment>
+                        )
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
-
-

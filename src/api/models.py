@@ -325,7 +325,7 @@ class Quizzes(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "question_title": self.question_title,
+            "questionTitle": self.question_title,
             "answerTeacher": self.answer_teacher,
             "answerUser": self.answer_user,
             "approved": self.approved,
