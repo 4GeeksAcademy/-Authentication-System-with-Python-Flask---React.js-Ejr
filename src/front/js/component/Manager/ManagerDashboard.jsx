@@ -16,6 +16,7 @@ import { CourseCard } from '../Courses/CourseCard.jsx';
 import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
+import { GetQuizzes } from './GetQuizzes.jsx';
 
 
 
@@ -39,11 +40,17 @@ export const ManagerDashboard = () => {
     
     const handleMyModule = () => {
         setButtonSelected(<ModuleCourse />)
-        actions.getCourse()
+        actions.getModules()
     }
+
 
     const handleMyQuizzes = () => {
         setButtonSelected(<QuizzesCourse />)
+        actions.getCourse()
+    }
+
+    const handleGetQuizzes = () => {
+        setButtonSelected(<GetQuizzes />)
         actions.getCourse()
     }
 
@@ -95,6 +102,8 @@ export const ManagerDashboard = () => {
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyModule}>Create Modules</button>
                 
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>Create Quizzes</button>
+
+                <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetQuizzes}>View Quizzes</button>
 
                 <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>Update Courses</button>
 

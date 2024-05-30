@@ -847,22 +847,31 @@ def post_quizzes():
     try:
         question_title = request.json.get('questionTitle')
         answer_teacher = request.json.get('answerTeacher')
-        answer_user = request.json.get('answerUser')
-        approved = request.json.get('approved')
+        answer_user = request.json.get('answerUser')  # Debe ser booleano
+        approved = request.json.get('approved')  # Debe ser booleano
         approval_percentage_user = request.json.get('approvalPercentageUser')
         approval_percentage_number = request.json.get('approvalPercentageNumber')
-        approval_percentage = request.json.get('approvalPercentage')
+        approval_percentage = request.json.get('approvalPercentage')  # Debe ser booleano
         module_id = request.json.get('moduleId')
 
-        if not question_title or not answer_teacher or not answer_user or not approved or not approval_percentage_user or not approval_percentage_number or not approval_percentage or not module_id:
-            return {"Error": "questionTitle, answer, answerTeacher, answerUser, approved, approvalPercentageUser, approvalPercentageNumber, approvalPercentage and moduleId are required"}, 400
+        if not question_title or not answer_teacher or answer_user is None or approved is None or not approval_percentage_user or not approval_percentage_number or approval_percentage is None or not module_id:
+            return {"Error": "questionTitle, answerTeacher, answerUser, approved, approvalPercentageUser, approvalPercentageNumber, approvalPercentage and moduleId are required"}, 400
         
         existing_module = Modules.query.filter_by(id=module_id).first()
 
         if not existing_module:
             return jsonify({"Error": "Module does not exist."}), 404
         
-        quiz = Quizzes(question_title=question_title, answer_teacher=answer_teacher, answer_user=answer_user, approved=approved, approval_percentage_user=approval_percentage_user, approval_percentage_number=approval_percentage_number, approval_percentage=approval_percentage, module_id=module_id)
+        quiz = Quizzes(
+            question_title=question_title,
+            answer_teacher=answer_teacher,
+            answer_user=answer_user,
+            approved=approved,
+            approval_percentage_user=approval_percentage_user,
+            approval_percentage_number=approval_percentage_number,
+            approval_percentage=approval_percentage,
+            module_id=module_id
+        )
         db.session.add(quiz)
         db.session.commit()
 
@@ -870,9 +879,8 @@ def post_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in quiz creation: ", "fetching error": str(err)}), 500
-    
 
-@api.route('/module/quizzes', methods=['GET'])
+@api.route('/module/quizzes')
 def get_quizzes():
     try:
         quizzes = Quizzes.query.all()
@@ -884,6 +892,47 @@ def get_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
+    
+@api.route('/module/quizzes/<int:quiz_id>', methods=['PUT'])
+def put_quizzes(quiz_id):
+    try:
+        question_title = request.json.get('questionTitle')
+        answer_teacher = request.json.get('answerTeacher')
+        answer_user = request.json.get('answerUser')
+        approved = request.json.get('approved')
+        approval_percentage_user = request.json.get('approvalPercentageUser')
+        approval_percentage_number = request.json.get('approvalPercentageNumber')
+        approval_percentage = request.json.get('approvalPercentage')
+        module_id = request.json.get('moduleId')
+        if not quiz_id:
+            return jsonify({"Error": "quizId is required"}), 400
+        quiz = Quizzes.query.get(quiz_id)
+        if not quiz:
+            return jsonify({"Error": "Quiz not found"}), 404
+        quiz.question_title = question_title
+        quiz.answer_teacher = answer_teacher
+        quiz.answer_user = answer_user
+        quiz.approved = approved
+        quiz.approval_percentage_user = approval_percentage_user
+        quiz.approval_percentage_number = approval_percentage_number
+        quiz.approval_percentage = approval_percentage
+        quiz.module_id = module_id
+        db.session.commit()
+        return jsonify({"message": "Quiz updated successfully", "Quiz": quiz.serialize()}), 200
+    except Exception as err:
+        return jsonify({"Error": "Error in quiz update: " + str(err)}), 500 
+
+@api.route('/module/quizzes/<int:quiz_id>', methods=['DELETE'])
+def delete_quiz(quiz_id):
+    try:
+        quiz = Quizzes.query.get(quiz_id)
+        if not quiz:
+            return jsonify({"Error": "Quiz not found"}), 404
+        db.session.delete(quiz)
+        db.session.commit()
+        return jsonify({"message": "Quiz deleted successfully"}), 200
+    except Exception as err:
+        return jsonify({"Error": "Error deleting quiz", "details": str(err)}), 500
         
         
 #----------------------TROLLEY------------------------#

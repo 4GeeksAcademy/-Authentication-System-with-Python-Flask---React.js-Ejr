@@ -24,6 +24,8 @@ import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
 import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
 import { Trolley } from "./component/User/Trolley.jsx";
+import { UpdateTeacher } from "./component/Manager/UpdateTeacher.jsx";
+import { UpdateQuizzes } from "./component/Manager/UpdateQuizzes.jsx";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -87,10 +89,18 @@ const Layout = () => {
                         <Route 
                             element={
                                 <ProtectedRoute>
-                                    <Course />
+                                    <UpdateTeacher />
                                 </ProtectedRoute>
                             } 
-                            path="/course/:id" 
+                            path="/UpdateTeacher/:teacherId" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UpdateQuizzes />
+                                </ProtectedRoute>
+                            } 
+                            path="/UpdateQuizzes/:quizzesId" 
                         />
                         {/* Ruta para el componente Trolley */}
                         <Route element={<Trolley />} path="/trolley" />
