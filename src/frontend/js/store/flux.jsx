@@ -10,6 +10,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       // internal
       readyState: { backend: false, frontend: false, pointer: false, language: false },
       activePage: null,
+      navbarBreadcumb: null,
 
       // user
       userPrefs: storeDefaults.userPrefs,
@@ -39,7 +40,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         }
         catch(e){}
         return null
-      }
+      },
+      millistamp: 0
     },
 		actions: {
 
@@ -76,7 +78,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 			},
 
       fetchUpdateUser: async ()=>{ 
-        const user= await getActions().accounts_currentUser()
+        const user= await getActions().accounts_user_get()
         console.log(user)
         if(user && user != getStore().userData) {
           console.log("gotcha!")
@@ -157,6 +159,15 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       setStoreDirty: (state)=> { setStore({ dirty: getStore().dirty | state })},
       unsetStoreDirty: (state)=> { setStore({ dirty: (getStore().dirty | state) ^ state })},
 
+      setNavbarBreadcumb: (element, replace)=> {
+        if(replace) setStore({navbarBreadcumb: element ? Array.isArray(element[0]) ? element : [element] : null})
+        else{
+          new_breadcumb= [...getStore().navbarBreadcumb]
+          new_breadcumb.concat(element)
+          setStore({navbarBreadcumb: new_breadcumb})
+        }
+      },
+
       getTimestamp: async(subdomain, id)=>{
 				try{
           const res= await fetch(Utils.getBackendUrl("workspaces", "/millistamp?id=" + id), { method: "GET", cors: "no-cors" })
@@ -198,7 +209,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       // #region ----------------------------------------------------------------------------------------- ACCOUNTS
 
       /** registers a new account */
-      accounts_signup: async (username, displayname, email, password, remember, loginafter)=>{
+      accounts_signup: async (username, displayname, email, password, remember, loginafter, templates)=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"POST|accounts:/signup",
           body: {
@@ -208,7 +219,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
             password: password,
             login: 0,
             loginafter: loginafter ? 1 : 0,
-            remember: remember ? 1 : 0
+            remember: remember ? 1 : 0,
+            templates: templates ? 1 : 0
           }
         })
         if([200,201].includes(res.status) && loginafter) {
@@ -255,7 +267,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       },
 
       /** get current user from backend */
-      accounts_currentUser: async ()=>{
+      accounts_user_get: async ()=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|accounts:/user"
         })
@@ -263,12 +275,20 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         return null
       },
 
-      /** get if username is registered */
-      accounts_usernameRegistered: async (name)=>{
+      /** modify account data */
+      accounts_user_patch: async (new_userData, password)=>{
         const res= await getActions().simpleBackendRequest({
-          endpoint:`GET|accounts:/username/${name}`
+          endpoint:"PATCH|accounts:/user",
+          body: {
+            current_password: password,
+            ...new_userData
+          },
+          mimetype:'multipart/form-data'
         })
-        return res.status===200
+        if(res.status===200){
+          setStore({userData: data.res})
+        }
+        return {status: res.status, msg: res.msg}
       },
 
       /** deletes an account forever // requires credentials token + manually entered credentials data */
@@ -313,8 +333,16 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         return {status: res.status, msg: res.msg}
       },
 
+      /** get if account has been verified */
+      accounts_verified: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|accounts:/verified"
+        })
+        return res.status === 200 && res.msg === "1"
+      },
+
       /** request recovery email */
-      accounts_recover_request: async (email)=>{
+      accounts_recover_issue: async (email)=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|accounts:/recover",
           body: {
@@ -325,7 +353,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       },
 
       /** submit recovery email code */
-      accounts_recover_submit: async (email, passcode, newPassword)=>{
+      accounts_recover_solve: async (email, passcode, newPassword)=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"POST|accounts:/recover",
           body: {
@@ -337,23 +365,78 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         return {status: res.status, msg: res.msg}
       },
 
-      /** modify account data */
-      accounts_modify: async (new_userData, password)=>{
+      /** get if username is registered */
+      accounts_username: async (name)=>{
         const res= await getActions().simpleBackendRequest({
-          endpoint:"PATCH|accounts:/user",
-          body: {
-            current_password: password,
-            ...new_userData
-          },
-          mimetype:'multipart/form-data'
+          endpoint:`GET|accounts:/username/${name}`
         })
-        if(res.status===200){
-          const data= await res.json()
-          setStore({userData: data.res})
-        }
-        return {status: res.status, msg: res.msg}
+        return res.status === 200 && res.msg === "1"
       },
       //#endregion
+
+      // #region ----------------------------------------------------------------------------------------- WORKSPACES
+
+      /** create a new, empty workspace */
+      workspaces_instance_create: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|workspaces:/instance",
+          body: {}
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** gets a single workspace by id */
+      workspaces_instance_get: async (id)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|workspaces:/instance/" + id
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** get current user workspaces from backend */
+      workspaces_user: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|workspaces:/user"
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+      //#endregion
+
+      // #region ----------------------------------------------------------------------------------------- BOARDS
+
+      /** create a new, empty board */
+      boards_instance_create: async (wid=-1)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|boards:/instance",
+          body: wid != -1 ? {'workspace_id': wid } : {}
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** gets a single board by id */
+      workspaces_instance_get: async (id)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|workspaces:/instance/" + id
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** get current user boards from backend */
+      boards_user: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|boards:/user"
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+      //#endregion
+
+      // #region ----------------------------------------------------------------------------------------- DEVELOPER ONLY
 
       simpleBackendRequest: async ({endpoint, body=null, credentials=true, mimetype='application/json'})=>{
         let res= null
@@ -366,11 +449,12 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
             method: endpointData[1],
             mode: "cors",
             ...(credentials? {credentials: 'include'} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
+            headers: { 
+              'Cookie': Utils.getCredentialCookies(),
+              "X-CSRF-TOKEN": Utils.getCookie("x_csrf_token"),
+              ...(body ? {'Content-Type': mimetype } : {})
+            },
             ...(body ? {
-              headers: { 
-                'Cookie': Utils.getCredentialCookies(),
-                'Content-Type': mimetype
-              },
               body: JSON.stringify(body)
             } : {})
           })
@@ -384,25 +468,6 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}\n`, e) }
         return { status: -1, msg:"unhandled error" }
       },
-
-      // #region ----------------------------------------------------------------------------------------- BOARDS
-
-      loadBoard: async (bid, pid=-1)=>{
-        console.log("loading board from backend yayyy")
-      },
-
-      // create a new item of given type on the board
-      addItem: async (type, coords)=>{
-        // backend -> POST create item and get resulting element
-      },
-
-      // create a new item of given type and append it to the item with given id
-      addChildItem: async (id, type)=>{
-        // backend -> POST create item and get resulting element
-      },
-      //#endregion
-
-      // #region ----------------------------------------------------------------------------------------- DEVELOPER ONLY
       
       getDevPref:(pref)=>{ return getStore().devPrefs[pref]?? null },
       

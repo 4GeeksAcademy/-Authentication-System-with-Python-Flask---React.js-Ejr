@@ -13,22 +13,17 @@ import Constants from "./constants.js"
 const GlobalListener=()=>{
   const 
     { language, store, actions }= React.useContext(Context),
+    onLoadRef= React.useRef(null),
     loc= useLocation(),
     nav= useNavigate()
 
-  // this effect is for testing anything, executed on page refresh
-  React.useEffect(()=>{
-  },[])
-
   /** -------------------------------------------------- LANGUAGE UPDATER */
-
-  React.useEffect(()=>{
-    refreshPageTitle()
-  },[store.activePage])
   
   React.useEffect(()=>{
-    refreshPageTitle()
-  },[language])
+    if(store.readyState.language){
+      refreshTitle()
+    }
+  },[store.activePage, store.readyState.language, onLoadRef.current])
 
   React.useEffect(()=>{
     if(store.userPrefs.language !== undefined) actions.loadLanguage(store.userPrefs.language)
@@ -42,29 +37,9 @@ const GlobalListener=()=>{
     else document.body.removeAttribute("data-darkmode")
   },[store.readyState.frontend, store.userPrefs.darkMode])
 
-  /** -------------------------------------------------- HOVER BOX */
-
-  /* 
-  React.useEffect(()=>{
-    window.addEventListener("mousemove", handleHoverBox)
-    return ()=>{ window.removeEventListener("mousemove", handleHoverBox)}
-  },[])
-
-  function handleHoverBox(e){
-    if(e.target){
-      const t= e.target
-      if(t.getAttribute("data-hover")){
-        
-      }
-    }
-  }
- */
-
   /** -------------------------------------------------------------------------- PAGE SHIT */
 
   React.useEffect(()=>{
-
-    console.log("hi there")
 
     // saves current page on store.activePage, can be tested against Constants.PAGE.***
     const 
@@ -75,7 +50,8 @@ const GlobalListener=()=>{
     actions.setActivePage(idx)
   },[loc, window.location.pathname])
   
-  function refreshPageTitle(){ // from location effect
+
+  function refreshTitle(){ // from location effect
     const 
       path= window.location.href.match(/(?<=\/)[^:\.\/]+($|(?=\/))/),
       titleroot= language.get("title._root")
@@ -86,16 +62,21 @@ const GlobalListener=()=>{
       const 
         pathname= path[0],
         pathnameLocalized= language.get("title", pathname)
+
+      if(pathnameLocalized) actions.setNavbarBreadcumb([pathnameLocalized, "/" + path], true)
+
       title= (pathnameLocalized ? pathnameLocalized + language.get("title._sep") : "") + titleroot
       if(store[pathname]) title= store[pathname].title + language.get("title._sep") + title
     }
-    document.title= title
+
+    if(title) document.title= title
   }
 
   /** -------------------------------------------------------------------------- TODO: global redirect listener */
 
   /** -------------------------------------------------------------------------- TODO: global userState listener */
-
+  
+  return <div ref={onLoadRef}></div>
 }
 
 export default GlobalListener

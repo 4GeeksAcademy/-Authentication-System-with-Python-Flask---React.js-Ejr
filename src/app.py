@@ -12,13 +12,18 @@ from backend.admin import setup_admin
 from backend.commands import setup_commands
 import backend.api_utils as api_utils
 
+from backend.aws_utils import _resolve_filename_for
+
 from backend.routes_accounts import accounts
 from backend.routes_workspaces import workspaces
 from backend.routes_boards import boards
 from backend.routes_objects import objects
 from backend.routes import api
 
+from backend.internal import USER_VOIDKEEPER
+
 ENV = "dev" if os.environ.get("FLASK_DEBUG", "0") == "1" else "prod"
+
 static_file_dir = os.path.join( os.path.dirname( os.path.realpath(__file__)), '../public/')
 #app = Flask(__name__, subdomain_matching=True)
 app = Flask(__name__)
@@ -34,9 +39,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config["JWT_SECRET_KEY"]= os.environ.get("FLASK_APP_KEY", "la_coyuntura_de_los_afluentes_tamizados")
 app.config["JWT_TOKEN_LOCATION"]= ('cookies')
+
+app.config["JWT_COOKIE_DOMAIN"] = "." + app.config['SERVER_NAME']
 app.config["JWT_COOKIE_SECURE"] = ENV == "prod" # cookies must be sent over https in production
-app.config["JWT_COOKIE_DOMAIN"] = app.config['SERVER_NAME']
-app.config["JWT_COOKIE_SAMESITE"] = "strict"
+app.config["JWT_CSRF_METHODS"] = ["POST", "PUT", "PATCH", "DELETE"]
+app.config["JWT_ACCESS_CSRF_HEADER_NAME"] = "X-CSRF-TOKEN"
+app.config["JWT_ACCESS_CSRF_COOKIE_NAME"] = "x_csrf_token"
+app.config["JWT_CSRF_IN_COOKIES"] = True
+
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 
@@ -58,44 +68,76 @@ setup_admin(app)
 setup_commands(app)
 
 jwt = JWTManager(app)
-
 api_utils.current_app= app
 
 @app.before_request
 def redirect_www():
   if 'www.' in request.host:
     return redirect(request.url.replace('www.', '', 1), code=301)
-    
+
 # root
 @app.route('/')
 def sitemap():
-  print("hello")
+  print("HELLO WORLD")
   if ENV == "dev": return generate_sitemap_v2(app)
   return send_from_directory(static_file_dir, 'index.html')
 
-@app.route('/reset_database')
+if ENV == "prod":
+  @app.route('/bend')
+  def bend():
+    return generate_sitemap_v2(app)
+
+@app.route('/intitialize_database', methods=['GET'])
+def database_intitialize():
+  if not db.session.query(User, 1).first():
+
+    voidkeeper= USER_VOIDKEEPER
+    voidkeeper['password']= api_utils.hash_password(voidkeeper['password'])
+
+    db.session.add( User(
+      **voidkeeper,
+      millistamp= 721407000000
+    ))
+
+    db.session.commit()
+
+    return api_utils.response_plain(200, "ok")
+  return api_utils.response_plain(304, "already initialized")
+
+@app.route('/reset_database', methods=['GET'])
 def database_reset():
+  api_utils.clear_database(commit=False)
+  database_intitialize()
   api_utils.load_rows_from_file("res/defaults.json")
   return api_utils.response_plain(200, "ok")
   
-@app.route('/clear_database')
+@app.route('/clear_database', methods=['GET'])
 def database_clear():
-  api_utils.clear_database(True)
+  api_utils.clear_database()
   return api_utils.response_plain(200, "ok")
   
-@app.route('/rollback_database')
+@app.route('/rollback_database', methods=['GET'])
 def database_rollback():
   db.session.rollback()
   db.session.commit()
   return api_utils.response_plain(200, "ok")
+  
+@app.route('/aws/<type>/<name>/<ext>', methods=['GET'])
+def database_awspath(type, name, ext):
+  return api_utils.response_plain(200, _resolve_filename_for(type, name, ext))
 
-# basic health check
-@app.route('/healthcheck', methods=['GET'])
-def handle_health():
-  domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
-  subdomains= ("accounts", "workspaces", "boards", "objects", "api")
-  responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
-  return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day</pre>", 200
+if ENV == "prod":
+  @app.route('/healthcheck', methods=['GET'])
+  def handle_health():
+    return "ok, have a nice day", 200
+else:
+  # basic health check
+  @app.route('/healthcheck', methods=['GET'])
+  def handle_health():
+    domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
+    subdomains= ("accounts", "workspaces", "boards", "objects", "api")
+    responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
+    return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day</pre>", 200
 
 # for every unused path
 @app.route('/<path:path>', methods=['GET'])

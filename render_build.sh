@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -o errexit
 
-npm install
-npm run tailwind
-npm run build
-
 pipenv install
+
+npm install
+npm run build
+npm run tailwind
+
 pipenv run remake

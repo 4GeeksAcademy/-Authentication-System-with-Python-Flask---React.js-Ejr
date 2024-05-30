@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.jsx";
 
 import Constants from "../app/constants.js";
+import NavbarBreadcumb from "./navbarBreadcumb.jsx";
 
 const Navbar = () => {
   const nav = useNavigate();
   
 
   //--- login ---------------------
-  const { store, actions }= React.useContext(Context)
+  const { language, store, actions }= React.useContext(Context)
   
   const [navbarState, setNavbarState] = React.useState(false);
 
@@ -51,11 +52,8 @@ const Navbar = () => {
             
             <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20">KeQQu</p>  
             
-            {store.activePage == Constants.PAGE.dashboard ?
-            <p onClick={()=>nav('dashboard')} className="f-body cursor-pointer">Dashboard</p>
-            :
-            <p onClick={()=>nav('workspaces')} className="f-body cursor-pointer">Workspaces</p>
-            }
+            <NavbarBreadcumb />
+
             <button className=""></button>
           </div>
             <div className="ml-10 flex items-center">

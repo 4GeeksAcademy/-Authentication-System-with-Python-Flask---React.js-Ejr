@@ -134,7 +134,7 @@ def create_new_access_token(response:Response, identity) -> Response:
 #--- remove user tokens
 def remove_token_cookie() -> Response:
   fres= response_200()
-  unset_jwt_cookies(fres, domain=current_app.config['SERVER_NAME'])
+  unset_access_cookies(fres, domain=current_app.config['SERVER_NAME'])
   return fres
 
 #--- check valid access for a token and returns the user
@@ -197,7 +197,7 @@ def endpoint_safe(
           if __type=="json": # parse json
             try: __parsed_data__['json']= request.get_json(force=True)
             except: return response(400, "body contains no valid JSON")
-            if not __parsed_data__['json']: return response(400, "body contains no JSON")
+            if not __parsed_data__['json'] and required_props: return response(400, "body contains no JSON")
           if __type=="multipart": # parse multipart json + files
             try: __parsed_data__['json']= json.loads(request.form['json'])
             except: pass
@@ -268,15 +268,14 @@ def load_rows_from_file(filepath):
         print('\n')
         continue
 
+  db.session.flush()
+  
   # Workspace
   if 'workspaces' in jdata:
     for data in jdata["workspaces"]:
       
       try:
-        
-        icon= data['icon'].lower() if data['icon'] else 'default'
-        if icon == 'default': data['icon']= DEFAULT_ICON['workspace']
-        
+
         thumbnail= data['thumbnail'].lower() if data['thumbnail'] else 'default'
         if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['workspace']
         
@@ -293,6 +292,8 @@ def load_rows_from_file(filepath):
         print('\n')
         continue
       
+  db.session.flush()
+
   # Board
   if 'boards' in jdata:
     for data in jdata["boards"]:
@@ -300,10 +301,10 @@ def load_rows_from_file(filepath):
       try:
         
         icon= data['icon'].lower() if data['icon'] else 'default'
-        if icon == 'default': data['icon']= DEFAULT_ICON['workspace']
+        if icon == 'default': data['icon']= DEFAULT_ICON['board']
         
         thumbnail= data['thumbnail'].lower() if data['thumbnail'] else 'default'
-        if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['workspace']
+        if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['board']
         
         # add to database
         db.session.add(Board(
@@ -318,6 +319,8 @@ def load_rows_from_file(filepath):
         print('\n')
         continue
       
+  db.session.flush()
+
   # List
   if 'lists' in jdata:
     for data in jdata["lists"]:
@@ -336,7 +339,9 @@ def load_rows_from_file(filepath):
         print(type(e), e.__repr__())
         print('\n')
         continue
-      
+  
+  db.session.flush()
+
   # Task
   if 'tasks' in jdata:
     for data in jdata["tasks"]:
@@ -359,8 +364,60 @@ def load_rows_from_file(filepath):
   db.session.commit()
 
 #--- clears all data in the database
-def clear_database(commit):
-  for table in db.metadata.sorted_tables:
-    db.session.execute(table.delete())
-  if commit:
-    db.session.commit()
+def clear_database(commit=True):
+  for table in db.metadata.sorted_tables: db.session.execute(table.delete())
+  if commit: db.session.commit()
+
+# delete shit
+
+def delete_user(element, commit=True):
+  workspaces= element.workspaces_.all()
+  if workspaces: delete_workspaces(workspaces, False)
+  if element.rwr_: delete_rwr(element.rwr_, False)
+  element.delete()
+  if commit: db.session.commit()
+
+def delete_workspaces(elements, commit=True):
+  for e in elements:
+    boards= e.boards_.all()
+    if boards: delete_boards(boards, commit=False)
+    if e.rwr_: delete_rwr(e.rwr_, commit=False)
+    e.delete()
+  if commit: db.session.commit()
+
+def delete_boards(elements, commit=True):
+  for e in elements:
+    lists= e.lists_.all()
+    if lists: delete_lists(lists, commit=False)
+    if e.rwr_: delete_rwr(e.rwr_, commit=False)
+    e.delete()
+  if commit: db.session.commit()
+
+def delete_lists(elements, commit=True):
+  for e in elements:
+    tasks= e.tasks_.all()
+    if tasks: delete_tasks(tasks, commit=False)
+    if e.rwr_: delete_rwr(e.rwr_, commit=False)
+    e.delete()
+  if commit: db.session.commit()
+
+def delete_tasks(elements, commit=True):
+  for e in elements:
+    if e.rwr_: delete_rwr(e.rwr_, commit=False)
+    e.delete()
+  if commit: db.session.commit()
+
+def delete_rwr(element, commit=True):
+  rules= element.user_rules_.all()
+  if rules:
+    for r in rules: r.delete()
+  element.delete()
+  if commit: db.session.commit()
+  
+def delete_tag(element, commit=True):
+  element.delete()
+  if commit: db.session.commit()
+  
+def delete_style(element, commit=True):
+  element.delete()
+  if commit: db.session.commit()

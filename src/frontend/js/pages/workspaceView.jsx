@@ -1,23 +1,39 @@
 import React, { useState } from "react"
-import SideNavbar from "../component/sideNavbar.jsx"
+import { Context } from "../store/appContext.jsx";
 
+import SideNavbar from "../component/sideNavbar.jsx"
 import BoardCard from "../component/cards/boardCard.jsx";
+import { useParams } from "react-router-dom";
 
 const WorkspaceView = () => {
 
-	const [boards, SetBoards] = useState([]);
-	const [workspaces, SetWorkspaces] = useState([]);
+  // new
 
+  const
+    { store, actions }= React.useContext(Context),
+    [workspace, set_workspace] = React.useState([]),
+    [boards, set_boards] = React.useState([]),
+    { wid }= useParams()
+
+  React.useEffect(()=>{ async function handle(){
+
+    const workspace = await actions.workspaces_instance_get(wid)
+
+    console.log("workspace:", workspace)
+    console.log("boards:", workspace.boards)
+
+    set_boards(workspace.boards)
+    workspace.boards= null;
+    set_workspace(workspace)
+      
+  } handle() },[])
 
 	const handleCreateNewBoard = async(e) =>{
-        e.preventDefault();
-		e.stopPropagation();
+    e.preventDefault(); e.stopPropagation()
 
-		const triedToCreateNewBoard = {id:0, name:"newBoard", thumbnail:"https://i.pinimg.com/564x/84/13/fa/8413fa6b6f9c2032f55c464444f10023.jpg"};
-		if (triedToCreateNewBoard) {
-			console.log("u are a whore")
-			SetBoards(boards.concat(triedToCreateNewBoard))
-    }}
+		const new_board = await actions.boards_instance_create();
+		if(new_board) set_boards([new_board, ...boards]) // put new on the left
+  }
 
 	return (
 		<div className="w-full h-full bg-dark flex">
@@ -33,11 +49,10 @@ const WorkspaceView = () => {
 						</div>
 						<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
 						<div className="flex items-center gap-10 my-4">
-							<div className="flex gap-5">
-								<BoardCard id={0} name="unaPollaGorda" thumbnail="https://i.pinimg.com/564x/84/13/fa/8413fa6b6f9c2032f55c464444f10023.jpg" />	
+							<div className="flex flex-col gap-3">
 								
-								{boards.map((e, i)=>{
-									return <BoardCard key={`bc-${i}`} id={e.id} name={e.name} thumbnail={e.thumbnail} />	
+								{boards && boards.map((e, i)=>{
+									return <BoardCard key={`bc-${i}`} data={e} />	
 								})}
 
 								<div onClick={handleCreateNewBoard} className="flex flex-col gap-3">

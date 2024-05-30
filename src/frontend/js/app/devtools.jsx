@@ -108,16 +108,28 @@ const DevTools = () => {
         console.log( await actions.accounts_login("userxx", "cojones44", true))
         break
       case 2: 
+        console.log("accounts:/login (void keeper)")
+        console.log( await actions.accounts_login("kekku24@gmail.com", "4a9df9d791dc9a5cccd525de", true))
+        break
+      case 3: 
         console.log("accounts:/login (admin account)")
         console.log( await actions.accounts_login("admin", "pajoteslejanos", true))
         break
-      case 3: 
+      case 4: 
         console.log("accounts:/logout")
         console.log( await actions.accounts_logout() )
         break
-      case 4:
+      case 5:
         console.log("accounts:/user")
-        console.log( await actions.accounts_currentUser() )
+        console.log( await actions.accounts_user_get() )
+        break
+      case 6:
+        console.log("workspaces:/user")
+        console.log( await actions.workspaces_user() )
+        break
+      case 7:
+        console.log("boards:/user")
+        console.log( await actions.boards_user() )
         break
     }
    
@@ -175,11 +187,13 @@ const DevTools = () => {
                   <div className="h-1"></div>
                   <button className="devtools-btn w-32" onClick={()=>{execute(0)}}>signup</button>
                   <button className="devtools-btn w-32" onClick={()=>{execute(1)}}>login</button>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(2)}}>login admin</button>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(3)}}>logout</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(2)}}>login keeper</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(3)}}>login admin</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(4)}}>logout</button>
                   <div className="h-1"></div>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(4)}}>get user</button>
-                  <button className="devtools-btn w-32" onClick={()=>{execute(5)}}>delete</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(5)}}>get user</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(6)}}>get workspaces</button>
+                  <button className="devtools-btn w-32" onClick={()=>{execute(7)}}>get boards</button>
                 </>
               }
               </div>
