@@ -5,7 +5,7 @@ from flask import jsonify, request, Response
 from flask_jwt_extended import *
 from scrypt import hash
 from .aws_utils import get_public_link, DEFAULT_ICON, DEFAULT_THUMBNAIL
-from .utils import get_current_timestamp, get_current_millistamp, read_file
+from .utils import get_current_timestamp, get_current_millistamp, read_file, fnv1256, fnv1128, fnv164, fnv132
 from .models import db, User, Workspace, Board, List, Task
 
 current_app= None
@@ -79,7 +79,6 @@ def get_user_by_email(email:str):
 #--- check the user's login
 def get_user_login(account:str, password:str) -> tuple[User|None, Response|None]:
   user= get_user_by_username(account)
-  print("hello")
   if not user: user= get_user_by_email(account)
   if not user: return None, response(400, "invalid credentials")
   print(user.serialize())
@@ -157,13 +156,33 @@ def check_user_forbidden(level:int=0) -> Response|None:
     
 #--- encrypt a password
 def hash_password(password:str) -> bytes:
-  return hash(password, current_app.config["JWT_SECRET_KEY"])
+
+  const= fnv1256(current_app.config["JWT_SECRET_KEY"])
+
+  hashparts=[
+    str(fnv132(password + current_app.config["JWT_SECRET_KEY"])),
+    str(fnv164(current_app.config["JWT_SECRET_KEY"] + password)),
+    str(fnv1128(password + current_app.config["JWT_SECRET_KEY"])),
+    str(fnv1256(current_app.config["JWT_SECRET_KEY"] + password))
+  ]
+
+  nbytes= bytes("".join(hashparts), 'utf-8')
+  hash= fnv1256(password)
+
+  result = bytearray()
+
+  for b in nbytes:
+    hash= hash * const
+    hash= hash ^ b
+    result.append(hash & 0xFF)
+
+  #print(result)
+  return result
 
 #--- test a password
 def check_password(input:str, hashed:bytes) -> bool:
   if input == str(hashed): return True
-  _new_hash= hash(input, current_app.config["JWT_SECRET_KEY"])
-  return _new_hash == hashed
+  return hash_password(input) == hashed
 
 #--- custom decorator, a safe endpoint wrapper and data retriever
 # wrapper version of the one commented above

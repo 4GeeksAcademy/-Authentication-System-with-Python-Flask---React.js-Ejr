@@ -487,7 +487,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         const settings= raw.settings.split('|')
 
         board.size= { x: Number(settings[0])|0, y: Number(settings[1])|0 }
-        board.half= { x: board.size.x * .475, y: board.size.y * .475 }
+        board.xhalf= { x: board.size.x * .475, y: board.size.y * .475 }
+        board.half= { x: board.size.x * .5, y: board.size.y * .5 }
         board.origin= [Number(settings[2])|0, Number(settings[3])|0, Number(settings[4]) ]
         board.background= settings[5][0]==="#" ? settings[5] : `url('${settings[5]}')`
 

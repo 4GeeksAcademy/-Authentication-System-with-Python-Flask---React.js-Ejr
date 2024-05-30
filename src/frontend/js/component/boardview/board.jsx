@@ -146,7 +146,7 @@ const Board= ()=>{
     if(!checkAction()){
       if(click.button === Constants.MOUSE_BTN_LEFT && zsort === 0 || click.button === Constants.MOUSE_BTN_MIDDLE && zsort >= -2) {
         const 
-          half= store.board.half,
+          xhalf= store.board.xhalf, // .475, not half
           coords= canvasState.coords
         merge_canvasState({
           action: { 
@@ -155,8 +155,8 @@ const Board= ()=>{
             middle: click.button === Constants.MOUSE_BTN_MIDDLE,
             origin: click.origin,
             limit: [
-                [ -half.x - coords.x, half.x - coords.x ],
-                [ -half.y - coords.y, half.y - coords.y ]
+                [ -xhalf.x - coords.x, xhalf.x - coords.x ],
+                [ -xhalf.y - coords.y, xhalf.y - coords.y ]
               ],
             zoominv: 1 / _ZOOM_LEVELS[canvasState.zoom]
           }
@@ -171,7 +171,7 @@ const Board= ()=>{
 
       if(pointerUtils.getZsort(canvasRef.current) === 0){
         const
-          half= store.board.half,
+          xhalf= store.board.xhalf, // .475, not half
           cur_coords= canvasState.coords,
           mus_coords= pointer.current.coords,
           viewFactor= [ window.innerWidth*.5, window.innerHeight*.5 ],
@@ -180,8 +180,8 @@ const Board= ()=>{
           zoominv= 1/_ZOOM_LEVELS[canvasState.zoom],
 
           new_coords= {
-            x: Utils.clamp(cur_coords.x + (mus_point[0] * zoominv | 0), -half.x, half.x),
-            y: Utils.clamp(cur_coords.y + (mus_point[1] * zoominv | 0), -half.y, half.y),
+            x: Utils.clamp(cur_coords.x + (mus_point[0] * zoominv | 0), -xhalf.x, xhalf.x),
+            y: Utils.clamp(cur_coords.y + (mus_point[1] * zoominv | 0), -xhalf.y, xhalf.y),
           }
 
         merge_canvasState({
@@ -267,8 +267,8 @@ const Board= ()=>{
           cursor= mus.coords,
           delta= [ cursor.x - (action.origin.x - action.coords.x * action.zoom), cursor.y - (action.origin.y - action.coords.y * action.zoom)],
           new_coords= {
-            x: Utils.clamp((delta[0] * action.zoominv) | 0, -action.half, action.half),
-            y: Utils.clamp((delta[1] * action.zoominv) | 0, -action.half, action.half)
+            x: Utils.clamp((delta[0] * action.zoominv) | 0, -action.half.x, action.half.x),
+            y: Utils.clamp((delta[1] * action.zoominv) | 0, -action.half.y, action.half.y)
           }
 
         ghost.style.setProperty("--item-coords-x", new_coords.x + "px")
@@ -349,7 +349,7 @@ const Board= ()=>{
         if(new_zoom != cur_zoom) {
   
           const
-            half= store.board.half,
+            xhalf= store.board.xhalf, // .475, not half
             cur_coords= canvasState.coords,
             mus_coords= pointer.current.coords,
             viewFactor= [ window.innerWidth*.5, window.innerHeight*.5 ],
@@ -361,8 +361,8 @@ const Board= ()=>{
             cur_offset= [ mus_point[0] * cur_zoomcomp, mus_point[1] * cur_zoomcomp ],
             new_offset= [ mus_point[0] * new_zoomcomp, mus_point[1] * new_zoomcomp ],
             new_coords= {
-              x: Utils.clamp((cur_coords.x + (cur_offset[0] - new_offset[0])) | 0, -half.x, half.x),
-              y: Utils.clamp((cur_coords.y + (cur_offset[1] - new_offset[1])) | 0, -half.y, half.y),
+              x: Utils.clamp((cur_coords.x + (cur_offset[0] - new_offset[0])) | 0, -xhalf.x, xhalf.x),
+              y: Utils.clamp((cur_coords.y + (cur_offset[1] - new_offset[1])) | 0, -xhalf.y, xhalf.y),
             }
 
           merge_canvasState({
