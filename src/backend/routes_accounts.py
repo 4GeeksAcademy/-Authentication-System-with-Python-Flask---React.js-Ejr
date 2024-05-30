@@ -170,7 +170,6 @@ def handle_accounts_user_patch(json, files):
 
 # -------------------------------------- /delete 
 # delete account
-# the strange name is so nobody navigatest there by randomly typing /delete
 @accounts.route('/delete', methods=['POST'])
 @jwt_required()
 @api_utils.endpoint_safe( content_type="application/json", required_props=("email", "password"))
@@ -184,10 +183,10 @@ def handle_accounts_delete(json):
     user, _= api_utils.get_user(email=json['email'])
     if user: return error
     if user_current.id != user.id: return api_utils.response_403()
-  result= user.serialize()
+  response= perform_logout(user)
   db.session.delete(user)
   db.session.commit()
-  return api_utils.response_200(result)
+  return response
 
 # -------------------------------------- /auth
 # check if authenticated [and allowed]

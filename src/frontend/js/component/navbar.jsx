@@ -66,7 +66,7 @@ const Navbar = () => {
 
     : 
 
-    <div className="sticky top-0 bg-dark w-full flex z-[999] border-b-[1px] border-gray-600">
+    <div className="sticky top-0 bg-dark w-full flex z-50 border-b-[1px] border-gray-600">
       <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
 
           <p onClick={()=>{nav("/")}}className=" text-2xl f-body font-[600] mr-24">KeQQu</p>  

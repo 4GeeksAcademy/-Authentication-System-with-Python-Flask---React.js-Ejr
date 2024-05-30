@@ -20,7 +20,9 @@ const _DEV_PAGES= Object.freeze([
   [null],
   ["dashboard", "/dashboard"],
   ["workspace-1", "/workspace/1"],
+  ["workspace-2", "/workspace/2"],
   ["board-1", "/board/1"],
+  ["board-2", "/board/2"],
   [null],
   ["404", "/404"],
   ["healthcheck", "/healthcheck"],
@@ -28,15 +30,15 @@ const _DEV_PAGES= Object.freeze([
 ])
 
 const _DEVTOOL_POSITIONS= Object.freeze([
-  [[" top-4 left-4"],       [" flex-row mb-2"],           [" flex-col"]],
-  [[" top-4 right-4"],      [" flex-row-reverse mb-2"],   [" flex-col"]],
-  [[" bottom-4 left-4"],    [" flex-row mt-2"],           [" flex-col-reverse"]],
-  [[" bottom-4 right-4"],   [" flex-row-reverse mt-2"],   [" flex-col-reverse"]]
+  [[" top-4 left-4"],       [" flex-row mb-2"],           [" flex-col"], [" ml-10 -mt-8 mb-4"]],
+  [[" top-4 right-4"],      [" flex-row-reverse mb-2"],   [" flex-col"], [" -ml-6 -mt-8 mb-4"]],
+  [[" bottom-4 left-4"],    [" flex-row mt-2"],           [" flex-col-reverse"], [" ml-10 -mb-8 mt-4"]],
+  [[" bottom-4 right-4"],   [" flex-row-reverse mt-2"],   [" flex-col-reverse"], [" -ml-6 -mb-8 mt-4"]]
 ])
 
 const _MODENAMES= Object.freeze([
   "GENERAL",
-  "ENPOINTS"
+  "DATABASE"
 ])
 
 const DevTools = () => {
@@ -55,6 +57,7 @@ const DevTools = () => {
 
   function toggle_devTools(e){ Utils.cancelEvent(e); actions.toggleDevPref(Constants.DEVPREFS_SHOWSTATE)}
   function move_devToolsPanel(e, i){ Utils.cancelEvent(e); actions.setDevPref(Constants.DEVPREFS_PANELPOSITION, i)}
+  function move_devToolsMode(e, i){ Utils.cancelEvent(e); actions.setDevPref(Constants.DEVPREFS_PANELPOSITION, i)}
   function toggle_devRender(e){ 
     Utils.cancelEvent(e)
     const new_devRender= !_devRender
@@ -83,10 +86,8 @@ const DevTools = () => {
   }
 
   function cycle_mode(e){ 
-    if(store.readyState.language){
-      Utils.cancelEvent(e)
-      set_mode(mode < _MODENAMES.length -1 ? mode+1 : 0)
-    }
+    Utils.cancelEvent(e)
+    set_mode(mode < _MODENAMES.length -1 ? mode+1 : 0)
   }
 
   function load_userPrefs(e){ Utils.cancelEvent(e); actions.loadUserPrefs() }
@@ -95,6 +96,14 @@ const DevTools = () => {
   
   async function execute(i){
     switch(i){
+      case 8:
+        console.log("/reset-db")
+        console.log( await actions.database_reset() )
+        break
+      case 9:
+        console.log("/clear-db")
+        console.log( await actions.database_clear() )
+        break
       case 0: 
         console.log("accounts:/signup")
         console.log( await actions.accounts_signup("userxx", "display xx", "feliznavidad@fakemail.com", "cojones44", false, true))
@@ -140,7 +149,7 @@ const DevTools = () => {
         </div>
         { _devToolState &&
         <>
-          <button className="devtools-btn w-32" onClick={cycle_mode}>mode: {_MODENAMES[mode]}</button>
+          <button className={"devtools-btn w-32 " + _DEVTOOL_POSITIONS[_devToolPosition][3]} onClick={cycle_mode}>mode: {_MODENAMES[mode]}</button>
           <div className="max-h-70scr w-36 overflow-hidden bg-black bg-opacity-50 border border-slate-600 rounded-xl">
             <div className="max-h-70scr hidescroll-y overflow-x-hidden overflow-y-scroll">
               <div className="flex flex-col w-36 gap-2 p-2">
@@ -179,7 +188,11 @@ const DevTools = () => {
               }
               { mode === 1 &&
                 <>
-                <button className="devtools-btn w-32" onClick={()=>{execute_test()}}>execute code test</button>
+                  <p>-- database --</p>
+                  <div className="flex gap-2">
+                    <button className="devtools-btn w-32" onClick={()=>{execute(8)}}>reset</button>
+                    <button className="devtools-btn w-32" onClick={()=>{execute(9)}}>clear</button>
+                  </div>
                   <div className="h-1"></div>
                   <button className="devtools-btn w-32" onClick={()=>{execute(0)}}>signup</button>
                   <button className="devtools-btn w-32" onClick={()=>{execute(1)}}>login</button>

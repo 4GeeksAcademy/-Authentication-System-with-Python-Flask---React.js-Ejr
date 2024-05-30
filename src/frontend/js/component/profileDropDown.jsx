@@ -25,9 +25,9 @@ const ProfileDropDown= ()=>{
           </div>
           <span className="h-[2px] bg-gray-400 dark:bg-gray-700 w-full mx-auto rounded-full my-1"></span>
           <div className="mb-2">
-              <ul>
-                <button onClick={()=>{nav("/logout")}} className="f-body text-red-600 hover:bg-red-950 cursor-pointer px-5">Log Out</button>
-              </ul>
+            <ul>
+              <button onClick={()=>{nav("/logout")}} className="text-left w-full text-red-600 hover:bg-red-950 cursor-pointer px-5">Log Out</button>
+            </ul>
           </div>
       </div>
     </div>

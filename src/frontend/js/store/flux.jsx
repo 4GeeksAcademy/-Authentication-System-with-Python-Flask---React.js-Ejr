@@ -93,9 +93,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 
       fetchUpdateUser: async ()=>{ 
         const user= await getActions().accounts_user_get()
-        console.log(user)
         if(user && user != getStore().userData) {
-          console.log("gotcha!")
+          console.log("gotcha user!")
           setStore({userData: user})
         }
       },
@@ -416,38 +415,58 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 
       // #region ----------------------------------------------------------------------------------------- BOARDS
 
+      /** clear the lodaded board */
+      clearBoard: async ()=>{
+        setStore({board: null})
+        mergeStore({
+          errorState: { board: false },
+          readyState: { board: false }
+        })
+        console.log("bye bordo!")
+      },
+
       /** create a new, empty board */
       boards_instance_create: async (wid=-1)=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"POST|boards:/instance",
           body: wid != -1 ? {'workspace_id': wid } : {}
         })
-        if(res.status==200 && res.data) return res.data
+        if(res.status==200 && res.data) {
+          console.log("newto bordo!")
+          return res.data
+        }
         return null
       },
 
       /** gets a single board by id */
       boards_instance_get: async (id)=>{
-        mergeStore({readyState: { language: false }})
+        mergeStore({readyState: { board: false }})
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|boards:/instance/" + id
         })
 
-        const raw= res.data??null
-        setStore({ board: raw ? getActions().getBoardFromRawData(raw, true) : null })
+        const 
+          raw= res.data??null,
+          board= getActions().getBoardFromRawData(raw, true)
+
+        setStore({ board: board?? null })
 
         mergeStore({
-          errorState: { board: raw == null },
-          readyState: { board: raw != null }
+          errorState: { board: board == null },
+          readyState: { board: board != null }
         })
 
-        return raw != null
+        if(board) console.log("hello bordo!")
+
+        return board != null
       },
 
       getBoardFromRawData: (raw, full)=>{
+        if(!raw) return null
+
         const board= {
           id: raw.id,
-          workspace_id: raw.workspace?.id?? -1,
+          workspace_id: raw.workspace? raw.workspace[0]?.id?? -1 : -1,
           workspace: null,
           millistamp: raw.millistamp,
           visibility: 0b0000_0001,
@@ -455,14 +474,14 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
           icon: raw.icon,
           name: raw.name,
           description: raw.description?? "/placeholder.description",
-          owner_id: raw.owner?.id?? -1,
+          owner_id: raw.owner? raw.owner[0]?.id?? -1 : -1,
       
           thumbnail: raw.thumbnail
         }
 
         if(full){
-          if(board.workspace_id != -1) board.workspace= raw.workspace
-          if(board.owner_id != -1) board.owner= raw.owner
+          if(board.workspace_id != -1) board.workspace= raw.workspace[0]
+          if(board.owner_id != -1) board.owner= raw.owner[0]
         }
 
         const settings= raw.settings.split('|')
@@ -530,6 +549,16 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 				catch(e){ console.log(`Error fetching ${endpoint.replace(":","-->")}\n`, e) }
         return { status: -1, msg:"unhandled error" }
       },
+
+			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
+			database_reset: async ()=>{
+				fetch(Utils.getBackendUrl("", "/reset-db"), { method: "GET", mode: "no-cors" })
+			},
+
+			// most actual webpages do have this, just a basic backend fetch to determine if backend server is up
+			database_clear: async ()=>{
+				fetch(Utils.getBackendUrl("", "/clear-db"), { method: "GET", mode: "no-cors" })
+			},
       
       getDevPref:(pref)=>{ return getStore().devPrefs[pref]?? null },
       
