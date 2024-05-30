@@ -849,7 +849,7 @@ def delete_module(module_id):
 
 
 #-----------------------PAYMENT------------------------#
-@api.route('/payment/courses', methods=['POST'])
+@api.route('/payment/courses', methods=['POST', 'GET'])
 def create_payment_course():
     try:
         data = request.get_json()
@@ -859,7 +859,7 @@ def create_payment_course():
             pad_amount=data.get('padAmount'),
             type_payment=data.get('typePayment'),
             course_id=data.get('courseId'),
-            manager_id=data.get('managerId')
+            manager_id=1
         )
         db.session.add(new_payment)
         db.session.commit()
@@ -868,9 +868,7 @@ def create_payment_course():
     
     except Exception as err:
         return jsonify({"Error": f"Error creating payment for course: {str(err)}"}), 500
-    
 
-@api.route('/payment/courses', methods=['GET'])
 def get_all_payments_courses():
     try:
         payments = Payment.query.all()
@@ -878,7 +876,11 @@ def get_all_payments_courses():
         return jsonify({"payments": serialized_payments}), 200
     
     except Exception as err:
-        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500
+        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500   
+    
+
+""" @api.route('/payment/courses', methods=['GET']) """
+
 
 
 #-----------------------QUIZZES------------------------#

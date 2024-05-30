@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       courseFavorite: "",
       category: "",
       modules: "",
-      quizzes: ""
+      quizzes: "",
+      payment: ""
     },
 
     actions: {
@@ -998,6 +999,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             category: dataGetCategory.Category,
           });
           console.log(dataGetCategory);
+
         } catch (err) {
           console.log(err);
         } finally {
@@ -1005,14 +1007,78 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      
+      // PAYMENT
+      createPayments: async (dataPayment) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
 
-      
+        try {
+          const url = process.env.BACKEND_URL + "/api/payment/courses";
+          const respAddPayment = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataPayment),
+          });
 
+          if (!respAddPayment.ok) {
+            const errorData = await respAddPayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
 
+            await getActions().getPayments()
+
+            throw new Error(
+              errorData.error || "Error in Payment"
+            );
+          }
+
+          const dataAddPayment = await respAddPayment.json();
+          setStore({ ...store, msg2: dataAddPayment.message });
+          console.log(dataAddPayment);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      getPayments: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const url = process.env.BACKEND_URL + "/api/payment/courses";
+          const respGetPayment = await fetch(url);
+
+          if (!respGetPayment.ok) {
+            const errorData = await respGetPayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in payment");
+          }
+
+          const dataGetPayment= await respGetPayment.json();
+          setStore({
+            ...store,
+            msg: dataGetPayment.message,
+            payment: dataGetPayment,
+          });
+          console.log(dataGetPayment);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      }, 
+       
     }
-
-
   }
 };
 

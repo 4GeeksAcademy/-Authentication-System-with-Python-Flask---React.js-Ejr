@@ -24,8 +24,8 @@ import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
 import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
 import { Trolley } from "./component/User/Trolley.jsx";
-// import { UpdateTeacher } from "./component/Manager/UpdateTeacher.jsx";
 import { UpdateQuizzes } from "./component/Manager/UpdateQuizzes.jsx";
+import { UpdatePayment } from "./component/Manager/UpdatePaymet.jsx";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -86,14 +86,14 @@ const Layout = () => {
                             } 
                             path="/UpdateCourse/:courseId" 
                         />
-                        {/* <Route 
+                        <Route 
                             element={
                                 <ProtectedRoute>
-                                    <UpdateTeacher />
+                                    <UpdatePayment />
                                 </ProtectedRoute>
                             } 
-                            path="/teacherUpdate/:teacherId" 
-                        /> */}
+                            path="/paymentUpdate/:paymentId" 
+                        />
                         
                         <Route 
                             element={
