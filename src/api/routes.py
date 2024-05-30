@@ -871,7 +871,6 @@ def post_quizzes():
     except Exception as err:
         return jsonify({"Error": "Error in quiz creation: ", "fetching error": str(err)}), 500
     
-
 @api.route('/module/quizzes', methods=['GET'])
 def get_quizzes():
     try:
@@ -884,8 +883,7 @@ def get_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in fetching quizzes: " + str(err)})
-        
-        
+
 #----------------------TROLLEY------------------------#
 @api.route('/trolley/courses', methods=['POST'])
 def add_course_to_trolley():
@@ -963,6 +961,7 @@ def delete_trolley(trolley_id):
     
 
 #----------------------ORDER------------------------#
+
 @api.route('/order/courses', methods=['POST'])
 def add_order_to_trolley():
     try:
@@ -971,6 +970,9 @@ def add_order_to_trolley():
         price = data.get('price')
         total = data.get('total')
         user_id = data.get('userId')
+        course_id = data.get('courseId')
+        teacher_id = data.get('teacherId')
+
 
         if not title_order or not price or not total:
             return jsonify({"Error": "titleOrder, price, total and userId are required"}), 400
