@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
 
@@ -10,8 +10,33 @@ const Navbar = () => {
   const 
     { language, store, actions }= React.useContext(Context),
     [navbarState, setNavbarState] = React.useState(false),
-    [profileDropDown, set_profileDropDown] = React.useState(false),
-    nav = useNavigate()
+    [profileDropDown, set_profileDropDown] = React.useState(false)
+    const nav = useNavigate();
+    const dropdownRef = useRef(null);
+
+
+//--- para click fuera de dropDown n shi -------------------------------------------------
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        set_profileDropDown(false);
+      }
+    };
+
+    useEffect(() => {
+      if (profileDropDown) {
+        document.addEventListener("mousedown", handleClickOutside);
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [profileDropDown]);
+  //---------------------------------------------------------------------------------------
+
+
+
 
   function handleAnchor(obj){
     if(store.activePage == Constants.PAGE.landing) {
@@ -38,8 +63,11 @@ const Navbar = () => {
               <button className="w-9 h-9 rounded-full overflow-hidden" onClick={()=>{set_profileDropDown(!profileDropDown)}}>
                 <img className="size-full" src={store.userData.avatar} alt="user avatar" />
               </button>
-                {profileDropDown && 
-                  <ProfileDropDown />
+                {profileDropDown && (
+                  <div ref={dropdownRef}>
+                    <ProfileDropDown />
+                  </div>
+                )
                 }
             </div>
           <div onClick={()=>{setNavbarState(!navbarState)}} className="black hidden">
