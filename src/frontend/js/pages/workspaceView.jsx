@@ -43,7 +43,7 @@ const WorkspaceView = () => {
 	return (
 		<div className="w-full h-full bg-dark flex overflow-hidden">
 {/*--------- Side NavBar --------------------------------------------------------------------------------*/}
-			<SideNavbar boards={boards} />
+			<SideNavbar boards={boards} workspace={workspace}/>
 
 {/*--------- Show Projects -----------------------------------------------------------------------------------*/}
 			<div className="p-12 w-5/6 overflow-auto">

@@ -177,7 +177,7 @@ const LandingView = () => {
                   <p className="f-body justify-item-end">Same but in yellow</p>
                 </div>
                 <div className="flex items-center">
-                  <i className="fa fa-solid fa-check text-4xl mr-4"/>
+                  <i className="fa fa-solid fa-check text-4xl mr-4 "/>
                   <p className="f-body justify-item-end">100% free</p>
                 </div>
               </div>
