@@ -103,7 +103,7 @@ export const AgregarForm = (props) => {
                const [url_img1, url_img2, url_img3] = image.array;
                let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3);
                    if (respuesta === "success") {
-                       swal("Vehículo añadido correctamente", ":)", "success")
+                       swal("Vehículo añadido correctamente", "", "success")
                        navigate("/");
                    } else if (respuesta === "plate_exist") {
                        swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
