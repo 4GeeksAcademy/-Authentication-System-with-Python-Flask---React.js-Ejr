@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../../store/appContext';
 
 export const Payments = () => {
+  
   const { store } = useContext(Context);
   const urlPayments = process.env.BACKEND_URL + '/api/payment/courses';
 
