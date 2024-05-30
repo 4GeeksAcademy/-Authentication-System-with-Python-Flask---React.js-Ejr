@@ -18,6 +18,7 @@
     "description":  "Description",
     "owner":        "Owner",
     "settings":     "Settings",
+    "loading":      "Loading...",
     "missing":      "--err--"
   },
   "user": {

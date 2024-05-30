@@ -8,7 +8,13 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 	return {
 		store: {
       // internal
-      readyState: { backend: false, frontend: false, pointer: false, language: false },
+      readyState: { 
+        backend: false, 
+        frontend: false, 
+        pointer: false, 
+        language: false, 
+        board: false 
+      },
       activePage: null,
       navbarBreadcumb: null,
 
@@ -419,12 +425,15 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 
       /** gets a single board by id */
       boards_instance_get: async (id)=>{
+        mergeStore({readyState: { language: false }})
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|boards:/instance/" + id
         })
 
         const raw= res.data??null
         setStore({ board: raw ? getActions().getBoardFromRawData(raw, true) : null })
+
+        mergeStore({readyState: { board: raw != null }})
 
         return raw != null
       },

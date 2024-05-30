@@ -1,20 +1,32 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext.jsx"
+import LocalizedString from "./localizedString.jsx"
 
 const NavbarBreadcumb= ()=>{
   const 
-    { language, store, actions }= React.useContext(Context),
+    { store, actions }= React.useContext(Context),
     nav= useNavigate()
 
   return (
     <div className="flex p-2">
       { store.navbarBreadcumb && 
         <>
-          <div className="flex">
+          <div className="breadcumb flex font-bold text-xl">
             {
-              store.navbarBreadcumb.map((e,i)=>
-                <button key={`ncb-${i}`} onClick={()=>{nav(e[1])}}>{e[0]}</button>
+              store.navbarBreadcumb.map((e,i)=>{
+                const last= store.navbarBreadcumb.length -1 == i
+                return (
+                  <>
+                    <button key={`ncb-${i}`} onClick={()=>{nav(e[1])}}><LocalizedString label={e[0]} /></button>
+                    { !last && 
+                      <span className="font-black text-3xl text-primary-n dark:text-accent-n">&gt;</span>
+                    }
+                  </>
+                )
+
+              }
+                
               )
             }
           </div>

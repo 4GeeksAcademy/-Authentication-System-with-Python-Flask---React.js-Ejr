@@ -66,7 +66,7 @@ const GlobalListener=()=>{
       if(pathnameLocalized) actions.setNavbarBreadcumb([pathnameLocalized, "/" + path], true)
 
       title= (pathnameLocalized ? pathnameLocalized + language.get("title._sep") : "") + titleroot
-      if(store[pathname]) title= store[pathname].title + language.get("title._sep") + title
+      if(store[pathname]) title= store[pathname].name + language.get("title._sep") + title
     }
 
     if(title) document.title= title

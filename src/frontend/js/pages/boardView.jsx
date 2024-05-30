@@ -22,7 +22,7 @@ import Utils from "../app/utils.js"
  */
 const BoardView= ()=>{
   const
-    { store, actions }= React.useContext(Context),
+    { language, store, actions }= React.useContext(Context),
     [ contextMenu, set_contextMenu ]= React.useState(null),
     [ lastUpdate, set_lastUpdate ]= React.useState({ millistamp:0, interval:1 }),
     { bid }= useParams(),
@@ -31,6 +31,15 @@ const BoardView= ()=>{
 
   // custom stateless React Hook I made for handling pointer behaviour
   useGlobalPointerHook()
+
+  React.useEffect(()=>{
+    if(store.readyState.board){
+
+    }
+    else actions.setNavbarBreadcumb([
+      ["/title.dashboard", "/dashboard"]
+    ], true)
+  },[store.board])
 
   // register custom event listener
   React.useEffect(()=>{ 
@@ -63,10 +72,9 @@ const BoardView= ()=>{
         console.log(`fetch changes, upload changes | boardid: ${bid}`)
         const res= await actions.boards_fetch(idnum, lastUpdateRef.current??0)
         console.log(res)
-  
-        Utils.clamp((nextUpdate= res ? lastUpdate[1]*2 : lastUpdate[1]*res*.85)|0, 250, 5000)
-  
-        set_lastUpdate({millistamp: res ? Date.now() : last.millistamp, interval: nextUpdate})
+        
+        const new_interval= Utils.clamp((res ? lastUpdate[1]*2 : lastUpdate[1]*res*.85)|0, 250, 5000)
+        set_lastUpdate({millistamp: res ? Date.now() : last.millistamp, interval: new_interval})
   
       }, last.interval)
     }
@@ -80,7 +88,6 @@ const BoardView= ()=>{
       console.log(store.board!=null, store.board?.id??null, idnum)
       console.log(!store.board==null, store.board?.id??null !== Number(idnum), idnum < 0)
 
-      console.log(`loading board: ${idnum}`)
       await actions.boards_instance_get(idnum) // board gets into 'store.board'
       
       if(store.board){
@@ -89,17 +96,25 @@ const BoardView= ()=>{
         //actions.getFontAwesomeIconList()
       }
     }
-  } handle() },[store.board])
+  } handle() },[bid])
 
   return (
     <div ref={selfRef} className="flex flex-col h-full overflow-hidden relative -z-50 select-none">
-      { store.readyState.pointer && store.board &&
+      { store.readyState.pointer &&
         <>
-          <div className="pointer-skip absolute inset-0 flex">
-{/*             <Toolbar />
-            <SidePanel /> */}
-          </div>
-          <Board/>
+          { store.readyState.board ?
+            <>
+              <div className="pointer-skip absolute inset-0 flex">
+                <Toolbar />
+                <SidePanel />
+              </div>
+              <Board/>
+            </>
+            :
+            <div className="flex h-full">
+              <div className="m-auto size-fit">{language.get("common.loading")}</div>
+            </div>
+          }
         </>
       }
       { contextMenu }
