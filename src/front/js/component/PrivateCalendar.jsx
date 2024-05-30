@@ -17,9 +17,9 @@ const PrivateCalendar = () => {
     // Definimos el estado para almacenar el evento seleccionado
     const [selectedEvent, setSelectedEvent] = useState(null);
 
-    // useEffect(() => {
-    //     actions.loadTrainingClasses(); // Carga las clases al montar el componente
-    // }, [actions]);
+    useEffect(() => {
+        actions.loadTrainingClasses(); // Carga las clases al montar el componente
+    }, []);
 
     // Transformamos los eventos del store para que sean compatibles con el calendario
     const events = store.trainingClasses.map(event => ({
