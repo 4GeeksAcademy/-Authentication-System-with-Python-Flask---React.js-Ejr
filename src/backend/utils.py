@@ -170,7 +170,8 @@ def fnv11024(data, text=False):
 
 #-- reads a file from backend static
 def read_file(url):
-  http = urllib3.PoolManager(cert_reqs='CERT_NONE')
+  #http = urllib3.PoolManager(cert_reqs='CERT_NONE')
+  http = urllib3.PoolManager()
   full_url = f"{os.environ.get('PROTOCOL','https://')}{os.environ.get('SERVER_NAME')}/{url}"
   response = http.request('GET', full_url)
   return str(response.data, 'utf-8')

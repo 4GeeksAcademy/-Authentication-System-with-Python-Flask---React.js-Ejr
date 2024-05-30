@@ -74,13 +74,18 @@ api_utils.current_app= app
 def redirect_www():
   if 'www.' in request.host:
     return redirect(request.url.replace('www.', '', 1), code=301)
-    
+
 # root
 @app.route('/')
 def sitemap():
-  print("hello")
+  print("HELLO WORLD")
   if ENV == "dev": return generate_sitemap_v2(app)
   return send_from_directory(static_file_dir, 'index.html')
+
+if ENV == "prod":
+  @app.route('/bend')
+  def bend():
+    return generate_sitemap_v2(app)
 
 @app.route('/intitialize_database', methods=['GET'])
 def database_intitialize():
@@ -121,13 +126,18 @@ def database_rollback():
 def database_awspath(type, name, ext):
   return api_utils.response_plain(200, _resolve_filename_for(type, name, ext))
 
-# basic health check
-@app.route('/healthcheck', methods=['GET'])
-def handle_health():
-  domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
-  subdomains= ("accounts", "workspaces", "boards", "objects", "api")
-  responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
-  return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day</pre>", 200
+if ENV == "prod":
+  @app.route('/healthcheck', methods=['GET'])
+  def handle_health():
+    return "ok, have a nice day", 200
+else:
+  # basic health check
+  @app.route('/healthcheck', methods=['GET'])
+  def handle_health():
+    domain= request.host.replace("www.", "") if 'www.' in request.host else request.host
+    subdomains= ("accounts", "workspaces", "boards", "objects", "api")
+    responses= [str(urllib3.request('GET', f"{s}.{domain}/healthcheck").data, 'utf-8') for s in subdomains]
+    return "<pre>" + "\n".join([r for r in responses]) + "\nroot ok\n\nhave a nice day</pre>", 200
 
 # for every unused path
 @app.route('/<path:path>', methods=['GET'])
