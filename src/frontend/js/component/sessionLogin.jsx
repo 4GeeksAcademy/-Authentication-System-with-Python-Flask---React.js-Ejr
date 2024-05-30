@@ -49,7 +49,7 @@ function SessionLogin({ mode }) {
 
 		const triedToSignUp = await actions.accounts_signup(username, displayname, email, password, remember);
 		if (triedToSignUp) {
-			/* navigate("/dashboard") */
+			navigate("/login") 
 			console.log(store)
     }}
     //------------------------------------------
@@ -110,7 +110,6 @@ function SessionLogin({ mode }) {
                                             placeholder="Name" 
                                     />
                                     <input className="text-black"
-                                            pattern={/^[\w.-]+@[\w-]+.[A-z.]+$/} required
                                             type="email" 
                                             value={email}
                                             onChange={(e)=> setEmail(e.target.value)}
