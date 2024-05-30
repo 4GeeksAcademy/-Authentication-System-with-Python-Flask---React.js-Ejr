@@ -172,9 +172,11 @@ def fnv11024(data, text=False):
 def read_file(url):
   #http = urllib3.PoolManager(cert_reqs='CERT_NONE')
   http = urllib3.PoolManager()
-  full_url = f"{os.environ.get('PROTOCOL','https://')}{os.environ.get('SERVER_NAME')}/{url}"
+  full_url = f"{os.environ.get('PROTOCOL','https://')}{os.environ.get('SERVER_NAME')}{url}"
   response = http.request('GET', full_url)
-  return str(response.data, 'utf-8')
+  data= str(response.data, 'utf-8')
+  http.clear()
+  return data
 
 def _get_link(url): return [url, _get_url_color(url), parseurl(url)]
 

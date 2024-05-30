@@ -106,30 +106,25 @@ def handle_boards_instance_delete(json):
   
 # -------------------------------------- /fetch
 # get the 'types' ids that require an update for a given 'board_id' and 'millistamp', gets everything if 'millistamp' < 0
-@boards.route('/fetch', methods=['GET'])
+@boards.route('/fetch', methods=['POST'])
 @jwt_required(optional=True)
 @api_utils.endpoint_safe( content_type="application/json", required_props=["board_id", "millistamp"] )
 def handle_boards_fecth(json):
   
-  board, error= get_board_by_id(json['board_id'])
+  bid= parse_int(json['board_id'])
+  board, error= get_board_by_id(bid)
   if error: return error
   
   # check here if board is public OR user has access to it
 
   millistamp= parse_int(json['millistamp'])
 
-  _objects= { "lists": [], "styles": [], "tags": [] }
-  if json['lists']: _objects['lists']= board.lists_.query.filter(List.millistamp > millistamp).all()
-  if json['tags']: _objects['tags']= board.tags_.query.filter(Tag.millistamp > millistamp).all()
-  if json['styles']: _objects['styles']= board.styles_.query.filter(Style.millistamp > millistamp).all()
+  _objects= {}
+  if 'lists' in json and len(json['lists']) > 0: _objects['lists']= board.lists_.query.filter(List.millistamp > millistamp).all()
+  if 'tags' in json and len(json['tags']) > 0: _objects['tags']= board.tags_.query.filter(Tag.millistamp > millistamp).all()
+  if 'styles' in json and len(json['styles']) > 0: _objects['styles']= board.styles_.query.filter(Style.millistamp > millistamp).all()
 
-  result= {
-    "lists": [v.id for v in _objects['lists']] if _objects['lists'] else {},
-    "styles": [v.id for v in _objects['styles']] if _objects['styles'] else {},
-    "tags": [v.id for v in _objects['tags']] if _objects['tags'] else {}
-  }
-
-  return api_utils.response_200(result)
+  return api_utils.response_200(_objects)
 
 # -------------------------------------- /pull
 # get the actual objects from a list of ids

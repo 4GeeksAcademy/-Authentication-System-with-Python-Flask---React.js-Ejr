@@ -418,18 +418,65 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       },
 
       /** gets a single board by id */
-      workspaces_instance_get: async (id)=>{
+      boards_instance_get: async (id)=>{
         const res= await getActions().simpleBackendRequest({
-          endpoint:"GET|workspaces:/instance/" + id
+          endpoint:"GET|boards:/instance/" + id
         })
-        if(res.status==200 && res.data) return res.data
-        return null
+
+        const raw= res.data??null
+        setStore({ board: raw ? getActions().getBoardFromRawData(raw, true) : null })
+
+        return raw != null
+      },
+
+      getBoardFromRawData: (raw, full)=>{
+        const board= {
+          id: raw.id,
+          workspace_id: raw.workspace?.id?? -1,
+          workspace: null,
+          millistamp: raw.millistamp,
+          visibility: 0b0000_0001,
+      
+          icon: raw.icon,
+          name: raw.name,
+          description: raw.description?? "/placeholder.description",
+          owner_id: raw.owner?.id?? -1,
+      
+          thumbnail: raw.thumbnail
+        }
+
+        if(full){
+          if(board.workspace_id != -1) board.workspace= raw.workspace
+          if(board.owner_id != -1) board.owner= raw.owner
+        }
+
+        const settings= raw.settings.split('|')
+
+        board.size= { x: Number(settings[0])|0, y: Number(settings[1])|0 }
+        board.half= { x: board.size.x * .475, y: board.size.y * .475 }
+        board.origin= [Number(settings[2])|0, Number(settings[3])|0, Number(settings[4]) ]
+        board.background= settings[5][0]==="#" ? settings[5] : `url('${settings[5]}')`
+
+        return board
       },
 
       /** get current user boards from backend */
       boards_user: async ()=>{
         const res= await getActions().simpleBackendRequest({
           endpoint:"GET|boards:/user"
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** fetch the board */
+      boards_fetch: async (id, millistamp)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|boards:/fetch",
+          body: {
+            board_id: id,
+            millistamp: millistamp
+          }
         })
         if(res.status==200 && res.data) return res.data
         return null

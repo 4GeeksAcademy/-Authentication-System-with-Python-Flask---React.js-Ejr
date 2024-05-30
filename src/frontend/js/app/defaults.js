@@ -19,27 +19,6 @@ export const storeDefaults = Object.freeze({
     devRender: false, // general purpose usage, toggleable in dev panel
     fakeOwner: false  // renders everything if you were the owner
   },
-  // board data
-  board: {
-    id: 0,
-    pid: 0,
-    millistamp: Date.now(),
-    visibility: 0b0000_0001,
-
-    icon: board_default_background,
-    title: "Example Table",
-    owner_id: 0,
-
-    thumb: board_default_background,
-
-    size: 4096,
-    background: board_default_background,
-    origin: [0, 0],
-    zoom: 1.0,
-
-    styles: {},
-    content: [5512,1346,43,675]
-  },
   // items, ALL
   items: [
     // lists

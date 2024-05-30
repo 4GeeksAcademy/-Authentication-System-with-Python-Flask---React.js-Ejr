@@ -209,7 +209,7 @@ def endpoint_safe(
             __json= __parsed_data__['json']
             for p in required_props:
               if not p in __json: return response(400, f"missing required property '{p}'")
-              if not __json[p] or (type(__json[p])== str and __json[p]== ""): return response(400, f"empty required property '{p}'")
+              if type(__json[p])== str and __json[p]== "": return response(400, f"empty required property '{p}'")
             if props_strict and len(__json.keys()) > len(required_props): return response(400, f"too many json properties")
         if required_params: # check required url parameters
           __params= {}
