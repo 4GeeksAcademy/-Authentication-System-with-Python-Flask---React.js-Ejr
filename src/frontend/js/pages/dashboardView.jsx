@@ -46,12 +46,12 @@ const DashboardView = () => {
   }
 
 	return (
-		<div className="w-full bg-dark flex h-full">
+		<div className="w-full bg-dark flex h-screen overflow-hidden">
 {/*--------- Side NavBar --------------------------------------------------------------------------------*/}
 			<SideNavbar workspaces={workspaces} boards={boards}/>
 
 {/*--------- Show Projects -----------------------------------------------------------------------------------*/}
-			<div className="p-12 w-5/6">
+			<div className="p-12 w-5/6 overflow-auto">
 				<div className="flex flex-col gap-5">
 					{ (lastVisited[0] || lastVisited[1]) &&
 					  <div>
@@ -75,9 +75,17 @@ const DashboardView = () => {
 					<div>
 						<div className="flex gap-3 items-center">
 							<p className="f-body">Workspaces</p>
+							<div className="flex items-center ml-4">
+								<button className="w-6 h-6 border-[1px] border-white rounded-md hover:bg-white hover:border-none">
+									<i  onClick={handleCreateNewWorkspace}
+										className="fa-regular fa-plus hover:text-black"></i>
+
+								</button>
+								<p className=" text-gray-400 ml-2">create a new workspace</p>
+							</div>
 						</div>
 						<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
-						<div className="flex items-center gap-10 my-4">
+						<div className="flex items-center gap-10 my-4 w-full flex-wrap">
 
 							{workspaces && workspaces.map((e, i)=> e ?
 								<WorkspaceCard key={`wc-${i}`} data={e} /> : null
@@ -92,9 +100,17 @@ const DashboardView = () => {
 					<div>
 						<div className="flex gap-3 items-center">
 							<p className="f-body">Boards</p>
+							<div className="flex items-center ml-4">
+								<button className="w-6 h-6 border-[1px] border-white rounded-md hover:bg-white hover:border-none">
+									<i  onClick={handleCreateNewBoard}
+										className="fa-regular fa-plus hover:text-black"></i>
+
+								</button>
+								<p className=" text-gray-400 ml-2">create a new board</p>
+							</div>
 						</div>
 						<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
-						<div className="flex items-center gap-10 my-4">
+						<div className="flex items-center gap-10 my-4 w-full flex-wrap">
 							
 							{boards && boards.map((e, i)=> e ?
 								<BoardCard key={`bc-${i}`} data={e} /> : null	

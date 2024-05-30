@@ -36,20 +36,28 @@ const WorkspaceView = () => {
   }
 
 	return (
-		<div className="w-full h-full bg-dark flex">
+		<div className="w-full h-full bg-dark flex overflow-hidden">
 {/*--------- Side NavBar --------------------------------------------------------------------------------*/}
-			<SideNavbar boards={boards} workspaces={workspaces}/>
+			<SideNavbar boards={boards} />
 
 {/*--------- Show Projects -----------------------------------------------------------------------------------*/}
-			<div className="p-12 w-5/6">
+			<div className="p-12 w-5/6 overflow-auto">
 				<div className="flex flex-col gap-5">
 					<div>
 						<div className="flex gap-3 items-center">
-							<p>Boards</p>
+							<p className="f-body-sm">Boards</p>
+							<div className="flex items-center ml-4">
+								<button className="w-6 h-6 border-[1px] border-white rounded-md hover:bg-white hover:border-none">
+									<i  onClick={handleCreateNewBoard}
+										className="fa-regular fa-plus hover:text-black"></i>
+
+								</button>
+								<p className=" text-gray-400 ml-2">create a new board</p>
+							</div>
 						</div>
 						<div id="divider" className="w-full h-[1px] bg-gray-500 mx-auto my-2"></div>
 						<div className="flex items-center gap-10 my-4">
-							<div className="flex flex-col gap-3">
+							<div className="flex gap-5 w-full flex-wrap ">
 								
 								{boards && boards.map((e, i)=>{
 									return <BoardCard key={`bc-${i}`} data={e} />	
