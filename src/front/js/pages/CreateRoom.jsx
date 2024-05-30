@@ -136,7 +136,7 @@ export const CreateRoom = () => {
                     >
                         <option value="All">All</option>
                         <option value="Xbox">Xbox</option>
-                        <option value="PSN">PSN</option>
+                        <option value="PlayStation">PlayStation</option>
                         <option value="PC">PC</option>
                         <option value="Google Play">Google Play</option>
                         <option value="Nintendo">Nintendo</option>

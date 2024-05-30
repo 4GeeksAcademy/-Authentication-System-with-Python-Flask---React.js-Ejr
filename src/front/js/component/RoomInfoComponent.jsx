@@ -2,6 +2,7 @@ import React from 'react';
 import '../../styles/RoomInfo.css';
 
 const RoomDetailsView = ({ room, participantsCount, formattedDateTime, renderPlatformIcon, handleKickParticipant, isHost }) => {
+    
     return (
         <div className="">
             <div className="formatted-datetime text-info">

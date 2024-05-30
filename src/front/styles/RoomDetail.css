@@ -8,6 +8,31 @@
     min-height: 752px;
     font-family: 'Inter', sans-serif;
 }
+
+.room-pills {
+    margin: 17px 0px 32px;
+    gap: 10px
+}
+
+.room-pills button {
+    background-color: #444C63;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.room-pills button.active {
+    background-color: #0096D2;
+}
+
+.room-pills button:hover {
+    background-color: #0056b3;
+}
+
 .back {
     max-width: 1114px;
     margin: auto;
