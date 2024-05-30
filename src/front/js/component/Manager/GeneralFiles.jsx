@@ -1,14 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export const GeneralFiles = () => {
+    const [files, setFiles] = useState([]);
+    const pdfUrl = process.env.BACKEND_URL +'/api/uploads';
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const response = await fetch(pdfUrl);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch files');
+                }
+                const data = await response.json();
+                setFiles(data);
+            } catch (error) {
+                console.error('Error fetching files:', error);
+            }
+        };
+        fetchFiles();
+    }, [pdfUrl]); 
+
     return (
-        <div className="card">
-            <div className="card-body">
-                <h5 className="card-title">Files</h5>
-                <p className="card-text">Atlas e-learning Files</p>
-                <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
-            </div>
-            <img src="https://static.vecteezy.com/system/resources/previews/014/294/517/non_2x/storage-documents-file-icon-cartoon-style-vector.jpg" className="card-img-bottom" alt="Files" />
+        <div>
+            <h5>Files:</h5>
+            <ul>
+                {files.map((file, index) => (
+                    <li key={index}>
+                        <a href={process.env.BACKEND_URL +`/api/uploads/${file}`} rel="noopener noreferrer">{file}</a>
+                    </li>
+                ))}
+            </ul>
         </div>
-    )
+    );
 }
+
+
+

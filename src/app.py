@@ -15,6 +15,7 @@ from flask_mail import Mail, Message
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+#-------------------------EMAIL-----------------------------#
 # Configuración de Flask-Mail
 #clave ffyi grea agyd alfc
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'

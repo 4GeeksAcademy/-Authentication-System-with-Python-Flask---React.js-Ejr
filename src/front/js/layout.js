@@ -19,17 +19,16 @@ import { SignOut } from "./pages/SignOut.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import { ResetPassword } from "./component/ResetPassword.jsx";
 import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
-import Courses from "./pages/Courses/Courses.jsx";
 import Course from "./pages/Courses/Course.jsx";
-import {PaypalPayment} from "./component/PaypalPayment.jsx";
+import { PaypalPayment } from "./component/PaypalPayment.jsx";
+import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
+import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
+import { Trolley } from "./component/User/Trolley.jsx";
 
-//create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
     return (
         <div>
@@ -39,53 +38,69 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<FormUser />} path="/FormUser" />
                         <Route element={<LogIn />} path="/LogIn" />
-                        <Route element={<SignOut />} path="/SignOut"/>
-                        <Route element={<ResetPassword />} path="/ResetPassword"/>
-                        <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token"/>
-                        
+                        <Route element={<SignOut />} path="/SignOut" />
+                        <Route element={<ResetPassword />} path="/ResetPassword" />
+                        <Route element={<ResetPasswordNewChange />} path="/ResetPassword/token" />
                         <Route element={<PaypalPayment />} path="/Paypal" />
 
-                        <Route element={<Courses />} path="/Courses"/>
+                        {/* Protected Routes */}
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <TeacherView />
+                                </ProtectedRoute>
+                            } 
+                            path="/teacherView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UserView />
+                                </ProtectedRoute>
+                            } 
+                            path="/userView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <ManagerView />
+                                </ProtectedRoute>
+                            } 
+                            path="/managerView" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UpdateUser />
+                                </ProtectedRoute>
+                            } 
+                            path="/UpdateUser/:userId" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <UpdateCourse />
+                                </ProtectedRoute>
+                            } 
+                            path="/UpdateCourse/:courseId" 
+                        />
+                        <Route 
+                            element={
+                                <ProtectedRoute>
+                                    <Course />
+                                </ProtectedRoute>
+                            } 
+                            path="/course/:id" 
+                        />
+                        {/* Ruta para el componente Trolley */}
+                        <Route element={<Trolley />} path="/trolley" />
 
-                            {/* Protected Routes */}
-                            <Route 
-                                element={
-                                    <ProtectedRoute>
-                                        <TeacherView />
-                                    </ProtectedRoute>
-                                } 
-                                path="/teacherView" 
-                            />
-                            <Route 
-                                element={
-                                    <ProtectedRoute>
-                                        <UserView />
-                                    </ProtectedRoute>
-                                } 
-                                path="/userView" 
-                            />
-                            <Route 
-                                element={
-                                    <ProtectedRoute>
-                                        <ManagerView />
-                                    </ProtectedRoute>
-                                } 
-                                path="/managerView" 
-                            />
-                            <Route 
-                                element={
-                                    <ProtectedRoute>
-                                        <Course />
-                                    </ProtectedRoute>
-                                } 
-                                path="/course/:id" 
-                            />
-                            <Route element={<h1>Not found!</h1>} />
-                            {/*<Route element={<Single />} path="/single/:theid" /> */}
-                        </Routes>
-                        <Footer />
-                    </ScrollToTop>
-                </BrowserRouter>
+                        {/* Fallback Route */}
+                        <Route element={<h1>Not found!</h1>} path="*" />
+                    </Routes>
+                    <Footer />
+                </ScrollToTop>
+            </BrowserRouter>
         </div>
     );
 };
