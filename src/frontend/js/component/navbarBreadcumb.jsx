@@ -22,10 +22,7 @@ const NavbarBreadcumb= ()=>{
                     <button key={`ncb-${i}`} onClick={e[1] ? ()=>{nav(e[1])} : null}><LocalizedString label={e[0]} /></button>
                   </div>
                 )
-
-              }
-                
-              )
+              })
             }
           </div>
         </>

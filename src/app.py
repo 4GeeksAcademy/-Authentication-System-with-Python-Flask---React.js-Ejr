@@ -91,8 +91,8 @@ if ENV == "prod":
   def bend():
     return generate_sitemap_v2(app)
 
-@app.route('/intitialize_database', methods=['GET'])
-def database_intitialize():
+@app.route('/init-db', methods=['GET'])
+def database_init():
   if not db.session.query(User, 1).first():
 
     voidkeeper= USER_VOIDKEEPER
@@ -108,19 +108,19 @@ def database_intitialize():
     return api_utils.response_plain(200, "ok")
   return api_utils.response_plain(304, "already initialized")
 
-@app.route('/reset_database', methods=['GET'])
+@app.route('/reset-db', methods=['GET'])
 def database_reset():
   api_utils.clear_database(commit=False)
-  database_intitialize()
+  database_init()
   api_utils.load_rows_from_file("/res/defaults.json")
   return api_utils.response_plain(200, "ok")
   
-@app.route('/clear_database', methods=['GET'])
+@app.route('/clear-db', methods=['GET'])
 def database_clear():
   api_utils.clear_database()
   return api_utils.response_plain(200, "ok")
   
-@app.route('/rollback_database', methods=['GET'])
+@app.route('/rollback-db', methods=['GET'])
 def database_rollback():
   db.session.rollback()
   db.session.commit()

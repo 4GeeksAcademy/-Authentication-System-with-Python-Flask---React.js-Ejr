@@ -100,7 +100,7 @@ const BoardView= ()=>{
 
       await actions.boards_instance_get(idnum) // board gets into 'store.board'
       
-      if(!store.failure.board){
+      if(!store.errorState.board){
         
         console.log(store.board)
 
@@ -127,7 +127,7 @@ const BoardView= ()=>{
             <>
             { store.errorState.board ?
               <div className="flex h-full">
-                <div className="m-auto size-fit">{language.get("error.boardnotfound")}</div>
+                <div className="m-auto size-fit font-black text-red-400 text-4xl max-w-50">{language.get("error.boardnotfound")}</div>
               </div>
               :
               <div className="flex h-full">

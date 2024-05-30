@@ -28,23 +28,19 @@ const Navbar = () => {
     <>
     {store.userData ? 
       <div className="sticky top-0 bg-stone-200 dark:bg-dark text-stone-800 dark:text-zinc-400 w-full flex z-50 border-b border-gray-600">
-        <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4 ">
+        <div className="flex h-[60px] w-full md:max-w-[1550px] mx-auto items-center justify-between px-8 md:px-4">
           <div className="flex items-center">
-            
             <p onClick={()=>nav('/')} className="cursor-pointer text-2xl f-body font-[600] mr-20 text-dark dark:text-white">KeQQu</p>  
-            
-            <NavbarBreadcumb />
-
-            <button className=""></button>
+              <NavbarBreadcumb />
           </div>
             <div className="ml-10 flex items-center">
               <div className=" w-6 h-6 flex items-center justify-center rounded-full mr-8 f-body border-2 border-white">?</div>
               <button className="w-9 h-9 rounded-full overflow-hidden" onClick={()=>{set_profileDropDown(!profileDropDown)}}>
-                  <img src={store.userData.avatar} alt="user avatar" />
+                <img className="size-full" src={store.userData.avatar} alt="user avatar" />
               </button>
-                  {profileDropDown && 
-                    <ProfileDropDown />
-                  }
+                {profileDropDown && 
+                  <ProfileDropDown />
+                }
             </div>
           <div onClick={()=>{setNavbarState(!navbarState)}} className="black hidden">
           {navbarState ? 
