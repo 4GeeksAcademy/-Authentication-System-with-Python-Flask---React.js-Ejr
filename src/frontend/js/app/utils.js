@@ -44,13 +44,13 @@ const Utils= {
 
   /** select only the auth cookies */
   getCredentialCookies: ()=>{
-    return (document.cookie.split("; ")?.filter(e=>e.startsWith(`access_token_cookie=`) || e.startsWith(`csrf_access_token=`)))?.join()??""
+    return (document.cookie.split("; ")?.filter(e=>e.startsWith(`access_token_cookie=`) || e.startsWith(`x_csrf_token=`)))?.join()??""
   },
 
   /** read a cookie and returns it, or undefined if not found */
   getCookie: (cookie)=>{
     const result= document.cookie.split("; ")?.find(e=>e.startsWith(`${cookie}=`))
-    console.log(`loaded cookie:`, result)
+    //console.log(`loaded cookie:`, result)
     return result?.split('=')[1] ?? undefined
   },
   
@@ -71,7 +71,7 @@ const Utils= {
     const cpath= path ? (";Path=" + path) : ""
     const csamesite= samesite ? (";SameSite=" + samesite) : ""
     const result= `${cookie}=${value}${cexpire}${cpath}${csamesite};domain=${process.env.FRONTEND_URL}`
-    console.log("saved cookie:", result)
+    //console.log("saved cookie:", result)
     document.cookie= result
   },
 

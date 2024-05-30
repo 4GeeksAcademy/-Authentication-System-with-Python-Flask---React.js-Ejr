@@ -121,7 +121,7 @@ const DevTools = () => {
         break
       case 5:
         console.log("accounts:/user")
-        console.log( await actions.accounts_user() )
+        console.log( await actions.accounts_user_get() )
         break
       case 6:
         console.log("workspaces:/user")

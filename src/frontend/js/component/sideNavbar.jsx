@@ -25,7 +25,7 @@ const SideNavbar = ({workspaces, boards}) => {
 					<li className="flex ite ms-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
 						<p className="text-sm f-body">And then onClick a function that opens this workspaces, or maybe a useNav idk</p>
 					</li>
-					{workspaces.map((e, i)=>{
+					{workspaces && workspaces.map((e, i)=>{
 								return <li key={`li-ws-${i}`} className="flex ite ms-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
 											<p className="text-sm f-body">{e.title}</p>
 										</li>
@@ -40,7 +40,7 @@ const SideNavbar = ({workspaces, boards}) => {
 					<li className="flex items-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
 						<p className="text-sm f-body">Same as workspaces</p>
 					</li>
-					{boards.map((e, i)=>{
+					{boards && boards.map((e, i)=>{
 								return <li key={`li-bc-${i}`} className="flex items-center hover:bg-gray-800 rounded-lg cursor-pointer p-3">
 											<p className="text-sm f-body">{e.name}</p>
 										</li>	

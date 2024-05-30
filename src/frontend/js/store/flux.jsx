@@ -10,6 +10,7 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       // internal
       readyState: { backend: false, frontend: false, pointer: false, language: false },
       activePage: null,
+      navbarBreadcumb: null,
 
       // user
       userPrefs: storeDefaults.userPrefs,
@@ -39,7 +40,8 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
         }
         catch(e){}
         return null
-      }
+      },
+      millistamp: 0
     },
 		actions: {
 
@@ -156,6 +158,15 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       getStoreDirty: (state)=> { return getStore().dirty & state },
       setStoreDirty: (state)=> { setStore({ dirty: getStore().dirty | state })},
       unsetStoreDirty: (state)=> { setStore({ dirty: (getStore().dirty | state) ^ state })},
+
+      setNavbarBreadcumb: (element, replace)=> {
+        if(replace) setStore({navbarBreadcumb: element ? Array.isArray(element[0]) ? element : [element] : null})
+        else{
+          new_breadcumb= [...getStore().navbarBreadcumb]
+          new_breadcumb.concat(element)
+          setStore({navbarBreadcumb: new_breadcumb})
+        }
+      },
 
       getTimestamp: async(subdomain, id)=>{
 				try{
@@ -365,6 +376,25 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
 
       // #region ----------------------------------------------------------------------------------------- WORKSPACES
 
+      /** create a new, empty workspace */
+      workspaces_instance_create: async ()=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|workspaces:/instance",
+          body: {}
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** gets a single workspace by id */
+      workspaces_instance_get: async (id)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|workspaces:/instance/" + id
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
       /** get current user workspaces from backend */
       workspaces_user: async ()=>{
         const res= await getActions().simpleBackendRequest({
@@ -376,6 +406,25 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
       //#endregion
 
       // #region ----------------------------------------------------------------------------------------- BOARDS
+
+      /** create a new, empty board */
+      boards_instance_create: async (wid=-1)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"POST|boards:/instance",
+          body: wid != -1 ? {'workspace_id': wid } : {}
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
+
+      /** gets a single board by id */
+      workspaces_instance_get: async (id)=>{
+        const res= await getActions().simpleBackendRequest({
+          endpoint:"GET|workspaces:/instance/" + id
+        })
+        if(res.status==200 && res.data) return res.data
+        return null
+      },
 
       /** get current user boards from backend */
       boards_user: async ()=>{
@@ -400,11 +449,12 @@ const storeState = ({ getStore, getLanguage, getActions, setStore, mergeStore, s
             method: endpointData[1],
             mode: "cors",
             ...(credentials? {credentials: 'include'} : {}), // <---- this must be only sent in our backend fetch calls, nowhere else
+            headers: { 
+              'Cookie': Utils.getCredentialCookies(),
+              "X-CSRF-TOKEN": Utils.getCookie("x_csrf_token"),
+              ...(body ? {'Content-Type': mimetype } : {})
+            },
             ...(body ? {
-              headers: { 
-                'Cookie': Utils.getCredentialCookies(),
-                'Content-Type': mimetype
-              },
               body: JSON.stringify(body)
             } : {})
           })

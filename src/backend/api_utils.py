@@ -197,7 +197,7 @@ def endpoint_safe(
           if __type=="json": # parse json
             try: __parsed_data__['json']= request.get_json(force=True)
             except: return response(400, "body contains no valid JSON")
-            if not __parsed_data__['json']: return response(400, "body contains no JSON")
+            if not __parsed_data__['json'] and required_props: return response(400, "body contains no JSON")
           if __type=="multipart": # parse multipart json + files
             try: __parsed_data__['json']= json.loads(request.form['json'])
             except: pass
@@ -301,10 +301,10 @@ def load_rows_from_file(filepath):
       try:
         
         icon= data['icon'].lower() if data['icon'] else 'default'
-        if icon == 'default': data['icon']= DEFAULT_ICON['workspace']
+        if icon == 'default': data['icon']= DEFAULT_ICON['board']
         
         thumbnail= data['thumbnail'].lower() if data['thumbnail'] else 'default'
-        if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['workspace']
+        if thumbnail == 'default': data['thumbnail']= DEFAULT_THUMBNAIL['board']
         
         # add to database
         db.session.add(Board(

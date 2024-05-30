@@ -28,7 +28,7 @@ const appContext = ReactComponent => {
     function _setlanguage(new_language) {
       setState({
         store: { ...state.store },
-        language: { ...new_language, get:state.language.get },
+        language: { ...new_language, millistamp:Date.now(), get:state.language.get },
         actions: { ...state.actions },
         millistamp: Date.now()
       })

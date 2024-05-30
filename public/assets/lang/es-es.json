@@ -6,9 +6,9 @@
     "board":      "Tablero",
     "dashboard":  "Panel",
     "workspace":  "Espacio",
-    "project":    "Proyecto",
-    "team":       "Equipo",
-    "profile":    "Perfil",
+    "signup":     "Registro",
+    "login":      "Acceso",
+    "logout":     "Salida",
     "settings":   "Cuenta",
     "404":        "Mecachis!!!",
     "creamyfap":  "Las pajas, eso es!"
@@ -17,7 +17,8 @@
     "title":        "Título",
     "description":  "Descripción",
     "owner":        "Propietario",
-    "settings":     "Opciones"
+    "settings":     "Opciones",
+    "missing":      "--err--"
   },
   "user": {
     "name":         "Nombre de usuario",

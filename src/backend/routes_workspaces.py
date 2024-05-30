@@ -21,38 +21,28 @@ def handle_workspaces_user():
   user, error= api_utils.get_user_by_identity()
   if error: return error
 
-  last= db.session.get(Workspace, user.last_workspace_id)
+  last= db.session.query(Workspace).filter(Workspace.id== user.last_workspace_id).first()
   result= {
     "last": last.serialize() if last else None,
-    "owned": [v.serialize() for v in user.workspaces_owned_] if user.workspaces_owned_ else {},
-    "active": [v.serialize() for v in user.workspaces_] if user.workspaces_ else {},
+    "owned": [v.serialize() for v in user.workspaces_owned_] if user.workspaces_owned_ else [],
+    "active": [v.serialize() for v in user.workspaces_] if user.workspaces_ else []
   }
   
   return api_utils.response_200(result)
-
-# -------------------------------------- /fetch
-# get the board ids that require an update for a given 'board_id' and 'millistamp', gets everything if 'millistamp' < 0
-@workspaces.route('/fetch', methods=['GET'])
-@jwt_required()
-@api_utils.endpoint_safe( content_type="application/json", required_props=("workspace_id", "millistamp") )
-def handle_workspaces_fetch(json):
-  
-  user, error= api_utils.get_user_by_identity()
-  if error: return error
-
-  return api_utils.response_200()
 
 # -------------------------------------- /instance
 # create a workspace
 @workspaces.route('/instance', methods=['POST'])
 @jwt_required()
 def handle_workspaces_instance_create():
+
+  print("w")
   
   user, error= api_utils.get_user_by_identity()
   if error: return error
 
   workspace= Workspace(
-    title='$default.title-workspace',
+    title='/default.title-workspace',
     thumbnail= DEFAULT_THUMBNAIL['workspace'],
     owner_id= user.id,
     millistamp= get_current_millistamp()
@@ -61,55 +51,64 @@ def handle_workspaces_instance_create():
   db.session.add(workspace)
   db.session.commit()
   
-  return api_utils.response_200(workspace)
+  return api_utils.response_200(workspace.serialize())
 
-# create a workspace
+# get a single workspace
 @workspaces.route('/instance/<int:id>', methods=['GET'])
 @jwt_required()
-def handle_workspaces_instance_get():
+def handle_workspaces_instance_get(id):
   
   user, error= api_utils.get_user_by_identity()
   if error: return error
 
-  workspace= Workspace(
-    title='$default.title-workspace',
-    thumbnail= DEFAULT_THUMBNAIL['workspace'],
-    owner_id= user.id,
-    millistamp= get_current_millistamp()
-  )
+  wid= parse_int(id, None)
+  if not wid or wid < 1: return api_utils.response(400, f"invalid workspace id: {wid}")
 
-  db.session.add(workspace)
-  db.session.commit()
+  workspace, error= get_workspace_by_id(wid)
+  if error: return error
+
+  if user.id != workspace.owner_id:
+    if not user.workspaces_.filter(Workspace.id == wid).first(): return api_utils.response(403, "user is not allowed in workspace")
   
-  return api_utils.response(204, "created")
+  return api_utils.response_200(workspace.serialize(deep=1))
 
-# create a workspace
-@workspaces.route('/instance/<int:id>', methods=['DELETE'])
+# delete a workspace (mark it as )
+@workspaces.route('/delete', methods=['POST'])
 @jwt_required()
-def handle_workspaces_instance_delete(id):
+@api_utils.endpoint_safe( content_type="application/json", required_props=("id") )
+def handle_workspaces_instance_delete(json):
   
   user, error= api_utils.get_user_by_identity()
   if error: return error
 
-  workspace= user.workspaces_owned_.filter(Workspace.id == id).first()
-  if not workspace: return api_utils.response(403, "user doesn't own the workspace")
+  wid= parse_int(json['id'], None)
+  if not wid or wid < 1: return api_utils.response(400, f"invalid workspace id: {wid}")
+
+  workspace, error= get_workspace_by_id(wid)
+  if error: return error
+
+  if user.id != workspace.owner_id: return api_utils.response(403, "user doesn't own the workspace")
 
   if not workspace.archived:
     workspace.archived=True
     return api_utils.response(200, "archived")
 
-  api_utils.delete_workspaces([workspace])
-
-  boards= workspace.boards_.all()
-  if boards:
-    api_utils.delete_boards(boards)
-
-  workspace.delete()
-
-  db.session.add(workspace)
-  db.session.commit()
+  api_utils.delete_workspaces([workspace]) # this do commit()
   
-  return api_utils.response(204, "created")
+  return api_utils.response(200, "deleted")
+
+# -------------------------------------- /fetch
+# get the board ids that require an update for a given 'board_id' and 'millistamp', gets everything if 'millistamp' < 0
+@workspaces.route('/fetch', methods=['GET'])
+@jwt_required()
+def handle_workspaces_fetch():
+  
+  user, error= api_utils.get_user_by_identity()
+  if error: return error
+
+  # TODOOOOOO
+
+  return api_utils.response_200()
 
 # -------------------------------------- /list
 # get workspaces lists
@@ -138,3 +137,11 @@ def handle_workspaces_millistamp():
 @workspaces.route('/healthcheck', methods=['GET'])
 def handle_workspaces_healthcheck():
     return "workspaces ok", 200
+
+# ---------------------------------------------------------------------------- HELPERS ----------------------------------------------------------------------------
+
+def get_workspace_by_id(wid):
+  if not wid or wid < 1: return api_utils.response(400, f"invalid workspace id: {wid}")
+  workspace= db.session.query(Workspace).get(wid)
+  if not workspace: return None, api_utils.response(404, "workspace not found")
+  return workspace, None

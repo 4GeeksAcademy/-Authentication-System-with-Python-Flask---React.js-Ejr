@@ -6,9 +6,9 @@
     "board":      "Board",
     "dashboard":  "Dashboard",
     "workspace":  "Workspace",
-    "project":    "Project",
-    "team":       "Team",
-    "profile":    "Profile",
+    "signup":     "Signup",
+    "login":      "Login",
+    "logout":     "Logout",
     "settings":   "Account",
     "404":        "Whoopitiwhoops!",
     "creamyfap":  "Fapping, that's it!"
@@ -17,7 +17,8 @@
     "title":        "Title",
     "description":  "Description",
     "owner":        "Owner",
-    "settings":     "Settings"
+    "settings":     "Settings",
+    "missing":      "--err--"
   },
   "user": {
     "name":         "Username",

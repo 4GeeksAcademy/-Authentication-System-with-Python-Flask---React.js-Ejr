@@ -39,9 +39,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config["JWT_SECRET_KEY"]= os.environ.get("FLASK_APP_KEY", "la_coyuntura_de_los_afluentes_tamizados")
 app.config["JWT_TOKEN_LOCATION"]= ('cookies')
+
+app.config["JWT_COOKIE_DOMAIN"] = "." + app.config['SERVER_NAME']
 app.config["JWT_COOKIE_SECURE"] = ENV == "prod" # cookies must be sent over https in production
-app.config["JWT_COOKIE_DOMAIN"] = app.config['SERVER_NAME']
-app.config["JWT_COOKIE_SAMESITE"] = "strict"
+app.config["JWT_CSRF_METHODS"] = ["POST", "PUT", "PATCH", "DELETE"]
+app.config["JWT_ACCESS_CSRF_HEADER_NAME"] = "X-CSRF-TOKEN"
+app.config["JWT_ACCESS_CSRF_COOKIE_NAME"] = "x_csrf_token"
+app.config["JWT_CSRF_IN_COOKIES"] = True
+
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 

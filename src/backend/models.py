@@ -81,7 +81,7 @@ class User(db.Model):
   lists_ = db.relationship("List", secondary=users_lists_association, back_populates='users_')
   tasks_ = db.relationship("Task", secondary=users_tasks_association, back_populates='users_')
 
-  def serialize(self):
+  def serialize(self, deep=0):
     return {
       "id": self.id,
       "username": self.username,
@@ -124,17 +124,26 @@ class Workspace(db.Model):
   # users
   users_ = db.relationship("User", secondary=users_workspaces_association, back_populates='workspaces_')
 
-  def __get_owner(self, deep):
+  def __get_owner(self, deep=0):
     return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
 
-  def serialize(self, deep=False):
+  def __get_rwr(self, deep=0):
+    return self.rwr_.serialize(deep-1) if deep and self.rwr_ else self.rwr_id,
+
+  def __get_boards(self, deep=0):
+    b= self.boards_
+    return ([v.serialize(deep-1) for v in b] if b else []) if deep > 0 else ([v.id for v in b] if b else [])
+
+  def serialize(self, deep=0):
+
     return {
       "id": self.id,
       "title": self.title,
-      "thumbnail": self.thumbnail,
+      "thumbnail": get_public_link(self.thumbnail) if not '://' in self.thumbnail else self.thumbnail,
       "settings": self.settings,
-      "rwr_id": self.rwr_id,
-      "owner_id": self.__get_owner(deep),
+      "rwr": self.__get_rwr(deep),
+      "owner": self.__get_owner(deep),
+      "boards": self.__get_boards(deep),
       "archived": self.archived,
       "millistamp": self.millistamp
     }
@@ -146,7 +155,7 @@ class Board(db.Model):
   __tablename__="boards"
   id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
   name = db.Column(db.String(64), nullable=False)
-  description = db.Column(db.String(1024), nullable=False)
+  description = db.Column(db.String(1024))
   icon = db.Column(db.String(256))
   thumbnail = db.Column(db.String(256), nullable= False)
   settings= db.Column(db.String(256))
@@ -177,6 +186,9 @@ class Board(db.Model):
   # users
   users_ = db.relationship("User", secondary=users_boards_association, back_populates='boards_')
 
+  def __get_rwr(self, deep=0):
+    return self.rwr_.serialize(deep-1) if deep and self.rwr_ else self.rwr_id,
+
   def __get_owner(self, deep):
     return self.owner_.serialize() if deep and self.owner_ else self.owner_id,
 
@@ -188,12 +200,12 @@ class Board(db.Model):
       "id": self.id,
       "name": self.name,
       "description": self.description,
-      "icon": self.icon,
-      "thumbnail": self.thumbnail,
+      "icon": get_public_link(self.icon) if not '://' in self.icon else self.icon,
+      "thumbnail": get_public_link(self.thumbnail) if not '://' in self.thumbnail else self.thumbnail,
       "settings": self.settings,
-      "rwr_id": self.rwr_id,
-      "owner_id": self.__get_owner(deep),
-      "workspace_id": self.workspace_id,
+      "rwr": self.__get_rwr(deep),
+      "owner": self.__get_owner(deep),
+      "workspace": self.__get_workspace(deep),
       "archived": self.archived,
       "millistamp": self.millistamp
     }
@@ -230,7 +242,7 @@ class List(db.Model):
     return {
       "id": self.id,
       "title": self.title,
-      "icon": self.icon,
+      "icon": get_public_link(self.icon) if not '://' in self.icon else self.icon,
       "settings": self.settings,
       "rwr_id": self.rwr_id,
       "board_id": self.board_id,
