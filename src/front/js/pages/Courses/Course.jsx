@@ -33,7 +33,12 @@ const Course = () => {
           <div className="card mb-3" style={{ minWidth: '540px' }}>
             <div className="row g-0">
               <div className="col-md-4">
-                <img src={store.media} className="img-fluid rounded-start" alt="Course thumbnail" />
+              <img
+                  src={course.titleUrlMedia}
+                  className="img-fluid rounded-start"
+                  alt="Course thumbnail"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
               <div className="col-md-8">
                 <div className="card-body">

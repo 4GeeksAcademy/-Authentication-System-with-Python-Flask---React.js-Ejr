@@ -62,79 +62,45 @@ export const TeacherDashboard = () => {
 
 
     return (
-        <div>
-            <div className='row' >
+        <div className="row">
+        <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">CLICK</button>
 
-                <div className='col-3 border border-secondary text-center'>
-                    <div className='text-center my-3 d-flex align-items-center justify-content-center'>
-
-                        <div className='fs-4' onClick={handleHome} style={{ cursor: "pointer" }}>
-                            <FaCircleArrowLeft />
-                        </div>
-                        <div>
-                            <h3 className='text-center d-inline mx-2'>Welcome!</h3>
-                        </div>
+        <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div className="offcanvas-header">
+                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-body">
+                <div className="text-center">
+                    <p>Dashboard</p>
+                    <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
+                        <FaCircleArrowLeft />
+                        <h1>Welcome!</h1>
+                        <h5>Manager</h5>
                     </div>
-                    <div>
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleProfile}>Profile</button>
-                        </div>
-                        
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyCourses}>My courses</button>
-                        </div>
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyStudents} >My students</button>
-                        </div>
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyFiles} >My files</button>
-                        </div>
-
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyPayment}>Payment history</button>
-
-                        </div>
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleSettings}>Settings</button>
-
-                        </div>
-                        <div>
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>Certificate</button>
-                        </div>
-                        <div>
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handlePostCourse}>Post course</button>
-                        </div>
-                        <div>
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleQuizzes}>Quizz</button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className='col border border-secondary d-flex justify-content-center align-items-center'>
-                    {
-                        (buttonSelected)
-                            ? <div className="col-9">
-                                {buttonSelected}
-                            </div>
-                            : <div>
-                                <h1>Contenido de Bienvenida</h1>
-                            </div>
-                    }
-
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleProfile}>Profile</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>My courses</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyStudents}>My students</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyFiles}>My files</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyPayment}>Payment history</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleSettings}>Settings</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handlePDF}>Certificate</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handlePostCourse}>Post course</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleQuizzes}>Quizz</button>
                 </div>
             </div>
         </div>
+
+        <div className="col border border-secondary d-flex justify-content-center align-items-center">
+            {buttonSelected ? (
+                <div className="col-9">
+                    {buttonSelected}
+                </div>
+            ) : (
+                <div>
+                    <h1>Contenido de Bienvenida</h1>
+                </div>
+            )}
+        </div>
+    </div>
     );
 };
