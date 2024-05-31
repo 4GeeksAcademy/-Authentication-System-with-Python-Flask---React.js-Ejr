@@ -63,7 +63,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							password: password
 						})
 					});
+					let data = await response.json()
 					if (response.status === 201) {
+						localStorage.setItem("token", data.access_token);
 						return "success";
 					} else if (response.status === 409) {
 						return "email_exist";
