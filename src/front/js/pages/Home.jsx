@@ -19,7 +19,6 @@ const Home = () => {
       </header>
       <div className={styles.content}>
         <Benefits />
-        <Plans />
         <PricingPlans />
         <Footer />
 
