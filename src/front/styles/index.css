@@ -175,12 +175,6 @@ body{
     border-top-right-radius: 1.25rem;
 }
 
-#favorite-btn-carousel  {
-    z-index: 99;
-    right: 10px;
-    top: 10px;
-}
-
 #details-carousel {
     z-index: 0;
 }

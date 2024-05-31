@@ -1,8 +1,24 @@
-import React from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext.js";
 
 export const CardVehicles = ({ vehicle }) => {
+    const { store, actions } = useContext(Context);
+    const [isFavorite, setIsFavorite] = useState(false);
     const token = localStorage.getItem("token");
+
+    const addOrRemove = async () => {
+        if (isFavorite) {
+            await actions.removeFav(vehicle.id);
+        } else {
+            await actions.addFav(vehicle.id);
+        }
+    }
+
+   useEffect(() => {
+        setIsFavorite(store.favorites.some((favorite) => favorite.id == vehicle.id));
+    }, [store.favorites]);
+
     return (
         <div className="vehiculo card col-md-4" style={{ width: "22rem", height: "27rem" }}>
             <div>
@@ -16,11 +32,16 @@ export const CardVehicles = ({ vehicle }) => {
                 <p className="card-text fs-5 mb-3"><strong>Precio:</strong> {vehicle.precio} €</p>
             </div>
                 {token ?
-                    <div className="d-flex justify-content-end mb-5 me-4">
+                    <div className="d-flex justify-content-between mx-3">
                         <Link to={`/details/${vehicle.id}`}>
-                            <button className="btn-success btn-lg border-2 rounded-4"><strong>Más Detalles</strong></button>
+                            <button className="btn-success btn-lg border-2 rounded-4 mb-3"><strong>Más Detalles</strong></button>
                         </Link>
+                        <div className="me-2">
+                            <button className="corazon btn btn-outline-success btn-lg border-2 rounded-4" onClick={addOrRemove}>
+                                <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
+                            </button>
                         </div>
+                    </div>
                     : null
                 }
         </div>
