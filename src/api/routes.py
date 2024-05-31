@@ -720,8 +720,8 @@ def post_courses():
         if existing_course:
             return jsonify({"Error":"Title already exists."}), 409
         
-        current_date = datetime.now().strftime('%Y-%m-%d')
-        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date, title_Teacher=title_Teacher, date_expiration=date_expiration, title_url_media=title_url_media)
+        current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date_time, title_Teacher=title_Teacher, date_expiration=date_expiration, title_url_media=title_url_media)
         db.session.add(course)
         db.session.commit()
 
@@ -810,8 +810,8 @@ def post_module():
         if existing_module:
             return jsonify({"Error": "Modules already exists."}), 404
 
-        current_date = datetime.now().strftime('%Y-%m-%d')
-        module = Modules(course_id=course_id, description_content=description_content, url_video=url_video, title=title, video_id=video_id, image_id=image_id, date_create=current_date, total_video=total_video, token_module=token_module )
+        current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        module = Modules(course_id=course_id, description_content=description_content, url_video=url_video, title=title, video_id=video_id, image_id=image_id, date_create=current_date_time, total_video=total_video, token_module=token_module )
         db.session.add(module)
         db.session.commit()
         return jsonify({"message": "Module created successfully", "Module": module.serialize()}), 201
@@ -849,7 +849,7 @@ def delete_module(module_id):
 
 
 #-----------------------PAYMENT------------------------#
-@api.route('/payment/courses', methods=['POST', 'GET'])
+@api.route('/payment/courses', methods=['POST'])
 def create_payment_course():
     try:
         data = request.get_json()
@@ -858,17 +858,20 @@ def create_payment_course():
             title_course=data.get('titleCourse'),
             pad_amount=data.get('padAmount'),
             type_payment=data.get('typePayment'),
+            user_id=data.get('userId'),
             course_id=data.get('courseId'),
             manager_id=1
         )
         db.session.add(new_payment)
         db.session.commit()
 
-        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.id}), 201
+        return jsonify({"message": "Payment for course created successfully", "payment": new_payment}), 201
     
     except Exception as err:
         return jsonify({"Error": f"Error creating payment for course: {str(err)}"}), 500
 
+
+@api.route('/payment/courses', methods=['GET'])
 def get_all_payments_courses():
     try:
         payments = Payment.query.all()
@@ -876,10 +879,53 @@ def get_all_payments_courses():
         return jsonify({"payments": serialized_payments}), 200
     
     except Exception as err:
-        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500   
-    
+        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500 
 
-""" @api.route('/payment/courses', methods=['GET']) """
+
+@api.route('/payment/courses/<int:pay_id>', methods=['PUT'])
+def put_payment(pay_id):
+    try:
+
+        title_course = request.json.get('titleCourse')
+        pad_amount = request.json.get('padAmount')
+        type_payment = request.json.get('typePayment')
+        user_id = request.json.get('userId')
+        course_id = request.json.get('courseId')
+        manager_id = request.json.get('managerId')
+
+        if not pay_id:
+            return jsonify({"Error": "Payment is required"}), 400
+        
+        payment = Payment.query.get(pay_id)
+        if not payment:
+            return jsonify({"Error": "Payment not found"}), 404
+        
+        payment.title_course = title_course
+        payment.pad_amount = pad_amount
+        payment.type_payment = type_payment
+        payment.user_id = user_id
+        payment.course_id = course_id
+        payment.manager_id = manager_id
+        
+        db.session.commit()
+
+        return jsonify({"message":  f"User with ID {payment.id} updated successfully", "Payment": payment.serialize()}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in payment update: " + str(err)}), 500 
+
+
+@api.route('/payment/courses/<int:pay_id>', methods=['DELETE'])
+def delete_payment(pay_id):
+    try:
+        payment = Payment.query.get(pay_id)
+        if not payment:
+            return jsonify({"Error": "Payment not found"}), 404
+        db.session.delete(payment)
+        db.session.commit()
+        return jsonify({"message": "Payment deleted successfully"}), 200
+    except Exception as err:
+        return jsonify({"Error": "Error deleting payment", "details": str(err)}), 500
 
 
 
@@ -1007,11 +1053,11 @@ def add_course_to_trolley():
             return jsonify({"Error": "Course already exists in the trolley"}), 409
         
        # Create a new trolley entry
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         new_trolley = Trolley(
             title_course=title_course,
             price=price,
-            date=current_date,
+            date=current_date_time,
             course_id=course_id,
             user_id=user_id
         )
@@ -1023,7 +1069,6 @@ def add_course_to_trolley():
     except Exception as e:
         return jsonify({"Error": "An error occurred", "details": str(e)}), 500
     
-
 @api.route('/trolley/courses')
 def get_trolley():
     try:
@@ -1035,7 +1080,6 @@ def get_trolley():
         return jsonify({"Error": "An error occurred while fetching trolleys", "error_details": str(e)}), 500
     
 @api.route('/view/trolley/<int:trolley_id>', methods=['DELETE'])
-
 def delete_trolley(trolley_id):
     try:
         trolley = Trolley.query.get(trolley_id)
@@ -1071,13 +1115,13 @@ def add_order_to_trolley():
         if not user:
             return jsonify({"Error": "User ID does not exist"}), 404 """
         
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         new_order = Orders(
             user_id=user_id,
             title_order=title_order,
             price=price,
             total=total,
-            date=current_date
+            date=current_date_time
         )
         # Verificación de existencia del título de la orden en la base de datos
         existing_order = Orders.query.filter_by(title_order=title_order).first()
@@ -1170,7 +1214,7 @@ def post_category():
         if not title_category or not sub_category:
             return jsonify({"Error": "titleCategory and subCategory are required"}), 400
         
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         new_category = Category(
             title_category=title_category,
             sub_category=sub_category,
@@ -1180,7 +1224,7 @@ def post_category():
             user_id=user_id,
             manager_id=manager_id,
             teacher_id=teacher_id,
-            create_date=current_date
+            create_date=current_date_time
         )
 
         db.session.add(new_category)

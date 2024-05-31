@@ -17,6 +17,8 @@ import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
 import { GetQuizzes } from './GetQuizzes.jsx';
+import { CreatePayment } from './CreatePayment.jsx';
+import { GetPayment } from './GetPayment.jsx';
 
 
 
@@ -27,6 +29,15 @@ export const ManagerDashboard = () => {
 
     const handleCreateCourse = () => {
         setButtonSelected(<PostCourseM />)
+    }
+
+    const handleGetPayment = () => {
+        setButtonSelected(<GetPayment />)
+        actions.getPayments()
+    }
+
+    const handleCreatePayment = () => {
+        setButtonSelected(<CreatePayment />)
     }
 
     const handleUpdateCourse = () => {
@@ -105,21 +116,27 @@ export const ManagerDashboard = () => {
                             <h1>Welcome!</h1>
                             <h5>Manager</h5>
                         </div>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreatePayment}>Create Payment</button>
+
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>Create Courses</button>
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyModule}>Create Modules</button>
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>Create Quizzes</button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetQuizzes}>View Quizzes</button>
+                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleCreateCategory}>Create Category</button>
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>Update Courses</button>
 
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetQuizzes}>View Quizzes</button>
+
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetPayment}>View Payment</button>
+                        
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>View Courses</button>
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>Profile</button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments}>Payments </button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments} disabled>Sin datos </button>
 
                         <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>Teachers</button>
 
@@ -129,7 +146,6 @@ export const ManagerDashboard = () => {
 
                         <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>Certificate</button>
 
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleCreateCategory}>Create Category</button>
                     </div>
                 </div>
             </div>

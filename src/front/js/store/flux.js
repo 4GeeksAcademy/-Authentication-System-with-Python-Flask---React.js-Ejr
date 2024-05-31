@@ -145,6 +145,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getCategory()
             await getActions().getModules()
             await getActions().getQuizzes()
+            await getActions().getPayments()
+
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
@@ -1046,7 +1048,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
-
+      
       getPayments: async () => {
         const store = getStore();
         getActions().updateMsgError("");
@@ -1076,7 +1078,82 @@ const getState = ({ getStore, getActions, setStore }) => {
         } finally {
           getActions().spinner(false);
         }
-      }, 
+      },
+      
+      updatePayment: async (dataUpdate, payId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+
+          const url = process.env.BACKEND_URL + "/api/payment/courses/" + payId;
+          const respUpdatePayment = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataUpdate),
+          })
+
+          if (!respUpdatePayment.ok) {
+            const errorData = await respUpdatePayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al Update"
+            )
+          }
+
+          const dataUpdatePayment = await respUpdatePayment.json()
+          setStore({ ...store, msg2: dataUpdatePayment.message })
+
+          await getActions().getUser();
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      deletePayment: async (payId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+
+          const url = process.env.BACKEND_URL + "/api/payment/courses/" + payId;
+          const respDelPayment = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+
+
+          if (!respDelPayment.ok) {
+            const errorData = await respDelPayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al Delete"
+            );
+          }
+
+
+          const dataDelPayment = await respDelPayment.json();
+          setStore({ ...store, msg2: dataDelPayment.message });
+
+          await getActions().getPayments();
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      }
        
     }
   }
