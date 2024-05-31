@@ -1,23 +1,20 @@
 /* Home.module.css */
 .homeContainer {
-  min-height: 100vh; /* Establece una altura mínima para el contenedor principal */
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
 }
 
-.sectionSpacing {
-  margin-bottom: 2rem; /* Ajusta el valor según el espacio deseado entre secciones */
-}
+
 
 .pricingContainer {
-  flex-grow: 1; /* Permite que el contenedor de precios crezca y ocupe el espacio restante */
-  overflow-y: auto; /* Agrega un desplazamiento vertical si el contenido es demasiado largo */
+  flex-grow: 1; 
+  overflow-y: auto; 
 }
 
-/* Resto de tus estilos CSS existentes */
 .header {
   position: relative; 
-  height: 750px;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;

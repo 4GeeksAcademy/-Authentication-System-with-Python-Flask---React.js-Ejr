@@ -17,7 +17,6 @@ const Home = () => {
   return (
     <div className={styles.homeContainer}>
       <Navbar />
-      {/* Utiliza el componente MainSection aquí */}
       <MainSection
         title="Welcome to MOMENTUM 360"
         subtitle="The best choice for your gym"

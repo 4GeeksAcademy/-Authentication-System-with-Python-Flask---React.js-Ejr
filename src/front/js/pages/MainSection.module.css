@@ -8,17 +8,16 @@
     align-items: center;
     text-align: center;
     color: white;
+    z-index: 900;
 }
 
 .content {
     max-width: 800px;
-    padding: 0 20px; /* Añade un poco de espacio en los lados */
 }
 
 .title {
     font-size: 3.5rem; /* Aumenta el tamaño del título */
     font-weight: bold;
-    margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Agrega un efecto de sombra al texto */
 }
 

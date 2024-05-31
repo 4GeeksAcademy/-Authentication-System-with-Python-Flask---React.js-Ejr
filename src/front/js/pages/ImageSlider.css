@@ -8,9 +8,7 @@
   display: flex; /* Para centrar verticalmente */
   justify-content: center; /* Para centrar horizontalmente */
   align-items: center; /* Para centrar verticalmente */
-  top: 50px; /* Ajusta la posición hacia arriba */
   min-height: 100vh; /* Establece una altura mínima del 100% del viewport */
-  padding-top: 20px; /* Ajusta el relleno superior según sea necesario */
 }
 
 .slide {
@@ -38,38 +36,43 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1; /* Asegura que la imagen esté detrás del texto */
-  opacity: 0.8; /* Ajusta la opacidad de la imagen */
-  background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad del color de fondo de la imagen */
+  z-index: -1; 
+  opacity: 0.5; 
+  background-color: rgba(0, 0, 0, 0.5); 
 }
 .slide-content {
   position: relative;
   z-index: 1;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro */
-  max-width: 800px; /* Añade un ancho máximo */
-  text-align: center; /* Centra el texto horizontalmente */
+  background-color: rgba(0, 0, 0, 0.7); 
+  max-width: 800px; 
+  text-align: center; 
 }
 
 .slide-title {
   font-size: 70px;
   font-weight: bold;
-  margin-bottom: 10px; /* Espacio entre el título y la descripción */
-  color: #ff0000; /* Cambia el color del título a rojo */
+  margin-bottom: 10px; 
+  color: #cf1e1e; 
 }
 
 .slide-description {
-  font-size: 24px;
-  margin-bottom: 10px; /* Espacio entre la descripción y los detalles */
+  font-size: 30px;
+  font-weight: bold;
+  color:rgb(182, 177, 170);
+  margin-bottom: 10px; 
 }
 
 .slide-details {
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 25px;
+  line-height: 2.0;
+  text-align: center;
 }
 
-/* Resto del código CSS */
-
+.slide-description, .slide-details {
+  max-width: 80%;
+  margin: 10px auto;
+}
 .slider-controls {
   position: absolute;
   bottom: 20px;
