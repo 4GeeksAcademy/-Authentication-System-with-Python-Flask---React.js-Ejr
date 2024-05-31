@@ -1,0 +1,4 @@
+/* just used to join all in one so we only need to import this one in app.js */
+@import url("./_styles.andrei.css");
+@import url("./_styles.miguel.css");
+@import url("./_styles.sopze.css");

@@ -1,0 +1,64 @@
+@layer components {
+
+  .k--board-toolbar {
+    @apply flex border-b border-zinc-800 
+  }
+
+  .k--board-sidepanel {
+    @apply flex border-l border-zinc-800 text-zinc-300;
+
+/* 
+    & .k--sidepanel-handles {
+      @apply flex flex-col w-5 h-full text-xl;
+
+      & .k--sidepanel-resizer { 
+        @apply flex flex-col h-full cursor-w-resize; 
+        & i { @apply mx-2 my-auto }
+      }
+    }
+
+    & .k--sidepanel-body {
+
+    } */
+  }
+
+  .k--boardpanels-btn {
+    @apply text-zinc-300 hover:text-zinc-100;
+  }
+
+  .k--boardpanels-details {
+    & > summary { @apply text-zinc-300 }
+    &:hover > summary { @apply text-zinc-100 }
+  }
+
+  .k--boardpanels-btn-discrete {
+    @apply text-zinc-700 hover:text-zinc-400;
+  }
+
+/* DEVTOOLS */
+
+  .devtools-btn {
+    @apply bg-slate-600 hover:bg-slate-500 px-3 py-0.5 rounded-md
+  }
+
+  .devtools-btn.active {
+    @apply bg-orange-600 hover:bg-orange-500 text-black 
+  }
+
+  .devtools-corner-btn {
+    @apply bg-gray-800 hover:bg-gray-600 w-10 aspect-4/3 border-2 border-gray-700
+  }
+
+}
+
+@layer utilities {
+
+  .k--board-text-title {
+    @apply text-zinc-400
+  }
+  
+  .k--bg-boardpanels {
+    @apply bg-zinc-900 bg-opacity-70 backdrop-blur-lg border-zinc-800 
+  }
+
+}

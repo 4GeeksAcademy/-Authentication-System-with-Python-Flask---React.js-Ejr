@@ -1,7 +1,17 @@
 {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false,
+    "files.autoSave": "off",
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
-    }
+    },
+    "files.associations": {
+    "*.tss": "tailwindcss"
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "editor.codeActionsOnSave": {
+        
+    },
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
+
+    
 }

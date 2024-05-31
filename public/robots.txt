@@ -1,0 +1,21 @@
+# here you write the paths that you dont want robots to index (like search-engines or when people share a link)
+# these are examples, of course
+User-agent: *
+
+Disallow: /admin/*
+
+Disallow: /registry/*
+Disallow: /workspace/*
+Disallow: /project/*
+Disallow: /board/*
+Disallow: /team/*
+Disallow: /user/*
+Allow: /*/public/*
+
+User-agent: Twitterbot
+Allow: /workspace
+Allow: /project
+
+User-agent: facebookexternalhit
+Allow: /workspace
+Allow: /project
