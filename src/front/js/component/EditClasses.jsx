@@ -84,7 +84,7 @@ const EditClasses = ({ classData, onClose }) => {
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label className={styles.label}>Nombre de la clase</Form.Label>
+                            <Form.Label className={styles.label}>class name</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Nombre"
@@ -98,7 +98,7 @@ const EditClasses = ({ classData, onClose }) => {
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label className={styles.label}>Descripción</Form.Label>
+                            <Form.Label className={styles.label}>Description</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Descripción"
@@ -114,7 +114,7 @@ const EditClasses = ({ classData, onClose }) => {
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label className={styles.label}>Fecha y hora de inicio</Form.Label>
+                            <Form.Label className={styles.label}>Start date and time</Form.Label>
                             <Form.Control
                                 type="datetime-local"
                                 name="dateTime_class"
@@ -127,7 +127,7 @@ const EditClasses = ({ classData, onClose }) => {
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label className={styles.label}>Hora de inicio</Form.Label>
+                            <Form.Label className={styles.label}>Start time</Form.Label>
                             <Form.Control
                                 type="time"
                                 name="start_time"
@@ -142,7 +142,7 @@ const EditClasses = ({ classData, onClose }) => {
                 <Row className="mb-3">
                     <Col>
                         <Form.Group>
-                            <Form.Label className={styles.label}>Duración (minutos)</Form.Label>
+                            <Form.Label className={styles.label}>Duration (minutes)</Form.Label>
                             <Form.Control
                                 type="number"
                                 name="duration_minutes"
@@ -155,7 +155,7 @@ const EditClasses = ({ classData, onClose }) => {
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label className={styles.label}>Plazas disponibles</Form.Label>
+                            <Form.Label className={styles.label}>Places available</Form.Label>
                             <Form.Control
                                 type="number"
                                 name="available_slots"
@@ -170,17 +170,17 @@ const EditClasses = ({ classData, onClose }) => {
                 <Row className="d-flex justify-content-around mt-3">
                     <Col xs="auto">
                         <Button variant="primary" type="button" onClick={handleSubmit} className={`btn-secondary mx-2 ${styles.button}`}>
-                            Aceptar cambios
+                        Accept changes
                         </Button>
                     </Col>
                     <Col xs="auto">
                         <Button variant="danger" type="button" onClick={handleConfirmCancel} className={`mx-2 ${styles.button}`}>
-                            Cancelar Clase
+                        Cancel Class
                         </Button>
                     </Col>
                     <Col xs="auto">
                         <Button variant="secondary" type="button" onClick={onClose} className={`mx-2 ${styles.button}`}>
-                            Volver
+                        Return
                         </Button>
                     </Col>
                 </Row>
@@ -189,17 +189,17 @@ const EditClasses = ({ classData, onClose }) => {
             <Modal show={showConfirmModal} onHide={handleCloseConfirmModal} centered>
                 <div className={styles.modalAlert}>
                 <Modal.Header >
-                    <Modal.Title>Confirmar Cancelación</Modal.Title>
+                    <Modal.Title>Confirm Cancellation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>¿Estás seguro de que deseas cancelar esta clase?</p>
+                    <p>Are you sure you want to cancel this class?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseConfirmModal}>
                         No
                     </Button>
                     <Button variant="danger" onClick={handleConfirmCancelClass}>
-                        Sí, Cancelar Clase
+                    Yes, Cancel Class
                     </Button>
                 </Modal.Footer>
                 </div>

@@ -22,8 +22,8 @@ import Singup from "./component/Singup.jsx";
 import SingupMaster from "./component/SingupMaster.jsx";
 import Calendar from "./component/Calendar.jsx";
 import PrivateCalendar from "./component/PrivateCalendar.jsx";
-import UserDataDetail from "./pages/UserDataDetail.jsx"
-import UserBooking from "./pages/UserBooking.jsx"
+import UserDataDetail from "./component/UserDataDetail.jsx"
+import UserBooking from "./component/UserBooking.jsx"
 import CreateClasses from "./component/CreateClasses.jsx";
 import ModulePage from "./pages/ModulePage.jsx";
 import EditProfile from "./component/EditProfile.jsx";
@@ -45,7 +45,7 @@ import PageNormalUser from "./pages/PageNormalUser.jsx";
 import MembershipManager from "./component/MembershipManager.jsx";
 
 import ClassesView from "./component/ClassesView.jsx";
-import EditClasses from "./pages/EditClasses.jsx"
+import EditClasses from "./component/EditClasses.jsx"
 
 import ExecutePayment from "./component/ExecutePayment.jsx";
 import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
@@ -56,6 +56,7 @@ import ResetPassword from "./component/ResetPassword.jsx";
 
 import ClassFrequencyChart from "./component/ClassFrequencyChart.jsx";
 
+import Sidebar from "./component/Sidebar.jsx";
 
 //create your first component
 const Layout = () => {
@@ -70,6 +71,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar /> {/* Renderiza el componente Navbar */}
+                    <Sidebar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />

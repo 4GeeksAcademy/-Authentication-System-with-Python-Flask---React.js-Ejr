@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 import PrivateCalendar from "../component/PrivateCalendar.jsx";
 import CreateClasses from "../component/CreateClasses.jsx";
 import MyCalendar from "../component/Calendar.jsx";
-import UserBooking from "./UserBooking.jsx";
+import UserBooking from "../component/UserBooking.jsx";
 import PrivatePageUser from "./PrivatePageUser.jsx";
 import Breadcrumbs from "../component/Breadcrumb.jsx";
 import SingupMaster from "../component/SingupMaster.jsx";

@@ -1,15 +1,25 @@
 .buttonBuy {
-    background-color: #5D7266; /* Ajustado a la paleta de colores */
-    color: white;
+    background-color: transparent;
+    color: #5D7266;
     border: none;
-    padding: 5px;
-    width: 100%;
+    padding: 10px 20px;
     text-align: center;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.buttonBuy:hover {
+    color: #e4e73f;
+    background-color: #a8a8a7;
+}
+
+.buttonBuy:active {
+    background-color: #3C403F;
+    color: #937863;
+}
+
 
 .modalHeader {
     background-color: #E6E6E9; /* Ajustado a la paleta de colores */

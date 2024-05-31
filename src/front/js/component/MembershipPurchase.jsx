@@ -129,7 +129,7 @@ const MembershipPurchase = () => {
 
     return (
         <>
-            <Button className={styles.buttonBuy} onClick={handleBuyClick}>Buy Membership</Button> {/* Botón para iniciar el proceso de compra */}
+            <Button className={styles.buttonBuy} onClick={handleBuyClick} title='Buy Membership<'><i class="fa-solid fa-cart-shopping"></i></Button> {/* Botón para iniciar el proceso de compra */}
             {showSelectionModal && (
                 <Modal show={true} onHide={() => setShowSelectionModal(false)} className={styles.modal}>
                     <Modal.Header closeButton className={styles.modalHeader}>
