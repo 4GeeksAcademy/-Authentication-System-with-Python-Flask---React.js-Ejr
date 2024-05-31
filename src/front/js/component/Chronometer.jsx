@@ -12,7 +12,7 @@ const TabataTimer = () => {
   const [workMinutes, setWorkMinutes] = useState(0);
   const [workSeconds, setWorkSeconds] = useState(20);
   const [restSeconds, setRestSeconds] = useState(10);
-  const [totalRounds, setTotalRounds] = useState(8); 
+  const [totalRounds, setTotalRounds] = useState(8);
 
   // Actualización del tiempo cada segundo cuando el cronómetro está corriendo
   useEffect(() => {
@@ -93,7 +93,7 @@ const TabataTimer = () => {
     textAlign: 'center'
   };
 
- 
+
 
   const btnStyle = {
     cursor: 'pointer',
@@ -150,14 +150,23 @@ const TabataTimer = () => {
     <div style={cuerpoStyle}>
       <div style={marcoStyle}>
         <h1>Tabata Timer</h1>
+        <div className="app" style={appStyle}>
+        <div className='time-circle' style={timeCircleStyle}>
+          <div className="time">
+            {formatTime(time)}
+          </div>
+          </div>
+        </div>
         <div style={inputContainerStyle}>
           <div style={inputStyle}>
             <label>Duración de Trabajo: </label>
-            <button style={buttonStyle} onClick={() => decrement(setWorkMinutes)}>-</button>
+
             <span>{workMinutes} min</span>
+            <button style={buttonStyle} onClick={() => decrement(setWorkMinutes)}>-</button>
             <button style={buttonStyle} onClick={() => increment(setWorkMinutes)}>+</button>
-            <button style={buttonStyle} onClick={() => decrement(setWorkSeconds)}>-</button>
+
             <span>{workSeconds} sec</span>
+            <button style={buttonStyle} onClick={() => decrement(setWorkSeconds)}>-</button>
             <button style={buttonStyle} onClick={() => increment(setWorkSeconds)}>+</button>
           </div>
           <div style={inputStyle}>
@@ -181,11 +190,7 @@ const TabataTimer = () => {
         </div>
 
         <div className="app" style={appStyle}>
-          <div className='time-circle' style={timeCircleStyle}>
-            <div className="time">
-              {formatTime(time)}
-            </div>
-          </div>
+
           <div className="buttons" style={buttonsStyle}>
             <button className="play-pause" style={btnStyle} onClick={handleStart}>
               <i className="fa fa-play fa-2x" />
