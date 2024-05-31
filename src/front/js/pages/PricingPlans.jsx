@@ -9,48 +9,48 @@ const PricingContainer = () => {
                 <span className={styles.yourPlan}>YOUR PLAN</span>
             </h2>
             <div className={styles.pricingContainer}>
-                {/* Plan Básico */}
+                {/* Basic Plan */}
                 <div className={`${styles.pricingCard} ${styles.pricingCardBasic}`}>
-                    <h4 className={styles.pricingCardTitle}>Plan Básico</h4>
+                    <h4 className={styles.pricingCardTitle}>Basic Plan</h4>
                     <div className={styles.pricingCardPrice}>$9.99</div>
                     <div className={styles.pricingCardDetails}>
                         <ul>
-                            <li>Gestión de miembros básica.</li>
-                            <li>Registro de asistencia.</li>
-                            <li>Programación de clases.</li>
+                            <li>Basic member management.</li>
+                            <li>Attendance tracking.</li>
+                            <li>Class scheduling.</li>
                         </ul>
                     </div>
-                    <a className={styles.enroll} href="#">Elegir Plan Básico</a>
+                    <a className={styles.enroll} href="#">Choose Basic Plan</a>
                 </div>
 
-                {/* Plan Estándar */}
+                {/* Standard Plan */}
                 <div className={`${styles.pricingCard} ${styles.pricingCardStandard}`}>
-                    <h4 className={styles.pricingCardTitle}>Plan Estándar</h4>
+                    <h4 className={styles.pricingCardTitle}>Standard Plan</h4>
                     <div className={styles.pricingCardPrice}>$19.99</div>
                     <div className={styles.pricingCardDetails}>
                         <ul>
-                            <li>Todas las características del Plan Básico.</li>
-                            <li>Seguimiento del progreso del entrenamiento.</li>
-                            <li>Acceso a informes y análisis de datos.</li>
-                            <li>Integración con dispositivos de seguimiento de fitness.</li>
+                            <li>All features of Basic Plan.</li>
+                            <li>Training progress tracking.</li>
+                            <li>Access to reports and data analysis.</li>
+                            <li>Integration with fitness tracking devices.</li>
                         </ul>
                     </div>
-                    <a className={styles.enroll} href="#">Elegir Plan Estándar</a>
+                    <a className={styles.enroll} href="#">Choose Standard Plan</a>
                 </div>
 
-                {/* Plan Premium */}
+                {/* Premium Plan */}
                 <div className={`${styles.pricingCard} ${styles.pricingCardPremium}`}>
-                    <h4 className={styles.pricingCardTitle}>Plan Premium</h4>
+                    <h4 className={styles.pricingCardTitle}>Premium Plan</h4>
                     <div className={styles.pricingCardPrice}>$29.99</div>
                     <div className={styles.pricingCardDetails}>
                         <ul>
-                            <li>Todas las características del Plan Estándar.</li>
-                            <li>Soporte prioritario 24/7.</li>
-                            <li>Personalización avanzada.</li>
-                            <li>Acceso exclusivo a nuevas funciones.</li>
+                            <li>All features of Standard Plan.</li>
+                            <li>24/7 priority support.</li>
+                            <li>Advanced customization.</li>
+                            <li>Exclusive access to new features.</li>
                         </ul>
                     </div>
-                    <a className={styles.enroll} href="#">Elegir Plan Premium</a>
+                    <a className={styles.enroll} href="#">Choose Premium Plan</a>
                 </div>
             </div>
         </div>

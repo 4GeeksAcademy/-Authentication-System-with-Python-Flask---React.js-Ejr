@@ -5,7 +5,7 @@ import styles from "./NavbarHome.module.css";
 const menuItems = [
     { id: "/", name: "Home" },
     { id: "/imageSlider", name: "About Us" },
-    { id: "/pricingplans", name: "Pricing Plans" },
+    { id: "/PricingPlans", name: "Pricing Plans" },
     { id: "/calendar", name: "Calendar" },
     { id: "/login", name: "Login" },
 ];

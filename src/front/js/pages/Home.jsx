@@ -9,9 +9,8 @@ import Plans from './Plans.jsx';
 import PricingPlans from './PricingPlans.jsx';
 import Footer from "../component/Footer.jsx";
 import ImageSlider from "./ImageSlider.jsx";
-
-// Importa el componente MainSection
 import MainSection from "./MainSection.jsx";
+import ContactForm from "./ContactForm.jsx";
 
 const Home = () => {
   return (
@@ -21,17 +20,20 @@ const Home = () => {
         title="Welcome to MOMENTUM 360"
         subtitle="The best choice for your gym"
         buttonText="Learn More"
-        buttonLink="/about" // Aquí coloca el enlace correcto
+        buttonLink="/about"
       />
       <div className={styles.content}>
         <ImageSlider />
         <div className={styles.sectionSpacing}>
           <PricingPlans />
         </div>
+
         <div className={styles.sectionSpacing}>
           <Footer />
         </div>
+
       </div>
+
     </div>
   );
 };
