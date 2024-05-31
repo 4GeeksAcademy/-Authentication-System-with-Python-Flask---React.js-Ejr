@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState,  useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import fortniteImage from '../../img/Fortnite.png';
 import xboxIcon from '../../img/xbox.png';
 import switchIcon from '../../img/switch.png';
+import exit from '../../img/exit.png';
 import playstationIcon from '../../img/playstation.png';
 import pcIcon from '../../img/pc.png';
+import { IoExitOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import '../../styles/RoomDetail.css';
 import RoomDetailsView from '../component/RoomInfoComponent.jsx';
@@ -28,24 +30,63 @@ export const RoomDetail = () => {
     const username = localStorage.getItem('username');
     const userId = parseInt(localStorage.getItem('userId'));
     const token = localStorage.getItem('jwt-token');
+    const [isParticipant, setIsParticipant] = useState(false);
+    const intervalRef = useRef(null);
 
-    useEffect(() => {
-        if (!token) {
-            navigate('/login');
-            return;
-        }
-
-        const fetchData = async () => {
+    const fetchData = async () => {
+        try {
             await actions.fetchRooms();
             const fetchedRoom = store.rooms.find(room => room.room_id === parseInt(roomId));
             setRoom(fetchedRoom);
-            await checkRequestStatus();
-            await fetchComments();
+
+            await Promise.all([
+                checkRequestStatus(),
+                fetchComments(),
+                fetchRequests()
+            ]);
+
+            if (fetchedRoom && fetchedRoom.participants) {
+                const participant = fetchedRoom.participants.some(p => p.participant_id === userId && p.confirmed);
+                setIsParticipant(participant);
+            }
             setLoading(false);
-        };
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+            setLoading(false);
+        }
+    };
+
+    const updateDataPeriodically = async () => {
+        try {
+            await Promise.all([
+                fetchRequests(),
+                fetchComments(),
+                checkRequestStatus()
+            ]);
+        } catch (error) {
+            console.error("Error updating data: ", error);
+        }
+    };
+
+    useEffect(() => {
 
         fetchData();
-    }, [token]);
+
+        intervalRef.current = setInterval(() => {
+            updateDataPeriodically();
+        }, 7000);
+
+        return () => {
+            clearInterval(intervalRef.current);
+        };
+    }, [token, roomId, userId, navigate]);
+
+    useEffect(() => {
+        if (room && room.participants) {
+            const participant = room.participants.some(p => p.participant_id === userId && p.confirmed);
+            setIsParticipant(participant);
+        }
+    }, [room, userId]);
 
     useEffect(() => {
         if (showRequests) {
@@ -226,10 +267,12 @@ export const RoomDetail = () => {
         return requests.filter(request => request.status === 'pending').length;
     };
 
-    const handleToggleView = (view) => {
+    const handleToggleView = (view, fetchRequests = false) => {
         setCurrentView(view);
+        if (fetchRequests) {
+            handleToggleRequests();
+        }
     };
-
     const isHost = room.host_name === username;
     const isParticipantOrHost = isHost || room.participants.some(p => p.participant_id === userId && p.confirmed);
     console.log(isParticipantOrHost)
@@ -242,7 +285,7 @@ export const RoomDetail = () => {
     const endTime = room.end_time || null;
 
     const formattedDateTime = formatDateTime(startDate, startTime, endDate, endTime);
-
+    console.log(requests)
     return (
         <div>
             <div className="back">
@@ -257,6 +300,11 @@ export const RoomDetail = () => {
                             <p>{room.game_name}</p>
                             <p className="text-info fs-6 fw-semibold font-family-Inter m-0">
                                 <FaUser /> {participantsCount}/{room.room_size}
+                                {isParticipant && (
+                                    <button className="exit-button">
+                                        <img src={exit} alt="Exit Room" onClick={handleAbandonRoom} />
+                                    </button>
+                                )}
                             </p>
                         </div>
                         {isHost && (
@@ -280,9 +328,10 @@ export const RoomDetail = () => {
                         )}
                         {currentView === 'participants' && (
                             <ParticipantsView
-                                requests={requests}
-                                handleRequestAction={handleRequestAction}
-                            />
+                            requests={requests}
+                            participants={room.participants} // Aquí pasamos los participantes
+                            handleRequestAction={handleRequestAction}
+                        />
                         )}
                     </div>
                 </div>
