@@ -28,13 +28,13 @@ export const Navbar = () => {
 	}, [store.vehicles]);
 
 	return (
-		<nav className="navbar navbar-light mb-5">
+		<nav className="navbar navbar-light mb-5 d-flex flex-nowrap">
 			<div className="container-fluid mx-2">
 				<div className="d-flex gap-3">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
 					</Link>
-					<h2 className="navbar-text ms-2 mt-3 mb-2 display-4 text-center text-white fs-2"><strong>Friendly Wheels</strong></h2>
+					<h2 className="navbar-text ms-2 me-5 mt-3 mb-2 display-4 text-center text-white fs-2"><strong>Friendly Wheels</strong></h2>
 				</div>
 				{token ?
 					<>

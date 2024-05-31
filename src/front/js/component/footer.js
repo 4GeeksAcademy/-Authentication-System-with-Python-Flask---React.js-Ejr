@@ -13,7 +13,7 @@ export const Footer = () => {
 
 	return (
 		<footer className="footer fs-4 d-flex justify-content-between">
-			<div className="d-flex mt-2 ms-3 mb-2 ps-3">
+			<div className="d-flex mt-2 ms-4 mb-2 ps-3">
 				<img src={logoImageUrl} />
 				<p className=" fs-3 me-4 ms-3 mt-4 text-white">© 2024 Friendly Wheels,Inc</p>
 			</div>
@@ -21,7 +21,7 @@ export const Footer = () => {
 				<Link to="/sobrenosotros" style={linkStyle} onMouseOver={() => setAboutUsHover(true)} onMouseLeave={() => setAboutUsHover(false)}>
 					<div className="me-3 mt-2 fs-3">Sobre Nosotros</div>
 				</Link>
-				<div className="iconos .d-none .d-lg-block .d-xl-none">
+				<div className="iconos d-none d-lg-block d-xl-block">
 					<a className="instagram fs-1" href="https://www.instagram.com/friendlywheels58" target="_blank">
 						<i className="fab fa-instagram me-2" />
 					</a>

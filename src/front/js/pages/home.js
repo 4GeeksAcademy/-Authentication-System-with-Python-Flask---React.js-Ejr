@@ -51,21 +51,13 @@ export const Home = () => {
 			<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
 				<p><strong>¿Buscas o rentas tu coche? Estás en el lugar adecuado</strong></p>
 			</div>
-			<div className="d-flex justify-content-center text-center mt-2 fs-4 text-dark-80">
-				<div className="d-flex me-2 px-3">
-					<FiltroAsientos
-						setFiltroAsientos={setFiltroAsientos}
-					/>
-				</div>
-				<div className="me-5">
-					<FiltroPrecio
-						setFiltroPrecio={setFiltroPrecio}
-					/>
-				</div>
+			<div className="d-flex gap-2 justify-content-center text-center my-3 fs-4 text-dark-80">
+				<FiltroAsientos setFiltroAsientos={setFiltroAsientos} />	
+				<FiltroPrecio setFiltroPrecio={setFiltroPrecio} />
 			</div>
 			<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
-					<div className="row text-dark d-flex justify-content-center">
+					<div className="row text-dark d-flex justify-content-center gap-4">
 						{store.vehicles.filter(filtrarPorAsientos).filter(filtrarPorPrecio).map((vehicle) => {
 							return (
 								<CardVehicles vehicle={vehicle} key={vehicle.id} />
