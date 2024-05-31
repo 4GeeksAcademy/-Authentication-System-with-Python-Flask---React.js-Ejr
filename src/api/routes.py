@@ -1098,8 +1098,7 @@ def add_order_to_trolley():
     except Exception as e:
         return jsonify({"Error": "An error occurred", "error_fetching": str(e)}), 500
 
-
-@api.route('/order/courses', methods=['GET'])
+@api.route('/order/courses', methods=[ 'GET' ])        
 def get_order():
     try:
         orders = Orders.query.all()
@@ -1107,6 +1106,7 @@ def get_order():
         return jsonify(serialized_orders), 200
     except Exception as e:
         return jsonify({"Error": "An error occurred while fetching orders", "error_details": str(e)}), 500
+
 
 
 #----------------------CARGA DE DOCUMENTO------------------------# 

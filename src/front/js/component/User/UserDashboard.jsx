@@ -7,6 +7,7 @@ import { UserProfile } from './UserProfile.jsx';
 import { UserPayment } from './UserPayment.jsx';
 import { Certificate } from './Certificate.jsx';
 import { CoursesContainer } from '../Courses/CoursesContainer.jsx';
+import { HistoryCourses } from './HistoryCourses.jsx';
 
 
 export const UserDashboard = () => {
@@ -31,6 +32,10 @@ export const UserDashboard = () => {
         setButtonSelected(<Certificate />)
     }
 
+    const handleHistoryCourses = () => {
+        setButtonSelected(<HistoryCourses/>)
+    }
+
     const navigate = useNavigate();
 
     function handleHome() {
@@ -53,27 +58,6 @@ export const UserDashboard = () => {
                     </div>
                     <div>
                         
-                        {/* <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyCourses}>My courses</button>
-                        </div>
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyStudents} >My students</button>
-                        </div>
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyFiles} >My files</button>
-                        </div>
-
-
-                        <div className='col-12 w-100'>
-
-                            <button className='btn btn-outline-primary my-2 w-75' onClick={handleMyPayment}>Payment history</button>
-
-                        </div> */}
 
                         <div className='col-12 w-100'>
                             <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>
@@ -93,6 +77,11 @@ export const UserDashboard = () => {
                         <div>
                             <button className="btn btn-outline-primary my-2 w-75" onClick={handleCertificate}>
                                 Certificate
+                            </button>
+                        </div>
+                        <div>
+                            <button className="btn btn-outline-primary my-2 w-75" onClick={handleHistoryCourses}>
+                                History Courses
                             </button>
                         </div>
                     </div>

@@ -17,7 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       category: "",
       modules: "",
       quizzes: "",
-      payment: ""
+      payment: "",
+      order: ""
     },
 
     actions: {
@@ -145,6 +146,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getCategory()
             await getActions().getModules()
             await getActions().getQuizzes()
+            await getActions().getOrders()
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
@@ -1077,6 +1079,77 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       }, 
+
+      createOrders: async (dataOrders) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/order/courses";
+          const respAddOrder = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataOrders),
+          });
+
+          if (!respAddOrder.ok) {
+            const errorData = await respAddOrder.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+
+            await getActions().getOrders()
+
+            throw new Error(
+              errorData.error || "Error in Payment"
+            );
+          }
+
+          const dataAddOrder = await respAddOrder.json();
+          setStore({ ...store, msg2: dataAddOrder.message });
+          console.log(dataAddOrder);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      getOrders: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const url = process.env.BACKEND_URL + "/api/order/courses";
+          const respGetOrder = await fetch(url);
+
+          if (!respGetOrder.ok) {
+            const errorData = await respGetOrder.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in Order");
+          }
+
+          const dataGetOrder= await respGetOrder.json();
+          setStore({
+            ...store,
+            msg: dataGetOrder.message,
+            order: dataGetOrder,
+          });
+          console.log(dataGetOrder);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      }, 
+
        
     }
   }
