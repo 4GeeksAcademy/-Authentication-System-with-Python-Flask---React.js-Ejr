@@ -27,8 +27,8 @@ export const Details = () => {
 
     return (
         <>
-            <div className="d-flex footer-view mt-4">
-                <div id="carouselExample" className="carousel slide w-75 me-4 ms-3 carousel-dark slide">
+            <div className="d-flex justify-content-evenly flex-wrap gap-4 footer-view mt-4">
+                <div id="details-carousel" className="carousel slide w-75 carousel-dark slide">
                     <div id="favorite-btn-carousel" className="position-absolute">
                         <button className="corazon btn btn-outline-success btn-lg" onClick={addOrRemove}>
                             <i className={`fa-heart ${isFavorite ? "fas text-success" : "far"}`}></i>
@@ -36,58 +36,56 @@ export const Details = () => {
                     </div>
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <img src={store.details?.url_img1} style={{ height: "500px", objectFit: "cover" }} className="d-block w-100 ms-5 ps-3 rounded-3" alt="..." />
+                            <img src={store.details?.url_img1} style={{ "max-height": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src={store.details?.url_img2} style={{ height: "500px", objectFit: "cover" }} className="d-block w-100 ms-5 ps-3 rounded-3" alt="..." />
+                            <img src={store.details?.url_img2} style={{ "max-height": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src={store.details?.url_img3} style={{ height: "500px", objectFit: "cover" }} className="d-block w-100 ms-5 ps-3 rounded-3" alt="..." />
+                            <img src={store.details?.url_img3} style={{ "max-height": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
                         </div>
-                        <button className="carousel-control-prev justify-center ms-5" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <button className="carousel-control-prev ms-3" type="button" data-bs-target="#details-carousel" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon bg-success" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
                     </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <button className="carousel-control-next" type="button" data-bs-target="#details-carousel" data-bs-slide="next">
                         <span className="carousel-control-next-icon bg-success" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
                     </button>
                     </div>
                 </div>
                 <div>
+                    <div className= "d-flex text-success mb-4">
+                        <h1 className="me-1"><strong>{store.details.marca_modelo?.toUpperCase()}</strong></h1>
+                    </div>
                     <div>
-                        <div className= "d-flex text-success mb-4">
-                            <h1 className="me-1"><strong>{store.details.marca_modelo?.toUpperCase()}</strong></h1>
+                        <div className="d-flex mb-4">
+                            <h5>
+                                <strong>MATRICULA:</strong> {store.details.matricula?.toUpperCase()} 
+                            </h5>
                         </div>
-                        <div>
-                            <div className="d-flex mb-4">
-                                <h5>
-                                    <strong>MATRICULA:</strong> {store.details.matricula?.toUpperCase()} 
-                                </h5>
-                            </div>
-                            <div className="d-flex mb-4">
-                                <h5>
-                                    <strong>TIPO DE MOTOR:</strong> {store.details.motor}
-                                </h5>
-                            </div>
-                            <div className="d-flex mb-4">
-                                <h5>
-                                    <strong>TIPO DE CAMBIO:</strong> {store.details.tipo_cambio}
-                                </h5>
-                            </div>
-                            <div className="d-flex mb-4">
-                                <h5>
-                                <strong>N° ASIENTOS:</strong> {store.details.asientos}
-                                </h5>
-                            </div>
-                            <div className="d-flex mb-4">
-                                <h5>
-                                    <strong>PRECIO POR DIA:</strong> {store.details.precio} €
-                                </h5>
-                            </div>
+                        <div className="d-flex mb-4">
+                            <h5>
+                                <strong>TIPO DE MOTOR:</strong> {store.details.motor}
+                            </h5>
+                        </div>
+                        <div className="d-flex mb-4">
+                            <h5>
+                                <strong>TIPO DE CAMBIO:</strong> {store.details.tipo_cambio}
+                            </h5>
+                        </div>
+                        <div className="d-flex mb-4">
+                            <h5>
+                            <strong>N° ASIENTOS:</strong> {store.details.asientos}
+                            </h5>
+                        </div>
+                        <div className="d-flex mb-4">
+                            <h5>
+                                <strong>PRECIO POR DIA:</strong> {store.details.precio} €
+                            </h5>
                         </div>
                     </div>
-                    <div className="d-grid gap-2 col-6 mx-auto d-flex mt-4">
+                    <div className="d-grid gap-2 col-6 mx-auto d-flex my-4">
                         <ModalAlquilar
                             vehicle_id={store.details.id}
                             marca_modelo={store.details.marca_modelo}

@@ -36,9 +36,9 @@ export const MisCoches = () => {
                         : (
                             <>
                                 <h2 className="mt-3 mb-4 text-success text-center"><strong>MIS VEHICULOS EN ALQUILER</strong></h2>
-                                <div className="row Map Cards text-dark d-flex justify-content-center">
+                                <div className="row text-dark d-flex gap-4 justify-content-center">
                                     {store.myVehicles.map((vehicle) => (
-                                        <div key={vehicle.id} className="vehiculo card col-md-4 mb-4 me-5" style={{ width: "22rem", height: "27rem"}}>
+                                        <div key={vehicle.id} className="vehiculo card" style={{ width: "22rem", height: "27rem"}}>
                                                 <img className="imagen1" src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
                                             <div className="card-body ms-2 p-2">
                                                 <h3 className="card-title mb-3 text-success mt-3 mb-3"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h3>

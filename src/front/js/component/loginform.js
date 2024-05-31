@@ -36,7 +36,7 @@ export const LoginForm = () => {
     });
 
     return (
-        <div className="contactForm2">
+        <div className="contactForm">
             <h1 className="title text-center pb-4">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">

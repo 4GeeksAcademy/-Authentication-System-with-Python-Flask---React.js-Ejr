@@ -61,7 +61,7 @@ export const AgregarForm = (props) => {
                     : image.array.map((item, index) => (
                         <>
                             <img key={index} alt="uploaded_image"
-                                style={{ width: "320px" }}
+                                style={{ "max-width": "50%" }}
                                 src={item}
                             />
                             <div onClick={() => {

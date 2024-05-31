@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const CardVehicles = ({ vehicle }) => {
     const token = localStorage.getItem("token");
     return (
-        <div className="vehiculo card col-md-4 mb-4 me-5 mt-4" style={{ width: "22rem", height: "27rem" }}>
+        <div className="vehiculo card col-md-4" style={{ width: "22rem", height: "27rem" }}>
             <div>
                 <a className="cardvehicles" href="#">
                     <img className="imagen1" src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
