@@ -1,0 +1,45 @@
+.mainSection {
+    background-image: url('https://wallpapercave.com/wp/wp5559316.jpg'); /* Reemplaza 'ruta/a/la/imagen.jpg' con la ruta de tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.content {
+    max-width: 800px;
+    padding: 0 20px; /* Añade un poco de espacio en los lados */
+}
+
+.title {
+    font-size: 3.5rem; /* Aumenta el tamaño del título */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Agrega un efecto de sombra al texto */
+}
+
+.subtitle {
+    font-size: 1.8rem; /* Aumenta el tamaño del subtítulo */
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Agrega un efecto de sombra al texto */
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px; /* Aumenta el padding del botón */
+    background-color: #FF6347; /* Cambia el color del botón a rojo */
+    color: white;
+    text-decoration: none;
+    border-radius: 30px; /* Hace que el botón tenga bordes redondeados */
+    font-size: 1.4rem; /* Aumenta el tamaño del texto del botón */
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Agrega una sombra al botón */
+}
+
+.button:hover {
+    background-color: #FF5733; /* Cambia el color del botón al pasar el ratón */
+}
