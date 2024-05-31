@@ -1,3 +1,20 @@
+/* Home.module.css */
+.homeContainer {
+  min-height: 100vh; /* Establece una altura mínima para el contenedor principal */
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionSpacing {
+  margin-bottom: 2rem; /* Ajusta el valor según el espacio deseado entre secciones */
+}
+
+.pricingContainer {
+  flex-grow: 1; /* Permite que el contenedor de precios crezca y ocupe el espacio restante */
+  overflow-y: auto; /* Agrega un desplazamiento vertical si el contenido es demasiado largo */
+}
+
+/* Resto de tus estilos CSS existentes */
 .header {
   position: relative; 
   height: 750px;
@@ -14,7 +31,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("https://www.crossfit.com/wp-content/uploads/2023/11/13131232/crossfit-coach-led-fitness-training-adapted-for-you-handstand-hold.jpg");
   background-size: cover;
   filter: blur(5px); 
   z-index: -1; 

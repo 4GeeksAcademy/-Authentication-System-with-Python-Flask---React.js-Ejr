@@ -3,55 +3,55 @@ import styles from './PricingPlans.module.css';
 
 const PricingContainer = () => {
     return (
-        <div className={styles.pricingContainer}>
-            {/* Card 1 */}
-            <div className={`${styles.pricingCard} ${styles.pricingCardBasic}`}>
-                <h4 className={styles.pricingCardTitle}>Basic</h4>
-                <div className={styles.pricingCardPrice}>$9.99</div>
-                <div className={styles.pricingCardDetails}>
-                    <ul>
-                        <li>Feature 1</li>
-                        <li>Feature 2</li>
-                        <li>Feature 3</li>
-                    </ul>
+        <div className={styles.container}>
+            <h2 className={styles.title}>
+                <span className={styles.choose}>CHOOSE</span>{" "}
+                <span className={styles.yourPlan}>YOUR PLAN</span>
+            </h2>
+            <div className={styles.pricingContainer}>
+                {/* Plan Básico */}
+                <div className={`${styles.pricingCard} ${styles.pricingCardBasic}`}>
+                    <h4 className={styles.pricingCardTitle}>Plan Básico</h4>
+                    <div className={styles.pricingCardPrice}>$9.99</div>
+                    <div className={styles.pricingCardDetails}>
+                        <ul>
+                            <li>Gestión de miembros básica.</li>
+                            <li>Registro de asistencia.</li>
+                            <li>Programación de clases.</li>
+                        </ul>
+                    </div>
+                    <a className={styles.enroll} href="#">Elegir Plan Básico</a>
                 </div>
-                <a className={styles.enroll} href="#">Choose Basic</a>
-            </div>
 
-            {/* Card 2 */}
-            <div className={`${styles.pricingCard} ${styles.pricingCardStandard}`}>
-                <h4 className={styles.pricingCardTitle}>Standard</h4>
-                <div className={styles.pricingCardPrice}>$19.99</div>
-                <div className={styles.pricingCardDetails}>
-                    <ul>
-                        <li>Feature 1</li>
-                        <li>Feature 2</li>
-                        <li>Feature 3</li>
-                        <li>Feature 4</li>
-                        <li>Feature 5</li>
-                    </ul>
+                {/* Plan Estándar */}
+                <div className={`${styles.pricingCard} ${styles.pricingCardStandard}`}>
+                    <h4 className={styles.pricingCardTitle}>Plan Estándar</h4>
+                    <div className={styles.pricingCardPrice}>$19.99</div>
+                    <div className={styles.pricingCardDetails}>
+                        <ul>
+                            <li>Todas las características del Plan Básico.</li>
+                            <li>Seguimiento del progreso del entrenamiento.</li>
+                            <li>Acceso a informes y análisis de datos.</li>
+                            <li>Integración con dispositivos de seguimiento de fitness.</li>
+                        </ul>
+                    </div>
+                    <a className={styles.enroll} href="#">Elegir Plan Estándar</a>
                 </div>
-                <a className={styles.enroll} href="#">Choose Standard</a>
-            </div>
 
-            {/* Card 3 */}
-            <div className={`${styles.pricingCard} ${styles.pricingCardPrimary}`}>
-                <h4 className={styles.pricingCardBanner}>Most Popular</h4>
-                <hr />
-                <h3>PRO</h3>
-                <div className={styles.pricingCardPriceOriginal}>
-                    <s>$129.00</s>
+                {/* Plan Premium */}
+                <div className={`${styles.pricingCard} ${styles.pricingCardPremium}`}>
+                    <h4 className={styles.pricingCardTitle}>Plan Premium</h4>
+                    <div className={styles.pricingCardPrice}>$29.99</div>
+                    <div className={styles.pricingCardDetails}>
+                        <ul>
+                            <li>Todas las características del Plan Estándar.</li>
+                            <li>Soporte prioritario 24/7.</li>
+                            <li>Personalización avanzada.</li>
+                            <li>Acceso exclusivo a nuevas funciones.</li>
+                        </ul>
+                    </div>
+                    <a className={styles.enroll} href="#">Elegir Plan Premium</a>
                 </div>
-                <div className={styles.pricingCardPrice}>$99.99</div>
-                <div className={styles.pricingCardDetails}>
-                    <ul>
-                        <li>More blab</li>
-                        <li>More blabh</li>
-                        <li>More blabh</li>
-                        <li>More blabh</li>
-                    </ul>
-                </div>
-                <a className={styles.enroll} href="#">Choose Pro</a>
             </div>
         </div>
     );

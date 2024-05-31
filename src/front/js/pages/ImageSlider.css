@@ -1,0 +1,103 @@
+/* ImageSlider.css */
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 600px; /* Altura del slide */
+  overflow: hidden;
+  display: flex; /* Para centrar verticalmente */
+  justify-content: center; /* Para centrar horizontalmente */
+  align-items: center; /* Para centrar verticalmente */
+  top: 50px; /* Ajusta la posición hacia arriba */
+  min-height: 100vh; /* Establece una altura mínima del 100% del viewport */
+  padding-top: 20px; /* Ajusta el relleno superior según sea necesario */
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Pone los elementos uno sobre otro */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Asegura que la imagen esté detrás del texto */
+  opacity: 0.8; /* Ajusta la opacidad de la imagen */
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad del color de fondo de la imagen */
+}
+.slide-content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro */
+  max-width: 800px; /* Añade un ancho máximo */
+  text-align: center; /* Centra el texto horizontalmente */
+}
+
+.slide-title {
+  font-size: 70px;
+  font-weight: bold;
+  margin-bottom: 10px; /* Espacio entre el título y la descripción */
+  color: #ff0000; /* Cambia el color del título a rojo */
+}
+
+.slide-description {
+  font-size: 24px;
+  margin-bottom: 10px; /* Espacio entre la descripción y los detalles */
+}
+
+.slide-details {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Resto del código CSS */
+
+.slider-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.prev-btn,
+.next-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.left {
+  border-width: 10px 15px 10px 0;
+  border-color: transparent #ff0000 transparent transparent;
+}
+
+.right {
+  border-width: 10px 0 10px 15px;
+  border-color: transparent transparent transparent #ff0000;
+}
