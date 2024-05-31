@@ -192,32 +192,24 @@ class Orders(db.Model):
     price = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String(250), nullable=False)
     total = db.Column(db.String(250), nullable=False)
-
+    
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
 
-    course_name = db.Column(db.String, db.ForeignKey('course_title.title'), nullable=True)
-    teacher_name = db.Column(db.String, db.ForeignKey('teacher_title.name'), nullable=True)
-    teacher_last_name = db.Column(db.String, db.ForeignKey('teacher_last.last_name'), nullable=True)
-    user_name = db.Column(db.String, db.ForeignKey('user_title.name'), nullable=True)
-    user_last_name = db.Column(db.String, db.ForeignKey('user_last.last_name'), nullable=True)
-
+    course_name = db.Column(db.String(300), nullable=True)
+    teacher_name = db.Column(db.String(300), nullable=True)
+    teacher_last_name = db.Column(db.String(300), nullable=True)
+    user_name = db.Column(db.String(300), nullable=True)
+    user_last_name = db.Column(db.String(300), nullable=True)
 
     # Relations
     user = db.relationship('User', backref=db.backref('orders', lazy=True))
     course = db.relationship('Course', backref=db.backref('orders', lazy=True))
     teacher = db.relationship('Teacher', backref=db.backref('orders', lazy=True))
-    course_title = db.relationship('Course', backref=db.backref('orders', lazy=True))
-    teacher_title = db.relationship('Teacher', backref=db.backref('orders', lazy=True))
-    teacher_last = db.relationship('Teacher', backref=db.backref('orders', lazy=True))
-    user_title = db.relationship('User', backref=db.backref('orders', lazy=True))
-    user_last = db.relationship('User', backref=db.backref('orders', lazy=True))
-
 
     def __repr__(self):
         return f'<Orders {self.id}>'
-
     def serialize(self):
         return {
             "id": self.id,
@@ -227,7 +219,12 @@ class Orders(db.Model):
             "total": self.total,
             "userId": self.user_id,
             "courseId": self.course_id,
-            "teacherId": self.teacher_id
+            "teacherId": self.teacher_id,
+            "courseName": self.course_name,
+            "teacherName": self.teacher_name,
+            "teacherLastName": self.teacher_last_name,
+            "userName": self.user_name,
+            "userLastName": self.user_last_name
         }
 
 class Trolley(db.Model):
