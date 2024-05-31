@@ -21,7 +21,7 @@ from datetime import datetime
 
 
 
-from .booking_service import create_booking, cancel_booking, process_payment, create_transaction, activate_membership, generate_confirmation_token_email, confirm_token_email, send_email, cancel_class_and_update_bookings, allowed_file, send_class_booking_email, send_class_cancellation_email
+from .booking_service import require_role, create_booking, cancel_booking, process_payment, create_transaction, activate_membership, generate_confirmation_token_email, confirm_token_email, send_email, cancel_class_and_update_bookings, allowed_file, send_class_booking_email, send_class_cancellation_email
 
 
 #------------------verificar con david --------------------------------
@@ -445,41 +445,6 @@ def delete_permission(permission_id):  # Define la función para manejar las sol
         return jsonify({'error': 'Error deleting permission: ' + str(e)}), 500  # Devuelve un mensaje de error con el código de estado 500 (Internal Server Error)
 
 
-#------ actualizar el usuario---------
-@api.route('/singup/user', methods=['PUT'])  # Define un endpoint para actualizar un personaje mediante una solicitud PUT
-@jwt_required() 
-def update_comun_user():
-    try:
-
-        data = request.json  # Obtén los datos JSON enviados en la solicitud
-        if not data:  # Verifica si no se proporcionaron datos JSON
-            return jsonify({'error': 'No data provided'}), 400  # Devuelve un error con código de estado 400 si no se proporcionaron datos
-        
-        current_user_id = get_jwt_identity() # Obtiene la id del usuario del token  # Busca el usuaerio en la base de datos utilizando su ID
-        user = User.query.get(current_user_id) # Buscar al usuario por su ID
-
-        if not user:  # Verifica si el user no fue encontrado en la base de datos
-            return jsonify({'error': 'User not found'}), 404  # Devuelve un error con código de estado 404 si el user no fue encontrado
-    
-        # Iterar sobre cada campo en el JSON y actualizar el user si corresponde
-        for key, value in data.items():  #items() para iterar sobre cada par llave-valor en el JSON recibido
-            # Verificar si el campo existe en la clase Character
-            if hasattr(user, key):  # Verifica si el user tiene un atributo con el nombre de la llave
-                if  key == 'password': #verificamos si unos de los atributos es password la hasheamos para luego incluirtla
-                    password_hash = generate_password_hash(value).decode('utf-8') #hasheamos la nueva contraseña
-                    setattr(user, key, password_hash) # iteramos sobre la llave 'password' y le asigamos la nueva contraseña hasheada
-                else:
-                    # Para otros campos, asignar el valor directamente al atributo correspondiente del usuario
-                    setattr(user, key, value)
-
-        db.session.commit()  # Confirma los cambios en la base de datos
-        return jsonify({'message': 'Password updated successfully'})  # Devuelve un mensaje de éxito indicando que el personaje se actualizó correctamente
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-
 #-------------------------------------------------------CREAR  USUARIOS--------------------------------------------------------------------------
 
 @api.route('/singup/user', methods=['POST'])  # Define un endpoint para agregar un nuevo usuario mediante una solicitud POST a la ruta '/users'
@@ -563,7 +528,7 @@ def create_new_normal_user():  # Define la función que manejará la solicitud
     except Exception as e:  # Captura cualquier excepción que ocurra durante el proceso.
         return jsonify({'error': 'Error in user creation: ' + str(e)}), 500  # Devuelve un mensaje de error si ocurre un problema.
 
-#------ actualizar el usuario---------
+#-----------------------------------------------------actualizar el usuario-----------------------------------------------------------
 @api.route('/user', methods=['PUT'])
 @jwt_required()
 def update_data_user():
@@ -606,6 +571,25 @@ def update_data_user():
         return jsonify({'message': 'User updated successfully'})
     
     except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+#-----------------------------------------------------PARA DESACTIVAR CUENTA DE USUARIOS-----------------------------------------------------------
+
+@api.route('/user/<int:user_id>/activate', methods=['PUT'])
+@jwt_required()
+@require_role('master')
+def toggle_user_activation(user_id):
+    data = request.get_json()
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    try:
+        user.is_active = data['is_active']
+        db.session.commit()
+        return jsonify({'message': 'User activation status updated successfully', 'is_active': user.is_active}), 200
+    except Exception as e:
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
 
@@ -747,6 +731,8 @@ def verify_reset_token(token):  # Define la función que manejará la solicitud 
     except Exception as e:  # Captura cualquier excepción que ocurra.
         return jsonify(message=str(e)), 400  # Devuelve un mensaje de error si ocurre un problema.
 
+
+# endpoint para cambiar contraseña con token de email
 @api.route('/reset_password', methods=['PUT'])  # Define un endpoint para restablecer la contraseña del usuario.
 def reset_password():  # Define la función que manejará la solicitud PUT.
     try:
@@ -948,9 +934,8 @@ def update_training_class(class_id):
 
 
 
-#CANCELAR una clase existente (PUT)
 @api.route('/cancel_class/<int:class_id>', methods=['PUT'])
-# @jwt_required()
+@jwt_required()  
 def cancel_class(class_id):
     # Buscar la clase por ID
     training_class = Training_classes.query.get(class_id)

@@ -28,6 +28,8 @@ const injectContext = PassedComponent => {
 			state.actions.getBookings()
 			state.actions.fetchImages();
 			state.actions.getUsers();
+			state.actions.getClasses();
+
 
 
 

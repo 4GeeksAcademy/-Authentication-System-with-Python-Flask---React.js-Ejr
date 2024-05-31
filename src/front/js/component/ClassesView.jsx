@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Form, Row, Col, Button, Modal } from "react-bootstrap";
 import styles from "./ClassesView.module.css";
 import EditClasses from "../pages/EditClasses.jsx";
+
 const ClassesView = () => {
     const { actions, store } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
@@ -20,6 +21,12 @@ const ClassesView = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedClass(null);
+    };
+
+    const formatDateTime = (dateTime) => {
+        const date = new Date(dateTime);
+        const formattedDate = date.toISOString().slice(0, 16);
+        return formattedDate;
     };
 
     return (
@@ -43,7 +50,7 @@ const ClassesView = () => {
                             <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-                                <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
+                                <td className="text-center">{formatDateTime(item.dateTime_class)}</td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
@@ -80,7 +87,7 @@ const ClassesView = () => {
                             <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-                                <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
+                                <td className="text-center">{formatDateTime(item.dateTime_class)}</td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
