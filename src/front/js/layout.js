@@ -31,7 +31,7 @@ import MembershipPurchase from "./component/MembershipPurchase.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
 import Chronometer from "./component/Chronometer.jsx";
-import Users from "./pages/Users.jsx"; // revisar
+import Users from "./component/Users.jsx"; // revisar
 import UploadForm from "./component/UploadForm.jsx";
 import ImageGallery from "./component/ImageGallery.jsx";
 import ProfileImageUpload from "./component/ProfileImageUpload.jsx";

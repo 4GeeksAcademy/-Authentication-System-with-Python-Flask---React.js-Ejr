@@ -18,7 +18,7 @@ import Login from "../component/Login.jsx";
 import Navbar from "../component/Navbar.jsx";
 import BookingView from "../component/BookingView.jsx";
 import MembershipPurchase from "../component/MembershipPurchase.jsx";
-import Users from "./Users.jsx";
+import Users from "../component/Users.jsx";
 import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";

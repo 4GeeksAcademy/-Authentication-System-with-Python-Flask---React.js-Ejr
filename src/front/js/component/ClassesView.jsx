@@ -10,7 +10,7 @@ const ClassesView = () => {
 
     useEffect(() => {
         actions.getClasses();
-    }, [actions]);
+    }, []);
 
     const handlerEdit = (item) => {
         setSelectedClass(item);
@@ -40,7 +40,7 @@ const ClassesView = () => {
                     </thead>
                     <tbody>
                         {store.classesData && store.classesData.filter(item => item.Class_is_active).map((item) => (
-                            <tr key={item.name} className={styles.tableRow}>
+                            <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
                                 <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
@@ -77,7 +77,7 @@ const ClassesView = () => {
                     </thead>
                     <tbody>
                         {store.classesData && store.classesData.filter(item => !item.Class_is_active).map((item) => (
-                            <tr key={item.name} className={styles.tableRow}>
+                            <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
                                 <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>

@@ -483,7 +483,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
             },
-//---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
+//---------------------------------------------------------FUNCION PARA CARGAR LAS CLASES DE ENTRENAMIENTO --------------------------------------------------------------------------
 
 
 			//funcion asincrona para la vista que trae las clases de entrenamiento 
@@ -554,6 +554,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CANCELAR CLASES --------------------------------------------------------------------------
 
 			//Funcion asincrona para el boton de cancelar clase en el formulario de edicion EditClasses
 			cancelClass: async (id) => {
@@ -587,6 +588,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
 
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local
