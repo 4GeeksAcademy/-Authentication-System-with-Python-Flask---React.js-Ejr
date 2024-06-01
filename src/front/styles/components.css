@@ -35,7 +35,7 @@
   }
   
   .folder:hover {
-    background-color: #d4f902;
+    background-color: #ffff00;
   }
   
   .folder a {
@@ -49,3 +49,7 @@
     text-overflow: ellipsis; 
     white-space: nowrap; 
   }
+  .fileUploader{
+    background-color: #999999;
+  }
+ 

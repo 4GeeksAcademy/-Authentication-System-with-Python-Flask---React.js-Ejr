@@ -12,6 +12,7 @@ import { UploadFile } from './UploadFile.jsx';
 import { PostCourse } from './PostCourse.jsx';
 import { QuizzForm } from './QuizzForm.jsx';
 import { TeacherProfile } from './TeacherProfile.jsx';
+import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context)
@@ -60,6 +61,10 @@ export const TeacherDashboard = () => {
         setButtonSelected(<QuizzForm />)
     }
 
+    const handleMyModule = () => {
+        setButtonSelected(<ModuleCourse />)
+        actions.getModules()
+    }
 
     return (
         <div className="row">
@@ -86,6 +91,7 @@ export const TeacherDashboard = () => {
                     <button className="btn btn-outline-primary my-2 w-75" onClick={handlePDF}>Certificate</button>
                     <button className="btn btn-outline-primary my-2 w-75" onClick={handlePostCourse}>Post course</button>
                     <button className="btn btn-outline-primary my-2 w-75" onClick={handleQuizzes}>Quizz</button>
+                    <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyModule}>Modules</button>
                 </div>
             </div>
         </div>

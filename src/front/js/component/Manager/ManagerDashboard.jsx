@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { Context } from "../../store/appContext.js"
 
 import { FaCircleArrowLeft } from 'react-icons/fa6';
-import { Certificate } from '../User/Certificate.jsx';
 
 import { ManagerCourses } from '../Manager/ManagerCourses.jsx';
 import { ManagerProfile } from '../Manager/ManagerProfile.jsx';
@@ -17,6 +16,7 @@ import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
 import { GetQuizzes } from './GetQuizzes.jsx';
+import { PostCertificate } from '../Teacher/PostCertificate.jsx';
 
 
 
@@ -77,7 +77,7 @@ export const ManagerDashboard = () => {
     }
 
     const handlePDF = () => {
-        setButtonSelected(<Certificate />)
+        setButtonSelected(<PostCertificate />)
     }
 
     const handleCreateCategory = () => {
