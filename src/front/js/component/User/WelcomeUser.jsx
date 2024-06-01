@@ -73,7 +73,7 @@ export const WelcomeUser = () => {
                             </div>
                         </div>
 
-                        {store.payment.payments.length === 0
+                        { store.payment && store.payment.payments && store.payment.payments.length === 0
                             ? "No hay payment cargados"
                             : store.payment.payments.map((item) => (
                                 <div className="row w-100" key={item.id}>
@@ -172,7 +172,7 @@ export const WelcomeUser = () => {
                             </div>
                         </div>
 
-                        {store.course.access_to_courses.length === 0
+                        {store.course && store.course.access_to_courses && store.course.access_to_courses.length === 0
                             ? "No hay course cargados"
                             : store.course.access_to_courses.map((item) => (
                                 <div className="row w-100" key={item.id}>

@@ -75,7 +75,7 @@ export const WelcomeTeacher = () => {
                             </div>
                         </div>
 
-                        {store.user.access_to_user.length === 0
+                        {store.user && store.user.access_to_user && store.user.access_to_user.length === 0
                             ? "No hay user cargados"
                             : store.user.access_to_user.map((item) => (
                                 <div className="row w-100" key={item.id}>
@@ -177,7 +177,7 @@ export const WelcomeTeacher = () => {
                             </div>
                         </div>
 
-                        {store.course.access_to_courses.length === 0
+                        { store.course && store.course.access_to_courses && store.course.access_to_courses.length === 0
                             ? "No hay course cargados"
                             : store.course.access_to_courses.map((item) => (
                                 <div className="row w-100" key={item.id}>
