@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Context } from "../../store/appContext";
 
-export const TeacherMyPayment = () => {
+export const HistoryCourses = () => {
     const { store, actions } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ export const TeacherMyPayment = () => {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-center my-4">My Payments Courses </h1>
+            <h1 className="text-center my-4">My Purchased Courses</h1>
             <Button variant="primary" onClick={handleShowModal}>Add Order</Button>
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
@@ -153,7 +153,7 @@ export const TeacherMyPayment = () => {
                                     <th scope="col">Title Order</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Course</th>
-                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Teacher name</th>
                                     <th scope="col">Last Name</th>
                                     <th scope="col">Price</th>
                                 </tr>
@@ -165,8 +165,8 @@ export const TeacherMyPayment = () => {
                                         <td>{item.titleOrder}</td>
                                         <td>{item.date}</td>
                                         <td>{item.courseName}</td>
-                                        <td>{item.userName}</td>
-                                        <td>{item.userLastName}</td>
+                                        <td>{item.teacherName}</td>
+                                        <td>{item.teacherLastName}</td>
                                         <td>{item.price}</td>
                                     </tr>
                                 ))}

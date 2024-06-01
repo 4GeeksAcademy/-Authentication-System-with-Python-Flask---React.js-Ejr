@@ -442,12 +442,31 @@ def show_view_user():
             }
             user_list.append(user_dict)
 
+        teachers = Teacher.query.all()
+        teacher_list = []
+        for teacher in teachers:
+            teacher_dict = {
+                "id": teacher.id,
+                "email": teacher.email,
+                "is_teacher": teacher.is_teacher,
+                "name": teacher.name,
+                "lastName": teacher.last_name,
+                "username": teacher.username,
+                "numberDocument": teacher.number_document,
+                "phone": teacher.phone,
+                "age": teacher.age,
+                "gender": teacher.gender,
+                "certificateTeacher": teacher.certificate_teacher,
+                "userId": teacher.user_id
+            }
+            teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "message": "Access to Student Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Teacher Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
 
+        
 @api.route('/view/teacher')
 @jwt_required() #Decorador para requerir autenticacion con jwt
 def show_view_teacher():
@@ -921,6 +940,7 @@ def post_quizzes():
     
     except Exception as err:
         return jsonify({"Error": "Error in quiz creation: ", "fetching error": str(err)}), 500
+    
 
 @api.route('/module/quizzes')
 def get_quizzes():
@@ -1062,28 +1082,42 @@ def add_order_to_trolley():
         price = data.get('price')
         total = data.get('total')
         user_id = data.get('userId')
+        course_id = data.get('courseId')
+        teacher_id = data.get('teacherId')
+        course_name = data.get('courseName')
+        teacher_name = data.get('teacherName')
+        teacher_last_name = data.get('teacherLastName')
+        user_name = data.get('userName')
+        user_last_name = data.get('userLastName')
+
 
         if not title_order or not price or not total:
             return jsonify({"Error": "titleOrder, price, total and userId are required"}), 400
         
-        """ user = User.query.filter_by(id=user_id).first()
+     
+            
+        # Verificación de existencia del título de la orden en la base de datos
+        existing_order = Orders.query.filter_by(title_order=title_order).first()
 
-        if not user:
-            return jsonify({"Error": "User ID does not exist"}), 404 """
-        
+        if existing_order:
+            return jsonify({"Error": "Order already exists."}), 409
+
         current_date = datetime.now().strftime('%Y-%m-%d')
         new_order = Orders(
             user_id=user_id,
             title_order=title_order,
             price=price,
             total=total,
-            date=current_date
+            date=current_date,
+            course_id=course_id,
+            teacher_id=teacher_id,
+            course_name=course_name,
+            teacher_name=teacher_name,
+            teacher_last_name=teacher_last_name,
+            user_name=user_name,
+            user_last_name=user_last_name
         )
-        # Verificación de existencia del título de la orden en la base de datos
-        existing_order = Orders.query.filter_by(title_order=title_order).first()
-
-        if existing_order:
-            return jsonify({"Error": "Order already exists."}), 409
+    
         
         db.session.add(new_order)
         db.session.commit()
@@ -1093,8 +1127,7 @@ def add_order_to_trolley():
     except Exception as e:
         return jsonify({"Error": "An error occurred", "error_fetching": str(e)}), 500
 
-
-@api.route('/order/courses', methods=['GET'])
+@api.route('/order/courses', methods=[ 'GET' ])        
 def get_order():
     try:
         orders = Orders.query.all()
@@ -1102,6 +1135,7 @@ def get_order():
         return jsonify(serialized_orders), 200
     except Exception as e:
         return jsonify({"Error": "An error occurred while fetching orders", "error_details": str(e)}), 500
+
 
 
 #----------------------CARGA DE DOCUMENTO------------------------# 

@@ -189,20 +189,27 @@ class Category(db.Model):
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title_order = db.Column(db.String(250), nullable=False)
-    price = db.Column(db.Integer, unique=False, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String(250), nullable=False)
     total = db.Column(db.String(250), nullable=False)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-   
-
-    #Relations
-    user = db.relationship('User', backref=db.backref('orders', lazy=True))
     
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
+
+    course_name = db.Column(db.String(300), nullable=True)
+    teacher_name = db.Column(db.String(300), nullable=True)
+    teacher_last_name = db.Column(db.String(300), nullable=True)
+    user_name = db.Column(db.String(300), nullable=True)
+    user_last_name = db.Column(db.String(300), nullable=True)
+
+    # Relations
+    user = db.relationship('User', backref=db.backref('orders', lazy=True))
+    course = db.relationship('Course', backref=db.backref('orders', lazy=True))
+    teacher = db.relationship('Teacher', backref=db.backref('orders', lazy=True))
 
     def __repr__(self):
         return f'<Orders {self.id}>'
-
     def serialize(self):
         return {
             "id": self.id,
@@ -211,10 +218,15 @@ class Orders(db.Model):
             "date": self.date,
             "total": self.total,
             "userId": self.user_id,
-            
-            # do not serialize the password, it's a security breach
+            "courseId": self.course_id,
+            "teacherId": self.teacher_id,
+            "courseName": self.course_name,
+            "teacherName": self.teacher_name,
+            "teacherLastName": self.teacher_last_name,
+            "userName": self.user_name,
+            "userLastName": self.user_last_name
         }
-    
+
 class Trolley(db.Model):
     id = db.Column (db.Integer, primary_key=True)
     title_course = db.Column(db.String(250), nullable=False)
