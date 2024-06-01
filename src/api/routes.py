@@ -442,8 +442,26 @@ def show_view_user():
             }
             user_list.append(user_dict)
 
+        teachers = Teacher.query.all()
+        teacher_list = []
+        for teacher in teachers:
+            teacher_dict = {
+                "id": teacher.id,
+                "email": teacher.email,
+                "is_teacher": teacher.is_teacher,
+                "name": teacher.name,
+                "lastName": teacher.last_name,
+                "username": teacher.username,
+                "numberDocument": teacher.number_document,
+                "phone": teacher.phone,
+                "age": teacher.age,
+                "gender": teacher.gender,
+                "certificateTeacher": teacher.certificate_teacher,
+                "userId": teacher.user_id
+            }
+            teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "message": "Access to Student Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Teacher Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -766,7 +784,7 @@ def put_courses(course_id):
     course.title_Teacher = data.get('title_Teacher', course.title_Teacher)
 
     db.session.commit()
-    return jsonify({"message": f"User with ID {course.id} updated successfully"}), 200
+    return jsonify({"message": f"Course with ID {course.id} updated successfully"}), 200
     
 
 @api.route('/view/courses/<int:course_id>', methods=['DELETE'])

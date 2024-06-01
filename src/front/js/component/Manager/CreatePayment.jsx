@@ -88,7 +88,9 @@ export const CreatePayment = () => {
                             <select className="form-select" name='titleCourse' onChange={handleChange} value={paymentData.titleCourse} required>
                                 <option value="">--Choose--</option>
                                 {
-                                    store.course.access_to_courses.map((item, index) => (
+                                    (store.course.access_to_courses.length == 0) 
+                                    ? <option value="">Sin Datos</option>
+                                    :store.course.access_to_courses.map((item, index) => (
                                         <option key={index} value={item.title}>{item.title}</option>
                                     ))
                                 }
@@ -115,7 +117,9 @@ export const CreatePayment = () => {
                             <select className="form-select" name='padAmount' onChange={handleChange} value={paymentData.padAmount} required>
                                 <option value="">--Choose--</option>
                                 {
-                                    store.course.access_to_courses.map((item, index) => (
+                                    (store.course.access_to_courses.length == 0) 
+                                    ? <option value="">Sin Datos</option>
+                                    :store.course.access_to_courses.map((item, index) => (
                                         <option key={index} value={parseInt(item.price, 10)}>{item.title} ${item.price}</option>
                                     ))
                                 }
@@ -142,7 +146,9 @@ export const CreatePayment = () => {
                             <select className="form-select" name='courseId' onChange={handleChange} value={paymentData.courseId} required>
                                 <option value="">--Choose--</option>
                                 {
-                                    store.course.access_to_courses.map((item, index) => (
+                                    (store.course.access_to_courses.length == 0) 
+                                    ? <option value="">Sin Datos</option>
+                                    :store.course.access_to_courses.map((item, index) => (
                                         <option key={index} value={parseInt(item.id)}>#{item.id}/{item.title}</option>
                                     ))
                                 }
@@ -154,14 +160,16 @@ export const CreatePayment = () => {
                             <select className="form-select" name='userId' onChange={handleChange} value={paymentData.userId} required>
                                 <option value="">--Choose--</option>
                                 {
-                                    store.user.access_to_user.map((item, index) => (
+                                    (store.user.access_to_user.length == 0) 
+                                    ? <option value="">Sin Datos</option>
+                                    :store.user.access_to_user.map((item, index) => (
                                         <option key={index} value={parseInt(item.id)}>#{item.id}/{item.name}</option>
                                     ))
                                 }
                             </select>
                         </div>
 
-                        <button className="btn btn-primary my-3" type='submit'>Create Category</button>
+                        <button className="btn btn-primary my-3" type='submit'>Create Payment</button>
                     </form>
                 </div>
             </div>
@@ -169,5 +177,3 @@ export const CreatePayment = () => {
         </div>
     );
 };
-
-

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../../store/appContext';
 import { useNavigate } from 'react-router-dom';
 import { GoArrowLeft } from "react-icons/go";
@@ -18,6 +18,8 @@ export const QuizzesCourse = () => {
 
     const navigate = useNavigate();
 
+   
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -25,7 +27,7 @@ export const QuizzesCourse = () => {
         if (name === "answerUser" || name === "approved" || name === "approvalPercentage") {
             parsedValue = value === "true" ? true : value === "false" ? false : '';
         } else if (name === "approvalPercentageUser" || name === "approvalPercentageNumber" || name === "moduleId") {
-            parsedValue = parseInt(value, 10) || '';
+            parsedValue = value === '' ? '' : parseInt(value, 10);
         }
 
         setFormData({
@@ -103,7 +105,7 @@ export const QuizzesCourse = () => {
                 <div className="form-group">
                     <label>Approval Percentage Number</label>
                     <input
-                        type="text"
+                        type="number"
                         name="approvalPercentageNumber"
                         value={formData.approvalPercentageNumber}
                         onChange={handleChange}
@@ -124,9 +126,11 @@ export const QuizzesCourse = () => {
                     <select className="form-select" name='moduleId' onChange={handleChange} value={formData.moduleId} required>
                         <option value="">--Choose--</option>
                         {
-                            store.modules.Modules.map((item, index) => (
-                                <option key={index} value={item.id}>#{item.id}/{item.title}</option>
-                            ))
+                            (!store.modules || !store.modules.Modules || store.modules.Modules.length === 0)
+                                ? (<option value="">Sin Datos</option>)
+                                : (store.modules.Modules.map((item, index) => (
+                                    <option key={index} value={item.id}>#{item.id}/{item.title}</option>
+                                )))
                         }
                     </select>
                 </div>

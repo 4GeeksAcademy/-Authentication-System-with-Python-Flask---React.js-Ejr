@@ -19,13 +19,18 @@ import { CreateCategory } from './CreateCategory.jsx';
 import { GetQuizzes } from './GetQuizzes.jsx';
 import { CreatePayment } from './CreatePayment.jsx';
 import { GetPayment } from './GetPayment.jsx';
+import { GetModule } from './GetModule.jsx';
+import { WelcomeManager } from './WelcomeManager.jsx';
 
 
 
 export const ManagerDashboard = () => {
     const { store, actions } = useContext(Context)
-    const [buttonSelected, setButtonSelected] = useState(null)
+    const [buttonSelected, setButtonSelected] = useState(<WelcomeManager />)
 
+    function homeManager(){
+        setButtonSelected(<WelcomeManager />)
+    }
 
     const handleCreateCourse = () => {
         setButtonSelected(<PostCourseM />)
@@ -60,10 +65,12 @@ export const ManagerDashboard = () => {
         actions.getQuizzes()
     }
 
-    const handleGetQuizzes = () => {
-        setButtonSelected(<GetQuizzes />)
-        actions.getQuizzes()
+    const handleGetModules = () => {
+        setButtonSelected(<GetModule />)
+        actions.getModules()
     }
+
+    
 
     const handleMyProfile = () => {
         setButtonSelected(<ManagerProfile />)
@@ -114,7 +121,7 @@ export const ManagerDashboard = () => {
                         <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
                             <FaCircleArrowLeft />
                             <h1>Welcome!</h1>
-                            <h5>Manager</h5>
+                            <h5 onClick={homeManager}>Manager</h5>
                         </div>
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreatePayment}>Create Payment</button>
 
@@ -128,7 +135,9 @@ export const ManagerDashboard = () => {
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>Update Courses</button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetQuizzes}>View Quizzes</button>
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>View Quizzes</button>  
+
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetModules}>View Modules</button>
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetPayment}>View Payment</button>
                         
@@ -150,7 +159,7 @@ export const ManagerDashboard = () => {
                 </div>
             </div>
             
-            <div className="d-flex justify-content-center bg-warning">
+            <div className="d-flex justify-content-center h-100">
                 {buttonSelected}
             </div>
         </div>

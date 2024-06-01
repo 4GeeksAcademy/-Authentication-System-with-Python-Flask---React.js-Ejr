@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: "",
       user: "",
       error: "",
+      error2: "",
       msg: "",
       msg2: "",
       course: "",
@@ -17,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       category: "",
       modules: "",
       quizzes: "",
-      payment: ""
+      payment: "",
+      medios: []
     },
 
     actions: {
@@ -460,14 +462,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!respUpdateCourse.ok) {
             const errorData = await respUpdateCourse.json();
             console.log(errorData);
-            setStore({ ...store, error: errorData.error });
+            setStore({ ...store, error2: errorData.error });
             throw new Error(
               errorData.error || "Error al Update"
             )
           }
 
           const dataUpdateCourse = await respUpdateCourse.json()
-          setStore({ ...store, msg: dataUpdateCourse.message })
+          setStore({ ...store, msg2: dataUpdateCourse.message })
 
           await getActions().getUser();
 
@@ -860,7 +862,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const uploadedMedia = await response.json();
-          setStore({ media: uploadedMedia.secure_url, loading: false });
+          setStore({ media: uploadedMedia.secure_url, loading: false, medios: [uploadedMedia] });
           console.log(uploadedMedia);
         } catch (error) {
           console.error('Error uploading media:', error);
