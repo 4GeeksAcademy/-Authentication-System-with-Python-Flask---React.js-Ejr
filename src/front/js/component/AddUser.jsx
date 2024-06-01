@@ -67,7 +67,7 @@ export const AddUser = () => {
                     isUser: undefined,
                     isManager: undefined,
                     certificateTeacher: certificate,
-                    userId: userId
+                    /* userId: userId */
                 }));
             } else if (value === 'manager') {
                 updatedData = { isManager: isUsers };
@@ -76,8 +76,8 @@ export const AddUser = () => {
                     ...updatedData,
                     isUser: undefined,
                     isTeacher: undefined,
-                    userId: userId,
-                    teacherId: teacherId
+                    /* userId: userId,
+                    teacherId: teacherId */
                 }));
             }
         } else if (name === 'userId' || name === 'teacherId') {
@@ -209,7 +209,7 @@ export const AddUser = () => {
                 <div className={`col-lg-3 ${(selectedRole === 'manager') ? 'd-block' : 'd-block'}`}>
                     <label className="form-label">Number Document</label>
                     <input
-                        type="text"
+                        type="number"
                         className="form-control"
                         name='numberDocument'
                         onChange={handleChange}
@@ -302,7 +302,7 @@ export const AddUser = () => {
                         Please enter your information.
                     </div>
                 </div>
-                {/* UserID */}
+                {/* UserID
                 <div className={`${(selectedRole === 'teacher') || (selectedRole === 'manager') ? 'd-block col-lg-12' : 'd-none'}`}>
                     <label>User Id:</label>
                     <select className="form-select"
@@ -325,7 +325,7 @@ export const AddUser = () => {
                         Please enter your information.
                     </div>
                 </div>
-                {/* TeacherID */}
+                {/* TeacherID 
                 <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-12' : 'd-none'}`}>
                     <label>Teacher Id:</label>
                     <select
@@ -348,7 +348,7 @@ export const AddUser = () => {
                     <div className="invalid-feedback">
                         Please enter your information.
                     </div>
-                </div>
+                </div> */}
                 <button
                     type="submit"
                     className="btn btn-primary"
