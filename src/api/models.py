@@ -123,7 +123,6 @@ class Room_participant(db.Model):
             "confirmed": self.confirmed
         }
     
-    
 class Room_request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
