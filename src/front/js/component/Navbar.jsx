@@ -64,8 +64,8 @@ export const Navbar = () => {
                                             <button className="btn btn-outline-danger m-1 mx-2" onClick={handleHomeView}>
                                                 Sign Out
                                             </button>
-                                            <div className='border border-black rounded-pill px-3 py-1'>
-                                                {store.currentRole}
+                                            <div className='border border-warning rounded-pill px-2 py-1 fs-6'>
+                                                <span className='text-warning'>{store.currentRole}</span>
                                             </div>
                                         </div>
                                     </nav>

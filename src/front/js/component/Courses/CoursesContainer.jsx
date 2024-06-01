@@ -62,21 +62,6 @@ export const CoursesContainer = () => {
                         );
                     })}
             </div>
-            <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
-                {store.modules && store.modules.Modules ? (
-                    store.modules.Modules.length === 0 ? "No hay Modules" :
-                        store.modules.Modules.map((item, index) => (
-                            <div key={index}>
-                                <p>{item.title}</p>
-                                <video controls className="img-fluid">
-                                    <source src={item.urlVideo} type="video/mp4" />
-                                </video>
-                            </div>
-                        ))
-                ) : (
-                    "Loading modules..."
-                )}
-            </div>
         </div>
     );
 };

@@ -42,8 +42,8 @@ export const CourseCard = () => {
                                             <p className="text-center">Loading...</p></div>
                                     </div>
                                     : <div className="card mx-2 shadow" style={{ width: "18rem", height: "auto", paddingTop: "20px", paddingBottom: "20px" }}>
-                                        <div onClick={()=>updateCourse(item.id)}>Edit</div>
-                                        <div onClick={()=>deleteCourse(item.id)}>Del</div>
+                                        <button className="btn btn-primary" onClick={()=>updateCourse(item.id)}>Edit</button>
+                                        <button className="btn btn-danger" onClick={()=>deleteCourse(item.id)}>Del</button>
                                         <div className="card-img-top">
                                             <div className="course-thumbnail">
                                                 <img
