@@ -18,15 +18,33 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right: 10px;
+    
 }
 
 .participant-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    list-style: none;
+    padding-left: 0px;
+    position: relative;
+    
 }
 
-.participant-item img {
-    margin-right: 10px;
+
+.participants-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.participant-item:not(:first-child) img {
+    margin-left: -8px; 
+}
+
+.participant-item:first-child img {
+    margin-left: 0px;
 }

@@ -42,11 +42,16 @@ const ParticipantsView = ({ requests, participants, handleRequestAction, handleK
     return (
         <div className="participants-view">
             <h3>Participants</h3>
-            <div className="participants-list">
+            <div className="">
                 {participants.map(participant => (
                     <div key={participant.participant_id} className="participant d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>{participant.participant_name}</strong>
+                        <img
+                            src={participant.profile_image_url}
+                            alt={`${participant.participant_name}'s profile`}
+                            className="profile-image"
+                        />
+                        <strong>{participant.participant_name}</strong>
                         </div>
                         <div className='d-flex align-items-center p-2 m-0' >
                             <div className='d-flex align-items-center' style={{ marginRight: '10px' }}  >
@@ -83,6 +88,11 @@ const ParticipantsView = ({ requests, participants, handleRequestAction, handleK
             <div className="requests-list">
                 {requests.map(request => (
                     <div key={request.room_request_id} className="request">
+                        <img
+                                src={request.profile_image_url}
+                                alt={`${request.participant_name}'s profile`}
+                                className="profile-image"
+                            />
                         <p>
                             <strong>{request.participant_name}</strong>
                             <br />

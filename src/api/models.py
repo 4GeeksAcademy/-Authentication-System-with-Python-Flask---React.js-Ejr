@@ -140,7 +140,9 @@ class Room_request(db.Model):
             "room_request_id": self.id,
             "room_id": self.room_id,
             "user_id": self.user_id,
-            "status": self.status
+            "status": self.status,
+            "participant_name": self.user.username,
+            "profile_image_url": self.user.url_image ,
         }
 
 class Comment(db.Model):
