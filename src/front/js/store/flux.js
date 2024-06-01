@@ -148,12 +148,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getCategory()
             await getActions().getModules()
             await getActions().getQuizzes()
-<<<<<<< HEAD
             await getActions().getPayments()
-
-=======
             await getActions().getOrders()
->>>>>>> b0c3c33f3e903c81d92f04d964316925b6684a29
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });

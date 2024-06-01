@@ -17,7 +17,6 @@ import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
 import { GetQuizzes } from './GetQuizzes.jsx';
-<<<<<<< HEAD
 import { CreatePayment } from './CreatePayment.jsx';
 import { GetPayment } from './GetPayment.jsx';
 import { GetModule } from './GetModule.jsx';
@@ -39,9 +38,7 @@ import { AiOutlineFundView } from "react-icons/ai";
 import { PiCertificate } from "react-icons/pi"
 import { MdErrorOutline } from "react-icons/md";
 
-=======
 import { HistoryCoursesUser } from './HistoryCoursesUser.jsx';
->>>>>>> b0c3c33f3e903c81d92f04d964316925b6684a29
 
 
 
@@ -210,13 +207,7 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-<<<<<<< HEAD
                         <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyQuizzes}>
-=======
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleHistoryCoursesUsers}>History Courses </button>
-
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>Teachers</button>
->>>>>>> b0c3c33f3e903c81d92f04d964316925b6684a29
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -348,14 +339,14 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handlePayments} disabled>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleHistoryCoursesUsers}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <MdErrorOutline />
                                 </div>
                                 <div>
-                                    <h5>Sin datos</h5>
+                                    <h5>History Courses</h5>
                                 </div>
                             </div>
                         </button>
