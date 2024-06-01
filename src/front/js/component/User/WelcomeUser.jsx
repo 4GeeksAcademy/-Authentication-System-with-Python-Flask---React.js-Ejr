@@ -67,7 +67,6 @@ export const WelcomeUser = () => {
                                         <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Operator
                                         </a>
-
                                     </div>
                                 </div>
                             </div>
