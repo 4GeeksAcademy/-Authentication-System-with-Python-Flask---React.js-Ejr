@@ -240,6 +240,7 @@ def get_current_rooms():
                 participants.append({
                     "participant_id": user.id,
                     "participant_name": user.username,
+                    "profile_image_url": user.url_image,  # Incluir la URL de la imagen de perfil
                     "confirmed": participant.confirmed,
                     "platform": room.platform,
                     "platform_id": platform_id,

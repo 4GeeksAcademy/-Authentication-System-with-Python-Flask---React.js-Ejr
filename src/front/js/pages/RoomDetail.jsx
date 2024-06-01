@@ -339,7 +339,7 @@ export const RoomDetail = () => {
                                 participantsCount={participantsCount}
                                 formattedDateTime={formattedDateTime}
                                 renderPlatformIcon={renderPlatformIcon}
-                                
+                                participants={room.participants}
                                 isHost={isHost}
                             />
                         )}
