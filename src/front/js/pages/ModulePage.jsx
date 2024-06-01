@@ -33,7 +33,7 @@ import ClassFrequencyChart from "../component/ClassFrequencyChart.jsx";
 
 import ClassesView from "../component/ClassesView.jsx";
 
-
+import Sidebar from "../component/Sidebar.jsx";
 
 const ModulePage = () => {
     const { store, actions } = useContext(Context);
@@ -65,7 +65,7 @@ const ModulePage = () => {
         { component: <ClassFrequencyChart />, name: "ClassFrequencyChart " },
         { component: <Users />, name: "Users " },
         { component: <TransactionsTable />, name: "TransactionsTable " },
-        { component: <MembershipPurchase />, name: "MembershipPurchase " },
+        // { component: <MembershipPurchase />, name: "MembershipPurchase " },
         { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
 
 
@@ -86,8 +86,8 @@ const ModulePage = () => {
 
     return (
         <>
+        <Sidebar/>
             <h1> Module Page</h1>
-            <Breadcrumbs />
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
                     <div key={index} className={styles.securityQuestions} onClick={() => handleOpenModal(index)}>

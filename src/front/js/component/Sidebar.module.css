@@ -12,7 +12,7 @@ body {
     background: var(--background);
     height: 100%;
     transition: padding-right 0.3s ease-in-out;
-    padding-right: 4.75rem; /* Default padding when sidebar is expanded */
+    /* padding-right: 4.75rem; Default padding when sidebar is expanded */
 }
 
 html {

@@ -97,7 +97,7 @@ const ProfileImageUpload = () => {
                     </Dropdown>
                 </>
             ) : (
-                <Button className={styles.editButton} onClick={() => handleShowModal('upload')}>Upload Image</Button> // Botón para subir imagen si no hay imagen de perfil
+                <Button className={styles.editButton} onClick={() => handleShowModal('upload')} title='Upload Image'><i class="fa-solid fa-image"></i></Button> // Botón para subir imagen si no hay imagen de perfil
             )}
             <Modal show={showModal} onHide={handleCloseModal}> {/* Modal para subir/editar imagen */}
             <div className={styles.modalProfile}>

@@ -101,7 +101,7 @@ const EditProfile = () => {
 
             <Modal show={show} onHide={handleClose} centered className={styles.modal + " modal-centered"}>
                 <Modal.Header  className={styles.modalHeader}>
-                    <Modal.Title className={styles.modalTitle}>Editar Perfil</Modal.Title>
+                    <Modal.Title className={styles.modalTitle}>Edit Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
                     <div className={styles.messageContainer}>
