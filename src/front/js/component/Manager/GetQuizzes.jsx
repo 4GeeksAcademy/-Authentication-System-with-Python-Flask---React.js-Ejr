@@ -10,9 +10,7 @@ export const GetQuizzes = () => {
         navigate(`/UpdateQuizzes/${quizId}`);
     };
 
-    if (!store.quizzes) {
-        return <div>Loading quizzes...</div>;
-    }
+
 
     if (!store.quizzes.Quiz || store.quizzes.Quiz.length === 0) {
         return <div>No hay cuestionarios disponibles</div>;

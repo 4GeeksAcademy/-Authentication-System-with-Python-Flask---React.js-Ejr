@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
-import { GoArrowLeft } from "react-icons/go"
+import { GoArrowLeft } from "react-icons/go";
 
 export const AddUser = () => {
     const { store, actions } = useContext(Context);
     const [selectedRole, setSelectedRole] = useState('');
     const [isUsers, setIsUsers] = useState(true);
     const [certificate, setCertificate] = useState('');
+    const [userId, setUserId] = useState('');
+    const [teacherId, setTeacherId] = useState('');
     const [counter, setCounter] = useState(7);
     const [redirectPath, setRedirectPath] = useState('');
     const navigate = useNavigate();
@@ -20,11 +22,32 @@ export const AddUser = () => {
         numberDocument: '',
         phone: '',
         age: '',
-        gender: ''
+        gender: '',
+        userId: '',
+        teacherId: ''
     });
+
+    useEffect(() => {
+        if (redirectPath) {
+            navigate(redirectPath);
+        }
+    }, [redirectPath, navigate]);
+
+    useEffect(() => {
+        if (store.error === '' && selectedRole && counter === 7) {
+            setRedirectPath(`/${selectedRole}View`);
+        }
+
+        const interval = setInterval(() => {
+            setCounter(prevCounter => prevCounter + 1);
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, [store.error, selectedRole, counter]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        
         if (name === 'isPeople') {
             setSelectedRole(value);
             let updatedData = {};
@@ -43,7 +66,8 @@ export const AddUser = () => {
                     ...updatedData,
                     isUser: undefined,
                     isManager: undefined,
-                    certificateTeacher: certificate
+                    certificateTeacher: certificate,
+                    userId: userId
                 }));
             } else if (value === 'manager') {
                 updatedData = { isManager: isUsers };
@@ -51,9 +75,19 @@ export const AddUser = () => {
                     ...prevState,
                     ...updatedData,
                     isUser: undefined,
-                    isTeacher: undefined
+                    isTeacher: undefined,
+                    userId: userId,
+                    teacherId: teacherId
                 }));
             }
+        } else if (name === 'userId' || name === 'teacherId') {
+            if (name === 'userId') setUserId(value);
+            if (name === 'teacherId') setTeacherId(value);
+
+            setUserData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
         } else {
             setUserData(prevState => ({
                 ...prevState,
@@ -62,48 +96,23 @@ export const AddUser = () => {
         }
     };
 
-    async function handleSubmit(event) {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         await actions.createUser(userData, selectedRole);
-        setCounter(0)
-    }
+        setCounter(0);
+    };
 
-    function handlerGoToLogIn() {
+    const handlerGoToLogIn = () => {
         navigate('/LogIn');
-    }
+    };
 
-    function handlerHome() {
+    const handlerHome = () => {
         navigate('/');
-    }
+    };
 
-    useEffect(() => {
-        if (redirectPath !== '') {
-            navigate(redirectPath);
-        }
-    }, [navigate, redirectPath]);
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCounter(prevCounter => {
-                if (msgError === '' && msg === ''){
-                    return
-                      
-                }else if(store.error === '' && selectedRole !== '' && counter === 7){
-                    setRedirectPath(`/${selectedRole}View`)
-                    clearInterval(interval)
-                }
-                
-                return prevCounter + 1;
-            });
-        }, 500);
-
-        return () => clearInterval(interval);
-    }, [setRedirectPath, store.error, counter]);
-
-
-    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
-    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
-    console.log(msg, msgError)
     return (
         <div className='container'>
             {/* Msg */}
@@ -136,10 +145,7 @@ export const AddUser = () => {
                 </div>
             </div>
 
-
-
             <form className=" mt-5 mb-5 row g-3 was-validated" onSubmit={handleSubmit} noValidate>
-
                 {/* Role */}
                 <div className='col-12'>
                     <label className="form-label">Role</label>
@@ -168,7 +174,6 @@ export const AddUser = () => {
                     <div className="invalid-feedback">
                         Please enter your information.
                     </div>
-
                 </div>
                 {/* Last Name */}
                 <div className='col-lg-6'>
@@ -297,7 +302,53 @@ export const AddUser = () => {
                         Please enter your information.
                     </div>
                 </div>
-
+                {/* UserID */}
+                <div className={`${(selectedRole === 'teacher') || (selectedRole === 'manager') ? 'd-block col-lg-12' : 'd-none'}`}>
+                    <label>User Id:</label>
+                    <select className="form-select"
+                        name='userId'
+                        onChange={handleChange}
+                        value={userId}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            !store.user || !store.user.access_to_user ? (
+                                <option value="">Sin Datos</option>
+                            ) : (
+                                store.user.access_to_user.map((item, index) => (
+                                    <option key={index} value={item.id}>{item.name} {item.lastName}</option>
+                                ))
+                            )
+                        }
+                    </select>
+                    <div className="invalid-feedback">
+                        Please enter your information.
+                    </div>
+                </div>
+                {/* TeacherID */}
+                <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-12' : 'd-none'}`}>
+                    <label>Teacher Id:</label>
+                    <select
+                        className="form-select"
+                        name='teacherId'
+                        onChange={handleChange}
+                        value={teacherId}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            !store.user || !store.user.access_to_teacher ? (
+                                <option value="">Sin Datos</option>
+                            ) : (
+                                store.user.access_to_teacher.map((item, index) => (
+                                    <option key={index} value={item.id}>{item.name} {item.lastName}</option>
+                                ))
+                            )
+                        }
+                    </select>
+                    <div className="invalid-feedback">
+                        Please enter your information.
+                    </div>
+                </div>
                 <button
                     type="submit"
                     className="btn btn-primary"
@@ -314,7 +365,6 @@ export const AddUser = () => {
                             </div>
                     }
                 </button>
-
                 <div className='col-lg my-3 text-center text-decoration-underline' style={{ cursor: "pointer" }}>
                     <a onClick={handlerGoToLogIn}>You already have an account.</a>
                 </div>

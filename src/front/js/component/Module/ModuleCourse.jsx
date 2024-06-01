@@ -42,7 +42,7 @@ export const ModuleCourse = () => {
         });
     };
 
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.title !== '' && formData.descriptionContent !== '') {
             console.log("Creating course with data:", formData);
@@ -52,7 +52,7 @@ export const ModuleCourse = () => {
         } else {
             alert('Ingrese todos los campos');
         }
-    }
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -77,6 +77,15 @@ export const ModuleCourse = () => {
             urlVideo: store.media
         }));
     }, [store.media]);
+
+    const toTime = (segundos) => {
+        const horas = Math.floor(segundos / 3600);
+        const minutos = Math.floor((segundos % 3600) / 60);
+        const segundosRestantes = segundos % 60;
+        return `${horas} horas, ${minutos} minutos, ${segundosRestantes} segundos`;
+    };
+
+    console.log(formData);
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
@@ -135,77 +144,134 @@ export const ModuleCourse = () => {
 
                 <div className="form-group">
                     <label>Title</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
+                    <select
+                        className="form-select"
+                        name='title'
                         onChange={handleChange}
-                        className="form-control"
-                        required
-                    />
+                        value={formData.title}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                                (!store.course.access_to_courses) 
+                                ? <option disabled>Sin Datos</option>
+                                : store.course.access_to_courses.map((item, index) => (
+                                    <option key={index} value={item.title}>#{item.id} /{item.title}</option>
+                                ))
+                        }
+                    </select>
                 </div>
 
                 <div className="form-group">
                     <label>Description Content</label>
-                    <input
-                        type="text"
-                        name="descriptionContent"
-                        value={formData.descriptionContent}
+                    <select
+                        className="form-select"
+                        name='descriptionContent'
                         onChange={handleChange}
-                        className="form-control"
-                        required
-                    />
+                        value={formData.descriptionContent}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            (!store.course.access_to_courses) ? <option disabled>Sin Datos</option>
+                                : store.course.access_to_courses.map((item, index) => (
+                                    <option key={index} value={item.description}>#{item.id} /{item.description}</option>
+                                ))
+                        }
+                    </select>
                 </div>
 
                 <div className="form-group">
                     <label>Video ID</label>
-                    <input
-                        type="text"
-                        name="videoId"
-                        value={formData.videoId}
+                    <select
+                        className="form-select"
+                        name='videoId'
                         onChange={handleChange}
-                        className="form-control"
-                    />
+                        value={formData.videoId}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            (store.medios.length === 0) ? (
+                                <option disabled>Sin Datos</option>
+                            ) : (
+                                store.medios.map((item, index) => (
+                                    <option key={index} value={item.version_id}>
+                                        #{item.original_filename}.{item.format}
+                                    </option>
+                                ))
+                            )
+                        }
+                    </select>
                 </div>
 
                 <div className="form-group">
                     <label>Image ID</label>
-                    <input
-                        type="text"
-                        name="imageId"
-                        value={formData.imageId}
+                    <select
+                        className="form-select"
+                        name='imageId'
                         onChange={handleChange}
-                        className="form-control"
-                    />
+                        value={formData.imageId}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            (store.medios.length === 0) ? (
+                                <option disabled>Sin Datos</option>
+                            ) : (
+                                store.medios.map((item, index) => (
+                                    <option key={index} value={item.version_id}>
+                                        #{item.original_filename}.{item.format}
+                                    </option>
+                                ))
+                            )
+                        }
+                    </select>
                 </div>
 
                 <div className="form-group">
                     <label>Total Video</label>
-                    <input
-                        type="text"
-                        name="totalVideo"
-                        value={formData.totalVideo}
+                    <select
+                        className="form-select"
+                        name='videoTotal'
                         onChange={handleChange}
-                        className="form-control"
-                    />
+                        value={formData.videoTotal}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            (store.medios.length === 0) ? (
+                                <option disabled>Sin Datos</option>
+                            ) : (
+                                store.medios.map((item, index) => (
+                                    <option key={index} value={toTime(item.duration)}>
+                                        #{item.id} /{toTime(item.duration)} hrs
+                                    </option>
+                                ))
+                            )
+                        }
+                    </select>
                 </div>
 
                 <div className="form-group">
-                    <label>COurse Id</label>
-                    <input
-                        type="text"
-                        name="courseId"
-                        value={formData.courseId}
+                    <label>Course Id</label>
+                    <select
+                        className="form-select"
+                        name='courseId'
                         onChange={handleChange}
-                        className="form-control"
-                    />
+                        value={formData.courseId}
+                        required>
+                        <option value="">--Choose--</option>
+                        {
+                            (!store.course.access_to_courses) ? <option disabled>Sin Datos</option>
+                                : store.course.access_to_courses.map((item, index) => (
+                                    <option key={index} value={item.id}>#{item.id} /{item.title}</option>
+                                ))
+                        }
+                    </select>
                 </div>
                 <button type="submit" className="btn btn-primary">Create Module</button>
             </form>
-            
-            {/* <button onClick={() => navigate(-1)} className="btn btn-secondary">
+
+            {/* Uncomment this button if you want to navigate back */}
+            <button onClick={() => navigate(-1)} className="btn btn-secondary">
                 <GoArrowLeft /> Back
-            </button> */}
+            </button>
         </div>
     );
 };

@@ -1,34 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Context } from '../../store/appContext'
+import { Context } from '../../store/appContext.js'
 import { Navbar } from '../../component/Navbar.jsx'
 
-const Course = () => {
-  const { id } = useParams();
-  const { store } = useContext(Context);
-  const [course, setCourse] = useState(null);
-  const [media, setMedia] = useState(null);
+export const Course = () => {
+    const { id } = useParams();
+    const { store, actions } = useContext(Context);
+    const [course, setCourse] = useState(null);
+    const [media, setMedia] = useState(null);
 
-  useEffect(() => {
-    if (store.course && store.course.access_to_courses) {
-      const foundCourse = store.course.access_to_courses.find(course => course.id === parseInt(id))
-      setCourse(foundCourse)
-    }
-  }, [store.course, id]);
-  console.log(course)
+    useEffect(() => {
+        console.log("Store updated:", store);
+        const foundCourse = store.course.access_to_courses.find(course => course.id === id);
+        
+            
+            console.log("Found course:", foundCourse);
+            setCourse(foundCourse);
+        
+    }, [store, id, actions]);
 
-  useEffect(() => {
-    if (store.media && store.media.access_to_media) {
-      const foundMedia = store.media.access_to_media.find(media => media.id === parseInt(id))
-      setMedia(foundMedia)
-    }
-  }, [store.media, id])
+    useEffect(() => {
+        if (store.media && store.media.access_to_media) {
+            const foundMedia = store.media.access_to_media.find(media => media.id === parseInt(id));
+            console.log("Found media:", foundMedia);
+            setMedia(foundMedia);
+        }
+    }, [store.media, id]);
 
-  console.log(store.media)
-  return (
-    <>
-      <Navbar />
-      {course ? (
+    console.log("Course state:", course);
+    console.log("Media state:", media);
+
+    return (
         <>
           <div className="card mb-3" style={{ minWidth: '540px' }}>
             <div className="row g-0">
@@ -58,12 +60,5 @@ const Course = () => {
             </div>
           </div>
         </>
-      ) : (
-        <div>No course data</div>
-      )}
-    </>
-  );
-  
+    );
 }
-
-export default Course

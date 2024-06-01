@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: "",
       user: "",
       error: "",
+      error2: "",
       msg: "",
       msg2: "",
       course: "",
@@ -17,7 +18,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       category: "",
       modules: "",
       quizzes: "",
-      payment: ""
+      payment: "",
+      medios: [],
+      order: ""
     },
 
     actions: {
@@ -145,6 +148,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getCategory()
             await getActions().getModules()
             await getActions().getQuizzes()
+            await getActions().getPayments()
+            await getActions().getOrders()
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
@@ -201,7 +206,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const token = localStorage.getItem("jwt-token");
           if (!token) throw new Error("No token found");
 
-          const url = process.env.BACKEND_URL + "/api/view/manager/"+ type +"/" + userId;
+          const url = process.env.BACKEND_URL + "/api/view/manager/" + type + "/" + userId;
           const respDelUser = await fetch(url, {
             method: "DELETE",
             headers: {
@@ -458,14 +463,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!respUpdateCourse.ok) {
             const errorData = await respUpdateCourse.json();
             console.log(errorData);
-            setStore({ ...store, error: errorData.error });
+            setStore({ ...store, error2: errorData.error });
             throw new Error(
               errorData.error || "Error al Update"
             )
           }
 
           const dataUpdateCourse = await respUpdateCourse.json()
-          setStore({ ...store, msg: dataUpdateCourse.message })
+          setStore({ ...store, msg2: dataUpdateCourse.message })
 
           await getActions().getUser();
 
@@ -858,7 +863,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const uploadedMedia = await response.json();
-          setStore({ media: uploadedMedia.secure_url, loading: false });
+          setStore({ media: uploadedMedia.secure_url, loading: false, medios: [uploadedMedia] });
           console.log(uploadedMedia);
         } catch (error) {
           console.error('Error uploading media:', error);
@@ -1052,6 +1057,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsgError("");
         getActions().updateMsg("");
         getActions().spinner(true);
+
         try {
           const url = process.env.BACKEND_URL + "/api/payment/courses";
           const respGetPayment = await fetch(url);
@@ -1063,7 +1069,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error(errorData.error || "Error in payment");
           }
 
-          const dataGetPayment= await respGetPayment.json();
+          const dataGetPayment = await respGetPayment.json();
           setStore({
             ...store,
             msg: dataGetPayment.message,
@@ -1076,8 +1082,150 @@ const getState = ({ getStore, getActions, setStore }) => {
         } finally {
           getActions().spinner(false);
         }
-      }, 
-       
+      },
+
+      updatePayment: async (dataUpdate, payId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        try {
+
+          const url = process.env.BACKEND_URL + "/api/payment/courses/" + payId;
+          const respUpdatePayment = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataUpdate),
+          })
+
+          if (!respUpdatePayment.ok) {
+            const errorData = await respUpdatePayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al Update"
+            )
+          }
+
+          const dataUpdatePayment = await respUpdatePayment.json()
+          setStore({ ...store, msg2: dataUpdatePayment.message })
+
+          await getActions().getUser();
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      deletePayment: async (payId) => {
+        try {
+
+          const url = process.env.BACKEND_URL + "/api/payment/courses/" + payId;
+          const respDelPayment = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+
+
+          if (!respDelPayment.ok) {
+            const errorData = await respDelPayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error al Delete"
+            );
+          }
+
+
+          const dataDelPayment = await respDelPayment.json();
+          setStore({ ...store, msg2: dataDelPayment.message });
+
+          await getActions().getPayments();
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      //ORDERS
+      createOrders: async (dataOrders) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/order/courses";
+          const respAddOrder = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataOrders),
+          });
+
+          if (!respAddOrder.ok) {
+            const errorData = await respAddOrder.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+
+            await getActions().getOrders()
+
+            throw new Error(
+              errorData.error || "Error in Payment"
+            );
+          }
+
+          const dataAddOrder = await respAddOrder.json();
+          setStore({ ...store, msg2: dataAddOrder.message });
+          console.log(dataAddOrder);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      getOrders: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/order/courses";
+          const respGetOrder = await fetch(url);
+
+          if (!respGetOrder.ok) {
+            const errorData = await respGetOrder.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in Order");
+          }
+
+          const dataGetOrder = await respGetOrder.json();
+          setStore({
+            ...store,
+            msg: dataGetOrder.message,
+            order: dataGetOrder,
+          });
+          console.log(dataGetOrder);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
     }
   }
 };

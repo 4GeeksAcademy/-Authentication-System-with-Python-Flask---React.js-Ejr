@@ -18,7 +18,7 @@ export const UpdateUser = (Role) => {
     const [counter, setCounter] = useState(7);
 
     useEffect(() => {
-        const userToUpdate = store.user.access_to_teacher.find(user => user.id === parseInt(userId)) || store.user.access_to_user.find(user => user.id === parseInt(userId)) || store.user.access_to_manager.find(user => user.id === parseInt(userId))
+        const userToUpdate = store.user.access_to_teacher.find(user => user.id === parseInt(userId)) || store.user.access_to_user.find(user => user.id === parseInt(userId)) || store.user.access_to_manager.find(user => user.id === parseInt(userId));
         if (userToUpdate) {
             setUserData({
                 email: userToUpdate.email,
@@ -29,46 +29,41 @@ export const UpdateUser = (Role) => {
                 phone: userToUpdate.phone,
                 age: userToUpdate.age,
                 gender: userToUpdate.gender,
-                certificateTeacher: userToUpdate.certificateTeacher
+                certificateTeacher: userToUpdate.certificateTeacher || ''
             });
+            setSelectedRole(userToUpdate.isTeacher ? 'teacher' : userToUpdate.isUser ? 'user' : 'manager');
         }
-    }, [userId, store.user.access_to_user || store.user.access_to_teacher || store.user.access_to_manager]);
-
+    }, [userId, store.user.access_to_user, store.user.access_to_teacher, store.user.access_to_manager]);
 
     const handlerChange = e => {
         const { name, value } = e.target;
         if (name === 'isPeople') {
             setSelectedRole(value);
+            if (value === 'teacher') {
+                setCertificate(userData.certificateTeacher || '');
+            } else {
+                setCertificate('');
+            }
+
             let updatedData = {};
             if (value === 'user') {
-                updatedData = { isUser: true };
-                setUserData(prevState => ({
-                    ...prevState,
-                    ...updatedData,
-                    isManager: undefined,
-                    isTeacher: undefined
-                }));
+                updatedData = { isUser: true, isTeacher: undefined, isManager: undefined, certificateTeacher: '' };
             } else if (value === 'teacher') {
-                updatedData = { isTeacher: true };
-                setUserData(prevState => ({
-                    ...prevState,
-                    ...updatedData,
-                    isUser: undefined,
-                    isManager: undefined,
-                    certificateTeacher: certificate
-                }));
+                updatedData = { isTeacher: true, isUser: undefined, isManager: undefined };
+            } else if (value === 'manager') {
+                updatedData = { isManager: true, isUser: undefined, isTeacher: undefined, certificateTeacher: '' };
             }
-            else if (value === 'manager') {
-                updatedData = { isManager: true };
-                setUserData(prevState => ({
-                    ...prevState,
-                    ...updatedData,
-                    isUser: undefined,
-                    isTeacher: undefined
-                }));
-            }
+            setUserData(prevState => ({
+                ...prevState,
+                ...updatedData
+            }));
+        } else if (name === 'certificateTeacher') {
+            setCertificate(value);
+            setUserData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
         } else {
-            setCertificate('');
             setUserData(prevState => ({
                 ...prevState,
                 [name]: value
@@ -261,9 +256,10 @@ export const UpdateUser = (Role) => {
                             type="text"
                             className="form-control"
                             name='certificateTeacher'
-                            onChange={(eve) => { setCertificate(eve.target.value) }}
+                            onChange={handlerChange}
                             value={certificate}
-                            required />
+                            required={selectedRole === 'teacher'}
+                        />
                         <div className="invalid-feedback">
                             Please enter your information.
                         </div>
