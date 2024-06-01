@@ -21,6 +21,7 @@ export const PostCourse = () => {
         titleUrlMedia: `${store.media}`
     });
 
+    
     const [media, setMedia] = useState('');
     const [mediaType, setMediaType] = useState('');
     const [loading, setLoading] = useState(false);
