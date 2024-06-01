@@ -55,6 +55,7 @@ export const Profile = () => {
     const [imageSrc, setImageSrc] = useState(null);
     const [isCropping, setIsCropping] = useState(false);
 
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -106,11 +107,17 @@ export const Profile = () => {
         try {
             const croppedImageFile = await getCroppedImg(imageSrc, croppedAreaPixels);
             console.log('Cropped image file:', croppedImageFile);
-            // Aquí puedes hacer lo que necesites con la imagen recortada, como enviarla a un servidor o actualizar el estado
-            setImageFile(croppedImageFile);  // Guarda la imagen recortada en el estado si es necesario
-            handleImageUpload();
-            setIsCropping(false);  // Opcional: Cambia el estado para salir del modo recorte
-            setImageSrc(null);     // Limpia la imagen original de la vista
+
+            const updatedProfile = await actions.editCloudinaryImage(croppedImageFile);
+            if (!updatedProfile) {
+                throw new Error('Failed to upload and update profile image');
+            }
+
+            setProfileData(updatedProfile);
+            setImageFile(null);
+            setEditingImage(false);
+            setIsCropping(false);
+            setImageSrc(null);
         } catch (error) {
             console.error('Error cropping image:', error);
         }
@@ -120,6 +127,8 @@ export const Profile = () => {
     const handleCancelEditing = () => {
         setEditingImage(false);
         setImageFile(null);
+        setIsCropping(false);
+        setImageSrc(null);
     };
 
     // Sube la nueva imagen y actualiza el perfil
@@ -150,12 +159,22 @@ export const Profile = () => {
     //-----------HANDLER PARA EDITAR INFORMACION--------------------------------------------------------------------------------------------
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setProfileData({ ...profileData, [name]: value });
+        if (name === 'confirmPassword') {
+            setConfirmPassword(value);
+        } else {
+            setProfileData({ ...profileData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
+
+        if (profileData.password !== confirmPassword) {
+            setError('Passwords do not match.');
+            return; // Detiene la función si las contraseñas no coinciden
+        }
+
         try {
             // Actualiza solo los datos del perfil, excluyendo la imagen
             const success = await actions.updateProfile(profileData);
@@ -164,6 +183,7 @@ export const Profile = () => {
                 localStorage.setItem('username', updatedProfile.username); // Actualiza el nombre de usuario en localStorage
                 setProfileData(updatedProfile);
                 setIsEditing(false); // Salir del modo de edición
+                setConfirmPassword('');
             } else {
                 setError('Failed to update profile. Please try again.');
             }
@@ -171,7 +191,6 @@ export const Profile = () => {
             setError('An unexpected error occurred. Please try again.');
         }
     };
-
 
     //------DELETING PROFILE HANDLERS-------------------------------------------------------------------------------------------------
 
@@ -255,24 +274,22 @@ export const Profile = () => {
                                     style={{ width: '100%' }}
                                 />
                             </div>
-                            <div>
-                                <button className="btn btn-primary" onClick={handleImageUpload}>
-                                    Save New Profile Picture
+                            <div className="button-container">
+                                <button className="join-room button-save" onClick={handleSaveCroppedImage}>
+                                    Save
                                 </button>
-                                <button className="btn btn-secondary" onClick={handleCancelEditing}>
-                                    Cancel
-                                </button>
-                                <button className="btn btn-success" onClick={handleSaveCroppedImage}>
-                                    Confirm Crop
+                                <button className="withdraw" onClick={handleCancelEditing}>
+                                    X
                                 </button>
                             </div>
+
                         </>
                     )}
                 </div>
             </div>
             {error && <p className="text-danger">{error}</p>}
             <form onSubmit={handleSubmit} style={{ marginLeft: '25px', marginRight: '25px' }}>
-                <div className="row d">
+                <div className="row">
                     {/** Username and Email */}
                     <div className="mb-3 col-6">
                         <label>Username:</label>
@@ -302,23 +319,46 @@ export const Profile = () => {
                         <input type="text" name="last_name" value={profileData.last_name} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
                 </div>
-                {/** Password and Age */}
-                <div className="row">
-                    <div className="mb-3 col-6">
-                        <label>Password:</label>
-                        <input type="text" name="password" value={profileData.password} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
+                {/** Password*/}
+                {isEditing && (
+                    <div className="row">
+                        <div className="mb-3 col-6">
+                            <label>Password:</label>
+                            <input
+                                type="password" // Cambiado a password para ocultar la entrada
+                                name="password"
+                                value={profileData.password}
+                                onChange={handleInputChange}
+                                className="form-control"
+                                readOnly={!isEditing}
+                            />
+                        </div>
+                        <div className="mb-3 col-6">
+                            <label>Confirm Password:</label>
+                            <input
+                                type="password" // Cambiado a password para ocultar la entrada
+                                name="confirmPassword" // Asegúrate de manejar este estado en tu componente
+                                value={confirmPassword} // Este estado debe ser añadido y manejado en tus estados
+                                onChange={(e) => setConfirmPassword(e.target.value)} // Añade y maneja el cambio específicamente para confirmPassword
+                                className="form-control"
+                                readOnly={!isEditing}
+                            />
+                        </div>
                     </div>
+                )}
+                {/** Age and Gender */}
+                <div className="row">
                     <div className="mb-3 col-6">
                         <label>Age:</label>
                         <input type="text" name="age" value={profileData.age} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
-                </div>
-                {/** Gender and Bio */}
-                <div className="row">
                     <div className="mb-3 col-6">
                         <label>Gender:</label>
                         <input type="text" name="gender" value={profileData.gender} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
+                </div>
+                {/** Bio */}
+                <div className="row">
                     <div className="mb-3 col-12">
                         <label>About yourself:</label>
                         <textarea name="bio" value={profileData.bio} onChange={handleInputChange} readOnly={!isEditing} className="form-control" placeholder='type something...'></textarea>

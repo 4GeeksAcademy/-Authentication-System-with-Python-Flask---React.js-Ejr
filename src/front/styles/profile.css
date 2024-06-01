@@ -72,3 +72,12 @@ input {
 .bio {
     width: 100%;
 }
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-save {
+    margin-right: 20px; /* Espacio entre los botones */
+}
