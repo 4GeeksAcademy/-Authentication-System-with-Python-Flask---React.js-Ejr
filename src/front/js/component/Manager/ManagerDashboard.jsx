@@ -126,7 +126,7 @@ export const ManagerDashboard = () => {
     return (
         <div className="row">
             <button
-                className="btn btn-primary"
+                className="btn btn-dark"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasScrolling"
@@ -138,27 +138,27 @@ export const ManagerDashboard = () => {
 
 
             <div className="offcanvas offcanvas-start"
-                /* data-bs-scroll="true" */
+                data-bs-scroll="true" 
                 data-bs-backdrop="false"
                 tabIndex="-1"
                 id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel">
+                aria-labelledby="offcanvasScrollingLabel" style={{backgroundColor: "#F5F5F5"}}>
 
 
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasScrollingLabel" onClick={homeManager}>Manager Dashboard</h5>
+                    <h5 className="offcanvas-title text-center" id="offcanvasScrollingLabel" onClick={homeManager}>Manager Dashboard</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body">
                     <div className="text-center">
-                        <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
-                            <FaCircleArrowLeft />
+                        <div className="fs-4 my-3" onClick={handleHome} style={{ cursor: 'pointer' }}>
+                            <FaCircleArrowLeft /> HOME
                         </div>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyProfile}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <CgProfile />
                                 </div>
                                 <div>
@@ -167,9 +167,9 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreatePayment}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleCreatePayment}>
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <MdPayments />
                                 </div>
                                 <div>
@@ -178,10 +178,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleCreateCourse}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <LuBookUp />
                                 </div>
                                 <div>
@@ -190,10 +190,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyModule}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyModule}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <RiSoundModuleFill />
                                 </div>
                                 <div>
@@ -202,10 +202,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyQuizzes}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     < VscGitPullRequestGoToChanges  />
                                 </div>
                                 <div>
@@ -214,10 +214,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleCreateCategory}>
+                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleCreateCategory}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <TbCategoryPlus />
                                 </div>
                                 <div>
@@ -226,10 +226,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleUpdateCourse}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleUpdateCourse}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <GrUpdate />
                                 </div>
                                 <div>
@@ -238,10 +238,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyQuizzes}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyQuizzes}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <MdOutlineQuiz />
                                 </div>
                                 <div>
@@ -250,10 +250,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetModules}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleGetModules}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <MdOutlineChromeReaderMode />
                                 </div>
                                 <div>
@@ -262,10 +262,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleGetPayment}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleGetPayment}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <MdOutlinePayment />
                                 </div>
                                 <div>
@@ -274,10 +274,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyCourses}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <AiOutlineFundView  />
                                 </div>
                                 <div>
@@ -286,10 +286,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>
+                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleTeachers}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <FaUserGraduate />
                                 </div>
                                 <div>
@@ -298,10 +298,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={handleUsers}>
+                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleUsers}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <BsFillPersonLinesFill />
                                 </div>
                                 <div>
@@ -310,10 +310,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={HandleFiles}>
+                        <button className='btn btn-outline-dark my-2 w-75' onClick={HandleFiles}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <VscFileSubmodule />
                                 </div>
                                 <div>
@@ -322,10 +322,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-primary my-2 w-75' onClick={handlePDF}>
+                        <button className='btn btn-outline-dark my-2 w-75' onClick={handlePDF}>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <PiCertificate />
                                 </div>
                                 <div>
@@ -334,10 +334,10 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments} disabled>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handlePayments} disabled>
 
                             <div className='d-flex justify-content-between align-items-center'>
-                                <div className='p-1 mx-1 border rounded-circle d-flex justify-content-center align-items-center'>
+                                <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <MdErrorOutline />
                                 </div>
                                 <div>

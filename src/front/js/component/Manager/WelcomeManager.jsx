@@ -47,29 +47,29 @@ export const WelcomeManager = () => {
                                         backgroundColor: '#AAAAAA'
                                     }}
                                 >
-                                    <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflowX: 'auto' }}>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                    <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflow: 'auto' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             #
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Name
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Last Name
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Email
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Number Document
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Phone
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Username
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Gender
                                         </a>
                                     </div>
@@ -88,29 +88,29 @@ export const WelcomeManager = () => {
                                                 backgroundColor: item.id % 2 === 0 ? '#F0F0F0' : '#C8C8C8'
                                             }}
                                         >
-                                            <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflowX: 'auto' }}>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                            <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflow: 'auto' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.id}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.name}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.lastName}
                                                 </a>
                                                 <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '50%' }}>
                                                     {item.email}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.numberDocument}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.phone}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.username}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.gender}
                                                 </a>
                                             </div>
@@ -140,32 +140,32 @@ export const WelcomeManager = () => {
                                         backgroundColor: '#AAAAAA'
                                     }}
                                 >
-                                    <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflowX: 'auto' }}>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                    <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflow: 'auto' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             #
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Name
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Last Name
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Email
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Number Document
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Phone
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Username
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Gender
                                         </a>
-                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                        <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                             Certificate Teacher
                                         </a>
                                     </div>
@@ -184,32 +184,32 @@ export const WelcomeManager = () => {
                                                 backgroundColor: item.id % 2 === 0 ? '#F0F0F0' : '#C8C8C8'
                                             }}
                                         >
-                                            <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflowX: 'auto' }} >
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                            <div className="rounded-2 d-flex justify-content-between w-100" style={{ overflow: 'auto' }} >
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.id}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.name}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.lastName}
                                                 </a>
                                                 <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '50%' }}>
                                                     {item.email}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.numberDocument}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.phone}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.username}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.gender}
                                                 </a>
-                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%' }}>
+                                                <a className="text-decoration-none text-dark m-3" style={{ cursor: 'pointer', width: '10%', maxHeight: "450px" }}>
                                                     {item.certificateTeacher}
                                                 </a>
                                             </div>
