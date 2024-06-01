@@ -17,6 +17,7 @@ import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
 import { GetQuizzes } from './GetQuizzes.jsx';
+import { HistoryCoursesUser } from './HistoryCoursesUser.jsx';
 
 
 
@@ -84,6 +85,10 @@ export const ManagerDashboard = () => {
         setButtonSelected(<CreateCategory />)
     }
 
+    const handleHistoryCoursesUsers = () => {
+        setButtonSelected(<HistoryCoursesUser />)
+    }
+
     const navigate = useNavigate()
     function handleHome() {
         navigate('/')
@@ -94,16 +99,15 @@ export const ManagerDashboard = () => {
 
             <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body">
                     <div className="text-center">
-                        <p>Dashboard</p>
+
                         <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
-                            <FaCircleArrowLeft />
                             <h1>Welcome!</h1>
                             <h5>Manager</h5>
+                            <FaCircleArrowLeft />
                         </div>
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleCreateCourse}>Create Courses</button>
 
@@ -120,6 +124,8 @@ export const ManagerDashboard = () => {
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>Profile</button>
 
                         <button className="btn btn-outline-primary my-2 w-75" onClick={handlePayments}>Payments </button>
+
+                        <button className="btn btn-outline-primary my-2 w-75" onClick={handleHistoryCoursesUsers}>History Courses </button>
 
                         <button className='btn btn-outline-primary my-2 w-75' onClick={handleTeachers}>Teachers</button>
 
@@ -140,4 +146,3 @@ export const ManagerDashboard = () => {
         </div>
     )
 }
-

@@ -33,7 +33,7 @@ export const UserDashboard = () => {
     }
 
     const handleHistoryCourses = () => {
-        setButtonSelected(<HistoryCourses/>)
+        setButtonSelected(<HistoryCourses />)
     }
 
     const navigate = useNavigate();
@@ -44,48 +44,53 @@ export const UserDashboard = () => {
 
     return (
         <div>
-            <div className='row' >
 
-                <div className='col-3 border border-secondary text-center'>
-                    <div className='text-center my-3 d-flex align-items-center justify-content-center'>
+            <div className="row">
+                <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">CLICK</button>
 
-                        <div className='fs-4' onClick={handleHome} style={{ cursor: "pointer" }}>
-                            <FaCircleArrowLeft />
-                        </div>
-                        <div>
-                            <h3 className='text-center d-inline mx-2'>Welcome!</h3>
-                        </div>
+                <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                    <div className="offcanvas-header">
+                        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-                    <div>
-                        
+                    <div className="offcanvas-body">
+                        <div className="text-center">
 
-                        <div className='col-12 w-100'>
+                            <div className="fs-4" onClick={handleHome} style={{ cursor: 'pointer' }}>
+                                <h1>Welcome!</h1>
+                                <h5>Student</h5>
+                                <FaCircleArrowLeft />
+                            </div>
+
                             <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyCourses}>
                                 My courses
                             </button>
+
+                            <div>
+                                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>
+                                    Profile
+                                </button>
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyPayments}>
+                                    My Payments
+                                </button>
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-primary my-2 w-75" onClick={handleCertificate}>
+                                    Certificate
+                                </button>
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-primary my-2 w-75" onClick={handleHistoryCourses}>
+                                    History Courses
+                                </button>
+                            </div>
+
                         </div>
-                        <div>
-                            <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyProfile}>
-                                Profile
-                            </button>
-                        </div>
-                        <div>
-                            <button className="btn btn-outline-primary my-2 w-75" onClick={handleMyPayments}>
-                                My Payments
-                            </button>
-                        </div>
-                        <div>
-                            <button className="btn btn-outline-primary my-2 w-75" onClick={handleCertificate}>
-                                Certificate
-                            </button>
-                        </div>
-                        <div>
-                            <button className="btn btn-outline-primary my-2 w-75" onClick={handleHistoryCourses}>
-                                History Courses
-                            </button>
-                        </div>
+
                     </div>
                 </div>
+
 
 
                 <div className='col border border-secondary d-flex justify-content-center align-items-center'>
@@ -95,12 +100,13 @@ export const UserDashboard = () => {
                                 {buttonSelected}
                             </div>
                             : <div>
-                                <h1>Contenido de Bienvenida</h1>
+                                
                             </div>
                     }
 
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
+
     )
 }
