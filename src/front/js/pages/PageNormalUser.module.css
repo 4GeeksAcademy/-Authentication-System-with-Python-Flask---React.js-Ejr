@@ -1,8 +1,9 @@
 .userDetailsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  padding-right: 4.75rem
   }
   
   .securityQuestions {

@@ -27,6 +27,8 @@ import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
 import PRRecord from "../component/PRRecord.jsx";
 
+import Sidebar from "../component/Sidebar.jsx";
+
 const PageNormalUser = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
@@ -71,8 +73,8 @@ const PageNormalUser = () => {
 
     return (
         <>
+        <Sidebar/>
             <h1>User Page</h1>
-            <Breadcrumbs />
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
                     <div key={index} className={styles.securityQuestions} onClick={() => handleOpenModal(index)}>

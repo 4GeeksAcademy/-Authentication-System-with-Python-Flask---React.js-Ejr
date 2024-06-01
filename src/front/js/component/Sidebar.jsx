@@ -75,7 +75,7 @@ const Sidebar = () => {
                         </>
                     )}
                     <span className={`${styles.userName} ${collapsed ? styles.hide : ''}`}>
-                        Bienvenido <strong>{store.uploadedUserData.name}</strong>
+                        Welcome! <strong>{store.uploadedUserData.name}</strong>
                     </span>
                 </div>
             </div>

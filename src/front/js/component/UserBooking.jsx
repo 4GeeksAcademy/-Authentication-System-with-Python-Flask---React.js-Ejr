@@ -54,7 +54,7 @@ const UserBooking = () => {
         <>
             <div className={styles.userDetailsContainer}>
                 <div className={styles.bookingsContainer}>
-                    <h3>Clases Reservadas:</h3>
+                    <h4>Reserved Classes:</h4>
                     <div className={styles.bookingsList}>
                     {uploadedUserData.bookings && uploadedUserData.bookings
                         .filter(booking => booking.booking_status === "reserved") // Filtra solo las reservas con status "reserved"
@@ -63,8 +63,8 @@ const UserBooking = () => {
                                 <div className={styles.bookingInfo}>
                                     <h4>{booking.class_name}</h4>
                                     <p><strong>Coach: </strong>{booking.class_instructor}</p>
-                                    <p><strong>Fecha: </strong><FormattedDate dateTime={booking.dateTime_class}/></p>
-                                    <p><strong>Hora: </strong>{booking.class_start_time}</p>
+                                    <p><strong>Date: </strong><FormattedDate dateTime={booking.dateTime_class}/></p>
+                                    <p><strong>Hour: </strong>{booking.class_start_time}</p>
                                 </div>
                                 <button onClick={() => handleCancelBooking(booking.booking_id)} className={styles.deleteButton}>
                                     <i className="fa-solid fa-trash-can"></i>
