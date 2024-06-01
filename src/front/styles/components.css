@@ -4,3 +4,18 @@
     object-fit: cover; 
   }
   
+  .cardEdit {
+    transition: transform 0.3s ease-in-out;
+}
+
+.cardEdit:hover {
+    transform: scale(1.05);
+}
+
+.addEdit{
+  transition: transform 1.3s ease-in-out;
+}
+
+.addEdit:hover{
+  background-color: aqua;
+}
