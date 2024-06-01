@@ -1,5 +1,5 @@
 .modal-content {
-  background-color: #333c53;
+  background-color:  #2F313A;
   color: #fff; /* Aseguramos que el texto sea legible */
   display: flex;
   flex-direction: column;
@@ -25,9 +25,6 @@
   color: white;
 }
 
-.form-select {
-  background-color: #1e1e1e;
-}
 
 /* Media query para pantallas pequeñas */
 @media (max-width: 768px) {

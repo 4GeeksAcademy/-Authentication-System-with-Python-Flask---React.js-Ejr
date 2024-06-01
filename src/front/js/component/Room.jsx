@@ -53,6 +53,7 @@ export const Room = ({ room }) => {
             case 'switch':
                 return <img src={switchIcon} alt="Switch" style={iconStyle} />;
             case 'psn':
+            case 'playstation':
                 return <img src={playstationIcon} alt="Playstation" style={iconStyle} />;
             case 'pc':
                 return <img src={pcIcon} alt="PC" style={iconStyle} />;

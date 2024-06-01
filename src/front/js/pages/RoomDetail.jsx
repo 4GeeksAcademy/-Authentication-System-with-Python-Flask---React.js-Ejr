@@ -33,11 +33,6 @@ export const RoomDetail = () => {
     const participantsRef = useRef(null);
 
     useEffect(() => {
-        if (!token) {
-            navigate('/login');
-            return;
-        }
-
         const fetchData = async () => {
             try {
                 await actions.fetchRooms();
@@ -275,7 +270,8 @@ export const RoomDetail = () => {
                 return <img src={xboxIcon} alt="Xbox" style={iconStyle} />;
             case 'switch':
                 return <img src={switchIcon} alt="Switch" style={iconStyle} />;
-            case 'playstation':
+                case 'playstation':
+                    case 'Playstation':
                 return <img src={playstationIcon} alt="PlayStation" style={iconStyle} />;
             case 'pc':
                 return <img src={pcIcon} alt="PC" style={iconStyle} />;
@@ -356,14 +352,13 @@ export const RoomDetail = () => {
                         )}
                     </div>
                 </div>
-                {!isParticipantOrHost && (
-                     <div className="room-actions">
-                     <button className="back-btn btn btn-outline-primary" onClick={() => navigate('/')}>Go Back</button>
-                     {(requestStatus === 'None' || requestStatus === 'abandoned') && (
-                         <button className="join-room" onClick={handleJoinRoom}>Join Room</button>
-                     )}
-                     {requestStatus === 'pending' && <button className='btn-danger withdraw' onClick={handleWithdrawRequest}>Withdraw Request</button>}
-                 </div>
+                {!isHost && (
+                    <div className="room-actions">
+                        <button className="back-btn btn btn-outline-primary" onClick={() => navigate('/')}>Go Back</button>
+                        {(!token || requestStatus === 'None' || requestStatus === 'abandoned') && (
+                            <button className="join-room" onClick={handleJoinRoom}>Join Room</button>
+                        )}
+                    </div>
                 )}
                 {isParticipantOrHost && (
                     <CommentsSection
@@ -377,11 +372,6 @@ export const RoomDetail = () => {
                         newComment={newComment}
                         setNewComment={setNewComment}
                     />
-                )}
-                {isParticipantOrHost && !isHost && (
-                    <div>
-                        <button onClick={handleAbandonRoom}>Abandon Room</button>
-                    </div>
                 )}
             </div>
         </div>
