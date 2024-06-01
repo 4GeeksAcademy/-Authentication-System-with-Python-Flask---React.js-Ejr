@@ -133,9 +133,9 @@ def get_token():
             return jsonify({'error': 'Invalid email format.'}), 400
         
         login_user = User.query.filter_by(email=email).one_or_none()
-
-        if not login_user:
-            return jsonify({'error': 'Email/user not found.'}), 404
+        
+        if not login_user or login_user.is_deleted:
+            return jsonify({'error': 'Email not found or account is deleted.'}), 404
 
         if bcrypt.check_password_hash(login_user.password, password):
             expires = timedelta(hours=1)  # pueden ser "hours", "minutes", "days","seconds"
