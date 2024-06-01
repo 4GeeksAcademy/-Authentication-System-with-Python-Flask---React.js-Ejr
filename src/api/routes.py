@@ -461,7 +461,7 @@ def show_view_user():
             }
             teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Teacher Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Student Successfully"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401

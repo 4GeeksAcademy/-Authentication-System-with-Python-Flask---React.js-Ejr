@@ -45,7 +45,7 @@ export const ModuleCourse = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.title !== '' && formData.descriptionContent !== '') {
-            console.log("Creating course with data:", formData);
+           
             await actions.postModule(formData);
             setCounter(0);
             resetFormData();
@@ -65,13 +65,12 @@ export const ModuleCourse = () => {
     const uploadMedia = async (e) => {
         const files = e.target.files;
         if (files.length > 0) {
-            await actions.uploadCloudinaryMedia(files);
-            console.log("Uploaded media:", store.media);
+            await actions.uploadCloudinaryMedia(files)
         }
     };
 
     useEffect(() => {
-        console.log("Media updated:", store.media);
+        
         setFormData(prevData => ({
             ...prevData,
             urlVideo: store.media
@@ -82,25 +81,25 @@ export const ModuleCourse = () => {
         const horas = Math.floor(segundos / 3600);
         const minutos = Math.floor((segundos % 3600) / 60);
         const segundosRestantes = segundos % 60;
-        return `${horas} horas, ${minutos} minutos, ${segundosRestantes} segundos`;
+        return `${horas} hours, ${minutos} minutes, ${segundosRestantes} seconds`;
     };
 
     console.log(formData);
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
-    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
+    const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2);
 
     return (
         <div className="container position-relative">
             {/* Msg */}
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
-                {(msgError === '' && msg === '') ? (
+                {(msgError === '' && msg2 === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
                         {"Internet or server connection failure"}
                     </div>
                 ) : (msgError === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
-                        {msg}
+                        {msg2}
                     </div>
                 ) : (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
@@ -152,9 +151,9 @@ export const ModuleCourse = () => {
                         required>
                         <option value="">--Choose--</option>
                         {
-                                (!store.course.access_to_courses) 
+                            (!store.course.access_to_courses)
                                 ? <option disabled>Sin Datos</option>
-                                : store.course.access_to_courses.map((item, index) => (
+                                : store.course.access_to_courses?.map((item, index) => (
                                     <option key={index} value={item.title}>#{item.id} /{item.title}</option>
                                 ))
                         }
@@ -172,7 +171,7 @@ export const ModuleCourse = () => {
                         <option value="">--Choose--</option>
                         {
                             (!store.course.access_to_courses) ? <option disabled>Sin Datos</option>
-                                : store.course.access_to_courses.map((item, index) => (
+                                : store.course.access_to_courses?.map((item, index) => (
                                     <option key={index} value={item.description}>#{item.id} /{item.description}</option>
                                 ))
                         }
@@ -192,7 +191,7 @@ export const ModuleCourse = () => {
                             (store.medios.length === 0) ? (
                                 <option disabled>Sin Datos</option>
                             ) : (
-                                store.medios.map((item, index) => (
+                                store.medios?.map((item, index) => (
                                     <option key={index} value={item.version_id}>
                                         #{item.original_filename}.{item.format}
                                     </option>
@@ -215,10 +214,14 @@ export const ModuleCourse = () => {
                             (store.medios.length === 0) ? (
                                 <option disabled>Sin Datos</option>
                             ) : (
-                                store.medios.map((item, index) => (
-                                    <option key={index} value={item.version_id}>
-                                        #{item.original_filename}.{item.format}
-                                    </option>
+                                store.medios?.map((item, index) => (
+                                    (item.format == 'mp4')
+                                        ? <option key={index} value="Not JPG">
+                                            Not JPG
+                                        </option>
+                                        : <option key={index} value={item.version_id}>
+                                            #{item.original_filename}.{item.format}
+                                        </option>
                                 ))
                             )
                         }
@@ -229,18 +232,18 @@ export const ModuleCourse = () => {
                     <label>Total Video</label>
                     <select
                         className="form-select"
-                        name='videoTotal'
+                        name='totalVideo'
                         onChange={handleChange}
-                        value={formData.videoTotal}
+                        value={formData.totalVideo}
                         required>
                         <option value="">--Choose--</option>
                         {
                             (store.medios.length === 0) ? (
                                 <option disabled>Sin Datos</option>
                             ) : (
-                                store.medios.map((item, index) => (
+                                store.medios?.map((item, index) => (
                                     <option key={index} value={toTime(item.duration)}>
-                                        #{item.id} /{toTime(item.duration)} hrs
+                                        #{item.id} /{toTime(item.duration)}
                                     </option>
                                 ))
                             )
@@ -259,7 +262,7 @@ export const ModuleCourse = () => {
                         <option value="">--Choose--</option>
                         {
                             (!store.course.access_to_courses) ? <option disabled>Sin Datos</option>
-                                : store.course.access_to_courses.map((item, index) => (
+                                : store.course.access_to_courses?.map((item, index) => (
                                     <option key={index} value={item.id}>#{item.id} /{item.title}</option>
                                 ))
                         }
