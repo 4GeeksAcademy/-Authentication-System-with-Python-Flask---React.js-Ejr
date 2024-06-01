@@ -14,6 +14,9 @@ export const WelcomeManager = () => {
         setActive(!active);
     };
 
+    const accessToUser = store.user?.access_to_user
+    const accessToTeacher = store.teacher?.access_to_teacher
+
     return (
         <div className="container-fluid" style={{ position: "relative", textAlign: "center", height: "100vh", padding: 0, margin: 0 }}>
             
@@ -77,9 +80,9 @@ export const WelcomeManager = () => {
                             </div>
                         </div>
 
-                        {store.user && store.user.access_to_user && store.user.access_to_user.length === 0
+                        {accessToUser && accessToUser.length === 0
                             ? "No hay user cargados"
-                            : store.user.access_to_user.map((item) => (
+                            : accessToUser.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div
@@ -173,9 +176,9 @@ export const WelcomeManager = () => {
                             </div>
                         </div>
 
-                        {store.user && store.user.access_to_teacher &&  store.user.access_to_teacher.length === 0
+                        {accessToTeacher &&  accessToTeacher.length === 0
                             ? "No hay teacher cargados"
-                            : store.user.access_to_teacher.map((item) => (
+                            : accessToTeacher.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div

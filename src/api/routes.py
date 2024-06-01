@@ -73,10 +73,10 @@ def create_signup_user():
         msg.body = f"Hello {name},\n\nThank you for signing up on our platform. We're excited to have you on board!"
         mail.send(msg)
 
-        return jsonify({"message":"Student has been Created Successfully", "user_create": new_user.serialize()}), 201
+        return jsonify({"message":"Student has been Created Successfully", "access_to_user": new_user.serialize()}), 201
 
     except Exception as err:
-        return jsonify({"Error":"Error in User Creation: " + str(err)}), 500
+        return jsonify({"Error":"Error in User Creation", "Msg": str(err)}), 500
 
 @api.route('/signup/teacher', methods=['POST'])
 def create_signup_teacher():
@@ -127,9 +127,9 @@ def create_signup_teacher():
         msg.body = f"Hello {name},\n\nThank you for signing up on our platform. We're excited to have you on board!"
         mail.send(msg)
 
-        return jsonify({"message": "Teacher has been Created Successfully", "teacher_create": new_teacher.serialize()}), 201
+        return jsonify({"message": "Teacher has been Created Successfully", "access_to_teacher": new_teacher.serialize()}), 201
     except Exception as e:
-        return jsonify({"Error": "Error posting teacher user", "error code": str(e)})
+        return jsonify({"Error": "Error in Teacher Creation", "error code": str(e)})
 
 @api.route('/signup/manager', methods=['POST'])
 def create_signup_manager():
@@ -176,9 +176,9 @@ def create_signup_manager():
         msg.body = f"Hello {name},\n\nThank you for signing up on our platform. We're excited to have you on board!"
         mail.send(msg)
         
-        return jsonify({"message": "Manager has been Created Successfully", "manager_create": new_manager.serialize()}), 201
+        return jsonify({"message": "Manager has been Created Successfully", "access_to_manager": new_manager.serialize()}), 201
     except Exception as e: 
-        return jsonify({"Error": "Error in user manager creation" + str(e)}), 500
+        return jsonify({"Error": "Error in Manager Creation", "Msg": str(e)}), 500
 
 
 

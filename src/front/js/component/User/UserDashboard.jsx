@@ -19,6 +19,8 @@ import { MdOutlinePayment } from "react-icons/md";
 import { AiOutlineFundView } from "react-icons/ai";
 import { PiCertificate } from "react-icons/pi"
 import { MdErrorOutline } from "react-icons/md";
+import { CourseWelcome } from '../../pages/Courses/CourseWelcome.jsx';
+import { GetModuleUser } from './GetModulesUser.jsx';
 
 
 
@@ -31,8 +33,12 @@ export const UserDashboard = () => {
         setButtonSelected(<WelcomeUser/>)
     }
 
+    function handleViewCourse() {
+        setButtonSelected(<GetModuleUser/>)
+    }
+
     const handleMyCourses = () => {
-        setButtonSelected(<CoursesContainer />)
+        setButtonSelected(<CourseWelcome />)
         actions.getCourse()
     }
 
@@ -111,7 +117,7 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" disabled>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleViewCourse}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>

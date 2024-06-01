@@ -9,6 +9,7 @@ import { LuHeart } from "react-icons/lu";
 export const CoursesContainer = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
+    
     const [activeIndex, setActiveIndex] = useState(0); // Estado para el índice activo del carrusel
 
     function handleAddTrolley(titleCourse, courseId, price) {
@@ -24,7 +25,7 @@ export const CoursesContainer = () => {
                     {store.course && store.course.access_to_courses && store.course.access_to_courses.length === 0 ? "No hay Cursos Cargados" :
                         store.course && store.course.access_to_courses && store.course.access_to_courses.map((item, index) => {
                             return (
-                                <div key={index} className={`carousel-item ${index === activeIndex ? 'active' : ''}`}> {/* Aquí se establece la clase active según el estado activeIndex */}
+                                <div key={index} className={`carousel-item ${index === activeIndex ? 'active' : ''}`}> 
                                     <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
                                         <div className="card mx-2 shadow rounded-4 col-12 cardEdit"
                                             onClick={() => navigate(`/course/${item.id}`)}

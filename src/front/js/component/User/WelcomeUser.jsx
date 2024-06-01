@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from "../../store/appContext.js";
 
 import { FaUserGraduate } from "react-icons/fa";
@@ -8,15 +8,24 @@ export const WelcomeUser = () => {
     const { store, actions } = useContext(Context);
     const [active, setActive] = useState(false);
 
+    useEffect(()=>{
+        actions.getCourse()
+        actions.getPayments()
+    },[])
+
     const toggleActive = () => {
         setActive(!active);
     };
+
+    // Verificar si store.course y store.course.access_to_course existen
+    const accessToCourse = store.course?.access_to_course
+    const accessToPayment = store.payment?.payment
 
     return (
         <div className="container-fluid" style={{ position: "relative", textAlign: "center", height: "100vh", padding: 0, margin: 0 }}>
 
             <div>
-                <img src="https://media.licdn.com/dms/image/D4D12AQFAm-bJ8YZRNQ/article-cover_image-shrink_720_1280/0/1658653581725?e=2147483647&v=beta&t=suMPUJnAI7EG2IgsJ4F7fcisAMbvVRXeJlKXJhDbF7Y" class="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
+                <img src="https://media.licdn.com/dms/image/D4D12AQFAm-bJ8YZRNQ/article-cover_image-shrink_720_1280/0/1658653581725?e=2147483647&v=beta&t=suMPUJnAI7EG2IgsJ4F7fcisAMbvVRXeJlKXJhDbF7Y" className="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
             </div>
             <div className='text-black fw-bolder rounded-pill' style={{ position: "absolute", top: "20%", width: "100%", color: "white" }}>
 
@@ -72,9 +81,9 @@ export const WelcomeUser = () => {
                             </div>
                         </div>
 
-                        { store.payment && store.payment.payments && store.payment.payments.length === 0
+                        {accessToPayment && accessToPayment.length === ''
                             ? "No hay payment cargados"
-                            : store.payment.payments.map((item) => (
+                            : accessToPayment?.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div
@@ -171,9 +180,9 @@ export const WelcomeUser = () => {
                             </div>
                         </div>
 
-                        {store.course && store.course.access_to_courses && store.course.access_to_courses.length === 0
+                        {accessToCourse && accessToCourse.length === ''
                             ? "No hay course cargados"
-                            : store.course.access_to_courses.map((item) => (
+                            : accessToCourse?.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div

@@ -139,23 +139,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("jwt-token");
           const userRole = localStorage.getItem("currentRole");
-          const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
-          if (token && userRole && userToLogin) {
+          const userToLoginStr = localStorage.getItem("userToLogin");
+
+          await getActions().getCourse();
+          await getActions().getTrolleyToOrder();
+          await getActions().getCategory();
+          
+      
+          if (token && userRole && userToLoginStr) {
+            const userToLogin = JSON.parse(userToLoginStr);
+            if (!userToLogin) {
+              throw new Error("Failed to parse userToLogin from localStorage");
+            }
+      
             setStore({ currentRole: userRole });
+            
+           
             await getActions().getUser(userRole);
-            await getActions().getCourse()
-            await getActions().getTrolleyToOrder()
-            await getActions().getCategory()
-            await getActions().getModules()
-            await getActions().getQuizzes()
-            await getActions().getPayments()
-            await getActions().getOrders()
+            await getActions().getModules();
+            await getActions().getQuizzes();
+            await getActions().getPayments();
+            await getActions().getOrders();
           }
         } catch (err) {
           setStore({ ...store, error: "Error checking user session" });
           console.error("Error checking user session: ", err);
         }
       },
+      
 
       updateUser: async (dataUpdate, type, userId) => {
         const store = getStore();
@@ -238,47 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      /* deleteTeacher: async (teacherId) => {
-        const store = getStore();
-        getActions().updateMsgError("");
-        getActions().updateMsg("");
-        getActions().spinner(true);
-        try {
-          const token = localStorage.getItem("jwt-token");
-          if (!token) throw new Error("No token found");
-
-          const url = process.env.BACKEND_URL + "/api/view/manager/teacher/" + teacherId;
-          const respDelQuizzes = await fetch(url, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            }
-          })
-
-
-          if (!respDelQuizzes.ok) {
-            const errorData = await respDelQuizzes.json();
-            console.log(errorData);
-            setStore({ ...store, error: errorData.error });
-            throw new Error(
-              errorData.error || "Error al Delete"
-            );
-          }
-
-
-          const dataDelQuizzes = await respDelQuizzes.json();
-          setStore({ ...store, msg: dataDelQuizzes.message });
-
-          await getActions().getUser();
-
-        } catch (err) {
-          console.log(err);
-        } finally {
-          getActions().spinner(false);
-        }
-      }, */
-
+    
       // RESET PASSWORD
       resetPassword: async (email, userPassword) => {
         const store = getStore();
@@ -900,12 +871,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataAddModule = await respAddModule.json();
-          setStore({ ...store, msg: dataAddModule.message });
+          setStore({ ...store, msg2: dataAddModule.message });
           console.log(dataAddModule);
 
         } catch (err) {
           console.error("Error in postModule:", err);
-          setStore({ ...store, error: err.message });
+          setStore({ ...store, error2: err.message });
         } finally {
           actions.spinner(false);
         }
@@ -923,14 +894,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!respGetModules.ok) {
             const errorData = await respGetModules.json();
             console.log(errorData);
-            setStore({ ...store, error: errorData.error });
+            setStore({ ...store, error2: errorData.error });
             throw new Error(errorData.error || "Error al Obtener el Modules");
           }
 
           const dataGetModules = await respGetModules.json();
           setStore({
             ...store,
-            msg: dataGetModules.message,
+            msg2: dataGetModules.message,
             modules: dataGetModules,
           });
           console.log(store.modules);
