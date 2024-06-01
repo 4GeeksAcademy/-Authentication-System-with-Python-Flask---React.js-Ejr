@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Form, Row, Col, Button, Modal } from "react-bootstrap";
 import styles from "./ClassesView.module.css";
-import EditClasses from "../pages/EditClasses.jsx";
+import EditClasses from "./EditClasses.jsx";
+
 const ClassesView = () => {
     const { actions, store } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
@@ -10,7 +11,7 @@ const ClassesView = () => {
 
     useEffect(() => {
         actions.getClasses();
-    }, [actions]);
+    }, []);
 
     const handlerEdit = (item) => {
         setSelectedClass(item);
@@ -22,9 +23,15 @@ const ClassesView = () => {
         setSelectedClass(null);
     };
 
+    const formatDateTime = (dateTime) => {
+        const date = new Date(dateTime);
+        const formattedDate = date.toISOString().slice(0, 16);
+        return formattedDate;
+    };
+
     return (
         <div className={`container-fluid ${styles.classesViewContainer}`}>
-            <h1 className={styles.title}>Clases Activas</h1>
+            <h1 className={styles.title}>Active Classes</h1>
             <div className="table-responsive">
                 <table className={`table ${styles.table}`}>
                     <thead>
@@ -40,10 +47,10 @@ const ClassesView = () => {
                     </thead>
                     <tbody>
                         {store.classesData && store.classesData.filter(item => item.Class_is_active).map((item) => (
-                            <tr key={item.name} className={styles.tableRow}>
+                            <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-                                <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
+                                <td className="text-center">{formatDateTime(item.dateTime_class)}</td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
@@ -53,7 +60,7 @@ const ClassesView = () => {
                                         className={styles.editButton}
                                         onClick={() => handlerEdit(item)}
                                     >
-                                        Editar clase
+                                        Edit class
                                     </Button>
                                 </td>
                             </tr>
@@ -62,7 +69,7 @@ const ClassesView = () => {
                 </table>
             </div>
 
-            <h1 className={styles.title}>Clases canceladas</h1>
+            <h1 className={styles.title}>Canceled classes</h1>
             <div className="table-responsive">
                 <table className={`table ${styles.table}`}>
                     <thead>
@@ -77,10 +84,10 @@ const ClassesView = () => {
                     </thead>
                     <tbody>
                         {store.classesData && store.classesData.filter(item => !item.Class_is_active).map((item) => (
-                            <tr key={item.name} className={styles.tableRow}>
+                            <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-                                <td className="text-center">{item.dateTime_class.slice(0, 16)}</td>
+                                <td className="text-center">{formatDateTime(item.dateTime_class)}</td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
@@ -92,7 +99,7 @@ const ClassesView = () => {
 
             <Modal show={showModal} onHide={handleCloseModal} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title className={styles.titlemodal}>Editar Clase</Modal.Title>
+                    <Modal.Title className={styles.titlemodal}>Edit class</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {selectedClass && (

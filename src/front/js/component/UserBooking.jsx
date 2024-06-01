@@ -41,9 +41,9 @@ const UserBooking = () => {
         // }
     };
 
-    // useEffect(() => {
-    //     actions.loadUserData(); // Carga las clases al montar el componente
-    // }, []);
+    useEffect(() => {
+        actions.loadUserData(); // Carga las clases al montar el componente
+    }, []);
 
 
 

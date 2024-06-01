@@ -19,7 +19,7 @@ const MembershipManager = () => {
 
     useEffect(() => {
         actions.loadMemberships(); // Fetch memberships from the server and update the store
-    }, [actions]);
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

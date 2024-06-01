@@ -84,3 +84,13 @@
 .searchInput {
   margin-bottom: 20px;
 }
+
+.modalactivation {
+  color: gray;
+}
+
+.buttonActivation {
+  background-color: #5D7266; /* Verde */
+  border: none;
+
+}

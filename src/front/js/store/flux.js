@@ -331,7 +331,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Obtenemos el token del almacenamiento local
 				let myToken = localStorage.getItem("token");
 				// console.log(myToken);
-				// console.log(userData);
+				console.log(userData);
 				// Construimos la URL para la solicitud
 				let url = `${process.env.BACKEND_URL}/api/user`;
 				try {
@@ -359,6 +359,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+
+//---------------------------------------------------------FUNCION PARA DESACTIVAR CUENTA DE USUARIO--------------------------------------------------------------------------
+
+			updateUserActivation: async (userId, isActive) => {
+				const token = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/api/user/${userId}/activate`;
+				try {
+					const response = await fetch(url, {
+						method: "PUT",
+						headers: {
+							Authorization: `Bearer ${token}`,
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ is_active: isActive })
+					});
+					const data = await response.json();
+					console.log(data)
+
+					if (response.ok) {
+						return { success: true, data: data };
+					} else {
+						return { success: false, error: data.error || "Unknown error occurred." };
+					}
+				} catch (error) {
+					console.error("Error updating user activation status:", error);
+					return { success: false, error: error.message };
+				}
+			},
+
 //---------------------------------------------------------FUNCIONES PARA CREAR CLASES --------------------------------------------------------------------------
 
 			// Función para crear una clase individual
@@ -483,7 +512,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
             },
-//---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
+//---------------------------------------------------------FUNCION PARA CARGAR LAS CLASES DE ENTRENAMIENTO --------------------------------------------------------------------------
 
 
 			//funcion asincrona para la vista que trae las clases de entrenamiento 
@@ -503,9 +532,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 					const data = await response.json();
+					// console.log(data)
+
 					if (response.ok) {
 						setStore({ ...getStore(), classesData: data });  // Actualiza el estado con las clases obtenidas
-						console.log(data)
 					} else {
 						throw new Error("Failed to fetch classes");
 					}
@@ -554,6 +584,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CANCELAR CLASES --------------------------------------------------------------------------
 
 			//Funcion asincrona para el boton de cancelar clase en el formulario de edicion EditClasses
 			cancelClass: async (id) => {
@@ -587,6 +618,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+//---------------------------------------------------------FUNCION PARA CARGAR LAS MEMBRESIAS --------------------------------------------------------------------------
 
 			loadMemberships: async () => {
 				// Obtenemos el token del almacenamiento local

@@ -6,6 +6,9 @@ from flask_mail import Message, Mail
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from werkzeug.utils import secure_filename # importacion de secure_filename para manejar imagen
 import base64
+from flask_jwt_extended import get_jwt_identity
+from functools import wraps
+from flask import jsonify
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -15,6 +18,25 @@ mail = Mail()
 
 #Funciones de Servicio
 #para facilitar la data de los enpoint
+
+
+
+#--------------------------------------------------------FUNCION PARA LA VERIFICACION DE ROLES------------------------------
+
+def require_role(*roles):
+    def wrapper(fn):
+        @wraps(fn)
+        def decorated(*args, **kwargs):
+            user_id = get_jwt_identity()
+            user = User.query.get(user_id)
+            if user and user.role.name in roles:
+                return fn(*args, **kwargs)
+            else:
+                return jsonify({'error': 'Insufficient role'}), 403
+        return decorated
+    return wrapper
+
+
 
 #--------------------------------------------------------FUNCION PARA EL ENVIO DE EMAIL ACTIVACION USUARIO------------------------------
 
@@ -66,34 +88,66 @@ def confirm_token_email(token, expiration=3600):
 def cancel_class_and_update_bookings(training_class):
     try:
         # Marcar la clase como no activa
-        training_class.Class_is_active = False  # Se establece la propiedad 'Class_is_active' del objeto 'training_class' a False.
+        training_class.Class_is_active = False
         
         # Obtener todas las reservas activas para esta clase
         bookings = Booking.query.filter_by(training_class_id=training_class.id, status='reserved').all()
-        # Se realiza una consulta a la base de datos para obtener todas las reservas donde el 'training_class_id' 
-        # corresponde al ID de la clase actual y el estado es 'reserved'. Esto retorna una lista de objetos 'Booking'.
+        
+        # Lista para almacenar los emails de los usuarios a notificar
+        users_to_notify = []
         
         # Cancelar cada reserva y actualizar la membresía del usuario
-        for booking in bookings:  # Itera sobre cada objeto 'Booking' en la lista 'bookings'.
+        for booking in bookings:
             booking.status = 'cancelled'  # Actualiza el estado de cada reserva a 'cancelled'.
+            
+            # Agregar el email del usuario a la lista de notificaciones si no está ya incluido
+            if booking.user.email not in users_to_notify:
+                users_to_notify.append(booking.user.email)
             
             # Reintegrar la clase a la membresía del usuario
             membership_history = UserMembershipHistory.query.filter(
-                UserMembershipHistory.user_id == booking.user_id,  # Filtra por 'user_id' de la reserva.
-                UserMembershipHistory.is_active == True,  # Se asegura que la membresía esté activa.
-                UserMembershipHistory.end_date >= datetime.utcnow()  # La membresía no debe haber expirado.
-            ).first()  # Obtiene la primera membresía activa que cumple con las condiciones o None si no hay ninguna.
+                UserMembershipHistory.user_id == booking.user_id,
+                UserMembershipHistory.is_active == True,
+                UserMembershipHistory.end_date >= datetime.utcnow()
+            ).first()
             
             if membership_history and membership_history.remaining_classes is not None:
-                # Si existe una membresía activa y se lleva un conteo de clases disponibles:
-                membership_history.remaining_classes += 1  # Incrementa en uno las clases disponibles.
-        
-        db.session.commit()  # Guarda los cambios realizados en la base de datos.
-        return True, "Class cancelled and bookings updated successfully"  # Retorna True y un mensaje de éxito.
-    except Exception as e:  # Si ocurre alguna excepción durante el proceso:
-        db.session.rollback()  # Deshace todos los cambios si hay un error.
+                membership_history.remaining_classes += 1
+
+        # Guardar los cambios en la base de datos
+        db.session.commit()
+
+        # Enviar correo de cancelación a cada usuario afectado
+        for email in users_to_notify:
+            send_class_cancellation_email_all(email, training_class)
+
+        return True, "Class cancelled and bookings updated successfully"
+    except Exception as e:
+        db.session.rollback()
         return False, "Error cancelling class and updating bookings: {}".format(str(e))
-        # Retorna False y el mensaje de error.
+
+def send_class_cancellation_email_all(email, training_class):
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    </head>
+    <body>
+        <div style="margin: 0 auto; width: 80%; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 3px #ccc;">
+            <h1 style="color: #333;">Class Cancellation Notification</h1>
+            <p>We regret to inform you that the following class has been cancelled:</p>
+            <ul>
+                <li>Class: {training_class.name}</li>
+                <li>Date: {training_class.dateTime_class}</li>
+                <li>Time: {training_class.start_time}</li>
+                <li>Duration: {training_class.duration_minutes} minutes</li>
+            </ul>
+            <p>We apologize for the inconvenience and hope to see you in another class soon!</p>
+        </div>
+    </body>
+    </html>
+    """
+    send_email('Class Cancellation Notification', email, html)
 
 
 
@@ -135,7 +189,7 @@ def send_class_booking_email(email, username, booking_id, training_class_id):
     <body>
         <div style="margin: 0 auto; width: 80%; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 3px #ccc;">
             <h1 style="color: #333;">Class Booking Confirmation</h1>
-            <p>Hello {username},</p>
+            <p><strong>Hello {username},</strong></p>
             <p>Thank you for booking a class with us! Here are the details of your reservation:</p>
             <ul>
                 <li>Class: {training_class.name}</li>
@@ -208,8 +262,8 @@ def send_class_cancellation_email(email, username, training_class_id):
     </head>
     <body>
         <div style="margin: 0 auto; width: 80%; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 3px #ccc;">
-            <h1 style="color: #333;">Class Cancellation Confirmation</h1>
-            <p>Hello {username},</p>
+            <h1 style="color: #333;">Class Booking Cancellation Confirmation</h1>
+            <p><strong>Hello {username},</strong></p>
             <p>We regret to inform you that your class reservation has been cancelled. Here are the details of the cancelled class:</p>
             <ul>
                 <li>Class: {training_class.name}</li>

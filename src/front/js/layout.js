@@ -22,15 +22,16 @@ import Singup from "./component/Singup.jsx";
 import SingupMaster from "./component/SingupMaster.jsx";
 import Calendar from "./component/Calendar.jsx";
 import PrivateCalendar from "./component/PrivateCalendar.jsx";
-import UserDataDetail from "./pages/UserDataDetail.jsx"
-import UserBooking from "./pages/UserBooking.jsx"
+import UserDataDetail from "./component/UserDataDetail.jsx"
+import UserBooking from "./component/UserBooking.jsx"
 import CreateClasses from "./component/CreateClasses.jsx";
 import ModulePage from "./pages/ModulePage.jsx";
 import EditProfile from "./component/EditProfile.jsx";
 import MembershipPurchase from "./component/MembershipPurchase.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
-import Users from "./pages/Users.jsx"; // revisar
+import Chronometer from "./component/Chronometer.jsx";
+import Users from "./component/Users.jsx"; // revisar
 import UploadForm from "./component/UploadForm.jsx";
 import ImageGallery from "./component/ImageGallery.jsx";
 import ProfileImageUpload from "./component/ProfileImageUpload.jsx";
@@ -44,7 +45,7 @@ import PageNormalUser from "./pages/PageNormalUser.jsx";
 import MembershipManager from "./component/MembershipManager.jsx";
 
 import ClassesView from "./component/ClassesView.jsx";
-import EditClasses from "./pages/EditClasses.jsx"
+import EditClasses from "./component/EditClasses.jsx"
 
 import ExecutePayment from "./component/ExecutePayment.jsx";
 import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
@@ -54,8 +55,13 @@ import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
 
 import ClassFrequencyChart from "./component/ClassFrequencyChart.jsx";
+
 import PricingPlans from "./pages/PricingPlans.jsx"
 import ImageSlider from "./pages/ImageSlider.jsx"
+
+
+import Sidebar from "./component/Sidebar.jsx";
+
 
 //create your first component
 const Layout = () => {
@@ -69,6 +75,9 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+
+                    <Navbar /> {/* Renderiza el componente Navbar */}
+                    <Sidebar />
 
                     <Routes>
                         <Route element={<Home />} path="/" />
@@ -91,6 +100,7 @@ const Layout = () => {
                         <Route element={<BookingView />} path="/BookingView" />
                         <Route element={<ClassesView />} path="/ClassesView" />
                         <Route element={<EditClasses />} path="/classEdit/:id" />
+                        <Route element={<Chronometer />} path="/Chronometer" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<UploadForm />} path="/UploadForm" />
                         <Route element={<ImageGallery />} path="/ImageGallery" />
