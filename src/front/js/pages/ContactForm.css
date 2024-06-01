@@ -1,0 +1,53 @@
+.form {
+    background: rgb(0, 0, 0); /* Fondo del formulario transparente */
+    color: white; /* Color del texto */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    max-width: 300px; /* Ancho máximo */
+    margin: 0; /* Eliminar márgenes */
+    margin-bottom: 20px; /* Espaciado inferior */
+    display: inline-block; /* Para alinear a la izquierda */
+}
+
+
+.form-title {
+    font-size: 24px; /* Tamaño del título */
+    font-weight: bold; /* Texto en negrita */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.form-input {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 15px; /* Espaciado inferior */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo del campo de entrada */
+    color: white; /* Color del texto */
+}
+
+.form-textarea {
+    width: 100%; /* Ancho completo */
+    height: 100px; /* Altura fija */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 15px; /* Espaciado inferior */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo del área de texto */
+    color: white; /* Color del texto */
+}
+
+.form-button {
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #3F8CFF; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.form-button:hover {
+    background-color: #4361ee; /* Color de fondo del botón al pasar el ratón */
+}

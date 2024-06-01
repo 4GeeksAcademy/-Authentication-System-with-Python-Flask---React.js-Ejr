@@ -9,7 +9,7 @@ import injectContext from "./store/appContext";
 // import { Navbar } from "./component/navbar";
 // import { Footer } from "./component/footer";
 
-import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
+//import Navbar from "./component/Navbar.jsx"; // Importación del componente Navbar
 
 import Home from "./pages/Home.jsx";
 import Footer from "./component/Footer.jsx";
@@ -49,14 +49,19 @@ import EditClasses from "./component/EditClasses.jsx"
 
 import ExecutePayment from "./component/ExecutePayment.jsx";
 import ExecutePaymentAdmin from "./component/ExecutePaymentAdmin.jsx";
-import  CancelPayment  from "./component/ExecutePayment.jsx";
+import CancelPayment from "./component/ExecutePayment.jsx";
 
 import PasswordResetRequest from "./component/PasswordResetRequest.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
 
 import ClassFrequencyChart from "./component/ClassFrequencyChart.jsx";
 
+import PricingPlans from "./pages/PricingPlans.jsx"
+import ImageSlider from "./pages/ImageSlider.jsx"
+
+
 import Sidebar from "./component/Sidebar.jsx";
+
 
 //create your first component
 const Layout = () => {
@@ -70,8 +75,10 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+
                     <Navbar /> {/* Renderiza el componente Navbar */}
                     <Sidebar />
+
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<ConfirmEmail />} path="/ConfirmEmail" />
@@ -111,6 +118,9 @@ const Layout = () => {
                         <Route element={<ClassFrequencyChart />} path="/ClassFrequencyChart" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<MembershipManager />} />
+                        <Route element={<PricingPlans />} path="/PricingPlans" />
+                        <Route element={<ImageSlider />} path="/ImageSlider" />
+
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>
