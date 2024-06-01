@@ -76,7 +76,6 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
 
-                    <Navbar /> {/* Renderiza el componente Navbar */}
                     <Sidebar />
 
                     <Routes>
