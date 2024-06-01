@@ -220,10 +220,34 @@ def get_current_rooms():
         for room in current_rooms:
             participants = []
             for participant in room.room_participants:
+                user = User.query.get(participant.user_id)
+                platform = None
+                platform_id = None
+                if user.xbox:
+                    platform = "xbox"
+                    platform_id = user.xbox
+                elif user.psn:
+                    platform = "psn"
+                    platform_id = user.psn
+                elif user.steam:
+                    platform = "steam"
+                    platform_id = user.steam
+                elif user.discord:
+                    platform = "discord"
+                    platform_id = user.discord
+                elif user.nintendo:
+                    platform = "nintendo"
+                    platform_id = user.nintendo
+                elif user.epic_id:
+                    platform = "epic_id"
+                    platform_id = user.epic_id
+
                 participants.append({
-                    "participant_id": participant.user.id,
-                    "participant_name": participant.user.username,
-                    "confirmed": participant.confirmed
+                    "participant_id": user.id,
+                    "participant_name": user.username,
+                    "confirmed": participant.confirmed,
+                    "platform": platform,
+                    "platform_id": platform_id  # Incluir la ID de la plataforma
                 })
 
             serialized_room = {
@@ -237,14 +261,14 @@ def get_current_rooms():
                 "time": room.time,
                 "platform": room.platform,
                 "mood": room.mood,
-                "participants": participants  
+                "participants": participants  # Incluyendo los participantes serializados
             }
             serialized_rooms.append(serialized_room)
 
         return jsonify(serialized_rooms), 200
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e), "message": "An error occurred while fetching rooms"}), 500
 
 
 @api.route('/create_room', methods=['POST'])
