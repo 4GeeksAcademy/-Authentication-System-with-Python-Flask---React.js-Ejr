@@ -60,3 +60,15 @@ input {
     padding: 8px 15px;
     border-radius: 4px;
 }
+
+.zoom-slider {
+    margin: 10px 0;
+}
+
+.zoom-slider input[type="range"] {
+    width: 100%;
+}
+
+.bio {
+    width: 100%;
+}

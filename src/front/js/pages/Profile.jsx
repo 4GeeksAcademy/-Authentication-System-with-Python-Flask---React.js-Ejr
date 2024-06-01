@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 import switchIcon from '../../img/switch.png';
@@ -8,6 +8,8 @@ import steamIcon from '../../img/steam.png';
 import discordIcon from '../../img/discord.png';
 import epicIcon from '../../img/epic.png';
 import '../../styles/profile.css';
+import Cropper from 'react-easy-crop';
+import getCroppedImg from './cropImage';
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
@@ -47,6 +49,11 @@ export const Profile = () => {
     const [imageFile, setImageFile] = useState(null);
     const [editingImage, setEditingImage] = useState(false);
 
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [imageSrc, setImageSrc] = useState(null);
+    const [isCropping, setIsCropping] = useState(false);
 
 
     useEffect(() => {
@@ -79,10 +86,36 @@ export const Profile = () => {
     // Maneja el cambio de archivo seleccionado
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            setImageFile(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageSrc(reader.result);
+            setIsCropping(true);
+        };
+    };
+
+    const handleCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
+
+    const handleSaveCroppedImage = async () => {
+        if (!croppedAreaPixels) {
+            console.error('No crop area defined.');
+            return;
+        }
+        try {
+            const croppedImageFile = await getCroppedImg(imageSrc, croppedAreaPixels);
+            console.log('Cropped image file:', croppedImageFile);
+            // Aquí puedes hacer lo que necesites con la imagen recortada, como enviarla a un servidor o actualizar el estado
+            setImageFile(croppedImageFile);  // Guarda la imagen recortada en el estado si es necesario
+            handleImageUpload();
+            setIsCropping(false);  // Opcional: Cambia el estado para salir del modo recorte
+            setImageSrc(null);     // Limpia la imagen original de la vista
+        } catch (error) {
+            console.error('Error cropping image:', error);
         }
     };
+
     // Cancela la edición de la imagen de perfil
     const handleCancelEditing = () => {
         setEditingImage(false);
@@ -97,6 +130,7 @@ export const Profile = () => {
         }
         try {
             // Llama a la acción para subir la imagen y actualizar el perfil
+
             const updatedProfile = await actions.editCloudinaryImage(imageFile);
             if (!updatedProfile) {
                 throw new Error('Failed to upload and update profile image');
@@ -106,6 +140,7 @@ export const Profile = () => {
             setProfileData(updatedProfile);
             setImageFile(null); // Limpia el archivo seleccionado
             setEditingImage(false); // Sale del modo de edición
+            setIsCropping(false);
         } catch (error) {
             console.error(error.message || 'An unexpected error occurred.');
         }
@@ -171,14 +206,15 @@ export const Profile = () => {
 
     return (
         <div className="container mt-3 profile-container" >
-            <h5 style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}
-            >Profile Settings</h5>
+            <h5 style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}>
+                Profile Settings
+            </h5>
             <div className="mb-3 row" style={{ marginLeft: '25px', marginRight: '25px' }}>
                 {profileData.url_image && (
                     <img src={profileData.url_image} alt="Profile" className="profile-image" />
                 )}
                 <div className="col" style={{ marginLeft: '25px', marginTop: '20px' }}>
-                    {!imageFile ? (
+                    {!imageSrc ? (
                         <>
                             <input
                                 type="file"
@@ -194,17 +230,47 @@ export const Profile = () => {
                         </>
                     ) : (
                         <>
-                            <span className="ms-2">{imageFile.name}</span>
-                            <button className="btn-edit-profile" onClick={handleImageUpload}>
-                                Save New Profile Picture
-                            </button>
-                            <button className="btn-delete-profile" onClick={handleCancelEditing}>
-                                X
-                            </button>
+                            <div style={{ width: '100%', height: '300px', position: 'relative' }}>
+                                <Cropper
+                                    image={imageSrc}
+                                    crop={crop}
+                                    zoom={zoom}
+                                    aspect={1}
+                                    onCropChange={setCrop}
+                                    onCropComplete={handleCropComplete}
+                                    onZoomChange={setZoom}
+                                />
+                            </div>
+                            <div className="controls" style={{ padding: '10px' }}>
+                                <label htmlFor="zoom">Zoom:</label>
+                                <input
+                                    type="range"
+                                    id="zoom"
+                                    name="zoom"
+                                    min="1"
+                                    max="3"
+                                    step="0.1"
+                                    value={zoom}
+                                    onChange={(e) => setZoom(Number(e.target.value))}
+                                    style={{ width: '100%' }}
+                                />
+                            </div>
+                            <div>
+                                <button className="btn btn-primary" onClick={handleImageUpload}>
+                                    Save New Profile Picture
+                                </button>
+                                <button className="btn btn-secondary" onClick={handleCancelEditing}>
+                                    Cancel
+                                </button>
+                                <button className="btn btn-success" onClick={handleSaveCroppedImage}>
+                                    Confirm Crop
+                                </button>
+                            </div>
                         </>
                     )}
                 </div>
             </div>
+            {error && <p className="text-danger">{error}</p>}
             <form onSubmit={handleSubmit} style={{ marginLeft: '25px', marginRight: '25px' }}>
                 <div className="row d">
                     {/** Username and Email */}
@@ -329,7 +395,7 @@ export const Profile = () => {
                             )}
                         </div>
                         <div>
-                            <button onClick={ handleSubmit } className="join-room">
+                            <button onClick={handleSubmit} className="join-room">
                                 Update Profile
                             </button>
                             <button type="button" onClick={() => setIsEditing(false)} className="withdraw">
