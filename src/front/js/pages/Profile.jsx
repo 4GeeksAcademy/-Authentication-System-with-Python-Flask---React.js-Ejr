@@ -66,10 +66,7 @@ export const Profile = () => {
         fetchProfile(); // Ejecuta la función para obtener los datos del perfil al montar el componente
     }, []);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setProfileData({ ...profileData, [name]: value });
-    };
+
 
     //--------------PROFILE IMAGE HANDLERS------------------------------------------------------------------------------------------------------
 
@@ -116,26 +113,22 @@ export const Profile = () => {
 
 
     //-----------HANDLER PARA EDITAR INFORMACION--------------------------------------------------------------------------------------------
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setProfileData({ ...profileData, [name]: value });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         try {
-            let updatedProfileData = { ...profileData };
-
-            if (imageFile) {
-                const imageUrl = await actions.uploadImageToCloudinary(imageFile);
-                if (!imageUrl) {
-                    throw new Error('Failed to upload image to Cloudinary');
-                }
-                updatedProfileData.url_image = imageUrl;
-            }
-
-            const success = await actions.updateProfile(updatedProfileData);
+            // Actualiza solo los datos del perfil, excluyendo la imagen
+            const success = await actions.updateProfile(profileData);
             if (success) {
-                const updatedProfile = await actions.getProfile(); // Fetch the profile again after update
-                localStorage.setItem('username', updatedProfile.username); // Update username in localStorage
+                const updatedProfile = await actions.getProfile(); // Recarga el perfil después de la actualización
+                localStorage.setItem('username', updatedProfile.username); // Actualiza el nombre de usuario en localStorage
                 setProfileData(updatedProfile);
-                setIsEditing(false);
+                setIsEditing(false); // Salir del modo de edición
             } else {
                 setError('Failed to update profile. Please try again.');
             }
@@ -143,6 +136,7 @@ export const Profile = () => {
             setError('An unexpected error occurred. Please try again.');
         }
     };
+
 
     //------DELETING PROFILE HANDLERS-------------------------------------------------------------------------------------------------
 
@@ -183,7 +177,7 @@ export const Profile = () => {
                 {profileData.url_image && (
                     <img src={profileData.url_image} alt="Profile" className="profile-image" />
                 )}
-                <div className="col" style={{ marginLeft: '25px', marginTop: '20px'}}>
+                <div className="col" style={{ marginLeft: '25px', marginTop: '20px' }}>
                     {!imageFile ? (
                         <>
                             <input
@@ -194,7 +188,7 @@ export const Profile = () => {
                                 style={{ display: 'none' }}
                                 className="form-control"
                             />
-                            <button className="join-room"  onClick={() => document.getElementById('fileInput').click()}>
+                            <button className="join-room" onClick={() => document.getElementById('fileInput').click()}>
                                 Edit Profile Picture
                             </button>
                         </>
@@ -211,12 +205,12 @@ export const Profile = () => {
                     )}
                 </div>
             </div>
-            <div style={{ marginLeft: '25px', marginRight: '25px' }}>
+            <form onSubmit={handleSubmit} style={{ marginLeft: '25px', marginRight: '25px' }}>
                 <div className="row d">
                     {/** Username and Email */}
                     <div className="mb-3 col-6">
                         <label>Username:</label>
-                        <input type="text" value={profileData.username} readOnly={!isEditing} className="form-control" />
+                        <input type="text" name="username" value={profileData.username} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
                     <div className="mb-3 col-6">
                         <label>
@@ -224,6 +218,7 @@ export const Profile = () => {
                         </label>
                         <input
                             type="text"
+                            name="email"
                             value={profileData.email}
                             readOnly // Este campo siempre es de solo lectura
                             className="form-control"
@@ -234,36 +229,33 @@ export const Profile = () => {
                 <div className="row">
                     <div className="mb-3 col-6">
                         <label>First Name:</label>
-                        <input type="text" value={profileData.first_name} readOnly={!isEditing} className="form-control" />
+                        <input type="text" name="first_name" value={profileData.first_name} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
                     <div className="mb-3 col-6">
                         <label>Last Name:</label>
-                        <input type="text" value={profileData.last_name} readOnly={!isEditing} className="form-control" />
+                        <input type="text" name="last_name" value={profileData.last_name} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
                 </div>
                 {/** Password and Age */}
                 <div className="row">
                     <div className="mb-3 col-6">
                         <label>Password:</label>
-                        <input type="text" value={profileData.password} readOnly={!isEditing} className="form-control" />
+                        <input type="text" name="password" value={profileData.password} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
-                    
+                    <div className="mb-3 col-6">
+                        <label>Age:</label>
+                        <input type="text" name="age" value={profileData.age} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
+                    </div>
                 </div>
                 {/** Gender and Bio */}
                 <div className="row">
                     <div className="mb-3 col-6">
                         <label>Gender:</label>
-                        <input type="text" value={profileData.gender} readOnly={!isEditing} className="form-control" />
+                        <input type="text" name="gender" value={profileData.gender} onChange={handleInputChange} readOnly={!isEditing} className="form-control" />
                     </div>
-                    <div className="mb-3 col-6">
-                        <label>Age:</label>
-                        <input type="text" value={profileData.age} readOnly={!isEditing} className="form-control" />
-                    </div>
-                </div>
-                <div className="row col-12">
-                    <div className="mb-3">
+                    <div className="mb-3 col-12">
                         <label>About yourself:</label>
-                        <textarea value={profileData.bio} readOnly={!isEditing} className="form-control" placeholder='type something...'></textarea>
+                        <textarea name="bio" value={profileData.bio} onChange={handleInputChange} readOnly={!isEditing} className="form-control" placeholder='type something...'></textarea>
                     </div>
                 </div>
                 {/** Gaming Profiles */}
@@ -275,7 +267,9 @@ export const Profile = () => {
                             </label>
                             <input
                                 type="text"
+                                name={platform.name.replace(/\s/g, '').toLowerCase()}
                                 value={profileData[platform.name.replace(/\s/g, '').toLowerCase()]}
+                                onChange={handleInputChange}
                                 readOnly={!isEditing}
                                 className="form-control mb-3"
                             />
@@ -287,11 +281,19 @@ export const Profile = () => {
                     {["Region", "Timezone", "Languages"].map((detail, index) => (
                         <div className="mb-3 col-4" key={index}>
                             <label className="me-2">{detail}:</label>
-                            <input type="text" value={profileData[detail.toLowerCase()]} readOnly={!isEditing} className="form-control mb-3" />
+                            <input
+                                type="text"
+                                name={detail.toLowerCase()}
+                                value={profileData[detail.toLowerCase()]}
+                                onChange={handleInputChange}
+                                readOnly={!isEditing}
+                                className="form-control mb-3"
+                            />
                         </div>
                     ))}
                 </div>
-            </div >
+            </form>
+
             <div className="d-flex justify-content-end" style={{ marginLeft: '25px', marginRight: '25px' }}>
                 {!isEditing && (
                     <button onClick={() => setIsEditing(true)} className="join-room">
@@ -327,7 +329,7 @@ export const Profile = () => {
                             )}
                         </div>
                         <div>
-                            <button onClick={{handleSubmit}} className="join-room">
+                            <button onClick={ handleSubmit } className="join-room">
                                 Update Profile
                             </button>
                             <button type="button" onClick={() => setIsEditing(false)} className="withdraw">
