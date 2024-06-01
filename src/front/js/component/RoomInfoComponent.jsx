@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/RoomInfo.css';
 
-const RoomDetailsView = ({ room, participantsCount, formattedDateTime, renderPlatformIcon, handleKickParticipant, isHost }) => {
+const RoomDetailsView = ({ room, participantsCount, formattedDateTime, renderPlatformIcon, isHost }) => {
     
     return (
         <div className="">
@@ -13,10 +13,7 @@ const RoomDetailsView = ({ room, participantsCount, formattedDateTime, renderPla
             <ul>
                 {room.participants.map(participant => (
                     <li key={participant.participant_id}>
-                        {participant.participant_name}
-                        {isHost && (
-                            <button className="kick-button" onClick={() => handleKickParticipant(participant.participant_id)}>Kick</button>
-                        )}
+                        {participant.participant_name}    
                     </li>
                 ))}
             </ul>

@@ -1,3 +1,15 @@
 * {
     padding:0px;
 }
+
+.kick-button {
+    background-color:#B40000 ;
+    color: white;
+    border: none;
+    height: 36px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 2rem;
+}

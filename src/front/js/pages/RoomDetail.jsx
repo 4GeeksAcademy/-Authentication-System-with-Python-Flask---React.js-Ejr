@@ -339,7 +339,7 @@ export const RoomDetail = () => {
                                 participantsCount={participantsCount}
                                 formattedDateTime={formattedDateTime}
                                 renderPlatformIcon={renderPlatformIcon}
-                                handleKickParticipant={handleKickParticipant}
+                                
                                 isHost={isHost}
                             />
                         )}
@@ -348,6 +348,7 @@ export const RoomDetail = () => {
                                 requests={requests}
                                 participants={room.participants} // Asegúrate de pasar los participantes
                                 handleRequestAction={handleRequestAction}
+                                handleKickParticipant={handleKickParticipant}
                             />
                         )}
                     </div>
@@ -358,6 +359,7 @@ export const RoomDetail = () => {
                         {(!token || requestStatus === 'None' || requestStatus === 'abandoned') && (
                             <button className="join-room" onClick={handleJoinRoom}>Join Room</button>
                         )}
+                        {requestStatus === 'pending' && <button className='btn-danger withdraw' onClick={handleWithdrawRequest}>Withdraw Request</button>}
                     </div>
                 )}
                 {isParticipantOrHost && (
