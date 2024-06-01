@@ -32,7 +32,7 @@ export const Profile = () => {
         gender: '',
         url_image: '' // Añadir url_image al estado inicial
     });
-    
+
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState(null);
     const platforms = [
@@ -45,9 +45,10 @@ export const Profile = () => {
     ];
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [imageFile, setImageFile] = useState(null);
+    const [editingImage, setEditingImage] = useState(false);
 
 
-    
+
     useEffect(() => {
         const fetchProfile = async () => {
             const userId = localStorage.getItem('userId');
@@ -70,39 +71,51 @@ export const Profile = () => {
         setProfileData({ ...profileData, [name]: value });
     };
 
+    //--------------PROFILE IMAGE HANDLERS------------------------------------------------------------------------------------------------------
+
+
+
+    // Activa la edición de la imagen de perfil
+    const handleEditPictureClick = () => {
+        setEditingImage(true);
+    };
+    // Maneja el cambio de archivo seleccionado
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setImageFile(file);
         }
     };
+    // Cancela la edición de la imagen de perfil
+    const handleCancelEditing = () => {
+        setEditingImage(false);
+        setImageFile(null);
+    };
 
-
+    // Sube la nueva imagen y actualiza el perfil
     const handleImageUpload = async () => {
         if (!imageFile) {
-            setError('No file selected.');
+            console.error('No file selected.');
             return;
         }
-        setError(null);
         try {
-            const imageUrl = await actions.uploadImageToCloudinary(imageFile);
-            if (!imageUrl) {
-                throw new Error('Failed to upload image to Cloudinary');
+            // Llama a la acción para subir la imagen y actualizar el perfil
+            const updatedProfile = await actions.editCloudinaryImage(imageFile);
+            if (!updatedProfile) {
+                throw new Error('Failed to upload and update profile image');
             }
-            const updatedProfileData = { ...profileData, url_image: imageUrl };
-            const success = await actions.updateProfile(updatedProfileData);
-            if (success) {
-                setProfileData(updatedProfileData);
-                setImageFile(null); // Clear the selected file
-            } else {
-                throw new Error('Failed to update profile with new image.');
-            }
+
+            // Actualiza el estado local con el perfil recién actualizado
+            setProfileData(updatedProfile);
+            setImageFile(null); // Limpia el archivo seleccionado
+            setEditingImage(false); // Sale del modo de edición
         } catch (error) {
-            setError(error.message || 'An unexpected error occurred.');
+            console.error(error.message || 'An unexpected error occurred.');
         }
     };
 
 
+    //-----------HANDLER PARA EDITAR INFORMACION--------------------------------------------------------------------------------------------
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
@@ -163,19 +176,15 @@ export const Profile = () => {
     //-------------------------------------------------------------------------------------------------------------------------------------
 
     return (
-        <div className="container mt-3 profile-container">
-            <h6>Profile Settings</h6>
-            <div className="mb-3 row">
+        <div className="container mt-3 profile-container" >
+            <h5 style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}
+            >Profile Settings</h5>
+            <div className="mb-3 row" style={{ marginLeft: '25px', marginRight: '25px' }}>
                 {profileData.url_image && (
-                    <img src={profileData.url_image} alt="Profile" className="profile-image mb-3" />
+                    <img src={profileData.url_image} alt="Profile" className="profile-image" />
                 )}
-                <div className="col">
-                    {!editingImage && (
-                        <button className="btn btn-primary" onClick={handleEditPictureClick}>
-                            Edit Profile Picture
-                        </button>
-                    )}
-                    {editingImage && !imageFile && (
+                <div className="col" style={{ marginLeft: '25px', marginTop: '20px'}}>
+                    {!imageFile ? (
                         <>
                             <input
                                 type="file"
@@ -185,29 +194,25 @@ export const Profile = () => {
                                 style={{ display: 'none' }}
                                 className="form-control"
                             />
-                            <button className="btn btn-secondary" onClick={() => document.getElementById('fileInput').click()}>
-                                Choose New Profile Picture
-                            </button>
-                            <button className="btn btn-secondary" onClick={handleCancelEditing}>
-                                Cancel Editing Profile Picture
+                            <button className="join-room"  onClick={() => document.getElementById('fileInput').click()}>
+                                Edit Profile Picture
                             </button>
                         </>
-                    )}
-                    {imageFile && (
+                    ) : (
                         <>
                             <span className="ms-2">{imageFile.name}</span>
-                            <button className="btn btn-primary" onClick={handleImageUpload}>
-                                Save Profile Picture
+                            <button className="btn-edit-profile" onClick={handleImageUpload}>
+                                Save New Profile Picture
                             </button>
-                            <button className="btn btn-secondary" onClick={handleCancelEditing}>
-                                Cancel Editing Profile Picture
+                            <button className="btn-delete-profile" onClick={handleCancelEditing}>
+                                X
                             </button>
                         </>
                     )}
                 </div>
             </div>
-            <div>
-                <div className="row">
+            <div style={{ marginLeft: '25px', marginRight: '25px' }}>
+                <div className="row d">
                     {/** Username and Email */}
                     <div className="mb-3 col-6">
                         <label>Username:</label>
@@ -242,10 +247,7 @@ export const Profile = () => {
                         <label>Password:</label>
                         <input type="text" value={profileData.password} readOnly={!isEditing} className="form-control" />
                     </div>
-                    <div className="mb-3 col-6">
-                        <label>Age:</label>
-                        <input type="text" value={profileData.age} readOnly={!isEditing} className="form-control" />
-                    </div>
+                    
                 </div>
                 {/** Gender and Bio */}
                 <div className="row">
@@ -254,8 +256,14 @@ export const Profile = () => {
                         <input type="text" value={profileData.gender} readOnly={!isEditing} className="form-control" />
                     </div>
                     <div className="mb-3 col-6">
-                        <label>Bio:</label>
-                        <textarea value={profileData.bio} readOnly={!isEditing} className="form-control"></textarea>
+                        <label>Age:</label>
+                        <input type="text" value={profileData.age} readOnly={!isEditing} className="form-control" />
+                    </div>
+                </div>
+                <div className="row col-12">
+                    <div className="mb-3">
+                        <label>About yourself:</label>
+                        <textarea value={profileData.bio} readOnly={!isEditing} className="form-control" placeholder='type something...'></textarea>
                     </div>
                 </div>
                 {/** Gaming Profiles */}
@@ -283,10 +291,10 @@ export const Profile = () => {
                         </div>
                     ))}
                 </div>
-            </div>
-            <div className="d-flex justify-content-end">
+            </div >
+            <div className="d-flex justify-content-end" style={{ marginLeft: '25px', marginRight: '25px' }}>
                 {!isEditing && (
-                    <button onClick={() => setIsEditing(true)} className="btn btn-primary">
+                    <button onClick={() => setIsEditing(true)} className="join-room">
                         Edit Profile
                     </button>
                 )}
@@ -319,13 +327,10 @@ export const Profile = () => {
                             )}
                         </div>
                         <div>
-                            <button onClick={() => {
-                                // Aquí debe ir el código para guardar los cambios
-                                // setIsEditing(false) puede llamarse después de actualizar los datos correctamente
-                            }} className="btn btn-primary me-2">
+                            <button onClick={{handleSubmit}} className="join-room">
                                 Update Profile
                             </button>
-                            <button type="button" onClick={() => setIsEditing(false)} className="btn btn-danger">
+                            <button type="button" onClick={() => setIsEditing(false)} className="withdraw">
                                 Cancel Changes
                             </button>
                         </div>
@@ -335,5 +340,4 @@ export const Profile = () => {
             {error && <p className="text-danger">{error}</p>}
         </div>
     );
-
 };

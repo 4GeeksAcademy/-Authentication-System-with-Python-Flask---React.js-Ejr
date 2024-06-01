@@ -117,6 +117,54 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             
+            editCloudinaryImage: async (imageFile) => {
+                const token = localStorage.getItem('jwt-token');
+                const userId = localStorage.getItem('userId'); // Obtener userId de localStorage
+                const preset_name = 'sducy1dm'; // Preset de Cloudinary
+                const cloud_name = 'dwnbekby9'; // Nombre de tu cuenta en Cloudinary
+            
+                // Prepara los datos para la subida a Cloudinary
+                const data = new FormData();
+                data.append('file', imageFile);
+                data.append('upload_preset', preset_name);
+            
+                try {
+                    // Realiza la solicitud POST a Cloudinary para subir la imagen
+                    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+                        method: 'POST',
+                        body: data
+                    });
+            
+                    if (!response.ok) {
+                        throw new Error('Failed to upload image to Cloudinary');
+                    }
+            
+                    const file = await response.json();
+                    const imageUrl = file.secure_url; // Obtiene la URL segura de la imagen subida
+                    console.log(imageUrl)
+                    // Realiza la solicitud PUT a tu API para actualizar el perfil del usuario con la nueva URL de la imagen
+                    let apiResponse = await fetch(`${apiUrl}/api/user/${userId}/update-image`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Asegúrate de incluir el token JWT correcto
+                        },
+                        body: JSON.stringify({
+                            url_image: imageUrl  // Envía la nueva URL de la imagen para actualizar en el perfil del usuario
+                        })
+                    });
+                        // console.log("ESTO es lo que se envía",body)
+                    if (!apiResponse.ok) {
+                        throw new Error('Failed to update user profile in the database');
+                    }
+            
+                    const updatedUser = await apiResponse.json();
+                    return updatedUser; // Retorna el usuario actualizado para uso posterior o manejo en el store
+                } catch (error) {
+                    console.error('Error updating image:', error);
+                    return null; // Retorna null en caso de error
+                }
+            },
             
             
             requestResetPassword: async (email) => {
