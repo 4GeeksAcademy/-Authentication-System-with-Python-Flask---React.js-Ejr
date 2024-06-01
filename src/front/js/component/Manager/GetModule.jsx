@@ -52,11 +52,18 @@ export const GetModule = () => {
                 {store.modules && store.modules.Modules ? (
                     store.modules.Modules.length === 0 ? "No hay Modules" :
                         store.modules.Modules.map((item, index) => (
-                            <div key={index}>
-                                <strong><p>{item.title}</p></strong>
-                                <video controls className="img-fluid" style={{ width: '30%', height: '30%' }}>
-                                    <source src={item.urlVideo} type="video/mp4" />
-                                </video>
+                            <div key={index} className='align-self-center'>
+
+                                <span>
+                                    <strong><p>{item.title}</p></strong>
+                                </span>
+                                <span>
+                                    <video controls className="img-fluid rounded-4 shadow" style={{ height: '30%' }}>
+                                        <source src={item.urlVideo} type="video/mp4" />
+                                    </video>
+                                </span>
+
+
                             </div>
                         ))
                 ) : (

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from "../../store/appContext.js";
 import { AddNewUser } from './AddNewUser.jsx';
 import { AddUser } from '../AddUser.jsx';
@@ -10,15 +10,22 @@ export const WelcomeManager = () => {
     const { store, actions } = useContext(Context);
     const [active, setActive] = useState(false);
 
+    useEffect(()=>{
+        actions.getUser()
+    },[])
+
     const toggleActive = () => {
         setActive(!active);
     };
+
+    const accessToUser = store.user?.access_to_user
+    const accessToTeacher = store.teacher?.access_to_teacher
 
     return (
         <div className="container-fluid" style={{ position: "relative", textAlign: "center", height: "100vh", padding: 0, margin: 0 }}>
             
             <div>
-                <img src="https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2021/03/10192552/Top-8-Project-Management-Blogs-Every-Manager-Must-Follow.png" class="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
+                <img src="https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2021/03/10192552/Top-8-Project-Management-Blogs-Every-Manager-Must-Follow.png" className="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
             </div>
             <div className='text-black fw-bolder rounded-pill' style={{ position: "absolute", top: "20%", width: "100%", color: "white" }}>
 
@@ -77,9 +84,9 @@ export const WelcomeManager = () => {
                             </div>
                         </div>
 
-                        {store.user && store.user.access_to_user && store.user.access_to_user.length === 0
+                        {accessToUser && accessToUser.length === 0
                             ? "No hay user cargados"
-                            : store.user.access_to_user.map((item) => (
+                            : accessToUser?.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div
@@ -173,9 +180,9 @@ export const WelcomeManager = () => {
                             </div>
                         </div>
 
-                        {store.user && store.user.access_to_teacher &&  store.user.access_to_teacher.length === 0
+                        {accessToTeacher &&  accessToTeacher.length === 0
                             ? "No hay teacher cargados"
-                            : store.user.access_to_teacher.map((item) => (
+                            : accessToTeacher?.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div
