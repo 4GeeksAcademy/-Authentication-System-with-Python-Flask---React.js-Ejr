@@ -16,6 +16,7 @@ export const WelcomeManager = () => {
 
     return (
         <div className="container-fluid" style={{ position: "relative", textAlign: "center", height: "100vh", padding: 0, margin: 0 }}>
+            
             <div>
                 <img src="https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2021/03/10192552/Top-8-Project-Management-Blogs-Every-Manager-Must-Follow.png" class="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
             </div>
