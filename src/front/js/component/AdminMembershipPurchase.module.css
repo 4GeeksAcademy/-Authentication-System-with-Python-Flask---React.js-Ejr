@@ -1,0 +1,66 @@
+.buttonBuy {
+  background-color: #5D7266; /* Green variant */
+  color: white;
+  border: none;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 4px;
+}
+
+.modalHeader {
+  background-color: #E6E6E9;
+  color: #3C403F;
+}
+
+.modalBody {
+  background-color: #E6E6E9;
+  color: #3C403F;
+}
+
+.modalFooter {
+  background-color: #E6E6E9;
+}
+
+.membershipItem {
+  padding: 10px;
+  margin: 5px 0;
+  cursor: pointer;
+  background-color: #FFF;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.membershipItem:hover {
+  background-color: #A8A7A8;
+}
+
+.alertResultSuccess {
+  color: #155724;
+  background-color: #D4EDDA;
+  border-color: #C3E6CB;
+}
+
+.alertResultDanger {
+  color: #721C24;
+  background-color: #F8D7DA;
+  border-color: #F5C6CB;
+}
+
+.alertProcessing {
+  color: #0C5460;
+  background-color: #D1ECF1;
+  border-color: #BEE5EB;
+}
+
+.closeButton {
+  background-color: #937863;
+  color: white;
+}
+
+.paymentMethodDropdown {
+  width: 100%;
+}

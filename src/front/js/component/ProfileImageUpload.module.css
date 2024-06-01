@@ -1,0 +1,111 @@
+.profileImageContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.profileImage {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.dropdownButton {
+    margin-top: 10px;
+}
+
+.modalHeader {
+    background-color: #E6E6E9; /* Color de fondo claro */
+    border-bottom: 1px solid #A8A7A8; /* Borde inferior */
+}
+
+.modalBody {
+    padding: 20px; /* Relleno para el cuerpo del modal */
+}
+
+.modalFooter {
+    border-top: 1px solid #A8A7A8; /* Borde superior */
+    display: flex;
+    justify-content: space-between; /* Espacio entre los botones */
+}
+
+.closeButton {
+    background-color: #3C403F; /* Color del botón de cerrar */
+    color: #fff; /* Color del texto */
+}
+
+.resultModal {
+    text-align: center; /* Alinear el texto al centro */
+}
+
+.resultMessage {
+    margin-top: 10px; /* Margen superior */
+    font-size: 16px; /* Tamaño de la fuente */
+}
+
+.modalProfile {
+    color: gray;
+}
+
+/* Botón editButton con los estilos solicitados */
+.editButton {
+    background-color: transparent;
+    color: #5D7266;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editButton:hover {
+    color: #E6E6E9;
+    background-color: #A8A7A8;
+}
+
+.editButton:active {
+    background-color: #3C403F;
+    color: #937863;
+}
+
+/* Estilos para la lista desplegable */
+.dropdownMenu {
+    font-size: 1rem; /* Tamaño de fuente base */
+    width: 100%;
+}
+
+.dropdownItem {
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: small;
+}
+
+.dropdownItem:hover {
+    background-color: #A8A7A8;
+    color: #fff;
+}
+
+.editButton {
+    background-color: transparent;
+    color: #5D7266;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editButton:hover {
+    color: #E6E6E9;
+    background-color: #A8A7A8;
+}
+
+.editButton:active {
+    background-color: #3C403F;
+    color: #937863;
+}
