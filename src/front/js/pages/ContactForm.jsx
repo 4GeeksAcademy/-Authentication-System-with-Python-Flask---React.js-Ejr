@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './ContactForm.css';
+import bg from "../../img/man.jpg";
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
+        firstName: '',
+        lastName: '',
+        email: ''
     });
 
     const handleChange = e => {
@@ -22,37 +23,46 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="form">
-            <div className="form-title">Contáctanos</div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Tu Nombre"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="form-input"
-                    required
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Tu Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="form-input"
-                    required
-                />
-                <textarea
-                    name="message"
-                    placeholder="Tu Mensaje"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="form-textarea"
-                    required
-                />
-                <button type="submit" className="form-button">Enviar</button>
-            </form>
+        <div className="contact-form-container" style={{ backgroundImage: `url(${bg})` }}>
+            <div className="form-wrapper">
+                <form onSubmit={handleSubmit}>
+                    <h1>CONTACT US</h1>
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            name="firstName"
+                            placeholder="First Name"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            className="form-input"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            className="form-input"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="form-input"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="submit-btn">Subscribe</button>
+                </form>
+            </div>
         </div>
     );
 };

@@ -76,7 +76,7 @@ const Login = () => {
 
     return (
         <div className={styles.loginform}>
-            <h2>Inicia sesión</h2>
+            <h2>Log in</h2>
             <div>
                 {renderLoginResponse()} 
             </div>
