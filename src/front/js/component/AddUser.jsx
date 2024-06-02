@@ -22,9 +22,7 @@ export const AddUser = () => {
         numberDocument: '',
         phone: '',
         age: '',
-        gender: '',
-        userId: '',
-        teacherId: ''
+        gender: ''
     });
 
     useEffect(() => {
@@ -224,7 +222,7 @@ export const AddUser = () => {
                 <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'd-block col-lg-3'}`}>
                     <label className="form-label">Phone</label>
                     <input
-                        type="phone"
+                        type="text"
                         className="form-control"
                         name='phone'
                         onChange={handleChange}
@@ -237,7 +235,7 @@ export const AddUser = () => {
                 <div className={`${(selectedRole === 'manager') ? 'd-none' : 'd-block col-lg-3 '}`}>
                     <label className="form-label">Age</label>
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         name='age'
                         onChange={handleChange}

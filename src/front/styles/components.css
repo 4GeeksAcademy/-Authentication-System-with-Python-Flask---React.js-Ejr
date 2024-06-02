@@ -18,4 +18,17 @@
 
 .addEdit:hover{
   background-color: aqua;
+  transform: scale(1.05);
+}
+
+.btnFav{
+  background-color: rgb(255, 255, 255);
+  border: none ;
+  border-radius: 20px;
+  color: #165D95;
+  font-size: 20px;
+}
+
+.btnFav:hover{
+  border: 0.3px solid #18BEBE;
 }

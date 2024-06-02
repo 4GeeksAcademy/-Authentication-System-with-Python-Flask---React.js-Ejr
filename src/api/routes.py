@@ -716,7 +716,6 @@ def update_manager(manager_id):
 
 #-----------------------COURSES------------------------#
 @api.route('/create/courses', methods=['POST'])
-
 def post_courses():
     try:
         title =  request.json.get('title')
@@ -738,7 +737,8 @@ def post_courses():
         existing_course = Course.query.filter_by(title=title).first()
         if existing_course:
             return jsonify({"Error":"Title already exists."}), 409
-        
+
+       
         current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date_time, title_Teacher=title_Teacher, date_expiration=date_expiration, title_url_media=title_url_media)
         db.session.add(course)
@@ -1311,3 +1311,4 @@ def upload_image():
         return jsonify(upload_result), 200
     
     return jsonify({"error": "Upload failed"}), 500
+

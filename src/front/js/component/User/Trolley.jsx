@@ -34,7 +34,7 @@ export const Trolley = () => {
                 </div>
                 <div className="col-9">
                     {store.courseFavorite.length === 0 ? "No hay Cursos Cargados" :
-                    store.courseFavorite.map((item, index) => (
+                    store.courseFavorite?.map((item, index) => (
                             <div key={index}>
                                 <table className="table mx-auto ">
                                     <thead>

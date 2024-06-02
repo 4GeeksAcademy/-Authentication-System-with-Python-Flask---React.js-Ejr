@@ -64,18 +64,19 @@ export const LogIn = () => {
     }, [navigate, redirectPath])
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCounter(prevCounter => {
-                if (msgError === '' && msg === ''){
-                    return
-                      
-                }else if(prevCounter + 1 === 7 && store.error == ''){
-                    setRedirectPath(`/${selectedRole}View`)
-                    clearInterval(interval)
-                }
-                return prevCounter + 1;
-            });
-        }, 500);
+        
+            if (msgError === '' && msg === ''){
+                return
+            }
+
+            if (store.error === '' && selectedRole && counter === 7) {
+                setRedirectPath(`/${selectedRole}View`);
+            }
+
+
+            const interval = setInterval(() => {
+                setCounter(prevCounter => prevCounter + 1);
+            }, 500);
 
         return () => clearInterval(interval)  
     }, [setRedirectPath, selectedRole])
