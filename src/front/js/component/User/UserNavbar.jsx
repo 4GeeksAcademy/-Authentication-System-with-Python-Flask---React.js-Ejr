@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from "../../store/appContext";
 
 export const UserNavbar = () => {
+    const [hovered, setHovered] = useState(false)
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 
@@ -12,6 +13,13 @@ export const UserNavbar = () => {
         navigate('/SignOut');
     }
 
+    const handleMouseEnter =()=>{
+        setHovered(true)
+        console.log(hovered => hovered+1)
+    }
+    const handleMouseLeave=()=>{
+        setHovered(false)
+    }
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
 
     return (
@@ -27,7 +35,27 @@ export const UserNavbar = () => {
                         </div>
                     </div>
                     : <nav className="navbar navbar-light bg-light">
-                        <div className="container-fluid">
+                        <div className="container-fluid position-relative">
+                        <div className="d-flex justify-content-center">
+            <button className="btn btn-white d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#coursesCategories" aria-expanded="false" aria-controls="coursesCategories" onMouseOver={handleMouseEnter} onMouseOut={handleMouseLeave}>
+                Categories
+            </button>
+        </div>
+        <div>
+            <div className="collapse position-absolute top-0 start-0" style={{ marginLeft: '10%' }} id="coursesCategories">
+                <div className="card card-body">
+                    {store.category && store.category.length > 0 ? (
+                        store.category.map((item, index) => {
+                            return (
+                                <a type="text" className="d-block mb-2" key={index}>{item.titleCategory}</a>
+                            )
+                        })
+                    ) : (
+                        <a type="text" className="d-block mb-2">No category available</a>
+                    )}
+                </div>
+            </div>
+        </div>
                             <div className="col d-flex justify-content-end">
                                 {
                                     (!store.user)
@@ -59,3 +87,4 @@ export const UserNavbar = () => {
         </div>
     );
 };
+
