@@ -225,9 +225,9 @@ export const Profile = () => {
 
     return (
         <div className="container mt-3 profile-container" >
-            <h5 style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}>
+            <p style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}>
                 Profile Settings
-            </h5>
+            </p>
             <div className="mb-3 row" style={{ marginLeft: '25px', marginRight: '25px' }}>
                 {profileData.url_image && (
                     <img src={profileData.url_image} alt="Profile" className="profile-image" />
@@ -278,8 +278,8 @@ export const Profile = () => {
                                 <button className="join-room button-save" onClick={handleSaveCroppedImage}>
                                     Save
                                 </button>
-                                <button className="withdraw" onClick={handleCancelEditing}>
-                                    X
+                                <button className="withdraw" style={{color: "white"}} onClick={handleCancelEditing}>
+                                    Cancel
                                 </button>
                             </div>
 

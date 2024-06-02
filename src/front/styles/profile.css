@@ -4,7 +4,6 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
-
     padding: 0;
 }
 
@@ -82,7 +81,6 @@ input {
 .button-save {
     margin-right: 20px; /* Espacio entre los botones */
 }
-=======
-}
+
 
 
