@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import '../../styles/Navbar.css';
@@ -9,6 +9,23 @@ export const Navbar = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('jwt-token');
     const [showSignUpModals, setShowSignUpModals] = useState(false);
+    const [profileImageUrl, setProfileImageUrl] = useState('');
+
+    useEffect(() => {
+        const loadUserProfile = async () => {
+            if (store.user && store.user.url_image) {
+                setProfileImageUrl(store.user.url_image);
+            } else if (localStorage.getItem('jwt-token')) {
+                // Suponiendo que el token existe pero aún no se han cargado los datos del usuario
+                const userData = await actions.getProfile();
+                if (userData && userData.url_image) {
+                    setProfileImageUrl(userData.url_image);
+                }
+            }
+        };
+
+        loadUserProfile();
+    }, [store.user]);
 
     const handleLogout = () => {
         actions.logout();
@@ -42,7 +59,10 @@ export const Navbar = () => {
                             {token ? (
                                 <>
                                     <li className="nav-item">
-                                        <Link to="/profile" className="nav-link">Profile</Link>
+                                        <Link to="/profile" className="nav-link">
+                                            {profileImageUrl && <img src={profileImageUrl} alt="Profile" style={{ width: '30px', height: '30px', marginRight: '10px', borderRadius: '50%' }} />}
+                                            Profile
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
                                         <button onClick={handleLogout} className="btn nav-link">Logout</button>
