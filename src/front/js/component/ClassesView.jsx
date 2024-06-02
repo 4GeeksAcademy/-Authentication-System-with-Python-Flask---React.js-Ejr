@@ -1,17 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { Form, Row, Col, Button, Modal } from "react-bootstrap";
+import { Form, Row, Col, Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import styles from "./ClassesView.module.css";
 import EditClasses from "./EditClasses.jsx";
+import moment from 'moment';
 
 const ClassesView = () => {
     const { actions, store } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
     const [selectedClass, setSelectedClass] = useState(null);
+    const [filter, setFilter] = useState(""); // Estado para almacenar el texto de búsqueda
 
     useEffect(() => {
         actions.getClasses();
     }, []);
+
+    const FormattedDate = ({ dateTime }) => {
+        return <span>{moment(dateTime).format('LL')}</span>;
+    };
 
     const handlerEdit = (item) => {
         setSelectedClass(item);
@@ -29,15 +35,34 @@ const ClassesView = () => {
         return formattedDate;
     };
 
+    // Función para filtrar las clases basadas en el estado de búsqueda
+    const filteredClasses = (classes, isActive) => {
+        return classes
+            .filter(item => item.Class_is_active === isActive)
+            .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()) ||
+                            item.instructor.toLowerCase().includes(filter.toLowerCase()) ||
+                            item.description.toLowerCase().includes(filter.toLowerCase()) ||
+
+                            moment(item.dateTime_class).format('LL').toLowerCase().includes(filter.toLowerCase()));
+    }
+
     return (
         <div className={`container-fluid ${styles.classesViewContainer}`}>
             <h1 className={styles.title}>Active Classes</h1>
+            <InputGroup className="mb-3">
+                <FormControl
+                    placeholder="Search: Class name, Coach, Description, Date"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                />
+            </InputGroup>
             <div className="table-responsive">
                 <table className={`table ${styles.table}`}>
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Coach</th>
                             <th className="text-center" scope="col">Date class</th>
                             <th className="text-center" scope="col">Start time</th>
                             <th className="text-center" scope="col">Duration minutes</th>
@@ -46,11 +71,12 @@ const ClassesView = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {store.classesData && store.classesData.filter(item => item.Class_is_active).map((item) => (
+                        {store.classesData && filteredClasses(store.classesData, true).map((item) => (
                             <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
-                                <td className="text-center">{formatDateTime(item.dateTime_class)}</td>
+                                <td>{item.instructor}</td>
+                                <td className="text-center"><FormattedDate dateTime={item.dateTime_class}/></td>
                                 <td className="text-center">{item.start_time}</td>
                                 <td className="text-center">{item.duration_minutes}</td>
                                 <td className="text-center">{item.available_slots}</td>
@@ -69,7 +95,7 @@ const ClassesView = () => {
                 </table>
             </div>
 
-            <h1 className={styles.title}>Canceled classes</h1>
+            <h1 className={styles.title}>Canceled Classes</h1>
             <div className="table-responsive">
                 <table className={`table ${styles.table}`}>
                     <thead>
@@ -83,7 +109,7 @@ const ClassesView = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {store.classesData && store.classesData.filter(item => !item.Class_is_active).map((item) => (
+                        {store.classesData && filteredClasses(store.classesData, false).map((item) => (
                             <tr key={item.id} className={styles.tableRow}>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>

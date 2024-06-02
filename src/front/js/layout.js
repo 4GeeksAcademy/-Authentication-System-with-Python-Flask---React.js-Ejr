@@ -25,7 +25,6 @@ import PrivateCalendar from "./component/PrivateCalendar.jsx";
 import UserDataDetail from "./component/UserDataDetail.jsx"
 import UserBooking from "./component/UserBooking.jsx"
 import CreateClasses from "./component/CreateClasses.jsx";
-import ModulePage from "./pages/ModulePage.jsx";
 import EditProfile from "./component/EditProfile.jsx";
 import MembershipPurchase from "./component/MembershipPurchase.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
@@ -41,6 +40,9 @@ import PRRecord from "./component/PRRecord.jsx";
 import AdminMembershipPurchase from "./component/AdminMembershipPurchase.jsx";
 
 import PageNormalUser from "./pages/PageNormalUser.jsx";
+import ModulePage from "./pages/ModulePage.jsx";
+import CoachPage from "./pages/CoachPage.jsx";
+import AdminPage from "./pages/adminPage.jsx";
 
 import MembershipManager from "./component/MembershipManager.jsx";
 
@@ -104,6 +106,8 @@ const Layout = () => {
                         <Route element={<TransactionsTable />} path="/TransactionsTable" />
                         <Route element={<UserCreator />} path="/UserCreator" />
                         <Route element={<PageNormalUser />} path="/Userpage" />
+                        <Route element={<CoachPage />} path="/CoachPage" />
+                        <Route element={<AdminPage />} path="/AdminPage" />
                         <Route element={<PRRecord />} path="/PRRecord" />
                         <Route element={<AdminMembershipPurchase />} path="/AdminMembershipPurchase" />
                         <Route element={<ExecutePayment />} path="/paypal_payment/execute" />
@@ -116,6 +120,7 @@ const Layout = () => {
                         <Route element={<MembershipManager />} />
                         <Route element={<PricingPlans />} path="/PricingPlans" />
                         <Route element={<ImageSlider />} path="/ImageSlider" />
+
 
                     </Routes>
                 </ScrollToTop>

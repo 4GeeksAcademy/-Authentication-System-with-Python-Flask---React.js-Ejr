@@ -4,7 +4,7 @@ Este módulo se encarga de iniciar el servidor API, cargar la base de datos y ag
 
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect, url_for, render_template, current_app  # Importación de Flask y funciones relacionadas
-from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Payment, PaymentDetail, UserMembershipHistory, MovementImages, ProfileImage, PRRecord  # Importación de los modelos de la base de datos
+from api.models import db, User, SecurityQuestion, Role, Permission, RolePermission, Membership, Training_classes, Booking, Payment, PaymentDetail, UserMembershipHistory, MovementImages, ProfileImage, PRRecord, MessagesSend, MessageRecipient  # Importación de los modelos de la base de datos
 from api.utils import generate_sitemap, APIException  # Importación de funciones de utilidad y excepciones personalizadas
 from flask_cors import CORS  # Importación de CORS para permitir solicitudes desde otros dominios
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity  # Importación de JWT para autenticación y autorización basada en tokens
@@ -18,6 +18,8 @@ import base64
 import paypalrestsdk
 from sqlalchemy import func, create_engine
 from datetime import datetime
+from sqlalchemy.orm import joinedload
+
 
 
 
@@ -63,7 +65,7 @@ def handle_hello():
 
 #-------------------CONSULTAR TODOS LOS USUARIOS--------------------------------------------------------------------------
 @api.route('/users', methods=['GET'])
-# @jwt_required() # Decorador para requerir autenticación con JWT
+@jwt_required() # Decorador para requerir autenticación con JWT
 def get_users():
     try:
         users = User.query.all()
@@ -77,7 +79,7 @@ def get_users():
 
 
 @api.route('/user/<int:id>',methods=['GET'])
-# @jwt_required() # Decorador para requerir autenticación con JWT
+@jwt_required() # Decorador para requerir autenticación con JWT
 def get_Oneuser(id):
     try:
         user=User.query.get(id)
@@ -176,7 +178,7 @@ def update_user(user_id):  # Define la función para manejar las solicitudes PUT
 #------todos los ROLE-------
 @api.route('master/roles', methods=['GET'])  # Define una ruta para obtener todos los roles
 @api.route('master/roles/<int:roles_id>', methods=['GET'])  # Define una ruta para obtener un rol específico por su ID
-# @jwt_required() # Decorador para requerir autenticación con JWT
+@jwt_required() # Decorador para requerir autenticación con JWT
 def get_roles(roles_id=None):  # Define una función para manejar las solicitudes GET relacionadas con los roles
     try:  # Inicia un bloque de manejo de excepciones para capturar posibles errores
         if roles_id:  # Comprueba si se proporcionó un ID de roles específico
@@ -397,7 +399,7 @@ def create_permissions():
 
 @api.route('master/permissions', methods=['GET'])  # Define una ruta para manejar solicitudes GET a '/master/permissions'
 @api.route('master/permissions/<int:permission_id>', methods=['GET'])  # Define otra ruta para manejar solicitudes GET a '/master/permissions/<int:permission_id>', donde <int:permission_id> es una variable para el ID del permiso
-# @jwt_required()  # Requiere autenticación con JWT para acceder a estas rutas
+@jwt_required()  # Requiere autenticación con JWT para acceder a estas rutas
 def get_permissions(permission_id=None):  # Define la función para manejar las solicitudes GET de permisos, con un parámetro opcional de ID de permiso
     try:  # Inicia un bloque try-except para manejar posibles errores durante la ejecución
         if permission_id:  # Comprueba si se proporcionó un ID de permiso
@@ -419,7 +421,7 @@ def get_permissions(permission_id=None):  # Define la función para manejar las 
 #------------------ eliminar PERMISOS---------------
 
 @api.route('master/permissions/<int:permission_id>', methods=['DELETE'])  # Define una ruta para manejar solicitudes DELETE a '/master/permissions/<int:permission_id>'
-# @jwt_required()  # Requiere autenticación con JWT para acceder a esta ruta
+@jwt_required()  # Requiere autenticación con JWT para acceder a esta ruta
 def delete_permission(permission_id):  # Define la función para manejar las solicitudes DELETE de permisos, con el parámetro de ID de permiso
     try:  # Inicia un bloque try-except para manejar posibles errores durante la ejecución
         permission = Permission.query.get(permission_id)  # Busca el permiso con el ID proporcionado
@@ -760,7 +762,7 @@ def reset_password():  # Define la función que manejará la solicitud PUT.
 #--------------------------------------------------ENPOINT PARA LA CONSULTA DE Y CREACION DE RESERVAS DE CLASE-----------------------------------
 #Consultar reservas (GET)
 @api.route('/booking', methods=['GET'])  # Define el endpoint para obtener todas las reservas.
-# @jwt_required() # Decorador comentado que requeriría autenticación con JWT para acceder a este endpoint.
+@jwt_required() # Decorador comentado que requeriría autenticación con JWT para acceder a este endpoint.
 def get_booking():  # Función que maneja la solicitud GET.
     try:
         all_booking = Booking.query.all()  # Consulta todas las reservas existentes en la base de datos.
@@ -909,7 +911,7 @@ def create_training_classes():  # Función que maneja la solicitud POST para cre
 #     "available_slots": 15,
 # }
 @api.route('/training_classes/<int:class_id>', methods=['PUT'])
-#@jwt_required()
+@jwt_required()
 def update_training_class(class_id):
     try:
         data = request.get_json()  # Asegúrate de que esto esté importado y configurado correctamente.
@@ -991,7 +993,7 @@ def get_memberships():  # Función que maneja la solicitud GET para obtener memb
 
 #Consultar historial de MEMBRESIA (GET)
 @api.route('/histoy_memberships', methods=['GET'])  # Define el endpoint para obtener el historial de membresías. Se usa el método GET.
-# @jwt_required() # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan acceder a esta información.
+@jwt_required() # Decorador para requerir autenticación con JWT, asegurando que solo usuarios autenticados puedan acceder a esta información.
 def get_histoy_memberships():  # Función que maneja la solicitud GET para obtener el historial de membresías.
     try:
         histoy_memberships = UserMembershipHistory.query.all()  # Consulta todo el historial de membresías en la base de datos.
@@ -1007,7 +1009,7 @@ def get_histoy_memberships():  # Función que maneja la solicitud GET para obten
 
 #Crear una MEMBRESIA  (POST)
 @api.route('/memberships', methods=['POST'])  # Define el endpoint para crear nuevas membresías.
-# @jwt_required() # Comentado aquí, pero este decorador requeriría autenticación con JWT para acceder a este endpoint.
+@jwt_required() # Comentado aquí, pero este decorador requeriría autenticación con JWT para acceder a este endpoint.
 def create_memberships():
     data = request.get_json()  # Obtiene los datos enviados en formato JSON.
     if not data:
@@ -1279,7 +1281,7 @@ def delete_profile_image():
     
 #-------------------------------------------------ENPOINT PARA LA CARGA DE PAYMENTS-----------------------------------------------------------
 @api.route('/Payments', methods=['GET'])
-# @jwt_required() # Decorador para requerir autenticación con JWT
+@jwt_required() # Decorador para requerir autenticación con JWT
 def get_all_payments():
     try:
         users = Payment.query.all()
@@ -1763,16 +1765,118 @@ def get_class_reservation_frequency():
         return jsonify({'error': str(e)}), 500
 
 
+#-------------------------------------------------ENPOINT PARA EL ENVIO DE MENSAJES------------------------------------------------------------------------------------
+
+
+@api.route('/messages/send', methods=['POST'])  # Define la ruta del endpoint y el método HTTP permitido
+@jwt_required()  # Decorador que requiere que el usuario esté autenticado para acceder a este endpoint
+def send_message():
+    user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado desde el token JWT
+    data = request.get_json()  # Extrae los datos JSON enviados en la petición
+    print("Received data:", data)  # Imprime los datos recibidos para depuración
+
+    recipients = data.get('recipients')  # Obtiene la lista de correos de los destinatarios desde los datos recibidos
+    title = data.get('title')  # Obtiene el título del mensaje desde los datos recibidos
+    content = data.get('content')  # Obtiene el contenido del mensaje desde los datos recibidos
+
+    # Verifica que todos los campos necesarios estén presentes
+    if not recipients or not title or not content:
+        return jsonify({'error': 'All fields are required'}), 400  # Retorna un error 400 si falta algún campo
+
+    recipients_not_found = []  # Lista para guardar los correos de destinatarios no encontrados
+    try:
+        new_message = MessagesSend(
+            sender_id=user_id,  # ID del remitente
+            title=title,  # Título del mensaje
+            body=content,  # Contenido del mensaje
+            send_time=datetime.utcnow()  # Fecha y hora de envío del mensaje
+        )
+        db.session.add(new_message)  # Añade el mensaje nuevo a la sesión de la base de datos
+        db.session.flush()  # Realiza un flush para obtener el ID del mensaje antes de commitear
+
+        # Recorre la lista de correos de los destinatarios
+        for email in recipients:
+            recipient = User.query.filter_by(email=email).first()  # Busca al usuario destinatario por correo
+            if recipient:
+                new_message_recipient = MessageRecipient(
+                    message_id=new_message.id,  # ID del mensaje
+                    recipient_id=recipient.id,  # ID del destinatario
+                    read=False  # Establece el mensaje como no leído
+                )
+                db.session.add(new_message_recipient)  # Añade el destinatario del mensaje a la sesión de la base de datos
+            else:
+                recipients_not_found.append(email)  # Añade el correo a la lista de no encontrados si no existe el usuario
+
+        # Verifica si hay destinatarios no encontrados
+        if recipients_not_found:
+            db.session.rollback()  # Revierte cambios en caso de error
+            return jsonify({'error': 'Recipients not found', 'emails': recipients_not_found}), 404  # Retorna un error 404
+
+        db.session.commit()  # Confirma los cambios en la base de datos
+        return jsonify({'message': 'Message sent successfully'}), 201  # Retorna un mensaje de éxito
+
+    except Exception as e:
+        db.session.rollback()  # Revierte cambios en caso de excepción
+        print(e)  # Imprime el error en consola
+        return jsonify({'error': str(e)}), 500  # Retorna un error 500
+
+
+
+@api.route('/messages', methods=['GET'])  # Define la ruta del endpoint y el método HTTP permitido para obtener mensajes
+@jwt_required()  # Decorador que requiere que el usuario esté autenticado para acceder a este endpoint
+def get_messages():
+    user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado desde el token JWT
+
+    try:
+        # Utiliza joinedload para optimizar la carga de relaciones y evitar múltiples consultas
+        received_messages = (MessageRecipient.query
+                             .join(MessagesSend)  # Realiza un join con la tabla de mensajes enviados
+                             .options(joinedload(MessageRecipient.message).joinedload(MessagesSend.sender))  # Pre-carga las relaciones de mensaje y remitente
+                             .filter(MessageRecipient.recipient_id == user_id)  # Filtra los mensajes por el ID del destinatario
+                             .all())  # Obtiene todos los mensajes que coincidan con el filtro
+
+        # Prepara la lista de mensajes recibidos con toda la información necesaria
+        result = [{
+            "id": mr.message.id,  # ID del mensaje
+            "from": mr.message.sender.username,  # Nombre de usuario del remitente
+            "title": mr.message.title,  # Título del mensaje
+            "send_time": mr.message.send_time.isoformat(),  # Fecha y hora del mensaje formateada como ISO
+            "content": mr.message.body,  # Contenido del mensaje
+            "read": mr.read  # Estado de lectura del mensaje
+        } for mr in received_messages]  # Itera sobre cada mensaje recibido para formar el resultado
+
+        return jsonify({"received": result}), 200  # Devuelve la lista de mensajes como respuesta JSON con un código de estado 200
+
+    except Exception as e:
+        # Manejo de errores para capturar cualquier excepción durante la consulta o procesamiento
+        db.session.rollback()  # Revierte la transacción de base de datos en caso de error
+        print(f"Error retrieving messages: {str(e)}")  # Imprime el error en consola
+        return jsonify({'error': 'Unable to retrieve messages', 'details': str(e)}), 500  # Devuelve un error 500 con detalles del error
+
+
+@api.route('/messages/read', methods=['POST'])  # Define la ruta y el método HTTP para marcar mensajes como leídos
+@jwt_required()  # Asegura que el usuario esté autenticado para acceder a esta funcionalidad
+def mark_as_read():
+    data = request.get_json()  # Obtiene los datos enviados en la solicitud JSON
+    message_id = data.get('message_id')  # Extrae el ID del mensaje de los datos de la solicitud
+    user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado desde el token JWT
     
-    
-# # Endpoint para registros de PR de un usuario
-# @api.route('/pr_records/user/<int:user_id>', methods=['GET'])
-# def get_user_pr_records(user_id):
-#     try:
-#         records = PRRecord.query.filter_by(user_id=user_id).all()
-#         data = [record.serialize() for record in records]
-#         return jsonify(data), 200
-#     except Exception as e:
-#         return jsonify({'error': str(e)}), 500
+    # Busca el registro de MessageRecipient que coincida con el ID del mensaje y el ID del destinatario
+    message_recipient = MessageRecipient.query.filter_by(message_id=message_id, recipient_id=user_id).first()
+    if message_recipient:
+        message_recipient.read = True  # Marca el mensaje como leído
+        db.session.commit()  # Guarda los cambios en la base de datos
+        return jsonify({"message": "Message marked as read"}), 200  # Retorna un mensaje de éxito
+    return jsonify({"error": "Message not found"}), 404  # Retorna un mensaje de error si no se encuentra el registro
+
+@api.route('/messages/unread', methods=['GET'])  # Define la ruta y el método HTTP para consultar mensajes no leídos
+@jwt_required()  # Requiere autenticación para acceder a este endpoint
+def check_unread_messages():
+    current_user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado desde el token JWT
+    # Cuenta los mensajes no leídos para el usuario autenticado
+    unread_count = MessageRecipient.query.filter_by(recipient_id=current_user_id, read=False).count()
+    return jsonify({"hasUnread": unread_count > 0})  # Retorna si hay o no mensajes sin leer
+
+
 
 

@@ -1,71 +1,73 @@
-import React, { useContext, useEffect, useState } from 'react';
-import styles from "./Login.module.css"; // Asegúrate de tener este archivo de estilos o ajusta el nombre según necesites
-import { Link, useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext";
+import React, { useContext, useEffect, useState } from 'react'; // Importa las funciones necesarias de React.
+import styles from "./Login.module.css"; // Importa los estilos específicos para este componente.
+import { Link, useNavigate } from "react-router-dom"; // Importa Link para la navegación declarativa y useNavigate para la programática.
+import { Context } from "../store/appContext"; // Importa el contexto que contiene tu estado global y acciones.
 
 const Login = () => {
-    const { actions, store } = useContext(Context);
-    const navigate = useNavigate();
+    const { actions, store } = useContext(Context); // Utiliza useContext para acceder al contexto y obtener las acciones y el estado del store.
+    const navigate = useNavigate(); // Inicializa navigate para poder redirigir al usuario.
 
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState(""); // Estado local para el correo electrónico con su respectivo setter.
+    const [password, setPassword] = useState(""); // Estado local para la contraseña con su respectivo setter.
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        await actions.loginUserV2(email, password);
-        await actions.loadUserData();
+        e.preventDefault(); // Previene el comportamiento por defecto del formulario (recargar la página).
+        await actions.loginUserV2(email, password); // Llama a la acción de inicio de sesión pasando el correo y la contraseña.
+        await actions.loadUserData(); // Carga los datos del usuario tras el inicio de sesión.
 
-        // Verificar el estado después de que se haya actualizado
+        // Verifica el estado de autenticación y el rol del usuario almacenados en localStorage.
         const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
         const dataRole = localStorage.getItem('dataRole');
 
-
+        // Redirecciona según el rol del usuario.
         if (isAuthenticated && dataRole) {
             if (dataRole === "athlete") {
                 navigate("/Userpage");
-            }else if (dataRole === "coach") {
-                navigate("/Userpage"); 
-            }else if (dataRole === "admin") {
-                navigate("/Userpage"); 
-            }else if (dataRole === "master") {
+            } else if (dataRole === "coach") {
+                navigate("/CoachPage"); 
+            } else if (dataRole === "admin") {
+                navigate("/AdminPage"); 
+            } else if (dataRole === "master") {
                 navigate("/ModulePage"); 
-            }else {
+            } else {
                 navigate("/");
             }
         }
     };
 
     useEffect(() => {
+        // Verifica si el usuario ya está autenticado y lo redirige automáticamente según su rol.
         const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
         const dataRole = localStorage.getItem("dataRole");
 
         if (isAuthenticated && dataRole) {
             if (dataRole === "athlete") {
                 navigate("/Userpage");
-            } else if (dataRole === "coach" || dataRole === "admin") {
-                navigate("/PrivatePageUser");
+            } else if (dataRole === "coach") {
+                navigate("/CoachPage"); 
+            } else if (dataRole === "admin") {
+                navigate("/AdminPage"); 
             } else if (dataRole === "master") {
-                navigate("/ModulePage");
+                navigate("/ModulePage"); 
             } else {
                 navigate("/");
             }
         }
-    }, [navigate]);
+    }, [navigate]); // El hook useEffect depende de navigate para asegurar que se use el último disponible.
 
-
-    const renderLoginResponse = () => { // Función para renderizar la respuesta del inicio de sesión
-        if (store.isAuthenticatedMessage != null) { // Verifica si hay una respuesta de inicio de sesión
-            if (store.isAuthenticatedMessage == false) { // Verifica si hay un error en el inicio de sesión
+    const renderLoginResponse = () => {
+        // Función que renderiza respuestas visuales dependiendo del estado de la autenticación.
+        if (store.isAuthenticatedMessage != null) {
+            if (store.isAuthenticatedMessage === false) {
                 return (
-                    <div className="alert alert-danger" role="alert"> {/* Muestra el mensaje de error */}
-                        <p>{store.loginError}</p>
+                    <div className="alert alert-danger" role="alert">
+                        <p>{store.loginError}</p> // Muestra mensaje de error si el inicio de sesión falla.
                     </div>
                 );
-            } else { // Si no hay error, muestra un mensaje de éxito
+            } else {
                 return (
                     <div className="alert alert-success" role="alert">
-                        <p>Correct password</p>
+                        <p>Correct password</p> // Muestra un mensaje de éxito.
                     </div>
                 );
             }
@@ -76,7 +78,7 @@ const Login = () => {
         <div className={styles.loginform}>
             <h2>Inicia sesión</h2>
             <div>
-                {renderLoginResponse()} {/* Renderiza la respuesta del inicio de sesión */}
+                {renderLoginResponse()} 
             </div>
             <form onSubmit={handleLogin}>
                 <label className="labels">
@@ -88,21 +90,23 @@ const Login = () => {
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>
 
-                <button type="submit" className={styles.submitButtonLogin}>Log in</button>
-                <Link to="/PasswordResetRequest">
-                    Forgot your password?</Link>
+                <button type="submit" className={styles.submitButtonLogin}>Log in</button> 
+                <Link to="/PasswordResetRequest"> 
+                    Forgot your password?
+                </Link>
 
                 <div className="rememberMe">
                     <input type="checkbox" />
-                    <span>
-                        Remember me</span>
+                    <span>Remember me</span> 
                     <p>
-                        Is this your first time here? <Link to="/Singup">
-                            Register now.</Link></p>
+                        Is this your first time here? <Link to="/Singup"> 
+                            Register now.
+                        </Link>
+                    </p>
                 </div>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default Login; 

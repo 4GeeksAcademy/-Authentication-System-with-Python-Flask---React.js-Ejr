@@ -67,4 +67,8 @@
     border-radius: .3rem;
     outline: 0;
   }
-  
+
+/* En tus estilos CSS */
+.unreadHighlight {
+  background-color: var(--color-green);;  
+  color: white;}

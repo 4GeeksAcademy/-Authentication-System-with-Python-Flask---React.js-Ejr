@@ -10,9 +10,9 @@ const BookingView = () => {
     const [search, setSearch] = useState('');
     const [filteredBookings, setFilteredBookings] = useState([]);
 
-    // useEffect(() => {
-    //     actions.getAllBookings();
-    // }, []);
+    useEffect(() => {
+        actions.getBookings();
+    }, []);
 
     const FormattedDate = ({ dateTime }) => {
         return <span>{moment(dateTime).format('LL')}</span>;
