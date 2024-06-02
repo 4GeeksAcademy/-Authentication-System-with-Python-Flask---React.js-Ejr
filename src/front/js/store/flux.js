@@ -420,6 +420,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+
             initializeData: async () => {
                 const store = setStore()
                 setStore({ loading: true });
@@ -432,6 +433,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(store)
                 }
             },
+
             joinRoom: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return false;
@@ -497,6 +499,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+
             checkRequestStatus: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return null;
@@ -517,6 +520,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return null;
                 }
             },
+            
             withdrawRequest: async (roomId) => {
                 const token = localStorage.getItem('jwt-token');
                 if (!token) return null;
