@@ -1,7 +1,7 @@
 :root {
     --primary-color: #aaa9a9;
     --text: rgb(0, 0, 0);
-    --background: #F4F5FC;
+    --background: black;
     --sidebar-gray-background: #757575;
     --red: #F55E5E;
     --item-hover: #F0F0F0;
@@ -26,7 +26,8 @@ main {
 }
 
 body.collapsed {
-    padding-right: 4.75rem; /* Padding when sidebar is collapsed */
+    padding-right: 4.75rem;
+    /* Padding when sidebar is collapsed */
 }
 
 .sidebarTop {
@@ -77,10 +78,12 @@ body.collapsed {
     height: 3.6125rem;
     max-width: 100%;
     object-fit: contain;
-    border-radius: 50%; /* Hace que la imagen sea redonda */
-    object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
-  
-    
+    border-radius: 50%;
+    /* Hace que la imagen sea redonda */
+    object-fit: cover;
+    /* Asegura que la imagen se ajuste bien dentro del contenedor */
+
+
 }
 
 .logoSmall {
@@ -88,9 +91,11 @@ body.collapsed {
     max-width: 100%;
     display: none;
     object-fit: contain;
-    border-radius: 50%; /* Hace que la imagen sea redonda */
-    object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
-  
+    border-radius: 50%;
+    /* Hace que la imagen sea redonda */
+    object-fit: cover;
+    /* Asegura que la imagen se ajuste bien dentro del contenedor */
+
 }
 
 .collapsed .logo {
@@ -287,6 +292,7 @@ body.collapsed {
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 .ButtonHome:hover {
     color: #E6E6E9;
     background-color: #A8A7A8;
@@ -296,4 +302,3 @@ body.collapsed {
     background-color: #3C403F;
     color: #937863;
 }
-

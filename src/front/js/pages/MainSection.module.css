@@ -1,5 +1,17 @@
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .mainSection {
-    background-image: url('https://wallpapercave.com/wp/wp5559316.jpg'); /* Reemplaza 'ruta/a/la/imagen.jpg' con la ruta de tu imagen de fondo */
+    background-image: url('https://wallpapercave.com/wp/wp5559316.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -7,8 +19,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
     z-index: 900;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
 }
 
 .content {
@@ -16,29 +29,56 @@
 }
 
 .title {
-    font-size: 3.5rem; /* Aumenta el tamaño del título */
+    font-size: 3.5rem;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Agrega un efecto de sombra al texto */
+    color: #caa265;
+    text-shadow: 1px 1px 2px rgba(78, 77, 77, 0.956);
+}
+
+.title,
+.logo,
+.logo2,
+.subtitle,
+.button {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.logo {
+    display: block;
+    margin: 1rem auto;
+    max-height: 150px;
+    width: auto;
+}
+
+.logo2 {
+    display: block;
+    margin: 1rem auto;
+    max-height: 80px;
+    width: auto;
 }
 
 .subtitle {
-    font-size: 1.8rem; /* Aumenta el tamaño del subtítulo */
-    margin-bottom: 40px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Agrega un efecto de sombra al texto */
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    color: #b99c70;
+    text-shadow: 1px 1px 2px rgba(78, 77, 77, 0.956);
 }
 
 .button {
     display: inline-block;
-    padding: 12px 24px; /* Aumenta el padding del botón */
-    background-color: #FF6347; /* Cambia el color del botón a rojo */
+    padding: 12px 24px;
+    background-color: #96794e;
     color: white;
     text-decoration: none;
-    border-radius: 30px; /* Hace que el botón tenga bordes redondeados */
-    font-size: 1.4rem; /* Aumenta el tamaño del texto del botón */
+    border-radius: 30px;
+    font-size: 1.4rem;
     transition: background-color 0.3s ease;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Agrega una sombra al botón */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 1rem;
 }
 
 .button:hover {
-    background-color: #FF5733; /* Cambia el color del botón al pasar el ratón */
+    background-color: #96794e;
 }

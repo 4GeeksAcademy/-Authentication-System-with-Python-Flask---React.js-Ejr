@@ -17,8 +17,8 @@ const Home = () => {
     <div className={styles.homeContainer}>
       <Navbar />
       <MainSection
-        title="Welcome to MOMENTUM 360"
-        subtitle="The best choice for your gym"
+        title="WELCOME TO"
+        subtitle="THE BEST CHOICE FOR YOUR GYM"
         buttonText="Learn More"
         buttonLink="/about"
       />
@@ -27,14 +27,15 @@ const Home = () => {
         <div className={styles.sectionSpacing}>
           <PricingPlans />
         </div>
-
+        <div className={styles.sectionSpacing}>
+          <ContactForm />
+        </div>
         <div className={styles.sectionSpacing}>
           <Footer />
         </div>
-
       </div>
 
-    </div>
+    </div >
   );
 };
 

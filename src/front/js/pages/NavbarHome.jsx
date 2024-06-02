@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./NavbarHome.module.css";
+import Momentum from "../../img/MOMENTUM360-10.png"
 
 const menuItems = [
     { id: "/", name: "Home" },
@@ -28,9 +29,11 @@ const Navbar = () => {
         <div className={`${styles.navbar} ${isSticky ? styles.sticky : ""}`}>
             <div className={styles.logoContainer}>
                 <Link to="/">
-                    <h1 className={`${styles.logo} ${styles.logoAnimation}`}>
-                        Momentum 360
-                    </h1>
+                    <img
+                        src={Momentum}
+                        alt="Momentum 360"
+                        className={`${styles.logo} ${styles.logoAnimation}`}
+                    />
                 </Link>
             </div>
             <nav className={styles.navLinks}>
