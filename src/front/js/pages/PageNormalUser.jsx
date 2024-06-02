@@ -26,6 +26,7 @@ import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
 import UserCreator from "../component/UserCreator.jsx";
 import PRRecord from "../component/PRRecord.jsx";
+import ReceiveMessages from "../component/ReceiveMessages.jsx";
 
 import Sidebar from "../component/Sidebar.jsx";
 
@@ -55,6 +56,7 @@ const PageNormalUser = () => {
     const components = [
         // { component: <CreateClasses />, name: "Create Classes" },
         // { component: <MyCalendar />, name: "My Calendar" },
+        { component: <ReceiveMessages showModal={!show} />, name: "Receive Messages" },
         { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
         // { component: <UserBooking />, name: "User Booking" },
         // { component: <BookingView />, name: "BookingView " },
@@ -71,19 +73,23 @@ const PageNormalUser = () => {
         { component: <PRRecord />, name: "PRRecord " },
     ];
 
+    useEffect(() => {
+        actions.checkUnreadMessages();
+    }, []);
+
     return (
         <>
         <Sidebar/>
             <h1>User Page</h1>
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
-                    <div key={index} className={styles.securityQuestions} onClick={() => handleOpenModal(index)}>
+                    <div key={index} className={`${styles.securityQuestions} ${entry.name === "Receive Messages" && store.hasUnreadMessages ? styles.unreadHighlight : ''}`} onClick={() => handleOpenModal(index)}>
                         <h3>{entry.name}</h3>
                         <p>Click to view more...</p>
                     </div>
                 ))}
             </div>
-
+    
             <Modal show={show} onHide={handleCloseModal} centered size="lg" className={styles.modalCustom}>
                 <Modal.Header closeButton className={styles.modalHeader}>
                     <Modal.Title className={styles.modalTitle}>{components[currentSlide].name}</Modal.Title>

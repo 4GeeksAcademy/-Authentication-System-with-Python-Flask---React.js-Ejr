@@ -17,7 +17,7 @@ const TransactionsTable = () => {
             setFilteredPayments(store.payments.filter(payment =>
                 payment.user_email.toLowerCase().includes(search.toLowerCase()) ||
                 payment.amount.toString().includes(search) ||
-                new Date(payment.payment_date).toLocaleDateString().includes(search)
+                new Date(payment.transaction_reference).toLocaleDateString().includes(search)
             ));
         }
     }, [search, store.payments]);
@@ -26,7 +26,7 @@ const TransactionsTable = () => {
         <div className={styles.tableContainer}>
             <InputGroup className="mb-3">
                 <FormControl
-                    placeholder="Search by email, amount, date"
+                    placeholder="Search by email, amount, Reference"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
@@ -41,6 +41,7 @@ const TransactionsTable = () => {
                             <th>Date</th>
                             <th>Status</th>
                             <th>Method</th>
+                            <th>Reference</th>
                             <th>Card number</th>
                             <th>Card type</th>
                         </tr>
@@ -54,6 +55,8 @@ const TransactionsTable = () => {
                                 <td>{new Date(payment.payment_date).toLocaleDateString()}</td>
                                 <td>{payment.status}</td>
                                 <td>{payment.payment_method}</td>
+                                <td>{payment.transaction_reference}</td>
+
                                 <td>{payment.card_number}</td>
                                 <td>
                                     {payment.card_type === 'visa' && <i className="fa-brands fa-cc-visa"></i>}

@@ -257,8 +257,8 @@ class Training_classes(db.Model):
             "id": self.id,
             "name": self.name,
             "Class_is_active": self.Class_is_active,
-            "dateTime_class": self.dateTime_class.strftime('%Y-%m-%d %H:%M:%S') if self.dateTime_class else None,
-            "start_time": self.start_time.strftime('%H:%M') if self.start_time else None,
+            "dateTime_class": self.dateTime_class.isoformat(), #strftime('%Y-%m-%d %H:%M:%S') if self.dateTime_class else None,
+            "start_time": self.start_time.isoformat(),      #strftime('%H:%M') if self.start_time else None,
             # "dateTime_class": self.dateTime_class,
             # "start_time": self.start_time.strftime('%H:%M'),  # Formato de hora como HH:MM
             "duration_minutes": self.duration_minutes,
@@ -329,14 +329,16 @@ class Payment(db.Model):
             "user_id": self.user.id,
             "user_name": self.user.name,
             "user_email": self.user.email,
-            "payment_date": self.payment_date,
+            "payment_date": self.payment_date.isoformat(),
             "amount": self.amount,
             "currency": self.currency,
             "payment_method": self.payment_method,
+            "transaction_reference": self.transaction_reference,
             "card_number": self.card_number_last4,
             "card_type": self.card_type,
             "cardholder_name": self.cardholder_name,
             "status": self.status
+
 
         }
 
@@ -424,3 +426,39 @@ class PRRecord(db.Model):
             "unit": self.unit,
             "date": self.date.isoformat()  # Mantén la fecha completa
         }
+
+
+class MessagesSend(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    title = db.Column(db.String(255), nullable=True)
+    body = db.Column(db.Text, nullable=False)
+    send_time = db.Column(db.DateTime, default=datetime.utcnow)
+
+    sender = db.relationship("User", foreign_keys=[sender_id], backref=db.backref("sent_messages", lazy='dynamic'))
+
+
+    def __repr__(self):
+        return '<MessagesSend %r>' % self.id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sender_id": self.sender_id,
+            "title": self.title,
+            "body": self.body,
+            "send_time": self.send_time.isoformat(),
+        }
+
+
+class MessageRecipient(db.Model):
+    message_id = db.Column(db.Integer, db.ForeignKey('messages_send.id'), primary_key=True)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    read = db.Column(db.Boolean, default=False)
+
+    message = db.relationship("MessagesSend", backref=db.backref("message_recipients", lazy='dynamic'))
+    recipient = db.relationship("User", foreign_keys=[recipient_id], backref=db.backref("recipient_entries", lazy='dynamic'))
+
+    def __repr__(self):
+        return '<MessageRecipient %r>' % (self.message_id, self.recipient_id)

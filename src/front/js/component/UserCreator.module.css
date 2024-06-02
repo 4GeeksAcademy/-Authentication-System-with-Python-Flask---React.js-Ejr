@@ -6,6 +6,7 @@
     padding: 20px;
     width: 100%;
     max-width: 600px;
+    font-size: small;
 }
 
 .form {
@@ -127,4 +128,8 @@
     border-radius: 0.3rem;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     color: gray;
+}
+
+.form h1 {
+    color: white;
 }

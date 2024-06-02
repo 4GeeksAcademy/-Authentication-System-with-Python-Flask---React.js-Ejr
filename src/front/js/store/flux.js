@@ -36,7 +36,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			classesData: [],
 			currentEdit: {},
 			payments: [],
-			userRecords: []
+			userRecords: [],
+			hasUnreadMessages: false,  // Nuevo estado para mensajes sin leer
+
 
 
 
@@ -669,7 +671,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
 
             let data = await response.json();
-          //   console.log(data);
+            console.log(data);
             let store = getStore(); // Obtiene el estado actual del almacén
             setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
 				  
@@ -830,6 +832,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					// Analizar la respuesta JSON
 					const data = await response.json();
+					console.log(data)
 
 					// Verificar si la solicitud fue exitosa
 					if (response.ok) {
@@ -1101,6 +1104,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(`Error al eliminar la membresía: ${error.message}`);
 				}
 			},
+			checkUnreadMessages: async () => {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/messages/unread`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch unread messages status');
+                    }
+                    const result = await response.json();
+                    setStore({
+                        hasUnreadMessages: result.hasUnread
+                    });
+                } catch (error) {
+                    console.error("Error checking for unread messages:", error);
+                }
+            },
 
 		},
 	}

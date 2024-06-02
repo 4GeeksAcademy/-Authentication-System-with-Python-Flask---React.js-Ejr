@@ -15,10 +15,11 @@ const MyCalendar = () => {
 
     const events = store.trainingClasses.map(event => ({
         ...event,
-        start: new Date(event.dateTime_class),
-        end: moment(new Date(event.dateTime_class)).add(event.duration_minutes, 'minutes').toDate(),
+        start: moment(event.dateTime_class).toDate(), // moment parsea la fecha asumiendo que está en UTC si termina en 'Z'
+        end: moment(event.dateTime_class).add(event.duration_minutes, 'minutes').toDate(),
         title: `${event.name} (${event.available_slots} slots)`
     }));
+    
 
     const handleEventClick = (event) => {
         setSelectedEvent(event);

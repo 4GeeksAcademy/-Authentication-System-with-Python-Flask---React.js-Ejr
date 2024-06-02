@@ -297,3 +297,24 @@ body.collapsed {
     color: #937863;
 }
 
+
+.ButtonMessage {
+    background-color: transparent;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.ButtonMessage:hover {
+    color: #E6E6E9;
+    background-color: #A8A7A8;
+}
+
+.ButtonMessage:active {
+    background-color: #3C403F;
+    color: #937863;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext"; // Ajusta la ruta según tu estructura
 import styles from "./CreateClasses.module.css"; // Ajusta la ruta según tu estructura
-import { Button, Form, Container, Row, Col } from 'react-bootstrap'; // Asumiendo que estás usando React-Bootstrap
+import { Button, Form, Container, Row, Col, Modal } from 'react-bootstrap'; // Asumiendo que estás usando React-Bootstrap
 
 const CreateClassForm = () => {
     const { actions, store } = useContext(Context);
@@ -17,6 +17,10 @@ const CreateClassForm = () => {
         endDate: ""
     });
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [instructorModalVisible, setInstructorModalVisible] = useState(false);
+    const [coaches, setCoaches] = useState([]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,34 +30,13 @@ const CreateClassForm = () => {
         setFormData({ ...formData, createBatch: !formData.createBatch });
     };
 
-    // estados para el modal
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalMessage, setModalMessage] = useState("");
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.createBatch && formData.endDate) {
-            const result = await actions.createBatchClasses(formData);
-            if (result) {
-                setModalMessage(result.message);
-                setModalVisible(true);
-            } else {
-                setModalMessage(result.messageError);
-                setModalVisible(true);
-            }
-        } else {
-            const result = await actions.createTrainingClasses(formData);
-            if (result) {
-                setModalMessage(store.creationTrainingClasses.message);
-                setModalVisible(true);
-            } else {
-                setModalMessage(store.creationTrainingClasses.error);
-                setModalVisible(true);
-            }
-
-        }
-
-        // Reset form after submission
+        const result = formData.createBatch && formData.endDate ? 
+            await actions.createBatchClasses(formData) : 
+            await actions.createTrainingClasses(formData);
+        setModalMessage(result.success ? "Class(es) created successfully!" : result.error);
+        setModalVisible(true);
         setFormData({
             name: "",
             description: "",
@@ -69,12 +52,19 @@ const CreateClassForm = () => {
 
     const handleModalClose = () => {
         setModalVisible(false);
-        actions.resetCreationTrainingClasses(); // Acción dedicada para resetear el estado
-
+        actions.resetCreationTrainingClasses();
     };
 
+    const handleInstructorSelectModal = () => {
+        const filteredCoaches = store.users.filter(user => user.role === 'coach');
+        setCoaches(filteredCoaches);
+        setInstructorModalVisible(true);
+    };
 
-
+    const handleSelectInstructor = (id) => {
+        setFormData({ ...formData, instructor_id: id });
+        setInstructorModalVisible(false);
+    };
 
     return (
         <>
@@ -84,36 +74,34 @@ const CreateClassForm = () => {
                     <Row className="mb-3">
                         <Col>
                             <Form.Group>
-                                <Form.Label>class name</Form.Label>
-                                <Form.Control type="text" placeholder="Nombre" name="name" value={formData.name} onChange={handleChange} required />
+                                <Form.Label>Class Name</Form.Label>
+                                <Form.Control type="text" placeholder="Enter class name" name="name" value={formData.name} onChange={handleChange} required />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
-                                <Form.Label>
-                                    Description</Form.Label>
-                                <Form.Control type="text" placeholder="Descripción" name="description" value={formData.description} onChange={handleChange} required />
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control type="text" placeholder="Enter description" name="description" value={formData.description} onChange={handleChange} required />
                             </Form.Group>
                         </Col>
                     </Row>
                     <Row className="mb-3">
                         <Col>
                             <Form.Group>
-                                <Form.Label>
-                                    Instructor ID (optional)</Form.Label>
-                                <Form.Control type="text" placeholder="ID del Instructor" name="instructor_id" value={formData.instructor_id} onChange={handleChange} />
+                                <Form.Label>Instructor</Form.Label>
+                                <Button onClick={handleInstructorSelectModal}>Select Instructor</Button>
+                                {formData.instructor_id && <div>Selected ID: {formData.instructor_id}</div>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
-                                <Form.Label>
-                                    Start date and time</Form.Label>
+                                <Form.Label>Start Date and Time</Form.Label>
                                 <Form.Control type="datetime-local" name="dateTime_class" value={formData.dateTime_class} onChange={handleChange} required />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
-                                <Form.Label>Start time</Form.Label>
+                                <Form.Label>Start Time</Form.Label>
                                 <Form.Control type="time" name="start_time" value={formData.start_time} onChange={handleChange} required />
                             </Form.Group>
                         </Col>
@@ -121,28 +109,25 @@ const CreateClassForm = () => {
                     <Row className="mb-3">
                         <Col>
                             <Form.Group>
-                                <Form.Label>
-                                    Duration (minutes)</Form.Label>
+                                <Form.Label>Duration (Minutes)</Form.Label>
                                 <Form.Control type="number" name="duration_minutes" value={formData.duration_minutes} onChange={handleChange} required />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
-                                <Form.Label>
-                                    Places available</Form.Label>
+                                <Form.Label>Available Slots</Form.Label>
                                 <Form.Control type="number" name="available_slots" value={formData.available_slots} onChange={handleChange} required />
                             </Form.Group>
                         </Col>
                     </Row>
                     <Row className="mb-3">
                         <Col xs={6}>
-                            <Form.Check type="checkbox" label="Crear lote de clases" checked={formData.createBatch} onChange={handleCheckboxChange} />
+                            <Form.Check type="checkbox" label="Create Batch of Classes" checked={formData.createBatch} onChange={handleCheckboxChange} />
                         </Col>
                         {formData.createBatch && (
                             <Col xs={6}>
                                 <Form.Group>
-                                    <Form.Label>
-                                        To date</Form.Label>
+                                    <Form.Label>End Date</Form.Label>
                                     <Form.Control type="date" name="endDate" value={formData.endDate} onChange={handleChange} required />
                                 </Form.Group>
                             </Col>
@@ -151,22 +136,24 @@ const CreateClassForm = () => {
                     <Button variant="primary" type="submit">Create Class(es)</Button>
                 </Form>
             </Container>
-            {/* Modal */}
-            <div className={`modal fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1" id={styles["modal"]}>
-                <div className="modal-dialog">
-                    <div className={styles["modal-content"]}>
-                        <div className="modal-header">
-                            <h5 className="modal-title">Registration Status</h5>
+            <Modal show={modalVisible} onHide={handleModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Class Creation Status</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{modalMessage}</Modal.Body>
+            </Modal>
+            <Modal show={instructorModalVisible} onHide={() => setInstructorModalVisible(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Select an Instructor</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {coaches.map((coach) => (
+                        <div key={coach.id} onClick={() => handleSelectInstructor(coach.id)}>
+                            <strong>{coach.name}</strong> (ID: {coach.id})
                         </div>
-                        <div className="modal-body">
-                            <p>{modalMessage}</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    ))}
+                </Modal.Body>
+            </Modal>
         </>
     );
 };
