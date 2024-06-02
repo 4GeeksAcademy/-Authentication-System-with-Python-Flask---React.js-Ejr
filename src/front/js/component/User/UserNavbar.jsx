@@ -47,7 +47,7 @@ export const UserNavbar = () => {
                     {store.category && store.category.length > 0 ? (
                         store.category.map((item, index) => {
                             return (
-                                <a type="text" className="d-block mb-2" key={index}>{item.titleCategory}</a>
+                                <a type="text" className="d-block mb-2" onClick={()=>navigate(`/category/${item.titleCategory}`)} key={index}>{item.titleCategory}</a>
                             )
                         })
                     ) : (
