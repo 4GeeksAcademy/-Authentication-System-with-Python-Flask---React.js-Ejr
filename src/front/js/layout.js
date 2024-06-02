@@ -26,7 +26,7 @@ import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
 import { Trolley } from "./component/User/Trolley.jsx";
 import { UpdateQuizzes } from "./component/Manager/UpdateQuizzes.jsx";
 import { UpdatePayment } from "./component/Manager/UpdatePaymet.jsx";
-import { CourseCategorySelected } from "./pages/User/CourseCategorySelected.jsx";
+import { CourseCategorySelected } from "./pages/CourseCategorySelected.jsx";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -113,10 +113,8 @@ const Layout = () => {
                             path="/course/:id"
                         />
                         <Route
-                            elemet={
-                                <ProtectedRoute>
-                                    <CourseCategorySelected />
-                                </ProtectedRoute>
+                            element={
+                                <CourseCategorySelected />
                             }
                             path="/category/:titleCategory"
                         />
