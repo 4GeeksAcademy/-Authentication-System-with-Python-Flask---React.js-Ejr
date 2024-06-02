@@ -25,7 +25,7 @@ const ContactForm = () => {
     return (
         <div className="contact-form-container" style={{ backgroundImage: `url(${bg})` }}>
             <div className="form-wrapper">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className='form'>
                     <h1>CONTACT US</h1>
                     <div className="form-group">
                         <input

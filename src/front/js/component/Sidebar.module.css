@@ -1,18 +1,10 @@
-:root {
-    --primary-color: #aaa9a9;
-    --text: rgb(0, 0, 0);
-    --background: black;
-    --sidebar-gray-background: #757575;
-    --red: #F55E5E;
-    --item-hover: #F0F0F0;
-}
 
-body {
+/* body {
     font-family: Inter, sans-serif;
     background: var(--background);
     height: 100%;
     transition: padding-right 0.3s ease-in-out;
-    /* padding-right: 4.75rem; Default padding when sidebar is expanded */
+    padding-right: 4.75rem; Default padding when sidebar is expanded
 }
 
 html {
@@ -27,8 +19,8 @@ main {
 
 body.collapsed {
     padding-right: 4.75rem;
-    /* Padding when sidebar is collapsed */
-}
+    Padding when sidebar is collapsed
+} */
 
 .sidebarTop {
     display: flex;
@@ -324,3 +316,4 @@ body.collapsed {
 .ButtonMessage:active {
     background-color: #3C403F;
     color: #937863;
+}
