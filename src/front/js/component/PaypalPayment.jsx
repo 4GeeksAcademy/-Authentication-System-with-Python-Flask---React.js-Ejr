@@ -28,7 +28,8 @@ export function PaypalPayment() {
         status: 'N/A',
         currencyCode: 'N/A',
         value: 'N/A',
-        typePayment: 'PAYPAL'
+        typePayment: 'PAYPAL',
+        courseId: numberCourse
     });
 
     useEffect(() => {
@@ -46,6 +47,8 @@ export function PaypalPayment() {
 
     const location = useLocation();
     const totalPrice = location.state?.totalPrice || 0;
+    const numberCourse = location.state?.numberCourse || 0
+console.log(numberCourse)
 
     const datos = {
         purchase_units: [
@@ -92,7 +95,8 @@ export function PaypalPayment() {
             status: detailsPaypal.status,
             currencyCode: detailsPaypal.purchase_units?.[0]?.amount?.currency_code,
             value: detailsPaypal.purchase_units?.[0]?.amount?.value,
-            typePayment: 'PAYPAL'
+            typePayment: 'PAYPAL',
+            courseId: numberCourse
         };
         await actions.createPayments(paymentData);
     }

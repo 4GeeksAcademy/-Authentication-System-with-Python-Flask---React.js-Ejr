@@ -18,7 +18,6 @@
 
 .addEdit:hover{
   background-color: aqua;
-  transform: scale(1.05);
 }
 
 .btnFav{

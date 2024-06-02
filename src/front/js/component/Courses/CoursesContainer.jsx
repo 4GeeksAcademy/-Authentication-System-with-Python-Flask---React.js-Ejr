@@ -2,18 +2,17 @@ import React, { useState, useContext } from "react";
 import { Context } from '../../store/appContext';
 import '../../../styles/components.css';
 import { useNavigate } from "react-router-dom";
-import Course from "../../pages/Courses/Course.jsx";
-
 import { LuHeart } from "react-icons/lu";
 
 export const CoursesContainer = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
-    
+
     const [activeIndex, setActiveIndex] = useState(0); // Estado para el índice activo del carrusel
 
     function handleAddTrolley(titleCourse, courseId, price) {
         actions.addCourseToTrolley(titleCourse, courseId, price);
+        navigate(`/trolley`, { state: { courseId: courseId } }); // O usa { state: { courseId: courseId } } para pasar por estado
     }
 
     console.log(store.modules)
@@ -25,10 +24,10 @@ export const CoursesContainer = () => {
                     {store.course && store.course.access_to_courses && store.course.access_to_courses.length === 0 ? "No hay Cursos Cargados" :
                         store.course && store.course.access_to_courses && store.course.access_to_courses.map((item, index) => {
                             return (
-                                <div key={index} className={`carousel-item ${index === activeIndex ? 'active' : ''}`}> 
+                                <div key={index} className={`carousel-item ${index === activeIndex ? 'active' : ''}`}>
                                     <div className="d-flex overflow-auto justify-content-center p-4 flex-wrap">
                                         <div className="card mx-2 shadow rounded-4 col-12 cardEdit"
-                                            onClick={() => navigate(`/course/${item.id}`)}
+                                            
                                             style={{ maxWidth: '350px', margin: '20px auto' }}>
                                             <div className="card-img-top">
                                                 <div className="course-thumbnail">
@@ -37,6 +36,7 @@ export const CoursesContainer = () => {
                                                         className="img-fluid rounded-top-4"
                                                         alt="python-course"
                                                         style={{ objectFit: 'cover', width: '100%', height: '200px' }}
+                                                        onClick={() => navigate(`/course/${item.id}`)}
                                                     />
                                                 </div>
                                             </div>

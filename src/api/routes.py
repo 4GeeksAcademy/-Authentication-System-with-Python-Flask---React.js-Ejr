@@ -869,16 +869,21 @@ def delete_module(module_id):
 
 
 #-----------------------PAYMENT------------------------#
-@api.route('/view/payment/create-token', methods=['POST'])
+""" @api.route('/view/course/create-token', methods=['POST'])
 def create_token():
     try:
         data = request.get_json()
         user_id = data.get('userId')
         course_id = data.get('courseId')
+        module_id = data.get('courseId')
+        quiz_id = data.get('courseId')
+        
 
         user = User.query.filter_by(id=user_id).first()
         course = Course.query.filter_by(id=course_id).first()
-        print(user, user_id, course)
+        module = Modules.query.filter_by(id=module_id).first()
+        quiz = Quizzes.query.filter_by(id=quiz_id).first()
+        print(user, user_id, course, module, quiz)
 
         if not user or not course:
             return jsonify({"Error": "User or Course not found"}), 404
@@ -889,12 +894,12 @@ def create_token():
         return jsonify({"token": token}), 200
     
     except Exception as err:
-        return jsonify({"Error": "Error creating token", "Msg": str(err)}), 500
+        return jsonify({"Error": "Error creating token", "Msg": str(err)}), 500 """
 
 
-@api.route('/view/payment/<int:course_id>/user/<int:user_id>', methods=['GET'])
+@api.route('/view/course/<int:course_id>/user/<int:user_id>/module/<int:module_id>/quiz/<int:quiz_id>', methods=['GET'])
 @jwt_required()
-def show_view_curso(user_id, course_id):
+def show_view_curso(user_id, course_id, module_id, quiz_id):
     try:
         current_token = get_jwt_identity()  # Obtiene la identidad del usuario del token
         print("Current token identity:", current_token)
@@ -910,7 +915,19 @@ def show_view_curso(user_id, course_id):
 
             course_list = [c.serialize() for c in course]
 
-            return jsonify({"access_to_course": course_list, "user": user.serialize(), "message": "Courses fetched successfully"}), 200
+            module = Modules.query.filter_by(id=module_id).all()  # Filtra por module_id
+            if not module:
+                return jsonify({"Error": "module not found"}), 404
+
+            module_list = [mod.serialize() for mod in module]
+
+            quiz = Quizzes.query.filter_by(id=quiz_id).all()  # Filtra por quiz_id
+            if not quiz:
+                return jsonify({"Error": "quiz not found"}), 404
+
+            quiz_list = [mod.serialize() for mod in quiz]
+
+            return jsonify({"access_to_course": course_list, "access_to_module": module_list, "access_to_quiz": quiz_list, "user": user.serialize(), "message": "Courses fetched successfully"}), 200
         
         else:
             return jsonify({"Error": "Token invalid or not exists"}), 401
@@ -923,6 +940,12 @@ def show_view_curso(user_id, course_id):
 def create_payment_course():
     try:
         data = request.get_json()
+        
+        # Validate the data
+        if not data:
+            return jsonify({"Error": "No data provided"}), 400
+        
+        # Create new payment record
         new_payment = Payment(
             date=data.get('date'),
             id_paypal=data.get('idPaypal'),
@@ -933,15 +956,25 @@ def create_payment_course():
             user_id=data.get('userId'),
             course_id=data.get('courseId'),
             manager_id=1
-            
         )
         db.session.add(new_payment)
         db.session.commit()
+        
+        # Retrieve the course
+        course_id = data.get('courseId')
+        course = Course.query.filter_by(id=course_id).first()
 
-        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.serialize()}), 201
+        if not course:
+            return jsonify({"Error": "Course not found"}), 404
+        
+        # Generate access token
+        token = create_access_token(identity=course.id, expires_delta=timedelta(hours=1))
+
+        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.serialize(), "token": token}), 201
     
     except Exception as err:
-        return jsonify({"Error": f"Error creating payment for course", "Msg": {str(err)}}), 500
+        db.session.rollback()
+        return jsonify({"Error": "Error creating payment for course", "Msg": str(err)}), 500
 
 
 @api.route('/payment/courses', methods=['GET'])
