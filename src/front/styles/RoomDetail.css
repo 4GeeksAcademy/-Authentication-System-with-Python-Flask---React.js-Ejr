@@ -137,3 +137,12 @@
 }
 
 
+
+.exit-button {
+    color: #CED4DA;
+    margin: 0px 5px;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}

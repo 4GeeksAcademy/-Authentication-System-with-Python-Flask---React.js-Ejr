@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/CommentsSection.css';
 
-const CommentsSection = ({ roomId, token, username, room, actions }) => {
-    const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
+const CommentsSection = ({ roomId, token, username, room, actions, comments, setComments, newComment, setNewComment }) => {
 
     useEffect(() => {
         fetchComments();
@@ -54,7 +52,6 @@ const CommentsSection = ({ roomId, token, username, room, actions }) => {
         }
     };
 
-
     return (
         <div className="comments-section room-info">
             <h3>Comments</h3>
@@ -63,12 +60,11 @@ const CommentsSection = ({ roomId, token, username, room, actions }) => {
                     <div key={comment.comment_id} className="comment">
                         <p><strong>{comment.username}</strong> <small>{timeAgo(comment.created_at)}</small> <br />
                             {comment.content}</p>
-
                     </div>
                 ))}
             </div>
             <div className="add-comment">
-            <div className="form-group">
+                <div className="form-group">
                     <textarea
                         className="form-control comment-box"
                         id="exampleFormControlTextarea1"

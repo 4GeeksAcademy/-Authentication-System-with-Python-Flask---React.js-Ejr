@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import fortniteImage from '../../img/Fortnite.png';
 import xboxIcon from '../../img/xbox.png';
 import switchIcon from '../../img/switch.png';
+import exit from '../../img/exit.png';
 import playstationIcon from '../../img/playstation.png';
 import pcIcon from '../../img/pc.png';
-import { FaUser } from "react-icons/fa";
+import { IoExitOutline } from "react-icons/io5";
+import { FaUser } from 'react-icons/fa';
 import '../../styles/RoomDetail.css';
 import RoomDetailsView from '../component/RoomInfoComponent.jsx';
 import ParticipantsView from '../component/ParticipantsInfoComponent.jsx';
 import CommentsSection from '../component/CommentsSection.jsx';
-
 
 export const RoomDetail = () => {
     const { store, actions } = useContext(Context);
@@ -28,6 +29,8 @@ export const RoomDetail = () => {
     const username = localStorage.getItem('username');
     const userId = parseInt(localStorage.getItem('userId'));
     const token = localStorage.getItem('jwt-token');
+    const [isParticipant, setIsParticipant] = useState(false);
+    const participantsRef = useRef(null);
 
     useEffect(() => {
         if (!token) {
@@ -36,16 +39,75 @@ export const RoomDetail = () => {
         }
 
         const fetchData = async () => {
-            await actions.fetchRooms();
-            const fetchedRoom = store.rooms.find(room => room.room_id === parseInt(roomId));
-            setRoom(fetchedRoom);
-            await checkRequestStatus();
-            await fetchComments();
-            setLoading(false);
+            try {
+                await actions.fetchRooms();
+                const fetchedRoom = store.rooms.find(room => room.room_id === parseInt(roomId));
+                console.log('Fetched Room:', fetchedRoom);
+                if (fetchedRoom) {
+                    console.log('Participants in fetched room:', fetchedRoom.participants);
+                    setRoom(fetchedRoom);
+
+                    await Promise.all([
+                        checkRequestStatus(),
+                        fetchComments(),
+                        fetchRequests()
+                    ]);
+
+                    if (fetchedRoom.participants) {
+                        const participant = fetchedRoom.participants.some(p => p.participant_id === userId && p.confirmed);
+                        setIsParticipant(participant);
+                    }
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+                setLoading(false);
+            }
         };
 
         fetchData();
     }, [token]);
+
+    useEffect(() => {
+        const fetchCommentsAndParticipants = async () => {
+            await Promise.all([fetchComments(), fetchRequests()]);
+            console.log('Updated Participants:', room.participants);
+            console.log('Updated Comments:', comments);
+        };
+
+        if (room && room.participants) {
+            console.log('Room Participants on Effect:', room.participants);
+            fetchCommentsAndParticipants();
+            participantsRef.current = setInterval(fetchCommentsAndParticipants, 7000);
+        }
+
+        return () => {
+            if (participantsRef.current) {
+                clearInterval(participantsRef.current);
+            }
+        };
+    }, [room, userId]);
+
+    useEffect(() => {
+        const fetchCommentsAndParticipants = async () => {
+            try {
+                await Promise.all([fetchComments(), fetchRequests()]);
+            } catch (error) {
+                console.error('Error fetching comments or requests:', error);
+            }
+        };
+
+        if (room) {
+            fetchCommentsAndParticipants();
+            participantsRef.current = setInterval(fetchCommentsAndParticipants, 7000);
+        }
+
+        return () => {
+            if (participantsRef.current) {
+                clearInterval(participantsRef.current);
+            }
+        };
+    }, [room]);
 
     useEffect(() => {
         if (showRequests) {
@@ -54,7 +116,7 @@ export const RoomDetail = () => {
     }, [showRequests]);
 
     const checkRequestStatus = async () => {
-        const status = await actions.checkRequestStatus(roomId);
+        let status = await actions.checkRequestStatus(roomId);
         setRequestStatus(status);
     };
 
@@ -213,7 +275,7 @@ export const RoomDetail = () => {
                 return <img src={xboxIcon} alt="Xbox" style={iconStyle} />;
             case 'switch':
                 return <img src={switchIcon} alt="Switch" style={iconStyle} />;
-            case 'PlayStation':
+            case 'playstation':
                 return <img src={playstationIcon} alt="PlayStation" style={iconStyle} />;
             case 'pc':
                 return <img src={pcIcon} alt="PC" style={iconStyle} />;
@@ -226,13 +288,15 @@ export const RoomDetail = () => {
         return requests.filter(request => request.status === 'pending').length;
     };
 
-    const handleToggleView = (view) => {
+    const handleToggleView = (view, fetchRequests = false) => {
         setCurrentView(view);
+        if (fetchRequests) {
+            handleToggleRequests();
+        }
     };
 
     const isHost = room.host_name === username;
     const isParticipantOrHost = isHost || room.participants.some(p => p.participant_id === userId && p.confirmed);
-    console.log(isParticipantOrHost)
 
     const participantsCount = room.participants ? room.participants.length : 0;
 
@@ -257,6 +321,11 @@ export const RoomDetail = () => {
                             <p>{room.game_name}</p>
                             <p className="text-info fs-6 fw-semibold font-family-Inter m-0">
                                 <FaUser /> {participantsCount}/{room.room_size}
+                                {isParticipant && (
+                                    <button className="exit-button">
+                                        <img src={exit} alt="Exit Room" onClick={handleAbandonRoom} />
+                                    </button>
+                                )}
                             </p>
                         </div>
                         {isHost && (
@@ -281,18 +350,20 @@ export const RoomDetail = () => {
                         {currentView === 'participants' && (
                             <ParticipantsView
                                 requests={requests}
+                                participants={room.participants} // Asegúrate de pasar los participantes
                                 handleRequestAction={handleRequestAction}
                             />
                         )}
                     </div>
                 </div>
                 {!isParticipantOrHost && (
-
-                    <div className="room-actions">
-                        <button className="back-btn btn btn-outline-primary" onClick={() => navigate('/')}>Go Back</button>
-                        {requestStatus === 'None' && <button className="join-room" onClick={handleJoinRoom}>Join Room</button>}
-                        {requestStatus === 'pending' && <button className='btn-danger withdraw' onClick={handleWithdrawRequest}>Withdraw Request</button>}
-                    </div>
+                     <div className="room-actions">
+                     <button className="back-btn btn btn-outline-primary" onClick={() => navigate('/')}>Go Back</button>
+                     {(requestStatus === 'None' || requestStatus === 'abandoned') && (
+                         <button className="join-room" onClick={handleJoinRoom}>Join Room</button>
+                     )}
+                     {requestStatus === 'pending' && <button className='btn-danger withdraw' onClick={handleWithdrawRequest}>Withdraw Request</button>}
+                 </div>
                 )}
                 {isParticipantOrHost && (
                     <CommentsSection
@@ -301,9 +372,12 @@ export const RoomDetail = () => {
                         username={username}
                         room={room}
                         actions={actions}
+                        comments={comments} // Pasar comentarios
+                        setComments={setComments} // Pasar setter para comentarios
+                        newComment={newComment}
+                        setNewComment={setNewComment}
                     />
                 )}
-
                 {isParticipantOrHost && !isHost && (
                     <div>
                         <button onClick={handleAbandonRoom}>Abandon Room</button>
