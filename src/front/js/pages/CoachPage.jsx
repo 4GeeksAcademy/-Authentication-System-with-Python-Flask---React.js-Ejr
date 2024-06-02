@@ -6,30 +6,9 @@ import styles from "./ModulePage.module.css"; // Asegúrate que el path de impor
 import { Context } from "../store/appContext";
 import PrivateCalendar from "../component/PrivateCalendar.jsx";
 import CreateClasses from "../component/CreateClasses.jsx";
-import MyCalendar from "../component/Calendar.jsx";
-import UserBooking from "../component/UserBooking.jsx";
-import PrivatePageUser from "./PrivatePageUser.jsx";
-import Breadcrumbs from "../component/Breadcrumb.jsx";
-import SingupMaster from "../component/SingupMaster.jsx";
-import Singup from "../component/Singup.jsx";
-import ConfirmarEmail from "../component/ConfirmEmail.jsx";
-import Home from "./Home.jsx";
-import Login from "../component/Login.jsx";
-import Navbar from "../component/Navbar.jsx";
+
 import BookingView from "../component/BookingView.jsx";
-import MembershipPurchase from "../component/MembershipPurchase.jsx";
-import Users from "../component/Users.jsx";
-import UploadForm from "../component/UploadForm.jsx";
-import ImageGallery from "../component/ImageGallery.jsx";
-import TransactionsTable from "../component/TransactionsTable.jsx";
-import UserCreator from "../component/UserCreator.jsx";
 
-import MembershipManager from "../component/MembershipManager.jsx";
-
-import PRRecord from "../component/PRRecord.jsx";
-import AdminMembershipPurchase from "../component/AdminMembershipPurchase.jsx";
-import ResetPassword from "../component/ResetPassword.jsx";
-import ClassFrequencyChart from "../component/ClassFrequencyChart.jsx";
 
 import ClassesView from "../component/ClassesView.jsx";
 
@@ -38,7 +17,7 @@ import Sidebar from "../component/Sidebar.jsx";
 import ReceiveMessages from "../component/ReceiveMessages.jsx";
 import SendMessage from "../component/SendMessage.jsx";
 
-const ModulePage = () => {
+const CoachPage = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -48,7 +27,7 @@ const ModulePage = () => {
         const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
         const dataRole = localStorage.getItem("dataRole");
 
-        if (!isAuthenticated || dataRole !== "master") {
+        if (!isAuthenticated || dataRole !== "coach") {
             navigate("/");
         }
     }, [navigate]);
@@ -62,26 +41,12 @@ const ModulePage = () => {
 
     const components = [
         { component: <CreateClasses />, name: "Create Classes" },
-        { component: <MembershipManager />, name: "MembershipManager" },
         { component: <BookingView />, name: "BookingView " },
         { component: <ClassesView />, name: "ClassesView " },
-        { component: <ClassFrequencyChart />, name: "ClassFrequencyChart " },
-        { component: <Users />, name: "Users " },
-        { component: <TransactionsTable />, name: "TransactionsTable " },
-        // { component: <MembershipPurchase />, name: "MembershipPurchase " },
-        { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
 
 
-        { component: <MyCalendar />, name: "My Calendar" },
         { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
-        // { component: <PrivatePageUser />, name: "Private Page User" },
-        // { component: <SingupMaster />, name: "Singup Master" },
-        { component: <UserCreator />, name: "UserCreator " },
-        { component: <UploadForm />, name: "UploadForm " },
-        { component: <ImageGallery />, name: "ImageGallery " },
 
-        // { component: <UserBooking />, name: "User Booking" },
-        { component: <PRRecord />, name: "PRRecord " },
         { component: <ReceiveMessages />, name: "Receive Messages" },
         { component: <SendMessage />, name: "SendMessage " },
     ];
@@ -93,7 +58,7 @@ const ModulePage = () => {
     return (
         <>
         <Sidebar/>
-            <h1>Master Page</h1>
+            <h1>Coach Page</h1>
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
                     <div key={index} className={`${styles.securityQuestions} ${entry.name === "Receive Messages" && store.hasUnreadMessages ? styles.unreadHighlight : ''}`} onClick={() => handleOpenModal(index)}>
@@ -115,4 +80,4 @@ const ModulePage = () => {
     );
 };
 
-export default ModulePage;
+export default CoachPage;

@@ -53,25 +53,36 @@ const Sidebar = () => {
 
     return (
         <nav className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
-             <div className={styles.sidebarTop}>
+            <div className={styles.sidebarTop}>
                 <div className={styles.profileContainer}>
                     {profileImageUrl ? (
                         <>
                             <img
                                 src={profileImageUrl}
-                                alt="Profile"
+                                alt="Photo Profile"
                                 className={`${styles.logo} ${collapsed ? styles.hide : ''}`}
                             />
                             <img
                                 src={profileImageUrl}
-                                alt="Profile"
+                                alt="Photo Profile"
                                 className={`${styles.logoSmall} ${collapsed ? '' : styles.hide}`}
                             />
                         </>
                     ) : (
                         <>
-                            <i className={`fa-regular fa-user ${styles.logo} ${collapsed ? styles.hide : ''}`}></i>
-                            <i className={`fa-regular fa-user ${styles.logoSmall} ${collapsed ? '' : styles.hide}`}></i>
+                            <img
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKfj6RsyRZqO4nnWkPFrYMmgrzDmyG31pFQ&s"
+                                alt="Photo Profile"
+                                className={`${styles.logo} ${collapsed ? styles.hide : ''}`}
+                                title='add your Photo'
+
+                            />
+                            <img
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKfj6RsyRZqO4nnWkPFrYMmgrzDmyG31pFQ&s"
+                                alt="Photo Profile"
+                                className={`${styles.logoSmall} ${collapsed ? '' : styles.hide}`}
+                                title='add your Photo'
+                            />
                         </>
                     )}
                     <span className={`${styles.userName} ${collapsed ? styles.hide : ''}`}>
@@ -79,22 +90,45 @@ const Sidebar = () => {
                     </span>
                 </div>
             </div>
-            <div className={styles.iconProfile}>
-                <MembershipPurchase />
-                <ProfileImageUpload />
-                <EditProfile />
-            </div>
+
+            {/* Muestra MembershipPurchase solo si el rol es 'athlete' */}
+            {store.uploadedUserData.role === 'athlete' ? (
+                <span className={`${styles.link} ${collapsed ? styles.hide : ''}`}>
+                    <div className={styles.iconProfile}>
+                        <MembershipPurchase />
+                        <ProfileImageUpload />
+                        <EditProfile />
+                    </div>
+                </span>
+
+            ) : (
+                <span className={`${styles.link} ${collapsed ? styles.hide : ''}`}>
+                    <div className={styles.iconProfile}>
+                        <ProfileImageUpload />
+                        <EditProfile />
+                    </div>
+                </span>
+            )}
+
             <span className={`${styles.icon} ${collapsed ? '' : styles.hide}`}>
-            <Button onClick={handleCloseSession} className={styles.ButtonHome} title='When you return home your session will be closed'>
-            <i className="fa-solid fa-house"></i>
+                {store.uploadedUserData.role === 'athlete' && (
+                    <MembershipPurchase />
+
+                )}
+            </span>
+
+            <span className={`${styles.icon} ${collapsed ? '' : styles.hide}`}>
+                <Button onClick={handleCloseSession} className={styles.ButtonHome} title='When you return home your session will be closed'>
+                    <i className="fa-solid fa-house"></i>
                 </Button>
             </span>
 
+
             <div className={styles.scrollableContent}>
-            <span className={`${styles.link} ${collapsed ? styles.hide : ''}`}>
-             <UserDataDetail />
-            <UserBooking />
-            </span>
+                <span className={`${styles.link} ${collapsed ? styles.hide : ''}`}>
+                    <UserDataDetail />
+                    <UserBooking />
+                </span>
             </div>
 
             {/* <div className={styles.scrollableContent}>
@@ -133,9 +167,9 @@ const Sidebar = () => {
                     alt="Left Collapse"
                 />
                 <span className={`${styles.link} ${collapsed ? styles.hide : ''}`}>
-                <Button onClick={handleCloseSession} className={styles.ButtonCloseSession}>
-                <i class="fa-solid fa-power-off"></i> Sign off
-                </Button>
+                    <Button onClick={handleCloseSession} className={styles.ButtonCloseSession}>
+                        <i class="fa-solid fa-power-off"></i> Sign off
+                    </Button>
                 </span>
             </div>
         </nav>
