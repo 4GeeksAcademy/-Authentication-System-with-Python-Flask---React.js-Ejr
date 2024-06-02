@@ -20,7 +20,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       quizzes: "",
       payment: "",
       medios: [],
-      order: ""
+      order: "",
+      
     },
 
     actions: {
