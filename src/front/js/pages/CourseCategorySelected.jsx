@@ -48,7 +48,7 @@ export const CourseCategorySelected = () => {
             setCategories(categorySelected);
         }
     }, [store.category, titleCategory]);
-
+    
     useEffect(() => {
         if (store.course && store.course.access_to_courses) {
             const categoryCourses = store.course.access_to_courses.filter(course => course.categoryTitle === titleCategory);
