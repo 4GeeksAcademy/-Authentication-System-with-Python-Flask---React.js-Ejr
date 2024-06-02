@@ -671,7 +671,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
 
             let data = await response.json();
-            console.log(data);
+            // console.log(data);
             let store = getStore(); // Obtiene el estado actual del almacén
             setStore({ ...store, users: data }); // Actualiza el estado con los usuarios obtenidos
 				  
@@ -832,7 +832,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					// Analizar la respuesta JSON
 					const data = await response.json();
-					console.log(data)
+					// console.log(data)
 
 					// Verificar si la solicitud fue exitosa
 					if (response.ok) {
