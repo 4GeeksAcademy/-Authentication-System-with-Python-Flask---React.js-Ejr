@@ -26,7 +26,21 @@
 }
 
 .form-select {
-  background-color: #1e1e1e;
+  background-color: #1e1e1e; /* Fondo oscuro cuando está inactivo */
+  color: white; /* Texto blanco para contraste */
+  border: 2px solid rgb(213, 213, 213);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.form-select:focus {
+  background-color: white; /* Fondo blanco cuando está activo o en foco */
+  color: #333c53; /* Texto oscuro para visibilidad */
+}
+
+.form-select option {
+  background-color: white; /* Intenta establecer un fondo claro para las opciones */
+  color: #333c53; /* Texto oscuro para las opciones */
 }
 
 /* Media query para pantallas pequeñas */
@@ -37,3 +51,4 @@
     max-height: none; /* Permite que el modal crezca en altura si es necesario */
   }
 }
+
