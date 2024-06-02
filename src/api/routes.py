@@ -396,6 +396,7 @@ def reset_password_manager(token):
     try:
         decoded_token = decode_token(token)
         manager_id = decoded_token['sub']
+
         manager = Manager.query.get(manager_id)
         
         if not manager:
@@ -868,6 +869,56 @@ def delete_module(module_id):
 
 
 #-----------------------PAYMENT------------------------#
+@api.route('/view/payment/create-token', methods=['POST'])
+def create_token():
+    try:
+        data = request.get_json()
+        user_id = data.get('userId')
+        course_id = data.get('courseId')
+
+        user = User.query.filter_by(id=user_id).first()
+        course = Course.query.filter_by(id=course_id).first()
+        print(user, user_id, course)
+
+        if not user or not course:
+            return jsonify({"Error": "User or Course not found"}), 404
+
+        # Crea el token JWT
+        token = create_access_token(identity=course.id, expires_delta=timedelta(hours=1))
+
+        return jsonify({"token": token}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error creating token", "Msg": str(err)}), 500
+
+
+@api.route('/view/payment/<int:course_id>/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def show_view_curso(user_id, course_id):
+    try:
+        current_token = get_jwt_identity()  # Obtiene la identidad del usuario del token
+        print("Current token identity:", current_token)
+        
+        if current_token:
+            user = User.query.get(user_id)
+            if not user:
+                return jsonify({"Error": "User not found"}), 404
+
+            course = Course.query.filter_by(id=course_id).all()  # Filtra por course_id
+            if not course:
+                return jsonify({"Error": "Course not found"}), 404
+
+            course_list = [c.serialize() for c in course]
+
+            return jsonify({"access_to_course": course_list, "user": user.serialize(), "message": "Courses fetched successfully"}), 200
+        
+        else:
+            return jsonify({"Error": "Token invalid or not exists"}), 401
+    
+    except Exception as err:
+        return jsonify({"Error": "Error fetching courses or user", "errorFetching": str(err)}), 500
+
+    
 @api.route('/payment/courses', methods=['POST'])
 def create_payment_course():
     try:
@@ -875,7 +926,8 @@ def create_payment_course():
         new_payment = Payment(
             date=data.get('date'),
             id_paypal=data.get('idPaypal'),
-            currency_code=data.get('currency_code'),
+            currency_code=data.get('currencyCode'),
+            status=data.get('status'),
             type_payment=data.get('typePayment'),
             value=data.get('value'),
             user_id=data.get('userId'),
@@ -886,10 +938,10 @@ def create_payment_course():
         db.session.add(new_payment)
         db.session.commit()
 
-        return jsonify({"message": "Payment for course created successfully", "payment": new_payment}), 201
+        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.serialize()}), 201
     
     except Exception as err:
-        return jsonify({"Error": f"Error creating payment for course: {str(err)}"}), 500
+        return jsonify({"Error": f"Error creating payment for course", "Msg": {str(err)}}), 500
 
 
 @api.route('/payment/courses', methods=['GET'])

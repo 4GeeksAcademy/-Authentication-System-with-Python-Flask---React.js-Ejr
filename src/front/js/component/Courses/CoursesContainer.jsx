@@ -45,7 +45,7 @@ export const CoursesContainer = () => {
                                             >
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <h3 className="card-title fw-bolder fs-2 text-white">{item.title}</h3>
+                                                        <h3 className="card-title fw-bolder fs-2 text-white">{item.id}/{item.title}</h3>
                                                     </div>
                                                     <div className="py-2 px-2 border fs-2 rounded-circle d-inline-flex justify-content-center align-items-center text-white" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>
                                                         <strong>${item.price}</strong>

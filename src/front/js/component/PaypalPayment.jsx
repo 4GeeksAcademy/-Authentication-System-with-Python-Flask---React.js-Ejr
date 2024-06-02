@@ -24,9 +24,9 @@ export function PaypalPayment() {
     const [detailsPaypal, setDetailsPaypal] = useState({});
     const [getDataPaypal, setGetDataPaypal] = useState({
         date: 'N/A',
-        id: 'N/A',
+        idPaypal: 'N/A',
         status: 'N/A',
-        currency_code: 'N/A',
+        currencyCode: 'N/A',
         value: 'N/A',
         typePayment: 'PAYPAL'
     });
@@ -35,15 +35,14 @@ export function PaypalPayment() {
         if (detailsPaypal) {
             setGetDataPaypal({
                 date: detailsPaypal.create_time || 'N/A',
-                id: detailsPaypal.id || 'N/A',
+                idPaypal: detailsPaypal.id || 'N/A',
                 status: detailsPaypal.status || 'N/A',
-                currency_code: detailsPaypal.purchase_units?.[0]?.amount?.currency_code || 'N/A',
+                currencyCode: detailsPaypal.purchase_units?.[0]?.amount?.currency_code || 'N/A',
                 value: detailsPaypal.purchase_units?.[0]?.amount?.value || 'N/A'
             });
         }
     }, [detailsPaypal]);
 
-    console.log(detailsPaypal)
 
     const location = useLocation();
     const totalPrice = location.state?.totalPrice || 0;
@@ -88,11 +87,12 @@ export function PaypalPayment() {
 
     async function handleSentToPayment(detailsPaypal) {
         const paymentData = {
-            create_time: detailsPaypal.create_time,
-            id: detailsPaypal.id,
+            date: detailsPaypal.create_time,
+            idPaypal: detailsPaypal.id,
             status: detailsPaypal.status,
-            currency_code: detailsPaypal.purchase_units?.[0]?.amount?.currency_code,
-            value: detailsPaypal.purchase_units?.[0]?.amount?.value
+            currencyCode: detailsPaypal.purchase_units?.[0]?.amount?.currency_code,
+            value: detailsPaypal.purchase_units?.[0]?.amount?.value,
+            typePayment: 'PAYPAL'
         };
         await actions.createPayments(paymentData);
     }

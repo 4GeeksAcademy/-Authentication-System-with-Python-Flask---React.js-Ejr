@@ -264,9 +264,9 @@ class Payment(db.Model):
     value = db.Column(db.String(250), nullable=False)
     type_payment = db.Column(db.String(250), nullable=False) 
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
-    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
+    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
     
     #Relations
     user = db.relationship('User', backref=db.backref('payment', lazy=True))
@@ -280,9 +280,11 @@ class Payment(db.Model):
         return{
             "id": self.id,
             "date": self.date,
-            "titleCourse": self.title_course,
-            "padAmount": self.pad_amount,
+            "status": self.status,
+            "value": self.value,
             "typePayment": self.type_payment,
+            "idPaypal": self.id_paypal,
+            "currencyCode": self.currency_code,
             "userId": self.user_id,
             "courseId": self.course_id,
             "managerId": self.manager_id
