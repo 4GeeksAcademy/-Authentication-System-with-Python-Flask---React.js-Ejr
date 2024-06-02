@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PayPalButton from '../component/PayPalButton.jsx';
+import '../../styles/BuyMeACoffee.css'; // Asegúrate de crear este archivo
 
 export const BuyMeACoffee = () => {
     const [successMessage, setSuccessMessage] = useState('');
@@ -9,10 +10,14 @@ export const BuyMeACoffee = () => {
     };
 
     return (
-        <div>
+        <div className="coffee-container">
             <h1>Buy Us a Coffee</h1>
-            {successMessage && <p>{successMessage}</p>}
-            <PayPalButton amount="5.00" onSuccess={handleSuccess} />
+            <div className="message-container">
+                {successMessage && <p className="success-message">{successMessage}</p>}
+            </div>
+            <div className="paypal-button-container">
+                <PayPalButton amount="5.00" onSuccess={handleSuccess} />
+            </div>
         </div>
     );
 };

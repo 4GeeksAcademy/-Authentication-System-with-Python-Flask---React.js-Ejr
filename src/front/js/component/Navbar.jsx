@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import '../../styles/Navbar.css';
 import SignUpModals from './SignUpModals.jsx'; // Importa el componente de modales
+import { CiCoffeeCup } from "react-icons/ci";
 
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
@@ -50,6 +51,9 @@ export const Navbar = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                                <Link to="/buy-me-a-coffee" className="nav-link"> <CiCoffeeCup /></Link>
+                                    </li>
                             <li className="nav-item">
                                 <Link to="/" className="nav-link">Rooms</Link>
                             </li>

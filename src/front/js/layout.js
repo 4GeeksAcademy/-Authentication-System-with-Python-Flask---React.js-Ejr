@@ -14,7 +14,6 @@ import PrivateRoute from "./component/PrivateRoute.jsx";
 import injectContext from "./store/appContext"; 
 
 import { Navbar } from "./component/Navbar.jsx";
-import { Footer } from "./component/Footer.jsx"
 import { BuyMeACoffee } from "./pages/BuyMeACoffee.jsx";
 import { ForgotPassword } from "./component/ForgotPassword.jsx";
 import { ResetPassword } from "./component/ResetPassword.jsx";
@@ -43,7 +42,6 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} path="*" />
                         <Route element={<BuyMeACoffee />} path="/buy-me-a-coffee" />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>
