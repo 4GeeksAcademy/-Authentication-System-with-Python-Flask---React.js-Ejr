@@ -989,7 +989,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsgError("");
         getActions().updateMsg("");
         getActions().spinner(true);
-
+console.log(dataPayment)
         try {
           const url = process.env.BACKEND_URL + "/api/payment/courses";
           const respAddPayment = await fetch(url, {

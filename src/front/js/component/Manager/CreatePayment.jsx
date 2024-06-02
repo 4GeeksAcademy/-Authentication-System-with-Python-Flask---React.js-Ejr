@@ -10,14 +10,15 @@ export const CreatePayment = () => {
     const [counter, setCounter] = useState(7)
     const [paymentData, setPaymentData] = useState({
         date: '',
-        titleCourse: '',
-        padAmount: '',
+        currency_code: '',
+        value: '',
+        status: '',
         typePayment: '',
         userId: '',
         courseId: '',
         managerId: 1
     });
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setPaymentData({
@@ -84,17 +85,14 @@ export const CreatePayment = () => {
                     <form onSubmit={handlerCreateCategory}>
                         <div>
 
-                            <label>Title Course:</label>
-                            <select className="form-select" name='titleCourse' onChange={handleChange} value={paymentData.titleCourse} required>
-                                <option value="">--Choose--</option>
-                                {
-                                    (store.course.access_to_courses.length == 0) 
-                                    ? <option value="">Sin Datos</option>
-                                    :store.course.access_to_courses.map((item, index) => (
-                                        <option key={index} value={item.title}>{item.title}</option>
-                                    ))
-                                }
-                            </select>
+                            <label>Transaccion:</label>
+                            <input
+                                type="text"
+                                name="status"
+                                value={paymentData.status}
+                                onChange={handleChange}
+                                id="validationFormCheck1"
+                                className="form-control" />
                             <div className="invalid-feedback">
                                 Please enter your information.
                             </div>
@@ -114,7 +112,7 @@ export const CreatePayment = () => {
                         </div>
                         <div>
                             <label>Pad Amount:</label>
-                            <select className="form-select" name='padAmount' onChange={handleChange} value={paymentData.padAmount} required>
+                            <select className="form-select" name='value' onChange={handleChange} value={paymentData.value} required>
                                 <option value="">--Choose--</option>
                                 {
                                     (store.course.access_to_courses.length == 0) 
@@ -134,7 +132,19 @@ export const CreatePayment = () => {
                             <select className="form-select" name='typePayment' onChange={handleChange} value={paymentData.typePayment} required>
                                 <option value="">--Choose--</option>
                                 <option value="paypal">Paypal</option>
-                                <option value="TDC/TDD">Tarjeta de Debito / Credito</option>
+                                <option value="TDC/TDD">Tarjeta de Debito / Credito</option>currency_code
+                            </select>
+                            <div className="invalid-feedback">
+                                Please enter your information.
+                            </div>
+                        </div>
+
+                        <div>
+                            <label>Type Payment:</label>
+                            <select className="form-select" name='currency_code' onChange={handleChange} value={paymentData.currency_code} required>
+                                <option value="">--Choose--</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
                             </select>
                             <div className="invalid-feedback">
                                 Please enter your information.
@@ -177,3 +187,18 @@ export const CreatePayment = () => {
         </div>
     );
 };
+
+{/* <label>Title Course:</label>
+                            <select className="form-select" name='titleCourse' onChange={handleChange} value={paymentData.titleCourse} required>
+                                <option value="">--Choose--</option>
+                                {
+                                    (store.course.access_to_courses.length == 0) 
+                                    ? <option value="">Sin Datos</option>
+                                    :store.course.access_to_courses.map((item, index) => (
+                                        <option key={index} value={item.title}>{item.title}</option>
+                                    ))
+                                }
+                            </select>
+                            <div className="invalid-feedback">
+                                Please enter your information.
+                            </div> */}

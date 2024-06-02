@@ -257,9 +257,11 @@ class Trolley(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    id_paypal = db.Column(db.String(250), nullable=True)
     date = db.Column(db.String(250), unique=False, nullable=False)
-    title_course = db.Column(db.String(250), nullable=False)
-    pad_amount = db.Column(db.String(250), nullable=False)
+    status = db.Column(db.String(250), nullable=False)
+    currency_code = db.Column(db.String(250), nullable=False)
+    value = db.Column(db.String(250), nullable=False)
     type_payment = db.Column(db.String(250), nullable=False) 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

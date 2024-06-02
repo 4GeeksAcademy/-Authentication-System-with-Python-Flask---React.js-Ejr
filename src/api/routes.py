@@ -874,12 +874,14 @@ def create_payment_course():
         data = request.get_json()
         new_payment = Payment(
             date=data.get('date'),
-            title_course=data.get('titleCourse'),
-            pad_amount=data.get('padAmount'),
+            id_paypal=data.get('idPaypal'),
+            currency_code=data.get('currency_code'),
             type_payment=data.get('typePayment'),
+            value=data.get('value'),
             user_id=data.get('userId'),
             course_id=data.get('courseId'),
             manager_id=1
+            
         )
         db.session.add(new_payment)
         db.session.commit()
@@ -905,9 +907,9 @@ def get_all_payments_courses():
 def put_payment(pay_id):
     try:
 
-        title_course = request.json.get('titleCourse')
-        pad_amount = request.json.get('padAmount')
+        value = request.get('value'),
         type_payment = request.json.get('typePayment')
+        
         user_id = request.json.get('userId')
         course_id = request.json.get('courseId')
         manager_id = request.json.get('managerId')
@@ -919,8 +921,8 @@ def put_payment(pay_id):
         if not payment:
             return jsonify({"Error": "Payment not found"}), 404
         
-        payment.title_course = title_course
-        payment.pad_amount = pad_amount
+        
+        payment.value = value
         payment.type_payment = type_payment
         payment.user_id = user_id
         payment.course_id = course_id
