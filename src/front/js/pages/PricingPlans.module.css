@@ -20,7 +20,6 @@ html {
 
 body {
   background: var(--bg);
-  padding: 1.5rem;
   /* padding-top: 3.5rem; */
   margin: 0;
 }
