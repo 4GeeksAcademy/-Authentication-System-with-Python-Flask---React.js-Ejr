@@ -73,6 +73,7 @@ export const LogIn = () => {
                                             className="form-control bg-dark text-white border-0"
                                             onChange={handleInputChange}
                                             required
+
                                         />
                                         <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
                                             {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
