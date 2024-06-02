@@ -10,7 +10,7 @@ export const BuyMeACoffee = () => {
 
     return (
         <div>
-            <h1>Buy Me a Coffee</h1>
+            <h1>Buy Us a Coffee</h1>
             {successMessage && <p>{successMessage}</p>}
             <PayPalButton amount="5.00" onSuccess={handleSuccess} />
         </div>
