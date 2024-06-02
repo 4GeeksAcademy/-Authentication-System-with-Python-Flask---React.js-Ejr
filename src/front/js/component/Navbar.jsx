@@ -57,9 +57,9 @@ export const Navbar = () => {
                             <li className="nav-item">
                                 <Link to="/" className="nav-link">Rooms</Link>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <Link to="/games" className="nav-link">Games</Link>
-                            </li>
+                            </li> */}
                             {token ? (
                                 <>
                                     <li className="nav-item">
