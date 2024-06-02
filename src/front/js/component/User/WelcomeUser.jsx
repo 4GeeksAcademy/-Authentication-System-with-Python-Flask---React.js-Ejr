@@ -3,6 +3,7 @@ import { Context } from "../../store/appContext.js";
 
 import { FaUserGraduate } from "react-icons/fa";
 import { BsFillPersonLinesFill } from "react-icons/bs";
+import { FaUniversity } from "react-icons/fa";
 
 export const WelcomeUser = () => {
     const { store, actions } = useContext(Context);

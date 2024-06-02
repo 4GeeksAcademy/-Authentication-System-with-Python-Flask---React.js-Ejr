@@ -46,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respCreateUser.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.Error });
-            throw new Error(errorData.Error || "Error al crear el usuario");
+            throw new Error(errorData.Error || "Error creating user");
           }
           const dataCreateUser = await respCreateUser.json();
           setStore({ ...store, msg: dataCreateUser.message });
@@ -78,7 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!respLoginIn.ok) {
             const errorData = await respLoginIn.json();
             setStore({ ...store, error: errorData.Error });
-            throw new Error(errorData.Error || "Error al iniciar sesión");
+            throw new Error(errorData.Error || "Failed to login");
           }
 
           const dataLoginIn = await respLoginIn.json();
@@ -86,6 +86,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           localStorage.setItem("currentRole", userRole);
           setStore({ ...store, currentRole: userRole });
           setStore({ ...store, msg: dataLoginIn.message });
+      
+        console.log(userToLogin,dataLoginIn)
+
           await getActions().getUser();
         } catch (err) {
           console.error(err);
@@ -93,6 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
+      
 
       getUser: async (userRol) => {
         const store = getStore();
@@ -121,7 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetUsers.json();
             setStore({ ...store, error: errorData.Error });
             throw new Error(
-              errorData.Error || "Error al obtener los datos del usuario"
+              errorData.Error || "Error getting user data"
             );
           }
 
@@ -369,7 +373,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al añadir el curso al carrito"
+              errorData.error || "Error when adding course to cart"
             );
           }
           const dataCreateCourse = await respCreateCourse.json();
@@ -394,7 +398,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetCourse.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener el Curso");
+            throw new Error(errorData.error || "Error Obtaining Course");
           }
 
           const dataGetCourse = await respGetCourse.json();
@@ -523,7 +527,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getTrolleyToOrder()
 
             throw new Error(
-              errorData.error || "Error al añadir el curso al carrito"
+              errorData.error || "Error when adding course to cart"
             );
           }
 
@@ -551,7 +555,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetOrder.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener el Curso");
+            throw new Error(errorData.error || "Error Obtaining Course");
           }
 
           const dataGetOrder = await respGetOrder.json();
@@ -589,7 +593,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al añadir el curso al carrito"
+              errorData.error || "Error when adding course to cart"
             );
           }
 
@@ -660,7 +664,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ ...store, error: errorData.error });
 
             throw new Error(
-              errorData.error || "Error al crear quizzes"
+              errorData.error || "Error creating quizzes"
             );
           }
           const dataAddQuizzes = await respAddQuizzes.json();
@@ -687,7 +691,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetQuizzes.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener los quizzes");
+            throw new Error(errorData.error || "Error when obtaining the quizzes");
           }
 
           const dataGetQuizzes = await respGetQuizzes.json();
@@ -725,7 +729,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Update"
+              errorData.error || "Update error"
             )
           }
 
@@ -762,7 +766,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Delete"
+              errorData.error || "Delete error"
             );
           }
 
@@ -895,7 +899,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetModules.json();
             console.log(errorData);
             setStore({ ...store, error2: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener el Modules");
+            throw new Error(errorData.error || "Error Getting Modules");
           }
 
           const dataGetModules = await respGetModules.json();
@@ -937,7 +941,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getTrolleyToOrder()
 
             throw new Error(
-              errorData.error || "Error al añadir la Category"
+              errorData.error || "Error when adding the Category"
             );
           }
 
@@ -965,7 +969,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetCategory.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener la Category");
+            throw new Error(errorData.error || "Error when adding the Category");
           }
 
           const dataGetCategory = await respGetCategory.json();
@@ -1077,7 +1081,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Update"
+              errorData.error || "Update error"
             )
           }
 
@@ -1109,7 +1113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Delete"
+              errorData.error || "Delete error"
             );
           }
 

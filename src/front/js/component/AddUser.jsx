@@ -23,8 +23,7 @@ export const AddUser = () => {
         phone: '',
         age: '',
         gender: '',
-        userId: '',
-        teacherId: ''
+        
     });
 
     useEffect(() => {

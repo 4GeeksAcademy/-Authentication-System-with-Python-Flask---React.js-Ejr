@@ -129,7 +129,7 @@ def create_signup_teacher():
 
         return jsonify({"message": "Teacher has been Created Successfully", "access_to_teacher": new_teacher.serialize()}), 201
     except Exception as e:
-        return jsonify({"Error": "Error in Teacher Creation", "error code": str(e)})
+        return jsonify({"Error": "Error in Teacher Creation", "error code": str(e)}), 500
 
 @api.route('/signup/manager', methods=['POST'])
 def create_signup_manager():
@@ -340,6 +340,8 @@ def forgot_password_teacher():
     msg = Message('Password Reset Request', recipients=[email])
     msg.body = f"To reset your password, click the following link: {reset_link}"
     mail.send(msg)
+
+    print(frontend_url)
 
     return jsonify({"message": "Password reset link sent", "access_token": reset_token}), 200
 
