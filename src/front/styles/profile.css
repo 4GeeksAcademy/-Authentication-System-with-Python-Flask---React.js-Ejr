@@ -1,8 +1,88 @@
 /* En tu archivo SignUp.css */
 .profile-image {
     border-radius: 50%;
-    width: 100px; /* Ajusta el tamaño según sea necesario */
-    height: 100px; /* Ajusta el tamaño según sea necesario */
+    width: 100px;
+    height: 100px;
     object-fit: cover;
+
+    padding: 0;
 }
+
+.profile-container {
+    max-width: 1130px;
+    background-color: #333C53; 
+    color: #FFF;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+input {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #0096D2; /* Azul para los bordes de los inputs */
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.form-control[readOnly] {
+    background-color: #333C53;
+    color: #ccc;
+    border: 1px solid #0096D2;
+}
+
+/* Estilos para los botones */
+.btn-update-profile-picture {
+    background-color: #6C757D;
+    color: #FFF;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.btn-edit-profile {
+    background-color: #FFF;
+    color: #0096D2; /* Azul para el texto del botón */
+    border: 1px solid #0096D2; /* Azul para los bordes del botón */
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.btn-delete-profile {
+    background-color: #B40000;
+    color: #FFF;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.zoom-slider {
+    margin: 10px 0;
+}
+
+.zoom-slider input[type="range"] {
+    width: 100%;
+}
+
+.bio {
+    width: 100%;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-save {
+    margin-right: 20px; /* Espacio entre los botones */
+}
+=======
+}
+
 

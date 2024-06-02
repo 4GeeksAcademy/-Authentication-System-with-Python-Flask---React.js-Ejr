@@ -131,9 +131,9 @@ def get_token():
             return jsonify({'error': 'Invalid email format.'}), 400
         
         login_user = User.query.filter_by(email=email).one_or_none()
-
-        if not login_user:
-            return jsonify({'error': 'Email/user not found.'}), 404
+        
+        if not login_user or login_user.is_deleted:
+            return jsonify({'error': 'Email not found or account is deleted.'}), 404
 
         if bcrypt.check_password_hash(login_user.password, password):
             expires = timedelta(hours=1)  # pueden ser "hours", "minutes", "days","seconds"
@@ -481,23 +481,25 @@ def update_user(user_id):
     try:
         # Obtener el ID de usuario del token de acceso
         current_user_id = get_jwt_identity()
-
+        
         # Obtener la instancia del usuario actual
         current_user = User.query.get(current_user_id)
-
+        
         # Verificar si el usuario actual es admin o el mismo usuario que solicita la actualización
         if not current_user or (current_user.id != user_id and not current_user.admin):
             return jsonify({"error": "Unauthorized."}), 403
-
+        
         user = User.query.get(user_id)
+        
         if user:
+            
             user_data = request.json
-
+            
             # Solo actualizar el password si se proporciona uno nuevo, de lo contrario, mantener el actual
             new_password = user_data.get('password')
             if new_password:
                 user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
-
+            
             # Actualizar los demás campos si se proporcionan, de lo contrario, mantener los valores actuales
             user.username = user_data.get('username', user.username)
             user.first_name = user_data.get('first_name', user.first_name)
@@ -509,13 +511,13 @@ def update_user(user_id):
             user.xbox = user_data.get('xbox', user.xbox)
             user.psn = user_data.get('psn', user.psn)
             user.steam = user_data.get('steam', user.steam)
-            user.google_play = user_data.get('google_play', user.google_play)
+            user.discord = user_data.get('discord', user.discord)
             user.nintendo = user_data.get('nintendo', user.nintendo)
             user.epic_id = user_data.get('epic_id', user.epic_id)
             user.bio = user_data.get('bio', user.bio)
             user.gender = user_data.get('gender', user.gender)
             user.url_image = user_data.get('url_image', user.url_image)
-
+            
             # Solo permitir que los administradores actualicen el campo admin
             if current_user.admin:
                 user.admin = user_data.get('admin', user.admin)
@@ -524,6 +526,37 @@ def update_user(user_id):
             return jsonify({"message": "User updated successfully", "user": user.serialize()}), 200
         else:
             return jsonify({"error": "User not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/user/<int:user_id>/update-image', methods=['PUT'])
+@jwt_required()
+def update_user_image(user_id):
+    try:
+        # Obtener el ID de usuario del token de acceso
+        current_user_id = get_jwt_identity()
+
+        # Asegurar que el usuario está autorizado para actualizar la imagen
+        if current_user_id != user_id:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"error": "User not found."}), 404
+
+        user_data = request.json
+        new_image_url = user_data.get('url_image')
+        
+        if not new_image_url:
+            return jsonify({"error": "No image URL provided."}), 400
+
+        # Actualiza la URL de la imagen del usuario
+        user.url_image = new_image_url
+        db.session.commit()
+
+        return jsonify({"message": "Image updated successfully", "url_image": user.url_image}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

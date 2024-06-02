@@ -23,13 +23,13 @@ export const LogIn = () => {
         e.preventDefault();
         try {
             let success = await actions.submitLogInForm(logInData);
-            if (success) {
-                navigate('/');
+            if (!success) {
+                setError('Failed to log in. Please check your credentials.');
             } else {
-                setError('Failed to log in. Please try again.');
+                navigate('/');
             }
         } catch (error) {
-            setError('An unexpected error occurred. Please try again.');
+            setError(error.message);
         }
     };
 
@@ -84,6 +84,9 @@ export const LogIn = () => {
                                 <button type="submit" className="btn login-btn">
                                     Login
                                 </button>
+                            </div>
+                            <div className="login-error-message">
+                                {error && <p className="text-danger">{error}</p>}
                             </div>
                         </form>
                         <div className="col-12 text-center">
