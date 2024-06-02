@@ -225,9 +225,9 @@ export const Profile = () => {
 
     return (
         <div className="container mt-3 profile-container" >
-            <h5 style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}>
+            <p style={{ marginLeft: '25px', marginTop: '15px', marginBottom: '20px' }}>
                 Profile Settings
-            </h5>
+            </p>
             <div className="mb-3 row" style={{ marginLeft: '25px', marginRight: '25px' }}>
                 {profileData.url_image && (
                     <img src={profileData.url_image} alt="Profile" className="profile-image" />
@@ -278,8 +278,8 @@ export const Profile = () => {
                                 <button className="join-room button-save" onClick={handleSaveCroppedImage}>
                                     Save
                                 </button>
-                                <button className="withdraw" onClick={handleCancelEditing}>
-                                    X
+                                <button className="withdraw" style={{ color: "white" }} onClick={handleCancelEditing}>
+                                    Cancel
                                 </button>
                             </div>
 
@@ -407,7 +407,7 @@ export const Profile = () => {
                     </button>
                 )}
                 {isEditing && (
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between align-items-center button-group">
                         <div>
                             <button onClick={handleDeleteClick} className="btn btn-danger">
                                 Delete Profile
@@ -425,7 +425,7 @@ export const Profile = () => {
                                             <div className="modal-body">
                                                 <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
                                             </div>
-                                            <div className="modal-footer">
+                                            <div className="modal-footer" >
                                                 <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button>
                                                 <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Delete Profile</button>
                                             </div>
@@ -434,13 +434,9 @@ export const Profile = () => {
                                 </div>
                             )}
                         </div>
-                        <div>
-                            <button onClick={handleSubmit} className="join-room">
-                                Update Profile
-                            </button>
-                            <button type="button" onClick={() => setIsEditing(false)} className="withdraw">
-                                Cancel Changes
-                            </button>
+                        <div className="d-flex">
+                            <button onClick={handleSubmit} className="btn btn-primary mr-2">Update Profile</button>
+                            <button type="button" onClick={() => setIsEditing(false)} className="btn btn-secondary">Cancel Changes</button>
                         </div>
                     </div>
                 )}
