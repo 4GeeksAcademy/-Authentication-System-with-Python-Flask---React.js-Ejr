@@ -29,3 +29,21 @@
 .paypal-button-container {
     margin-top: 20px;
 }
+
+.support-message {
+    font-size: 12px; /* Tamaño del texto para la descripción */
+    margin-bottom: 20px; /* Espacio antes del botón PayPal */
+    color: #FFFFFF; /* Color dorado para destacar el mensaje */
+    font-style: italic; /* Estilo cursivo para dar un toque especial */
+}
+
+@media (max-width: 480px) {
+    .coffee-container {
+        padding: 10px; /* Menos padding en pantallas pequeñas */
+        max-width: 95%; /* Aprovechar más espacio horizontal */
+    }
+
+    .support-message, .success-message {
+        font-size: 14px; /* Tamaño de fuente más grande para mejor legibilidad */
+    }
+}
