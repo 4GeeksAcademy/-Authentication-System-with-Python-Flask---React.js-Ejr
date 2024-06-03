@@ -17,6 +17,7 @@ import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 import { QuizzesCourse } from '../Quizzes/QuizzesCourse.jsx';
 import { CreateCategory } from './CreateCategory.jsx';
 import { GetQuizzes } from './GetQuizzes.jsx';
+import { PostCertificate } from '../Teacher/PostCertificate.jsx';
 import { CreatePayment } from './CreatePayment.jsx';
 import { GetPayment } from './GetPayment.jsx';
 import { GetModule } from './GetModule.jsx';
@@ -119,7 +120,7 @@ export const ManagerDashboard = () => {
     }
 
     const handlePDF = () => {
-        setButtonSelected(<Certificate />)
+        setButtonSelected(<PostCertificate />)
     }
 
     const handleCreateCategory = () => {

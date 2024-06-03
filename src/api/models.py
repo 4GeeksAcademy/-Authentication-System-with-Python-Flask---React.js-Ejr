@@ -112,7 +112,7 @@ class Course(db.Model):
     modules_length = db.Column(db.Integer, nullable=False)
     title_certificate_to_get = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)  
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(1000000), nullable=False)
     assessment = db.Column(db.Integer, nullable=True) 
     create_date = db.Column(db.String(300), unique=False, nullable=True)
     title_Teacher = db.Column(db.String(250), nullable=False)

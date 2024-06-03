@@ -22,8 +22,7 @@ export const AddUser = () => {
         numberDocument: '',
         phone: '',
         age: '',
-        gender: '',
-        
+        gender: ''
     });
 
     useEffect(() => {
@@ -56,7 +55,8 @@ export const AddUser = () => {
                     ...prevState,
                     ...updatedData,
                     isTeacher: undefined,
-                    isManager: undefined
+                    isManager: undefined,
+                    
                 }));
             } else if (value === 'teacher') {
                 updatedData = { isTeacher: isUsers };
@@ -73,7 +73,7 @@ export const AddUser = () => {
                     ...prevState,
                     ...updatedData,
                     isUser: undefined,
-                    isTeacher: undefined,
+                    isTeacher: undefined
                 }));
             }
         } else if (name === 'userId' || name === 'teacherId') {

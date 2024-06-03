@@ -19,13 +19,14 @@ import { SignOut } from "./pages/SignOut.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import { ResetPassword } from "./component/ResetPassword.jsx";
 import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
-import {Course} from "./pages/Courses/Course.jsx";
+import { Course } from "./pages/Courses/Course.jsx";
 import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
 import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
 import { Trolley } from "./component/User/Trolley.jsx";
 import { UpdateQuizzes } from "./component/Manager/UpdateQuizzes.jsx";
 import { UpdatePayment } from "./component/Manager/UpdatePaymet.jsx";
+import { CourseCategorySelected } from "./pages/CourseCategorySelected.jsx";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -103,16 +104,20 @@ const Layout = () => {
                             }
                             path="/UpdateQuizzes/:quizId"
                         />
-
                         <Route
                             element={
                                 <ProtectedRoute>
                                     <Course />
                                 </ProtectedRoute>
                             }
-                            path="/course/:courseId"
+                            path="/course/:id"
                         />
-
+                        <Route
+                            element={
+                                <CourseCategorySelected />
+                            }
+                            path="/category/:titleCategory"
+                        />
                         {/* Ruta para el componente Trolley */}
                         <Route element={<Trolley />} path="/trolley" />
 

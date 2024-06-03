@@ -15,6 +15,7 @@ import { UploadFile } from './UploadFile.jsx';
 import { PostCourse } from './PostCourse.jsx';
 import { QuizzForm } from './QuizzForm.jsx';
 import { TeacherProfile } from './TeacherProfile.jsx';
+import { ModuleCourse } from '../Module/ModuleCourse.jsx'
 
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { MdPayments } from "react-icons/md";
