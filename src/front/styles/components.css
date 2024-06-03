@@ -20,14 +20,21 @@
   background-color: aqua;
 }
 
-.btnFav{
+.btnFav {
   background-color: rgb(255, 255, 255);
-  border: none ;
+  border: none;
   border-radius: 20px;
   color: #165D95;
   font-size: 20px;
+  transition: border 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-.btnFav:hover{
-  border: 0.3px solid #18BEBE;
+.btnFav:hover {
+  border: 0.3px solid #F6CA1F;
+  background-color: #F6CA1F;
+  color: #165D95;
+}
+
+nav {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
