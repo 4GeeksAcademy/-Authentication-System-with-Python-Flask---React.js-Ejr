@@ -6,9 +6,9 @@ import styles from './ImageGallery.module.css'; // Asegúrate de crear este arch
 const ImageGallery = () => {
     const { store, actions } = useContext(Context);
 
-    // useEffect(() => {
-    //     actions.fetchImages();
-    // }, [actions]);
+    useEffect(() => {
+        actions.fetchImages();
+    }, []);
 
     return (
         <div className={styles.galleryContainer}>

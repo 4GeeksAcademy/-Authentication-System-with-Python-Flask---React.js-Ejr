@@ -3,6 +3,7 @@
   background-color: #E6E6E9; /* Fondo claro */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: small;
 }
 
 .title {
@@ -83,4 +84,14 @@
 
 .searchInput {
   margin-bottom: 20px;
+}
+
+.modalactivation {
+  color: gray;
+}
+
+.buttonActivation {
+  background-color: #5D7266; /* Verde */
+  border: none;
+
 }

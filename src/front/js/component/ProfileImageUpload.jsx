@@ -85,26 +85,26 @@ const ProfileImageUpload = () => {
             {store.uploadedUserData && store.uploadedUserData.profile_image_url ? ( // Verifica si hay una imagen de perfil
                 <>
                     <Dropdown> {/* Dropdown para acciones */}
-                        <Dropdown.Toggle variant="primary" id="dropdown-basic"> {/* Botón de toggle del dropdown */}
-                            edit photo
+                        <Dropdown.Toggle className={styles.editButton} id="dropdown-basic" title='Edit photo'> {/* Botón de toggle del dropdown */}
+                        <i class="fa-solid fa-image"></i>
                         </Dropdown.Toggle>
-                        <Dropdown.Menu> {/* Menú del dropdown */}
-                            <Dropdown.Item onClick={() => handleShowModal('edit')}>Edit Profile Image</Dropdown.Item> {/* Opción para editar */}
-                            <Dropdown.Item onClick={() => handleShowModal('upload')}>Upload Profile Image</Dropdown.Item> {/* Opción para subir */}
+                        <Dropdown.Menu className={styles.dropdownMenu}> {/* Menú del dropdown */}
+                            <Dropdown.Item className={styles.dropdownItem} onClick={() => handleShowModal('edit')}>Edit Image</Dropdown.Item> {/* Opción para subir */}
+                            <Dropdown.Item className={styles.dropdownItem} onClick={() => handleShowModal('upload')}>Upload Image</Dropdown.Item> {/* Opción para subir */}
                             <Dropdown.Divider /> {/* Divisor del dropdown */}
-                            <Dropdown.Item onClick={handleDelete}>Delete Profile Image</Dropdown.Item> {/* Opción para eliminar */}
+                            <Dropdown.Item className={styles.dropdownItem} onClick={handleDelete}>Delete Image</Dropdown.Item> {/* Opción para eliminar */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
             ) : (
-                <Button variant="primary" onClick={() => handleShowModal('upload')}>Upload Profile Image</Button> // Botón para subir imagen si no hay imagen de perfil
+                <Button className={styles.editButton} onClick={() => handleShowModal('upload')} title='Upload Image'><i class="fa-solid fa-image"></i></Button> // Botón para subir imagen si no hay imagen de perfil
             )}
             <Modal show={showModal} onHide={handleCloseModal}> {/* Modal para subir/editar imagen */}
             <div className={styles.modalProfile}>
-                <Modal.Header closeButton>
+                <Modal.Header className={styles.modalHeader}>
                     <Modal.Title>{modalAction === 'edit' ? 'Edit Profile Image' : 'Upload Profile Image'}</Modal.Title> {/* Título del modal */}
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className={styles.modalBody}>
                     <Form>
                         <Form.Group>
                             <Form.Label>Choose file</Form.Label>
@@ -112,9 +112,9 @@ const ProfileImageUpload = () => {
                         </Form.Group>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>Close</Button> {/* Botón para cerrar el modal */}
-                    <Button variant="primary" onClick={modalAction === 'edit' ? handleUpdate : handleUpload}> {/* Botón para subir/editar imagen */}
+                <Modal.Footer className={styles.modalFooter}>
+                    <Button className={styles.editButton} onClick={handleCloseModal}>Close</Button> {/* Botón para cerrar el modal */}
+                    <Button className={styles.editButton} onClick={modalAction === 'edit' ? handleUpdate : handleUpload}> {/* Botón para subir/editar imagen */}
                         {modalAction === 'edit' ? 'Update' : 'Upload'}
                     </Button>
                 </Modal.Footer>
@@ -122,14 +122,14 @@ const ProfileImageUpload = () => {
             </Modal>
             <Modal show={resultModalVisible} onHide={handleResultModalClose}> {/* Modal para mostrar mensajes de resultado */}
                 <div className={styles.modalProfile}>
-                <Modal.Header closeButton>
+                <Modal.Header className={styles.modalHeader}>
                     <Modal.Title>Result</Modal.Title> {/* Título del modal */}
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className={styles.modalBody}>
                     <p>{resultModalMessage}</p> {/* Mensaje del modal */}
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleResultModalClose}>Close</Button> {/* Botón para cerrar el modal */}
+                <Modal.Footer className={styles.modalFooter}>
+                    <Button className={styles.editButton} onClick={handleResultModalClose}>Close</Button> {/* Botón para cerrar el modal */}
                 </Modal.Footer>
                 </div>
             </Modal>

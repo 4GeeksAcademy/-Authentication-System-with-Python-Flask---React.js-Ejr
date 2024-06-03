@@ -95,13 +95,13 @@ const EditProfile = () => {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow} className={styles.editButton}>
-                Editar Perfil
+            <Button variant="primary" onClick={handleShow} className={styles.editButton} title="Edit Profile">
+            <i class="fa-solid fa-user-pen"></i>
             </Button>
 
             <Modal show={show} onHide={handleClose} centered className={styles.modal + " modal-centered"}>
-                <Modal.Header closeButton className={styles.modalHeader}>
-                    <Modal.Title className={styles.modalTitle}>Editar Perfil</Modal.Title>
+                <Modal.Header  className={styles.modalHeader}>
+                    <Modal.Title className={styles.modalTitle}>Edit Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.modalBody}>
                     <div className={styles.messageContainer}>
@@ -142,7 +142,7 @@ const EditProfile = () => {
             </Modal>
 
             <Modal show={confirmShow} onHide={handleConfirmClose} centered className={styles.modal + " modal-centered"}>
-                <Modal.Header closeButton className={styles.modalHeader}>
+                <Modal.Header  className={styles.modalHeader}>
                     <Modal.Title className={styles.modalTitle}>
                         Confirm Changes</Modal.Title>
                 </Modal.Header>

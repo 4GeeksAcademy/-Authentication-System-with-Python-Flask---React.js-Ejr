@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
+    padding-right: 4.75rem
   }
   
   .securityQuestions {
@@ -66,4 +67,8 @@
     border-radius: .3rem;
     outline: 0;
   }
-  
+
+/* En tus estilos CSS */
+.unreadHighlight {
+  background-color: var(--color-green);;  
+  color: white;}

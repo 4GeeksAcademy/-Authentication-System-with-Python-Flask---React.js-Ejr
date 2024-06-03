@@ -1,10 +1,22 @@
+.homeContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+
+.pricingContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .header {
-  position: relative; 
-  height: 750px;
+  position: relative;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .header::before {
@@ -14,10 +26,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("https://www.crossfit.com/wp-content/uploads/2023/11/13131232/crossfit-coach-led-fitness-training-adapted-for-you-handstand-hold.jpg");
   background-size: cover;
-  filter: blur(5px); 
-  z-index: -1; 
+  filter: blur(5px);
+  z-index: -1;
 }
 
 .headerTitle {
@@ -31,4 +42,5 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 100px;
 }

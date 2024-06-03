@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 import PrivateCalendar from "../component/PrivateCalendar.jsx";
 import CreateClasses from "../component/CreateClasses.jsx";
 import MyCalendar from "../component/Calendar.jsx";
-import UserBooking from "./UserBooking.jsx";
+import UserBooking from "../component/UserBooking.jsx";
 import PrivatePageUser from "./PrivatePageUser.jsx";
 import Breadcrumbs from "../component/Breadcrumb.jsx";
 import SingupMaster from "../component/SingupMaster.jsx";
@@ -18,7 +18,7 @@ import Login from "../component/Login.jsx";
 import Navbar from "../component/Navbar.jsx";
 import BookingView from "../component/BookingView.jsx";
 import MembershipPurchase from "../component/MembershipPurchase.jsx";
-import Users from "./Users.jsx";
+import Users from "../component/Users.jsx";
 import UploadForm from "../component/UploadForm.jsx";
 import ImageGallery from "../component/ImageGallery.jsx";
 import TransactionsTable from "../component/TransactionsTable.jsx";
@@ -33,7 +33,10 @@ import ClassFrequencyChart from "../component/ClassFrequencyChart.jsx";
 
 import ClassesView from "../component/ClassesView.jsx";
 
+import Sidebar from "../component/Sidebar.jsx";
 
+import ReceiveMessages from "../component/ReceiveMessages.jsx";
+import SendMessage from "../component/SendMessage.jsx";
 
 const ModulePage = () => {
     const { store, actions } = useContext(Context);
@@ -65,13 +68,13 @@ const ModulePage = () => {
         { component: <ClassFrequencyChart />, name: "ClassFrequencyChart " },
         { component: <Users />, name: "Users " },
         { component: <TransactionsTable />, name: "TransactionsTable " },
-        { component: <MembershipPurchase />, name: "MembershipPurchase " },
+        // { component: <MembershipPurchase />, name: "MembershipPurchase " },
         { component: <AdminMembershipPurchase />, name: "AdminMembershipPurchase " },
 
 
         { component: <MyCalendar />, name: "My Calendar" },
         { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
-        { component: <PrivatePageUser />, name: "Private Page User" },
+        // { component: <PrivatePageUser />, name: "Private Page User" },
         // { component: <SingupMaster />, name: "Singup Master" },
         { component: <UserCreator />, name: "UserCreator " },
         { component: <UploadForm />, name: "UploadForm " },
@@ -79,24 +82,27 @@ const ModulePage = () => {
 
         // { component: <UserBooking />, name: "User Booking" },
         { component: <PRRecord />, name: "PRRecord " },
-
-
-
+        { component: <ReceiveMessages />, name: "Receive Messages" },
+        { component: <SendMessage />, name: "SendMessage " },
     ];
+
+    useEffect(() => {
+        actions.checkUnreadMessages();
+    }, []);
 
     return (
         <>
-            <h1> Module Page</h1>
-            <Breadcrumbs />
+        <Sidebar/>
+            <h1>Master Page</h1>
             <div className={styles.userDetailsContainer}>
                 {components.map((entry, index) => (
-                    <div key={index} className={styles.securityQuestions} onClick={() => handleOpenModal(index)}>
+                    <div key={index} className={`${styles.securityQuestions} ${entry.name === "Receive Messages" && store.hasUnreadMessages ? styles.unreadHighlight : ''}`} onClick={() => handleOpenModal(index)}>
                         <h3>{entry.name}</h3>
                         <p>Click to view more...</p>
                     </div>
                 ))}
             </div>
-
+    
             <Modal show={show} onHide={handleCloseModal} centered size="lg" className={styles.modalCustom}>
                 <Modal.Header closeButton className={styles.modalHeader}>
                     <Modal.Title className={styles.modalTitle}>{components[currentSlide].name}</Modal.Title>

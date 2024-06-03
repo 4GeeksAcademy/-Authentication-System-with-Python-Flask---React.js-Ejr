@@ -1,15 +1,26 @@
 .editButton {
-    background-color: #5D7266; /* Gray */
-    color: white;
+    background-color: transparent;
+    color: var(--color-green);
     border: none;
-    padding: 5px;
-    width: 100%;
+    padding: 10px 20px; /* Aumentar el padding para mayor impacto */
     text-align: center;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transiciones suaves */
 }
+
+.editButton:hover {
+    color: var(--color-light);
+    background-color: var(--color-grey); /* Fondo gris en hover */
+}
+
+.editButton:active {
+    background-color: var(--color-dark); /* Fondo oscuro en active */
+    color: var(--color-brown); /* Texto marrón en active */
+}
+
+
 
 .modal {
     color: #383838; /* Charcoal */

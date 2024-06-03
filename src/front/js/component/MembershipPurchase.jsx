@@ -21,7 +21,7 @@ const MembershipPurchase = () => {
 
     useEffect(() => { // Hook useEffect para cargar las membresías cuando el componente se monta
         actions.loadMemberships(); // Llama a la acción para cargar las membresías
-    }, [actions]);
+    }, []);
 
     const handleBuyClick = () => { // Función para manejar el clic en el botón de compra
         if (store.uploadedUserData.active_membership_is_active !== "No Activa") { // Verifica si el usuario ya tiene una membresía activa
@@ -129,7 +129,7 @@ const MembershipPurchase = () => {
 
     return (
         <>
-            <Button className={styles.buttonBuy} onClick={handleBuyClick}>Buy Membership</Button> {/* Botón para iniciar el proceso de compra */}
+            <Button className={styles.buttonBuy} onClick={handleBuyClick} title='Buy Membership'><i class="fa-solid fa-cart-shopping"></i></Button> {/* Botón para iniciar el proceso de compra */}
             {showSelectionModal && (
                 <Modal show={true} onHide={() => setShowSelectionModal(false)} className={styles.modal}>
                     <Modal.Header closeButton className={styles.modalHeader}>
@@ -151,19 +151,30 @@ const MembershipPurchase = () => {
                     </Modal.Header>
                     <Modal.Body className={styles.modalBody}>
                         <Form onSubmit={handleFormSubmit}>
-                            <Form.Group>
+                        <Form.Group>
                                 <Form.Label>Payment Method</Form.Label>
                                 <DropdownButton id="dropdown-payment-method" title={paymentMethod || 'Select Method'} className={styles.paymentMethodDropdown}>
-                                    <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => setPaymentMethod('cash')}><i className="fa-solid fa-money-bill-wave"></i> Cash</Dropdown.Item>
+
+                                    {/* SE COMENTA ESTOS DOS MEDIOS DE PAGO YA QUE NO ESTAN INTEGRADOS */}
+                                    {/* <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => setPaymentMethod('debit_card')}><i className="fa-solid fa-credit-card"></i> Debit Card</Dropdown.Item> */}
+                                    
                                     <Dropdown.Item onClick={() => setPaymentMethod('paypal')}><i className="fa-brands fa-paypal"></i> PayPal</Dropdown.Item>
+                                    {['admin', 'master'].includes(localStorage.getItem('dataRole')) && (
+                                        <Dropdown.Item onClick={() => setPaymentMethod('cash')}>
+                                            <i className="fa-regular fa-money-bill-1"></i> Cash
+                                        </Dropdown.Item>
+                                    )}
                                 </DropdownButton>
                             </Form.Group>
-                            {paymentMethod === 'credit_card' && renderCreditCardForm()}
+                            {(paymentMethod === 'credit_card' || paymentMethod === 'debit_card') && renderCreditCardForm()}
                             <Button type="submit" disabled={processing} className={styles.buttonSubmit}>
                                 {processing ? 'Processing...' : 'Confirm Purchase'}
                             </Button>
                         </Form>
+                        
+
+
                     </Modal.Body>
                 </Modal>
             )}

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Form, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
 import { Context } from '../store/appContext';
-import styles from "./MembershipPurchase.module.css"; // Importa los estilos CSS
+import styles from "./AdminMembershipPurchase.module.css"; // Importa los estilos CSS
 
 const AdminMembershipPurchase = () => {
     const { store, actions } = useContext(Context);
@@ -138,7 +138,7 @@ const AdminMembershipPurchase = () => {
 
     return (
         <>
-            <Button className={styles.buttonBuy} onClick={handleBuyClick}>Buy Membership</Button>
+            <Button className={styles.buttonBuyAdmin} onClick={handleBuyClick}>Buy Membership <i class="fa-solid fa-shop"></i></Button>
             {showSelectionModal && (
                 <Modal show={true} onHide={() => setShowSelectionModal(false)} className={styles.modal}>
                     <Modal.Header closeButton className={styles.modalHeader}>

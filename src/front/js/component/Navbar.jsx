@@ -5,8 +5,8 @@ import { Context } from '../store/appContext';
 import styles from './Navbar.module.css';  // Asegúrate de que el path es correcto
 
 import EditProfile from './EditProfile.jsx';
-import UserDataDetail from '../pages/UserDataDetail.jsx';
-import UserBooking from '../pages/UserBooking.jsx';
+import UserDataDetail from './UserDataDetail.jsx';
+import UserBooking from './UserBooking.jsx';
 import MembershipPurchase from './MembershipPurchase.jsx';
 import ProfileImageUpload from './ProfileImageUpload.jsx';
 

@@ -24,10 +24,11 @@ const PrivateCalendar = () => {
     // Transformamos los eventos del store para que sean compatibles con el calendario
     const events = store.trainingClasses.map(event => ({
         ...event,
-        start: new Date(event.dateTime_class), // Definimos el inicio del evento
-        end: moment(new Date(event.dateTime_class)).add(event.duration_minutes, 'minutes').toDate(), // Definimos el fin del evento
-        title: `${event.name} (${event.available_slots} slots)` // Definimos el título del evento
+        start: moment(event.dateTime_class).toDate(), // moment parsea la fecha asumiendo que está en UTC si termina en 'Z'
+        end: moment(event.dateTime_class).add(event.duration_minutes, 'minutes').toDate(),
+        title: `${event.name} (${event.available_slots} slots)`
     }));
+    
 
     //console.log("estructura_eventos",events); // Esto mostrará la estructura de los eventos transformados en la consola
 
@@ -130,7 +131,7 @@ const PrivateCalendar = () => {
                                     )
                                 );
                                 return filteredBookings.map((booking, index) => {
-                                    console.log("Reservas filtradas por evento y estado sin duplicados:", booking); // Esto mostrará en consola cada booking que cumpla las condiciones
+                                    // console.log("Reservas filtradas por evento y estado sin duplicados:", booking); // Esto mostrará en consola cada booking que cumpla las condiciones
                                     return (
                                         <div key={index} className={styles.bookingItem}>
                                             {booking.booking_user_profile_image ? (

@@ -34,3 +34,7 @@
 .button:hover {
     background-color: #5D7266;
 }
+
+.modalAlert {
+    color: gray;
+}
