@@ -27,6 +27,7 @@ export const GetQuizzes = () => {
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     {store.quizzes.Quiz.map((item, index) => (
                         <tr key={item.id || index}>
