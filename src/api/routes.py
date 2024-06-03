@@ -1907,6 +1907,7 @@ def handle_contact_form():
             # Verifica si todos los campos requeridos están presentes en los datos
             return jsonify({'error': 'Missing required fields'}), 400
 
+        EMIL_CONTACT = os.getenv('EMAIL_FOR_CONTACT')
         # Crea el contenido del correo electrónico en formato HTML
         html_content = f"""
             <!DOCTYPE html>
@@ -1927,7 +1928,7 @@ def handle_contact_form():
             """
 
         # Envía el correo electrónico utilizando una función de ayuda 'send_email'
-        send_email('New Contact Request', 'newappcrossfit@gmail.com', html_content)
+        send_email('New Contact Request', EMIL_CONTACT, html_content)
 
         # Retorna un mensaje de éxito si todo es correcto
         return jsonify({'message': 'Contact request sent successfully'}), 200
