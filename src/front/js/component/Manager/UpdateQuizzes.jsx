@@ -44,6 +44,7 @@ export const UpdateQuizzes = () => {
         }
     })
 
+
     async function handleSubmit(event) {
         event.preventDefault();
         console.log(quizData, quizId)
@@ -83,10 +84,23 @@ export const UpdateQuizzes = () => {
         e.preventDefault();
         if (quizData.questionTitle !== '' && quizData.answerUser !== '' && quizData.answerTeacher !== '') {
             actions.updateQuizzes(quizData, quizId);
-
+            resetForm();
         } else {
-            alert('No debe dejar ningun campo vacío');
+            alert('You must not leave any field empty.');
         }
+    }
+
+    const resetForm = () => {
+        setquizData({
+            questionTitle: '',
+            answerTeacher: '',
+            answerUser: '',
+            approved: '',
+            approvalPercentage: '',
+            approvalPercentageUser: '',
+            approvalPercentageNumber: '',
+            moduleId: '',
+        });
     }
 
     function handlerGoToHome() {

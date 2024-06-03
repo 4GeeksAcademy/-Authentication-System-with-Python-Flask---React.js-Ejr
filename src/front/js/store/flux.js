@@ -440,7 +440,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error2: errorData.error });
             throw new Error(
-              errorData.error || "Error al Update"
+              errorData.error || "Error in Update"
             )
           }
 
@@ -466,7 +466,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!token) throw new Error("No token found");
 
           const url = process.env.BACKEND_URL + "/api/view/courses/" + courseId;
-          const respDelCourse = await fetch(url, {
+          const respDeleteModule = await fetch(url, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -475,8 +475,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
 
 
-          if (!respDelCourse.ok) {
-            const errorData = await respDelCourse.json();
+          if (!respDeleteModule.ok) {
+            const errorData = await respDeleteModule.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
@@ -485,7 +485,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
 
-          const dataDelCourse = await respDelCourse.json();
+          const dataDelCourse = await respDeleteModule.json();
           setStore({ ...store, msg: dataDelCourse.message });
 
           await getActions().getUser();
@@ -892,7 +892,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsg("");
         getActions().spinner(true);
         try {
-          const url = process.env.BACKEND_URL + "/api/module/courses";
+          const url = process.env.BACKEND_URL + "/api/module/course";
           const respGetModules = await fetch(url);
 
           if (!respGetModules.ok) {
@@ -909,6 +909,47 @@ const getState = ({ getStore, getActions, setStore }) => {
             modules: dataGetModules,
           });
           console.log(store.modules);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+       deleteModules: async (modulesId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const url = process.env.BACKEND_URL + "/api/module/course/" + modulesId;
+          const respDeleteModule = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              
+            }
+          })
+
+
+          if (!respDeleteModule.ok) {
+            const errorData = await respDeleteModule.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error in  Delete"
+            );
+          }
+
+
+          const dataDelModule = await respDeleteModule.json();
+          setStore({ ...store, msg: dataDelModule.message });
+
+          await getActions().getUser();
+
         } catch (err) {
           console.log(err);
         } finally {

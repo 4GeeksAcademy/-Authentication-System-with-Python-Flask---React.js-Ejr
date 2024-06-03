@@ -24,7 +24,7 @@ export const ActiveUsers = () => {
         setActive(!active);
     };
 
-    
+    const [users, setUsers] = useState(store.user.access_to_user);
 
     return (
         <div className="container d-flex justify-content-center align-items-center p-4">

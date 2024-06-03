@@ -840,7 +840,7 @@ def post_module():
     except Exception as err:
         return jsonify({"Error": "Error in module Creation: " + str(err)}), 500
 
-@api.route('/module/courses/', methods=['GET'])
+@api.route('/module/course/', methods=['GET'])
 def get_modules():
     try:
         modules = Modules.query.all()
@@ -1148,7 +1148,7 @@ def add_order_to_trolley():
         if existing_order:
             return jsonify({"Error": "Order already exists."}), 409
 
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         new_order = Orders(
             user_id=user_id,
             title_order=title_order,
