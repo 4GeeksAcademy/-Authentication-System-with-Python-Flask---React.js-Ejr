@@ -1,0 +1,100 @@
+.formContainer {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
+    font-size: small;
+}
+
+.title {
+    color: #3C403F;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.label {
+    color: #5D7266;
+    font-weight: bold;
+}
+
+.input {
+    border: 1px solid #A8A7A8;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.button {
+    background-color: #5D7266;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #3C403F;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Permitir desplazamiento horizontal */
+    -webkit-overflow-scrolling: touch; /* Habilitar desplazamiento suave en dispositivos táctiles */
+}
+
+.table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f8f9fa;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    border: 1px solid #A8A7A8;
+    text-align: left;
+    white-space: nowrap; /* Evitar el ajuste automático de texto en celdas */
+}
+
+.tableRow:hover {
+    background-color: #E6E6E9;
+}
+
+.editButton {
+    background-color: #5D7266;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.editButton:hover {
+    background-color: #3C403F;
+}
+
+.deleteButton {
+    background-color: #937863;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #733F3F;
+}
+
+.modal-content {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: .3rem;
+    color: #212529;
+}
+
+.titlemodal {
+    color: grey;
+}

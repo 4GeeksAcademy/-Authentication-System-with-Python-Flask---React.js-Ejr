@@ -1,0 +1,97 @@
+.container {
+  padding: 20px;
+  background-color: #E6E6E9; /* Fondo claro */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: small;
+}
+
+.title {
+  color: #3C403F; /* Color oscuro */
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  text-align: left;
+}
+
+.table th {
+  background-color: #A8A7A8; /* Fondo de encabezados */
+  color: #3C403F; /* Texto de encabezados */
+}
+
+.table tr:nth-child(even) {
+  background-color: #E6E6E9; /* Fondo de filas pares */
+}
+
+.tableRow:hover {
+  background-color: #937863; /* Color marrón */
+}
+
+.modalContent {
+  width: 100%;
+}
+
+.card {
+  background-color: #E6E6E9; /* Fondo claro */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profileImage {
+  width: 100%;
+  height: auto;
+  border-radius: 10px 0 0 10px;
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.cardBody h5 {
+  font-size: 10px;
+}
+
+.button {
+  margin: 5px;
+  transition: background-color 0.2s;
+  padding: 6px 12px;
+  font-size: 8px;
+}
+
+.button:hover {
+  background-color: #5D7266; /* Verde */
+  color: #E6E6E9; /* Fondo claro */
+}
+
+.userImagen {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.searchInput {
+  margin-bottom: 20px;
+}
+
+.modalactivation {
+  color: gray;
+}
+
+.buttonActivation {
+  background-color: #5D7266; /* Verde */
+  border: none;
+
+}

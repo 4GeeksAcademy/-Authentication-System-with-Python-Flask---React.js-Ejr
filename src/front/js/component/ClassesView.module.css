@@ -1,0 +1,64 @@
+.classesViewContainer {
+    padding: 20px;
+    background-color: #E6E6E9; /* Fondo gris claro */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: small;
+}
+
+.title {
+    color: #3C403F; /* Color oscuro */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #FFF; /* Fondo blanco */
+}
+
+.table th,
+.table td {
+    text-align: center;
+}
+
+.table th {
+    background-color: #A8A7A8; /* Fondo gris claro para encabezados */
+    color: #3C403F; /* Texto oscuro */
+}
+
+.table tr:nth-child(even) {
+    background-color: #F8F9FA; /* Fondo gris claro para filas pares */
+}
+
+.tableRow {
+    transition: background-color 0.2s;
+}
+
+.tableRow:hover {
+    background-color: #D3D3D3; /* Fondo más oscuro al pasar el ratón */
+}
+
+.editButton {
+    background-color: #5D7266; /* Verde claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: small
+}
+
+.editButton:hover {
+    background-color: #3C403F; /* Verde más oscuro al pasar el ratón */
+}
+
+.titlemodal{
+    color: gray;
+}
