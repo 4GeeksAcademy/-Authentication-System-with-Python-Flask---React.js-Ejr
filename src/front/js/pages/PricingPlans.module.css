@@ -20,7 +20,6 @@ html {
 
 body {
   background: var(--bg);
-  /* padding-top: 3.5rem; */
   margin: 0;
 }
 
@@ -56,15 +55,10 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  /* Permitir que las tarjetas se envuelvan a la siguiente fila si es necesario */
   gap: 2rem;
-  /* Ajustar el espacio entre las tarjetas */
   overflow: auto;
-  /* Agregar desplazamiento horizontal si las tarjetas se desbordan */
   padding-top: 20px;
-  /* Ajustar el relleno superior según sea necesario */
   max-width: 100%;
-  /* Ajustar el ancho máximo del contenedor */
 }
 
 .pricingCard {
@@ -74,7 +68,6 @@ body {
   align-items: center;
   width: 100%;
   max-width: calc(33.33% - 2rem);
-  /* Ajustar el ancho máximo de las tarjetas para ocupar un tercio del contenedor */
   border-radius: 0.5rem;
   padding: 2rem;
   background: var(--card-bg);
