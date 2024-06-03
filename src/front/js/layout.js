@@ -30,6 +30,7 @@ import MembershipPurchase from "./component/MembershipPurchase.jsx";
 import Breadcrumbs from "./component/Breadcrumb.jsx";
 import BookingView from "./component/BookingView.jsx";
 import Chronometer from "./component/Chronometer.jsx";
+import NormalChronometer from "./component/NormalChronometer.jsx";
 import Users from "./component/Users.jsx"; // revisar
 import UploadForm from "./component/UploadForm.jsx";
 import ImageGallery from "./component/ImageGallery.jsx";
@@ -99,6 +100,7 @@ const Layout = () => {
                         <Route element={<ClassesView />} path="/ClassesView" />
                         <Route element={<EditClasses />} path="/classEdit/:id" />
                         <Route element={<Chronometer />} path="/Chronometer" />
+                        <Route element={<NormalChronometer />} path="/NormalChronometer" />
                         <Route element={<Users />} path="/Users" />
                         <Route element={<UploadForm />} path="/UploadForm" />
                         <Route element={<ImageGallery />} path="/ImageGallery" />
