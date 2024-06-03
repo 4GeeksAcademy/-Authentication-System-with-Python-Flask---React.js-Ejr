@@ -43,6 +43,7 @@ const TransactionsTable = () => {
                             <th>Status</th>
                             <th>Method</th>
                             <th>Reference</th>
+                            <th>Product</th>
                             <th>Card number</th>
                             <th>Card type</th>
                         </tr>
@@ -57,6 +58,7 @@ const TransactionsTable = () => {
                                 <td>{payment.status}</td>
                                 <td>{payment.payment_method}</td>
                                 <td>{payment.transaction_reference}</td>
+                                <td>{payment.description}</td>
 
                                 <td>{payment.card_number}</td>
                                 <td>

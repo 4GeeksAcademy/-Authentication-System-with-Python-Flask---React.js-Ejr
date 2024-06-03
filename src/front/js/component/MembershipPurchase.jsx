@@ -81,6 +81,8 @@ const MembershipPurchase = () => {
 
         const paymentData = {
             amount: selectedMembership.price,
+            description: selectedMembership.name,
+            transaction_reference: Math.floor(100000 + Math.random() * 900000),  // Generates a 6-digit random number
             payment_method: paymentMethod,
             ...(paymentMethod !== 'cash' && {
                 card_number: creditCardDetails.cardNumber,

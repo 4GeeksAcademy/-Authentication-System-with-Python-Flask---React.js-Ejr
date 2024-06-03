@@ -81,6 +81,8 @@ const AdminMembershipPurchase = () => {
 
         const paymentData = {
             amount: selectedMembership.price,
+            description: selectedMembership.name,
+            transaction_reference: Math.floor(100000 + Math.random() * 900000),  // Generates a 6-digit random number
             payment_method: paymentMethod,
             // email: userEmail,  // Incluir el email del usuario en los datos de pago
             ...(paymentMethod !== 'cash' && {
