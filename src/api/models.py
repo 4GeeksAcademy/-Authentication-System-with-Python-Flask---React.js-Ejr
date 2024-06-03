@@ -155,6 +155,8 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
+    
+
     def __repr__(self):
         return f'<Comment {self.id}>'
 
@@ -167,7 +169,8 @@ class Comment(db.Model):
             "is_edited": self.is_edited,
             "room_id": self.room_id,
             "user_id": self.user_id,
-            "username": self.user.username 
+            "username": self.user.username, 
+            "profile_image_url": self.user.url_image,
         }
 
 class Review(db.Model):

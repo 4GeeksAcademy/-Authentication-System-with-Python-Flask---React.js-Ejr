@@ -325,9 +325,9 @@ export const RoomDetail = () => {
                             </p>
                         </div>
                         {isHost && (
-                            <div className="room-pills">
+                            <div className="room-pills ">
                                 <button className={`pill-detail ${currentView === 'details' ? 'active' : ''}`} onClick={() => handleToggleView('details')}>Room Details</button>
-                                <button className={`pill-participants ${currentView === 'participants' ? 'active' : ''}`} onClick={() => handleToggleView('participants')}>
+                                <button className={ `pill-participants mx-2 ${currentView === 'participants' ? 'active' : ''}`} onClick={() => handleToggleView('participants')}>
                                     Members & Requests ({countPendingRequests()})
                                 </button>
                             </div>

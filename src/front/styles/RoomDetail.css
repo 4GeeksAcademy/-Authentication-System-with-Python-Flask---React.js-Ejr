@@ -1,5 +1,5 @@
 .room-detail {
-    background-color: #333C53;
+    background-color: #1e1e1e;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #fff;
@@ -12,7 +12,7 @@
 .room-detail-small {
     max-height: 1500px; /* Altura más pequeña para usuarios que no son participantes ni host */
     max-width: 1114px;
-    background-color: #333C53;
+    background-color: #1e1e1e;
     margin: 0 auto;
     font-family: 'Inter', sans-serif;
 }
@@ -108,6 +108,7 @@
 }
 .withdraw {
     background-color:#B40000 ;
+    color: #fff;
     border: none;
     height: 48px;
     padding: 10px 20px;

@@ -1,3 +1,4 @@
+
 * {
     padding:0px;
 }
@@ -41,10 +42,10 @@
     list-style: none;
 }
 
-.participant-item:not(:first-child) img {
+/* .participant-item:not(:first-child) img {
     margin-left: -8px; 
 }
-
+ */
 .participant-item:first-child img {
     margin-left: 0px;
 }

@@ -45,20 +45,20 @@ const ParticipantsView = ({ requests, participants, handleRequestAction, handleK
             <div className="">
                 {participants.map(participant => (
                     <div key={participant.participant_id} className="participant d-flex justify-content-between align-items-center">
-                        <div>
-                        <img
-                            src={participant.profile_image_url}
-                            alt={`${participant.participant_name}'s profile`}
-                            className="profile-image"
-                        />
-                        <strong>{participant.participant_name}</strong>
+                        <div className='align-items-center'>
+                            <img
+                                src={participant.profile_image_url}
+                                alt={`${participant.participant_name}'s profile`}
+                                className="profile-image"
+                            />
+                            <strong>{participant.participant_name}</strong>
                         </div>
                         <div className='d-flex align-items-center p-2 m-0' >
                             <div className='d-flex align-items-center' style={{ marginRight: '10px' }}  >
                                 <div>
                                     {renderPlatformIcon(participant.platform)}
                                 </div>
-                                <div style={{ marginLeft: '5px' }}> 
+                                <div style={{ marginLeft: '5px' }}>
                                     {participant.platform_id}
                                 </div>
                             </div>
@@ -87,19 +87,24 @@ const ParticipantsView = ({ requests, participants, handleRequestAction, handleK
             <h3>Requests</h3>
             <div className="requests-list">
                 {requests.map(request => (
-                    <div key={request.room_request_id} className="request">
+                    <div key={request.room_request_id} className="request d-flex justify-content-between align-items-center">
+                        <div className='d-flex align-items-center'>
                         <img
-                                src={request.profile_image_url}
-                                alt={`${request.participant_name}'s profile`}
-                                className="profile-image"
-                            />
+                            src={request.profile_image_url}
+                            alt={`${request.participant_name}'s profile`}
+                            className="profile-image"
+                        />
                         <p>
                             <strong>{request.participant_name}</strong>
-                            <br />
-                            Status: {request.status}
                         </p>
-                        <button onClick={() => handleRequestAction(request.room_request_id, 'accepted')}>Accept</button>
-                        <button onClick={() => handleRequestAction(request.room_request_id, 'rejected')}>Reject</button>
+                        </div>
+                      
+                        <div className="d-flex ">
+                            <button className="join-room mx-3" onClick={() => handleRequestAction(request.room_request_id, 'accepted')}>Accept</button>
+                            <button className="withdraw" onClick={() => handleRequestAction(request.room_request_id, 'rejected')}>Reject</button>
+                        </div>
+
+
                     </div>
                 ))}
             </div>
