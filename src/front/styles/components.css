@@ -68,3 +68,35 @@
 .addEdit:hover{
   background-color: aqua;
 }
+
+.btnFav {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 20px;
+  color: #165D95;
+  font-size: 20px;
+  transition: border 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.btnFav:hover {
+  border: 0.3px solid #F6CA1F;
+  background-color: #F6CA1F;
+  color: #165D95;
+}
+
+.cardCourseInformation{
+  /* background-color: rgb(254, 246, 200); */
+  background-color: rgb(185, 251, 251);
+}
+.cardCourseInformation {
+  border: 1px solid #ffc107;
+}
+
+.course-text {
+  font-family: Vegur, 'PT Sans', Tahoma, sans-serif;
+  color: #000000;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
+}

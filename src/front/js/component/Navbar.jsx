@@ -4,11 +4,20 @@ import { Context } from '../store/appContext';
 
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
+    const [hovered, setHovered] = useState()
     const navigate = useNavigate();
 
     function handleHomeView() {
         localStorage.removeItem('jwt-token');
         navigate('/SignOut');
+    }
+
+    const handleMouseEnter = () => {
+        setHovered(true)
+        console.log(hovered => hovered + 1)
+    }
+    const handleMouseLeave = () => {
+        setHovered(false)
     }
 
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
@@ -30,7 +39,37 @@ export const Navbar = () => {
                         <nav className="navbar navbar-light bg-light">
                             <div className="container-fluid">
                                 <div className='col-3'>
-                                    <a className="navbar-brand">Atlas Learning</a>
+                                    <div className='d-flex'>
+                                        <a className="navbar-brand">Atlas Learning</a>
+                                        <div className="d-flex justify-content-center">
+                                            <button className="btn btn-white d-flex align-items-center" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#coursesCategories" 
+                                            aria-expanded="false" aria-controls="coursesCategories" 
+                                            onMouseOver={handleMouseEnter} onMouseOut={handleMouseLeave}>
+                                                Categories
+                                            </button>
+                                        </div>
+                                        <div className="position-relative">
+                                            <div className="collapse position-absolute top-0 start-0" 
+                                            style={{ marginLeft: '10%', zIndex: 1050 }} id="coursesCategories">
+                                                <div className="card card-body">
+                                                    {store.category && store.category.length > 0 ? (
+                                                        store.category.map((item, index) => {
+                                                            return (
+                                                                <a type="text" className="d-block mb-2" 
+                                                                onClick={() => navigate(`/category/${item.titleCategory}`)} 
+                                                                key={index}>{item.titleCategory}</a>
+                                                            )
+                                                        })
+                                                    ) : (
+                                                        <a type="text" className="d-block mb-2">No category available</a>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="col d-flex justify-content-end">
                                     {store.user ? (
@@ -66,7 +105,31 @@ export const Navbar = () => {
             ) : (
                 <nav className="navbar navbar-light bg-light">
                     <div className="container-fluid">
-                        <a className="navbar-brand">Atlas Learning</a>
+                        <div className='d-flex'>
+                            <a className="navbar-brand">Atlas Learning</a>
+                            <div className="d-flex justify-content-center">
+                                <button className="btn btn-white d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#coursesCategories" aria-expanded="false" aria-controls="coursesCategories" onMouseOver={handleMouseEnter} onMouseOut={handleMouseLeave}>
+                                    Categories
+                                </button>
+                            </div>
+                            <div className="position-relative">
+                                <div className="collapse position-absolute top-0 start-0" style={{ marginLeft: '10%', zIndex: 1050 }} id="coursesCategories">
+                                    <div className="card card-body">
+                                        {store.category && store.category.length > 0 ? (
+                                            store.category.map((item, index) => {
+                                                return (
+                                                    <a type="text" className="d-block mb-2" onClick={() => navigate(`/category/${item.titleCategory}`)} key={index}>{item.titleCategory}</a>
+                                                )
+                                            })
+                                        ) : (
+                                            <a type="text" className="d-block mb-2">No category available</a>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div className="d-flex">
                             <Link to='/FormUser'>
                                 <button className='btn btn-outline-success m-1'>Sign Up</button>

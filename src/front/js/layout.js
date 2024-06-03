@@ -105,10 +105,8 @@ const Layout = () => {
                             path="/UpdateQuizzes/:quizzesId"
                         />
                         <Route
-                            element={
-                                <ProtectedRoute>
-                                    <Course />
-                                </ProtectedRoute>
+                            element={                                
+                                    <Course />                               
                             }
                             path="/course/:id"
                         />

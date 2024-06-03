@@ -6,6 +6,7 @@ import { GrFormPreviousLink } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { GoArrowLeft } from "react-icons/go"
 
+
 export const UpdateCourse = () => {
     const { actions, store } = useContext(Context);
     const [selectedRole, setSelectedRole] = useState('')
@@ -105,8 +106,8 @@ export const UpdateCourse = () => {
                 if (msgError === '' && msg2 === '') {
                     return
 
-                } else if (store.error === ''  && counter === 7) {
-                    
+                } else if (store.error === '' && counter === 7) {
+
                     clearInterval(interval)
                 }
 
@@ -215,7 +216,7 @@ export const UpdateCourse = () => {
                             Please enter your information.
                         </div>
                     </div>
-                    
+
                     {/* Price */}
                     <div className='d-block col-lg-4'>
                         <label className="form-label">Price</label>
@@ -290,7 +291,7 @@ export const UpdateCourse = () => {
                         </div>
                     </div>
 
-                   
+
 
                 </form>
                 <button
