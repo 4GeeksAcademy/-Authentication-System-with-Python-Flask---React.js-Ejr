@@ -24,11 +24,11 @@ const Login = () => {
             if (dataRole === "athlete") {
                 navigate("/Userpage");
             } else if (dataRole === "coach") {
-                navigate("/CoachPage"); 
+                navigate("/CoachPage");
             } else if (dataRole === "admin") {
-                navigate("/AdminPage"); 
+                navigate("/AdminPage");
             } else if (dataRole === "master") {
-                navigate("/ModulePage"); 
+                navigate("/ModulePage");
             } else {
                 navigate("/");
             }
@@ -44,11 +44,11 @@ const Login = () => {
             if (dataRole === "athlete") {
                 navigate("/Userpage");
             } else if (dataRole === "coach") {
-                navigate("/CoachPage"); 
+                navigate("/CoachPage");
             } else if (dataRole === "admin") {
-                navigate("/AdminPage"); 
+                navigate("/AdminPage");
             } else if (dataRole === "master") {
-                navigate("/ModulePage"); 
+                navigate("/ModulePage");
             } else {
                 navigate("/");
             }
@@ -56,18 +56,18 @@ const Login = () => {
     }, [navigate]); // El hook useEffect depende de navigate para asegurar que se use el último disponible.
 
     const renderLoginResponse = () => {
-        
+
         if (store.isAuthenticatedMessage != null) {
             if (store.isAuthenticatedMessage === false) {
                 return (
                     <div className="alert alert-danger" role="alert">
-                        <p>{store.loginError}</p> 
+                        <p>{store.loginError}</p>
                     </div>
                 );
             } else {
                 return (
                     <div className="alert alert-success" role="alert">
-                        <p>Correct password</p> 
+                        <p>Correct password</p>
                     </div>
                 );
             }
@@ -75,10 +75,10 @@ const Login = () => {
     };
 
     return (
-        <div className={styles.loginform}>
+        <div className={styles.loginform} id="login">
             <h2>Log in</h2>
             <div>
-                {renderLoginResponse()} 
+                {renderLoginResponse()}
             </div>
             <form onSubmit={handleLogin}>
                 <label className="labels">
@@ -90,16 +90,16 @@ const Login = () => {
                     <input type="password" name="password" value={password.trim()} onChange={e => setPassword(e.target.value)} required />
                 </label>
 
-                <button type="submit" className={styles.submitButtonLogin}>Log in</button> 
-                <Link to="/PasswordResetRequest"> 
+                <button type="submit" className={styles.submitButtonLogin}>Log in</button>
+                <Link to="/PasswordResetRequest">
                     Forgot your password?
                 </Link>
 
                 <div className="rememberMe">
                     <input type="checkbox" />
-                    <span>Remember me</span> 
+                    <span>Remember me</span>
                     <p>
-                        Is this your first time here? <Link to="/Singup"> 
+                        Is this your first time here? <Link to="/Singup">
                             Register now.
                         </Link>
                     </p>
