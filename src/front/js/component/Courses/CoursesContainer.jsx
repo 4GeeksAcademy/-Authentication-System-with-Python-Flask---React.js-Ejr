@@ -84,7 +84,7 @@ export const CoursesContainer = () => {
                     })
                 )}
             </div>
-            <button className="btnFav d-flex justify-content-center align-items-center position-absolute top-50 end-0 translate-middle-y" onClick={handleNext} style={{ zIndex: 10 }}>
+            <button className="d-flex justify-content-center align-items-center btnFav" onClick={handleNext}>
                 <FaArrowRight />
             </button>
         </div>

@@ -124,7 +124,7 @@ export const Navbar = () => {
                                 <div>
                                     {
                                         accessToAddCourse.length === 0
-                                            ? <p className='letter'>Not course in Trolley</p>
+                                            ? <p className='letter'></p>
                                             : (
                                                 <ul className="dropdown-menu">
                                                     {accessToAddCourse.map((trolley, index) => (

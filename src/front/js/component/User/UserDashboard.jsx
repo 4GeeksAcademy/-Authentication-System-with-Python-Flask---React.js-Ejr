@@ -49,7 +49,6 @@ export const UserDashboard = () => {
 
     const handleMyCourses = () => {
         setButtonSelected(<CourseWelcome />)
-        actions.getCourse()
     }
 
     const handleMyProfile = () => {
@@ -255,7 +254,7 @@ export const UserDashboard = () => {
                 </div>
             </div>
 
-            <div className="d-flex justify-content-center h-100">
+            <div>
                 {buttonSelected}
             </div>
         </div>

@@ -19,7 +19,7 @@ export const ManagerProfile = () => {
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
 
     return (
-        <div className="user-profile-container">
+        <div className="user-profile-container d-flex justify-content-center">
             <div className='my-3'>
 
                 <ul className="list-group d-flex flex-row">

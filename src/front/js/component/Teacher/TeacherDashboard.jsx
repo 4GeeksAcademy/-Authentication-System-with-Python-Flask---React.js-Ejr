@@ -64,7 +64,6 @@ export const TeacherDashboard = () => {
 
     const handleMyStudents = () => {
         setButtonSelected(<TeacherStudents />)
-        actions.getUser()
     }
 
     const handleMyFiles = () => {
@@ -337,7 +336,7 @@ export const TeacherDashboard = () => {
                 </div>
             </div>
 
-            <div className="d-flex justify-content-center h-100">
+            <div>
                 {buttonSelected}
             </div>
         </div>

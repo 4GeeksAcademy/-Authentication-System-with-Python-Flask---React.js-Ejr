@@ -69,7 +69,6 @@ export const ManagerDashboard = () => {
 
     const handleGetPayment = () => {
         setButtonSelected(<GetPayment />)
-        actions.getPayments()
     }
 
     const handleCreatePayment = () => {
@@ -82,13 +81,12 @@ export const ManagerDashboard = () => {
 
     const handleMyCourses = () => {
         setButtonSelected(<ManagerCourses />)
-        actions.getCourse()
     }
 
-    const handleMyModule = () => {
+   /*  const handleMyModule = () => {
         setButtonSelected(<ModuleCourse />)
         actions.getModules()
-    }
+    } */
 
 
     const handleMyQuizzes = () => {
@@ -98,10 +96,8 @@ export const ManagerDashboard = () => {
 
     const handleGetModules = () => {
         setButtonSelected(<GetModule />)
-        actions.getModules()
+
     }
-
-
 
     const handleMyProfile = () => {
         setButtonSelected(<ManagerProfile />)
@@ -113,12 +109,10 @@ export const ManagerDashboard = () => {
 
     const handleTeachers = () => {
         setButtonSelected(<Teachers />)
-        actions.getUser()
     }
 
     const handleUsers = () => {
         setButtonSelected(<ActiveUsers />)
-        actions.getUser()
     }
 
     const HandleFiles = () => {
@@ -383,7 +377,7 @@ export const ManagerDashboard = () => {
                 </div>
             </div>
 
-            <div className="d-flex justify-content-center h-100">
+            <div className='text-center'>
                 {buttonSelected}
             </div>
         </div>
