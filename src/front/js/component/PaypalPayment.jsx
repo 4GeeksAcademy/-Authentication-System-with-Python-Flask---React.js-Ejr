@@ -32,23 +32,10 @@ export function PaypalPayment() {
         courseId: numberCourse
     });
 
-    useEffect(() => {
-        if (detailsPaypal) {
-            setGetDataPaypal({
-                date: detailsPaypal.create_time || 'N/A',
-                idPaypal: detailsPaypal.id || 'N/A',
-                status: detailsPaypal.status || 'N/A',
-                currencyCode: detailsPaypal.purchase_units?.[0]?.amount?.currency_code || 'N/A',
-                value: detailsPaypal.purchase_units?.[0]?.amount?.value || 'N/A'
-            });
-        }
-    }, [detailsPaypal]);
-
-
     const location = useLocation();
     const totalPrice = location.state?.totalPrice || 0;
     const numberCourse = location.state?.numberCourse || 0
-console.log(numberCourse)
+    
 
     const datos = {
         purchase_units: [
@@ -60,6 +47,18 @@ console.log(numberCourse)
             },
         ],
     };
+
+    useEffect(() => {
+        if (detailsPaypal) {
+            setGetDataPaypal({
+                date: detailsPaypal.create_time || 'N/A',
+                idPaypal: detailsPaypal.id || 'N/A',
+                status: detailsPaypal.status || 'N/A',
+                currencyCode: detailsPaypal.purchase_units?.[0]?.amount?.currency_code || 'N/A',
+                value: detailsPaypal.purchase_units?.[0]?.amount?.value || 'N/A'
+            });
+        }
+    }, [detailsPaypal]);
 
     async function createOrder(data, actions) {
         try {
@@ -99,6 +98,7 @@ console.log(numberCourse)
             courseId: numberCourse
         };
         await actions.createPayments(paymentData);
+        await actions.getAccessCourse()
     }
 
     return (

@@ -55,7 +55,7 @@ export const Trolley = () => {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">{courseId}</th>
+                                            <th scope="row">{item.id}</th>
                                             <td>{item.titleCourse}</td>
                                             <td>{item.price}</td>
                                             <td>{item.date}</td>

@@ -12,6 +12,10 @@ export const ManagerNavbar = () => {
         navigate('/SignOut')
     }
 
+    function handleHome() {
+        navigate('/')
+    }
+
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
 
     return (
@@ -28,6 +32,10 @@ export const ManagerNavbar = () => {
                     </div>
                     : <nav className="navbar navbar-light bg-light">
                         <div className="container-fluid">
+                        <div className='col-3'>
+                                <img src="https://res.cloudinary.com/dfoegvmld/image/upload/v1717377021/i6uvyydr1sapaurgp3r5.png"
+                                    alt="logo_alta_elearning" className='w-75' onClick={handleHome} style={{cursor: 'pointer'}}/>
+                            </div>
                             <div className="col d-flex justify-content-end">
                                 {
                                     (!store.user)

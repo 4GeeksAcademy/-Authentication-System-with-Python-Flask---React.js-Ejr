@@ -11,6 +11,10 @@ export const TeacherNavbar = () => {
         navigate('/SignOut')
     }
 
+    function handleHome() {
+        navigate('/')
+    }
+
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
 
     return (
@@ -25,8 +29,12 @@ export const TeacherNavbar = () => {
                             <p>Loading...</p>
                         </div>
                     </div>
-                    : <nav className="navbar navbar-light bg-light">
+                    : <nav className="navbar navbar-light bg-white">
                         <div className="container-fluid">
+                        <div className='col-3'>
+                                <img src="https://res.cloudinary.com/dfoegvmld/image/upload/v1717377021/i6uvyydr1sapaurgp3r5.png"
+                                    alt="logo_alta_elearning" className='w-75' onClick={handleHome} style={{cursor: 'pointer'}}/>
+                            </div>
                             <div className="col d-flex justify-content-end">
                                 {
                                     (!store.user)

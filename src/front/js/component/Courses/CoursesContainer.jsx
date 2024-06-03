@@ -12,7 +12,7 @@ export const CoursesContainer = () => {
 
     function handleAddTrolley(titleCourse, courseId, price) {
         actions.addCourseToTrolley(titleCourse, courseId, price);
-        navigate(`/trolley`, { state: { courseId: courseId } }); // O usa { state: { courseId: courseId } } para pasar por estado
+        /* navigate(`/trolley`, { state: { courseId: courseId } });  */// O usa { state: { courseId: courseId } } para pasar por estado
     }
 
     console.log(store.modules)

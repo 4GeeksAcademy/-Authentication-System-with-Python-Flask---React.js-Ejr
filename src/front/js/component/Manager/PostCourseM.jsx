@@ -73,7 +73,7 @@ export const PostCourseM = () => {
             await actions.uploadCloudinaryMedia(files);
             console.log("Uploaded media:", store.media);
         }
-    };
+    }
 
     useEffect(() => {
         console.log("Media updated:", store.media);

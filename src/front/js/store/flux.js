@@ -21,6 +21,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       payment: "",
       medios: [],
       order: "",
+      access: "",
+      tokenToPay: ""
       
     },
 
@@ -83,7 +85,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataLoginIn = await respLoginIn.json();
-          localStorage.setItem("jwt-token", dataLoginIn.access_token);
+          localStorage.setItem("jwt-token", dataLoginIn.access_token)
+          
           localStorage.setItem("currentRole", userRole);
           setStore({ ...store, currentRole: userRole });
           setStore({ ...store, msg: dataLoginIn.message });
@@ -127,6 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataGetUser = await respGetUsers.json();
+          localStorage.setItem("userData", JSON.stringify(dataGetUser))
           setStore({ ...store, user: dataGetUser });
           setStore({ ...store, msg: dataGetUser.message });
         } catch (err) {
@@ -990,7 +994,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsgError("");
         getActions().updateMsg("");
         getActions().spinner(true);
-console.log(dataPayment)
+        
         try {
           const url = process.env.BACKEND_URL + "/api/payment/courses";
           const respAddPayment = await fetch(url, {
@@ -1003,6 +1007,7 @@ console.log(dataPayment)
 
           if (!respAddPayment.ok) {
             const errorData = await respAddPayment.json();
+            
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
 
@@ -1014,7 +1019,11 @@ console.log(dataPayment)
           }
 
           const dataAddPayment = await respAddPayment.json();
-          setStore({ ...store, msg2: dataAddPayment.message });
+          localStorage.setItem("token-accessCourse", dataAddPayment.token)
+          setStore({ ...store, msg2: dataAddPayment.message,
+            tokenToPay: dataAddPayment.token }
+          
+          );
           console.log(dataAddPayment);
 
         } catch (err) {
@@ -1042,6 +1051,7 @@ console.log(dataPayment)
           }
 
           const dataGetPayment = await respGetPayment.json();
+          ;
           setStore({
             ...store,
             msg: dataGetPayment.message,
@@ -1198,6 +1208,131 @@ console.log(dataPayment)
           getActions().spinner(false);
         }
       },
+
+      createOrders: async (dataOrders) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/order/courses";
+          const respAddOrder = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataOrders),
+          });
+
+          if (!respAddOrder.ok) {
+            const errorData = await respAddOrder.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+
+            await getActions().getOrders()
+
+            throw new Error(
+              errorData.error || "Error in Payment"
+            );
+          }
+
+          const dataAddOrder = await respAddOrder.json();
+          setStore({ ...store, msg2: dataAddOrder.message });
+          console.log(dataAddOrder);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      getAccessCourse: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        const token = localStorage.getItem("token-accessCourse")
+        if (!token) throw new Error("No token found");
+        
+        try {
+          const url = process.env.BACKEND_URL + "/api/view/course/accessAll";
+          const respGetAccess = await fetch(url, {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          });
+
+          if (!respGetAccess.ok) {
+            const errorData = await respGetAccess.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in payment");
+          }
+
+          const dataGetAccess = await respGetAccess.json();
+          setStore({
+            ...store,
+            msg: dataGetAccess.message,
+            access: dataGetAccess
+          });
+          console.log(token);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+      
+      /**PROXIMAS PUEBAS */
+      getCoursePayment: async (course_id, user_id, module_id, quiz_id) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        const token = localStorage.getItem("token-accessCourse")
+        if (!token) throw new Error("No token found");
+        
+        localStorage.setItem("userData")
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/view/course/course_id/user/user_id/module/module_id/quiz/quiz_id";
+          const respGetPayment = await fetch(url, {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          });
+
+          if (!respGetPayment.ok) {
+            const errorData = await respGetPayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in payment");
+          }
+
+          const dataGetPayment = await respGetPayment.json();
+          localStorage.setItem("token-accessCourse", dataGetPayment.token);
+          setStore({
+            ...store,
+            msg: dataGetPayment.message,
+            pt: dataGetPayment,
+          });
+          console.log(dataGetPayment);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+      
     }
   }
 };

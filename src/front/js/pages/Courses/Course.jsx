@@ -27,8 +27,9 @@ export const Course = () => {
         }
     }, [store.media, id]);
 
-    console.log("Course state:", course);
+    console.log("Course state:", course, id);
     console.log("Media state:", media);
+
 
     return (
         <>

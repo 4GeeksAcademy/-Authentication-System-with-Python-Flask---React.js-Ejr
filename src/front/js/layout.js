@@ -19,7 +19,7 @@ import { SignOut } from "./pages/SignOut.jsx";
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
 import { ResetPassword } from "./component/ResetPassword.jsx";
 import { ResetPasswordNewChange } from "./component/ResetPasswordNewChange.jsx";
-import {Course} from "./pages/Courses/Course.jsx";
+import { Course } from "./pages/Courses/Course.jsx";
 import { PaypalPayment } from "./component/PaypalPayment.jsx";
 import { UpdateUser } from "./component/Manager/UpdateUser.jsx";
 import { UpdateCourse } from "./component/Manager/UpdateCourse.jsx";
@@ -110,7 +110,7 @@ const Layout = () => {
                                     <Course />
                                 </ProtectedRoute>
                             }
-                            path="/course/:courseId"
+                            path="/course/:Id"
                         />
 
                         {/* Ruta para el componente Trolley */}

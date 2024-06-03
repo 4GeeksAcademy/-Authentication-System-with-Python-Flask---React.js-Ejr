@@ -30,11 +30,11 @@ export const UserDashboard = () => {
     const [buttonSelected, setButtonSelected] = useState(<WelcomeUser />)
 
     function homeStudents() {
-        setButtonSelected(<WelcomeUser/>)
+        setButtonSelected(<WelcomeUser />)
     }
 
     function handleViewCourse() {
-        setButtonSelected(<GetModuleUser/>)
+        setButtonSelected(<GetModuleUser />)
     }
 
     const handleMyCourses = () => {
@@ -53,14 +53,18 @@ export const UserDashboard = () => {
     const handleCertificate = () => {
         setButtonSelected(<Certificate />)
     }
+console.log(store.tokenToPay)
 
-    
 
     const navigate = useNavigate()
 
     function handleHome() {
         navigate('/')
     }
+
+    const tokenPayString = localStorage.getItem("token-accessCourse")
+    console.log(tokenPayString)
+
     return (
         <div className="row">
             <button
@@ -76,11 +80,11 @@ export const UserDashboard = () => {
 
 
             <div className="offcanvas offcanvas-start"
-                data-bs-scroll="true" 
+                data-bs-scroll="true"
                 data-bs-backdrop="false"
                 tabIndex="-1"
                 id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel" style={{backgroundColor: "#F5F5F5"}}>
+                aria-labelledby="offcanvasScrollingLabel" style={{ backgroundColor: "#F5F5F5" }}>
 
 
                 <div className="offcanvas-header">
@@ -105,7 +109,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" disabled>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                        >
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -117,7 +124,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleViewCourse}>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleViewCourse}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -129,7 +139,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyPayment}>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleMyPayment}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -141,11 +154,14 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyCourses}>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleMyCourses}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
-                                    <AiOutlineFundView  />
+                                    <AiOutlineFundView />
                                 </div>
                                 <div>
                                     <h5>View Courses</h5>
@@ -153,7 +169,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-dark my-2 w-75' disabled>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                        >
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -165,9 +184,9 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        
 
-                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleCertificate}>
+
+                        <button className='btn btn-outline-dark my-2 w-75' disabled>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -179,8 +198,11 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleCertificate}>
-
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleCertificate}
+                        >
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <PiCertificate />
@@ -191,7 +213,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" disabled>
+                        {/* <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                        >
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -201,7 +226,7 @@ export const UserDashboard = () => {
                                     <h5>Sin datos</h5>
                                 </div>
                             </div>
-                        </button>
+                        </button> */}
 
                     </div>
                 </div>
