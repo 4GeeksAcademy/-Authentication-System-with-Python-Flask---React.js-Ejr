@@ -1,15 +1,43 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
+import '../../../styles/components.css';
 
 
 export const TeacherFiles = () => {
+    const [files, setFiles] = useState([]);
+    const pdfUrl = process.env.BACKEND_URL +'/api/uploads';
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const response = await fetch(pdfUrl);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch files');
+                }
+                const data = await response.json();
+                setFiles(data);
+            } catch (error) {
+                console.error('Error fetching files:', error);
+            }
+        };
+        fetchFiles();
+    }, [pdfUrl]); 
+
     return (
-        <div className="d-flex overflow-auto justify-content-center p-4">
-            <div className="card" style={{width: "18rem"}}>
-                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.microsoft.com%2Fes-mx%2Fsql-server%2Fsql-server-2022&psig=AOvVaw1rU15Xei7F-_jh7YKsNt_f&ust=1715832874568000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJivrtnljoYDFQAAAAAdAAAAABAE" className="card-img-top"/>
-                <div className="card-body">
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
+        <div>
+            <h5>Files:</h5>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {files.map((file, index) => (
+                    <div key={index} className="folder">
+                        <a 
+                            href={process.env.BACKEND_URL + `/api/uploads/${file}`} 
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                            {file}
+                        </a>
+                    </div>
+                ))}
             </div>
         </div>
-    )
+    );
 }
