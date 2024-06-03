@@ -81,7 +81,7 @@ const PrivateCalendar = () => {
         <>
             <div className={styles.container}>
                 <div className={styles.myCalendar}>
-                    <h2>Private Calendar</h2>
+                    <h1 className={styles.titleComponent}>Private Calendar</h1>
                     <Calendar
                         localizer={localizer}
                         events={events}

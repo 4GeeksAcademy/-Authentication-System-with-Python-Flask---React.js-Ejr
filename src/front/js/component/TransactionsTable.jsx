@@ -24,6 +24,7 @@ const TransactionsTable = () => {
 
     return (
         <div className={styles.tableContainer}>
+            <h1 className={styles.titleComponent}>Transactions</h1>
             <InputGroup className="mb-3">
                 <FormControl
                     placeholder="Search by email, amount, Reference"

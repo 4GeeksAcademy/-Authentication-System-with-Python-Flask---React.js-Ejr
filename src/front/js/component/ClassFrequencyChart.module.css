@@ -13,3 +13,6 @@
     text-align: center;
   }
   
+  .titleComponent {
+    color: var(--color-green);
+}

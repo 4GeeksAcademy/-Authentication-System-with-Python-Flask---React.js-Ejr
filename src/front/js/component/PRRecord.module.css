@@ -151,3 +151,7 @@
     background-color: #A8A7A8; /* Verde un poco más oscuro */
     border-color: #A8A7A8;
 }
+
+.titleComponent {
+    color: var(--color-green);
+}

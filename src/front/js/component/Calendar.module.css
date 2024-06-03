@@ -77,3 +77,7 @@
 .loginButton:hover {
   background-color: #937863;
 }
+
+.titleComponent {
+  color: var(--color-green);
+}

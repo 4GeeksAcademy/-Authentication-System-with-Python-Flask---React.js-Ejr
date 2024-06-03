@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
 import styles from "./PageNormalUser.module.css"; // Asegúrate que el path de importación es correcto
+import foto from "../../img/collapse-right-svgrepo-com.png"
 
 import { Context } from "../store/appContext";
 import PrivateCalendar from "../component/PrivateCalendar.jsx";
@@ -56,8 +57,8 @@ const PageNormalUser = () => {
     const components = [
         // { component: <CreateClasses />, name: "Create Classes" },
         // { component: <MyCalendar />, name: "My Calendar" },
-        { component: <ReceiveMessages showModal={!show} />, name: "Receive Messages" },
-        { component: <PrivateCalendar showModal={!show} />, name: "Private Calendar" },
+        { component: <ReceiveMessages showModal={!show} />, name: <i class="fa-solid fa-envelope"></i>},
+        { component: <PrivateCalendar showModal={!show} />, name: <i class="fa-regular fa-calendar"></i> },
         // { component: <UserBooking />, name: "User Booking" },
         // { component: <BookingView />, name: "BookingView " },
         // { component: <PrivatePageUser />, name: "Private Page User" },
@@ -67,10 +68,10 @@ const PageNormalUser = () => {
         // { component: <Oneuser />, name: "Oneuser " }, eliminar
         // { component: <Homeadmin />, name: "Homeadmin " }, eliminar
         // { component: <UploadForm />, name: "UploadForm " },
-        { component: <ImageGallery />, name: "ImageGallery " },
+        { component: <ImageGallery />, name: <i class="fa-solid fa-photo-film"></i> },
         // { component: <TransactionsTable />, name: "TransactionsTable " },
         // { component: <Users />, name: "Users " },
-        { component: <PRRecord />, name: "PRRecord " },
+        { component: <PRRecord />, name: <i class="fa-solid fa-dumbbell"></i> },
     ];
 
     useEffect(() => {

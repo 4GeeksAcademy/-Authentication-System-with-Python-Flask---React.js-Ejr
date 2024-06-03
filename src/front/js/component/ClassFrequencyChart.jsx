@@ -70,6 +70,7 @@ const ClassFrequencyChart = () => {
 
     return (
         <div className={styles.container}>  
+            <h1 className={styles.titleComponent}>Class Reservation Frequency</h1>
             {error ? ( 
                 <div className={styles.error}>
                     <h2>Error</h2>
@@ -77,7 +78,6 @@ const ClassFrequencyChart = () => {
                 </div>
             ) : (
                 <div className={styles.chart}>  
-                    <h2>Class Reservation Frequency</h2>
                     <div className={styles.filters}>  
                         <label>
                             Filter by:

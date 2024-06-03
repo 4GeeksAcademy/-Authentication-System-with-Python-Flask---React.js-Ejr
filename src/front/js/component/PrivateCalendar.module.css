@@ -146,3 +146,8 @@
   vertical-align: middle;
   color: black;
 }
+
+
+.titleComponent {
+  color: var(--color-green);
+}

@@ -3,6 +3,8 @@ import { Offcanvas, Nav, Navbar, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import styles from './Sidebar.module.css';
+import flecha from '../../img/collapse-right-svgrepo-com.png';
+import profilePic from '../../img/profile-circle-svgrepo-com.png';
 
 import EditProfile from './EditProfile.jsx';
 import UserDataDetail from './UserDataDetail.jsx';
@@ -71,14 +73,14 @@ const Sidebar = () => {
                     ) : (
                         <>
                             <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKfj6RsyRZqO4nnWkPFrYMmgrzDmyG31pFQ&s"
+                                src={profilePic}
                                 alt="Photo Profile"
                                 className={`${styles.logo} ${collapsed ? styles.hide : ''}`}
                                 title='add your Photo'
 
                             />
                             <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKfj6RsyRZqO4nnWkPFrYMmgrzDmyG31pFQ&s"
+                                src={profilePic}
                                 alt="Photo Profile"
                                 className={`${styles.logoSmall} ${collapsed ? '' : styles.hide}`}
                                 title='add your Photo'
@@ -163,7 +165,7 @@ const Sidebar = () => {
             </div> */}
             <div className={styles.expandBtn} onClick={handleToggle}>
                 <img
-                    src="https://www.svgrepo.com/show/379887/collapse-right.svg"
+                    src={flecha}
                     alt="Left Collapse"
                 />
                 <span className={`${styles.link} ${collapsed ? styles.hide : ''}`}>

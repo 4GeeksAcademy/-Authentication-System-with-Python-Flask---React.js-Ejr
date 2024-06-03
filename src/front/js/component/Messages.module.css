@@ -128,3 +128,7 @@
     grid-template-columns: auto auto auto;  
 
 }
+
+.titleComponent {
+    color: var(--color-green);
+}

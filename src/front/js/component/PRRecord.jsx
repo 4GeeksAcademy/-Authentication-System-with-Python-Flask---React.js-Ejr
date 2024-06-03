@@ -250,6 +250,7 @@ const PRRecord = () => {
     // Renderizado del componente
     return (
         <div className={styles.prRecordContainer}>
+            <h1 className={styles.titleComponent}>PRrecord</h1>
             <Form className={styles.prRecordForm} onSubmit={handleSubmit}>
             <div className={styles.fieldsRow}>
                 <Form.Group controlId="movement" className={styles.formGroup}>
