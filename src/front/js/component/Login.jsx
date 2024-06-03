@@ -56,18 +56,18 @@ const Login = () => {
     }, [navigate]); // El hook useEffect depende de navigate para asegurar que se use el último disponible.
 
     const renderLoginResponse = () => {
-        // Función que renderiza respuestas visuales dependiendo del estado de la autenticación.
+        
         if (store.isAuthenticatedMessage != null) {
             if (store.isAuthenticatedMessage === false) {
                 return (
                     <div className="alert alert-danger" role="alert">
-                        <p>{store.loginError}</p> // Muestra mensaje de error si el inicio de sesión falla.
+                        <p>{store.loginError}</p> 
                     </div>
                 );
             } else {
                 return (
                     <div className="alert alert-success" role="alert">
-                        <p>Correct password</p> // Muestra un mensaje de éxito.
+                        <p>Correct password</p> 
                     </div>
                 );
             }
