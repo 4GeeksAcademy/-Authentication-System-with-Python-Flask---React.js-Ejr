@@ -12,6 +12,7 @@ const ImageGallery = () => {
 
     return (
         <div className={styles.galleryContainer}>
+            <h1 className={styles.titleComponent}>movement gallery</h1>
             {store.images.map((image, index) => (
                 <Card key={index} className={styles.card}>
                     <Card.Img variant="top" src={image.img_url} alt={image.name} className={styles.image} />

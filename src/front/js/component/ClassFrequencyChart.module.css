@@ -5,6 +5,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
     color: var(--color-grey);
+    font-size: small;
   }
   
   .error {
@@ -12,3 +13,6 @@
     text-align: center;
   }
   
+  .titleComponent {
+    color: var(--color-green);
+}

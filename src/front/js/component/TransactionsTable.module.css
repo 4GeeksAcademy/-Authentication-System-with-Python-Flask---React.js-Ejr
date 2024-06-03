@@ -31,3 +31,8 @@
 .tableContainer .table tr:nth-child(even) {
     background-color: #E6E6E9; /* Ajustado a la paleta de colores */
 }
+
+
+.titleComponent {
+    color: var(--color-green);
+}

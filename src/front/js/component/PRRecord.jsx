@@ -22,6 +22,8 @@ const PRRecord = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false); // Estado para mostrar el modal de confirmación de eliminación
     const [movementToDelete, setMovementToDelete] = useState(null); // Movimiento a eliminar
     const [showAlertModal, setShowAlertModal] = useState(false); // Estado para mostrar el modal de alerta
+    const [search, setSearch] = useState('');  // Estado para manejar la búsqueda
+
 
     // Lista de movimientos disponibles con sus unidades correspondientes
     const movementsList = [
@@ -238,10 +240,19 @@ const PRRecord = () => {
         setMovementToDelete(null); // Limpiar el estado del movimiento a eliminar
     };
 
+    useEffect(() => {
+        const filtered = movements.filter(movement =>
+            movement.name.toLowerCase().includes(search.toLowerCase())
+        );
+        setFilteredMovements(filtered);
+    }, [search, movements]);
+
     // Renderizado del componente
     return (
         <div className={styles.prRecordContainer}>
+            <h1 className={styles.titleComponent}>PRrecord</h1>
             <Form className={styles.prRecordForm} onSubmit={handleSubmit}>
+            <div className={styles.fieldsRow}>
                 <Form.Group controlId="movement" className={styles.formGroup}>
                     <Form.Label className={styles.formLabel}>Movement</Form.Label>
                     <Form.Control
@@ -346,7 +357,18 @@ const PRRecord = () => {
                 <Button variant="primary" type="submit" className={styles.formButton}>
                     Save Record
                 </Button>
+                </div>
+                <Form.Group  controlId="searchMovement" className={styles.searchGroup}>
+                <Form.Control
+                    type="text"
+                    placeholder="Search movements"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className={styles.fullWidthControl}
+                />
+            </Form.Group>
             </Form>
+            
 
             <div className={styles.tableContainer}>
                 <Table striped bordered hover className={styles.prRecordTable}>
@@ -362,7 +384,7 @@ const PRRecord = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {userRecords.map(record => (
+                        {userRecords.filter(record => filteredMovements.some(m => m.id === record.movement_id)).map(record => (
                             <tr key={record.id}>
                                 <td>{movements.find(m => m.id === record.movement_id)?.name || "N/A"}</td>
                                 <td>{record.value}</td>

@@ -69,7 +69,7 @@ const CreateClassForm = () => {
     return (
         <>
             <Container className={styles.formContainer}>
-                <h2>Create Training Classes</h2>
+                <h1 className={styles.titleComponent}>Create Training Classes</h1>
                 <Form onSubmit={handleSubmit}>
                     <Row className="mb-3">
                         <Col>

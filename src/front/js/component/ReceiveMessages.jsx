@@ -73,7 +73,7 @@ const ReceiveMessages = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Received Messages</h1>
+        <h1 className={styles.titleComponent}>Received Messages</h1>
         <span className={styles.badge}>{messages.filter(msg => !msg.read).length}</span>
       </div>
       <ul className={styles.messageList}>

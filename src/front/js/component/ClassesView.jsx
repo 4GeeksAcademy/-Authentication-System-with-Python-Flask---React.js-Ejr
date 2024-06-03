@@ -48,7 +48,7 @@ const ClassesView = () => {
 
     return (
         <div className={`container-fluid ${styles.classesViewContainer}`}>
-            <h1 className={styles.title}>Active Classes</h1>
+            <h1 className={styles.titleComponent}>Active Classes</h1>
             <InputGroup className="mb-3">
                 <FormControl
                     placeholder="Search: Class name, Coach, Description, Date"

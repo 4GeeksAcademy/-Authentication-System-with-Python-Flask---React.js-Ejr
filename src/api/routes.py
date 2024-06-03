@@ -16,6 +16,7 @@ from flask import send_file
 from io import BytesIO
 import base64
 import paypalrestsdk
+import re #biblioteca estándar de Python para trabajar con expresiones regulares
 from sqlalchemy import func, create_engine
 from datetime import datetime
 from sqlalchemy.orm import joinedload
@@ -1878,5 +1879,59 @@ def check_unread_messages():
     return jsonify({"hasUnread": unread_count > 0})  # Retorna si hay o no mensajes sin leer
 
 
+#-------------------------------------------------ENPOINT PARA EL ENVIO DE CORREO DE CONTACTO------------------------------------------------------------------------------------
 
+@api.route('/contact', methods=['POST'])  # Define la ruta y el método aceptado
+def handle_contact_form():
+    try:
+        data = request.json  # Obtiene los datos JSON enviados con la petición
+        if not data:
+            # Devuelve un mensaje de error si no se proporcionan datos
+            return jsonify({'error': 'No data provided'}), 400
+        
+        # Validación informacion maliciosa
+        errors = {}
+        if 'firstName' not in data or not data['firstName'].strip():
+            errors['firstName'] = 'First name is required'
+        if 'email' not in data or not data['email']:
+            errors['email'] = 'Email is required'
+        elif not re.match(r"[^@]+@[^@]+\.[^@]+", data['email']):
+            errors['email'] = 'Email is invalid'
 
+        if errors:
+            return jsonify({'errors': errors}), 400
+
+        # Lista de campos requeridos para procesar la solicitud
+        required_fields = ['firstName', 'lastName', 'email']
+        if not all(field in data for field in required_fields):
+            # Verifica si todos los campos requeridos están presentes en los datos
+            return jsonify({'error': 'Missing required fields'}), 400
+
+        # Crea el contenido del correo electrónico en formato HTML
+        html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <head>
+            </head>
+            <body>
+                <div style="margin: 0 auto; width: 80%; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 3px #ccc;">
+                    <h1 style="color: #333;">New Contact Request</h1>
+                    <ul>
+                        <li><p><strong>Name:</strong> {data['firstName']} {data['lastName']}</p></li>
+                        <li><p><strong>Email:</strong> {data['email']}</p></li>
+                    </ul>
+                    <p>contact later!</p>
+                </div>
+            </body>
+            </html>
+            """
+
+        # Envía el correo electrónico utilizando una función de ayuda 'send_email'
+        send_email('New Contact Request', 'newappcrossfit@gmail.com', html_content)
+
+        # Retorna un mensaje de éxito si todo es correcto
+        return jsonify({'message': 'Contact request sent successfully'}), 200
+
+    except Exception as e:
+        # Retorna un mensaje de error si ocurre algún problema durante el proceso
+        return jsonify({'error': 'Failed to send contact request: ' + str(e)}), 500

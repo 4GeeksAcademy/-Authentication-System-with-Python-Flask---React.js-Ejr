@@ -86,7 +86,7 @@ const MembershipManager = () => {
 
     return (
         <Container className={styles.formContainer}>
-            <h2 className={styles.title}>Membership Admin</h2>
+            <h1 className={styles.titleComponent}>Membership Admin</h1>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                     <Col>
