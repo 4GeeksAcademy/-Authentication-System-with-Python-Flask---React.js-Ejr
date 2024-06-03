@@ -10,7 +10,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import requests
 import base64
 import json
-
+from sqlalchemy.exc import SQLAlchemyError
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
 from datetime import datetime
@@ -220,30 +220,35 @@ def get_token_login_teacher():
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"Error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Invalid Email or Password"}), 400
 
         # Buscar el usuario con ese correo
         login_teacher = Teacher.query.filter_by(email=email).first()
-        print(login_teacher)
-        if login_teacher:
-            return jsonify({'Error': 'Invalid Email'}), 400
+        
+        if not login_teacher:
+            return jsonify({'Error': 'Invalid Email or Password'}), 400
 
         # Obtener la contraseña desde la base de datos
         password_from_db = login_teacher.password
 
         # Verificar la contraseña
-        true_or_false = check_password_hash(password_from_db, password)
+        password_valid = check_password_hash(password_from_db, password)
 
-        if true_or_false:
+        if password_valid:
             expires = timedelta(days=1)
             teacher_id = login_teacher.id
             access_token = create_access_token(identity=teacher_id, expires_delta=expires)
             return jsonify({"access_token": access_token, "message": "Log In Successfully"}), 200
         else:
-            return jsonify({"Error":"Invalid Password"}), 400
+            return jsonify({"Error": "Invalid Email or Password"}), 400
         
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        # Manejar errores de la base de datos de manera específica
+        return jsonify({"Error": "Database error", "message": str(e)}), 500
     except Exception as e:
-        return jsonify({"Error": "Teacher not exists in Data Base" , "message": str(e)}), 500
+        # Manejar otros errores internos del servidor
+        return jsonify({"Error": "Internal Server Error", "message": str(e)}), 500
+
 
 @api.route('/login/manager', methods=['POST'])
 def get_token_login_manager():

@@ -4,7 +4,6 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Context } from "../../store/appContext.js"
 
-
 import { FaCircleArrowLeft, FaUserGraduate } from "react-icons/fa6";
 import { TeacherCourses } from '../Teacher/TeacherCourses.jsx'
 import { TeacherStudents } from './TeacherStudents.jsx';
@@ -34,11 +33,25 @@ import { PiCertificate } from "react-icons/pi"
 import { MdErrorOutline } from "react-icons/md";
 import { WelcomeTeacher } from './WelcomeTeacher.jsx';
 
-
+import { Message } from '../Message.jsx'
+import { ManagerProfile } from '../Manager/ManagerProfile.jsx';
 
 
 export const TeacherDashboard = () => {
     const { store, actions } = useContext(Context)
+    
+    const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
+    const [hovered, setHovered] = useState(false)
+    
+    const handleMouseEnter = () => {
+        setHovered(true)
+        console.log(hovered => hovered + 1)
+    }
+
+    const handleMouseLeave = () => {
+        setHovered(false)
+    }
+
     const [buttonSelected, setButtonSelected] = useState(<WelcomeTeacher />)
 
     const handleMyCourses = () => {
@@ -46,7 +59,7 @@ export const TeacherDashboard = () => {
     }
 
     const handleProfile = () => {
-        setButtonSelected(<TeacherProfile />)
+        setButtonSelected(<ManagerProfile />)
     }
 
     const handleMyStudents = () => {
@@ -80,8 +93,12 @@ export const TeacherDashboard = () => {
     function handleHome() {
         navigate('/')
     }
+
+    
+
     return (
-        <div className="row">
+        <div className="row position-relative">
+
             <button
                 className="btn btn-dark"
                 type="button"
@@ -95,17 +112,30 @@ export const TeacherDashboard = () => {
 
 
             <div className="offcanvas offcanvas-start"
-                data-bs-scroll="true" 
+                data-bs-scroll="true"
                 data-bs-backdrop="false"
                 tabIndex="-1"
                 id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel" style={{backgroundColor: "#F5F5F5"}}>
+                aria-labelledby="offcanvasScrollingLabel" style={{ backgroundColor: "#F5F5F5" }}>
 
 
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title text-center" id="offcanvasScrollingLabel" onClick={handleHome}>Teacher Dashboard</h5>
+                    <div className="col d-flex justify-content-end">
+                        {store.user ? (
+                            store.user[`access_to_${store.currentRole}`]?.map((item, index) => (
+                                item.email === userToLogin.email ? (
+                                    <span className='mx-2 letter' key={index}>
+                                        Welcome, <strong>{item.name.toUpperCase()}</strong> <strong>{item.lastName.toUpperCase()}</strong>
+                                    </span>
+                                ) : null
+                            ))
+                        ) : (
+                            <p className="text-center">No hay</p>
+                        )}
+                    </div>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
+
                 <div className="offcanvas-body">
                     <div className="text-center">
                         <div className="fs-4 my-3" onClick={handleHome} style={{ cursor: 'pointer' }}>
@@ -163,7 +193,7 @@ export const TeacherDashboard = () => {
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
-                                    < VscGitPullRequestGoToChanges  />
+                                    < VscGitPullRequestGoToChanges />
                                 </div>
                                 <div>
                                     <h5>Create Quizzes</h5>
@@ -183,7 +213,7 @@ export const TeacherDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75"disabled>
+                        <button className="btn btn-outline-dark my-2 w-75" disabled>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -235,7 +265,7 @@ export const TeacherDashboard = () => {
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
-                                    <AiOutlineFundView  />
+                                    <AiOutlineFundView />
                                 </div>
                                 <div>
                                     <h5>View Courses</h5>

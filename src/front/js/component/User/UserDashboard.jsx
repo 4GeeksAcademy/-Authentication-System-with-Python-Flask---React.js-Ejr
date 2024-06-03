@@ -20,14 +20,24 @@ import { AiOutlineFundView } from "react-icons/ai";
 import { PiCertificate } from "react-icons/pi"
 import { MdErrorOutline } from "react-icons/md";
 import { CourseWelcome } from '../../pages/Courses/CourseWelcome.jsx';
-import { GetModuleUser } from './GetModulesUser.jsx';
-
-
-
+import { GetModuleUser } from './GetModulesUser.jsx'
+import { ManagerProfile } from '../Manager/ManagerProfile.jsx';
 
 export const UserDashboard = () => {
     const { store, actions } = useContext(Context)
     const [buttonSelected, setButtonSelected] = useState(<WelcomeUser />)
+    const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
+
+    const [hovered, setHovered] = useState(false)
+    
+    const handleMouseEnter = () => {
+        setHovered(true)
+        console.log(hovered => hovered + 1)
+    }
+
+    const handleMouseLeave = () => {
+        setHovered(false)
+    }
 
     function homeStudents() {
         setButtonSelected(<WelcomeUser />)
@@ -43,7 +53,7 @@ export const UserDashboard = () => {
     }
 
     const handleMyProfile = () => {
-        setButtonSelected(<UserProfile />)
+        setButtonSelected(<ManagerProfile />)
     }
 
     const handleMyPayment = () => {
@@ -53,7 +63,6 @@ export const UserDashboard = () => {
     const handleCertificate = () => {
         setButtonSelected(<Certificate />)
     }
-console.log(store.tokenToPay)
 
 
     const navigate = useNavigate()
@@ -67,6 +76,7 @@ console.log(store.tokenToPay)
 
     return (
         <div className="row">
+
             <button
                 className="btn btn-dark"
                 type="button"
@@ -88,9 +98,22 @@ console.log(store.tokenToPay)
 
 
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title text-center" id="offcanvasScrollingLabel" onClick={homeStudents}>Stundent Dashboard</h5>
+                    <div className="col d-flex justify-content-end">
+                        {store.user ? (
+                            store.user[`access_to_${store.currentRole}`]?.map((item, index) => (
+                                item.email === userToLogin.email ? (
+                                    <span className='mx-2 letter' key={index}>
+                                        Welcome, <strong>{item.name.toUpperCase()}</strong> <strong>{item.lastName.toUpperCase()}</strong>
+                                    </span>
+                                ) : null
+                            ))
+                        ) : (
+                            <p className="text-center">No hay</p>
+                        )}
+                    </div>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
+                </div> 
+
                 <div className="offcanvas-body">
                     <div className="text-center">
                         <div className="fs-4 my-3" onClick={handleHome} style={{ cursor: 'pointer' }}>

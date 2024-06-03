@@ -3,10 +3,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 
+import { Message } from '../Message.jsx'
+
 export const UserNavbar = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false); // Estado para controlar la visualización del spinner
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
 
     useEffect(() => {
         // Cambiar el estado del spinner
@@ -50,6 +54,10 @@ export const UserNavbar = () => {
 
     return (
         <div className="position-relative">
+            {/* Mostrar mensaje de éxito o error */}
+            {msgError && <Message type="danger" text={msgError} />}
+            {msg && <Message type="success" text={msg} />}
+
             {loading && ( // Renderizar el spinner si está en estado de carga
                 <div className="spinner-overlay d-flex justify-content-center align-items-center">
                     <div className="spinner-overlay d-flex justify-content-center align-items-center">

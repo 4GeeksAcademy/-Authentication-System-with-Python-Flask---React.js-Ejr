@@ -6,7 +6,10 @@ import { Context } from '../store/appContext';
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false); // Estado para controlar la visualización del spinner
+    const [loading, setLoading] = useState(false)
+    const [hovered, setHovered] = useState(false)
+
+
 
     useEffect(() => {
         // Cambiar el estado del spinner
@@ -51,7 +54,7 @@ export const Navbar = () => {
             {loading && ( // Renderizar el spinner si está en estado de carga
                 <div className="spinner-overlay d-flex justify-content-center align-items-center">
                     <div className="spinner-overlay d-flex justify-content-center align-items-center">
-                        <img className="spinner-image" src="http://res.cloudinary.com/dfoegvmld/image/upload/v1717432190/k08lvmnyqvccpqiyr001.png" alt="spinner" style={{ width: '130px' }} />
+                        <img className="spinner-image" src="http://res.cloudinary.com/dfoegvmld/image/upload/v1717432190/k08lvmnyqvccpqiyr001.png" alt="spinner" style={{ width: '100px' }} />
                     </div>
                 </div>
             )}
