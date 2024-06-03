@@ -19,14 +19,15 @@ export const UserNavbar = () => {
         navigate('/')
     }
 
-
     const handleMouseEnter = () => {
         setHovered(true)
         console.log(hovered => hovered + 1)
     }
+
     const handleMouseLeave = () => {
         setHovered(false)
     }
+
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
 
     return (
