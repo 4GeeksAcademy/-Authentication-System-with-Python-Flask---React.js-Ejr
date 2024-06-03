@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import images from '../../img/images.js'; // Import the images
 import fortniteImage from '../../img/Fortnite.png';
 import xboxIcon from '../../img/xbox.png';
 import switchIcon from '../../img/switch.png';
@@ -66,8 +67,7 @@ export const RoomDetail = () => {
     useEffect(() => {
         const fetchCommentsAndParticipants = async () => {
             await Promise.all([fetchComments(), fetchRequests()]);
-            console.log('Updated Participants:', room.participants);
-            console.log('Updated Comments:', comments);
+           
         };
 
         if (room && room.participants) {
@@ -108,6 +108,12 @@ export const RoomDetail = () => {
         if (showRequests) {
             fetchRequests();
         }
+        return () => {
+            // Clean up effect
+            if (participantsRef.current) {
+                clearInterval(participantsRef.current);
+            }
+        };
     }, [showRequests]);
 
     const checkRequestStatus = async () => {
@@ -270,8 +276,8 @@ export const RoomDetail = () => {
                 return <img src={xboxIcon} alt="Xbox" style={iconStyle} />;
             case 'switch':
                 return <img src={switchIcon} alt="Switch" style={iconStyle} />;
-                case 'playstation':
-                    case 'Playstation':
+            case 'playstation':
+            case 'Playstation':
                 return <img src={playstationIcon} alt="PlayStation" style={iconStyle} />;
             case 'pc':
                 return <img src={pcIcon} alt="PC" style={iconStyle} />;
@@ -302,7 +308,8 @@ export const RoomDetail = () => {
     const endTime = room.end_time || null;
 
     const formattedDateTime = formatDateTime(startDate, startTime, endDate, endTime);
-
+    const gameKey = room.game_name ? room.game_name.toLowerCase().replace(/\s+/g, '-') : 'other';
+    const imageSrc = images[gameKey] ? images[gameKey].default : null;
     return (
         <div>
             <div className="back">
@@ -311,7 +318,11 @@ export const RoomDetail = () => {
 
             <div className={`${!isParticipantOrHost ? 'room-detail-small' : 'room-detail'}`}>
                 <div className="room-header">
-                    <img src={fortniteImage} alt="Room Image" className="room-image" />
+                    {imageSrc ? (
+                        <img src={imageSrc} alt={room.game_name} className="room-image" />
+                    ) : (
+                        <p>Image not found</p> // Placeholder if image not found
+                    )}
                     <div className="room-info">
                         <div className='d-flex justify-content-between text-info'>
                             <p>{room.game_name}</p>
@@ -327,7 +338,7 @@ export const RoomDetail = () => {
                         {isHost && (
                             <div className="room-pills ">
                                 <button className={`pill-detail ${currentView === 'details' ? 'active' : ''}`} onClick={() => handleToggleView('details')}>Room Details</button>
-                                <button className={ `pill-participants mx-2 ${currentView === 'participants' ? 'active' : ''}`} onClick={() => handleToggleView('participants')}>
+                                <button className={`pill-participants mx-2 ${currentView === 'participants' ? 'active' : ''}`} onClick={() => handleToggleView('participants')}>
                                     Members & Requests ({countPendingRequests()})
                                 </button>
                             </div>

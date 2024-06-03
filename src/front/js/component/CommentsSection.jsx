@@ -3,7 +3,7 @@ import '../../styles/CommentsSection.css';
 
 const CommentsSection = ({ roomId, token, username, room, actions, comments, setComments, newComment, setNewComment }) => {
 
-    useEffect(() => {
+   /*  useEffect(() => {
         fetchComments();
     }, []);
 
@@ -14,7 +14,7 @@ const CommentsSection = ({ roomId, token, username, room, actions, comments, set
         } catch (error) {
             console.error('Error fetching comments:', error);
         }
-    };
+    }; */
 
     const handleAddComment = async () => {
         if (!token) {
