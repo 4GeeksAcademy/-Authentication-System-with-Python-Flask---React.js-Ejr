@@ -32,11 +32,14 @@ export const RoomDetail = () => {
     const token = localStorage.getItem('jwt-token');
     const [isParticipant, setIsParticipant] = useState(false);
     const participantsRef = useRef(null);
+    const isMountedRef = useRef(true);
 
     useEffect(() => {
+        isMountedRef.current = true;
         const fetchData = async () => {
             try {
                 await actions.fetchRooms();
+                if (!isMountedRef.current) return; // Check if component is still mounted
                 const fetchedRoom = store.rooms.find(room => room.room_id === parseInt(roomId));
                 console.log('Fetched Room:', fetchedRoom);
                 if (fetchedRoom) {
@@ -56,18 +59,26 @@ export const RoomDetail = () => {
                 }
                 setLoading(false);
             } catch (error) {
+                if (!isMountedRef.current) return; // Check if component is still mounted
                 console.error("Error fetching data: ", error);
                 setLoading(false);
             }
         };
 
         fetchData();
+
+        return () => {
+            // Clean up effect
+            isMountedRef.current = false;
+            if (participantsRef.current) {
+                clearInterval(participantsRef.current);
+            }
+        };
     }, [token]);
 
     useEffect(() => {
         const fetchCommentsAndParticipants = async () => {
             await Promise.all([fetchComments(), fetchRequests()]);
-           
         };
 
         if (room && room.participants) {
@@ -118,14 +129,17 @@ export const RoomDetail = () => {
 
     const checkRequestStatus = async () => {
         let status = await actions.checkRequestStatus(roomId);
+        if (!isMountedRef.current) return; // Check if component is still mounted
         setRequestStatus(status);
     };
 
     const fetchRequests = async () => {
         try {
             const fetchedRequests = await actions.fetchRoomRequests(roomId);
+            if (!isMountedRef.current) return; // Check if component is still mounted
             setRequests(fetchedRequests);
         } catch (error) {
+            if (!isMountedRef.current) return; // Check if component is still mounted
             console.error('Error fetching requests:', error);
         }
     };
@@ -133,8 +147,10 @@ export const RoomDetail = () => {
     const fetchComments = async () => {
         try {
             const fetchedComments = await actions.getComments(roomId);
+            if (!isMountedRef.current) return; // Check if component is still mounted
             setComments(fetchedComments);
         } catch (error) {
+            if (!isMountedRef.current) return; // Check if component is still mounted
             console.error('Error fetching comments:', error);
         }
     };
@@ -271,6 +287,7 @@ export const RoomDetail = () => {
 
     const renderPlatformIcon = (platform) => {
         const iconStyle = { width: '26px', height: '26px', position: 'relative', top: '-5px' };
+        if (!platform) return null;
         switch (platform.toLowerCase()) {
             case 'xbox':
                 return <img src={xboxIcon} alt="Xbox" style={iconStyle} />;
@@ -310,6 +327,7 @@ export const RoomDetail = () => {
     const formattedDateTime = formatDateTime(startDate, startTime, endDate, endTime);
     const gameKey = room.game_name ? room.game_name.toLowerCase().replace(/\s+/g, '-') : 'other';
     const imageSrc = images[gameKey] ? images[gameKey].default : null;
+
     return (
         <div>
             <div className="back">
