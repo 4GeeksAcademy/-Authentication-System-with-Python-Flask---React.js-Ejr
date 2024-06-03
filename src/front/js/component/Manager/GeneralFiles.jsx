@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../../../styles/components.css';
 
 export const GeneralFiles = () => {
     const [files, setFiles] = useState([]);
@@ -24,13 +25,19 @@ export const GeneralFiles = () => {
     return (
         <div>
             <h5>Files:</h5>
-            <ul>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {files.map((file, index) => (
-                    <li key={index}>
-                        <a href={process.env.BACKEND_URL +`/api/uploads/${file}`} rel="noopener noreferrer">{file}</a>
-                    </li>
+                    <div key={index} className="folder">
+                        <a 
+                            href={process.env.BACKEND_URL + `/api/uploads/${file}`} 
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                            {file}
+                        </a>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }

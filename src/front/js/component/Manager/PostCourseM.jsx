@@ -114,7 +114,7 @@ export const PostCourseM = () => {
                 <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
                     <div className="d-flex justify-content-center align-items-center position-relative mb-5">
                         <div className='d-flex justify-content-center align-items-center'>
-                            <h1>Create Course New</h1>
+                            <h1>Create New Course</h1>
                         </div>
                     </div>
                     <form onSubmit={handlerCreateCourse}>

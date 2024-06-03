@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from "../../store/appContext";
 
 export const UserNavbar = () => {
+    const [hovered, setHovered] = useState(false)
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 
@@ -19,6 +20,13 @@ export const UserNavbar = () => {
     }
 
 
+    const handleMouseEnter = () => {
+        setHovered(true)
+        console.log(hovered => hovered + 1)
+    }
+    const handleMouseLeave = () => {
+        setHovered(false)
+    }
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"))
 
     return (
@@ -33,11 +41,31 @@ export const UserNavbar = () => {
                             <p>Loading...</p>
                         </div>
                     </div>
-                    : <nav className="navbar navbar-light bg-white">
-                        <div className="container-fluid">
+                    : <nav className="navbar navbar-light bg-light">
+                        <div className="container-fluid position-relative">
                             <div className='col-3'>
                                 <img src="https://res.cloudinary.com/dfoegvmld/image/upload/v1717377021/i6uvyydr1sapaurgp3r5.png"
-                                    alt="logo_alta_elearning" className='w-75' onClick={handleHome} style={{cursor: 'pointer'}}/>
+                                    alt="logo_alta_elearning" className='w-75' onClick={handleHome} style={{ cursor: 'pointer' }} />
+                            </div>
+                            <div className="d-flex justify-content-center">
+                                <button className="btn btn-white d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#coursesCategories" aria-expanded="false" aria-controls="coursesCategories" onMouseOver={handleMouseEnter} onMouseOut={handleMouseLeave}>
+                                    Categories
+                                </button>
+                            </div>
+                            <div>
+                                <div className="collapse position-absolute top-0 start-0" style={{ marginLeft: '10%' }} id="coursesCategories">
+                                    <div className="card card-body">
+                                        {store.category && store.category.length > 0 ? (
+                                            store.category.map((item, index) => {
+                                                return (
+                                                    <a type="text" className="d-block mb-2" onClick={() => navigate(`/category/${item.titleCategory}`)} key={index}>{item.titleCategory}</a>
+                                                )
+                                            })
+                                        ) : (
+                                            <a type="text" className="d-block mb-2">No category available</a>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                             <div className="col d-flex justify-content-end">
 
@@ -71,3 +99,4 @@ export const UserNavbar = () => {
         </div>
     );
 };
+
