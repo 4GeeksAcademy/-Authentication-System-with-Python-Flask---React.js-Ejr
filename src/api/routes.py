@@ -1233,6 +1233,7 @@ def list_files():
         return jsonify(files), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+        
 #----------------------Category------------------------#
 @api.route('/courses/categories', methods=['POST'])
 def post_category():
