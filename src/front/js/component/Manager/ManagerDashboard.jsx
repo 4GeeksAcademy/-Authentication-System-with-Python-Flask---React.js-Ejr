@@ -40,6 +40,7 @@ import { PiCertificate } from "react-icons/pi"
 import { MdErrorOutline } from "react-icons/md";
 
 import { HistoryCoursesUser } from './HistoryCoursesUser.jsx';
+import { UpdateQuizzes } from './UpdateQuizzes.jsx';
 
 
 
@@ -78,11 +79,16 @@ export const ManagerDashboard = () => {
         actions.getModules()
     }
 
-
     const handleMyQuizzes = () => {
         setButtonSelected(<QuizzesCourse />)
         actions.getQuizzes()
     }
+
+    const handleGetQuizzes = () => {
+        setButtonSelected(<GetQuizzes />)
+        actions.getQuizzes()
+    }
+
 
     const handleGetModules = () => {
         setButtonSelected(<GetModule />)
@@ -244,7 +250,8 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyQuizzes}>
+
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleGetQuizzes}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>

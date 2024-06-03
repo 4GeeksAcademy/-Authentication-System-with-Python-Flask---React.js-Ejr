@@ -86,7 +86,7 @@ export const UpdateTeacher = () => {
             await actions.updateUser(teacherData, selectedRole, teacherId);
             setCounter(0);
         } else {
-            alert('No debe dejar ningun campo vacío');
+            alert('You must not leave any field empty.');
         }
     };
 
