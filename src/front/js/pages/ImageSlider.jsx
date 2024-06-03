@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './ImageSlider.css';
-
-// Importa las imágenes locales
 import image1 from '../../img/image11.jpg';
 import image2 from '../../img/image10.jpg';
 import image3 from '../../img/image3.jpg';
@@ -65,9 +63,11 @@ const ImageSlider = () => {
             {slides.map((slide, index) => (
                 <div key={index} className={`slide ${index === currentIndex ? 'active' : ''}`}>
                     <img src={slide.image} alt={slide.title} className="slide-image" />
-                    <h2 className="slide-title">{slide.title}</h2>
-                    <p className="slide-description">{slide.description}</p>
-                    <p className="slide-details">{slide.details}</p>
+                    <div className="slide-content">
+                        <h2 className="slide-title">{slide.title}</h2>
+                        <p className="slide-description">{slide.description}</p>
+                        <p className="slide-details">{slide.details}</p>
+                    </div>
                 </div>
             ))}
             <div className="slider-controls">
