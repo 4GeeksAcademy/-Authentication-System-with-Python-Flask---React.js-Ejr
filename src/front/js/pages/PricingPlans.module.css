@@ -122,3 +122,14 @@ body {
 .enroll:hover {
   background: var(--primary-red);
 }
+
+@media (max-width: 768px) {
+  .pricingContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pricingCard {
+    max-width: 100%;
+  }
+}
