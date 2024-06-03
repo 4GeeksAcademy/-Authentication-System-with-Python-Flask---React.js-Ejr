@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const Normaltimer = () => {
-    // Estados para el cronómetro
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
-    const [initialTime, setInitialTime] = useState({ hours: 0, minutes: 0, seconds: 0 }); // Estado para el tiempo inicial
+    const [intervalDuration, setIntervalDuration] = useState(2);
+    const [seriesCount, setSeriesCount] = useState(2);
+    const [currentSeries, setCurrentSeries] = useState(1);
+    const [showIntervalDropdown, setShowIntervalDropdown] = useState(false);
+    const [showSeriesDropdown, setShowSeriesDropdown] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
     const intervalRef = useRef(null);
 
-    // Actualización del tiempo cada 10 milisegundos cuando el cronómetro está corriendo
     useEffect(() => {
         if (isRunning) {
             intervalRef.current = setInterval(() => {
-                setTime(prevTime => prevTime + 10);
-            }, 10);
+                setTime(prevTime => prevTime + 1000); // Incrementa por segundos
+            }, 1000);
         } else if (!isRunning && intervalRef.current) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
@@ -20,49 +23,57 @@ const Normaltimer = () => {
         return () => clearInterval(intervalRef.current);
     }, [isRunning]);
 
-    // Función para iniciar el cronómetro
-    const handleStart = () => {
-        setIsRunning(true);
-    };
+    useEffect(() => {
+        const intervalMillis = intervalDuration * 60 * 1000;
+        if (time >= intervalMillis && isRunning) {
+            clearInterval(intervalRef.current);
+            setIsRunning(false);
+            setAlertMessage(`Intervalo ${currentSeries} terminado!`);
+            setTimeout(() => {
+                setAlertMessage('');
+                if (currentSeries < seriesCount) {
+                    setCurrentSeries(prevSeries => prevSeries + 1);
+                    setTime(0);
+                    setAlertMessage(`Continuando con la siguiente serie...`);
+                    setTimeout(() => {
+                        setAlertMessage('');
+                        setIsRunning(true);
+                    }, 10000); // Espera 10 segundos antes de comenzar la siguiente serie
+                } else {
+                    setAlertMessage('¡Ronda de ejercicios terminada!');
+                }
+            }, 10000); // La alerta dura 10 segundos
+        }
+    }, [time, isRunning, intervalDuration, seriesCount, currentSeries]);
 
-    // Función para detener el cronómetro
-    const handleStop = () => {
-        setIsRunning(false);
-    };
-
-    // Función para reiniciar el cronómetro
+    const handleStart = () => setIsRunning(true);
+    const handleStop = () => setIsRunning(false);
     const handleReset = () => {
         setIsRunning(false);
-        setTime(
-            initialTime.hours * 3600000 +
-            initialTime.minutes * 60000 +
-            initialTime.seconds * 1000
-        );
+        setTime(0);
+        setCurrentSeries(1);
+        setAlertMessage('');
     };
 
-    // Función para establecer el tiempo inicial
-    const handleSetInitialTime = (event) => {
-        const { name, value } = event.target;
-        setInitialTime(prevState => ({
-            ...prevState,
-            [name]: parseInt(value) || 0
-        }));
+    const handleIntervalChange = (event) => {
+        setIntervalDuration(parseInt(event.target.value));
+        setShowIntervalDropdown(false);
     };
 
-    // Función para formatear el tiempo en horas, minutos, segundos y milisegundos
+    const handleSeriesChange = (event) => {
+        setSeriesCount(parseInt(event.target.value));
+        setShowSeriesDropdown(false);
+    };
+
     const formatTime = (time) => {
-        const milliseconds = Math.floor(time / 10) % 100;  // Dos dígitos para milisegundos
         const totalSeconds = Math.floor(time / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
-        const minutes = Math.floor(totalSeconds / 60) % 60;
-        const hours = Math.floor(totalSeconds / 3600);
 
-        const formattedMilliseconds = milliseconds.toString().padStart(2, '0');
-        const formattedSeconds = seconds.toString().padStart(2, '0');
         const formattedMinutes = minutes.toString().padStart(2, '0');
-        const formattedHours = hours.toString().padStart(2, '0');
+        const formattedSeconds = seconds.toString().padStart(2, '0');
 
-        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`;
+        return `${formattedMinutes}:${formattedSeconds}`;
     };
 
     const cuerpoStyle = {
@@ -73,7 +84,8 @@ const Normaltimer = () => {
         fontSize: '300%',
         fontFamily: 'calibri',
         color: 'white',
-        background: 'linear-gradient(skyblue, white)'
+        background: 'linear-gradient(skyblue, white)',
+        position: 'relative'
     };
     const marcoStyle = {
         borderRadius: '30px',
@@ -94,14 +106,9 @@ const Normaltimer = () => {
         alignItems: 'center',
         marginBottom: '20px'
     };
-    const inputStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        margin: '5px 0'
-    };
-    const buttonStyle = {
-        margin: '0 5px',
-        padding: '5px 10px',
+    const dropdownStyle = {
+        margin: '5px',
+        padding: '10px',
         fontSize: '1em'
     };
     const appStyle = {
@@ -113,28 +120,42 @@ const Normaltimer = () => {
     const timeCircleStyle = {
         borderRadius: '50%',
         border: '10px solid white',
-        width: '250px',  // Ajustamos el tamaño del círculo
-        height: '250px', // Ajustamos el tamaño del círculo
+        width: '250px',
+        height: '250px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: '20px'
     };
     const timeStyle = {
-        fontSize: '30px', // Ajustamos el tamaño de la fuente
-        textAlign: 'center', // Aseguramos que el texto esté centrado
-        wordBreak: 'break-all' // Aseguramos que el texto no se salga del contenedor
+        fontSize: '40px',
+        textAlign: 'center',
+        wordBreak: 'break-all'
     };
     const buttonsStyle = {
         display: 'flex',
         justifyContent: 'center',
         gap: '10px'
     };
+    const alertStyle = {
+        position: 'absolute',
+        top: '10px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        backgroundColor: '#f8d7da',
+        color: '#721c24',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        border: '1px solid #f5c6cb',
+        textAlign: 'center',
+        fontSize: '1.5em'
+    };
 
     return (
         <div style={cuerpoStyle}>
             <div style={marcoStyle}>
                 <h1>Cronómetro</h1>
+                {alertMessage && <div style={alertStyle}>{alertMessage}</div>}
                 <div className="app" style={appStyle}>
                     <div className='time-circle' style={timeCircleStyle}>
                         <div className="time" style={timeStyle}>
@@ -143,18 +164,32 @@ const Normaltimer = () => {
                     </div>
                 </div>
                 <div style={inputContainerStyle}>
-                    <label>Establecer tiempo inicial:</label>
-                    <div style={inputStyle}>
-                        <label>Horas:</label>
-                        <input type="number" name="hours" value={initialTime.hours} onChange={handleSetInitialTime} />
+                    <label>Configurar cronómetro:</label>
+                    <div style={dropdownStyle}>
+                        <label>Duración del intervalo (minutos):</label>
+                        <button onClick={() => setShowIntervalDropdown(!showIntervalDropdown)}>
+                            {intervalDuration} minutos
+                        </button>
+                        {showIntervalDropdown && (
+                            <select value={intervalDuration} onChange={handleIntervalChange}>
+                                {[...Array(99)].map((_, i) => (
+                                    <option key={i + 2} value={i + 2}>{i + 2}</option>
+                                ))}
+                            </select>
+                        )}
                     </div>
-                    <div style={inputStyle}>
-                        <label>Minutos:</label>
-                        <input type="number" name="minutes" value={initialTime.minutes} onChange={handleSetInitialTime} />
-                    </div>
-                    <div style={inputStyle}>
-                        <label>Segundos:</label>
-                        <input type="number" name="seconds" value={initialTime.seconds} onChange={handleSetInitialTime} />
+                    <div style={dropdownStyle}>
+                        <label>Cantidad de series:</label>
+                        <button onClick={() => setShowSeriesDropdown(!showSeriesDropdown)}>
+                            {seriesCount} series
+                        </button>
+                        {showSeriesDropdown && (
+                            <select value={seriesCount} onChange={handleSeriesChange}>
+                                {[...Array(9)].map((_, i) => (
+                                    <option key={i + 2} value={i + 2}>{i + 2}</option>
+                                ))}
+                            </select>
+                        )}
                     </div>
                 </div>
                 <div className="app" style={appStyle}>
