@@ -224,7 +224,8 @@ def get_token_login_teacher():
 
         # Buscar el usuario con ese correo
         login_teacher = Teacher.query.filter_by(email=email).first()
-        if not login_teacher:
+        print(login_teacher)
+        if login_teacher:
             return jsonify({'Error': 'Invalid Email'}), 400
 
         # Obtener la contraseña desde la base de datos

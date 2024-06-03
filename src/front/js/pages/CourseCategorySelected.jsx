@@ -66,7 +66,7 @@ export const CourseCategorySelected = () => {
 
                                     <p className="border rounded-pill py-1 px-1 me-3 d-inline-flex text-white" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>{item.categoryTitle}</p>
 
-                                    <p className="border rounded-pill py-1 px-1 d-inline-flex text-white" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>Modulos: {item.modulesLength}</p>
+                                    <p className="border rounded-pill py-1 px-1 d-inline-flex text-white" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>Modulos: </p>
 
                                     <div className="d-flex justify-content-end">
                                         <button className='py-2 px-2 border fs-2 rounded-circle d-flex justify-content-center align-items-center addEdit text-white' onClick={(e) => {e.stopPropagation(); handleAddTrolley(item.title, item.id, item.price);}} style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>

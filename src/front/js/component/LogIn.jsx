@@ -1,27 +1,51 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
-
 import { GoArrowLeft } from "react-icons/go";
 
 export const LogIn = () => {
-    const { store, actions } = useContext(Context)
-    const navigate = useNavigate()
-    const [selectedRole, setSelectedRole] = useState('')
-    const [active, setActive] = useState(false)
-    const [counter, setCounter] = useState(7)
-    const [redirectPath, setRedirectPath] = useState('')
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+    const [selectedRole, setSelectedRole] = useState('');
+    const [active, setActive] = useState(false);
+    const [counter, setCounter] = useState(7);
+    const [redirectPath, setRedirectPath] = useState('');
     const [login, setLogin] = useState({
         "email": '',
         "password": ''
     });
 
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
+
+    useEffect(() => {
+        if (redirectPath !== '') {
+            navigate(redirectPath);
+        }
+    }, [navigate, redirectPath]);
+
+    useEffect(() => {
+        if (msgError === '' && msg === '') {
+            return;
+        }
+
+        if (store.error === '' && selectedRole && counter === 7) {
+            setRedirectPath(`/${selectedRole}View`);
+        }
+
+        const interval = setInterval(() => {
+            setCounter(prevCounter => prevCounter + 1);
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, [setRedirectPath, selectedRole, store.error, msgError, msg, counter]);
+
     function handlerChangeLogin(eve) {
         eve.preventDefault();
         const { name, value } = eve.target;
         if (name === 'isPeople') {
-            setSelectedRole(value)
-            setActive(true)
+            setSelectedRole(value);
+            setActive(true);
         } else {
             setLogin(prev => ({
                 ...prev,
@@ -33,61 +57,31 @@ export const LogIn = () => {
     async function handlerLogin(e) {
         e.preventDefault();
         if (login.email !== '' && login.password !== '') {
-            await actions.loginIn(login, selectedRole)
-            setCounter(0)
+            await actions.loginIn(login, selectedRole);
+            setCounter(7); // Cambiado a 7
         } else {
-            alert('Ingrese todo los campos')
+            alert('Ingrese todos los campos');
         }
     }
 
     function handlerGoToRegister() {
-        navigate('/FormUser')
+        navigate('/FormUser');
     }
 
     function handlerResetPassword() {
-        navigate('/ResetPassword')
+        navigate('/ResetPassword');
     }
 
     function handlerChangeActive() {
-        setActive(false)
+        setActive(false);
     }
 
     function handlerHome() {
-        navigate('/')
+        navigate('/');
     }
 
-
-    useEffect(() => {
-        if (redirectPath !== '') {
-            navigate(redirectPath)
-        }
-    }, [navigate, redirectPath])
-
-    useEffect(() => {
-        
-            if (msgError === '' && msg === ''){
-                return
-            }
-
-            if (store.error === '' && selectedRole && counter === 7) {
-                setRedirectPath(`/${selectedRole}View`);
-            }
-
-
-            const interval = setInterval(() => {
-                setCounter(prevCounter => prevCounter + 1);
-            }, 500);
-
-        return () => clearInterval(interval)  
-    }, [setRedirectPath, selectedRole])
-
-
-    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
-    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg)
-
     return (
-        <div className=' position-relative'>
-            {/* Msg */}
+        <div className='position-relative'>
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {(msgError === '' && msg === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
@@ -103,7 +97,6 @@ export const LogIn = () => {
                     </div>
                 )}
             </div>
-            {/* Título */}
             <div className='row d-flex flex-row'>
                 <div className='col-md-12 col-lg-5 d-flex justify-content-center align-items-start'>
                     <div className='border border-black rounded-3 mx-auto my-5 p-3 w-75'>
@@ -116,84 +109,77 @@ export const LogIn = () => {
                             </div>
                         </div>
                         <form className='mt-5 mb-5 was-validated' onSubmit={handlerLogin}>
-
-
-                            {
-                                (active)
-                                    ? <div>
-                                        {/* Email */}
-                                        <div className='col-md my-3 form-check'>
-                                            <label className='my-2' htmlFor="validationFormCheck1">Email</label>
-                                            <input
-                                                name='email'
-                                                value={login.email}
-                                                onChange={handlerChangeLogin}
-                                                type="text"
-                                                id="validationFormCheck1"
-                                                className="form-control"
-                                            />
-                                            <div className="invalid-feedback">
-                                                Please enter your information.
-                                            </div>
+                            {(active) ? (
+                                <div>
+                                    <div className='col-md my-3 form-check'>
+                                        <label className='my-2' htmlFor="validationFormCheck1">Email</label>
+                                        <input
+                                            name='email'
+                                            value={login.email}
+                                            onChange={handlerChangeLogin}
+                                            type="text"
+                                            id="validationFormCheck1"
+                                            className="form-control"
+                                        />
+                                        <div className="invalid-feedback">
+                                            Please enter your information.
                                         </div>
-                                        {/* Password */}
-                                        <div className='col-md my-3 form-check'>
-                                            <label className='my-2' htmlFor="validationFormCheck2">Password</label>
-                                            <input
-                                                name='password'
-                                                value={login.password}
-                                                onChange={handlerChangeLogin}
-                                                type='password'
-                                                id="validationFormCheck2"
-                                                className="form-control"
-                                            />
-                                            <div className="invalid-feedback">
-                                                Please enter your information.
-                                            </div>
+                                    </div>
+                                    <div className='col-md my-3 form-check'>
+                                        <label className='my-2' htmlFor="validationFormCheck2">Password</label>
+                                        <input
+                                            name='password'
+                                            value={login.password}
+                                            onChange={handlerChangeLogin}
+                                            type='password'
+                                            id="validationFormCheck2"
+                                            className="form-control"
+                                        />
+                                        <div className="invalid-feedback">
+                                            Please enter your information.
                                         </div>
-
-                                        <div className='col-md' style={{ marginTop: '80px' }}>
-                                            <button className='btn btn-primary w-100' onClick={handlerLogin}>{
-                                                (store.spinner)
-                                                    ? <div className="spinner-border" role="status">
-                                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div className='col-md' style={{ marginTop: '80px' }}>
+                                        <button className='btn btn-primary w-100' type="submit">
+                                            {(store.spinner)
+                                                ? <div className="spinner-border" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                                : <div className="row align-items-center">
+                                                    <div className="col align-self-center text-center fs-4">
+                                                        <span>Login In</span>
                                                     </div>
-                                                    : <div className="row align-items-center">
-                                                        <div className="col align-self-center text-center fs-4">
-                                                            <span>Login In</span>
-                                                        </div>
-                                                    </div>
+                                                </div>
                                             }
-                                            </button>
+                                        </button>
+                                    </div>
+                                    <div className='col-md my-3 text-center'>
+                                        <p className='text-decoration-underline' onClick={handlerGoToRegister} style={{ cursor: "pointer" }}>Don't have an account yet? click here to register.</p>
+                                    </div>
+                                    <div className='col-md my-3 text-center'>
+                                        <p className='text-decoration-underline' onClick={handlerChangeActive} style={{ cursor: "pointer" }}>Do you want to change roles?</p>
+                                    </div>
+                                    <div className='col-md my-3 text-center'>
+                                        <p className='text-decoration-underline' onClick={handlerResetPassword} style={{ cursor: "pointer" }}>Reset your Password</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className='d-flex justify-content-center my-5'>
+                                    <div className='col-md-8 my-3'>
+                                        <div className='text-center'>
+                                            <label className="form-label fw-bold">Role</label>
                                         </div>
-                                        <div className='col-md my-3 text-center'>
-                                            <p className='text-decoration-underline' onClick={handlerGoToRegister} style={{ cursor: "pointer" }}>Don't have an account yet? click here to register.</p>
-                                        </div>
-                                        <div className='col-md my-3 text-center'>
-                                            <p className='text-decoration-underline' onClick={handlerChangeActive} style={{ cursor: "pointer" }}>Do you want to change roles?</p>
-                                        </div>
-                                        <div className='col-md my-3 text-center'>
-                                            <p className='text-decoration-underline' onClick={handlerResetPassword} style={{ cursor: "pointer" }}>Reset your Password</p>
+                                        <div className="input-group has-validation">
+                                            <select className="form-select" name='isPeople' onChange={handlerChangeLogin} value={selectedRole} required>
+                                                <option value="">--Choose--</option>
+                                                <option value='teacher'>Teacher</option>
+                                                <option value='student'>Student</option>
+                                                <option value='manager'>Manager</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    : <div className='d-flex justify-content-center my-5'>
-                                        <div className='col-md-8 my-3'>
-                                            <div className='text-center'>
-                                                <label className="form-label fw-bold">Role</label>
-                                            </div>
-
-                                            <div className="input-group has-validation">
-                                                <select className="form-select" name='isPeople' onChange={handlerChangeLogin} value={selectedRole} required>
-                                                    <option value="">--Choose--</option>
-                                                    <option value='teacher'>Teacher</option>
-                                                    <option value='user'>Student</option>
-                                                    <option value='manager'>Manager</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                            }
-
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>
