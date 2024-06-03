@@ -186,7 +186,7 @@ def setup_commands(app):
 
     @app.cli.command("create-bookings")
     def create_bookings():
-        """Crear reservas para las clases creadas."""
+        """Crear reservas para las clases creadas y descontar clases disponibles."""
         print("Creating bookings...")
         users = User.query.filter(User.role_id == 5).all()  # Todos los usuarios atletas
         classes = Training_classes.query.all()
@@ -197,15 +197,22 @@ def setup_commands(app):
             num_bookings = random.randint(1, min(len(users), training_class.available_slots))  # Ajusta aquí para no superar el número de usuarios
             booked_users = random.sample(users, num_bookings)  # Usuarios aleatorios para reservas
             for user in booked_users:
-                booking = Booking(
-                    user_id=user.id,
-                    training_class_id=training_class.id,
-                    booking_date=datetime.now(),
-                    status='reserved'
-                )
-                db.session.add(booking)
+                active_membership = user.get_active_membership()
+                if active_membership and active_membership.remaining_classes > 0:
+                    booking = Booking(
+                        user_id=user.id,
+                        training_class_id=training_class.id,
+                        booking_date=datetime.now(),
+                        status='reserved'
+                    )
+                    db.session.add(booking)
+                    # Descontar una clase de la membresía activa del usuario
+                    active_membership.remaining_classes -= 1
+                else:
+                    print(f"No remaining classes for user {user.id}")
         db.session.commit()
         print("Bookings created.")
+
 
     @app.cli.command("insert-test-data")
     def insert_test_data():

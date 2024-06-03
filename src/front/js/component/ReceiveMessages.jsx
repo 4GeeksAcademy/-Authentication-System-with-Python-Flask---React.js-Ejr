@@ -60,6 +60,7 @@ const ReceiveMessages = () => {
         setMessages(messages.map(msg => 
           msg.id === messageId ? { ...msg, read: true } : msg
         ));
+        
       }
     } catch (error) {
       console.error(error);
@@ -68,6 +69,8 @@ const ReceiveMessages = () => {
 
   const closeModal = () => {
     setModalOpen(false);
+    // setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
   };
 
   return (

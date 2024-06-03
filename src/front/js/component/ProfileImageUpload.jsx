@@ -39,6 +39,8 @@ const ProfileImageUpload = () => {
                 setResultModalMessage('Profile image uploaded successfully'); // Muestra un mensaje de éxito
                 setResultModalVisible(true); // Muestra el modal de resultado
                 handleCloseModal(); // Cierra el modal de subida de imagen
+                setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
             } else {
                 setResultModalMessage('Failed to upload profile image: ' + result.message); // Muestra un mensaje de error
                 setResultModalVisible(true); // Muestra el modal de resultado
@@ -58,6 +60,8 @@ const ProfileImageUpload = () => {
                 setResultModalMessage('Profile image updated successfully'); // Muestra un mensaje de éxito
                 setResultModalVisible(true); // Muestra el modal de resultado
                 handleCloseModal(); // Cierra el modal de subida de imagen
+                setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
             } else {
                 setResultModalMessage('Failed to update profile image: ' + result.message); // Muestra un mensaje de error
                 setResultModalVisible(true); // Muestra el modal de resultado
@@ -74,6 +78,8 @@ const ProfileImageUpload = () => {
             setResultModalMessage('Profile image deleted successfully'); // Muestra un mensaje de éxito
             setResultModalVisible(true); // Muestra el modal de resultado
             handleCloseModal(); // Cierra el modal de subida de imagen
+            setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
         } else {
             setResultModalMessage('Failed to delete profile image: ' + result.message); // Muestra un mensaje de error
             setResultModalVisible(true); // Muestra el modal de resultado

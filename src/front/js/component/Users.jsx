@@ -64,7 +64,7 @@ const Users = () => {
 
   return (
     <div className={`${styles.container} container-fluid`}>
-      <h3 className={`d-flex justify-content-center ${styles.title}`}>Users List</h3>
+      <h1 className={`d-flex justify-content-center ${styles.titleComponent}`}>Users List</h1>
       <InputGroup className={`mb-3 ${styles.searchInput}`}>
         <FormControl
           placeholder="Search by email, name, username"
@@ -146,6 +146,8 @@ const Users = () => {
                       <h5>Membership start date: <FormattedDate dateTime={selectedUser.membership_start_date} /></h5>
                       <h5>Membership end date: <FormattedDate dateTime={selectedUser.membership_end_date} /></h5>
                       <h5>Membership description: {selectedUser.membership_description}</h5>
+                      <h5><strong>Remaining Classes:</strong> {selectedUser.membership_remaining_classes}</h5>
+
                       <Button variant="warning" onClick={handleShowConfirmModal} className={styles.buttonActivation}>
                         Account Active Status
                       </Button>

@@ -3,6 +3,9 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .card {

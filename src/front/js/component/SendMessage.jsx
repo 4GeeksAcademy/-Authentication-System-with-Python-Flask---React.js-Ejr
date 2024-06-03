@@ -77,6 +77,7 @@ const SendMessage = () => {
       setTitle('');
       setContent('');
       setRecipients([]);
+      setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
     } else {
       setMessage(data.error || 'Failed to send message');
     }
