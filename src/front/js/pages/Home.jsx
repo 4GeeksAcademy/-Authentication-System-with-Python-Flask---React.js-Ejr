@@ -8,6 +8,7 @@ import { Navbar } from "../component/Navbar.jsx";
 import { CoursesContainer } from "../component/Courses/CoursesContainer.jsx";
 import { Carousel } from "./Carousel.jsx";
 import { Category } from "./Category.jsx";
+import { Suscribe } from "./Suscribe.jsx";
 
 
 
@@ -21,6 +22,7 @@ export const Home = () => {
             <Carousel />
             <CoursesContainer />
             <Category />
+            <Suscribe />
         </div>
     );
 }
