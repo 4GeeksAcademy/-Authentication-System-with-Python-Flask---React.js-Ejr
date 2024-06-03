@@ -22,13 +22,13 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.loadUserData(); 
+			// state.actions.loadUserData(); 
 			state.actions.loadTrainingClasses(); 
-			state.actions.loadMemberships();
-			state.actions.getBookings()
-			state.actions.fetchImages();
-			state.actions.getUsers();
-			state.actions.getClasses();
+			// state.actions.loadMemberships();
+			// state.actions.getBookings()
+			// state.actions.fetchImages();
+			// state.actions.getUsers();
+			// state.actions.getClasses();
 
 
 
