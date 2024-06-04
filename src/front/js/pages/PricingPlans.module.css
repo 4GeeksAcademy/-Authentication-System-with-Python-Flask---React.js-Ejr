@@ -1,0 +1,135 @@
+:root {
+  --primary-red: #b6935f;
+  --text-white: #F7FAFF;
+  --text-gray: #B5B8BC;
+  --card-bg: #1A1A1A;
+  --bg: rgba(0, 0, 0, 0.8);
+}
+
+*::selection {
+  background: var(--primary-red);
+  color: var(--text-white);
+}
+
+html {
+  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: 0.75px;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  margin: 0;
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.choose {
+  color: #FFFFFF;
+  /* blanco */
+  font-weight: bold;
+}
+
+.yourPlan {
+  color: #816740;
+  font-weight: bold;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+.pricingTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.pricingContainer {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  overflow: auto;
+  padding-top: 20px;
+  max-width: 100%;
+}
+
+.pricingCard {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  max-width: calc(33.33% - 2rem);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  color: var(--text-gray);
+  transition: all 0.5s ease-in-out;
+}
+
+.pricingCard:hover {
+  transform: translateY(-2rem);
+}
+
+.pricingCardPrice {
+  color: var(--text-white);
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.pricingCardPriceOriginal {
+  color: var(--text-gray);
+  font-weight: 500;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+.pricingCard h3 {
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+  font-size: 2rem;
+  color: var(--text-white);
+}
+
+.enroll {
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  border-radius: 0.5rem;
+  color: var(--text-white);
+  margin-top: auto;
+  text-decoration: none;
+  letter-spacing: 0.75px;
+  border: 1px solid var(--primary-red);
+  background: var(--primary-red);
+  transition: all 0.3s ease-in-out;
+}
+
+.enroll:hover {
+  background: var(--primary-red);
+}
+
+@media (max-width: 768px) {
+  .pricingContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pricingCard {
+    max-width: 100%;
+  }
+}

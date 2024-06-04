@@ -1,0 +1,31 @@
+.formContainer {
+    padding: 20px;
+    background: #E6E6E9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #3C403F;
+}
+
+.formContainer input, .formContainer select, .formContainer textarea {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #FFF;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: .3rem;
+    outline: 0;
+    color: #3C403F;
+    /* align-items: center; */
+}
+
+.titleComponent {
+    color: var(--color-green);
+}

@@ -20,7 +20,7 @@ It is recomended to install the backend first, make sure you have Python 3.8, Pi
 3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
 
 | Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
+| --------- | ---------------------p------------------------------ |
 | SQLite    | sqlite:////test.db                                  |
 | MySQL     | mysql://username:password@localhost:port/example    |
 | Postgress | postgres://username:password@localhost:5432/example |

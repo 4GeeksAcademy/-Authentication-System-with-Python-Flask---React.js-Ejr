@@ -1,0 +1,77 @@
+.editButton {
+    background-color: transparent;
+    color: var(--color-green);
+    border: none;
+    padding: 10px 20px; /* Aumentar el padding para mayor impacto */
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transiciones suaves */
+}
+
+.editButton:hover {
+    color: var(--color-light);
+    background-color: var(--color-grey); /* Fondo gris en hover */
+}
+
+.editButton:active {
+    background-color: var(--color-dark); /* Fondo oscuro en active */
+    color: var(--color-brown); /* Texto marrón en active */
+}
+
+
+
+.modal {
+    color: #383838; /* Charcoal */
+}
+
+.modalHeader {
+    background-color: #A8A7A8;
+}
+
+.modalTitle {
+    color: #373737; /* Dark Gray */
+}
+
+.modalBody {
+    background-color: #E6E6E9;
+}
+
+.modalFooter {
+    background-color: #A8A7A8;
+}
+
+.closeButton, .saveButton {
+    border-radius: 0;
+    border: none;
+}
+
+.form-control {
+    margin-bottom: 10px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input:focus, input:valid {
+    outline: none;
+    border: 1.5px solid #B8B8B8 !important; /* Añade !important para forzar la aplicación de esta regla */
+}
+
+.modal-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.updateMessage {
+    color: #333333; /* Dark Gray */
+    font-size: 1.2em;
+    text-align: center;
+}

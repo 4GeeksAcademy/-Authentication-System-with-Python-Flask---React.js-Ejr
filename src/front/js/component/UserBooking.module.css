@@ -1,0 +1,81 @@
+.userDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .loading {
+    font-size: 16px;
+    color: var(--color-grey);
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .bookingsContainer {
+    width: 90%;
+    max-width: 600px;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: small;
+  }
+  
+  .bookingsContainer h3, .bookingsContainer h4 {
+    color: var(--color-dark);
+    margin-bottom: 15px;
+  }
+  
+  .bookingInfo p {
+    color: var(--color-grey);
+    margin: 0;
+  }
+  
+  .bookingsList {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .bookingDetail {
+    background-color: rgba(123, 123, 123, 0.1);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 10px 4px 1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .bookingInfo {
+    font-size: smaller;
+    flex: 1;
+  }
+  
+  .deleteButton {
+    margin-left: 10px;
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+  }
+  
+  .deleteButton:hover {
+    color: darkred;
+  }
+  
+  .modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: var(--color-light);
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: .3rem;
+    outline: 0;
+    color: var(--color-dark);
+  }
+  
