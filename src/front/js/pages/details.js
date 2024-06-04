@@ -18,13 +18,13 @@ export const Details = () => {
                 <div id="details-carousel" className="carousel slide w-75 carousel-dark slide">
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <img src={store.details?.url_img1} style={{ "max-height": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
+                            <img src={store.details?.url_img1} style={{ "maxHeight": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src={store.details?.url_img2} style={{ "max-height": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
+                            <img src={store.details?.url_img2} style={{ "maxHeight": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src={store.details?.url_img3} style={{ "max-height": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
+                            <img src={store.details?.url_img3} style={{ "maxHeight": "500px", objectFit: "cover" }} className="d-block w-100 ps-3 rounded-3" alt="..." />
                         </div>
                         <button className="carousel-control-prev ms-3" type="button" data-bs-target="#details-carousel" data-bs-slide="prev">
                             <span className="carousel-control-prev-icon bg-success" aria-hidden="true"></span>
