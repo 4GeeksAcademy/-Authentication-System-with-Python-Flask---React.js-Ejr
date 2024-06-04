@@ -20,30 +20,39 @@ import { AiOutlineFundView } from "react-icons/ai";
 import { PiCertificate } from "react-icons/pi"
 import { MdErrorOutline } from "react-icons/md";
 import { CourseWelcome } from '../../pages/Courses/CourseWelcome.jsx';
-import { GetModuleUser } from './GetModulesUser.jsx';
-
-
-
+import { GetModuleUser } from './GetModulesUser.jsx'
+import { ManagerProfile } from '../Manager/ManagerProfile.jsx';
 
 export const UserDashboard = () => {
     const { store, actions } = useContext(Context)
     const [buttonSelected, setButtonSelected] = useState(<WelcomeUser />)
+    const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
+
+    const [hovered, setHovered] = useState(false)
+    
+    const handleMouseEnter = () => {
+        setHovered(true)
+        console.log(hovered => hovered + 1)
+    }
+
+    const handleMouseLeave = () => {
+        setHovered(false)
+    }
 
     function homeStudents() {
-        setButtonSelected(<WelcomeUser/>)
+        setButtonSelected(<WelcomeUser />)
     }
 
     function handleViewCourse() {
-        setButtonSelected(<GetModuleUser/>)
+        setButtonSelected(<GetModuleUser />)
     }
 
     const handleMyCourses = () => {
         setButtonSelected(<CourseWelcome />)
-        actions.getCourse()
     }
 
     const handleMyProfile = () => {
-        setButtonSelected(<UserProfile />)
+        setButtonSelected(<ManagerProfile />)
     }
 
     const handleMyPayment = () => {
@@ -54,15 +63,19 @@ export const UserDashboard = () => {
         setButtonSelected(<Certificate />)
     }
 
-    
 
     const navigate = useNavigate()
 
     function handleHome() {
         navigate('/')
     }
+
+    const tokenPayString = localStorage.getItem("token-accessCourse")
+    console.log(tokenPayString)
+
     return (
         <div className="row">
+
             <button
                 className="btn btn-dark"
                 type="button"
@@ -76,17 +89,30 @@ export const UserDashboard = () => {
 
 
             <div className="offcanvas offcanvas-start"
-                data-bs-scroll="true" 
+                data-bs-scroll="true"
                 data-bs-backdrop="false"
                 tabIndex="-1"
                 id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel" style={{backgroundColor: "#F5F5F5"}}>
+                aria-labelledby="offcanvasScrollingLabel" style={{ backgroundColor: "#F5F5F5" }}>
 
 
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title text-center" id="offcanvasScrollingLabel" onClick={homeStudents}>Stundent Dashboard</h5>
+                    <div className="col d-flex justify-content-end">
+                        {store.user ? (
+                            store.user[`access_to_${store.currentRole}`]?.map((item, index) => (
+                                item.email === userToLogin.email ? (
+                                    <span className='mx-2 letter' key={index}>
+                                        Welcome, <strong>{item.name.toUpperCase()}</strong> <strong>{item.lastName.toUpperCase()}</strong>
+                                    </span>
+                                ) : null
+                            ))
+                        ) : (
+                            <p className="text-center">No hay</p>
+                        )}
+                    </div>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
+                </div> 
+
                 <div className="offcanvas-body">
                     <div className="text-center">
                         <div className="fs-4 my-3" onClick={handleHome} style={{ cursor: 'pointer' }}>
@@ -105,7 +131,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" disabled>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                        >
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -117,7 +146,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleViewCourse}>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleViewCourse}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -129,7 +161,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyPayment}>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleMyPayment}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -141,11 +176,14 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyCourses}>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleMyCourses}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
-                                    <AiOutlineFundView  />
+                                    <AiOutlineFundView />
                                 </div>
                                 <div>
                                     <h5>View Courses</h5>
@@ -153,7 +191,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-dark my-2 w-75' disabled>
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                        >
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -165,9 +206,9 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        
 
-                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleCertificate}>
+
+                        <button className='btn btn-outline-dark my-2 w-75' disabled>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -179,8 +220,11 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className='btn btn-outline-dark my-2 w-75' onClick={handleCertificate}>
-
+                        <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                            onClick={handleCertificate}
+                        >
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
                                     <PiCertificate />
@@ -191,7 +235,10 @@ export const UserDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" disabled>
+                        {/* <button
+                            className="btn btn-outline-dark my-2 w-75"
+                            disabled={tokenPayString === ""}
+                        >
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
@@ -201,13 +248,13 @@ export const UserDashboard = () => {
                                     <h5>Sin datos</h5>
                                 </div>
                             </div>
-                        </button>
+                        </button> */}
 
                     </div>
                 </div>
             </div>
 
-            <div className="d-flex justify-content-center h-100">
+            <div>
                 {buttonSelected}
             </div>
         </div>

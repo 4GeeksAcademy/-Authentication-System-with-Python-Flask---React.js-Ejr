@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "../component/Navbar.jsx";
 import { CoursesContainer } from "../component/Courses/CoursesContainer.jsx";
 import { Carousel } from "./Carousel.jsx";
+import { Category } from "./Category.jsx";
+import { Suscribe } from "./Suscribe.jsx";
 
 
 
@@ -19,6 +21,8 @@ export const Home = () => {
             <Navbar />
             <Carousel />
             <CoursesContainer />
+            {/* <Category /> */}
+            <Suscribe />
         </div>
     );
 }

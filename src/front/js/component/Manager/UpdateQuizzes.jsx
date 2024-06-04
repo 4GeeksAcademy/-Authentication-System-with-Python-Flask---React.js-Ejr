@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 export const UpdateQuizzes = () => {
     const { actions, store } = useContext(Context);
-    const [selectedRole, setSelectedRole] = useState('')
-    const [certificate, setCertificate] = useState('')
+    const [selectedRole, setSelectedRole] = useState('');
+    const [certificate, setCertificate] = useState('');
     const [isUsers, setIsUsers] = useState(true);
     const [redirectPath, setRedirectPath] = useState('');
     const [counter, setCounter] = useState(7);
     const { quizId } = useParams();
     const navigate = useNavigate();
-    const [quizData, setquizData] = useState(() => {
-        const quizToUpdate = store.quizzes.Quiz.find(quiz => quiz.id == quizId)
 
+    const [quizData, setquizData] = useState(() => {
+        const quizToUpdate = store.quizzes.Quiz.find(quiz => quiz.id == quizId);
         if (quizToUpdate) {
             return {
                 questionTitle: quizToUpdate.questionTitle,
@@ -28,32 +28,28 @@ export const UpdateQuizzes = () => {
                 approvalPercentageUser: quizToUpdate.approvalPercentageUser,
                 approvalPercentageNumber: quizToUpdate.approvalPercentageNumber,
                 moduleId: quizToUpdate.moduleId
-                
             };
         } else {
             return {
                 questionTitle: '',
                 answerTeacher: '',
-                answerUser: '',
-                approved: '',
+                answerUser: false,
+                approved: false,
                 approvalPercentageUser: '',
                 approvalPercentageNumber: '',
-                approvalPercentage: '',
+                approvalPercentage: false,
                 moduleId: '',
             };
         }
-    })
+    });
 
     async function handleSubmit(event) {
         event.preventDefault();
-        console.log(quizData, quizId)
         await actions.updateQuizzes(quizData, quizId);
-        setCounter(0)
+        setCounter(0);
     }
 
-
     useEffect(() => {
-        // Obtener los detalles del usuario específico y establecer los datos en el estado local
         const quizToUpdate = store.quizzes.Quiz.find(quiz => quiz.id === quizId);
         if (quizToUpdate) {
             setquizData({
@@ -71,23 +67,26 @@ export const UpdateQuizzes = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
+        let newValue = value;
+
+        if (name === 'answerUser' || name === 'approved' || name === 'approvalPercentage') {
+            newValue = value === 'true';
+        }
 
         setquizData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: newValue
         }));
-
     };
 
     const handlerSubmit = (e) => {
         e.preventDefault();
         if (quizData.questionTitle !== '' && quizData.answerUser !== '' && quizData.answerTeacher !== '') {
             actions.updateQuizzes(quizData, quizId);
-
         } else {
-            alert('No debe dejar ningun campo vacío');
+            alert('You must not leave any field empty.');
         }
-    }
+    };
 
     function handlerGoToHome() {
         navigate('/managerView');
@@ -107,26 +106,32 @@ export const UpdateQuizzes = () => {
         const interval = setInterval(() => {
             setCounter(prevCounter => {
                 if (msgError === '' && msg2 === '') {
-                    return
-
+                    return prevCounter;
                 } else if (store.error === '' && selectedRole !== '' && counter === 7) {
-                    setRedirectPath(`/managerView`)
-                    clearInterval(interval)
+                    setRedirectPath('/managerView');
+                    clearInterval(interval);
                 }
-
                 return prevCounter + 1;
             });
         }, 500);
-
         return () => clearInterval(interval);
     }, [setRedirectPath, store.error, counter, msg2, msgError]);
 
-
-    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error)
-    const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2)
+    const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
+    const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2);
 
     return (
         <div className="container mt-4 w-50">
+            <button
+          className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          onClick={() => navigate(`/`)}
+        >
+           <FaArrowLeft />
+        </button>
             {/* Msg */}
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {(msgError === '' && msg2 === '') ? (
@@ -143,9 +148,8 @@ export const UpdateQuizzes = () => {
                     </div>
                 )}
             </div>
-
             <h1>Update Quiz</h1>
-            <div >
+            <div>
                 <button onClick={handlerGoToHome}>Regresar</button>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -174,16 +178,16 @@ export const UpdateQuizzes = () => {
                         <label>Answer User</label>
                         <select className="form-select" name='answerUser' onChange={handleChange} value={quizData.answerUser} required>
                             <option value="">--Choose--</option>
-                            <option value="true">True</option>
-                            <option value="false">False</option>
+                            <option value={true}>True</option>
+                            <option value={false}>False</option>
                         </select>
                     </div>
                     <div className="form-group">
                         <label>Approved</label>
                         <select className="form-select" name='approved' onChange={handleChange} value={quizData.approved} required>
                             <option value="">--Choose--</option>
-                            <option value="true">Aprobado</option>
-                            <option value="false">Reprobado</option>
+                            <option value={true}>Aprobado</option>
+                            <option value={false}>Reprobado</option>
                         </select>
                     </div>
                     <div className="form-group">
@@ -212,8 +216,8 @@ export const UpdateQuizzes = () => {
                         <label>Approval Percentage</label>
                         <select className="form-select" name='approvalPercentage' onChange={handleChange} value={quizData.approvalPercentage} required>
                             <option value="">--Choose--</option>
-                            <option value="true">Aprobado</option>
-                            <option value="false">Reprobado</option>
+                            <option value={true}>Aprobado</option>
+                            <option value={false}>Reprobado</option>
                         </select>
                     </div>
                     <div className="form-group">
@@ -237,7 +241,7 @@ export const UpdateQuizzes = () => {
                             ? <div className="spinner-border" role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>
-                            : <div className="row align-items-center ">
+                            : <div className="row align-items-center">
                                 <div className="col align-self-center text-center fs-4">
                                     <span>Update User</span>
                                 </div>
@@ -248,7 +252,3 @@ export const UpdateQuizzes = () => {
         </div>
     );
 }
-
-
-
-

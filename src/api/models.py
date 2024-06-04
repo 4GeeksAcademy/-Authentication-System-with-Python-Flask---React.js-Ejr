@@ -257,14 +257,16 @@ class Trolley(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    id_paypal = db.Column(db.String(250), nullable=True)
     date = db.Column(db.String(250), unique=False, nullable=False)
-    title_course = db.Column(db.String(250), nullable=False)
-    pad_amount = db.Column(db.String(250), nullable=False)
+    status = db.Column(db.String(250), nullable=False)
+    currency_code = db.Column(db.String(250), nullable=False)
+    value = db.Column(db.String(250), nullable=False)
     type_payment = db.Column(db.String(250), nullable=False) 
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
-    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
+    manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
     
     #Relations
     user = db.relationship('User', backref=db.backref('payment', lazy=True))
@@ -278,9 +280,11 @@ class Payment(db.Model):
         return{
             "id": self.id,
             "date": self.date,
-            "titleCourse": self.title_course,
-            "padAmount": self.pad_amount,
+            "status": self.status,
+            "value": self.value,
             "typePayment": self.type_payment,
+            "idPaypal": self.id_paypal,
+            "currencyCode": self.currency_code,
             "userId": self.user_id,
             "courseId": self.course_id,
             "managerId": self.manager_id
@@ -343,10 +347,24 @@ class Quizzes(db.Model):
             "answerTeacher": self.answer_teacher,
             "answerUser": self.answer_user,
             "approved": self.approved,
-            "approvalPorcentageUser": self.approval_percentage_user,
-            "approvalPorcentageNumber": self.approval_percentage_number,
-            "approvalPorcentage": self.approval_percentage,
+            "approvalPercentageUser": self.approval_percentage_user,
+            "approvalPercentageNumber": self.approval_percentage_number,
+            "approvalPercentage": self.approval_percentage,
             "moduleId": self.module_id
         }
 
+class AccessCourse(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(250), nullable=False)
+    details = db.Column(db.Text, nullable=True)
+
+    def __repr__(self):
+        return f'<AccessCourse {self.id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": self.user,
+            "details": self.details
+        }
 

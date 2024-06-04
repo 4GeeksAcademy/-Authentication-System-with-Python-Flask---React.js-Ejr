@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -76,10 +76,28 @@ export const UpdateUser = (Role) => {
         if (userData.name !== '' && userData.email !== '' && userData.phone !== '' && userData.lastName !== '' && userData.numberDocument !== '') {
             await actions.updateUser(userData, selectedRole, userId);
             setCounter(0);
+            resetForm();
         } else {
-            alert('No debe dejar ningun campo vacío');
+            alert('You must not leave any field empty.');
         }
     };
+
+    const resetForm = () => {
+        setUserData({
+            email: '',
+            name: '',
+            lastName: '',
+            username: '',
+            numberDocument: '',
+            phone: '',
+            age: '',
+            gender: '',
+            certificateTeacher: ''
+        });
+        setSelectedRole('');
+        setCertificate('');
+    };
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -96,27 +114,16 @@ export const UpdateUser = (Role) => {
         return () => clearInterval(interval);
     }, [navigate, store.error, store.msg2]);
 
+    /* const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
+    const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2); */
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
-    const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2);
+    const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
 
     return (
         <div className="container mt-4 w-50">
-            {/* Msg */}
-            <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
-                {(msgError === '' && msg2 === '') ? (
-                    <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                        {"Internet or server connection failure"}
-                    </div>
-                ) : (msgError === '') ? (
-                    <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
-                        {msg2}
-                    </div>
-                ) : (
-                    <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                        {msgError}
-                    </div>
-                )}
-            </div>
+            {/* Mostrar mensaje de éxito o error */}
+            {msgError && <Message type="danger" text={msgError} />}
+            {msg && <Message type="success" text={msg} />}
 
             <h1>Update</h1>
             <div >

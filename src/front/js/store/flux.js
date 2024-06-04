@@ -20,7 +20,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       quizzes: "",
       payment: "",
       medios: [],
-      order: ""
+      order: "",
+      access: "",
+      tokenToPay: ""
+      
     },
 
     actions: {
@@ -44,9 +47,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!respCreateUser.ok) {
             const errorData = await respCreateUser.json();
-            console.log(errorData);
             setStore({ ...store, error: errorData.Error });
-            throw new Error(errorData.Error || "Error al crear el usuario");
+            throw new Error(errorData.Error || "Error creating user");
           }
           const dataCreateUser = await respCreateUser.json();
           setStore({ ...store, msg: dataCreateUser.message });
@@ -78,21 +80,27 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!respLoginIn.ok) {
             const errorData = await respLoginIn.json();
             setStore({ ...store, error: errorData.Error });
-            throw new Error(errorData.Error || "Error al iniciar sesión");
+            throw new Error(errorData.Error || "Failed to login");
           }
 
           const dataLoginIn = await respLoginIn.json();
-          localStorage.setItem("jwt-token", dataLoginIn.access_token);
+          localStorage.setItem("jwt-token", dataLoginIn.access_token)
+          
           localStorage.setItem("currentRole", userRole);
           setStore({ ...store, currentRole: userRole });
           setStore({ ...store, msg: dataLoginIn.message });
+      
+        console.log(userToLogin,dataLoginIn)
+
           await getActions().getUser();
+
         } catch (err) {
           console.error(err);
         } finally {
           getActions().spinner(false);
         }
       },
+      
 
       getUser: async (userRol) => {
         const store = getStore();
@@ -121,11 +129,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetUsers.json();
             setStore({ ...store, error: errorData.Error });
             throw new Error(
-              errorData.Error || "Error al obtener los datos del usuario"
+              errorData.Error || "Error getting user data"
             );
           }
 
           const dataGetUser = await respGetUsers.json();
+          localStorage.setItem("userData", JSON.stringify(dataGetUser))
           setStore({ ...store, user: dataGetUser });
           setStore({ ...store, msg: dataGetUser.message });
         } catch (err) {
@@ -136,6 +145,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       checkUserSession: async () => {
         const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
         try {
           const token = localStorage.getItem("jwt-token");
           const userRole = localStorage.getItem("currentRole");
@@ -197,7 +208,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataUpdateUser = await respUpdateUser.json();
-          setStore({ ...store, msg2: dataUpdateUser.message });
+          setStore({ ...store, msg: dataUpdateUser.message });
 
           await getActions().getUser()
 
@@ -228,8 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
           if (!respDelUser.ok) {
-            const errorData = await respDelUser.json();
-            console.log(errorData);
+            const errorData = await respDelUser.json()
             setStore({ ...store, error: errorData.error });
             throw new Error(
               errorData.error || "Error al Update"
@@ -257,7 +267,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsg("");
         getActions().spinner(true);
 
-        console.log(email, userPassword);
         try {
           console.log(
             process.env.BACKEND_URL + `/api/forgot-password/` + userPassword
@@ -298,9 +307,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().spinner(true);
 
         try {
-          console.log(
-            process.env.BACKEND_URL + `/api/forgot-password/` + tokenPassword
-          );
           const tokenPassword = localStorage.getItem("jwt-token-reset");
           if (!tokenPassword) throw new Error("No token found");
 
@@ -354,7 +360,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsg("");
         getActions().spinner(true);
 
-        console.log(dataCourse)
         try {
           const url = process.env.BACKEND_URL + "/api/create/courses";
           const respCreateCourse = await fetch(url, {
@@ -369,7 +374,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al añadir el curso al carrito"
+              errorData.error || "Error when adding course to cart"
             );
           }
           const dataCreateCourse = await respCreateCourse.json();
@@ -394,7 +399,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await respGetCourse.json();
             console.log(errorData);
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener el Curso");
+            throw new Error(errorData.error || "Error Obtaining Course");
           }
 
           const dataGetCourse = await respGetCourse.json();
@@ -402,8 +407,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             ...store,
             msg: dataGetCourse.message,
             course: dataGetCourse,
-          });
-          console.log(dataGetCourse);
+          })
         } catch (err) {
           console.log(err);
         } finally {
@@ -432,16 +436,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
 
           if (!respUpdateCourse.ok) {
-            const errorData = await respUpdateCourse.json();
-            console.log(errorData);
-            setStore({ ...store, error2: errorData.error });
+            const errorData = await respUpdateCourse.json()
+            setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Update"
+              errorData.error || "Error in Update"
             )
           }
 
           const dataUpdateCourse = await respUpdateCourse.json()
-          setStore({ ...store, msg2: dataUpdateCourse.message })
+          setStore({ ...store, msg: dataUpdateCourse.message })
 
           await getActions().getUser();
 
@@ -462,7 +465,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!token) throw new Error("No token found");
 
           const url = process.env.BACKEND_URL + "/api/view/courses/" + courseId;
-          const respDelCourse = await fetch(url, {
+          const respDeleteModule = await fetch(url, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -472,8 +475,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
           if (!respDelCourse.ok) {
-            const errorData = await respDelCourse.json();
-            console.log(errorData);
+            const errorData = await respDelCourse.json()
             setStore({ ...store, error: errorData.error });
             throw new Error(
               errorData.error || "Error al Delete"
@@ -481,7 +483,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
 
-          const dataDelCourse = await respDelCourse.json();
+          const dataDelCourse = await respDeleteModule.json();
           setStore({ ...store, msg: dataDelCourse.message });
 
           await getActions().getUser();
@@ -523,7 +525,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getActions().getTrolleyToOrder()
 
             throw new Error(
-              errorData.error || "Error al añadir el curso al carrito"
+              errorData.error || "Error when adding course to cart"
             );
           }
 
@@ -548,10 +550,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           const respGetOrder = await fetch(url);
 
           if (!respGetOrder.ok) {
-            const errorData = await respGetOrder.json();
-            console.log(errorData);
+            const errorData = await respGetOrder.json()
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener el Curso");
+            throw new Error(errorData.error || "Error Obtaining Course");
           }
 
           const dataGetOrder = await respGetOrder.json();
@@ -560,7 +561,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             msg: dataGetOrder.message,
             courseFavorite: dataGetOrder,
           });
-          console.log(dataGetOrder);
+          
         } catch (err) {
           console.log(err);
         } finally {
@@ -585,11 +586,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
           if (!respDelTrolley.ok) {
-            const errorData = await respDelTrolley.json();
-            console.log(errorData);
+            const errorData = await respDelTrolley.json()
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al añadir el curso al carrito"
+              errorData.error || "Error when adding course to cart"
             );
           }
 
@@ -625,8 +625,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           if (!respNewQuizz.ok) {
-            const errorData = await respNewQuizz.json();
-            console.log(errorData);
+            const errorData = await respNewQuizz.json()
             setStore({ ...store, error: errorData.Error });
             throw new Error(errorData.Error || "Error creating quizz");
           }
@@ -655,17 +654,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (!respAddQuizzes.ok) {
-            const errorData = await respAddQuizzes.json();
-            console.log(errorData);
+            const errorData = await respAddQuizzes.json()
             setStore({ ...store, error: errorData.error });
 
             throw new Error(
-              errorData.error || "Error al crear quizzes"
+              errorData.error || "Error creating quizzes"
             );
           }
           const dataAddQuizzes = await respAddQuizzes.json();
           setStore({ ...store, msg: dataAddQuizzes.message });
-          console.log(dataAddQuizzes);
+          
 
         } catch (err) {
           console.log(err);
@@ -684,10 +682,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           const respGetQuizzes = await fetch(url);
 
           if (!respGetQuizzes.ok) {
-            const errorData = await respGetQuizzes.json();
-            console.log(errorData);
+            const errorData = await respGetQuizzes.json()
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener los quizzes");
+            throw new Error(errorData.error || "Error when obtaining the quizzes");
           }
 
           const dataGetQuizzes = await respGetQuizzes.json();
@@ -696,7 +693,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             msg: dataGetQuizzes.message,
             quizzes: dataGetQuizzes,
           });
-          console.log(store.modules);
+          
         } catch (err) {
           console.log(err);
         } finally {
@@ -721,11 +718,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
 
           if (!respUpdateQuiz.ok) {
-            const errorData = await respUpdateQuiz.json();
-            console.log(errorData);
+            const errorData = await respUpdateQuiz.json()
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Update"
+              errorData.error || "Update error"
             )
           }
 
@@ -758,11 +754,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
           if (!respDelQuizzes.ok) {
-            const errorData = await respDelQuizzes.json();
-            console.log(errorData);
+            const errorData = await respDelQuizzes.json()
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Delete"
+              errorData.error || "Delete error"
             );
           }
 
@@ -789,19 +784,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!responseUploadData.ok) {
             const errorUploadData = await responseUploadData();
-            console.log(errorUploadData)
             setStore({ ...store, error: errorUploadData.Error })
             throw new Error(errorUploadData.Error || "Error posting certificate")
-          } else {
+
+          } 
+          else 
+          {
             const uploadData = await response.json();
             alert('File uploaded successfully: ' + JSON.stringify(uploadData));
           }
           const dataNewCertificate = await respNewCertificate.json()
           setStore({ ...store, msg: dataNewCertificate.message })
+
         } catch (error) {
-          console.error('Error during file upload:', error);
-          setError('An error occurred while uploading the file');
-          alert('An error occurred while uploading the file');
+          setError('An error occurred while uploading the file')
+
         } finally {
           getActions().spinner(false);
         }
@@ -850,8 +847,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions.updateMsg("");
         actions.spinner(true);
 
-        console.log(dataModule);
-
         try {
           const url = process.env.BACKEND_URL + "/api/module/course";
           const respAddModule = await fetch(url, {
@@ -863,20 +858,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (!respAddModule.ok) {
-            const errorData = await respAddModule.json();
-            console.error(errorData);
+            const errorData = await respAddModule.json()
             setStore({ ...store, error: errorData.Error });
 
             throw new Error(errorData.Error || "Error creating module");
           }
 
           const dataAddModule = await respAddModule.json();
-          setStore({ ...store, msg2: dataAddModule.message });
-          console.log(dataAddModule);
+          setStore({ ...store, msg: dataAddModule.message });
+     
 
         } catch (err) {
           console.error("Error in postModule:", err);
-          setStore({ ...store, error2: err.message });
+          setStore({ ...store, error: err.message });
         } finally {
           actions.spinner(false);
         }
@@ -888,23 +882,64 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsg("");
         getActions().spinner(true);
         try {
-          const url = process.env.BACKEND_URL + "/api/module/courses";
+          const url = process.env.BACKEND_URL + "/api/module/course";
           const respGetModules = await fetch(url);
 
           if (!respGetModules.ok) {
             const errorData = await respGetModules.json();
             console.log(errorData);
-            setStore({ ...store, error2: errorData.error });
+            setStore({ ...store, error: errorData.error });
             throw new Error(errorData.error || "Error al Obtener el Modules");
           }
 
           const dataGetModules = await respGetModules.json();
           setStore({
             ...store,
-            msg2: dataGetModules.message,
+            msg: dataGetModules.message,
             modules: dataGetModules,
-          });
-          console.log(store.modules);
+          })
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+       deleteModules: async (modulesId) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+        try {
+          const token = localStorage.getItem("jwt-token");
+          if (!token) throw new Error("No token found");
+
+          const url = process.env.BACKEND_URL + "/api/module/course/" + modulesId;
+          const respDeleteModule = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              
+            }
+          })
+
+
+          if (!respDeleteModule.ok) {
+            const errorData = await respDeleteModule.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(
+              errorData.error || "Error in  Delete"
+            );
+          }
+
+
+          const dataDelModule = await respDeleteModule.json();
+          setStore({ ...store, msg: dataDelModule.message });
+
+          await getActions().getUser();
+
         } catch (err) {
           console.log(err);
         } finally {
@@ -930,20 +965,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (!respAddCategory.ok) {
-            const errorData = await respAddCategory.json();
-            console.log(errorData);
+            const errorData = await respAddCategory.json()
             setStore({ ...store, error: errorData.error });
 
             await getActions().getTrolleyToOrder()
 
             throw new Error(
-              errorData.error || "Error al añadir la Category"
+              errorData.error || "Error when adding the Category"
             );
           }
 
           const dataAddCategory = await respAddCategory.json();
           setStore({ ...store, msg: dataAddCategory.message });
-          console.log(dataAddCategory);
 
         } catch (err) {
           console.log(err);
@@ -962,10 +995,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           const respGetCategory = await fetch(url);
 
           if (!respGetCategory.ok) {
-            const errorData = await respGetCategory.json();
-            console.log(errorData);
+            const errorData = await respGetCategory.json()
             setStore({ ...store, error: errorData.error });
-            throw new Error(errorData.error || "Error al Obtener la Category");
+            throw new Error(errorData.error || "Error when adding the Category");
           }
 
           const dataGetCategory = await respGetCategory.json();
@@ -974,7 +1006,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             msg: dataGetCategory.message,
             category: dataGetCategory.Category,
           });
-          console.log(dataGetCategory);
 
         } catch (err) {
           console.log(err);
@@ -989,7 +1020,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().updateMsgError("");
         getActions().updateMsg("");
         getActions().spinner(true);
-
+        
         try {
           const url = process.env.BACKEND_URL + "/api/payment/courses";
           const respAddPayment = await fetch(url, {
@@ -1002,7 +1033,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!respAddPayment.ok) {
             const errorData = await respAddPayment.json();
-            console.log(errorData);
             setStore({ ...store, error: errorData.error });
 
             await getActions().getPayments()
@@ -1013,8 +1043,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataAddPayment = await respAddPayment.json();
-          setStore({ ...store, msg2: dataAddPayment.message });
-          console.log(dataAddPayment);
+          localStorage.setItem("token-accessCourse", dataAddPayment.token)
+          setStore({ ...store, msg2: dataAddPayment.message,
+            tokenToPay: dataAddPayment.token }
+          
+          )
 
         } catch (err) {
           console.log(err);
@@ -1041,12 +1074,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataGetPayment = await respGetPayment.json();
+          ;
           setStore({
             ...store,
             msg: dataGetPayment.message,
             payment: dataGetPayment,
-          });
-          console.log(dataGetPayment);
+          })
 
         } catch (err) {
           console.log(err);
@@ -1074,15 +1107,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!respUpdatePayment.ok) {
             const errorData = await respUpdatePayment.json();
-            console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Update"
+              errorData.error || "Update error"
             )
           }
 
           const dataUpdatePayment = await respUpdatePayment.json()
-          setStore({ ...store, msg2: dataUpdatePayment.message })
+          setStore({ ...store, msg: dataUpdatePayment.message })
 
           await getActions().getUser();
         } catch (err) {
@@ -1106,16 +1138,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!respDelPayment.ok) {
             const errorData = await respDelPayment.json();
-            console.log(errorData);
             setStore({ ...store, error: errorData.error });
             throw new Error(
-              errorData.error || "Error al Delete"
+              errorData.error || "Delete error"
             );
           }
 
 
           const dataDelPayment = await respDelPayment.json();
-          setStore({ ...store, msg2: dataDelPayment.message });
+          setStore({ ...store, msg: dataDelPayment.message });
 
           await getActions().getPayments();
         } catch (err) {
@@ -1145,7 +1176,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!respAddOrder.ok) {
             const errorData = await respAddOrder.json();
-            console.log(errorData);
             setStore({ ...store, error: errorData.error });
 
             await getActions().getOrders()
@@ -1156,8 +1186,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const dataAddOrder = await respAddOrder.json();
-          setStore({ ...store, msg2: dataAddOrder.message });
-          console.log(dataAddOrder);
+          setStore({ ...store, msg: dataAddOrder.message });
 
         } catch (err) {
           console.log(err);
@@ -1177,8 +1206,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const respGetOrder = await fetch(url);
 
           if (!respGetOrder.ok) {
-            const errorData = await respGetOrder.json();
-            console.log(errorData);
+            const errorData = await respGetOrder.json()
             setStore({ ...store, error: errorData.error });
             throw new Error(errorData.error || "Error in Order");
           }
@@ -1188,8 +1216,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             ...store,
             msg: dataGetOrder.message,
             order: dataGetOrder,
-          });
-          console.log(dataGetOrder);
+          })
 
         } catch (err) {
           console.log(err);
@@ -1197,10 +1224,129 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
         }
       },
+
+      createOrders: async (dataOrders) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/order/courses";
+          const respAddOrder = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataOrders),
+          });
+
+          if (!respAddOrder.ok) {
+            const errorData = await respAddOrder.json()
+            setStore({ ...store, error: errorData.error });
+
+            await getActions().getOrders()
+
+            throw new Error(
+              errorData.error || "Error in Payment"
+            );
+          }
+
+          const dataAddOrder = await respAddOrder.json();
+          setStore({ ...store, msg: dataAddOrder.message })
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+
+      getAccessCourse: async () => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        const token = localStorage.getItem("token-accessCourse")
+        if (!token) throw new Error("No token found");
+        
+        try {
+          const url = process.env.BACKEND_URL + "/api/view/course/accessAll";
+          const respGetAccess = await fetch(url, {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          });
+
+          if (!respGetAccess.ok) {
+            const errorData = await respGetAccess.json()
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in payment");
+          }
+
+          const dataGetAccess = await respGetAccess.json();
+          setStore({
+            ...store,
+            msg: dataGetAccess.message,
+            access: dataGetAccess
+          });
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+      
+      /**PROXIMAS PUEBAS */
+      getCoursePayment: async (course_id, user_id, module_id, quiz_id) => {
+        const store = getStore();
+        getActions().updateMsgError("");
+        getActions().updateMsg("");
+        getActions().spinner(true);
+
+        const token = localStorage.getItem("token-accessCourse")
+        if (!token) throw new Error("No token found");
+        
+        localStorage.setItem("userData")
+
+        try {
+          const url = process.env.BACKEND_URL + "/api/view/course/course_id/user/user_id/module/module_id/quiz/quiz_id";
+          const respGetPayment = await fetch(url, {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          });
+
+          if (!respGetPayment.ok) {
+            const errorData = await respGetPayment.json();
+            console.log(errorData);
+            setStore({ ...store, error: errorData.error });
+            throw new Error(errorData.error || "Error in payment");
+          }
+
+          const dataGetPayment = await respGetPayment.json();
+          localStorage.setItem("token-accessCourse", dataGetPayment.token);
+          setStore({
+            ...store,
+            msg: dataGetPayment.message,
+            pt: dataGetPayment,
+          });
+          console.log(dataGetPayment);
+
+        } catch (err) {
+          console.log(err);
+        } finally {
+          getActions().spinner(false);
+        }
+      },
+      
     }
   }
 };
-
-
 
 export default getState;

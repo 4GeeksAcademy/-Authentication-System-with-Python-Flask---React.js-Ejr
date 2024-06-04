@@ -1,5 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
+
+import { Message } from './Message.jsx'
+
 import { useNavigate } from 'react-router-dom';
 import { GoArrowLeft } from "react-icons/go";
 
@@ -56,7 +59,7 @@ export const AddUser = () => {
                     ...updatedData,
                     isTeacher: undefined,
                     isManager: undefined,
-                    
+
                 }));
             } else if (value === 'teacher') {
                 updatedData = { isTeacher: isUsers };
@@ -106,28 +109,17 @@ export const AddUser = () => {
         navigate('/');
     };
 
+    
+    
+
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
 
     return (
-        <div className='container'>
-            <div className='position-relative'>
-                <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x' style={{ zIndex: 1 }}>
-                    {(msgError === '' && msg === '') ? (
-                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                            {"Internet or server connection failure"}
-                        </div>
-                    ) : (msgError === '') ? (
-                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-success" : "d-none"}`}>
-                            {msg}
-                        </div>
-                    ) : (
-                        <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
-                            {msgError}
-                        </div>
-                    )}
-                </div>
-            </div>
+        <div className='container position-relative'>
+            {/* Mostrar mensaje de éxito o error */}
+            {msgError && <Message type="danger" text={msgError} />}
+            {msg && <Message type="success" text={msg} />}
 
             <div className="d-flex justify-content-center align-items-center position-relative mt-3 mb-5" style={{ zIndex: 0 }}>
                 <div className='d-flex justify-content-center align-items-center mx-2 fs-4 position-absolute start-0'
@@ -223,7 +215,7 @@ export const AddUser = () => {
                 <div className={`${(selectedRole === 'manager') ? 'd-block col-lg-4' : 'd-block col-lg-3'}`}>
                     <label className="form-label">Phone</label>
                     <input
-                        type="phone"
+                        type="text"
                         className="form-control"
                         name='phone'
                         onChange={handleChange}
@@ -236,7 +228,7 @@ export const AddUser = () => {
                 <div className={`${(selectedRole === 'manager') ? 'd-none' : 'd-block col-lg-3 '}`}>
                     <label className="form-label">Age</label>
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         name='age'
                         onChange={handleChange}

@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 
-import { AddNewUser } from './AddNewUser.jsx';
+
+import { AddUser } from '../AddUser.jsx';
 
 export const ActiveUsers = () => {
     const { store, actions } = useContext(Context);
@@ -24,7 +25,7 @@ export const ActiveUsers = () => {
         setActive(!active);
     };
 
-    
+    const [users, setUsers] = useState(store.user.access_to_user);
 
     return (
         <div className="container d-flex justify-content-center align-items-center p-4">
@@ -80,7 +81,7 @@ export const ActiveUsers = () => {
                     </div>
                     <button onClick={toggleActive}>Add</button>
                     <div className={`${active ? "d-block" : "d-none"}`}>
-                        <AddNewUser />
+                        <AddUser />
                     </div>
                 </div>
             )}

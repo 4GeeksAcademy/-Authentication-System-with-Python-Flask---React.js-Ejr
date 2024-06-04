@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -17,8 +17,9 @@ export const UpdatePayment = () => {
         if (payToUpdate) {
             return {
                 date: payToUpdate.date,
-                titleCourse: payToUpdate.titleCourse,
-                padAmount: payToUpdate.padAmount,
+                currency_code: payToUpdate.currency_code,
+                status: payToUpdate.status,
+                value: payToUpdate.value,
                 typePayment: payToUpdate.typePayment,
                 courseId: payToUpdate.courseId,
                 userId: payToUpdate.userId
@@ -27,8 +28,9 @@ export const UpdatePayment = () => {
         } else {
             return {
                 date: '',
-                titleCourse: '',
-                padAmount: '',
+                currency_code: '',
+                value: '',
+                status: '',
                 typePayment: '',
                 courseId: '',
                 userId: ''
@@ -44,8 +46,9 @@ export const UpdatePayment = () => {
         if (payToUpdate) {
             setCourseData({
                 date: payToUpdate.date,
-                titleCourse: payToUpdate.titleCourse,
-                padAmount: payToUpdate.padAmount,
+                currency_code: payToUpdate.currency_code,
+                status: payToUpdate.status,
+                value: payToUpdate.value,
                 typePayment: payToUpdate.typePayment,
                 courseId: payToUpdate.courseId,
                 userId: payToUpdate.userId
@@ -57,8 +60,9 @@ export const UpdatePayment = () => {
 
     const [payData, setPayData] = useState({
         date: '',
-        titleCourse: '',
-        padAmount: '',
+        currency_code: '',
+        value: '',
+        status: '',
         typePayment: '',
         courseId: '',
         userId: ''
@@ -69,12 +73,12 @@ export const UpdatePayment = () => {
         if (payToUpdate) {
             setPayData({
                 date: payToUpdate.date,
-                titleCourse: payToUpdate.titleCourse,
-                padAmount: payToUpdate.padAmount,
+                currency_code: payToUpdate.currency_code,
+                status: payToUpdate.status,
+                value: payToUpdate.value,
                 typePayment: payToUpdate.typePayment,
                 courseId: payToUpdate.courseId,
-                userId: payToUpdate.userId,
-                managerId: payToUpdate.managerId
+                userId: payToUpdate.userId
             });
         }
     }, [payId, store.payment.payments]);
@@ -93,6 +97,7 @@ export const UpdatePayment = () => {
         await actions.updatePayment(payData, payId);
         setCounter(0);
         navigate('/managerView');
+        resetForm(); 
     }
 
     function handlerGoToHome() {
@@ -128,8 +133,31 @@ export const UpdatePayment = () => {
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2);
 
+
+    const resetForm = () => {
+        setPayData({
+            date: '',
+            titleCourse: '',
+            padAmount: '',
+            typePayment: '',
+            courseId: '',
+            userId: ''
+        });
+    };
+
+
     return (
         <div className="container mt-4 w-50">
+            <button
+          className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          onClick={() => navigate(`/`)}
+        >
+           <FaArrowLeft />
+        </button>
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {(msgError === '' && msg2 === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>
@@ -151,11 +179,22 @@ export const UpdatePayment = () => {
                 <button onClick={handlerGoToHome}>Regresar</button>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>Title Course</label>
+                        <label>Status</label>
                         <input
                             type="text"
-                            name="titleCourse"
-                            value={payData.titleCourse}
+                            name="status"
+                            value={payData.status}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Currency</label>
+                        <input
+                            type="text"
+                            name="currency_code"
+                            value={payData.currency_code}
                             onChange={handleChange}
                             className="form-control"
                             required
@@ -189,8 +228,8 @@ export const UpdatePayment = () => {
                         <label>Pad Amount</label>
                         <input
                             type="text"
-                            name="padAmount"
-                            value={payData.padAmount}
+                            name="value"
+                            value={payData.value}
                             onChange={handleChange}
                             className="form-control"
                             required
@@ -221,9 +260,9 @@ export const UpdatePayment = () => {
                         <label>Manager ID</label>
                         <select className="form-select" name='managerId' onChange={handleChange} value={payData.managerId} required>
                             <option value="">--Choose--</option>
-                            
+
                             <option value={1}>#{1}/{"Manager"}</option>
-                          
+
                         </select>
                     </div>
 
