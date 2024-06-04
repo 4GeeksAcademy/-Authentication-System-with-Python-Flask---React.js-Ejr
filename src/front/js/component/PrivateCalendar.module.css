@@ -1,0 +1,153 @@
+/* Contenedor principal del componente */
+.container {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para el encabezado */
+.container h2 {
+  color: #ADB5BD;
+}
+
+/* Grupo de entrada */
+.inputGroup {
+  position: relative;
+  margin: 10px 0;
+  width: 300px;
+}
+
+/* Estilo de la entrada */
+.input {
+  border: solid 1.5px #9E9E9E;
+  border-radius: 1rem;
+  background: none;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #F5F5F5;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Etiqueta del usuario */
+.userLabel {
+  position: absolute;
+  left: 15px;
+  color: #E8E8E8;
+  transform: translateY(1rem);
+}
+
+/* Superposición del modal */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1050;
+}
+
+/* Contenedor del modal */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #FFF;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+  font-size: small;
+}
+
+/* Contenido del modal */
+.modalContent {
+  flex: 1;
+}
+
+/* Estilos del modal */
+.modal h2, .modal p, .modal h4 {
+  color: #3C403F;
+}
+
+.modal h3 {
+  color: #937863;
+}
+
+/* Contenedor de los botones */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Estilo de los botones */
+.buttonback, .buttonadd {
+  border: none;
+  padding: 5px;
+  font-size: small;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.buttonback {
+  margin-right: 3px;
+  background-color: #F0F0F0;
+  color: #3C403F;
+}
+
+.buttonadd {
+  margin-left: 3px;
+  background-color: #5D7266;
+  color: white;
+}
+
+.buttonback:hover {
+  background-color: #E0E0E0;
+}
+
+.buttonadd:hover {
+  background-color: #9c9ea0;
+}
+
+/* Estilo de la imagen de perfil */
+.profileImage {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Estilo del icono de perfil por defecto */
+.defaultProfileIcon {
+  font-size: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
+  color: #ccc; /* Ajustar color si es necesario */
+}
+
+/* Contenedor del item de booking */
+.bookingItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Estilo del nombre del usuario */
+.bookingUserName {
+  vertical-align: middle;
+  color: black;
+}
+
+
+.titleComponent {
+  color: var(--color-green);
+}

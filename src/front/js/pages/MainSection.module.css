@@ -1,0 +1,124 @@
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mainSection {
+    background-image: url('https://wallpapercave.com/wp/wp5559316.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 900;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+.content {
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #caa265;
+    text-shadow: 1px 1px 2px rgba(78, 77, 77, 0.956);
+}
+
+.title,
+.logo,
+.logo2,
+.subtitle,
+.button {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.logo {
+    display: block;
+    margin: 1rem auto;
+    max-height: 150px;
+    width: auto;
+}
+
+.logo2 {
+    display: block;
+    margin: 0.5rem auto;
+    max-height: 80px;
+    width: auto;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    color: #b99c70;
+    text-shadow: 1px 1px 2px rgba(78, 77, 77, 0.956);
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #96794e;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.4rem;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 1rem;
+}
+
+.button:hover {
+    background-color: #96794e;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .button {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+    .logo {
+        max-height: 100px;
+    }
+
+    .logo2 {
+        max-height: 40px;
+        margin: 0 auto;
+    }
+}

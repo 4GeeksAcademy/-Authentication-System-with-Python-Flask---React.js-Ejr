@@ -1,0 +1,92 @@
+.navbar {
+  background-color: #5D7266; /* Color de fondo */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logonavbar {
+  color: #E6E6E9; /* Color de texto */
+  font-size: 20px;
+  font-weight: 900;
+  text-shadow: 1px 1px 3px #3C403F; /* Sombra de texto */
+}
+
+.nav-link {
+  color: #E6E6E9; /* Color de los enlaces */
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 12px;
+}
+
+.nav-link:hover {
+  background-color: #3C403F; /* Fondo al pasar el ratón */
+  color: #FFFFFF; /* Color de texto al pasar el ratón */
+}
+
+.logo {
+  height: 55px;
+  margin-top: -5px;
+}
+
+.logo img {
+  height: 100%;
+}
+
+.loginButton, .logoutButton, .ProfileButton {
+  background-color: #A8A7A8; /* Color de fondo del botón */
+  color: #E6E6E9; /* Color del texto del botón */
+  border: none;
+  border-radius: 5px;
+  padding: 6px 15px;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.loginButton:hover, .logoutButton:hover, .ProfileButton:hover {
+  background-color: #3C403F; /* Color de fondo del botón al pasar el ratón */
+  color: #E6E6E9; /* Color del texto del botón al pasar el ratón */
+}
+
+.ProfileButton img, .profileImage, .profileImageButton {
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+}
+
+.ProfileButton img {
+  width: 30px; /* Ajusta el tamaño de la imagen */
+  height: 30px; /* Asegúrate de que la altura coincida con el ancho */
+}
+
+.profileImage {
+  width: 40px; /* Ajusta el tamaño de la imagen */
+  height: 40px; /* Asegúrate de que la altura coincida con el ancho */
+  margin-left: 10px; /* Espacio entre el nombre y la imagen */
+}
+
+.offcanvasHeader {
+  color: #3C403F; /* Color del texto */
+  background: rgba(211, 211, 211, 0.38); /* Fondo */
+}
+
+#offcanvasNavbarDropdown {
+  color: #3C403F; /* Color del texto */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+  }
+
+  .navbar-toggler {
+      align-self: flex-end;
+  }
+
+  .nav-link {
+      margin: 5px 0;
+  }
+}
