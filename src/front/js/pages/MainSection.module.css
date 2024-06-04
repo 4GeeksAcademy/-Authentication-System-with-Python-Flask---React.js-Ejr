@@ -56,9 +56,7 @@
 .logo2 {
     display: block;
     margin: 0.5rem auto;
-    /* Reducimos el margen superior */
     max-height: 80px;
-    /* Tamaño máximo para pantallas grandes */
     width: auto;
 }
 
@@ -120,7 +118,7 @@
     }
 
     .logo2 {
-        max-height: 45px;
+        max-height: 40px;
         margin: 0 auto;
     }
 }

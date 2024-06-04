@@ -59,17 +59,17 @@ const ImageSlider = () => {
     }, []);
 
     return (
-        <div className="slider-container">
-            {slides.map((slide, index) => (
-                <div key={index} className={`slide ${index === currentIndex ? 'active' : ''}`}>
-                    <img src={slide.image} alt={slide.title} className="slide-image" />
-                    <div className="slide-content">
-                        <h2 className="slide-title">{slide.title}</h2>
-                        <p className="slide-description">{slide.description}</p>
-                        <p className="slide-details">{slide.details}</p>
-                    </div>
+        <div className="slider-container" id="ImageSlider">            
+        {slides.map((slide, index) => (
+            <div key={index} className={`slide ${index === currentIndex ? 'active' : ''}`}>
+                <img src={slide.image} alt={slide.title} className="slide-image" />
+                <div className="slide-content">
+                    <h2 className="slide-title">{slide.title}</h2>
+                    <p className="slide-description">{slide.description}</p>
+                    <p className="slide-details">{slide.details}</p>
                 </div>
-            ))}
+            </div>
+        ))}
             <div className="slider-controls">
                 <button className="prev-btn" onClick={handlePrevClick}>
                     <i className="arrow left"></i>
