@@ -243,6 +243,4 @@ export const WelcomeTeacher = () => {
         </div>
     );
 };
-
-
  

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Context } from '../../store/appContext.js';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+import { CourseCard } from '../Courses/CourseCard.jsx';
 import { UserNavbar } from '../../component/User/UserNavbar.jsx';
 
 export const Trolley = () => {
@@ -34,6 +35,16 @@ export const Trolley = () => {
     return (
         <div>
             <UserNavbar />
+            <button
+                className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasScrolling"
+                aria-controls="offcanvasScrolling"
+                onClick={() => navigate(`/`)}
+            >
+                <FaArrowLeft />
+            </button>
             <div className="container mt-5">
                 <h1>Your Course</h1>
                 <div className="col-3">

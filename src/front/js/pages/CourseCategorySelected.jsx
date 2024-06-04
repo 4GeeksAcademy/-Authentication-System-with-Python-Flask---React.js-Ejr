@@ -1,12 +1,12 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserNavbar } from "../component/User/UserNavbar.jsx";
 import { Context } from "../store/appContext.js";
 import { LuHeart } from "react-icons/lu";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 
 export const CourseCategorySelected = () => {
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context); // Asegurarse de obtener `actions` desde el contexto
     const { titleCategory } = useParams();
     const [categories, setCategories] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -18,23 +18,33 @@ export const CourseCategorySelected = () => {
             setCategories(categorySelected);
         }
     }, [store.category, titleCategory]);
-    
+
     useEffect(() => {
         if (store.course && store.course.access_to_courses) {
             const categoryCourses = store.course.access_to_courses.filter(course => course.categoryTitle === titleCategory);
             setCourses(categoryCourses);
         }
     }, [store.course, titleCategory]);
-    
-    const handleAddTrolley = (title, id, price) => {
-        // Implementa aquí la lógica para añadir el curso al carrito
-        console.log(`Added ${title} with ID ${id} and price ${price} to trolley`);
+
+    const handleAddTrolley = (titleCourse, id, price) => {
+        actions.addCourseToTrolley(titleCourse, id, price);
     };
 
     return (
         <div>
             <UserNavbar />
+                <button
+                    className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasScrolling"
+                    aria-controls="offcanvasScrolling"
+                    onClick={() => navigate(`/`)}
+                >
+                    <FaArrowLeft />
+                </button>
             <div className="container-fluid">
+                <h3>Courses:</h3>
                 <div className="d-flex flex-wrap justify-content-center">
                     {courses.length === 0 ? (
                         "No hay Cursos Cargados"
@@ -69,7 +79,7 @@ export const CourseCategorySelected = () => {
                                     <p className="border rounded-pill py-1 px-1 d-inline-flex text-white" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>Modulos: </p>
 
                                     <div className="d-flex justify-content-end">
-                                        <button className='py-2 px-2 border fs-2 rounded-circle d-flex justify-content-center align-items-center addEdit text-white' onClick={(e) => {e.stopPropagation(); handleAddTrolley(item.title, item.id, item.price);}} style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>
+                                        <button className='py-2 px-2 border fs-2 rounded-circle d-flex justify-content-center align-items-center addEdit text-white' onClick={(e) => { e.stopPropagation(); handleAddTrolley(item.title, item.id, item.price); }} style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}>
                                             <LuHeart />
                                         </button>
                                     </div>

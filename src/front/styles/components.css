@@ -69,7 +69,6 @@
   background-color: aqua;
 }
 
-
 .btnFav {
   background-color: rgb(255, 255, 255);
   border: none;
@@ -148,4 +147,22 @@ nav {
 .transition-up.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+.cardCourseInformation{
+  /* background-color: rgb(254, 246, 200); */
+  background-color: rgb(185, 251, 251);
+}
+
+.cardCourseInformation {
+  border: 1px solid #ffc107;
+}
+
+.course-text {
+  font-family: Vegur, 'PT Sans', Tahoma, sans-serif;
+  color: #000000;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
 }

@@ -31,7 +31,6 @@ export const TeacherNavbar = () => {
         setHovered(true)
         console.log(hovered => hovered + 1)
     }
-
     const handleMouseLeave = () => {
         setHovered(false)
     }

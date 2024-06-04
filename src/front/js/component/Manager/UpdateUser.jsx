@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { IoAddCircleOutline } from "react-icons/io5";

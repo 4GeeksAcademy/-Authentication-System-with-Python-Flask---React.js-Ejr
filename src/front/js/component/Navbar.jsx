@@ -5,9 +5,9 @@ import { Context } from '../store/appContext';
 
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
+    const [hovered, setHovered] = useState()
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
-    const [hovered, setHovered] = useState(false)
 
 
 
@@ -41,7 +41,6 @@ export const Navbar = () => {
         setHovered(true)
         console.log(hovered => hovered + 1)
     }
-
     const handleMouseLeave = () => {
         setHovered(false)
     }
