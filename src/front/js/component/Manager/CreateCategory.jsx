@@ -128,5 +128,3 @@ export const CreateCategory= () => {
         </div>
     );
 };
-
-
