@@ -347,9 +347,9 @@ class Quizzes(db.Model):
             "answerTeacher": self.answer_teacher,
             "answerUser": self.answer_user,
             "approved": self.approved,
-            "approvalPorcentageUser": self.approval_percentage_user,
-            "approvalPorcentageNumber": self.approval_percentage_number,
-            "approvalPorcentage": self.approval_percentage,
+            "approvalPercentageUser": self.approval_percentage_user,
+            "approvalPercentageNumber": self.approval_percentage_number,
+            "approvalPercentage": self.approval_percentage,
             "moduleId": self.module_id
         }
 

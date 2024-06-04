@@ -4,6 +4,7 @@ import { Context } from "../../store/appContext.js";
 import { FaUniversity } from "react-icons/fa";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 
+
 export const WelcomeUser = () => {
     const { store, actions } = useContext(Context);
     const [active, setActive] = useState(false);
@@ -15,7 +16,7 @@ export const WelcomeUser = () => {
 
     const toggleActive = () => {
         setActive(!active);
-    };
+    }; 
 
     // Verificar si store.course y store.course.access_to_course existen
     const accessToCourse = store.course?.access_to_course
@@ -27,7 +28,8 @@ export const WelcomeUser = () => {
             <div>
                 <img src="https://media.licdn.com/dms/image/D4D12AQFAm-bJ8YZRNQ/article-cover_image-shrink_720_1280/0/1658653581725?e=2147483647&v=beta&t=suMPUJnAI7EG2IgsJ4F7fcisAMbvVRXeJlKXJhDbF7Y" className="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
             </div>
-            <div className='text-black fw-bolder rounded-pill' style={{ position: "absolute", top: "20%", width: "100%", color: "white" }}>
+            
+            <div className='text-black fw-bolder rounded-pill' style={{ position: "absolute", top: "20%", width: "100%",  color: "white" }}>
     
                 <h1 className='fs-1 fw-bolder'>Welcome, Student!</h1>
     

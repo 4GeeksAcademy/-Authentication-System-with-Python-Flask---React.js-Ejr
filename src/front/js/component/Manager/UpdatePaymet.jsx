@@ -97,6 +97,7 @@ export const UpdatePayment = () => {
         await actions.updatePayment(payData, payId);
         setCounter(0);
         navigate('/managerView');
+        resetForm(); 
     }
 
     function handlerGoToHome() {
@@ -131,6 +132,19 @@ export const UpdatePayment = () => {
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg2 = typeof store.msg2 === 'string' ? store.msg2 : JSON.stringify(store.msg2);
+
+
+    const resetForm = () => {
+        setPayData({
+            date: '',
+            titleCourse: '',
+            padAmount: '',
+            typePayment: '',
+            courseId: '',
+            userId: ''
+        });
+    };
+
 
     return (
         <div className="container mt-4 w-50">

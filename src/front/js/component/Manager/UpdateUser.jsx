@@ -76,10 +76,28 @@ export const UpdateUser = (Role) => {
         if (userData.name !== '' && userData.email !== '' && userData.phone !== '' && userData.lastName !== '' && userData.numberDocument !== '') {
             await actions.updateUser(userData, selectedRole, userId);
             setCounter(0);
+            resetForm();
         } else {
-            alert('No debe dejar ningun campo vacío');
+            alert('You must not leave any field empty.');
         }
     };
+
+    const resetForm = () => {
+        setUserData({
+            email: '',
+            name: '',
+            lastName: '',
+            username: '',
+            numberDocument: '',
+            phone: '',
+            age: '',
+            gender: '',
+            certificateTeacher: ''
+        });
+        setSelectedRole('');
+        setCertificate('');
+    };
+
 
     useEffect(() => {
         const interval = setInterval(() => {
