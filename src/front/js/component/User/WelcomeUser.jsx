@@ -84,7 +84,7 @@ export const WelcomeUser = () => {
                             </div>
                         </div>
 
-                        {accessToPayment && accessToPayment.length === ''
+                        {accessToPayment && accessToPayment.length === 0
                             ? "No hay payment cargados"
                             : accessToPayment?.map((item) => (
                                 <div className="row w-100" key={item.id}>

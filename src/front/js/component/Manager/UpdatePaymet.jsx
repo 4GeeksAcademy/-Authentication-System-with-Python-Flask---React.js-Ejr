@@ -17,8 +17,9 @@ export const UpdatePayment = () => {
         if (payToUpdate) {
             return {
                 date: payToUpdate.date,
-                titleCourse: payToUpdate.titleCourse,
-                padAmount: payToUpdate.padAmount,
+                currency_code: payToUpdate.currency_code,
+                status: payToUpdate.status,
+                value: payToUpdate.value,
                 typePayment: payToUpdate.typePayment,
                 courseId: payToUpdate.courseId,
                 userId: payToUpdate.userId
@@ -27,8 +28,9 @@ export const UpdatePayment = () => {
         } else {
             return {
                 date: '',
-                titleCourse: '',
-                padAmount: '',
+                currency_code: '',
+                value: '',
+                status: '',
                 typePayment: '',
                 courseId: '',
                 userId: ''
@@ -44,8 +46,9 @@ export const UpdatePayment = () => {
         if (payToUpdate) {
             setCourseData({
                 date: payToUpdate.date,
-                titleCourse: payToUpdate.titleCourse,
-                padAmount: payToUpdate.padAmount,
+                currency_code: payToUpdate.currency_code,
+                status: payToUpdate.status,
+                value: payToUpdate.value,
                 typePayment: payToUpdate.typePayment,
                 courseId: payToUpdate.courseId,
                 userId: payToUpdate.userId
@@ -57,8 +60,9 @@ export const UpdatePayment = () => {
 
     const [payData, setPayData] = useState({
         date: '',
-        titleCourse: '',
-        padAmount: '',
+        currency_code: '',
+        value: '',
+        status: '',
         typePayment: '',
         courseId: '',
         userId: ''
@@ -69,12 +73,12 @@ export const UpdatePayment = () => {
         if (payToUpdate) {
             setPayData({
                 date: payToUpdate.date,
-                titleCourse: payToUpdate.titleCourse,
-                padAmount: payToUpdate.padAmount,
+                currency_code: payToUpdate.currency_code,
+                status: payToUpdate.status,
+                value: payToUpdate.value,
                 typePayment: payToUpdate.typePayment,
                 courseId: payToUpdate.courseId,
-                userId: payToUpdate.userId,
-                managerId: payToUpdate.managerId
+                userId: payToUpdate.userId
             });
         }
     }, [payId, store.payment.payments]);
@@ -175,11 +179,22 @@ export const UpdatePayment = () => {
                 <button onClick={handlerGoToHome}>Regresar</button>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>Title Course</label>
+                        <label>Status</label>
                         <input
                             type="text"
-                            name="titleCourse"
-                            value={payData.titleCourse}
+                            name="status"
+                            value={payData.status}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Currency</label>
+                        <input
+                            type="text"
+                            name="currency_code"
+                            value={payData.currency_code}
                             onChange={handleChange}
                             className="form-control"
                             required
@@ -213,8 +228,8 @@ export const UpdatePayment = () => {
                         <label>Pad Amount</label>
                         <input
                             type="text"
-                            name="padAmount"
-                            value={payData.padAmount}
+                            name="value"
+                            value={payData.value}
                             onChange={handleChange}
                             className="form-control"
                             required
@@ -245,9 +260,9 @@ export const UpdatePayment = () => {
                         <label>Manager ID</label>
                         <select className="form-select" name='managerId' onChange={handleChange} value={payData.managerId} required>
                             <option value="">--Choose--</option>
-                            
+
                             <option value={1}>#{1}/{"Manager"}</option>
-                          
+
                         </select>
                     </div>
 

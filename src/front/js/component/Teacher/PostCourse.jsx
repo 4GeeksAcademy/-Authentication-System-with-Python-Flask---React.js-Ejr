@@ -21,7 +21,7 @@ export const PostCourse = () => {
         titleUrlMedia: `${store.media}`
     });
 
-    
+
     const [media, setMedia] = useState('');
     const [mediaType, setMediaType] = useState('');
     const [loading, setLoading] = useState(false);
@@ -90,6 +90,7 @@ export const PostCourse = () => {
 
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
+    const accessToAddCourse = Array.isArray(store.courseFavorite) ? store.courseFavorite : [];
 
     return (
         <div>
@@ -126,7 +127,7 @@ export const PostCourse = () => {
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 d-flex justify-content-center">
                                         <label htmlFor="postCourse" className="fileUploader btn btn-secondary mb-3 d-flex align-items-center justify-content-center" style={{ borderRadius: '10px', width: '60%', height: '170px' }}>
-                                            <FaRegImages style={{ width: '50%', height: '50%' }}/>
+                                            <FaRegImages style={{ width: '50%', height: '50%' }} />
                                         </label>
                                         <input id="postCourse" type="file" className="d-none" onChange={uploadMedia} />
                                     </div>
@@ -167,19 +168,18 @@ export const PostCourse = () => {
                                 Please enter your information.
                             </div>
                         </div>
-                        <div>
+                        <div className="form-group">
                             <label>Category Title:</label>
-                            <input
-                                type="text"
-                                name="categoryTitle"
-                                value={courseData.categoryTitle}
-                                onChange={handleChange}
-                                id="validationFormCheck1"
-                                className="form-control" />
-                            <div className="invalid-feedback">
-                                Please enter your information.
-                            </div>
+                            <select className="form-select" name='categoryTitle' onChange={handleChange} value={courseData.categoryTitle} required>
+                                <option value="">--Choose--</option>
+                                {
+                                    accessToAddCourse?.map((item, index) => (
+                                        <option key={index} value={item.titleCategory}>{item.titleCategory}/{item.subCategory}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
+
                         <div>
                             <label>Modules Length:</label>
                             <input

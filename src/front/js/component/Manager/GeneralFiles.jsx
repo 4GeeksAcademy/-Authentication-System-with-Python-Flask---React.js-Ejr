@@ -23,7 +23,7 @@ export const GeneralFiles = () => {
     }, [pdfUrl]); 
 
     return (
-        <div>
+        <div className='text-center'>
             <h5>Files:</h5>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {files.map((file, index) => (

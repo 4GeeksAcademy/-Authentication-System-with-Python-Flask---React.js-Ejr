@@ -2,14 +2,15 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, send_file, send_from_directory
-from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes 
+from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes, AccessCourse
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import requests
 import base64
-
+import json
+from sqlalchemy.exc import SQLAlchemyError
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, decode_token
 from datetime import timedelta
 from datetime import datetime
@@ -219,29 +220,35 @@ def get_token_login_teacher():
         email = request.json.get('email')
         password = request.json.get('password')
         if not email or not password:
-            return jsonify({"Error": "Email and Password are required"}), 400
+            return jsonify({"Error": "Invalid Email or Password"}), 400
 
         # Buscar el usuario con ese correo
         login_teacher = Teacher.query.filter_by(email=email).first()
+        
         if not login_teacher:
-            return jsonify({'Error': 'Invalid Email'}), 400
+            return jsonify({'Error': 'Invalid Email or Password'}), 400
 
         # Obtener la contraseña desde la base de datos
         password_from_db = login_teacher.password
 
         # Verificar la contraseña
-        true_or_false = check_password_hash(password_from_db, password)
+        password_valid = check_password_hash(password_from_db, password)
 
-        if true_or_false:
+        if password_valid:
             expires = timedelta(days=1)
             teacher_id = login_teacher.id
             access_token = create_access_token(identity=teacher_id, expires_delta=expires)
             return jsonify({"access_token": access_token, "message": "Log In Successfully"}), 200
         else:
-            return jsonify({"Error":"Invalid Password"}), 400
+            return jsonify({"Error": "Invalid Email or Password"}), 400
         
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        # Manejar errores de la base de datos de manera específica
+        return jsonify({"Error": "Database error", "message": str(e)}), 500
     except Exception as e:
-        return jsonify({"Error": "Teacher not exists in Data Base" , "message": str(e)}), 500
+        # Manejar otros errores internos del servidor
+        return jsonify({"Error": "Internal Server Error", "message": str(e)}), 500
+
 
 @api.route('/login/manager', methods=['POST'])
 def get_token_login_manager():
@@ -398,6 +405,7 @@ def reset_password_manager(token):
     try:
         decoded_token = decode_token(token)
         manager_id = decoded_token['sub']
+
         manager = Manager.query.get(manager_id)
         
         if not manager:
@@ -463,7 +471,7 @@ def show_view_user():
             }
             teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Student Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Welcome to Student"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -511,7 +519,7 @@ def show_view_teacher():
             }
             teacher_list.append(teacher_dict)
 
-        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Access to Teacher Successfully"}), 200
+        return jsonify({"access_to_user": user_list, "access_to_teacher": teacher_list, "message": "Welcome to Teacher"}), 200
         
     else:
         return jsonify({"Error": "Token invalid or not exits"}), 401
@@ -578,7 +586,7 @@ def show_view_manager():
             "access_to_user": user_list,
             "access_to_teacher": teacher_list,
             "access_to_manager": manager_list,
-            "message": "Access to Manager User Successfully"
+            "message": "Welcome to Manager"
         }), 200
         
     else:
@@ -718,7 +726,6 @@ def update_manager(manager_id):
 
 #-----------------------COURSES------------------------#
 @api.route('/create/courses', methods=['POST'])
-
 def post_courses():
     try:
         title =  request.json.get('title')
@@ -740,7 +747,8 @@ def post_courses():
         existing_course = Course.query.filter_by(title=title).first()
         if existing_course:
             return jsonify({"Error":"Title already exists."}), 409
-        
+
+       
         current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         course = Course(title=title, category_title=category_title,modules_length=modules_length, title_certificate_to_get=title_certificate_to_get, price=price,  description=description, assessment=assessment, create_date=current_date_time, title_Teacher=title_Teacher, date_expiration=date_expiration, title_url_media=title_url_media)
         db.session.add(course)
@@ -867,87 +875,6 @@ def delete_module(module_id):
     
     except Exception as err:
         return jsonify({"Error": "Error in module deletion: " + str(err)}), 500
-
-
-#-----------------------PAYMENT------------------------#
-@api.route('/payment/courses', methods=['POST'])
-def create_payment_course():
-    try:
-        data = request.get_json()
-        new_payment = Payment(
-            date=data.get('date'),
-            title_course=data.get('titleCourse'),
-            pad_amount=data.get('padAmount'),
-            type_payment=data.get('typePayment'),
-            user_id=data.get('userId'),
-            course_id=data.get('courseId'),
-            manager_id=1
-        )
-        db.session.add(new_payment)
-        db.session.commit()
-
-        return jsonify({"message": "Payment for course created successfully", "payment": new_payment}), 201
-    
-    except Exception as err:
-        return jsonify({"Error": f"Error creating payment for course: {str(err)}"}), 500
-
-
-@api.route('/payment/courses', methods=['GET'])
-def get_all_payments_courses():
-    try:
-        payments = Payment.query.all()
-        serialized_payments = [payment.serialize() for payment in payments]
-        return jsonify({"payments": serialized_payments}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500 
-
-
-@api.route('/payment/courses/<int:pay_id>', methods=['PUT'])
-def put_payment(pay_id):
-    try:
-
-        title_course = request.json.get('titleCourse')
-        pad_amount = request.json.get('padAmount')
-        type_payment = request.json.get('typePayment')
-        user_id = request.json.get('userId')
-        course_id = request.json.get('courseId')
-        manager_id = request.json.get('managerId')
-
-        if not pay_id:
-            return jsonify({"Error": "Payment is required"}), 400
-        
-        payment = Payment.query.get(pay_id)
-        if not payment:
-            return jsonify({"Error": "Payment not found"}), 404
-        
-        payment.title_course = title_course
-        payment.pad_amount = pad_amount
-        payment.type_payment = type_payment
-        payment.user_id = user_id
-        payment.course_id = course_id
-        payment.manager_id = manager_id
-        
-        db.session.commit()
-
-        return jsonify({"message":  f"User with ID {payment.id} updated successfully", "Payment": payment.serialize()}), 200
-    
-    except Exception as err:
-        return jsonify({"Error": "Error in payment update: " + str(err)}), 500 
-
-
-@api.route('/payment/courses/<int:pay_id>', methods=['DELETE'])
-def delete_payment(pay_id):
-    try:
-        payment = Payment.query.get(pay_id)
-        if not payment:
-            return jsonify({"Error": "Payment not found"}), 404
-        db.session.delete(payment)
-        db.session.commit()
-        return jsonify({"message": "Payment deleted successfully"}), 200
-    except Exception as err:
-        return jsonify({"Error": "Error deleting payment", "details": str(err)}), 500
-
 
 
 #-----------------------QUIZZES------------------------#
@@ -1314,3 +1241,180 @@ def upload_image():
         return jsonify(upload_result), 200
     
     return jsonify({"error": "Upload failed"}), 500
+
+
+#-----------------------PAYMENT------------------------#
+    
+@api.route('/payment/courses', methods=['POST'])
+def create_payment_course():
+    try:
+        data = request.get_json()
+        
+        # Validate the data
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+        
+        # Create new payment record
+        new_payment = Payment(
+            date=data.get('date'),
+            id_paypal=data.get('idPaypal'),
+            currency_code=data.get('currencyCode'),
+            status=data.get('status'),
+            type_payment=data.get('typePayment'),
+            value=data.get('value'),
+            user_id=data.get('userId'),
+            course_id=data.get('courseId'),
+            manager_id=1
+        )
+        db.session.add(new_payment)
+        db.session.commit()
+        
+        # Retrieve the course
+        course_id = data.get('courseId')
+        course = Course.query.get(course_id)
+
+        if not course:
+            return jsonify({"error": "Course not found"}), 404
+        
+        # Generate access token with a 30-day expiration
+        token = create_access_token(identity=course.id, expires_delta=timedelta(days=30))
+
+        return jsonify({"message": "Payment for course created successfully", "payment": new_payment.serialize(), "token": token}), 201
+    
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({"error": "Error creating payment for course", "msg": str(err)}), 500
+
+
+
+@api.route('/payment/courses', methods=['GET'])
+def get_all_payments_courses():
+    try:
+        payments = Payment.query.all()
+        serialized_payments = [payment.serialize() for payment in payments]
+        return jsonify({"payments": serialized_payments}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": f"Error fetching payments for courses: {str(err)}"}), 500 
+
+
+@api.route('/payment/courses/<int:pay_id>', methods=['PUT'])
+def put_payment(pay_id):
+    try:
+
+        value = request.get('value'),
+        type_payment = request.json.get('typePayment')
+        
+        user_id = request.json.get('userId')
+        course_id = request.json.get('courseId')
+        manager_id = request.json.get('managerId')
+
+        if not pay_id:
+            return jsonify({"Error": "Payment is required"}), 400
+        
+        payment = Payment.query.get(pay_id)
+        if not payment:
+            return jsonify({"Error": "Payment not found"}), 404
+        
+        
+        payment.value = value
+        payment.type_payment = type_payment
+        payment.user_id = user_id
+        payment.course_id = course_id
+        payment.manager_id = manager_id
+        
+        db.session.commit()
+
+        return jsonify({"message":  f"User with ID {payment.id} updated successfully", "Payment": payment.serialize()}), 200
+    
+    except Exception as err:
+        return jsonify({"Error": "Error in payment update: " + str(err)}), 500 
+
+
+@api.route('/payment/courses/<int:pay_id>', methods=['DELETE'])
+def delete_payment(pay_id):
+    try:
+        payment = Payment.query.get(pay_id)
+        if not payment:
+            return jsonify({"Error": "Payment not found"}), 404
+        db.session.delete(payment)
+        db.session.commit()
+        return jsonify({"message": "Payment deleted successfully"}), 200
+    except Exception as err:
+        return jsonify({"Error": "Error deleting payment", "details": str(err)}), 500
+
+
+
+#-------------------------------ACCESS TO COURSE-------------------------------#
+@api.route('/view/course/accessAll', methods=['GET'])
+@jwt_required()
+def show_view_accessAllCourse():
+    try:
+        current_token = get_jwt_identity()
+        if current_token:
+            user_list = [user.serialize() for user in User.query.all()]
+            course_list = [course.serialize() for course in Course.query.all()]
+            module_list = [module.serialize() for module in Modules.query.all()]
+            quiz_list = [quiz.serialize() for quiz in Quizzes.query.all()]
+            
+            return jsonify({"access_to_course": course_list, "access_to_module": module_list, "access_to_quiz": quiz_list, "user": user_list, "message": "Courses fetched successfully"}), 200
+        else:
+            return jsonify({"error": "Token invalid or not exists"}), 401
+    
+    except Exception as err:
+        return jsonify({"error": "Error fetching courses or user", "msg": str(err)}), 500
+
+
+@api.route('/accessCourse', methods=['POST'])
+def create_accessCourse():
+    data = request.get_json()
+    user = data.get('user')
+    details = data.get('details')
+
+    if not user:
+        return jsonify({"error": "user is required"}), 400
+
+    new_accessCourse = AccessCourse(user=user, details=json.dumps(details))
+    db.session.add(new_accessCourse)
+    db.session.commit()
+
+    return jsonify(new_accessCourse.serialize()), 201
+
+
+@api.route('/view/course/<int:course_id>/user/<int:user_id>/module/<int:module_id>/quiz/<int:quiz_id>', methods=['GET'])
+@jwt_required()
+def show_view_curso(user_id, course_id, module_id, quiz_id):
+    try:
+        current_token = get_jwt_identity()  # Obtiene la identidad del usuario del token
+        print("Current token identity:", current_token)
+        
+        if current_token:
+            user = User.query.get(user_id)
+            if not user:
+                return jsonify({"Error": "User not found"}), 404
+
+            course = Course.query.filter_by(id=course_id).all()  # Filtra por course_id
+            if not course:
+                return jsonify({"Error": "Course not found"}), 404
+
+            course_list = [c.serialize() for c in course]
+
+            module = Modules.query.filter_by(id=module_id).all()  # Filtra por module_id
+            if not module:
+                return jsonify({"Error": "module not found"}), 404
+
+            module_list = [mod.serialize() for mod in module]
+
+            quiz = Quizzes.query.filter_by(id=quiz_id).all()  # Filtra por quiz_id
+            if not quiz:
+                return jsonify({"Error": "quiz not found"}), 404
+
+            quiz_list = [mod.serialize() for mod in quiz]
+
+            return jsonify({"access_to_course": course_list, "access_to_module": module_list, "access_to_quiz": quiz_list, "user": user.serialize(), "message": "Courses fetched successfully"}), 200
+        
+        else:
+            return jsonify({"Error": "Token invalid or not exists"}), 401
+    
+    except Exception as err:
+        return jsonify({"Error": "Error fetching courses or user", "errorFetching": str(err)}), 500

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Context } from '../../store/appContext.js';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { CourseCard } from '../Courses/CourseCard.jsx';
@@ -10,9 +10,13 @@ export const Trolley = () => {
 
     const [price, setPrice] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Obtener courseId de location.state, si está presente
+    const courseId = location.state?.courseId;
 
     const calculateTotalPrice = () => {
-        return store.courseFavorite.reduce((total, item) => total + item.price, 0);
+        return store?.courseFavorite?.reduce((total, item) => total + item.price, 0);
     };
 
     useEffect(() => {
@@ -21,7 +25,11 @@ export const Trolley = () => {
     }, [store.courseFavorite]);
 
     const handleCheckout = () => {
-        navigate('/paypal', { state: { totalPrice: price } });
+        if (courseId !== undefined) {
+            navigate('/paypal', { state: { totalPrice: price, numberCourse: courseId } });
+        } else {
+            alert('Course ID is not available.');
+        }
     };
 
     return (
@@ -46,7 +54,7 @@ export const Trolley = () => {
                     {store.courseFavorite.length === 0 ? "No hay Cursos Cargados" :
                         store.courseFavorite.map((item, index) => (
                             <div key={index}>
-                                <table className="table mx-auto ">
+                                <table className="table mx-auto">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -70,6 +78,7 @@ export const Trolley = () => {
                         ))
                     }
                 </div>
+
                 <div className="col-12 text-right">
                     <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
                 </div>
