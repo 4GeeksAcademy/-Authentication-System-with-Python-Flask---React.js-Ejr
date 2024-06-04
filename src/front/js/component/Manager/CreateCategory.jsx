@@ -11,9 +11,7 @@ export const CreateCategory= () => {
     const [categoryData, setCategoryData] = useState({
         titleCategory: '',
         subCategory: '',
-        categoryLength: '',
-        courseMoreCurrent: '',
-        courseMoreSold: ''
+        categoryLength: ''
     });
 
     const handleChange = (e) => {
@@ -26,7 +24,7 @@ export const CreateCategory= () => {
 
     async function handlerCreateCategory(e) {
         e.preventDefault();
-        if (categoryData.titleCategory !== '' && categoryData.subCategory !== '' && categoryData.categoryLength !== '' && categoryData.courseMoreCurrent !== '' && categoryData.courseMoreSold !== '') {
+        if (categoryData.titleCategory !== '' && categoryData.subCategory !== '' ) {
             await actions.createCategory(categoryData)
             setCounter(0)
         } else {
@@ -120,32 +118,7 @@ export const CreateCategory= () => {
                                 Please enter your information.
                             </div>
                         </div>
-                        <div>
-                            <label>Course More Current:</label>
-                            <input
-                                type="text"
-                                name="courseMoreCurrent"
-                                value={categoryData.courseMoreCurrent}
-                                onChange={handleChange}
-                                id="validationFormCheck1"
-                                className="form-control" />
-                            <div className="invalid-feedback">
-                                Please enter your information.
-                            </div>
-                        </div>
-                        <div>
-                            <label>Courser More Sold:</label>
-                            <input
-                                type="number"
-                                name="courseMoreSold"
-                                value={categoryData.courseMoreSold}
-                                onChange={handleChange}
-                                id="validationFormCheck1"
-                                className="form-control" />
-                            <div className="invalid-feedback">
-                                Please enter your information.
-                            </div>
-                        </div>
+                       
                        
                         <button className="btn btn-primary my-3" type='submit'>Create Category</button>
                     </form>

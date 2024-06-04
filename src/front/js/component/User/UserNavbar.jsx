@@ -7,7 +7,8 @@ import { Message } from '../Message.jsx'
 
 export const UserNavbar = () => {
     const { store, actions } = useContext(Context);
-    const navigate = useNavigate();
+    const navigate = useNavigate();setHovered
+    const [ hovered, setHovered] = useState(false)
     const [loading, setLoading] = useState(false); // Estado para controlar la visualización del spinner
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);

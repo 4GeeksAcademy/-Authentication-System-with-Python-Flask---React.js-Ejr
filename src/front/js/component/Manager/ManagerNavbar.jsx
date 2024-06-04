@@ -6,7 +6,8 @@ import { Context } from '../../store/appContext';
 import { Message } from '../Message.jsx'
 
 export const ManagerNavbar = () => {
-    const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context)
+    const [ hovered, setHovered] = useState(false)
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
     const navigate = useNavigate();

@@ -84,10 +84,10 @@ export const ManagerDashboard = () => {
         setButtonSelected(<ManagerCourses />)
     }
 
-   /*  const handleMyModule = () => {
+    const handleMyModule = () => {
         setButtonSelected(<ModuleCourse />)
         actions.getModules()
-    } */
+    } 
 
     const handleMyQuizzes = () => {
         setButtonSelected(<QuizzesCourse />)
@@ -223,7 +223,7 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" disabled>
+                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyModule}>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>
