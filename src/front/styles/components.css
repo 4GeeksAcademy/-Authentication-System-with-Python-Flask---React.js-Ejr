@@ -132,3 +132,20 @@ nav {
   background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
   z-index: 1000; /* Colocar el spinner por encima de todo */
 }
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-size: 250%;
+}
+
+.transition-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.transition-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}

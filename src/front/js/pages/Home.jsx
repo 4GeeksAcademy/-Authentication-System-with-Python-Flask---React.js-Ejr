@@ -21,7 +21,7 @@ export const Home = () => {
             <Navbar />
             <Carousel />
             <CoursesContainer />
-            <Category />
+            {/* <Category /> */}
             <Suscribe />
         </div>
     );
