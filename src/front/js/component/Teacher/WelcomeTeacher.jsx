@@ -17,11 +17,14 @@ export const WelcomeTeacher = () => {
         setActive(!active);
     };
 
+    const accessToCourse = store?.course?.access_to_course
+    const accessToUser = store?.user?.access_to_user
+
     return (
         <div className="container-fluid" style={{ position: "relative", textAlign: "center", height: "100vh", padding: 0, margin: 0 }}>
             
             <div>
-                <img src="https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2023/05/05152249/Roles-and-Responsibilities-of-a-Project-Manager.jpg" class="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
+                <img src="https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2023/05/05152249/Roles-and-Responsibilities-of-a-Project-Manager.jpg" className="img-fluid opacity-50" alt="Manager" style={{ height: "50vh", width: "100%", objectFit: "cover" }} />
             </div>
             <div className='text-black fw-bolder rounded-pill' style={{ position: "absolute", top: "20%", width: "100%", color: "white" }}>
 
@@ -80,9 +83,9 @@ export const WelcomeTeacher = () => {
                             </div>
                         </div>
 
-                        {store.user && store.user.access_to_user && store.user.access_to_user.length === 0
+                        {accessToUser && accessToUser.length === 0
                             ? "No hay user cargados"
-                            : store.user.access_to_user.map((item) => (
+                            : accessToUser?.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div
@@ -182,9 +185,9 @@ export const WelcomeTeacher = () => {
                             </div>
                         </div>
 
-                        { store.course && store.course.access_to_courses && store.course.access_to_courses.length === 0
+                        { accessToCourse && accessToCourse.length === 0
                             ? "No hay course cargados"
-                            : store.course.access_to_courses.map((item) => (
+                            : accessToCourse?.map((item) => (
                                 <div className="row w-100" key={item.id}>
                                     <div className="col-12">
                                         <div
@@ -239,6 +242,4 @@ export const WelcomeTeacher = () => {
         </div>
     );
 };
-
-
  

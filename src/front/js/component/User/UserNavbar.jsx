@@ -42,7 +42,7 @@ export const UserNavbar = () => {
                                 </button>
                             </div>
                             <div>
-                                <div className="collapse position-absolute top-0 start-0" style={{ marginLeft: '10%' }} id="coursesCategories">
+                                <div className="collapse position-absolute top-0 start-0" style={{ marginLeft: '7%', zIndex:1080 }} id="coursesCategories">
                                     <div className="card card-body">
                                         {store.category && store.category.length > 0 ? (
                                             store.category.map((item, index) => {

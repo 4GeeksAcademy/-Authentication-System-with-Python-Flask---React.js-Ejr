@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -144,6 +144,16 @@ export const UpdatePayment = () => {
 
     return (
         <div className="container mt-4 w-50">
+            <button
+          className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          onClick={() => navigate(`/`)}
+        >
+           <FaArrowLeft />
+        </button>
             <div className='d-flex justify-content-center position-fixed position-absolute top-0 start-50 translate-middle-x'>
                 {(msgError === '' && msg2 === '') ? (
                     <div className={`text-center mt-3 fs-4 fw-bold w-100 ${(counter >= 1 && counter <= 5) ? "alert alert-danger" : "d-none"}`}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext.js';
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import { CourseCard } from '../Courses/CourseCard.jsx';
 import { UserNavbar } from '../../component/User/UserNavbar.jsx';
 
@@ -27,6 +27,16 @@ export const Trolley = () => {
     return (
         <div>
             <UserNavbar />
+            <button
+                className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasScrolling"
+                aria-controls="offcanvasScrolling"
+                onClick={() => navigate(`/`)}
+            >
+                <FaArrowLeft />
+            </button>
             <div className="container mt-5">
                 <h1>Your Course</h1>
                 <div className="col-3">
@@ -34,7 +44,7 @@ export const Trolley = () => {
                 </div>
                 <div className="col-9">
                     {store.courseFavorite.length === 0 ? "No hay Cursos Cargados" :
-                    store.courseFavorite.map((item, index) => (
+                        store.courseFavorite.map((item, index) => (
                             <div key={index}>
                                 <table className="table mx-auto ">
                                     <thead>
