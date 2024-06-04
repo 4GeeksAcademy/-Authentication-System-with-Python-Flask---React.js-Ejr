@@ -243,4 +243,3 @@ export const WelcomeTeacher = () => {
         </div>
     );
 };
- 

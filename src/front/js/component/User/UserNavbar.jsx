@@ -4,10 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 
 import { Message } from '../Message.jsx'
+import { FaHeart } from 'react-icons/fa';
 
 export const UserNavbar = () => {
     const { store, actions } = useContext(Context);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); setHovered
+    const [hovered, setHovered] = useState(false)
     const [loading, setLoading] = useState(false); // Estado para controlar la visualización del spinner
     const msgError = typeof store.error === 'string' ? store.error : JSON.stringify(store.error);
     const msg = typeof store.msg === 'string' ? store.msg : JSON.stringify(store.msg);
@@ -110,32 +112,46 @@ export const UserNavbar = () => {
                                 )}
                             </div>
 
-                            <button
-                                type="button"
-                                className="btnFav dropdown-toggle text-center mx-2 px-3 py-2"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                data-bs-auto-close="true"
-                            >
-                                <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#165D95" }}></i>
-                                Trolley <span className={`badge text-bg-${accessToAddCourse.length === 0 ? 'secondary' : 'danger'}`}>{accessToAddCourse.length}</span>
-                            </button>
-                            <div>
-                                {
-                                    accessToAddCourse.length === 0
-                                        ? <p className='letter'></p>
-                                        : (
-                                            <ul className="dropdown-menu">
-                                                {accessToAddCourse.map((trolley, index) => (
-                                                    <li key={index}
-                                                        className="list-group-item"
-                                                    >{trolley.titleCourse} / {trolley.price} / {trolley.date}</li>
-                                                ))}
-                                                <button onClick={handleGoToTrolley}>More</button>
-                                            </ul>
-                                        )
-                                }
+                            <div className="dropdown">
+                            
+                                 {FaHeart} 
+
+                                <button
+                                    type="button"
+                                    className="btn btnFav dropdown-toggle text-center mx-2 px-3 py-2"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    data-bs-auto-close="true"
+                                >
+                                    Favorites{' '}
+                                    <span className={`badge rounded-pill text-bg-${accessToAddCourse.length === 0 ? 'secondary' : 'light'}`}>
+                                        <FaHeart style={{ color: '#fa0505' }} /> {accessToAddCourse.length}
+                                    </span>
+                                </button>
+
+                                <div className="dropdown-menu" >
+                                    {accessToAddCourse.length === 0 ? (
+                                        <p className='dropdown-item'>Not course in Trolley</p>
+                                    ) : (
+                                        <>
+                                            {accessToAddCourse.map((trolley, index) => (
+                                                <div key={index} className="dropdown-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <span>{trolley.titleCourse}</span>
+                                                        {/* <span>{trolley.price}</span> */}
+                                                        {/* <span>{trolley.date}</span> */}
+                                                    </div>
+                                                    <button className="btn-close ms-3" onClick={() => actions.deleteTrolley(trolley.id)}>
+
+                                                    </button>
+                                                </div>
+                                            ))}
+                                            {/* <button className="btn btn-link" onClick={handleGoToTrolley}>More</button> */}
+                                        </>
+                                    )}
+                                </div>
                             </div>
+
 
                             <button
                                 type="button"

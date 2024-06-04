@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, send_file, send_from_directory
-from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes, AccessCourse
+from api.models import db, User, Manager, Teacher, Course, Category, Orders, Trolley, Payment, Modules, Quizzes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -1169,8 +1169,6 @@ def post_category():
         title_category = data.get('titleCategory')
         sub_category = data.get('subCategory')
         category_length = data.get('categoryLength')
-        course_more_current = data.get('courseMoreCurrent')
-        course_more_sold = data.get('courseMoreSold')
         user_id = data.get('userId')
         manager_id = data.get('managerId')
         teacher_id = data.get('teacherId')
@@ -1183,8 +1181,6 @@ def post_category():
             title_category=title_category,
             sub_category=sub_category,
             category_length=category_length,
-            course_more_current=course_more_current,
-            course_more_sold=course_more_sold,
             user_id=user_id,
             manager_id=manager_id,
             teacher_id=teacher_id,
@@ -1365,7 +1361,7 @@ def show_view_accessAllCourse():
         return jsonify({"error": "Error fetching courses or user", "msg": str(err)}), 500
 
 
-@api.route('/accessCourse', methods=['POST'])
+""" @api.route('/accessCourse', methods=['POST'])
 def create_accessCourse():
     data = request.get_json()
     user = data.get('user')
@@ -1378,7 +1374,7 @@ def create_accessCourse():
     db.session.add(new_accessCourse)
     db.session.commit()
 
-    return jsonify(new_accessCourse.serialize()), 201
+    return jsonify(new_accessCourse.serialize()), 201 """
 
 
 @api.route('/view/course/<int:course_id>/user/<int:user_id>/module/<int:module_id>/quiz/<int:quiz_id>', methods=['GET'])

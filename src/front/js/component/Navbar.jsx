@@ -3,6 +3,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
+import { FaHeart } from 'react-icons/fa';
+
+
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
     const [hovered, setHovered] = useState()
@@ -109,35 +112,50 @@ export const Navbar = () => {
                                     Panel
                                 </button>
                             </Link>
+                            
                             <div className="dropdown">
+
+                                  {FaHeart} 
+
                                 <button
                                     type="button"
-                                    className="btnFav dropdown-toggle text-center mx-2 px-3 py-2"
+                                    className="btn btnFav dropdown-toggle text-center mx-2 px-3 py-2"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                     data-bs-auto-close="true"
                                 >
-                                    <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#165D95" }}></i>
-                                    Trolley <span className={`badge text-bg-${accessToAddCourse.length === 0 ? 'secondary' : 'danger'}`}>{accessToAddCourse.length}</span>
+                                    Favorites{' '}
+                                    <span className={`badge rounded-pill text-bg-${accessToAddCourse.length === 0 ? 'secondary' : 'light'}`}>
+                                        <FaHeart style={{ color: '#fa0505' }} /> {accessToAddCourse.length}
+                                    </span>
                                 </button>
-                                <div>
-                                    {
-                                        accessToAddCourse.length === 0
-                                            ? <p className='letter'></p>
-                                            : (
-                                                <ul className="dropdown-menu">
-                                                    {accessToAddCourse.map((trolley, index) => (
-                                                        <li key={index}
-                                                            className="list-group-item"
-                                                        >{trolley.titleCourse} / {trolley.price} / {trolley.date}</li>
-                                                    ))}
-                                                    <button onClick={handleGoToTrolley}>More</button>
-                                                </ul>
-                                            )
-                                    }
-                                </div>
 
+
+                                <div className="dropdown-menu" >
+                                    {accessToAddCourse.length === 0 ? (
+                                        <p className='dropdown-item'>Not course in Trolley</p>
+                                    ) : (
+                                        <>
+                                            {accessToAddCourse.map((trolley, index) => (
+                                                <div key={index} className="dropdown-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <span>{trolley.titleCourse}</span>
+                                                        {/* <span>{trolley.price}</span> */}
+                                                        {/* <span>{trolley.date}</span> */}
+                                                    </div >
+                                                    <button className="btn-close ms-3 " onClick={() => actions.deleteTrolley(trolley.id)}>
+
+                                                    </button>
+                                                </div>
+                                            ))}
+                                            <div className="text-center">
+                                                <button className="btnFav mx-1" onClick={handleGoToTrolley}>More</button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                             </div>
+
                             <button
                                 type="button"
                                 className="btnFav text-center mx-2 px-3 py-2"

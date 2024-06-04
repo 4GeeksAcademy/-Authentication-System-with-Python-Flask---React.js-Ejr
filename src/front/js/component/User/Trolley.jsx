@@ -34,55 +34,52 @@ export const Trolley = () => {
 
     return (
         <div>
-            <UserNavbar />
-            <button
-                className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling"
-                onClick={() => navigate(`/`)}
-            >
-                <FaArrowLeft />
-            </button>
-            <div className="container mt-5">
-                <h1>Your Course</h1>
-                <div className="col-3">
-                    <h1><strong>$</strong>{price}</h1>
-                </div>
+        <UserNavbar />
+        <button
+            className="btnFav d-flex justify-content-center align-items-center top-50 end-0 translate-middle-y ms-3 mt-3"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasScrolling"
+            aria-controls="offcanvasScrolling"
+            onClick={() => navigate(`/`)}
+        >
+            <FaArrowLeft />
+        </button>
+        <div className="container mt-5">
+            <h1 className="text-center mb-5">Favorite courses</h1>
+            <div className="row justify-content-center">
                 <div className="col-9">
-                    {store.courseFavorite.length === 0 ? "No hay Cursos Cargados" :
-                        store.courseFavorite.map((item, index) => (
-                            <div key={index}>
-                                <table className="table mx-auto">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Title Course</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">EDIT</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">{item.id}</th>
-                                            <td>{item.titleCourse}</td>
-                                            <td>{item.price}</td>
-                                            <td>{item.date}</td>
-                                            <td onClick={() => actions.deleteTrolley(item.id)}>{"Del"}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        ))
-                    }
-                </div>
-
-                <div className="col-12 text-right">
-                    <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
+                    {store.courseFavorite.length === 0 ? (
+                        <p className="text-center">No hay Cursos Cargados</p>
+                    ) : (
+                        <table className="table table-striped table-hover my-5">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title Course</th>
+                                    {/* <th scope="col">Price</th> */}
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {store.courseFavorite.map((item, index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{item.id}</th>
+                                        <td>{item.titleCourse}</td>
+                                        {/* <td>{item.price}</td> */}
+                                        <td>{item.date}</td>
+                                        <td>
+                                            <button className="btn btn-sm btn-danger" onClick={() => actions.deleteTrolley(item.id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
             </div>
         </div>
+    </div>
     );
 };

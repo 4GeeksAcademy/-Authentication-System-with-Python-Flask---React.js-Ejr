@@ -36,7 +36,7 @@ export const CoursesContainer = () => {
     return (
         <div className="container-fluid position-relative d-flex flex-column justify-content-around align-items-center" style={{ height: "100vh" }}>
             <div className="d-flex align-items-center">
-                <h1 className="poppins-extrabold-italic lh-lg fw-light">Don't you know it yet? Learning is fun! Let's have fun together acquiring new knowledge</h1>
+                <h1 className="text-center poppins-extrabold-italic lh-lg fw-light text-uppercase text-dark">Don't you know it yet? Learning is fun! Let's have fun together acquiring new knowledge</h1>
             </div>
             <div className="container-fluid position-relative">
                 <button className="btnFav d-flex justify-content-center align-items-center position-absolute top-50 start-0 translate-middle-y" onClick={handlePrev} style={{ zIndex: 10 }}>

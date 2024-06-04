@@ -4,16 +4,16 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(250), unique=True, nullable=False)
-    password = db.Column(db.String(1024), unique=False, nullable=False)
+    email = db.Column(db.String(9999999), unique=True, nullable=False)
+    password = db.Column(db.String(9999999), unique=False, nullable=False)
     is_user = db.Column(db.Boolean(), unique=False, nullable=False)
-    name = db.Column(db.String(250), nullable=False)
-    last_name = db.Column(db.String(250), nullable=False)
-    username = db.Column(db.String(250), unique=True, nullable=False)
-    number_document = db.Column(db.String(250), unique=True, nullable=False)
-    phone = db.Column(db.String(250), nullable=False)
+    name = db.Column(db.String(9999999), nullable=False)
+    last_name = db.Column(db.String(9999999), nullable=False)
+    username = db.Column(db.String(9999999), unique=True, nullable=False)
+    number_document = db.Column(db.String(9999999), unique=True, nullable=False)
+    phone = db.Column(db.String(9999999), nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(250), nullable=False)
+    gender = db.Column(db.String(9999999), nullable=False)
 
     def __repr__(self):
         return f'<User {self.id}>'
@@ -35,13 +35,13 @@ class User(db.Model):
 
 class Manager(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(250), unique=True, nullable=False)
-    password = db.Column(db.String(1024), unique=False, nullable=False)
+    email = db.Column(db.String(9999999), unique=True, nullable=False)
+    password = db.Column(db.String(9999999), unique=False, nullable=False)
     is_manager = db.Column(db.Boolean(), unique=False, nullable=False)
-    name = db.Column(db.String(250), nullable=False)
-    last_name = db.Column(db.String(250), nullable=False)
-    phone = db.Column(db.String(250), nullable=False)
-    number_document = db.Column(db.String(250), unique=True, nullable=False)
+    name = db.Column(db.String(9999999), nullable=False)
+    last_name = db.Column(db.String(9999999), nullable=False)
+    phone = db.Column(db.String(9999999), nullable=False)
+    number_document = db.Column(db.String(9999999), unique=True, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
@@ -69,17 +69,17 @@ class Manager(db.Model):
 
 class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(250), unique=True, nullable=False)
-    password = db.Column(db.String(1024), nullable=False)
+    email = db.Column(db.String(9999999), unique=True, nullable=False)
+    password = db.Column(db.String(9999999), nullable=False)
     is_teacher = db.Column(db.Boolean(), nullable=False)
-    name = db.Column(db.String(250), nullable=False)
-    last_name = db.Column(db.String(250), nullable=False)
-    username = db.Column(db.String(250), unique=True, nullable=False)
-    number_document = db.Column(db.String(250), unique=True, nullable=False)
-    phone = db.Column(db.String(250), nullable=False)
+    name = db.Column(db.String(9999999), nullable=False)
+    last_name = db.Column(db.String(9999999), nullable=False)
+    username = db.Column(db.String(9999999), unique=True, nullable=False)
+    number_document = db.Column(db.String(9999999), unique=True, nullable=False)
+    phone = db.Column(db.String(9999999), nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(250), nullable=False)
-    certificate_teacher = db.Column(db.String(250), nullable=True)
+    gender = db.Column(db.String(9999999), nullable=False)
+    certificate_teacher = db.Column(db.String(9999999), nullable=True)
 
     #relations
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -107,17 +107,17 @@ class Teacher(db.Model):
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(250), nullable=False)
-    category_title = db.Column(db.String(250), nullable=False)
+    title = db.Column(db.String(9999999), nullable=False)
+    category_title = db.Column(db.String(9999999), nullable=False)
     modules_length = db.Column(db.Integer, nullable=False)
-    title_certificate_to_get = db.Column(db.String(250), nullable=False)
+    title_certificate_to_get = db.Column(db.String(9999999), nullable=False)
     price = db.Column(db.Integer, nullable=False)  
     description = db.Column(db.String(1000000), nullable=False)
     assessment = db.Column(db.Integer, nullable=True) 
-    create_date = db.Column(db.String(300), unique=False, nullable=True)
-    title_Teacher = db.Column(db.String(250), nullable=False)
-    date_expiration = db.Column(db.String(300), unique=False, nullable=True)
-    title_url_media = db.Column(db.String(1024), nullable=False) 
+    create_date = db.Column(db.String(9999999), unique=False, nullable=True)
+    title_Teacher = db.Column(db.String(9999999), nullable=False)
+    date_expiration = db.Column(db.String(9999999), unique=False, nullable=True)
+    title_url_media = db.Column(db.String(9999999), nullable=False) 
 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -154,12 +154,10 @@ class Course(db.Model):
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title_category = db.Column(db.String(250), nullable=False)
-    sub_category = db.Column(db.String(250), nullable=False)
-    category_length = db.Column(db.String(300), nullable=False)
-    create_date = db.Column(db.String(300), unique=False, nullable=True)
-    course_more_current = db.Column(db.String(250), nullable=False)
-    course_more_sold = db.Column(db.String(250), nullable=False)  
+    title_category = db.Column(db.String(9999999), nullable=False)
+    sub_category = db.Column(db.String(9999999), nullable=False)
+    category_length = db.Column(db.String(9999999), nullable=False)
+    create_date = db.Column(db.String(9999999), unique=False, nullable=True) 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     manager_id = db.Column(db.Integer, db.ForeignKey('manager.id'), nullable=True)
@@ -181,27 +179,25 @@ class Category(db.Model):
             "userId": self.user_id,
             "managerId": self.manager_id,
             "teacherId": self.teacher_id,
-            "categoryLength": self.category_length,
-            "course_more_current": self.course_more_current,
-            "course_more_sold": self.course_more_sold
+            "categoryLength": self.category_length
         }
 
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title_order = db.Column(db.String(250), nullable=False)
+    title_order = db.Column(db.String(9999999), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.String(250), nullable=False)
-    total = db.Column(db.String(250), nullable=False)
+    date = db.Column(db.String(9999999), nullable=False)
+    total = db.Column(db.String(9999999), nullable=False)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=True)
 
-    course_name = db.Column(db.String(300), nullable=True)
-    teacher_name = db.Column(db.String(300), nullable=True)
-    teacher_last_name = db.Column(db.String(300), nullable=True)
-    user_name = db.Column(db.String(300), nullable=True)
-    user_last_name = db.Column(db.String(300), nullable=True)
+    course_name = db.Column(db.String(9999999), nullable=True)
+    teacher_name = db.Column(db.String(9999999), nullable=True)
+    teacher_last_name = db.Column(db.String(9999999), nullable=True)
+    user_name = db.Column(db.String(9999999), nullable=True)
+    user_last_name = db.Column(db.String(9999999), nullable=True)
 
     # Relations
     user = db.relationship('User', backref=db.backref('orders', lazy=True))
@@ -229,9 +225,9 @@ class Orders(db.Model):
 
 class Trolley(db.Model):
     id = db.Column (db.Integer, primary_key=True)
-    title_course = db.Column(db.String(250), nullable=False)
+    title_course = db.Column(db.String(9999999), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.String(250), unique=False, nullable=False)
+    date = db.Column(db.String(9999999), unique=False, nullable=False)
 
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -257,12 +253,12 @@ class Trolley(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    id_paypal = db.Column(db.String(250), nullable=True)
-    date = db.Column(db.String(250), unique=False, nullable=False)
-    status = db.Column(db.String(250), nullable=False)
-    currency_code = db.Column(db.String(250), nullable=False)
-    value = db.Column(db.String(250), nullable=False)
-    type_payment = db.Column(db.String(250), nullable=False) 
+    id_paypal = db.Column(db.String(9999999), nullable=True)
+    date = db.Column(db.String(9999999), unique=False, nullable=False)
+    status = db.Column(db.String(9999999), nullable=False)
+    currency_code = db.Column(db.String(9999999), nullable=False)
+    value = db.Column(db.String(9999999), nullable=False)
+    type_payment = db.Column(db.String(9999999), nullable=False) 
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=True)
@@ -293,15 +289,15 @@ class Payment(db.Model):
 class Modules(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description_content = db.Column(db.String(500), nullable=False)
-    title = db.Column(db.String(250), nullable=False)
-    url_video = db.Column(db.String(1024), nullable=False)  
-    video_id = db.Column(db.String(250), nullable=True)
-    image_id = db.Column(db.String(250), nullable=True)
-    total_video = db.Column(db.String(250), nullable=True)
-    date_create = db.Column(db.String(250), nullable=False)
-    token_module = db.Column(db.String(1024), nullable=True)
+    title = db.Column(db.String(9999999), nullable=False)
+    url_video = db.Column(db.String(9999999), nullable=False)  
+    video_id = db.Column(db.String(9999999), nullable=True)
+    image_id = db.Column(db.String(9999999), nullable=True)
+    total_video = db.Column(db.String(9999999), nullable=True)
+    date_create = db.Column(db.String(9999999), nullable=False)
+    token_module = db.Column(db.String(9999999), nullable=True)
 
-    #String(250)ns
+    #String(9999999)ns
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     course = db.relationship('Course', backref=db.backref('modules', lazy=True))
 
@@ -324,7 +320,7 @@ class Modules(db.Model):
     
 class Quizzes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    question_title = db.Column(db.String(250), nullable=False)
+    question_title = db.Column(db.String(9999999), nullable=False)
     answer_teacher = db.Column(db.String(800), nullable=False)
     answer_user = db.Column(db.Boolean(), unique=False, nullable=False)
     approved = db.Column(db.Boolean(), unique=False, nullable=False)
@@ -353,9 +349,9 @@ class Quizzes(db.Model):
             "moduleId": self.module_id
         }
 
-class AccessCourse(db.Model):
+""" class AccessCourse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.String(250), nullable=False)
+    user = db.Column(db.String(9999999), nullable=False)
     details = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
@@ -367,4 +363,4 @@ class AccessCourse(db.Model):
             "user": self.user,
             "details": self.details
         }
-
+ """
