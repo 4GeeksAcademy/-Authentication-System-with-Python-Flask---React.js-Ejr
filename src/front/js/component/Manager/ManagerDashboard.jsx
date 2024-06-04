@@ -217,7 +217,7 @@ export const ManagerDashboard = () => {
                             </div>
                         </button>
 
-                        <button className="btn btn-outline-dark my-2 w-75" onClick={handleMyModule}>
+                        <button className="btn btn-outline-dark my-2 w-75" disabled>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <div className='p-1 mx-1 border fs-3 rounded-circle d-flex justify-content-center align-items-center'>

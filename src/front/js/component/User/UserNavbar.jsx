@@ -48,7 +48,7 @@ export const UserNavbar = () => {
         navigate('/')
     }
 
-    
+
     const userToLogin = JSON.parse(localStorage.getItem("userToLogin"));
     const accessToAddCourse = Array.isArray(store.courseFavorite) ? store.courseFavorite : [];
 
@@ -106,39 +106,37 @@ export const UserNavbar = () => {
                                         ) : null
                                     ))
                                 ) : (
-                                    <p className="text-center">No hay</p>
+                                    <p className="text-center">Not user</p>
                                 )}
                             </div>
-                            
-                            <div className="dropdown">
-                                <button
-                                    type="button"
-                                    className="btnFav dropdown-toggle text-center mx-2 px-3 py-2"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    data-bs-auto-close="true"
-                                >
-                                    <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#165D95" }}></i>
-                                    Trolley <span className={`badge text-bg-${accessToAddCourse.length === 0 ? 'secondary' : 'danger'}`}>{accessToAddCourse.length}</span>
-                                </button>
-                                <div>
-                                    {
-                                        accessToAddCourse.length === 0
-                                            ? <p className='letter'>Not course in Trolley</p>
-                                            : (
-                                                <ul className="dropdown-menu">
-                                                    {accessToAddCourse.map((trolley, index) => (
-                                                        <li key={index}
-                                                            className="list-group-item"
-                                                        >{trolley.titleCourse} / {trolley.price} / {trolley.date}</li>
-                                                    ))}
-                                                    <button onClick={handleGoToTrolley}>More</button>
-                                                </ul>
-                                            )
-                                    }
-                                </div>
 
+                            <button
+                                type="button"
+                                className="btnFav dropdown-toggle text-center mx-2 px-3 py-2"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                data-bs-auto-close="true"
+                            >
+                                <i className="fa-solid fa-cart-shopping fa-fade" style={{ color: "#165D95" }}></i>
+                                Trolley <span className={`badge text-bg-${accessToAddCourse.length === 0 ? 'secondary' : 'danger'}`}>{accessToAddCourse.length}</span>
+                            </button>
+                            <div>
+                                {
+                                    accessToAddCourse.length === 0
+                                        ? <p className='letter'></p>
+                                        : (
+                                            <ul className="dropdown-menu">
+                                                {accessToAddCourse.map((trolley, index) => (
+                                                    <li key={index}
+                                                        className="list-group-item"
+                                                    >{trolley.titleCourse} / {trolley.price} / {trolley.date}</li>
+                                                ))}
+                                                <button onClick={handleGoToTrolley}>More</button>
+                                            </ul>
+                                        )
+                                }
                             </div>
+
                             <button
                                 type="button"
                                 className="btnFav text-center mx-2 px-3 py-2"
