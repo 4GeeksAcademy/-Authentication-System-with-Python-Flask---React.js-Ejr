@@ -3,6 +3,9 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .card {
@@ -32,4 +35,8 @@
 .description {
     font-size: 12px;
     color: #8b8b8b;
+}
+
+.titleComponent {
+    color: var(--color-green);
 }

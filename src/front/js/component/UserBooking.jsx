@@ -26,6 +26,8 @@ const UserBooking = () => {
         if (store.cancelBooking.message) {
             setModalMessage(store.cancelBooking.message);
             setModalVisible(true);
+            setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
         }else{
             setModalMessage(store.cancelBooking.error); 
             setModalVisible(true);

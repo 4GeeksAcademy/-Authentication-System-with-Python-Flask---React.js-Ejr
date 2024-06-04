@@ -29,3 +29,7 @@
 .tableContainer .table tr:nth-child(even) {
   background-color: #E6E6E9; /* Odd row background color */
 }
+
+.titleComponent {
+  color: var(--color-green);
+}

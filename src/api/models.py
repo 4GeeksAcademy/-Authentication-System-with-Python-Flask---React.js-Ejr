@@ -334,6 +334,7 @@ class Payment(db.Model):
             "currency": self.currency,
             "payment_method": self.payment_method,
             "transaction_reference": self.transaction_reference,
+            "description": self.description,
             "card_number": self.card_number_last4,
             "card_type": self.card_type,
             "cardholder_name": self.cardholder_name,

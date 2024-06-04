@@ -77,6 +77,7 @@ const SendMessage = () => {
       setTitle('');
       setContent('');
       setRecipients([]);
+      setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
     } else {
       setMessage(data.error || 'Failed to send message');
     }
@@ -84,13 +85,13 @@ const SendMessage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Send Message</h1>
+      <h1 className={styles.titleComponent}>Send Messages</h1>
       <button onClick={toggleModal} className={styles.button}>Select Recipients</button>
       {isModalOpen && (
         <div>
           <div className={styles.overlay} onClick={toggleModal}></div>
           <div className={styles.modal}>
-            <h3>Select Recipients</h3>
+            <h3 className={styles.titleComponent}>Select Recipients</h3>
             <input
               type="text"
               placeholder="Search by email"

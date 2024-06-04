@@ -11,7 +11,10 @@ const ImageGallery = () => {
     }, []);
 
     return (
+        <>
+        <h1 className={styles.titleComponent}>movement gallery</h1>
         <div className={styles.galleryContainer}>
+            <></>
             {store.images.map((image, index) => (
                 <Card key={index} className={styles.card}>
                     <Card.Img variant="top" src={image.img_url} alt={image.name} className={styles.image} />
@@ -22,6 +25,7 @@ const ImageGallery = () => {
                 </Card>
             ))}
         </div>
+        </>
     );
 };
 

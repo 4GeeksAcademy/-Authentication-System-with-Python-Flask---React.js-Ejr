@@ -4,6 +4,15 @@ import logo from "../../img/logow.png";
 import logo2 from "../../img/white.png";
 
 const MainSection = ({ title, subtitle, buttonText, buttonLink }) => {
+    const handleButtonClick = (event) => {
+        event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+
+        const imageSliderElement = document.getElementById('ImageSlider');
+        if (imageSliderElement) {
+            imageSliderElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <section className={styles.mainSection}>
             <div className={styles.content}>
@@ -11,8 +20,8 @@ const MainSection = ({ title, subtitle, buttonText, buttonLink }) => {
                 <img src={logo} alt="logo" className={`${styles.logo} ${styles.fadeInScale}`} />
                 <img src={logo2} alt="logo" className={`${styles.logo2} ${styles.fadeInScaleDelay}`} />
                 <p className={styles.subtitle}>{subtitle}</p>
-                {buttonText && buttonLink && (
-                    <a href={buttonLink} className={styles.button}>
+                {buttonText && (
+                    <a href="#" onClick={handleButtonClick} className={styles.button}>
                         {buttonText}
                     </a>
                 )}

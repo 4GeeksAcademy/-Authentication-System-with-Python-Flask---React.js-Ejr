@@ -62,3 +62,7 @@
 .titlemodal{
     color: gray;
 }
+
+.titleComponent {
+    color: var(--color-green);
+}

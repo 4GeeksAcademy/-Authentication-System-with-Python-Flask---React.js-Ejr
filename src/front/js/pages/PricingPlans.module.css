@@ -116,9 +116,89 @@ body {
   letter-spacing: 0.75px;
   border: 1px solid var(--primary-red);
   background: var(--primary-red);
-  transition: all 0.3s ease-in-out;
 }
 
 .enroll:hover {
   background: var(--primary-red);
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  color: var(--text-gray);
+  transition: all 0.5s ease-in-out;
+  position: relative;
+  max-width: calc(33.33% - 2rem);
+  width: 100%;
+}
+
+.modalContent:hover {
+  transform: translateY(-2rem);
+}
+
+.close {
+  color: var(--text-white);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.registerButton {
+  display: block;
+  width: 200px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  border-radius: 0.5rem;
+  color: var(--text-white);
+  margin-top: auto;
+  text-decoration: none;
+  letter-spacing: 0.75px;
+  border: 1px solid var(--primary-red);
+  background-color: #1A1A1A;
+  transition: all 0.3s ease-in-out;
+}
+
+.registerButton:hover {
+  background: var(--primary-red);
+}
+
+@media (max-width: 768px) {
+  .pricingContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pricingCard {
+    max-width: 100%;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: none;
+  }
+
+  .modalContent {
+    max-width: 90%;
+  }
+
 }

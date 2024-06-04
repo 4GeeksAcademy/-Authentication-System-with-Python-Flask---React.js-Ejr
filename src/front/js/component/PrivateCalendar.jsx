@@ -61,6 +61,8 @@ const PrivateCalendar = () => {
             if (result.success) {
                 setBookingMessage("Reservation made successfully"); // Establece el mensaje de éxito
                 setShowMessage(true); // Muestra el mensaje
+                setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
             } else {
                 setBookingMessage(result.error || "Error booking class"); // Establece el mensaje de error
                 setShowMessage(true); // Muestra el mensaje
@@ -73,7 +75,7 @@ const PrivateCalendar = () => {
             setTimeout(() => {
                 setShowMessage(false); // Oculta el mensaje después de 5 segundos
                 setBookingMessage(""); // Limpia el mensaje
-            }, 5000);
+            }, 3000);
         }
     };
 
@@ -81,7 +83,7 @@ const PrivateCalendar = () => {
         <>
             <div className={styles.container}>
                 <div className={styles.myCalendar}>
-                    <h2>Private Calendar</h2>
+                    <h1 className={styles.titleComponent}>Private Calendar</h1>
                     <Calendar
                         localizer={localizer}
                         events={events}
@@ -93,11 +95,11 @@ const PrivateCalendar = () => {
                             borderRadius: '5px',
                             color: 'gray'
                         }}
-                        onSelectEvent={handleEventClick} // Maneja el clic en un evento del calendario
+                        onSelectEvent={handleEventClick} 
                     />
                 </div>
 
-                {selectedEvent && ( // Si hay un evento seleccionado, muestra el modal
+                {selectedEvent && ( 
                     <Modal
                         isOpen={modalIsOpen}
                         onRequestClose={closeModal}
@@ -109,7 +111,7 @@ const PrivateCalendar = () => {
                     >
                         <h2>{selectedEvent.title}</h2>
                         {showMessage && (
-                            <h3 id='bookigMenssage'>{bookingMessage}</h3> // Muestra el mensaje de reserva si está disponible
+                            <h3 className="titleComponent">{bookingMessage}</h3> 
                         )}
                         <h4>Class status: {selectedEvent.Class_is_active ? "Active" : "Cancelled"}</h4>
                         <p>Description: {selectedEvent.description}</p>
@@ -121,17 +123,17 @@ const PrivateCalendar = () => {
                         <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
                             <h3>Personas en clase:</h3>
                             {(() => {
-                                const uniqueBookings = new Set(); // Set para almacenar IDs únicos de reservas
+                                const uniqueBookings = new Set(); 
                                 const filteredBookings = selectedEvent.bookings.flatMap(booking =>
                                     booking.bookings.filter(b =>
                                         b.class_id === selectedEvent.id &&
                                         b.booking_status === "reserved" &&
-                                        !uniqueBookings.has(b.booking_id) && // Verifica si el booking_id ya fue procesado
-                                        uniqueBookings.add(b.booking_id) // Añade el booking_id al Set
+                                        !uniqueBookings.has(b.booking_id) && 
+                                        uniqueBookings.add(b.booking_id) 
                                     )
                                 );
                                 return filteredBookings.map((booking, index) => {
-                                    // console.log("Reservas filtradas por evento y estado sin duplicados:", booking); // Esto mostrará en consola cada booking que cumpla las condiciones
+                                    
                                     return (
                                         <div key={index} className={styles.bookingItem}>
                                             {booking.booking_user_profile_image ? (

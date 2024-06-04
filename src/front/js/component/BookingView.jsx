@@ -32,6 +32,7 @@ const BookingView = () => {
 
     return (
         <div className={styles.tableContainer}>
+            <h1 className={styles.titleComponent}>Bookings</h1>
             <InputGroup className="mb-3">
                 <FormControl
                     placeholder="Search by user, class name, instructor, date"

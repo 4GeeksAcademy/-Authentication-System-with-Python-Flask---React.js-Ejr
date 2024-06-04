@@ -60,6 +60,7 @@ const ReceiveMessages = () => {
         setMessages(messages.map(msg => 
           msg.id === messageId ? { ...msg, read: true } : msg
         ));
+        
       }
     } catch (error) {
       console.error(error);
@@ -68,12 +69,14 @@ const ReceiveMessages = () => {
 
   const closeModal = () => {
     setModalOpen(false);
+    // setTimeout(() => window.location.reload(), 2000); // Recarga la página después de 2 segundos
+
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Received Messages</h1>
+        <h1 className={styles.titleComponent}>Received Messages</h1>
         <span className={styles.badge}>{messages.filter(msg => !msg.read).length}</span>
       </div>
       <ul className={styles.messageList}>

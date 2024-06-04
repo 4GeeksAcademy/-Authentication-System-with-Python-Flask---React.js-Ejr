@@ -81,6 +81,8 @@ const AdminMembershipPurchase = () => {
 
         const paymentData = {
             amount: selectedMembership.price,
+            description: selectedMembership.name,
+            transaction_reference: Math.floor(100000 + Math.random() * 900000),  // Generates a 6-digit random number
             payment_method: paymentMethod,
             // email: userEmail,  // Incluir el email del usuario en los datos de pago
             ...(paymentMethod !== 'cash' && {
@@ -167,8 +169,8 @@ const AdminMembershipPurchase = () => {
                             <Form.Group>
                                 <Form.Label>Payment Method</Form.Label>
                                 <DropdownButton id="dropdown-payment-method" title={paymentMethod || 'Select Method'} className={styles.paymentMethodDropdown}>
-                                    <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => setPaymentMethod('debit_card')}><i className="fa-solid fa-credit-card"></i> Debit Card</Dropdown.Item>
+                                    {/* <Dropdown.Item onClick={() => setPaymentMethod('credit_card')}><i className="fa-solid fa-credit-card"></i> Credit Card</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => setPaymentMethod('debit_card')}><i className="fa-solid fa-credit-card"></i> Debit Card</Dropdown.Item> */}
                                     <Dropdown.Item onClick={() => setPaymentMethod('paypal')}><i className="fa-brands fa-paypal"></i> PayPal</Dropdown.Item>
                                     {['admin', 'master'].includes(localStorage.getItem('dataRole')) && (
                                         <Dropdown.Item onClick={() => setPaymentMethod('cash')}>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext"; // Ajusta la ruta según tu estructura
 import styles from "./CreateClasses.module.css"; // Ajusta la ruta según tu estructura
 import { Button, Form, Container, Row, Col, Modal } from 'react-bootstrap'; // Asumiendo que estás usando React-Bootstrap
@@ -21,6 +21,10 @@ const CreateClassForm = () => {
     const [modalMessage, setModalMessage] = useState("");
     const [instructorModalVisible, setInstructorModalVisible] = useState(false);
     const [coaches, setCoaches] = useState([]);
+
+    useEffect(() => {
+        actions.getUsers();
+      }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,7 +73,7 @@ const CreateClassForm = () => {
     return (
         <>
             <Container className={styles.formContainer}>
-                <h2>Create Training Classes</h2>
+                <h1 className={styles.titleComponent}>Create Training Classes</h1>
                 <Form onSubmit={handleSubmit}>
                     <Row className="mb-3">
                         <Col>

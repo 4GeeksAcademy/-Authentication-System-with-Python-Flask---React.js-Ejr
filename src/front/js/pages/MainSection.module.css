@@ -26,6 +26,7 @@
 
 .content {
     max-width: 800px;
+    padding: 0 20px;
 }
 
 .title {
@@ -54,7 +55,7 @@
 
 .logo2 {
     display: block;
-    margin: 1rem auto;
+    margin: 0.5rem auto;
     max-height: 80px;
     width: auto;
 }
@@ -81,4 +82,43 @@
 
 .button:hover {
     background-color: #96794e;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .button {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+    .logo {
+        max-height: 100px;
+    }
+
+    .logo2 {
+        max-height: 40px;
+        margin: 0 auto;
+    }
 }
