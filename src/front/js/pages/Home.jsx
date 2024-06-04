@@ -20,17 +20,17 @@ const Home = () => {
         title="WELCOME TO"
         subtitle="THE BEST CHOICE FOR YOUR GYM"
         buttonText="Learn More"
-        buttonLink="/about"
+        buttonLink="ImageSlider"
       />
-      <div className={styles.content}>
+      <div className={styles.content} id="image-slider">
         <ImageSlider />
-        <div className={styles.sectionSpacing}>
+        <div className={styles.sectionSpacing} id="pricing-plans">
           <PricingPlans />
         </div>
-        <div className={styles.sectionSpacing}>
+        <div className={styles.sectionSpacing} id="contact">
           <ContactForm />
         </div>
-        <div className={styles.sectionSpacing}>
+        <div className={styles.sectionSpacing} id="footer" >
           <Footer />
         </div>
       </div>
