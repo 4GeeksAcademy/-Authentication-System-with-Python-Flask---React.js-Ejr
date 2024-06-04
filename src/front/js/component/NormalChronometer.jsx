@@ -154,7 +154,7 @@ const Normaltimer = () => {
     return (
         <div style={cuerpoStyle}>
             <div style={marcoStyle}>
-                <h1>Cronómetro</h1>
+                <h1>For minute</h1>
                 {alertMessage && <div style={alertStyle}>{alertMessage}</div>}
                 <div className="app" style={appStyle}>
                     <div className='time-circle' style={timeCircleStyle}>
@@ -164,11 +164,11 @@ const Normaltimer = () => {
                     </div>
                 </div>
                 <div style={inputContainerStyle}>
-                    <label>Configurar cronómetro:</label>
+                    <label>Set time:</label>
                     <div style={dropdownStyle}>
-                        <label>Duración del intervalo (minutos):</label>
+                        <label>Time caps (minutos):</label>
                         <button onClick={() => setShowIntervalDropdown(!showIntervalDropdown)}>
-                            {intervalDuration} minutos
+                            {intervalDuration} minutes
                         </button>
                         {showIntervalDropdown && (
                             <select value={intervalDuration} onChange={handleIntervalChange}>
@@ -179,9 +179,9 @@ const Normaltimer = () => {
                         )}
                     </div>
                     <div style={dropdownStyle}>
-                        <label>Cantidad de series:</label>
+                        <label>Sets</label>
                         <button onClick={() => setShowSeriesDropdown(!showSeriesDropdown)}>
-                            {seriesCount} series
+                            {seriesCount} sets
                         </button>
                         {showSeriesDropdown && (
                             <select value={seriesCount} onChange={handleSeriesChange}>
