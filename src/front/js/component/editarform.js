@@ -1,21 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState} from "react";
 import { Context } from "../store/appContext";
 import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import "../../styles/index.css";
 import imgFolder from "../../img/folder.png";
 import { Container } from "reactstrap";
 import Dropzone from "react-dropzone";
 import axios from "axios";
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
-export const AgregarForm = (props) => {
-
-    const { actions } = useContext(Context);
-    const [image, setImage] = useState({ array: [] });
+export const EditarForm = (props) => {
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+    const [image, setImage] = useState({ array: [props.url_img1, props.url_img2, props.url_img3] });
     const [loading, setLoading] = useState("");
-    
 
     const handleDrop = (files) => {
         const uploaders = files.map((file) => {
@@ -61,7 +60,7 @@ export const AgregarForm = (props) => {
                     : image.array.map((item, index) => (
                         <>
                             <img key={index} alt="uploaded_image"
-                                style={{ "max-width": "50%" }}
+                                style={{ "maxWidth": "50%" }}
                                 src={item}
                             />
                             <div onClick={() => {
@@ -75,16 +74,15 @@ export const AgregarForm = (props) => {
             </h6>)
         }
     };
-
-    const navigate = useNavigate();
+    
     const formik = useFormik({
         initialValues: {
-            inputMarcayModelo: '',
-            inputMatricula: '',
-            inputMotor: '',
-            inputCambio: '',
-            inputAsientos: '',
-            inputPrecio: '',
+            inputMarcayModelo: props.marca_modelo,
+            inputMatricula: props.matricula,
+            inputMotor: props.motor,
+            inputCambio: props.tipo_cambio,
+            inputAsientos: props.asientos,
+            inputPrecio: props.precio
         },
         validationSchema: Yup.object({
             inputMarcayModelo: Yup.string().min(8, 'La marca o modelo debe tener mínimo 8 carácteres').required('Campo obligatorio'),
@@ -94,28 +92,30 @@ export const AgregarForm = (props) => {
             inputAsientos: Yup.number().min(2, 'El vehículo debe tener mínimo 2 asientos').required('Campo obligatorio'),
             inputPrecio: Yup.number().min(1, 'El precio de su alquiler debe ser mayor a 0').required('Campo obligatorio'),
         }),
-        onSubmit: values => {
+        
+        onSubmit: async values => {
             async function handleSubmit() {   
-                       if (image.array.length !== 3) {
-                       swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
-                       return;
-               }
-               const [url_img1, url_img2, url_img3] = image.array;
-               let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3);
-                   if (respuesta === "success") {
-                       swal("Vehículo añadido correctamente", "", "success")
-                       navigate("/");
-                   } else if (respuesta === "plate_exist") {
-                       swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
-                   }
-               };
-               handleSubmit();
+                if (image.array.length !== 3) {
+                swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
+                return;
+                }
+                const [url_img1, url_img2, url_img3] = image.array;
+                console.log(image.array);
+                let respuesta = await actions.updateOneVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, store.details.id,url_img1, url_img2, url_img3);
+                if (respuesta === "success") {
+                    swal("Vehículo editado correctamente", "", "success")
+                    navigate("/");
+                } else if (respuesta === "plate_exist") {
+                    swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
+                }
+            }
+            handleSubmit();
         },
-      });
+    });
 
     return (
         <div className="container lg-5">
-            <h1 className="border-bottom pb-4 text-success text-center"><strong>PONGA SU VEHÍCULO EN ALQUILER</strong></h1>
+            <h1 className="border-bottom pb-4 text-success text-center"><strong>EDITE SU COCHE </strong></h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
@@ -185,7 +185,7 @@ export const AgregarForm = (props) => {
                 </div>
                 <div>
                     <Container>
-                        <h4 className="upload-img-text">Seleccione tres imágenes de su vehículo</h4>
+                        <h4 className="upload-img-text">Si quiere editar sus fotos actuales, seleccione tres imágenes nuevas de su coche</h4>
                         <Dropzone className="dropzone"
                             onDrop={handleDrop}
                             onChange={(e) => setImage(e.target.value)}
@@ -203,7 +203,7 @@ export const AgregarForm = (props) => {
                     </Container>
                 </div>
                 <div className="d-flex justify-content-center" id="btnAgregarForm">
-                    <button type="submit" className="btn-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
+                    <button type="submit" className="btn-success btn-lg border-2 mb-5 fs-4 justify-content-center">Guardar cambios</button>
                 </div>
             </form>
         </div>

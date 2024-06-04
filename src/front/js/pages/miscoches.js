@@ -23,7 +23,7 @@ export const MisCoches = () => {
                     {store.myVehicles.length === 0 
                         ? (
                             <>
-                                <h2 className="mt-3 mb-2 text-success"><strong>MIS VEHICULOS EN ALQUILER</strong></h2>
+                                <h2 className="mt-3 mb-2 text-success"><strong>MIS COCHES EN ALQUILER</strong></h2>
                                 <div className="fs-4 mt-4 mb-3"><strong>Añade tu primer coche a Friendly Wheels</strong></div>
                                 <div className="texto-favoritos">Pulsa en el botón añadir que se muestra a continuación para añadir tu primer coche</div>
                                 <Link to={`/agregarvehiculo`}>
@@ -35,7 +35,7 @@ export const MisCoches = () => {
                         )
                         : (
                             <>
-                                <h2 className="mt-3 mb-4 text-success text-center"><strong>MIS VEHICULOS EN ALQUILER</strong></h2>
+                                <h2 className="mt-3 mb-4 text-success text-center"><strong>MIS COCHES EN ALQUILER</strong></h2>
                                 <div className="row text-dark d-flex gap-4 justify-content-center">
                                     {store.myVehicles.map((vehicle) => (
                                         <div key={vehicle.id} className="vehiculo card" style={{ width: "22rem", height: "27rem"}}>
@@ -45,6 +45,11 @@ export const MisCoches = () => {
                                                 <p className="card-text fs-5"><strong>Matrícula:</strong> {vehicle.matricula.toUpperCase()}</p>
                                             </div>
                                             <div className="d-flex justify-content-end mt-auto pb-3">
+                                                <Link to={`/editarvehiculo/${vehicle.id}`}>
+                                                    <button className="btn-success btn-lg border-2 rounded me-3">
+                                                    <i className="fa-regular fa-pen-to-square"></i>
+                                                    </button>
+                                                </Link>
                                                 <button onClick={() => eliminarVehiculo(vehicle.id)} className="btn-danger btn-lg border-2 rounded me-3">
                                                     Eliminar
                                                 </button>

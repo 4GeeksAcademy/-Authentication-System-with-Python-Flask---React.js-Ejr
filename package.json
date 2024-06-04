@@ -80,6 +80,7 @@
 		"fs-extra": "^11.2.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.14.0",
+		"react-datepicker": "^6.9.0",
 		"react-dom": "^16.14.0",
 		"react-dropzone": "^14.2.3",
 		"react-polyfills": "0.0.1",
@@ -90,10 +91,9 @@
 		"sweetalert": "^2.1.2",
 		"yup": "^1.4.0"
 	},
-"overrides": {
-    "react-simple-chatbot": {
-      "styled-components": "^5.3.11"
-    }
-  }
+	"overrides": {
+		"react-simple-chatbot": {
+			"styled-components": "^5.3.11"
+		}
+	}
 }
-

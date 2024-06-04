@@ -1,14 +1,21 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const ModalAlquilar = (props) => {
     const { actions } = useContext(Context);
-    const [days, setDays] = useState(null);
     const navigate = useNavigate();
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const handlePayment = () => {
-        actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, days, props.precio_id_stripe,props.url_img1);
+        const fechaInicio = startDate.getTime();
+        const fechaFin = endDate.getTime();
+        const diff = fechaFin - fechaInicio;
+        const diasTotales =  diff / (1000 * 60 * 60 * 24);
+        actions.totalpayment(props.vehicle_id, props.marca_modelo, props.precio, diasTotales, props.precio_id_stripe,props.url_img1);
 		navigate('/payment');
 	};
 
@@ -24,29 +31,41 @@ export const ModalAlquilar = (props) => {
                             <h5 className="modal-title" id="exampleModalLabel">¿Cuantos días desea alquilar?</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body">
-                            <div className="form-check">
-                                <input onClick={() => setDays(7)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                    7 días
-                                </label>
+                        <div className="d-block modal-body">
+                            <div className="mb-3">
+                                <p className="m-0"><strong>Recogida</strong></p>
+                                <DatePicker
+                                    dateFormat="dd/MM"
+                                    todayButton="Friendly Wheels" 
+                                    showIcon
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    minDate={(new Date())}
+                                    excludeDates={[
+                                        { date: new Date(), message: "El día de hoy no se puede incluir" }
+                                    ]}
+                                />
                             </div>
-                            <div className="form-check">
-                                <input onClick={() => setDays(15)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                    15 días
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input onClick={() => setDays(30)} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                                <label className="form-check-label" htmlFor="flexRadioDefault3">
-                                    30 días
-                                </label>
+                            <div>
+                                <p className="m-0"><strong>Devolución</strong></p>
+                                <DatePicker
+                                    dateFormat="dd/MM"
+                                    todayButton="Friendly Wheels" 
+                                    showIcon
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    selectsEnd
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    minDate={startDate}
+                                />
                             </div>
                         </div>
-                        <div className="modal-footer">
+                        <div className="modal-footer justify-content-center">
+                            <button onClick={handlePayment} type="button" className="btn btn-success" data-bs-dismiss="modal">Alquilar</button>
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button disabled={days == null ? true : false} onClick={handlePayment} type="button" className="btn btn-success" data-bs-dismiss="modal">Alquilar</button>
                         </div>
                     </div>
                 </div>
