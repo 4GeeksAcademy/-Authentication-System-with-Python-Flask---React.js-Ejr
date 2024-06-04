@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Normaltimer = () => {
+const NormalTimer = () => {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const [intervalDuration, setIntervalDuration] = useState(2);
@@ -41,6 +41,10 @@ const Normaltimer = () => {
                     }, 10000); // Espera 10 segundos antes de comenzar la siguiente serie
                 } else {
                     setAlertMessage('¡Ronda de ejercicios terminada!');
+                    setTimeout(() => {
+                        setAlertMessage('');
+                        setTime(0); // Reinicia el cronómetro a cero
+                    }, 10000); // La alerta dura 10 segundos
                 }
             }, 10000); // La alerta dura 10 segundos
         }
@@ -139,23 +143,25 @@ const Normaltimer = () => {
     };
     const alertStyle = {
         position: 'absolute',
-        top: '10px',
+        top: '50%',
         left: '50%',
-        transform: 'translateX(-50%)',
-        backgroundColor: '#f8d7da',
-        color: '#721c24',
-        padding: '10px 20px',
-        borderRadius: '5px',
-        border: '1px solid #f5c6cb',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        padding: '20px 40px',
+        borderRadius: '10px',
+        border: '2px solid #f5c6cb',
         textAlign: 'center',
-        fontSize: '1.5em'
+        fontSize: '1.5em',
+        cursor: 'pointer',
+        zIndex: 1000
     };
 
     return (
         <div style={cuerpoStyle}>
             <div style={marcoStyle}>
-                <h1>For minute</h1>
-                {alertMessage && <div style={alertStyle}>{alertMessage}</div>}
+                <h1>Cronómetro</h1>
+                {alertMessage && <div style={alertStyle} onClick={() => setAlertMessage('')}>{alertMessage}</div>}
                 <div className="app" style={appStyle}>
                     <div className='time-circle' style={timeCircleStyle}>
                         <div className="time" style={timeStyle}>
@@ -164,11 +170,11 @@ const Normaltimer = () => {
                     </div>
                 </div>
                 <div style={inputContainerStyle}>
-                    <label>Set time:</label>
+                    <label>Configurar cronómetro:</label>
                     <div style={dropdownStyle}>
-                        <label>Time caps (minutos):</label>
+                        <label>Duración del intervalo (minutos):</label>
                         <button onClick={() => setShowIntervalDropdown(!showIntervalDropdown)}>
-                            {intervalDuration} minutes
+                            {intervalDuration} minutos
                         </button>
                         {showIntervalDropdown && (
                             <select value={intervalDuration} onChange={handleIntervalChange}>
@@ -179,9 +185,9 @@ const Normaltimer = () => {
                         )}
                     </div>
                     <div style={dropdownStyle}>
-                        <label>Sets</label>
+                        <label>Cantidad de series:</label>
                         <button onClick={() => setShowSeriesDropdown(!showSeriesDropdown)}>
-                            {seriesCount} sets
+                            {seriesCount} series
                         </button>
                         {showSeriesDropdown && (
                             <select value={seriesCount} onChange={handleSeriesChange}>
@@ -210,4 +216,4 @@ const Normaltimer = () => {
     );
 };
 
-export default Normaltimer;
+export default NormalTimer;
