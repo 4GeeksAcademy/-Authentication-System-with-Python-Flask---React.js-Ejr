@@ -6,7 +6,7 @@ import { EditarForm } from "../component/editarform.js";
 export const EditarVehiculo = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
-    const hasDetails = Object.keys(store.details).length > 0; 
+    const showForm = params.id == store.details.id;
 
     useEffect (() => {
         actions.getDetails(params.id);
@@ -14,7 +14,7 @@ export const EditarVehiculo = () => {
 
     return (
         <div className="footer-view agregar-vehiculo">
-            {hasDetails
+            {showForm
                 ? <EditarForm {...store.details} /> 
                 : null
             }
