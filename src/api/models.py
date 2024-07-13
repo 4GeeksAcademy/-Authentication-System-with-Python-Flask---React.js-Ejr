@@ -4,14 +4,35 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    img = db.Column(db.String(120), nullable=True, default='default.jpg')
 
-    def __repr__(self):
-        return f'<User {self.email}>'
+class GroupMember(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    role = db.Column(db.String(50), nullable=False)
 
-    def serialize(self):
+
+class Group(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    path_id = db.Column(db.Integer, db.ForeignKey('path.id'), nullable=False)
+
+class Path(db.Model):   
+    id = db.Column(db.Integer, primary_key=True)
+    Title_name = db.Column(db.String(80), unique=True, nullable=False)
+    Description = db.Column(db.String(120), unique=True, nullable=False)
+    Direction = db.Column(db.String(120), nullable=False)
+    img = db.Column(db.String(120), nullable=True, default='default.jpg')
+
+class Favorite_paths(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+     path_id = db.Column(db.Integer, db.ForeignKey('path.id'), nullable=False)
+     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
