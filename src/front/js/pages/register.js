@@ -25,9 +25,9 @@ export const Register = () => {
 	};
 
 	return (
-		<div classNameName="container-fluid py-5">
-			<h1>Register</h1>
-			<form className="row g-3">
+		<div className="container-fluid py-5">
+		<h1>Register</h1>
+		<form onSubmit={handleRegister}>
 				<div className="col-md-6">
 					<label for="inputEmail4" className="form-label">Username</label>
 					<input type="email" className="form-control" id="inputEmail4"></input>
