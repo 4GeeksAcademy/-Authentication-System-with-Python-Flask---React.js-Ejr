@@ -8,7 +8,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    img = db.Column(db.String(120), nullable=True, default='default.jpg')
+    img = db.Column(db.String(120), nullable=True, default='https://avatar.iran.liara.run/public/49')
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -24,8 +24,8 @@ class User(db.Model):
 class GroupMember(db.Model):
     __tablename__= "Group Member"
     id = db.Column(db.Integer, primary_key=True)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    group_id = db.Column(db.Integer, db.ForeignKey('Group.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     role = db.Column(db.String(50), nullable=False)
 
     def serialize(self):
@@ -40,7 +40,7 @@ class Group(db.Model):
     __tablename__= "Group"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    path_id = db.Column(db.Integer, db.ForeignKey('path.id'), nullable=False)
+    path_id = db.Column(db.Integer, db.ForeignKey('Path.id'), nullable=False)
 
     def serialize(self):
         return {
@@ -67,10 +67,10 @@ class Path(db.Model):
         }
 
 class Favorite_paths(db.Model):
-     __tablename__= "Favorita Path"
+     __tablename__= "Favorite Path"
      id = db.Column(db.Integer, primary_key=True)
-     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-     path_id = db.Column(db.Integer, db.ForeignKey('path.id'), nullable=False)
+     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+     path_id = db.Column(db.Integer, db.ForeignKey('Path.id'), nullable=False)
 
      def serialize(self):
         return {
