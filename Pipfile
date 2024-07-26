@@ -6,17 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-flask = "*"
-sqlalchemy = "==1.4.46"
-flask-sqlalchemy = "*"
-flask-migrate = "*"
-flask-swagger = "*"
-psycopg2-binary = "*"
 python-dotenv = "*"
-flask-cors = "*"
 gunicorn = "*"
 cloudinary = "*"
-flask-admin = "*"
 typing-extensions = "*"
 
 [requires]

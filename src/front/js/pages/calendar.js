@@ -29,7 +29,6 @@ function Calendar(props) {
   const onCloseModal = () => setOpen(false);
   const { store, actions } = useContext(Context);
   const [modalData, setModalData] = useState({});
-console.log(store)
   let trHeight = Math.floor(100 / store.programs.length);
 
   

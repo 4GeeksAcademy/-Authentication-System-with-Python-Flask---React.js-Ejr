@@ -115,7 +115,7 @@ function Input() {
                       setRefresh(false);
                       if(programTitle.name == "Create New Program"){
                         setNewProgram(true);
-                        setUpdatedPrograms((prevUpdatedPrograms) => {
+                        ((prevUpdatedPrograms) => {
                           const updatedProgramsList = [...prevUpdatedPrograms,
                             {
                               description: "",
@@ -224,7 +224,6 @@ function Input() {
                   newProgramList.forEach((item,i)=>{
                     item.program_number = i + 1
                   })
-                  console.log(newProgramList,"filter")
           
                   setProgramIndex(0);
                   setDropdownTitle(updatedPrograms[0])
@@ -309,7 +308,8 @@ function Input() {
           <div className=" input-mobile-start-end d-flex justify-content-start ">
             {dayArray.map((day, i) => {
               // list variables for conditions
-
+              console.log(updatedPrograms,"updatedPrograms")
+              console.log(`${day.toLowerCase()}_start`,"`${day.toLowerCase()}_start`")
               let dayStartTrue =  updatedPrograms[programIndex]?.[
                 `${day.toLowerCase()}_start`
               ] &&
@@ -360,8 +360,9 @@ function Input() {
                             // set start and end time to 9am/9:30am as default when first setting to active
                             dayStartFalse
                           ) {
+                            console.log("false!!")
                             setUpdatedPrograms((prevUpdatedPrograms) => {
-                              const updatedProgramsList = [
+                              let updatedProgramsList = [
                                 ...prevUpdatedPrograms,
                               ]; 
                               updatedProgramsList[programIndex] = {
