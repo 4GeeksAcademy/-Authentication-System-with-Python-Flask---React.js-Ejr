@@ -114,8 +114,9 @@ function Input() {
                     onClick={() => {
                       setRefresh(false);
                       if(programTitle.name == "Create New Program"){
+                        
                         setNewProgram(true);
-                        ((prevUpdatedPrograms) => {
+                        setUpdatedPrograms((prevUpdatedPrograms) => {
                           const updatedProgramsList = [...prevUpdatedPrograms,
                             {
                               description: "",
@@ -137,7 +138,6 @@ function Input() {
                               wednesday_start: null
                           }
                           ];
-                          
                           setProgramIndex(
                             updatedProgramsList[index ].program_number - 1
                           );
@@ -308,8 +308,7 @@ function Input() {
           <div className=" input-mobile-start-end d-flex justify-content-start ">
             {dayArray.map((day, i) => {
               // list variables for conditions
-              console.log(updatedPrograms,"updatedPrograms")
-              console.log(`${day.toLowerCase()}_start`,"`${day.toLowerCase()}_start`")
+             
               let dayStartTrue =  updatedPrograms[programIndex]?.[
                 `${day.toLowerCase()}_start`
               ] &&
@@ -360,7 +359,6 @@ function Input() {
                             // set start and end time to 9am/9:30am as default when first setting to active
                             dayStartFalse
                           ) {
-                            console.log("false!!")
                             setUpdatedPrograms((prevUpdatedPrograms) => {
                               let updatedProgramsList = [
                                 ...prevUpdatedPrograms,
@@ -1022,8 +1020,7 @@ function Input() {
                   boxShadow: "rgb(5 218 210) 0px 1px 4.5px 0px",
                 }}
                 onClick={(e) => {
-               console.log(programName,"name")
-               console.log(programDescription,"descr")
+            
                   if(programName.length == 0 && programDescription.length == 0){
                     setErrorMessage("Program name and description cannot be left blank")
                   }
