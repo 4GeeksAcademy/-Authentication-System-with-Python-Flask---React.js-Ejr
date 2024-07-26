@@ -219,7 +219,7 @@ function Input() {
         {!newProgram ? <>
                 <button
                 onClick={()=>{
-                  actions.deleteProgram(updatedPrograms[programIndex].program_number);
+                  actions.deleteProgram(updatedPrograms[programIndex].id);
                   let newProgramList = updatedPrograms.filter((item)=> item.program_number != updatedPrograms[programIndex].program_number)
                   newProgramList.forEach((item,i)=>{
                     item.program_number = i + 1
@@ -1047,7 +1047,6 @@ function Input() {
                     e.preventDefault();
                     setProgramIndex(0);
                     setRefresh(true);
-                    console.log(updatedPrograms,"submit")
                     actions.updateProgram(updatedPrograms);
                   }
                 }}

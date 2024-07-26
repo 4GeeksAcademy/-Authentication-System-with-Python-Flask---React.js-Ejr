@@ -1,5 +1,5 @@
 import { db } from "../../firebaseConfig";
-import { collection, getDocs, doc, updateDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, addDoc,deleteDoc } from "firebase/firestore";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -121,28 +121,33 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 		  setStore({ totalHours: totalHoursArray });
 		},
-		deleteProgram: async (program_number)=>{
-			try{
-				const resp = await fetch(
-					process.env.BACKEND_URL + `/api/deleteProgram/${program_number}`,
-					{
-					  method: "DELETE",
-					  headers: { "Content-Type": "application/json" },
-					}
-				  );
-				 
+		deleteProgram: async (programId) => {
+			try {
+			  const programRef = doc(db, "Programs", programId);
+			  await deleteDoc(programRef);
 		
-				  if (resp.status == 200) {
-					setStore({ inputStatusMessage: "Program successfully deleted!" });
-					setTimeout(window.location.reload(false),12000);
-				  } 
+			  setStore({ inputStatusMessage: "Program successfully deleted!" });
+		
+			  // Fetch updated programs to refresh the state
+			  const updatedPrograms = await getDocs(collection(db, "Programs"));
+			  const data = updatedPrograms.docs.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			  }));
+			  let sortedData = data.sort(
+				(a, b) => a.program_number - b.program_number
+			  );
+			  setStore({ programs: sortedData });
+		
+			 
+			} catch (error) {
+			  setStore({ inputStatusMessage: "Program not deleted, please try again" });
+			  console.log("Error deleting program in Firestore", error);
+		
+			  // Clear the inputStatusMessage after a delay even on error
+			 
 			}
-			catch (error) {
-				setStore({ inputStatusMessage: "Program not deleted, please try again" });
-				console.log("Error loading message from backend", error);
-			  }
-
-		},
+		  },
 	  },
 	};
   };
