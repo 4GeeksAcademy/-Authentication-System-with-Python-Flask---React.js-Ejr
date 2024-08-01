@@ -1,8 +1,10 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-  const navigate = useNavigate();
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
   const userRole = null; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
 
@@ -15,22 +17,20 @@ export const Navbar = () => {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          onClick={handleNavCollapse}
           aria-controls="navbarNav"
-          aria-expanded="false"
+          aria-expanded={!isNavCollapsed}
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item active">
               <Link
                 to="/"
                 className="nav-link m-2"
-                data-bs-toggle="collapse"
-                data-bs-target=".navbar-collapse.show"
+                onClick={handleNavCollapse}
               >
                 Home
               </Link>
@@ -39,8 +39,7 @@ export const Navbar = () => {
               <Link
                 to="/bookappointment"
                 className="nav-link"
-                data-bs-toggle="collapse"
-                data-bs-target=".navbar-collapse.show"
+                onClick={handleNavCollapse}
               >
                 Book an Appointment
               </Link>
@@ -49,8 +48,7 @@ export const Navbar = () => {
               <Link
                 to="/contact"
                 className="nav-link"
-                data-bs-toggle="collapse"
-                data-bs-target=".navbar-collapse.show"
+                onClick={handleNavCollapse}
               >
                 Contact
               </Link>
@@ -63,8 +61,7 @@ export const Navbar = () => {
                   <Link
                     to="/login"
                     className="btn btn-primary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Login
                   </Link>
@@ -73,8 +70,7 @@ export const Navbar = () => {
                   <Link
                     to="/signup"
                     className="btn btn-primary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Signup
                   </Link>
@@ -87,8 +83,7 @@ export const Navbar = () => {
                   <Link
                     to="/userprofile"
                     className="btn btn-secondary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Profile
                   </Link>
@@ -97,8 +92,7 @@ export const Navbar = () => {
                   <Link
                     to="/appointments"
                     className="btn btn-secondary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Appointment History
                   </Link>
@@ -107,8 +101,7 @@ export const Navbar = () => {
                   <Link
                     to="/logout"
                     className="btn btn-primary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Logout
                   </Link>
@@ -121,8 +114,7 @@ export const Navbar = () => {
                   <Link
                     to="/appointments"
                     className="btn btn-secondary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Appointment History
                   </Link>
@@ -131,8 +123,7 @@ export const Navbar = () => {
                   <Link
                     to="/logout"
                     className="btn btn-primary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Logout
                   </Link>
@@ -145,8 +136,7 @@ export const Navbar = () => {
                   <Link
                     to="/admindashboard"
                     className="btn btn-secondary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Dashboard
                   </Link>
@@ -155,8 +145,7 @@ export const Navbar = () => {
                   <Link
                     to="/appointments"
                     className="btn btn-secondary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Appointment History
                   </Link>
@@ -165,8 +154,7 @@ export const Navbar = () => {
                   <Link
                     to="/logout"
                     className="btn btn-primary"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
+                    onClick={handleNavCollapse}
                   >
                     Logout
                   </Link>
