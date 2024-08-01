@@ -1,7 +1,11 @@
-/*
-    home.css: This website contains selectors only used in home.css
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap');
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+body {
+    font-family: "Nunito Sans", Arial, sans-serif;
+    background: #fff;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: 400;
+    color: #999999;
+    margin: 0;
+}
