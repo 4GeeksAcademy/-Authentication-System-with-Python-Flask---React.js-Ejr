@@ -19,9 +19,9 @@ export const Navbar = () => {
             className="mr-3 h-6 sm:h-9"
             alt="AutoAgenda Logo"
           />
-          <span className="self-center whitespace-nowrap text-xl font-semibold">
+          {/* <span className="self-center whitespace-nowrap text-xl font-semibold">
             AutoAgenda
-          </span>
+          </span> */}
         </Link>
         <button
           className="navbar-toggler"

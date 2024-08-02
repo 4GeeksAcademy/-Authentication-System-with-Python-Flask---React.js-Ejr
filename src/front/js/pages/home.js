@@ -13,13 +13,13 @@ export const Home = () => {
           <div id="carouselExample" className="carousel slide">
             <div className="carousel-inner">
               <div className="carousel-item active">
-                <img src="https://picsum.photos/600/400" className="d-block w-100" alt="..." />
+                <img src="https://picsum.photos/600/400" className="d-block w-100 rounded" alt="..." />
               </div>
               <div className="carousel-item">
-                <img src="https://picsum.photos/600/400" className="d-block w-100" alt="..." />
+                <img src="https://picsum.photos/600/400" className="d-block w-100 rounded" alt="..." />
               </div>
               <div className="carousel-item">
-                <img src="https://picsum.photos/600/400" className="d-block w-100" alt="..." />
+                <img src="https://picsum.photos/600/400" className="d-block w-100 rounded" alt="..." />
               </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -39,20 +39,3 @@ export const Home = () => {
     </div>
   );
 };
-
-
-		// <div className="text-center mt-5">
-		// 	<h1>Hello Rigo!!</h1>
-		// 	<p>
-		// 		<img src={rigoImageUrl} />
-		// 	</p>
-		// 	<div className="alert alert-info">
-		// 		{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-		// 	</div>
-		// 	<p>
-		// 		This boilerplate comes with lots of documentation:{" "}
-		// 		<a href="https://start.4geeksacademy.com/starters/react-flask">
-		// 			Read documentation
-		// 		</a>
-		// 	</p>
-		// </div>
