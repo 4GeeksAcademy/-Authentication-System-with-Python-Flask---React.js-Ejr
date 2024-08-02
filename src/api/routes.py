@@ -2,23 +2,34 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from flask_jwt_extended import create_access_token, get_jwt_identity,get_jwt, jwt_required
+from api.models import db, User, Role, Car, Appointment, Service, Comment
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from models import db
+from flask_jwt_extended import JWTManager
+
 api = Blueprint('api', __name__)
 
+# api.config["JWT_SECRET_KEY"] = "AUADMIN"  
+# jwt = JWTManager(api)
 # Allow CORS requests to this API
 CORS(api)
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
+# ///////////////////////////////////////////////////////////////////////////////////////////// post en /users
 
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector  will see the GET request"
-#     }
 
-#     return jsonify(response_body), 200
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /users
@@ -34,13 +45,15 @@ def create_user():
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
     
-    user = User.query.filter_by(email=email).first()
-    if user:
-        return jsonify({"error": "User already exists"}), 400
+    # user = User.query.filter_by(email=email).first()
+    # if user:
+    #     return jsonify({"error": "User already exists"}), 400
     
     new_user = User(email=email, password=password, name=name , phone_number=phone_number)
     db.session.add(new_user)
     db.session.commit()
+
+    token= create_access_token(identity="AUADMIN")
 
     response_body = new_user.serialize()
     return jsonify(response_body), 201
