@@ -19,7 +19,8 @@ const Login = () => {
                 <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
                 <small id="passwordHelp" className="form-text text-muted">Your password is saved in encrypted form</small>
               </div>
-              <div className="form-group">
+              <div className="form-group mt-2">
+                <a href="/forgot-password" className="text-primary">Forgot your password?</a>
               </div>
               <button type="submit" className="btn btn-primary mt-3">Submit</button>
             </form>
