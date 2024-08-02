@@ -10,7 +10,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Error404 from "../js/pages/Error404";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 
 // Import the components for the new routes
 import BookAppointment from "./pages/BookAppointment";

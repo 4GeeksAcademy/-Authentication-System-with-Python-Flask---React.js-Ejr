@@ -24,7 +24,7 @@ export const Footer = () => (
           target="_blank"
           className="text-decoration-none text-white fw-bold"
         >
-          Alejandro Núñez
+          Marlon Núñez
         </a>
       </p>
     </div>
