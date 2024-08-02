@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from flask_jwt_extended import create_access_token, get_jwt_identity,get_jwt, jwt_required
-from api.models import db, User, Role, Car, Appointment, Service, Comment
+from api.models import db, User, Roles, Cars, Appointments, Services, Comments
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -75,7 +75,7 @@ def get_user(user_id):
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
 @api.route('/cars<int:car_id>', methods=['GET'])
 def get_cars(car_id):
-    car_query=Car.query.filter_by(car_id=car_id).first()
+    car_query=Cars.query.filter_by(car_id=car_id).first()
     if car_query:
         response_body={
             "msg": "Resultado exitoso" , 
@@ -98,7 +98,7 @@ def create_car():
     license_plate = data.get('license_plate')
     if not car_model or not license_plate:
         return jsonify({"error": "car model and license plate are required"}), 400
-    new_car = Car(car_model=car_model, license_plate=license_plate)
+    new_car = Cars(car_model=car_model, license_plate=license_plate)
     db.session.add(new_car)
     db.session.commit()
 
@@ -109,7 +109,7 @@ def create_car():
 def create_comment():
     data = request.get_json()
     comment = data.get('comment')
-    new_comment = Comment(comment=comment)
+    new_comment = Comments(comment=comment)
     db.session.add(new_comment)
     db.session.commit()
 
@@ -128,7 +128,7 @@ def create_service():
     max_appointments = data.get('max_appointments')
     appointments = data.get('appointments')
 
-    new_service = Service(name=name, description = description, duration = duration, max_appointments = max_appointments, appointments = appointments)
+    new_service = Services(name=name, description = description, duration = duration, max_appointments = max_appointments, appointments = appointments)
     db.session.add(new_service)
     db.session.commit()
 
