@@ -5,16 +5,22 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Error404 from "../js/pages/Error404";
+import Login from "./pages/login";
 
-//create your first component
+// Import the components for the new routes
+import BookAppointment from "./pages/BookAppointment";
+import Contact from "./pages/Contact";
+import Signup from "./pages/Signup";
+import UserProfile from "./pages/UserProfile";
+import Appointments from "./pages/Appointments";
+import AdminDashboard from "./pages/AdminDashboard";
+
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
@@ -27,8 +33,14 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Login />} path="/login" />
+                        <Route element={<BookAppointment />} path="/bookappointment" />
+                        <Route element={<Contact />} path="/contact" />
+                        <Route element={<Signup />} path="/signup" />
+                        <Route element={<UserProfile />} path="/userprofile" />
+                        <Route element={<Appointments />} path="/appointments" />
+                        <Route element={<AdminDashboard />} path="/admindashboard" />
+                        <Route path="*" element={<Error404 />} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
