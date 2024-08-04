@@ -241,3 +241,8 @@ def cancel_appointment(appointment_id):
     db.session.commit()
 
     return jsonify({"msg": "Cita cancelada exitosamente"}), 200
+
+
+
+
+
