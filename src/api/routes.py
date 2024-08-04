@@ -74,6 +74,22 @@ def get_cars(car_id):
            "msg": "Car no exist" 
         }
         return jsonify(response_body), 404
+    
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /services con id
+@api.route('/services/<int:services_id>', methods=['GET'])
+def get_service(services_id):
+    service_query = Service.query.filter_by(id=services_id).first()
+    if service_query:
+        response_body = {
+            "msg": "Resultado exitoso", 
+            "result": service_query.serialize()
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+           "msg": "Service no exist" 
+        }
+        return jsonify(response_body), 404
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
@@ -86,6 +102,9 @@ def create_car():
     user_id = data.get('user_id')
     if not car_model or not license_plate or not user_id:
         return jsonify({"error": "Car model, license plate, and user ID are required"}), 400
+    existing_user = User.query.filter_by(id=user_id).first()
+    if not existing_user:
+        return jsonify({"error": "Bad user_id"}), 400
 
     new_car = Car(car_model=car_model, license_plate=license_plate, owner_id=user_id)
     db.session.add(new_car)
@@ -121,6 +140,8 @@ def create_service():
     description = data.get('description')
     duration = data.get('duration')
     slots_required = data.get('slots_required')
+    if not name or not description or not duration or not slots_required:
+        return jsonify({"error": "Name, description,slots_required and duration are required"}), 400
 
     new_service = Service(name=name, description=description, duration=duration, slots_required=slots_required)
     db.session.add(new_service)
@@ -165,7 +186,13 @@ def get_setting():
         return jsonify(response_body), 200
     else:
         return jsonify({"msg": "Settings not configured"}), 404
-
+    
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /users 
+@api.route('/users', methods=['GET'])
+def get_users():
+    users_query = User.query.all()
+    users_list = list(map(lambda user: user.serialize(), users_query))
+    return jsonify(users_list), 200
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /appointments 
 @api.route('/appointments', methods=['POST'])
 def create_appointment():
@@ -180,8 +207,12 @@ def create_appointment():
     
     if not date or not user_id or not car_id or not service_id:
         return jsonify({"error": "Date, user ID, car ID, and service ID are required"}), 400
-
+    
+    existing_user = User.query.filter_by(id=user_id).first()
+    if not existing_user:
+        return jsonify({"error": "Bad user_id"}), 400
     service = Service.query.get(service_id)
+
     if not service:
         return jsonify({"error": "Service not found"}), 404
 
