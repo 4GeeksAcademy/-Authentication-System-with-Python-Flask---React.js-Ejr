@@ -15,8 +15,8 @@ import Login from "./pages/Login";
 import BookAppointment from "./pages/BookAppointment";
 import Contact from "./pages/Contact";
 import Signup from "./pages/Signup";
-import UserProfile from "./pages/UserProfile";
-import Appointments from "./pages/Appointments";
+import UserDashboard from "./pages/UserDashboard";
+import UserAppointments from "./component/UserAppointments";
 import AdminDashboard from "./pages/AdminDashboard";
 
 const Layout = () => {
@@ -35,8 +35,8 @@ const Layout = () => {
                         <Route element={<BookAppointment />} path="/bookappointment" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Signup />} path="/signup" />
-                        <Route element={<UserProfile />} path="/userprofile" />
-                        <Route element={<Appointments />} path="/appointments" />
+                        <Route element={<UserDashboard />} path="/userdashboard" />
+                        <Route element={<UserAppointments />} path="/userappointments" />
                         <Route element={<AdminDashboard />} path="/admindashboard" />
                         <Route path="*" element={<Error404 />} />
                     </Routes>

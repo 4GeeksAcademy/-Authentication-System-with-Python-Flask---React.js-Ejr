@@ -1,0 +1,88 @@
+/* General Styles */
+.btnSetting {
+  border: 1px solid #ccc;
+}
+.h3, h3 {
+  font-size: 1.3rem;
+  margin-top: 15px;
+}
+.dashboard {
+  text-align: center;
+}
+
+.stats {
+  margin: 20px 0;
+}
+
+.stat1 {
+  background-color: #ECF2FF;
+  border: 2px solid #ccc;
+  border-radius: 5%;
+  margin-top: 15px;
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+}
+.stat2 {
+  background-color: #E7FFFB;
+  border: 2px solid #ccc;
+  border-radius: 5%;
+  margin-top: 15px;
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+}
+.stat3 {
+  background-color: #FEF5E5;
+  border: 2px solid #ccc;
+  border-radius: 5%;
+  margin-top: 15px;
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+}
+.stat4 {
+  background-color: #FCEDE9;
+  border: 2px solid #ccc;
+  border-radius: 5%;
+  margin-top: 15px;
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+}
+.stat5 {
+  background-color: #EBF2FF;
+  border: 2px solid #ccc;
+  border-radius: 5%;
+  margin-top: 15px;
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+/* User List Styles */
+.user-list {
+  margin: 20px;
+}
+
+.user-list .table-responsive {
+  overflow-x: auto;
+}
+
+.user-list table th button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: inherit;
+}
+
+.user-list table th button:focus {
+  outline: none;
+}
+
+/* Modal Styles */
+.modal.show {
+  display: block;
+}
+

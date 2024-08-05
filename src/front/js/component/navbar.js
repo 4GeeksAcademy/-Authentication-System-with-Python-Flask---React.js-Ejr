@@ -8,7 +8,7 @@ export const Navbar = () => {
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  const userRole = "admin"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
+  const userRole = "client"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,9 +19,6 @@ export const Navbar = () => {
             className="mr-3 h-6 sm:h-9"
             alt="AutoAgenda Logo"
           />
-          {/* <span className="self-center whitespace-nowrap text-xl font-semibold">
-            AutoAgenda
-          </span> */}
         </Link>
         <button
           className="navbar-toggler"
@@ -64,11 +61,8 @@ export const Navbar = () => {
             )}
             {userRole === "client" && (
               <>
-                <Link to="/userprofile" className="btn btn-secondary me-2" onClick={handleNavCollapse}>
-                  Profile
-                </Link>
-                <Link to="/appointments" className="btn btn-secondary me-2" onClick={handleNavCollapse}>
-                  Appointment History
+                <Link to="/userdashboard" className="btn btn-secondary me-2" onClick={handleNavCollapse}>
+                  Dashboard
                 </Link>
                 <Link to="/logout" className="btn btn-primary" onClick={handleNavCollapse}>
                   Logout
