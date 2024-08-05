@@ -7,12 +7,16 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import datetime, timedelta
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+
 
 app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'autoagendaFMS24'
+
+jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
 api = Blueprint('api', __name__)
-
 # Allow CORS requests to this API
 CORS(api)
 
@@ -27,6 +31,7 @@ def create_user():
     name = data.get('name')
     phone_number = data.get('phone_number')
     role_id = data.get('role_id')
+
     if not email or not password or not name or not phone_number or not role_id:
         return jsonify({"error": "All fields are required"}), 400
     
@@ -39,11 +44,37 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
-    response_body = new_user.serialize()
+    access_token = create_access_token(identity=new_user.id)  # Crear un token de acceso para el nuevo usuario
+    response_body = {
+        "user": new_user.serialize(),
+        "access_token": access_token
+    }
     return jsonify(response_body), 201
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// post en /login
+@api.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user or not bcrypt.check_password_hash(user.password, password):
+        return jsonify({"error": "Invalid credentials"}), 401
+
+    access_token = create_access_token(identity=user.id)  # Crear un token de acceso para el usuario
+    return jsonify(access_token=access_token), 200
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users con id
 @api.route('/users/<int:user_id>', methods=['GET'])
+@jwt_required()
 def get_user(user_id):
     user_query = User.query.filter_by(id=user_id).first()
     if user_query:
@@ -61,6 +92,7 @@ def get_user(user_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
 @api.route('/cars/<int:car_id>', methods=['GET'])
+@jwt_required()
 def get_cars(car_id):
     car_query = Car.query.filter_by(id=car_id).first()
     if car_query:
@@ -77,6 +109,7 @@ def get_cars(car_id):
     
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services con id
 @api.route('/services/<int:services_id>', methods=['GET'])
+@jwt_required()
 def get_service(services_id):
     service_query = Service.query.filter_by(id=services_id).first()
     if service_query:
@@ -93,6 +126,7 @@ def get_service(services_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
+@jwt_required()
 def create_car():
     data = request.get_json()
     if not data:
@@ -115,6 +149,7 @@ def create_car():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /comments 
 @api.route('/comments', methods=['POST'])
+@jwt_required()
 def create_comment():
     data = request.get_json()
     comment = data.get('comment')
@@ -132,6 +167,7 @@ def create_comment():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /services 
 @api.route('/services', methods=['POST'])
+@jwt_required()
 def create_service():
     data = request.get_json()
     if not data:
@@ -152,6 +188,7 @@ def create_service():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services 
 @api.route('/services', methods=['GET'])
+@jwt_required()
 def get_services():
     services_query = Service.query.all()
     services_list = list(map(lambda service: service.serialize(), services_query))
@@ -159,6 +196,7 @@ def get_services():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /settings 
 @api.route('/settings', methods=['POST'])
+@jwt_required()
 def create_setting():
     data = request.get_json()
     max_appointments_per_hour = data.get('max_appointments_per_hour')
@@ -179,6 +217,7 @@ def create_setting():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /settings 
 @api.route('/settings', methods=['GET'])
+@jwt_required()
 def get_setting():
     setting = Setting.query.first()
     if setting:
@@ -189,12 +228,14 @@ def get_setting():
     
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users 
 @api.route('/users', methods=['GET'])
+@jwt_required()
 def get_users():
     users_query = User.query.all()
     users_list = list(map(lambda user: user.serialize(), users_query))
     return jsonify(users_list), 200
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /appointments 
 @api.route('/appointments', methods=['POST'])
+@jwt_required()
 def create_appointment():
     data = request.get_json()
     if not data:
@@ -267,12 +308,21 @@ def cancel_appointment(appointment_id):
     appointment = Appointment.query.get(appointment_id)
     if not appointment:
         return jsonify({"error": "Cita no encontrada"}), 404
-
+    
+    comments = Comment.query.filter_by(appointment_id=appointment_id).all()
+    for comment in comments:
+        db.session.delete(comment)
     db.session.delete(appointment)
     db.session.commit()
 
     return jsonify({"msg": "Cita cancelada exitosamente"}), 200
-
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments
+@api.route('/appointments', methods=['GET'])
+@jwt_required()
+def get_appointments():
+    appointments_query = Appointment.query.all()
+    appointments_list = list(map(lambda appointment: appointment.serialize(), appointments_query))
+    return jsonify(appointments_list), 200
 
 
 
