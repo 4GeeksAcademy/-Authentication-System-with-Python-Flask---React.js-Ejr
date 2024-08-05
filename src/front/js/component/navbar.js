@@ -8,7 +8,7 @@ export const Navbar = () => {
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  const userRole = null; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
+  const userRole = "admin"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -73,6 +73,13 @@ export const Navbar = () => {
                 <Link to="/logout" className="btn btn-primary" onClick={handleNavCollapse}>
                   Logout
                 </Link>
+                <div className="row">
+                    <div className="profile-header-container">   
+                      <div className="role-label-container">
+                        <span className="label label-default role-label">Client</span>
+                      </div>
+	                  </div>
+                  </div>
               </>
             )}
             {userRole === "mechanic" && (
@@ -83,6 +90,13 @@ export const Navbar = () => {
                 <Link to="/logout" className="btn btn-primary" onClick={handleNavCollapse}>
                   Logout
                 </Link>
+                <div className="row">
+                    <div className="profile-header-container">   
+                      <div className="role-label-container">
+                        <span className="label label-default role-label">Mechanic</span>
+                      </div>
+	                  </div>
+                  </div>
               </>
             )}
             {userRole === "admin" && (
@@ -96,6 +110,13 @@ export const Navbar = () => {
                 <Link to="/logout" className="btn btn-primary" onClick={handleNavCollapse}>
                   Logout
                 </Link>
+	                <div className="row">
+                    <div className="profile-header-container">   
+                      <div className="role-label-container">
+                        <span className="label label-default role-label">Admin</span>
+                      </div>
+	                  </div>
+                  </div>
               </>
             )}
           </div>
