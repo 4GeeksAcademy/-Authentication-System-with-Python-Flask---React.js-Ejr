@@ -1,15 +1,13 @@
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import heroImg from "../../img/hero-img.png";
 import worldDottedMap from "../../img/world-dotted-map.png";
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-
-// const worldDottedMap = require("../../img/world-dotted-map.png");
-// const heroImg = require("../../img/hero-img.svg");
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
 
   return (
     <>
@@ -35,7 +33,7 @@ export const Home = () => {
                 manage your car maintenance effortlessly with us. We're your
                 reliable partner for all auto repair needs.
               </p>
-              <button className="btn btn-primary w-100 p-3 fw-bold">
+              <button onClick={() => navigate('/bookappointment')} className="btn btn-primary w-100 p-3 fw-bold">
                 Book Your Appointment at Our Trusted Workshop
               </button>
               <div
