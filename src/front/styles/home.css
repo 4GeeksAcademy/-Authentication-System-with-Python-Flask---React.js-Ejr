@@ -1,17 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap');
-
-body {
-    font-family: "Nunito Sans", Arial, sans-serif;
-    background: #fff;
-    font-size: 16px;
-    line-height: 1.8;
-    font-weight: 400;
-    color: #999999;
-    margin: 0;
-}
- 
 body { 
-  --background-color:  #0e1d34;  
+  --background-color:  #003366;  
   --default-color:  #ffffff;  
   --heading-color:  #ffffff;  
   --contrast-color:  #ffffff; 
@@ -21,7 +9,7 @@ body {
   --bs-btn-font-size:  1rem;  
   --bs-btn-font-weight:  400;  
   --bs-btn-line-height:  1.5;  
-  --bs-body-color: #212529; 
+  --bs-body-color: #333333; 
   --bs-border-width: 1px; 
   --bs-btn-border-width:  var(--bs-border-width);  
   --bs-btn-border-color:  transparent;  
@@ -30,9 +18,9 @@ body {
   --bs-btn-hover-border-color:  transparent;  
   --bs-btn-focus-box-shadow:  0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);  
   --bs-btn-color:  #fff;  
-  --bs-btn-bg:  #0d6efd;  
+  --bs-btn-bg:  #035cb5;  
   --bs-btn-hover-color:  #fff;  
-  --bs-btn-hover-bg:  #0b5ed7;  
+  --bs-btn-hover-bg:  #035cb5;  
 
   --bs-btn-focus-shadow-rgb:  49,132,253;  
 } 
@@ -66,7 +54,7 @@ body {
   --bs-body-font-size: 1rem; 
   --bs-body-font-weight: 400; 
   --bs-body-line-height: 1.5; 
-  --bs-body-color: #212529; 
+  --bs-body-color: #333333; 
   --bs-body-bg: #fff; 
   --bs-heading-color: inherit; 
   --bs-border-width: 1px; 
@@ -89,9 +77,9 @@ body {
 
 :root { 
   --background-color: #ffffff; 
-  --default-color: #212529; 
-  --heading-color: #001973; 
-  --accent-color: #0d42ff; 
+  --default-color: #333333; 
+  --heading-color: #035cb5; 
+  --accent-color: #cc0000; 
   --contrast-color: #ffffff;
 } 
 
@@ -100,7 +88,7 @@ body {
 } 
 
 .dark-background { 
-  --background-color: #0e1d34; 
+  --background-color: #0c2346; 
   --default-color: #ffffff; 
   --heading-color: #ffffff; 
   --contrast-color: #ffffff;
