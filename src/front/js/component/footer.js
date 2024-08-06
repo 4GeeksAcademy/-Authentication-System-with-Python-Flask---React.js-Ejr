@@ -1,10 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
+import { useLocation } from 'react-router-dom';
 
-export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center">
-		<p>
-			Made with <i className="fa fa-heart text-danger" /> by{" "}
-			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-		</p>
-	</footer>
-);
+const Footer = () => {
+    const location = useLocation();
+
+  
+    if (location.pathname !== "/login" && location.pathname !== "/register") {
+        return (
+            <footer className="footer mt-auto py-3 text-center">
+                <p>
+                    Made with <i className="fa fa-heart text-danger" /> by{" "}
+                    <a href="http://www.4geeksacademy.com">4Geeks Academy</a>
+                </p>
+            </footer>
+        );
+    } else {
+        return null; 
+    }
+};
+
+export default Footer;
