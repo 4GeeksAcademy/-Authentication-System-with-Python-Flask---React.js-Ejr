@@ -116,7 +116,7 @@ class DayRoutineDate(db.Model):
         return {
             "id": self.id,
             "day_routine_id": self.day_routine_id,
-            "date": self.weekly_routine_id,
+            "date": self.date,
             "done": self.done
         }
 
@@ -164,6 +164,8 @@ class ExerciseDayRoutine(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
+
+    exercise = db.relationship('Exercise', backref = 'category', lazy = True)
 
     def __repr__(self):
         return f'<User {self.name}>'
