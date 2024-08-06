@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function UserProfileModal({ user, onSave, onClose }) {
+function UserProfileModal({ user, onSave, onClose, error }) {
   const [updatedUser, setUpdatedUser] = useState(user);
 
   const handleChange = (e) => {
@@ -24,6 +24,7 @@ function UserProfileModal({ user, onSave, onClose }) {
             <button type="button" className="btn-close" onClick={onClose}></button>
           </div>
           <div className="modal-body">
+            {error && <div className="alert alert-danger">{error}</div>}
             <div className="mb-3">
               <label className="form-label">Name</label>
               <input type="text" className="form-control" name="name" value={updatedUser.name} onChange={handleChange} />

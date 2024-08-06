@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function EditCarModal({ car, onSave, onClose }) {
+function EditCarModal({ car, onSave, onClose, error }) {
   const [updatedCar, setUpdatedCar] = useState(car);
 
   const handleChange = (e) => {
@@ -24,6 +24,7 @@ function EditCarModal({ car, onSave, onClose }) {
             <button type="button" className="btn-close" onClick={onClose}></button>
           </div>
           <div className="modal-body">
+            {error && <div className="alert alert-danger">{error}</div>}
             <div className="mb-3">
               <label className="form-label">Model</label>
               <input type="text" className="form-control" name="model" value={updatedCar.model} onChange={handleChange} />

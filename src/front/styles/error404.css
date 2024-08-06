@@ -1,0 +1,130 @@
+/* Error404.css */
+* {
+    padding: 0px;
+    margin: 0px;
+  }
+  
+  body {
+    background: #0c2346;
+  }
+  
+  .error404-st0 {
+    font-family: 'FootlightMTLight';
+  }
+  
+  .error404-st1 {
+    font-size: 83.0285px;
+  }
+  
+  .error404-st2 {
+    fill: gray;
+  }
+  
+  svg {
+    width: 500px;
+    height: 400px;
+    text-align: center;
+    fill: #035cb5;
+  }
+  
+  path#error404-XMLID_5_ {
+    fill: #035cb5;
+    filter: url(#error404-blurFilter4);
+  }
+  
+  path#error404-XMLID_11_, path#error404-XMLID_2_ {
+    fill: #035cb5;
+  }
+  
+  .error404-circle {
+    animation: error404-out 2s infinite ease-out;
+    fill: #035cb5;
+  }
+  
+  #error404-container {
+    text-align: center;
+  }
+  
+  .error404-message {
+    color: #035cb5;
+  }
+  
+  .error404-message:after {
+    content: "]";
+  }
+  
+  .error404-message:before {
+    content: "[";
+  }
+  
+  .error404-message:after,
+  .error404-message:before {
+    color: #035cb5;
+    font-size: 20px;
+    -webkit-animation-name: error404-opacity;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: error404-opacity;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    margin: 0 50px;
+  }
+  
+  @-webkit-keyframes error404-opacity {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes error404-opacity {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes error404-out {
+    0% {
+      r: 1;
+      opacity: 0.9;
+    }
+    25% {
+      r: 5;
+      opacity: 0.3;
+    }
+    50% {
+      r: 10;
+      opacity: 0.2;
+    }
+    75% {
+      r: 15;
+      opacity: 0.1;
+    }
+    100% {
+      r: 20;
+      opacity: 0;
+    }
+  }
+  
+  .error404-btn {
+    background: #035cb5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .error404-btn:hover {
+    background: #003366;
+  }
+  

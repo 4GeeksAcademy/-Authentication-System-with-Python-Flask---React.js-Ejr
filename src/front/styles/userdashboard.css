@@ -1,4 +1,8 @@
 /* General Styles */
+body {
+  background-color: white;
+}
+
 .user-dashboard {
   text-align: center;
 }

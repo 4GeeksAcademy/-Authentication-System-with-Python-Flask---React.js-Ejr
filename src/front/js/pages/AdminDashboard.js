@@ -25,27 +25,27 @@ const AdminDashboard = () => {
         <h1>Admin Dashboard</h1>
         <div className="stats row">
           <div className="stat1 col mx-2">
-            <img src={iconUser}/>
+            <img src={iconUser} alt="Total Clients"/>
             <h3>Total Clients</h3>
             <p>10</p>
           </div>
           <div className="stat2 col mx-2">
-            <img src={iconComments}/>
+            <img src={iconComments} alt="Total Appointments"/>
             <h3>Total Appointments</h3>
             <p>20</p>
           </div>
           <div className="stat3 col mx-2">
-            <img src={iconBriefcase}/>
+            <img src={iconBriefcase} alt="Total Services"/>
             <h3>Total Services</h3>
             <p>5</p>
           </div>
           <div className="stat4 col mx-2">
-            <img src={iconFavorites}/>
+            <img src={iconFavorites} alt="Total Cars"/>
             <h3>Total Cars</h3>
             <p>15</p>
           </div>
           <div className="stat5 col mx-2">
-            <img src={iconConnect}/>
+            <img src={iconConnect} alt="Settings"/>
             <h3>Settings</h3>
             <p>Max Appointments per Hour: 4</p>
             <button className="btn btn-secondary btnSetting" onClick={handleModalOpen}>
