@@ -1,14 +1,16 @@
 import React from 'react';
-import { Calendar, Badge } from 'rsuite';
-import 'rsuite/dist/rsuite.min.css'; // Add this line to import rsuite styles
+import { Calendar } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css';
+import "../../styles/reactcalendar.css";
 
-const ReactCalendar = ({ onDateChange }) => {
+const ReactCalendar = ({ onDateChange, initialDate }) => {
   return (
-    <div style={{ width: 280 }}>
+    <div className="calendar-container">
       <Calendar
         compact
         bordered
-        onSelect={onDateChange} // Add onSelect handler to capture date changes
+        defaultValue={initialDate}
+        onSelect={onDateChange}
       />
     </div>
   );

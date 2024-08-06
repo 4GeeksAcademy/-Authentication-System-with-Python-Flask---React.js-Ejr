@@ -1,6 +1,6 @@
-// BookAppointmentUnregisteredUser.js
 import React, { useState, useEffect } from "react";
 import ReactCalendar from "../component/ReactCalendar";
+import "../../styles/bookappointmentunregistereduser.css";
 
 const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,7 +19,8 @@ const BookAppointmentUnregisteredUser = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const apiUrl = "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
+  const apiUrl =
+    "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
 
   useEffect(() => {
     const getServices = async () => {
@@ -91,167 +92,159 @@ const BookAppointmentUnregisteredUser = () => {
       setError("Service required. Please select one from the list.");
       return;
     }
+    if (currentStep === 3) {
+      if (!appointmentDate || !comment) {
+        setError(
+          "Both appointment date and comment are required. Please choose a date from the calendar and add a brief comment about the service you require."
+        );
+        return;
+      }
+    }
+    if (currentStep === 4) {
+      if (!name || !email || !password) {
+        setError("Full name, email, and password are required in order to confirm your appointment.");
+        return;
+      }
+    }
     setError("");
     setCurrentStep(currentStep + 1);
   };
 
   const displayCurrentStep = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <div>
-            <h2>Enter Car Details</h2>
-            {error && <p className="error-message">{error}</p>}
-            <label htmlFor="carLicensePlate">Car License Plate</label>
-            <input
-              type="text"
-              id="carLicensePlate"
-              value={carLicensePlate}
-              onChange={(e) => setCarLicensePlate(e.target.value)}
-              placeholder="Enter car license plate"
-            />
-            <label htmlFor="carModel">Car Model</label>
-            <input
-              type="text"
-              id="carModel"
-              value={carModel}
-              onChange={(e) => setCarModel(e.target.value)}
-              placeholder="Enter car model"
-            />
-          </div>
-        );
-      case 2:
-        return (
-          <div>
-            <h2>Select Service</h2>
-            {error && <p className="error-message">{error}</p>}
-            <label htmlFor="service">Service</label>
-            <select
-              id="service"
-              value={serviceChosen}
-              onChange={(e) => setServiceChosen(e.target.value)}
-            >
-              <option value="">Select a service</option>
-              {services.map((service) => (
-                <option key={service.id} value={service.name}>
-                  {service.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        );
-      case 3:
-        return (
-          <div>
-            <h2>Select Date and Add Comments</h2>
-            <label htmlFor="date">Appointment Date</label>
-            <ReactCalendar
-              onDateChange={setAppointmentDate}
-              initialDate={appointmentDate}
-            />
-            <label htmlFor="comment">Comments</label>
-            <textarea
-              id="comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows="4"
-              cols="50"
-            />
-          </div>
-        );
-      case 4:
-        return (
-          <div>
-            <h2>Sign Up</h2>
-            <label htmlFor="name">Full Name</label>
-            <input
-              type="name"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
-            />
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-            />
-            <label htmlFor="phoneNumber">Phone Number</label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter your phone number"
-            />
-            <label htmlFor="password">Create Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password"
-            />
-          </div>
-        );
-      case 5:
-        return (
-          <div>
-            <h2>Confirm Appointment</h2>
-            <p>
-              <strong>Car License Plate:</strong> {carLicensePlate}
-            </p>
-            <p>
-              <strong>Car Model:</strong> {carModel}
-            </p>
-            <p>
-              <strong>Service:</strong> {serviceChosen}
-            </p>
-            <p>
-              <strong>Appointment Date:</strong> {appointmentDate.toLocaleDateString()}
-            </p>
-            <p>
-              <strong>Comments:</strong> {comment}
-            </p>
-            <p>
-              <strong>Email:</strong> {email}
-            </p>
-            <p>
-              <strong>Phone Number:</strong> {phoneNumber}
-            </p>
+    return (
+      <div className="card padding">
+        <div className="card-body">
+          {error && <p className="error-message">{error}</p>}
+          {currentStep === 1 && (
             <div>
-              <button onClick={() => setCurrentStep(1)}>
-                Back to Start
-              </button>
-              <button onClick={submitAppointment}>Submit</button>
+              <h3>Please Enter your Car Details</h3>
+              <label htmlFor="carLicensePlate">Car License Plate</label>
+              <input
+                type="text"
+                id="carLicensePlate"
+                value={carLicensePlate}
+                onChange={(e) => setCarLicensePlate(e.target.value)}
+                placeholder="Enter car license plate"
+              />
+              <label htmlFor="carModel">Car Model</label>
+              <input
+                type="text"
+                id="carModel"
+                value={carModel}
+                onChange={(e) => setCarModel(e.target.value)}
+                placeholder="Enter car model"
+              />
             </div>
-          </div>
-        );
-      default:
-        return null;
-    }
+          )}
+          {currentStep === 2 && (
+            <div>
+              <h3>Please Select a Service</h3>
+              <label htmlFor="service">Service</label>
+              <select
+                id="service"
+                value={serviceChosen}
+                onChange={(e) => setServiceChosen(e.target.value)}
+              >
+                <option value="">Select a service</option>
+                {services.map((service) => (
+                  <option key={service.id} value={service.name}>
+                    {service.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {currentStep === 3 && (
+            <div>
+              <h3>Please Select Appointment Date and Add a Comment</h3>
+              <label htmlFor="date">Appointment Date</label>
+              <ReactCalendar
+                onDateChange={setAppointmentDate}
+                initialDate={appointmentDate}
+              />
+              <label htmlFor="comment">Comments</label>
+              <textarea
+                id="comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                rows="4"
+              />
+            </div>
+          )}
+          {currentStep === 4 && (
+            <div>
+              <h3>Sign Up</h3>
+              <span>
+                To confirm your appointment with us, we kindly ask that you create
+                an account by providing your full name, email address, and a
+                password.
+              </span>
+              <label htmlFor="name">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+              />
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+              />
+              <label htmlFor="phoneNumber">Phone Number</label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                placeholder="Enter your phone number"
+              />
+              <label htmlFor="password">Create Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create a password"
+              />
+            </div>
+          )}
+          {currentStep === 5 && (
+            <div>
+              <h3>Appointment Summary</h3>
+              <p><strong>Car License Plate:</strong> {carLicensePlate}</p>
+              <p><strong>Car Model:</strong> {carModel}</p>
+              <p><strong>Service:</strong> {serviceChosen}</p>
+              <p><strong>Appointment Date:</strong> {appointmentDate.toLocaleDateString()}</p>
+              <p><strong>Comments:</strong> {comment}</p>
+              <p><strong>Email:</strong> {email}</p>
+              <p><strong>Phone Number:</strong> {phoneNumber}</p>
+              <div>
+                <button onClick={() => setCurrentStep(1)}>Back to Start</button>
+                <button type="submit" onClick={submitAppointment}>Submit</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div>
-      <div>
-        <div onClick={() => setCurrentStep(1)}>Car Details</div>
-        <div onClick={() => setCurrentStep(2)}>Service</div>
-        <div onClick={() => setCurrentStep(3)}>Date & Comments</div>
-        <div onClick={() => setCurrentStep(4)}>Sign Up</div>
-        <div onClick={() => setCurrentStep(5)}>Summary</div>
-      </div>
-      {displayCurrentStep()}
-      <div>
-        {currentStep > 1 && (
-          <button onClick={() => setCurrentStep(currentStep - 1)}>
-            Previous
-          </button>
-        )}
-        {currentStep < 5 && <button onClick={nextStep}>Next</button>}
+    <div id="content">
+      <div className="card padding">
+        <div className="card-header">Appointment Booking</div>
+        {displayCurrentStep()}
+        <div>
+          {currentStep > 1 && (
+            <button onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>
+          )}
+          {currentStep < 5 && <button onClick={nextStep}>Next</button>}
+        </div>
       </div>
     </div>
   );
