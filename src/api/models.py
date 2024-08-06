@@ -42,6 +42,7 @@ class Itinerary(db.Model):
 
     author = db.relationship('User', back_populates='itineraries')
     comments = db.relationship('Comments', back_populates='itinerary')
+    tags = db.relationship('Tags', secondary='itinerary_tags_rel', back_populates='itinerary')
 
     def __repr__(self):
         return f'<Itinerary {self.title}>'
@@ -62,7 +63,8 @@ class Itinerary(db.Model):
             'itinerary': self.itinerary,
             'creation_date': self.creation_date,
             'author': self.author.username,
-            'comments': [comment.serialize() for comment in self.comments]
+            'comments': [comment.serialize() for comment in self.comments],
+            'tags': [tag.serialize() for tag in self.tags]
         }
     
 class Comments(db.Model):
@@ -111,3 +113,34 @@ class Reports(db.Model):
             "reported_user_id": self.reported_user_id,
             "comment_id": self.comment_id,
         }
+    
+class Itenerary_Tags_Rel(db.Model):
+    __tablename__ = 'itinerary_tags_rel'
+
+    itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), primary_key=True)
+    tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+
+    def serialize(self):
+        return{
+            "itinerary_id": self.itinerary_id,
+            "tags_id": self.tags_id    
+        }
+
+class Tags(db.Model):
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), unique=True, nullable=False)
+
+    itinerary = db.relationship('Itinerary', secondary='itinerary_tags_rel', back_populates='tags')
+
+    def __repr__(self):
+        return f'<Tag {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "itineraries": [itinerary.serialize_simple() for itinerary in self.itineraries]           
+        }
+
