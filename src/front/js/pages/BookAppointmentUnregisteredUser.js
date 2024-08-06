@@ -1,23 +1,30 @@
+// BookAppointmentUnregisteredUser.js
 import React, { useState, useEffect } from "react";
+import ReactCalendar from "../component/ReactCalendar";
 
-const AppointmentForm = () => {
+const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentId, setAppointmentId] = useState("");
-  const [appointmentDate, setAppointmentDate] = useState("");
+  const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [carId, setCarId] = useState("");
+  const [carLicensePlate, setCarLicensePlate] = useState("");
+  const [carModel, setCarModel] = useState("");
   const [services, setServices] = useState([]);
   const [serviceChosen, setServiceChosen] = useState("");
   const [comment, setComment] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const apiUrl =
-    "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
+  const apiUrl = "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
 
   useEffect(() => {
     const getServices = async () => {
       try {
-        const response = await fetch(`${apiUrl}/services`);
+        const response = await fetch(`${apiUrl}/api/services`);
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
@@ -76,7 +83,11 @@ const AppointmentForm = () => {
   };
 
   const nextStep = () => {
-    if (currentStep === 1 && !serviceChosen) {
+    if (currentStep === 1 && (!carLicensePlate || !carModel)) {
+      setError("Car license plate and model are required.");
+      return;
+    }
+    if (currentStep === 2 && !serviceChosen) {
       setError("Service required. Please select one from the list.");
       return;
     }
@@ -89,8 +100,31 @@ const AppointmentForm = () => {
       case 1:
         return (
           <div>
+            <h2>Enter Car Details</h2>
+            {error && <p className="error-message">{error}</p>}
+            <label htmlFor="carLicensePlate">Car License Plate</label>
+            <input
+              type="text"
+              id="carLicensePlate"
+              value={carLicensePlate}
+              onChange={(e) => setCarLicensePlate(e.target.value)}
+              placeholder="Enter car license plate"
+            />
+            <label htmlFor="carModel">Car Model</label>
+            <input
+              type="text"
+              id="carModel"
+              value={carModel}
+              onChange={(e) => setCarModel(e.target.value)}
+              placeholder="Enter car model"
+            />
+          </div>
+        );
+      case 2:
+        return (
+          <div>
             <h2>Select Service</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             <label htmlFor="service">Service</label>
             <select
               id="service"
@@ -106,31 +140,15 @@ const AppointmentForm = () => {
             </select>
           </div>
         );
-      case 2:
-        return (
-          <div>
-            <h2>Select Car and Date</h2>
-            <label htmlFor="car">Car ID</label>
-            <input
-              type="text"
-              id="car"
-              value={carId}
-              onChange={(e) => setCarId(e.target.value)}
-              placeholder="Enter car ID"
-            />
-            <label htmlFor="date">Appointment Date</label>
-            <input
-              type="date"
-              id="date"
-              value={appointmentDate}
-              onChange={(e) => setAppointmentDate(e.target.value)}
-            />
-          </div>
-        );
       case 3:
         return (
           <div>
-            <h2>Add Comments</h2>
+            <h2>Select Date and Add Comments</h2>
+            <label htmlFor="date">Appointment Date</label>
+            <ReactCalendar
+              onDateChange={setAppointmentDate}
+              initialDate={appointmentDate}
+            />
             <label htmlFor="comment">Comments</label>
             <textarea
               id="comment"
@@ -144,22 +162,69 @@ const AppointmentForm = () => {
       case 4:
         return (
           <div>
+            <h2>Sign Up</h2>
+            <label htmlFor="name">Full Name</label>
+            <input
+              type="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+            />
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+            />
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Enter your phone number"
+            />
+            <label htmlFor="password">Create Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Create a password"
+            />
+          </div>
+        );
+      case 5:
+        return (
+          <div>
             <h2>Confirm Appointment</h2>
+            <p>
+              <strong>Car License Plate:</strong> {carLicensePlate}
+            </p>
+            <p>
+              <strong>Car Model:</strong> {carModel}
+            </p>
             <p>
               <strong>Service:</strong> {serviceChosen}
             </p>
             <p>
-              <strong>Car ID:</strong> {carId}
-            </p>
-            <p>
-              <strong>Appointment Date:</strong> {appointmentDate}
+              <strong>Appointment Date:</strong> {appointmentDate.toLocaleDateString()}
             </p>
             <p>
               <strong>Comments:</strong> {comment}
             </p>
+            <p>
+              <strong>Email:</strong> {email}
+            </p>
+            <p>
+              <strong>Phone Number:</strong> {phoneNumber}
+            </p>
             <div>
-              <button onClick={() => setCurrentStep(currentStep - 1)}>
-                Previous
+              <button onClick={() => setCurrentStep(1)}>
+                Back to Start
               </button>
               <button onClick={submitAppointment}>Submit</button>
             </div>
@@ -173,10 +238,11 @@ const AppointmentForm = () => {
   return (
     <div>
       <div>
-        <div onClick={() => setCurrentStep(1)}>Service</div>
-        <div onClick={() => setCurrentStep(2)}>Car & Date</div>
-        <div onClick={() => setCurrentStep(3)}>Comments</div>
-        <div onClick={() => setCurrentStep(4)}>Confirm</div>
+        <div onClick={() => setCurrentStep(1)}>Car Details</div>
+        <div onClick={() => setCurrentStep(2)}>Service</div>
+        <div onClick={() => setCurrentStep(3)}>Date & Comments</div>
+        <div onClick={() => setCurrentStep(4)}>Sign Up</div>
+        <div onClick={() => setCurrentStep(5)}>Summary</div>
       </div>
       {displayCurrentStep()}
       <div>
@@ -185,12 +251,10 @@ const AppointmentForm = () => {
             Previous
           </button>
         )}
-        {currentStep < 4 && (
-          <button onClick={nextStep}>Next</button>
-        )}
+        {currentStep < 5 && <button onClick={nextStep}>Next</button>}
       </div>
     </div>
   );
 };
 
-export default AppointmentForm;
+export default BookAppointmentUnregisteredUser;

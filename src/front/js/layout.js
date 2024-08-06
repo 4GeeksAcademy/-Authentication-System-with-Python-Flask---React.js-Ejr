@@ -12,7 +12,7 @@ import Error404 from "../js/pages/Error404";
 import Login from "./pages/Login";
 
 // Import the components for the new routes
-import BookAppointment from "./pages/BookAppointment";
+import BookAppointmentUnregisteredUser from "./pages/BookAppointmentUnregisteredUser";
 import Contact from "./pages/Contact";
 import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard";
@@ -32,7 +32,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<BookAppointment />} path="/bookappointment" />
+                        <Route element={<BookAppointmentUnregisteredUser />} path="/bookappointmentunregistereduser" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<UserDashboard />} path="/userdashboard" />

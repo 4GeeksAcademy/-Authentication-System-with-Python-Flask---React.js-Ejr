@@ -38,7 +38,7 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/bookappointment" className="nav-link" onClick={handleNavCollapse}>
+              <Link to="/bookappointmentunregistereduser" className="nav-link" onClick={handleNavCollapse}>
                 Book an Appointment
               </Link>
             </li>
