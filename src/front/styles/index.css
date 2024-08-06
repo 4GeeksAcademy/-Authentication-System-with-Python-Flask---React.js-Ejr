@@ -5,3 +5,7 @@
     padding: 0;
     font-family: var(--font-primary);
 }
+
+body{
+    background-color: var(--color-light-gray);
+}
