@@ -1,3 +1,7 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+@import url('./variables.css');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}

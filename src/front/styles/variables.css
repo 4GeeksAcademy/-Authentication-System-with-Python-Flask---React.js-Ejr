@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+:root {
+    --color-cream: #EBE6D8;
+    --color-olive: #B1B284;
+    --color-forest: #394B3F;
+
+    --color-green: #72BB53;
+    --color-red: #FF8A84;
+
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray: #929292;
+    --color-light-gray: #F5F5F6;
+
+    --font-logo: "Averia Serif Libre", serif;
+    --font-primary: "Afacad", sans-serif;
+}
