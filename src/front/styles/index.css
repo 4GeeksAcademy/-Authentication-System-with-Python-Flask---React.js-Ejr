@@ -49,3 +49,8 @@ button {
   button:hover {
     transform: scale(1.02);
   }
+
+
+.card{
+    background-color: #a9d7cb !important;
+}
