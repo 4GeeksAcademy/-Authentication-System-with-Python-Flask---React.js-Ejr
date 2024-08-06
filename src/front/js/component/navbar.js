@@ -1,19 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../img/logo.png"
 
 export const Navbar = () => {
 	return (
-		<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand ms-5" href="#">HablemosUY</a>
-    <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+		<nav className="navbar navbar-expand-lg bg-body-tertiary navbar-transparent">
+  <div className="container-fluid">
+	<div className="ms-5">
+	<img className="logo" src={logo} />
+    <a className="navbar-brand text-light ms-3" href="#">HablemosUY</a>
+	</div>
+	
+    <button className="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link active mx-4" aria-current="page" href="#">Preguntas frecuentes</a>
-        <a class="nav-link mx-4" href="#">Profesionales</a>
-		<a class="nav-link mx-4 me-5 pe-5" href="#">Precios</a>
+    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div className="navbar-nav ms-auto">
+        <a className="nav-link active mx-4 text-light" aria-current="page" href="#">Preguntas frecuentes</a>
+        <a className="nav-link mx-4 text-light" href="#">Profesionales</a>
+		<a className="nav-link mx-4 me-5 pe-5 text-light" href="#">Precios</a>
       </div>
     </div>
   </div>
