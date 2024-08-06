@@ -1,21 +1,35 @@
+// src/components/Post.js
+
 import React, { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../../contexts/AuthContext';
+
 
 const Post = ({ post }) => {
-  const { user } = useContext(AuthContext);
+  const { authTokens } = useContext(AuthContext);
 
   const handleLike = async () => {
-    // Lógica para manejar el like
+    const response = await fetch(`${process.env.BACKEND_URL}/api/posts/${post.id}/like`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${authTokens}`
+      }
+    });
+    if (response.ok) {
+      // Manejar la respuesta exitosa
+      console.log('Post liked successfully');
+    } else {
+      // Manejar errores
+      console.error('Failed to like post');
+    }
   };
 
   return (
-    <div className="post">
+    <div>
       <img src={post.image} alt="Post" />
       <p>{post.message}</p>
-      <p>By: {post.author.username}</p>
       <p>Location: {post.location}</p>
-      <p>Likes: {post.likes.length}</p>
-      {user && <button onClick={handleLike}>Like</button>}
+      <p>Status: {post.status}</p>
+      <button onClick={handleLike}>Like</button>
     </div>
   );
 };

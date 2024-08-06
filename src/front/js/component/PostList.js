@@ -1,24 +1,25 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { fetchPosts } from '../services/api';
+// src/components/PostList.js
+
+import React, { useEffect, useContext } from 'react';
+import { AppContext } from '../../../store/appContext';
+import { getPosts } from '../../../services/api';
 import Post from './Post';
-import { AuthContext } from '../contexts/AuthContext';
 
 const PostList = () => {
-  const [posts, setPosts] = useState([]);
-  const { user } = useContext(AuthContext);
+  const [state, setState] = useContext(AppContext);
 
   useEffect(() => {
-    const loadPosts = async () => {
-      const fetchedPosts = await fetchPosts();
-      setPosts(fetchedPosts);
+    const fetchPosts = async () => {
+      const posts = await getPosts();
+      setState({ ...state, posts });
     };
-    loadPosts();
+
+    fetchPosts();
   }, []);
 
   return (
     <div>
-      <h1>Posts</h1>
-      {posts.map(post => (
+      {state.posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </div>

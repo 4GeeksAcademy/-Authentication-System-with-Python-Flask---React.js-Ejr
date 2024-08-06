@@ -1,23 +1,21 @@
+// src/components/UserProfile.js
+
 import React, { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../../contexts/AuthContext';
 
-const Post = ({ post }) => {
-  const { user } = useContext(AuthContext);
+const UserProfile = () => {
+  const { currentUser } = useContext(AuthContext);
 
-  const handleLike = async () => {
-    // Lógica para manejar el like
-  };
+  if (!currentUser) {
+    return <p>Please log in to see your profile.</p>;
+  }
 
   return (
-    <div className="post">
-      <img src={post.image} alt="Post" />
-      <p>{post.message}</p>
-      <p>By: {post.author.username}</p>
-      <p>Location: {post.location}</p>
-      <p>Likes: {post.likes.length}</p>
-      {user && <button onClick={handleLike}>Like</button>}
+    <div>
+      <h1>{currentUser.name}</h1>
+      <p>Email: {currentUser.email}</p>
     </div>
   );
 };
 
-export default Post;
+export default UserProfile;
