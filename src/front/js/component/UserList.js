@@ -1,28 +1,99 @@
 import React, { useState } from 'react';
+import UserProfileView from './UserProfileView';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function UserList() {
   const initialUsers = [
-    { id: 1, name: 'John', cars: 2, appointments: 3, comments: 5 },
-    { id: 2, name: 'Jane', cars: 1, appointments: 2, comments: 3 },
-    { id: 3, name: 'Alice', cars: 3, appointments: 1, comments: 2 },
-    { id: 4, name: 'Bob', cars: 2, appointments: 4, comments: 1 },
-    { id: 5, name: 'Charlie', cars: 1, appointments: 5, comments: 3 },
-    { id: 6, name: 'Dave', cars: 2, appointments: 3, comments: 4 },
-    { id: 7, name: 'Eve', cars: 1, appointments: 2, comments: 2 },
-    { id: 8, name: 'Frank', cars: 3, appointments: 3, comments: 5 },
-    { id: 9, name: 'Grace', cars: 2, appointments: 1, comments: 1 },
-    { id: 10, name: 'Heidi', cars: 1, appointments: 4, comments: 2 },
-    { id: 11, name: 'Ivan', cars: 2, appointments: 2, comments: 3 },
-    { id: 12, name: 'Judy', cars: 3, appointments: 3, comments: 4 },
-    { id: 13, name: 'Mallory', cars: 1, appointments: 1, comments: 1 },
-    { id: 14, name: 'Niaj', cars: 2, appointments: 2, comments: 2 },
-    { id: 15, name: 'Olivia', cars: 1, appointments: 5, comments: 5 },
+    { 
+      id: 1, name: 'John', phoneNumber: '123-456-7890', email: 'john@example.com', 
+      cars: [{ model: 'Toyota Camry', licensePlate: 'ABC123' }, { model: 'Honda Civic', licensePlate: 'XYZ789' }], 
+      appointments: [
+        { date: '2024-08-01', service: 'Oil Change', status: 'Completed' }, 
+        { date: '2024-08-05', service: 'Tire Rotation', status: 'Pending' },
+        { date: '2024-08-10', service: 'Brake Inspection', status: 'Completed' }
+      ], 
+      comments: [
+        { content: 'Great service!', timestamp: '2024-08-01 10:30 AM' }, 
+        { content: 'Very satisfied', timestamp: '2024-08-05 02:00 PM' },
+        { content: 'Brake pads need replacement', timestamp: '2024-08-10 01:30 PM' },
+        { content: 'Quick and efficient', timestamp: '2024-08-10 01:50 PM' }
+      ]
+    },
+    { 
+      id: 2, name: 'Jane', phoneNumber: '234-567-8901', email: 'jane@example.com', 
+      cars: [{ model: 'Nissan Altima', licensePlate: 'LMN456' }], 
+      appointments: [
+        { date: '2024-08-03', service: 'Engine Check', status: 'Completed' },
+        { date: '2024-08-07', service: 'Battery Replacement', status: 'Pending' }
+      ], 
+      comments: [
+        { content: 'Excellent work!', timestamp: '2024-08-03 11:00 AM' }, 
+        { content: 'Very professional', timestamp: '2024-08-07 03:00 PM' }
+      ]
+    },
+    { 
+      id: 3, name: 'Alice', phoneNumber: '345-678-9012', email: 'alice@example.com', 
+      cars: [{ model: 'Ford Focus', licensePlate: 'OPQ678' }], 
+      appointments: [
+        { date: '2024-08-04', service: 'Tire Replacement', status: 'Completed' }
+      ], 
+      comments: [
+        { content: 'Friendly staff', timestamp: '2024-08-04 02:00 PM' }
+      ]
+    },
+    { 
+      id: 4, name: 'Bob', phoneNumber: '456-789-0123', email: 'bob@example.com', 
+      cars: [{ model: 'Chevrolet Malibu', licensePlate: 'RST901' }, { model: 'Jeep Wrangler', licensePlate: 'UVW234' }], 
+      appointments: [
+        { date: '2024-08-06', service: 'Oil Change', status: 'Completed' }, 
+        { date: '2024-08-09', service: 'Brake Inspection', status: 'Pending' }
+      ], 
+      comments: [
+        { content: 'Quick service', timestamp: '2024-08-06 01:00 PM' }, 
+        { content: 'Brake inspection was thorough', timestamp: '2024-08-09 04:00 PM' }
+      ]
+    },
+    { 
+      id: 5, name: 'Charlie', phoneNumber: '567-890-1234', email: 'charlie@example.com', 
+      cars: [{ model: 'Hyundai Sonata', licensePlate: 'XYZ678' }], 
+      appointments: [
+        { date: '2024-08-02', service: 'Oil Change', status: 'Completed' }, 
+        { date: '2024-08-08', service: 'Tire Rotation', status: 'Pending' }
+      ], 
+      comments: [
+        { content: 'Great experience', timestamp: '2024-08-02 10:00 AM' }, 
+        { content: 'Very satisfied with the tire rotation', timestamp: '2024-08-08 02:00 PM' }
+      ]
+    },
+    { 
+      id: 6, name: 'Dave', phoneNumber: '678-901-2345', email: 'dave@example.com', 
+      cars: [{ model: 'BMW X5', licensePlate: 'ABC567' }], 
+      appointments: [
+        { date: '2024-08-11', service: 'Engine Check', status: 'Completed' }
+      ], 
+      comments: [
+        { content: 'Engine check was thorough', timestamp: '2024-08-11 11:00 AM' }
+      ]
+    },
+    { 
+      id: 7, name: 'Eve', phoneNumber: '789-012-3456', email: 'eve@example.com', 
+      cars: [{ model: 'Mercedes Benz C300', licensePlate: 'XYZ234' }], 
+      appointments: [
+        { date: '2024-08-12', service: 'Oil Change', status: 'Completed' },
+        { date: '2024-08-15', service: 'Battery Replacement', status: 'Pending' }
+      ], 
+      comments: [
+        { content: 'Excellent service', timestamp: '2024-08-12 09:00 AM' }, 
+        { content: 'Battery replacement was quick', timestamp: '2024-08-15 11:00 AM' }
+      ]
+    }
   ];
 
   const [users, setUsers] = useState(initialUsers);
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const sortedUsers = [...users].sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -52,6 +123,14 @@ function UserList() {
     setShowConfirmModal(false);
   };
 
+  const handleViewProfile = user => {
+    setSelectedUser(user);
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedUser(null);
+  };
+
   return (
     <div className="user-list">
       <h2>User List</h2>
@@ -69,6 +148,8 @@ function UserList() {
                   Client Name {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
                 </button>
               </th>
+              <th>Phone Number</th>
+              <th>Email</th>
               <th>Number of Vehicles</th>
               <th>Number of Appointments</th>
               <th>Comments</th>
@@ -80,11 +161,13 @@ function UserList() {
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
-                <td>{user.cars}</td>
-                <td>{user.appointments}</td>
-                <td>{user.comments}</td>
+                <td>{user.phoneNumber}</td>
+                <td>{user.email}</td>
+                <td>{user.cars.length}</td>
+                <td>{user.appointments.length}</td>
+                <td>{user.comments.length}</td>
                 <td>
-                  <button className="btn btn-primary">View Profile</button>
+                  <button className="btn btn-primary" onClick={() => handleViewProfile(user)}>View Profile</button>
                   <button className="btn btn-danger ms-2" onClick={() => handleDeleteClick(user)}>Delete</button>
                 </td>
               </tr>
@@ -92,6 +175,8 @@ function UserList() {
           </tbody>
         </table>
       </div>
+
+      {selectedUser && <UserProfileView user={selectedUser} onClose={handleCloseProfile} />}
 
       {showConfirmModal && (
         <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>

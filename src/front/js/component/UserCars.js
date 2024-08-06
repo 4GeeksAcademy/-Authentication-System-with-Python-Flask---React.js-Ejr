@@ -14,6 +14,7 @@ function UserCars() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [carToEdit, setCarToEdit] = useState(null);
   const [carToDelete, setCarToDelete] = useState(null);
+  const [error, setError] = useState('');
 
   const handleAddModalOpen = () => {
     setIsAddModalOpen(true);
@@ -21,6 +22,7 @@ function UserCars() {
 
   const handleAddModalClose = () => {
     setIsAddModalOpen(false);
+    setError('');
   };
 
   const handleEditModalOpen = (car) => {
@@ -30,27 +32,30 @@ function UserCars() {
 
   const handleEditModalClose = () => {
     setIsEditModalOpen(false);
+    setError('');
   };
 
   const handleAddCar = (newCar) => {
     if (!newCar.model.trim() || !newCar.licensePlate.trim()) {
-      alert('Model and License Plate cannot be blank');
+      setError('Model and License Plate cannot be blank');
       return;
     }
 
     const newCarWithId = { ...newCar, id: cars.length + 1 };
     setCars([...cars, newCarWithId]);
     setIsAddModalOpen(false);
+    setError('');
   };
 
   const handleEditCar = (updatedCar) => {
     if (!updatedCar.model.trim() || !updatedCar.licensePlate.trim()) {
-      alert('Model and License Plate cannot be blank');
+      setError('Model and License Plate cannot be blank');
       return;
     }
 
     setCars(cars.map(car => car.id === updatedCar.id ? updatedCar : car));
     setIsEditModalOpen(false);
+    setError('');
   };
 
   const handleDeleteClick = carId => {
@@ -65,7 +70,7 @@ function UserCars() {
 
   return (
     <div className="user-cars">
-      <h2>My Cars</h2>
+      <h2 className="fw-bolder text-dark p-3">My Cars</h2>
       <button className="btn btn-primary mb-3" onClick={handleAddModalOpen}>Add Car</button>
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -90,8 +95,8 @@ function UserCars() {
           </tbody>
         </table>
       </div>
-      {isAddModalOpen && <AddCarModal onSave={handleAddCar} onClose={handleAddModalClose} />}
-      {isEditModalOpen && <EditCarModal car={carToEdit} onSave={handleEditCar} onClose={handleEditModalClose} />}
+      {isAddModalOpen && <AddCarModal onSave={handleAddCar} onClose={handleAddModalClose} error={error} />}
+      {isEditModalOpen && <EditCarModal car={carToEdit} onSave={handleEditCar} onClose={handleEditModalClose} error={error} />}
 
       {showConfirmModal && (
         <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>

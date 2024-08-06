@@ -23,17 +23,29 @@ function UserAppointments() {
       car: 'Honda Accord',
       status: 'Pending',
       comments: []
+    },
+    {
+      id: 3,
+      date: '2024-08-10',
+      time: '01:00 PM',
+      service: 'Brake Inspection',
+      car: 'Ford Focus',
+      status: 'Pending',
+      comments: [
+        { author: 'Mechanic', content: 'Brake pads need replacement', timestamp: '2024-08-10 01:30 PM' }
+      ]
     }
   ];
 
   const [appointments, setAppointments] = useState(initialAppointments);
   const [newComments, setNewComments] = useState({});
+  const [errors, setErrors] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [appointmentToCancel, setAppointmentToCancel] = useState(null);
 
   const handleAddComment = (appointmentId) => {
     if (!newComments[appointmentId] || newComments[appointmentId].trim() === '') {
-      alert('Comment cannot be blank');
+      setErrors(prevState => ({ ...prevState, [appointmentId]: 'Comment cannot be blank' }));
       return;
     }
 
@@ -50,10 +62,12 @@ function UserAppointments() {
 
     setAppointments(updatedAppointments);
     setNewComments(prevState => ({ ...prevState, [appointmentId]: '' }));
+    setErrors(prevState => ({ ...prevState, [appointmentId]: '' }));
   };
 
   const handleCommentChange = (appointmentId, value) => {
     setNewComments(prevState => ({ ...prevState, [appointmentId]: value }));
+    setErrors(prevState => ({ ...prevState, [appointmentId]: '' }));
   };
 
   const handleCancelClick = appointmentId => {
@@ -68,7 +82,7 @@ function UserAppointments() {
 
   return (
     <div className="user-appointments">
-      <h2>My Appointments</h2>
+      <h2 className="fw-bolder text-dark py-3">My Appointments</h2>
       <button className="btn btn-primary mb-3">Create New Appointment</button>
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -98,6 +112,7 @@ function UserAppointments() {
                   ))}
                 </td>
                 <td>
+                  {errors[app.id] && <div className="alert alert-danger">{errors[app.id]}</div>}
                   <input
                     type="text"
                     className="form-control"
