@@ -1,0 +1,13 @@
+/* General Styles */
+.appointment-details ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .appointment-details ul li {
+    background-color: #f8f9fa;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  

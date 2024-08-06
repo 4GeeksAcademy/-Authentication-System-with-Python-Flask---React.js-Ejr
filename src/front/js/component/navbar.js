@@ -8,7 +8,7 @@ export const Navbar = () => {
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  const userRole = "admin"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
+  const userRole = "mechanic"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -78,8 +78,8 @@ export const Navbar = () => {
             )}
             {userRole === "mechanic" && (
               <>
-                <Link to="/appointments" className="btn btn-secondary me-2" onClick={handleNavCollapse}>
-                  Appointment History
+                <Link to="/mechanicdashboard" className="btn btn-secondary me-2" onClick={handleNavCollapse}>
+                  Dashboard
                 </Link>
                 <Link to="/logout" className="btn btn-primary" onClick={handleNavCollapse}>
                   Logout
