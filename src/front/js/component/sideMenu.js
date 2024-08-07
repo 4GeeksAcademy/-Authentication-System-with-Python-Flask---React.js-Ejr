@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const SideMenu = () => {
+  const { store, actions } = useContext(Context);
+
   return (
     <>
       <button
@@ -31,10 +34,10 @@ export const SideMenu = () => {
         className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full drop-shadow-2xl"
         aria-label="Sidenav"
       >
-        <div className="overflow-y-auto py-5 px-3 h-full border-r bg-neutral-800 border-neutral-700">
+        <div className="flex flex-col justify-between overflow-y-auto py-5 px-3 h-full border-r bg-neutral-800 border-neutral-700">
           <ul className="space-y-2">
             <li className="flex justify-end">
-            <button
+              <button
                 data-drawer-target="default-sidebar"
                 data-drawer-toggle="default-sidebar"
                 aria-controls="default-sidebar"
@@ -214,6 +217,14 @@ export const SideMenu = () => {
               </ul>
             </li>
           </ul>
+          <button
+            onClick={() => actions.logout()}
+            type="button"
+            class="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95"
+            href="#"
+          >
+            Cerrar sesión
+          </button>
         </div>
       </aside>
     </>

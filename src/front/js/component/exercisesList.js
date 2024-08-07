@@ -15,7 +15,7 @@ const ejerciciosPrueba = [
   },
 ];
 
-export const ExercisesList = () => {
+export const ExercisesList = (value) => {
   return (
     <>
       <label

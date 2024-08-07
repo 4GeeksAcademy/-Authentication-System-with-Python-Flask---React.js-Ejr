@@ -5,27 +5,26 @@ import 'react-circular-progressbar/dist/styles.css';
 
 
 
-export const Progress = () => {
-    const { store, actions } = useContext(Context);
-    const [percentage, setPercentage] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setPercentage(prev => {
-                if (prev < 100) {
-                    return prev + 1;
-                } else {
-                    clearInterval(interval);
-                    return prev;
-                }
-            });
-        }, 50);
-
-        return () => clearInterval(interval);
-    }, []);
-
+export const Progress = ({ randomValue }) => {
+    let percentage = randomValue;
     return (
-        <div className="flex flex-col items-center justify-center gap-4">
+
+        /*  useEffect(() => {
+             const interval = setInterval(() => {
+                 setPercentage(prev => {
+                     if (prev < 100) {
+                         return prev + 1;
+                     } else {
+                         clearInterval(interval);
+                         return prev;
+                     }
+                 });
+             }, 50);
+     
+             return () => clearInterval(interval);
+         }, []); */
+
+        <div className="flex flex-col items-center justify-center gap-4 pb-11">
             <h1 className="text-neutral-50 mx-auto w-max text-2xl">Tu progreso</h1>
             <div className="w-[200px]
             ">
