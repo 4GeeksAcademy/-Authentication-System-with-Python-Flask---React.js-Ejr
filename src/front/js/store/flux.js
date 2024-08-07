@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							'accept': 'application/json',
 							'Content-Type': 'application/json',
-							'api-key': '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'
+							'api-key': process.env.MAILAPIKEY
 						},
 						  body: JSON.stringify(trydata)
 						});
