@@ -646,9 +646,11 @@ video {
   margin-top: 0.75rem;
 }
 
+
 .mt-4 {
   margin-top: 1rem;
 }
+
 
 .mt-5 {
   margin-top: 1.25rem;
@@ -665,6 +667,7 @@ video {
 .flex {
   display: flex;
 }
+
 
 .inline-flex {
   display: inline-flex;
@@ -711,6 +714,8 @@ video {
   width: 100%;
 }
 
+
+
 .w-max {
   width: -moz-max-content;
   width: max-content;
@@ -753,9 +758,11 @@ video {
   align-items: center;
 }
 
+
 .justify-end {
   justify-content: flex-end;
 }
+
 
 .justify-center {
   justify-content: center;
@@ -764,6 +771,7 @@ video {
 .justify-between {
   justify-content: space-between;
 }
+
 
 .gap-2 {
   gap: 0.5rem;
@@ -871,6 +879,7 @@ video {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
 
+
 .bg-indigo-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(79 70 229 / var(--tw-bg-opacity));
@@ -931,6 +940,7 @@ video {
 .p-8 {
   padding: 2rem;
 }
+
 
 .px-1 {
   padding-left: 0.25rem;
