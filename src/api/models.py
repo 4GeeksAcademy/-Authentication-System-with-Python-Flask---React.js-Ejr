@@ -7,6 +7,7 @@ class Sex(enum.Enum):
     male='male'
     female='female'
 
+# USUARIO
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
@@ -53,7 +54,7 @@ class PhysicalInformation(db.Model):
 # RUTINA SEMANA
 class WeeklyRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     weekly_day_routine = db.relationship('WeeklyDayRoutine', backref = 'weekly_routine', lazy = True)
 
@@ -70,9 +71,9 @@ class WeeklyRoutine(db.Model):
 class DayRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
+
     weekly_day_routine = db.relationship('WeeklyDayRoutine', backref = 'day_routine', lazy = True)
     day_routine_date = db.relationship('DayRoutineDate', backref = 'day_routine', lazy = True)
-
     exercise_day_routine = db.relationship('ExerciseDayRoutine', backref = 'day_routine', lazy = True)
 
     def __repr__(self):
@@ -87,8 +88,8 @@ class DayRoutine(db.Model):
 # RUTINA SEMANA DIA - PIVOTE
 class WeeklyDayRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'))
-    weekly_routine_id = db.Column(db.Integer, db.ForeignKey('weekly_routine.id'))
+    day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'), nullable=False)
+    weekly_routine_id = db.Column(db.Integer, db.ForeignKey('weekly_routine.id'), nullable=False)
 
     def __repr__(self):
         return f'<User {self.id}>'
@@ -104,7 +105,7 @@ class WeeklyDayRoutine(db.Model):
 # FECHA RUTINA DIA
 class DayRoutineDate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'))
+    day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'), nullable=False)
     date = db.Column(db.Date, nullable=False)
     done = db.Column(db.Boolean, nullable=False) 
 
@@ -115,14 +116,14 @@ class DayRoutineDate(db.Model):
         return {
             "id": self.id,
             "day_routine_id": self.day_routine_id,
-            "date": self.weekly_routine_id,
+            "date": self.date,
             "done": self.done
         }
 
-# EXERCISE 
+# EJERCICIO 
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
@@ -141,11 +142,11 @@ class Exercise(db.Model):
             "image": self.image,
         }
 
-# EXERCISE_DAY_ROUTINE 
+# EJERCICIO RUTINA DIA
 class ExerciseDayRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'))
-    exercise_id = db.Column(db.Integer, db.ForeignKey('exercise.id'))
+    day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'), nullable=False)
+    exercise_id = db.Column(db.Integer, db.ForeignKey('exercise.id'), nullable=False)
     done = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
@@ -163,6 +164,8 @@ class ExerciseDayRoutine(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
+
+    exercise = db.relationship('Exercise', backref = 'category', lazy = True)
 
     def __repr__(self):
         return f'<User {self.name}>'
