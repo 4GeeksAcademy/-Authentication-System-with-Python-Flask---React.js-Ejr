@@ -10,12 +10,18 @@ import "../../styles/admindashboard.css";
 
 const AdminDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(4);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleModalClose = (updatedValue) => {
+    if (updatedValue && updatedValue > 0) {
+      setMaxAppointmentsPerHour(updatedValue);
+      setStatusMessage("Settings updated successfully");
+    }
     setIsModalOpen(false);
   };
 
@@ -25,29 +31,29 @@ const AdminDashboard = () => {
         <h1>Admin Dashboard</h1>
         <div className="stats row">
           <div className="stat1 col mx-2">
-            <img src={iconUser} alt="Total Clients"/>
+            <img src={iconUser} alt="Total Clients" />
             <h3>Total Clients</h3>
             <p>10</p>
           </div>
           <div className="stat2 col mx-2">
-            <img src={iconComments} alt="Total Appointments"/>
+            <img src={iconComments} alt="Total Appointments" />
             <h3>Total Appointments</h3>
             <p>20</p>
           </div>
           <div className="stat3 col mx-2">
-            <img src={iconBriefcase} alt="Total Services"/>
+            <img src={iconBriefcase} alt="Total Services" />
             <h3>Total Services</h3>
             <p>5</p>
           </div>
           <div className="stat4 col mx-2">
-            <img src={iconFavorites} alt="Total Cars"/>
+            <img src={iconFavorites} alt="Total Cars" />
             <h3>Total Cars</h3>
             <p>15</p>
           </div>
           <div className="stat5 col mx-2">
-            <img src={iconConnect} alt="Settings"/>
+            <img src={iconConnect} alt="Settings" />
             <h3>Settings</h3>
-            <p>Max Appointments per Hour: 4</p>
+            <p>Max Appointments per Hour: {maxAppointmentsPerHour}</p>
             <button className="btn btn-secondary btnSetting" onClick={handleModalOpen}>
               Edit
             </button>
@@ -55,7 +61,8 @@ const AdminDashboard = () => {
         </div>
       </div>
       <UserList />
-      {isModalOpen && <SettingModal onClose={handleModalClose} />}
+      {isModalOpen && <SettingModal onClose={handleModalClose} currentValue={maxAppointmentsPerHour} />}
+      {statusMessage && <div className="alert alert-success mt-3">{statusMessage}</div>}
     </div>
   );
 };

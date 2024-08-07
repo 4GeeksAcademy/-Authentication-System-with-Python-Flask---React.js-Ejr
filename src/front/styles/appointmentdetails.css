@@ -10,4 +10,17 @@
     padding: 10px;
     border-radius: 5px;
   }
-  
+
+/* Tamaño en dispositivos móviles */
+.row > * {
+  width: auto !important;
+  max-width: 100%;
+}
+
+/* Tamaño para dispositivos medianos y grandes */
+@media (min-width: 768px) {
+  .row > * {
+    width: auto !important;
+    max-width: 50%;
+  }
+}
