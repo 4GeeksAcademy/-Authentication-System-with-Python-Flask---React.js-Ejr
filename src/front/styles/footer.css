@@ -1,0 +1,32 @@
+.footer {
+position:fixed;
+   left:0px;
+   bottom:0px;
+   height:70px;
+   width:100%;
+   background:#6793AE;
+   color: white;
+   display:flex;
+   justify-content: space-around;
+   align-items: center;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.text-footer {
+    font-size: 10px;
+}
+.iconos-footer {
+    font-size: 20px;
+}
+
+a{
+    text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+    border-bottom: 1px solid white;
+    font-weight: bold;
+    padding-bottom: 3px;
+    color:white;
+}
