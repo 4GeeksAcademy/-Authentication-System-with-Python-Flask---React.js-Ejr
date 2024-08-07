@@ -49,7 +49,9 @@ button {
     transform: scale(1.02);
   }
 
-
+section{
+  min-height: 100vh;
+}
 .card{
     background-color: #a9d7cb !important;
 }
