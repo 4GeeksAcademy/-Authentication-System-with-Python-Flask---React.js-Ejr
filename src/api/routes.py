@@ -93,7 +93,7 @@ def valid_token():
 
 
 # GET ALL WeeklyRoutine / TRAER TODAS RUTINA SEMANA
-@api.route('/WeeklyRoutine', methods=['GET'])
+@api.route('/weekly-routine', methods=['GET'])
 def get_all_weekly_routine():
     weekly_routine = WeeklyRoutine.query.all()
     if len(weekly_routine) == 0:
@@ -103,7 +103,7 @@ def get_all_weekly_routine():
         return jsonify(data_serialized), 200
    
 # GET ONE WeeklyRoutine / TRAER UNA RUTINA SEMANA
-@api.route('/WeeklyRoutine/<int:user_id>', methods=['GET'])
+@api.route('/weekly-routine/<int:user_id>', methods=['GET'])
 def get_weekly_routine(user_id):
     weekly_routine = WeeklyRoutine.query.filter_by(user_id=user_id).first()
     if weekly_routine is None:
@@ -114,7 +114,7 @@ def get_weekly_routine(user_id):
 
 
 # GET ALL DayRoutine / TRAER TODAS RUTINA DIA
-@api.route('/DayRoutine', methods=['GET'])
+@api.route('/day-routine', methods=['GET'])
 def get_all_day_routine():
     day_routine = DayRoutine.query.all()
     if len(day_routine) == 0:
@@ -124,7 +124,7 @@ def get_all_day_routine():
         return jsonify(data_serialized), 200
    
 # GET ONE DayRoutine / TRAER UNA RUTINA DIA
-@api.route('/DayRoutine/<int:id>', methods=['GET'])
+@api.route('/day-routine/<int:id>', methods=['GET'])
 def get_day_routine(id):
     day_routine = DayRoutine.query.filter_by(id=id).first()
     if day_routine is None:
@@ -135,7 +135,7 @@ def get_day_routine(id):
 
 
 # GET ALL DayRoutineDate / TRAER TODAS FECHA RUTINA DIA
-@api.route('/DayRoutineDate', methods=['GET'])
+@api.route('/day-routine-date', methods=['GET'])
 def get_all_day_routine_date():
     day_routines_date = DayRoutineDate.query.all()
     if len(day_routines_date) == 0:
@@ -146,7 +146,7 @@ def get_all_day_routine_date():
 
 
 # GET ONE DayRoutineDate / TRAER UNA FECHA RUTINA DIA
-@api.route('/DayRoutineDate/<int:id>', methods=['GET'])
+@api.route('/day-routine-date/<int:id>', methods=['GET'])
 def get_day_routine_date(id):
     day_routine_date = DayRoutineDate.query.filter_by(id=id).first()
     if day_routine_date is None:
@@ -157,7 +157,7 @@ def get_day_routine_date(id):
 
 
 # GET ALL WeeklyDayRoutine / TRAER TODAS RUTINA SEMANA DIA - PIVOTE
-@api.route('/WeeklyDayRoutine', methods=['GET'])
+@api.route('/weekly-day-routine', methods=['GET'])
 def get_all_weekly_day_routine():
     weekly_day_routine = WeeklyDayRoutine.query.all()
     if len(weekly_day_routine) == 0:
@@ -168,7 +168,7 @@ def get_all_weekly_day_routine():
 
 
 # GET WeeklyDayRoutine OF ONE WEEK / TRAER TODAS RUTINA SEMANA DIA DE UNA SEMANA- PIVOTE
-@api.route('/WeeklyDayRoutine/<int:weekly_routine_id>', methods=['GET'])
+@api.route('/weekly-day-routine/<int:weekly_routine_id>', methods=['GET'])
 def get_one_weekly_day_routine(weekly_routine_id):
     weekly_day_routine = WeeklyDayRoutine.query.filter_by(weekly_routine_id=weekly_routine_id).all()
     if len(weekly_day_routine) == 0:
@@ -179,7 +179,7 @@ def get_one_weekly_day_routine(weekly_routine_id):
 
 
 # GET ALL EXERCIE / TRAER TODOS EJERCICIO
-@api.route('/Exercise', methods=['GET'])
+@api.route('/exercise', methods=['GET'])
 def get_all_exercise():
     exercise = Exercise.query.all()
     if len(exercise) == 0:
@@ -190,7 +190,7 @@ def get_all_exercise():
 
 
 # GET ONE EXERCIE / TRAER UN EJERCICIO
-@api.route('/Exercise/<int:id>', methods=['GET'])
+@api.route('/exercise/<int:id>', methods=['GET'])
 def get_one_exercise(id):
     exercise = Exercise.query.filter_by(id=id).first()
     if exercise is None:
@@ -201,7 +201,7 @@ def get_one_exercise(id):
 
 
 # GET ALL ExerciseDayRoutine / TRAER TODAS RUTINA DIA EJERCICIO
-@api.route('/ExerciseDayRoutine', methods=['GET'])
+@api.route('/exercise-day-routine', methods=['GET'])
 def get_all_exercise_day_routine():
     exercise_day_routine = ExerciseDayRoutine.query.all()
     if len(exercise_day_routine) == 0:
@@ -211,8 +211,8 @@ def get_all_exercise_day_routine():
         return jsonify(data_serialized), 200
 
 
-# GET ALL ExerciseDayRoutine BY DAY / TRAER TODAS RUTINA DIA EJERCICIO DE UN DIA
-@api.route('/ExerciseDayRoutine/<int:day_routine_id>', methods=['GET'])
+# GET ALL ExerciseDayRoutine ONE DAY / TRAER TODAS RUTINA DIA EJERCICIO DE UN DIA
+@api.route('/exercise-day-routine/<int:day_routine_id>', methods=['GET'])
 def get_all_exercise_day_routine_one_day(day_routine_id):
     exercise_day_routine = ExerciseDayRoutine.query.filter_by(day_routine_id=day_routine_id).all()
     if len(exercise_day_routine) == 0:
@@ -223,7 +223,7 @@ def get_all_exercise_day_routine_one_day(day_routine_id):
 
 
 # GET ALL Category / TRAER TODAS CATEGORIA
-@api.route('/Category', methods=['GET'])
+@api.route('/category', methods=['GET'])
 def get_all_Category():
     category = Category.query.all()
     if len(category) == 0:
@@ -234,7 +234,7 @@ def get_all_Category():
 
 
 # GET ONE CATEGORY / TRAER UNA CATEGORIA
-@api.route('/Category/<int:id>', methods=['GET'])
+@api.route('/category/<int:id>', methods=['GET'])
 def get_one_category(id):
     category = Category.query.filter_by(id=id).first()
     if category is None:

@@ -611,8 +611,6 @@ video {
 }
 
 
-}
-
 .mt-5 {
   margin-top: 1.25rem;
 }
@@ -621,8 +619,6 @@ video {
   margin-top: auto;
 }
 
-
-}
 
 .w-max {
   width: -moz-max-content;
@@ -634,14 +630,10 @@ video {
 }
 
 
-}
-
 .justify-center {
   justify-content: center;
 }
 
-
-}
 
 .gap-4 {
   gap: 1rem;
@@ -651,8 +643,6 @@ video {
   border-radius: 0.25rem;
 }
 
-
-}
 
 .px-1 {
   padding-left: 0.25rem;
