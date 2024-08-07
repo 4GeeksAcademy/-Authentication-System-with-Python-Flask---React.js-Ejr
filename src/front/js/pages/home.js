@@ -4,9 +4,12 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { SideMenu } from "../component/sideMenu";
 
+import { Progress } from "../component/progress";
+
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
+<<<<<<< HEAD
   return (
     <>
       <section className="overflow-hidden bg-[url(https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop)] bg-cover bg-top bg-no-repeat">
@@ -34,4 +37,11 @@ export const Home = () => {
       <SideMenu />
     </>
   );
+=======
+	return (
+  <Progress/>
+	);
+
+	
+>>>>>>> e931ece4365662aabdb965f16a42cbed8ce9ffff
 };
