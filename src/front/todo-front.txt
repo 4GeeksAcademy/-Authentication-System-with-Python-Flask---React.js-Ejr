@@ -1,0 +1,1 @@
+Cuando se haga login se debe redireccionar a /dashboard, el cual se va a convertir en nuestra pagina "principal".
