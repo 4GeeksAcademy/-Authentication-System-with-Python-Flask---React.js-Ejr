@@ -1,10 +1,10 @@
 import React from "react";
 
-const Cursos = () => {
+const Favoritos = () => {
     return (
         <div className="container"></div>
     )
 }
 
 
-export default Cursos
+export default Favoritos
