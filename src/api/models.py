@@ -16,6 +16,8 @@ class User(db.Model):
     comments = db.relationship('Comments', back_populates='author')
     reports = db.relationship('Reports', back_populates='author', foreign_keys='Reports.author_id')
     reported_user_reports = db.relationship('Reports', back_populates='reported_user', foreign_keys='Reports.reported_user_id')
+    follows_followers_rel = db.relationship('Follows_followers_rel', back_populates='author')
+    scores = db.relationship('Score', back_populates='author')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -144,3 +146,43 @@ class Tags(db.Model):
             "itineraries": [itinerary.serialize_simple() for itinerary in self.itineraries]           
         }
 
+class Follows_followers_rel(db.Model):
+    __tablename__ = 'follows_followers_rel'
+
+    following_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    followed_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
+
+    following_user = db.relationship('User', back_populates='follows_followers_rel')
+    followed_user = db.relationship('User', back_populates='follows_followers_rel')
+
+    def __repr__(self):
+        return f'<Follows_followers_rel {self.id}>'
+    
+    def serialize(self):
+        return {
+            'following_user_id': self.following_user_id,
+            'followed_user_id': self.followed_user_id,
+            'creation_date': self.creation_date,
+        }
+    
+class Score(db.Model):
+    __tablename__ = 'score'    
+
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer, unique=False, nullable=False)
+    itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    author = db.relationship('User', back_populates='score', foreign_keys=[author_id])
+
+    def __repr__(self):
+        return f'<Score {self.number}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            'number': self.number,
+            "intinerary_id": self.itinerary_id,
+            "author_id": self.author_id,
+        }
