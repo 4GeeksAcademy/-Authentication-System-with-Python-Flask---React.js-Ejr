@@ -13,6 +13,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Profile } from "./pages/profile";
 
 import { VistaPrueba } from "./pages/vistaPrueba.jsx";
 
@@ -34,14 +35,12 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-
                         <Route element={<VistaPrueba />} path="/VistaPrueba" />
-
                         <Route element={<Dashboard />} path="/dashboard" />
-
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Private />} path="/private" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1 className="text-center">Not found!</h1>} path="/*" />
