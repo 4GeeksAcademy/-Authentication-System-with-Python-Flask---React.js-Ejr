@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import DateTimePicker from "../component/DateTimePicker";
+import ReactCalendar from "../component/ReactCalendar";
 import "../../styles/bookappointmentunregistereduser.css";
-import DateTimePickerComponent from "../component/DateTimePicker";
 
 const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -20,7 +19,8 @@ const BookAppointmentUnregisteredUser = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const apiUrl = "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
+  const apiUrl =
+    "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
 
   useEffect(() => {
     const getServices = async () => {
@@ -158,7 +158,7 @@ const BookAppointmentUnregisteredUser = () => {
             <div>
               <h3>Please Select Appointment Date and Add a Comment</h3>
               <label htmlFor="date">Appointment Date</label>
-              <DateTimePickerComponent
+              <ReactCalendar
                 onDateChange={setAppointmentDate}
                 initialDate={appointmentDate}
               />
@@ -223,28 +223,31 @@ const BookAppointmentUnregisteredUser = () => {
               <p><strong>Comments:</strong> {comment}</p>
               <p><strong>Email:</strong> {email}</p>
               <p><strong>Phone Number:</strong> {phoneNumber}</p>
-              <p><strong>Name:</strong> {name}</p>
-              <button onClick={submitAppointment} className="submit-btn">Submit</button>
+              <div>
+                <button onClick={() => setCurrentStep(1)}>Back to Start</button>
+                <button type="submit" onClick={submitAppointment}>Create Account and Submit</button>
+              </div>
             </div>
           )}
-          <div className="button-group">
-            {currentStep > 1 && (
-              <button onClick={() => setCurrentStep(currentStep - 1)} className="previous-btn">
-                Previous
-              </button>
-            )}
-            {currentStep < 5 && (
-              <button onClick={nextStep} className="next-btn">
-                Next
-              </button>
-            )}
-          </div>
         </div>
       </div>
     );
   };
 
-  return <div className="container">{displayCurrentStep()}</div>;
+  return (
+    <div id="content">
+      <div className="card padding">
+        <div className="card-header">Appointment Booking</div>
+        {displayCurrentStep()}
+        <div>
+          {currentStep > 1 && (
+            <button onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>
+          )}
+          {currentStep < 5 && <button onClick={nextStep}>Next</button>}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default BookAppointmentUnregisteredUser;
