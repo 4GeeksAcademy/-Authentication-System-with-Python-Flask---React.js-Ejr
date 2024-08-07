@@ -3,6 +3,8 @@ import axios from 'axios';
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
+            auth: false,
+
             allWeeklyRoutineList: [],
             oneWeeklyRoutine: {},
             allDayRoutineList: [],
@@ -15,8 +17,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             allExerciseDayRoutineOneDayList: [],
             allCategoryList: [],
             oneCategory: {},
-
-
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -33,7 +33,77 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("Error loading message from backend", error)
                 }
             },
-
+            // REGISTRO
+            signup: async (name, email, password, confirmPassword) => {
+                try {
+                    let response = await axios.post(process.env.BACKEND_URL + '/register', {
+                        "name": name,
+                        "email": email,
+                        "password": password,
+                        "confirm_password": confirmPassword,
+                    })
+                    if (response.status = 200) {
+                        console.log(response.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    if (error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log(error);
+                        return error;
+                    }
+                }
+            },
+            // LOGIN / INICIO DE SESION
+            login: async (email, password) => {
+                try {
+                    let response = await axios.post(process.env.BACKEND_URL + '/login', {
+                        'email': email,
+                        'password': password
+                    })
+                    if (response.status = 200) {
+                        localStorage.setItem('token', response.data.access_token);
+                        setStore({ auth: response.data.logged })
+                        console.log(response.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    if (error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    }
+                    console.log(error);
+                    return error;
+                }
+            },
+            // VALID TOKEN
+            validToken: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    let response = await axios.get(process.env.BACKEND_URL + '/valid-token', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                    })
+                    if (response.status = 200) {
+                        setStore({ auth: response.data.logged })
+                        console.log(getStore().auth);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    if (error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    }
+                    console.log(error);
+                    return error;
+                }
+            },
             // GET ALL WeeklyRoutine / TRAER TODAS RUTINA SEMANA
             allWeeklyRoutine: async () => {
                 try {

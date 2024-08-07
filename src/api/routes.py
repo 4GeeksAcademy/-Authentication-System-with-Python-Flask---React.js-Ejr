@@ -46,10 +46,13 @@ def post_user():
          return({'error':'"email" must be a string'}), 400
     if user_by_email:
         if user_by_email.email == user['email']:
-            return jsonify('This email is already used'), 403
+            return ({'error':'This email is already used'}), 400
     if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
          return({'error':'"password" must be a string'}), 400
-
+    if not isinstance(user['confirm_password'], str) or len(user['confirm_password'].strip()) == 0:
+         return({'error':'"confirm_password" must be a string'}), 400
+    if user['password'] != user['confirm_password']:
+        return({'error':'"password" and "confirm_password" must be the same'}), 400
 
     user_created = User(name=user['name'], email=user['email'], password=user['password'])
     db.session.add(user_created)
