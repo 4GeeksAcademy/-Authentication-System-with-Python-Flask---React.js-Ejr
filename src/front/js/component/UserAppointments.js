@@ -1,40 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function UserAppointments() {
   const initialAppointments = [
     {
       id: 1,
-      date: '2024-08-01',
-      time: '10:00 AM',
-      service: 'Oil Change',
-      car: 'Toyota Camry',
-      status: 'Completed',
+      date: "2024-08-01",
+      time: "10:00 AM",
+      service: "Oil Change",
+      car: "Toyota Camry",
+      status: "Completed",
       comments: [
-        { author: 'Mechanic', content: 'All good', timestamp: '2024-08-01 10:30 AM' },
-        { author: 'Client', content: 'Great service!', timestamp: '2024-08-01 11:00 AM' },
-        { author: 'Client', content: 'Very satisfied', timestamp: '2024-08-01 11:30 AM' }
-      ]
+        {
+          author: "Mechanic",
+          content: "All good",
+          timestamp: "2024-08-01 10:30 AM",
+        },
+        {
+          author: "Client",
+          content: "Great service!",
+          timestamp: "2024-08-01 11:00 AM",
+        },
+        {
+          author: "Client",
+          content: "Very satisfied",
+          timestamp: "2024-08-01 11:30 AM",
+        },
+      ],
     },
     {
       id: 2,
-      date: '2024-08-05',
-      time: '02:00 PM',
-      service: 'Tire Rotation',
-      car: 'Honda Accord',
-      status: 'Pending',
-      comments: []
+      date: "2024-08-05",
+      time: "02:00 PM",
+      service: "Tire Rotation",
+      car: "Honda Accord",
+      status: "Pending",
+      comments: [],
     },
     {
       id: 3,
-      date: '2024-08-10',
-      time: '01:00 PM',
-      service: 'Brake Inspection',
-      car: 'Ford Focus',
-      status: 'Pending',
+      date: "2024-08-10",
+      time: "01:00 PM",
+      service: "Brake Inspection",
+      car: "Ford Focus",
+      status: "Pending",
       comments: [
-        { author: 'Mechanic', content: 'Brake pads need replacement', timestamp: '2024-08-10 01:30 PM' }
-      ]
-    }
+        {
+          author: "Mechanic",
+          content: "Brake pads need replacement",
+          timestamp: "2024-08-10 01:30 PM",
+        },
+      ],
+    },
   ];
 
   const [appointments, setAppointments] = useState(initialAppointments);
@@ -42,48 +59,69 @@ function UserAppointments() {
   const [errors, setErrors] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [appointmentToCancel, setAppointmentToCancel] = useState(null);
+  const navigate = useNavigate();
 
   const handleAddComment = (appointmentId) => {
-    if (!newComments[appointmentId] || newComments[appointmentId].trim() === '') {
-      setErrors(prevState => ({ ...prevState, [appointmentId]: 'Comment cannot be blank' }));
+    if (
+      !newComments[appointmentId] ||
+      newComments[appointmentId].trim() === ""
+    ) {
+      setErrors((prevState) => ({
+        ...prevState,
+        [appointmentId]: "Comment cannot be blank",
+      }));
       return;
     }
 
     const currentDateTime = new Date().toLocaleString();
-    const updatedAppointments = appointments.map(app => {
+    const updatedAppointments = appointments.map((app) => {
       if (app.id === appointmentId) {
         return {
           ...app,
-          comments: [...app.comments, { author: 'Client', content: newComments[appointmentId], timestamp: currentDateTime }]
+          comments: [
+            ...app.comments,
+            {
+              author: "Client",
+              content: newComments[appointmentId],
+              timestamp: currentDateTime,
+            },
+          ],
         };
       }
       return app;
     });
 
     setAppointments(updatedAppointments);
-    setNewComments(prevState => ({ ...prevState, [appointmentId]: '' }));
-    setErrors(prevState => ({ ...prevState, [appointmentId]: '' }));
+    setNewComments((prevState) => ({ ...prevState, [appointmentId]: "" }));
+    setErrors((prevState) => ({ ...prevState, [appointmentId]: "" }));
   };
 
   const handleCommentChange = (appointmentId, value) => {
-    setNewComments(prevState => ({ ...prevState, [appointmentId]: value }));
-    setErrors(prevState => ({ ...prevState, [appointmentId]: '' }));
+    setNewComments((prevState) => ({ ...prevState, [appointmentId]: value }));
+    setErrors((prevState) => ({ ...prevState, [appointmentId]: "" }));
   };
 
-  const handleCancelClick = appointmentId => {
+  const handleCancelClick = (appointmentId) => {
     setAppointmentToCancel(appointmentId);
     setShowConfirmModal(true);
   };
 
   const confirmCancel = () => {
-    setAppointments(appointments.filter(app => app.id !== appointmentToCancel));
+    setAppointments(
+      appointments.filter((app) => app.id !== appointmentToCancel)
+    );
     setShowConfirmModal(false);
   };
 
   return (
     <div className="user-appointments">
       <h2 className="fw-bolder text-dark py-3">My Appointments</h2>
-      <button className="btn btn-primary mb-3">Create New Appointment</button>
+      <button
+        onClick={() => navigate("/createappointmentregistereduser")}
+        className="btn btn-primary mb-3"
+      >
+        Create New Appointment
+      </button>
       <div className="table-responsive">
         <table className="table table-striped table-bordered">
           <thead>
@@ -99,7 +137,7 @@ function UserAppointments() {
             </tr>
           </thead>
           <tbody>
-            {appointments.map(app => (
+            {appointments.map((app) => (
               <tr key={app.id}>
                 <td>{app.date}</td>
                 <td>{app.time}</td>
@@ -108,16 +146,24 @@ function UserAppointments() {
                 <td>{app.status}</td>
                 <td>
                   {app.comments.map((comment, index) => (
-                    <p key={index}><strong>{comment.author}:</strong> {comment.content} <br /><small>{comment.timestamp}</small></p>
+                    <p key={index}>
+                      <strong>{comment.author}:</strong> {comment.content}{" "}
+                      <br />
+                      <small>{comment.timestamp}</small>
+                    </p>
                   ))}
                 </td>
                 <td>
-                  {errors[app.id] && <div className="alert alert-danger">{errors[app.id]}</div>}
+                  {errors[app.id] && (
+                    <div className="alert alert-danger">{errors[app.id]}</div>
+                  )}
                   <input
                     type="text"
                     className="form-control"
-                    value={newComments[app.id] || ''}
-                    onChange={(e) => handleCommentChange(app.id, e.target.value)}
+                    value={newComments[app.id] || ""}
+                    onChange={(e) =>
+                      handleCommentChange(app.id, e.target.value)
+                    }
                   />
                   <button
                     className="btn btn-secondary mt-2"
@@ -127,7 +173,12 @@ function UserAppointments() {
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-danger ms-2" onClick={() => handleCancelClick(app.id)}>Cancel</button>
+                  <button
+                    className="btn btn-danger ms-2"
+                    onClick={() => handleCancelClick(app.id)}
+                  >
+                    Cancel
+                  </button>
                 </td>
               </tr>
             ))}
@@ -136,19 +187,39 @@ function UserAppointments() {
       </div>
 
       {showConfirmModal && (
-        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div
+          className="modal show d-block"
+          tabIndex="-1"
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirm Cancellation</h5>
-                <button type="button" className="btn-close" onClick={() => setShowConfirmModal(false)}></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowConfirmModal(false)}
+                ></button>
               </div>
               <div className="modal-body">
                 <p>Are you sure you want to cancel this appointment?</p>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowConfirmModal(false)}>No</button>
-                <button type="button" className="btn btn-danger" onClick={confirmCancel}>Yes, Cancel</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowConfirmModal(false)}
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={confirmCancel}
+                >
+                  Yes, Cancel
+                </button>
               </div>
             </div>
           </div>

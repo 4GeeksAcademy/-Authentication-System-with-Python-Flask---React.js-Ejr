@@ -18,6 +18,9 @@ import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard";
 import UserAppointments from "./component/UserAppointments";
 import AdminDashboard from "./pages/AdminDashboard";
+import MechanicDashboard from "./pages/MechanicDashboard";
+import AppointmentDetails from "./pages/AppointmentDetails";
+
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -38,6 +41,8 @@ const Layout = () => {
                         <Route element={<UserDashboard />} path="/userdashboard" />
                         <Route element={<UserAppointments />} path="/userappointments" />
                         <Route element={<AdminDashboard />} path="/admindashboard" />
+                        <Route element={<MechanicDashboard />} path="/mechanicdashboard" />
+                        <Route element={<AppointmentDetails />} path="/appointmentdetails/:appointmentId" />
                         <Route path="*" element={<Error404 />} />
                     </Routes>
                     <Footer />

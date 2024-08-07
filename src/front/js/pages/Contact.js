@@ -1,3 +1,4 @@
+import React from 'react';
 import heroImg from "../../img/hero-img.png";
 import worldDottedMap from "../../img/world-dotted-map.png";
 import "../../styles/home.css";
