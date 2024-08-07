@@ -2,21 +2,32 @@
 
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ScrollToTop from './component/ScrollToTop';
-import { BackendURL } from './component/BackendURL';
+// import ScrollToTop from './component/ScrollToTop';
+import ScrollToTop from "../js/component/scrollToTop"
+// import { BackendURL } from './component/BackendURL';
+import {BackendURL} from "../js/component/backendURL"
 
-import Home from './pages/Home';
-import Demo from './pages/Demo';
-import Single from './pages/Single';
+// import Home from './pages/Home';
+import Home from "../js/pages/home"
+// import Demo from './pages/Demo';
+import {Demo} from "../js/pages/demo"
+
+// import Single from './pages/Single';
+import {Single} from "../js/pages/single"
+
 import injectContext from './store/appContext';
 
-import Navbar from './component/Navbar';
-import Footer from './component/Footer';
+// import Navbar from './component/Navbar';
+import Navbar from './component/navbar';
+// import Footer from './component/Footer';
+import Footer from './component/footer';
 import Login from './component/Login';
 import Register from './component/Register';
 import Post from './component/Post';
 import CreatePost from './component/CreatePost';
-import UserProfile from './component/UserProfile';
+// import UserProfile from './component/UserProfile';
+import UserProfile from './component/userProfile';
+// import Post from './component/Post';
 
 const Layout = () => {
   const basename = process.env.BASENAME || '';

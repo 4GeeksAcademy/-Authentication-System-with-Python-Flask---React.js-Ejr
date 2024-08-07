@@ -1,7 +1,6 @@
-// src/pages/Home.js
-
 import React from 'react';
-import PostList from '../components/PostList';
+// import PostList from '../components/PostList';
+import PostList from "../component/PostList"
 
 const Home = () => {
   return (
