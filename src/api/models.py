@@ -16,8 +16,9 @@ class User(db.Model):
     comments = db.relationship('Comments', back_populates='author')
     reports = db.relationship('Reports', back_populates='author', foreign_keys='Reports.author_id')
     reported_user_reports = db.relationship('Reports', back_populates='reported_user', foreign_keys='Reports.reported_user_id')
-    follows_followers_rel = db.relationship('Follows_followers_rel', back_populates='author')
-    scores = db.relationship('Score', back_populates='author')
+    followers = db.relationship('User', back_populates='following', secondary='follows_followers_rel', primaryjoin=db.and_(id == ("Follows_Followers_Rel.following_user_id")))
+    following = db.relationship('User', back_populates='followers', secondary='follows_followers_rel', primaryjoin=db.and_(id == ("FollowsFollowersRel.follower_user_id")))
+    score = db.relationship('Score', back_populates='author')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -45,6 +46,8 @@ class Itinerary(db.Model):
     author = db.relationship('User', back_populates='itineraries')
     comments = db.relationship('Comments', back_populates='itinerary')
     tags = db.relationship('Tags', secondary='itinerary_tags_rel', back_populates='itinerary')
+    score = db.relationship('Score', back_populates='itinerary')
+    
 
     def __repr__(self):
         return f'<Itinerary {self.title}>'
@@ -146,18 +149,12 @@ class Tags(db.Model):
             "itineraries": [itinerary.serialize_simple() for itinerary in self.itineraries]           
         }
 
-class Follows_followers_rel(db.Model):
+class Follows_Followers_Rel(db.Model):
     __tablename__ = 'follows_followers_rel'
 
-    following_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    followed_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    following_user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False, primary_key=True)
+    followed_user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False, primary_key=True)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
-
-    following_user = db.relationship('User', back_populates='follows_followers_rel')
-    followed_user = db.relationship('User', back_populates='follows_followers_rel')
-
-    def __repr__(self):
-        return f'<Follows_followers_rel {self.id}>'
     
     def serialize(self):
         return {
@@ -174,7 +171,9 @@ class Score(db.Model):
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
-    author = db.relationship('User', back_populates='score', foreign_keys=[author_id])
+    author = db.relationship('User', back_populates='score')
+    
+    itinerary = db.relationship('Itinerary', back_populates='score')
 
     def __repr__(self):
         return f'<Score {self.number}>'
@@ -182,7 +181,7 @@ class Score(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            'number': self.number,
+            "number": self.number,
             "intinerary_id": self.itinerary_id,
             "author_id": self.author_id,
         }
