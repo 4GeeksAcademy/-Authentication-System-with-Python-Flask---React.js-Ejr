@@ -602,12 +602,15 @@ video {
   margin-bottom: 0px;
 }
 
+.me-4 {
+  margin-inline-end: 1rem;
+}
+
 .ml-auto {
   margin-left: auto;
 }
 
-.mt-3 {
-  margin-top: 0.75rem;
+
 }
 
 .mt-5 {
@@ -618,29 +621,7 @@ video {
   margin-top: auto;
 }
 
-.flex {
-  display: flex;
-}
 
-.h-\[min\] {
-  height: min;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.w-\[200px\] {
-  width: 200px;
-}
-
-.w-auto {
-  width: auto;
-}
-
-.w-min {
-  width: -moz-min-content;
-  width: min-content;
 }
 
 .w-max {
@@ -652,20 +633,14 @@ video {
   flex-direction: row;
 }
 
-.flex-col {
-  flex-direction: column;
-}
 
-.items-center {
-  align-items: center;
 }
 
 .justify-center {
   justify-content: center;
 }
 
-.gap-2 {
-  gap: 0.5rem;
+
 }
 
 .gap-4 {
@@ -676,9 +651,7 @@ video {
   border-radius: 0.25rem;
 }
 
-.bg-neutral-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(23 23 23 / var(--tw-bg-opacity));
+
 }
 
 .px-1 {
@@ -724,6 +697,21 @@ video {
   color: rgb(14 165 233 / var(--tw-text-opacity));
 }
 
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.text-green-600 {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -739,12 +727,51 @@ video {
   color: rgb(250 250 250 / var(--tw-text-opacity));
 }
 
+.ring-offset-gray-800 {
+  --tw-ring-offset-color: #1f2937;
+}
+
+.ring-offset-gray-900 {
+  --tw-ring-offset-color: #111827;
+}
+
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #4B5563;
+  background-color: #4B5563;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+input[type="checkbox"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 body {
