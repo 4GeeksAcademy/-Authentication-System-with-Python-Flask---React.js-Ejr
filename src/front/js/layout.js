@@ -18,6 +18,10 @@ import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard";
 import UserAppointments from "./component/UserAppointments";
 import AdminDashboard from "./pages/AdminDashboard";
+import MechanicDashboard from "./pages/MechanicDashboard";
+import AppointmentDetails from "./pages/AppointmentDetails";
+import CreateAppointmentRegisteredUser from "./pages/CreateAppointmentRegisteredUser";
+
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -32,12 +36,15 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<BookAppointmentUnregisteredUser />} path="/bookappointmentunregistereduser" />
+                        <Route element={<BookAppointmentUnregisteredUser />} path="/bookappointment" />
+                        <Route element={<CreateAppointmentRegisteredUser />} path="/createappointmentregistereduser" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<UserDashboard />} path="/userdashboard" />
                         <Route element={<UserAppointments />} path="/userappointments" />
                         <Route element={<AdminDashboard />} path="/admindashboard" />
+                        <Route element={<MechanicDashboard />} path="/mechanicdashboard" />
+                        <Route element={<AppointmentDetails />} path="/appointmentdetails/:appointmentId" />
                         <Route path="*" element={<Error404 />} />
                     </Routes>
                     <Footer />

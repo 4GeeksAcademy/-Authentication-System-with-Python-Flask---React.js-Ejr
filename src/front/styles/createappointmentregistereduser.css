@@ -1,0 +1,39 @@
+.padding {
+    padding: 2rem;
+  }
+  
+  @media (max-width: 991.98px) {
+    .padding {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 767.98px) {
+    .padding {
+      padding: 1rem;
+    }
+  }
+  
+  .card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-header {
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  
+  .step-content {
+    margin-bottom: 1.5rem;
+  }
+  
+  .error-message {
+    color: #f54394;
+    margin-bottom: 1rem;
+  }
+  
+  .button-container {
+    margin-top: 1rem;
+  }
+  
