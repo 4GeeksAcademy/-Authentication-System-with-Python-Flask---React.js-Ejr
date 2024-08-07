@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 export const Login = () => {
@@ -7,16 +8,17 @@ export const Login = () => {
 			<form action="#" id="login-form">
 				<h2 className="heading mb-3">Iniciar sesión</h2>
 				<div className="left">
-					<label for="email">Email</label> <br />
+					<label htmlFor="email">Email</label> <br />
 					<input type="email" name="email" id="email" /> <br />
-					<label for="password">Contraseña</label> <br />
+					<label htmlFor="password">Contraseña</label> <br />
 					<input type="password" name="password" id="pass" /> <br />
 					<div>
 						<button type="submit" className="btn btn-primary mt-2">Iniciar sesión</button>
 					</div>
 				</div>
 				<div className="right">
-					<a href="#" className="login__forgot m-3">Olvidé mi contraseña</a>
+					<Link to="/" className="login__forgot m-3">Olvidé mi contraseña</Link>
+					<Link to="/vista-register" className="login__forgot m-3">No tienes una cuenta? REGISTRATE</Link>
 
 					<button className="button mt-4">
 						<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">
