@@ -75,8 +75,6 @@
 		]
 	},
 	"dependencies": {
-		"i": "^0.3.7",
-		"npm": "^10.8.2",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-circular-progressbar": "^2.1.0",
