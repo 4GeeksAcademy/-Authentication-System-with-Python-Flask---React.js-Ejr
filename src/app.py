@@ -198,6 +198,21 @@ def update_user(user_id):
         return jsonify({"msg": "Usuario actualizado exitosamente"}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500   
+#ELIMINAR USUARIO
+@app.route('/usuario/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+        user = User.query.get(user_id)
+
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        db.session.delete(user)
+        db.session.commit()
+
+        return jsonify({"msg": "Usuario eliminado exitosamente"}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
 
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
