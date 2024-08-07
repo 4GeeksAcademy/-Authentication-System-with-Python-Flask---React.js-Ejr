@@ -3,9 +3,22 @@ from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
+class Follows_Followers_Rel(db.Model):
+    __tablename__ = 'follows_followers_rel'
+    following_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+    followed_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
+    
+    def serialize(self):
+        return {
+            'following_user_id': self.following_user_id,
+            'followed_user_id': self.followed_user_id,
+            'creation_date': self.creation_date,
+        }
+
+
 class User(db.Model):
     __tablename__= 'user'
-
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -16,8 +29,21 @@ class User(db.Model):
     comments = db.relationship('Comments', back_populates='author')
     reports = db.relationship('Reports', back_populates='author', foreign_keys='Reports.author_id')
     reported_user_reports = db.relationship('Reports', back_populates='reported_user', foreign_keys='Reports.reported_user_id')
-    followers = db.relationship('User', back_populates='following', secondary='follows_followers_rel', primaryjoin=db.and_(id == ("Follows_Followers_Rel.following_user_id")))
-    following = db.relationship('User', back_populates='followers', secondary='follows_followers_rel', primaryjoin=db.and_(id == ("FollowsFollowersRel.follower_user_id")))
+    
+    followers = db.relationship(
+        'User', 
+        secondary='follows_followers_rel',
+        primaryjoin=(id == Follows_Followers_Rel.followed_user_id),
+        secondaryjoin=(id == Follows_Followers_Rel.following_user_id),
+        back_populates='following'
+    )
+    following = db.relationship(
+        'User', 
+        secondary='follows_followers_rel',
+        primaryjoin=(id == Follows_Followers_Rel.following_user_id),
+        secondaryjoin=(id == Follows_Followers_Rel.followed_user_id),
+        back_populates='followers'
+    )
     score = db.relationship('Score', back_populates='author')
 
     def __repr__(self):
@@ -30,10 +56,9 @@ class User(db.Model):
             "username": self.username
             # do not serialize the password, its a security breach
         }
-    
+ 
 class Itinerary(db.Model):
     __tablename__ = 'itinerary'
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(90), unique=False, nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=False)
@@ -74,7 +99,6 @@ class Itinerary(db.Model):
     
 class Comments(db.Model):
     __tablename__= 'comments'
-
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     text = db.Column(db.String(250), unique=False, nullable=False)
@@ -121,7 +145,6 @@ class Reports(db.Model):
     
 class Itenerary_Tags_Rel(db.Model):
     __tablename__ = 'itinerary_tags_rel'
-
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), primary_key=True)
     tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
 
@@ -133,7 +156,6 @@ class Itenerary_Tags_Rel(db.Model):
 
 class Tags(db.Model):
     __tablename__ = 'tags'
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), unique=True, nullable=False)
 
@@ -149,20 +171,6 @@ class Tags(db.Model):
             "itineraries": [itinerary.serialize_simple() for itinerary in self.itineraries]           
         }
 
-class Follows_Followers_Rel(db.Model):
-    __tablename__ = 'follows_followers_rel'
-
-    following_user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False, primary_key=True)
-    followed_user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False, primary_key=True)
-    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
-    
-    def serialize(self):
-        return {
-            'following_user_id': self.following_user_id,
-            'followed_user_id': self.followed_user_id,
-            'creation_date': self.creation_date,
-        }
-    
 class Score(db.Model):
     __tablename__ = 'score'    
 
@@ -172,7 +180,6 @@ class Score(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
     author = db.relationship('User', back_populates='score')
-    
     itinerary = db.relationship('Itinerary', back_populates='score')
 
     def __repr__(self):
