@@ -23,6 +23,6 @@ export const Profile = props => {
 	);
 };
 
-Single.propTypes = {
+Profile.propTypes = {
 	match: PropTypes.object
 };

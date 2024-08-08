@@ -23,6 +23,6 @@ export const CreateEditRoute = props => {
 	);
 };
 
-Single.propTypes = {
+CreateEditRoute.propTypes = {
 	match: PropTypes.object
 };
