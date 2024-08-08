@@ -3,13 +3,47 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: var(--font-primary);
 }
-
-
-
+.header-login-title{
+    color:var(--color-forest);
+}
 .login-body {
     background-color: var(--color-olive);
     width:100dvw;
     height: 100dvh;
+}
+.container-login{
+    border: 2px solid var(--color-forest);
+}
+.header-container{
+width: 68%;
+}
+.logo-img{
+    width: 3.5em;
+}
+.btn-login {
+    background-color: var(--color-olive);
+    border: 2px solid var(--color-forest);
+}
+.btn-login:hover {
+    background-color: var(--color-forest);
+  color: var(--color-cream);
+    border: solid 2px var(--color-olive);
+    /* transition: 0.5s all ease; */
+}
+.form-control {
+    border: 1px solid var(--color-olive);
+   
+}
+.register-link{
+    color: var(--color-forest);
+ text-decoration: none;
+}
+.register-link:hover{
+    color: var(--color-forest);
+    text-decoration: underline;
+    
+ 
 }
