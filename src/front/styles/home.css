@@ -1,7 +1,100 @@
-/*
-    home.css: This website contains selectors only used in home.css
+@import url('./variables.css');
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.home-container .banner {
+    height: 91dvh;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.home-container .banner img {
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+}
+
+.home-container .banner h1 {
+    font-size: 4rem;
+}
+
+/* *************____PARALLAX__EFFECT____***************** */
+.parallax-container-1 {
+    background: url('https://i.pinimg.com/736x/cd/21/21/cd212108de53f818db368c1ffdcb75c2.jpg');
+}
+
+.parallax-container-2 {
+    background: url('https://t4.ftcdn.net/jpg/04/23/41/61/240_F_423416137_voueqROw16TIR7dZ7WWNtwvcZ1m2rMEd.jpg');
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    perspective: 1px;
+    height: 20dvh;
+    min-width: 100%;
+}
+
+/* *************____SECCIONES____***************** */
+
+/* .home-container section */
+.home-container * {
+    outline: 1px solid red;
+}
+
+.home-container section {
+    padding: 2em;
+}
+
+.home-container section article {
+    padding: 2em 0 0;
+    margin: auto 2rem;
+}
+
+.home-container section p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+}
+
+.home-container section .img-container {
+    overflow: hidden;
+    min-width: 40%;
+    max-width: 40%;
+    max-height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.home-container section .img-container img {
+    border-radius: 10px;
+    margin: auto 0;
+}
+
+@media (width < 844px) {
+    .home-container section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2em;
+    }
+
+    .home-container section article {
+        padding: 2em 0 0;
+        margin: 0;
+    }
+
+    .home-container section .img-container {
+        min-width: 40%;
+        max-width: 90%;
+        max-height: 40%;
+    }
+    .home-container section .img-container img {
+        border-radius: 10px;
+        margin: 1em 0;
+    }
+}
