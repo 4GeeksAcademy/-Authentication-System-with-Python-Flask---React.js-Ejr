@@ -6,7 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home.jsx";
 import { Search } from "./pages/search.jsx";
 import { SingleRoute } from "./pages/singleRoute.jsx";
-import { CreateEditRoute } from "./pages/singleRoute.jsx";
+import { CreateEditRoute } from "./pages/createEditRoute.jsx";
 import { Profile } from "./pages/profile.jsx";
 import injectContext from "./store/appContext";
 
