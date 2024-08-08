@@ -1,0 +1,30 @@
+
+
+.custom-font {
+    font-family: "Lobster", sans-serif;
+    color: #257895 !important;
+    font-size: xx-large;
+
+}
+
+.custom-link {
+    text-decoration: none; /* Remueve el subrayado */
+    color: inherit; /* Mantiene el color del texto */
+}
+
+.navbar-shadow {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px;
+}
+
+.custom-button {
+    background-color: #257895; /* Color de fondo personalizado */
+    color: white; /* Color del texto */
+    font-size: small;
+    border: none; /* Elimina el borde */
+    
+    
+}
+
+
+
+
