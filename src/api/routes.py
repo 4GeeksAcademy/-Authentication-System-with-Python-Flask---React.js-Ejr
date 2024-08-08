@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, WeeklyRoutine, DayRoutine, DayRoutineDate, WeeklyDayRoutine, Exercise, ExerciseDayRoutine, Category
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, Category
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -71,7 +71,6 @@ def login():
     if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
          return({'error':'"password" must be a string'}), 400
 
-
     user_db = User.query.filter_by(email=user['email'], password=user['password']).first()
     if user_db is None:
         return jsonify({"error":"incorrect credentials"}), 401
@@ -94,6 +93,15 @@ def valid_token():
 
     return jsonify(logged=True), 200
 
+# TRAER PERFIL
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def profile():
+    email = get_jwt_identity()
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify(user=user.serialize()), 200
 
 # GET ALL WeeklyRoutine / TRAER TODAS RUTINA SEMANA
 @api.route('/weekly-routine', methods=['GET'])
@@ -116,69 +124,69 @@ def get_weekly_routine(user_id):
         return jsonify(data_serialized), 200
 
 
-# GET ALL DayRoutine / TRAER TODAS RUTINA DIA
-@api.route('/day-routine', methods=['GET'])
-def get_all_day_routine():
-    day_routine = DayRoutine.query.all()
-    if len(day_routine) == 0:
-        return ({'error':'DayRoutine list not found'}), 404
+# GET ALL Routine / TRAER TODAS RUTINA
+@api.route('/routine', methods=['GET'])
+def get_all_routine():
+    routine = Routine.query.all()
+    if len(routine) == 0:
+        return ({'error':'Routine list not found'}), 404
     else:
-        data_serialized = list(map(lambda routine: routine.serialize(), day_routine))
+        data_serialized = list(map(lambda routine: routine.serialize(), routine))
         return jsonify(data_serialized), 200
    
-# GET ONE DayRoutine / TRAER UNA RUTINA DIA
-@api.route('/day-routine/<int:id>', methods=['GET'])
-def get_day_routine(id):
-    day_routine = DayRoutine.query.filter_by(id=id).first()
-    if day_routine is None:
-        return ({'error':'DayRoutine not found'}), 404
+# GET ONE Routine / TRAER UNA RUTINA
+@api.route('/routine/<int:id>', methods=['GET'])
+def get_routine(id):
+    routine = Routine.query.filter_by(id=id).first()
+    if routine is None:
+        return ({'error':'Routine not found'}), 404
     else:
-        data_serialized = day_routine.serialize()
+        data_serialized = routine.serialize()
         return jsonify(data_serialized), 200
 
 
-# GET ALL DayRoutineDate / TRAER TODAS FECHA RUTINA DIA
-@api.route('/day-routine-date', methods=['GET'])
-def get_all_day_routine_date():
-    day_routines_date = DayRoutineDate.query.all()
-    if len(day_routines_date) == 0:
-        return ({'error':'DayRoutineDate list not found'}), 404
-    else:
-        data_serialized = list(map(lambda date: date.serialize(), day_routines_date))
-        return jsonify(data_serialized), 200
+# # GET ALL DayRoutineDate / TRAER TODAS FECHA RUTINA DIA
+# @api.route('/day-routine-date', methods=['GET'])
+# def get_all_day_routine_date():
+#     day_routines_date = DayRoutineDate.query.all()
+#     if len(day_routines_date) == 0:
+#         return ({'error':'DayRoutineDate list not found'}), 404
+#     else:
+#         data_serialized = list(map(lambda date: date.serialize(), day_routines_date))
+#         return jsonify(data_serialized), 200
 
 
-# GET ONE DayRoutineDate / TRAER UNA FECHA RUTINA DIA
-@api.route('/day-routine-date/<int:id>', methods=['GET'])
-def get_day_routine_date(id):
-    day_routine_date = DayRoutineDate.query.filter_by(id=id).first()
-    if day_routine_date is None:
-        return ({'error':'DayRoutineDate not found'}), 404
-    else:
-        data_serialized = day_routine_date.serialize()
-        return jsonify(data_serialized), 200
+# # GET ONE DayRoutineDate / TRAER UNA FECHA RUTINA DIA
+# @api.route('/day-routine-date/<int:id>', methods=['GET'])
+# def get_day_routine_date(id):
+#     day_routine_date = DayRoutineDate.query.filter_by(id=id).first()
+#     if day_routine_date is None:
+#         return ({'error':'DayRoutineDate not found'}), 404
+#     else:
+#         data_serialized = day_routine_date.serialize()
+#         return jsonify(data_serialized), 200
 
 
-# GET ALL WeeklyDayRoutine / TRAER TODAS RUTINA SEMANA DIA - PIVOTE
-@api.route('/weekly-day-routine', methods=['GET'])
-def get_all_weekly_day_routine():
-    weekly_day_routine = WeeklyDayRoutine.query.all()
-    if len(weekly_day_routine) == 0:
-        return ({'error':'WeeklyDayRoutine list not found'}), 404
-    else:
-        data_serialized = list(map(lambda weekly_day: weekly_day.serialize(), weekly_day_routine))
-        return jsonify(data_serialized), 200
+# # GET ALL WeeklyDayRoutine / TRAER TODAS RUTINA SEMANA DIA - PIVOTE
+# @api.route('/weekly-day-routine', methods=['GET'])
+# def get_all_weekly_day_routine():
+#     weekly_day_routine = WeeklyDayRoutine.query.all()
+#     if len(weekly_day_routine) == 0:
+#         return ({'error':'WeeklyDayRoutine list not found'}), 404
+#     else:
+#         data_serialized = list(map(lambda weekly_day: weekly_day.serialize(), weekly_day_routine))
+#         return jsonify(data_serialized), 200
 
 
-# GET WeeklyDayRoutine OF ONE WEEK / TRAER TODAS RUTINA SEMANA DIA DE UNA SEMANA- PIVOTE
-@api.route('/weekly-day-routine/<int:weekly_routine_id>', methods=['GET'])
-def get_one_weekly_day_routine(weekly_routine_id):
-    weekly_day_routine = WeeklyDayRoutine.query.filter_by(weekly_routine_id=weekly_routine_id).all()
-    if len(weekly_day_routine) == 0:
-        return ({'error':'WeeklyDayRoutine list of one week not found'}), 404
-    else:
-        data_serialized = list(map(lambda weekly_day: weekly_day.serialize(), weekly_day_routine))
-        return jsonify(data_serialized), 200
+# # GET WeeklyDayRoutine OF ONE WEEK / TRAER TODAS RUTINA SEMANA DIA DE UNA SEMANA- PIVOTE
+# @api.route('/weekly-day-routine/<int:weekly_routine_id>', methods=['GET'])
+# def get_one_weekly_day_routine(weekly_routine_id):
+#     weekly_day_routine = WeeklyDayRoutine.query.filter_by(weekly_routine_id=weekly_routine_id).all()
+#     if len(weekly_day_routine) == 0:
+#         return ({'error':'WeeklyDayRoutine list of one week not found'}), 404
+#     else:
+#         data_serialized = list(map(lambda weekly_day: weekly_day.serialize(), weekly_day_routine))
+#         return jsonify(data_serialized), 200
 
 
 # GET ALL EXERCIE / TRAER TODOS EJERCICIO
@@ -186,7 +194,7 @@ def get_one_weekly_day_routine(weekly_routine_id):
 def get_all_exercise():
     exercise = Exercise.query.all()
     if len(exercise) == 0:
-        return ({'error':'Exercise list not found'}), 404
+        return ({'error':'exercise list not found'}), 404
     else:
         data_serialized = list(map(lambda exercise: exercise.serialize(), exercise))
         return jsonify(data_serialized), 200
@@ -197,31 +205,31 @@ def get_all_exercise():
 def get_one_exercise(id):
     exercise = Exercise.query.filter_by(id=id).first()
     if exercise is None:
-        return ({'error':'Exercise not found'}), 404
+        return ({'error':'exercise not found'}), 404
     else:
         data_serialized = exercise.serialize()
         return jsonify(data_serialized), 200
 
 
-# GET ALL ExerciseDayRoutine / TRAER TODAS RUTINA DIA EJERCICIO
-@api.route('/exercise-day-routine', methods=['GET'])
-def get_all_exercise_day_routine():
-    exercise_day_routine = ExerciseDayRoutine.query.all()
-    if len(exercise_day_routine) == 0:
-        return ({'error':'Exercise_Day_Routine list not found'}), 404
+# GET ALL ExerciseRoutine / TRAER TODAS RUTINA EJERCICIO
+@api.route('/exercise-routine', methods=['GET'])
+def get_all_exercise_routine():
+    exercise_routine = ExerciseRoutine.query.all()
+    if len(exercise_routine) == 0:
+        return ({'error':'exercise routine list not found'}), 404
     else:
-        data_serialized = list(map(lambda routine: routine.serialize(), exercise_day_routine))
+        data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
 
 
-# GET ALL ExerciseDayRoutine ONE DAY / TRAER TODAS RUTINA DIA EJERCICIO DE UN DIA
-@api.route('/exercise-day-routine/<int:day_routine_id>', methods=['GET'])
-def get_all_exercise_day_routine_one_day(day_routine_id):
-    exercise_day_routine = ExerciseDayRoutine.query.filter_by(day_routine_id=day_routine_id).all()
-    if len(exercise_day_routine) == 0:
-        return ({'error':'exercise_day_routine list of one day not found'}), 404
+# GET ALL ExerciseRoutine ONE DAY / TRAER TODAS RUTINA EJERCICIO DE UN DIA
+@api.route('/exercise-routine/<int:routine_id>', methods=['GET'])
+def get_all_exercise_routine_one_day(routine_id):
+    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id).all()
+    if len(exercise_routine) == 0:
+        return ({'error':'exercise routine list of one day not found'}), 404
     else:
-        data_serialized = list(map(lambda routine: routine.serialize(), exercise_day_routine))
+        data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
 
 

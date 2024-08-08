@@ -9,7 +9,7 @@ export const Private = () => {
 
     useEffect(() => {
         const fetchUserProfile = async () => {
-            const token = actions.getToken();
+            const token = actions.validToken();
             if (token) {
                 await actions.getUserProfile();
             } else {
