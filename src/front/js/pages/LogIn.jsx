@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useContext}from "react";
+import{Context} from "../store/appContext"
 import "../../styles/login.css";
 import Logo from "../../../../public/images/nutri-logo-icon-b.png";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 const LogIn = () => {
+    const{actions} = useContext(Context)
     return (
         <div className="login-body d-flex justify-content-center align-items-center">
 
@@ -34,6 +35,7 @@ const LogIn = () => {
                         //     setSubmitting(false);
                         // }, 400);
                         console.log(values);
+                        actions.login(values.email,values.password)
                         
                     }}
                 >
