@@ -131,3 +131,32 @@ def delete_user(id):
     db.session.commit()    
     return jsonify({"msj":"delete successfully"}), 200
 
+# PUT user
+@api.route('/users/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_user(id):
+    # current_user_email = get_jwt_identity #obtengo el id del usuario actual y lo comparo con el usuario autenticado
+    # if current_user_id != id:          # si el id del usuario actual no es igual al id atenticado 
+    #     return jsonify ({"msg":"Unauthorized"}), 403
+    data = request.get_json()
+    user = User.query.filter_by(id=id).first()#la variable user me define es el usuario que busco para actualizar
+    if user is None:
+        return jsonify({"msg":"The user doesn't exist"}), 404
+# actualiza datos del usuario
+    if 'name' in data:
+        user.name = data ['name']
+    if 'email' in data:
+        user.email = data ['email']
+    if 'password' in data:
+        user.password = data ['password']
+    if 'address' in data:
+        user.address = data ['address']
+    if 'phone' in data:
+        user.phone = data ['phone']
+    if 'is_active' in data:
+        user.is_active = data ['is_active']
+    if 'id_role' in data:
+        user.id_role = data ['id_role']
+# guardo los cambios en la db
+    db.session.commit()
+    return jsonify (user.serialize(),{"msg":"The user has been updated"}), 200
