@@ -28,6 +28,14 @@ const LogIn = () => {
                         email: Yup.string().email('Ingresa un correo válido').required('Requerido'),
                         password: Yup.string().required('Contraseña inválida'),
                     })}
+                    onSubmit={(values, { setSubmitting }) => {
+                        // setTimeout(() => {
+                        //     alert(JSON.stringify(values, null, 2));
+                        //     setSubmitting(false);
+                        // }, 400);
+                        console.log(values);
+                        
+                    }}
                 >
 
                     <Form className="row g-3 d-flex flex-column justify-content-center align-items-center">
