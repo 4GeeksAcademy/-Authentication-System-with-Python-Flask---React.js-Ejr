@@ -11,7 +11,7 @@ const LogIn = () => {
 
 
             <div className="h-75 bg-light rounded col-12 col-lg-6 container container-login">
-                <div className="header-container mt-3 h-25 d-flex align-items-center justify-content-between">
+                <div className="header-container mt-5 h-25 d-flex align-items-center justify-content-between">
                     <div className="logo-img-container d-flex">
                         <img className="logo-img" src={Logo} alt="logo-nutri-4-well" />
                     </div>
