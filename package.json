@@ -73,6 +73,7 @@
 		]
 	},
 	"dependencies": {
+		"formik": "^2.4.6",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
@@ -81,6 +82,7 @@
 		"react-router-dom": "^6.3.0",
 		"react-slick": "^0.30.2",
 		"react-star-rating-component": "^1.4.1",
-		"slick-carousel": "^1.8.1"
+		"slick-carousel": "^1.8.1",
+		"yup": "^1.4.0"
 	}
 }
