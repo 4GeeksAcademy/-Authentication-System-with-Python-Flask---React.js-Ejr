@@ -1,18 +1,57 @@
 import React from "react";
-import "../../styles/login.css"
-
-
-
-const LogIn = () =>{
+import "../../styles/login.css";
+import Logo from "../../../../public/images/nutri-logo-icon-b.png";
+import { Link } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+const LogIn = () => {
     return (
-        <div className="login-body d-flex justify-content-center align-items-center ">
-        <div className="container w-50 bg-light h-75 rounded">
-        <h1 className="text-center">
-            Login
-        </h1>
+        <div className="login-body d-flex justify-content-center align-items-center">
+
+
+            <div className="h-75 bg-light rounded col-12 col-lg-6 container container-login">
+                <div className="header-container mt-3 h-25 d-flex align-items-center justify-content-between">
+                    <div className="logo-img-container d-flex">
+                        <img className="logo-img" src={Logo} alt="logo-nutri-4-well" />
+                    </div>
+                    <h1 className="text-center header-login-title">
+                        Inicio de sesión
+                    </h1>
+                </div>
+                <Formik
+                    initialValues={{
+                        email: '',
+                        password: '',
+                    }}
+                    validationSchema={Yup.object({
+                        email: Yup.string().email('Ingresa un correo válido').required('Requerido'),
+                        password: Yup.string().required('Contraseña inválida'),
+                    })}
+                >
+
+                    <Form className="row g-3 d-flex flex-column justify-content-center align-items-center">
+                        <div className="col-auto w-75">
+                            <Field name="email" type="email" className="form-control" id="exampleFormControlInput1" placeholder="Correo electrónico" />
+                            <ErrorMessage name="email" />
+                        </div>
+                        <div className="col-auto w-75">
+                            <Field name="password" type="password" className="form-control" id="inputPassword2" placeholder="Contraseña" />
+                            <ErrorMessage name="password" />
+                        </div>
+                        <div className="register-link-container d-flex justify-content-center">
+                            <Link className="register-link" to='/register'>Registrarse</Link>
+                        </div>
+                        <div className="col-auto d-flex justify-content-center w-100">
+                            <button type="submit" className="btn btn-login mb-3 p-2 w-75">Iniciar sesión</button>
+                        </div>
+
+                    </Form>
+                </Formik>
+            </div>
         </div>
-        </div>
-    )
+    );
+
 }
 
 
