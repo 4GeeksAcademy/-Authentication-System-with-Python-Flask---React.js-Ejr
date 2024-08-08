@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Itinerary, Comments, Reports, Tags, Itenerary_Tags_Rel
+from .models import db, User, Itinerary, Comments, Reports, Tags, Itenerary_Tags_Rel, Follows_Followers_Rel, Score
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -17,6 +17,10 @@ def setup_admin(app):
     admin.add_view(ModelView(Reports, db.session))
     admin.add_view(ModelView(Tags, db.session))
     admin.add_view(ModelView(Itenerary_Tags_Rel, db.session))
+    admin.add_view(ModelView(Follows_Followers_Rel, db.session))
+    admin.add_view(ModelView(Score, db.session))
+    
+
     
 
     # You can duplicate that line to add mew models

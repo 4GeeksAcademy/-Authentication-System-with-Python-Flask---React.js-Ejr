@@ -3,13 +3,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { Home } from "./pages/home.jsx";
+import { Search } from "./pages/search.jsx";
+import { SingleRoute } from "./pages/singleRoute.jsx";
+import { CreateEditRoute } from "./pages/singleRoute.jsx";
+import { Profile } from "./pages/profile.jsx";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Navbar } from "./component/navbar.jsx";
+import { Footer } from "./component/footer.jsx";
 
 //create your first component
 const Layout = () => {
@@ -26,8 +28,10 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Search />} path="/search" />
+                        <Route element={<SingleRoute />} path="/route/:theid" />
+                        <Route element={<CreateEditRoute />} path="/route/:action/:theid" />
+                        <Route element={<Profile />} path="/user/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
