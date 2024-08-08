@@ -4,14 +4,14 @@ import logo from "../../img/logo.png";
 
 export const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-transparent">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-dark">
       <div className="container-fluid">
         <div className="ms-5">
           <img className="logo" src={logo} alt="Logo" />
           <Link className="navbar-brand text-light ms-3" to="/">HablemosUY</Link>
         </div>
 
-        <button className="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button className="navbar-toggler text-dark me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">

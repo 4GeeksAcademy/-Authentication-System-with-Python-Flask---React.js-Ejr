@@ -51,6 +51,7 @@ const SimpleCarousel = () => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,  // Tiempo en milisegundos
+        arrows: false,
     };
 
     return (
