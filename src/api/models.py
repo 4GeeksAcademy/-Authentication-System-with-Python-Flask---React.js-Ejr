@@ -33,7 +33,7 @@ class Role(db.Model):
 
 
         def __repr__(self):
-            return f'<Role {self.id}>'
+            return f'<Role {self.name}>'
 
         def serialize(self):
             return {
