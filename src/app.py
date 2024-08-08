@@ -214,6 +214,42 @@ def delete_user(user_id):
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
 
+# Modificar un comentario 
+@app.route('/comentarios/<int:comentario_id>', methods=['PUT'])
+def update_comentario(comentario_id):
+    try:
+        data = request.get_json()
+        comentario = Comentarios.query.get(comentario_id)
+
+        if not comentario:
+            return jsonify({"msg": "Comentario no encontrado"}), 404
+
+        comentario.comentario = data.get("comentario", comentario.comentario)
+        comentario.puntaje = data.get("puntaje", comentario.puntaje)
+        comentario.fecha_de_publicacion = datetime.now(timezone.utc)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Comentario actualizado exitosamente"}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+
+# Eliminar un comentario 
+@app.route('/comentarios/<int:comentario_id>', methods=['DELETE'])
+def delete_comentario(comentario_id):
+    try:
+        comentario = Comentarios.query.get(comentario_id)
+
+        if not comentario:
+            return jsonify({"msg": "Comentario no encontrado"}), 404
+
+        db.session.delete(comentario)
+        db.session.commit()
+
+        return jsonify({"msg": "Comentario eliminado exitosamente"}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
