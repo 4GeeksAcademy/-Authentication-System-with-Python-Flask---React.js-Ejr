@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Login } from "../component/login.jsx"
+import "../../styles/registro-login.css"
 
 const VistaLogin = () => {
     const { store, actions } = useContext(Context);
