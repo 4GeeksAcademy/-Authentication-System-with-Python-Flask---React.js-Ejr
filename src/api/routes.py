@@ -33,6 +33,43 @@ def login():
             access_token = create_access_token(identity=user.id)
             return jsonify({'success' : True, 'user':user.serialize(), 'token' :access_token }), 200
         return jsonify({'success' : False, 'msg':'usuario o contraseña no válidos'}), 400
-   #return jsonify({'success' : False,  'msg' : 'El correo electrónico no tiene una cuenta asociada'}), 404
+    return jsonify({'success' : False,  'msg' : 'El correo electrónico no existe'}), 404
+
+@api.route('/signup', methods=['POST'])
+def signup():
+    name = request.json.get('name',None)
+    username = User.query.filter_by (email=email).first()
+    email = request.json.get('email',None)
+    password = request.json.get('password', None)
+    if not email or password or name or not username:
+        return jsonify({'success' : False,  'msg' : 'Faltan datos para el registro'}), 400
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({'success' : False,  'msg' : 'Este correo electrónico ya tiene una cuenta'}), 400
+    new_user = User(email=email, password=password, is_active=True)
+    db.session.add(new_user)
+    db.session.commit()
+    access_token = create_access_token(identity=new_user.id)
+    return jsonify({'success' : True, 'user': new_user.serialize(), 'token' : access_token}), 200
+
+@api.route('/token', methods=['GET'])
+@jwt_required()
+def check_jwt():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({'success' : True, 'user': user.serialize()}), 200
+    return jsonify({'success' : False, 'msg': 'Bad Token'}), 200
+
+@api.route('/protected', methods=['GET'])
+@jwt_required()
+def handle_protected():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+         return jsonify({'msg' : 'Has logrado acceder a una ruta protegida, ' + user})
+    return jsonify({'Success' : False, 'msg' : 'Bad Token'})
+
+
             
                
