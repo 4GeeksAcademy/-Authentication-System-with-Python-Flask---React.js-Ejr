@@ -20,9 +20,11 @@ class Follows_Followers_Rel(db.Model):
 class User(db.Model):
     __tablename__= 'user'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(256), unique=True, nullable=False)
+    password = db.Column(db.String, unique=False, nullable=False)
+    username = db.Column(db.String(64), unique=True, nullable=False)
+    description = db.Column(db.String(215), unique=False, nullable=True)
+    social_media = db.Column(db.JSON, unique=False, nullable=True)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
 
     itineraries = db.relationship('Itinerary', back_populates='author')
@@ -53,7 +55,11 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "username": self.username
+            "username": self.username,
+            "description": self.description,
+            "social_media": self.social_media,
+            "creation_date": self.creation_date,
+            "itinerary": [itinerary.serialize() for itinerary in self.itineraries]
             # do not serialize the password, its a security breach
         }
  
@@ -103,6 +109,9 @@ class Comments(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     text = db.Column(db.String(250), unique=False, nullable=False)
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), nullable=False)
+    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
+
+    
 
     author = db.relationship('User', back_populates='comments')
     itinerary = db.relationship('Itinerary', back_populates='comments')
@@ -127,6 +136,8 @@ class Reports(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'), nullable=False)
     reported_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
+
 
     comment = db.relationship('Comments', back_populates='reports')  # One-to-many comment
     author = db.relationship('User', back_populates='reports', foreign_keys=[author_id])
@@ -178,6 +189,7 @@ class Score(db.Model):
     number = db.Column(db.Integer, unique=False, nullable=False)
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
     
     author = db.relationship('User', back_populates='score')
     itinerary = db.relationship('Itinerary', back_populates='score')
