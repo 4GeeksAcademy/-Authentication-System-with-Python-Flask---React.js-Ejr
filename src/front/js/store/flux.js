@@ -61,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					})
 					let data = await response.json()
-					console.log(data); // me muestra data en
+					console.log(data); // me muestra data en consola
 
 				}
 				catch (error) {
