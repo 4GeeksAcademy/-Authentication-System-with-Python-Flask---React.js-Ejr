@@ -21,39 +21,6 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /create users from admin
-@api.route('/superuser', methods=['POST'])
-def create_superuser():
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    
-    email = data.get('email')
-    password = data.get('password')
-    name = data.get('name')
-    phone_number = data.get('phone_number')
-    role_id = data.get('role_id')
-
-    if not email or not password or not name or not phone_number:
-        return jsonify({"error": "All fields are required"}), 400
-    
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
-        return jsonify({"error": "User already exists"}), 400
-
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(email=email, password=hashed_password, name=name, phone_number=phone_number, role_id=role_id)
-    db.session.add(new_user)
-    db.session.commit()
-
-    response_body = {
-        "id": new_user.id,
-        "email": new_user.email,
-        "name": new_user.name,
-        "phone_number": new_user.phone_number,
-    }
-    return jsonify(response_body), 201
-
-# ///////////////////////////////////////////////////////////////////////////////////////////// post en /create users from admin
 @api.route('/users', methods=['POST'])
 @jwt_required()
 def create_user():
@@ -409,6 +376,29 @@ def get_appointments():
     appointments_list = list(map(lambda appointment: appointment.serialize(), appointments_query))
     return jsonify(appointments_list), 200
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
+@api.route('/update_profile', methods=['PATCH'])
+@jwt_required()
+def update_profile():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    email = data.get('email')
+    current_password = data.get('currentPassword')
+    new_password = data.get('newPassword')
+
+    user = User.query.get(user_id)
+    
+    if not user or not bcrypt.check_password_hash(user.password, current_password):
+        return jsonify({"error": "Invalid current password"}), 401
+
+    if email:
+        user.email = email
+    if new_password:
+        user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+
+    db.session.commit()
+    return jsonify({"msg": "Profile updated successfully", "email": user.email}), 200
+
 
 
 # /***************** GENERA DATOS DE PRUEBA ************ get a /add_test_data
@@ -424,7 +414,7 @@ def add_test_data():
 
     # Agregar usuarios
     users = [
-        {"email": "user1@example.com", "password": "password1", "name": "User One", "phone_number": "1234567890", "role_id": 3},
+        {"email": "user1@example.com", "password": "123123", "name": "User One", "phone_number": "1234567890", "role_id": 3},
         {"email": "user2@example.com", "password": "password2", "name": "User Two", "phone_number": "0987654321", "role_id": 3},
         {"email": "user3@example.com", "password": "password3", "name": "User Three", "phone_number": "1122334455", "role_id": 3},
         {"email": "user4@example.com", "password": "password4", "name": "User Four", "phone_number": "2233445566", "role_id": 3},
@@ -435,8 +425,8 @@ def add_test_data():
         {"email": "user9@example.com", "password": "password9", "name": "User Nine", "phone_number": "7788990011", "role_id": 3},
         {"email": "user10@example.com", "password": "password10", "name": "User Ten", "phone_number": "8899001122", "role_id": 3},
         {"email": "user11@example.com", "password": "password11", "name": "User Eleven", "phone_number": "9900112233", "role_id": 3},
-        {"email": "admin@example.com", "password": "password12", "name": "Admin User", "phone_number": "1231231234", "role_id": 1},
-        {"email": "mechanic@example.com", "password": "password13", "name": "Mechanic User", "phone_number": "3213214321", "role_id": 2}
+        {"email": "admin@example.com", "password": "123123", "name": "Admin User", "phone_number": "1231231234", "role_id": 1},
+        {"email": "mechanic@example.com", "password": "123123", "name": "Mechanic User", "phone_number": "3213214321", "role_id": 2}
     ]
     user_objects = []
     for user_data in users:

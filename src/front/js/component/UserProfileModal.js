@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
-function UserProfileModal({ user, onSave, onClose, error }) {
+function UserProfileModal({ user, onSave, onClose, isAdmin }) {
   const [updatedUser, setUpdatedUser] = useState(user);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,7 +16,23 @@ function UserProfileModal({ user, onSave, onClose, error }) {
   };
 
   const handleSave = () => {
-    onSave(updatedUser);
+    if (!updatedUser.email || (isAdmin && !currentPassword)) {
+      setError("All required fields must be filled");
+      return;
+    }
+
+    if (newPassword && newPassword !== confirmPassword) {
+      setError("New passwords do not match");
+      return;
+    }
+
+    onSave({ ...updatedUser, currentPassword, newPassword })
+      .then(() => {
+        setError(null); 
+      })
+      .catch((err) => {
+        setError("An error occurred. Please try again later.");
+      });
   };
 
   return (
@@ -25,21 +45,33 @@ function UserProfileModal({ user, onSave, onClose, error }) {
           </div>
           <div className="modal-body">
             {error && <div className="alert alert-danger">{error}</div>}
-            <div className="mb-3">
-              <label className="form-label">Name</label>
-              <input type="text" className="form-control" name="name" value={updatedUser.name} onChange={handleChange} />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Phone Number</label>
-              <input type="text" className="form-control" name="phoneNumber" value={updatedUser.phoneNumber} onChange={handleChange} />
-            </div>
+            {!isAdmin && (
+              <>
+                <div className="mb-3">
+                  <label className="form-label">Name</label>
+                  <input type="text" className="form-control" name="name" value={updatedUser.name} onChange={handleChange} />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Phone Number</label>
+                  <input type="text" className="form-control" name="phoneNumber" value={updatedUser.phoneNumber} onChange={handleChange} />
+                </div>
+              </>
+            )}
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input type="email" className="form-control" name="email" value={updatedUser.email} onChange={handleChange} />
             </div>
             <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-control" name="password" value={updatedUser.password} onChange={handleChange} />
+              <label className="form-label">Current Password</label>
+              <input type="password" className="form-control" name="currentPassword" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">New Password</label>
+              <input type="password" className="form-control" name="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Confirm New Password</label>
+              <input type="password" className="form-control" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </div>
           </div>
           <div className="modal-footer">
