@@ -19,8 +19,10 @@ export const LoginForm = () => {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const success = await actions.login(user);
-        if (success) {
+        const success = await actions.login(user.email, user.password);
+        console.log(success);
+
+        if (success === true) {
             await actions.getUserProfile();
             navigate("/");
         }

@@ -11,7 +11,7 @@ export const SignupForm = () => {
         email: "",
         name: "",
         password: "",
-        confim_password: "",
+        confirm_password: "",
     });
 
     const handleChange = (e) => {
@@ -24,7 +24,7 @@ export const SignupForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // actions.login(user);
-        actions.register(user);
+        actions.signup(user.name, user.email, user.password, user.confirm_password);
         navigate("/");
     };
 
@@ -73,10 +73,10 @@ export const SignupForm = () => {
                                         <input
                                             type="password"
                                             className="form-control"
-                                            id="confim_password"
-                                            name="confim_password"
+                                            id="confirm_password"
+                                            name="confirm_password"
                                             placeholder="Confirm password"
-                                            value={user.confim_password}
+                                            value={user.confirm_password}
                                             onChange={handleChange}
                                             required
                                         />

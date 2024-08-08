@@ -11,6 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             oneDayRoutine: {},
             allDayRoutineDateList: [],
             oneDayRoutineDate: {},
+            allWeeklyDayRoutineList: [],
+            allWeeklyDayRoutineOfOneWeekList: [],
             allExerciseList: [],
             oneExercise: {},
             allExerciseDayRoutineList: [],
@@ -24,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getMessage: async () => {
                 try {
                     // fetching data from the backend
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+                    const resp = await fetch(process.env.BACKEND_URL + "/hello")
                     const data = await resp.json()
                     setStore({ message: data.message })
                     // don't forget to return something, that is how the async resolves
@@ -103,6 +105,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error);
                     return error;
                 }
+            },
+            // TRAER PERFIL
+            getUserProfile: async () => {
+                try {
+                    let token = localStorage.getItem("token")
+                    // const token = getActions().getToken();
+                    if (!token) throw new Error("No token found");
+                    const resp = await fetch(process.env.BACKEND_URL + "/profile", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+                    if (!resp.ok) {
+                        throw new Error("Error fetching profile");
+                    }
+                    const data = await resp.json();
+                    setStore({ currentUser: data });
+                    return data;
+                } catch (error) {
+                    console.log("Error loading user profile from backend", error);
+                    setStore({ authError: error.message });
+                }
+            },
+            // CERRAR SESION
+            logout: () => {
+                sessionStorage.removeItem("jwt_token");
+                setStore({ currentUser: null });
             },
             // GET ALL WeeklyRoutine / TRAER TODAS RUTINA SEMANA
             allWeeklyRoutine: async () => {
@@ -200,6 +231,39 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // GET ALL WeeklyDayRoutine / TRAER TODAS RUTINA SEMANA DIA - PIVOTE
+            allWeeklyDayRoutine: async () => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/weekly-day-routine");
+
+                    if (resp.status = 200) {
+                        setStore({ allWeeklyDayRoutineList: resp.data })
+                        console.log(getStore().allWeeklyDayRoutineList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error.response.data);
+                    return false;
+                }
+            },
+            // GET WeeklyDayRoutine OF ONE WEEK / TRAER TODAS RUTINA SEMANA DIA DE UNA SEMANA- PIVOTE
+
+            allWeeklyDayRoutineOfOneWeek: async (id) => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + `/weekly-day-routine/${id}`);
+
+                    if (resp.status = 200) {
+                        setStore({ allWeeklyDayRoutineOfOneWeekList: resp.data })
+                        console.log(getStore().allWeeklyDayRoutineOfOneWeekList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
             // # GET ALL EXERCIE / TRAER TODOS EJERCICIO
             allExercise: async () => {
                 try {
@@ -260,7 +324,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
                 catch (error) {
-                    console.log(error.response.data);
+                    console.log(error);
                     return false;
                 }
             },
