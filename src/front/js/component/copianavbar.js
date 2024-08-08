@@ -1,49 +1,23 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoAutoAgenda from "../../img/autoagendalogo1080.png";
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
-const apiUrl = process.env.BACKEND_URL + "/api";
 
 export const Navbar = () => {
   const { actions, store } = useContext(Context);
-  const [hasAccess, setHasAccess] = useState(!!store.token);
   const navigate = useNavigate();
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-  const [userRole, setUserRole] = useState(null);
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  const handleLogout = async () => {
-    await actions.logout();
+  const handleLogout = () => {
+    actions.logout();
     handleNavCollapse();
     navigate("/login");
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setHasAccess(!!token);
-
-    const fetchUserRole = async () => {
-      if (token) {
-        const response = await fetch( apiUrl + "/pinguser", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUserRole(data.role); 
-        } else {
-          setUserRole(null);
-        }
-      } else {
-        setUserRole(null);
-      }
-    };
-
-    fetchUserRole();
-  }, [store.token]);
+  const userRole = null; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,7 +59,7 @@ export const Navbar = () => {
                   Book an Appointment
                 </Link>
               )}
-              {userRole === "User" && (
+              {userRole === "client" && (
                 <Link
                   to="/createappointmentregistereduser"
                   className="nav-link"
@@ -124,7 +98,7 @@ export const Navbar = () => {
                 </Link>
               </>
             )}
-            {userRole === "User" && (
+            {userRole === "client" && (
               <>
                 <Link
                   to="/userdashboard"
@@ -140,14 +114,14 @@ export const Navbar = () => {
                   <div className="profile-header-container">
                     <div className="role-label-container">
                       <span className="label label-default role-label">
-                        User
+                        Client
                       </span>
                     </div>
                   </div>
                 </div>
               </>
             )}
-            {userRole === "Mechanic" && (
+            {userRole === "mechanic" && (
               <>
                 <Link
                   to="/mechanicdashboard"
@@ -170,7 +144,7 @@ export const Navbar = () => {
                 </div>
               </>
             )}
-            {userRole === "Admin" && (
+            {userRole === "admin" && (
               <>
                 <Link
                   to="/admindashboard"

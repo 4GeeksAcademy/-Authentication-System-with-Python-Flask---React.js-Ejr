@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
@@ -33,7 +33,10 @@ export const Home = () => {
                 manage your car maintenance effortlessly with us. We're your
                 reliable partner for all auto repair needs.
               </p>
-              <button onClick={() => navigate('/bookappointment')} className="btn btn-primary w-100 p-3 fw-bold">
+              <button
+                onClick={() => navigate("/bookappointment")}
+                className="btn btn-primary w-100 p-3 fw-bold"
+              >
                 Book Your Appointment at Our Trusted Workshop
               </button>
               <div
@@ -41,25 +44,19 @@ export const Home = () => {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <div className="col-lg-3 col-6">
+                <div className="col-lg-6 col-md-6 col-6 mx-auto my-3">
                   <div className="stats-item text-center w-100 h-100">
                     <span>1232</span>
                     <p>Happy Clients</p>
                   </div>
                 </div>
-                <div className="col-lg-3 col-6">
+                <div className="col-lg-6 col-md-6 col-6 mx-auto my-3">
                   <div className="stats-item text-center w-100 h-100">
                     <span>521</span>
                     <p>Scheduled Services</p>
                   </div>
                 </div>
-                <div className="col-lg-3 col-6">
-                  <div className="stats-item text-center w-100 h-100">
-                    <span>980</span>
-                    <p>Support Requests</p>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-6">
+                <div className="col-lg-6 col-md-6 col-6 mx-auto my-3">
                   <div className="stats-item text-center w-100 h-100">
                     <span>32</span>
                     <p>Years of Experience</p>
