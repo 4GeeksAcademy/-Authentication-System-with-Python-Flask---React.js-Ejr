@@ -4,8 +4,28 @@
 body {
     background-color:#005468 ;
 }
+* {
+  box-sizing: border-box !important;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Oculta el desbordamiento horizontal */
+}
 
-.navbar-transparent {
+.container-fluid {
+  max-width: 100%;
+  overflow-x: hidden; /* Asegura que el contenido no se desborde */
+}
+
+img, video {
+  max-width: 100%; /* Asegura que las imágenes y videos no desborden el contenedor */
+  height: auto;
+}
+
+
+.navbar-dark {
     background-color: #112d52 !important;
   }
 
@@ -48,13 +68,14 @@ button {
   button:hover {
     transform: scale(1.02);
   }
-
+/* Estilos para sections y cards */
 section{
   min-height: 100vh;
 }
 .card{
     background-color: #a9d7cb !important;
 }
+
 
 /* Estilos de formulario de registro */
 .form-container {
