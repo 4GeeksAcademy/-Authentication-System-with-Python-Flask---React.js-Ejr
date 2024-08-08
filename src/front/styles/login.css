@@ -43,7 +43,11 @@ width: 68%;
 }
 .register-link:hover{
     color: var(--color-forest);
-    text-decoration: underline;
-    
- 
+    text-decoration: underline; 
+}
+
+/*STYLES ONLY FOR REGISTER.JSX */
+
+.container-header-register{
+    width:63%;
 }
