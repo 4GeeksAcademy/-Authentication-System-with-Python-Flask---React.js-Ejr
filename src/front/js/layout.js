@@ -12,12 +12,12 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 
-import Login from "./pages/login";
-import SignUp from "./pages/signUp";
-import EditarPerfil from "./pages/editarPerfil";
-import Favoritos from "./pages/favoritos";
-import Cursos from "./pages/cursos";
-import Logout from "./pages/logout";
+import { Login } from "./pages/login";
+import { SignUp } from "./pages/signUp";
+import { EditarPerfil } from "./pages/editarPerfil";
+import { Favoritos } from "./pages/favoritos";
+import { Cursos } from "./pages/cursos";
+import { Logout } from "./pages/logout";
 
 
 //create your first component
