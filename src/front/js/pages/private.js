@@ -7,7 +7,7 @@ export const Private = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    /* useEffect(() => {
         const fetchUserProfile = async () => {
             const token = actions.validToken();
             if (token) {
@@ -22,10 +22,10 @@ export const Private = () => {
         }
     }, [store.currentUser, actions, navigate]);
 
-    const user = store.currentUser?.user;
+    const user = store.currentUser?.user; */
 
     // console.log('currentuser', user);
-
+    const user = store.currentUser?.user;
     return (
         <div className="text-center mt-5">
             <h1>Hello {user ? user.email : "Guest"}!</h1>
