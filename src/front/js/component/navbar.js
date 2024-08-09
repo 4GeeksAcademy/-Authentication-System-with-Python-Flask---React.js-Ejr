@@ -14,34 +14,42 @@ export const Navbar = () => {
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
   const handleLogout = async () => {
-    await actions.logout();
+    const logoutSuccess = await actions.logout();
     handleNavCollapse();
-    navigate("/");
+    if (logoutSuccess) {
+      setUserRole(null); // Asegurarse de que se limpie el role al hacer logout
+      navigate("/");
+    }
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
-    setHasAccess(!!token);
 
-    const fetchUserRole = () => {
-      switch (roleId) {
-        case "1":
-          setUserRole("Admin");
-          break;
-        case "2":
-          setUserRole("Mechanic");
-          break;
-        case "3":
-          setUserRole("User");
-          break;
-        default:
-          setUserRole(null);
-          break;
-      }
-    };
-
-    fetchUserRole();
+    // Solo si el token es válido, asignamos el userRole
+    if (token) {
+      setHasAccess(true);
+      const fetchUserRole = () => {
+        switch (roleId) {
+          case "1":
+            setUserRole("Admin");
+            break;
+          case "2":
+            setUserRole("Mechanic");
+            break;
+          case "3":
+            setUserRole("User");
+            break;
+          default:
+            setUserRole(null);
+            break;
+        }
+      };
+      fetchUserRole();
+    } else {
+      setHasAccess(false);
+      setUserRole(null);
+    }
   }, [store.token]);
 
   return (
