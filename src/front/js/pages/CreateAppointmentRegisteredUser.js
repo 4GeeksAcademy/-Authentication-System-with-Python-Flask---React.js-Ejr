@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
 
 const CreateAppointmentRegisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
-  const [appointmentDate, setAppointmentDate] = useState(null); // Updated to null to handle DatePicker
+  const [appointmentDate, setAppointmentDate] = useState(null);
   const [appointmentId, setAppointmentId] = useState("");
   const [carId, setCarId] = useState("");
   const [carLicensePlate, setCarLicensePlate] = useState("");
@@ -17,6 +18,7 @@ const CreateAppointmentRegisteredUser = () => {
   const [error, setError] = useState("");
   const [userCars, setUserCars] = useState([]);
   const datePickerRef = useRef(null);
+  const navigate = useNavigate();
 
   const apiUrl = "https://jubilant-lamp-r47rv4r66qrw3xxxg-3001.app.github.dev/";
 
@@ -34,11 +36,16 @@ const CreateAppointmentRegisteredUser = () => {
 
     const getUserCars = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/cars/${userId}`);
-        // const response = await fetch(`${apiUrl}/api/cars/2`);
+        const response = await fetch(`${apiUrl}/api/cars/5`);
         if (!response.ok) throw new Error("Network response failed");
-        const data = await response.json();
-        setUserCars(data);
+
+        const { result } = await response.json();
+
+        if (result && result.id && result.license_plate && result.car_model) {
+          setUserCars([result]);
+        } else {
+          console.error("Invalid car data received:", result);
+        }
       } catch (error) {
         console.error("Error getting user cars:", error);
       }
@@ -89,7 +96,7 @@ const CreateAppointmentRegisteredUser = () => {
           slots_required: 1,
           car_id: carId,
           appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"), // Include time in the request
+          appointment_time: appointmentDate.format("HH:mm"),
         }),
       });
 
@@ -111,12 +118,18 @@ const CreateAppointmentRegisteredUser = () => {
       setError("Service required. Please select one from the list.");
       return;
     }
-    if (currentStep === 3 && (!appointmentDate || !comment)) {
-      setError("Both appointment date and comment are required.");
+    if (currentStep === 3 && !appointmentDate) {
+      setError(
+        "Appointment date is required. Please select one from the calendar."
+      );
       return;
     }
     setError("");
     setCurrentStep(currentStep + 1);
+  };
+
+  const confirmAppointment = () => {
+    navigate("/appointmentconfirmed");
   };
 
   const displayCurrentStep = () => {
@@ -136,7 +149,7 @@ const CreateAppointmentRegisteredUser = () => {
               <option value="">Select one of your cars</option>
               {userCars.map((car) => (
                 <option key={car.id} value={car.id}>
-                  {car.license_plate} - {car.model}
+                  {car.license_plate} - {car.car_model}
                 </option>
               ))}
             </select>
@@ -206,16 +219,39 @@ const CreateAppointmentRegisteredUser = () => {
           </div>
         );
       case 4:
+        const selectedCar = userCars.find((car) => car.id === parseInt(carId));
+
+        const displayedCarLicensePlate = selectedCar
+          ? selectedCar.license_plate
+          : carLicensePlate;
+        const displayedCarModel = selectedCar
+          ? selectedCar.car_model
+          : carModel;
+
         return (
           <div className="step-content">
-            <h3>Confirm Appointment</h3>
-            <p>Car: {carLicensePlate} - {carModel}</p>
-            <p>Service: {serviceChosen}</p>
-            <p>Date: {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}</p>
-            <p>Time: {appointmentDate ? appointmentDate.format("hh:mm A") : ""}</p>
-            <p>Comment: {comment}</p>
+            <h3>Appointment Summary</h3>
+            <p>
+              <strong>Car:</strong> {displayedCarLicensePlate} -{" "}
+              {displayedCarModel}
+            </p>
+            <p>
+              <strong>Service:</strong> {serviceChosen}
+            </p>
+            <p>
+              <strong>Date:</strong>{" "}
+              {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
+            </p>
+            <p>
+              <strong>Time:</strong>{" "}
+              {appointmentDate ? appointmentDate.format("hh:mm A") : ""}
+            </p>
+            <p>
+              <strong>Comment:</strong> {comment}
+            </p>
           </div>
         );
+
       default:
         return null;
     }
@@ -228,9 +264,18 @@ const CreateAppointmentRegisteredUser = () => {
           <div className="card">
             <div className="card-header">Appointment Booking</div>
             <div className="card-body">{displayCurrentStep()}</div>
-            <div className={`button-container d-flex ${currentStep === 1 ? 'justify-content-end' : 'justify-content-between'}`}>
+            <div
+              className={`button-container d-flex ${
+                currentStep === 1
+                  ? "justify-content-end"
+                  : "justify-content-between"
+              }`}
+            >
               {currentStep > 1 && (
-                <button className="btn btn-secondary" onClick={() => setCurrentStep(currentStep - 1)}>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setCurrentStep(currentStep - 1)}
+                >
                   Previous
                 </button>
               )}
@@ -240,9 +285,20 @@ const CreateAppointmentRegisteredUser = () => {
                 </button>
               )}
               {currentStep === 4 && (
-                <button className="btn btn-primary ml-auto" onClick={submitAppointment}>
-                  Confirm Appointment
-                </button>
+                <div className="d-flex justify-content-between w-100">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setCurrentStep(1)}
+                  >
+                    Back to Start
+                  </button>
+                  <button
+                    className="btn btn-primary ml-auto"
+                    onClick={confirmAppointment}
+                  >
+                    Confirm Appointment
+                  </button>
+                </div>
               )}
             </div>
           </div>

@@ -21,6 +21,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import MechanicDashboard from "./pages/MechanicDashboard";
 import AppointmentDetails from "./pages/AppointmentDetails";
 import CreateAppointmentRegisteredUser from "./pages/CreateAppointmentRegisteredUser";
+import AppointmentConfirmed from "./pages/AppointmentConfirmed";
 
 
 const Layout = () => {
@@ -38,6 +39,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<BookAppointmentUnregisteredUser />} path="/bookappointment" />
                         <Route element={<CreateAppointmentRegisteredUser />} path="/createappointmentregistereduser" />
+                        <Route element={<AppointmentConfirmed />} path="/appointmentconfirmed" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<UserDashboard />} path="/userdashboard" />
