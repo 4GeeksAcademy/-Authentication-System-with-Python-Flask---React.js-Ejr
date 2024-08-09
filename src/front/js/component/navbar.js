@@ -17,7 +17,7 @@ export const Navbar = () => {
     const logoutSuccess = await actions.logout();
     handleNavCollapse();
     if (logoutSuccess) {
-      setUserRole(null); // Asegurarse de que se limpie el role al hacer logout
+      setUserRole(null);
       navigate("/");
     }
   };
