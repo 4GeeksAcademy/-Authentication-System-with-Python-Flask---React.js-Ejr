@@ -20,12 +20,12 @@ const CreateAppointmentRegisteredUser = () => {
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
 
-  const apiUrl = "https://jubilant-lamp-r47rv4r66qrw3xxxg-3001.app.github.dev/";
+  const apiUrl = process.env.BACKEND_URL + "/api";
 
   useEffect(() => {
     const getServices = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/services`);
+        const response = await fetch(`${apiUrl}/services`);
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
@@ -36,7 +36,7 @@ const CreateAppointmentRegisteredUser = () => {
 
     const getUserCars = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/cars/5`);
+        const response = await fetch(`${apiUrl}/cars/5`);
         if (!response.ok) throw new Error("Network response failed");
 
         const { result } = await response.json();
@@ -71,7 +71,7 @@ const CreateAppointmentRegisteredUser = () => {
     }
 
     try {
-      const commentResponse = await fetch(`${apiUrl}/api/comments`, {
+      const commentResponse = await fetch(`${apiUrl}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -86,7 +86,7 @@ const CreateAppointmentRegisteredUser = () => {
       const commentData = await commentResponse.json();
       console.log("Comment added:", commentData);
 
-      const serviceResponse = await fetch(`${apiUrl}/api/services`, {
+      const serviceResponse = await fetch(`${apiUrl}/services`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
