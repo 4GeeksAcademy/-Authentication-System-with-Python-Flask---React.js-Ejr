@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "../component/tickeate.png";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate()
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#d3d3d3' }}>
       <div className="container-fluid">
@@ -43,6 +45,11 @@ export const Navbar = () => {
               <a className="nav-link" href="#" style={{ color: 'black' }}>
                 Galería
               </a>
+            </li>
+            <li className="nav-item">
+              <p onClick={() => navigate("/contact-us")} className="nav-link" style={{ color: 'black' }}>
+                Contact Us
+              </p>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto">
