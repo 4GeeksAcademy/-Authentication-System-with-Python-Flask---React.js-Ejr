@@ -1,9 +1,11 @@
 import React from "react";
 import "../../styles/home.css";
+import jumbotron from "../component/jumbotron";
 
 export const Home = () => {
     return (
         <>
+        
             <div id="carouselExampleDark" className="carousel carousel-dark slide">
                 <div className="carousel-indicators">
                     <button
