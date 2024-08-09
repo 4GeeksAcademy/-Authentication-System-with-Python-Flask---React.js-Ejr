@@ -37,20 +37,19 @@ def login():
 
 @api.route('/signup', methods=['POST'])
 def signup():
-    name = request.json.get('name',None)
-    username = User.query.filter_by (email=email).first()
-    email = request.json.get('email',None)
+    username = request.json.get('username', None)
+    email = request.json.get('email', None)
     password = request.json.get('password', None)
-    if not email or password or name or not username:
-        return jsonify({'success' : False,  'msg' : 'Faltan datos para el registro'}), 400
+    if not email or not password or not username:
+        return jsonify({'success': False, 'msg': 'Faltan datos para el registro'}), 400
     user = User.query.filter_by(email=email).first()
     if user:
-        return jsonify({'success' : False,  'msg' : 'Este correo electrónico ya tiene una cuenta'}), 400
-    new_user = User(email=email, password=password, is_active=True)
+        return jsonify({'success': False, 'msg': 'Este correo electrónico ya tiene una cuenta'}), 400
+    new_user = User(username=username, email=email, password=password, is_admin=False)  # Considera si is_admin debe ser true o false por defecto
     db.session.add(new_user)
     db.session.commit()
     access_token = create_access_token(identity=new_user.id)
-    return jsonify({'success' : True, 'user': new_user.serialize(), 'token' : access_token}), 200
+    return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
 
 @api.route('/token', methods=['GET'])
 @jwt_required()
