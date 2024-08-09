@@ -138,7 +138,6 @@ export const Home = () => {
                 />
                 <div className="card-img-overlay d-flex flex-column justify-content-center align-items-center text-center">
                     <h5 className="card-title">Descubra y asista a emocionantes acontecimientos</h5>
-                    <p className="card-text">Sign up for an account or newsletter to stay updated on upcoming events</p>
                     <div className="button-group mt-3">
                         <a href="#" className="btn btn-dark btn-lg mx-2">Regístrese</a>
                     </div>
