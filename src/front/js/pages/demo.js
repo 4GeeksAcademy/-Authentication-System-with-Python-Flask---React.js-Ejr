@@ -28,6 +28,17 @@ export const Demo = () => {
         console.log(dataForm)
     }
 
+    function toggleCheckbox(alumnoCheck, profesorCheck) {
+        const alumnoCheckbox = document.getElementById(alumnoCheck);
+        const profesorCheckbox = document.getElementById(profesorCheck);
+
+        if (alumnoCheckbox.checked) {
+            profesorCheckbox.checked = false;
+        }
+    }
+
+    //toggleCheckbox(alumnoCheck, profesorCheck)
+
     return(
         <div>
             <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro">
@@ -43,12 +54,12 @@ export const Demo = () => {
 				<div className="p-3">Registrarse como:</div>
   				<div>
 					<div class="mb-3 form-check">
-    					<input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-    						<label class="form-check-label" for="exampleCheck1">Alumno</label>
+    					<input type="checkbox" class="form-check-input" id="alumnoCheck"></input>
+    						<label class="form-check-label" for="alumnoCheck">Alumno</label>
   					</div>
 					<div class="mb-3 form-check">
-    					<input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-    						<label class="form-check-label" for="exampleCheck1">Profesor</label>
+    					<input type="checkbox" class="form-check-input" id="profesorCheck"></input>
+    						<label class="form-check-label" for="profesorCheck">Profesor</label>
   					</div>
 				</div>
 				<input className="btn btn-primary" value="Regístrate" type="submit"/>

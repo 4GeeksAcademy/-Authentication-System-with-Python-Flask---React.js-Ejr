@@ -5,6 +5,8 @@ import { Context } from "../store/appContext";
 
 //PENDIENTE CAMBIAR FUNCIONES Y CONECTAR CON API
 
+//PENDIENTE CAMBIAR FUNCIONES Y CONECTAR CON API
+
 export const SignUp = () =>{
 	const { store, actions } = useContext(Context);
     const [dataForm,setDataForm]=useState({
