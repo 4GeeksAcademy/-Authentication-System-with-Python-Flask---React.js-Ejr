@@ -33,12 +33,12 @@ export const Login = () =>{
         <div>
             <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro" onSubmit={handleSubmit}>
 				<label>Email
-                    <input className="form-control" name="email" value={dataForm.email} placeholder="" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Password
                     <input className="form-control" name="phone" value={dataForm.password} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
-				<input className="btn btn-primary" value="Iniciar sesión" type="submit"/>
+				<input className="btn btn-primary mt-3" value="Iniciar sesión" type="submit"/>
 			</form>
         </div>
     )
