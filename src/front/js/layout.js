@@ -14,7 +14,7 @@ import { Footer } from "./component/footer";
 
 
 import Login from "./pages/login";
-import SignUp from "./pages/signup";
+import SignUp from "./pages/signUp";
 import EditarPerfil from "./pages/editarPerfil";
 import Favoritos from "./pages/favoritos";
 import Cursos from "./pages/cursos";
