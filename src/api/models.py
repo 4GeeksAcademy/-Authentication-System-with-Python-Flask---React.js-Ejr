@@ -31,11 +31,11 @@ class User(db.Model):
 class Programador(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     #proyectos 
-    precio_hora = db.Column (db.Integer, unique=False)
-    tecnologias = db.Column (db.String(200), unique=False)
-    experiencia = db.Column(db.String(200), unique=False)
-    descripcion = db.Column(db.String(300), unique=False)
-    rating = db.Column (db.Float(2), unique=False)
+    precio_hora = db.Column (db.Integer)
+    tecnologias = db.Column (db.String(200))
+    experiencia = db.Column(db.String(200))
+    descripcion = db.Column(db.String(300))
+    rating = db.Column (db.Float(2))
     
 
     def __repr__(self):
