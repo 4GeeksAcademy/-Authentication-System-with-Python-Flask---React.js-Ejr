@@ -70,6 +70,20 @@ input[type="submit"] {
     margin-bottom: 1rem;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 1rem;
+  }
+  
+  .previous-button {
+    margin-right: auto; 
+  }
+  
+  .next-button {
+    margin-left: auto; 
+  }
+  
 button {
     border: none;
     padding: .5rem 1rem;
@@ -84,4 +98,22 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+.d-flex .justify-content-end {
+    justify-content: flex-end;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.ant-picker-suffix svg {
+    width: 1em !important;
+    height: 1em !important;
+}
+
+.ant-picker-clear svg {
+    width: 1em !important;
+    height: 1em !important;
 }

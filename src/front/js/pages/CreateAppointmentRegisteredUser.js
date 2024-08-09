@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import React, { useState, useEffect, useRef } from "react";
+import { DatePicker } from "antd";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../styles/createappointmentregistereduser.css";
 
 const CreateAppointmentRegisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
-  const [appointmentDate, setAppointmentDate] = useState(new Date());
+  const [appointmentDate, setAppointmentDate] = useState(null); // Updated to null to handle DatePicker
   const [appointmentId, setAppointmentId] = useState("");
   const [carId, setCarId] = useState("");
   const [carLicensePlate, setCarLicensePlate] = useState("");
@@ -17,8 +16,9 @@ const CreateAppointmentRegisteredUser = () => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const [userCars, setUserCars] = useState([]);
+  const datePickerRef = useRef(null);
 
-  const apiUrl = "https://scaling-space-disco-q7v9g7944jgv29974-3001.app.github.dev";
+  const apiUrl = "https://jubilant-lamp-r47rv4r66qrw3xxxg-3001.app.github.dev/";
 
   useEffect(() => {
     const getServices = async () => {
@@ -35,6 +35,7 @@ const CreateAppointmentRegisteredUser = () => {
     const getUserCars = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/cars/${userId}`);
+        // const response = await fetch(`${apiUrl}/api/cars/2`);
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setUserCars(data);
@@ -46,6 +47,12 @@ const CreateAppointmentRegisteredUser = () => {
     getServices();
     getUserCars();
   }, [apiUrl, userId]);
+
+  useEffect(() => {
+    if (datePickerRef.current) {
+      datePickerRef.current.focus();
+    }
+  }, [currentStep]);
 
   const submitAppointment = async (e) => {
     e.preventDefault();
@@ -81,7 +88,8 @@ const CreateAppointmentRegisteredUser = () => {
           duration: 60,
           slots_required: 1,
           car_id: carId,
-          appointment_date: appointmentDate,
+          appointment_date: appointmentDate.format("YYYY-MM-DD"),
+          appointment_time: appointmentDate.format("HH:mm"), // Include time in the request
         }),
       });
 
@@ -176,13 +184,15 @@ const CreateAppointmentRegisteredUser = () => {
         );
       case 3:
         return (
-          <div className="step-content react-calendar-container">
-            <h3>Select Appointment Date and Add a Comment</h3>
+          <div className="step-content datetimepicker-component">
+            <h3>Select Appointment Date, Time, and Add a Comment</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="date">Appointment Date</label>
-            <Calendar
-              onChange={setAppointmentDate}
-              value={appointmentDate}
+            <DatePicker
+              ref={datePickerRef}
+              format="DD/MM/YYYY hh:mm A"
+              onChange={(date) => setAppointmentDate(date)}
+              showTime={{ use12Hours: true }}
               className="form-control"
             />
             <label htmlFor="comment">Comment</label>
@@ -201,7 +211,8 @@ const CreateAppointmentRegisteredUser = () => {
             <h3>Confirm Appointment</h3>
             <p>Car: {carLicensePlate} - {carModel}</p>
             <p>Service: {serviceChosen}</p>
-            <p>Date: {appointmentDate.toDateString()}</p>
+            <p>Date: {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}</p>
+            <p>Time: {appointmentDate ? appointmentDate.format("hh:mm A") : ""}</p>
             <p>Comment: {comment}</p>
           </div>
         );
@@ -211,13 +222,13 @@ const CreateAppointmentRegisteredUser = () => {
   };
 
   return (
-    <div className="container py-5">
+    <div className="card-content py-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
           <div className="card">
             <div className="card-header">Appointment Booking</div>
             <div className="card-body">{displayCurrentStep()}</div>
-            <div className="button-container d-flex justify-content-between">
+            <div className={`button-container d-flex ${currentStep === 1 ? 'justify-content-end' : 'justify-content-between'}`}>
               {currentStep > 1 && (
                 <button className="btn btn-secondary" onClick={() => setCurrentStep(currentStep - 1)}>
                   Previous
@@ -229,8 +240,8 @@ const CreateAppointmentRegisteredUser = () => {
                 </button>
               )}
               {currentStep === 4 && (
-                <button className="btn btn-success" onClick={submitAppointment}>
-                  Submit
+                <button className="btn btn-primary ml-auto" onClick={submitAppointment}>
+                  Confirm Appointment
                 </button>
               )}
             </div>
