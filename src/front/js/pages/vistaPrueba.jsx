@@ -6,15 +6,16 @@ export const VistaPrueba = () => {
 
 	useEffect(() => {
 		actions.allWeeklyRoutine();
-		actions.oneWeeklyRoutine(1);
-		actions.allRoutine();
-		actions.oneRoutine(1);
-		actions.allExercise();
-		actions.oneExercise(1);
-		actions.allExerciseRoutine();
-		actions.allExerciseRoutineOneDay(1);
-		actions.allFollowUp();
-		actions.oneFollowUp(1);
+		actions.allWeeklyRoutineUser(1);
+		actions.oneWeeklyRoutineUser(1,1)
+		// actions.allRoutine();
+		// actions.oneRoutine(1);
+		// actions.allExercise();
+		// actions.oneExercise(1);
+		// actions.allExerciseRoutine();
+		// actions.allExerciseRoutineOneDay(1);
+		// actions.allFollowUp();
+		// actions.oneFollowUp(1);
 		// actions.signup("juan", "juan@gmail.com", "11", "11");
 
 		// actions.allWeeklyDayRoutine();
