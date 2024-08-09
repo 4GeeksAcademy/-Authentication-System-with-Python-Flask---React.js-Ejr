@@ -455,6 +455,7 @@ def cancel_appointment(appointment_id):
     db.session.commit()
 
     return jsonify({"msg": "Cita cancelada exitosamente"}), 200
+
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments
 @api.route('/appointments', methods=['GET'])
 @jwt_required()

@@ -108,10 +108,9 @@ const AppointmentDetails = () => {
 
         const commentData = await response.json();
 
-        // Actualizar la lista de comentarios en la interfaz
         const commentWithRole = {
           ...commentData,
-          is_mechanic: isMechanic,  // Añadir is_mechanic para mostrarlo inmediatamente
+          is_mechanic: isMechanic, 
         };
 
         setComments([...comments, commentWithRole]);
