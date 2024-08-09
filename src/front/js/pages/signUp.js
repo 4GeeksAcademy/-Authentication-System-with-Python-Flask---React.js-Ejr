@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 
 //PENDIENTE CAMBIAR FUNCIONES Y CONECTAR CON API
 
-export const signUp = () =>{
+export const SignUp = () =>{
 	const { store, actions } = useContext(Context);
     const [dataForm,setDataForm]=useState({
         email: '',
@@ -31,9 +31,9 @@ export const signUp = () =>{
 
     return(
         <div>
-            <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro">
+            <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro" onSubmit={handleSubmit}>
 				<label>Email
-                    <input className="form-control" name="email" value={dataForm.email} placeholder="" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Password
                     <input className="form-control" name="phone" value={dataForm.password} placeholder="" onChange={handleChange} type="text"></input>
@@ -42,19 +42,20 @@ export const signUp = () =>{
                     <input className="form-control" name="address" value={dataForm.confirmPassword} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
 				<div className="p-3">Registrarse como:</div>
-  				<div>
-					<div class="mb-3 form-check">
-    					<input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-    						<label class="form-check-label" for="exampleCheck1">Alumno</label>
-  					</div>
-					<div class="mb-3 form-check">
-    					<input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-    						<label class="form-check-label" for="exampleCheck1">Profesor</label>
-  					</div>
-				</div>
-				<input className="btn btn-primary" value="Regístrate" type="submit"/>
+  				<div className="form-check">
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"></input>
+                    <label className="form-check-label" for="flexRadioDefault1">
+                        Alumno
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked></input>
+                    <label className="form-check-label" for="flexRadioDefault2">
+                        Profesor
+                    </label>
+                </div>
+				<input className="btn btn-primary mt-3" value="Regístrate" type="submit"/>
 			</form>
         </div>
     )
 };
-

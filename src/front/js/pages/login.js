@@ -31,7 +31,7 @@ export const Login = () =>{
 
 	return(
         <div>
-            <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro">
+            <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro" onSubmit={handleSubmit}>
 				<label>Email
                     <input className="form-control" name="email" value={dataForm.email} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
@@ -42,5 +42,4 @@ export const Login = () =>{
 			</form>
         </div>
     )
-};
 };
