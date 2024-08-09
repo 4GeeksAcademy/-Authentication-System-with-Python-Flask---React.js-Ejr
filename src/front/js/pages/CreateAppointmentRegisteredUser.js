@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DatePicker } from "antd";
+ 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../styles/createappointmentregistereduser.css";
 
@@ -17,30 +18,9 @@ const CreateAppointmentRegisteredUser = () => {
   const [error, setError] = useState("");
   const [userCars, setUserCars] = useState([]);
   const datePickerRef = useRef(null);
-//-----------------------------------------------------------------------------------------------------
-  const [bookedAppointments, setBookedAppointments] = useState([]);
-//-----------------------------------------------------------------------------------------------------
+
   
-  const apiUrl = "https://jubilant-lamp-r47rv4r66qrw3xxxg-3001.app.github.dev/";
-
-//-----------------------------------------------------------------------------------------------------
-useEffect(() => {
-  const fetchBookedAppointments = async () => {
-    try {
-      const response = await fetch('/api/appointments');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setBookedAppointments(data.date);
-    } catch (error) {
-      console.error('Error fetching appointments:', error);
-    }
-  };
-  fetchBookedAppointments();
-}, []);
-//-----------------------------------------------------------------------------------------------------
-
+  const apiUrl = "https://symmetrical-space-guacamole-97x9wqv4wr53p9w-3001.app.github.dev/";
 
   useEffect(() => {
     const getServices = async () => {
@@ -56,8 +36,8 @@ useEffect(() => {
 
     const getUserCars = async () => {
       try {
-        const response = await fetch(`${apiUrl}api/cars/${userId}`);
-        // const response = await fetch(`${apiUrl}/api/cars/2`);
+        // const response = await fetch(`${apiUrl}api/cars/${userId}`);
+        const response = await fetch(`${apiUrl}/api/cars/2`);
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setUserCars(data);
@@ -65,7 +45,6 @@ useEffect(() => {
         console.error("Error getting user cars:", error);
       }
     };
-
     getServices();
     getUserCars();
   }, [apiUrl, userId]);
@@ -123,35 +102,7 @@ useEffect(() => {
       console.error("Error submitting appointment:", error);
     }
   };
-  //----------------------------------------------------------------------------------------------------- Función para deshabilitar dias no laborables.
-  const disabledDate = (current) => {
-    // Deshabilita fechas anteriores a hoy y fines de semana
-    return current && (current.day() === 0 || current.day() === 6 || current.isBefore(new Date(), "day"));
-    
-  };
-
-  //----------------------------------------------------------------------------------------------------- Función para deshabilitar horas fuera de 8:00 a 18:00
-  const disabledTime = (selectedDate) => {
-    const selectedDateString = selectedDate.format('YYYY-MM-DD');
-
-    const bookedTimes = bookedAppointments
-      .filter(appointment => appointment.date === selectedDateString)
-      .map(appointment => parseInt(appointment.time.split(':')[0]));
-    return {
-      disabledHours: () => {
-        const hours = [];
-        for (let i = 0; i < 24; i++) {
-          if (i < 8 || i >= 18 || bookedTimes.includes(i)) {
-            hours.push(i);
-          }
-        }
-        return hours;
-      },
-      disabledMinutes: () => [],
-      disabledSeconds: () => [],
-    };
-  };
-//-----------------------------------------------------------------------------------------------------
+ 
   const nextStep = () => {
     if (currentStep === 1 && !carId && (!carLicensePlate || !carModel)) {
       setError("Please select a car or add a new one.");
