@@ -52,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			validToken: async () => {
 				let token = localStorage.getItem("token");
 				try {
-					let response = await fetch('${process.env.BACKEND_URL}/api/valid_token', {
+					let response = await fetch(`${process.env.BACKEND_URL}/api/valid_token`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -68,8 +68,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 					return false
 				}
+			},
+			register: async (name,email, password,password2 , address, phone) => {
+				// hacer fetch que envie el email y password para poder loguearme
+				try {
+					const response = await fetch (`${process.env.BACKEND_URL}/api/register`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							"name": name,
+							"email": email,
+							"password": password,
+							"password2":password2,
+							"address": address,
+							"phone": phone
+						})
+					})
+					let data = await response.json()
+					localStorage.setItem("token", data.access_token)
+					setStore({ auth: data.logged })
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
 			}
-
 		}
 
 	}
