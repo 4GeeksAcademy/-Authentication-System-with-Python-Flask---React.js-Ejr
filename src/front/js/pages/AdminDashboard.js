@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserList from "../component/UserList";
-import UserProfileModal from "../component/UserProfileModal"; // Importa el modal aquí
-import SettingModal from "../component/SettingModal"; // Importa el modal de configuraciones
+import UserProfileModal from "../component/UserProfileModal"; 
+import SettingModal from "../component/SettingModal";
 import iconUser from "../../img/icons/icon-user.png";
 import iconComments from "../../img/icons/icon-comments.png";
 import iconConnect from "../../img/icons/icon-connect.png";

@@ -20,12 +20,12 @@ const MechanicDashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
-    const userId = localStorage.getItem("user_id"); // Cargar el user_id del localStorage
+    const userId = localStorage.getItem("user_id");
 
     setHasAccess(!!token && roleId === "2");
 
     if (token && roleId === "2" && userId) {
-      // Load the mechanic profile
+
       const loadProfile = async () => {
         try {
           const response = await fetch(`${apiUrl}/users/${userId}`, {
@@ -39,7 +39,7 @@ const MechanicDashboard = () => {
             setProfile({
               name: data.result.name,
               email: data.result.email,
-              password: '********', // Nunca mostrar la contraseña real
+              password: '********', 
             });
           } else {
             console.error("Failed to fetch profile");
