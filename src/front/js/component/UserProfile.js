@@ -1,53 +1,79 @@
 import React, { useState } from 'react';
 import UserProfileModal from './UserProfileModal';
 
-function UserProfile() {
-  const [user, setUser] = useState({
+const UserProfile = () => {
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [profile, setProfile] = useState({
     name: 'John Doe',
     phoneNumber: '123-456-7890',
     email: 'john.doe@example.com',
     password: '********'
   });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
+  const handleProfileModalOpen = () => {
+    setIsProfileModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setError('');
-  };
-
-  const handleSave = (updatedUser) => {
-    if (!updatedUser.name.trim() || !updatedUser.phoneNumber.trim() || !updatedUser.email.trim() || !updatedUser.password.trim()) {
-      setError('All fields are required');
-      return;
+  const handleProfileModalClose = (updatedProfile) => {
+    if (updatedProfile) {
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        name: updatedProfile.name,
+        phoneNumber: updatedProfile.phoneNumber,
+        email: updatedProfile.email,
+      }));
+      setStatusMessage("Profile updated successfully");
     }
+    setIsProfileModalOpen(false);
+  };
 
-    setUser(updatedUser);
-    setIsModalOpen(false);
-    setError('');
+  const saveProfile = async (updatedProfile) => {
+    const response = await fetch('/api/update_profile', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updatedProfile)
+    });
+
+    if (response.ok) {
+      handleProfileModalClose(updatedProfile);
+    } else {
+      alert('Error updating profile');
+    }
   };
 
   return (
-    <div className="user-profile bg-secondary rounded p-1">
-    <div className="col bg-secondary-subtle rounded py-4">
-    <h2 className="fw-bolder text-dark"> Welcome back! {user.name}</h2>
-    <div>
-      <p>Name: {user.name}</p>
-      <p>Phone Number: {user.phoneNumber}</p>
-      <p>Email: {user.email}</p>
+    <div className="user-profile">
+      <h2>Profile</h2>
+      <div>
+        <p>Name: {profile.name}</p>
+        <p>Phone Number: {profile.phoneNumber}</p>
+        <p>Email: {profile.email}</p>
+        <p>Password: {profile.password}</p>
+      </div>
+      <button
+        className="btn btn-secondary btnSetting"
+        onClick={handleProfileModalOpen}
+      >
+        Edit
+      </button>
+      {isProfileModalOpen && (
+        <UserProfileModal
+          user={profile}
+          onSave={saveProfile}
+          onClose={() => setIsProfileModalOpen(false)}
+          error={statusMessage}
+          isAdmin={false}
+        />
+      )}
+      {statusMessage && (
+        <div className="alert alert-success mt-3">{statusMessage}</div>
+      )}
     </div>
-    {isModalOpen && <UserProfileModal user={user} onSave={handleSave} onClose={handleModalClose} error={error} />}
-    <button className="btn btn-primary mb-3" onClick={handleModalOpen}>Edit Profile</button>
-    </div>
-  </div>
   );
-}
+};
 
 export default UserProfile;
-
-

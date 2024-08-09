@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserList from "../component/UserList";
-import SettingModal from "../component/SettingModal";
+import UserProfileModal from "../component/UserProfileModal"; // Importa el modal aquí
+import SettingModal from "../component/SettingModal"; // Importa el modal de configuraciones
 import iconUser from "../../img/icons/icon-user.png";
 import iconComments from "../../img/icons/icon-comments.png";
 import iconConnect from "../../img/icons/icon-connect.png";
@@ -9,20 +10,58 @@ import iconBriefcase from "../../img/icons/icon-briefcase.png";
 import "../../styles/admindashboard.css";
 
 const AdminDashboard = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(4);
   const [statusMessage, setStatusMessage] = useState("");
+  const [profile, setProfile] = useState({
+    name: 'Admin',
+    email: 'admin@example.com',
+    password: '********',
+  });
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
+  const handleSettingModalOpen = () => {
+    setIsSettingModalOpen(true);
   };
 
-  const handleModalClose = (updatedValue) => {
+  const handleSettingModalClose = (updatedValue) => {
     if (updatedValue && updatedValue > 0) {
       setMaxAppointmentsPerHour(updatedValue);
       setStatusMessage("Settings updated successfully");
     }
-    setIsModalOpen(false);
+    setIsSettingModalOpen(false);
+  };
+
+  const handleProfileModalOpen = () => {
+    setIsProfileModalOpen(true);
+  };
+
+  const handleProfileModalClose = (updatedProfile) => {
+    if (updatedProfile) {
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        email: updatedProfile.email
+      }));
+      setStatusMessage("Profile updated successfully");
+    }
+    setIsProfileModalOpen(false);
+  };
+
+  const saveProfile = async (updatedProfile) => {
+    const response = await fetch('/api/update_profile', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updatedProfile)
+    });
+
+    if (response.ok) {
+      handleProfileModalClose(updatedProfile);
+    } else {
+      alert('Error updating profile');
+    }
   };
 
   return (
@@ -54,15 +93,47 @@ const AdminDashboard = () => {
             <img src={iconConnect} alt="Settings" />
             <h3>Settings</h3>
             <p>Max Appointments per Hour: {maxAppointmentsPerHour}</p>
-            <button className="btn btn-secondary btnSetting" onClick={handleModalOpen}>
+            <button
+              className="btn btn-secondary btnSetting"
+              onClick={handleSettingModalOpen}
+            >
+              Edit
+            </button>
+          </div>
+          <div className="stat5 col mx-2">
+            <img src={iconConnect} alt="Profile" />
+            <h3>Profile</h3>
+            <div>
+              <p>Email: {profile.email}</p>
+            </div>
+            <button
+              className="btn btn-secondary btnSetting"
+              onClick={handleProfileModalOpen}
+            >
               Edit
             </button>
           </div>
         </div>
       </div>
       <UserList />
-      {isModalOpen && <SettingModal onClose={handleModalClose} currentValue={maxAppointmentsPerHour} />}
-      {statusMessage && <div className="alert alert-success mt-3">{statusMessage}</div>}
+      {isSettingModalOpen && (
+        <SettingModal
+          onClose={handleSettingModalClose}
+          currentValue={maxAppointmentsPerHour}
+        />
+      )}
+      {isProfileModalOpen && (
+        <UserProfileModal
+          user={profile}
+          onSave={saveProfile}
+          onClose={() => setIsProfileModalOpen(false)}
+          error={statusMessage}
+          isAdmin={true}
+        />
+      )}
+      {statusMessage && (
+        <div className="alert alert-success mt-3">{statusMessage}</div>
+      )}
     </div>
   );
 };
