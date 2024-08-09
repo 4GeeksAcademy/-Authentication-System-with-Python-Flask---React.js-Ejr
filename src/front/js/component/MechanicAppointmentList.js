@@ -1,56 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const initialAppointments = [
-  {
-    id: 1,
-    date: '2024-08-01',
-    time: '10:00 AM',
-    service: 'Oil Change',
-    vehicle: 'Toyota Camry',
-    client: 'John Doe',
-    status: 'Pending',
-    comments: [
-      { author: 'Client', content: 'Please check the tire pressure as well.', timestamp: '2024-07-31 09:00 AM' },
-      { author: 'Client', content: 'The car has been making a strange noise.', timestamp: '2024-07-31 12:00 PM' }
-    ]
-  },
-  {
-    id: 2,
-    date: '2024-08-05',
-    time: '02:00 PM',
-    service: 'Tire Rotation',
-    vehicle: 'Honda Accord',
-    client: 'Jane Smith',
-    status: 'In Progress',
-    comments: [
-      { author: 'Client', content: 'Rotate all four tires, please.', timestamp: '2024-08-04 03:00 PM' },
-      { author: 'Client', content: 'Check the brake pads too.', timestamp: '2024-08-05 09:00 AM' }
-    ]
-  },
-  {
-    id: 3,
-    date: '2024-08-10',
-    time: '01:00 PM',
-    service: 'Brake Inspection',
-    vehicle: 'Ford Focus',
-    client: 'Alice Johnson',
-    status: 'Completed',
-    comments: [
-      { author: 'Client', content: 'I think the brake pads need to be replaced.', timestamp: '2024-08-09 10:00 AM' }
-    ]
-  }
-];
+import { Context } from '../store/appContext';
 
 function MechanicAppointmentList() {
-  const [appointments, setAppointments] = useState(initialAppointments);
+  const [appointments, setAppointments] = useState([]);
   const navigate = useNavigate();
+  const { store } = useContext(Context);
 
-  const handleStatusChange = (appointmentId, status) => {
-    const updatedAppointments = appointments.map(app =>
-      app.id === appointmentId ? { ...app, status } : app
-    );
-    setAppointments(updatedAppointments);
+  const apiUrl = process.env.BACKEND_URL + "/api";
+
+  useEffect(() => {
+    const loadAppointments = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/appointments`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (response.ok) {
+          const appointmentsData = await response.json();
+          setAppointments(appointmentsData);
+        } else {
+          console.error('Failed to fetch appointments');
+        }
+      } catch (error) {
+        console.error('Error loading appointments:', error);
+      }
+    };
+
+    loadAppointments();
+  }, [store.token]);
+
+  const handleStatusChange = async (appointmentId, status) => {
+    try {
+      const response = await fetch(`${apiUrl}/appointments/${appointmentId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (response.ok) {
+        setAppointments(prevAppointments =>
+          prevAppointments.map(app =>
+            app.id === appointmentId ? { ...app, status } : app
+          )
+        );
+      } else {
+        console.error('Failed to update appointment status');
+      }
+    } catch (error) {
+      console.error('Error updating appointment status:', error);
+    }
   };
 
   const handleViewDetails = appointmentId => {
@@ -77,11 +81,11 @@ function MechanicAppointmentList() {
           <tbody>
             {appointments.map(app => (
               <tr key={app.id}>
-                <td>{app.date}</td>
-                <td>{app.time}</td>
-                <td>{app.service}</td>
-                <td>{app.vehicle}</td>
-                <td>{app.client}</td>
+                <td>{new Date(app.date).toLocaleDateString()}</td>
+                <td>{new Date(app.date).toLocaleTimeString()}</td>
+                <td>{app.service?.name || 'Unknown'}</td>
+                <td>{app.car?.car_model || 'Unknown'}</td>
+                <td>{app.user?.name || 'Unknown'}</td>
                 <td>
                   <select 
                     value={app.status} 
@@ -92,7 +96,7 @@ function MechanicAppointmentList() {
                     <option value="Completed">Completed</option>
                   </select>
                 </td>
-                <td>{app.comments.length}</td>
+                <td>{app.comments?.length || 0}</td>
                 <td>
                   <button 
                     className="btn btn-primary" 

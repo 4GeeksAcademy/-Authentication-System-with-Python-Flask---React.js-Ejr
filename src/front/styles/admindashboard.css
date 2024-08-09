@@ -86,3 +86,53 @@
   display: block;
 }
 
+/* ModalProfile */
+/* Agrega esto a tu archivo admindashboard.css o a un archivo CSS global */
+
+.profile-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.profile-modal-content {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.3rem;
+  outline: 0;
+  max-width: 500px;
+  width: 100%;
+  padding: 20px;
+}
+
+.profile-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.profile-modal-body {
+  position: relative;
+  padding: 15px;
+}
+
+.profile-modal-title {
+  margin: 0;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}

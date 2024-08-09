@@ -2,12 +2,12 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, User, Role, Car, Appointment, Service, Comment, Setting
+from api.models import db, User, Role, Car, Appointment, Service, Comment, Setting, TokenBlockList
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import datetime, timedelta
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 
 
 app = Flask(__name__)
@@ -20,8 +20,9 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-# ///////////////////////////////////////////////////////////////////////////////////////////// post en /users
+# ///////////////////////////////////////////////////////////////////////////////////////////// post en /create users from admin
 @api.route('/users', methods=['POST'])
+@jwt_required()
 def create_user():
     data = request.get_json()
     if not data:
@@ -44,12 +45,43 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
-    access_token = create_access_token(identity=new_user.id)  # Crear un token de acceso para el nuevo usuario
     response_body = {
         "user": new_user.serialize(),
-        "access_token": access_token
     }
     return jsonify(response_body), 201
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// post en /signup
+@api.route('/signupuser', methods=['POST'])
+def create_signupusers():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    email = data.get('email')
+    password = data.get('password')
+    name = data.get('name')
+    phone_number = data.get('phone_number')
+
+    if not email or not password or not name or not phone_number:
+        return jsonify({"error": "All fields are required"}), 400
+    
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"error": "User already exists"}), 400
+
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    new_user = User(email=email, password=hashed_password, name=name, phone_number=phone_number, role_id=3)
+    db.session.add(new_user)
+    db.session.commit()
+
+    response_body = {
+        "id": new_user.id,
+        "email": new_user.email,
+        "name": new_user.name,
+        "phone_number": new_user.phone_number,
+    }
+    return jsonify(response_body), 201
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /login
 @api.route('/login', methods=['POST'])
@@ -65,16 +97,41 @@ def login():
         return jsonify({"error": "Email and password are required"}), 400
 
     user = User.query.filter_by(email=email).first()
+    
     if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    access_token = create_access_token(identity=user.id)  # Crear un token de acceso para el usuario
-    return jsonify(access_token=access_token), 200
+    role = Role.query.filter_by(id=user.role_id).first()
+    access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})
+    return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
+@api.route('/api/pinguser', methods=['GET'])
+@jwt_required()
+def ping_user():
+    current_user_id = get_jwt_identity()
+    payload = get_jwt()
+    if "role_id" not in payload:
+        return jsonify({"error": "Role ID not found in token"}), 400
+    
+    role_id = payload["role_id"]
+    return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
+
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// post en /logout
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def user_logout():
+    jti = get_jwt()["jti"]
+    token_blocked = TokenBlockList(jti=jti)
+    db.session.add(token_blocked)
+    db.session.commit()
+    return jsonify({"msg": "Logout successful"})
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users con id
 @api.route('/users/<int:user_id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_user(user_id):
     user_query = User.query.filter_by(id=user_id).first()
     if user_query:
@@ -90,23 +147,7 @@ def get_user(user_id):
         return jsonify(response_body), 404
     
 
-# ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
-@api.route('/cars/<int:car_id>', methods=['GET'])
-# @jwt_required()
-def get_cars(car_id):
-    car_query = Car.query.filter_by(id=car_id).first()
-    if car_query:
-        response_body = {
-            "msg": "Resultado exitoso", 
-            "result": car_query.serialize()
-        }
-        return jsonify(response_body), 200
-    else:
-        response_body = {
-           "msg": "Car no exist" 
-        }
-        return jsonify(response_body), 404
-    
+   
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services con id
 @api.route('/services/<int:services_id>', methods=['GET'])
 @jwt_required()
@@ -123,6 +164,33 @@ def get_service(services_id):
            "msg": "Service no exist" 
         }
         return jsonify(response_body), 404
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /cars 
+@api.route('/cars', methods=['GET'])
+@jwt_required()
+def get_all_cars():
+    cars = Car.query.all()
+    car_list = [car.serialize() for car in cars]
+    return jsonify(car_list), 200
+
+    
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
+@api.route('/cars/<int:car_id>', methods=['GET'])
+@jwt_required()
+def get_cars(car_id):
+    car_query = Car.query.filter_by(id=car_id).first()
+    if car_query:
+        response_body = {
+            "msg": "Resultado exitoso", 
+            "result": car_query.serialize()
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+           "msg": "Car no exist" 
+        }
+        return jsonify(response_body), 404
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
@@ -147,23 +215,78 @@ def create_car():
     response_body = new_car.serialize()
     return jsonify(response_body), 201
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// PATCH a /cars + id 
+@api.route('/cars/<int:car_id>', methods=['PATCH'])
+@jwt_required()
+def update_car(car_id):
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"error": "Car not found"}), 404
+
+    data = request.get_json()
+    car_model = data.get('car_model')
+    license_plate = data.get('license_plate')
+
+    if car_model:
+        car.car_model = car_model
+    if license_plate:
+        car.license_plate = license_plate
+
+    db.session.commit()
+    return jsonify(car.serialize()), 200
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// DELETE a /cars + id 
+@api.route('/cars/<int:car_id>', methods=['DELETE'])
+@jwt_required()
+def delete_car(car_id):
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"error": "Car not found"}), 404
+
+    db.session.delete(car)
+    db.session.commit()
+    return jsonify({"message": "Car deleted successfully"}), 200
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /comments?appointment_id=
+@api.route('/comments', methods=['GET'])
+@jwt_required()
+def get_comments():
+    appointment_id = request.args.get('appointment_id')
+    if appointment_id:
+        comments_query = Comment.query.filter_by(appointment_id=appointment_id).all()
+        comments_list = list(map(lambda comment: comment.serialize(), comments_query))
+        return jsonify(comments_list), 200
+    else:
+        return jsonify({"msg": "No appointment_id provided"}), 400
+
+
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /comments 
 @api.route('/comments', methods=['POST'])
 @jwt_required()
 def create_comment():
     data = request.get_json()
-    comment = data.get('comment')
+    comment_content = data.get('comment')
     user_id = data.get('user_id')
     appointment_id = data.get('appointment_id')
-    if not comment or not user_id or not appointment_id:
+    is_mechanic = data.get('is_mechanic', False) 
+
+    if not comment_content or not user_id or not appointment_id:
         return jsonify({"error": "Comment, user ID, and appointment ID are required"}), 400
 
-    new_comment = Comment(content=comment, author_id=user_id, appointment_id=appointment_id)
+    new_comment = Comment(
+        content=comment_content,
+        author_id=user_id,
+        appointment_id=appointment_id,
+        is_mechanic=is_mechanic
+    )
     db.session.add(new_comment)
     db.session.commit()
 
     response_body = new_comment.serialize()
     return jsonify(response_body), 201
+
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /services 
 @api.route('/services', methods=['POST'])
@@ -286,6 +409,22 @@ def create_appointment():
         return jsonify({"error": "No available slots for this time"}), 400
 
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// PATCH a /appointments con id
+@api.route('/appointments/<int:appointment_id>', methods=['PATCH'])
+@jwt_required()
+def update_appointment(appointment_id):
+    appointment = Appointment.query.get(appointment_id)
+    if not appointment:
+        return jsonify({"error": "Appointment not found"}), 404
+
+    data = request.get_json()
+    status = data.get('status')
+    if status:
+        appointment.status = status
+
+    db.session.commit()
+    return jsonify({"msg": "Appointment updated successfully"}), 200
+
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments con id
 @api.route('/appointments/<int:appointment_id>', methods=['GET'])
 def get_appointment(appointment_id):
@@ -321,9 +460,56 @@ def cancel_appointment(appointment_id):
 @jwt_required()
 def get_appointments():
     appointments_query = Appointment.query.all()
-    appointments_list = list(map(lambda appointment: appointment.serialize(), appointments_query))
+    
+    appointments_list = []
+    for appointment in appointments_query:
+        appointment_data = appointment.serialize()
+        
+        user = User.query.get(appointment.user_id)
+        car = Car.query.get(appointment.car_id)
+        service = Service.query.get(appointment.service_id)
+        
+        # Obtener comentarios asociados a la cita
+        comments = Comment.query.filter_by(appointment_id=appointment.id).all()
+        comments_data = [comment.serialize() for comment in comments]
+
+        # Agregar los datos adicionales a appointment_data
+        appointment_data['user'] = user.serialize() if user else None
+        appointment_data['car'] = car.serialize() if car else None
+        appointment_data['service'] = service.serialize() if service else None
+        appointment_data['comments'] = comments_data 
+
+        appointments_list.append(appointment_data)
+    
     return jsonify(appointments_list), 200
 
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
+@api.route('/update_profile', methods=['PATCH'])
+@jwt_required()
+def update_profile():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    email = data.get('email')
+    current_password = data.get('currentPassword')
+    new_password = data.get('newPassword')
+
+    user = User.query.get(user_id)
+    
+    if not user or not bcrypt.check_password_hash(user.password, current_password):
+        return jsonify({"error": "Invalid current password"}), 401
+
+    if email:
+        user.email = email
+    if new_password:
+        user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+
+    db.session.commit()
+    return jsonify({"msg": "Profile updated successfully", "email": user.email}), 200
+
+
+# /***************** GENERA DATOS DE PRUEBA ************ get a /add_test_data
 @api.route('/add_test_data', methods=['POST'])
 def add_test_data():
     # Agregar roles
@@ -439,23 +625,28 @@ def add_test_data():
 
     # Agregar comentarios
     comments = [
-        {"content": "Great service!", "author_id": user_objects[0].id, "appointment_id": 1},
-        {"content": "Very satisfied with the brake inspection.", "author_id": user_objects[1].id, "appointment_id": 2},
-        {"content": "Tire rotation was quick and efficient.", "author_id": user_objects[2].id, "appointment_id": 3},
-        {"content": "Oil change done perfectly.", "author_id": user_objects[3].id, "appointment_id": 4},
-        {"content": "Friendly staff.", "author_id": user_objects[4].id, "appointment_id": 5},
-        {"content": "Great service as always.", "author_id": user_objects[5].id, "appointment_id": 6},
-        {"content": "Quick and efficient.", "author_id": user_objects[6].id, "appointment_id": 7},
-        {"content": "Highly recommend.", "author_id": user_objects[7].id, "appointment_id": 8},
-        {"content": "Very professional.", "author_id": user_objects[8].id, "appointment_id": 9},
-        {"content": "Exceptional service.", "author_id": user_objects[9].id, "appointment_id": 10},
-        {"content": "Best workshop in town.", "author_id": user_objects[10].id, "appointment_id": 11}
+        {"content": "Great service!", "author_id": user_objects[0].id, "appointment_id": 1, "is_mechanic": False},
+        {"content": "Very satisfied with the brake inspection.", "author_id": user_objects[1].id, "appointment_id": 2, "is_mechanic": False},
+        {"content": "Tire rotation was quick and efficient.", "author_id": user_objects[2].id, "appointment_id": 3, "is_mechanic": False},
+        {"content": "Oil change done perfectly.", "author_id": user_objects[3].id, "appointment_id": 4, "is_mechanic": False},
+        {"content": "Friendly staff.", "author_id": user_objects[4].id, "appointment_id": 5, "is_mechanic": False},
+        {"content": "Great service as always.", "author_id": user_objects[5].id, "appointment_id": 6, "is_mechanic": False},
+        {"content": "Quick and efficient.", "author_id": user_objects[6].id, "appointment_id": 7, "is_mechanic": False},
+        {"content": "Highly recommend.", "author_id": user_objects[7].id, "appointment_id": 8, "is_mechanic": False},
+        {"content": "Very professional.", "author_id": user_objects[8].id, "appointment_id": 9, "is_mechanic": False},
+        {"content": "Exceptional service.", "author_id": user_objects[9].id, "appointment_id": 10, "is_mechanic": False},
+        {"content": "Best workshop in town.", "author_id": user_objects[10].id, "appointment_id": 11, "is_mechanic": False},
+        # Comentarios del mecánico
+        {"content": "Everything looks good after inspection.", "author_id": user_objects[-1].id, "appointment_id": 1, "is_mechanic": True},
+        {"content": "Brake pads replaced.", "author_id": user_objects[-1].id, "appointment_id": 2, "is_mechanic": True},
+        {"content": "Tire pressure adjusted.", "author_id": user_objects[-1].id, "appointment_id": 3, "is_mechanic": True}
     ]
     for comment_data in comments:
         comment = Comment(
             content=comment_data['content'],
             author_id=comment_data['author_id'],
-            appointment_id=comment_data['appointment_id']
+            appointment_id=comment_data['appointment_id'],
+            is_mechanic=comment_data['is_mechanic']
         )
         db.session.add(comment)
 
