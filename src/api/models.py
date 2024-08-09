@@ -27,5 +27,28 @@ class User(db.Model):
 
             # do not serialize the password, its a security breach
         }
+
+class Programador(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    #proyectos 
+    precio_hora = db.Column (db.Integer, unique=False)
+    tecnologias = db.Column (db.String(200), unique=False)
+    experiencia = db.Column(db.String(200), unique=False)
+    descripcion = db.Column(db.String(300), unique=False)
+    rating = db.Column (db.Float(2), unique=False)
     
-    
+
+    def __repr__(self):
+        return f'<Programador {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "precio_hora": self.precio_hora,
+            "tecnologias": self.tecnologias,
+            "experiencia": self.experiencia,
+            "descripcion": self.descripcion,
+            "rating": self.rating
+
+            # do not serialize the password, its a security breach
+        }
