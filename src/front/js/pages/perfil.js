@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../styles/perfil.css"
 const Perfil = () => {
-
+    useEffect(() => {
+        // Inicializar los popovers (sin guardar en una variable)
+        document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
+            new bootstrap.Popover(popoverTriggerEl);
+        });
+    }, []);
     return (
         <div className="container mt-4 col-md-8">
             <div className="row align-items-center user-profile">
-                <div className="col-md-4 text-center">
-                    <img src="https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain" alt="User Image" className="img-fluid rounded-circle profile-image" />
+                <div className="col-md-4 text-center position-relative">
+                    <img src="https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain"
+                        alt="User Image"
+                        className="img-fluid rounded-circle profile-image"
+                    />
+                    <button className="btn btn-light position-absolute align-items-center d-flex"
+                        style={{
+                            borderRadius: "50%",
+                            height: "40px",
+                            width: "40px",
+                            top: "15%",
+                            left: "85%",
+                            transform: "translate(-50%, -50%)",
+                            backgroundColor: "#afb4b8"
+                        }}
+                        onClick={() => alert("Edit image clicked!")}>
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
                 </div>
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
                     <h2>Nombre del Usuario</h2>
@@ -20,7 +41,38 @@ const Perfil = () => {
                         </h2>
                         <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div className="accordion-body">
-                                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                <div className="container mt-4">
+                                    <div className="row align-items-center">
+                                        <div className="col-md-8">
+                                            <p><strong>Nombre:</strong> Juan Pérez</p>
+                                            <p><strong>Email:</strong> juan.perez@example.com</p>
+                                            <p><strong>Teléfono:</strong> +598 1234 5678</p>
+                                        </div>
+                                        <div className="col-md-4 text-end align-self-start d-flex justify-content-end">
+                                            <span className="d-inline-block" tabindex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información solo está disponible para tí y para los profesionales con los que agendes cita, nadie más puede acceder a ella.">
+                                                <button className="btn btn-outline-secondary me-2" type="button" ><i class="fa-regular fa-circle-question"></i></button>
+                                            </span>
+                                            <button className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-regular fa-pen-to-square"></i></button>
+                                            
+                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            ...
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Understood</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
