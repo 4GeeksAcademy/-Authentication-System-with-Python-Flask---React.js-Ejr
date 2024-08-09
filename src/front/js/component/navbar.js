@@ -7,7 +7,7 @@ import logo from '../../img/LogoNombre2b.png';
 export const Navbar = () => {
 	//localStorage, almacenar datos en el navegador del usuario de manera persistente, después de que el navegador se cierra o la página se recarga
     // Leer el estado de autenticación y la imagen de perfil desde localStorage
-    const identificación = localStorage.getItem('identificación') === 'true'; //Verifica si el usuario está autenticado.
+    const logueado = localStorage.getItem('logueado'); //Verifica si el usuario está autenticado.
     const usuarioImage = localStorage.getItem('usuarioImage'); //Obtiene la URL de la imagen del perfil del usuario.
 
     return (
@@ -15,15 +15,15 @@ export const Navbar = () => {
             <Link to="/" className="navbar-brand">
                 <img src={logo} alt="Logo Elearning" className="logo"/>
             </Link>
-            {identificación ? ( //es true, se muestra el dropdown con la imagen del perfil y las opciones del menú.
+            {logueado ? ( //es true, se muestra el dropdown con la imagen del perfil y las opciones del menú.
                 <div className="dropdown">
                     <button
                         className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src={usuarioImage} alt="User Profile" className="imgPerfil"/>
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><Link className="dropdown-item" to="/favorites">Favoritos</Link></li>
-                        <li><Link className="dropdown-item" to="/courses">Cursos</Link></li>
+                        <li><Link className="dropdown-item" to="/favoritos">Favoritos</Link></li>
+                        <li><Link className="dropdown-item" to="/cursos">Cursos</Link></li>
                         <li><Link className="dropdown-item" to="/logout">Salir</Link></li>
                     </ul>
                 </div>
