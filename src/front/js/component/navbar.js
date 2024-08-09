@@ -36,12 +36,12 @@ export const Navbar = () => {
           <ul className="navbar-nav">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#" style={{ color: 'black' }}>
-                Discover events
+                Descubre eventos
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#" style={{ color: 'black' }}>
-                Gallery
+                Galería
               </a>
             </li>
           </ul>
