@@ -12,7 +12,7 @@ import Error404 from "../js/pages/Error404";
 import Login from "./pages/Login";
 
 // Import the components for the new routes
-import BookAppointment from "./pages/BookAppointment";
+import BookAppointmentUnregisteredUser from "./pages/BookAppointmentUnregisteredUser";
 import Contact from "./pages/Contact";
 import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard";
@@ -20,6 +20,7 @@ import UserAppointments from "./component/UserAppointments";
 import AdminDashboard from "./pages/AdminDashboard";
 import MechanicDashboard from "./pages/MechanicDashboard";
 import AppointmentDetails from "./pages/AppointmentDetails";
+import CreateAppointmentRegisteredUser from "./pages/CreateAppointmentRegisteredUser";
 
 
 const Layout = () => {
@@ -35,7 +36,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<BookAppointment />} path="/bookappointment" />
+                        <Route element={<BookAppointmentUnregisteredUser />} path="/bookappointment" />
+                        <Route element={<CreateAppointmentRegisteredUser />} path="/createappointmentregistereduser" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<UserDashboard />} path="/userdashboard" />

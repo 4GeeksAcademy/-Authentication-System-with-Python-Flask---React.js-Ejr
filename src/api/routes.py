@@ -92,7 +92,7 @@ def get_user(user_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
 @api.route('/cars/<int:car_id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_cars(car_id):
     car_query = Car.query.filter_by(id=car_id).first()
     if car_query:
@@ -126,7 +126,7 @@ def get_service(services_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def create_car():
     data = request.get_json()
     if not data:
@@ -188,7 +188,7 @@ def create_service():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services 
 @api.route('/services', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_services():
     services_query = Service.query.all()
     services_list = list(map(lambda service: service.serialize(), services_query))
@@ -323,7 +323,4 @@ def get_appointments():
     appointments_query = Appointment.query.all()
     appointments_list = list(map(lambda appointment: appointment.serialize(), appointments_query))
     return jsonify(appointments_list), 200
-
-
-
 

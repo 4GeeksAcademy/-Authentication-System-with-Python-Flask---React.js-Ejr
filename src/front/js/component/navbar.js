@@ -8,7 +8,7 @@ export const Navbar = () => {
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  const userRole = "admin"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
+  const userRole = "client"; // Placeholder: replace with actual user role check ('client', 'mechanic', 'admin')
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
