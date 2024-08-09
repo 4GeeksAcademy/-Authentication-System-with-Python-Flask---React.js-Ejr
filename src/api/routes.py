@@ -102,27 +102,32 @@ def login():
         return jsonify({"error": "Invalid credentials"}), 401
 
     role = Role.query.filter_by(id=user.role_id).first()
-    access_token = create_access_token(identity=user.id, additional_claims={"role": role.role_name})  # Incluye role_name en el token
-    return jsonify(access_token=access_token), 200
+    access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})  # Incluye role_id en el token
+    return jsonify(access_token=access_token, role_id=role.id), 200  # Incluye role_id en la respuesta
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
-@api.route('/pinguser', methods=['GET'])
+@api.route('/api/pinguser', methods=['GET'])
 @jwt_required()
 def ping_user():
     current_user_id = get_jwt_identity()
     payload = get_jwt()
-    return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role": payload["role"]}), 200
+    if "role_id" not in payload:
+        return jsonify({"error": "Role ID not found in token"}), 400
+    
+    role_id = payload["role_id"]
+    return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
+
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /logout
 @api.route('/logout', methods=['POST'])
 @jwt_required()
 def user_logout():
-    jti=get_jwt()["jti"]
-    token_blocked=TokenBlockList(jti=jti)
+    jti = get_jwt()["jti"]
+    token_blocked = TokenBlockList(jti=jti)
     db.session.add(token_blocked)
     db.session.commit()
-    return jsonify({"msg":"Logout"})
+    return jsonify({"msg": "Logout successful"})
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users con id
 @api.route('/users/<int:user_id>', methods=['GET'])

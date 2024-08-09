@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logoAutoAgenda from "../../img/autoagendalogo1080.png";
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
-const apiUrl = process.env.BACKEND_URL + "/api";
 
 export const Navbar = () => {
   const { actions, store } = useContext(Context);
@@ -22,23 +21,23 @@ export const Navbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const roleId = localStorage.getItem("role_id");
     setHasAccess(!!token);
 
-    const fetchUserRole = async () => {
-      if (token) {
-        const response = await fetch( apiUrl + "/pinguser", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUserRole(data.role); 
-        } else {
+    const fetchUserRole = () => {
+      switch (roleId) {
+        case "1":
+          setUserRole("Admin");
+          break;
+        case "2":
+          setUserRole("Mechanic");
+          break;
+        case "3":
+          setUserRole("User");
+          break;
+        default:
           setUserRole(null);
-        }
-      } else {
-        setUserRole(null);
+          break;
       }
     };
 

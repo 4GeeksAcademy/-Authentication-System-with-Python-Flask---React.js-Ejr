@@ -5,37 +5,49 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			token: null,
 			userId: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			roleId: null,
 		},
 		actions: {
-			loadSession: async () =>{
-				let storageToken = localStorage.getItem("token");
-				if(!storageToken) return;
-				setStore({ token: storageToken });
-				let resp = await fetch(apiUrl + "/pinguser", {
-					headers: {
-						Authorization: "Bearer " + storageToken,
-					},
-				});
-				if(!resp.ok) {
-					setStore(({ token: null }));
+			loadSession: async () => {
+				try {
+					let storageToken = localStorage.getItem("token");
+					if (!storageToken) {
+						// Si no hay token en localStorage, asegúrate de limpiar el estado
+						setStore({ token: null, userId: null, roleId: null });
+						return false;
+					}
+			
+					let resp = await fetch(apiUrl + "/pinguser", {
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: "Bearer " + storageToken,
+						},
+					});
+			
+					if (!resp.ok) {
+						// Si el token no es válido, limpiar el token del localStorage y el estado
+						console.error("Invalid token response status:", resp.status);
+						localStorage.removeItem("token");
+						localStorage.removeItem("role_id");
+						setStore({ token: null, userId: null, roleId: null });
+						return false;
+					}
+			
+					let data = await resp.json();
+					localStorage.setItem("role_id", data.role_id);  // Almacenar role_id en localStorage
+					setStore({ token: storageToken, userId: data.user_id, roleId: data.role_id });
+					return true;
+				} catch (error) {
+					// Manejar errores de la solicitud fetch
+					console.error("Error loading session:", error);
+					localStorage.removeItem("token");
+					localStorage.removeItem("role_id");
+					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
-				let data = await resp.json();
-				setStore({ userId: data })
-				return true;
 			},
+			
+			
 			login: async (email, password) => {
 				let resp = await fetch(apiUrl + "/login", {
 					method: "POST",
@@ -44,15 +56,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"Content-Type" : "application/json",
 					},
 				});
-					if(!resp.ok) {
-						setStore({ token: null});
-						return false;
-					};
-					let data = await resp.json();
-					setStore({ token: data.access_token });
-					localStorage.setItem("token", data.access_token);
-					return true;
-			},
+				if (!resp.ok) {
+					setStore({ token: null });
+					return false;
+				};
+				let data = await resp.json();
+				setStore({ token: data.access_token });
+				localStorage.setItem("token", data.access_token);
+				localStorage.setItem("role_id", data.role_id); 
+				return true;
+			},			
 			signup: async (email, password, name, phone_number) => {
 				let resp = await fetch(apiUrl + "/signupuser", {
 					method: "POST",
@@ -77,10 +90,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 				});
 				if (!resp.ok) return false;
-				setStore({ token: null, userId: null });
+				setStore({ token: null, userId: null, roleId: null });
 				localStorage.removeItem("token");
+				localStorage.removeItem("role_id");
 				return true;
 			},
+			
+			saveProfile: async (updatedProfile) => {
+				let { token } = getStore();
+				let resp = await fetch(apiUrl + "/update_profile", {
+					method: "PATCH",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + token,
+					},
+					body: JSON.stringify(updatedProfile),
+				});
+				if (!resp.ok) {
+					const errorData = await resp.json();
+					return { success: false, error: errorData };
+				}
+				const data = await resp.json();
+				return { success: true };
+			}
 		},
 	};
 };
