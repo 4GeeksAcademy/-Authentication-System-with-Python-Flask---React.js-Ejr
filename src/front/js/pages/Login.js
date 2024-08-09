@@ -8,8 +8,7 @@ const Login = () => {
   const { actions } = useContext(Context);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
-    useState(false);
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
 
   const handleForgotPasswordModalOpen = () => {
     setIsForgotPasswordModalOpen(false);
@@ -33,8 +32,14 @@ const Login = () => {
       return;
     }
 
+    setError(null);
+
     let logged = await actions.login(email, password);
-    if (logged) navigate("/");
+    if (logged) {
+      navigate("/");
+    } else {
+      setError("Invalid email or password. Please try again.");
+    }
   }
 
   return (

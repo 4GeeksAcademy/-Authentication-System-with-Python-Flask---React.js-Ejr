@@ -11,8 +11,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadSession: async () => {
 				try {
 					let storageToken = localStorage.getItem("token");
-					if (!storageToken) {
-						// Si no hay token en localStorage, asegúrate de limpiar el estado
+					let storageUserId = localStorage.getItem("user_id");
+					let storageRoleId = localStorage.getItem("role_id");
+			
+					if (!storageToken || !storageUserId || !storageRoleId) {
+						// Si falta algún dato en localStorage, asegura limpiar el estado
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
@@ -29,19 +32,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error("Invalid token response status:", resp.status);
 						localStorage.removeItem("token");
 						localStorage.removeItem("role_id");
+						localStorage.removeItem("user_id"); // Limpiar user_id del localStorage
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
 			
 					let data = await resp.json();
-					localStorage.setItem("role_id", data.role_id);  // Almacenar role_id en localStorage
-					setStore({ token: storageToken, userId: data.user_id, roleId: data.role_id });
+					setStore({ token: storageToken, userId: storageUserId, roleId: storageRoleId });
 					return true;
 				} catch (error) {
 					// Manejar errores de la solicitud fetch
 					console.error("Error loading session:", error);
 					localStorage.removeItem("token");
 					localStorage.removeItem("role_id");
+					localStorage.removeItem("user_id"); // Limpiar user_id del localStorage
 					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
@@ -62,7 +66,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json();
 				setStore({ token: data.access_token });
 				localStorage.setItem("token", data.access_token);
-				localStorage.setItem("role_id", data.role_id); 
+				localStorage.setItem("role_id", data.role_id);
+				localStorage.setItem("user_id", data.user_id); 
 				return true;
 			},			
 			signup: async (email, password, name, phone_number) => {
@@ -92,6 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ token: null, userId: null, roleId: null });
 				localStorage.removeItem("token");
 				localStorage.removeItem("role_id");
+				localStorage.removeItem("user_id");
 				return true;
 			},
 			

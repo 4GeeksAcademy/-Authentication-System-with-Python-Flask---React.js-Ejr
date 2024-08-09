@@ -103,7 +103,7 @@ def login():
 
     role = Role.query.filter_by(id=user.role_id).first()
     access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})
-    return jsonify(access_token=access_token, role_id=role.id), 200
+    return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
 @api.route('/api/pinguser', methods=['GET'])
