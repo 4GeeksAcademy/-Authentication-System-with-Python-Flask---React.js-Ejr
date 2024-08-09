@@ -25,7 +25,7 @@
 }
 
 .card {
-    background: #fff;
+    background-color: transparent; 
     border-width: 0;
     border-radius: .25rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
@@ -39,6 +39,13 @@
     background-clip: padding-box;
     font-weight: bold;
     font-size: 1.25rem;
+}
+
+.card-footer {
+    background-color: transparent; 
+    border: none; 
+    display: flex;
+    justify-content: space-between; 
 }
 
 form {
@@ -72,18 +79,18 @@ input[type="submit"] {
 
 .button-container {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     margin-top: 1rem;
-  }
-  
-  .previous-button {
+}
+
+.previous-button {
     margin-right: auto; 
-  }
-  
-  .next-button {
+}
+
+.next-button {
     margin-left: auto; 
-  }
-  
+}
+
 button {
     border: none;
     padding: .5rem 1rem;
@@ -117,3 +124,10 @@ button[type="submit"]:hover {
     width: 1em !important;
     height: 1em !important;
 }
+
+.appointment-description {
+    max-width: 400px; 
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
