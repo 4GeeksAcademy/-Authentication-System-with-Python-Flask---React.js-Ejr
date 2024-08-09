@@ -248,7 +248,7 @@ def delete_car(car_id):
     return jsonify({"message": "Car deleted successfully"}), 200
 
 
-# ///////////////////////////////////////////////////////////////////////////////////////////// post a /comments 
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /comments?appointment_id=
 @api.route('/comments', methods=['GET'])
 @jwt_required()
 def get_comments():
@@ -469,13 +469,20 @@ def get_appointments():
         car = Car.query.get(appointment.car_id)
         service = Service.query.get(appointment.service_id)
         
+        # Obtener comentarios asociados a la cita
+        comments = Comment.query.filter_by(appointment_id=appointment.id).all()
+        comments_data = [comment.serialize() for comment in comments]
+
+        # Agregar los datos adicionales a appointment_data
         appointment_data['user'] = user.serialize() if user else None
         appointment_data['car'] = car.serialize() if car else None
         appointment_data['service'] = service.serialize() if service else None
-        
+        appointment_data['comments'] = comments_data  # Añadir comentarios
+
         appointments_list.append(appointment_data)
     
     return jsonify(appointments_list), 200
+
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
