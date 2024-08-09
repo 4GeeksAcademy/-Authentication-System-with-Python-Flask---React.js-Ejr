@@ -269,7 +269,7 @@ def create_comment():
     comment_content = data.get('comment')
     user_id = data.get('user_id')
     appointment_id = data.get('appointment_id')
-    is_mechanic = data.get('is_mechanic', False)  # Obtiene el valor de `is_mechanic`, False si no está presente
+    is_mechanic = data.get('is_mechanic', False) 
 
     if not comment_content or not user_id or not appointment_id:
         return jsonify({"error": "Comment, user ID, and appointment ID are required"}), 400
@@ -477,7 +477,7 @@ def get_appointments():
         appointment_data['user'] = user.serialize() if user else None
         appointment_data['car'] = car.serialize() if car else None
         appointment_data['service'] = service.serialize() if service else None
-        appointment_data['comments'] = comments_data  # Añadir comentarios
+        appointment_data['comments'] = comments_data 
 
         appointments_list.append(appointment_data)
     
