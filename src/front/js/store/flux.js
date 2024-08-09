@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             currentUser: '',
 
             allWeeklyRoutineList: [],
-            oneWeeklyRoutine: {},
+            allWeeklyRoutineUserList: [],
+            oneWeeklyRoutineUserList: [],
             allRoutineList: [],
             oneRoutine: {},
             allExerciseList: [],
@@ -105,47 +106,47 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return error;
                 }
             },
-            // // TRAER PERFIL
-            // getUserProfile: async () => {
-            //     try {
-            //         let token = localStorage.getItem("token")
-            //         // const token = getActions().getToken();
-            //         if (!token) throw new Error("No token found");
-            //         const resp = await fetch(process.env.BACKEND_URL + "/profile", {
-            //             method: "GET",
-            //             headers: {
-            //                 "Content-Type": "application/json",
-            //                 "Authorization": `Bearer ${token}`
-            //             }
-            //         });
-            //         if (!resp.ok) {
-            //             throw new Error("Error fetching profile");
-            //         }
-            //         const data = await resp.json();
-            //         setStore({ currentUser: data });
-            //         return data;
-            //     } catch (error) {
-            //         console.log("Error loading user profile from backend", error);
-            //         setStore({ authError: error.message });
-            //     }
-            // },
             // TRAER PERFIL
             getUserProfile: async () => {
                 try {
                     let token = localStorage.getItem("token")
-                    let response = await axios.get(process.env.BACKEND_URL + "/profile", {
+                    // const token = getActions().getToken();
+                    if (!token) throw new Error("No token found");
+                    const resp = await fetch(process.env.BACKEND_URL + "/profile", {
+                        method: "GET",
                         headers: {
-                            'Authorization': `Bearer ${token}`
-                        },
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
                     });
-                    setStore({ currentUser: response.data });
+                    if (!resp.ok) {
+                        throw new Error("Error fetching profile");
+                    }
+                    const data = await resp.json();
+                    setStore({ currentUser: data });
                     return data;
-
                 } catch (error) {
-                    console.log(error);
-                    // setStore({ authError: error.message });
+                    console.log("Error loading user profile from backend", error);
+                    setStore({ authError: error.message });
                 }
             },
+            // TRAER PERFIL
+            // getUserProfile: async () => {
+            //     try {
+            //         let token = localStorage.getItem("token")
+            //         let response = await axios.get(process.env.BACKEND_URL + "/profile", {
+            //             headers: {
+            //                 'Authorization': `Bearer ${token}`
+            //             },
+            //         });
+            //         setStore({ currentUser: response.data });
+            //         return data;
+
+            //     } catch (error) {
+            //         console.log(error);
+            //         // setStore({ authError: error.message });
+            //     }
+            // },
             // CERRAR SESION
             logout: () => {
                 localStorage.removeItem("token");
@@ -167,14 +168,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-            // GET ONE WeeklyRoutine / TRAER UNA RUTINA SEMANA
-            oneWeeklyRoutine: async (id) => {
+            // GET ALL WeeklyRoutine OF USER / TRAER TODAS RUTINA SEMANA DE USUARIO
+            allWeeklyRoutineUser: async (id) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + `/weekly-routine/${id}`);
 
                     if (resp.status == 200) {
-                        setStore({ oneWeeklyRoutine: resp.data })
-                        console.log(getStore().oneWeeklyRoutine);
+                        setStore({ allWeeklyRoutineUserList: resp.data })
+                        console.log(getStore().allWeeklyRoutineUserList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            // GET ONE WeeklyRoutine OF USER / TRAER UNA RUTINA SEMANA DE USUARIO
+            oneWeeklyRoutineUser: async (week) => {
+                let token = localStorage.getItem("token")
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + `/weekly-user-routine/${week}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (resp.status == 200) {
+                        setStore({ oneWeeklyRoutineUserList: resp.data })
+                        console.log(getStore().oneWeeklyRoutineUserList);
                         return true;
                     }
                 }

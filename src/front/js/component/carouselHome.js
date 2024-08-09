@@ -13,16 +13,18 @@ const CarouselComplete = () => {
     const { store, actions } = useContext(Context);
 
     useEffect(() => {
-        actions.allWeeklyDayRoutineOfOneWeek(1);
+        actions.oneWeeklyRoutineUser(1);
     }, [])
+    console.log(store.oneWeeklyRoutineUserList);
+
     return (
 
         <Carousel showThumbs={false} showStatus={false}>
 
-            {store.allWeeklyDayRoutineOfOneWeekList.map((item, index) => (
+            {store.oneWeeklyRoutineUserList.sort((a, b) => a.day - b.day).map((item, index) => (
                 <div key={index} className="w-2/3 mx-auto">
-                    <ExercisesList dayRoutine={item} />
-                    <h1>{item.day_routine_id}</h1>
+                    <ExercisesList routine={item.routine} />
+                    <h1>{item.day}</h1>
                     {/* <Progress randomValue={item} /> */}
                 </div>
             ))}

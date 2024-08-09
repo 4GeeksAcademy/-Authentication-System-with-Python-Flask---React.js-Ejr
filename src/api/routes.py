@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -114,14 +114,25 @@ def get_all_weekly_routine():
         data_serialized = list(map(lambda routine: routine.serialize(), weekly_routine))
         return jsonify(data_serialized), 200
    
-# GET ONE WeeklyRoutine / TRAER UNA RUTINA SEMANA
+# GET ALL WeeklyRoutine OF USER / TRAER TODAS RUTINA SEMANA DE USUARIO
 @api.route('/weekly-routine/<int:user_id>', methods=['GET'])
-def get_weekly_routine(user_id):
-    weekly_routine = WeeklyRoutine.query.filter_by(user_id=user_id).first()
-    if weekly_routine is None:
-        return ({'error':'WeeklyRoutine not found'}), 404
+def get_all_weekly_routine_user(user_id):
+    weekly_routine = WeeklyRoutine.query.filter_by(user_id=user_id).all()
+    if len(weekly_routine) == 0:
+        return ({'error':'all WeeklyRoutine user list not found'}), 404
     else:
-        data_serialized = weekly_routine.serialize()
+        data_serialized = list(map(lambda routine: routine.serialize(), weekly_routine))
+        return jsonify(data_serialized), 200
+
+# GET ONE WeeklyRoutine OF USER / TRAER UNA RUTINA SEMANA DE USUARIO
+@api.route('/weekly-routine/<int:user_id>/<int:week>', methods=['GET'])
+def get_one_weekly_routine_user(user_id, week):
+    print(Week(week))
+    weekly_routine = WeeklyRoutine.query.filter_by(user_id=user_id, week=Week(week)).all()
+    if len(weekly_routine) == 0:
+        return ({'error':'one WeeklyRoutine user list not found'}), 404
+    else:
+        data_serialized = list(map(lambda routine: routine.serialize(), weekly_routine))
         return jsonify(data_serialized), 200
 
 # GET ALL Routine / TRAER TODAS RUTINA
@@ -217,15 +228,18 @@ def get_all_exercise_routine():
         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
 
-# GET ALL ExerciseRoutine ONE DAY / TRAER TODAS RUTINA EJERCICIO DE UN DIA
-@api.route('/exercise-routine/<int:routine_id>', methods=['GET'])
-def get_all_exercise_routine_one_day(routine_id):
-    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id).all()
+# GET ALL weekly-user-routine / TRAER TODAS RUTINA EJERCICIO DE UN DIA
+@api.route('/weekly-user-routine/<int:week>', methods=['GET'])
+@jwt_required()
+def get_all_exercise_routine_one_day(week):
+    current_user=get_jwt_identity()
+    exercise_routine = WeeklyRoutine.query.filter_by(week=Week(week), user_id=current_user["id"]).all()
     if len(exercise_routine) == 0:
         return ({'error':'exercise routine list of one day not found'}), 404
     else:
         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
+
 
 # GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
 @api.route('/follow-up', methods=['GET'])
