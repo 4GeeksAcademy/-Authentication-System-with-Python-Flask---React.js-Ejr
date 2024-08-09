@@ -1,0 +1,22 @@
+.user-profile {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.profile-image {
+    max-width: 100%;
+}
+
+/* Media query para pantallas medianas (>= 768px) */
+@media (max-width: 768px) {
+    .profile-image {
+        max-width: 50%;
+        /* Cambia el ancho máximo a 75% en pantallas medianas */
+    }
+}
+
+.accordion-button {
+    max-width: 100% !important;
+}

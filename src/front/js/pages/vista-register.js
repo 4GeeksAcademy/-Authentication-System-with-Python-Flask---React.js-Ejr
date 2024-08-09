@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Register } from "../component/register.jsx"
+import "../../styles/registro-login.css"
 
 const VistaRegister = () => {
     const { store, actions } = useContext(Context);
