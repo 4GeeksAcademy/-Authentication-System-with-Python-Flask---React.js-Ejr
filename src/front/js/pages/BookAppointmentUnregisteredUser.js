@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DatePicker } from "antd";
 import "../../styles/bookappointmentunregistereduser.css";
+import { useNavigate } from "react-router-dom";
 
 const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,9 +20,9 @@ const BookAppointmentUnregisteredUser = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const datePickerRef = useRef(null);
+  const navigate = useNavigate();
 
   const apiUrl = process.env.BACKEND_URL + "/api";
-
 
   useEffect(() => {
     const getServices = async () => {
@@ -78,7 +79,7 @@ const BookAppointmentUnregisteredUser = () => {
           slots_required: 1,
           car_id: carId,
           appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"), 
+          appointment_time: appointmentDate.format("HH:mm"),
         }),
       });
 
@@ -116,6 +117,10 @@ const BookAppointmentUnregisteredUser = () => {
     }
     setError("");
     setCurrentStep(currentStep + 1);
+  };
+
+  const confirmAccountAndAppointment = () => {
+    navigate("/accountandappointmentcreated");
   };
 
   const displayCurrentStep = () => {
@@ -289,7 +294,7 @@ const BookAppointmentUnregisteredUser = () => {
               <button
                 className="btn btn-primary"
                 type="submit"
-                onClick={submitAppointment}
+                onClick={confirmAccountAndAppointment}
               >
                 Create Account and Submit
               </button>
@@ -304,16 +309,22 @@ const BookAppointmentUnregisteredUser = () => {
     <div id="content" className="padding">
       <div className="card shadow-sm">
         <div className="card-header text-center">Appointment Booking</div>
-        <form onSubmit={submitAppointment}>
-          {displayCurrentStep()}
-        </form>
-        <div className="card-footer d-flex justify-content-between"> 
-  {currentStep > 1 && (
-    <button className="btn btn-secondary previous-button" onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>
-  )}
-  {currentStep < 5 && <button className="btn btn-primary next-button" onClick={nextStep}>Next</button>}
-</div>
-
+        <form onSubmit={submitAppointment}>{displayCurrentStep()}</form>
+        <div className="card-footer d-flex justify-content-between">
+          {currentStep > 1 && (
+            <button
+              className="btn btn-secondary previous-button"
+              onClick={() => setCurrentStep(currentStep - 1)}
+            >
+              Previous
+            </button>
+          )}
+          {currentStep < 5 && (
+            <button className="btn btn-primary next-button" onClick={nextStep}>
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
