@@ -8,7 +8,7 @@ export const Jumbotron = () => {
 
     return (
         <div>
-            <header className="bg-light py-5">
+            <header className=" jumbotronPrincipal py-5">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-lg-8">
