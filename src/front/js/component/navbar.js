@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.css";
-import logo from '../../img/logoSinFondo.png';
+import logo from '../../img/LogoNombre2b.png';
 
 export const Navbar = () => {
 	//localStorage, almacenar datos en el navegador del usuario de manera persistente, después de que el navegador se cierra o la página se recarga
