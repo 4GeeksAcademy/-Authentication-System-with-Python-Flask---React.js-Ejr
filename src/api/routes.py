@@ -194,7 +194,7 @@ def get_cars(car_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def create_car():
     data = request.get_json()
     if not data:
@@ -311,7 +311,7 @@ def create_service():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services 
 @api.route('/services', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_services():
     services_query = Service.query.all()
     services_list = list(map(lambda service: service.serialize(), services_query))

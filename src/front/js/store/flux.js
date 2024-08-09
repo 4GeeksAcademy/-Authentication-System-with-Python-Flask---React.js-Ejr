@@ -116,6 +116,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { success: true };
 			}
 		},
+
+			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mails
+
+			SendMail: async (trydata) => {
+				try{
+					const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+						method: 'POST',
+						headers: {
+							'accept': 'application/json',
+							'Content-Type': 'application/json',
+							'api-key': process.env.MAILAPIKEY
+						},
+						  body: JSON.stringify(trydata)
+						});
+						if (response.ok){
+							//mail enviado con exito
+						}
+					}
+					catch (error) {
+							console.error("Error:", error);
+					}
+			},
+			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mails
+
 	};
 };
 

@@ -1,0 +1,103 @@
+.card-content {
+  background-color: #0c2346;
+  background-image: url("https://effective-computing-machine-v6vjj55rvpj524v7-3000.app.github.dev/world-dotted-map.png");
+  background-size: cover;
+  min-height: 100vh;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.padding {
+  padding: 5rem;
+}
+
+@media (max-width: 991.98px) {
+  .padding {
+      padding: 1.5rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .padding {
+      padding: 1rem;
+  }
+}
+
+.card {
+  background: #fff;
+  border-width: 0;
+  border-radius: .25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+  margin-bottom: 1.5rem;
+  padding: 2rem;
+}
+
+.card-header {
+  background-color: transparent;
+  border-color: rgba(160, 175, 185, .15);
+  background-clip: padding-box;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+form {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: .5rem;
+  color: #6c757d;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: .375rem .75rem;
+  margin-bottom: .5rem;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+input[type="submit"] {
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: #f54394;
+  margin-bottom: 1rem;
+}
+
+button {
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.button-container {
+  margin-top: 1rem;
+}
+
+.ml-auto {
+  margin-left: auto; 
+}
+
+.btn {
+  min-width: 100px; 
+}
+
+.datetimepicker-component {
+  margin-bottom: 1.5rem;
+}
