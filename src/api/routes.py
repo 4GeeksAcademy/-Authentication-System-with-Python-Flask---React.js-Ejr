@@ -69,6 +69,47 @@ def handle_protected():
          return jsonify({'msg' : 'Has logrado acceder a una ruta protegida, ' + user})
     return jsonify({'Success' : False, 'msg' : 'Bad Token'})
 
+#[GET] Listar todos los bebes que hay en la base de datos.
+@api.route('/all_babies', methods=['GET'])
+def get_all_babies():
+    bebe = Baby.query.all()
+    aux = list(map(lambda x: x.serialize(), bebe))
+    return jsonify({'msg': 'OK', 'data': aux}), 200   
+
+#[GET] Muestra la información de un solo bebe según su id.
+@api.route('/one_baby/<int:id>', methods=['GET'])
+def get_one_baby(id):
+    bebe = Baby.query.get(id)
+    return jsonify({'msg': 'OK', 'bebe': bebe.serialize()}), 200
+
+#[GET] Muestra la información de un solo bebe según su nombre.
+@api.route('/one_baby_by_name/<string:name>', methods=['GET'])
+def get_one_baby_by_name(name):
+    baby=Baby.query.filter_by(name=name).first()
+    if baby is None:
+        return jsonify({'msg': 'Baby not found'}), 404
+    return jsonify({'msg': 'OK', 'data': baby.serialize()}), 200
+
+#[PUT] Editar los datos de un bebe
+@api.route('/edit_baby/<int:id>', methods=['PUT'])
+def edit_baby(id):
+    baby = Baby.query.get(id)
+    if baby is None:
+        return jsonify({'msg': 'Baby not found'}), 404
+        
+    data = request.json
+    baby.name = data['name']
+    baby.gender = data['gender']
+    baby.age = data['age']
+    baby.height = data['height']
+    baby.weigth = data['weigth']
+    #baby.avatar_path = data['avatar_path']
+
+    db.session.commit()
+    return jsonify({'msg': 'Datos del bebe editado', 'data': baby.serialize()}), 200    
+    
+
+
 
             
                
