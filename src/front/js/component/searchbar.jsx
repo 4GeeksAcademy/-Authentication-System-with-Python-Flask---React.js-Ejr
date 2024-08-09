@@ -9,7 +9,7 @@ const Searchbar = () => {
       <div className="d-flex justify-content-center h-100">
         <div className="search d-flex">
           <input className="search_input w-50" type="text" name="" placeholder="Destino/@username"/>
-          <input className="search_input w-25 me-auto" type="text" name="" placeholder="Duración"/>
+          <input className="search_input w-25 me-auto" type="number" name="" placeholder="Duración"/>
           <a href="#" className="search_icon "><i className="fa fa-search"></i></a>
         </div>
       </div>

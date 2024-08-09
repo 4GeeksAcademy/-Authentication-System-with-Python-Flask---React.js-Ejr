@@ -12,7 +12,7 @@ export const Navbar = () => {
                     <span className="navbar-brand mb-0 h1 custom-font">ShareTrips</span>
                 </Link>
                 <div className="d-flex align-items-center">
-                    <Searchbar />
+
                 </div>
                 <div className="ml-auto d-flex align-items-center">
                     <button className="btn custom-button rounded-pill" data-bs-toggle="modal" data-bs-target="#loginModal">
