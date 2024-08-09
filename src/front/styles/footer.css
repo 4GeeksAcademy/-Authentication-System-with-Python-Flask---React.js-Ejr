@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.footer{
+    background-color: #303036;
+    font-family: Montserrat;
+}
+
+.footer a:hover {
+    color: #FFFAFF; 
+}
+
+.footer a {
+    color: #257895;
+}
+.footer li{
+    width: auto;
+    text-align: center;
+    list-style-type: none;
+    padding: 5px;
+    position: relative;
+}
+
+.footer .btn-outline{
+    background-color: #257895;
+}
+
+.footer .btn-outline:hover {
+    color: #FFFAFF; 
+}
+
+.footer .btn-btn-success{
+    background-color: #408642;
+}
