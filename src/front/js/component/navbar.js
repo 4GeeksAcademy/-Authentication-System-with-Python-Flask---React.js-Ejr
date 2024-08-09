@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../component/tickeate.png";
 
 export const Navbar = () => {
   return (
@@ -8,13 +9,14 @@ export const Navbar = () => {
           className="navbar-brand"
           href="#"
           style={{
-            backgroundImage: `url(https://uc68bb29a58af4b878b52eeeee1d.previews.dropboxusercontent.com/p/thumb/ACV2ffXL4xzTWd-luSq6HeNXxU0KzglJcBObKMDD4HgwFqfUuDyfDXImFme5_zH-0gli7UaLYPc0iLk5bnYKOI47NIR4obQIWugMg-XyS5NVASaDr9OFeSKHWuPAyOWYBBvXr8w8_BRV4kGpg8AWnOfnsmCWGWLuTWspHsuJBmjNxwx-7izYxpGfxM1cRKQPHx-36Ey1scVmLlVcg8WCPuryl4cM3WeIQdROLz7uhrgsr1XBXVdioRyA021KxeRXa-t0E7vzZVBQbUpG-fRsn80hhhTStTEESdEZXFN4nb7qnw8IuiBe6TYLigEwDG3qaapXIv-YIQ1zacNl6dW5oewy3umyVQY7AR8gKMF0iSEmwg/p.png)`,
+            backgroundImage: `url(${logo})`,
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            height: '50px',
-            width: '50px',
+            height: '40px',
+            width: '155px',
             display: 'block',
-            textIndent: '-9999px'
+            textIndent: '-9999px',
+            marginLeft: '-3px'
           }}
         >
           Navbar
@@ -48,9 +50,18 @@ export const Navbar = () => {
               <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ color: 'black' }}>
                 Registrarse
               </a>
-              <ul className="dropdown-menu dropdown-menu-end"> 
-                <li><a className="dropdown-item" href="#">Registrarse/iniciar sesión como usuario</a></li>
-                <li><a className="dropdown-item" href="#">Registrarse/iniciar sesión como partner</a></li>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li><a className="dropdown-item" href="#">Registrarse como usuario</a></li>
+                <li><a className="dropdown-item" href="#">Registrarse como partner</a></li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ color: 'black' }}>
+                Iniciar sesión
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li><a className="dropdown-item" href="#">Iniciar sesión como usuario</a></li>
+                <li><a className="dropdown-item" href="#">Iniciar sesión como partner</a></li>
               </ul>
             </li>
           </ul>
@@ -59,3 +70,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default Navbar;
