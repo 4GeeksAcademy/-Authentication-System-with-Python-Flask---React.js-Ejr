@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import Searchbar from "../component/searchbar.jsx";
 
+
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
