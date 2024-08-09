@@ -176,7 +176,7 @@ def get_all_cars():
     
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
 @api.route('/cars/<int:car_id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_cars(car_id):
     car_query = Car.query.filter_by(id=car_id).first()
     if car_query:
@@ -458,7 +458,7 @@ def cancel_appointment(appointment_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments
 @api.route('/appointments', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_appointments():
     appointments_query = Appointment.query.all()
     

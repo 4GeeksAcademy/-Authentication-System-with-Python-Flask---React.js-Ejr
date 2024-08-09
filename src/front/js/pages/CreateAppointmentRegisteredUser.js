@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
+import moment from 'moment';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
+import { Context } from "../store/appContext";
 
 const CreateAppointmentRegisteredUser = () => {
+  const { store } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
@@ -20,9 +23,15 @@ const CreateAppointmentRegisteredUser = () => {
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
 
+//-----------------------------------------------------------------------------------------------------
+const [bookedAppointments, setBookedAppointments] = useState([]);
+//-----------------------------------------------------------------------------------------------------
   const apiUrl = process.env.BACKEND_URL + "/api";
 
   useEffect(() => {
+    // Verificamos si userId está definido antes de proceder
+    // if (!userId) return;
+  
     const getServices = async () => {
       try {
         const response = await fetch(`${apiUrl}/services`);
@@ -33,14 +42,14 @@ const CreateAppointmentRegisteredUser = () => {
         console.error("Error getting services:", error);
       }
     };
-
+  
     const getUserCars = async () => {
       try {
-        const response = await fetch(`${apiUrl}/cars/5`);
+        const response = await fetch(`${apiUrl}/cars/${store.userId}`);
         if (!response.ok) throw new Error("Network response failed");
-
+  
         const { result } = await response.json();
-
+  
         if (result && result.id && result.license_plate && result.car_model) {
           setUserCars([result]);
         } else {
@@ -50,15 +59,70 @@ const CreateAppointmentRegisteredUser = () => {
         console.error("Error getting user cars:", error);
       }
     };
+  
+    const fetchBookedAppointments = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/appointments`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const processedAppointments = data.map(appointment => ({
+          date: moment.utc(appointment.date).local().format('YYYY-MM-DD'),
+          time: moment.utc(appointment.date).local().format('HH')
+        }));
+        setBookedAppointments(processedAppointments);
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+      }
+    };
+  
     getServices();
     getUserCars();
-  }, [apiUrl, userId]);
-
+    fetchBookedAppointments();
+  
+  }, [apiUrl, store.userId]); 
+  
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
     }
   }, [currentStep]);
+
+  //----------------------------------------------------------------------------------------------------- Función para deshabilitar dias no laborables.
+  const disabledDate = (current) => {
+    // Deshabilita fechas anteriores a hoy y fines de semana
+    return current && (current.day() === 0 || current.day() === 6 || current.isBefore(new Date(), "day"));
+  };
+
+  //----------------------------------------------------------------------------------------------------- Función para deshabilitar horas fuera de 8:00 a 18:00
+  const disabledTime = (selectedDate) => {
+    // Formateamos la fecha seleccionada para compararla con las citas reservadas
+    const selectedDateString = selectedDate.format('YYYY-MM-DD');
+    
+    // Filtramos las citas que coinciden con la fecha seleccionada
+    const bookedTimes = bookedAppointments
+      .filter(appointment => appointment.date === selectedDateString)
+      .map(appointment => parseInt(appointment.time)); // Obtenemos solo las horas ya reservadas
+    
+    return {
+      disabledHours: () => {
+        const hours = [];
+        
+        // Deshabilitamos las horas antes de las 8:00, después de las 18:00 y las ya reservadas
+        for (let i = 0; i < 24; i++) {
+          if (i < 8 || i >= 18 || bookedTimes.includes(i)) {
+            hours.push(i);
+          }
+        }
+        return hours;
+      },
+      disabledMinutes: () => [], // No deshabilitamos minutos específicos
+      disabledSeconds: () => [], // No deshabilitamos segundos específicos
+    };
+  };
+//-----------------------------------------------------------------------------------------------------
+
 
   const submitAppointment = async (e) => {
     e.preventDefault();
@@ -75,7 +139,7 @@ const CreateAppointmentRegisteredUser = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           comment,
-          user_id: userId,
+          user_id: store.userId,
           appointment_id: appointmentId,
         }),
       });
