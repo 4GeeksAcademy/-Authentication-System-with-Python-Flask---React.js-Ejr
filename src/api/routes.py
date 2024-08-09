@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, Category
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -39,9 +39,12 @@ def post_user():
     user = request.get_json()
     user_by_email = User.query.filter_by(email=user['email']).first()
 
-
     if not isinstance(user['name'], str) or len(user['name'].strip()) == 0:
          return({'error':'"name" must be a string'}), 400
+    if not isinstance(user['birthday'], str) or len(user['birthday'].strip()) == 0:
+         return({'error':'"birthday" must be a string'}), 400
+    if not isinstance(user['sex'], str) or len(user['sex'].strip()) == 0:
+        return({'error':'"sex" must be a string'}), 400
     if not isinstance(user['email'], str) or len(user['email'].strip()) == 0:
          return({'error':'"email" must be a string'}), 400
     if user_by_email:
@@ -54,7 +57,7 @@ def post_user():
     if user['password'] != user['confirm_password']:
         return({'error':'"password" and "confirm_password" must be the same'}), 400
 
-    user_created = User(name=user['name'], email=user['email'], password=user['password'])
+    user_created = User(name=user['name'], birthday=user['birthday'], sex=user['sex'], email=user['email'], password=user['password'])
     db.session.add(user_created)
     db.session.commit()
     return jsonify(user_created.serialize()), 200
@@ -65,7 +68,6 @@ def post_user():
 def login():
     user = request.get_json()
 
-
     if not isinstance(user['email'], str) or len(user['email'].strip()) == 0:
          return({'error':'"email" must be a string'}), 400
     if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
@@ -75,7 +77,7 @@ def login():
     if user_db is None:
         return jsonify({"error":"incorrect credentials"}), 401
    
-    access_token = create_access_token(identity=user['email'])
+    access_token = create_access_token(identity={"email": user_db.email, "id": user_db.id})
     return jsonify({"access_token":access_token, "logged":True}), 200
 
 
@@ -86,10 +88,9 @@ def valid_token():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
    
-    user_exist = User.query.filter_by(email=current_user).first()
+    user_exist = User.query.filter_by(email=current_user['email']).first()
     if user_exist is None:
         return jsonify(logged=False), 404
-
 
     return jsonify(logged=True), 200
 
@@ -97,8 +98,8 @@ def valid_token():
 @api.route('/profile', methods=['GET'])
 @jwt_required()
 def profile():
-    email = get_jwt_identity()
-    user = User.query.filter_by(email=email).first()
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user['email']).first()
     if not user:
         return jsonify({"error": "User not found"}), 404
     return jsonify(user=user.serialize()), 200
@@ -123,7 +124,6 @@ def get_weekly_routine(user_id):
         data_serialized = weekly_routine.serialize()
         return jsonify(data_serialized), 200
 
-
 # GET ALL Routine / TRAER TODAS RUTINA
 @api.route('/routine', methods=['GET'])
 def get_all_routine():
@@ -143,7 +143,6 @@ def get_routine(id):
     else:
         data_serialized = routine.serialize()
         return jsonify(data_serialized), 200
-
 
 # # GET ALL DayRoutineDate / TRAER TODAS FECHA RUTINA DIA
 # @api.route('/day-routine-date', methods=['GET'])
@@ -188,8 +187,7 @@ def get_routine(id):
 #         data_serialized = list(map(lambda weekly_day: weekly_day.serialize(), weekly_day_routine))
 #         return jsonify(data_serialized), 200
 
-
-# GET ALL EXERCIE / TRAER TODOS EJERCICIO
+# GET ALL EXERCICE / TRAER TODOS EJERCICIO
 @api.route('/exercise', methods=['GET'])
 def get_all_exercise():
     exercise = Exercise.query.all()
@@ -198,7 +196,6 @@ def get_all_exercise():
     else:
         data_serialized = list(map(lambda exercise: exercise.serialize(), exercise))
         return jsonify(data_serialized), 200
-
 
 # GET ONE EXERCIE / TRAER UN EJERCICIO
 @api.route('/exercise/<int:id>', methods=['GET'])
@@ -210,7 +207,6 @@ def get_one_exercise(id):
         data_serialized = exercise.serialize()
         return jsonify(data_serialized), 200
 
-
 # GET ALL ExerciseRoutine / TRAER TODAS RUTINA EJERCICIO
 @api.route('/exercise-routine', methods=['GET'])
 def get_all_exercise_routine():
@@ -220,7 +216,6 @@ def get_all_exercise_routine():
     else:
         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
-
 
 # GET ALL ExerciseRoutine ONE DAY / TRAER TODAS RUTINA EJERCICIO DE UN DIA
 @api.route('/exercise-routine/<int:routine_id>', methods=['GET'])
@@ -232,24 +227,22 @@ def get_all_exercise_routine_one_day(routine_id):
         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
 
-
-# GET ALL Category / TRAER TODAS CATEGORIA
-@api.route('/category', methods=['GET'])
-def get_all_Category():
-    category = Category.query.all()
-    if len(category) == 0:
-        return ({'error':'category list not found'}), 404
+# GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
+@api.route('/follow-up', methods=['GET'])
+def get_all_follow_up():
+    follow_up = FollowUp.query.all()
+    if len(follow_up) == 0:
+        return ({'error':'followUp list not found'}), 404
     else:
-        data_serialized = list(map(lambda category: category.serialize(), category))
+        data_serialized = list(map(lambda followUp: followUp.serialize(), follow_up))
         return jsonify(data_serialized), 200
 
-
-# GET ONE CATEGORY / TRAER UNA CATEGORIA
-@api.route('/category/<int:id>', methods=['GET'])
-def get_one_category(id):
-    category = Category.query.filter_by(id=id).first()
-    if category is None:
-        return ({'error':'category not found'}), 404
+# GET ALL FollowUp weekly_routine / TRAER TODOS SEGUIMIENTO DE UNA RUITNA SEMANA
+@api.route('/follow-up/<int:weekly_routine_id>', methods=['GET'])
+def get_one_follow_up(weekly_routine_id):
+    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id).all()
+    if len(follow_up) == 0:
+        return ({'error':'followUp of one week not found'}), 404
     else:
-        data_serialized = category.serialize()
+        data_serialized = list(map(lambda followUp: followUp.serialize(), follow_up))
         return jsonify(data_serialized), 200
