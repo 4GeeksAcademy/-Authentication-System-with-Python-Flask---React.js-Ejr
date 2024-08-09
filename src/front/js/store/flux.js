@@ -47,7 +47,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			
-			
 			login: async (email, password) => {
 				let resp = await fetch(apiUrl + "/login", {
 					method: "POST",

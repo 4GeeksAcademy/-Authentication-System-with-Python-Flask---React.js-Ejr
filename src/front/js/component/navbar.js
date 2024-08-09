@@ -16,7 +16,7 @@ export const Navbar = () => {
   const handleLogout = async () => {
     await actions.logout();
     handleNavCollapse();
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {

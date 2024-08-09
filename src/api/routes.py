@@ -102,8 +102,8 @@ def login():
         return jsonify({"error": "Invalid credentials"}), 401
 
     role = Role.query.filter_by(id=user.role_id).first()
-    access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})  # Incluye role_id en el token
-    return jsonify(access_token=access_token, role_id=role.id), 200  # Incluye role_id en la respuesta
+    access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})
+    return jsonify(access_token=access_token, role_id=role.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
 @api.route('/api/pinguser', methods=['GET'])
