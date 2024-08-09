@@ -28,7 +28,15 @@ def register():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     country = request.json.get("country", None)
-   
-   
-    return jsonify(response_body), 200
+    if not name or not username or not email or not password or not country:
+        return jsonify({'success':False, 'msg':'Todos los campos son necesarios'})
+    email_exist = User.query.filter_by(email=email).first()
+    if email_exist:
+        return jsonify({'success': False, 'msg':'Ya existe una cuenta registrada con el email '+ email}),400
+
+    new_user = User(name=name, username=username, email=email, password=password, country=country )
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize()}),200
+
 
