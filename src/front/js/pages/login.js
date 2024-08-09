@@ -1,7 +1,11 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import "../../styles/signUp.css";
 import { Context } from "../store/appContext";
+
 //PENDIENTE CAMBIAR FUNCIONES Y CONECTAR CON API
-export const signUp = () =>{
+
+export const Login = () =>{
     const { store, actions } = useContext(Context);
     const [dataForm,setDataForm]=useState({
         email: '',
