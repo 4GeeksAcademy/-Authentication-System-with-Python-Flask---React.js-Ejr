@@ -4,7 +4,7 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
 import { CarouselHome } from "../component/carouselHome";
-import Timeline from "../component/TimeLine";
+import Streak from "../component/streak";
 
 export const Dashboard = () => {
 	const { store, actions } = useContext(Context);
@@ -12,7 +12,7 @@ export const Dashboard = () => {
 	return (
 		<>
 			<CarouselHome />
-			<Timeline />
+			<Streak />
 		</>
 	);
 
