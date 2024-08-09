@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error("Invalid token response status:", resp.status);
 						localStorage.removeItem("token");
 						localStorage.removeItem("role_id");
-						localStorage.removeItem("user_id"); // Limpiar user_id del localStorage
+						localStorage.removeItem("user_id"); 
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
@@ -45,7 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error loading session:", error);
 					localStorage.removeItem("token");
 					localStorage.removeItem("role_id");
-					localStorage.removeItem("user_id"); // Limpiar user_id del localStorage
+					localStorage.removeItem("user_id");
 					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}

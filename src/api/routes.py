@@ -147,23 +147,7 @@ def get_user(user_id):
         return jsonify(response_body), 404
     
 
-# ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
-@api.route('/cars/<int:car_id>', methods=['GET'])
-@jwt_required()
-def get_cars(car_id):
-    car_query = Car.query.filter_by(id=car_id).first()
-    if car_query:
-        response_body = {
-            "msg": "Resultado exitoso", 
-            "result": car_query.serialize()
-        }
-        return jsonify(response_body), 200
-    else:
-        response_body = {
-           "msg": "Car no exist" 
-        }
-        return jsonify(response_body), 404
-    
+   
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services con id
 @api.route('/services/<int:services_id>', methods=['GET'])
 @jwt_required()
@@ -180,6 +164,33 @@ def get_service(services_id):
            "msg": "Service no exist" 
         }
         return jsonify(response_body), 404
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /cars 
+@api.route('/cars', methods=['GET'])
+@jwt_required()
+def get_all_cars():
+    cars = Car.query.all()
+    car_list = [car.serialize() for car in cars]
+    return jsonify(car_list), 200
+
+    
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
+@api.route('/cars/<int:car_id>', methods=['GET'])
+@jwt_required()
+def get_cars(car_id):
+    car_query = Car.query.filter_by(id=car_id).first()
+    if car_query:
+        response_body = {
+            "msg": "Resultado exitoso", 
+            "result": car_query.serialize()
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+           "msg": "Car no exist" 
+        }
+        return jsonify(response_body), 404
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
@@ -203,6 +214,52 @@ def create_car():
 
     response_body = new_car.serialize()
     return jsonify(response_body), 201
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// PATCH a /cars + id 
+@api.route('/cars/<int:car_id>', methods=['PATCH'])
+@jwt_required()
+def update_car(car_id):
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"error": "Car not found"}), 404
+
+    data = request.get_json()
+    car_model = data.get('car_model')
+    license_plate = data.get('license_plate')
+
+    if car_model:
+        car.car_model = car_model
+    if license_plate:
+        car.license_plate = license_plate
+
+    db.session.commit()
+    return jsonify(car.serialize()), 200
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// DELETE a /cars + id 
+@api.route('/cars/<int:car_id>', methods=['DELETE'])
+@jwt_required()
+def delete_car(car_id):
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"error": "Car not found"}), 404
+
+    db.session.delete(car)
+    db.session.commit()
+    return jsonify({"message": "Car deleted successfully"}), 200
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// post a /comments 
+@api.route('/comments', methods=['GET'])
+@jwt_required()
+def get_comments():
+    appointment_id = request.args.get('appointment_id')
+    if appointment_id:
+        comments_query = Comment.query.filter_by(appointment_id=appointment_id).all()
+        comments_list = list(map(lambda comment: comment.serialize(), comments_query))
+        return jsonify(comments_list), 200
+    else:
+        return jsonify({"msg": "No appointment_id provided"}), 400
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /comments 
 @api.route('/comments', methods=['POST'])
@@ -343,6 +400,22 @@ def create_appointment():
         return jsonify({"error": "No available slots for this time"}), 400
 
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// PATCH a /appointments con id
+@api.route('/appointments/<int:appointment_id>', methods=['PATCH'])
+@jwt_required()
+def update_appointment(appointment_id):
+    appointment = Appointment.query.get(appointment_id)
+    if not appointment:
+        return jsonify({"error": "Appointment not found"}), 404
+
+    data = request.get_json()
+    status = data.get('status')
+    if status:
+        appointment.status = status
+
+    db.session.commit()
+    return jsonify({"msg": "Appointment updated successfully"}), 200
+
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments con id
 @api.route('/appointments/<int:appointment_id>', methods=['GET'])
 def get_appointment(appointment_id):
@@ -378,8 +451,23 @@ def cancel_appointment(appointment_id):
 @jwt_required()
 def get_appointments():
     appointments_query = Appointment.query.all()
-    appointments_list = list(map(lambda appointment: appointment.serialize(), appointments_query))
+    
+    appointments_list = []
+    for appointment in appointments_query:
+        appointment_data = appointment.serialize()
+        
+        user = User.query.get(appointment.user_id)
+        car = Car.query.get(appointment.car_id)
+        service = Service.query.get(appointment.service_id)
+        
+        appointment_data['user'] = user.serialize() if user else None
+        appointment_data['car'] = car.serialize() if car else None
+        appointment_data['service'] = service.serialize() if service else None
+        
+        appointments_list.append(appointment_data)
+    
     return jsonify(appointments_list), 200
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
 @api.route('/update_profile', methods=['PATCH'])

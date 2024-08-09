@@ -173,3 +173,58 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+
+
+// # Routes de CredentialsContainer, copia de seguridad:
+
+@api.route('/appointments', methods=['POST'])
+@jwt_required()
+def create_appointment():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    date = data.get('date')
+    user_id = data.get('user_id')
+    car_id = data.get('car_id')
+    service_id = data.get('service_id')
+    
+    if not date or not user_id or not car_id or not service_id:
+        return jsonify({"error": "Date, user ID, car ID, and service ID are required"}), 400
+    
+    existing_user = User.query.filter_by(id=user_id).first()
+    if not existing_user:
+        return jsonify({"error": "Bad user_id"}), 400
+    service = Service.query.get(service_id)
+
+    if not service:
+        return jsonify({"error": "Service not found"}), 404
+
+    max_appointments_per_hour = Setting.query.first().max_appointments_per_hour
+
+    start_time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+    end_time = start_time + timedelta(hours=1)
+
+    appointments_in_hour = Appointment.query.filter(
+        Appointment.date >= start_time,
+        Appointment.date < end_time
+    ).all()
+
+    total_slots_booked = sum([app.service.slots_required for app in appointments_in_hour])
+
+    if (total_slots_booked + service.slots_required) <= max_appointments_per_hour:
+        new_appointment = Appointment(
+            date=start_time,
+            user_id=user_id,
+            car_id=car_id,
+            service_id=service_id,
+            status="pending"
+        )
+        db.session.add(new_appointment)
+        db.session.commit()
+
+        response_body = new_appointment.serialize()
+        return jsonify(response_body), 201
+    else:
+        return jsonify({"error": "No available slots for this time"}), 400

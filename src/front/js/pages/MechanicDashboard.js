@@ -10,15 +10,47 @@ const MechanicDashboard = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [hasAccess, setHasAccess] = useState(false);
   const [profile, setProfile] = useState({
-    name: 'Mechanic',
-    email: 'mechanic@example.com',
+    name: '',
+    email: '',
     password: '********',
   });
+
+  const apiUrl = process.env.BACKEND_URL + "/api";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
+    const userId = localStorage.getItem("user_id"); // Cargar el user_id del localStorage
+
     setHasAccess(!!token && roleId === "2");
+
+    if (token && roleId === "2" && userId) {
+      // Load the mechanic profile
+      const loadProfile = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setProfile({
+              name: data.result.name,
+              email: data.result.email,
+              password: '********', // Nunca mostrar la contraseña real
+            });
+          } else {
+            console.error("Failed to fetch profile");
+          }
+        } catch (error) {
+          console.error("Error loading profile:", error);
+        }
+      };
+
+      loadProfile();
+    }
   }, [store.token]);
 
   const handleProfileModalOpen = () => {
@@ -29,7 +61,8 @@ const MechanicDashboard = () => {
     if (updatedProfile) {
       setProfile((prevProfile) => ({
         ...prevProfile,
-        email: updatedProfile.email
+        email: updatedProfile.email,
+        name: updatedProfile.name,
       }));
       setStatusMessage("Profile updated successfully");
     }
@@ -37,11 +70,21 @@ const MechanicDashboard = () => {
   };
 
   const saveProfile = async (updatedProfile) => {
-    const result = await actions.saveProfile(updatedProfile);
-    if (result.success) {
-      handleProfileModalClose(updatedProfile);
-    } else {
-      alert('Error updating profile: ' + result.error.message);
+    try {
+      const result = await actions.saveProfile(updatedProfile);
+      if (result.success) {
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          email: updatedProfile.email,
+          name: updatedProfile.name,
+        }));
+        setStatusMessage("Profile updated successfully");
+        setIsProfileModalOpen(false);
+      } else {
+        alert('Error updating profile: ' + result.error.message);
+      }
+    } catch (error) {
+      alert('An error occurred: ' + error.message);
     }
   };
 
