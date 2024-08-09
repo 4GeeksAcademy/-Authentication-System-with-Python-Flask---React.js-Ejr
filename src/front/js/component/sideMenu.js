@@ -189,7 +189,7 @@ export const SideMenu = () => {
                 </Link>
               </li>
               <li className="flex w-full items-center active:scale-95 transition-all">
-                <Link to='/signin'
+                <Link to='/signup'
                   className="flex w-full justify-center items-center gap-2 rounded border border-emerald-600 px-12 py-3 text-sm font-medium text-emerald-400 hover:bg-emerald-600 hover:text-neutral-900 focus:outline-none active:bg-emerald-500 transition-all duration-100 ease-in"
                   href="#"
                 >
