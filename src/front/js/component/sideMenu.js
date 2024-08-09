@@ -32,10 +32,10 @@ export const SideMenu = () => {
 
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full drop-shadow-2xl"
+        className="fixed top-0 left-0 z-40 md:w-64 w-screen h-screen transition-transform -translate-x-full drop-shadow-2xl backdrop-blur"
         aria-label="Sidenav"
       >
-        <div className="flex flex-col overflow-y-auto py-5 px-3 h-full border-r bg-neutral-900 border-neutral-700">
+        <div className="flex flex-col overflow-y-auto py-5 px-3 h-full border-r bg-neutral-900/75	 border-neutral-700  w-screen md:w-64">
           <div className="flex justify-between items-center mb-5">
             <div className="flex items-center gap-1 mr-2">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m536-84-56-56 142-142-340-340-142 142-56-56 56-58-56-56 84-84-56-58 56-56 58 56 84-84 56 56 58-56 56 56-142 142 340 340 142-142 56 56-56 58 56 56-84 84 56 58-56 56-58-56-84 84-56-56-58 56Z" />
