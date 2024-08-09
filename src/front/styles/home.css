@@ -1,7 +1,185 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.carousel {
+    position: relative;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.carousel-inner {
+    padding-bottom: 2rem;
+}
+
+.card {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 500px; 
+}
+
+.card-img-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.carousel-caption {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.card-details {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 50%;
+}
+
+.custom-jumbotron {
+    background-color: #d3d3d3; 
+    padding: 2rem 1rem; 
+}
+
+.custom-jumbotron h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.custom-jumbotron p {
+    font-size: 1.25rem; 
+}
+
+.custom-jumbotron img {
+    border-radius: 8px; 
+}
+
+.custom-jumbotron {
+    background-color: #f1f1f1;
+    padding: 2rem 1rem;
+    border: 1px solid #ccc; 
+}
+
+.custom-jumbotron h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.custom-jumbotron p.lead {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.custom-jumbotron .percentage {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.custom-jumbotron .image-container {
+    max-width: 600px; 
+    margin-left: 2rem; 
+}
+
+.custom-card {
+    position: relative;
+    background-color: #000;
+    border: none;
+}
+
+.custom-card .card-img {
+    opacity: 0.7; 
+    height: 100%; 
+    object-fit: cover;
+}
+
+.custom-card .card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: white;
+}
+
+.custom-card .card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.custom-card .card-text {
+    font-size: 1.25rem;
+}
+
+.custom-card .button-group .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border: none; /* Elimina el borde alrededor del botón */
+    padding: 0.25rem 0.75rem; /* Ajusta el padding para mejorar la apariencia */
+    outline: none; /* Elimina el outline al hacer clic */
+}
+
+.navbar-toggler-icon {
+    width: 1.5rem; 
+    height: 1.5rem; 
+    background-image: none; /* Elimina la imagen por defecto */
+    position: relative;
+    display: block;
+    background-color: transparent; /* Asegura que no haya fondo de color */
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after,
+.navbar-toggler-icon div {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px; 
+    background-color: black; /* Color de las líneas del menú */
+    position: absolute;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler-icon::before {
+    top: 0;
+}
+
+.navbar-toggler-icon::after {
+    bottom: 0;
+}
+
+.navbar-toggler-icon div {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon div {
+    transform: scale(0);
+}
+
