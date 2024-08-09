@@ -22,6 +22,7 @@ export const Navbar = () => {
                         <img src={usuarioImage} alt="User Profile" className="imgPerfil"/>
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li><Link className="dropdown-item" to="/editarPerfil">Perfil</Link></li>
                         <li><Link className="dropdown-item" to="/favoritos">Favoritos</Link></li>
                         <li><Link className="dropdown-item" to="/cursos">Cursos</Link></li>
                         <li><Link className="dropdown-item" to="/logout">Salir</Link></li>
@@ -32,7 +33,7 @@ export const Navbar = () => {
                     <Link to="/login" className="btn btn-secondary">
                         Iniciar sesión
                     </Link>
-                    <Link to="/signup" className="btn btn-secondary">
+                    <Link to="/signUp" className="btn btn-secondary">
                         Registrarse
                     </Link>
                 </div>
