@@ -1,0 +1,49 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #5D737E;
+}
+
+/* Contenedor navbar */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 0; 
+    margin: 0;  
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.btn-secondary {
+    background-color: #64b6ac;
+    border-color: #64b6ac;
+    color: #DAffef;
+}
+
+.btn-secondary:hover {
+    background-color: #DAffef;
+    border-color: #DAffef;
+    color: #5D737E;
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 1rem; /* Espacio entre botones */
+}
+
+.imgPerfil {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%; /* Opcional: para hacer la imagen redonda */
+    margin-right: 0.5rem;
+}

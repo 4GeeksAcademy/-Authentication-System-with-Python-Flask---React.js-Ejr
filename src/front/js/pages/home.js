@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
+
+
 export const Home = () => {
     const { store, actions } = useContext(Context);
 // esto para que al presionar la pestaña, nos lleve a una pagina LINEA 12
@@ -35,3 +37,4 @@ export const Home = () => {
         </div>
     );
 };
+
