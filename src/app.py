@@ -10,6 +10,7 @@ from api.utils import APIException, generate_sitemap
 from api.models import db, TokenBlockList
 from api.routes import api
 from api.admin import setup_admin
+from datetime import timedelta
 from api.commands import setup_commands
 
 # from models import Person
@@ -20,7 +21,8 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-app.config["JWT_SECRET_KEY"] = "LmL4gqgKVY8Ddy8wAA01S9gTDLX6HXFHrMR4eq4eakuot7juK"  # ¡Cambia las palabras "super-secret" por otra cosa!
+app.config["JWT_SECRET_KEY"] = "LmL4gqgKVY8Ddy8wAA01S9gTDLX6HXFHrMR4eq4eakuot7juK"
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=3)
 jwt = JWTManager(app)
 
 @jwt.token_in_blocklist_loader

@@ -70,6 +70,7 @@ const AppointmentDetails = () => {
           },
         });
         const commentsData = await commentsResponse.json();
+
         setComments(commentsData);
 
       } catch (error) {
@@ -82,6 +83,9 @@ const AppointmentDetails = () => {
 
   const handleAddComment = async () => {
     const token = localStorage.getItem("token");
+    const role_id = localStorage.getItem("role_id"); 
+    const isMechanic = role_id === "2"; 
+
     if (newComment.trim()) {
       try {
         const response = await fetch(`${apiUrl}/comments`, {
@@ -94,6 +98,7 @@ const AppointmentDetails = () => {
             comment: newComment,
             user_id: user.id,
             appointment_id: appointment.id,
+            is_mechanic: isMechanic, 
           }),
         });
 
@@ -102,7 +107,14 @@ const AppointmentDetails = () => {
         }
 
         const commentData = await response.json();
-        setComments([...comments, commentData]);
+
+        // Actualizar la lista de comentarios en la interfaz
+        const commentWithRole = {
+          ...commentData,
+          is_mechanic: isMechanic,  // Añadir is_mechanic para mostrarlo inmediatamente
+        };
+
+        setComments([...comments, commentWithRole]);
         setNewComment("");
         setError("");
       } catch (error) {
@@ -149,7 +161,7 @@ const AppointmentDetails = () => {
               {comments.length > 0 ? (
                 comments.map((comment, index) => (
                   <li key={index} className="m-3">
-                    <strong>{comment.author_id === comment.author_id ? "Client" : "Mechanic"}:</strong> {comment.content} <small>({new Date(comment.timestamp).toLocaleString()})</small>
+                    <strong>{comment.is_mechanic ? "Mechanic" : "Client"}:</strong> {comment.content} <small>({new Date(comment.timestamp).toLocaleString()})</small>
                   </li>
                 ))
               ) : (

@@ -15,7 +15,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let storageRoleId = localStorage.getItem("role_id");
 			
 					if (!storageToken || !storageUserId || !storageRoleId) {
-						// Si falta algún dato en localStorage, asegura limpiar el estado
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
@@ -28,7 +27,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			
 					if (!resp.ok) {
-						// Si el token no es válido, limpiar el token del localStorage y el estado
 						console.error("Invalid token response status:", resp.status);
 						localStorage.removeItem("token");
 						localStorage.removeItem("role_id");
@@ -41,7 +39,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: storageToken, userId: storageUserId, roleId: storageRoleId });
 					return true;
 				} catch (error) {
-					// Manejar errores de la solicitud fetch
 					console.error("Error loading session:", error);
 					localStorage.removeItem("token");
 					localStorage.removeItem("role_id");

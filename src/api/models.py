@@ -103,6 +103,7 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     timestamp  = db.Column(db.DateTime, default=datetime.utcnow)
+    is_mechanic = db.Column(db.Boolean, nullable=False, default=False)
 
     def serialize(self):
         return {
@@ -110,7 +111,8 @@ class Comment(db.Model):
             'appointment_id': self.appointment_id,
             'author_id': self.author_id,
             'content': self.content,
-            'timestamp': self.timestamp 
+            'timestamp': self.timestamp,
+            'is_mechanic': self.is_mechanic
         }
 
 class Setting(db.Model):

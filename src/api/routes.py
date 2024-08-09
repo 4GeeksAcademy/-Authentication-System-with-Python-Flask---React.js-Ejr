@@ -266,18 +266,27 @@ def get_comments():
 @jwt_required()
 def create_comment():
     data = request.get_json()
-    comment = data.get('comment')
+    comment_content = data.get('comment')
     user_id = data.get('user_id')
     appointment_id = data.get('appointment_id')
-    if not comment or not user_id or not appointment_id:
+    is_mechanic = data.get('is_mechanic', False)  # Obtiene el valor de `is_mechanic`, False si no está presente
+
+    if not comment_content or not user_id or not appointment_id:
         return jsonify({"error": "Comment, user ID, and appointment ID are required"}), 400
 
-    new_comment = Comment(content=comment, author_id=user_id, appointment_id=appointment_id)
+    new_comment = Comment(
+        content=comment_content,
+        author_id=user_id,
+        appointment_id=appointment_id,
+        is_mechanic=is_mechanic
+    )
     db.session.add(new_comment)
     db.session.commit()
 
     response_body = new_comment.serialize()
     return jsonify(response_body), 201
+
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /services 
 @api.route('/services', methods=['POST'])
@@ -493,7 +502,6 @@ def update_profile():
     return jsonify({"msg": "Profile updated successfully", "email": user.email}), 200
 
 
-
 # /***************** GENERA DATOS DE PRUEBA ************ get a /add_test_data
 @api.route('/add_test_data', methods=['POST'])
 def add_test_data():
@@ -610,23 +618,28 @@ def add_test_data():
 
     # Agregar comentarios
     comments = [
-        {"content": "Great service!", "author_id": user_objects[0].id, "appointment_id": 1},
-        {"content": "Very satisfied with the brake inspection.", "author_id": user_objects[1].id, "appointment_id": 2},
-        {"content": "Tire rotation was quick and efficient.", "author_id": user_objects[2].id, "appointment_id": 3},
-        {"content": "Oil change done perfectly.", "author_id": user_objects[3].id, "appointment_id": 4},
-        {"content": "Friendly staff.", "author_id": user_objects[4].id, "appointment_id": 5},
-        {"content": "Great service as always.", "author_id": user_objects[5].id, "appointment_id": 6},
-        {"content": "Quick and efficient.", "author_id": user_objects[6].id, "appointment_id": 7},
-        {"content": "Highly recommend.", "author_id": user_objects[7].id, "appointment_id": 8},
-        {"content": "Very professional.", "author_id": user_objects[8].id, "appointment_id": 9},
-        {"content": "Exceptional service.", "author_id": user_objects[9].id, "appointment_id": 10},
-        {"content": "Best workshop in town.", "author_id": user_objects[10].id, "appointment_id": 11}
+        {"content": "Great service!", "author_id": user_objects[0].id, "appointment_id": 1, "is_mechanic": False},
+        {"content": "Very satisfied with the brake inspection.", "author_id": user_objects[1].id, "appointment_id": 2, "is_mechanic": False},
+        {"content": "Tire rotation was quick and efficient.", "author_id": user_objects[2].id, "appointment_id": 3, "is_mechanic": False},
+        {"content": "Oil change done perfectly.", "author_id": user_objects[3].id, "appointment_id": 4, "is_mechanic": False},
+        {"content": "Friendly staff.", "author_id": user_objects[4].id, "appointment_id": 5, "is_mechanic": False},
+        {"content": "Great service as always.", "author_id": user_objects[5].id, "appointment_id": 6, "is_mechanic": False},
+        {"content": "Quick and efficient.", "author_id": user_objects[6].id, "appointment_id": 7, "is_mechanic": False},
+        {"content": "Highly recommend.", "author_id": user_objects[7].id, "appointment_id": 8, "is_mechanic": False},
+        {"content": "Very professional.", "author_id": user_objects[8].id, "appointment_id": 9, "is_mechanic": False},
+        {"content": "Exceptional service.", "author_id": user_objects[9].id, "appointment_id": 10, "is_mechanic": False},
+        {"content": "Best workshop in town.", "author_id": user_objects[10].id, "appointment_id": 11, "is_mechanic": False},
+        # Comentarios del mecánico
+        {"content": "Everything looks good after inspection.", "author_id": user_objects[-1].id, "appointment_id": 1, "is_mechanic": True},
+        {"content": "Brake pads replaced.", "author_id": user_objects[-1].id, "appointment_id": 2, "is_mechanic": True},
+        {"content": "Tire pressure adjusted.", "author_id": user_objects[-1].id, "appointment_id": 3, "is_mechanic": True}
     ]
     for comment_data in comments:
         comment = Comment(
             content=comment_data['content'],
             author_id=comment_data['author_id'],
-            appointment_id=comment_data['appointment_id']
+            appointment_id=comment_data['appointment_id'],
+            is_mechanic=comment_data['is_mechanic']
         )
         db.session.add(comment)
 
