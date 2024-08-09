@@ -1,17 +1,18 @@
-import React from "react";
+import React, {useContext}from "react";
+import{Context} from "../store/appContext"
 import "../../styles/login.css";
 import Logo from "../../../../public/images/nutri-logo-icon-b.png";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 const LogIn = () => {
+    const{actions} = useContext(Context)
     return (
         <div className="login-body d-flex justify-content-center align-items-center">
 
 
             <div className="h-75 bg-light rounded col-12 col-lg-6 container container-login">
-                <div className="header-container mt-3 h-25 d-flex align-items-center justify-content-between">
+                <div className="header-container mt-5 h-25 d-flex align-items-center justify-content-between">
                     <div className="logo-img-container d-flex">
                         <img className="logo-img" src={Logo} alt="logo-nutri-4-well" />
                     </div>
@@ -28,6 +29,15 @@ const LogIn = () => {
                         email: Yup.string().email('Ingresa un correo válido').required('Requerido'),
                         password: Yup.string().required('Contraseña inválida'),
                     })}
+                    onSubmit={(values, { setSubmitting }) => {
+                        // setTimeout(() => {
+                        //     alert(JSON.stringify(values, null, 2));
+                        //     setSubmitting(false);
+                        // }, 400);
+                        console.log(values);
+                        actions.login(values.email,values.password)
+                        
+                    }}
                 >
 
                     <Form className="row g-3 d-flex flex-column justify-content-center align-items-center">
