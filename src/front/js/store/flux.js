@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			email: [],
 			password: []
+// lineas
 
 
 
@@ -36,7 +37,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			
 		},
 		actions: {
 
