@@ -106,18 +106,17 @@ export const Home = () => {
             <div className="jumbotron jumbotron-fluid mt-4 custom-jumbotron">
                 <div className="container d-flex align-items-center justify-content-between">
                     <div className="text-container">
-                        <h1 className="display-5">Discover the Benefits of Using Tickeate for Your Music Events</h1>
+                        <h1 className="display-5">Descubra las ventajas de utilizar Tickeate para sus eventos musicales</h1>
                         <p className="lead">
-                            With Tickeate, you'll have exclusive access to the hottest music events, a user-friendly interface for easy ticket purchasing, and secure transactions for peace of mind.
-                        </p>
+                        Con Tickeate, tendrás acceso exclusivo a los eventos musicales más candentes, una interfaz fácil de usar para comprar entradas fácilmente y transacciones seguras para tu tranquilidad.                        </p>
                         <div className="row">
                             <div className="col-6 text-center">
                                 <h2 className="percentage">50%</h2>
-                                <p>Exclusive Access to the Hottest Music Events</p>
+                                <p>Acceso exclusivo a los mejores eventos musicales</p>
                             </div>
                             <div className="col-6 text-center">
                                 <h2 className="percentage">50%</h2>
-                                <p>User-Friendly Interface and Secure Transactions</p>
+                                <p>Interfaz fácil de usar y transacciones seguras</p>
                             </div>
                         </div>
                     </div>
@@ -138,11 +137,10 @@ export const Home = () => {
                     alt="Background Image"
                 />
                 <div className="card-img-overlay d-flex flex-column justify-content-center align-items-center text-center">
-                    <h5 className="card-title">Discover and attend exciting events</h5>
+                    <h5 className="card-title">Descubra y asista a emocionantes acontecimientos</h5>
                     <p className="card-text">Sign up for an account or newsletter to stay updated on upcoming events</p>
                     <div className="button-group mt-3">
-                        <a href="#" className="btn btn-dark btn-lg mx-2">Sign Up</a>
-                        <a href="#" className="btn btn-light btn-lg mx-2">Learn More</a>
+                        <a href="#" className="btn btn-dark btn-lg mx-2">Regístrese</a>
                     </div>
                 </div>
             </div>
