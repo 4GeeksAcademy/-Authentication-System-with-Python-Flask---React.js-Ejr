@@ -14,6 +14,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Profile } from "./pages/profile";
+import { ToastContainer } from "react-toastify";
 
 import { VistaPrueba } from "./pages/vistaPrueba.jsx";
 
@@ -45,6 +46,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1 className="text-center">Not found!</h1>} path="/*" />
                     </Routes>
+                    <ToastContainer theme="dark" />
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
