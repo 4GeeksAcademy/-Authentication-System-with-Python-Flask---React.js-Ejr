@@ -17,6 +17,8 @@ const BookAppointmentUnregisteredUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const datePickerRef = useRef(null);
@@ -94,7 +96,7 @@ const BookAppointmentUnregisteredUser = () => {
 
   const nextStep = () => {
     if (currentStep === 1 && (!carLicensePlate || !carModel)) {
-      setError("Car license plate and model are required.");
+      setError("Car license plate, make & model are required.");
       return;
     }
     if (currentStep === 2 && !serviceChosen) {
@@ -123,6 +125,45 @@ const BookAppointmentUnregisteredUser = () => {
     navigate("/accountandappointmentcreated");
   };
 
+  const requireLicensePlate = (e) => {
+    const value = e.target.value.toUpperCase();
+    const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
+
+    if (regex.test(value)) {
+      setCarLicensePlate(value);
+    }
+  };
+
+  const requireEmail = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+  
+    if (!value.includes("@")) {
+      setEmailError("Email must contain @ sign.");
+    } else {
+      setEmailError(""); 
+    }
+  };
+  
+  const requirePhoneNumber = (e) => {
+    const value = e.target.value;
+    
+    const digitsOnly = value.replace(/\D/g, "");
+  
+    if (digitsOnly.length > 9) {
+      setPhoneNumber(digitsOnly.slice(0, 9));
+    } else {
+      setPhoneNumber(digitsOnly);
+    }
+  
+    if (digitsOnly.length !== 9) {
+      setPhoneError("Phone number must be exactly 9 digits.");
+    } else {
+      setPhoneError(""); 
+    }
+  };
+  
+
   const displayCurrentStep = () => {
     return (
       <div className="card-body">
@@ -136,19 +177,19 @@ const BookAppointmentUnregisteredUser = () => {
                 type="text"
                 id="carLicensePlate"
                 value={carLicensePlate}
-                onChange={(e) => setCarLicensePlate(e.target.value)}
+                onChange={requireLicensePlate}
                 placeholder="Enter car license plate"
                 className="form-control"
               />
             </div>
             <div>
-              <label htmlFor="carModel">Car Model</label>
+              <label htmlFor="carModel">Car Make & Model</label>
               <input
                 type="text"
                 id="carModel"
                 value={carModel}
                 onChange={(e) => setCarModel(e.target.value)}
-                placeholder="Enter car model"
+                placeholder="Enter car make & model"
                 className="form-control"
               />
             </div>
@@ -206,8 +247,8 @@ const BookAppointmentUnregisteredUser = () => {
             <h3>Sign Up</h3>
             <div className="appointment-description">
               To confirm your appointment with us, we kindly ask that you create
-              an account by providing your full name, email address, and a
-              password.
+              an account by providing your full name, email address, phone
+              number and a password.
             </div>
             <div>
               <label htmlFor="name">Full Name</label>
@@ -226,7 +267,7 @@ const BookAppointmentUnregisteredUser = () => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={requireEmail}
                 placeholder="Enter your email"
                 className="form-control"
               />
@@ -237,7 +278,7 @@ const BookAppointmentUnregisteredUser = () => {
                 type="tel"
                 id="phoneNumber"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={requirePhoneNumber}
                 placeholder="Enter your phone number"
                 className="form-control"
               />

@@ -132,6 +132,15 @@ const CreateAppointmentRegisteredUser = () => {
     navigate("/appointmentconfirmed");
   };
 
+  const requireLicensePlate = (e) => {
+    const value = e.target.value.toUpperCase();
+    const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
+
+    if (regex.test(value)) {
+      setCarLicensePlate(value);
+    }
+  };
+
   const displayCurrentStep = () => {
     switch (currentStep) {
       case 1:
@@ -153,27 +162,33 @@ const CreateAppointmentRegisteredUser = () => {
                 </option>
               ))}
             </select>
-            <p>Or add a new car:</p>
-            <label htmlFor="carLicensePlate">Car License Plate</label>
-            <input
-              type="text"
-              id="carLicensePlate"
-              className="form-control"
-              value={carLicensePlate}
-              onChange={(e) => setCarLicensePlate(e.target.value)}
-              placeholder="Enter car license plate"
-            />
-            <label htmlFor="carModel">Car Model</label>
-            <input
-              type="text"
-              id="carModel"
-              className="form-control"
-              value={carModel}
-              onChange={(e) => setCarModel(e.target.value)}
-              placeholder="Enter car model"
-            />
+
+            {!carId && (
+              <>
+                <p>Or add a new car:</p>
+                <label htmlFor="carLicensePlate">Car License Plate</label>
+                <input
+                  type="text"
+                  id="carLicensePlate"
+                  className="form-control"
+                  value={carLicensePlate}
+                  onChange={requireLicensePlate}
+                  placeholder="Enter car license plate"
+                />
+                <label htmlFor="carModel">Car Make & Model</label>
+                <input
+                  type="text"
+                  id="carModel"
+                  className="form-control"
+                  value={carModel}
+                  onChange={(e) => setCarModel(e.target.value)}
+                  placeholder="Enter car make & model"
+                />
+              </>
+            )}
           </div>
         );
+
       case 2:
         return (
           <div className="step-content">
