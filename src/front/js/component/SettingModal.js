@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
 
-function SettingModal({ onClose, currentValue }) {
+function SettingModal({ onClose, currentValue, onSave }) {
   const [maxAppointments, setMaxAppointments] = useState(currentValue);
   const [error, setError] = useState("");
+  const apiUrl = process.env.BACKEND_URL + "/api";
+  const token = localStorage.getItem("token");
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (maxAppointments <= 0) {
       setError("Value must be greater than 0");
       return;
     }
 
-    onClose(maxAppointments);
+    try {
+      const response = await fetch(`${apiUrl}/settings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ max_appointments_per_hour: maxAppointments })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save setting");
+      }
+
+      const data = await response.json();
+      onSave(data.max_appointments_per_hour);  // Actualiza el valor en AdminDashboard
+      setError("");
+      onClose(); 
+
+    } catch (error) {
+      setError("Error saving setting: " + error.message);
+    }
   };
 
   return (

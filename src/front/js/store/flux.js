@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			userId: null,
 			roleId: null,
+			setting: null,
 		},
 		actions: {
 			loadSession: async () => {
