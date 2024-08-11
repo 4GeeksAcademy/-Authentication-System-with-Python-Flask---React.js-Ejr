@@ -27,11 +27,10 @@ const CreateAppointmentRegisteredUser = () => {
 const [bookedAppointments, setBookedAppointments] = useState([]);
 //-----------------------------------------------------------------------------------------------------
   const apiUrl = process.env.BACKEND_URL + "/api";
-
+  const myuserId = localStorage.getItem("user_id");
+  // setUserId(localStorage.getItem("user_id"))
   useEffect(() => {
-    // Verificamos si userId está definido antes de proceder
-    // if (!userId) return;
-  
+    
     const getServices = async () => {
       try {
         const response = await fetch(`${apiUrl}/services`);
@@ -42,18 +41,21 @@ const [bookedAppointments, setBookedAppointments] = useState([]);
         console.error("Error getting services:", error);
       }
     };
-  
+    console.log(myuserId)
     const getUserCars = async () => {
       try {
-        const response = await fetch(`${apiUrl}/cars/${store.userId}`);
+        // Actualiza la URL para que apunte a la ruta correcta usando owner_id
+        const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
         if (!response.ok) throw new Error("Network response failed");
-  
-        const { result } = await response.json();
-  
-        if (result && result.id && result.license_plate && result.car_model) {
-          setUserCars([result]);
+    
+        // Desestructura el resultado de la respuesta
+        const { result, msg } = await response.json();
+    
+        // Verifica si result es un array y tiene contenido
+        if (Array.isArray(result) && result.length > 0) {
+          setUserCars(result); // Guarda todos los coches en el estado
         } else {
-          console.error("Invalid car data received:", result);
+          console.error("No valid car data received or user has no cars", msg, result);
         }
       } catch (error) {
         console.error("Error getting user cars:", error);

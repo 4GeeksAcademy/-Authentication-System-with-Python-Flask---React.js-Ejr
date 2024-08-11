@@ -219,7 +219,28 @@ def get_cars(car_id):
            "msg": "Car no exist" 
         }
         return jsonify(response_body), 404
+    
 
+
+
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars/user con id del user
+@api.route('/cars/user/<int:owner_id>', methods=['GET'])
+# @jwt_required()
+def get_user_cars(owner_id):
+    cars_query = Car.query.filter_by(owner_id=owner_id).all()
+    if cars_query:
+        response_body = {
+            "msg": "Resultado exitoso", 
+            "result": [car.serialize() for car in cars_query]
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+           "msg": "No cars found for this user" 
+        }
+        return jsonify(response_body), 404
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
