@@ -7,6 +7,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userId: null,
 			roleId: null,
 			setting: null,
+			totalClients: null,
+			totalAppointments: null,
+			totalServices: null,
+			totalCars: null,
 		},
 		actions: {
 			loadSession: async () => {

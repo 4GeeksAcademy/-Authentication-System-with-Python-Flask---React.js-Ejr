@@ -9,12 +9,17 @@ import iconFavorites from "../../img/icons/icon-favorites.png";
 import iconBriefcase from "../../img/icons/icon-briefcase.png";
 import "../../styles/admindashboard.css";
 import { Context } from "../store/appContext";
+import { data } from "jquery";
 
 const AdminDashboard = () => {
   const { store, actions } = useContext(Context);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null); // 4 a null
+  const [clientCount, setClientCount] = useState(0);
+  const [appointmentsCount, setAppointmentsCount] = useState(0);
+  const [servicesCount, setServicesCount] = useState(0);
+  const [carsCount, setCarsCount] = useState(0);
   const [statusMessage, setStatusMessage] = useState(""); // Nuevo
   const [hasAccess, setHasAccess] = useState(false);  // Nuevo
   const apiUrl = process.env.BACKEND_URL + "/api";
@@ -26,6 +31,7 @@ const AdminDashboard = () => {
   const handleSettingModalOpen = () => {
     setIsSettingModalOpen(true);
   };
+
 
   const handleSettingModalClose = (updatedValue) => {
     if (updatedValue && updatedValue > 0) {
@@ -67,7 +73,112 @@ const AdminDashboard = () => {
       };
       loadProfile();
 
-      ///  Nuevo LoadSetting
+      const totalClients = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/users/clientscount`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            return false;
+          } else {
+            const data = await response.json();
+            const clientCount = data.total_clients;
+            return clientCount;
+          }
+        } catch (error) {
+          console.error("Error loading user:", error);
+        }
+      };
+      totalClients();
+      
+
+      const totalClientsCount = async() => {
+        const clientsNumbers = await totalClients();
+        setClientCount(clientsNumbers);
+        setStore({ totalClients: clientsNumbers });
+      }
+      totalClientsCount();
+
+      const totalAppointments = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/appointments/count`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            return false;
+          } else {
+            const data = await response.json();
+            const appointmentsCount = data.total_appointments;
+            return appointmentsCount;
+          }
+        } catch (error) {
+          console.error("Error loading Appointments:", error);
+        }
+      };
+      totalAppointments();
+
+      const totalAppointmentsCount = async() => {
+        const clientsAppintments = await totalAppointments();
+        setAppointmentsCount(clientsAppintments);
+      }
+      totalAppointmentsCount();
+
+      const totalServices = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/services/count`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            return false;
+          } else {
+            const data = await response.json();
+            const servicesCount = data.total_services;
+            return servicesCount;
+          }
+        } catch (error) {
+          console.error("Error loading Services:", error);
+        }
+      };
+      totalServices();
+
+      const totalServicesCount = async() => {
+        const servicesCounter = await totalServices();
+        setServicesCount(servicesCounter);
+      }
+      totalServicesCount();
+
+      const totalCars = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/cars/count`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            return false;
+          } else {
+            const data = await response.json();
+            const carsCount = data.total_cars;
+            return carsCount;
+          }
+        } catch (error) {
+          console.error("Error loading cars:", error);
+        }
+      };
+      totalCars();
+
+      const totalCarsCount = async() => {
+        const clientsCars = await totalCars();
+        setCarsCount(clientsCars);
+      }
+      totalCarsCount();
+      
       const loadSetting = async () => {
         try {
           const response = await fetch(`${apiUrl}/settings`, {
@@ -75,9 +186,8 @@ const AdminDashboard = () => {
               Authorization: `Bearer ${token}`,
             },
           });
-  
           if (!response.ok) {
-            console.error("Failed to get setting");
+            return false;
           } else {
             const data = await response.json();
             setMaxAppointmentsPerHour(data.max_appointments_per_hour);
@@ -145,22 +255,22 @@ const AdminDashboard = () => {
             <div className="stat1 col mx-2">
               <img src={iconUser} alt="Total Clients" />
               <h3>Total Clients</h3>
-              <p>10</p>
+              <p>{clientCount}</p>
             </div>
             <div className="stat2 col mx-2">
               <img src={iconComments} alt="Total Appointments" />
               <h3>Total Appointments</h3>
-              <p>20</p>
+              <p>{appointmentsCount}</p>
             </div>
             <div className="stat3 col mx-2">
               <img src={iconBriefcase} alt="Total Services" />
               <h3>Total Services</h3>
-              <p>5</p>
+              <p>{servicesCount}</p>
             </div>
             <div className="stat4 col mx-2">
               <img src={iconFavorites} alt="Total Cars" />
               <h3>Total Cars</h3>
-              <p>15</p>
+              <p>{carsCount}</p>
             </div>
             <div className="stat5 col mx-2">
               <img src={iconConnect} alt="Settings" />

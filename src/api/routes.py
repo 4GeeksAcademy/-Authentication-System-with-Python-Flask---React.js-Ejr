@@ -131,7 +131,7 @@ def user_logout():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users con id
 @api.route('/users/<int:user_id>', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_user(user_id):
     user_query = User.query.filter_by(id=user_id).first()
     if user_query:
@@ -146,6 +146,35 @@ def get_user(user_id):
         }
         return jsonify(response_body), 404
     
+# ///////////////////////////////////////////////////////////////////////////////////////////// DELETE a /users con id
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user: 
+        return jsonify({"error": "User not found"}), 404
+
+    appointments = Appointment.query.filter_by(user_id=user_id).all()
+    if not appointments:
+        return jsonify({"error": "No appointments found for this user"}), 404
+
+    for appointment in appointments:
+        comments = Comment.query.filter_by(appointment_id=appointment.id).all()
+        for comment in comments:
+            db.session.delete(comment)
+        db.session.delete(appointment)
+
+    cars = Car.query.filter_by(owner_id=user_id).all()
+    if not cars:
+        return jsonify({"error": "No cars found for this user"}), 404
+
+    for car in cars:
+        db.session.delete(car)
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"message": "User and related data deleted successfully"}), 200
 
    
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services con id
@@ -484,6 +513,33 @@ def get_appointments():
     
     return jsonify(appointments_list), 200
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments
+@api.route('/appointments/count', methods=['GET'])
+@jwt_required()
+def count_appointments():
+    total_appointments = Appointment.query.count()
+    return jsonify({'total_appointments': total_appointments}), 200
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /users/count
+@api.route('/users/clientscount', methods=['GET'])
+@jwt_required()
+def count_users():
+    total_clients = User.query.filter_by(role_id=3).count()
+    return jsonify({'total_clients': total_clients}), 200
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /services/count
+@api.route('/services/count', methods=['GET'])
+@jwt_required()
+def count_services():
+    total_services = Service.query.count()
+    return jsonify({'total_services': total_services}), 200
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /cars/count
+@api.route('/cars/count', methods=['GET'])
+@jwt_required()
+def count_cars():
+    total_cars = Car.query.count()
+    return jsonify({'total_cars': total_cars}), 200
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
