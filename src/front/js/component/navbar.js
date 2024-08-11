@@ -13,20 +13,22 @@ export const Navbar = () => {
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  const handleLogout = async () => {
-    const logoutSuccess = await actions.logout();
-    handleNavCollapse();
-    if (logoutSuccess) {
-      setUserRole(null);
-      navigate("/");
-    }
-  };
+const handleLogout = async () => {
+  const logoutSuccess = await actions.logout();
+  handleNavCollapse();
+  if (logoutSuccess) {
+    setUserRole(null);
+    navigate("/");
+  } else {
+    window.location.reload(); 
+  }
+};
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
 
-    // Solo si el token es válido, asignamos el userRole
     if (token) {
       setHasAccess(true);
       const fetchUserRole = () => {
