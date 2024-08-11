@@ -651,6 +651,11 @@ def add_test_data():
         {"car_model": "Subaru Impreza", "license_plate": "HIJ678", "owner_id": user_objects[12].id},
         {"car_model": "Volkswagen Golf", "license_plate": "KLM901", "owner_id": user_objects[13].id},
         {"car_model": "Tesla Model 3", "license_plate": "NOP234", "owner_id": user_objects[14].id},
+        # Añadimos más coches para algunos usuarios
+        {"car_model": "Ford Fiesta", "license_plate": "FGH567", "owner_id": user_objects[1].id},
+        {"car_model": "Chevrolet Camaro", "license_plate": "UVW345", "owner_id": user_objects[2].id},
+        {"car_model": "Toyota Camry", "license_plate": "QWE123", "owner_id": user_objects[3].id},
+        {"car_model": "Honda Accord", "license_plate": "ASD234", "owner_id": user_objects[4].id},
     ]
     for car_data in cars:
         car = Car(
@@ -679,6 +684,11 @@ def add_test_data():
         {"date": "2024-08-22 22:00:00", "user_id": user_objects[12].id, "car_id": 13, "service_id": 2, "status": "completed"},
         {"date": "2024-08-23 23:00:00", "user_id": user_objects[13].id, "car_id": 14, "service_id": 3, "status": "pending"},
         {"date": "2024-08-24 09:00:00", "user_id": user_objects[14].id, "car_id": 15, "service_id": 1, "status": "cancelled"},
+        # Añadimos más citas para mayor variedad
+        {"date": "2024-08-24 10:00:00", "user_id": user_objects[1].id, "car_id": 16, "service_id": 1, "status": "pending"},
+        {"date": "2024-08-25 11:00:00", "user_id": user_objects[2].id, "car_id": 17, "service_id": 2, "status": "completed"},
+        {"date": "2024-08-26 12:00:00", "user_id": user_objects[3].id, "car_id": 18, "service_id": 3, "status": "pending"},
+        {"date": "2024-08-27 13:00:00", "user_id": user_objects[4].id, "car_id": 19, "service_id": 1, "status": "cancelled"},
     ]
     for appointment_data in appointments:
         appointment = Appointment(
@@ -709,6 +719,11 @@ def add_test_data():
         {"content": "Brakes feel great.", "author_id": user_objects[12].id, "appointment_id": 13, "is_mechanic": False},
         {"content": "Smooth ride after service.", "author_id": user_objects[13].id, "appointment_id": 14, "is_mechanic": False},
         {"content": "Very efficient.", "author_id": user_objects[14].id, "appointment_id": 15, "is_mechanic": False},
+        # Añadimos más comentarios para mayor variedad
+        {"content": "Excellent service!", "author_id": user_objects[1].id, "appointment_id": 16, "is_mechanic": False},
+        {"content": "Prompt and courteous.", "author_id": user_objects[2].id, "appointment_id": 17, "is_mechanic": False},
+        {"content": "Work done well.", "author_id": user_objects[3].id, "appointment_id": 18, "is_mechanic": False},
+        {"content": "Had a great experience.", "author_id": user_objects[4].id, "appointment_id": 19, "is_mechanic": False},
         # Comentarios del mecánico
         {"content": "Everything looks good after inspection.", "author_id": user_objects[-1].id, "appointment_id": 1, "is_mechanic": True},
         {"content": "Brake pads replaced.", "author_id": user_objects[-1].id, "appointment_id": 2, "is_mechanic": True},
@@ -728,3 +743,4 @@ def add_test_data():
     db.session.commit()
 
     return jsonify({"msg": "Test data added successfully"}), 201
+

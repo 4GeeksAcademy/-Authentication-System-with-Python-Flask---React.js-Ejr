@@ -14,13 +14,13 @@ const AdminDashboard = () => {
   const { store, actions } = useContext(Context);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null); // 4 a null
+  const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
   const [clientCount, setClientCount] = useState(0);
   const [appointmentsCount, setAppointmentsCount] = useState(0);
   const [servicesCount, setServicesCount] = useState(0);
   const [carsCount, setCarsCount] = useState(0);
-  const [statusMessage, setStatusMessage] = useState(""); // Nuevo
-  const [hasAccess, setHasAccess] = useState(false);  // Nuevo
+  const [statusMessage, setStatusMessage] = useState(""); 
+  const [hasAccess, setHasAccess] = useState(false);
   const apiUrl = process.env.BACKEND_URL + "/api";
   const [profile, setProfile] = useState({
     email: '',
@@ -96,7 +96,6 @@ const AdminDashboard = () => {
       const totalClientsCount = async() => {
         const clientsNumbers = await totalClients();
         setClientCount(clientsNumbers);
-        setStore({ totalClients: clientsNumbers });
       }
       totalClientsCount();
 

@@ -27,7 +27,7 @@ function SettingModal({ onClose, currentValue, onSave }) {
       }
 
       const data = await response.json();
-      onSave(data.max_appointments_per_hour);  // Actualiza el valor en AdminDashboard
+      onSave(data.max_appointments_per_hour);
       setError("");
       onClose(); 
 

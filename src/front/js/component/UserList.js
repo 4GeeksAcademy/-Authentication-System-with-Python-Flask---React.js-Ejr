@@ -34,37 +34,32 @@ function UserList() {
 
         const appointmentsData = await response.json();
 
-        // Agrupación por usuario
         const groupedUsers = appointmentsData.reduce((acc, appointment) => {
           const userId = appointment.user.id;
           if (!acc[userId]) {
             acc[userId] = {
               ...appointment.user,
-              cars: new Set(),
+              cars: [],
               appointments: [],
               comments: [],
               lastAppointmentStatus: '',
               lastAppointmentDate: null,
             };
           }
-
-          acc[userId].cars.add(appointment.car.car_model);  // Usamos un Set para evitar duplicados
+          acc[userId].cars.push({car_model: appointment.car.car_model,license_plate: appointment.car.license_plate});
           acc[userId].appointments.push(appointment);
           acc[userId].comments.push(...appointment.comments);
 
-          // Guardar el estado y la fecha de la última cita
           acc[userId].lastAppointmentStatus = appointment.status;
 
-          // Convertir la fecha a objeto Date para una comparación adecuada
           acc[userId].lastAppointmentDate = new Date(appointment.date);
 
           return acc;
         }, {});
 
-        // Convertir los sets a arrays para contar los elementos
         const usersArray = Object.values(groupedUsers).map(user => ({
           ...user,
-          cars: Array.from(user.cars),  // Convertimos el Set en un array
+          cars: Array.from(user.cars),  
         }));
         setUsersData(usersArray);
       } catch (error) {  
