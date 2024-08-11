@@ -35,8 +35,17 @@ const Login = () => {
     setError(null);
 
     let logged = await actions.login(email, password);
+    const roleId = localStorage.getItem("role_id");
     if (logged) {
-      navigate("/");
+      if (roleId == 1) {
+        navigate("/admindashboard");
+      }
+      else if (roleId == 2){
+        navigate("/mechanicdashboard");
+      }
+      else if (roleId == 3){
+        navigate("/userdashboard");
+      }
     } else {
       setError("Invalid email or password. Please try again.");
     }
@@ -63,7 +72,7 @@ const Login = () => {
                   name="inputEmail"
                   type="email"
                   className="form-control"
-                  id="exampleInputEmail1"
+                  id="InputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                 />

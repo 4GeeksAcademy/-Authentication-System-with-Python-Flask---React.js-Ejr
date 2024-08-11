@@ -6,15 +6,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			userId: null,
 			roleId: null,
+			setting: null,
+			totalClients: null,
+			totalAppointments: null,
+			totalServices: null,
+			totalCars: null,
 		},
 		actions: {
 			loadSession: async () => {
 				try {
-					let storageToken = localStorage.getItem("token");
-					let storageUserId = localStorage.getItem("user_id");
-					let storageRoleId = localStorage.getItem("role_id");
+					const storageToken = localStorage.getItem("token");
+					const storageUserId = localStorage.getItem("user_id");
+					const storageRoleId = localStorage.getItem("role_id");
 			
 					if (!storageToken || !storageUserId || !storageRoleId) {
+						localStorage.clear(); 
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
@@ -27,22 +33,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			
 					if (!resp.ok) {
-						console.error("Invalid token response status:", resp.status);
-						localStorage.removeItem("token");
-						localStorage.removeItem("role_id");
-						localStorage.removeItem("user_id"); 
+						localStorage.clear(); 
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
 			
-					let data = await resp.json();
-					setStore({ token: storageToken, userId: storageUserId, roleId: storageRoleId });
+					const data = await resp.json();
+					localStorage.setItem("token", data.access_token);
+					localStorage.setItem("role_id", data.role_id);
+					localStorage.setItem("user_id", data.user_id); 
+					setStore({ token: data.access_token, userId: data.user_id, roleId: data.role_id });
 					return true;
 				} catch (error) {
 					console.error("Error loading session:", error);
-					localStorage.removeItem("token");
-					localStorage.removeItem("role_id");
-					localStorage.removeItem("user_id");
+					localStorage.clear();
 					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
@@ -92,9 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				if (!resp.ok) return false;
 				setStore({ token: null, userId: null, roleId: null });
-				localStorage.removeItem("token");
-				localStorage.removeItem("role_id");
-				localStorage.removeItem("user_id");
+				localStorage.clear();
 				return true;
 			},
 			
