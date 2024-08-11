@@ -45,7 +45,19 @@ width: 68%;
     color: var(--color-forest);
     text-decoration: underline; 
 }
+.error-message{
+    color: #f55!important;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 /*STYLES ONLY FOR REGISTER.JSX */
 
 .container-header-register{
