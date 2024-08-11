@@ -154,6 +154,66 @@ class Modalidad(Enum):
     TELETRABAJO = 'teletrabajo'
     PRESENCIAL = 'presencial'
     
+
+            # do not serialize the password, its a security breach
+        }
+    
+class Postulados(db.Model):
+    __tablename__="postulados"
+    id = db.Column(db.Integer, primary_key=True)
+    #id_oferta= db.Column(db.Integer)
+    
+
+    def __repr__(self):
+        return f'<Postulados {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            #"id_oferta": self.id_oferta,
+
+            # do not serialize the password, its a security breach
+        }
+    
+class Ratings(db.Model):
+    __tablename__="ratings"
+    id = db.Column(db.Integer, primary_key=True)
+    #from_id = db.Column (db.Integer, unique=True, nullable=False)
+    #to_id = db.Column (db.Integer, unique=True, nullable=False)
+    value = db.Column(db.Integer)
+    
+
+    def __repr__(self):
+        return f'<Ratings {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            #from_id
+            #to_id
+            "value": self.value
+
+            # do not serialize the password, its a security breach
+        }
+    
+
+class Favoritos(db.Model):
+    __tablename__="favoritos"
+    id = db.Column(db.Integer, primary_key=True)
+    #id_programadores
+    #id_oferta
+    #id_empleadores
+    def __repr__(self):
+        return f'<Favoritos {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            #resto de id
+
+            # do not serialize the password, its a security breach
+        }
+
 class Ofertas(db.Model):
     __tablename__="ofertas"
     id = db.Column(db.Integer, primary_key=True)
@@ -189,6 +249,7 @@ class Ofertas(db.Model):
     
 
 class Proyectos(db.Model):
+    __tablename__="proyectos"
     __tablename__="proyectos"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=True, nullable=False)
