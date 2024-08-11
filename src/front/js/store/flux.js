@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			users: [],
-			auth: false
+			auth: false,
+			error:{}
 		},
 		actions: {
 			// loginFetch: async () => {
@@ -16,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	  console.error('Error:', error);
 			// 	  throw error; 
 			// 	}
+
+		
 
 			login: async (email, password) => {
 				// hacer fetch que envie el email y password para poder loguearme
@@ -30,10 +33,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password
 						})
 					})
+					if(response.status === 201){
+						let data = await response.json()
+						setStore({ auth: data.logged })
+						return true
+					}
+					if(response.status === 404){
+						let data = await response.json()
+						setStore({error:data.msj})
+						
+						return false
+					}
+					
 					let data = await response.json()
 					localStorage.setItem("token", data.access_token)
 					setStore({ auth: data.logged })
-					console.log(data);
+				
 					return true
 				} catch (error) {
 					console.log(error);
@@ -69,10 +84,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			register: async (name,email, password,password2 , address, phone) => {
+			register: async (name,email, password, address, phone) => {
 				// hacer fetch que envie el email y password para poder loguearme
 				try {
-					const response = await fetch (`${process.env.BACKEND_URL}/api/register`, {
+					const response = await fetch (`${process.env.BACKEND_URL}/api/user`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -81,23 +96,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"name": name,
 							"email": email,
 							"password": password,
-							"password2":password2,
 							"address": address,
-							"phone": phone
+							"phone": phone,
+						"is_active":true,
+						"id_role": 1
 						})
 					})
+		
+				if(response.status === 201){
 					let data = await response.json()
-					localStorage.setItem("token", data.access_token)
+
+					// localStorage.setItem("token", data.access_token)
 					setStore({ auth: data.logged })
-					console.log(data);
+					
 					return true
+				}
+				if(response.status === 404){
+					let data = await response.json()
+					setStore({error:data.msj})
+					
+					return false
+				}
 				} catch (error) {
 					console.log(error);
 					return false
 				}
-			}
+			},
+		
 		}
-
+	
 	}
 };
 
