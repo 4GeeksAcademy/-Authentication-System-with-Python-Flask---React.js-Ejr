@@ -2,12 +2,13 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Product
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
-
-
+import mercadopago
+import json
+sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -160,3 +161,91 @@ def update_user(id):
 # guardo los cambios en la db
     db.session.commit()
     return jsonify (user.serialize(),{"msg":"The user has been updated"}), 200
+
+# ENDPOINT PRODUCTOS
+#GET products
+@api.route('/products', methods=['GET'])
+def get_products():
+    all_products = Product.query.all()
+    if all_products == []: #sin productos
+        return jsonify({"msj":"Out of stock"}), 404 
+    
+    result= list(map(lambda item:item.serialize(),all_products))
+
+    response_body = {
+        "msg": "All products", 
+        "results": result #tus productos
+    }
+    return jsonify(response_body), 200
+
+# GET product
+@api.route('/product/<int:id>', methods=['GET'])
+def get_product(id):
+    # print(id)
+    especific_product= Product.query.filter_by(id=id).first()
+    if especific_product is None:
+        return jsonify({"msj":"Not faund"}), 404
+    # print(especific_product)
+    query_result= especific_product.serialize()
+    print(query_result)
+    return jsonify(query_result), 200
+
+#DELETE 
+@api.route('/product/<int:id>', methods=['DELETE'])
+def delete_product(id):
+    especific_product= Product.query.filter_by(id=id).first() 
+    if especific_product is None:
+        return jsonify({"msg":"The product doesn't exist"}), 404
+
+    db.session.delete(especific_product)
+    db.session.commit()    
+    return jsonify({"msj":"delete successfully"}), 200
+
+# Agregar producto
+@api.route('/product', methods=['POST'])
+def add_new_product():
+    request_body= request.get_json()
+    new_product = Product(
+        name = request_body['name'],
+        cost = request_body['cost'],
+    )
+    db.session.add(new_product)
+    db.session.commit()
+    return jsonify({"msj":"Added product"}), 201
+
+# Actualizar productos
+@api.route('/products/<int:id>', methods=['PUT'])
+def update_product(id):
+    data = request.get_json()
+    product = Product.query.filter_by(id=id).first()
+    if product is None:
+         return jsonify({"msg":"The product doesn't exist"}), 404
+# actualiza datos
+    if 'name' in data:
+        product.name = data ['name']
+    if 'cost' in data:
+        product.cost = data ['cost']
+    db.session.commit()
+    return jsonify (product.serialize(),{"msg":"The product has been updated"}), 200
+
+#MERCADO PAGO
+
+@api.route("/preference", methods=["POST"]) 
+def preference(): 
+    # body = json.loads(request.data)  # aca trae la info 
+ # acá vamos a poner más líneas de código 
+ # Crea un ítem en la preferencia 
+    preference_data = { 
+    "items": [ {
+        "title": "Mi producto",  #estas líneas las vamos a poder editar con los datos de nuestra API. 
+        "quantity": 1,   #estos tres son los requeridos obligatoriamente por mercadopago. 
+        "unit_price": 75.76,   #aca va el total a pagar por el cliente. 
+ #también podríamos mandar más datos como nombre del producto, etc. 
+    } ]
+ # acá vamos a poner más líneas de código 
+    } 
+ #acá vamos a poner más líneas de código 
+    preference_response = sdk.preference().create(preference_data) 
+    preference = preference_response["response"] 
+    return preference, 200 
+ 
