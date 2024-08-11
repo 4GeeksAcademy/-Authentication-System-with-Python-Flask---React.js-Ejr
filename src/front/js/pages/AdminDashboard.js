@@ -9,7 +9,6 @@ import iconFavorites from "../../img/icons/icon-favorites.png";
 import iconBriefcase from "../../img/icons/icon-briefcase.png";
 import "../../styles/admindashboard.css";
 import { Context } from "../store/appContext";
-import { data } from "jquery";
 
 const AdminDashboard = () => {
   const { store, actions } = useContext(Context);

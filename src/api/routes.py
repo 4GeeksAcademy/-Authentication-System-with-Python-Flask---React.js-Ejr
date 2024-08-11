@@ -590,6 +590,10 @@ def add_test_data():
         {"email": "user9@example.com", "password": "password9", "name": "User Nine", "phone_number": "7788990011", "role_id": 3},
         {"email": "user10@example.com", "password": "password10", "name": "User Ten", "phone_number": "8899001122", "role_id": 3},
         {"email": "user11@example.com", "password": "password11", "name": "User Eleven", "phone_number": "9900112233", "role_id": 3},
+        {"email": "user12@example.com", "password": "password12", "name": "User Twelve", "phone_number": "1234567890", "role_id": 3},
+        {"email": "user13@example.com", "password": "password13", "name": "User Thirteen", "phone_number": "0987654321", "role_id": 3},
+        {"email": "user14@example.com", "password": "password14", "name": "User Fourteen", "phone_number": "1122334455", "role_id": 3},
+        {"email": "user15@example.com", "password": "password15", "name": "User Fifteen", "phone_number": "2233445566", "role_id": 3},
         {"email": "admin@example.com", "password": "123123", "name": "Admin User", "phone_number": "1231231234", "role_id": 1},
         {"email": "mechanic@example.com", "password": "123123", "name": "Mechanic User", "phone_number": "3213214321", "role_id": 2}
     ]
@@ -642,7 +646,11 @@ def add_test_data():
         {"car_model": "Audi A4", "license_plate": "STU123", "owner_id": user_objects[7].id},
         {"car_model": "Lexus IS", "license_plate": "VWX456", "owner_id": user_objects[8].id},
         {"car_model": "Hyundai Sonata", "license_plate": "YZA789", "owner_id": user_objects[9].id},
-        {"car_model": "Kia Optima", "license_plate": "BCD012", "owner_id": user_objects[10].id}
+        {"car_model": "Kia Optima", "license_plate": "BCD012", "owner_id": user_objects[10].id},
+        {"car_model": "Mazda 3", "license_plate": "EFG345", "owner_id": user_objects[11].id},
+        {"car_model": "Subaru Impreza", "license_plate": "HIJ678", "owner_id": user_objects[12].id},
+        {"car_model": "Volkswagen Golf", "license_plate": "KLM901", "owner_id": user_objects[13].id},
+        {"car_model": "Tesla Model 3", "license_plate": "NOP234", "owner_id": user_objects[14].id},
     ]
     for car_data in cars:
         car = Car(
@@ -657,16 +665,20 @@ def add_test_data():
     # Agregar citas
     appointments = [
         {"date": "2024-08-10 10:00:00", "user_id": user_objects[0].id, "car_id": 1, "service_id": 1, "status": "pending"},
-        {"date": "2024-08-11 11:00:00", "user_id": user_objects[1].id, "car_id": 2, "service_id": 2, "status": "pending"},
+        {"date": "2024-08-11 11:00:00", "user_id": user_objects[1].id, "car_id": 2, "service_id": 2, "status": "completed"},
         {"date": "2024-08-12 12:00:00", "user_id": user_objects[2].id, "car_id": 3, "service_id": 3, "status": "pending"},
-        {"date": "2024-08-13 13:00:00", "user_id": user_objects[3].id, "car_id": 4, "service_id": 1, "status": "pending"},
-        {"date": "2024-08-14 14:00:00", "user_id": user_objects[4].id, "car_id": 5, "service_id": 2, "status": "pending"},
+        {"date": "2024-08-13 13:00:00", "user_id": user_objects[3].id, "car_id": 4, "service_id": 1, "status": "cancelled"},
+        {"date": "2024-08-14 14:00:00", "user_id": user_objects[4].id, "car_id": 5, "service_id": 2, "status": "completed"},
         {"date": "2024-08-15 15:00:00", "user_id": user_objects[5].id, "car_id": 6, "service_id": 3, "status": "pending"},
-        {"date": "2024-08-16 16:00:00", "user_id": user_objects[6].id, "car_id": 7, "service_id": 1, "status": "pending"},
+        {"date": "2024-08-16 16:00:00", "user_id": user_objects[6].id, "car_id": 7, "service_id": 1, "status": "completed"},
         {"date": "2024-08-17 17:00:00", "user_id": user_objects[7].id, "car_id": 8, "service_id": 2, "status": "pending"},
-        {"date": "2024-08-18 18:00:00", "user_id": user_objects[8].id, "car_id": 9, "service_id": 3, "status": "pending"},
+        {"date": "2024-08-18 18:00:00", "user_id": user_objects[8].id, "car_id": 9, "service_id": 3, "status": "cancelled"},
         {"date": "2024-08-19 19:00:00", "user_id": user_objects[9].id, "car_id": 10, "service_id": 1, "status": "pending"},
-        {"date": "2024-08-20 20:00:00", "user_id": user_objects[10].id, "car_id": 11, "service_id": 2, "status": "pending"}
+        {"date": "2024-08-20 20:00:00", "user_id": user_objects[10].id, "car_id": 11, "service_id": 2, "status": "completed"},
+        {"date": "2024-08-21 21:00:00", "user_id": user_objects[11].id, "car_id": 12, "service_id": 1, "status": "pending"},
+        {"date": "2024-08-22 22:00:00", "user_id": user_objects[12].id, "car_id": 13, "service_id": 2, "status": "completed"},
+        {"date": "2024-08-23 23:00:00", "user_id": user_objects[13].id, "car_id": 14, "service_id": 3, "status": "pending"},
+        {"date": "2024-08-24 09:00:00", "user_id": user_objects[14].id, "car_id": 15, "service_id": 1, "status": "cancelled"},
     ]
     for appointment_data in appointments:
         appointment = Appointment(
@@ -683,8 +695,8 @@ def add_test_data():
     # Agregar comentarios
     comments = [
         {"content": "Great service!", "author_id": user_objects[0].id, "appointment_id": 1, "is_mechanic": False},
-        {"content": "Very satisfied with the brake inspection.", "author_id": user_objects[1].id, "appointment_id": 2, "is_mechanic": False},
-        {"content": "Tire rotation was quick and efficient.", "author_id": user_objects[2].id, "appointment_id": 3, "is_mechanic": False},
+        {"content": "Brake pads replaced.", "author_id": user_objects[1].id, "appointment_id": 2, "is_mechanic": True},
+        {"content": "Tire pressure adjusted.", "author_id": user_objects[2].id, "appointment_id": 3, "is_mechanic": True},
         {"content": "Oil change done perfectly.", "author_id": user_objects[3].id, "appointment_id": 4, "is_mechanic": False},
         {"content": "Friendly staff.", "author_id": user_objects[4].id, "appointment_id": 5, "is_mechanic": False},
         {"content": "Great service as always.", "author_id": user_objects[5].id, "appointment_id": 6, "is_mechanic": False},
@@ -693,10 +705,16 @@ def add_test_data():
         {"content": "Very professional.", "author_id": user_objects[8].id, "appointment_id": 9, "is_mechanic": False},
         {"content": "Exceptional service.", "author_id": user_objects[9].id, "appointment_id": 10, "is_mechanic": False},
         {"content": "Best workshop in town.", "author_id": user_objects[10].id, "appointment_id": 11, "is_mechanic": False},
+        {"content": "Satisfied with the tire rotation.", "author_id": user_objects[11].id, "appointment_id": 12, "is_mechanic": False},
+        {"content": "Brakes feel great.", "author_id": user_objects[12].id, "appointment_id": 13, "is_mechanic": False},
+        {"content": "Smooth ride after service.", "author_id": user_objects[13].id, "appointment_id": 14, "is_mechanic": False},
+        {"content": "Very efficient.", "author_id": user_objects[14].id, "appointment_id": 15, "is_mechanic": False},
         # Comentarios del mecánico
         {"content": "Everything looks good after inspection.", "author_id": user_objects[-1].id, "appointment_id": 1, "is_mechanic": True},
         {"content": "Brake pads replaced.", "author_id": user_objects[-1].id, "appointment_id": 2, "is_mechanic": True},
-        {"content": "Tire pressure adjusted.", "author_id": user_objects[-1].id, "appointment_id": 3, "is_mechanic": True}
+        {"content": "Tire pressure adjusted.", "author_id": user_objects[-1].id, "appointment_id": 3, "is_mechanic": True},
+        {"content": "Oil change completed.", "author_id": user_objects[-1].id, "appointment_id": 4, "is_mechanic": True},
+        {"content": "Brake system functioning properly.", "author_id": user_objects[-1].id, "appointment_id": 5, "is_mechanic": True},
     ]
     for comment_data in comments:
         comment = Comment(
