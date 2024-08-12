@@ -1,0 +1,67 @@
+@import url('./variables.css');
+
+.footer {
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.footer-content {
+  z-index: 999;
+  display: flex;
+  background-color: #fdfef0;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 50px;
+  transform: translateY(50px);
+}
+
+.footer-logo img {
+  width: 120px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.footer-link-item {
+  display: flex;
+  align-items: center;
+}
+
+.vertical-line {
+  border-left: 2px solid #000;
+  height: 60px; /* Match the height of the logo */
+  margin-right: 10px;
+}
+
+.footer-links a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0 10px;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus {
+  color: #007bff; /* Cambiar el color del texto al pasar el mouse */
+  text-decoration: underline; /* Subrayar el enlace al pasar el mouse */
+  background-color: #f0f0f0; /* Fondo de enlace al pasar el mouse (opcional) */
+  border-radius: 3px; /* Esquinas redondeadas del fondo del enlace (opcional) */
+}
+
+.footer-decor {
+  z-index: -1;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background: #fdfef0;
+}
+
+.footer-decor img {
+  min-width: calc(100% + 100px);
+  transform: translateY(50px);
+}
