@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const SideMenu = () => {
   const { store, actions } = useContext(Context);
-
+  const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -172,7 +172,7 @@ export const SideMenu = () => {
                 </li>
               </ul>
               <button
-                onClick={() => actions.logout()}
+                onClick={() => { actions.logout(); closeSidebar(); navigate('/')}}
                 type="button"
                 className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95"
               >
@@ -184,7 +184,9 @@ export const SideMenu = () => {
               <li className="flex w-full items-center active:scale-95 transition-all">
                 <Link to='/login'
                   className="flex w-full justify-center items-center gap-2 rounded border border-emerald-600 px-12 py-3 text-sm font-medium text-emerald-400 hover:bg-emerald-600 hover:text-neutral-900 focus:outline-none active:bg-emerald-500"
+
                   onClick={closeSidebar}
+
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-login-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" /><path d="M3 12h13l-3 -3" /><path d="M13 15l3 -3" /></svg>
                   <span className="text-sm font-bold"> Iniciar Sesión </span>
