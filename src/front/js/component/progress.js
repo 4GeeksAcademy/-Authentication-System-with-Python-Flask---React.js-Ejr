@@ -16,6 +16,8 @@ export const Progress = ({ day }) => {
 
     useEffect(() => {
         console.log(percentage);
+        console.log(typeof percentage);
+
     }, [store.porcentaje])
 
 
@@ -25,7 +27,8 @@ export const Progress = ({ day }) => {
             <div className="w-[200px]
             ">
                 <CircularProgressbar value={percentage}
-                    text={`${percentage}%`} styles={buildStyles({
+                    text={`${typeof percentage === 'number' ? percentage.toFixed(0) : '0'}%`}
+                    styles={buildStyles({
 
                         strokeLinecap: 'butt',
 
@@ -39,8 +42,6 @@ export const Progress = ({ day }) => {
                         backgroundColor: '#0a0a0a',
                     })} />
             </div>
-
-            <div className="text-neutral-400">Llevas una racha de 4 días 🔥</div>
         </div>
     )
 };
