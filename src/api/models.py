@@ -1,10 +1,24 @@
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
 
-#falta tabla ofertas largas????
-
 
 db = SQLAlchemy()
+
+class Postulados(db.Model):
+    __tablename__="postulados"
+    user_id= db.Column (db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    oferta_id = db.Column (db.Integer, db.ForeignKey("ofertas.id"), primary_key=True)
+    
+
+    def __repr__(self):
+        return f'<Postulados {self.id}>'
+
+    def serialize(self):
+        return {
+            "user_id": self.user_id,
+            "oferta_id": self.oferta_id
+
+        }
 
 class User(db.Model):
     __tablename__="user"
@@ -17,6 +31,7 @@ class User(db.Model):
     country = db.Column (db.String (20), unique=False, nullable=False)
     profile_programador = db.relationship ("Programador", backref="user", uselist=False)
     profile_empleador = db.relationship ("Empleador", backref="user", uselist=False)
+    postulados= db.relationship ("Postulados", backref= "user", lazy=True)
    
 
     def __repr__(self):
@@ -30,14 +45,14 @@ class User(db.Model):
             "username": self.username,
             "photo": self.photo,
             "country": self.country,
-            "profile_programador": self.profile_programador.serialize()
-
-            # do not serialize the password, its a security breach
+            "profile_programador": self.profile_programador.serialize(),
+            "postulados": [postulados.serialize() for postulados in self.postulados]
+            
         }
 
 class Experience(Enum):
-    JUNIOR: 'junior' 
-    MID: 'mid-level' 
+    JUNIOR: 'junior'
+    MID: 'mid-level'
     SENIOR: 'senior'
 
 class Programador(db.Model):
@@ -50,6 +65,7 @@ class Programador(db.Model):
     rating = db.Column (db.Float(2))
     proyectos = db.relationship ("Proyectos", backref="programador", lazy=True)
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
+    rating = db.relationship ("Ratings", backref="programador", lazy=True)
 
     def __repr__(self):
         return f'<Programador {self.id}>'
@@ -64,7 +80,6 @@ class Programador(db.Model):
             "rating": self.rating,
             "proyectos": [proyectos.serialize()for proyectos in self.proyectos]
 
-            # do not serialize the password, its a security breach
         }
 
 class Empleador(db.Model):
@@ -74,6 +89,7 @@ class Empleador(db.Model):
     metodo_pago = db.Column (db.String(100), nullable=False)
     descripcion = db.Column(db.String(300))
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
+    rating = db.relationship ("Ratings", backref="empleador", lazy=True)
     
 
     def __repr__(self):
@@ -86,31 +102,15 @@ class Empleador(db.Model):
             "metodo_pago": self.metodo_pago,
             "descripcion": self.descripcion,
 
-            # do not serialize the password, its a security breach
         }
     
-class Postulados(db.Model):
-    __tablename__="postulados"
-    id = db.Column(db.Integer, primary_key=True)
-    #id_oferta= db.Column(db.Integer)
-    
 
-    def __repr__(self):
-        return f'<Postulados {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            #"id_oferta": self.id_oferta,
-
-            # do not serialize the password, its a security breach
-        }
     
 class Ratings(db.Model):
     __tablename__="ratings"
-    id = db.Column(db.Integer, primary_key=True)
-    #from_id = db.Column (db.Integer, unique=True, nullable=False)
-    #to_id = db.Column (db.Integer, unique=True, nullable=False)
+    #id = db.Column(db.Integer, primary_key=True) -> eliminar?
+    from_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
+    to_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
     value = db.Column(db.Integer)
     
 
@@ -119,28 +119,28 @@ class Ratings(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
-            #from_id
-            #to_id
+            "from_id": self.from_id,
+            "to_id": self.to_id,
             "value": self.value
-
-            # do not serialize the password, its a security breach
         }
     
 
 class Favoritos(db.Model):
     __tablename__="favoritos"
     id = db.Column(db.Integer, primary_key=True)
-    #id_programadores
-    #id_oferta
-    #id_empleadores
+    programador_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
+    empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
+    oferta_id =db.Column (db.Integer, db.ForeignKey ("ofertas.id"), primary_key=True)
+    
     def __repr__(self):
         return f'<Favoritos {self.id}>'
 
     def serialize(self):
         return {
-            "id": self.id,
-            #resto de id
+            "programador_id": [programador.serialize() for programador in self.programador_id],
+            "empleador_id": [empleador.seliarize()self.empleador_id],
+            "oferta_id": self.oferta_id
+            [postulados.serialize() for postulados in self.postulados]
 
             # do not serialize the password, its a security breach
         }
@@ -156,6 +156,7 @@ class Ofertas(db.Model):
     modalidad = db.Column(db.String(80), nullable=False)
     experiencia_minima = db.Column (db.String (100))
     fecha_publicacion = db.Column(db.Date, nullable=False)
+    postulados= db.relationship ("Postulados", backref= "ofertas", lazy=True)
    
     #Profile_programador i profile_empleador pendiente
 
@@ -186,8 +187,7 @@ class Proyectos(db.Model):
     git = db.Column(db.String(300))
     link = db.Column(db.String(500))
     tecnologias = db.Column (db.String(200), nullable=False)
-    proyectos_id = db.Column (db.Integer, db.ForeignKey ("programador.id"))
-    
+    programador_id = db.Column (db.Integer, db.ForeignKey ("programador.id"))
     
 
     def __repr__(self):
@@ -200,7 +200,8 @@ class Proyectos(db.Model):
             "descripcion_corta": self.descripcion_corta,
             "git": self.git,
             "link": self.link,
-            "tecnologias": self.tecnologias
+            "tecnologias": self.tecnologias,
+            "programador_id": self.programador_id
 
             # do not serialize the password, its a security breach
         }
