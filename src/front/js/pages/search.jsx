@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 
-export const Single = props => {
+export const Search = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
@@ -23,6 +23,6 @@ export const Single = props => {
 	);
 };
 
-Single.propTypes = {
+Search.propTypes = {
 	match: PropTypes.object
 };
