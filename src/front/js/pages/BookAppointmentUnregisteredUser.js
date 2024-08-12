@@ -255,9 +255,9 @@ const BookAppointmentUnregisteredUser = () => {
               <label htmlFor="date">Appointment Date</label>
               <DatePicker
                 ref={datePickerRef}
-                format="DD/MM/YYYY HH:mm" 
+                format="DD/MM/YYYY HH:mm"
                 onChange={manageDateChange}
-                showTime={{ use12Hours: false, format: "HH:mm" }} 
+                showTime={{ use12Hours: false, format: "HH:mm" }}
                 className="form-control"
               />
             </div>
