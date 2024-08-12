@@ -52,7 +52,7 @@ export const LoginForm = () => {
   }
 
   return (
-    <section className="absolute h-screen w-full top-0 z-50 bg-white dark:bg-neutral-900">
+    <section className="animate__animated animate__fadeIn absolute min-h-screen w-full top-0 z-50 bg-white dark:bg-neutral-900">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="relative flex h-32 items-end bg-neutral-900 lg:col-span-5 lg:h-full xl:col-span-6">
           <img alt="" src={formImg} className="absolute inset-0 h-full w-full object-cover opacity-80" />
@@ -79,7 +79,7 @@ export const LoginForm = () => {
               </div>
 
               <div className="col-span-6 sm:col-span-6">
-                <label htmlFor="Password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200"> Password </label>
+                <label htmlFor="Password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200"> Contraseña </label>
 
                 <input value={user.password} onChange={handleChange} required type="password" id="Password" name="password" className="mt-1 w-full rounded-md border-neutral-200 bg-white py-1 text-sm text-neutral-700 shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 focus:ring-emerald-500 focus:border-emerald-500" />
               </div>
@@ -88,7 +88,7 @@ export const LoginForm = () => {
                 <button className="inline-block shrink-0 rounded-md border border-emerald-600 bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-emerald-600 focus:outline-none focus:ring active:text-emerald-500 dark:hover:bg-emerald-700 dark:hover:text-white">Iniciar sesión</button>
 
                 <p className="mt-4 text-sm text-neutral-500 sm:mt-0 dark:text-neutral-400">
-                  No tienes una cuenta?
+                  ¿No tienes una cuenta?
                   <Link to={'/signup'} className="text-neutral-700 underline dark:text-neutral-300 hover:text-neutral-50 transition-all ml-1">Regístrate</Link>.
                 </p>
               </div>

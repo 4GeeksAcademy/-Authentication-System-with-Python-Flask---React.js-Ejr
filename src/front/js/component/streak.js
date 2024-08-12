@@ -62,12 +62,13 @@ const Streak = () => {
         />
       </div> */}
       <div className="flex flex-col justify-center items-center gap-6">
-        <div className="relative flex items-end justify-center">
-          <img className='animate-pulse size-48 -mb-4 -translate-x-1' src={fireGif}></img>
-          <span className='absolute text-4xl font-bold text-orange-950/80 z-20 bitsfont'>{streak}</span>
+        <div className="animate-pulse relative flex items-end justify-center">
+          <img className=' size-48 -mb-4' src={fireGif}></img>
+          <span className='absolute text-4xl font-bold text-orange-600 z-20 bitsfont' style={{ textShadow: "2px 2px 2px black", transform: "translateX(8px)" }}
+          >{streak}</span>
         </div>
         <div className="flex flex-col justify-center items-center gap-1">
-          <span className="text-neutral-400 font-bold text-lg">Racha de días</span>
+          <span className="text-neutral-400 font-bold text-lg bitsfont">Racha de dias</span>
         </div>
       </div>
     </div>
