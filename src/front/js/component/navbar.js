@@ -3,6 +3,7 @@ import logo from "../component/tickeate.png";
 import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 import { useNavigate } from "react-router-dom";
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const navigate = useNavigate()
