@@ -11,7 +11,7 @@ class Postulados(db.Model):
     
 
     def __repr__(self):
-        return f'<Postulados {self.id}>'
+        return f'<Postulados {self.user_id}>'
 
     def serialize(self):
         return {
@@ -46,7 +46,7 @@ class Favoritos(db.Model):
     oferta_id =db.Column (db.Integer, db.ForeignKey ("ofertas.id"), primary_key=True)
     
     def __repr__(self):
-        return f'<Favoritos {self.id}>'
+        return f'<Favoritos {self.programador_id}>'
 
     def serialize(self):
         return {
@@ -66,9 +66,9 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     country = db.Column (db.String (20), unique=False, nullable=False)
-    profile_programador = db.relationship ("Programador", back_populates="user", uselist=False)
-    profile_empleador = db.relationship ("Empleador", back_populates="user", uselist=False)
-    postulados= db.relationship ("Postulados", back_populates= "user", lazy=True)
+    profile_programador = db.relationship ("Programador", backref="user", uselist=False)
+    profile_empleador = db.relationship ("Empleador", backref="user", uselist=False)
+    postulados= db.relationship ("Postulados", backref= "user", lazy=True)
    
 
     def __repr__(self):
@@ -84,8 +84,7 @@ class User(db.Model):
             "country": self.country,
             "profile_programador": self.profile_programador.serialize(),
             "profile_empleador": self.profile_empleador.serialize(),
-            "postulados": [postulados.serialize() for postulados in self.postulados]
-            
+            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
         }
     
 
@@ -103,10 +102,10 @@ class Programador(db.Model):
     experiencia = db.Column(db.Enum(Experience), nullable=False)
     descripcion = db.Column(db.String(300))
     rating = db.Column (db.Float(2))
-    proyectos = db.relationship ("Proyectos", back_populates="programador", lazy=True)
+    proyectos = db.relationship ("Proyectos", backref="programador", lazy=True)
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
-    rating = db.relationship ("Ratings", back_populates="programador", lazy=True)
-    favoritos = db.relationship ("Favoritos", back_populates="programador", lazy=True)
+    rating = db.relationship ("Ratings", backref="programador", lazy=True)
+    favoritos = db.relationship ("Favoritos", backref="programador", lazy=True)
    
 
     def __repr__(self):
@@ -121,8 +120,7 @@ class Programador(db.Model):
             "descripcion": self.descripcion,
             "rating": self.rating,
             "proyectos": [proyectos.serialize()for proyectos in self.proyectos],
-            "favoritos": [favoritos.serialize() for favoritos in self.favoritos]
-
+            "favoritos": [favoritos.serialize() for favoritos in self.favoritos] if self.favoritos else None
         }
 
 class Empleador(db.Model):
@@ -132,9 +130,9 @@ class Empleador(db.Model):
     metodo_pago = db.Column (db.String(100), nullable=False)
     descripcion = db.Column(db.String(300))
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
-    rating = db.relationship ("Ratings", back_populates="empleador", lazy=True)
-    favoritos = db.relationship ("Favoritos", back_populates="empleador", lazy=True)
-    oferta = db.relationship ("Ofertas", back_populates="empleador", lazy=True)
+    rating = db.relationship ("Ratings", backref="empleador", lazy=True)
+    favoritos = db.relationship ("Favoritos", backref="empleador", lazy=True)
+    oferta = db.relationship ("Ofertas", backref="empleador", lazy=True)
     
 
     def __repr__(self):
@@ -146,8 +144,7 @@ class Empleador(db.Model):
             "cif": self.cif,
             "metodo_pago": self.metodo_pago,
             "descripcion": self.descripcion,
-            "favoritos": [favoritos.serialize() for favoritos in self.favoritos]
-
+            "favoritos": [favoritos.serialize() for favoritos in self.favoritos]  if self.favoritos else None
         }
     
 
@@ -163,8 +160,8 @@ class Ofertas(db.Model):
     modalidad = db.Column(db.String(80), nullable=False)
     experiencia_minima = db.Column (db.String (100))
     fecha_publicacion = db.Column(db.Date, nullable=False)
-    postulados= db.relationship ("Postulados", back_populates= "ofertas", lazy=True)
-    favoritos = db.relationship ("Favoritos", back_populates="ofertas", lazy=True)
+    postulados= db.relationship ("Postulados", backref= "ofertas", lazy=True)
+    favoritos = db.relationship ("Favoritos", backref="ofertas", lazy=True)
     empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id",))
    
 
@@ -183,9 +180,7 @@ class Ofertas(db.Model):
             "fecha_publicacion": self.fecha_publicacion,
             "favorito": self.favorito,
             "empleador_id": self.empleador_id,
-            "favoritos": [favoritos.serialize() for favoritos in self.favoritos]
-            
-
+            "favoritos": [favoritos.serialize() for favoritos in self.favoritos] if self.favoritos else None
         }
     
 
@@ -212,6 +207,4 @@ class Proyectos(db.Model):
             "link": self.link,
             "tecnologias": self.tecnologias,
             "programador_id": self.programador_id
-
-            
         }
