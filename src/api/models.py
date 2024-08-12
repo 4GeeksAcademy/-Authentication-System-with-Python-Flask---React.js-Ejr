@@ -14,7 +14,7 @@ class User(db.Model):
     partner_profile_id = db.Column(db.Integer, db.ForeignKey('partnerProfile.id'), nullable=True)
 
     profile = db.relationship("UserProfile", backref="user", lazy=True)
-    partner_profile = db.relationship("PartnerProfile", backref="user", lazy=True)
+    partner_profile = db.relationship("PartnerProfile", backref="users_partner", lazy=True)
 
     def __repr__(self):
         return '<User %r>' % self.id
@@ -39,6 +39,7 @@ class UserProfile(db.Model):
     id_favorites = db.Column(db.Integer, db.ForeignKey('favorites.id'), nullable=True)
 
     favorites = db.relationship("Favorites", backref="user_profile", lazy=True)
+    payments = db.relationship("Payment", backref="user_profile", lazy=True)
 
     def __repr__(self):
         return '<UserProfile %r>' % self.id
@@ -61,7 +62,7 @@ class PartnerProfile(db.Model):
     venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'), nullable=True)
 
     venue = db.relationship("Venue", backref="partner_profile", lazy=True)
-    
+    users = db.relationship("User", backref="partner_profile_partner", lazy=True)
 
     def __repr__(self):
         return '<PartnerProfile %r>' % self.name
@@ -82,9 +83,6 @@ class Payment(db.Model):
     user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'), nullable=True)
     events_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
 
-    user_profile = db.relationship("UserProfile", backref="payments", lazy=True)
-    events = db.relationship("Events", backref="payments", lazy=True)
-
     def __repr__(self):
         return '<Payment %r>' % self.id
     
@@ -104,7 +102,7 @@ class Favorites(db.Model):
     venue = db.Column(db.String(250), nullable=True)
 
     def __repr__(self):
-        return '<Payment %r>' % self.id
+        return '<Favorites %r>' % self.id
     
     def serialize(self):
         return {
@@ -125,9 +123,10 @@ class Venue(db.Model):
     events_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
 
     events = db.relationship("Events", backref="venue", lazy=True)
+    comments_venue = db.relationship("CommentsVenue", backref="venue", lazy=True)
 
     def __repr__(self):
-        return '<Payment %r>' % self.name
+        return '<Venue %r>' % self.name
     
     def serialize(self):
         return {
@@ -175,9 +174,6 @@ class CommentsVenue(db.Model):
     date = db.Column(db.String(250), nullable=True)
     rating = db.Column(db.String(250), nullable=True)
 
-    user_profile = db.relationship("UserProfile", backref="comments_venue", lazy=True)
-    venue = db.relationship("Venue", backref="comments_venue", lazy=True)
-
     def __repr__(self):
         return '<CommentsVenue %r>' % self.id
     
@@ -195,13 +191,10 @@ class Events(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
     name_event = db.Column(db.String(250), nullable=True)
-    payment_id = db.Column(db.Integer, db.ForeignKey('payment.id'), nullable=True)
     style = db.Column(db.String(250), nullable=True)
     date = db.Column(db.String(250), nullable=True)
     price = db.Column(db.String(250), nullable=True)
     description = db.Column(db.String(250), nullable=True)
-
-    payment = db.relationship("Payment", backref="events", lazy=True)
 
     def __repr__(self):
         return '<Events %r>' % self.name_event
@@ -210,14 +203,8 @@ class Events(db.Model):
         return {
             "id": self.id,
             "name_event": self.name_event,
-            "payment_id": self.payment_id,
             "style": self.style,
             "date": self.date,
+            "price": self.price,
+            "description": self.description,
         }
-    
-
-
-    def to_dict(self):
-        return {}
-
-## Draw from SQLAlchemy base
