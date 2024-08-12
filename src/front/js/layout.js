@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import {SingleOffer} from "./pages/SingleOffer.jsx"
+import { TimeLine } from "./component/TimeLine.jsx"
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
