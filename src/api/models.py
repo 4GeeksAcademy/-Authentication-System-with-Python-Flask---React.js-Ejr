@@ -196,11 +196,10 @@ class Favoritos(db.Model):
     def serialize(self):
         return {
             "programador_id": [programador.serialize() for programador in self.programador_id],
-            "empleador_id": [empleador.seliarize()self.empleador_id],
-            "oferta_id": self.oferta_id
-            [postulados.serialize() for postulados in self.postulados]
+            "empleador_id": [empleador.seliarize() for empleador in self.empleador_id],
+            "oferta_id": [ofertas.serialize() for ofertas in self.oferta_id]
 
-            # do not serialize the password, its a security breach
+            
         }
 
 class Ofertas(db.Model):
