@@ -45,7 +45,7 @@
 }
 
 .singup-container button {
-    background-color: #512da8;
+    background-color: #1d0e3f;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -154,9 +154,9 @@
 }
 
 .singup-toggle {
-    background-color: #1D1E2C;
+    background-color: #9C528B;
     height: 100%;
-    background: linear-gradient(to right, #1D1E2C, #1D1E2C);
+    background: linear-gradient(to right, #9C528B, #9C528B);
     color: #fff;
     position: relative;
     left: -100%;
@@ -200,4 +200,68 @@
 
 .singup-container.singup-active .singup-toggle-right {
     transform: translateX(200%);
+}
+
+.signup-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #1d0e3f;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.toggle-text {
+    font-size: 14px;
+    font-weight: 600;
 }

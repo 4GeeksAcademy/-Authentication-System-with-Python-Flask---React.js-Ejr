@@ -35,7 +35,7 @@ const Footer = () => {
 								</a>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="/contact" style={{ color: 'black', padding: '0 15px' }}>
+								<a className="nav-link" href="/contact-us" style={{ color: 'black', padding: '0 15px' }}>
 									Contáctanos
 								</a>
 							</li>

@@ -55,12 +55,7 @@ export const Navbar = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <a href="/register" className="nav-link" style={{ color: 'black' }}>
-                Registrarse
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/login" className="nav-link" style={{ color: 'black' }}>
-                Iniciar sesión
+                Registrarse / Iniciar sesión
               </a>
             </li>
           </ul>
