@@ -39,6 +39,8 @@ def post_user():
     user = request.get_json()
     user_by_email = User.query.filter_by(email=user['email']).first()
 
+    # Arreglar lo que son los codigos de estado y poner los mensajes desde el frontend
+
     if not isinstance(user['name'], str) or len(user['name'].strip()) == 0:
          return({'error':'"name" must be a string'}), 400
     if not isinstance(user['birthday'], str) or len(user['birthday'].strip()) == 0:
