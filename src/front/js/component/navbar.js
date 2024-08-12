@@ -13,7 +13,7 @@ export const Navbar = () => {
   <div className="container-fluid">
     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div className="navbar-nav me-auto">
-        <Link to={''} className="nav-link active me-3" style={{ color: 'white' }}>INICIO</Link>
+        <Link to={'/'} className="nav-link active me-3" style={{ color: 'white' }}>INICIO</Link>
         <Link to={''} className="nav-link active me-3" style={{ color: 'white' }}>CONTRATAR</Link>
         <Link to={''} className="nav-link active me-3" style={{ color: 'white' }}>INSCRIBIRSE</Link>
         <button type="button" className="btn rounded-pill me-4" style={{ backgroundColor: '#70879C', borderColor: '#70879C', color: 'white' }}>INICIAR SESIÓN</button>
