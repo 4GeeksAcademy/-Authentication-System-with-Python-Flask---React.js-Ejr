@@ -150,6 +150,10 @@ class Empleador(db.Model):
 
 
 
+class Modalidad(Enum):
+    TELETRABAJO = 'teletrabajo'
+    PRESENCIAL = 'presencial'
+    
 class Ofertas(db.Model):
     __tablename__="ofertas"
     id = db.Column(db.Integer, primary_key=True)
@@ -157,7 +161,7 @@ class Ofertas(db.Model):
     descripcion = db.Column (db.String(700), nullable=False)
     salario = db.Column (db.Integer, nullable=False)
     plazo = db.Column(db.String(100), nullable=False)
-    modalidad = db.Column(db.String(80), nullable=False)
+    modalidad = db.Column(db.Enum(Modalidad), nullable=False)
     experiencia_minima = db.Column (db.String (100))
     fecha_publicacion = db.Column(db.Date, nullable=False)
     postulados= db.relationship ("Postulados", backref= "ofertas", lazy=True)
