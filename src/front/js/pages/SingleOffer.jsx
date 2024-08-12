@@ -1,4 +1,5 @@
 import React from "react";
+import { CardOffer } from "../component/CardOffer";
 
 
 export const SingleOffer = () =>{
@@ -8,8 +9,7 @@ export const SingleOffer = () =>{
     return(
         <>
             <div className="container">
-                <img src="" alt="" />
-                <p>Nombre completo</p>
+                <CardOffer/>
             </div>
         </>
     )

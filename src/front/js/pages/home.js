@@ -12,12 +12,10 @@ export const Home = () => {
 	
 
 return (
-	<>
+	
 		<div className="container-fluid">
-			<TimeLine/>
-			<SingleOffer/>
 			<CardOffer/>
 		</div>
-	</>
+	
 	  );
 };
