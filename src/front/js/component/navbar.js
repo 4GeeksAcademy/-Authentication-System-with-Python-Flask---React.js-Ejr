@@ -17,7 +17,9 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto">
             <Link className="nav-link active mx-4 text-light" aria-current="page" to="/">Preguntas frecuentes</Link>
-            <Link className="nav-link mx-4 text-light" to="/">Profesionales</Link>
+         
+            <Link className="nav-link mx-4 text-light" to="/profesionales">Profesionales</Link>
+           
             <Link className="nav-link mx-4 text-light" to="/">Precios</Link>
             <Link to="/vista-login">
               <button type="button" className="btn btn-outline-light me-5">Iniciar sesión</button>

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Especialidades, Comentarios
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
@@ -173,8 +173,8 @@ def create_comentario():
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
 #OBTENER TODOS LOS USUARIOS
-@api.route('/usuarios', methods=['GET'])
-def get_users():
+@api.route('/psicologos', methods=['GET'])
+def get_psicologos():
     try:
         users = User.query.all()
         users_serialized = [user.serialize() for user in users]
@@ -182,6 +182,18 @@ def get_users():
         return jsonify(users_serialized), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+
+#OBTENER TODOS LOS PROFESIONALES
+@api.route('/usuarios', methods=['GET'])
+def get_users():
+    try:
+        users = User.query.filterBy(User.is_psicologo == True)
+        users_serialized = [user.serialize() for user in users]
+
+        return jsonify(users_serialized), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
 #OBTENER TODAS LAS ESPECIALIDADES  
 @api.route('/especialidades', methods=['GET'])
 def get_especialidades():

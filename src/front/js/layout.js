@@ -12,6 +12,7 @@ import { Footer } from "./component/footer";
 import VistaRegister from "./pages/vista-register";
 import VistaLogin from "./pages/vista-login";
 import Perfil from "./pages/perfil";
+import Profesionales from "./pages/profesionales";
 
 
 //create your first component
@@ -32,6 +33,7 @@ const Layout = () => {
                         <Route element={<VistaRegister />} path="/vista-register" />
                         <Route element={<VistaLogin />} path="/vista-login" />
                         <Route element={<Perfil />} path="/perfil" />
+                        <Route element={<Profesionales />} path="/profesionales" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
