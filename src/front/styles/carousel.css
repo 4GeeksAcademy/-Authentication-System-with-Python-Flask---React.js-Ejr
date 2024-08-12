@@ -1,0 +1,37 @@
+.carousel {
+    position: relative;
+}
+
+.carousel-inner {
+    padding-bottom: 2rem;
+}
+
+.carousel-caption {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 50%;
+}
+
+.card {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 500px; 
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid black;
+}
