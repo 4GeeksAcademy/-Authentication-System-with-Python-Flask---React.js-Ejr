@@ -7,6 +7,8 @@ import '../../styles/navbar.css'
 export const Navbar = () => {
     let location = useLocation();
 
+    let id = 0;
+
     if (location.pathname !== "/login" && location.pathname !== "/register") {
         return (
             <>
@@ -27,9 +29,9 @@ export const Navbar = () => {
                             <ul className="navbar-nav ms-auto mb-lg-0 text-lg-end">
                                 <li className="nav-item my-lg-auto nav-text-item">
                                     <Link to="/professionals" className="link">
-                                        <button type="button nav-text-btn">
+                                        <button type="button nav-text-btn ">
                                             <i className="bi bi-lungs"></i>
-                                            <span className="i-name">Nutricionistas</span>
+                                            <span className="i-name">Profesionales</span>
                                         </button>
                                     </Link>
                                 </li>
@@ -42,21 +44,12 @@ export const Navbar = () => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/favorites" className="link">
-                                        <button type="button" className="favs-button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                                            {/* <span className="favs-counter badge me-1 p-0 bg-secondary rounded-circle text-light">{favsCounter}</span> */}
+                                    <Link to="/wishlist" className="link">
+                                        <button type="button nav-text-btn">
                                             <i className="bi bi-suit-heart-fill"></i>
                                             <span className="i-name">Favoritos</span>
                                         </button>
                                     </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <div className="link">
-                                        <button type="button">
-                                            <i className="bi bi-bell"></i>
-                                            <span className="i-name">Notificaciónes</span>
-                                        </button>
-                                    </div>
                                 </li>
                                 <li className="nav-item">
                                     <Link to="/cart" className="link">
@@ -74,15 +67,43 @@ export const Navbar = () => {
                                         </button>
                                     </a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-user-menu" aria-labelledby="navbarDropdown">
-                                        <Link to="/user-profile" className="link">
+                                        <Link to={`/user/${id}`} className="link">
                                             <li><button type="button">Perfil</button></li>
                                         </Link>
-                                        <div className="link">
+                                        <Link to={`/agenda/${id}`} className="link">
                                             <li><button type="button">Agendas</button></li>
-                                        </div>
-                                        <div className="link">
-                                            <li><button type="button">cerrar sesion</button></li>
-                                        </div>
+                                        </Link>
+                                        <Link to="/login" className="link">
+                                            <li><button type="button">Cerrar Sesión</button></li>
+                                        </Link>
+                                    </ul>
+                                </li>
+                                <li className="nav-item dropdown user-list">
+                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button type="button notification-btn">
+                                            <i className="bi bi-bell">
+                                                <span className="favs-counter badge me-1 p-0 bg-secondary rounded-circle text-light">0</span>
+                                            </i>
+                                            <span className="i-name">Notificaciones</span>
+                                        </button>
+                                    </a>
+                                    <ul className="dropdown-menu dropdown-menu-end dropdown-user-menu" aria-labelledby="navbarDropdown">
+                                        <li className="fav-li-item link d-flex">
+                                            <button type="button">Notificación 1</button>
+                                            <button /* onClick={() => actions.deleteFavorite(item.name)} */ className="dropdown-item text-center" type="button">
+                                                <i className="bi bi-trash3 fs-5"></i>
+                                            </button>
+                                        </li>
+                                        {/* {store.favorites && store.favorites.length > 0 && store.favorites.map((item, index) => (
+                                            <li key={index} className="fav-li-item">
+                                                <a className="dropdown-item" href="#">
+                                                    ({item.type}) {item.name}
+                                                </a>
+                                                <button onClick={() => actions.deleteFavorite(item.name)} className="dropdown-item text-center" type="button">
+                                                    <i className="bi bi-trash3"></i>
+                                                    </button>
+                                                    </li>
+                                                    ))} */}
                                     </ul>
                                 </li>
                             </ul>
