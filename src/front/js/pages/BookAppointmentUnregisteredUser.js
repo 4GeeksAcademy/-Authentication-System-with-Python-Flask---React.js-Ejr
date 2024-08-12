@@ -174,9 +174,6 @@ const BookAppointmentUnregisteredUser = () => {
     setCurrentStep(currentStep + 1);
   };
 
-  const confirmAccountAndAppointment = () => {
-    navigate("/accountandappointmentcreated");
-  };
 
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();
@@ -194,6 +191,10 @@ const BookAppointmentUnregisteredUser = () => {
     if (numericInput.length <= 9) {
       setPhoneNumber(numericInput);
     }
+  };
+
+  const confirmAccountAndAppointment = () => {
+    navigate("/accountandappointmentcreated");
   };
 
   const displayCurrentStep = () => {
@@ -346,7 +347,7 @@ const BookAppointmentUnregisteredUser = () => {
             </p>
             <p>
               <strong>Appointment Time:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("HH:mm:ss") : ""}
+              {appointmentDate ? appointmentDate.format("HH:mm") : ""}
             </p>
             <p>
               <strong>Comments:</strong> {comment}
