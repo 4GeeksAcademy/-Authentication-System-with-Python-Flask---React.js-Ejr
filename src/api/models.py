@@ -94,6 +94,11 @@ class Experience(Enum):
     MID = 'mid-level'
     SENIOR = 'senior'
 
+class Experience(Enum):
+    JUNIOR: 'junior' 
+    MID: 'mid-level' 
+    SENIOR: 'senior'
+
 class Programador(db.Model):
     __tablename__="programador"
     id = db.Column(db.Integer, primary_key=True)
