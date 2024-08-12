@@ -1,15 +1,16 @@
 import React from "react";
 import logo from "../component/tickeate.png";
 import { useNavigate } from "react-router-dom";
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const navigate = useNavigate()
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#d3d3d3' }}>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#d3d3d3', padding: '1rem 0' }}>
       <div className="container-fluid">
         <a
           className="navbar-brand"
-          href="#"
+          href="/"
           style={{
             backgroundImage: `url(${logo})`,
             backgroundSize: 'contain',
@@ -18,7 +19,6 @@ export const Navbar = () => {
             width: '155px',
             display: 'block',
             textIndent: '-9999px',
-            marginLeft: '-3px'
           }}
         >
           Navbar
@@ -37,12 +37,12 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#" style={{ color: 'black' }}>
+              <a className="nav-link active" aria-current="page" href="/events" style={{ color: 'black' }}>
                 Descubre eventos
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#" style={{ color: 'black' }}>
+              <a href="/galeria" className="nav-link" style={{ color: 'black' }}>
                 Galería
               </a>
             </li>
@@ -53,23 +53,15 @@ export const Navbar = () => {
             </li>
           </ul>
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ color: 'black' }}>
+            <li className="nav-item">
+              <a href="/register" className="nav-link" style={{ color: 'black' }}>
                 Registrarse
               </a>
-              <ul className="dropdown-menu dropdown-menu-end">
-                <li><a className="dropdown-item" href="#">Registrarse como usuario</a></li>
-                <li><a className="dropdown-item" href="#">Registrarse como partner</a></li>
-              </ul>
             </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ color: 'black' }}>
+            <li className="nav-item">
+              <a href="/login" className="nav-link" style={{ color: 'black' }}>
                 Iniciar sesión
               </a>
-              <ul className="dropdown-menu dropdown-menu-end">
-                <li><a className="dropdown-item" href="#">Iniciar sesión como usuario</a></li>
-                <li><a className="dropdown-item" href="#">Iniciar sesión como partner</a></li>
-              </ul>
             </li>
           </ul>
         </div>
