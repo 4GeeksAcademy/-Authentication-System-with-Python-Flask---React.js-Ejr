@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
-export const Home = () => {
+export const Jumbotron = () => {
     const { store, actions } = useContext(Context);
 
     return (
@@ -25,4 +25,4 @@ export const Home = () => {
     );
 };
 
-export default jumbotron;
+export default Jumbotron;
