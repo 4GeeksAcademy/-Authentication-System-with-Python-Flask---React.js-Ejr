@@ -16,8 +16,42 @@ const ejerciciosPrueba = [
   },
 ];
 
-export const ExercisesList = ({ routine }) => {
+export const ExercisesList = ({ routine, day }) => {
   const { store, actions } = useContext(Context);
+  const [total, setTotal] = useState(0);
+  const [done, setDone] = useState(0);
+  const [percentage, setPercentage] = useState();
+
+
+  const handleChange = (e) => (e.target.checked == true ? setDone(done + 1) : setDone(done - 1));
+
+  useEffect(() => {
+    setTotal(routine.exercises.length);
+  }, [routine.exercises]);
+
+  useEffect(() => {
+    // console.log(total);
+  }, [total]);
+
+  useEffect(() => {
+    // console.log(done);
+  }, [done]);
+
+  useEffect(() => {
+    console.log("done:", done);
+    console.log("total:", total);
+    if (total > 0) {
+      setPercentage((done / total) * 100)
+      // console.log(percentage);
+    }
+  }, [done]);
+
+  useEffect(() => {
+    actions.updateElementAtIndex(day - 1, percentage)
+    // console.log(percentage);
+    // console.log(store.porcentajes);
+    
+  }, [percentage]);
 
   return (
     <>
@@ -28,7 +62,7 @@ export const ExercisesList = ({ routine }) => {
         <div className="flex items-center">
           <input
             type="checkbox"
-            className=" size-4 text-green-600 bg-gray-100 border-gray-300 rounded ring-offset-gray-800 focus:ring-2border-gray-600"
+            className="size-4 text-green-600 bg-gray-100 border-gray-300 rounded ring-offset-gray-800 focus:ring-2border-gray-600"
             id='exerciseDay'
           // value={item.i}
           />
@@ -38,8 +72,9 @@ export const ExercisesList = ({ routine }) => {
         </div>
       </label>
       <ul className="bg-neutral-900 p-3 space-y-3">
+
+
         {routine.exercises.map((item, index) => {
-          console.log(item)
           return (
             < label
               key={index}
@@ -49,10 +84,11 @@ export const ExercisesList = ({ routine }) => {
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  className="size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"
+                  className="myCheckbox size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"
                   id={`option ${index}`}
-                // value={item.i}
+                  onChange={handleChange}
                 />
+                {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
               </div>
               <div>
                 <p className="font-medium text-white">{item.name}</p>

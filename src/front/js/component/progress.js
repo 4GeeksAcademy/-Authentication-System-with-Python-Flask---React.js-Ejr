@@ -5,31 +5,30 @@ import 'react-circular-progressbar/dist/styles.css';
 
 
 
-export const Progress = ({ randomValue }) => {
-    let percentage = randomValue;
+export const Progress = ({ day }) => {
+    const { store, actions } = useContext(Context);
+    const [percentage, setPercentage] = useState(0);
+
+    useEffect(() => {
+        setPercentage(actions.returnElementAtIndex(day - 1))
+        console.log(percentage);
+    }, [store.porcentajes])
+
+    useEffect(() => {
+        console.log(percentage);
+        console.log(typeof percentage);
+
+    }, [store.porcentaje])
+
+
     return (
-
-        /*  useEffect(() => {
-             const interval = setInterval(() => {
-                 setPercentage(prev => {
-                     if (prev < 100) {
-                         return prev + 1;
-                     } else {
-                         clearInterval(interval);
-                         return prev;
-                     }
-                 });
-             }, 50);
-     
-             return () => clearInterval(interval);
-         }, []); */
-
         <div className="flex flex-col items-center justify-center gap-4 pb-11">
             <h1 className="text-neutral-50 mx-auto w-max text-2xl">Tu progreso</h1>
             <div className="w-[200px]
             ">
                 <CircularProgressbar value={percentage}
-                    text={`${percentage}%`} styles={buildStyles({
+                    text={`${typeof percentage === 'number' ? percentage.toFixed(0) : '0'}%`}
+                    styles={buildStyles({
 
                         strokeLinecap: 'butt',
 
@@ -37,14 +36,12 @@ export const Progress = ({ randomValue }) => {
 
                         pathTransitionDuration: 0.1,
 
-                        pathColor: `rgba(14,165,233, ${percentage / 100})`,
+                        pathColor: `rgba(14,165,233, ${percentage})`,
                         textColor: '#0ea5e9',
                         trailColor: '#262626',
                         backgroundColor: '#0a0a0a',
                     })} />
             </div>
-
-            <div className="text-neutral-400">Llevas una racha de 4 días 🔥</div>
         </div>
     )
 };
