@@ -28,8 +28,8 @@ export const SignupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const signupPromise = new Promise(async (resolve, reject) => {
-            const success = await actions.signup(
+        try {
+            const response = await actions.signup(
                 user.name,
                 user.birthday,
                 user.sex,
@@ -37,28 +37,22 @@ export const SignupForm = () => {
                 user.password,
                 user.confirmPassword
             );
-            if (success === true) {
-                resolve("Registro exitoso");
+
+            if (response.success) {
+                toast.success('Registro exitoso 😎');
+                navigate("/login");
             } else {
-                reject("Error al registrarse");
+                console.log(response.error)
+                throw new Error(response.error || "Error al registrarse");
             }
-        });
-
-        toast.promise(
-            signupPromise,
-            {
-                pending: 'Registrando...',
-                success: 'Registro exitoso 😎',
-                error: 'Error al registrarse'
-            }
-        );
-
-        signupPromise.then(() => {
-            navigate("/dashboard");
-        }).catch((error) => {
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message || "Error inesperado durante el registro");
             console.error(error);
-        });
+        }
     };
+
+
 
     return (
         <section className="animate__animated animate__fadeIn absolute min-h-screen w-full top-0 z-50 bg-white dark:bg-neutral-900">
