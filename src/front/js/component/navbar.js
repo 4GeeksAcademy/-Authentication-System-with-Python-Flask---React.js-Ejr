@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <nav className="navbar fixed-top" style={{ backgroundColor: '#6793AE', height: '120px'}}>
+    <nav className="navbar" style={{ backgroundColor: '#6793AE', height: '120px'}}>
       <div className="container-fluid">
         <Link to={''} className="navbar-brand">
           <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap" width="30" height="24" />
