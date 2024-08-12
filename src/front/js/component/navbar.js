@@ -47,9 +47,9 @@ export const Navbar = () => {
               </a>
             </li>
             <li className="nav-item">
-              <p onClick={() => navigate("/contact-us")} className="nav-link" style={{ color: 'black' }}>
-                Contact Us
-              </p>
+              <a onClick={() => navigate("/contact-us")} className="nav-link" style={{ color: 'black', cursor: 'pointer' }}>
+                Contáctanos
+              </a>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto">
