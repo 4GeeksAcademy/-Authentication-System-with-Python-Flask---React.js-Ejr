@@ -4,7 +4,7 @@ import "../../styles/carousel.css";
 const Carousel = () => {
 
     return (
-        <div id="carouselExampleDark" className="carousel carousel-dark slide">
+        <div id="carouselExampleDark" className="carousel carousel-dark slide mt-5">
             <div className="carousel-indicators">
                     <button
                         type="button"
