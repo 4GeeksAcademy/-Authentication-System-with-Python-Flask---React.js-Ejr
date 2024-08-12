@@ -95,8 +95,8 @@ class Experience(Enum):
     SENIOR = 'senior'
 
 class Experience(Enum):
-    JUNIOR: 'junior' 
-    MID: 'mid-level' 
+    JUNIOR: 'junior'
+    MID: 'mid-level'
     SENIOR: 'senior'
 
 class Programador(db.Model):
@@ -160,31 +160,15 @@ class Modalidad(Enum):
     PRESENCIAL = 'presencial'
     
 
-            # do not serialize the password, its a security breach
         }
     
-class Postulados(db.Model):
-    __tablename__="postulados"
-    id = db.Column(db.Integer, primary_key=True)
-    #id_oferta= db.Column(db.Integer)
-    
 
-    def __repr__(self):
-        return f'<Postulados {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            #"id_oferta": self.id_oferta,
-
-            # do not serialize the password, its a security breach
-        }
     
 class Ratings(db.Model):
     __tablename__="ratings"
-    id = db.Column(db.Integer, primary_key=True)
-    #from_id = db.Column (db.Integer, unique=True, nullable=False)
-    #to_id = db.Column (db.Integer, unique=True, nullable=False)
+    #id = db.Column(db.Integer, primary_key=True) -> eliminar?
+    from_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
+    to_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
     value = db.Column(db.Integer)
     
 
@@ -193,28 +177,28 @@ class Ratings(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
-            #from_id
-            #to_id
+            "from_id": self.from_id,
+            "to_id": self.to_id,
             "value": self.value
-
-            # do not serialize the password, its a security breach
         }
     
 
 class Favoritos(db.Model):
     __tablename__="favoritos"
     id = db.Column(db.Integer, primary_key=True)
-    #id_programadores
-    #id_oferta
-    #id_empleadores
+    programador_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
+    empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
+    oferta_id =db.Column (db.Integer, db.ForeignKey ("ofertas.id"), primary_key=True)
+    
     def __repr__(self):
         return f'<Favoritos {self.id}>'
 
     def serialize(self):
         return {
-            "id": self.id,
-            #resto de id
+            "programador_id": [programador.serialize() for programador in self.programador_id],
+            "empleador_id": [empleador.seliarize()self.empleador_id],
+            "oferta_id": self.oferta_id
+            [postulados.serialize() for postulados in self.postulados]
 
             # do not serialize the password, its a security breach
         }
