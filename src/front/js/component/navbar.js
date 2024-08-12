@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate=useNavigate()
   return (
     <nav className="navbar fixed-top" style={{ backgroundColor: '#6793AE', height: '120px'}}>
       <div className="container-fluid">
@@ -16,7 +17,9 @@ export const Navbar = () => {
         <Link to={''} className="nav-link active me-3" style={{ color: 'white' }}>INICIO</Link>
         <Link to={''} className="nav-link active me-3" style={{ color: 'white' }}>CONTRATAR</Link>
         <Link to={''} className="nav-link active me-3" style={{ color: 'white' }}>INSCRIBIRSE</Link>
-        <button type="button" className="btn rounded-pill me-4" style={{ backgroundColor: '#70879C', borderColor: '#70879C', color: 'white' }}>INICIAR SESIÓN</button>
+        <button type="button" 
+        onClick={()=>navigate("/login")}
+        className="btn rounded-pill me-4" style={{ backgroundColor: '#70879C', borderColor: '#70879C', color: 'white' }}>INICIAR SESIÓN</button>
         <button type="button" className="btn rounded-pill me-3" style={{ backgroundColor: 'white', borderColor: 'white', color: '#70879C' }}>REGISTRARSE</button>
       </div>
     </div>
