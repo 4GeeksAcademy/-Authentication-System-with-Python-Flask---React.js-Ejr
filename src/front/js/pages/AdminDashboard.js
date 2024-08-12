@@ -102,7 +102,7 @@ const AdminDashboard = () => {
           setServicesCount(counts.servicesCount);
           setCarsCount(counts.carsCount);
         } else {
-          console.log("Failed to fetch the counters.");
+          return false
         }
       };
       totalCounters();

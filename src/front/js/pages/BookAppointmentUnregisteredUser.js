@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DatePicker } from "antd";
 import "../../styles/bookappointmentunregistereduser.css";
+import { useNavigate } from "react-router-dom";
 
 const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,9 +20,10 @@ const BookAppointmentUnregisteredUser = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const datePickerRef = useRef(null);
+  const navigate = useNavigate();
+  const [isAvailable, setIsAvailable] = useState(true);
 
   const apiUrl = process.env.BACKEND_URL + "/api";
-
 
   useEffect(() => {
     const getServices = async () => {
@@ -42,6 +44,45 @@ const BookAppointmentUnregisteredUser = () => {
       datePickerRef.current.focus();
     }
   }, [currentStep]);
+
+  const checkSlotAvailability = async (dateTime) => {
+    try {
+      const response = await fetch(`${apiUrl}/slots-taken`);
+      if (!response.ok) throw new Error("Failed to fetch taken slots");
+
+      const takenSlots = await response.json();
+
+      const selectedDate = dateTime.format("YYYY-MM-DD");
+      const selectedTime = dateTime.format("HH:mm:ss");
+
+      const slotIsAvailable = !takenSlots.some((slot) => {
+        return (
+          slot.date === selectedDate &&
+          selectedTime >= slot.start_time &&
+          selectedTime < slot.end_time
+        );
+      });
+
+      setIsAvailable(slotIsAvailable);
+
+      if (!slotIsAvailable) {
+        setError(
+          "Appointment unavailable for the selected date & time, please choose a different one."
+        );
+      } else {
+        setError("");
+      }
+    } catch (error) {
+      setError("Failed to check slot availability.");
+    }
+  };
+
+  const manageDateChange = (date) => {
+    setAppointmentDate(date);
+    if (date) {
+      checkSlotAvailability(date);
+    }
+  };
 
   const submitAppointment = async (e) => {
     e.preventDefault();
@@ -78,7 +119,7 @@ const BookAppointmentUnregisteredUser = () => {
           slots_required: 1,
           car_id: carId,
           appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"), 
+          appointment_time: appointmentDate.format("HH:mm"),
         }),
       });
 
@@ -91,9 +132,9 @@ const BookAppointmentUnregisteredUser = () => {
     }
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (currentStep === 1 && (!carLicensePlate || !carModel)) {
-      setError("Car license plate and model are required.");
+      setError("Car license plate, make & model are required.");
       return;
     }
     if (currentStep === 2 && !serviceChosen) {
@@ -103,8 +144,14 @@ const BookAppointmentUnregisteredUser = () => {
     if (currentStep === 3) {
       if (!appointmentDate) {
         setError(
-          "Appointment date is required. Please select a date from the calendar."
+          "Appointment date & time are required. Please select a date & time from the calendar."
         );
+        return;
+      }
+
+      await checkSlotAvailability(appointmentDate);
+
+      if (!isAvailable) {
         return;
       }
     }
@@ -113,9 +160,40 @@ const BookAppointmentUnregisteredUser = () => {
         setError("All fields are required to confirm your appointment.");
         return;
       }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setError(
+          "Please enter a valid email address that includes the '@' sign."
+        );
+        return;
+      }
     }
+
     setError("");
     setCurrentStep(currentStep + 1);
+  };
+
+  const confirmAccountAndAppointment = () => {
+    navigate("/accountandappointmentcreated");
+  };
+
+  const requireLicensePlate = (e) => {
+    const value = e.target.value.toUpperCase();
+    const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
+
+    if (regex.test(value)) {
+      setCarLicensePlate(value);
+    }
+  };
+
+  const requirePhoneNumber = (e) => {
+    const input = e.target.value;
+    const numericInput = input.replace(/\D/g, "");
+
+    if (numericInput.length <= 9) {
+      setPhoneNumber(numericInput);
+    }
   };
 
   const displayCurrentStep = () => {
@@ -131,19 +209,19 @@ const BookAppointmentUnregisteredUser = () => {
                 type="text"
                 id="carLicensePlate"
                 value={carLicensePlate}
-                onChange={(e) => setCarLicensePlate(e.target.value)}
+                onChange={requireLicensePlate}
                 placeholder="Enter car license plate"
                 className="form-control"
               />
             </div>
             <div>
-              <label htmlFor="carModel">Car Model</label>
+              <label htmlFor="carModel">Car Make & Model</label>
               <input
                 type="text"
                 id="carModel"
                 value={carModel}
                 onChange={(e) => setCarModel(e.target.value)}
-                placeholder="Enter car model"
+                placeholder="Enter car make & model"
                 className="form-control"
               />
             </div>
@@ -177,9 +255,9 @@ const BookAppointmentUnregisteredUser = () => {
               <label htmlFor="date">Appointment Date</label>
               <DatePicker
                 ref={datePickerRef}
-                format="DD/MM/YYYY hh:mm A"
-                onChange={(date) => setAppointmentDate(date)}
-                showTime={{ use12Hours: true }}
+                format="DD/MM/YYYY HH:mm"
+                onChange={manageDateChange}
+                showTime={{ use12Hours: false, format: "HH:mm" }}
                 className="form-control"
               />
             </div>
@@ -216,7 +294,7 @@ const BookAppointmentUnregisteredUser = () => {
               />
             </div>
             <div>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -232,7 +310,7 @@ const BookAppointmentUnregisteredUser = () => {
                 type="tel"
                 id="phoneNumber"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={requirePhoneNumber}
                 placeholder="Enter your phone number"
                 className="form-control"
               />
@@ -268,13 +346,13 @@ const BookAppointmentUnregisteredUser = () => {
             </p>
             <p>
               <strong>Appointment Time:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("hh:mm A") : ""}
+              {appointmentDate ? appointmentDate.format("HH:mm:ss") : ""}
             </p>
             <p>
               <strong>Comments:</strong> {comment}
             </p>
             <p>
-              <strong>Email:</strong> {email}
+              <strong>Email Address:</strong> {email}
             </p>
             <p>
               <strong>Phone Number:</strong> {phoneNumber}
@@ -289,7 +367,7 @@ const BookAppointmentUnregisteredUser = () => {
               <button
                 className="btn btn-primary"
                 type="submit"
-                onClick={submitAppointment}
+                onClick={confirmAccountAndAppointment}
               >
                 Create Account and Submit
               </button>
@@ -304,16 +382,22 @@ const BookAppointmentUnregisteredUser = () => {
     <div id="content" className="padding">
       <div className="card shadow-sm">
         <div className="card-header text-center">Appointment Booking</div>
-        <form onSubmit={submitAppointment}>
-          {displayCurrentStep()}
-        </form>
-        <div className="card-footer d-flex justify-content-between"> 
-  {currentStep > 1 && (
-    <button className="btn btn-secondary previous-button" onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>
-  )}
-  {currentStep < 5 && <button className="btn btn-primary next-button" onClick={nextStep}>Next</button>}
-</div>
-
+        <form onSubmit={submitAppointment}>{displayCurrentStep()}</form>
+        <div className="card-footer d-flex justify-content-between">
+          {currentStep > 1 && (
+            <button
+              className="btn btn-secondary previous-button"
+              onClick={() => setCurrentStep(currentStep - 1)}
+            >
+              Previous
+            </button>
+          )}
+          {currentStep < 5 && (
+            <button className="btn btn-primary next-button" onClick={nextStep}>
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

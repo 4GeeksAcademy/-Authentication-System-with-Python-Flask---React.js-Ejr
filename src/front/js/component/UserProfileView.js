@@ -10,9 +10,6 @@ const UserProfileView = ({ user, onClose }) => {
     : [];
   const latestComments = user.comments ? user.comments.slice(-4) : [];
   const cars = user.cars ? user.cars : [];
-  
-            
-  console.log('Comments:', latestComments);
 
   return (
     <div
@@ -75,8 +72,13 @@ const UserProfileView = ({ user, onClose }) => {
               <ul>
                 {latestComments.map((comment, index) => (
                   <li key={index}>
-                    <strong>{comment.is_mechanic === true ? "Mechanic" : "Client"}:</strong> {comment.content || "No content"}{" "}
-                    <p><small>({comment.timestamp || "Unknown time"})</small></p>
+                    <strong>
+                      {comment.is_mechanic === true ? "Mechanic" : "Client"}:
+                    </strong>{" "}
+                    {comment.content || "No content"}{" "}
+                    <p>
+                      <small>({comment.timestamp || "Unknown time"})</small>
+                    </p>
                   </li>
                 ))}
               </ul>
