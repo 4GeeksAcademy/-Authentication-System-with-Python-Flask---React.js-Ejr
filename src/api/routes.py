@@ -221,10 +221,6 @@ def get_cars(car_id):
         return jsonify(response_body), 404
     
 
-
-
-
-
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars/user con id del user
 @api.route('/cars/user/<int:owner_id>', methods=['GET'])
 # @jwt_required()

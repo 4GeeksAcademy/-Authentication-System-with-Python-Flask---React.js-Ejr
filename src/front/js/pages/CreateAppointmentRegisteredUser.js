@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
-import moment from 'moment';
+import moment from "moment"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
-import { Context } from "../store/appContext";
+
 
 const CreateAppointmentRegisteredUser = () => {
-  const { store } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
@@ -24,14 +23,9 @@ const CreateAppointmentRegisteredUser = () => {
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
 
-//-----------------------------------------------------------------------------------------------------
-const [bookedAppointments, setBookedAppointments] = useState([]);
-//-----------------------------------------------------------------------------------------------------
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
-  // setUserId(localStorage.getItem("user_id"))
   useEffect(() => {
-    
     const getServices = async () => {
       try {
         const response = await fetch(`${apiUrl}/services`);
@@ -42,55 +36,66 @@ const [bookedAppointments, setBookedAppointments] = useState([]);
         console.error("Error getting services:", error);
       }
     };
-    console.log(myuserId)
-    const getUserCars = async () => {
-      try {
-        // Actualiza la URL para que apunte a la ruta correcta usando owner_id
-        const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
-        if (!response.ok) throw new Error("Network response failed");
-    
-        // Desestructura el resultado de la respuesta
-        const { result, msg } = await response.json();
-    
-        // Verifica si result es un array y tiene contenido
-        if (Array.isArray(result) && result.length > 0) {
-          setUserCars(result); // Guarda todos los coches en el estado
-        } else {
-          console.error("No valid car data received or user has no cars", msg, result);
-        }
-      } catch (error) {
-        console.error("Error getting user cars:", error);
-      }
-    };
-  
-    const fetchBookedAppointments = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/appointments`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const processedAppointments = data.map(appointment => ({
-          date: moment.utc(appointment.date).local().format('YYYY-MM-DD'),
-          time: moment.utc(appointment.date).local().format('HH')
-        }));
-        setBookedAppointments(processedAppointments);
-      } catch (error) {
-        console.error('Error fetching appointments:', error);
-      }
-    };
-  
+
+   
+const getUserCars = async () => {
+  try {
+    // Actualiza la URL para que apunte a la ruta correcta usando owner_id
+    const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
+    if (!response.ok) throw new Error("Network response failed");
+
+    // Desestructura el resultado de la respuesta
+    const { result, msg } = await response.json();
+
+    // Verifica si result es un array y tiene contenido
+    if (Array.isArray(result) && result.length > 0) {
+      setUserCars(result); // Guarda todos los coches en el estado
+    } else {
+      console.error("No valid car data received or user has no cars", msg, result);
+    }
+  } catch (error) {
+    console.error("Error getting user cars:", error);
+  }
+};
     getServices();
     getUserCars();
-    fetchBookedAppointments();
+  }, [apiUrl, userId]);
+
   
-  }, [apiUrl, store.userId]); 
-  
+
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
     }
   }, [currentStep]);
+  //------------------------------------------------------------------------------------ manejo horario laboral
+  const disabledDate = (current) => {
+    // Deshabilitar todos los días que no sean de lunes a viernes
+    return current && (current < moment().startOf('day') || current.day() === 0 || current.day() === 6);
+  };
+
+  // Función para deshabilitar horas fuera del horario laboral
+  const disabledTime = (date) => {
+    const hours = {
+      disabledHours: () => {
+        // Deshabilitar horas fuera del rango de 9:00 a 17:00
+        const disabledHours = [];
+        for (let i = 0; i < 24; i++) {
+          if (i < 9 || i >= 17) {
+            disabledHours.push(i);
+          }
+        }
+        return disabledHours;
+      },
+      disabledMinutes: () => {
+        // Habilitar solo los minutos a las horas permitidas
+        return [0, 15, 30, 45];
+      }
+    };
+    return hours;
+  };
+
+  //------------------------------------------------------------------------------------
 
   const checkSlotAvailability = async (dateTime) => {
     try {
@@ -146,7 +151,7 @@ const [bookedAppointments, setBookedAppointments] = useState([]);
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           comment,
-          user_id: store.userId,
+          user_id: userId,
           appointment_id: appointmentId,
         }),
       });
