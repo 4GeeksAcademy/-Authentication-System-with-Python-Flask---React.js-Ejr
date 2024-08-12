@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DatePicker } from "antd";
+import moment from "moment"; 
 import "../../styles/bookappointmentunregistereduser.css";
 import { useNavigate } from "react-router-dom";
 
@@ -45,6 +46,33 @@ const BookAppointmentUnregisteredUser = () => {
     }
   }, [currentStep]);
 
+  //------------------------------------------------------------------------------------ manejo horario laboral
+  const disabledDate = (current) => {
+    // Deshabilitar todos los días que no sean de lunes a viernes
+    return current && (current < moment().startOf('day') || current.day() === 0 || current.day() === 6);
+  };
+  // Función para deshabilitar horas fuera del horario laboral
+  const disabledTime = (date) => {
+    const hours = {
+      disabledHours: () => {
+        // Deshabilitar horas fuera del rango de 9:00 a 17:00
+        const disabledHours = [];
+        for (let i = 0; i < 24; i++) {
+          if (i < 9 || i >= 17) {
+            disabledHours.push(i);
+          }
+        }
+        return disabledHours;
+      },
+      disabledMinutes: () => {
+        // Habilitar solo los minutos a las horas permitidas
+        return [0, 15, 30, 45];
+      }
+    };
+    return hours;
+  };
+
+  //------------------------------------------------------------------------------------
   const checkSlotAvailability = async (dateTime) => {
     try {
       const response = await fetch(`${apiUrl}/slots-taken`);
@@ -260,6 +288,8 @@ const BookAppointmentUnregisteredUser = () => {
                 onChange={manageDateChange}
                 showTime={{ use12Hours: false, format: "HH:mm" }}
                 className="form-control"
+                disabledDate={disabledDate}
+                disabledTime={disabledTime}
               />
             </div>
             <div>
