@@ -125,6 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         throw new Error("Error fetching profile");
                     }
                     const data = await resp.json();
+                    console.log(data)
                     setStore({ currentUser: data });
                     return data;
                 } catch (error) {

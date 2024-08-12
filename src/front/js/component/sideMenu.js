@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const SideMenu = () => {
   const { store, actions } = useContext(Context);
-
+  const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -85,6 +85,7 @@ export const SideMenu = () => {
               <ul className="space-y-2">
                 <li className="flex items-center justify-between">
                   <Link to='/dashboard'
+                    onClick={closeSidebar}
                     className="flex items-center w-full p-2 text-base font-normal text-neutral-900 rounded-lg dark:text-neutral-200 hover:bg-neutral-700 dark:hover:bg-neutral-800 group"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
@@ -93,6 +94,7 @@ export const SideMenu = () => {
                 </li>
                 <li>
                   <Link to='/statistics'
+                    onClick={closeSidebar}
                     className="flex items-center p-2 w-full text-base font-normal text-neutral-900 rounded-lg transition duration-75 group hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
                   >
                     <svg
@@ -120,6 +122,7 @@ export const SideMenu = () => {
                 </li>
                 <li>
                   <Link to='/routine/new'
+                    onClick={closeSidebar}
                     className="flex items-center p-2 w-full text-base font-normal text-neutral-900 rounded-lg transition duration-75 group hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
 
                   >
@@ -131,6 +134,7 @@ export const SideMenu = () => {
                 </li>
                 <li>
                   <Link
+                    onClick={closeSidebar}
                     to='/weight'
                     className="flex items-center p-2 text-base font-normal text-neutral-900 rounded-lg dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 group"
                   >
@@ -157,6 +161,7 @@ export const SideMenu = () => {
                 </li>
                 <li>
                   <Link to='/profile'
+                    onClick={closeSidebar}
                     className="flex items-center p-2 w-full text-base font-normal text-neutral-900 rounded-lg transition duration-75 group hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
@@ -167,7 +172,7 @@ export const SideMenu = () => {
                 </li>
               </ul>
               <button
-                onClick={() => actions.logout()}
+                onClick={() => { actions.logout(); closeSidebar(); navigate('/')}}
                 type="button"
                 className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95"
               >
@@ -179,7 +184,9 @@ export const SideMenu = () => {
               <li className="flex w-full items-center active:scale-95 transition-all">
                 <Link to='/login'
                   className="flex w-full justify-center items-center gap-2 rounded border border-emerald-600 px-12 py-3 text-sm font-medium text-emerald-400 hover:bg-emerald-600 hover:text-neutral-900 focus:outline-none active:bg-emerald-500"
+
                   onClick={closeSidebar}
+
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-login-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" /><path d="M3 12h13l-3 -3" /><path d="M13 15l3 -3" /></svg>
                   <span className="text-sm font-bold"> Iniciar Sesión </span>
