@@ -541,6 +541,28 @@ def count_cars():
     total_cars = Car.query.count()
     return jsonify({'total_cars': total_cars}), 200
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET /slots-taken
+@api.route('/slots-taken', methods=['GET'])
+# @jwt_required()
+def get_slots_taken():
+    now = datetime.now()
+    end_date = now + timedelta(days=7) 
+
+    appointments = Appointment.query.filter(
+        Appointment.date >= now,
+        Appointment.date <= end_date
+    ).all()
+
+    slots = [
+        {
+            'date': app.date.strftime('%Y-%m-%d'),
+            'start_time': app.date.strftime('%H:%M:%S'),
+            'end_time': (app.date + timedelta(hours=1)).strftime('%H:%M:%S'),
+        } for app in appointments
+    ]
+
+    return jsonify(slots), 200
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
 @api.route('/update_profile', methods=['PATCH'])
