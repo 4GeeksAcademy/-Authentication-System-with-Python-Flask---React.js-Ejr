@@ -1,0 +1,24 @@
+.barra-busqueda {
+    background-color: #DAFFEF;
+    border: 1px solid #64b6ac;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.filtro label {
+    font-weight: bold;
+}
+
+.filtro span {
+    cursor: pointer;
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
+.filtro span:hover {
+    color: #ffc107;
+}
+
+.botones {
+    margin-top: 20px;
+}
