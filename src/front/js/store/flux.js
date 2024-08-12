@@ -26,6 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 			
 					let resp = await fetch(apiUrl + "/pinguser", {
+						mode: 'no-cors',
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + storageToken,

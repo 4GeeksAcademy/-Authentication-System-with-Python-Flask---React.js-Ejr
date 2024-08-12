@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserList from "../component/UserList";
-import UserProfileModal from "../component/UserProfileModal"; 
+import UserProfileModal from "../component/UserProfileModal";
 import SettingModal from "../component/SettingModal";
 import iconUser from "../../img/icons/icon-user.png";
 import iconComments from "../../img/icons/icon-comments.png";
@@ -19,18 +19,17 @@ const AdminDashboard = () => {
   const [appointmentsCount, setAppointmentsCount] = useState(0);
   const [servicesCount, setServicesCount] = useState(0);
   const [carsCount, setCarsCount] = useState(0);
-  const [statusMessage, setStatusMessage] = useState(""); 
+  const [statusMessage, setStatusMessage] = useState("");
   const [hasAccess, setHasAccess] = useState(false);
   const apiUrl = process.env.BACKEND_URL + "/api";
   const [profile, setProfile] = useState({
-    email: '',
-    password: '********',
+    email: "",
+    password: "********",
   });
 
   const handleSettingModalOpen = () => {
     setIsSettingModalOpen(true);
   };
-
 
   const handleSettingModalClose = (updatedValue) => {
     if (updatedValue && updatedValue > 0) {
@@ -40,7 +39,7 @@ const AdminDashboard = () => {
     setIsSettingModalOpen(false);
   };
 
-  useEffect(() => {   
+  useEffect(() => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
     const userId = localStorage.getItem("user_id");
@@ -63,7 +62,7 @@ const AdminDashboard = () => {
             setProfile({
               name: data.result.name,
               email: data.result.email,
-              password: '********',
+              password: "********",
             });
           }
         } catch (error) {
@@ -72,9 +71,9 @@ const AdminDashboard = () => {
       };
       loadProfile();
 
-      const totalClients = async () => {
+      const totalCount = async () => {
         try {
-          const response = await fetch(`${apiUrl}/users/clientscount`, {
+          const response = await fetch(`${apiUrl}/totalcount`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -84,99 +83,30 @@ const AdminDashboard = () => {
           } else {
             const data = await response.json();
             const clientCount = data.total_clients;
-            return clientCount;
-          }
-        } catch (error) {
-          console.error("Error loading user:", error);
-        }
-      };
-      totalClients();
-      
-
-      const totalClientsCount = async() => {
-        const clientsNumbers = await totalClients();
-        setClientCount(clientsNumbers);
-      }
-      totalClientsCount();
-
-      const totalAppointments = async () => {
-        try {
-          const response = await fetch(`${apiUrl}/appointments/count`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          if (!response.ok) {
-            return false;
-          } else {
-            const data = await response.json();
             const appointmentsCount = data.total_appointments;
-            return appointmentsCount;
-          }
-        } catch (error) {
-          console.error("Error loading Appointments:", error);
-        }
-      };
-      totalAppointments();
-
-      const totalAppointmentsCount = async() => {
-        const clientsAppintments = await totalAppointments();
-        setAppointmentsCount(clientsAppintments);
-      }
-      totalAppointmentsCount();
-
-      const totalServices = async () => {
-        try {
-          const response = await fetch(`${apiUrl}/services/count`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          if (!response.ok) {
-            return false;
-          } else {
-            const data = await response.json();
             const servicesCount = data.total_services;
-            return servicesCount;
-          }
-        } catch (error) {
-          console.error("Error loading Services:", error);
-        }
-      };
-      totalServices();
-
-      const totalServicesCount = async() => {
-        const servicesCounter = await totalServices();
-        setServicesCount(servicesCounter);
-      }
-      totalServicesCount();
-
-      const totalCars = async () => {
-        try {
-          const response = await fetch(`${apiUrl}/cars/count`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          if (!response.ok) {
-            return false;
-          } else {
-            const data = await response.json();
             const carsCount = data.total_cars;
-            return carsCount;
+            return { clientCount, appointmentsCount, servicesCount, carsCount };
           }
         } catch (error) {
-          console.error("Error loading cars:", error);
+          console.error("Error loading counters:", error);
         }
       };
-      totalCars();
+      totalCount();
 
-      const totalCarsCount = async() => {
-        const clientsCars = await totalCars();
-        setCarsCount(clientsCars);
-      }
-      totalCarsCount();
-      
+      const totalCounters = async () => {
+        const counts = await totalCount();
+        if (counts) {
+          setClientCount(counts.clientCount);
+          setAppointmentsCount(counts.appointmentsCount);
+          setServicesCount(counts.servicesCount);
+          setCarsCount(counts.carsCount);
+        } else {
+          console.log("Failed to fetch the counters.");
+        }
+      };
+      totalCounters();
+
       const loadSetting = async () => {
         try {
           const response = await fetch(`${apiUrl}/settings`, {
@@ -195,7 +125,6 @@ const AdminDashboard = () => {
         }
       };
       loadSetting();
-
     }
   }, [store.token, store.setting]);
 
@@ -227,10 +156,10 @@ const AdminDashboard = () => {
         setStatusMessage("Profile updated successfully");
         setIsProfileModalOpen(false);
       } else {
-        alert('Error updating profile: ' + result.error.message);
+        alert("Error updating profile: " + result.error.message);
       }
     } catch (error) {
-      alert('An error occurred: ' + error.message);
+      alert("An error occurred: " + error.message);
     }
   };
 
@@ -241,73 +170,75 @@ const AdminDashboard = () => {
         {!hasAccess ? (
           <div className="card p-5">
             <div className="card-body mx-auto">
-              <h2 className="card-title">You do not have access to this section</h2>
+              <h2 className="card-title">
+                You do not have access to this section
+              </h2>
               <p className="card-text mt-3">
-                You must log in as a registered Admin to view the content of this page.
+                You must log in as a registered Admin to view the content of
+                this page.
               </p>
             </div>
           </div>
         ) : (
           <>
-          <div className="stats row">
-            <div className="stat1 col mx-2">
-              <img src={iconUser} alt="Total Clients" />
-              <h3>Total Clients</h3>
-              <p>{clientCount}</p>
-            </div>
-            <div className="stat2 col mx-2">
-              <img src={iconComments} alt="Total Appointments" />
-              <h3>Total Appointments</h3>
-              <p>{appointmentsCount}</p>
-            </div>
-            <div className="stat3 col mx-2">
-              <img src={iconBriefcase} alt="Total Services" />
-              <h3>Total Services</h3>
-              <p>{servicesCount}</p>
-            </div>
-            <div className="stat4 col mx-2">
-              <img src={iconFavorites} alt="Total Cars" />
-              <h3>Total Cars</h3>
-              <p>{carsCount}</p>
-            </div>
-            <div className="stat5 col mx-2">
-              <img src={iconConnect} alt="Settings" />
-              <h3>Settings</h3>
-              <p>Max Appointments per Hour: {maxAppointmentsPerHour}</p>
-              <button
-                className="btn btn-secondary btnSetting"
-                onClick={handleSettingModalOpen}
-              >
-                Edit
-              </button>
-            </div>
-            <div className="stat5 col mx-2">
-              <img src={iconConnect} alt="Profile" />
-              <h3>Profile</h3>
-              <div>
-                <p>Email: {profile.email}</p>
+            <div className="stats row">
+              <div className="stat1 col mx-2">
+                <img src={iconUser} alt="Total Clients" />
+                <h3>Total Clients</h3>
+                <p>{clientCount}</p>
               </div>
-              <button
-                className="btn btn-secondary btnSetting"
-                onClick={handleProfileModalOpen}
-              >
-                Edit
-              </button>
+              <div className="stat2 col mx-2">
+                <img src={iconComments} alt="Total Appointments" />
+                <h3>Total Appointments</h3>
+                <p>{appointmentsCount}</p>
+              </div>
+              <div className="stat3 col mx-2">
+                <img src={iconBriefcase} alt="Total Services" />
+                <h3>Total Services</h3>
+                <p>{servicesCount}</p>
+              </div>
+              <div className="stat4 col mx-2">
+                <img src={iconFavorites} alt="Total Cars" />
+                <h3>Total Cars</h3>
+                <p>{carsCount}</p>
+              </div>
+              <div className="stat5 col mx-2">
+                <img src={iconConnect} alt="Settings" />
+                <h3>Settings</h3>
+                <p>Max Appointments per Hour: {maxAppointmentsPerHour}</p>
+                <button
+                  className="btn btn-secondary btnSetting"
+                  onClick={handleSettingModalOpen}
+                >
+                  Edit
+                </button>
+              </div>
+              <div className="stat5 col mx-2">
+                <img src={iconConnect} alt="Profile" />
+                <h3>Profile</h3>
+                <div>
+                  <p>Email: {profile.email}</p>
+                </div>
+                <button
+                  className="btn btn-secondary btnSetting"
+                  onClick={handleProfileModalOpen}
+                >
+                  Edit
+                </button>
+              </div>
             </div>
-          </div>
-          <UserList />
+            <UserList />
           </>
         )}
         {isSettingModalOpen && (
           <SettingModal
-          onClose={handleSettingModalClose}
-          onSave={(value) => {
-            setMaxAppointmentsPerHour(value);
-            setStatusMessage("Settings updated successfully");
-          }}
-          currentValue={maxAppointmentsPerHour}
-        />
-        
+            onClose={handleSettingModalClose}
+            onSave={(value) => {
+              setMaxAppointmentsPerHour(value);
+              setStatusMessage("Settings updated successfully");
+            }}
+            currentValue={maxAppointmentsPerHour}
+          />
         )}
         {isProfileModalOpen && (
           <UserProfileModal
