@@ -11,6 +11,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from datetime import datetime, timezone
+from flask_jwt_extended import JWTManager
 # from models import Person
 #hola
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -36,6 +37,10 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-agent-secret-86"
+jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
