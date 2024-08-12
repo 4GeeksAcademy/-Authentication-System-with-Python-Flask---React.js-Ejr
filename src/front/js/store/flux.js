@@ -143,46 +143,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			getPsicologos: async () => {
+				const store = getStore()
+				
+				try {
+                    const response = await fetch('https://expert-succotash-5gq475r9p4pw34x4v-3001.app.github.dev/api/psicologos');
+                    const data = await response.json();
+            
+                    if (response.status === 200) {
+                        console.log(data);
+                        // Actualiza solo la propiedad psicologos en el store
+                        setStore({
+                            ...store,
+                            psicologos: data
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching psicologos:", error);
+                }
+			},
+			
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, correo, clave) => {
 				const options = {

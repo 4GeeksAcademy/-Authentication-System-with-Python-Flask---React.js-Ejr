@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { gapi } from "gapi-script";
@@ -66,15 +65,7 @@ export const Register = () => {
 		validationSchema,
 		onSubmit: async (values) => {
 			console.log(values);
-			//   setNombreUsuario(values.nombre);
-			//   setApellido(values.apellido);
-			//   setFechaDeNacimiento(values.fecha_de_nacimiento);
-			//   setCodigoDeArea(values.codigoPais);
-			//   setTelefono(values.telefono);
-			//   setCorreo(values.correo);
-			//   setClave(values.clave);
 
-			// fetchToRegister();
 			const registro = await actions.register(values.nombre, values.apellido, "1990-01-01", values.codigo_de_area, values.telefono, values.correo, values.clave)
 			if (registro) {
 				navigate('/vista-login')
@@ -83,7 +74,7 @@ export const Register = () => {
 	});
 
 	return (
-		// <div className="d-flex justify-content-center align-items-center vh-100">
+
 		<div className="form-container mb-3  border border-3 rounded p-4">
 			<p className="title fw-semibold text-secondary text-center">Registrarse</p>
 			<form className="row g-3 d-flex" onSubmit={formik.handleSubmit}>
