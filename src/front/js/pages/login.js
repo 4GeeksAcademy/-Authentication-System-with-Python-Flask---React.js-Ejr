@@ -8,7 +8,6 @@ import { LoginForm } from "../component/loginForm";
 export const Login = () => {
 	const { store, actions } = useContext(Context);
 
-
 	return (
 		<LoginForm />
 	);

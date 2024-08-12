@@ -36,25 +36,27 @@ const getState = ({ getStore, getActions, setStore }) => {
             // REGISTRO
             signup: async (name, birthday, sex, email, password, confirmPassword) => {
                 try {
-                    let response = await axios.post(process.env.BACKEND_URL + '/register', {
+                    const payload = {
                         "name": name,
                         "birthday": birthday,
                         "sex": sex,
                         "email": email,
                         "password": password,
                         "confirm_password": confirmPassword,
-                    })
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/register', payload);
                     if (response.status == 200) {
-                        console.log(response.data);
+                        console.log('Registration successful:', response.data);
                         return true;
                     }
-                }
-                catch (error) {
-                    if (error.response.data) {
-                        console.log(error.response.data);
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log('Error response data:', error.response.data);
                         return error.response.data;
                     } else {
-                        console.log(error);
+                        console.log('Error:', error);
                         return error;
                     }
                 }
@@ -123,6 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         throw new Error("Error fetching profile");
                     }
                     const data = await resp.json();
+                    console.log(data)
                     setStore({ currentUser: data });
                     return data;
                 } catch (error) {

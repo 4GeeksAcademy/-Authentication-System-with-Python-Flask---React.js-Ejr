@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
 // Acá habría que pasar el usuario x el store y despues mostrarle la imagen, si es que le vamos a poner
-const ProfileIcon = ({ gender }) => {
+const ProfileIcon = () => {
     const { store, actions } = useContext(Context);
 
     return (
