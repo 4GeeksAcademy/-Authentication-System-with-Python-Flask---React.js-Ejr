@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import "../../styles/home.css";
+import { Context } from "../store/appContext";
+
 
 export const Jumbotron = () => {
     const { store, actions } = useContext(Context);
