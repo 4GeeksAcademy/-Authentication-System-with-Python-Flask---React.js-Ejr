@@ -29,6 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + storageToken,
+							"Access-Control-Allow-Origin": "*"
 						},
 					});
 			

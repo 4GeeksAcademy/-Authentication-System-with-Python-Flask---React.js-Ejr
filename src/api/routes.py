@@ -541,6 +541,15 @@ def count_cars():
     total_cars = Car.query.count()
     return jsonify({'total_cars': total_cars}), 200
 
+# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /cars/count
+@api.route('/totalcount', methods=['GET'])
+@jwt_required()
+def total_count():
+    total_appointments = Appointment.query.count()
+    total_clients = User.query.filter_by(role_id=3).count()
+    total_services = Service.query.count()
+    total_cars = Car.query.count()
+    return jsonify({'total_clients': total_clients, 'total_appointments': total_appointments, 'total_cars': total_cars, 'total_services': total_services}), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /update_profile
 @api.route('/update_profile', methods=['PATCH'])
