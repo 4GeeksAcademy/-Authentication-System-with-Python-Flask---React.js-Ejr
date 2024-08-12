@@ -17,6 +17,7 @@ const CreateAppointmentRegisteredUser = () => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const [userCars, setUserCars] = useState([]);
+  const [isAvailable, setIsAvailable] = useState(true);
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -60,6 +61,45 @@ const CreateAppointmentRegisteredUser = () => {
       datePickerRef.current.focus();
     }
   }, [currentStep]);
+
+  const checkSlotAvailability = async (dateTime) => {
+    try {
+      const response = await fetch(`${apiUrl}/slots-taken`);
+      if (!response.ok) throw new Error("Failed to fetch taken slots");
+
+      const takenSlots = await response.json();
+
+      const selectedDate = dateTime.format("YYYY-MM-DD");
+      const selectedTime = dateTime.format("HH:mm:ss");
+
+      const isAvailable = !takenSlots.some((slot) => {
+        return (
+          slot.date === selectedDate &&
+          selectedTime >= slot.start_time &&
+          selectedTime < slot.end_time
+        );
+      });
+
+      setIsAvailable(isAvailable);
+
+      if (!isAvailable) {
+        setError(
+          "Appointment unavailable for the selected date & time, please choose a different one."
+        );
+      } else {
+        setError("");
+      }
+    } catch (error) {
+      setError("Failed to check slot availability.");
+    }
+  };
+
+  const manageDateChange = (date) => {
+    setAppointmentDate(date);
+    if (date) {
+      checkSlotAvailability(date);
+    }
+  };
 
   const submitAppointment = async (e) => {
     e.preventDefault();
@@ -109,7 +149,7 @@ const CreateAppointmentRegisteredUser = () => {
     }
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (currentStep === 1 && !carId && (!carLicensePlate || !carModel)) {
       setError("Please select a car or add a new one.");
       return;
@@ -118,11 +158,17 @@ const CreateAppointmentRegisteredUser = () => {
       setError("Service required. Please select one from the list.");
       return;
     }
-    if (currentStep === 3 && !appointmentDate) {
-      setError(
-        "Appointment date is required. Please select one from the calendar."
-      );
-      return;
+    if (currentStep === 3) {
+      if (!appointmentDate) {
+        setError(
+          "Appointment date is required. Please select one from the calendar."
+        );
+        return;
+      }
+      await checkSlotAvailability(appointmentDate);
+      if (!isAvailable) {
+        return;
+      }
     }
     setError("");
     setCurrentStep(currentStep + 1);
@@ -218,11 +264,12 @@ const CreateAppointmentRegisteredUser = () => {
             <label htmlFor="date">Appointment Date</label>
             <DatePicker
               ref={datePickerRef}
-              format="DD/MM/YYYY hh:mm A"
-              onChange={(date) => setAppointmentDate(date)}
-              showTime={{ use12Hours: true }}
+              format="DD/MM/YYYY HH:mm"
+              onChange={manageDateChange}
+              showTime={{ use12Hours: false, format: "HH:mm" }}
               className="form-control"
             />
+
             <label htmlFor="comment">Comment</label>
             <textarea
               id="comment"
