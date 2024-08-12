@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import Gallery from "./pages/gallery";
 import Discover from "./pages/discover";
+import Singup from "./component/signup";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -34,6 +35,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Gallery />} path="/galeria" />
                         <Route element={<Discover />} path="/events" />
+                        <Route element={<Singup />} path="/register" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<ContactUs />} path="/contact-us" />
                     </Routes>
