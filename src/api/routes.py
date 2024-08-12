@@ -513,33 +513,15 @@ def get_appointments():
     
     return jsonify(appointments_list), 200
 
-# ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments
-@api.route('/appointments/count', methods=['GET'])
-@jwt_required()
-def count_appointments():
-    total_appointments = Appointment.query.count()
-    return jsonify({'total_appointments': total_appointments}), 200
-
-# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /users/count
-@api.route('/users/clientscount', methods=['GET'])
-@jwt_required()
-def count_users():
-    total_clients = User.query.filter_by(role_id=3).count()
-    return jsonify({'total_clients': total_clients}), 200
-
-# ///////////////////////////////////////////////////////////////////////////////////////////// GET a /services/count
-@api.route('/services/count', methods=['GET'])
-@jwt_required()
-def count_services():
-    total_services = Service.query.count()
-    return jsonify({'total_services': total_services}), 200
-
 # ///////////////////////////////////////////////////////////////////////////////////////////// GET a /cars/count
-@api.route('/cars/count', methods=['GET'])
+@api.route('/totalcount', methods=['GET'])
 @jwt_required()
-def count_cars():
+def total_count():
+    total_appointments = Appointment.query.count()
+    total_clients = User.query.filter_by(role_id=3).count()
+    total_services = Service.query.count()
     total_cars = Car.query.count()
-    return jsonify({'total_cars': total_cars}), 200
+    return jsonify({'total_clients': total_clients, 'total_appointments': total_appointments, 'total_cars': total_cars, 'total_services': total_services}), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// GET /slots-taken
 @api.route('/slots-taken', methods=['GET'])
