@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-#from enum import Enum
+from enum import Enum
 
 #falta tabla ofertas largas????
 
@@ -35,12 +35,17 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
+class Experience(Enum):
+    JUNIOR: 'junior' 
+    MID: 'mid-level' 
+    SENIOR: 'senior'
+
 class Programador(db.Model):
     __tablename__="programador"
     id = db.Column(db.Integer, primary_key=True)
     precio_hora = db.Column (db.Integer, nullable=False)
     tecnologias = db.Column (db.String(200), nullable=False)
-    #experiencia = db.Column(db.Enum('junior', 'mid-level', 'senior'), nullable=False)
+    experiencia = db.Column(db.Enum(Experience), nullable=False)
     descripcion = db.Column(db.String(300))
     rating = db.Column (db.Float(2))
     proyectos = db.relationship ("Proyectos", backref="programador", lazy=True)
