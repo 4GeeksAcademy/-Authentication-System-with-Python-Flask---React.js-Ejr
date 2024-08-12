@@ -17,6 +17,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             allExerciseRoutineOneDayList: [],
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
+
+            porcentajes: [1, 2, 3, 4, 5, 6, 7],
+            porcentaje: 0,
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -397,8 +400,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            updateElementAtIndex: (index, newElement) => {
+                const newArray = [...getStore().porcentajes];
+                newArray[index] = newElement;
+                setStore({ porcentajes: newArray });
+
+            },
+            returnElementAtIndex: (index) => {
+                const newArray = [...getStore().porcentajes];
+                setStore({ porcentaje: newArray[index] })
+                console.log(getStore().porcentaje);
+                return getStore().porcentaje
+            },
         }
     };
 };
-
 export default getState;
