@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			users: [],
 			auth: false,
-			error:{}
+			error: {},
+			mercadoPago: {},
 		},
 		actions: {
 			// loginFetch: async () => {
@@ -18,12 +19,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	  throw error; 
 			// 	}
 
-		
+
 
 			login: async (email, password) => {
 				// hacer fetch que envie el email y password para poder loguearme
 				try {
-					const response = await fetch (`${process.env.BACKEND_URL}/api/login`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -33,22 +34,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password
 						})
 					})
-					if(response.status === 201){
+					if (response.status === 201) {
 						let data = await response.json()
 						setStore({ auth: data.logged })
 						return true
 					}
-					if(response.status === 404){
+					if (response.status === 404) {
 						let data = await response.json()
-						setStore({error:data.msj})
-						
+						setStore({ error: data.msj })
+
 						return false
 					}
-					
+
 					let data = await response.json()
 					localStorage.setItem("token", data.access_token)
 					setStore({ auth: data.logged })
-				
+
 					return true
 				} catch (error) {
 					console.log(error);
@@ -84,10 +85,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			register: async (name,email, password, address, phone) => {
+			register: async (name, email, password, address, phone) => {
 				// hacer fetch que envie el email y password para poder loguearme
 				try {
-					const response = await fetch (`${process.env.BACKEND_URL}/api/user`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -98,33 +99,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password,
 							"address": address,
 							"phone": phone,
-						"is_active":true,
-						"id_role": 1
+							"is_active": true,
+							"id_role": 1
 						})
 					})
-		
-				if(response.status === 201){
-					let data = await response.json()
 
-					// localStorage.setItem("token", data.access_token)
-					setStore({ auth: data.logged })
-					
-					return true
-				}
-				if(response.status === 404){
-					let data = await response.json()
-					setStore({error:data.msj})
-					
-					return false
-				}
+					if (response.status === 201) {
+						let data = await response.json()
+
+						// localStorage.setItem("token", data.access_token)
+						setStore({ auth: data.logged })
+
+						return true
+					}
+					if (response.status === 404) {
+						let data = await response.json()
+						setStore({ error: data.msj })
+
+						return false
+					}
 				} catch (error) {
 					console.log(error);
 					return false
 				}
 			},
-		
+
+			pagoMercadoPago: async (total) => {
+				try {
+					const response = await axios.post(back + "/api/preference", {
+						total: total,  //acá está de nuevo la variable  donde se guarda el total a pagar por el cliente 
+					});
+					console.log(response.data);
+					setStore({ mercadoPago: response.data });  //guardamos  la info en el objeto que creamos en store 
+				} catch (error) {
+					console.log(error);
+				}
+			},
+
 		}
-	
+
 	}
 };
 

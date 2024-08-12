@@ -234,6 +234,8 @@ def update_product(id):
 def preference(): 
     # body = json.loads(request.data)  # aca trae la info 
  # acá vamos a poner más líneas de código 
+    body = json.loads(request.data)  # aca esta toda  la info 
+    total = body["total"]   # acá decimos que en el  body mandamos el total a pagar por el cliente? 
  # Crea un ítem en la preferencia 
     preference_data = { 
     "items": [ {
@@ -241,9 +243,20 @@ def preference():
         "quantity": 1,   #estos tres son los requeridos obligatoriamente por mercadopago. 
         "unit_price": 75.76,   #aca va el total a pagar por el cliente. 
  #también podríamos mandar más datos como nombre del producto, etc. 
-    } ]
- # acá vamos a poner más líneas de código 
-    } 
+    } ],
+ # acá vamos a poner más líneas de código
+
+    "payer":{ 
+     "email":"test_user_17805074@testuser.com"  #este es el usuario de prueba comprador 
+ }, 
+    "back_urls": { 
+    "success": "https://3000-sumpierrezf-mercadodela-7ms2um6rmsm.ws-us87.gitpod.io", 
+    "failure": "https://3000-sumpierrezf-mercadodela-7ms2um6rmsm.ws-us87.gitpod.io", 
+    "pending": "https://3000-sumpierrezf-mercadodela-7ms2um6rmsm.ws-us87.gitpod.io"  #  En 
+ #este caso las tres están configuradas para que lo manden de nuevo a la página home de la app. 
+ }, 
+    "auto_return": "approved" 
+ }  #preference es  el nombre que le dimos a nuestra ruta para pagar con mercadopago  
  #acá vamos a poner más líneas de código 
     preference_response = sdk.preference().create(preference_data) 
     preference = preference_response["response"] 
