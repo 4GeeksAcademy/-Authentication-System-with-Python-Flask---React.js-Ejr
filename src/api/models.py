@@ -14,7 +14,7 @@ class User(db.Model):
     partner_profile_id = db.Column(db.Integer, db.ForeignKey('partnerProfile.id'), nullable=True)
 
     profile = db.relationship("UserProfile", backref="user", lazy=True)
-    partner_profile = db.relationship("PartnerProfile", backref="users_partner", lazy=True)
+    partner_profile = db.relationship("PartnerProfile", back_populates="users", lazy=True)
 
     def __repr__(self):
         return '<User %r>' % self.id
@@ -57,12 +57,12 @@ class UserProfile(db.Model):
 class PartnerProfile(db.Model):
     __tablename__ = 'partnerProfile'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=True)
+    name = db.Column(db.String(250))
     description = db.Column(db.String(1000), nullable=True)
-    venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'), nullable=True)
+    venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'))
 
     venue = db.relationship("Venue", backref="partner_profile", lazy=True)
-    users = db.relationship("User", backref="partner_profile_partner", lazy=True)
+    users = db.relationship("User", back_populates="partner_profile", lazy=True, overlaps="partner_profile,partner_profile_partner")
 
     def __repr__(self):
         return '<PartnerProfile %r>' % self.name
@@ -79,9 +79,9 @@ class Payment(db.Model):
     __tablename__ = 'payment'
     id = db.Column(db.Integer, primary_key=True)
     purchase_date = db.Column(db.String(250), nullable=True)
-    price = db.Column(db.String(250), nullable=True)
-    user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'), nullable=True)
-    events_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
+    price = db.Column(db.String(250))
+    user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'))
+    events_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     def __repr__(self):
         return '<Payment %r>' % self.id
@@ -98,8 +98,8 @@ class Payment(db.Model):
 class Favorites(db.Model):
     __tablename__ = 'favorites'
     id = db.Column(db.Integer, primary_key=True)
-    events = db.Column(db.String(250), nullable=True)
-    venue = db.Column(db.String(250), nullable=True)
+    events = db.Column(db.String(250))
+    venue = db.Column(db.String(250))
 
     def __repr__(self):
         return '<Favorites %r>' % self.id
@@ -115,12 +115,12 @@ class Venue(db.Model):
     __tablename__ = 'venue'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=True)
-    email = db.Column(db.String(250), nullable=True)
-    number = db.Column(db.Integer, nullable=True)
+    email = db.Column(db.String(250))
+    number = db.Column(db.Integer)
     capacity = db.Column(db.String(250), nullable=True)
-    address = db.Column(db.String(250), nullable=True)
-    clasification = db.Column(db.String(250), nullable=True)
-    events_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
+    address = db.Column(db.String(250))
+    classification = db.Column(db.String(250))
+    events_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     events = db.relationship("Events", backref="venue", lazy=True)
     comments_venue = db.relationship("CommentsVenue", backref="venue", lazy=True)
@@ -136,21 +136,18 @@ class Venue(db.Model):
             "number": self.number,
             "capacity": self.capacity,
             "address": self.address,
-            "clasification": self.clasification,
+            "classification": self.classification,
             "events_id": self.events_id,
         }    
     
 class CommentsEvents(db.Model):
     __tablename__ = 'commentsEvents'
     id = db.Column(db.Integer, primary_key=True)
-    user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'), nullable=True)
-    events_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=True)
-    content = db.Column(db.String(250), nullable=True)
-    date = db.Column(db.String(250), nullable=True)
+    user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'))
+    events_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    content = db.Column(db.String(250))
+    date = db.Column(db.String(250))
     rating = db.Column(db.String(250), nullable=True)
-
-    user_profile = db.relationship("UserProfile", backref="comments_events", lazy=True)
-    events = db.relationship("Events", backref="comments_events", lazy=True)
 
     def __repr__(self):
         return '<CommentsEvents %r>' % self.id
@@ -168,10 +165,10 @@ class CommentsEvents(db.Model):
 class CommentsVenue(db.Model):
     __tablename__ = 'commentsVenue'
     id = db.Column(db.Integer, primary_key=True)
-    user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'), nullable=True)
-    venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'), nullable=True)
-    content = db.Column(db.String(250), nullable=True)
-    date = db.Column(db.String(250), nullable=True)
+    user_profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'))
+    venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'))
+    content = db.Column(db.String(250))
+    date = db.Column(db.String(250))
     rating = db.Column(db.String(250), nullable=True)
 
     def __repr__(self):
@@ -190,10 +187,10 @@ class CommentsVenue(db.Model):
 class Events(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
-    name_event = db.Column(db.String(250), nullable=True)
-    style = db.Column(db.String(250), nullable=True)
-    date = db.Column(db.String(250), nullable=True)
-    price = db.Column(db.String(250), nullable=True)
+    name_event = db.Column(db.String(250), )
+    style = db.Column(db.String(250), )
+    date = db.Column(db.String(250), )
+    price = db.Column(db.String(250), )
     description = db.Column(db.String(250), nullable=True)
 
     def __repr__(self):
