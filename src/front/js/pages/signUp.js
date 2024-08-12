@@ -11,12 +11,18 @@ export const SignUp = () =>{
         email: '',
         password: '',
         confirmPassword: ''
-    })
+    });
+    const [visible,setVisible]=useState(false);
 
     const handleChange = (e) =>{
         const{name,value}=e.target
         setDataForm({...dataForm, [name]: value})
     }
+
+    const handleClick = (e) =>{
+        e.preventDefault()
+        setVisible(!visible)
+    };
 
     const handleSubmit = (e) =>{ 
         e.preventDefault() //evita que se recargue la página
@@ -31,15 +37,22 @@ export const SignUp = () =>{
 
     return(
         <div>
-            <form className="container d-flex flex-column align-items-center mt-5 p-5" id="formularioRegistro" onSubmit={handleSubmit}>
+            <form className="container d-flex flex-column align-items-center mt-5 p-3" id="formularioRegistro" onSubmit={handleSubmit}>
+                <h4 className="mt-2 mb-4">Regístrate y comienza a aprender</h4>
 				<label>Email
                     <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Password
-                    <input className="form-control" name="phone" value={dataForm.password} placeholder="" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="password" value={dataForm.password} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
+                    <button onClick={handleClick}>
+                        {visible? <span class="fa-solid fa-eye-slash"></span>:<span className="fa-solid fa-eye"></span>}
+                    </button>
                 </label>
                 <label>Confirm Password
-                    <input className="form-control" name="address" value={dataForm.confirmPassword} placeholder="" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="confirmPassword" value={dataForm.confirmPassword} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
+                    <button onClick={handleClick}>
+                        {visible? <span class="fa-solid fa-eye-slash"></span>:<span className="fa-solid fa-eye"></span>}
+                    </button>
                 </label>
 				<div className="p-3">Registrarse como:</div>
   				<div className="form-check">
