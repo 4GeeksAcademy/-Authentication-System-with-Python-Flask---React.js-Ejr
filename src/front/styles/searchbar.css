@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-    .search{
+.search{
     margin-bottom: auto;
     margin-top: auto;
     height: 50px;
@@ -7,11 +8,10 @@
     border-radius: 40px;
     padding: 10px;
     box-shadow: 0 2px 4px #c0bfc0 ;
-
-    }
+}
 
  
-    .search_input{
+.search_input{
     color: black;
     border: 0;
     outline: 0;
@@ -21,11 +21,9 @@
     caret-color:transparent;
     line-height: 40px;
     transition: width 0.4s linear;
-    
+ }
 
-    }
-
-    .search_icon{
+.search_icon{
     height: 30px;
     width: 30px;
     float: right;
@@ -33,16 +31,16 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color:#050401;
-    
-    }
+    color:#050401;    
+}
     
 a:link{
     text-decoration:none;
-}  
+}
+
 input:focus::placeholder {
     color: transparent;
-  }
+}
 
 
   
