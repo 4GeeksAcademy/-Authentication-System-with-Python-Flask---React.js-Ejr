@@ -66,6 +66,8 @@ class Programador(db.Model):
     proyectos = db.relationship ("Proyectos", backref="programador", lazy=True)
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
     rating = db.relationship ("Ratings", backref="programador", lazy=True)
+    favorito = db.relationship ("Favoritos", backref="programador", lazy=True)
+   
 
     def __repr__(self):
         return f'<Programador {self.id}>'
@@ -90,6 +92,8 @@ class Empleador(db.Model):
     descripcion = db.Column(db.String(300))
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
     rating = db.relationship ("Ratings", backref="empleador", lazy=True)
+    favorito = db.relationship ("Favoritos", backref="empleador", lazy=True)
+    oferta = db.relationship
     
 
     def __repr__(self):
@@ -138,11 +142,10 @@ class Favoritos(db.Model):
     def serialize(self):
         return {
             "programador_id": [programador.serialize() for programador in self.programador_id],
-            "empleador_id": [empleador.seliarize()self.empleador_id],
-            "oferta_id": self.oferta_id
-            [postulados.serialize() for postulados in self.postulados]
+            "empleador_id": [empleador.seliarize() for empleador in self.empleador_id],
+            "oferta_id": [ofertas.serialize() for ofertas in self.oferta_id]
 
-            # do not serialize the password, its a security breach
+            
         }
 
 class Ofertas(db.Model):
@@ -157,6 +160,8 @@ class Ofertas(db.Model):
     experiencia_minima = db.Column (db.String (100))
     fecha_publicacion = db.Column(db.Date, nullable=False)
     postulados= db.relationship ("Postulados", backref= "ofertas", lazy=True)
+    favorito = db.relationship ("Favoritos", backref="ofertas", lazy=True)
+    empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id",))
    
     #Profile_programador i profile_empleador pendiente
 
@@ -173,6 +178,7 @@ class Ofertas(db.Model):
             "modalidad": self.modalidad,
             "experiencia_minima": self.experiencia_minima,
             "fecha_publicacion": self.fecha_publicacion,
+            "favorito": self.favorito
             #empleador_id
 
             # do not serialize the password, its a security breach
