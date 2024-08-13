@@ -44,7 +44,7 @@ def login():
         return jsonify({"msg": "Correo y clave son requeridos"}), 400
 
     access_token = create_access_token(identity=user_query.id)
-    return jsonify(access_token=access_token)
+    return jsonify({"access_token":access_token,"logged":True}), 200
 
 # Proteje una ruta con jwt_required, que expulsará las solicitudes
 # sin un JWT válido presente.
