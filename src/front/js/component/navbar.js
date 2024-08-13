@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.png";
 
 export const Navbar = () => {
+
+  const { store, actions } = useContext(Context)
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-dark">
       <div className="container-fluid">
@@ -24,6 +28,7 @@ export const Navbar = () => {
             <Link to="/vista-login">
               <button type="button" className="btn btn-outline-light me-5">Iniciar sesión</button>
             </Link>
+            {/* {store.logged ?  : null} */}
           </div>
         </div>
       </div>
