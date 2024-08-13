@@ -1,12 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 import "../../styles/perfil.css"
+
+
 const Perfil = () => {
+    const { store, actions } = useContext(Context)
+
     useEffect(() => {
-        // Inicializar los popovers (sin guardar en una variable)
+        
+      // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
+        //Llamamos a función de ruta protegida
+        actions.getPerfilUsuario()
         });
     }, []);
+
     return (
         <div className="container mt-4 col-md-8">
             <div className="row align-items-center user-profile">
@@ -26,7 +35,7 @@ const Perfil = () => {
                             backgroundColor: "#afb4b8"
                         }}
                         onClick={() => alert("Edit image clicked!")}>
-                        <i class="fa-regular fa-pen-to-square"></i>
+                        <i className="fa-regular fa-pen-to-square"></i>
                     </button>
                 </div>
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
@@ -50,22 +59,22 @@ const Perfil = () => {
                                         </div>
                                         <div className="col-md-4 text-end align-self-start d-flex justify-content-end">
                                             <span className="d-inline-block" tabindex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información solo está disponible para tí y para los profesionales con los que agendes cita, nadie más puede acceder a ella.">
-                                                <button className="btn btn-outline-secondary me-2" type="button" ><i class="fa-regular fa-circle-question"></i></button>
+                                                <button className="btn btn-outline-secondary me-2" type="button" ><i className="fa-regular fa-circle-question"></i></button>
                                             </span>
-                                            <button className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-regular fa-pen-to-square"></i></button>
+                                            <button className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fa-regular fa-pen-to-square"></i></button>
                                             
-                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div className="modal-dialog">
+                                                    <div className="modal-content">
+                                                        <div className="modal-header">
+                                                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
                                                         </div>
-                                                        <div class="modal-body">
+                                                        <div className="modal-body">
                                                             ...
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-primary">Understood</button>
+                                                        <div className="modal-footer">
+                                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" className="btn btn-primary">Understood</button>
                                                         </div>
                                                     </div>
                                                 </div>

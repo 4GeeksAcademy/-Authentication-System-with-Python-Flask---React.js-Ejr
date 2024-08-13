@@ -13,6 +13,8 @@ from api.commands import setup_commands
 from datetime import datetime, timezone
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager# from models import Person 
+from flask_jwt_extended import JWTManager
+# from models import Person
 #hola
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(

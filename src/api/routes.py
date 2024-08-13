@@ -2,11 +2,13 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Comentarios, Especialidades
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-
+from flask import jsonify
+from flask_jwt_extended.exceptions import NoAuthorizationError, InvalidHeaderError, RevokedTokenError
+from werkzeug.exceptions import Unauthorized
 from datetime import datetime, timezone
 api = Blueprint('api', __name__)
 
@@ -48,13 +50,37 @@ def login():
 # sin un JWT válido presente.
 @api.route("/perfil/usuario", methods=["GET"])
 @jwt_required()
-def protected():
+def get_perfil():
+    try:
+        current_user = get_jwt_identity()       
+        if not current_user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+        # Aquí podemos hacer una consulta a la base de datos para obtener más información del usuario
+        # user = User.query.filter_by(id=current_user).first()
+
+        return jsonify(logged=current_user), 200    
+    except NoAuthorizationError:
+        return jsonify({"error": "Autorización no proporcionada"}), 401
+    except InvalidHeaderError:
+        return jsonify({"error": "Encabezado de autorización inválido"}), 422
+    except RevokedTokenError:
+        return jsonify({"error": "El token ha sido revocado"}), 401
+    except Unauthorized:
+        return jsonify({"error": "No autorizado"}), 403
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@api.route("/valid-token", methods=["GET"])
+@jwt_required()
+def valid_token():
     # Acceda a la identidad del usuario actual con get_jwt_identity
     current_user = get_jwt_identity()
-    #Con la identidad del usuario podemos hacer consultas a User que retorne
-    #una respuesta con la info del usuario que requieramos
-    #Desde aquí deberiamos enviar toda la info del Usuario
-    return jsonify(logged_in_as=current_user), 200
+    user_exist= User.query.filter_by(id=current_user).first()
+
+    if not user_exist:
+        return jsonify(logged=False), 404
+    return jsonify(logged=True), 200
+ 
 
 
 
