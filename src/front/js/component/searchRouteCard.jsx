@@ -2,7 +2,7 @@ import React from 'react'
 import "../../styles/route_card.css"
 
 
-export const RouteCard = ({title, img, desc, score}) => {
+export const RouteCard = ({id, title, img, desc, score}) => {
     return(
         <div className="card mb-3 border-0" style={{maxWidth: '745px', background: '#D9D9D9', borderRadius:'15px'}}>
             <div className="row g-0 p-3">

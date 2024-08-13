@@ -18,8 +18,8 @@ export const ContactModal = () => {
                         </div>
                         <form action="submit" className="text-start">
                             <div className="mb-3 w-75 mx-auto">
-                                <label htmlFor="email" className="form-label text-black">Email</label>
-                                <input type="email" className="form-control rounded-pill" name="email" id="email" required/>
+                                <label htmlFor="contactEmail" className="form-label text-black">Email</label>
+                                <input type="email" className="form-control rounded-pill" name="contactEmail" id="contactEmail" required/>
                             </div>
 
                             <div className="mb-3 w-75 mx-auto">

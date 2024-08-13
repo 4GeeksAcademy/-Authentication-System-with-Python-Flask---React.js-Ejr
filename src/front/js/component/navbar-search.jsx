@@ -15,7 +15,7 @@ export const Navbarsearch = () => {
                     <Searchbar />
                 </div>
                 <div className="ml-auto d-flex align-items-center">
-                    <button className="btn custom-button rounded-pill" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <button className="custom-button rounded-pill py-2 px-3" data-bs-toggle="modal" data-bs-target="#loginModal">
                         <i className="bi bi-person-circle"></i> Iniciar Sesión
                     </button>
                 </div>

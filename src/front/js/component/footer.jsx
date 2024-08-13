@@ -33,16 +33,16 @@ export const Footer = () => {
 					<div className="col-12 col-md-6 col-lg-4">
 						<h3>Síguenos</h3>
 						<br />
-							<a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="mx-3">
+							<a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="mx-3">
 								<i className="fa-brands fa-facebook fa-2x"></i>
 							</a>
-							<a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="mx-3">
+							<a href="https://x.com" target="_blank" rel="noopener noreferrer" className="mx-3">
 								<i className="fa-brands fa-x-twitter fa-2x"></i>							
 							</a>
-							<a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="mx-3">
+							<a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="mx-3">
 								<i className="fa-brands fa-instagram fa-2x"></i>
 							</a>
-							<a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="mx-3">
+							<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="mx-3">
 								<i className="fa-brands fa-linkedin fa-2x"></i>
 							</a>
 					</div>
