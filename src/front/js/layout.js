@@ -7,9 +7,12 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+
 import LogIn from "./pages/LogIn.jsx";
 import Register from "./pages/register.jsx";
 import ListOfProducts from "./pages/listofproducts.jsx";
+import Editor from "./pages/editor.jsx";
+
 import { Navbar } from "./component/navbar";
 import  Footer  from "./component/footer";
 import Contact from "./pages/contact.jsx";
@@ -35,6 +38,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<LogIn />} path="/logIn" />
                         <Route element={<Register />} path="/register" />
+                        <Route element={<Editor />} path="/editor" />
                         <Route element={<ListOfProducts />} path="/listofproducts" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<About />} path="/about" />

@@ -1,11 +1,5 @@
 @import url('./variables.css');
 
-:root {
-    --sb-track-color: var(--color-white);
-    --sb-thumb-color: var(--color-light-green);
-    --sb-size: 5px;
-}
-
 *{
     margin: 0;
     padding: 0;
