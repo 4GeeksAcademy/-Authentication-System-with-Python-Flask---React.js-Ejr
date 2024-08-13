@@ -77,7 +77,8 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    -webkit-line-clamp:5;
+    -webkit-line-clamp: 7;
+    line-clamp: 7;
 }
 
 .home-container section .img-container {
@@ -112,6 +113,11 @@
 
 .home-container h5:hover {
     background: var(--color-cream);
+}
+
+.home-container .more-link{
+    color: var(--color-forest);
+    text-decoration: none;
 }
 
 /* *************____RESPONSIVE____***************** */
@@ -153,6 +159,18 @@
         min-width: 40%;
         max-width: 100%;
         min-height: 22%;
+    }
+
+    .home-container section p {
+        line-clamp: 5;
+        -webkit-line-clamp: 5;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }    
+
+    .home-container .sports-title {
+        margin-top: 1em;
     }
 }
 
