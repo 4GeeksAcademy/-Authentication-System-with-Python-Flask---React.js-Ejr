@@ -166,6 +166,12 @@ export const SideMenu = () => {
           )}
         </div>
       </aside>
+
+      <div
+        className={`fixed top-0 right-0 h-screen transition-opacity duration-300 z-[30] backdrop-blur ${isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        style={{ width: isSidebarOpen ? `calc(100% - 16rem)` : '0' }}
+        onClick={closeSidebar}
+      ></div>
     </>
   );
 };
