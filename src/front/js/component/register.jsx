@@ -43,10 +43,12 @@ export const Register = () => {
 		}
 		gapi.load("client:auth2", start)
 	}, [])
+
 	const onSuccess = (response) => {
 		console.log(response)
 		//conectar con los actions de flux para registrar usuario y luego con la base de datos
 	}
+
 	const onFailure = () => {
 		console.log('Algo salió mal')
 	}
@@ -70,6 +72,7 @@ export const Register = () => {
 			if (registro) {
 				navigate('/vista-login')
 			}
+
 		}
 	});
 
@@ -109,41 +112,41 @@ export const Register = () => {
 				</div>
 
 				<div className="col-md-6">
-					<label htmlFor="fecha-de-nacimiento" className="form-label text-start">
+					<label htmlFor="fecha_de_nacimiento" className="form-label text-start">
 						Fecha de nacimiento:
 					</label>
 					<input
 						type="date"
 						className="form-control"
-						name="fechaDeNacimiento"
+						name="fecha_de_nacimiento"
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
-						value={formik.values.fechaDeNacimiento}
+						value={formik.values.fecha_de_nacimiento}
 					/>
-					{formik.touched.fechaDeNacimiento && formik.errors.fechaDeNacimiento ? (
-						<div className="text-danger">{formik.errors.fechaDeNacimiento}</div>
+					{formik.touched.fecha_de_nacimiento && formik.errors.fecha_de_nacimiento ? (
+						<div className="text-danger">{formik.errors.fecha_de_nacimiento}</div>
 					) : null}
 				</div>
 
 				<div className="col-md-6">
-					<label htmlFor="codigo-pais" className="form-label text-start">
+					<label htmlFor="codigo_de_area" className="form-label text-start">
 						Código de Área:
 					</label>
 					<input
 						list="codigos-pais"
 						className="form-control"
-						id="codigo-pais"
-						name="codigoPais"
+						id="codigo_de_area"
+						name="codigo_de_area"
 						placeholder="+589"
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
-						value={formik.values.codigoPais}
+						value={formik.values.codigo_de_area}
 					/>
-					{formik.touched.codigoPais && formik.errors.codigoPais ? (
-						<div className="text-danger">{formik.errors.codigoPais}</div>
+					{formik.touched.codigo_de_area && formik.errors.codigo_de_area ? (
+						<div className="text-danger">{formik.errors.codigo_de_area}</div>
 					) : null}
 
-					<datalist id="codigos-pais">
+					<datalist id="codigo_de_area">
 						<option value="+54">Argentina</option>
 						<option value="+56">Chile</option>
 						<option value="+57">Colombia</option>
@@ -174,14 +177,14 @@ export const Register = () => {
 					<input
 						type="email"
 						className="form-control"
-						name="email"
-						placeholder="Email:"
+						name="correo"
+						placeholder="correo:"
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
-						value={formik.values.email}
+						value={formik.values.correo}
 					/>
-					{formik.touched.email && formik.errors.email ? (
-						<div className="text-danger">{formik.errors.email}</div>
+					{formik.touched.correo && formik.errors.correo ? (
+						<div className="text-danger">{formik.errors.correo}</div>
 					) : null}
 				</div>
 
@@ -189,14 +192,14 @@ export const Register = () => {
 					<input
 						type="password"
 						className="form-control"
-						name="password"
+						name="clave"
 						placeholder="Password:"
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
-						value={formik.values.password}
+						value={formik.values.clave}
 					/>
-					{formik.touched.password && formik.errors.password ? (
-						<div className="text-danger">{formik.errors.password}</div>
+					{formik.touched.clave && formik.errors.clave ? (
+						<div className="text-danger">{formik.errors.clave}</div>
 					) : null}
 				</div>
 

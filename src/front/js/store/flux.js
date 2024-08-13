@@ -178,12 +178,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch('https://animated-garbanzo-x75jg5677x63p57j-3001.app.github.dev/api/user', options);
 					const data = await response.json();
 
-					if (response.status === 200) {
+					if (response.status === 201) {
 						console.log(data);
-						Swal.fire({
-							text: "El registro del usuario se ha realizado con éxito.",
-							icon: "success"
-						});
+						// Swal.fire({
+						// 	text: "El registro del usuario se ha realizado con éxito.",
+						// 	icon: "success"
+						// });
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
