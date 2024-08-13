@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Especialidades, Comentarios
+from api.models import db, User, Comentarios, Especialidades
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
@@ -76,6 +76,36 @@ def valid_token():
     # Acceda a la identidad del usuario actual con get_jwt_identity
     current_user = get_jwt_identity()
     user_exist= User.query.filter_by(id=current_user).first()
+
+
+    if not user_exist:
+        return jsonify(logged=False), 404
+    return jsonify(logged=True), 200
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     if not user_exist:
         return jsonify(logged=False), 404

@@ -8,7 +8,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			clave: [],
 			logged: false,
 			psicologos: []
-
 		},
 		actions: {
 
