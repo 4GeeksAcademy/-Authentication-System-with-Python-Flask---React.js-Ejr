@@ -2,18 +2,17 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Game
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from models import User, Game
 
-app = Blueprint('app', __name__)
+api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
-CORS(app)
+CORS(api)
 
 
-@app.route('/users', methods=['GET'])
+@api.route('/users', methods=['GET'])
 def all_users():
     users = User.query.all()
     response_body = {
@@ -22,7 +21,7 @@ def all_users():
 
     return jsonify(users), 200
 
-@app.route('/user/<int:id>', methods=['POST', 'GET', 'DELETE', 'PATCH'])
+@api.route('/user/<int:id>', methods=['POST', 'GET', 'DELETE', 'PATCH'])
 def one_user(req, id):     
     if req.method =='POST':
         #add a user into database
@@ -42,7 +41,7 @@ def one_user(req, id):
         #edits individual user
             #return  
 
-# @app.route('/games', methods=['GET'])        
+# @api.route('/games', methods=['GET'])        
 # def all_games():
 
 #     req.body = {
