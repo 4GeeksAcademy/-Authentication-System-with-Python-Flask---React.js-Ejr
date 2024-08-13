@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             allWeeklyRoutineList: [],
             allWeeklyRoutineUserList: [],
             oneWeeklyRoutineUserList: [],
+            onePhysicalUserInformationList: [],
             allRoutineList: [],
             oneRoutine: {},
             allExerciseList: [],
@@ -153,11 +154,70 @@ const getState = ({ getStore, getActions, setStore }) => {
             //         // setStore({ authError: error.message });
             //     }
             // },
+
             // CERRAR SESION
             logout: () => {
                 localStorage.removeItem("token");
                 setStore({ currentUser: null });
             },
+            // PHYSICAL INFORMATION
+            // GET ONE PhysicalInformation / TRAER UNA INFORMACION FISICA
+            get_one_physical_user_information: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/physical-user-information", {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (resp.status == 200) {
+                        setStore({ onePhysicalUserInformationList: resp.data })
+                        console.log(getStore().onePhysicalUserInformationList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            // POST PhysicalInformation / AGREGAR INFORMACION FISICA
+            postPhysicalInformation: async (height, weight) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "height": height,
+                        "weight": weight,
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/physical-information', payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('Physical Information successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
+            // WEEKLY ROUTINE
             // GET ALL WeeklyRoutine / TRAER TODAS RUTINA SEMANA
             allWeeklyRoutine: async () => {
                 try {
@@ -175,9 +235,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // GET ALL WeeklyRoutine OF USER / TRAER TODAS RUTINA SEMANA DE USUARIO
-            allWeeklyRoutineUser: async (id) => {
+            allWeeklyRoutineUser: async () => {
+                let token = localStorage.getItem("token")
                 try {
-                    const resp = await axios.get(process.env.BACKEND_URL + `/weekly-routine/${id}`);
+                    const resp = await axios.get(process.env.BACKEND_URL + "/weekly-user-routine", {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
 
                     if (resp.status == 200) {
                         setStore({ allWeeklyRoutineUserList: resp.data })
@@ -211,6 +276,43 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // POST WeeklyRoutine / AGREGAR RUTINA SEMANA DE USUARIO
+            postWeeklyRoutine: async (routine_id, week, day) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "routine_id": routine_id,
+                        "week": week,
+                        "day": day
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/weekly-routine', payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('Weekly Routine successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
+            // ROUTINE
             // GET ALL Routine / TRAER TODAS RUTINA
             allRoutine: async () => {
                 try {
@@ -243,71 +345,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-            // // # GET ALL DayRoutineDate / TRAER TODAS FECHA RUTINA DIA
-            // allDayRoutineDate: async () => {
-            //     try {
-            //         const resp = await axios.get(process.env.BACKEND_URL + "/day-routine-date");
+            // POST Routine / AGREGAR RUTINA
+            postRoutine: async (name) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
 
-            //         if (resp.status == 200) {
-            //             setStore({ allDayRoutineDateList: resp.data })
-            //             console.log(getStore().allDayRoutineDateList);
-            //             return true;
-            //         }
-            //     }
-            //     catch (error) {
-            //         console.log(error);
-            //         return false;
-            //     }
-            // },
-            // // # GET ONE DayRoutineDate / TRAER UNA FECHA RUTINA DIA
-            // oneDayRoutineDate: async (id) => {
-            //     try {
-            //         const resp = await axios.get(process.env.BACKEND_URL + `/day-routine-date/${id}`);
+                    const payload = {
+                        "name": name,
+                    };
+                    console.log('Sending payload:', payload);
 
-            //         if (resp.status == 200) {
-            //             setStore({ oneDayRoutineDate: resp.data })
-            //             console.log(getStore().oneDayRoutineDate);
-            //             return true;
-            //         }
-            //     }
-            //     catch (error) {
-            //         console.log(error);
-            //         return false;
-            //     }
-            // },
-            // GET ALL WeeklyDayRoutine / TRAER TODAS RUTINA SEMANA DIA - PIVOTE
-            // allWeeklyDayRoutine: async () => {
-            //     try {
-            //         const resp = await axios.get(process.env.BACKEND_URL + "/weekly-day-routine");
+                    let response = await axios.post(process.env.BACKEND_URL + '/routine', payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
 
-            //         if (resp.status == 200) {
-            //             setStore({ allWeeklyDayRoutineList: resp.data })
-            //             console.log(getStore().allWeeklyDayRoutineList);
-            //             return true;
-            //         }
-            //     }
-            //     catch (error) {
-            //         console.log(error);
-            //         return false;
-            //     }
-            // },
-            // // GET WeeklyDayRoutine OF ONE WEEK / TRAER TODAS RUTINA SEMANA DIA DE UNA SEMANA- PIVOTE
+                    if (response.status == 200) {
+                        console.log('Routine successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
 
-            // allWeeklyDayRoutineOfOneWeek: async (id) => {
-            //     try {
-            //         const resp = await axios.get(process.env.BACKEND_URL + `/weekly-day-routine/${id}`);
-
-            //         if (resp.status == 200) {
-            //             setStore({ allWeeklyDayRoutineOfOneWeekList: resp.data })
-            //             console.log(getStore().allWeeklyDayRoutineOfOneWeekList);
-            //             return true;
-            //         }
-            //     }
-            //     catch (error) {
-            //         console.log(error);
-            //         return false;
-            //     }
-            // },
+            // EXERCISE
             // # GET ALL EXERCICE / TRAER TODOS EJERCICIO
             allExercise: async () => {
                 try {
@@ -340,6 +412,44 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // POST Exercise / AGREGAR EJERCICIO
+            postExercise: async (name, category, description, image) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "name": name,
+                        "category": category,
+                        "description": description,
+                        "image": image,
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/exercise', payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('Exercise successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
+            // EXERCISE ROUTINE
             // GET ALL ExerciseRoutine / TRAER TODAS RUTINA EJERCICIO
             allExerciseRoutine: async () => {
                 try {
@@ -372,6 +482,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // POST ExerciseRoutine / AGREGAR RUTINA EJERCICIO
+            postExerciseRoutine: async (routine_id, exercise_id) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "routine_id": routine_id,
+                        "exercise_id": exercise_id
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/exercise-routine', payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('Exercise Routine successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+            // FOLLOW UP
             // GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
             allFollowUp: async () => {
                 try {
@@ -403,12 +548,49 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // POST FollowUp / AGREGAR SEGUIMIENTO
+            postFollowUp: async (weekly_routine_id, exercise_routine_id) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "weekly_routine_id": weekly_routine_id,
+                        "exercise_routine_id": exercise_routine_id
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/follow-up', payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('follow-up successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
+            // CAROUSEL
             updateElementAtIndex: (index, newElement) => {
                 const newArray = [...getStore().porcentajes];
                 newArray[index] = newElement;
                 setStore({ porcentajes: newArray });
 
             },
+
             returnElementAtIndex: (index) => {
                 const newArray = [...getStore().porcentajes];
                 setStore({ porcentaje: newArray[index] })
