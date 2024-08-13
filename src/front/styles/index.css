@@ -608,6 +608,14 @@ video {
   border-width: 0;
 }
 
+.pointer-events-none{
+  pointer-events: none;
+}
+
+.pointer-events-auto{
+  pointer-events: auto;
+}
+
 .fixed{
   position: fixed;
 }
@@ -628,6 +636,10 @@ video {
   left: 0px;
 }
 
+.right-0{
+  right: 0px;
+}
+
 .top-0{
   top: 0px;
 }
@@ -642,6 +654,10 @@ video {
 
 .z-50{
   z-index: 50;
+}
+
+.z-\[30\]{
+  z-index: 30;
 }
 
 .col-span-6{
@@ -760,8 +776,16 @@ video {
   height: 2.25rem;
 }
 
+.h-10{
+  height: 2.5rem;
+}
+
 .h-32{
   height: 8rem;
+}
+
+.h-4{
+  height: 1rem;
 }
 
 .h-6{
@@ -780,12 +804,32 @@ video {
   min-height: 100vh;
 }
 
+.w-10{
+  width: 2.5rem;
+}
+
 .w-11\/12{
   width: 91.666667%;
 }
 
+.w-16{
+  width: 4rem;
+}
+
 .w-2\/3{
   width: 66.666667%;
+}
+
+.w-20{
+  width: 5rem;
+}
+
+.w-28{
+  width: 7rem;
+}
+
+.w-32{
+  width: 8rem;
 }
 
 .w-4\/6{
@@ -813,12 +857,12 @@ video {
   width: 100vw;
 }
 
-.max-w-xl{
-  max-width: 36rem;
+.max-w-sm{
+  max-width: 24rem;
 }
 
-.flex-1{
-  flex: 1 1 0%;
+.max-w-xl{
+  max-width: 36rem;
 }
 
 .shrink-0{
@@ -921,10 +965,6 @@ video {
   overflow-y: auto;
 }
 
-.whitespace-nowrap{
-  white-space: nowrap;
-}
-
 .rounded{
   border-radius: 0.25rem;
 }
@@ -1015,9 +1055,24 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.bg-gray-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .bg-gray-800{
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
+.bg-neutral-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
+}
+
+.bg-neutral-300{
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
 }
 
 .bg-neutral-800{
@@ -1132,10 +1187,6 @@ video {
   padding-top: 1.25rem;
 }
 
-.text-left{
-  text-align: left;
-}
-
 .text-center{
   text-align: center;
 }
@@ -1201,6 +1252,11 @@ video {
   color: rgb(52 211 153 / var(--tw-text-opacity));
 }
 
+.text-emerald-500{
+  --tw-text-opacity: 1;
+  color: rgb(16 185 129 / var(--tw-text-opacity));
+}
+
 .text-emerald-600{
   --tw-text-opacity: 1;
   color: rgb(5 150 105 / var(--tw-text-opacity));
@@ -1246,8 +1302,9 @@ video {
   color: rgb(23 23 23 / var(--tw-text-opacity));
 }
 
-.text-orange-950\/80{
-  color: rgb(67 20 7 / 0.8);
+.text-orange-600{
+  --tw-text-opacity: 1;
+  color: rgb(234 88 12 / var(--tw-text-opacity));
 }
 
 .text-red-600{
@@ -1260,17 +1317,16 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-orange-600\/80{
-  color: rgb(234 88 12 / 0.8);
-}
-
-.text-orange-600{
-  --tw-text-opacity: 1;
-  color: rgb(234 88 12 / var(--tw-text-opacity));
-}
-
 .underline{
   text-decoration-line: underline;
+}
+
+.opacity-0{
+  opacity: 0;
+}
+
+.opacity-100{
+  opacity: 1;
 }
 
 .opacity-80{
@@ -1320,6 +1376,12 @@ video {
   transition-duration: 150ms;
 }
 
+.transition-opacity{
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .transition-transform{
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1332,10 +1394,6 @@ video {
 
 .duration-300{
   transition-duration: 300ms;
-}
-
-.duration-75{
-  transition-duration: 75ms;
 }
 
 .ease-in{
@@ -1587,8 +1645,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (min-width: 768px){
+  .md\:flex{
+    display: flex;
+  }
+
   .md\:w-64{
     width: 16rem;
+  }
+
+  .md\:items-center{
+    align-items: center;
   }
 
   .md\:text-4xl{
@@ -1647,10 +1713,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+.rtl\:space-x-reverse:where([dir="rtl"], [dir="rtl"] *) > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 1;
+}
+
 @media (prefers-color-scheme: dark){
   .dark\:border-neutral-700{
     --tw-border-opacity: 1;
     border-color: rgb(64 64 64 / var(--tw-border-opacity));
+  }
+
+  .dark\:bg-neutral-700{
+    --tw-bg-opacity: 1;
+    background-color: rgb(64 64 64 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-neutral-800{
@@ -1676,6 +1751,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .dark\:text-neutral-400{
     --tw-text-opacity: 1;
     color: rgb(163 163 163 / var(--tw-text-opacity));
+  }
+
+  .dark\:text-neutral-600{
+    --tw-text-opacity: 1;
+    color: rgb(82 82 82 / var(--tw-text-opacity));
   }
 
   .dark\:text-white{
