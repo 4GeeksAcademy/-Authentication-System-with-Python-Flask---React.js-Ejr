@@ -20,13 +20,13 @@ class User(db.Model):
 
 class Beer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
    # brewery_id = db.Column(db.Integer, db.ForeignKey('brewery.id'), nullable=False)
     name = db.Column(db.String(120), nullable=False)
-    bjcp_style = db.Column(db.String(120), nullable=False)
-    IBUs = db.Column(db.String(120), nullable=False)
-    volALC = db.Column(db.String(120), nullable=False)
-    description = db.Column(db.String(120), nullable=False)
+    bjcp_style = db.Column(db.String(120))
+    IBUs = db.Column(db.String(120))
+    volALC = db.Column(db.String(120))
+    description = db.Column(db.String(120))
     picture_of_beer_url = db.Column(db.String(250), nullable=True) 
 
 
