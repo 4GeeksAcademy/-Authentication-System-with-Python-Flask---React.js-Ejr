@@ -7,14 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			correo: [],
 			clave: [],
 			logged: false,
-
-
-
-
-
-
-
-
+			psicologos: []
 
 		},
 		actions: {
