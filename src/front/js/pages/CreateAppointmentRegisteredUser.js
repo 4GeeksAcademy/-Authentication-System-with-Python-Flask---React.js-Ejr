@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
 import moment from "moment"; 
+import { Context } from "../store/appContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
 
 
 const CreateAppointmentRegisteredUser = () => {
+  const { store, actions } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
@@ -208,10 +210,44 @@ const getUserCars = async () => {
     setError("");
     setCurrentStep(currentStep + 1);
   };
-
-  const confirmAppointment = () => {
+ 
+  const confirmAppointment = async () => {
+    //------------------------------------------------------------------------------------
+    try {
+        const userInfo = await actions.GetUser();
+        if (userInfo && userInfo.email && userInfo.name) {
+          console.log("Entra");
+          MailSender(userInfo);
+      } else {
+          console.error("User Info is missing email or name.");
+      }
+  } catch (error) {
+      console.error("Failed to fetch user info:", error);
+  }
+  
+    //------------------------------------------------------------------------------------
     navigate("/appointmentconfirmed");
+};
+    //------------------------------------------------------------------------------------
+    const MailSender = (userInfo) => {
+      const data = {
+          "sender": {
+              "name": "AutoAgenda",
+              "email": "autoagenda3@gmail.com"
+          },
+          "to": [{
+              "email": userInfo.email,
+              "name": userInfo.name
+          }],
+          "subject": "Appointment created successfully",
+          "htmlContent": "<html><head></head><body><p>Hello,</p>This is my first transactional email sent from Brevo.</p></body></html>"
+      };
+  
+      console.log("Data ready to send:", data);
+      actions.SendMail(data);
   };
+    
+    //------------------------------------------------------------------------------------
 
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();

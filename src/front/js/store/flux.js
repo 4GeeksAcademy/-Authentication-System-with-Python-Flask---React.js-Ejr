@@ -118,21 +118,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await resp.json();
 				return { success: true };
-			}
-		},
-
+			},
 			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mails
-
-			SendMail: async (trydata) => {
+			SendMail: async (data) => {
+				console.log(data)
 				try{
 					const response = await fetch('https://api.brevo.com/v3/smtp/email', {
 						method: 'POST',
 						headers: {
 							'accept': 'application/json',
-							'Content-Type': 'application/json',
-							'api-key': process.env.MAILAPIKEY
+							'api-key': process.env.MYKEY,
+							'Content-Type': 'application/json'
+							
 						},
-						  body: JSON.stringify(trydata)
+						  body: JSON.stringify(data)
 						});
 						if (response.ok){
 							//mail enviado con exito
@@ -142,9 +141,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 							console.error("Error:", error);
 					}
 			},
-			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mails
+			GetUser:async () => {
+				try{
+					const storageUserId = localStorage.getItem("user_id");
+					console.log(storageUserId)
+					const response = await fetch(`${apiUrl}/users/${storageUserId}`);
+						
+						if (!response.ok) throw new Error("Network response failed");
+							
+						const data = await response.json();
 
-	};
+           				const { result } = data;
+            			const email = result.email;
+            			const name = result.name;
+
+						return { email, name };
+						
+					} catch (error) {
+						console.error("Error:", error);
+					}
+				},
+
+		}
+	}
+			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mail
 };
 
 export default getState;

@@ -131,7 +131,7 @@ def user_logout():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users con id
 @api.route('/users/<int:user_id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_user(user_id):
     user_query = User.query.filter_by(id=user_id).first()
     if user_query:
