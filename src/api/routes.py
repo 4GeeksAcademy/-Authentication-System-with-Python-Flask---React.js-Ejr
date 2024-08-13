@@ -77,6 +77,7 @@ def valid_token():
     current_user = get_jwt_identity()
     user_exist= User.query.filter_by(id=current_user).first()
 
+
     if not user_exist:
         return jsonify(logged=False), 404
     return jsonify(logged=True), 200
@@ -106,6 +107,10 @@ def valid_token():
 
 
 
+    if not user_exist:
+        return jsonify(logged=False), 404
+    return jsonify(logged=True), 200
+ 
 
 
 
@@ -120,9 +125,7 @@ def valid_token():
 
 
 
-
-
-
+ 
 
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])
@@ -199,8 +202,8 @@ def create_comentario():
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
 #OBTENER TODOS LOS USUARIOS
-@api.route('/usuarios', methods=['GET'])
-def get_users():
+@api.route('/psicologos', methods=['GET'])
+def get_psicologos():
     try:
         users = User.query.all()
         users_serialized = [user.serialize() for user in users]
@@ -208,6 +211,18 @@ def get_users():
         return jsonify(users_serialized), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+
+#OBTENER TODOS LOS PROFESIONALES
+@api.route('/usuarios', methods=['GET'])
+def get_users():
+    try:
+        users = User.query.filterBy(User.is_psicologo == True)
+        users_serialized = [user.serialize() for user in users]
+
+        return jsonify(users_serialized), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
 #OBTENER TODAS LAS ESPECIALIDADES  
 @api.route('/especialidades', methods=['GET'])
 def get_especialidades():
