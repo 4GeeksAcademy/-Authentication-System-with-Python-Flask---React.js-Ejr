@@ -25,6 +25,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+#Registrar el usario
 @api.route('/register', methods=['POST'])
 def register():
     name = request.json.get("name", None)
@@ -54,7 +55,40 @@ def register():
     return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token}),200
     return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token}),200
 
+#Mostrar el usuario con ese id
+@api.route('/getUsers/<int:id>', methods=['GET'])
+def getUsers(id):
+    user = User.query.get(id)
+    if user:
+        return jsonify({'user': user.serialize()}),200
+    return jsonify({'msg':'Usuario no encontrado'}),404
 
+#Mostrar todos los usuarios
+@api.route('/getAllUsers', methods=['GET'])
+def getAllUsers():
+    users = User.query.all()
+    users=[user.serialize() for user in users]
+    if users:
+        return jsonify({'user': users}),200
+    return jsonify({'msg':'Ningún usuario encontrado'}),404
+
+#Agregar usuario a Empleador
+@api.route('/user/<int:id>/addEmpleador', methods=['POST'])
+def addEmpleador(id):
+    cif = request.json.get('cif', None)
+    metodo_pago = request.json.get('metodo_pago', None)
+    descripcion = request.json.get('descripcion', None)
+    id_exist = Empleador.query.filter_by(user_id=id).first()
+    if id_exist:
+        return jsonify({'msg':'el usuario ya es empleador'}
+        )
+    else:
+        empleador = Empleador(user_id=id,cif=cif, metodo_pago=metodo_pago, descripcion=descripcion)
+        db.session.add(empleador)
+        db.session.commit()
+        return jsonify({'msg':'Empleador creado correctamente', 'user':empleador.serialize()})
+
+#Iniciar sesión
 @api.route('/login', methods=['POST'])
 def login():
     email = request.json.get("email", None)
