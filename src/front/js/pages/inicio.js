@@ -31,7 +31,7 @@ export const Inicio = () => {
       </section>
       <section className="px-5 d-flex flex-column align-items-center">
        <div className="my-auto">
-       <h2 className="text-light my-5 text-center">¿Cómo funciona?</h2>
+       <h2 className="text-inicio my-5 text-center">¿Cómo funciona?</h2>
         <div className="row justify-content-center text-center">
           <InfoCard title={"Regístrate"} description={"Para poder agendar una sesión con uno de nuestros profesionales, primero debes registrarte, sólo toma 1 minuto y es gratis."} icono={"fa-solid fa-arrow-right"} />
           <InfoCard title={"Agendar sesión"} description={"Luego de registrarte, puedes ver la lista de nuestros profesionales y sus especialidades, ver qué días y horarios tienen disponibles y agendar en el que más prefieras."} icono={"fa-regular fa-calendar-days"} />
@@ -41,7 +41,7 @@ export const Inicio = () => {
       </section>
       <section className="d-flex flex-column">
        <div className="my-auto">
-       <h2 className="text-light my-5 text-center">Profesionales Destacados</h2>
+       <h2 className="text-inicio my-5 text-center">Profesionales Destacados</h2>
         <div className="row justify-content-center">
 
           <ProfDestacados />

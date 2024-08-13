@@ -4,9 +4,11 @@
 body {
     background-color: white ;
 }
+
 * {
   box-sizing: border-box !important;
 }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -14,6 +16,9 @@ html, body {
  overflow-x: hidden;
 }
 
+.text-inicio{
+  color: #112d52;
+}
 .container-fluid {
   max-width: 100%;
 }
