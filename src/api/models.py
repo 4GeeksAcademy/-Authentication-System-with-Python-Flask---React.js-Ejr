@@ -18,9 +18,10 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     name = db.Column(db.String(30), unique=False, nullable=False)
     #favorite = db.Column(db.String(50), unique = False) #nullable = True)
-    favorite_game_id = db.Column(db.Integer, ForeignKey('game.id')) #nullable=False)
-    favorite_game = db.relationship('Game', foreign_keys=[favorite_game_id])
+    #favorite_game_id = db.Column(db.Integer, ForeignKey('game.id')) #nullable=False)
+    favorite_game = db.relationship('Favorite', back_populates='user')
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -29,15 +30,28 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            #"password": self.password,
             "name": self.name,
-            #"favorite_game_id": self.favorite_game_id,
             "is_active": self.is_active
             # do not serialize the password, its a security breach
         }
     
 class Favorite(db.Model):
-    __tablename__ =    
+    __tablename__ = "favorite"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+    game_id = db.Column(db.Integer, ForeignKey('game.id'))
+    user= db.relationship('User', foreign_keys=[user_id])
+    game= db.relationship('Game', foreign_keys=[game_id])
+
+    def __repr__(self):
+        return f'<game {self.name}>'
+
+    def serialize(self):
+            return {
+                "id": self.id,
+                "user_id": self.user_id,
+                "game_id": self.game_id
+        }
 
 class Game(db.Model):
     __tablename__ = "game"
