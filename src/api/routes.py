@@ -96,34 +96,7 @@ def valid_token():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])
