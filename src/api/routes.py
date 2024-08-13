@@ -246,6 +246,7 @@ def post_routine():
     db.session.commit()
     return jsonify(routine_created.serialize()), 200
 
+# EXERCISE
 # GET ALL EXERCICE / TRAER TODOS EJERCICIO
 @api.route('/exercise', methods=['GET'])
 def get_all_exercise():

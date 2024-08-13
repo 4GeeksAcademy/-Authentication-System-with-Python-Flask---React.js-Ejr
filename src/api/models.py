@@ -139,7 +139,7 @@ class Exercise(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "category": self.category.value,
+            "category": self.category.name,
             "description": self.description,
             "image": self.image,
         }
