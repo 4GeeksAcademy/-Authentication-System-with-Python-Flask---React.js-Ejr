@@ -1,0 +1,31 @@
+@import url('./variables.css');
+
+.editor-container{
+    margin-top: 80px;
+}
+
+.editor-container .nav-item, .editor-container .nav-link {
+    outline: 2px solid var(--color-olive);
+    border-bottom: none;
+    background-color: var(--color-cream);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: var(--color-forest);
+    font-size: 1.1em;
+}
+
+.editor-container .nav-link {
+    border: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.editor-container .nav-link:hover{
+    background-color: var(--color-white);
+    color: var(--color-forest);
+}
+
+.editor-container .nav-link:focus{
+    background-color: var(--color-white);
+    color: var(--color-forest);
+}
