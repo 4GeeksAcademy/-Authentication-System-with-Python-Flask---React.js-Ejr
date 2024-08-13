@@ -12,29 +12,31 @@ const AccountAndAppointmentCreated = () => {
   };
 
   return (
-    <div id="content">
-      <div className="card padding">
-        <div className="card-body">
-          <h1 className="card-header text-center">Account and Appointment Created!</h1>
-          <br />
-          <p className="appointment-description text-center">
-            Thank you for creating an account and scheduling an appointment with us.
+    <div>
+      <div id="content">
+        <div className="card padding">
+          <div className="card-body">
+            <h1 className="card-header text-center">Account and Appointment Created!</h1>
             <br />
-            <br />
-            A confirmation email has been sent to your provided email address.
-            <br />
-            <br />
-            We look forward to seeing you soon!
-          </p>
-          <div className="text-center mt-4">
-            <button onClick={userDashboard} className="btn btn-secondary">
-              User Dashboard
-            </button>
-            <img
-              src={logoAutoAgenda}
-              className="autoAgendaLogo"
-              alt="AutoAgenda Logo"
-            />
+            <p className="appointment-description text-center">
+              Thank you for creating an account and scheduling an appointment with us.
+              <br />
+              <br />
+              A confirmation email has been sent to your provided email address.
+              <br />
+              <br />
+              We look forward to seeing you soon!
+            </p>
+            <div className="text-center mt-4">
+              <button onClick={userDashboard} className="btn btn-secondary">
+                User Dashboard
+              </button>
+              <img
+                src={logoAutoAgenda}
+                className="autoAgendaLogo"
+                alt="AutoAgenda Logo"
+              />
+            </div>
           </div>
         </div>
       </div>

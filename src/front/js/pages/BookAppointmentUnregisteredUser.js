@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DatePicker } from "antd";
-import moment from "moment"; 
+import moment from "moment";
 import "../../styles/bookappointmentunregistereduser.css";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +49,12 @@ const BookAppointmentUnregisteredUser = () => {
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
     // Deshabilitar todos los días que no sean de lunes a viernes
-    return current && (current < moment().startOf('day') || current.day() === 0 || current.day() === 6);
+    return (
+      current &&
+      (current < moment().startOf("day") ||
+        current.day() === 0 ||
+        current.day() === 6)
+    );
   };
   // Función para deshabilitar horas fuera del horario laboral
   const disabledTime = (date) => {
@@ -67,7 +72,7 @@ const BookAppointmentUnregisteredUser = () => {
       disabledMinutes: () => {
         // Habilitar solo los minutos a las horas permitidas
         return [0, 15, 30, 45];
-      }
+      },
     };
     return hours;
   };
@@ -202,7 +207,6 @@ const BookAppointmentUnregisteredUser = () => {
     setCurrentStep(currentStep + 1);
   };
 
-
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();
     const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
@@ -221,9 +225,82 @@ const BookAppointmentUnregisteredUser = () => {
     }
   };
 
-  const confirmAccountAndAppointment = () => {
-    navigate("/accountandappointmentcreated");
-  };
+  const confirmAccountAndAppointment = async () => {
+    try {
+        const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+                phone_number: phoneNumber,
+            }),
+        });
+
+        if (!signUpNewUser.ok) {
+            const errorData = await signUpNewUser.json();
+            setError(errorData.error || "Failed to create account");
+            return;
+        }
+
+        const userData = await signUpNewUser.json();
+        setUserId(userData.id);
+
+        const loginResponse = await fetch(`${apiUrl}/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        if (!loginResponse.ok) {
+            const errorData = await loginResponse.json();
+            setError(errorData.error || "Failed to log in");
+            return;
+        }
+
+        const loginData = await loginResponse.json();
+
+        localStorage.setItem("token", loginData.access_token);
+        localStorage.setItem("role_id", loginData.role_id);
+        localStorage.setItem("user_id", loginData.user_id);
+
+        const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${loginData.access_token}`,  
+            },
+            body: JSON.stringify({
+                car_model: carModel,  
+                license_plate: carLicensePlate,  
+                user_id: userData.id 
+            }),
+        });
+
+        if (!addNewCarNewUser.ok) {
+            const errorData = await addNewCarNewUser.json();
+            setError(errorData.error || "Failed to create car entry");
+            return;
+        }
+
+        navigate("/accountandappointmentcreated");
+
+    } catch (error) {
+        setError("Failed to create account, log in, or create car entry");
+    }
+};
+
+
+
+
 
   const displayCurrentStep = () => {
     return (
