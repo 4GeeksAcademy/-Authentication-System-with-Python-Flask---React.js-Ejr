@@ -59,10 +59,10 @@ class User(db.Model):
 # INFORMACION FISICA
 class PhysicalInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     height = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
         return f'<PhysicalInformation {self.id}>'
@@ -75,22 +75,6 @@ class PhysicalInformation(db.Model):
             "weight": self.weight,
             "date": self.date,
         }
-
-# # RUTINA SEMANA
-# class WeeklyRoutine(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-#     weekly_day_routine = db.relationship('WeeklyDayRoutine', backref = 'weekly_routine', lazy = True)
-
-#     def __repr__(self):
-#         return f'<User {self.id}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "user_id": self.user_id,
-#         }
 
 # RUTINA 
 class Routine(db.Model):
@@ -137,25 +121,6 @@ class WeeklyRoutine(db.Model):
             "week": self.week.value,
             "day": self.day.value
         }
-
-        
-# # FECHA RUTINA DIA
-# class DayRoutineDate(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'), nullable=False)
-#     date = db.Column(db.Date, nullable=False)
-#     done = db.Column(db.Boolean, nullable=False) 
-
-#     def __repr__(self):
-#         return f'<User {self.id}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "day_routine_id": self.day_routine_id,
-#             "date": self.date,
-#             "done": self.done
-#         }
 
 # EJERCICIO 
 class Exercise(db.Model):
