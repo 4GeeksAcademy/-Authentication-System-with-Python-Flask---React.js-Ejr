@@ -135,6 +135,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+
+			//Traemos psicologos de la base de datos
 			getPsicologos: async () => {
 				const store = getStore()
 				
