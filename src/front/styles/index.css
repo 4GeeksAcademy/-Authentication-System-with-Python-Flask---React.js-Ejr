@@ -1,3 +1,142 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+/* Estilos generales de la navbar */
+.navbar {
+    margin-top: 40 !important;
+    min-height: 80px;
+    margin-bottom: 35px;
+    background: rgba(245, 207, 70, 1);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 30px;
+  }
+  
+  .nav-icon {
+    font-size: 2rem;
+    margin-top: 3px;
+  }
+  
+  .beer-container {
+    position: absolute;
+    top: 5px;
+    right: 47%;
+  }
+  /* Estilos de la imagen de cerveza */
+  .beer-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Agregamos transición para la sombra */
+  }
+  
+  .beer-image:hover {
+    transform: scale(1.1) rotate(88deg); /* Escala y rotación al pasar el ratón */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+  }
+  
+  /* Cambia el color de los enlaces en el menú de navegación */
+  .nav-link {
+    color: rgba(35, 21, 16, 1) !important;
+    font-weight: bold;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: rgba(231, 162, 6, 255) !important;
+    font-weight: bold;
+  }
+  
+  /* Estilos para los elementos del menú desplegable */
+  .dropdown-menu {
+    background: rgba(245, 207, 70, 1);
+    border: none;
+    width: auto !important;
+  }
+  
+  /* Mostrar el dropdown al pasar el mouse */
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  .dropdown-toggle::after {
+    content: none;
+  }
+  
+  /* Estilo de los elementos del submenú */
+  .dropdown-item {
+    color: black;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, color 0.5s ease, transform 0.8s ease; /* Transiciones suaves */
+  }
+  
+  .dropdown-item:hover {
+    background-color: rgba(231, 162, 6, 0.2) !important;
+    color: #fff !important;
+    font-weight: 600;
+    transform: scale(1); /* Efecto de escala al pasar el mouse */
+    cursor: pointer;
+  }
+  
+  /* Estilos para el pie de página */
+  footer {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+  }
+  
+  /* Estilos específicos para el pie de página */
+  footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  footer li {
+    margin: 0 15px;
+  }
+  
+  footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease; /* Transición suave para el color del enlace */
+  }
+  
+  footer a:hover {
+    text-decoration: underline;
+    color: rgba(231, 162, 6, 1); /* Cambio de color al pasar el mouse */
+  }
+  
+  footer .col {
+    margin-bottom: 15px;
+  }
+  
+  @media (max-width: 800px) {
+    .beer-container {
+      position: absolute;
+      top: 0px;
+      right: 40%;
+    }
+    .signin-button {
+      margin-left: auto;
+      padding: 4px;
+      width: 4rem;
+    }
+    .estilos {
+      margin-top: 30px;
+    }
+  }
+  
