@@ -1,3 +1,5 @@
-.btn-card{
+.card-timeline{
+    box-shadow: black 4px 3px 9px;
+}.btn-card{
     background-color: rgb(103, 147, 174);
 }

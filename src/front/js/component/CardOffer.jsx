@@ -12,7 +12,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
 
     return (
         <div className="container mt-5">
-            <div className="card m-auto" style={{ width: "55rem" }}>
+            <div className="card m-auto card-timeline" style={{ width: "55rem" }}>
                 <div className="card-body d-flex align-items-center">
                     <img
                         className="img-fluid me-3"
