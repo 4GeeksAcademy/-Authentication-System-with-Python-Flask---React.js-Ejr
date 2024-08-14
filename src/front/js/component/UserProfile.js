@@ -1,47 +1,82 @@
-import React, { useState } from 'react';
-import UserProfileModal from './UserProfileModal';
+import React, { useState, useContext, useEffect } from "react";
+import { Context } from "../store/appContext";
+import UserProfileModal from "./UserProfileModal";
+
+
 
 const UserProfile = () => {
+  const { store, actions } = useContext(Context);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  const [hasAccess, setHasAccess] = useState(false);
   const [profile, setProfile] = useState({
-    name: 'John Doe',
-    phoneNumber: '123-456-7890',
-    email: 'john.doe@example.com',
-    password: '********'
+    name: "",
+    phoneNumber: "",
+    email: "",
+    password: "********",
   });
+  const apiUrl = process.env.BACKEND_URL + "/api";
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const roleId = localStorage.getItem("role_id");
+    const userId = localStorage.getItem("user_id");
+
+    setHasAccess(!!token && roleId === "2");
+
+    if (token || (roleId === "3" && userId)) {
+      const loadProfile = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setProfile({
+              name: data.result.name,
+              email: data.result.email,
+              phoneNumber: data.result.phone_number,
+              password: "********",
+            });
+          } else {
+            console.error("Failed to fetch profile");
+          }
+        } catch (error) {
+          console.error("Error loading profile:", error);
+        }
+      };
+      loadProfile();
+    }
+  },  []);
 
   const handleProfileModalOpen = () => {
     setIsProfileModalOpen(true);
   };
 
-  const handleProfileModalClose = (updatedProfile) => {
-    if (updatedProfile) {
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        name: updatedProfile.name,
-        phoneNumber: updatedProfile.phoneNumber,
-        email: updatedProfile.email,
-      }));
-      setStatusMessage("Profile updated successfully");
-    }
-    setIsProfileModalOpen(false);
-  };
 
   const saveProfile = async (updatedProfile) => {
-    const response = await fetch('/api/update_profile', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(updatedProfile)
-    });
-
-    if (response.ok) {
-      handleProfileModalClose(updatedProfile);
-    } else {
-      alert('Error updating profile');
+    try {
+      const result = await actions.saveProfile(updatedProfile);
+      if (result.success) {
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          email: updatedProfile.email,
+          name: updatedProfile.name,
+          phoneNumber: updatedProfile.phoneNumber,
+        }));
+        setStatusMessage("Profile updated successfully");
+        setIsProfileModalOpen(false);
+        return Promise.resolve();
+        
+      } else {
+        return Promise.reject(result.error);
+      }
+    } catch (error) {
+      console.error("An error occurred: " + error.message);
+      return Promise.reject(error); 
     }
   };
 

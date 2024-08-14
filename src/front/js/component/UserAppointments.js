@@ -1,99 +1,97 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 function UserAppointments() {
-  const initialAppointments = [
-    {
-      id: 1,
-      date: "2024-08-01",
-      time: "10:00 AM",
-      service: "Oil Change",
-      car: "Toyota Camry",
-      status: "Completed",
-      comments: [
-        {
-          author: "Mechanic",
-          content: "All good",
-          timestamp: "2024-08-01 10:30 AM",
-        },
-        {
-          author: "Client",
-          content: "Great service!",
-          timestamp: "2024-08-01 11:00 AM",
-        },
-        {
-          author: "Client",
-          content: "Very satisfied",
-          timestamp: "2024-08-01 11:30 AM",
-        },
-      ],
-    },
-    {
-      id: 2,
-      date: "2024-08-05",
-      time: "02:00 PM",
-      service: "Tire Rotation",
-      car: "Honda Accord",
-      status: "Pending",
-      comments: [],
-    },
-    {
-      id: 3,
-      date: "2024-08-10",
-      time: "01:00 PM",
-      service: "Brake Inspection",
-      car: "Ford Focus",
-      status: "Pending",
-      comments: [
-        {
-          author: "Mechanic",
-          content: "Brake pads need replacement",
-          timestamp: "2024-08-10 01:30 PM",
-        },
-      ],
-    },
-  ];
+  const [appointments, setAppointments] = useState([]);
+  const { store } = useContext(Context);
+  const navigate = useNavigate();
 
-  const [appointments, setAppointments] = useState(initialAppointments);
   const [newComments, setNewComments] = useState({});
   const [errors, setErrors] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [appointmentToCancel, setAppointmentToCancel] = useState(null);
-  const navigate = useNavigate();
 
-  const handleAddComment = (appointmentId) => {
-    if (
-      !newComments[appointmentId] ||
-      newComments[appointmentId].trim() === ""
-    ) {
+  const apiUrl = process.env.BACKEND_URL + "/api";
+
+  useEffect(() => {
+    const userId = localStorage.getItem("user_id");
+
+    const loadAppointments = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/appointmentsuser/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (response.ok) {
+          const appointmentsData = await response.json();
+          setAppointments(appointmentsData);
+        } else {
+          console.error("Failed to fetch appointments");
+        }
+      } catch (error) {
+        console.error("Error loading appointments:", error);
+      }
+    };
+
+    loadAppointments();
+  }, []); 
+
+  const handleAddComment = async (appointmentId) => {
+    const token = localStorage.getItem("token");
+    const role_id = localStorage.getItem("role_id");
+    const isMechanic = role_id === "2";
+
+    if (newComments[appointmentId]?.trim()) {
+      try {
+        const response = await fetch(`${apiUrl}/comments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            comment: newComments[appointmentId],
+            user_id: localStorage.getItem("user_id"),
+            appointment_id: appointmentId, 
+            is_mechanic: false, 
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to add comment");
+        }
+
+        const commentData = await response.json();
+
+        const updatedAppointments = appointments.map((app) => {
+          if (app.id === appointmentId) {
+            return {
+              ...app,
+              comments: [...app.comments, commentData],
+            };
+          }
+          return app;
+        });
+
+        setAppointments(updatedAppointments);
+        setNewComments((prevState) => ({ ...prevState, [appointmentId]: "" }));
+        setErrors((prevState) => ({ ...prevState, [appointmentId]: "" }));
+      } catch (error) {
+        console.error("Error adding comment:", error);
+        setErrors((prevState) => ({
+          ...prevState,
+          [appointmentId]: "Failed to add comment",
+        }));
+      }
+    } else {
       setErrors((prevState) => ({
         ...prevState,
         [appointmentId]: "Comment cannot be blank",
       }));
-      return;
     }
-
-    const currentDateTime = new Date().toLocaleString();
-    const updatedAppointments = appointments.map((app) => {
-      if (app.id === appointmentId) {
-        return {
-          ...app,
-          comments: [
-            ...app.comments,
-            {
-              author: "Client",
-              content: newComments[appointmentId],
-              timestamp: currentDateTime,
-            },
-          ],
-        };
-      }
-      return app;
-    });
-
-    setAppointments(updatedAppointments);
-    setNewComments((prevState) => ({ ...prevState, [appointmentId]: "" }));
-    setErrors((prevState) => ({ ...prevState, [appointmentId]: "" }));
   };
 
   const handleCommentChange = (appointmentId, value) => {
@@ -106,11 +104,33 @@ function UserAppointments() {
     setShowConfirmModal(true);
   };
 
-  const confirmCancel = () => {
-    setAppointments(
-      appointments.filter((app) => app.id !== appointmentToCancel)
-    );
-    setShowConfirmModal(false);
+  const confirmCancel = async () => {
+    try {
+      const appoinmentToDelete = appointmentToCancel;
+      const response = await fetch(
+        `${apiUrl}/appointments/${appoinmentToDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to delete user:", errorData.error);
+        return false;
+      }
+
+      setAppointments(
+        appointments.filter((app) => app.id !== appoinmentToDelete)
+      );
+      setShowConfirmModal(false);
+      return true;
+    } catch (error) {
+      return `Error deleting user: ${error.message}`;
+    }
   };
 
   return (
@@ -139,17 +159,22 @@ function UserAppointments() {
           <tbody>
             {appointments.map((app) => (
               <tr key={app.id}>
-                <td>{app.date}</td>
-                <td>{app.time}</td>
-                <td>{app.service}</td>
-                <td>{app.car}</td>
-                <td>{app.status}</td>
+                <td>{new Date(app.date).toLocaleDateString()}</td>
+                <td>{new Date(app.date).toLocaleTimeString()}</td>
+                <td>{app.service?.name || "Unknown"}</td>
+                <td>{app.car?.car_model || "Unknown"}</td>
+                <td>{app.status || "Unknown"}</td>
                 <td>
                   {app.comments.map((comment, index) => (
                     <p key={index}>
-                      <strong>{comment.author}:</strong> {comment.content}{" "}
+                      <strong>
+                        {comment.is_mechanic ? "Mechanic" : "Client"}:
+                      </strong>{" "}
+                      {comment.content}
                       <br />
-                      <small>{comment.timestamp}</small>
+                      <small>
+                        ({new Date(comment.timestamp).toLocaleString()})
+                      </small>
                     </p>
                   ))}
                 </td>
