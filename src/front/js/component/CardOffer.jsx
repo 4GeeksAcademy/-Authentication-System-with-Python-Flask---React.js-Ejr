@@ -4,13 +4,13 @@ import {Link} from "react-router-dom"
 
 
 
-export const CardOffer = ({ title, company, location, salary, description,id }) => {
+export const CardOffer = ({ title, company, modality, location, salary, description,id }) => {
 
 
 
     return (
         <div className="container mt-5">
-            <div className="card m-auto" style={{ width: "55rem" }}>
+            <div className="card m-auto card-timeline" style={{ width: "55rem" }}>
                 <div className="card-body d-flex align-items-center">
                     <img
                         className="img-fluid me-3"
@@ -23,6 +23,9 @@ export const CardOffer = ({ title, company, location, salary, description,id }) 
                         <h6 className="card-subtitle mb-2 text-muted">{company}</h6>
                         <p className="card-text lh-1">
                             <strong>Location:</strong> {location}
+                        </p>
+                        <p className="card-text lh-1">
+                            <strong>Modality:</strong> {modality}
                         </p>
                         <p className="card-text lh-1">
                             <strong>Salary:</strong> {salary}
