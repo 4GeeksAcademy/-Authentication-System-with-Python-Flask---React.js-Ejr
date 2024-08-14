@@ -27,10 +27,15 @@ const CreateAppointmentRegisteredUser = () => {
 
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
+  const myToken = localStorage.getItem("token");
   useEffect(() => {
     const getServices = async () => {
       try {
-        const response = await fetch(`${apiUrl}/services`);
+        const response = await fetch(`${apiUrl}/services`, {
+          headers: {
+            Authorization: `Bearer ${myToken}`,
+          },
+        });
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
@@ -43,7 +48,11 @@ const CreateAppointmentRegisteredUser = () => {
 const getUserCars = async () => {
   try {
     // Actualiza la URL para que apunte a la ruta correcta usando owner_id
-    const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
+    const response = await fetch(`${apiUrl}/cars/user/${myuserId}`,{
+      headers: {
+        Authorization: `Bearer ${myToken}`,
+      },
+    });
     if (!response.ok) throw new Error("Network response failed");
 
     // Desestructura el resultado de la respuesta
@@ -85,20 +94,43 @@ const getUserCars = async () => {
   };
 
   const disabledTime = (date) => {
-    return {
-      disabledHours: () => {
-        const disabledHours = [];
-        for (let i = 0; i < 24; i++) {
-          if (i < 8 || i >= 18) {  // Deshabilitar horas fuera del rango de 8:00 a 18:00
-            disabledHours.push(i);
-          }
+    const now = moment();
+    const selectedDate = date.clone().startOf('day'); // Clona la fecha seleccionada y la ajusta al inicio del día
+
+    const disabledHours = () => {
+      const disabledHours = [];
+      const currentHour = now.hour(); // Obtiene la hora actual
+
+      for (let i = 0; i < 24; i++) {
+        // Si es el día actual, deshabilita las horas pasadas
+        if (selectedDate.isSame(now, 'day') && i < currentHour) {
+          disabledHours.push(i);
         }
-        return disabledHours;
-      },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos 0 y 30
-        return Array.from({ length: 60 }, (_, i) => i).filter(min => min !== 0 && min !== 30);
+
+        // Deshabilita horas fuera del rango de 8:00 a 18:00
+        if (i < 8 || i >= 18) {
+          disabledHours.push(i);
+        }
       }
+
+      return disabledHours;
+    };
+
+    const disabledMinutes = (selectedHour) => {
+      const currentMinutes = now.minutes();
+      
+      // Si es la hora actual, deshabilita los minutos pasados
+      if (selectedHour === now.hour()) {
+        return Array.from({ length: 60 }, (_, i) => i).filter(min => min < currentMinutes || min !== 0 && min !== 30);
+      }
+
+      // Habilitar solo los minutos 0 y 30
+      return Array.from({ length: 60 }, (_, i) => i).filter(min => min !== 0 && min !== 30);
+    };
+
+    return {
+      disabledHours,
+      disabledMinutes,
     };
   };
 
