@@ -36,11 +36,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Datos en localStorage correctos, haciendo ping al usuario...");
 			
 					let resp = await fetch(apiUrl + "/pinguser", {
-						mode: 'no-cors',
+						// mode: 'no-cors',
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + storageToken,
-							"Access-Control-Allow-Origin": "*"
+							// "Access-Control-Allow-Origin": "*"
 						},
 					});
 			
@@ -64,9 +64,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Sesión cargada con éxito");
 					return true;
 				} catch (error) {
-					console.error("Error al cargar la sesión:", error);
-					localStorage.clear();
-					setStore({ token: null, userId: null, roleId: null });
+					// console.error("Error al cargar la sesión:", error);
+					// localStorage.clear();
+					// setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
 			},
@@ -107,18 +107,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return true;
 			},
 			logout: async () => {
-				let { token } = getStore();
-				let resp = await fetch(apiUrl + "/logout", {
-					method: "POST",
-					headers: {
-						Authorization: "Bearer " + token,
-					},
-				});
-				if (!resp.ok) return false;
-				setStore({ token: null, userId: null, roleId: null });
-				localStorage.clear();
-				return true;
+				try {
+					let { token } = getStore();
+					if (!token) {
+						console.warn("No hay token disponible para hacer logout");
+						return false;
+					}
+			
+					let resp = await fetch(apiUrl + "/logout", {
+						method: "POST",
+						headers: {
+							"Authorization": "Bearer " + token,
+						},
+					});
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
+					
+					if (!resp.ok) {
+						console.error("Error en la solicitud de logout:", resp.statusText);
+						return false;
+					}
+					
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
+					return true;
+			
+				} catch (error) {
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
+					return false;
+				}
 			},
+			
 			
 			saveProfile: async (updatedProfile) => {
 				let { token } = getStore();

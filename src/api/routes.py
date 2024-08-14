@@ -11,14 +11,13 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'autoagendaFMS24'
-
-jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
+# CORS(app, resources={r"/api/*": {"origins": "https://tu-frontend.github.dev"}})
+
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /create users from admin
 @api.route('/users', methods=['POST'])
