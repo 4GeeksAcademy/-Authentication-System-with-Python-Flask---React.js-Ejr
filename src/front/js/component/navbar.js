@@ -10,7 +10,7 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    actions.cerrarSesion(navigate); // Pasar navigate a cerrarSesion
+    actions.cerrarSesion(navigate);
   };
 
   useEffect(() => {
