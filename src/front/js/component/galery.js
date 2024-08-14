@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import CustomArrows from './CustomArrows'; 
 import { Modal } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../styles/modal.css";
 
 
@@ -22,13 +23,13 @@ const Galery = () => {
                  className="slick-next" 
                  onClick={() => sliderRef.current.slickNext()}
                  onMouseEnter={() => sliderRef.current.slickNext()} 
-                 onMouseLeave={() => clearInterval(autoPlayId)} // Detiene el desplazamiento automático
+                 onMouseLeave={() => clearInterval(autoPlayId)} 
                />,
     prevArrow: <CustomArrows 
                  className="slick-prev" 
                  onClick={() => sliderRef.current.slickPrev()}
                  onMouseEnter={() => sliderRef.current.slickPrev()} 
-                 onMouseLeave={() => clearInterval(autoPlayId)} // Detiene el desplazamiento automático
+                 onMouseLeave={() => clearInterval(autoPlayId)}
                />,
     responsive: [
       {
@@ -64,11 +65,11 @@ const Galery = () => {
       } else {
         sliderRef.current.slickPrev();
       }
-    }, 2000); // Cambia la imagen cada 2 segundos
+    }, 2000); 
   };
 
   const handleMouseLeave = () => {
-    clearInterval(autoPlayId); // Detiene el intervalo cuando el mouse sale
+    clearInterval(autoPlayId); 
   };
 
   const handleImageClick = (imageUrl) => {
@@ -94,7 +95,7 @@ const Galery = () => {
       <Slider 
         ref={sliderRef}
         {...settings}
-        beforeChange={() => clearInterval(autoPlayId)} // Detiene el auto-play cuando cambia el slide
+        beforeChange={() => clearInterval(autoPlayId)} 
       >
         <div onClick={() => handleImageClick("https://cdn.midjourney.com/17df57f2-1d7c-4cce-9411-afc19c623240/0_1.png")}>
           <img src="https://cdn.midjourney.com/17df57f2-1d7c-4cce-9411-afc19c623240/0_1.png" alt="Evento 1" style={{ width: '100%', cursor: 'pointer' }} />
@@ -126,7 +127,7 @@ const Galery = () => {
         <Modal.Body className='modalPrincipal'>
           <img src={modalImage} alt="Evento" className='modalImg' />
         </Modal.Body>
-        <Modal.Header className='closeButton' closeButton />
+        <Modal.Header closeButton />
       </Modal>
     </div>
   );
