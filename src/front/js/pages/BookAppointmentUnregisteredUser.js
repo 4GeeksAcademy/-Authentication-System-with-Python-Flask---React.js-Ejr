@@ -7,9 +7,7 @@ import { useNavigate } from "react-router-dom";
 const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
-  const [appointmentId, setAppointmentId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
-  const [carId, setCarId] = useState("");
   const [carLicensePlate, setCarLicensePlate] = useState("");
   const [carModel, setCarModel] = useState("");
   const [services, setServices] = useState([]);
@@ -33,6 +31,8 @@ const BookAppointmentUnregisteredUser = () => {
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
+        console.log("set service data", setServices);
+        console.log("service data", data);
       } catch (error) {
         console.error("Error getting services:", error);
       }
@@ -43,8 +43,32 @@ const BookAppointmentUnregisteredUser = () => {
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
+      console.log("calendar details", datePickerRef.current);
     }
   }, [currentStep]);
+
+  const handleServiceChange = (e) => {
+    const selectServiceId = e.target.value;
+    console.log("selected service id", selectServiceId);
+    setServiceChosen(selectServiceId);
+  };
+
+  useEffect(() => {
+    console.log("service list", services);
+    if (serviceChosen) {
+      const selectedServiceId = parseInt(serviceChosen, 10);
+      const selectedService = services.find(
+        (service) => service.id === selectedServiceId
+      );
+      console.log("service being selected", selectedService);
+      if (selectedService) {
+        // const nameOfService = selectedService.name;
+        console.log("showing service name", selectedService.name);
+        console.log("showing service id", selectedService.id);
+        // console.log(nameOfService);
+      }
+    }
+  }, [serviceChosen, services]);
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
@@ -114,54 +138,7 @@ const BookAppointmentUnregisteredUser = () => {
     setAppointmentDate(date);
     if (date) {
       checkSlotAvailability(date);
-    }
-  };
-
-  const submitAppointment = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!serviceChosen) {
-      setError("Service required. Please select one from the list.");
-      return;
-    }
-
-    try {
-      const commentResponse = await fetch(`${apiUrl}/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          comment,
-          user_id: userId,
-          appointment_id: appointmentId,
-        }),
-      });
-
-      if (!commentResponse.ok) throw new Error("Error adding comment");
-
-      const commentData = await commentResponse.json();
-      console.log("Comment added:", commentData);
-
-      const serviceResponse = await fetch(`${apiUrl}/services`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: serviceChosen,
-          description: "Service description",
-          duration: 60,
-          slots_required: 1,
-          car_id: carId,
-          appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"),
-        }),
-      });
-
-      if (!serviceResponse.ok) throw new Error("Error booking service");
-
-      const serviceData = await serviceResponse.json();
-      console.log("Service booked:", serviceData);
-    } catch (error) {
-      console.error("Error submitting appointment:", error);
+      console.log("date details set", setAppointmentDate);
     }
   };
 
@@ -181,8 +158,9 @@ const BookAppointmentUnregisteredUser = () => {
         );
         return;
       }
-
       await checkSlotAvailability(appointmentDate);
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+      console.log("date details", dateFormat);
 
       if (!isAvailable) {
         return;
@@ -225,82 +203,104 @@ const BookAppointmentUnregisteredUser = () => {
     }
   };
 
-  const confirmAccountAndAppointment = async () => {
+  const confirmAccountAndAppointment = async (e) => {
+    e.preventDefault();
+
     try {
-        const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                password,
-                phone_number: phoneNumber,
-            }),
-        });
+      const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          phone_number: phoneNumber,
+        }),
+      });
 
-        if (!signUpNewUser.ok) {
-            const errorData = await signUpNewUser.json();
-            setError(errorData.error || "Failed to create account");
-            return;
-        }
+      if (!signUpNewUser.ok) {
+        const errorData = await signUpNewUser.json();
+        setError(errorData.error || "Failed to create account");
+        return;
+      }
 
-        const userData = await signUpNewUser.json();
-        setUserId(userData.id);
+      const userData = await signUpNewUser.json();
+      setUserId(userData.id);
 
-        const loginResponse = await fetch(`${apiUrl}/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
+      const loginResponse = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-        if (!loginResponse.ok) {
-            const errorData = await loginResponse.json();
-            setError(errorData.error || "Failed to log in");
-            return;
-        }
+      if (!loginResponse.ok) {
+        const errorData = await loginResponse.json();
+        setError(errorData.error || "Failed to log in");
+        return;
+      }
 
-        const loginData = await loginResponse.json();
+      const loginData = await loginResponse.json();
+      localStorage.setItem("token", loginData.access_token);
+      localStorage.setItem("role_id", loginData.role_id);
+      localStorage.setItem("user_id", loginData.user_id);
 
-        localStorage.setItem("token", loginData.access_token);
-        localStorage.setItem("role_id", loginData.role_id);
-        localStorage.setItem("user_id", loginData.user_id);
+      const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loginData.access_token}`,
+        },
+        body: JSON.stringify({
+          car_model: carModel,
+          license_plate: carLicensePlate,
+          user_id: userData.id,
+        }),
+      });
 
-        const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${loginData.access_token}`,  
-            },
-            body: JSON.stringify({
-                car_model: carModel,  
-                license_plate: carLicensePlate,  
-                user_id: userData.id 
-            }),
-        });
+      if (!addNewCarNewUser.ok) {
+        const errorData = await addNewCarNewUser.json();
+        setError(errorData.error || "Failed to register car details");
+        return;
+      }
+      const carData = await addNewCarNewUser.json();
 
-        if (!addNewCarNewUser.ok) {
-            const errorData = await addNewCarNewUser.json();
-            setError(errorData.error || "Failed to create car entry");
-            return;
-        }
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
 
-        navigate("/accountandappointmentcreated");
+      const submitAppointment = await fetch(`${apiUrl}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loginData.access_token}`,
+        },
+        body: JSON.stringify({
+          date: dateFormat,
+          user_id: userData.id,
+          car_id: carData.id,
+          service_id: parseInt(serviceChosen, 10),
+        }),
+      });
 
+      if (!submitAppointment.ok) {
+        const errorData = await submitAppointment.json();
+        setError(errorData.error || "Failed to book the appointment. Please try again.");
+        return;
+      }
+
+      const appointmentData = await submitAppointment.json();
+      console.log("Appointment details:", appointmentData);
+
+      navigate("/accountandappointmentcreated");
     } catch (error) {
-        setError("Failed to create account, log in, or create car entry");
+      setError("Failed to create account or register car details");
     }
-};
-
-
-
-
+  };
 
   const displayCurrentStep = () => {
     return (
@@ -341,12 +341,13 @@ const BookAppointmentUnregisteredUser = () => {
               <select
                 id="service"
                 value={serviceChosen}
-                onChange={(e) => setServiceChosen(e.target.value)}
+                // onChange={(e) => setServiceChosen(e.target.value)}
+                onChange={handleServiceChange}
                 className="form-control"
               >
                 <option value="">Select a service</option>
                 {services.map((service) => (
-                  <option key={service.id} value={service.name}>
+                  <option key={service.id} value={service.id}>
                     {service.name}
                   </option>
                 ))}
@@ -490,7 +491,9 @@ const BookAppointmentUnregisteredUser = () => {
     <div id="content" className="padding">
       <div className="card shadow-sm">
         <div className="card-header text-center">Appointment Booking</div>
-        <form onSubmit={submitAppointment}>{displayCurrentStep()}</form>
+        <form onSubmit={confirmAccountAndAppointment}>
+          {displayCurrentStep()}
+        </form>
         <div className="card-footer d-flex justify-content-between">
           {currentStep > 1 && (
             <button

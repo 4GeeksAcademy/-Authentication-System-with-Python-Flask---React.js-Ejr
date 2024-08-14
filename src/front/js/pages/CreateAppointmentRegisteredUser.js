@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
-import moment from "moment"; 
+import moment from "moment";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
-
 
 const CreateAppointmentRegisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
-  const [appointmentId, setAppointmentId] = useState("");
   const [carId, setCarId] = useState("");
   const [carLicensePlate, setCarLicensePlate] = useState("");
   const [carModel, setCarModel] = useState("");
@@ -37,42 +35,48 @@ const CreateAppointmentRegisteredUser = () => {
       }
     };
 
-   
-const getUserCars = async () => {
-  try {
-    // Actualiza la URL para que apunte a la ruta correcta usando owner_id
-    const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
-    if (!response.ok) throw new Error("Network response failed");
+    const getUserCars = async () => {
+      try {
+        // Actualiza la URL para que apunte a la ruta correcta usando owner_id
+        const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
+        if (!response.ok) throw new Error("Network response failed");
 
-    // Desestructura el resultado de la respuesta
-    const { result, msg } = await response.json();
+        // Desestructura el resultado de la respuesta
+        const { result, msg } = await response.json();
 
-    // Verifica si result es un array y tiene contenido
-    if (Array.isArray(result) && result.length > 0) {
-      setUserCars(result); // Guarda todos los coches en el estado
-    } else {
-      console.error("No valid car data received or user has no cars", msg, result);
-    }
-  } catch (error) {
-    console.error("Error getting user cars:", error);
-  }
-};
+        // Verifica si result es un array y tiene contenido
+        if (Array.isArray(result) && result.length > 0) {
+          setUserCars(result); // Guarda todos los coches en el estado
+        } else {
+          console.error(
+            "No valid car data received or user has no cars",
+            msg,
+            result
+          );
+        }
+      } catch (error) {
+        console.error("Error getting user cars:", error);
+      }
+    };
     getServices();
     getUserCars();
   }, [apiUrl, userId]);
-
-  
 
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
     }
   }, [currentStep]);
-  
+
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
     // Deshabilitar todos los días que no sean de lunes a viernes
-    return current && (current < moment().startOf('day') || current.day() === 0 || current.day() === 6);
+    return (
+      current &&
+      (current < moment().startOf("day") ||
+        current.day() === 0 ||
+        current.day() === 6)
+    );
   };
 
   // Función para deshabilitar horas fuera del horario laboral
@@ -91,7 +95,7 @@ const getUserCars = async () => {
       disabledMinutes: () => {
         // Habilitar solo los minutos a las horas permitidas
         return [0, 15, 30, 45];
-      }
+      },
     };
     return hours;
   };
@@ -137,53 +141,53 @@ const getUserCars = async () => {
     }
   };
 
-  const submitAppointment = async (e) => {
-    e.preventDefault();
-    setError("");
+  // const submitAppointment = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
 
-    if (!serviceChosen) {
-      setError("Service required. Please select one from the list.");
-      return;
-    }
+  //   if (!serviceChosen) {
+  //     setError("Service required. Please select one from the list.");
+  //     return;
+  //   }
 
-    try {
-      const commentResponse = await fetch(`${apiUrl}/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          comment,
-          user_id: userId,
-          appointment_id: appointmentId,
-        }),
-      });
+  //   try {
+  //     const commentResponse = await fetch(`${apiUrl}/comments`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         comment,
+  //         user_id: userId,
+  //         appointment_id: appointmentId,
+  //       }),
+  //     });
 
-      if (!commentResponse.ok) throw new Error("Error adding comment");
+  //     if (!commentResponse.ok) throw new Error("Error adding comment");
 
-      const commentData = await commentResponse.json();
-      console.log("Comment added:", commentData);
+  //     const commentData = await commentResponse.json();
+  //     console.log("Comment added:", commentData);
 
-      const serviceResponse = await fetch(`${apiUrl}/services`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: serviceChosen,
-          description: "Service description",
-          duration: 60,
-          slots_required: 1,
-          car_id: carId,
-          appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"),
-        }),
-      });
+  //     const serviceResponse = await fetch(`${apiUrl}/services`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         name: serviceChosen,
+  //         description: "Service description",
+  //         duration: 60,
+  //         slots_required: 1,
+  //         car_id: carId,
+  //         appointment_date: appointmentDate.format("YYYY-MM-DD"),
+  //         appointment_time: appointmentDate.format("HH:mm"),
+  //       }),
+  //     });
 
-      if (!serviceResponse.ok) throw new Error("Error booking service");
+  //     if (!serviceResponse.ok) throw new Error("Error booking service");
 
-      const serviceData = await serviceResponse.json();
-      console.log("Service booked:", serviceData);
-    } catch (error) {
-      console.error("Error submitting appointment:", error);
-    }
-  };
+  //     const serviceData = await serviceResponse.json();
+  //     console.log("Service booked:", serviceData);
+  //   } catch (error) {
+  //     console.error("Error submitting appointment:", error);
+  //   }
+  // };
 
   const nextStep = async () => {
     if (currentStep === 1 && !carId && (!carLicensePlate || !carModel)) {
@@ -210,10 +214,6 @@ const getUserCars = async () => {
     setCurrentStep(currentStep + 1);
   };
 
-  const confirmAppointment = () => {
-    navigate("/appointmentconfirmed");
-  };
-
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();
     const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
@@ -222,6 +222,58 @@ const getUserCars = async () => {
       setCarLicensePlate(value);
     }
   };
+
+ 
+
+  const confirmAppointmentRegisteredUser = async (e) => {
+    e.preventDefault();
+
+    try {
+        if (!selectedCarId || !appointmentDate || !serviceChosen) {
+            setError("Missing required appointment details.");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("user_id");
+        const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+
+        console.log('Sending appointment data:', {
+            date: dateFormat,
+            user_id: userId,
+            car_id: selectedCarId,
+            service_id: parseInt(serviceChosen, 10),
+        });
+
+        const submitAppointment = await fetch(`${apiUrl}/appointments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${loginData.access_token}`,
+          },
+          body: JSON.stringify({
+            date: dateFormat,
+            user_id: userData.id,
+            car_id: carData.id,
+            service_id: parseInt(serviceChosen, 10),
+          }),
+        });
+  
+        if (!submitAppointment.ok) {
+          const errorData = await submitAppointment.json();
+          setError(errorData.error || "Failed to book the appointment. Please try again.");
+          return;
+        }
+  
+        const appointmentData = await submitAppointment.json();
+        console.log("Appointment details:", appointmentData);
+  
+        navigate("/appointmentconfirmed");
+      } catch (error) {
+        setError("Failed to create account or register car details");
+      }
+};
+
 
   const displayCurrentStep = () => {
     switch (currentStep) {
@@ -394,7 +446,7 @@ const getUserCars = async () => {
                   </button>
                   <button
                     className="btn btn-primary ml-auto"
-                    onClick={confirmAppointment}
+                    onClick={confirmAppointmentRegisteredUser}
                   >
                     Confirm Appointment
                   </button>
