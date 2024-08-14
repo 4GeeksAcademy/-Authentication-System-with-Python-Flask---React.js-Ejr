@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
-export const Demo = () => {
+export const Register = () => {
 	const { store, actions } = useContext(Context);
 	const [name, setName] = useState("")
 	const [username, setUsername] = useState("")
@@ -28,33 +28,33 @@ export const Demo = () => {
 				<form onSubmit={handleSubmit}>
 					<h1>Want to join us?</h1>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="mb-3">
-						<label for="exampleInputEmail1" class="form-label">Name</label>
-						<input type="name" class="form-control" id="exampleInputEmail1" value={name} onChange={e => setName(e.target.value)} aria-describedby="emailHelp" />
-						<div id="emailHelp" class="form-text"></div>
+					<div className="mb-3">
+						<label for="exampleInputEmail1" className="form-label">Name</label>
+						<input type="name" className="form-control" id="exampleInputEmail1" value={name} onChange={e => setName(e.target.value)} aria-describedby="emailHelp" />
+						<div id="emailHelp" className="form-text"></div>
 					</div>
-					<div class="mb-3">
-						<label for="exampleInputPassword1" class="form-label">Username</label>
-						<input type="text" class="form-control" id="exampleInputPassword1" value={username} onChange={e => setUsername(e.target.value)} />
+					<div className="mb-3">
+						<label for="exampleInputPassword1" className="form-label">Username</label>
+						<input type="text" className="form-control" id="exampleInputPassword1" value={username} onChange={e => setUsername(e.target.value)} />
 					</div>
-					<div class="mb-3">
-						<label for="exampleInputEmail1" class="form-label">Email</label>
-						<input type="email" class="form-control" id="exampleInputEmail1" value={email} onChange={e => setEmail(e.target.value)} aria-describedby="emailHelp" />
-						<div id="emailHelp" class="form-text"></div>
+					<div className="mb-3">
+						<label for="exampleInputEmail1" className="form-label">Email</label>
+						<input type="email" className="form-control" id="exampleInputEmail1" value={email} onChange={e => setEmail(e.target.value)} aria-describedby="emailHelp" />
+						<div id="emailHelp" className="form-text"></div>
 					</div>
-					<div class="mb-3">
-						<label for="exampleInputPassword1" class="form-label">Password</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" value={password} onChange={e => setPassword(e.target.value)} />
+					<div className="mb-3">
+						<label for="exampleInputPassword1" className="form-label">Password</label>
+						<input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={e => setPassword(e.target.value)} />
 					</div>
-					<div class="mb-3">
-						<label for="exampleInputPassword1" class="form-label">Repeat password</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" value={repeatPasword} onChange={e => setRepeatPassword(e.target.value)} />
+					<div className="mb-3">
+						<label for="exampleInputPassword1" className="form-label">Repeat password</label>
+						<input type="password" className="form-control" id="exampleInputPassword1" value={repeatPasword} onChange={e => setRepeatPassword(e.target.value)} />
 					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" className="btn btn-primary">Submit</button>
 				</form>
 				{error && <p className="text-danger">Todos los campos son obligatorios</p>}
 			</form>
-			<p><a class="link-opacity-50-hover" href="https://expert-guacamole-r475gg7979j9cg57-3000.app.github.dev/">Already have an account?Login</a></p>
+			<p><a className="link-opacity-50-hover" href="https://expert-guacamole-r475gg7979j9cg57-3000.app.github.dev/">Already have an account?Login</a></p>
 		</div>
 	);
 };
