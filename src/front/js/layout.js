@@ -11,8 +11,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 
-import Login from "./pages/login";
-import SignUp from "./pages/signUp";
+import {Login} from "./pages/login";
+import {SignUp} from "./pages/signUp";
 import Cursos from "./pages/cursos";
 
 
