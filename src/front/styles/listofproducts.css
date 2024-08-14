@@ -46,6 +46,16 @@
 .card-body-info-product{
     max-width: 25em;
 }
+.dynamic-products {
+    flex-wrap: nowrap;
+ 
+}
+.product-card{
+    max-width: 80%;
+}
+.card-img-top{
+    width: 45%;
+}
 /*MEDIA QUERIES FOR PRODUCTS*/
 @media screen and (max-width:600px) {
     .card-item {
