@@ -3,22 +3,36 @@
     border: 1px solid #64b6ac;
     border-radius: 5px;
     padding: 20px;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en una columna principal */
+    align-items: center; /* Centra los elementos horizontalmente */
+    max-width: 1200px; /* Establece un ancho máximo para el contenedor */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
 }
 
-.filtro label {
-    font-weight: bold;
+.barra-busqueda .form-group {
+    margin-bottom: 0; /* Elimina el margen inferior de los grupos de formularios */
 }
 
-.filtro span {
-    cursor: pointer;
-    font-size: 1.5em;
-    margin-right: 5px;
+.barra-busqueda .row {
+    display: flex; /* Utiliza flexbox para los elementos dentro del row */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben en una línea */
+    gap: 10px; /* Espacio entre los elementos */
+    width: 100%; /* Asegura que el row ocupe todo el ancho disponible */
 }
 
-.filtro span:hover {
-    color: #ffc107;
+.barra-busqueda .form-control {
+    width: 100%; /* Asegura que los campos de entrada llenen el espacio disponible dentro de su contenedor */
+}
+
+.barra-busqueda .col {
+    flex: 1 1 150px; /* Permite que los elementos crezcan y se reduzcan según el espacio disponible, con un ancho base de 150px */
+    min-width: 150px; /* Establece un ancho mínimo para evitar que los elementos se vuelvan demasiado pequeños */
 }
 
 .botones {
-    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px; /* Ajusta el margen superior para separación */
+    justify-content: flex-start; /* Alinea los botones al inicio del contenedor */
 }
