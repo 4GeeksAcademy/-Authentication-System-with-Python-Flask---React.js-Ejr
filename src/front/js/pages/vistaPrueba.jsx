@@ -9,7 +9,8 @@ export const VistaPrueba = () => {
 		// actions.allWeeklyRoutineUser();
 		// actions.oneWeeklyRoutineUser(1)
 		// actions.postPhysicalInformation("190", "90");
-		actions.deleteAccount();
+		actions.category();
+
 
 		// actions.postWeeklyRoutine("1", "SEMANA1", "MIERCOLES")
 		// actions.postRoutine("Rutina de brazo")
@@ -32,6 +33,9 @@ export const VistaPrueba = () => {
 		// actions.validToken();
 
 	}, [])
+	console.log(store.allCategoryList);
+	// console.log(Object.keys(store.allCategoryList));
+
 	return (
 		<div></div>
 		// <div>

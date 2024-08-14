@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import date
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -352,3 +352,8 @@ def post_follow_up():
     db.session.add(follow_up_created)
     db.session.commit()
     return jsonify(follow_up_created.serialize())
+
+@api.route('/exercises-category', methods=['GET'])
+def get_exercises_category():
+    categories = {category.name: category.value for category in Category}
+    return jsonify(categories)

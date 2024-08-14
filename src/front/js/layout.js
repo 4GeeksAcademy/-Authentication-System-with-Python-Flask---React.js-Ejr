@@ -19,7 +19,7 @@ import { ToastContainer } from "react-toastify";
 import { VistaPrueba } from "./pages/vistaPrueba.jsx";
 
 import { Dashboard } from "./pages/dashboard";
-import { Exercises } from "./pages/exercices.jsx";
+import { Exercises } from "./pages/exercises.jsx";
 
 
 //create your first component
@@ -38,8 +38,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<VistaPrueba />} path="/vistaprueba" />
-                        <Route element={<Exercises/>} path="/exercises" />
-
+                        <Route element={<Exercises />} path="/exercises" />
                         <Route element={<Dashboard />} path="/dashboard" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
