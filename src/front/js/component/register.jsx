@@ -220,19 +220,16 @@ export const Register = () => {
 					<span>He leído y acepto los términos y condiciones de uso.</span>
 				</div>
 
-				<div className="col-md-12">
-					<button className="btn btn-primary w-100" type="submit">
-						Siguiente
+				<div className="col-md-12 d-flex justify-content-center">
+					<button className="btn btn-primary btn-login-registro" type="submit">
+						Registrarme
 					</button>
 				</div>
 			</form>
 
-			<p className="sign-up-label mt-3 text-center">
-				¿Ya tienes una cuenta?
-				<Link to="/vista-login" className="login__forgot m-3">
-					Inicia sesión
-				</Link>
-			</p>
+			<div className="buttons-container d-flex justify-content-center mt-2">
+				<GoogleLogin className="btn-login-registro d-flex justify-content-center" clientId={clientID} onSuccess={onSuccess} onFailure={onFailure} cookiePolicy="single_host_policy" />
+			</div>
 
 			<div className="linea-divisoria d-flex align-items-center my-3">
 				<span className="linea flex-grow-1"></span>
@@ -240,9 +237,13 @@ export const Register = () => {
 				<span className="linea flex-grow-1"></span>
 			</div>
 
-			<div className="buttons-container d-flex justify-content-center">
-				<GoogleLogin clientId={clientID} onSuccess={onSuccess} onFailure={onFailure} cookiePolicy="single_host_policy" />
-			</div>
+			<p className="sign-up-label mt-3 text-center">
+				¿Ya tienes una cuenta?
+				<Link to="/vista-login" className="login__forgot m-3">
+					Inicia sesión
+				</Link>
+			</p>
+			
 		</div>
 
 	);

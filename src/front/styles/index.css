@@ -17,7 +17,7 @@ html, body {
 }
 
 .text-inicio{
-  color: #112d52;
+  color: #350436;
 }
 .container-fluid {
   max-width: 100%;
@@ -29,7 +29,9 @@ img, video {
 }
 
 .navbar-dark {
-    background-color: #112d52 !important;
+  background: linear-gradient(90deg, #360033
+, #0b8793) !important;
+
   }
 
 .logo{
@@ -42,6 +44,11 @@ section{
   min-height: 100vh;
 }
 .card{
-    background-color: #a9d7cb !important;
+    background-color: rgba(11, 135, 147, 0.2) !important;
+}
+.text-presentacion{
+  background: linear-gradient(90deg, rgba(54, 0, 51, 0.3), rgba(11, 135, 147, 0.3)) !important;
+
+
 }
 
