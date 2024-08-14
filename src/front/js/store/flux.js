@@ -135,18 +135,86 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+			// Obtener todos los productos
 			getProducts: async () => {
 				try {
-					const resp = await axios.get(`${process.env.BACKEND_URL}/api/product`);
-					if (resp.status === 200) {
-						return resp.data; 
+					const response = await fetch(`${API_URL}/products`);
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data: data.results };
 					} else {
-						console.error(`Error: ${resp.statusText}`);
-						return null;
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
 					}
 				} catch (error) {
-					console.error(`Error fetching products: ${error.message}`);
-					return null; 
+					return { success: false, error: error.message };
+				}
+			},
+			// Obtener un producto específico
+			getProduct: async (id) => {
+				try {
+					const response = await fetch(`${API_URL}/product/${id}`);
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Agregar un nuevo producto
+			addProduct: async (product) => {
+				try {
+					const response = await fetch(`${API_URL}/product`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(product),
+					});
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Eliminar un producto
+			deleteProduct: async (id) => {
+				try {
+					const response = await fetch(`${API_URL}/product/${id}`, { method: 'DELETE' });
+					if (response.ok) {
+						return { success: true };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Actualizar un producto
+			updateProduct: async (id, updates) => {
+				try {
+					const response = await fetch(`${API_URL}/products/${id}`, {
+						method: 'PUT',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(updates),
+					});
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
 				}
 			}
 
