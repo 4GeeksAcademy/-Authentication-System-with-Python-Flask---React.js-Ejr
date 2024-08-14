@@ -8,7 +8,7 @@ import { Context } from "../store/appContext";
 
 // Validación con Yup
 const validationSchema = Yup.object({
-	nombre: Yup.string().min(4, '4 characters').required('Nombre requerido'),
+	nombre: Yup.string().min(3, '3 characters').required('Nombre requerido'),
 	apellido: Yup.string().required('Apellido requerido'),
 	fecha_de_nacimiento: Yup.date().required('Fecha de nacimiento requerida'),
 	codigo_de_area: Yup.string().max(4, '4 characters').required('Código de área requerido'),

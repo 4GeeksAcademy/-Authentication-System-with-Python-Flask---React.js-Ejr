@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 
 
 const Perfil = () => {
+    
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
 

@@ -48,7 +48,7 @@ def get_perfil():
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
 
-        # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`, y `telefono`
+        # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify({
             "logged": True,
             "nombre_usuario": user.nombre_usuario,
@@ -177,7 +177,7 @@ def create_comentario():
     
 # #OBTENER TODOS LOS USUARIOS
 # @api.route('/usuarios', methods=['GET'])
-# def get_psicologos():
+# def get_users():
 #     try:
 #         users = User.query.all()
 #         users_serialized = [user.serialize() for user in users]
@@ -188,7 +188,7 @@ def create_comentario():
 
 #OBTENER TODOS LOS PROFESIONALES
 @api.route('/psicologos', methods=['GET'])
-def get_users():
+def get_psicologos():
     try:
         users = User.query.filter_by(is_psicologo=True).all()
         users_serialized = [user.serialize() for user in users]
