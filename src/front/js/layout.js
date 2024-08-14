@@ -11,6 +11,7 @@ import {SingleOffer} from "./pages/SingleOffer.jsx"
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { LoginPage } from "./pages/login";
 import { TimeLine } from "./pages/TimeLine.jsx";
 
 //create your first component
@@ -29,6 +30,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/home" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<LoginPage />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<TimeLine/>} path="/timeline"/>
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
