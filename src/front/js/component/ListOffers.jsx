@@ -20,6 +20,7 @@ export const ListOffers = () =>{
                 <CardOffer 
                   title={offer.title}
                   company={offer.company}
+                  modality={offer.modality}
                   location={offer.location}
                   salary={offer.salary}
                   description={offer.description}
