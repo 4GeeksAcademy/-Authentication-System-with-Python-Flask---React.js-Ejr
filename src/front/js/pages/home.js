@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { TimeLine } from "../component/TimeLine.jsx";
-import {SingleOffer} from "./SingleOffer.jsx"
-import { CardOffer } from "../component/CardOffer.jsx";
+import {TimeLine} from "../component/TimeLine.jsx"
+
 
 
 
@@ -14,7 +13,7 @@ export const Home = () => {
 return (
 	
 		<div className="container-fluid">
-			<CardOffer/>
+			<TimeLine/>
 		</div>
 	
 	  );

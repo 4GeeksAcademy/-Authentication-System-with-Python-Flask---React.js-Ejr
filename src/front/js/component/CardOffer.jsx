@@ -1,14 +1,16 @@
 import React from "react";
 import "../../styles/CardOffer.css"
+import {Link} from "react-router-dom"
 
 
-export const CardOffer = ({ title, company, location, salary, description }) => {
+
+export const CardOffer = ({ title, company, location, salary, description,id }) => {
 
 
 
     return (
-        <div className="container mt-3">
-            <div className="card" style={{ width: "60rem" }}>
+        <div className="container mt-5">
+            <div className="card m-auto" style={{ width: "55rem" }}>
                 <div className="card-body d-flex align-items-center">
                     <img
                         className="img-fluid me-3"
@@ -17,21 +19,20 @@ export const CardOffer = ({ title, company, location, salary, description }) => 
                         style={{ width: "150px", height: "150px", objectFit: "cover" }}
                     />
                     <div>
-                        <h5 className="card-title">{title}Frontend Developer</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{company}Tech Company S.L</h6>
+                        <h5 className="card-title">{title}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">{company}</h6>
                         <p className="card-text lh-1">
-                            <strong>Location:</strong> {location} Remote
+                            <strong>Location:</strong> {location}
                         </p>
                         <p className="card-text lh-1">
-                            <strong>Salary:</strong> {salary} $40,000 - $60,000/year
+                            <strong>Salary:</strong> {salary}
                         </p>
                         <p className="card-text lh-1">
-                            <strong>Description:</strong> {description} We are looking for a
-                            skilled Frontend Developer to...
+                            <strong>Description:</strong> {description} 
                         </p>
-                        <a href="#" className="btn btn-primary">
+                        <Link to={`/singleoffer/${id}`} className="btn btn-primary">
                             Ver Oferta
-                        </a>
+                        </Link>
                         <a href="#" className="btn btn-success ms-2">
                             Inscribirse
                         </a>
