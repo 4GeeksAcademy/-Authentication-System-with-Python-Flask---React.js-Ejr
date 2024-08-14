@@ -11,7 +11,7 @@
 }
 
 .form-container2 {
-   width: 100%; 
+  width: 100%; 
   max-height: 550px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -41,13 +41,6 @@
   border-bottom: 1px solid;
   border-color:rgb(13,110,253);
   border-radius: 0px;
-}
-.input {
-  border-radius: 20px;
-  border: 1px solid #c0c0c0;
-  outline: 0 !important;
-  box-sizing: border-box;
-  padding: 12px 15px;
 }
 
 
@@ -101,4 +94,18 @@
 }
 .label-left {
   text-align: left !important;
+}
+.btn-login-registro {
+  width: 70%;
+  height: 50px !important;
+  background: #2b214a;
+  border: none;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.btn-login-registro:hover{
+  width: 72%;
+  height: 50px !important;
+  background: #112d52;
+  border: none;
 }

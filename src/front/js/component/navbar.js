@@ -18,7 +18,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark nav nav-underline">
       <div className="container-fluid">
         <div className="ms-5">
           <img className="logo" src={logo} alt="Logo" />
@@ -30,20 +30,22 @@ export const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto">
-            <Link className="nav-link active mx-4 text-light" aria-current="page" to="/">Preguntas frecuentes</Link>
+            <Link className="nav-link mx-4 text-light" aria-current="page" to="/">Preguntas frecuentes</Link>
             {store.logged && (<Link className="nav-link mx-4 text-light" to="/profesionales">Profesionales</Link>
+            )}
+             {store.logged && (<Link className="nav-link mx-4 text-light" to="/perfil">Perfil</Link>
             )}
 
 
-            <Link className="nav-link mx-4 text-light" to="/">Precios</Link>
+            {/* <Link className="nav-link mx-4 text-light" to="/">Precios</Link> */}
             {!store.logged && (
               <Link to="/vista-login">
-                <button type="button" className="btn btn-outline-light me-5">
+                <button type="button" className="btn btn-outline-light ms-4 me-5">
                   Iniciar sesión
                 </button>
               </Link>
             )},
-            {store.logged && (<Link to="/"> <button type="button" className="btn btn-outline-light me-5" onClick={handleLogout}>
+            {store.logged && (<Link to="/"> <button type="button" className="btn btn-outline-light  ms-4 me-5" onClick={handleLogout}>
               Cerrar sesión
             </button></Link>
             )}

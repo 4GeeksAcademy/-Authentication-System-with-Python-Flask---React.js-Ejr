@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from '../store/appContext'
 import ReactStars from 'react-rating-stars-component';
+import Swal from 'sweetalert2'
 
 
 
@@ -21,12 +22,14 @@ const Profesionales = () => {
         const checkLoggedStatus = async () => {
             try {
                 const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
-                console.log(logged); // Ahora 'logged' debería ser el valor resuelto de la promesa
-                if (logged) {
-                    console.log('en el logged');
-                    navigate('/profesionales');
-                } else {
-                    console.log('fuera del logged');
+              
+                if (!logged) {
+                    Swal.fire({
+                        title: 'Sesión expirada',
+                        text: 'Debes logearte nuevamente',
+                        icon: 'error',
+                        timer: 4000
+                    })
                     navigate('/vista-login');
                 }
             } catch (error) {
@@ -34,7 +37,7 @@ const Profesionales = () => {
                 navigate('/vista-login'); // Redirigir en caso de error
             }
         };
-    
+
         checkLoggedStatus();
 
         return () => {
