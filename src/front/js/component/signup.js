@@ -19,15 +19,18 @@ const Signup = () => {
 
     return (
         <div className="singup-body">
+            <video autoPlay muted loop id="myVideo">
+                <source src="https://videos.pexels.com/video-files/2022395/2022395-hd_1920_1080_30fps.mp4" type="video/mp4" />
+            </video>
             <div className={`singup-container ${isActive ? "singup-active" : ""}`} id="container">
                 <div className="singup-form-container singup-sign-up">
                     <form>
-                        <h1>Create Account</h1>
+                        <h1>Crear Cuenta</h1>
                         <input type="text" placeholder="Name" />
                         <input type="email" placeholder="Email" />
                         <input type="password" placeholder="Password" />
                         <div className="signup-toggle-wrapper">
-                            <button type="submit">Sign Up</button>
+                            <button type="submit">Regístrate</button>
                             <label className="switch">
                                 <input type="checkbox" checked={isPartner} onChange={handleToggleChange} />
                                 <span className="slider round"></span>
@@ -38,28 +41,28 @@ const Signup = () => {
                 </div>
                 <div className="singup-form-container singup-sign-in">
                     <form>
-                        <h1>Sign In</h1>
-                        <span>Use your email and password</span>
+                        <h1>Iniciar sesión</h1>
+                        <span>Usa tu correo y contraseña</span>
                         <input type="email" placeholder="Email" />
                         <input type="password" placeholder="Password" />
-                        <a href="#">Forget Your Password?</a>
-                        <button type="submit">Sign In</button>
+                        <a href="#">¿Has olvidado tu contraseña?</a>
+                        <button type="submit">Iniciar sesión</button>
                     </form>
                 </div>
                 <div className="singup-toggle-container">
                     <div className="singup-toggle">
                         <div className="singup-toggle-panel singup-toggle-left">
-                            <h1>Welcome Back!</h1>
-                            <p>Enter your personal details to use all of site features</p>
+                            <h1>¡Bienvenido de nuevo!</h1>
+                            <p>Introduzca sus datos personales para utilizar todas las funciones del sitio web</p>
                             <button className="singup-hidden" id="login" onClick={handleLoginClick}>
-                                Sign In
+                            Iniciar sesión
                             </button>
                         </div>
                         <div className="singup-toggle-panel singup-toggle-right">
-                            <h1>Hello, Friend!</h1>
-                            <p>Register with your personal details to use all of site features</p>
+                            <h1>¡Hola, amigo!</h1>
+                            <p>Regístrese con sus datos personales para utilizar todas las funciones del sitio web</p>
                             <button className="singup-hidden" id="register" onClick={handleRegisterClick}>
-                                Sign Up
+                            Regístrese
                             </button>
                         </div>
                     </div>

@@ -1,0 +1,44 @@
+.gallery {
+    text-align: center;
+    color: white;
+  }
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .gallery-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .gallery-item-image {
+    flex: 1;
+    max-width: 200px;
+    margin-right: 20px;
+  }
+  
+  .gallery-item-content {
+    flex: 2;
+    text-align: left;
+  }
+  
+  button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

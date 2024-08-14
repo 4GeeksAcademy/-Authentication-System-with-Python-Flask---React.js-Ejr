@@ -8,7 +8,8 @@
 }
 
 .singup-body {
-    background-color: #ffffff; 
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,13 +18,14 @@
 }
 
 .singup-container {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    transition: all 0.6s ease-in-out;
 }
 
 .singup-container p {
@@ -63,7 +65,7 @@
 }
 
 .singup-container form {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +75,7 @@
 }
 
 .singup-container input {
-    background-color: #eee;
+    background-color: #f0f0f0;
     border: none;
     margin: 8px 0;
     padding: 10px 15px;
@@ -92,25 +94,30 @@
 .singup-sign-in {
     left: 0;
     width: 50%;
-    z-index: 2;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
 }
 
 .singup-container.singup-active .singup-sign-in {
-    transform: translateX(100%);
-}
-
-.singup-sign-up {
-    left: 0;
-    width: 50%;
+    transform: translateX(-100%);
     opacity: 0;
     z-index: 1;
 }
 
-.singup-container.singup-active .singup-sign-up {
+.singup-sign-up {
+    left: 50%;
+    width: 50%;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
     transform: translateX(100%);
+}
+
+.singup-container.singup-active .singup-sign-up {
+    transform: translateX(0);
     opacity: 1;
-    z-index: 5;
-    animation: singup-move 0.6s;
+    z-index: 2;
 }
 
 @keyframes singup-move {
@@ -120,7 +127,7 @@
     }
     50%, 100% {
         opacity: 1;
-        z-index: 5;
+        z-index: 2;
     }
 }
 
@@ -154,9 +161,9 @@
 }
 
 .singup-toggle {
-    background-color: #9C528B;
+    background-color: rgba(29, 14, 63, 0.9);
     height: 100%;
-    background: linear-gradient(to right, #9C528B, #9C528B);
+    background: linear-gradient(to right, rgba(29, 14, 63, 0.9), rgba(29, 14, 63, 0.9));
     color: #fff;
     position: relative;
     left: -100%;
@@ -264,4 +271,16 @@ input:checked + .slider:before {
 .toggle-text {
     font-size: 14px;
     font-weight: 600;
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000;
+    object-fit: cover;
 }
