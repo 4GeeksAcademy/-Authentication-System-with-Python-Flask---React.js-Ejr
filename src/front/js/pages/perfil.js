@@ -4,6 +4,7 @@ import "../../styles/perfil.css"
 
 
 const Perfil = () => {
+    
     const { store, actions } = useContext(Context)
 
     useEffect(() => {

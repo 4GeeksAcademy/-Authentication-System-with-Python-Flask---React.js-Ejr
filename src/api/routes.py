@@ -48,7 +48,7 @@ def get_perfil():
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
 
-        # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`, y `telefono`
+        # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify({
             "logged": True,
             "nombre_usuario": user.nombre_usuario,
