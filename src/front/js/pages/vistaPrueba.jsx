@@ -8,7 +8,8 @@ export const VistaPrueba = () => {
 		// actions.allWeeklyRoutine();
 		// actions.allWeeklyRoutineUser();
 		// actions.oneWeeklyRoutineUser(1)
-		actions.postPhysicalInformation("190", "90");
+		// actions.postPhysicalInformation("190", "90");
+		actions.deleteAccount();
 
 		// actions.postWeeklyRoutine("1", "SEMANA1", "MIERCOLES")
 		// actions.postRoutine("Rutina de brazo")
