@@ -1,10 +1,14 @@
 import React, { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/perfil.css"
+import Swal from 'sweetalert2'
+
 
 
 const Perfil = () => {
     const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
 
     useEffect(() => {
         actions.getPerfilUsuario()
@@ -13,6 +17,27 @@ const Perfil = () => {
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
         });    
+
+        const checkLoggedStatus = async () => {
+            try {
+                const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
+              
+                if (!logged) {
+                    Swal.fire({
+                        title: 'Sesión expirada',
+                        text: 'Debes logearte nuevamente',
+                        icon: 'error',
+                        timer: 4000
+                    })
+                    navigate('/vista-login');
+                }
+            } catch (error) {
+                console.error('Error al validar token:', error);
+                navigate('/vista-login'); // Redirigir en caso de error
+            }
+        };
+
+        checkLoggedStatus();
     }, []);
     
     return (

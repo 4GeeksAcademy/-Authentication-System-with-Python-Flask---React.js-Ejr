@@ -19,7 +19,7 @@ export const Inicio = () => {
               style={{ objectFit: 'cover' }}
               alt="..."
             />
-            <div className="position-absolute  col-8 text-start text-light bg-dark bg-opacity-50 p-3 rounded"
+            <div className="position-absolute  col-8 text-start text-light text-presentacion bg-opacity-50 p-3 rounded"
             style={{ top: '50%', left: '40%', transform: 'translate(-50%, -50%)' }}>
               <h1 className="mb-4">Bienvenido a HablemosUY</h1>
         <h5>
