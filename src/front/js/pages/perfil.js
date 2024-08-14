@@ -14,12 +14,12 @@ const Perfil = () => {
             new bootstrap.Popover(popoverTriggerEl);
         });    
     }, []);
-
+    
     return (
         <div className="container mt-4 col-md-8">
             <div className="row align-items-center user-profile">
                 <div className="col-md-4 text-center position-relative">
-                    <img src="https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain"
+                    <img src={store.dataUser?.foto || "https://example.com/default-image.jpg"} 
                         alt="User Image"
                         className="img-fluid rounded-circle profile-image"
                     />
@@ -38,7 +38,7 @@ const Perfil = () => {
                     </button>
                 </div>
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
-                    <h2>Nombre del Usuario</h2>
+                    <h2>{store.dataUser?.nombre_usuario}</h2>
                 </div>
                 <div className="accordion mt-3" id="accordionExample">
                     <div className="accordion-item">
@@ -52,9 +52,9 @@ const Perfil = () => {
                                 <div className="container mt-4">
                                     <div className="row align-items-center">
                                         <div className="col-md-8">
-                                            <p><strong>Nombre:</strong> Juan Pérez</p>
-                                            <p><strong>Email:</strong> juan.perez@example.com</p>
-                                            <p><strong>Teléfono:</strong> +598 1234 5678</p>
+                                            <p><strong>Nombre: {store.dataUser?.nombre_usuario}</strong> </p>
+                                            <p><strong>Email:</strong> {store.dataUser?.correo}</p>
+                                            <p><strong>Teléfono:</strong> {store.dataUser?.telefono}</p>
                                         </div>
                                         <div className="col-md-4 text-end align-self-start d-flex justify-content-end">
                                             <span className="d-inline-block" tabindex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información solo está disponible para tí y para los profesionales con los que agendes cita, nadie más puede acceder a ella.">

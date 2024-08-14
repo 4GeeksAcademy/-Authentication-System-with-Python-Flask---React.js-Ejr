@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			correo: [],
 			clave: [],
 			logged: false,
-			psicologos: []
+			psicologos: [],
+			dataUser:null
 		},
 		actions: {
 
@@ -33,6 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem('token', data.access_token);
 						setStore({ currentUser: { correo: correo } });
 						setStore({ logged: true });
+						
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
@@ -68,17 +70,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
 						return false;
 					}
-					// Comprueba el token si es proporcionado					
+			
+					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						/* console.log(localStorage.getItem('token')); */
 						return true;
-					} else if (response.status === 400) {
-						throw new Error('Bad Request: ' + (data.msg || 'Solicitud incorrecta'));
-					} else if (response.status === 500) {
-						throw new Error('Internal Server Error: ' + (data.msg || 'Error en el servidor'));
 					} else {
-						throw new Error(data.msg || response.statusText);
+						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
 					}
+			
 				} catch (error) {
 					Swal.fire({
 						title: 'No puede acceder a ésta sección!',
@@ -89,10 +89,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			
+			
 
 			//Validación de token para contexto global
 			validToken: async () => {
-				const store = getStore();
 				const token = localStorage.getItem('token');
 				const options = {
 					headers: {
