@@ -128,9 +128,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore()
 
 				try {
-					const response = await fetch(process.env.BACKEND_URL + '/api/psicologos');
+					const response = await fetch(process.env.BACKEND_URL + '/psicologos');
 					const data = await response.json();
-
+					console.log(data)
 					if (response.status === 200) {
 						console.log(data);
 						// Actualiza solo la propiedad psicologos en el store
@@ -174,7 +174,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				console.log('antes del fetch register');
 				try {
-					const response = await fetch(process.env.BACKEND_URL + '/api/user', options);
+					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
 
 					if (response.status === 201) {

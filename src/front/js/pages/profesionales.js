@@ -18,16 +18,24 @@ const Profesionales = () => {
         script.async = true;
         document.body.appendChild(script);
 
-        const logged = actions.validToken();
-        if(logged){
-            console.log(logged)
-            console.log('en el logged')
-            navigate('/profesionales')
-        }else{
-            console.log('fuera del logged')
-
-            navigate('/vista-login')
-        }
+        const checkLoggedStatus = async () => {
+            try {
+                const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
+                console.log(logged); // Ahora 'logged' debería ser el valor resuelto de la promesa
+                if (logged) {
+                    console.log('en el logged');
+                    navigate('/profesionales');
+                } else {
+                    console.log('fuera del logged');
+                    navigate('/vista-login');
+                }
+            } catch (error) {
+                console.error('Error al validar token:', error);
+                navigate('/vista-login'); // Redirigir en caso de error
+            }
+        };
+    
+        checkLoggedStatus();
 
         return () => {
             // Limpiar el script al desmontar el componente
