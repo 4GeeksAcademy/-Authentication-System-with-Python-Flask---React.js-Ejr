@@ -65,8 +65,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return true;
 				} catch (error) {
 					// console.error("Error al cargar la sesión:", error);
-					// localStorage.clear();
-					// setStore({ token: null, userId: null, roleId: null });
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
 			},
