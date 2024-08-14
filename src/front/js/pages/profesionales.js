@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from '../store/appContext'
 import ReactStars from 'react-rating-stars-component';
 
@@ -6,6 +7,7 @@ import ReactStars from 'react-rating-stars-component';
 
 const Profesionales = () => {
     const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -15,6 +17,25 @@ const Profesionales = () => {
         script.src = "https://assets.calendly.com/assets/external/widget.js";
         script.async = true;
         document.body.appendChild(script);
+
+        const checkLoggedStatus = async () => {
+            try {
+                const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
+                console.log(logged); // Ahora 'logged' debería ser el valor resuelto de la promesa
+                if (logged) {
+                    console.log('en el logged');
+                    navigate('/profesionales');
+                } else {
+                    console.log('fuera del logged');
+                    navigate('/vista-login');
+                }
+            } catch (error) {
+                console.error('Error al validar token:', error);
+                navigate('/vista-login'); // Redirigir en caso de error
+            }
+        };
+    
+        checkLoggedStatus();
 
         return () => {
             // Limpiar el script al desmontar el componente
@@ -45,7 +66,6 @@ const Profesionales = () => {
         }
     };
 
-    
     return (<div className="mt-5">
         {
             store.psicologos.map((elm, index) => {

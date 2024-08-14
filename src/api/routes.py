@@ -44,7 +44,6 @@ def get_perfil():
             return jsonify({"error": "Usuario no encontrado"}), 404
         # Aquí podemos hacer una consulta a la base de datos para obtener más información del usuario
         # user = User.query.filter_by(id=current_user).first()
-
         return jsonify(logged=current_user), 200    
     except NoAuthorizationError:
         return jsonify({"error": "Autorización no proporcionada"}), 401
@@ -56,6 +55,7 @@ def get_perfil():
         return jsonify({"error": "No autorizado"}), 403
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # Validación de TOKEN
 @api.route("/valid-token", methods=["GET"])
@@ -162,22 +162,23 @@ def create_comentario():
         return jsonify({"msg": "Comentario creado exitosamente"}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
-#OBTENER TODOS LOS USUARIOS
-@api.route('/psicologos', methods=['GET'])
-def get_psicologos():
-    try:
-        users = User.query.all()
-        users_serialized = [user.serialize() for user in users]
+    
+# #OBTENER TODOS LOS USUARIOS
+# @api.route('/usuarios', methods=['GET'])
+# def get_psicologos():
+#     try:
+#         users = User.query.all()
+#         users_serialized = [user.serialize() for user in users]
 
-        return jsonify(users_serialized), 200
-    except Exception as e:
-        return jsonify({"msg": str(e)}), 500
+#         return jsonify(users_serialized), 200
+#     except Exception as e:
+#         return jsonify({"msg": str(e)}), 500
 
 #OBTENER TODOS LOS PROFESIONALES
-@api.route('/usuarios', methods=['GET'])
+@api.route('/psicologos', methods=['GET'])
 def get_users():
     try:
-        users = User.query.filterBy(User.is_psicologo == True)
+        users = User.query.filter_by(is_psicologo=True).all()
         users_serialized = [user.serialize() for user in users]
 
         return jsonify(users_serialized), 200
