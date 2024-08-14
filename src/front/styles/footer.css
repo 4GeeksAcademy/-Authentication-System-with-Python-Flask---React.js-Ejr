@@ -1,37 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
-.footer{
-    background-color: #303036;
-    font-family: 'Montserrat', sans-serif;
+.footer {
+  background-color: #303036;
+  font-family: "Montserrat", sans-serif;
 }
 
 .footer a:hover {
-    color: #FFFAFF; 
+  color: #fffaff;
 }
 
 .footer a {
-    color: #257895;
+  color: #33c5fa;
 }
-.footer li{
-    width: auto;
-    list-style-type: none;
-    padding: 5px;
-    position: relative;
+.footer li {
+  width: auto;
+  list-style-type: none;
+  padding: 5px;
+  position: relative;
 }
 
-.footer .btn-outline{
-    background-color: #257895;
+.footer .btn-outline {
+  background-color: #257895;
 }
 
 .footer .btn-outline:hover {
-    color: #FFFAFF; 
+  color: #fffaff;
 }
 
-.footer .btn-btn-success{
-    background-color: #408642;
+.footer .btn-btn-success {
+  background-color: #408642;
 }
 
 .phone {
-    cursor: default !important;
-    user-select: text !important
+  cursor: default !important;
+  user-select: text !important;
 }
