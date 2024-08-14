@@ -12,9 +12,10 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username:</label>
+    <form className="login-container" onSubmit={handleSubmit}>
+      <h4>Iniciar Sesión</h4>
+      <div className="username">
+        <label>Nombre Usuario:</label>
         <input
           type="text"
           value={username}
@@ -22,8 +23,8 @@ const Login = () => {
           required
         />
       </div>
-      <div>
-        <label>Password:</label>
+      <div className="password">
+        <label>Contraseña:</label>
         <input
           type="password"
           value={password}
@@ -31,7 +32,12 @@ const Login = () => {
           required
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" className="loginbutton">Login</button>
+      <div>
+        <p>
+          ¿Olvidaste tu contraseña?
+        </p>
+      </div>
     </form>
   );
 };
