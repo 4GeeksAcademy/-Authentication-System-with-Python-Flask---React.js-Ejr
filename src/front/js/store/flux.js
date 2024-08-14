@@ -74,6 +74,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						/* console.log(localStorage.getItem('token')); */
+						setStore({
+							dataUser: {
+								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
+								correo: data.correo || "Correo no disponible",
+								foto: data.foto || "https://example.com/default-image.jpg",
+								telefono: data.telefono || "Teléfono no disponible",
+								descripcion: data.descripcion || "descripcion no disponible"
+							}
+						});
 						return true;
 					} else {
 						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
