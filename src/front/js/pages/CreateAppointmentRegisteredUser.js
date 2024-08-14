@@ -83,15 +83,15 @@ const getUserCars = async () => {
         // Deshabilitar horas fuera del rango de 9:00 a 17:00
         const disabledHours = [];
         for (let i = 0; i < 24; i++) {
-          if (i < 9 || i >= 17) {
+          if (i < 8 || i >= 18) {
             disabledHours.push(i);
           }
         }
         return disabledHours;
       },
       disabledMinutes: () => {
-        // Habilitar solo los minutos a las horas permitidas
-        return [0, 15, 30, 45];
+        // Habilitar solo los minutos 0 y 30
+        return Array.from({ length: 60 }, (_, i) => i).filter(min => min !== 0 && min !== 30);
       }
     };
     return hours;
@@ -216,7 +216,7 @@ const getUserCars = async () => {
     try {
         const userInfo = await actions.GetUser();
         if (userInfo && userInfo.email && userInfo.name) {
-          console.log("Entra");
+          
           MailSender(userInfo);
       } else {
           console.error("User Info is missing email or name.");
@@ -240,7 +240,7 @@ const getUserCars = async () => {
               "name": userInfo.name
           }],
           "subject": "Appointment created successfully",
-          "htmlContent": "<html><head></head><body><p>Hello,</p>This is my first transactional email sent from Brevo.</p></body></html>"
+          "htmlContent": `<html><head></head><body><p>Hello,${userInfo.name}</p>This is my first transactional email sent from Brevo.</p></body></html>`
       };
   
       console.log("Data ready to send:", data);
@@ -337,7 +337,7 @@ const getUserCars = async () => {
               ref={datePickerRef}
               format="DD/MM/YYYY HH:mm"
               onChange={manageDateChange}
-              showTime={{ use12Hours: false, format: "HH:mm" }}
+              showTime={{ use12Hours: false, format: "HH:mm", hideDisabledOptions: true }}
               className="form-control"
               disabledDate={disabledDate}
               disabledTime={disabledTime}
