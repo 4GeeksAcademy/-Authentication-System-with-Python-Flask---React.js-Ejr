@@ -1,6 +1,6 @@
 
-import click
-from api.models import db, User
+import click,json, os
+from api.models import db, User,Product
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -29,6 +29,17 @@ def setup_commands(app):
 
         print("All test users created")
 
-    @app.cli.command("insert-test-data")
-    def insert_test_data():
-        pass
+    @app.cli.command("insert-test-products")
+    def insert_test_products():
+        script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+        rel_path = "json/products.json"
+        abs_file_path = os.path.join(script_dir, rel_path)
+        with open(abs_file_path) as f:
+            d = json.load(f)
+            print(d)
+            for product in d:
+                new_product = Product(name=product["name"], cost=product["cost"])
+                db.session.add(new_product)
+            db.session.commit()
+
+           

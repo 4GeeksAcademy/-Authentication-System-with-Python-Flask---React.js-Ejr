@@ -10,7 +10,7 @@ import mercadopago
 import json
 sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
-
+from flask import render_template
 # Allow CORS requests to this API
 CORS(api)
 
@@ -261,4 +261,9 @@ def preference():
     preference_response = sdk.preference().create(preference_data) 
     preference = preference_response["response"] 
     return preference, 200 
+
+@api.route('/')
+def home():
+    products = Product.query.all()
+    return render_template('home.html', products=products)   
  
