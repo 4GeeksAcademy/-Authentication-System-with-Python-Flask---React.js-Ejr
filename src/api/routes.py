@@ -106,18 +106,6 @@ def login():
     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
-# @api.route('/api/pinguser', methods=['GET'])
-# @jwt_required()
-# def ping_user():
-#     current_user_id = get_jwt_identity()
-#     payload = get_jwt()
-#     if "role_id" not in payload:
-#         return jsonify({"error": "Role ID not found in token"}), 400
-    
-#     role_id = payload["role_id"]
-#     print(role_id)
-#     print(current_user_id)
-#     return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
 @api.route('/api/pinguser', methods=['GET'])
 @jwt_required()
 def ping_user():
@@ -139,6 +127,7 @@ def ping_user():
     print("Respuesta enviada:", response)
     
     return response, 200
+#     return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
 
 
 
@@ -154,7 +143,7 @@ def user_logout():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users con id
 @api.route('/users/<int:user_id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_user(user_id):
     user_query = User.query.filter_by(id=user_id).first()
     if user_query:
