@@ -8,9 +8,9 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
+			<h1>Mi perfil!!</h1>
 			<p>
-				<img src={rigoImageUrl} />
+				<img src=""/>
 			</p>
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
