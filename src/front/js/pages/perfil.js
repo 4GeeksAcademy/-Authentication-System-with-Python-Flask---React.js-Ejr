@@ -44,7 +44,7 @@ function Perfil() {
       <input type="text" class="form-control" id="inputState"/>
     </div>
     <div class="col-md-2">
-      <label for="inputZip" class="form-label">Zip</label>
+      <label for="inputZip" class="form-label">Zip Code</label>
       <input type="text" class="form-control" id="inputZip"/>
     </div>
     <div class="col-12">
