@@ -1,0 +1,38 @@
+/* Galery.css */
+.custom-modal .modal-dialog {
+    max-width: 90vw; /* Ajusta el ancho máximo del modal */
+    margin: 0 auto; /* Centra el modal horizontalmente */
+  }
+  
+  .custom-modal .modal-content {
+    border: none;
+    border-radius: 0;
+    background: transparent; /* Fondo transparente para el contenido del modal */
+  }
+  
+  .custom-modal .modal-body {
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    
+  }
+  
+  .custom-modal .modal-footer {
+    border: none;
+    padding: 0;
+  }
+  
+  .custom-modal .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo difuminado negro */
+  }
+  
+  .custom-modal .modal-body img {
+    max-width: 80vw; /* Ajusta el tamaño máximo de la imagen */
+    max-height: 80vh; /* Ajusta el tamaño máximo de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+  
+  .closeButton{
+    color: red !important;
+  }
