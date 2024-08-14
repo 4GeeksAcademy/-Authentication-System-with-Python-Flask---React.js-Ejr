@@ -8,6 +8,7 @@ const Perfil = () => {
 
     useEffect(() => {
         actions.getPerfilUsuario()
+        actions.validToken()
         
       // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
