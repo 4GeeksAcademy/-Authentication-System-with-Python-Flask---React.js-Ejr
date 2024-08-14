@@ -1,0 +1,43 @@
+/* Galery.css */
+.custom-modal .modal-dialog {
+    max-width: 90vw; 
+    margin: 0 auto; 
+  }
+  
+  .custom-modal .modal-content {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+  
+  .custom-modal .modal-body {
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    
+  }
+  
+  .custom-modal .modal-footer {
+    border: none;
+    padding: 0;
+  }
+  
+  .custom-modal .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7); 
+  }
+  
+  .custom-modal .modal-body img {
+    max-width: 80vw; 
+    max-height: 80vh; 
+    height: auto; 
+  }
+  
+  .custom-modal .btn-close  {
+    background-color: #ffffff; 
+    font-size: 1.5rem; 
+  }
+  
+  .custom-modal .modal-header .close:hover {
+    color: #f8f9fa; 
+  }
