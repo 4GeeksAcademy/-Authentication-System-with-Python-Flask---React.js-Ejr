@@ -1,0 +1,28 @@
+.perfil{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: #64b6ac;
+}
+.perfil__side-content{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 20%;
+    padding: 1rem;
+}
+.perfil__main-content{
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;  
+    padding: 1rem;
+}
+.perfil__divider{
+    border-left: 2px solid #DAFFEF;
+      height: 100vw;
+}
