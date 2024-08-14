@@ -42,9 +42,20 @@ def get_perfil():
         current_user = get_jwt_identity()       
         if not current_user:
             return jsonify({"error": "Usuario no encontrado"}), 404
-        # Aquí podemos hacer una consulta a la base de datos para obtener más información del usuario
-        # user = User.query.filter_by(id=current_user).first()
-        return jsonify(logged=current_user), 200    
+        
+        # Simulando la obtención de más datos del usuario desde la base de datos
+        user = User.query.filter_by(id=current_user).first()
+        if not user:
+            return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
+
+        # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`, y `telefono`
+        return jsonify({
+            "logged": True,
+            "nombre_usuario": user.nombre_usuario,
+            "correo": user.correo,
+            "foto": user.foto,
+            "telefono": user.telefono
+        }), 200    
     except NoAuthorizationError:
         return jsonify({"error": "Autorización no proporcionada"}), 401
     except InvalidHeaderError:
