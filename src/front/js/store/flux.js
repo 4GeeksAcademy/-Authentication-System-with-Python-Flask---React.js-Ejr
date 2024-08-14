@@ -47,8 +47,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.error('Error al iniciar sesión: ', error);
-					localStorage.removeItem('token');  // Elimina el token en caso de error
-					setStore({ logged: false }); // Asegura que el estado global se actualice
+					localStorage.removeItem('token');  // Eliminar el token en caso de error
+					setStore({ logged: false }); // Asegurar que el estado global se actualice
 					return false;
 				}
 			},
@@ -161,7 +161,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({git
+					body: JSON.stringify({
 						nombre_usuario: nombre,
 						apellido: apellido,
 						fecha_de_nacimiento: fecha_de_nacimiento,
