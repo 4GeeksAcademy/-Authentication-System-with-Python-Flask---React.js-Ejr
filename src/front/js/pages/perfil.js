@@ -12,7 +12,8 @@ const Perfil = () => {
       // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
-        });    
+        //Llamamos a función de ruta protegida
+        });
     }, []);
     console.log(store.dataUser);
     
