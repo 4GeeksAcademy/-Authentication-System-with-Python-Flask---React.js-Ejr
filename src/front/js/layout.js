@@ -12,7 +12,7 @@ import { Footer } from "./component/footer";
 
 import { Login } from "./pages/login";
 import { SignUp } from "./pages/signUp";
-import { EditarPerfil } from "./pages/editarPerfil";
+
 import { Favoritos } from "./pages/favoritos";
 import { Cursos } from "./pages/cursos";
 import { Logout } from "./pages/logout";
@@ -35,7 +35,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignUp />} path="/signup"/>
-                        <Route element={<EditarPerfil />} path="/editarPerfil"/>
+
                         <Route element={<Favoritos />} path="/favoritos" />
                         <Route element={<Cursos />} path="/cursos" />
                         <Route element={<Logout />} path="/logout" />

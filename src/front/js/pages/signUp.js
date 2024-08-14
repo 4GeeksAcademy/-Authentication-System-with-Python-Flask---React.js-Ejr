@@ -44,15 +44,11 @@ export const SignUp = () =>{
                 </label>
 			    <label>Password
                     <input className="form-control" name="password" value={dataForm.password} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
-                    <button onClick={handleClick}>
-                        {visible? <span class="fa-solid fa-eye-slash"></span>:<span className="fa-solid fa-eye"></span>}
-                    </button>
+                    {visible? <span class="fa-solid fa-eye-slash" onClick={handleClick}></span>:<span className="fa-solid fa-eye" onClick={handleClick}></span>}
                 </label>
                 <label>Confirm Password
                     <input className="form-control" name="confirmPassword" value={dataForm.confirmPassword} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
-                    <button onClick={handleClick}>
-                        {visible? <span class="fa-solid fa-eye-slash"></span>:<span className="fa-solid fa-eye"></span>}
-                    </button>
+                    {visible? <span class="fa-solid fa-eye-slash" onClick={handleClick}></span>:<span className="fa-solid fa-eye" onClick={handleClick}></span>}
                 </label>
 				<div className="p-3">Registrarse como:</div>
   				<div className="form-check">

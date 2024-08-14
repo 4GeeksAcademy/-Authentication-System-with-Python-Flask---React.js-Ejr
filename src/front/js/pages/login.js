@@ -38,15 +38,15 @@ export const Login = () =>{
 	return(
         <div>
             <form className="container d-flex flex-column align-items-center mt-5 p-3" id="formularioLogin" onSubmit={handleSubmit}>
-                <h4 className="mt-2 mb-4">INICIA SESIÓN</h4>
-				<label>Email
+                <h4 className="mt-2 mb-4">Inicia sesión</h4>
+                <label>Email              
                     <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Password
+                <div className="input-group">
                     <input className="form-control" name="password" value={dataForm.password} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
-                    <button onClick={handleClick}>
-                        {visible? <span class="fa-solid fa-eye-slash"></span>:<span className="fa-solid fa-eye"></span>}
-                    </button>
+                    {visible? <span class="fa-solid fa-eye-slash" onClick={handleClick}></span>:<span className="fa-solid fa-eye" onClick={handleClick}></span>}
+                </div>
                 </label>
 				<input className="btn btn-primary mt-3" value="Iniciar sesión" type="submit"/>
 			</form>
