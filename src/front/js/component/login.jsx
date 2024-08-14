@@ -57,7 +57,7 @@ export const Login = () => {
 			} else {
 				Swal.fire({
 					title: 'Lo sentimos!',
-					text: 'Ha habido un error en su correo o contraseña!',
+					text: 'Ha habido un error en su correo o contraseña, intente nuevamente!',
 					icon: 'error',
 					timer: 4000
 				})

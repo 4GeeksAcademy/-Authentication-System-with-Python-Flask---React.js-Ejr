@@ -7,13 +7,13 @@ const Perfil = () => {
     const { store, actions } = useContext(Context)
 
     useEffect(() => {
+        //Llamamos a función de ruta protegida
+        actions.getPerfilUsuario()
         
       // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
-        //Llamamos a función de ruta protegida
-        actions.getPerfilUsuario()
-        });
+        });    
     }, []);
 
     return (
