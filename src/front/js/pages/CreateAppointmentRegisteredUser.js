@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
 import moment from "moment";
+import { Context } from "../store/appContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
 
 const CreateAppointmentRegisteredUser = () => {
+  const { store, actions } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
@@ -23,10 +25,16 @@ const CreateAppointmentRegisteredUser = () => {
 
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
+  const myToken = localStorage.getItem("token");
+
   useEffect(() => {
     const getServices = async () => {
       try {
-        const response = await fetch(`${apiUrl}/services`);
+        const response = await fetch(`${apiUrl}/services`, {
+          headers: {
+            Authorization: `Bearer ${myToken}`,
+          },
+        });
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
@@ -38,7 +46,11 @@ const CreateAppointmentRegisteredUser = () => {
     const getUserCars = async () => {
       try {
         // Actualiza la URL para que apunte a la ruta correcta usando owner_id
-        const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
+        const response = await fetch(`${apiUrl}/cars/user/${myuserId}`, {
+          headers: {
+            Authorization: `Bearer ${myToken}`,
+          },
+        });
         if (!response.ok) throw new Error("Network response failed");
 
         // Desestructura el resultado de la respuesta
@@ -86,15 +98,17 @@ const CreateAppointmentRegisteredUser = () => {
         // Deshabilitar horas fuera del rango de 9:00 a 17:00
         const disabledHours = [];
         for (let i = 0; i < 24; i++) {
-          if (i < 9 || i >= 17) {
+          if (i < 8 || i >= 18) {
             disabledHours.push(i);
           }
         }
         return disabledHours;
       },
       disabledMinutes: () => {
-        // Habilitar solo los minutos a las horas permitidas
-        return [0, 15, 30, 45];
+        // Habilitar solo los minutos 0 y 30
+        return Array.from({ length: 60 }, (_, i) => i).filter(
+          (min) => min !== 0 && min !== 30
+        );
       },
     };
     return hours;
@@ -214,6 +228,45 @@ const CreateAppointmentRegisteredUser = () => {
     setCurrentStep(currentStep + 1);
   };
 
+  const confirmAppointment = async () => {
+    //------------------------------------------------------------------------------------
+    try {
+      const userInfo = await actions.GetUser();
+      if (userInfo && userInfo.email && userInfo.name) {
+        MailSender(userInfo);
+      } else {
+        console.error("User Info is missing email or name.");
+      }
+    } catch (error) {
+      console.error("Failed to fetch user info:", error);
+    }
+
+    //------------------------------------------------------------------------------------
+    navigate("/appointmentconfirmed");
+  };
+  //------------------------------------------------------------------------------------
+  const MailSender = (userInfo) => {
+    const data = {
+      sender: {
+        name: "AutoAgenda",
+        email: "autoagenda3@gmail.com",
+      },
+      to: [
+        {
+          email: userInfo.email,
+          name: userInfo.name,
+        },
+      ],
+      subject: "Appointment created successfully",
+      htmlContent: `<html><head></head><body><p>Hello,${userInfo.name}</p>This is my first transactional email sent from Brevo.</p></body></html>`,
+    };
+
+    console.log("Data ready to send:", data);
+    actions.SendMail(data);
+  };
+
+  //------------------------------------------------------------------------------------
+
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();
     const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
@@ -223,57 +276,65 @@ const CreateAppointmentRegisteredUser = () => {
     }
   };
 
- 
-
   const confirmAppointmentRegisteredUser = async (e) => {
     e.preventDefault();
-
+  
+    // Error handling for missing details
+    if (!carId || !appointmentDate || !serviceChosen) {
+      setError("Missing required appointment details.");
+      return;
+    }
+  
     try {
-        if (!selectedCarId || !appointmentDate || !serviceChosen) {
-            setError("Missing required appointment details.");
-            return;
-        }
-
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("user_id");
-        const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-
-        console.log('Sending appointment data:', {
-            date: dateFormat,
-            user_id: userId,
-            car_id: selectedCarId,
-            service_id: parseInt(serviceChosen, 10),
-        });
-
-        const submitAppointment = await fetch(`${apiUrl}/appointments`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${loginData.access_token}`,
-          },
-          body: JSON.stringify({
-            date: dateFormat,
-            user_id: userData.id,
-            car_id: carData.id,
-            service_id: parseInt(serviceChosen, 10),
-          }),
-        });
+      // Retrieve the necessary data from localStorage
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("user_id");
   
-        if (!submitAppointment.ok) {
-          const errorData = await submitAppointment.json();
-          setError(errorData.error || "Failed to book the appointment. Please try again.");
-          return;
-        }
+      // Format the appointment date
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
   
-        const appointmentData = await submitAppointment.json();
-        console.log("Appointment details:", appointmentData);
+      console.log("Sending appointment data:", {
+        date: dateFormat,
+        user_id: userId,
+        car_id: carId,
+        service_id: parseInt(serviceChosen, 10),
+      });
   
-        navigate("/appointmentconfirmed");
-      } catch (error) {
-        setError("Failed to create account or register car details");
+      // Send the appointment request
+      const response = await fetch(`${apiUrl}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          date: dateFormat,
+          user_id: userId,
+          car_id: carId,
+          service_id: parseInt(serviceChosen, 10),
+        }),
+      });
+  
+      // Check for HTTP errors
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to book the appointment. Please try again.");
+        return;
       }
-};
-
+  
+      // Process successful response
+      const appointmentData = await response.json();
+      console.log("Appointment details:", appointmentData);
+  
+      // Navigate to confirmation page
+      navigate("/appointmentconfirmed");
+    } catch (error) {
+      // Set a more appropriate error message
+      setError("Failed to create the appointment. Please try again.");
+      console.error("Error creating appointment:", error);
+    }
+  };
+  
 
   const displayCurrentStep = () => {
     switch (currentStep) {
@@ -354,7 +415,11 @@ const CreateAppointmentRegisteredUser = () => {
               ref={datePickerRef}
               format="DD/MM/YYYY HH:mm"
               onChange={manageDateChange}
-              showTime={{ use12Hours: false, format: "HH:mm" }}
+              showTime={{
+                use12Hours: false,
+                format: "HH:mm",
+                hideDisabledOptions: true,
+              }}
               className="form-control"
               disabledDate={disabledDate}
               disabledTime={disabledTime}
@@ -446,7 +511,7 @@ const CreateAppointmentRegisteredUser = () => {
                   </button>
                   <button
                     className="btn btn-primary ml-auto"
-                    onClick={confirmAppointmentRegisteredUser}
+                    onClick={confirmAppointment}
                   >
                     Confirm Appointment
                   </button>
