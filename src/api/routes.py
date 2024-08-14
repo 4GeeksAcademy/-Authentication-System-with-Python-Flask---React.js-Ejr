@@ -165,7 +165,7 @@ def create_comentario():
     
 # #OBTENER TODOS LOS USUARIOS
 # @api.route('/usuarios', methods=['GET'])
-# def get_psicologos():
+# def get_users():
 #     try:
 #         users = User.query.all()
 #         users_serialized = [user.serialize() for user in users]
@@ -176,7 +176,7 @@ def create_comentario():
 
 #OBTENER TODOS LOS PROFESIONALES
 @api.route('/psicologos', methods=['GET'])
-def get_users():
+def get_psicologos():
     try:
         users = User.query.filter_by(is_psicologo=True).all()
         users_serialized = [user.serialize() for user in users]
