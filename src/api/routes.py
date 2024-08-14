@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import date
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -33,7 +33,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
+# USUARIO
 # CREAR USUARIO
 @api.route('/register', methods=['POST'])
 def post_user():
@@ -65,7 +65,6 @@ def post_user():
     db.session.commit()
     return jsonify(user_created.serialize()), 200
 
-
 # INICIAR SESION
 @api.route('/login', methods=['POST'])
 def login():
@@ -82,7 +81,6 @@ def login():
    
     access_token = create_access_token(identity={"email": user_db.email, "id": user_db.id})
     return jsonify({"access_token":access_token, "logged":True}), 200
-
 
 # VALIDAR TOKEN
 @api.route("/valid-token", methods=["GET"])
@@ -106,6 +104,18 @@ def profile():
     if not user:
         return jsonify({"error": "User not found"}), 404
     return jsonify(user=user.serialize()), 200
+
+# ELIMINAR USUARIO
+@api.route('/delete-account', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user['email']).first()
+    if not user:
+        return jsonify({"error":"User not found"}), 404
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify("User successfully deleted"), 200
 
 # PHYSICAL INFORMATION
 # GET ALL PhysicalInformation / TRAER TODAS INFORMACION FISICA
@@ -259,6 +269,7 @@ def post_routine():
     db.session.commit()
     return jsonify(routine_created.serialize()), 200
 
+# EXERCISE
 # GET ALL EXERCICE / TRAER TODOS EJERCICIO
 @api.route('/exercise', methods=['GET'])
 def get_all_exercise():
@@ -354,3 +365,8 @@ def post_follow_up():
     db.session.add(follow_up_created)
     db.session.commit()
     return jsonify(follow_up_created.serialize())
+
+@api.route('/exercises-category', methods=['GET'])
+def get_exercises_category():
+    categories = {category.name: category.value for category in Category}
+    return jsonify(categories)

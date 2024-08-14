@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom"
 import "../../styles/home.css";
 import ProfileIcon from "../component/profileIcon";
+import "react-toastify/dist/ReactToastify.css"
 import { toast } from "react-toastify";
 import { Badge } from "../component/badge";
 
@@ -58,11 +60,39 @@ export const Profile = () => {
     actions.get_last_physical_user_information()
     calcIMC()
   }, [])
+  
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  // useEffect(() => {
-  //   console.log(store.lastPhysicalUserInformationList);
+  const navigate = useNavigate()
 
-  // }, [store.lastPhysicalUserInformationList])
+  const handleDeleteSubmit = async (e) => {
+    e.preventDefault()
+
+    // Crear una promesa para manejar el login
+    const deleteAccount = new Promise(async (resolve, reject) => {
+      const success = await actions.deleteAccount()
+      if (success === true) {
+        resolve("Cuenta Eliminada")
+      } else {
+        reject("Elimincacion fallida")
+      }
+    })
+
+    toast.promise(
+      deleteAccount,
+      {
+        pending: 'Eliminando...',
+        success: 'Cuenta eliminada exitosamente 👌',
+        error: 'No se pudo eliminar su cuenta 🤯'
+      }
+    )
+
+    deleteAccount.then(() => {
+      navigate("/")
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
 
   return (
     <div className="sm:w-2/3 w-11/12 mx-auto flex flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-3 h-full bg-neutral-800 border-neutral-700 relative">
@@ -183,7 +213,7 @@ export const Profile = () => {
             </div>
 
             <div data-popover id="popover-default" role="tooltip" className={`w-72 md:w-96 p-1 sm:p-4 absolute right-1/2 -translate-y-3/4 translate-x-1/2 z-10 text-sm text-neutral-500 bg-white border border-neutral-200 rounded-lg shadow-sm ${isPopoverHover ? 'opacity-100 visible' : 'opacity-0 invisible'} dark:text-neutral-400 dark:border-neutral-600 dark:bg-neutral-800`}>
-              <div className="flex items-center justify-between bg-neutral-100 border-b border-neutral-200 rounded-t-lg dark:border-neutral-600 dark:bg-neutral-700">
+              <div className="flex items-center justify-between px-1 bg-neutral-100 border-b border-neutral-200 rounded-t-lg dark:border-neutral-600 dark:bg-neutral-700">
                 <h3 className="font-semibold text-neutral-900 dark:text-white">Tabla de IMC</h3>
                 <button
                 onClick={() => setIsPopoverHover(false)}
@@ -198,9 +228,9 @@ export const Profile = () => {
               <div className="px-3 py-2">
                 <div className="relative overflow-y-auto">
                   <table className="w-full text-left rtl:text-right text-neutral-500 dark:text-neutral-400">
-                    <thead className="text-xs text-neutral-700 bg-neutral-50 dark:bg-neutral-700 dark:text-neutral-400 uppercase">
+                    <thead className="text-xs text-neutral-700 border-b border-neutral-700 dark:text-neutral-400 uppercase">
                       <tr>
-                        <th scope="col" className="text-center text-xs lowercasse px-6 py-2">
+                        <th scope="col" className="text-left text-xs lowercasse px-6 py-2">
                           Composición corporal
                         </th>
                         <th scope="col" className="px-6 py-2">
@@ -267,7 +297,6 @@ export const Profile = () => {
         </div>
       </div>
 
-
       {/* modal toggle */}
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <button
@@ -277,7 +306,43 @@ export const Profile = () => {
         >
           Editar información física
         </button>
-        <button type="button" className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95" href="#">Desactivar cuenta</button>
+        {/* <button type="button" className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95" href="#">Desactivar cuenta</button> */}
+      {/* <!-- Modal toggle --> */}
+      <button onClick={() => setIsDeleteModalOpen(true)} className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95" type="button">
+        Eliminar cuenta
+      </button>
+
+      {/* <!-- Main modal --> */}
+      <div id="default-modal" tabindex="-1" aria-hidden="true" className={`${isDeleteModalOpen ? '' : 'hidden'}  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
+        <div className="relative p-4 w-full max-w-2xl max-h-full">
+          {/* <!-- Modal content --> */}
+          <div className="relative rounded-lg shadow dark:bg-neutral-700">
+            {/* <!-- Modal header --> */}
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-neutral-700">
+              <h3 className="text-xl text-neutral-50 font-bold">
+                Eliminar cuenta permanentemente
+              </h3>
+              <button type="button" onClick={() => setIsModalOpen(false)} className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white" data-modal-hide="default-modal">
+                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+            {/* <!-- Modal body --> */}
+            <div className="p-4 md:p-5 space-y-4">
+              <p className="text-xs font-bold uppercase text-neutral-400">
+                Su cuenta se eliminara de manera permanente, asi como sus rutinas e informacion fisica.
+              </p>
+            </div>
+            {/* <!-- Modal footer --> */}
+            <div className="flex items-center p-4 md:p-5 border-t border-neutral-200 rounded-b dark:border-neutral-600">
+              <button onClick={handleDeleteSubmit} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Eliminar Cuenta</button>
+              <button onClick={() => setIsModalOpen(false)} type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-neutral-900 focus:outline-none bg-white rounded-lg border border-neutral-200 hover:bg-neutral-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-neutral-100 dark:focus:ring-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:text-white dark:hover:bg-neutral-700">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
       {/* modal */}
       <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
@@ -297,20 +362,22 @@ export const Profile = () => {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-4 md:p-5">
-              <div className="grid gap-4 mb-4 grid-cols-2">
-                <div className="col-span-2 sm:col-span-1">
-                  <label htmlFor="weight" className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white">Peso (kg)</label>
-                  <input value={userData.weight}
-                    onChange={handleChange} type="number" name="weight" id="weight" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="76,8" required />
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label htmlFor="height" className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white">Altura (cm)</label>
-                  <input value={userData.height}
-                    onChange={handleChange} type="number" name="height" id="height" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="178 cm" required />
+            <form onSubmit={handleSubmit} className="p-4 md:p-5 space-y-4">
+              <div className="flex flex-col gap-4">
+                <div className='flex flex-col md:flex-row gap-4 w-full'>
+                  <div className="w-full">
+                    <label htmlFor="weight" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Peso (kg)</label>
+                    <input value={userData.weight}
+                      onChange={handleChange} type="number" name="weight" id="weight" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="76,8" required />
+                  </div>
+                  <div className="w-full">
+                    <label htmlFor="height" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Altura (cm)</label>
+                    <input value={userData.height}
+                      onChange={handleChange} type="number" name="height" id="height" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="178 cm" required />
+                  </div>
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="date" className="block text-sm font-medium text-neutral-700 dark:text-neutral-200">
+                  <label htmlFor="date" className="block mb-1 text-sm font-medium text-neutral-700 dark:text-neutral-200">
                     Fecha de hoy
                   </label>
                   <input

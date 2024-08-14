@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             allExerciseRoutineOneDayList: [],
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
+            allCategoryList: [],
 
             porcentajes: [1, 2, 3, 4, 5, 6, 7],
             porcentaje: 0,
@@ -162,6 +163,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.removeItem("token");
                 setStore({ currentUser: null });
             },
+            // ELIMINAR USUARIO
+            deleteAccount: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    let response = await axios.delete(process.env.BACKEND_URL + "/delete-account", {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    if (response.status == 200) {
+                        console.log(response)
+                        setStore({ currentUser: null });
+                        return true
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return error
+                }
+            },
+
             // PHYSICAL INFORMATION
             // GET ONE PhysicalInformation / TRAER UNA INFORMACION FISICA
             get_one_physical_user_information: async () => {
@@ -625,6 +647,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
+            //CATEGORY
+            // GET ALL Category / TRAER TODAS LAS CATEGORIAS
+            category: async () => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/exercises-category");
+                    if (resp.status == 200) {
+                        setStore({ allCategoryList: Object.keys(resp.data) })
+                        console.log(getStore().allCategoryList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
 
             // CAROUSEL
             updateElementAtIndex: (index, newElement) => {
@@ -633,7 +671,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ porcentajes: newArray });
 
             },
-
             returnElementAtIndex: (index) => {
                 const newArray = [...getStore().porcentajes];
                 setStore({ porcentaje: newArray[index] })

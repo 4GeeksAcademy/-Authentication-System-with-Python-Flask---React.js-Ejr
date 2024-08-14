@@ -40,9 +40,9 @@ class User(db.Model):
     birthday = db.Column(db.Date, nullable=False)
     sex = db.Column(db.Enum(Sex), nullable=False)
 
-    weekly_routine = db.relationship('WeeklyRoutine', backref = 'user', lazy = True)
-    routine = db.relationship('Routine', backref = 'user', lazy = True)
-    physical_information = db.relationship('PhysicalInformation', backref = 'user', lazy = True)
+    weekly_routine = db.relationship('WeeklyRoutine', cascade="all, delete", backref = 'user', lazy = True)
+    routine = db.relationship('Routine', cascade="all, delete", backref = 'user', lazy = True)
+    physical_information = db.relationship('PhysicalInformation', cascade="all, delete", backref = 'user', lazy = True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -82,8 +82,8 @@ class Routine(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
-    weekly_routine = db.relationship('WeeklyRoutine', back_populates = 'routine', lazy = True)
-    exercise_routine = db.relationship('ExerciseRoutine', backref = 'routine', lazy = True)
+    weekly_routine = db.relationship('WeeklyRoutine', cascade="all, delete", back_populates = 'routine', lazy = True)
+    exercise_routine = db.relationship('ExerciseRoutine', cascade="all, delete", backref = 'routine', lazy = True)
     
     def __repr__(self):
         return f'<Routine {self.name}>'
@@ -107,7 +107,7 @@ class WeeklyRoutine(db.Model):
     week = db.Column(db.Enum(Week), nullable=False) # ENUM
     day = db.Column(db.Enum(Day), nullable=False) # ENUM
 
-    follow_up = db.relationship('FollowUp', backref = 'weekly_routine', lazy = True)
+    follow_up = db.relationship('FollowUp', cascade="all, delete", backref = 'weekly_routine', lazy = True)
     routine = db.relationship(Routine)
 
     def __repr__(self):
@@ -139,7 +139,7 @@ class Exercise(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "category": self.category.value,
+            "category": self.category.name,
             "description": self.description,
             "image": self.image,
         }
