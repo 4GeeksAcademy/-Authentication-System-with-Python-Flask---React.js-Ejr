@@ -45,8 +45,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.error('Error al iniciar sesión: ', error);
-					localStorage.removeItem('token');  // Eliminar el token en caso de error
-					setStore({ logged: false }); // Asegurar que el estado global se actualice
+					localStorage.removeItem('token');  // Elimina el token en caso de error
+					setStore({ logged: false }); // Asegura que el estado global se actualice
 					return false;
 				}
 			},
@@ -144,17 +144,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			/* Cierre de sesión */
-			cerrarSesion: (navigate) => {
+			cerrarSesion: () => {
 				const store = getStore();
-
 				// Eliminamos el token del Local Storage
 				localStorage.removeItem('token');
 				// Actualizar el estado global
 				setStore({ currentUser: null });
-				setStore({ logged: false });
-				// Redirigimos al usuario a la página de inicio
-				navigate('/');
+				setStore({ logged: false });				
 			},
+
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, correo, clave) => {
 				const options = {
