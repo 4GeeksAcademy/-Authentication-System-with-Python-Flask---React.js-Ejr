@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { CardOffer } from "./CardOffer.jsx";
 import { Context } from "../store/appContext.js";
 
-export const TimeLine = () =>{
+export const ListOffers = () =>{
   const {store, actions} = useContext(Context);
   const {jobOffers} = store;
 
@@ -13,7 +13,7 @@ export const TimeLine = () =>{
   }, [jobOffers])
 
     return (
-        <div className="container d-flex justify-content-center mt-5">
+        <div className="container d-flex justify-content-center my-5">
           <div className="row d-flex flex-column">
             {jobOffers.map((offer, index) => (
               <div className="col-md-4" key={index}>
