@@ -130,6 +130,19 @@ def get_one_physical_user_information():
         data_serialized = physical_information.serialize()
         return jsonify(data_serialized), 200
 
+# GET LAST PhysicalInformation / TRAER LA ULTIMA INFORMACION FISICA
+@api.route('/last-physical-user-information', methods=['GET'])
+@jwt_required()
+def get_last_physical_user_information():
+    current_user = get_jwt_identity()
+    physical_information_list = PhysicalInformation.query.filter_by(user_id=current_user["id"]).all()
+    last_value = physical_information_list[-1]
+    if physical_information_list is None:
+        return ({'error':'physical information not found'}), 404
+    else:
+        data_serialized = last_value.serialize()
+        return jsonify(data_serialized), 200
+
 # POST PhysicalInformation / AGREGAR INFORMACION FISICA
 @api.route('/physical-information', methods=['POST'])
 @jwt_required()

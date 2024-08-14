@@ -10,6 +10,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             allWeeklyRoutineUserList: [],
             oneWeeklyRoutineUserList: [],
             onePhysicalUserInformationList: [],
+            lastPhysicalUserInformation: '',
+            allPhysicalUserInformationList: [],
             allRoutineList: [],
             oneRoutine: {},
             allExerciseList: [],
@@ -174,6 +176,47 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (resp.status == 200) {
                         setStore({ onePhysicalUserInformationList: resp.data })
                         console.log(getStore().onePhysicalUserInformationList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            // GET  LAST PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+            get_last_physical_user_information: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/last-physical-user-information", {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (resp.status == 200) {
+                        setStore({ lastPhysicalUserInformation: resp.data })
+                        console.log(getStore().lastPhysicalUserInformation);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            get_all_physical_user_information: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/physical-information", {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (resp.status == 200) {
+                        setStore({ allPhysicalUserInformationList: resp.data })
+                        console.log(getStore().allPhysicalUserInformationList);
                         return true;
                     }
                 }
