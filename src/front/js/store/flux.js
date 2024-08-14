@@ -135,6 +135,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+			getProducts: async () => {
+				try {
+					const resp = await axios.get(`${process.env.BACKEND_URL}/api/product`);
+					if (resp.status === 200) {
+						return resp.data; 
+					} else {
+						console.error(`Error: ${resp.statusText}`);
+						return null;
+					}
+				} catch (error) {
+					console.error(`Error fetching products: ${error.message}`);
+					return null; 
+				}
+			}
 
 		}
 

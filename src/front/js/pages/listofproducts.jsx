@@ -16,14 +16,14 @@ const ListOfProducts = () => {
                 </div>
                 <div className="container-background align-items-center justify-content-center d-flex mt-5">
                 <div className="container background">
-  <div className="row d-flex">
-    <div className="col-md-4 col-xs-12">
+  <div className="row d-flex container-top-products">
+    <div className="col-md-4 col-xs-12 container-top-product">
       <TopProduct />
     </div>
-    <div className="col-md-4 col-xs-12">
+    <div className="col-md-4 col-xs-12 container-top-product">
       <TopProduct />
     </div>
-    <div className="col-md-4 col-xs-12">
+    <div className="col-md-4 col-xs-12 container-top-product">
       <TopProduct />
     </div>
   </div>
@@ -32,7 +32,7 @@ const ListOfProducts = () => {
 
             </div>
             <div className="btn-container w-100 d-flex justify-content-center">
-            <button className="btn-see-more">
+            <button className="btn-see-more px-5 py-3 mt-3 rounded">
               Ver más
             </button>
             </div>
