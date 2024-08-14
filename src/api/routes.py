@@ -54,7 +54,8 @@ def get_perfil():
             "nombre_usuario": user.nombre_usuario,
             "correo": user.correo,
             "foto": user.foto,
-            "telefono": user.telefono
+            "telefono": user.telefono,
+            "descripcion": user.descripcion
         }), 200    
     except NoAuthorizationError:
         return jsonify({"error": "Autorización no proporcionada"}), 401

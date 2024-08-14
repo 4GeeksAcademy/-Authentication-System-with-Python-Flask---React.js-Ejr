@@ -55,6 +55,7 @@ const Perfil = () => {
                                             <p><strong>Nombre: {store.dataUser?.nombre_usuario}</strong> </p>
                                             <p><strong>Email:</strong> {store.dataUser?.correo}</p>
                                             <p><strong>Teléfono:</strong> {store.dataUser?.telefono}</p>
+                                            <p><strong>Descripción:</strong> {store.dataUser?.descripcion}</p>
                                         </div>
                                         <div className="col-md-4 text-end align-self-start d-flex justify-content-end">
                                             <span className="d-inline-block" tabindex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información solo está disponible para tí y para los profesionales con los que agendes cita, nadie más puede acceder a ella.">

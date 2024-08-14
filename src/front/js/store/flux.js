@@ -79,7 +79,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
 								correo: data.correo || "Correo no disponible",
 								foto: data.foto || "https://example.com/default-image.jpg",
-								telefono: data.telefono || "Teléfono no disponible"
+								telefono: data.telefono || "Teléfono no disponible",
+								descripcion: data.descripcion || "descripcion no disponible"
 							}
 						});
 						return true;
