@@ -16,29 +16,15 @@ export const SingleOffer = () => {
     }
 
     return (
-        <div className="container my-5">
-            <div className="row ">
-                <div className="col-6">
-                    <div className="card single-card">
-                        <div className="card-body">
-                            <div className="d-flex">
-                                <h2 className="">{offer.title}</h2>
-                            </div>
-                            <p>{offer.company}<span className="ms-3">{offer.location}</span></p>
-                            <p><u>{offer.salary}</u></p>
-                            <p className="fw-bold">Description</p>
-                            <p>{offer.description}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6">
-                    <h2></h2>
-                </div>
-            </div>
-            
-
-
-            
+        <div className="container mt-5">
+            <CardOffer
+                title={offer.title}
+                company={offer.company}
+                location={offer.location}
+                salary={offer.salary}
+                description={offer.description}
+                id={offer.id}
+            />
         </div>
     );
 }
