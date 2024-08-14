@@ -1,49 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
-    font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .jumbotron {
-    background-image: url('https://images.unsplash.com/photo-1468183654773-77e2f0bb6bf9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    background-size: cover;
-    background-position: center;
-    padding-top: 10rem !important;
-    padding-bottom: 15rem !important;
-    position: relative;
+  background-image: url("https://images.unsplash.com/photo-1468183654773-77e2f0bb6bf9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  padding-top: 10rem !important;
+  padding-bottom: 15rem !important;
+  position: relative;
 }
 
 .fa-search {
-    color: black;
-    margin-right: 12px;
-    background-color: #267192;
-    padding: 10px;
-    border-radius: 50px;
-    margin-left: 15px;
+  color: black;
+  margin-right: 12px;
+  background-color: #267192;
+  padding: 10px;
+  border-radius: 50px;
+  margin-left: 15px;
 }
 
 .buscar {
-    position: absolute;
-    bottom: 40px;
-    left: 400px;
+  position: absolute;
+  bottom: 40px;
+  left: 400px;
 }
 
 .search {
-    align-items: center;
-    /* width: 400px; */
+  align-items: center;
+  /* width: 400px; */
 }
 
 input {
-    border-radius: 40px;
-    background-color: transparent;
+  border-radius: 40px;
+  background-color: transparent;
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: #050401;
-    transition: background-color 5000s ease-in-out 0s;
-    box-shadow: inset 0 0 20px 20px rgba(233, 79, 79, 0.01);
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #050401;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px rgba(233, 79, 79, 0.01);
 }
