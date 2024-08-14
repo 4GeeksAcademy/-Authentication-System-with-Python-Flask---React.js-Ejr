@@ -3,7 +3,7 @@ import "../../styles/footer.css";
 import { FaFacebook, FaInstagram, FaTwitter  } from "react-icons/fa";
 
 export const Footer = () => (
-	<div className="container">
+	
 	<footer className="footer d-flex  justify-content-around align-items-center m-0">
 			<div className="text-footer">
 				<a className="me-3" href="#">Sobre nosotros</a>
@@ -20,6 +20,6 @@ export const Footer = () => (
 				<a className="me-4" href="https://x.com/empleocero" target="_blank"><FaTwitter /></a>
 			</div>
 	</footer>
-	</div>
+
 	
 );
