@@ -16,7 +16,7 @@ export const CardOffer = ({ title, company, location, salary, description,id }) 
                         className="img-fluid me-3"
                         src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
                         alt="Job Offer"
-                        style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                        style={{ width: "180px", height: "180px", objectFit: "cover" }}
                     />
                     <div>
                         <h5 className="card-title">{title}</h5>
@@ -33,9 +33,9 @@ export const CardOffer = ({ title, company, location, salary, description,id }) 
                         <Link to={`/singleoffer/${id}`} className="btn btn-primary">
                             Ver Oferta
                         </Link>
-                        <a href="#" className="btn btn-success ms-2">
+                        <Link to = {`/`} href="#" className="btn btn-success ms-2">
                             Inscribirse
-                        </a>
+                        </Link>
                         <a href="#" className="ms-2">
                             <i className="bi bi-heart"></i>
                         </a>

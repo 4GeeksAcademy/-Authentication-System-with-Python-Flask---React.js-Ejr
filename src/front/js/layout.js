@@ -13,6 +13,7 @@ import { TimeLine } from "./component/TimeLine.jsx"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Inicio } from "./pages/inicio.js";
+import { TimeLine } from "./pages/TimeLine.jsx";
 
 //create your first component
 const Layout = () => {
@@ -31,6 +32,7 @@ const Layout = () => {
                         <Route element ={<Inicio />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<TimeLine/>} path="/timeline"/>
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

@@ -16,7 +16,10 @@ export const SingleOffer = () => {
     }
 
     return (
-        <div className="container mt-5">
+        <div className="container my-5">
+            
+
+
             <CardOffer
                 title={offer.title}
                 company={offer.company}
