@@ -45,7 +45,7 @@ def register():
     access_token = create_access_token(identity=new_user.id)
     db.session.add(new_user)
     db.session.commit()
-    return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token}),200
+    return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token}),201
 
 #Mostrar el usuario con ese id
 @api.route('/getUsers/<int:id>', methods=['GET'])
@@ -70,7 +70,7 @@ def addEmpleador(id):
     cif = request.json.get('cif', None)
     metodo_pago = request.json.get('metodo_pago', None)
     descripcion = request.json.get('descripcion', None)
-    id_exist = Empleador.query.filter_by(user_id=id).first()
+    id_exist = Empleador.query.get(id)
     if id_exist:
         return jsonify({'msg':'el usuario ya es empleador'}
         )
@@ -78,7 +78,7 @@ def addEmpleador(id):
         empleador = Empleador(user_id=id,cif=cif, metodo_pago=metodo_pago, descripcion=descripcion)
         db.session.add(empleador)
         db.session.commit()
-        return jsonify({'msg':'Empleador creado correctamente', 'user':empleador.serialize()})
+        return jsonify({'msg':'Empleador creado correctamente', 'user':empleador.serialize()}), 201
 
 #Iniciar sesión
 @api.route('/login', methods=['POST'])
