@@ -14,7 +14,7 @@ const ContactUs = () => {
                 </div>
                 <div className="contactUs-container-right">
                     <form>
-                        <h2>Level up your brand</h2>
+                        <h2>Level up your brand</h2> 
                         <span>You can reach us anytime via tickeate@gmail.com</span>
                         <input type="name" placeholder="Name" />
                         <input type="email" placeholder="Email" />
