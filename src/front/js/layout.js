@@ -30,7 +30,7 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div className="bg-neutral-900 min-h-screen">
+        <div className="bg-neutral-900 min-h-screen flex flex-col gap-6">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
