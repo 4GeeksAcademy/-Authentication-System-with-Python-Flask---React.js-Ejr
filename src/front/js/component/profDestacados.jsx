@@ -10,35 +10,38 @@ const psicologos = [
         nombre: "Dr. Juan Pérez",
         especialidades: ["Psicología Clínica", "Terapia Cognitivo-Conductual"],
         descripcion: "El Dr. Juan Pérez tiene más de 15 años de experiencia en psicología clínica y es experto en terapia cognitivo-conductual. Ha ayudado a numerosos pacientes a superar trastornos de ansiedad y depresión.",
-        calificacion: 4.8
+        calificacion: 4.8,
     },
     {
         img: "https://th.bing.com/th/id/OIP.3pTvuODk4tohlb2GjXzhUQHaGv?rs=1&pid=ImgDetMain",
         nombre: "Dra. María García",
         especialidades: ["Psicología Infantil", "Terapia Familiar"],
         descripcion: "La Dra. María García se especializa en psicología infantil y terapia familiar. Con su enfoque comprensivo y empático, ha trabajado con familias para mejorar la comunicación y resolver conflictos.",
-        calificacion: 4.7
+        calificacion: 4.7,
+      
     },
     {
         img: "https://th.bing.com/th/id/OIP.7kRUafV2fWsF8wi1zH_CewHaE8?w=1500&h=1000&rs=1&pid=ImgDetMain",
         nombre: "Dr. Luis Rodríguez",
         especialidades: ["Psicología Organizacional", "Coaching"],
         descripcion: "El Dr. Luis Rodríguez es un psicólogo organizacional y coach certificado. Ayuda a las empresas a mejorar el rendimiento de sus empleados y a desarrollar líderes efectivos.",
-        calificacion: 4.9
+        calificacion: 4.9,
+      
     },
     {
         img: "https://media.licdn.com/dms/image/C4D03AQG6bwvCYAJucQ/profile-displayphoto-shrink_800_800/0/1619111773727?e=2147483647&v=beta&t=4YsQKaZyBsL-csV5ud1Pm8M5tqienkoe_dEvHhNNUwI",
         nombre: "Dra. Ana Martínez",
         especialidades: ["Psicología Forense", "Evaluaciones Psicológicas"],
         descripcion: "La Dra. Ana Martínez es especialista en psicología forense y realiza evaluaciones psicológicas para casos legales. Su conocimiento en el campo forense es ampliamente reconocido.",
-        calificacion: 3.6
+        calificacion: 3.6,
+      
     },
     {
         img: "https://th.bing.com/th/id/OIP.ZqIS8QmJFXUBUT1j292aegHaHa?w=530&h=530&rs=1&pid=ImgDetMain",
         nombre: "Dr. Carlos Gómez",
         especialidades: ["Terapia de Pareja", "Sexología"],
         descripcion: "El Dr. Carlos Gómez se especializa en terapia de pareja y sexología. Ha ayudado a muchas parejas a mejorar su relación y resolver problemas sexuales.",
-        calificacion: 4.5
+        calificacion: 4.5,
     }
 ];
 
