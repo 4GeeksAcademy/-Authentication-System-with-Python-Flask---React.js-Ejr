@@ -5,20 +5,18 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
+import Perfil from "./pages/perfil";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 
-import { Login } from "./pages/login";
-import { SignUp } from "./pages/signUp";
-
-import { Favoritos } from "./pages/favoritos";
-import { Cursos } from "./pages/cursos";
-import { Logout } from "./pages/logout";
+import Login from "./pages/login";
+import SignUp from "./pages/signUp";
+import Cursos from "./pages/cursos";
 
 
-//create your first component
+
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
@@ -35,8 +33,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignUp />} path="/signup"/>
-
-                        <Route element={<Favoritos />} path="/favoritos" />
+                        <Route element={<Perfil />} path="/perfil"/>
                         <Route element={<Cursos />} path="/cursos" />
                         <Route element={<h1>Not found!</h1>} path="*" /> 
                     </Routes>
