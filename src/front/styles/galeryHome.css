@@ -5,12 +5,10 @@
   }
   
   .slick-slide img {
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-  }
-  
-  .slick-slide img:hover {
-    transform: scale(1.1); 
-  }
+  transition: transform 0.3s ease; /* Añade una transición suave para el efecto de escala */
+}
 
+.slick-slide img:hover {
+  transform: scale(1.05); /* Amplía la imagen en un 5% */
+}
   
