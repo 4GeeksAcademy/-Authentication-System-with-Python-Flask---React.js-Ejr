@@ -1,0 +1,44 @@
+.custom-jumbotron {
+    background-color: #d3d3d3; 
+    padding: 2rem 1rem; 
+}
+
+.custom-jumbotron h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.custom-jumbotron p {
+    font-size: 1.25rem; 
+}
+
+.custom-jumbotron img {
+    border-radius: 8px; 
+}
+
+.custom-jumbotron {
+    background-color: #f1f1f1;
+    padding: 2rem 1rem;
+    border: 1px solid #ccc; 
+}
+
+.custom-jumbotron h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.custom-jumbotron p.lead {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.custom-jumbotron .percentage {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.custom-jumbotron .image-container {
+    max-width: 600px; 
+    margin-left: 2rem; 
+}

@@ -1,0 +1,28 @@
+
+  .arrow-icon:hover {
+    color: gray; /* Color al pasar el ratón */
+  }
+  
+  /* Estilos para las flechas del carrusel */
+  .slick-prev, .slick-next {
+    width: 40px; 
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: rgba(0, 0, 0, 0.8); 
+    border-radius: 50%; 
+  }
+  
+  /* Posicionamiento de flechas  */
+  .slick-prev {
+    left: 10px; 
+  }
+  
+  .slick-next {
+    right: 10px; 
+  }
+  

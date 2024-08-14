@@ -1,0 +1,113 @@
+/* Galery.css */
+.custom-modal .modal-dialog {
+    max-width: 90vw; 
+    margin: 0 auto; 
+  }
+  
+  .custom-modal .modal-content {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+  
+  .custom-modal .modal-body {
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    
+  }
+  
+  .custom-modal .modal-footer {
+    border: none;
+    padding: 0;
+  }
+  
+  .custom-modal .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7); 
+  }
+  
+  .custom-modal .modal-body img {
+    max-width: 80vw; 
+    max-height: 80vh; 
+    height: auto; 
+  }
+  
+  .custom-modal .btn-close  {
+    background-color: #ffffff; 
+    font-size: 1rem; 
+  }
+  
+  .custom-modal .modal-header .close:hover {
+    color: #f8f9fa; 
+  }
+
+  .galery-container {
+    padding: 20px;
+  }
+  
+  .miniJumbotronGalery {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(156, 148, 148, 0.8) 100%), 
+    radial-gradient(circle, rgba(119, 115, 117, 0.5) 0%, rgba(75, 143, 160, 0.5) 100%);
+    background-blend-mode: overlay;
+    background-size: cover;
+    color: rgb(0, 0, 0);
+    padding: 50px;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+  
+  .miniJumbotronGalery h1 {
+    margin-bottom: 10px;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .miniJumbotronGalery p {
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    font-style: italic;
+  }
+  
+  button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .sparkle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://your-image-url.com/party-sparkles.png') repeat;
+    pointer-events: none;
+    animation: sparkle 2s infinite;
+    opacity: 0.4;
+  }
+  
+  @keyframes sparkle {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
+  
