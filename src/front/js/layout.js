@@ -11,6 +11,7 @@ import {SingleOffer} from "./pages/SingleOffer.jsx"
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Inicio } from "./pages/inicio.js";
 
 //create your first component
 const Layout = () => {
@@ -26,7 +27,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element ={<Inicio />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
