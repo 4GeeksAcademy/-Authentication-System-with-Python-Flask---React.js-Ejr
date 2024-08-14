@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 1,
 						title: "Frontend Developer",
 						company: "Tech Company S.L",
-						location: "Remote",
+						modality: "Remote",
+						location: "Spain",
 						salary: "$40,000 - $60,000/year",
 						description: "We are looking for a skilled Frontend Developer to..."
 					},
@@ -21,7 +22,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 2,
 						title: "Backend Developer",
 						company: "Tech Company S.L",
-						location: "On-site",
+						modality: "On-site",
+						location: "Spain",
 						salary: "$50,000 - $70,000/year",
 						description: "We are looking for a skilled Backend Developer to..."
 					},
@@ -29,7 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 3,
 						title: "Project Manager",
 						company: "consulting Company S.L",
-						location: "On-site",
+						modality: "On-site",
+						location: "Spain",
 						salary: "$90,000 - $100,000/year",
 						description: "We are looking for a skilled Project Manager to..."
 					},
@@ -37,7 +40,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 4,
 						title: "UI/UX",
 						company: "Design Company S.L",
-						location: "On-site/remote",
+						modality: "On-site/remote",
+						location: "Spain",
 						salary: "$40,000 - $60,000/year",
 						description: "We are looking for a skilled Backend Developer to..."
 					}
