@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			correo: [],
 			clave: [],
 			logged: false,
-			psicologos: []
+			psicologos: [],
+			dataUser:null
 		},
 		actions: {
 
@@ -26,14 +27,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				};
 				try {
-					const response = await fetch('https://sturdy-space-barnacle-97xvxj7jqw5hpw6v-3001.app.github.dev/api/login', options);
+					const response = await fetch('https://animated-garbanzo-x75jg5677x63p57j-3001.app.github.dev/api/login', options);
 					const data = await response.json();
 
 					if (response.status === 200) {
+						
 						localStorage.setItem('token', data.access_token);
 						console.log(localStorage.getItem('token'));
 						setStore({ currentUser: { correo: correo } });
 						setStore({ logged: true });
+						
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
@@ -56,8 +59,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Fetch con ruta protegida para datos del perfil de usuario
 			getPerfilUsuario: async () => {
-				let token = localStorage.getItem('token');
-
+				const token = localStorage.getItem('token');
+			
+				// Comprobación inicial del token
+				if (!token) {
+					Swal.fire({
+						title: 'Error!',
+						text: 'Token no encontrado. Por favor, inicia sesión nuevamente.',
+						icon: 'error',
+						confirmButtonText: 'Entendido'
+					});
+					return false;  // Termina la ejecución si no hay token
+				}
+			
 				const requestOptions = {
 					method: "GET",
 					headers: {
@@ -65,31 +79,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 						'Authorization': `Bearer ${token}`
 					}
 				};
-
+			
 				try {
-					const response = await fetch("https://sturdy-space-barnacle-97xvxj7jqw5hpw6v-3001.app.github.dev/api/perfil/usuario", requestOptions);
+					const response = await fetch("https://animated-garbanzo-x75jg5677x63p57j-3001.app.github.dev/api/perfil/usuario", requestOptions);
 					const data = await response.json();
-
-					if (!token) {
-						Swal.fire({
-							title: 'Error!',
-							text: 'Token no encontrado. Por favor, inicia sesión nuevamente.',
-							icon: 'error',
-							confirmButtonText: 'Entendido'
-						});
-						return false;
+			
+					if (!response.ok) {
+						// Manejar diferentes códigos de estado HTTP
+						if (response.status === 400) {
+							throw new Error('Bad Request: ' + (data.msg || 'Solicitud incorrecta'));
+						} else if (response.status === 500) {
+							throw new Error('Internal Server Error: ' + (data.msg || 'Error en el servidor'));
+						} else {
+							throw new Error(data.msg || response.statusText);
+						}
 					}
-					// Comprueba el token si es proporcionado					
+			
+					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
-						console.log(localStorage.getItem('token'));
+						setStore({
+							correo: data.correo || [],
+							clave: data.clave || [],
+							logged: true, // Aquí marcas que el usuario está logueado
+							dataUser: {
+								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
+								correo: data.correo || "Correo no disponible",
+								foto: data.foto || "https://example.com/default-image.jpg",
+								telefono: data.telefono || "Teléfono no disponible"
+							}
+						});
 						return true;
-					} else if (response.status === 400) {
-						throw new Error('Bad Request: ' + (data.msg || 'Solicitud incorrecta'));
-					} else if (response.status === 500) {
-						throw new Error('Internal Server Error: ' + (data.msg || 'Error en el servidor'));
 					} else {
-						throw new Error(data.msg || response.statusText);
+						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
 					}
+			
 				} catch (error) {
 					Swal.fire({
 						title: 'Error!',
@@ -100,10 +123,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			
+			
 
 			//Validación de token para contexto global
 			validToken: async () => {
-				const store = getStore();
 				const token = localStorage.getItem('token');
 				const options = {
 					headers: {
@@ -112,7 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				};
 				try {
-					const response = await fetch('https://sturdy-space-barnacle-97xvxj7jqw5hpw6v-3001.app.github.dev/api/valid-token', options);
+					const response = await fetch('https://animated-garbanzo-x75jg5677x63p57j-3001.app.github.dev//api/valid-token', options);
 					const data = await response.json();
 
 					if (response.status === 200) {
@@ -139,7 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore()
 				
 				try {
-                    const response = await fetch('https://expert-succotash-5gq475r9p4pw34x4v-3001.app.github.dev/api/psicologos');
+                    const response = await fetch('https://animated-garbanzo-x75jg5677x63p57j-3001.app.github.dev/api/psicologos');
                     const data = await response.json();
             
                     if (response.status === 200) {
