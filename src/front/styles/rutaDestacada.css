@@ -1,0 +1,25 @@
+img{
+    width: 500px;
+    height: 500px;
+    border-radius: 7%;
+    object-fit: cover;
+    
+    
+    
+    
+    
+}
+.carousel{
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;   
+    
+    
+    
+
+}
+button{
+    border-radius: 7%;
+}
