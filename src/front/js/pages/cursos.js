@@ -2,7 +2,9 @@ import React from "react";
 
 const Cursos = () => {
     return (
-        <div className="container"></div>
+        <div className="container">
+            pagina de cursos
+        </div>
     )
 }
 
