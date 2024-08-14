@@ -16,16 +16,6 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
-
 # Crea una ruta para autenticar a tus usuarios y devolver los JWT.
 # La función create_access_token() se utiliza para generar el JWT   
 @api.route("/login", methods=["POST"])
@@ -34,17 +24,14 @@ def login():
     clave = request.json.get("clave", None)
     # Consulta si el usuario existe en la base de datos
     user_query = User.query.filter_by(correo=correo).first()
-
     # Verifica si el usuario existe y si la contraseña es correcta
     if correo != user_query.correo or clave != user_query.clave:
-        return jsonify({"msg": "Correo o clave incorrectos"}), 401
-    
+        return jsonify({"msg": "Correo o clave incorrectos"}), 401  
     # Verifica si el usuario proporcionó ambos datos
     if not correo or not clave:
         return jsonify({"msg": "Correo y clave son requeridos"}), 400
-
     access_token = create_access_token(identity=user_query.id)
-    return jsonify(access_token=access_token)
+    return jsonify({"access_token":access_token,"logged":True}), 200
 
 # Proteje una ruta con jwt_required, que expulsará las solicitudes
 # sin un JWT válido presente.
@@ -70,46 +57,20 @@ def get_perfil():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Validación de TOKEN
 @api.route("/valid-token", methods=["GET"])
 @jwt_required()
 def valid_token():
     # Acceda a la identidad del usuario actual con get_jwt_identity
     current_user = get_jwt_identity()
     user_exist= User.query.filter_by(id=current_user).first()
-
-
+    # Validación del ID
+    if current_user is None or not isinstance(current_user, int):
+            return jsonify({"error": "Token inválido o no se puede obtener la identidad"}), 400
     if not user_exist:
         return jsonify(logged=False), 404
     return jsonify(logged=True), 200
- 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if not user_exist:
-        return jsonify(logged=False), 404
-    return jsonify(logged=True), 200
  
 
 

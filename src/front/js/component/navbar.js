@@ -1,11 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.png";
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
 
   const { store, actions } = useContext(Context)
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    actions.cerrarSesion(navigate);
+  };
+
+  useEffect(() => {
+    actions.validToken();
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-dark">
@@ -21,14 +31,21 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto">
             <Link className="nav-link active mx-4 text-light" aria-current="page" to="/">Preguntas frecuentes</Link>
-         
+
             <Link className="nav-link mx-4 text-light" to="/profesionales">Profesionales</Link>
-           
+
             <Link className="nav-link mx-4 text-light" to="/">Precios</Link>
-            <Link to="/vista-login">
-              <button type="button" className="btn btn-outline-light me-5">Iniciar sesión</button>
-            </Link>
-            {/* {store.logged ?  : null} */}
+            {!store.logged && (
+              <Link to="/vista-login">
+                <button type="button" className="btn btn-outline-light me-5">
+                  Iniciar sesión
+                </button>
+              </Link>
+            )},
+            {store.logged && (<Link to="/"> <button type="button" className="btn btn-outline-light me-5" onClick={handleLogout}>
+              Cerrar sesión
+            </button></Link>
+            )}
           </div>
         </div>
       </div>
