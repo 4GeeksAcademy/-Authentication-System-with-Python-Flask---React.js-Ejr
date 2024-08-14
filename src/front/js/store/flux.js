@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             allExerciseRoutineOneDayList: [],
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
+            allCategoryList: [],
 
             porcentajes: [1, 2, 3, 4, 5, 6, 7],
             porcentaje: 0,
@@ -603,6 +604,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
+            //CATEGORY
+            // GET ALL Category / TRAER TODAS LAS CATEGORIAS
+            category: async () => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/exercises-category");
+                    if (resp.status == 200) {
+                        setStore({ allCategoryList: Object.keys(resp.data) })
+                        console.log(getStore().allCategoryList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
 
             // CAROUSEL
             updateElementAtIndex: (index, newElement) => {
@@ -611,7 +628,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ porcentajes: newArray });
 
             },
-
             returnElementAtIndex: (index) => {
                 const newArray = [...getStore().porcentajes];
                 setStore({ porcentaje: newArray[index] })
