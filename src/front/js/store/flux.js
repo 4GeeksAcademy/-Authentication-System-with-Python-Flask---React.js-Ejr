@@ -15,15 +15,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			loadSession: async () => {
 				try {
+					console.log("Iniciando loadSession");
+			
 					const storageToken = localStorage.getItem("token");
+					console.log("Token recuperado:", storageToken);
+			
 					const storageUserId = localStorage.getItem("user_id");
+					console.log("User ID recuperado:", storageUserId);
+			
 					const storageRoleId = localStorage.getItem("role_id");
+					console.log("Role ID recuperado:", storageRoleId);
 			
 					if (!storageToken || !storageUserId || !storageRoleId) {
+						console.log("Faltan datos en localStorage");
 						localStorage.clear(); 
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
+			
+					console.log("Datos en localStorage correctos, haciendo ping al usuario...");
 			
 					let resp = await fetch(apiUrl + "/pinguser", {
 						mode: 'no-cors',
@@ -34,25 +44,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 					});
 			
+					console.log("Respuesta del servidor:", resp);
+			
 					if (!resp.ok) {
+						console.log("Fallo en el ping al usuario, status:", resp.status);
 						localStorage.clear(); 
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
 			
 					const data = await resp.json();
+					console.log("Datos recibidos del servidor:", data);
+			
 					localStorage.setItem("token", data.access_token);
 					localStorage.setItem("role_id", data.role_id);
 					localStorage.setItem("user_id", data.user_id); 
 					setStore({ token: data.access_token, userId: data.user_id, roleId: data.role_id });
+			
+					console.log("Sesión cargada con éxito");
 					return true;
 				} catch (error) {
-					console.error("Error loading session:", error);
+					console.error("Error al cargar la sesión:", error);
 					localStorage.clear();
 					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
 			},
+			
 			
 			login: async (email, password) => {
 				let resp = await fetch(apiUrl + "/login", {
@@ -119,6 +137,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await resp.json();
 				return { success: true };
 			},
+			saveCarDetails: async (carId, updatedCar) => {
+				let { token } = getStore();
+				try {
+					let resp = await fetch(`${apiUrl}/cars/${carId}`, {
+						method: "PATCH",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: "Bearer " + token,
+						},
+						body: JSON.stringify(updatedCar),
+					});
+			
+					if (!resp.ok) {
+						const errorData = await resp.json();
+						return { success: false, error: errorData };
+					}
+			
+					const data = await resp.json();
+					return { success: true, data: data };
+				} catch (error) {
+					console.error("Error updating car details:", error);
+					return { success: false, error: error.message };
+				}
+			},
+		
 			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mails
 			SendMail: async (data) => {
 				console.log(data)
