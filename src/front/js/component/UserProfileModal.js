@@ -9,6 +9,7 @@ function UserProfileModal({ user, onSave, onClose, isAdmin }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setError(null);
     setUpdatedUser(prevState => ({
       ...prevState,
       [name]: value

@@ -106,16 +106,39 @@ def login():
     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
+# @api.route('/api/pinguser', methods=['GET'])
+# @jwt_required()
+# def ping_user():
+#     current_user_id = get_jwt_identity()
+#     payload = get_jwt()
+#     if "role_id" not in payload:
+#         return jsonify({"error": "Role ID not found in token"}), 400
+    
+#     role_id = payload["role_id"]
+#     print(role_id)
+#     print(current_user_id)
+#     return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
 @api.route('/api/pinguser', methods=['GET'])
 @jwt_required()
 def ping_user():
+    print("Iniciando ping_user")
     current_user_id = get_jwt_identity()
     payload = get_jwt()
+    
+    print("current_user_id:", current_user_id)
+    print("JWT Payload:", payload)
+    
     if "role_id" not in payload:
+        print("Role ID no encontrado en el token")
         return jsonify({"error": "Role ID not found in token"}), 400
     
     role_id = payload["role_id"]
-    return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
+    print("Role ID:", role_id)
+
+    response = jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id})
+    print("Respuesta enviada:", response)
+    
+    return response, 200
 
 
 
@@ -205,7 +228,7 @@ def get_all_cars():
     
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars con id
 @api.route('/cars/<int:car_id>', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_cars(car_id):
     car_query = Car.query.filter_by(id=car_id).first()
     if car_query:
@@ -223,7 +246,7 @@ def get_cars(car_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /cars/user con id del user
 @api.route('/cars/user/<int:owner_id>', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_user_cars(owner_id):
     cars_query = Car.query.filter_by(owner_id=owner_id).all()
     if cars_query:
@@ -240,7 +263,7 @@ def get_user_cars(owner_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /cars 
 @api.route('/cars', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def create_car():
     data = request.get_json()
     if not data:
@@ -357,7 +380,7 @@ def create_service():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services 
 @api.route('/services', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_services():
     services_query = Service.query.all()
     services_list = list(map(lambda service: service.serialize(), services_query))
@@ -402,6 +425,7 @@ def get_users():
     users_query = User.query.all()
     users_list = list(map(lambda user: user.serialize(), users_query))
     return jsonify(users_list), 200
+
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /appointments 
 @api.route('/appointments', methods=['POST'])
 @jwt_required()
@@ -473,6 +497,7 @@ def update_appointment(appointment_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments con id
 @api.route('/appointments/<int:appointment_id>', methods=['GET'])
+@jwt_required()
 def get_appointment(appointment_id):
     appointment_query = Appointment.query.filter_by(id=appointment_id).first()
     if appointment_query:
@@ -489,6 +514,7 @@ def get_appointment(appointment_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// delete a /appointments con id
 @api.route('/appointments/<int:appointment_id>', methods=['DELETE'])
+@jwt_required()
 def cancel_appointment(appointment_id):
     appointment = Appointment.query.get(appointment_id)
     if not appointment:
@@ -504,7 +530,7 @@ def cancel_appointment(appointment_id):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointments
 @api.route('/appointments', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_appointments():
     appointments_query = Appointment.query.all()
     
@@ -521,6 +547,36 @@ def get_appointments():
         comments_data = [comment.serialize() for comment in comments]
 
         # Agregar los datos adicionales a appointment_data
+        appointment_data['user'] = user.serialize() if user else None
+        appointment_data['car'] = car.serialize() if car else None
+        appointment_data['service'] = service.serialize() if service else None
+        appointment_data['comments'] = comments_data 
+
+        appointments_list.append(appointment_data)
+    
+    return jsonify(appointments_list), 200
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////// get a /appointmentsuser
+@api.route('/appointmentsuser/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_appointmentsuser(user_id):
+    appointments_query  = Appointment.query.filter_by(user_id=user_id).all()
+
+    if not appointments_query:
+        return jsonify({"error": "No appointments found for this user"}), 404
+    
+    appointments_list = []
+    for appointment in appointments_query:
+        appointment_data = appointment.serialize()
+        
+        user = User.query.get(appointment.user_id)
+        car = Car.query.get(appointment.car_id)
+        service = Service.query.get(appointment.service_id)
+        
+        comments = Comment.query.filter_by(appointment_id=appointment.id).all()
+        comments_data = [comment.serialize() for comment in comments]
+
         appointment_data['user'] = user.serialize() if user else None
         appointment_data['car'] = car.serialize() if car else None
         appointment_data['service'] = service.serialize() if service else None
@@ -569,7 +625,9 @@ def get_slots_taken():
 def update_profile():
     user_id = get_jwt_identity()
     data = request.get_json()
+    name = data.get('name')
     email = data.get('email')
+    phone_number = data.get('phoneNumber')
     current_password = data.get('currentPassword')
     new_password = data.get('newPassword')
 
@@ -578,8 +636,12 @@ def update_profile():
     if not user or not bcrypt.check_password_hash(user.password, current_password):
         return jsonify({"error": "Invalid current password"}), 401
 
+    if name:
+        user.name = name
     if email:
         user.email = email
+    if phone_number:
+        user.phone_number = phone_number
     if new_password:
         user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
 
