@@ -40,9 +40,9 @@ class User(db.Model):
     birthday = db.Column(db.Date, nullable=False)
     sex = db.Column(db.Enum(Sex), nullable=False)
 
-    weekly_routine = db.relationship('WeeklyRoutine', backref = 'user', lazy = True)
-    routine = db.relationship('Routine', backref = 'user', lazy = True)
-    physical_information = db.relationship('PhysicalInformation', backref = 'user', lazy = True)
+    weekly_routine = db.relationship('WeeklyRoutine', cascade="all, delete", backref = 'user', lazy = True)
+    routine = db.relationship('Routine', cascade="all, delete", backref = 'user', lazy = True)
+    physical_information = db.relationship('PhysicalInformation', cascade="all, delete", backref = 'user', lazy = True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -59,10 +59,10 @@ class User(db.Model):
 # INFORMACION FISICA
 class PhysicalInformation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     height = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
         return f'<PhysicalInformation {self.id}>'
@@ -76,30 +76,14 @@ class PhysicalInformation(db.Model):
             "date": self.date,
         }
 
-# # RUTINA SEMANA
-# class WeeklyRoutine(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-#     weekly_day_routine = db.relationship('WeeklyDayRoutine', backref = 'weekly_routine', lazy = True)
-
-#     def __repr__(self):
-#         return f'<User {self.id}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "user_id": self.user_id,
-#         }
-
 # RUTINA 
 class Routine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
-    weekly_routine = db.relationship('WeeklyRoutine', back_populates = 'routine', lazy = True)
-    exercise_routine = db.relationship('ExerciseRoutine', backref = 'routine', lazy = True)
+    weekly_routine = db.relationship('WeeklyRoutine', cascade="all, delete", back_populates = 'routine', lazy = True)
+    exercise_routine = db.relationship('ExerciseRoutine', cascade="all, delete", backref = 'routine', lazy = True)
     
     def __repr__(self):
         return f'<Routine {self.name}>'
@@ -123,7 +107,7 @@ class WeeklyRoutine(db.Model):
     week = db.Column(db.Enum(Week), nullable=False) # ENUM
     day = db.Column(db.Enum(Day), nullable=False) # ENUM
 
-    follow_up = db.relationship('FollowUp', backref = 'weekly_routine', lazy = True)
+    follow_up = db.relationship('FollowUp', cascade="all, delete", backref = 'weekly_routine', lazy = True)
     routine = db.relationship(Routine)
 
     def __repr__(self):
@@ -137,25 +121,6 @@ class WeeklyRoutine(db.Model):
             "week": self.week.value,
             "day": self.day.value
         }
-
-        
-# # FECHA RUTINA DIA
-# class DayRoutineDate(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     day_routine_id = db.Column(db.Integer, db.ForeignKey('day_routine.id'), nullable=False)
-#     date = db.Column(db.Date, nullable=False)
-#     done = db.Column(db.Boolean, nullable=False) 
-
-#     def __repr__(self):
-#         return f'<User {self.id}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "day_routine_id": self.day_routine_id,
-#             "date": self.date,
-#             "done": self.done
-#         }
 
 # EJERCICIO 
 class Exercise(db.Model):
@@ -174,7 +139,7 @@ class Exercise(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "category": self.category.value,
+            "category": self.category.name,
             "description": self.description,
             "image": self.image,
         }

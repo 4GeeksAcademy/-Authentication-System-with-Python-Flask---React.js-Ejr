@@ -5,9 +5,17 @@ export const VistaPrueba = () => {
 	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
-		actions.allWeeklyRoutine();
-		actions.allWeeklyRoutineUser(1);
-		actions.oneWeeklyRoutineUser(1,1)
+		// actions.allWeeklyRoutine();
+		// actions.allWeeklyRoutineUser();
+		// actions.oneWeeklyRoutineUser(1)
+		// actions.postPhysicalInformation("190", "90");
+		actions.category();
+
+
+		// actions.postWeeklyRoutine("1", "SEMANA1", "MIERCOLES")
+		// actions.postRoutine("Rutina de brazo")
+		// actions.postExercise("elevaciones laterales","HOMBRO","ejericio de hobro", "123")
+		// actions.postFollowUp("1","1")
 		// actions.allRoutine();
 		// actions.oneRoutine(1);
 		// actions.allExercise();
@@ -25,6 +33,9 @@ export const VistaPrueba = () => {
 		// actions.validToken();
 
 	}, [])
+	console.log(store.allCategoryList);
+	// console.log(Object.keys(store.allCategoryList));
+
 	return (
 		<div></div>
 		// <div>

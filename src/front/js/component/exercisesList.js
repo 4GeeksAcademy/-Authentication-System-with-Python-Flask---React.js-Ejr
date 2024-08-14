@@ -1,20 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 
-const ejerciciosPrueba = [
-  {
-    isDone: false,
-    name: "abdominales",
-  },
-  {
-    isDone: false,
-    name: "Lagartijas",
-  },
-  {
-    isDone: false,
-    name: "Press militar",
-  },
-];
 
 export const ExercisesList = ({ routine, day }) => {
   const { store, actions } = useContext(Context);
