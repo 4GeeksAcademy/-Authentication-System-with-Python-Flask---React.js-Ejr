@@ -2,51 +2,62 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			jobOffers: [], 
+			
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			loadJobOffers: async () => {
+				// datos fake (Aqui llamadas api)
+				const offers = [
+					{
+						id: 1,
+						title: "Frontend Developer",
+						company: "Tech Company S.L",
+						location: "Remote",
+						salary: "$40,000 - $60,000/year",
+						description: "We are looking for a skilled Frontend Developer to..."
+					},
+					{
+						id: 2,
+						title: "Backend Developer",
+						company: "Tech Company S.L",
+						location: "On-site",
+						salary: "$50,000 - $70,000/year",
+						description: "We are looking for a skilled Backend Developer to..."
+					},
+					{
+						id: 3,
+						title: "Project Manager",
+						company: "consulting Company S.L",
+						location: "On-site",
+						salary: "$90,000 - $100,000/year",
+						description: "We are looking for a skilled Project Manager to..."
+					},
+					{
+						id: 4,
+						title: "UI/UX",
+						company: "Design Company S.L",
+						location: "On-site/remote",
+						salary: "$40,000 - $60,000/year",
+						description: "We are looking for a skilled Backend Developer to..."
+					}
+					
+				];
+				setStore({ jobOffers: offers });
 			},
 
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
+					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+					const data = await resp.json();
+					setStore({ message: data.message });
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+				} catch (error) {
+					console.log("Error loading message from backend", error);
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
 		}
 	};
 };
