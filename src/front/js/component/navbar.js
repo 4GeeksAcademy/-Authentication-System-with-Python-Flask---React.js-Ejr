@@ -10,7 +10,11 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+<<<<<<< HEAD
     actions.cerrarSesion(navigate);
+=======
+    actions.cerrarSesion(navigate); // Pasar navigate a cerrarSesion
+>>>>>>> cfc1072 (login component)
   };
 
   useEffect(() => {
