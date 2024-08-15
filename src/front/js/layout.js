@@ -18,6 +18,7 @@ import { LoginPage } from "./pages/login";
 >>>>>>> b5c2fbf (Ruta añadida del front para el timeLine)
 import { Inicio } from "./pages/inicio.js";
 import { LoginPage } from "./pages/login";
+import { Register } from "./pages/register.js"
 import { TimeLine } from "./pages/TimeLine.jsx";
 import { SobreNosotros } from "./pages/sobreNosotros.js";
 
@@ -39,6 +40,7 @@ const Layout = () => {
                         <Route element ={<SobreNosotros />} path="/sobrenosotros" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<LoginPage />} path="/login" />
+                        <Route element={<Register />} path="/register" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<TimeLine/>} path="/timeline"/>
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
