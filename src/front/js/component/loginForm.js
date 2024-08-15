@@ -92,11 +92,6 @@ export const LoginForm = () => {
                   <Link to={'/signup'} className="text-neutral-700 underline dark:text-neutral-300 hover:text-neutral-50 transition-all ml-1">Regístrate</Link>.
                 </p>
               </div>
-              {store.authError && (
-                <div className="alert alert-danger mt-3">
-                  {store.authError}
-                </div>
-              )}
             </form>
           </div>
         </main>
