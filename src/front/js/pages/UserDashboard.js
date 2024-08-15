@@ -13,7 +13,7 @@ const UserDashboard = () => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
     setHasAccess(!!token && roleId === "3");
-  }, []); //quitado store.token 
+  }, [store.token]);
 
   return (
     <div className="container py-4">

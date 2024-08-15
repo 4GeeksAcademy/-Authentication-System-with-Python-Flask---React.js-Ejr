@@ -13,14 +13,13 @@ export const Navbar = () => {
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-const handleLogout = async () => {
-  const logoutSuccess = await actions.logout();
-  handleNavCollapse();
-  if (logoutSuccess) {
-    setUserRole(null);
-    navigate("/");
-  } else {
-    window.location.reload(); 
+  const handleLogout = async () => {
+    try {
+      await actions.logout();
+      setUserRole(null);
+      navigate('/');
+    } catch (error) {
+      console.error("Error al hacer logout:", error);
   }
 };
 

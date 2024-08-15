@@ -36,11 +36,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Datos en localStorage correctos, haciendo ping al usuario...");
 			
 					let resp = await fetch(apiUrl + "/pinguser", {
-						mode: 'no-cors',
+						// mode: 'no-cors',
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + storageToken,
-							"Access-Control-Allow-Origin": "*"
+							// "Access-Control-Allow-Origin": "*"
 						},
 					});
 			
@@ -56,11 +56,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json();
 					console.log("Datos recibidos del servidor:", data);
 			
-					localStorage.setItem("token", data.access_token);
-					localStorage.setItem("role_id", data.role_id);
-					localStorage.setItem("user_id", data.user_id); 
-					setStore({ token: data.access_token, userId: data.user_id, roleId: data.role_id });
-			
+					const updateTokenAndState = (token, userId, roleId) => {
+                        setStore({ token, userId, roleId });
+                        localStorage.setItem("token", token);
+                        localStorage.setItem("user_id", userId);
+                        localStorage.setItem("role_id", roleId);
+                    };
+					
+					updateTokenAndState(data.access_token, data.user_id, data.role_id);
+
 					console.log("Sesión cargada con éxito");
 					return true;
 				} catch (error) {
@@ -74,22 +78,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			login: async (email, password) => {
 				let resp = await fetch(apiUrl + "/login", {
-					method: "POST",
-					body: JSON.stringify({email, password }),
-					headers: {
-						"Content-Type" : "application/json",
-					},
+				  method: "POST",
+				  body: JSON.stringify({ email, password }),
+				  headers: {
+					"Content-Type": "application/json",
+				  },
 				});
 				if (!resp.ok) {
-					setStore({ token: null });
-					return false;
+				  setStore({ token: null });
+				  console.error("Error al hacer login:", errorData);
+				  return { success: false, message: errorData.error || "Error desconocido" };
 				};
+
 				let data = await resp.json();
+				// const token = data.access_token;
 				setStore({ token: data.access_token });
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("role_id", data.role_id);
-				localStorage.setItem("user_id", data.user_id); 
-				return true;
+				localStorage.setItem("user_id", data.user_id);
+				return { success: true };
+			  }, catch (error) {
+				console.error("Error en la solicitud de login:", error);
+				return { success: false, message: "Error en la red o en el servidor" };
 			},			
 			signup: async (email, password, name, phone_number) => {
 				let resp = await fetch(apiUrl + "/signupuser", {
@@ -107,18 +117,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return true;
 			},
 			logout: async () => {
-				let { token } = getStore();
-				let resp = await fetch(apiUrl + "/logout", {
-					method: "POST",
-					headers: {
-						Authorization: "Bearer " + token,
-					},
-				});
-				if (!resp.ok) return false;
-				setStore({ token: null, userId: null, roleId: null });
-				localStorage.clear();
-				return true;
+				try {
+					let { token } = getStore();
+					if (!token) {
+						console.warn("No hay token disponible para hacer logout");
+						return false;
+					}
+			
+					let resp = await fetch(apiUrl + "/logout", {
+						method: "POST",
+						headers: {
+							"Authorization": "Bearer " + token,
+						},
+					});
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
+					
+					if (!resp.ok) {
+						console.error("Error en la solicitud de logout:", resp.statusText);
+						return false;
+					}
+					
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
+					return true;
+			
+				} catch (error) {
+					localStorage.clear();
+					setStore({ token: null, userId: null, roleId: null });
+					return false;
+				}
 			},
+			
 			
 			saveProfile: async (updatedProfile) => {
 				let { token } = getStore();

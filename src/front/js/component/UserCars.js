@@ -58,7 +58,48 @@ function UserCars() {
     setError("");
   };
 
-  // *Fecth on agregar con patch
+  const handleConfirmModalClose = () => {
+    setShowConfirmModal(false);
+    setError(""); 
+  };
+
+  // Actualizar coche con PATCH en la base de datos
+  const handleEditCar = async (updatedCar) => {
+    if (!updatedCar.car_model.trim() || !updatedCar.license_plate.trim()) {
+      setError("Model and License Plate cannot be blank");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/cars/${updatedCar.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          car_model: updatedCar.car_model,
+          license_plate: updatedCar.license_plate,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError("Failed to update car: " + errorData.error);
+        return;
+      }
+
+      // Actualiza la lista de coches en el estado
+      setCars(cars.map((car) => (car.id === updatedCar.id ? updatedCar : car)));
+      setIsEditModalOpen(false);
+      setError("");
+    } catch (error) {
+      console.error("Error updating car:", error);
+      setError("An error occurred: " + error.message);
+    }
+  };
+
+  // Agregar coche con POST en la base de datos
   const handleAddCar = async (newCar) => {
     if (!newCar.model.trim() || !newCar.licensePlate.trim()) {
       setError("Model and License Plate cannot be blank");
@@ -66,54 +107,64 @@ function UserCars() {
     }
 
     try {
-      // Asigna un ID temporal para simular el guardado
-      const newCarWithId = { ...newCar, id: cars.length + 1 };
+      const response = await fetch(`${apiUrl}/cars`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          car_model: newCar.model,
+          license_plate: newCar.licensePlate,
+          user_id: localStorage.getItem("user_id"),
+        }),
+      });
 
-      // Aquí deberías hacer la llamada para guardar los detalles del coche
-      const result = await actions.saveCarDetails(newCarWithId.id, newCarWithId);
-      if (result.success) {
-        setCars([...cars, newCarWithId]);
-        setIsAddModalOpen(false);
-        setError("");
-      } else {
-        setError("Failed to add car: " + result.error);
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError("Failed to add car: " + (errorData.error || "Unknown error"));
+        return;
       }
+
+      const savedCar = await response.json();
+      setCars([...cars, savedCar]);
+      setIsAddModalOpen(false);
+      setError("");
     } catch (error) {
       console.error("Error adding car:", error);
       setError("An error occurred: " + error.message);
     }
   };
 
-  // *Fecth on editar con patch
-  const handleEditCar = async (updatedCar) => {
-    if (!updatedCar.model.trim() || !updatedCar.licensePlate.trim()) {
-      setError("Model and License Plate cannot be blank");
-      return;
-    }
-
+  // Verificar y eliminar coche si no está asociado a una cita
+  const confirmDelete = async () => {
     try {
-      const result = await actions.saveCarDetails(updatedCar.id, updatedCar);
-      if (result.success) {
-        setCars(cars.map((car) => (car.id === updatedCar.id ? updatedCar : car)));
-        setIsEditModalOpen(false);
-        setError("");
-      } else {
-        setError("Failed to update car: " + result.error);
+      const response = await fetch(`${apiUrl}/cars/${carToDelete}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to delete car");
+        return false;
       }
+
+      setCars(cars.filter((car) => car.id !== carToDelete));
+      setShowConfirmModal(false);
+      return true;
     } catch (error) {
-      console.error("Error updating car:", error);
+      console.error(`Error deleting car: ${error.message}`);
       setError("An error occurred: " + error.message);
+      return false;
     }
   };
 
   const handleDeleteClick = (carId) => {
     setCarToDelete(carId);
     setShowConfirmModal(true);
-  };
-
-  const confirmDelete = () => {
-    setCars(cars.filter((car) => car.id !== carToDelete));
-    setShowConfirmModal(false);
   };
 
   return (
@@ -184,11 +235,12 @@ function UserCars() {
                 <button
                   type="button"
                   className="btn-close"
-                  onClick={() => setShowConfirmModal(false)}
+                  onClick={handleConfirmModalClose}
                 ></button>
               </div>
               <div className="modal-body">
                 <p>Are you sure you want to delete this car?</p>
+                {error && <div className="alert alert-danger">{error}</div>}
               </div>
               <div className="modal-footer">
                 <button
