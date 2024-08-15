@@ -43,7 +43,7 @@ def add_new_user():
         address = request_body ['address'],
         phone = request_body  ['phone'],
         is_active = request_body ['is_active'],
-        id_role = request_body ['id_role']
+        role_id = request_body ['role_id']
     )
     # print(new_user)
     db.session.add(new_user)
