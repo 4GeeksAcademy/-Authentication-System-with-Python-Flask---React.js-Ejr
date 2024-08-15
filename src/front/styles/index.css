@@ -28,7 +28,7 @@ img, video {
   height: auto;
 }
 
-.navbar-dark {
+.navbar-dark, .footer {
   background: linear-gradient(90deg, #360033
 , #0b8793) !important;
 
