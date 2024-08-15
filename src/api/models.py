@@ -12,6 +12,8 @@ class User(db.Model):
     profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'), nullable=True)
     partner = db.Column(db.Boolean, nullable=True)
     partner_profile_id = db.Column(db.Integer, db.ForeignKey('partnerProfile.id'), nullable=True)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), nullable=True) 
 
     profile = db.relationship("UserProfile", backref="user", lazy=True)
     partner_profile = db.relationship("PartnerProfile", back_populates="users", lazy=True)
@@ -27,6 +29,7 @@ class User(db.Model):
             "profile_id": self.profile_id,
             "partner": self.partner,
             "partner_profile_id": self.partner_profile_id,
+            # no hacer serialize de la password, es un fallo de seguridad
         }
 
 class UserProfile(db.Model):
