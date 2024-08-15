@@ -13,15 +13,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 1,
 						title: "Frontend Developer",
 						company: "Tech Company S.L",
+						sector: "IT",
+						tecnologies: "HTML, CSS, Javascript, Python",
 						modality: "Remote",
 						location: "Spain",
 						salary: "$40,000 - $60,000/year",
-						description: "We are looking for a skilled Frontend Developer to..."
+						description: "Nuestra esencia nos ha llevado a la vanguardia de la tecnología, a romper paradigmas y a brindar las soluciones que realmente se corresponden a las necesidades de cada cliente. Nuestro talento nos ha hecho poder decir con orgullo que somos una de las 6 empresas TOP de tecnologías en el mundo. Buscamos a grandes profesionales que tengan experiencia en proyectos desarrollando con tecnologías Front End: React, Angular. Trabajaras siempre acompañado de un gran equipo y con metodologías ágiles como Scrum, usando herramientas como Jira y Confluence para estar unido a tu equipo y a los avances del proyecto"
 					},
 					{
 						id: 2,
 						title: "Backend Developer",
 						company: "Tech Company S.L",
+						sector: "IT",
+						tecnologies: "HTML, CSS, Javascript, Python",
 						modality: "On-site",
 						location: "Spain",
 						salary: "$50,000 - $70,000/year",
@@ -30,7 +34,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					{
 						id: 3,
 						title: "Project Manager",
-						company: "consulting Company S.L",
+						company: "Consulting Company S.L",
+						sector: "Administrative",
+						tecnologies: "HTML, CSS, Javascript, Python",
 						modality: "On-site",
 						location: "Spain",
 						salary: "$90,000 - $100,000/year",
@@ -40,7 +46,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 4,
 						title: "UI/UX",
 						company: "Design Company S.L",
-						modality: "On-site/remote",
+						sector: "Real state",
+						modality: "Hibryd",
+						tecnologies: "HTML, CSS, Javascript, Python",
 						location: "Spain",
 						salary: "$40,000 - $60,000/year",
 						description: "We are looking for a skilled Backend Developer to..."
