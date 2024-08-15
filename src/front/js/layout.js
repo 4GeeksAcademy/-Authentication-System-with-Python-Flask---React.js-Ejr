@@ -19,7 +19,8 @@ import { ToastContainer } from "react-toastify";
 import { VistaPrueba } from "./pages/vistaPrueba.jsx";
 
 import { Dashboard } from "./pages/dashboard";
-import { Exercises } from "./pages/exercises.jsx";
+import { Exercises } from "./pages/exercises";
+import { ErrorView } from "./pages/error";
 
 
 //create your first component
@@ -46,7 +47,7 @@ const Layout = () => {
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1 className="text-center">Not found!</h1>} path="/*" />
+                        <Route element={<ErrorView />} path="/*" />
                     </Routes>
                     <ToastContainer theme="dark" />
                     <Footer />
