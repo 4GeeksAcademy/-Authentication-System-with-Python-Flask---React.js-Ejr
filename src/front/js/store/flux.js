@@ -129,7 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			pagoMercadoPago: async (total) => {
 				try {
-					const response = await axios.post(back + "/api/preference", {
+					const response = await axios.post(back + `${process.env.BACKEND_URL}/api/preference`, {
 						total: total,  //acá está de nuevo la variable  donde se guarda el total a pagar por el cliente 
 					});
 					console.log(response.data);
@@ -159,7 +159,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Obtener un producto específico
 			getProduct: async (id) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/product/${id}`);
+					const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`);
 					if (response.ok) {
 						const data = await response.json();
 						return { success: true, data };
@@ -174,7 +174,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Agregar un nuevo producto
 			addProduct: async (product) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/product`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/product`, {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(product),
@@ -193,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Eliminar un producto
 			deleteProduct: async (id) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/product/${id}`, { method: 'DELETE' });
+					const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`, { method: 'DELETE' });
 					if (response.ok) {
 						return { success: true };
 					} else {
@@ -207,7 +207,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Actualizar un producto
 			updateProduct: async (id, updates) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/products/${id}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/products/${id}`, {
 						method: 'PUT',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(updates),
@@ -222,8 +222,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return { success: false, error: error.message };
 				}
-			}
+			},
 
+			// Agregar a Favoritos
+			addFavorite: (name) => {
+				const actions = getActions();
+				const store = getStore();
+				let isFavorite = actions.favoriteExist(name)
+				console.log(isFavorite);
+				if (!isFavorite) {
+					setStore({ favorites: [...store.favorites, { name: name }] })
+				}
+			},
+			// Borrar de Favoritos
+			deleteFavorite: (name) => {
+				const store = getStore();
+				setStore({ favorites: store.favorites.filter(item => item.name != name) })
+			},
+
+			// Verificar si existe favorito para evitar duplicados
+			favoriteExist: (name) => {
+				const actions = getActions();
+				const store = getStore();
+				let isFavorite = store.favorites.some(item => item.name == name)
+				if (isFavorite) {
+					actions.deleteFavorite(name)
+					return true
+				}
+				return false
+			}
 		}
 
 	}

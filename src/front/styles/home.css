@@ -176,7 +176,6 @@
 
 @media (width < 555px) {
     .home-container .banner .title-container {
-        top: 10%;
         left: 10%;
         padding: 10px 20px;
     }
@@ -186,7 +185,7 @@
     }
 }
 
-@media (width < 380px) {
+@media (width < 400px) {
     .home-container .banner h1 {
         font-size: 1.4rem;
     }
