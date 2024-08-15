@@ -72,18 +72,24 @@ const getUserCars = async () => {
   }, [currentStep]);
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
+    const now = moment().startOf('day');
+    const endDate = moment().add(30, 'days').endOf('day');
+    
     // Deshabilitar todos los días que no sean de lunes a viernes
-    return current && (current < moment().startOf('day') || current.day() === 0 || current.day() === 6);
+    const isWeekend = current.day() === 0 || current.day() === 6;
+
+    // Deshabilitar fechas fuera del rango de hoy a 30 días adelante
+    const isOutOfRange = current < now || current > endDate;
+
+    return current && (isWeekend || isOutOfRange);
   };
 
-  // Función para deshabilitar horas fuera del horario laboral
   const disabledTime = (date) => {
-    const hours = {
+    return {
       disabledHours: () => {
-        // Deshabilitar horas fuera del rango de 9:00 a 17:00
         const disabledHours = [];
         for (let i = 0; i < 24; i++) {
-          if (i < 8 || i >= 18) {
+          if (i < 8 || i >= 18) {  // Deshabilitar horas fuera del rango de 8:00 a 18:00
             disabledHours.push(i);
           }
         }
@@ -94,8 +100,10 @@ const getUserCars = async () => {
         return Array.from({ length: 60 }, (_, i) => i).filter(min => min !== 0 && min !== 30);
       }
     };
-    return hours;
   };
+
+  //------------------------------------------------------------------------------------
+
 
   //------------------------------------------------------------------------------------
 
@@ -224,8 +232,6 @@ const getUserCars = async () => {
   } catch (error) {
       console.error("Failed to fetch user info:", error);
   }
-  
-    //------------------------------------------------------------------------------------
     navigate("/appointmentconfirmed");
 };
     //------------------------------------------------------------------------------------
@@ -240,10 +246,11 @@ const getUserCars = async () => {
               "name": userInfo.name
           }],
           "subject": "Appointment created successfully",
-          "htmlContent": `<html><head></head><body><p>Hello,${userInfo.name}</p>This is my first transactional email sent from Brevo.</p></body></html>`
+          "htmlContent": `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          <h1 class="default-heading1" style="margin: 0; color: #1f2d3d; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
+          Your appointment on the day ${appointmentDate} has been created successfully.</p>
+          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`
       };
-  
-      console.log("Data ready to send:", data);
       actions.SendMail(data);
   };
     
