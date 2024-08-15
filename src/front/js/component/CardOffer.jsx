@@ -39,7 +39,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                         <p className="card-text lh-1">
                             <strong>Salary:</strong> {salary}
 
-                        
+                        </p>
                         <p className="card-text">
                             <strong>Description:</strong> {isExpanded ? description : `${description.substring(0, 100)}...`}
                             <button onClick={toggleDescription} className="btn btn-link text-muted p-0 ms-2">
