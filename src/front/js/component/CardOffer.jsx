@@ -45,7 +45,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                         <Link to={`/singleoffer/${id}`} className="btn btn-card">
                             Ver Oferta
                         </Link>
-                        <Link to = {`/`} href="#" className="btn btn-success ms-2">
+                        <Link to = {`/`} href="#" className="btn btn-card ms-2">
                             Inscribirse
                         </Link>
                         <a href="#" className="ms-2">
