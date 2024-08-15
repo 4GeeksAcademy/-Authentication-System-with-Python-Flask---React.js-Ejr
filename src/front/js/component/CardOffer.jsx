@@ -1,16 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../styles/CardOffer.css"
 import {Link} from "react-router-dom"
 
 
 
 export const CardOffer = ({ title, company, modality, location, salary, description,id }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const toggleDescription = () => {
+        setIsExpanded(!isExpanded);
+    };
+
 
 
 
     return (
         <div className="container mt-5">
-            <div className="card m-auto card-timeline" style={{ width: "55rem" }}>
+            <div className="card m-auto" style={{ width: "55rem" }}>
                 <div className="card-body d-flex align-items-center">
                     <img
                         className="img-fluid me-3"
@@ -30,13 +36,16 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                         <p className="card-text lh-1">
                             <strong>Salary:</strong> {salary}
                         </p>
-                        <p className="card-text lh-1">
-                            <strong>Description:</strong> {description} 
+                        <p className="card-text">
+                            <strong>Description:</strong> {isExpanded ? description : `${description.substring(0, 100)}...`}
+                            <button onClick={toggleDescription} className="btn btn-link text-muted p-0 ms-2">
+                                {isExpanded ? "Leer menos" : "Leer más"}
+                            </button>
                         </p>
-                        <Link to={`/singleoffer/${id}`} className="btn btn-primary">
+                        <Link to={`/singleoffer/${id}`} className="btn btn-card">
                             Ver Oferta
                         </Link>
-                        <Link to = {`/`} href="#" className="btn btn-success ms-2">
+                        <Link to = {`/`} href="#" className="btn btn-card ms-2">
                             Inscribirse
                         </Link>
                         <a href="#" className="ms-2">

@@ -1,3 +1,27 @@
-.single-card{
-    box-shadow: black 4px 3px 9px;
+.single-offer-box{
+    width: 50rem;
+    box-shadow: -1px 2px 20px 4px #d4c4c4;
+}
+.card-single-offer{
+    box-shadow: -1px 2px 20px 4px #d4c4c4;
+}
+
+.salary-box{
+    position: relative;
+    bottom: 22px;
+    right: 5px;
+    font-size: 0.7rem;
+    text-decoration: underline;
+}
+.btn-single-offer{
+    background-color: rgb(103, 147, 174);
+}
+
+.btn-single-offer:hover{
+    background-color: rgb(175, 206, 225);
+    
+}
+.btn-company{
+    background-color: rgb(175, 206, 225);
+
 }
