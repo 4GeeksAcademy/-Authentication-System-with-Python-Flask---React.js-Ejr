@@ -12,9 +12,9 @@ import { TimeLine } from "./component/TimeLine.jsx"
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { LoginPage } from "./pages/login";
 import { Inicio } from "./pages/inicio.js";
 import { TimeLine } from "./pages/TimeLine.jsx";
-import { LoginPage } from "./pages/login";
 
 //create your first component
 const Layout = () => {
