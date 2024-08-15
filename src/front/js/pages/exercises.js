@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 
-import { Exercise } from "../component/exercise.jsx";
+import { Exercise } from "../component/exercise.js";
 
 export const Exercises = () => {
     const { store, actions } = useContext(Context);
