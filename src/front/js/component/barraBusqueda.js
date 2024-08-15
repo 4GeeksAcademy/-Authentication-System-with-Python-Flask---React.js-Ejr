@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap'; //biblioteca que reescribe los componentes de Bootstrap como componentes de React.
+import { Form, Button, Row, Col, Dropdown } from 'react-bootstrap'; //biblioteca que reescribe los componentes de Bootstrap como componentes de React.
 import '../../styles/barraBusqueda.css'; // Importa los estilos para el componente
 import { Context } from '../store/appContext'; // Importa el contexto global
 
 const BarraBusqueda = () => {
     // Accede al estado global y las acciones desde el contexto
     const { store, actions } = useContext(Context);
+
+    // Estado para la categoría seleccionada y la categoría que está siendo sobrevolada (hover)
+    const [seleCategoria, setSeleCategoria] = useState(null);
+    const [hoveredCategoria, setHoveredCategoria] = useState(null);
 
     // Estado local para manejar el estado de carga y errores
     const [loading, setLoading] = useState(store.loading);
@@ -57,42 +61,103 @@ const BarraBusqueda = () => {
             busqueda: "",
             cursoRelacionado: ""
         }); // Resetea los filtros en el estado global
+        setSeleCategoria(null);
     };
 
-    // Función para manejar los cambios en los filtros
+    // Función para manejar los cambios en los campos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target; // Obtiene el nombre  del campo de formulario que cambió (por ejemplo, "categoria", "valoracion", "precio", etc.) 
         //y valor del input del campo de formulario que cambió
         actions.actualizarFiltros({ [name]: value }); // Actualiza el filtro específico en el estado global
     };
+    // Función para manejar el cambio de categoría.
+    const handleCategoriaChange = (categoria) => {
+        setSeleCategoria(categoria); // Actualiza la categoría seleccionada.
+        actions.actualizarFiltros({ categoria }); // Actualiza el filtro de categoría en el estado global.
+    };
+
+    // Función para manejar el evento de pasar el ratón sobre una categoría
+    const handleMouseEnter = (categoria) => {
+        setHoveredCategoria(categoria);
+    };
+
+     // Función para manejar con el evento de salir el ratón de una categoría
+    const handleMouseLeave = () => {
+        setHoveredCategoria(null);
+    };
+
+
+    // Categorías y sus subtemas.
+    const categorias = {
+        Desarrollo: ["Desarrollo Web", "Lenguajes de programación", "Diseño y Desarrollo de bases de datos", "Desarrollo de Software"],
+        Negocios: ["Finanzas", "Contabilidad", "Marketing", "Banca"],
+        Diseño: ["Diseño Web", "Creación de Marca", "3D. y animación"]
+    };
+
 
     return (
         <div className="barra-busqueda">
             <Form>
                 <Row className="mb-3">
-                    <Col>
+                    <Col>  {/* Columna para el filtro de categoría */}
                         <Form.Group controlId="formCategoria">
-                            <Form.Label>Categorías</Form.Label>
-                            <Form.Control as="select" name="categoria" onChange={handleChange}>
-                                <option value="">Seleccione una categoría</option>
-                                <option value="categoria1">Categoría 1</option>
-                                <option value="categoria2">Categoría 2</option>
-                            </Form.Control>
+                            <Form.Label>Categoría</Form.Label>
+                            <div 
+                                className="categoria-menu" 
+                                onMouseLeave={handleMouseLeave} /*  Función para manejar el evento de salir con el ratón de una categoría*/
+                            >
+                                <Dropdown>
+                                    {/* Botón que muestra la categoría seleccionada */}
+                                    <Dropdown.Toggle id="dropdown-categorias" title={seleCategoria || "Categoría"}>
+                                        {seleCategoria || "Categoría"}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        {/* Opciones de categoría */}
+                                        {Object.keys(categorias).map((categoria) => (
+                                            <Dropdown.Item 
+                                                key={categoria} 
+                                                onMouseEnter={() => handleMouseEnter(categoria)}
+                                                onClick={() => handleCategoriaChange(categoria)}
+                                            >
+                                                {categoria}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                {/* Menú de subcategorías que se muestra al pasar el ratón sobre una categoría */}
+                                {hoveredCategoria && (
+                                    <Dropdown.Menu 
+                                        className="subcategoria-menu" 
+                                        show 
+                                        style={{ left: '100%', marginTop: 0 }}
+                                    >
+                                        {categorias[hoveredCategoria].map((subcategoria) => (
+                                            <Dropdown.Item 
+                                                key={subcategoria} 
+                                                onClick={() => handleCategoriaChange(subcategoria)}
+                                            >
+                                                {subcategoria}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                )}
+                            </div>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col> {/* Columna para el filtro de valoraciones */}
                         <Form.Group controlId="formValoracion">
                             <Form.Label>Valoraciones</Form.Label>
                             <div className="filtro">
+                                {/* Muestra estrellas según la valoración actual */}
                                 {[...Array(5)].map((_, i) => (
                                     <span key={i} onClick={() => handleChange({ target: { name: 'valoracion', value: i + 1 } })}>
-                                        {i < store.filtros.valoracion ? "★" : "☆"}
+                                        {i < store.filtros.valoracion ? "★" : "☆"} 
                                     </span>
                                 ))}
                             </div>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col> {/* Columna para el filtro de nivel */}
                         <Form.Group controlId="formNivel">
                             <Form.Label>Niveles</Form.Label>
                             <Form.Control as="select" name="nivel" onChange={handleChange}>
@@ -104,36 +169,35 @@ const BarraBusqueda = () => {
                             </Form.Control>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col> {/* Columna para el filtro de precio */}
                         <Form.Group controlId="formPrecio">
                             <Form.Label>Precios</Form.Label>
                             <Form.Control 
                                 type="range" 
                                 min="0" 
-                                max="100" 
+                                max="350" 
                                 name="precio" 
-                                value={store.filtros.precio[1]} 
+                                value={store.filtros.precio[1]} /* Flux */
                                 onChange={(e) => handleChange({ target: { name: 'precio', value: [0, e.target.value] } })} 
                             />
-                            <span>{`$0 - $${store.filtros.precio[1]}`}</span>
+                            <span>{`€0 - €${store.filtros.precio[1]}`}</span>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col>  {/* Columna para el filtro de fecha */}
                         <Form.Group controlId="formFecha">
-                            <Form.Label>Fechas</Form.Label>
+                            <Form.Label>Fecha de Inicio</Form.Label>
                             <Form.Control 
                                 type="date" 
                                 name="fecha" 
-                                value={store.filtros.fecha} 
+                                value={store.filtros.fecha} /* Flux */
                                 onChange={handleChange} 
                             />
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col>{/* Columna para el filtro de idioma */}
                         <Form.Group controlId="formIdioma">
                             <Form.Label>Idioma</Form.Label>
                             <Form.Control as="select" name="idioma" onChange={handleChange}>
-                                <option value="">Seleccione un idioma</option>
                                 <option value="espanol">Español</option>
                                 <option value="ingles">Inglés</option>
                                 <option value="aleman">Alemán</option>
@@ -151,7 +215,7 @@ const BarraBusqueda = () => {
                             />
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col> {/* Columna para el filtro de curso relacionado */}
                         <Form.Group controlId="formCursoRelacionado">
                             <Form.Label>Cursos relacionados</Form.Label>
                             <Form.Control as="select" name="cursoRelacionado" onChange={handleChange}>
@@ -164,17 +228,18 @@ const BarraBusqueda = () => {
                 </Row>
                 <Row>
                     <div className="botones">
-                        <Button variant="primary" onClick={filtrosAplicar}>Aplicar</Button>
+                        {/* Botones para aplicar o restablecer los filtros */}
+                        <Button variant="primary" onClick={filtrosAplicar}>Aceptar</Button>
                         <Button variant="secondary" onClick={resetFiltros}>Restablecer</Button>
                     </div>
                 </Row>
             </Form>
-    
+            {/* Muestra los cursos filtrados, si existen, con los filtros aplicados */}   
             {store.cursosConFiltros && store.cursosConFiltros.map(curso => (
                 <div key={curso.id}>{curso.nombre}</div>
             ))}
         </div>
-    );    
+    );
 };
 
 export default BarraBusqueda;

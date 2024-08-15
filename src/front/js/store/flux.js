@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 categoria: "",
                 valoracion: 0,
                 nivel: "",
-                precio: [0, 100],
+                precio: [0, 350],
                 fecha: "",
                 idioma: "",
                 busqueda: "",
