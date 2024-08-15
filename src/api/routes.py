@@ -10,7 +10,7 @@ import mercadopago
 import json
 sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
-
+from flask import render_template
 # Allow CORS requests to this API
 CORS(api)
 
@@ -60,10 +60,10 @@ def login():
     #cuando me llega la info del usuario, consulto a la bd si la informacion es correcta o no
     user_query = User.query.filter_by(email=email).first() #en mi solicitud hago un filtro con email
     if user_query is None:
-        return jsonify({"msg":"Unregistered user"}), 404
+        return jsonify({"msg":"Usuario no registrado"}), 404
 
     if email != user_query.email or password != user_query.password:
-        return jsonify({"msg": "Bad email or password"}), 401
+        return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
 
     access_token = create_access_token(identity=email)
     return jsonify({"access_token":
@@ -125,12 +125,12 @@ def get_user(id):
 def delete_user(id):
     especific_user= User.query.filter_by(id=id).first() #me permite filtrar si el usuario existe
     if especific_user is None:
-        return jsonify({"msg":"The user doesn't exist"}), 404#result es mi lista de favoritos para ese id
+        return jsonify({"msg":"El usuario no existe"}), 404#result es mi lista de favoritos para ese id
     
 
     db.session.delete(especific_user)
     db.session.commit()    
-    return jsonify({"msj":"delete successfully"}), 200
+    return jsonify({"msj":"Usuario eliminado correctamente"}), 200
 
 # PUT user
 @api.route('/users/<int:id>', methods=['PUT'])
@@ -142,7 +142,7 @@ def update_user(id):
     data = request.get_json()
     user = User.query.filter_by(id=id).first()#la variable user me define es el usuario que busco para actualizar
     if user is None:
-        return jsonify({"msg":"The user doesn't exist"}), 404
+        return jsonify({"msg":"El usuario no existe"}), 404
 # actualiza datos del usuario
     if 'name' in data:
         user.name = data ['name']
@@ -160,7 +160,7 @@ def update_user(id):
         user.id_role = data ['id_role']
 # guardo los cambios en la db
     db.session.commit()
-    return jsonify (user.serialize(),{"msg":"The user has been updated"}), 200
+    return jsonify (user.serialize(),{"msg":"El usuario ha sido actualizado"}), 200
 
 # ENDPOINT PRODUCTOS
 #GET products
@@ -168,12 +168,12 @@ def update_user(id):
 def get_products():
     all_products = Product.query.all()
     if all_products == []: #sin productos
-        return jsonify({"msj":"Out of stock"}), 404 
+        return jsonify({"msj":"No hay productos disponibles"}), 404 
     
     result= list(map(lambda item:item.serialize(),all_products))
 
     response_body = {
-        "msg": "All products", 
+        "msg": "Todos los productos", 
         "results": result #tus productos
     }
     return jsonify(response_body), 200
@@ -184,7 +184,7 @@ def get_product(id):
     # print(id)
     especific_product= Product.query.filter_by(id=id).first()
     if especific_product is None:
-        return jsonify({"msj":"Not faund"}), 404
+        return jsonify({"msj":"Producto no encontrado"}), 404
     # print(especific_product)
     query_result= especific_product.serialize()
     print(query_result)
@@ -195,11 +195,11 @@ def get_product(id):
 def delete_product(id):
     especific_product= Product.query.filter_by(id=id).first() 
     if especific_product is None:
-        return jsonify({"msg":"The product doesn't exist"}), 404
+        return jsonify({"msg":"El producto no existe"}), 404
 
     db.session.delete(especific_product)
     db.session.commit()    
-    return jsonify({"msj":"delete successfully"}), 200
+    return jsonify({"msj":"Producto eliminado correctamente"}), 200
 
 # Agregar producto
 @api.route('/product', methods=['POST'])
@@ -211,7 +211,7 @@ def add_new_product():
     )
     db.session.add(new_product)
     db.session.commit()
-    return jsonify({"msj":"Added product"}), 201
+    return jsonify({"msj":"Producto agregado"}), 201
 
 # Actualizar productos
 @api.route('/products/<int:id>', methods=['PUT'])
@@ -219,14 +219,14 @@ def update_product(id):
     data = request.get_json()
     product = Product.query.filter_by(id=id).first()
     if product is None:
-         return jsonify({"msg":"The product doesn't exist"}), 404
+         return jsonify({"msg":"El producto no existe"}), 404
 # actualiza datos
     if 'name' in data:
         product.name = data ['name']
     if 'cost' in data:
         product.cost = data ['cost']
     db.session.commit()
-    return jsonify (product.serialize(),{"msg":"The product has been updated"}), 200
+    return jsonify (product.serialize(),{"msg":"El producto ha sido actualizado"}), 200
 
 #MERCADO PAGO
 
@@ -238,10 +238,15 @@ def preference():
     total = body["total"]   # acá decimos que en el  body mandamos el total a pagar por el cliente? 
  # Crea un ítem en la preferencia 
     preference_data = { 
-    "items": [ {
-        "title": "Mi producto",  #estas líneas las vamos a poder editar con los datos de nuestra API. 
-        "quantity": 1,   #estos tres son los requeridos obligatoriamente por mercadopago. 
-        "unit_price": 75.76,   #aca va el total a pagar por el cliente. 
+    "items": [ 
+        {
+        # "title": "Mi producto",  #estas líneas las vamos a poder editar con los datos de nuestra API. 
+        # "quantity": 1,   #estos tres son los requeridos obligatoriamente por mercadopago. 
+        # "unit_price": 75.76,   #aca va el total a pagar por el cliente. 
+        "title": request.json.get('title', 'Mi producto'),
+        "quantity": int(request.json.get('quantity', 1)),
+        "unit_price": float(request.json.get('price', 100))
+
  #también podríamos mandar más datos como nombre del producto, etc. 
     } ],
  # acá vamos a poner más líneas de código
@@ -261,4 +266,9 @@ def preference():
     preference_response = sdk.preference().create(preference_data) 
     preference = preference_response["response"] 
     return preference, 200 
+
+@api.route('/')
+def home():
+    products = Product.query.all()
+    return render_template('home.html', products=products)   
  

@@ -1,5 +1,6 @@
 @import url('./variables.css');
 
+/*LIST OF PRODUCTS STYLES*/
 *{
     margin: 0;
     padding: 0;
@@ -7,8 +8,8 @@
 }
 .banner-products-title{
     position: absolute;
-    /* top: 40%;
-    left: 16%; */
+    top: 40%;
+    left: 16%; 
     color: var(--color-forest);
     z-index: 1;
 }
@@ -16,4 +17,114 @@
     width: 100dvw;
     position: relative;
     z-index: 0;
+}
+/*PRODUCT STYLES*/
+.background {
+    background-color:  rgba(177, 178, 132, 47%);
+    width: 80vw;
+    height:40vh;
+    margin-top: 8em;
+    border-radius: 30px;
+}
+.container-background{
+    position: relative;
+    margin-top: 5em;
+}
+.protein {
+    max-width: 50%;
+}
+.card-item {
+    position: absolute;
+    top: 10%;
+   width: 20%;
+}
+
+.btn-see-more {
+    background-color: var(--color-olive);
+    
+}
+.card-body-info-product{
+    max-width: 25em;
+}
+.dynamic-products {
+    flex-wrap: nowrap;
+ 
+}
+.product-card{
+    max-width: 80%;
+}
+.card-img-top{
+    width: 45%;
+}
+/*MEDIA QUERIES FOR PRODUCTS*/
+@media screen and (max-width:600px) {
+    .card-item {
+      display: flex;
+    }
+    .container-top-product{
+        align-items: center;
+        justify-content: center;
+        position: static;
+    }
+    .container-top-product{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .card-body-info-product{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/*MEDIA QUERIES*/
+
+@media screen and (max-width:1400px) {
+    .banner-products-title{
+        max-width: 50%;
+        top: 15%;
+        left: 5%;
+        z-index: 2;
+        
+    }
+}
+
+@media screen and (max-width:700px) {
+    .banner-products-title{
+        max-width: 50%;
+        top: 15%;
+        left: 5%;
+        z-index: 2;
+        
+    }
+    .card-item {
+        position: static;
+        top: 0;
+    }
+    
+}
+@media screen and (max-width:550px){
+    
+}
+@media screen and (max-width:450px) {
+    .banner-products-title{
+        max-width: 50%;
+        top: 10%;
+        left: 1%;
+        z-index: 2;
+        
+    }
+    .card-item {
+        position: static;
+        margin: 0;
+    }
+    .protein{
+        margin: 0;
+    }
+    .container-background{
+ 
+  margin-top: 0;
+    }
 }

@@ -17,6 +17,7 @@
 
 .footer-logo img {
   width: 120px;
+  cursor: pointer;
 }
 
 .footer-links {
@@ -30,6 +31,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .vertical-line {
@@ -44,6 +46,7 @@
   font-weight: bold;
   padding: 0 10px;
   transition: all 0.3s ease;
+  
 }
 
 .footer-links a:hover,
@@ -52,6 +55,7 @@
   text-decoration: underline;
   background-color: #f0f0f0;
   border-radius: 3px;
+ 
 }
 
 .footer-decor {

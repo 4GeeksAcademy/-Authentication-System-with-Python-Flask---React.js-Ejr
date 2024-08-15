@@ -7,6 +7,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			auth: false,
 			error: {},
 			mercadoPago: {},
+			products: [],
+			product:{},
+			favorites:[],
 		},
 		actions: {
 			// loginFetch: async () => {
@@ -135,6 +138,91 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+			// Obtener todos los productos
+			getProducts: async () => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/products`);
+					// if (response.ok) {
+						const data = await response.json();
+					// 	//return { success: true, data: data.results };
+					// } else {
+					// 	const errorData = await response.json();
+					// 	return { success: false, error: errorData.msj };
+					// }
+					console.log(data)
+					setStore({products: data.results})
+					return true
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Obtener un producto específico
+			getProduct: async (id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/product/${id}`);
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Agregar un nuevo producto
+			addProduct: async (product) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/product`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(product),
+					});
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Eliminar un producto
+			deleteProduct: async (id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/product/${id}`, { method: 'DELETE' });
+					if (response.ok) {
+						return { success: true };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			// Actualizar un producto
+			updateProduct: async (id, updates) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/products/${id}`, {
+						method: 'PUT',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(updates),
+					});
+					if (response.ok) {
+						const data = await response.json();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			}
 
 		}
 
