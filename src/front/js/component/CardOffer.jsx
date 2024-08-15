@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import React, { useState } from "react";
 import "../../styles/CardOffer.css"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 
-export const CardOffer = ({ title, company, modality, location, salary, description,id }) => {
+export const CardOffer = ({ title, company, modality, location, salary, description, id }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleDescription = () => {
@@ -45,7 +46,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                         <Link to={`/singleoffer/${id}`} className="btn btn-card">
                             Ver Oferta
                         </Link>
-                        <Link to = {`/`} href="#" className="btn btn-card ms-2">
+                        <Link to={`/`} href="#" className="btn btn-success ms-2">
                             Inscribirse
                         </Link>
                         <a href="#" className="ms-2">
