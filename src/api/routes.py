@@ -14,7 +14,6 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 api = Blueprint('api', __name__)
-# Allow CORS requests to this API
 CORS(api)
 # CORS(app, resources={r"/api/*": {"origins": "https://tu-frontend.github.dev"}})
 
@@ -86,22 +85,29 @@ def create_signupusers():
 @api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
+    if not data or not data.get('email') or not data.get('password'):
+        return jsonify({"error": "Email and password are required"}), 400
 
     email = data.get('email')
     password = data.get('password')
 
-    if not email or not password:
-        return jsonify({"error": "Email and password are required"}), 400
-
     user = User.query.filter_by(email=email).first()
-    
     if not user or not bcrypt.check_password_hash(user.password, password):
+        # Incrementar el contador de intentos fallidos
+        user.failed_login_attempts += 1
+        if user.failed_login_attempts >= 5:
+            # Bloquear la cuenta temporalmente
+            user.is_blocked = True
+            db.session.commit()
+            return jsonify({"error": "Account blocked due to excessive login attempts"}), 401
         return jsonify({"error": "Invalid credentials"}), 401
 
     role = Role.query.filter_by(id=user.role_id).first()
+    if not role:
+        return jsonify({"error": "Invalid role"}), 401
+
     access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})
+    # access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id}, expires_in=3600)
     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
@@ -126,8 +132,6 @@ def ping_user():
     print("Respuesta enviada:", response)
     
     return response, 200
-#     return jsonify({"message": "User is authenticated", "user_id": current_user_id, "role_id": role_id}), 200
-
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /logout
@@ -299,6 +303,10 @@ def delete_car(car_id):
     car = Car.query.get(car_id)
     if not car:
         return jsonify({"error": "Car not found"}), 404
+
+    associated_appointments = Appointment.query.filter_by(car_id=car_id).all()
+    if associated_appointments:
+        return jsonify({"error": "Cannot delete car because it is associated with an appointment"}), 400
 
     db.session.delete(car)
     db.session.commit()

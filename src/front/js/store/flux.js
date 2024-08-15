@@ -56,15 +56,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json();
 					console.log("Datos recibidos del servidor:", data);
 			
-					localStorage.setItem("token", data.access_token);
-					localStorage.setItem("role_id", data.role_id);
-					localStorage.setItem("user_id", data.user_id); 
-					setStore({ token: data.access_token, userId: data.user_id, roleId: data.role_id });
-			
+					const updateTokenAndState = (token, userId, roleId) => {
+                        setStore({ token, userId, roleId });
+                        localStorage.setItem("token", token);
+                        localStorage.setItem("user_id", userId);
+                        localStorage.setItem("role_id", roleId);
+                    };
+					
+					updateTokenAndState(data.access_token, data.user_id, data.role_id);
+
 					console.log("Sesión cargada con éxito");
 					return true;
 				} catch (error) {
-					// console.error("Error al cargar la sesión:", error);
+					console.error("Error al cargar la sesión:", error);
 					localStorage.clear();
 					setStore({ token: null, userId: null, roleId: null });
 					return false;
@@ -74,22 +78,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			login: async (email, password) => {
 				let resp = await fetch(apiUrl + "/login", {
-					method: "POST",
-					body: JSON.stringify({email, password }),
-					headers: {
-						"Content-Type" : "application/json",
-					},
+				  method: "POST",
+				  body: JSON.stringify({ email, password }),
+				  headers: {
+					"Content-Type": "application/json",
+				  },
 				});
 				if (!resp.ok) {
-					setStore({ token: null });
-					return false;
+				  setStore({ token: null });
+				  console.error("Error al hacer login:", errorData);
+				  return { success: false, message: errorData.error || "Error desconocido" };
 				};
+
 				let data = await resp.json();
+				// const token = data.access_token;
 				setStore({ token: data.access_token });
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("role_id", data.role_id);
-				localStorage.setItem("user_id", data.user_id); 
-				return true;
+				localStorage.setItem("user_id", data.user_id);
+				return { success: true };
+			  }, catch (error) {
+				console.error("Error en la solicitud de login:", error);
+				return { success: false, message: "Error en la red o en el servidor" };
 			},			
 			signup: async (email, password, name, phone_number) => {
 				let resp = await fetch(apiUrl + "/signupuser", {

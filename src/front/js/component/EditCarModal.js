@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
 function EditCarModal({ car, onSave, onClose, error }) {
-  const [updatedCar, setUpdatedCar] = useState(car);
+  // Inicializa el estado usando las propiedades correctas
+  const [updatedCar, setUpdatedCar] = useState({
+    car_model: car.car_model || "",
+    license_plate: car.license_plate || ""
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,7 +16,8 @@ function EditCarModal({ car, onSave, onClose, error }) {
   };
 
   const handleSave = () => {
-    onSave(updatedCar);
+    // Asegúrate de pasar el ID del coche junto con los datos actualizados
+    onSave({ ...updatedCar, id: car.id });
   };
 
   return (
@@ -27,11 +32,23 @@ function EditCarModal({ car, onSave, onClose, error }) {
             {error && <div className="alert alert-danger">{error}</div>}
             <div className="mb-3">
               <label className="form-label">Model</label>
-              <input type="text" className="form-control" name="model" value={updatedCar.model} onChange={handleChange} />
+              <input 
+                type="text" 
+                className="form-control" 
+                name="car_model" 
+                value={updatedCar.car_model} 
+                onChange={handleChange} 
+              />
             </div>
             <div className="mb-3">
               <label className="form-label">License Plate</label>
-              <input type="text" className="form-control" name="licensePlate" value={updatedCar.licensePlate} onChange={handleChange} />
+              <input 
+                type="text" 
+                className="form-control" 
+                name="license_plate" 
+                value={updatedCar.license_plate} 
+                onChange={handleChange} 
+              />
             </div>
           </div>
           <div className="modal-footer">
