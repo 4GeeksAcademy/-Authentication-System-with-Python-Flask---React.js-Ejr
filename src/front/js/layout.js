@@ -18,7 +18,6 @@ import { LoginPage } from "./pages/login";
 >>>>>>> b5c2fbf (Ruta añadida del front para el timeLine)
 import { Inicio } from "./pages/inicio.js";
 import { TimeLine } from "./pages/TimeLine.jsx";
-import { LoginPage } from "./pages/login";
 
 //create your first component
 const Layout = () => {
