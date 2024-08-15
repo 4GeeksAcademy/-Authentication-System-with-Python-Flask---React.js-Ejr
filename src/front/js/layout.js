@@ -11,8 +11,8 @@ import {SingleOffer} from "./pages/SingleOffer.jsx"
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { TimeLine } from "./pages/TimeLine.jsx";
 import { LoginPage } from "./pages/login";
+import { TimeLine } from "./pages/TimeLine.jsx";
 
 //create your first component
 const Layout = () => {
