@@ -57,11 +57,6 @@
     cursor: pointer;
 }
 
-.contactUs-container button.signup-hidden {
-    background-color: transparent;
-    border-color: #fff;
-}
-
 .contactUs-container form {
     background-color: #fff;
     display: flex;
@@ -96,5 +91,32 @@
     left: 50%;
     height: 100%;
     width: 50%;
+}
+
+/* este @media es para pantalla mas pequenas de telefonos */
+@media (max-width: 768px) {
+    .contactUs-container {
+        width: 100%;
+        flex-direction: column;
+        position: static;
+        box-shadow: none;
+    }
+
+    .contactUs-container-left,
+    .contactUs-container-right {
+        position: relative;
+        width: 100%;
+        height: auto;
+        right: 0;
+        left: 0;
+    }
+
+    .contactUs-container button {
+        width: 100%;
+    }
+
+    .contactUs-container form {
+        padding: 20px;
+    }
 }
 
