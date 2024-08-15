@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0fecfd5a1824
+Revision ID: 366e5ba6d50a
 Revises: 
-Create Date: 2024-08-13 15:01:17.503388
+Create Date: 2024-08-14 19:01:53.616235
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0fecfd5a1824'
+revision = '366e5ba6d50a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,13 +28,12 @@ def upgrade():
     sa.Column('country', sa.String(length=20), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('name'),
     sa.UniqueConstraint('username')
     )
     op.create_table('empleador',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('cif', sa.Integer(), nullable=False),
-    sa.Column('metodo_pago', sa.String(length=100), nullable=False),
+    sa.Column('cif', sa.String(length=15), nullable=True),
+    sa.Column('metodo_pago', sa.String(length=100), nullable=True),
     sa.Column('descripcion', sa.String(length=300), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
@@ -43,9 +42,9 @@ def upgrade():
     )
     op.create_table('programador',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('precio_hora', sa.Integer(), nullable=False),
-    sa.Column('tecnologias', sa.String(length=200), nullable=False),
-    sa.Column('experiencia', sa.Enum('JUNIOR', 'MID', 'SENIOR', name='experience'), nullable=False),
+    sa.Column('precio_hora', sa.Integer(), nullable=True),
+    sa.Column('tecnologias', sa.String(length=200), nullable=True),
+    sa.Column('experiencia', sa.Enum('JUNIOR', 'MID', 'SENIOR', name='experience'), nullable=True),
     sa.Column('descripcion', sa.String(length=300), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),

@@ -60,7 +60,7 @@ class Favoritos(db.Model):
 class User(db.Model):
     __tablename__="user"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column (db.String (20), unique=True, nullable=False)
+    name = db.Column (db.String (20), nullable=False)
     username = db.Column (db.String(50), unique=True, nullable=False)
     photo = db.Column (db.String(200))
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -82,8 +82,8 @@ class User(db.Model):
             "username": self.username,
             "photo": self.photo,
             "country": self.country,
-            "profile_programador": self.profile_programador.serialize(),
-            "profile_empleador": self.profile_empleador.serialize(),
+            "profile_programador": self.profile_programador.serialize() if self.profile_programador else None,
+            "profile_empleador": self.profile_empleador.serialize()  if self.profile_empleador else None,
             "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
         }
     
@@ -97,9 +97,9 @@ class Experience(Enum):
 class Programador(db.Model):
     __tablename__="programador"
     id = db.Column(db.Integer, primary_key=True)
-    precio_hora = db.Column (db.Integer, nullable=False)
-    tecnologias = db.Column (db.String(200), nullable=False)
-    experiencia = db.Column(db.Enum(Experience), nullable=False)
+    precio_hora = db.Column (db.Integer)
+    tecnologias = db.Column (db.String(200))
+    experiencia = db.Column(db.Enum(Experience))
     descripcion = db.Column(db.String(300))
     rating = db.Column (db.Float(2))
     proyectos = db.relationship ("Proyectos", backref="programador", lazy=True)
@@ -126,8 +126,8 @@ class Programador(db.Model):
 class Empleador(db.Model):
     __tablename__ = "empleador"
     id = db.Column(db.Integer, primary_key=True)
-    cif = db.Column (db.Integer, unique=True, nullable=False)
-    metodo_pago = db.Column (db.String(100), nullable=False)
+    cif = db.Column (db.String(15), unique=True)
+    metodo_pago = db.Column (db.String(100))
     descripcion = db.Column(db.String(300))
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
     rating = db.relationship ("Ratings", backref="empleador", lazy=True)

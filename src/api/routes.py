@@ -33,6 +33,7 @@ def register():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     country = request.json.get("country", None)
+    cif= request.json.get("cif", None)
     if not name or not username or not email or not password or not country:
         return jsonify({'register':False, 'msg':'Todos los campos son necesarios'})
     email_exist = User.query.filter_by(email=email).first()
@@ -45,7 +46,21 @@ def register():
     access_token = create_access_token(identity=new_user.id)
     db.session.add(new_user)
     db.session.commit()
-    return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token}),201
+    if cif is not None:
+        empleador = Empleador(user_id=new_user.id,cif=cif)
+        db.session.add(empleador)
+        db.session.commit()
+        return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token, 'empleador':empleador.serialize()}),201
+    elif cif is None:
+        programador = Programador(user_id=new_user.id)
+        db.session.add(programador)
+        db.session.commit()
+        return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token, 'programador':programador.serialize()}),201
+    else:
+        db.session.rollback()
+        return jsonify({'success':False, 'msg':'Error'}),418
+    
+    
 
 #Mostrar el usuario con ese id
 @api.route('/getUsers/<int:id>', methods=['GET'])
@@ -64,21 +79,55 @@ def getAllUsers():
         return jsonify({'user': users}),200
     return jsonify({'msg':'Ningún usuario encontrado'}),404
 
-#Agregar usuario a Empleador
-@api.route('/user/<int:id>/addEmpleador', methods=['POST'])
-def addEmpleador(id):
+
+#Agregar usuario a Empleador  PENDIENTE
+#@api.route('/user/editEmpleador', methods=['PUT'])
+#@jwt_required()
+#def editEmpleador():
+    name = request.json.get("name", None)
+    username = request.json.get("username", None)
+    email = request.json.get("email", None)
+    country = request.json.get("country", None)
     cif = request.json.get('cif', None)
     metodo_pago = request.json.get('metodo_pago', None)
     descripcion = request.json.get('descripcion', None)
-    id_exist = Empleador.query.get(id)
+    photo = request.json.get('photo', None)
+    id = get_jwt_identity
+    user = User.query.get(id)
+    empleador = Empleador.query.get(user.profile_empleador)
+    user.name=name
+    user.username = username
+    user.email=email
+    user.country = country
+    user.photo = photo
+    empleador.cif = cif
+    empleador.metodo_pago = metodo_pago
+    empleador.descripcion=descripcion
+    db.session.commit()
+    return jsonify({'msg': 'OK', 'user': user.serialize()}), 200
+    
+
+
+
+#Agregar usuario a Programador   PENDIENTE
+#@api.route('/user/editProgramador', methods=['PUT'])
+#@jwt_required
+#def editProgramador():
+    user_id = get_jwt_identity
+    precio_hora = request.json.get("precio_hora", None)
+    tecnologias = request.json.get("tecnologias", None)
+    experiencia = request.json.get("experiencia", None)
+    descripcion = request.json.get("descripcion", None)
+    id_exist = Programador.query.get(id)
     if id_exist:
-        return jsonify({'msg':'el usuario ya es empleador'}
+        return jsonify({'msg':'el usuario ya es programador'}
         )
     else:
-        empleador = Empleador(user_id=id,cif=cif, metodo_pago=metodo_pago, descripcion=descripcion)
-        db.session.add(empleador)
+        programador = Programador(user_id=id,precio_hora=precio_hora, tecnologias=tecnologias, descripcion=descripcion, experiencia=experiencia)
+        db.session.add(programador)
         db.session.commit()
-        return jsonify({'msg':'Empleador creado correctamente', 'user':empleador.serialize()}), 201
+        return jsonify({'msg':'Programador creado correctamente', 'user':programador.serialize()}), 201
+
 
 #Iniciar sesión
 @api.route('/login', methods=['POST'])
