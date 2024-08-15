@@ -1,0 +1,21 @@
+@import url('./variables.css');
+
+.about-container {
+    background-color: #f8f9fa; /* Color de fondo suave */
+    padding: 30px; /* Espaciado interno */
+    border-radius: 8px; /* Esquinas redondeadas */
+}
+
+.about-container h1 {
+    color: #007bff; /* Color del encabezado */
+    font-size: 2.5rem; /* Tamaño del texto del encabezado */
+    font-weight: bold; /* Negrita */
+}
+
+.about-container p.lead {
+    font-size: 1.2rem; /* Tamaño del texto */
+    color: #333; /* Color del texto */
+    line-height: 1.6; /* Altura de línea para mejor legibilidad */
+    max-width: 800px; /* Ancho máximo del párrafo */
+    margin: 0 auto; /* Centrar el párrafo */
+}
