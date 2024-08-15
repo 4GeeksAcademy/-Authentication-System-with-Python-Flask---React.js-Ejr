@@ -44,7 +44,7 @@ export const Navbar = () => {
                   Iniciar sesión
                 </button>
               </Link>
-            )},
+            )}
             {store.logged && (<Link to="/"> <button type="button" className="btn btn-outline-light  ms-4 me-5" onClick={handleLogout}>
               Cerrar sesión
             </button></Link>
