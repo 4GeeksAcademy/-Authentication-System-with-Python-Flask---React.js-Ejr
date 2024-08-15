@@ -188,10 +188,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.status === 201) {
 						console.log(data);
-						// Swal.fire({
-						// 	text: "El registro del usuario se ha realizado con éxito.",
-						// 	icon: "success"
-						// });
+						 Swal.fire({
+						 	text: "El registro del usuario se ha realizado con éxito.",
+						 	icon: "success"
+						 });
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
