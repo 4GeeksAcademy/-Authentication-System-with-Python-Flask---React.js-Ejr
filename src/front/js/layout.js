@@ -16,6 +16,7 @@ import { BlogDetail } from "./pages/blog_detail.jsx";
 import { AddReport } from "./pages/add_report.jsx";
 import { ViewReport } from "./pages/view_report.jsx";
 import { EditReport } from "./pages/edit_report.jsx";
+import { ViewReports } from "./pages/view_all_reports.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -44,6 +45,7 @@ const Layout = () => {
                         <Route element={<AddReport />} path="/Today" />
                         <Route path="/baby/:babyId/:reportId" element={<ViewReport />} />
                         <Route path="/edit_report/:babyId/:reportId" element={<EditReport />} />
+                        <Route path="/baby/:babyId/reports" element={<ViewReports />} />
                         {/* Blog */}
                         <Route element={<New_Blog />} path="/new_blog" />
                         <Route element={<All_Blogs />} path="/blog" />
