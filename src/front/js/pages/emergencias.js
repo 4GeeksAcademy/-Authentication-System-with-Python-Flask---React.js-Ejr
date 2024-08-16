@@ -6,7 +6,7 @@ const Emergencias = () => {
             <h2 className="text-start text-inicio mb-4">Teléfonos de Emergencias</h2>
             <div className="d-flex flex-column">
                 <div className="card card-emergencia text-dark mb-3">
-                    <div className="card-header d-flex justify-content-between align-items-center"><h6 className="m-0">ASSE - Salud Mental</h6><h5 className="mb-0 me-4 text-inicio">0800 1920</h5></div>
+                    <div className="card-header d-flex justify-content-between align-items-center"><h6 className="m-0">ASSE - Salud Mental</h6><h5 className="mb-0 me-4 text-inicio">0800 19 20</h5></div>
                     <div className="card-body">
                         <p className="card-text">El número está habilitado las 24 horas y es para toda la población. La Administración de Servicios de Salud del Estado ASSE habilitó la línea para la atención psicológica gratuita a personas que necesiten algún tipo de apoyo emocional en el marco de la crisis provocada por el coronavirus.</p>
                     </div>
