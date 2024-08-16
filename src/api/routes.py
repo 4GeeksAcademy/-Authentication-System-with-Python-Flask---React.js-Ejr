@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Comentarios, Especialidades
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, create_refresh_token
 from flask import jsonify
 from flask_jwt_extended.exceptions import NoAuthorizationError, InvalidHeaderError, RevokedTokenError
 from werkzeug.exceptions import Unauthorized
@@ -24,14 +24,15 @@ def login():
     clave = request.json.get("clave", None)
     # Consulta si el usuario existe en la base de datos
     user_query = User.query.filter_by(correo=correo).first()
-    # Verifica si el usuario existe y si la contraseña es correcta
-    if correo != user_query.correo or clave != user_query.clave:
-        return jsonify({"msg": "Correo o clave incorrectos"}), 401  
+     # Verifica si el usuario existe y si la contraseña es correcta
+    if not user_query or not user_query.check_password(clave):
+        return jsonify({"msg": "Correo o clave incorrectos"}), 401 
     # Verifica si el usuario proporcionó ambos datos
     if not correo or not clave:
         return jsonify({"msg": "Correo y clave son requeridos"}), 400
     access_token = create_access_token(identity=user_query.id)
-    return jsonify({"access_token":access_token,"logged":True}), 200
+    refresh_token = create_refresh_token(identity=user_query.id)
+    return jsonify({"access_token":access_token,"refresh_token": refresh_token,"logged":True}), 200
 
 # Proteje una ruta con jwt_required, que expulsará las solicitudes
 # sin un JWT válido presente.
@@ -83,7 +84,13 @@ def valid_token():
         return jsonify(logged=False), 404
     return jsonify(logged=True), 200
 
- 
+ # Endpoint para refrescar el access_token
+@api.route('/refresh-token', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    return jsonify({"access_token": new_access_token}), 200
 
 
 
@@ -106,12 +113,13 @@ def create_user():
     try:
         data = request.get_json()
         existing_user = User.query.filter_by(correo=data["correo"]).first()
+        print(data)
         
         if existing_user:
             return jsonify({"msg": "Email already exists"}), 400
-
         
         fecha_de_nacimiento = datetime.strptime(data['fecha_de_nacimiento'], '%Y-%m-%d').date()
+
         user_created = User(
             nombre_usuario=data["nombre_usuario"],
             apellido=data["apellido"],
@@ -125,6 +133,8 @@ def create_user():
             foto=data.get("foto"),
             is_psicologo=data.get('is_psicologo', False)
         )
+         # Hasheamos y almacenamos la contraseña
+        user_created.set_password(data["clave"])
         db.session.add(user_created)
         db.session.commit()
 
@@ -136,7 +146,8 @@ def create_user():
     
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
-    #CREAR ESPECIALIDAD
+    
+#CREAR ESPECIALIDAD
 @api.route('/especialidad', methods=['POST'])
 def create_especialidad():
     try:
