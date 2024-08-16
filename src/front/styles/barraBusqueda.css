@@ -1,13 +1,15 @@
 .barra-busqueda {
-    background-color: #DAFFEF;
-    border: 1px solid #64b6ac;
-    border-radius: 5px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column; /* Alinea los elementos en una columna principal */
+    background-color: #DAFFEF; /* Color de fondo */
+    border: 1px solid #64b6ac; /* Borde alrededor del contenedor */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    display: flex; /* Usa Flexbox para layout */
+    flex-direction: column; /* Alinea los elementos en una columna */
     align-items: center; /* Centra los elementos horizontalmente */
-    max-width: 1200px; /* Establece un ancho máximo para el contenedor */
+    max-width: 1700px; /* Ancho máximo del contenedor */
     margin: 0 auto; /* Centra el contenedor horizontalmente */
+    font-weight: bold; /* Negrita para la etiqueta */
+    color: #5D737E; /* Color de la etiqueta */
 }
 
 .barra-busqueda .form-group {
@@ -15,7 +17,7 @@
 }
 
 .barra-busqueda .row {
-    display: flex; /* Utiliza flexbox para los elementos dentro del row */
+    display: flex; /* Usa Flexbox para los elementos dentro del row */
     flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben en una línea */
     gap: 10px; /* Espacio entre los elementos */
     width: 100%; /* Asegura que el row ocupe todo el ancho disponible */
@@ -31,8 +33,139 @@
 }
 
 .botones {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px; /* Ajusta el margen superior para separación */
+    display: flex; /* Usa Flexbox para alinear los botones */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 10px; /* Margen superior para separación */
     justify-content: flex-start; /* Alinea los botones al inicio del contenedor */
+}
+
+/* Estilos para el botón de aceptar */
+.botones .btn-primary {
+    background-color: #5D737E; /* Color de fondo */
+    color: #DAFFEF; /* Color de letra */
+    border: none; /* Elimina el borde del botón por defecto */
+}
+
+/* Estilos para el botón de restablecer */
+.botones .btn-secondary {
+    background-color: #64b6ac; /* Color de fondo */
+    color: #DAFFEF; /* Color de letra */
+    border: none; /* Elimina el borde del botón por defecto */
+}
+
+/* Estilos para el botón de restablecer cuando está activo */
+.botones .btn-secondary:active {
+    background-color: #4a9a8a; /* Color más oscuro para cuando el botón está activo */
+}
+
+/* Estilos para el botón de aceptar cuando está activo */
+.botones .btn-primary:active {
+    background-color: #4a6e6f; /* Color más oscuro para cuando el botón está activo */
+}
+
+/* Estilos para el menú desplegable */
+.categoria-menu {
+    position: relative; /* Posiciona el contenedor relativo al resto de los elementos */
+}
+
+.subcategoria-menu .dropdown-item {
+    white-space: nowrap; /* Evita que el texto se ajuste a varias líneas */
+}
+
+/* Estilos para el botón de categoría */
+.dropdown-toggle {
+    background-color: #DAFFEF; /* Color de fondo */
+    color: #5D737E; /* Color de letra */
+    border: none; /* Elimina el borde del botón por defecto */
+}
+
+/* Estilos para el botón de categoría en estado hover */
+.dropdown-toggle:hover {
+    background-color: #4a9a8a; /* Color de fondo en hover */
+    color: #DAFFEF; /* Color de letra en hover */
+}
+
+/* Estilos para el botón de categoría cuando está activo */
+.dropdown-toggle:active {
+    background-color: #4a9a8a; /* Color de fondo cuando el botón está activo */
+    color: #DAFFEF; /* Color de letra cuando el botón está activo */
+}
+
+/* Estilos para el menú desplegable de categorías */
+.categoria-menu .dropdown-menu {
+    background-color: #64b6ac; /* Color de fondo del menú */
+    color: #5D737E; /* Color de letra del menú */
+    border: none; /* Elimina el borde del menú por defecto */
+}
+
+/* Estilos para el menú de subcategorías que se despliega automáticamente */
+.subcategoria-menu {
+    position: absolute; /* Posiciona el submenú absolutamente con respecto a .categoria-menu */
+    top: 100%; /* Coloca el submenú justo debajo del menú principal */
+    left: 0; /* Alinea el submenú a la izquierda del contenedor */
+    background-color: #64b6ac; /* Color de fondo del menú de subcategorías */
+    color: #5D737E; /* Color de letra del menú de subcategorías */
+    border: none; /* Elimina el borde del menú de subcategorías por defecto */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el submenú */
+    z-index: 1000; /* Asegura que el submenú esté sobre otros elementos */
+}
+
+/* Estilos para los elementos del menú de subcategorías */
+.subcategoria-menu .dropdown-item {
+    color: black; /* Color de letra de los elementos del menú de subcategorías */
+}
+
+/* Estilos para los elementos del menú de subcategorías cuando se pasa el ratón sobre ellos */
+.subcategoria-menu .dropdown-item:hover {
+    background-color: #4a9a8a; /* Color de fondo en hover */
+    color: #DAFFEF; /* Color de letra en hover */
+}
+
+/* Estilos generales para los menús desplegables idioma y niveles */
+.dropdown-menu {
+    background-color: #64b6ac; /* Color de fondo del menú */
+    color: #5D737E; /* Color de letra del menú */
+    border: none; /* Elimina el borde del menú por defecto */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el menú */
+    z-index: 1000; /* Asegura que el menú esté sobre otros elementos */
+}
+
+/* Estilos para los menús desplegables que se despliegan automáticamente idioma y niveles */
+.dropdown-menu-absolute {
+    position: absolute; /* Posiciona el submenú absolutamente con respecto al contenedor */
+    top: 100%; /* Coloca el submenú justo debajo del menú principal */
+    left: 0; /* Alinea el submenú a la izquierda del contenedor */
+}
+
+/* Estilos para el input del filtro de fecha */
+.filtro-fecha-select {
+    border: 1px solid #64b6ac; /* Borde del input */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    color: #5D737E; /* Color del texto */
+    background-color: #DAFFEF; /* Color de fondo */
+}
+
+/* Estilos para las opciones del input del filtro de fecha */
+.filtro-fecha-select.menu {
+    background-color: #64b6ac; /* Color de fondo para las opciones */
+    color: #DAFFEF; /* Color del texto para las opciones */
+}
+
+/* Estilos para el input de rango del filtro de precio */
+.filtro-precio-select {
+    border: 1px solid #64b6ac; /* Borde del input */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    color: #5D737E; /* Color del texto */
+    background-color: #DAFFEF; /* Color de fondo */
+}
+
+/* Estilos para el input de texto del filtro de búsqueda */
+.filtro-busqueda{
+    border: 1px solid #64b6ac; /* Borde del input */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    color: #5D737E; /* Color del texto */
+    background-color: #DAFFEF; /* Color de fondo */
 }
