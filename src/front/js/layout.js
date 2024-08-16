@@ -12,7 +12,9 @@ import {SingleOffer} from "./pages/SingleOffer.jsx"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Inicio } from "./pages/inicio.js";
+import { LoginPage } from "./pages/login";
 
+import { TimeLine } from "./pages/TimeLine.jsx";
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -29,7 +31,9 @@ const Layout = () => {
                     <Routes>
                         <Route element ={<Inicio />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<LoginPage />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<TimeLine/>} path="/timeline"/>
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

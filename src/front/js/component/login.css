@@ -1,0 +1,100 @@
+
+body {
+  margin-top:  250px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; 
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.username {
+  margin-bottom: 15px;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.password{
+  margin-bottom: 15px;
+  width: 100%;
+  
+
+}
+
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
+.loginbutton {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  background-color: #6693ae;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+}
+
+.loginbutton:hover {
+  background-color: #6693ae;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: #6693ae; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+  outline: none; 
+}
+
+.login-container{
+  width: 600px; 
+  height: 350px; 
+  margin: 0 auto;
+  padding: 20px; 
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  justify-content: center;
+
+}
+h4{
+  font-family: 'Lucida Sans';
+}
+p{
+  margin-top: 20px;
+}
+
