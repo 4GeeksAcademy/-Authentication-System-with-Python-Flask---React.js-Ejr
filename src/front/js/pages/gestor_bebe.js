@@ -33,7 +33,7 @@ export const Gestor_bebe = () => {
     };
 
 	return (
-		<div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: '#FBEE84' }}>
+		<div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: '#FBEE84', marginTop:'55px' }}>
 			<div className="d-flex justify-content-center align-items-center">
 				<div>
 					<img src={bebe1} className="img-fluid" alt="IMG_Baby"/>
