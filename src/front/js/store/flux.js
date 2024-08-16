@@ -43,28 +43,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 							// "Access-Control-Allow-Origin": "*"
 						},
 					});
-			
+					
 					console.log("Respuesta del servidor:", resp);
-			
+					
 					if (!resp.ok) {
 						console.log("Fallo en el ping al usuario, status:", resp.status);
 						localStorage.clear(); 
 						setStore({ token: null, userId: null, roleId: null });
 						return false;
 					}
-			
+					
 					const data = await resp.json();
 					console.log("Datos recibidos del servidor:", data);
-			
+					
 					const updateTokenAndState = (token, userId, roleId) => {
-                        setStore({ token, userId, roleId });
+						setStore({ token, userId, roleId });
                         localStorage.setItem("token", token);
                         localStorage.setItem("user_id", userId);
                         localStorage.setItem("role_id", roleId);
                     };
 					
 					updateTokenAndState(data.access_token, data.user_id, data.role_id);
-
+					
 					console.log("Sesión cargada con éxito");
 					return true;
 				} catch (error) {
@@ -78,18 +78,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			login: async (email, password) => {
 				let resp = await fetch(apiUrl + "/login", {
-				  method: "POST",
-				  body: JSON.stringify({ email, password }),
-				  headers: {
-					"Content-Type": "application/json",
-				  },
+					method: "POST",
+					body: JSON.stringify({ email, password }),
+					headers: {
+						"Content-Type": "application/json",
+					},
 				});
 				if (!resp.ok) {
-				  setStore({ token: null });
-				  console.error("Error al hacer login:", errorData);
-				  return { success: false, message: errorData.error || "Error desconocido" };
+					setStore({ token: null });
+					console.error("Error al hacer login:", errorData);
+					return { success: false, message: errorData.error || "Error desconocido" };
 				};
-
+				
 				let data = await resp.json();
 				// const token = data.access_token;
 				setStore({ token: data.access_token });
