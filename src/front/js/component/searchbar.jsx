@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/searchbar.css";
+import { Link } from "react-router-dom";
 
 const Searchbar = () => {
   return (
@@ -20,9 +21,9 @@ const Searchbar = () => {
               name="days"
               placeholder="Duración"
             />
-            <a href="#" className="search_icon">
+            <Link to='/search' className="search_icon">
               <i className="fa fa-search"></i>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

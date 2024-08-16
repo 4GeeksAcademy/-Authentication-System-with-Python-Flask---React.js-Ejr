@@ -25,3 +25,19 @@
   font-size: small;
   border: none; /* Elimina el borde */
 }
+
+@media only screen and (max-width: 600px){
+  div .custom-button {
+    -webkit-order: 2 !important;
+    order: 2 !important;  
+  }
+
+  nav .custom-link {
+    -webkit-order: 1 !important;
+    order: 1 !important;  
+  }
+
+  nav div.container {
+    flex-direction: row-reverse;
+  }
+}

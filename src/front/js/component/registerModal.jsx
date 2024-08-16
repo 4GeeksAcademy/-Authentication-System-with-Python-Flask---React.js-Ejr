@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/RegisterLogin_modal.css";
+import { ForgotPassword } from "../component/recuperar-contraseña.jsx";
+
 
 export const LoginRegister = () => {
   const { store, actions } = useContext(Context);
@@ -9,6 +11,7 @@ export const LoginRegister = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
   return (
     <>
       <div
@@ -31,7 +34,7 @@ export const LoginRegister = () => {
             </div>
             <div className="modal-body">
               <div className=" text-center">
-                <h1 className="action fs-5">
+                <h1 className="action fs-5 text-black">
                   {!register ? "Iniciar sesión" : "Crear cuenta"}
                 </h1>
               </div>
@@ -71,7 +74,7 @@ export const LoginRegister = () => {
                         id="passwordConfirm"
                         name="passwordConfirm"
                         className="form-control 
-                                                rounded-pill mx-auto mt-1"
+                        rounded-pill mx-auto mt-1"
                         required
                       />
                     </div>
@@ -91,7 +94,7 @@ export const LoginRegister = () => {
                 ) : null}
                 {!register ? (
                   <p className="mt-2 mb-0 w-75 mx-auto text-secondary">
-                    <span>¿Has olvidado tu contraseña?</span>
+                    <span data-bs-target="#forgot-password" data-bs-toggle="modal">¿Has olvidado tu contraseña?</span>
                   </p>
                 ) : null}
                 <p className="mt-0 w-75 mx-auto text-secondary">
@@ -116,6 +119,7 @@ export const LoginRegister = () => {
           </div>
         </div>
       </div>
+      <ForgotPassword />
     </>
   );
 };
