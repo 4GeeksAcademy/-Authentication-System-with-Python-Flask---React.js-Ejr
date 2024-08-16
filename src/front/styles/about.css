@@ -1,0 +1,26 @@
+.about{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: #64b6ac;
+}
+.about__main-content{
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;  
+    padding: 1rem;
+
+}
+.card-body{
+    text-align: center;
+    max-width: 80%; 
+    margin: 0 auto;
+    letter-spacing: 2px;
+}
+.card-img-top{
+    height: 450px;
+}
