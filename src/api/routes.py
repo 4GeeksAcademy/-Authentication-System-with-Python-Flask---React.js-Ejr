@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, PartnerProfile, UserProfile
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -20,18 +20,31 @@ def handle_hello():
 
 @api.route('/signup', methods=['POST'])
 def handle_signup():
-    request_body_user = request.get_json()
-    print (request_body_user)
-    user = User.query.filter_by(email=request_body_user["email"], password=request_body_user["password"]).first()
+    data = request.get_json()
+    print(data)
+    
+
+    user = User.query.filter_by(email=data["email"], password=data["password"]).first()
     
     if user:
-        return jsonify({"message": "Email and password already exists"})
-    new_user = User(email=request_body_user["email"], password=request_body_user["password"])
-    print(new_user)
+        return jsonify({"message": "Email and password already exist"}), 400
+    
+ 
+    new_user = User(email=data["email"], password=data["password"], partner=data["partner"])
     db.session.add(new_user)
-    db.session.commit()
+    db.session.commit()  
 
-    return jsonify({"message": "New user added"}), 200
+
+    if data['partner'] == True:
+        new_partner_profile = PartnerProfile(users=[new_user])  
+        db.session.add(new_partner_profile)
+        
+    elif data['partner'] == False:
+        new_user_profile = UserProfile(users=[new_user])  
+        db.session.add(new_user_profile)
+    
+    db.session.commit()  
+    return jsonify({"success": True}), 201
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -47,17 +60,14 @@ def login():
         return jsonify({"message": "Email and password incorrect"})
     access_token = create_access_token(identity=user.id)
 
-    return jsonify({"token": access_token, "user_id": user.id})
+    return jsonify({"token": access_token, "user": user.serialize()})
 
 
 @api.route('/private', methods=['GET'])
 @jwt_required()
 def validate_token():
-    
     current_user_id = get_jwt_identity()
-    print(current_user_id)
-
-    user = User.query.filter_by(id=current_user_id).first()
+    user = User.query.get(current_user_id)
     if user is None:
         raise APIException("User not found", status_code=404)
 
