@@ -14,6 +14,8 @@ import VistaLogin from "./pages/vista-login";
 import Perfil from "./pages/perfil";
 import Profesionales from "./pages/profesionales";
 import ProfilePage from "./pages/vista-modal";
+import PregFrecuentes from "./pages/pregFrecuentes";
+import Emergencias from "./pages/emergencias";
 
 
 //create your first component
@@ -36,6 +38,8 @@ const Layout = () => {
                         <Route element={<Perfil />} path="/perfil" />
                         <Route element={<Profesionales />} path="/profesionales" />
                         <Route element={<ProfilePage />} path="/ProfilePage" />
+                        <Route element={<PregFrecuentes />} path="/preguntas-frecuentes" />
+                        <Route element={<Emergencias />} path="/emergencias" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

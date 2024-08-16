@@ -48,7 +48,23 @@ section{
 }
 .text-presentacion{
   background: linear-gradient(90deg, rgba(54, 0, 51, 0.3), rgba(11, 135, 147, 0.3)) !important;
-
-
 }
+
+.card.card-emergencia{
+  background: white !important;
+}
+.card-emergencia .card-header {
+  background: linear-gradient(90deg, rgba(54, 0, 51, 0.3), rgba(11, 135, 147, 0.3)) !important;
+}
+/* Estilos para los acordeones */
+.accordion-button.collapsed {
+  background: white !important;
+}
+.accordion-button {
+  background: linear-gradient(90deg, rgba(54, 0, 51, 0.3), rgba(11, 135, 147, 0.3)) !important;
+}
+.accordion-button:focus {
+  box-shadow: none !important; /* Quita la sombra al enfocar */
+}
+
 
