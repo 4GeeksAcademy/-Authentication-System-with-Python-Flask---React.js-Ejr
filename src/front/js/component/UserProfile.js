@@ -29,8 +29,9 @@ const UserProfile = () => {
         try {
           const response = await fetch(`${apiUrl}/users/${userId}`, {
             headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            Authorization: `Bearer ${token}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
+        },
           });
 
           if (response.ok) {

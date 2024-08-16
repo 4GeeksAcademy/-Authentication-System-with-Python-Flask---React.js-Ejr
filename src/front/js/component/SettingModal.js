@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from '../store/appContext';
 
 function SettingModal({ onClose, currentValue, onSave }) {
+  const { store } = useContext(Context)
   const [maxAppointments, setMaxAppointments] = useState(currentValue);
   const [error, setError] = useState("");
   const apiUrl = process.env.BACKEND_URL + "/api";
@@ -17,7 +19,8 @@ function SettingModal({ onClose, currentValue, onSave }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({ max_appointments_per_hour: maxAppointments })
       });
