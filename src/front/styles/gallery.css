@@ -6,9 +6,18 @@
   position: relative;
   margin: 30px; 
   overflow: hidden; 
+  flex: 0 0 auto;
   
 }
+/* Estilos para el contenedor de la galería */
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-left: 4%;
+}
 
+/* Estilos para la superposición de cada item de la galería */
 .gallery-item-overlay {
   display: flex;
   justify-content: center;
@@ -23,10 +32,12 @@
   transition: opacity 0.3s ease;
 }
 
+/* Estilo de hover para la superposición */
 .gallery-item:hover .gallery-item-overlay {
   opacity: 1; 
 }
 
+/* Título del item de la galería */
 .gallery-item-title {
   color: rgb(255, 255, 255); 
   font-size: 3rem;
@@ -34,7 +45,94 @@
   margin: 0;
 }
 
-.gallery-container{
-  padding: 10px;
-  margin-left: 4%;
+/*Estilos para el modal*/
+
+.custom-modal .modal-dialog {
+  max-width: auto;
+  margin: 30px auto;
 }
+
+.custom-modal .modal-content {
+  border-radius: 15px;
+  box-shadow: 0 40px 15px rgba(0, 0, 0, 0.3); 
+  background: #322d38;
+  border: none; 
+}
+
+.custom-modal-header {
+  background-color: #322d38; 
+  color: white;
+}
+
+.custom-modal-header .close {
+  color: white;
+}
+
+.custom-modal .btn-close {
+  background-color: #b2f3ff;
+  font-size: 1rem;
+}
+
+/* Main Image */
+.modal-main-image {
+  position: relative;
+}
+
+.modal-main-image img {
+  margin-left: 2%;
+  height: auto;
+  
+  border-radius: 10px;
+  
+}
+
+/* Thumbnail Styles */
+.modal-thumbnails {
+  margin-top: 15px;
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.thumbnail-col {
+  flex: 0 0 auto;
+}
+
+.thumbnail-img {
+  width: 100px; /* Tamaño fijo para las miniaturas */
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s;
+}
+
+.thumbnail-img.active {
+  transform: scale(1.1); /* Destaca la miniatura activa */
+}
+
+.thumbnail-img:hover {
+  transform: scale(1.05); /* Agranda la miniatura al pasar el cursor */
+}
+
+/* Modal Description */
+.modal-description {
+  margin-top: 20px;
+  color: white;
+}
+
+.modal-description h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #f8f9fa; /* Color claro para contraste */
+}
+
+.modal-description p {
+  font-size: 1rem;
+  color: #e9ecef; /* Color claro para contraste */
+}
+
+
+
+
