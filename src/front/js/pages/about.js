@@ -4,64 +4,58 @@ import "../../styles/about.css";
 
 function About() {
   return (
-   <div className='perfil'>
-    <div className='perfil__side-content'>
-      <h2>Mi perfil!</h2>
-      <img src="https://picsum.photos/200/300"/>
-      <span>Datos Personales</span>
-      <span>Metodos de pago</span>
-    </div>
-    <div className='perfil__divider'></div>
-      <div className='perfil__main-content'>
-      <form class="row g-3"/>
-      <div class="col-12">
-      <label for="inputName" class="form-label">Name</label>
-      <input type="text" class="form-control" id="inputName"/>
-    </div>
-    <div class="col-12">
-      <label for="inputLastName" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="inputLastName"/>
-    </div>
-      <form class="row g-3">
-    <div class="col-md-6">
-      <label for="inputEmail4" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail4"/>
-    </div>
-    <div class="col-md-6">
-      <label for="inputPassword4" class="form-label">Password</label>
-      <input type="password" class="form-control" id="inputPassword4"/>
-    </div>
-    <div class="col-12">
-      <label for="inputAddress" class="form-label">Address</label>
-      <input type="text" class="form-control" id="inputAddress"/>
-    </div>
-    <div class="col-md-6">
-      <label for="inputCity" class="form-label">City</label>
-      <input type="text" class="form-control" id="inputCity"/>
-    </div>
-    <div class="col-md-6">
-      <label for="inputState" class="form-label">State</label>
-      <input type="text" class="form-control" id="inputState"/>
-    </div>
-    <div class="col-md-2">
-      <label for="inputZip" class="form-label">Zip Code</label>
-      <input type="text" class="form-control" id="inputZip"/>
-    </div>
-    <div class="col-12">
-      <div class="form-check">
-       <input class="form-check-input" type="checkbox" id="gridCheck"/>
-       <label class="form-check-label" for="gridCheck">
-        Check me out
-       </label>
+   <div className='about'>
+      <div className='about__main-content'>
+        <div class="card mb-3">
+          <img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top"/>
+      <div class="card-body">
+          <h5 class="card-title">Quienes Somos</h5>
+          <p class="card-text">En Learning Network, nos dedicamos a brindar una plataforma de aprendizaje en línea de alta calidad, diseñada para satisfacer las necesidades educativas de personas de todo el mundo. Con una amplia variedad de cursos en múltiples disciplinas, nos esforzamos por democratizar el acceso a la educación y empoderar a nuestros estudiantes para que alcancen sus metas académicas y profesionales.</p>
       </div>
-    </div>
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </div>
-  </form>
-
-    </div>
-    </div>
+        </div>
+        <div class="card mb-3">
+          <img src="https://images.pexels.com/photos/4144923/pexels-photo-4144923.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="..."/>
+      <div class="card-body">
+          <h5 class="card-title">Nuestros Valores</h5>
+          <p>Accesibilidad: Creemos que la educación debe estar al alcance de todos, sin importar su ubicación o situación económica.</p>
+          <p>Calidad: Nos aseguramos de que cada curso ofrecido en nuestra plataforma sea creado y enseñado por expertos en la materia.</p>
+          <p>Innovación: Utilizamos las últimas tecnologías para proporcionar una experiencia de aprendizaje interactiva y atractiva.</p>
+          <p>Colaboración: Fomentamos una comunidad de aprendizaje donde los estudiantes y profesores pueden colaborar y crecer juntos.</p>
+      </div>
+      </div>
+      <div class="card mb-3">
+          <img src="https://images.pexels.com/photos/2041540/pexels-photo-2041540.jpeg" class="card-img-top"/>
+      <div class="card-body">
+          <h5 class="card-title">Nuestra Historia</h5>
+          <p class="card-text">Learning Network fue fundada en 2005 por un grupo de entusiastas de la educación y la tecnología. Desde entonces, hemos crecido rápidamente, ampliando nuestra oferta de cursos y nuestra comunidad de estudiantes. Hoy, Learning Network es una de las plataformas de aprendizaje en línea más respetadas, con miles de cursos y millones de estudiantes en todo el mundo.</p>
+      </div>
+        </div>
+        <div class="card mb-3">
+          <img src="https://images.pexels.com/photos/4861363/pexels-photo-4861363.jpeg?auto=compress&cs=tinysrgb&w=800" class="card-img-top"/>
+      <div class="card-body">
+          <h5 class="card-title">Nuestra Mision</h5>
+          <p class="card-text">Nuestra misión es transformar la educación a través de la tecnología, proporcionando acceso a cursos y recursos educativos de calidad a estudiantes de todas las edades y orígenes. Nos comprometemos a fomentar un entorno de aprendizaje inclusivo, accesible y efectivo que inspire a los estudiantes a alcanzar su máximo potencial.</p>
+      </div>
+        </div>
+        <div class="card mb-3">
+          <img src="https://images.pexels.com/photos/8199708/pexels-photo-8199708.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top"/>
+      <div class="card-body">
+          <h5 class="card-title">Nuestra Equipo</h5>
+          <p class="card-text">Nuestro equipo está compuesto por educadores, desarrolladores, diseñadores y especialistas en soporte al cliente que trabajan en conjunto para ofrecer la mejor experiencia de aprendizaje posible. Cada miembro de Learning Network está apasionado por la educación y comprometido con el éxito de nuestros estudiantes.</p>
+      </div>
+        </div>
+        <div class="card mb-3">
+          <img src="https://images.pexels.com/photos/2041540/pexels-photo-2041540.jpeg" class="card-img-top"/>
+      <div class="card-body">
+          <h5 class="card-title">Que Ofrecemos</h5>
+          <p>Variedad de Cursos: Desde habilidades técnicas y profesionales hasta intereses personales y académicos, ofrecemos cursos en una amplia gama de temas.</p>
+          <p>Flexibilidad: Aprende a tu propio ritmo con acceso las 24 horas del día, los 7 días de la semana a todos los cursos.</p>
+          <p>Certificaciones: Obtén certificados de finalización que pueden ayudarte a avanzar en tu carrera o en tus estudios.</p>
+          <p>Soporte: Nuestro equipo de soporte está disponible para ayudarte con cualquier pregunta o problema que puedas tener.</p>
+      </div>
+        </div>
+        </div>
+      </div>
   );
 }
 
