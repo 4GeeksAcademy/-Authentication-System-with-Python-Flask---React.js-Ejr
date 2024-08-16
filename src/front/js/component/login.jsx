@@ -44,7 +44,6 @@ export const Login = () => {
 		}),
 
 		onSubmit: async (values) => {
-			console.log(values);
 			const isLogged = await actions.iniciarSesion(values.correo, values.clave)
 			if (isLogged) {
 				Swal.fire({

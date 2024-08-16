@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime,timezone
+import bcrypt
 
 db = SQLAlchemy()
 
@@ -35,6 +36,13 @@ class User(db.Model):
             "foto": self.foto,
             "is_active": self.is_active,
         }
+    # Método para establecer la contraseña (hash)
+    def set_password(self, password):
+        self.clave = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    # Método para verificar la contraseña
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'), self.clave.encode('utf-8'))
     
 class Especialidades(db.Model):
     id = db.Column(db.Integer, primary_key=True)
