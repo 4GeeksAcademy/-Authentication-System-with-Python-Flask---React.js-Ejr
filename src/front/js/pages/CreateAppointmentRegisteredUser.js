@@ -82,24 +82,23 @@ const CreateAppointmentRegisteredUser = () => {
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
-    const now = moment().startOf('day');
-    const endDate = moment().add(30, 'days').endOf('day');
-    
     // Deshabilitar todos los días que no sean de lunes a viernes
-    const isWeekend = current.day() === 0 || current.day() === 6;
-
-    // Deshabilitar fechas fuera del rango de hoy a 30 días adelante
-    const isOutOfRange = current < now || current > endDate;
-
-    return current && (isWeekend || isOutOfRange);
+    return (
+      current &&
+      (current < moment().startOf("day") ||
+        current.day() === 0 ||
+        current.day() === 6)
+    );
   };
 
+  // Función para deshabilitar horas fuera del horario laboral
   const disabledTime = (date) => {
-    return {
+    const hours = {
       disabledHours: () => {
+        // Deshabilitar horas fuera del rango de 9:00 a 17:00
         const disabledHours = [];
         for (let i = 0; i < 24; i++) {
-          if (i < 8 || i >= 18) {  // Deshabilitar horas fuera del rango de 8:00 a 18:00
+          if (i < 8 || i >= 18) {
             disabledHours.push(i);
           }
         }
@@ -112,10 +111,8 @@ const CreateAppointmentRegisteredUser = () => {
         );
       },
     };
+    return hours;
   };
-
-  //------------------------------------------------------------------------------------
-
 
   //------------------------------------------------------------------------------------
 
@@ -158,54 +155,6 @@ const CreateAppointmentRegisteredUser = () => {
     }
   };
 
-  // const submitAppointment = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
-
-  //   if (!serviceChosen) {
-  //     setError("Service required. Please select one from the list.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const commentResponse = await fetch(`${apiUrl}/comments`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         comment,
-  //         user_id: userId,
-  //         appointment_id: appointmentId,
-  //       }),
-  //     });
-
-  //     if (!commentResponse.ok) throw new Error("Error adding comment");
-
-  //     const commentData = await commentResponse.json();
-  //     console.log("Comment added:", commentData);
-
-  //     const serviceResponse = await fetch(`${apiUrl}/services`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         name: serviceChosen,
-  //         description: "Service description",
-  //         duration: 60,
-  //         slots_required: 1,
-  //         car_id: carId,
-  //         appointment_date: appointmentDate.format("YYYY-MM-DD"),
-  //         appointment_time: appointmentDate.format("HH:mm"),
-  //       }),
-  //     });
-
-  //     if (!serviceResponse.ok) throw new Error("Error booking service");
-
-  //     const serviceData = await serviceResponse.json();
-  //     console.log("Service booked:", serviceData);
-  //   } catch (error) {
-  //     console.error("Error submitting appointment:", error);
-  //   }
-  // };
-
   const nextStep = async () => {
     if (currentStep === 1 && !carId && (!carLicensePlate || !carModel)) {
       setError("Please select a car or add a new one.");
@@ -230,42 +179,237 @@ const CreateAppointmentRegisteredUser = () => {
     setError("");
     setCurrentStep(currentStep + 1);
   };
-  
 
-  const confirmAppointment = async () => {
-    //------------------------------------------------------------------------------------
+  const confirmAppointment = async (e) => {
+    e.preventDefault();
+
+    // const token = localStorage.getItem("token");
+    const role_id = localStorage.getItem("role_id");
+    const user_id = localStorage.getItem("user_id");
+    const carSelectedId = carId;
+
+    if (!carSelectedId) {
+      try {
+        const addNewCarResponse = await fetch(`${apiUrl}/cars`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${myToken}`,
+          },
+          body: JSON.stringify({
+            car_model: carModel,
+            license_plate: carLicensePlate,
+            user_id: user_id,
+          }),
+        });
+
+        if (!addNewCarResponse.ok) {
+          const errorData = await addNewCarResponse.json();
+          setError(errorData.error || "Failed to register car details");
+          return;
+        }
+
+        const carData = await addNewCarResponse.json();
+        await bookAppointment(carData.id);
+      } catch (error) {
+        console.error("Error while registering car:", error);
+        setError(
+          "An error occurred while registering the car. Please try again."
+        );
+      }
+    } else {
+      await bookAppointment(carSelectedId);
+    }
+  };
+
+  const bookAppointment = async (carId) => {
     try {
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+
+      console.log("Date", dateFormat);
+      console.log("User id", myuserId);
+      console.log("Car ID", carId);
+      console.log("Serv. ID", parseInt(serviceChosen, 10));
+      console.log("service being chosen", serviceChosen);
+      console.log("comments", comment);
+
+      const submitAppointment = await fetch(`${apiUrl}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${myToken}`,
+        },
+        body: JSON.stringify({
+          date: dateFormat,
+          user_id: myuserId,
+          car_id: carId,
+          service_id: parseInt(serviceChosen, 10),
+          comment: comment,
+        }),
+      });
+
+      if (!submitAppointment.ok) {
+        const errorData = await submitAppointment.json();
+        setError(
+          errorData.error || "Failed to book the appointment. Please try again."
+        );
+        return;
+      }
+
+      const appointmentData = await submitAppointment.json();
+      console.log("Appointment details:", appointmentData);
+
       const userInfo = await actions.GetUser();
       if (userInfo && userInfo.email && userInfo.name) {
         MailSender(userInfo);
       } else {
         console.error("User Info is missing email or name.");
       }
+
+      navigate("/appointmentconfirmed");
     } catch (error) {
-      console.error("Failed to fetch user info:", error);
-  }
-    navigate("/appointmentconfirmed");
-};
-    //------------------------------------------------------------------------------------
-    const MailSender = (userInfo) => {
-      const data = {
-          "sender": {
-              "name": "AutoAgenda",
-              "email": "autoagenda3@gmail.com"
-          },
-          "to": [{
-              "email": userInfo.email,
-              "name": userInfo.name
-          }],
-          "subject": "Appointment created successfully",
-          "htmlContent": `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
-          <h1 class="default-heading1" style="margin: 0; color: #1f2d3d; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
-          Your appointment on the day ${appointmentDate} has been created successfully.</p>
-          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`
-      };
-      actions.SendMail(data);
+      console.error("Error while booking appointment:", error);
+      console.log("Error while booking appointment:", error);
+      setError(
+        "An error occurred while booking the appointment. Please try again."
+      );
+    }
   };
- 
+
+  // const confirmAppointment = async () => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         name,
+  //         email,
+  //         password,
+  //         phone_number: phoneNumber,
+  //       }),
+  //     });
+
+  //     if (!signUpNewUser.ok) {
+  //       const errorData = await signUpNewUser.json();
+  //       setError(errorData.error || "Failed to create account");
+  //       return;
+  //     }
+
+  //     const userData = await signUpNewUser.json();
+  //     setUserId(userData.id);
+
+  //     const loginResponse = await fetch(`${apiUrl}/login`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email,
+  //         password,
+  //       }),
+  //     });
+
+  //     if (!loginResponse.ok) {
+  //       const errorData = await loginResponse.json();
+  //       setError(errorData.error || "Failed to log in");
+  //       return;
+  //     }
+
+  //     const loginData = await loginResponse.json();
+  //     localStorage.setItem("token", loginData.access_token);
+  //     localStorage.setItem("role_id", loginData.role_id);
+  //     localStorage.setItem("user_id", loginData.user_id);
+
+  //     const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${loginData.access_token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         car_model: carModel,
+  //         license_plate: carLicensePlate,
+  //         user_id: userData.id,
+  //       }),
+  //     });
+
+  //     if (!addNewCarNewUser.ok) {
+  //       const errorData = await addNewCarNewUser.json();
+  //       setError(errorData.error || "Failed to register car details");
+  //       return;
+  //     }
+  //     const carData = await addNewCarNewUser.json();
+
+  //     const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+
+  //     const submitAppointment = await fetch(`${apiUrl}/appointments`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${loginData.access_token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         date: dateFormat,
+  //         user_id: userData.id,
+  //         car_id: carData.id,
+  //         service_id: parseInt(serviceChosen, 10),
+  //       }),
+  //     });
+
+  //     if (!submitAppointment.ok) {
+  //       const errorData = await submitAppointment.json();
+  //       setError(errorData.error || "Failed to book the appointment. Please try again.");
+  //       return;
+  //     }
+
+  //     const appointmentData = await submitAppointment.json();
+  //     console.log("Appointment details:", appointmentData);
+
+  //     navigate("/accountandappointmentcreated");
+  //   } catch (error) {
+  //     setError("Failed to create account or register car details");
+  //   }
+  //   //------------------------------------------------------------------------------------
+
+  //   try {
+  //     const userInfo = await actions.GetUser();
+  //     if (userInfo && userInfo.email && userInfo.name) {
+  //       MailSender(userInfo);
+  //     } else {
+  //       console.error("User Info is missing email or name.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch user info:", error);
+  //   }
+
+  //   //------------------------------------------------------------------------------------
+  //   navigate("/appointmentconfirmed");
+  // };
+  // //------------------------------------------------------------------------------------
+  // const MailSender = (userInfo) => {
+  //   const data = {
+  //     sender: {
+  //       name: "AutoAgenda",
+  //       email: "autoagenda3@gmail.com",
+  //     },
+  //     to: [
+  //       {
+  //         email: userInfo.email,
+  //         name: userInfo.name,
+  //       },
+  //     ],
+  //     subject: "Appointment created successfully",
+  //     htmlContent: `<html><head></head><body><p>Hello,${userInfo.name}</p>This is my first transactional email sent from Brevo.</p></body></html>`,
+  //   };
+
+  //   console.log("Data ready to send:", data);
+  //   actions.SendMail(data);
+  // };
+
   //------------------------------------------------------------------------------------
 
   const requireLicensePlate = (e) => {
@@ -276,66 +420,6 @@ const CreateAppointmentRegisteredUser = () => {
       setCarLicensePlate(value);
     }
   };
-
-  // const confirmAppointmentRegisteredUser = async (e) => {
-  //   e.preventDefault();
-  
-  //   // Error handling for missing details
-  //   if (!carId || !appointmentDate || !serviceChosen) {
-  //     setError("Missing required appointment details.");
-  //     return;
-  //   }
-  
-  //   try {
-  //     // Retrieve the necessary data from localStorage
-  //     const token = localStorage.getItem("token");
-  //     const userId = localStorage.getItem("user_id");
-  
-  //     // Format the appointment date
-  //     const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-  
-  //     console.log("Sending appointment data:", {
-  //       date: dateFormat,
-  //       user_id: userId,
-  //       car_id: carId,
-  //       service_id: parseInt(serviceChosen, 10),
-  //     });
-  
-  //     // Send the appointment request
-  //     const response = await fetch(`${apiUrl}/appointments`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         date: dateFormat,
-  //         user_id: userId,
-  //         car_id: carId,
-  //         service_id: parseInt(serviceChosen, 10),
-  //       }),
-  //     });
-  
-  //     // Check for HTTP errors
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       setError(errorData.error || "Failed to book the appointment. Please try again.");
-  //       return;
-  //     }
-  
-  //     // Process successful response
-  //     const appointmentData = await response.json();
-  //     console.log("Appointment details:", appointmentData);
-  
-  //     // Navigate to confirmation page
-  //     navigate("/appointmentconfirmed");
-  //   } catch (error) {
-  //     // Set a more appropriate error message
-  //     setError("Failed to create the appointment. Please try again.");
-  //     console.error("Error creating appointment:", error);
-  //   }
-  // };
-  
 
   const displayCurrentStep = () => {
     switch (currentStep) {
@@ -399,7 +483,7 @@ const CreateAppointmentRegisteredUser = () => {
             >
               <option value="">Select a service</option>
               {services.map((service) => (
-                <option key={service.id} value={service.name}>
+                <option key={service.id} value={service.id}>
                   {service.name}
                 </option>
               ))}
