@@ -70,7 +70,7 @@ class Itinerary(db.Model):
     title = db.Column(db.String(90), unique=False, nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=False)
     duration = db.Column(db.Integer, unique=False, nullable=False)
-    images = db.Column(db.JSON, unique=False, nullable=True)
+    images = db.Column(db.JSON, unique=False, nullable=False)
     itinerary = db.Column(db.JSON, unique=False, nullable=False)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
