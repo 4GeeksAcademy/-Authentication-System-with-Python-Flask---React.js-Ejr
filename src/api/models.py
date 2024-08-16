@@ -130,6 +130,7 @@ class WeeklyRoutine(db.Model):
             "routine": routine,
             "week": self.week.value,
             "day": self.day.name,
+            "day_num": self.day.value,
             # "follow_up": list(map(lambda item: item.serialize(), self.follow_up))
         }
 

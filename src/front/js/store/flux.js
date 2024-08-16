@@ -22,9 +22,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
-
-            porcentajes: [1, 2, 3, 4, 5, 6, 7],
-            porcentaje: 0,
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -615,7 +612,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // GET ALL FollowUp FOR weekly_routine_id / TRAER TODOS SEGUIMIENTO POR RUITNA_SEMANA_ID
-            oneFollowUp: async (id) => {
+            allFollowUpWeek: async (id) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + `/follow-up/${id}`);
 
@@ -688,19 +685,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // CAROUSEL
-            updateElementAtIndex: (index, newElement) => {
-                const newArray = [...getStore().porcentajes];
-                newArray[index] = newElement;
-                setStore({ porcentajes: newArray });
-
-            },
-            returnElementAtIndex: (index) => {
-                const newArray = [...getStore().porcentajes];
-                setStore({ porcentaje: newArray[index] })
-                console.log(getStore().porcentaje);
-                return getStore().porcentaje
-            },
         }
     };
 };

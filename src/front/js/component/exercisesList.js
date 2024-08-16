@@ -1,81 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
+import { Progress } from "./progress";
 
-
-export const ExercisesList = ({ weeklyRoutine, day }) => {
+export const ExercisesList = ({ weeklyRoutine }) => {
   const { store, actions } = useContext(Context);
-  // const [isChecked, setIsChecked] = useState(null);
-  const [exercise, setExercise] = useState({});
-  // const [percentage, setPercentage] = useState();
+  const [total, setTotal] = useState(0);
+  const [done, setDone] = useState(0);
+  const [percentage, setPercentage] = useState(0);
 
-  const handleChange = async (e, excersice) => {
+  const handleChange = async (e, exercise) => {
+    e.persist()
     if (e.target.checked == true) {
-      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, excersice);
-      const excersiceRoutine = await store.oneExerciseRoutine;
-      await actions.postFollowUp(weeklyRoutine.id, excersiceRoutine.id)
+      setDone(done + 1)
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      const exerciseRoutine = await store.oneExerciseRoutine;
+      await actions.postFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
     if (e.target.checked == false) {
-      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, excersice);
-      const excersiceRoutine = await store.oneExerciseRoutine;
-      await actions.deleteFollowUp(weeklyRoutine.id, excersiceRoutine.id)
+      setDone(done - 1)
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      const exerciseRoutine = await store.oneExerciseRoutine;
+      await actions.deleteFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
   }
 
   useEffect(() => {
-    console.log(exercise);
-    // actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise.exercise.id);
-  }, [exercise]);
+    setTotal(weeklyRoutine.routine.exercises.length);
+  }, [weeklyRoutine.routine.exercises]);
 
-  // useEffect(() => {
-  //   setTotal(weeklyRoutine.routine.exercises.length);
-  // }, [weeklyRoutine.routine.exercises]);
+  useEffect(() => {
+    setDone(weeklyRoutine.routine.exercises.filter(item => item.exercise.done === true).length);
+  }, [weeklyRoutine.routine.exercises]);
 
-  // useEffect(() => {
-  //   // console.log(total);
-  // }, [total]);
+  useEffect(() => {
+    if (total > 0) {
+      setPercentage((done / total) * 100)
+    }
+  }, [done, total]);
 
-  // useEffect(() => {
-  //   // console.log(done);
-  // }, [done]);
-
-  // useEffect(() => {
-  //   console.log("done:", done);
-  //   console.log("total:", total);
-  //   if (total > 0) {
-  //     setPercentage((done / total) * 100)
-  //     // console.log(percentage);
-  //   }
-  // }, [done]);
-
-  // useEffect(() => {
-  //   actions.updateElementAtIndex(day - 1, percentage)
-  //   // console.log(percentage);
-  //   // console.log(store.porcentajes);
-
-  // }, [percentage]);
 
   return (
     <>
-      <label
-        htmlFor='exerciseDay'
-        className="flex flex-row-reverse justify-between items-center cursor-pointer gap-4 p-4"
-      >
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            className="size-4 text-green-600 bg-gray-100 border-gray-300 rounded ring-offset-gray-800 focus:ring-2border-gray-600"
-            id='exerciseDay'
-          // value={item.i}
-          />
-        </div>
-        <div>
-          <p className="font-bold text-white">{weeklyRoutine.day}</p>
-        </div>
-      </label>
+      <div>
+        <p className="font-bold text-white text-center">{weeklyRoutine.day}</p>
+      </div>
       <ul className="bg-neutral-900 p-3 space-y-3">
 
         {weeklyRoutine.routine.exercises.map((item, index) => {
-
           return (
             < label
               key={index}
@@ -103,6 +74,7 @@ export const ExercisesList = ({ weeklyRoutine, day }) => {
           )
         })}
       </ul >
+      <Progress percentage={percentage} />
     </>
   );
 };
