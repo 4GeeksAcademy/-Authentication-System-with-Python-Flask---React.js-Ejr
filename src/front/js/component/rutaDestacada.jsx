@@ -47,7 +47,7 @@ const RutaDestacada = () => {
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      <h3 className="mt-3 mb-4 ms-1">Título de la ruta</h3>
+      <h3 className="text-center text-md-start mt-3 mb-4 ms-1">Título de la ruta</h3>
     </div>
   );
 };
