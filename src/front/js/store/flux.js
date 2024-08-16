@@ -70,6 +70,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error);
 				}
 			},
+			register: async (formData) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/register",{
+						method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(formData),
+					})
+						const data = await resp.json()
+						setStore(data)
+						localStorage.setItem('token', data.token)
+						return data
+								
+				} catch (error) {
+					console.log('error:'+error)
+				}
+			},
 		}
 	};
 };
