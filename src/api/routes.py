@@ -1,7 +1,5 @@
 from flask import Blueprint, jsonify, request
 from api.models import db, User
-from models import db, User
-from auth import token_required, permission_required
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 api = Blueprint('api', __name__)
@@ -76,14 +74,12 @@ def delete_user(user_id):
 
 
 @api.route('/crear_curso', methods=['POST'])
-@token_required
-@permission_required('crear_curso')
+@jwt_required()
 def crear_curso(current_user):
     return jsonify({"message": "Curso creado exitosamente"})
 
 @api.route('/ver_curso', methods=['GET'])
-@token_required
-@permission_required('ver_curso')
+@jwt_required()
 def ver_curso(current_user):
     return jsonify({"message": "Aquí están los cursos"})
 
