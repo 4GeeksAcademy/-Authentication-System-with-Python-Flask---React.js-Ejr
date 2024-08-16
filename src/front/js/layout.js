@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 import Perfil from "./pages/perfil";
+import About from "./pages/about";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -35,6 +36,7 @@ const Layout = () => {
                         <Route element={<SignUp />} path="/signup"/>
                         <Route element={<Perfil />} path="/perfil"/>
                         <Route element={<Cursos />} path="/cursos" />
+                        <Route element={<About />} path="/about" />
                         <Route element={<h1>Not found!</h1>} path="*" /> 
                     </Routes>
                     <Footer />
