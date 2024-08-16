@@ -55,6 +55,5 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                 </div>
             </div>
         </div>
-
-    )
-}
+    );
+};
