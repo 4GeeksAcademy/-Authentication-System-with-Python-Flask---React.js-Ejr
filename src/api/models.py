@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
+# Crear una instancia global de SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -20,13 +21,5 @@ class User(db.Model):
             "is_teacher": self.is_teacher
         }
 
-
     def __repr__(self):
         return f'<User {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            # do not serialize the password, its a security breach
-        }
