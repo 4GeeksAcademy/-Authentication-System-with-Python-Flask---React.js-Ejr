@@ -6,6 +6,7 @@ from api.models import db, User, Baby, Report, Blog_recipe, Blog_news
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -260,7 +261,90 @@ def get_blog(type, id):
     return jsonify({'msg': 'Blog not found'}), 404
 
 
+#[POST] Añadir datos al Report
+@api.route('/report', methods=['POST'])
+def add_report():
+    data = request.get_json()
+
+    try:
+        baby_id = data.get('baby_id')
+        baby = Baby.query.get(baby_id)
+        if not baby:
+            return jsonify({"error": "Baby not found"}), 404
+
+        new_report = Report(
+            date=datetime.strptime(data.get('date'), '%Y-%m-%d'),
+            bedtime=data.get('bedtime'),
+            meals=data.get('meals'),
+            diapers=data.get('diapers'),
+            walks=data.get('walks'),
+            water=data.get('water'),
+            meds=data.get('meds'),
+            kindergarden=data.get('kindergarden'),
+            extra=data.get('extra'),
+            baby_id=baby_id  # Asociar el reporte con el bebé
+        )
+        
+        db.session.add(new_report)
+        db.session.commit()
+
+        return jsonify(new_report.serialize()), 201
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
+    
+
+#[PUT] Editar datos del Report
+@api.route('/report/<int:report_id>', methods=['PUT'])
+def edit_report(report_id):
+    data = request.get_json()
+    report = Report.query.get(report_id)
+
+    if not report:
+        return jsonify({"error": "Report not found"}), 404
+
+    try:
+        report.date = datetime.strptime(data.get('date', report.date.isoformat()), '%Y-%m-%d')
+        report.bedtime = data.get('bedtime', report.bedtime)
+        report.meals = data.get('meals', report.meals)
+        report.diapers = data.get('diapers', report.diapers)
+        report.walks = data.get('walks', report.walks)
+        report.water = data.get('water', report.water)
+        report.meds = data.get('meds', report.meds)
+        report.kindergarden = data.get('kindergarden', report.kindergarden)
+        report.extra = data.get('extra', report.extra)
+
+        db.session.commit()
+
+        return jsonify(report.serialize()), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
+    
+
+#[GET] Ver todos los reports de un bebé
+@api.route('/baby/<int:baby_id>/reports', methods=['GET'])
+def get_reports(baby_id):
+    baby = Baby.query.get(baby_id)
+    if not baby:
+        return jsonify({"error": "Baby not found"}), 404
+
+    reports = [report.serialize() for report in baby.reports]  # Corregido: usar 'reports' en plural
+    return jsonify(reports), 200
 
 
-            
+#[GET] Ver un report de un bebé (id)
+@api.route('/baby/<int:baby_id>/<int:report_id>', methods=['GET'])
+def get_report(baby_id, report_id):
+    baby = Baby.query.get(baby_id)
+    if not baby:
+        return jsonify({"error": "Baby not found"}), 404
+    
+    report = Report.query.filter_by(id=report_id, baby_id=baby_id).first()
+    if not report:
+        return jsonify({"error": "Report not found for this baby"}), 404
+
+    return jsonify(report.serialize()), 200
                

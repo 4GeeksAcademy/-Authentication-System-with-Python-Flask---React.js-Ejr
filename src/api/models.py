@@ -26,35 +26,24 @@ class User(db.Model):
         }
     
 class Baby(db.Model):
-
     id = db.Column(db.Integer, primary_key=True)
-    avatar_path = db.Column(db.String(255))  # Almacenar la ruta de la imagen
+    avatar_path = db.Column(db.String(255))
     name = db.Column(db.String(120), nullable=False)
-    gender=db.Column(db.String(120),  nullable=False)
-    age= db.Column(db.Integer)
-    height=db.Column(db.Float) 
-    weight=db.Column(db.Float)
-    report_id=db.Column(db.Integer, db.ForeignKey('report.id'))
-
-    report = db.relationship('Report', backref='baby', lazy=True)
+    gender = db.Column(db.String(120), nullable=False)
+    age = db.Column(db.Integer)
+    height = db.Column(db.Float)
+    weight = db.Column(db.Float)
     
+    # Definir la relación uno-a-muchos
+    reports = db.relationship('Report', backref='baby', lazy=True)
 
     def __repr__(self):
         return f'<Baby {self.name}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "gender": self.gender,
-            "age": self.age,
-            "height": self.height,
-            "weight": self.weight,
-            # do not serialize the password, its a security breach
-        }
         
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
     bedtime = db.Column(db.Integer)
     meals = db.Column(db.Integer)
     diapers = db.Column(db.Integer)
@@ -64,12 +53,15 @@ class Report(db.Model):
     kindergarden = db.Column(db.Boolean)
     extra = db.Column(db.String(120))
 
+    baby_id = db.Column(db.Integer, db.ForeignKey('baby.id'), nullable=False)
+
     def __repr__(self):
         return f'<Report {self.id}>'
-
+    
     def serialize(self):
         return {
             "id": self.id,
+            "date": self.date.isoformat(),  # Convertir a formato ISO para facilitar su manejo
             "bedtime": self.bedtime,
             "meals": self.meals,
             "diapers": self.diapers,
@@ -78,8 +70,8 @@ class Report(db.Model):
             "meds": self.meds,
             "kindergarden": self.kindergarden,
             "extra": self.extra,
-            # do not serialize the password, its a security breach
         }
+
 
 class Blog_recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
