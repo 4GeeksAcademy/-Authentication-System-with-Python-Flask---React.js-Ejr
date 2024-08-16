@@ -17,6 +17,115 @@
     }
 }
 
-.accordion-button {
+button.accordion-button {
     max-width: 100% !important;
+}
+.modal-content {
+    z-index: 1050 !important;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal-backdrop {
+    z-index: 1040!important; /* Asegúrate de que esté debajo del modal-content */
+    background-color: rgba(0, 0, 0, 0.5); /* Un color semitransparente */
+}
+button.accordion-button {
+    z-index: 1000!important; /* Un valor más bajo que el modal */
+    position: relative;
+}
+
+
+/* Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    z-index: 1040; /* Debe estar debajo del modal pero encima de otros elementos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenido del Modal */
+.modal-content {
+    position: fixed; /* Asegura que el modal esté fijado en la pantalla */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el modal en la pantalla */
+    z-index: 1050; /* Asegúrate de que esté por encima del overlay */
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 500px; /* Ajusta según tu diseño */
+    max-width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
+
+/* Header del Modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Cuerpo del Modal */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.image-container img {
+    max-width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Acciones del Modal */
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-actions .btn {
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.modal-actions .btn i {
+    font-size: 1.2rem;
+}
+
+.modal-actions .btn span {
+    font-size: 0.9rem;
 }

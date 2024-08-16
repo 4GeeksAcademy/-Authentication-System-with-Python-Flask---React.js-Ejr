@@ -1,55 +1,43 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/perfil.css"
+import VistaModal from "../component/vistaModal.jsx";
 import Swal from 'sweetalert2'
 
 
 
 const Perfil = () => {
-    
+
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
 
     useEffect(() => {
         actions.getPerfilUsuario()
-        
-      // Inicializar los popovers (sin guardar en una variable)
+
+        // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
-        });    
+        });
 
-        const checkLoggedStatus = async () => {
-            try {
-                const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
-              
-                if (!logged) {
-                    Swal.fire({
-                        title: 'Sesión expirada',
-                        text: 'Debes logearte nuevamente',
-                        icon: 'error',
-                        timer: 4000
-                    })
-                    navigate('/vista-login');
-                }
-            } catch (error) {
-                console.error('Error al validar token:', error);
-                navigate('/vista-login'); // Redirigir en caso de error
-            }
-        };
-
-        checkLoggedStatus();
     }, []);
-    
+    const [showModal, setShowModal] = useState(false);
+
+    // Función para mostrar el modal
+    const openModal = () => setShowModal(true);
+
+    // Función para cerrar el modal
+    const closeModal = () => setShowModal(false);
     return (
         <div className="container mt-4 col-md-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
                 <div className="col-md-4 text-center position-relative">
-                    <img src={store.dataUser?.foto || "https://example.com/default-image.jpg"} 
+                    <img src={store.dataUser?.foto || "https://example.com/default-image.jpg"}
                         alt="User Image"
                         className="img-fluid rounded-circle profile-image"
                     />
-                    <button className="btn btn-light position-absolute align-items-center d-flex"
+                    <button
+                        className="btn btn-light position-absolute align-items-center d-flex"
                         style={{
                             borderRadius: "50%",
                             height: "40px",
@@ -59,9 +47,22 @@ const Perfil = () => {
                             transform: "translate(-50%, -50%)",
                             backgroundColor: "#afb4b8"
                         }}
-                        onClick={() => alert("Edit image clicked!")}>
+                        onClick={openModal} // Abre el modal al hacer clic en el botón
+                    >
                         <i className="fa-regular fa-pen-to-square"></i>
                     </button>
+
+                    {/* Renderiza el modal condicionalmente */}
+                    {showModal && (
+                        <VistaModal
+                            show={showModal}
+                            onClose={closeModal}
+                            imageSrc={store.dataUser?.foto || "https://example.com/default-image.jpg"}
+                            onDelete={() => {
+                                // Aquí puedes agregar la lógica para eliminar la foto de perfil si es necesario.
+                            }}
+                        />
+                    )}
                 </div>
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
                     <h2>{store.dataUser?.nombre_usuario}</h2>
@@ -84,12 +85,12 @@ const Perfil = () => {
                                             <p><strong>Descripción:</strong> {store.dataUser?.descripcion}</p>
                                         </div>
                                         <div className="col-md-4 text-end align-self-start d-flex justify-content-end">
-                                            <span className="d-inline-block" tabindex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información solo está disponible para tí y para los profesionales con los que agendes cita, nadie más puede acceder a ella.">
+                                            <span className="d-inline-block" tabIndex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información solo está disponible para tí y para los profesionales con los que agendes cita, nadie más puede acceder a ella.">
                                                 <button className="btn btn-outline-secondary me-2" type="button" ><i className="fa-regular fa-circle-question"></i></button>
                                             </span>
                                             <button className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fa-regular fa-pen-to-square"></i></button>
-                                            
-                                            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                                            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div className="modal-dialog">
                                                     <div className="modal-content">
                                                         <div className="modal-header">

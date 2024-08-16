@@ -2,13 +2,16 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 		store: {
 			correo: [],
 			clave: [],
 			logged: false,
 			psicologos: [],
-			dataUser: null
+			dataUser: null,
+			imagenURL:""
+
 		},
 		actions: {
 
@@ -74,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
 						return false;
 					}
-
+          
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						setStore({
@@ -101,8 +104,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-
 
 			//Validación de token para contexto global
 			validToken: async () => {
@@ -248,6 +249,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 
 
+				}
+			},
+			//cloudinary (IMAGENES)
+			uploadImage: async (data,cloud_name,preset_name) => {
+				console.log(data);
+				
+			
+			//	setLoading(true);
+			
+				try {
+					const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+						method: 'POST',
+						body: data
+					});
+			
+					const fileData = await response.json();
+					//setProfileImage(fileData.secure_url);  // Actualiza el estado profileImage con la URL de la imagen subida.
+					//setLoading(false);
+					//console.log(fileData.secure_url);
+					setStore({imagenURL:fileData.secure_url})
+					
+				} catch (error) {
+					console.error('Error uploading image:', error);
+				//	setLoading(false);
 				}
 			},
 		}
