@@ -18,6 +18,8 @@ import { All_Blogs } from "./pages/all_blogs.jsx";
 import { EditBlog } from "./pages/edit_blog.jsx";
 import { BlogDetail } from "./pages/blog_detail.jsx";
 
+import { Gestor_perfil } from "./pages/gestor_perfil.js";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -36,6 +38,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
+                        <Route element={<Gestor_perfil />} path="/gestor_perfil" />
                         <Route element={<Gestor_bebe />} path="/gestor_bebe" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<New_Blog />} path="/new_blog" />
