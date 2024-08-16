@@ -34,8 +34,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.status === 200) {
 						// Guardar el token en Local Storage y actualizar el estado global
 						localStorage.setItem('token', data.access_token);
+						localStorage.setItem('refresh_token', data.refresh_token); // Guarda el refresh token
 						setStore({ currentUser: { correo: correo } });
 						setStore({ logged: true });
+						// Configuramos el temporizador para renovar el token
+						setTimeout(() => getActions.refreshToken(), (data.expires_in - 60) * 1000); // Se renueva un minuto antes de expirar
 
 						return true;
 					} else if (response.status === 400) {
@@ -50,6 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error al iniciar sesión: ', error);
 					localStorage.removeItem('token');  // Elimina el token en caso de error
+					localStorage.removeItem('refresh_token');  // Elimina el refresh token en caso de error
 					setStore({ logged: false }); // Asegura que el estado global se actualice
 					return false;
 				}
@@ -73,9 +77,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 
+
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
-						
 						setStore({
 							dataUser: {
 								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
@@ -103,15 +107,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
+
+
 			//Validación de token para contexto global
 			validToken: async () => {
 				const token = localStorage.getItem('token');
+				if (!token) {
+					setStore({ logged: false });
+					return false;
+				}
+
 				const options = {
 					headers: {
 						'Content-Type': 'application/json',
 						'Authorization': `Bearer ${token}`,
 					}
 				};
+
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/valid-token', options);
 					const data = await response.json();
@@ -122,13 +134,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else if (response.status === 404) {
 						setStore({ logged: false });
 						console.log('Token inválido, usuario no logeado');
-						throw new Error('Bad Request: ' + data.msg);
+						localStorage.removeItem('token'); // Limpia el token
+						return false;
 					} else {
 						setStore({ logged: false });
-						throw new Error(data.msg || response.statusText);
+						localStorage.removeItem('token');
+						console.error('Error:', data.msg || response.statusText);
+						return false;
 					}
 				} catch (error) {
 					setStore({ logged: false });
+					localStorage.removeItem('token');
 					console.log('Token inválido, usuario no logeado');
 					return false;
 				}
@@ -141,9 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/psicologos');
 					const data = await response.json();
-					console.log(data)
 					if (response.status === 200) {
-						console.log(data);
 						// Actualiza solo la propiedad psicologos en el store
 						setStore({
 							...store,
@@ -165,6 +179,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ logged: false });
 			},
 
+			/* Función para refrescar el token */
+			refreshToken: async () => {
+				const refresh_token = localStorage.getItem('refresh_token');
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ refresh_token })
+				};
+
+				try {
+					const response = await fetch(process.env.BACKEND_URL + '/refresh-token', options);
+					const data = await response.json();
+
+					if (response.status === 200) {
+						localStorage.setItem('token', data.access_token);
+						setTimeout(() => getActions.refreshToken(), (data.expires_in - 60) * 1000); // Renueva un minuto antes de expirar
+					} else {
+						throw new Error('Error al refrescar el token');
+					}
+				} catch (error) {
+					console.error('Error al refrescar el token: ', error);
+					actions.logout(); // Si el refresh falla, cierra la sesión
+				}
+			},
+
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, correo, clave) => {
 				const options = {
@@ -183,29 +224,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				};
 
-				console.log('antes del fetch register');
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
 
 					if (response.status === 201) {
 						console.log(data);
-						 Swal.fire({
-						 	text: "El registro del usuario se ha realizado con éxito.",
-						 	icon: "success"
-						 });
+						Swal.fire({
+							text: "El registro del usuario se ha realizado con éxito.",
+							icon: "success"
+						});
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
 					} else if (response.status === 500) {
 						throw new Error('Internal Server Error: ' + data.msg);
 					} else {
-						console.log(response);
 
 						throw new Error(data.msg || response.statusText);
 					}
 				} catch (error) {
-					console.log('Fetch error: ', error);
 					Swal.fire({
 						title: 'Error!',
 						text: 'La dirección de correo electrónico ya existe',
