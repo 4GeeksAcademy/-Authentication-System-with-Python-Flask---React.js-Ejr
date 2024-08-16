@@ -1,0 +1,33 @@
+/* General Styles */
+body {
+  background-color: white;
+}
+
+.user-dashboard {
+  text-align: center;
+}
+
+.user-profile, .user-appointments, .user-cars {
+  margin: 20px 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table th button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: inherit;
+}
+
+.table th button:focus {
+  outline: none;
+}
+
+/* Modal Styles */
+.modal.show {
+  display: block;
+}

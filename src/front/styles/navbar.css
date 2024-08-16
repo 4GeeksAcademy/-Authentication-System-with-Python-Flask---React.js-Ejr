@@ -1,0 +1,80 @@
+.navbar {
+  padding: 1rem 2rem;
+  background-color: #f2f2f2;
+}
+
+.navbar-brand img {
+  width: 5rem;
+  height: 3.38rem;
+  margin-right: 0.75rem;
+}
+
+.navbar-brand span {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #035cb5;
+}
+
+.nav-link {
+  margin: 0 0.5rem;
+  color: #333333;
+}
+
+.nav-link:hover {
+  color: #035cb5;
+}
+
+.btn-primary {
+  background-color: #035cb5;
+  border-color: #035cb5;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #003366;
+  border-color: #003366;
+}
+
+.btn-secondary {
+  background-color: #f2f2f2;
+  color: #333333;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
+  color: #333333;
+}
+
+body {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+/**
+* Ranking component
+*/
+
+.role-label-container {
+  margin-top: -5px;
+  color: white;
+  /* z-index: 1000; */
+  text-align: center;
+  font-size: 13px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.label.label-default.role-label {
+  border-radius: 40px;
+  background-color: #035cb5;
+  padding: 5px 10px 5px 10px;
+  margin: 0px 0px 0px 10px;
+}
