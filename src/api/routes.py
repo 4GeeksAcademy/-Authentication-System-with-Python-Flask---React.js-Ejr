@@ -296,13 +296,13 @@ def add_report():
     
 
 #[PUT] Editar datos del Report
-@api.route('/report/<int:report_id>', methods=['PUT'])
-def edit_report(report_id):
+@api.route('/baby/<int:baby_id>/report/<int:report_id>', methods=['PUT'])
+def edit_report(baby_id, report_id):
     data = request.get_json()
-    report = Report.query.get(report_id)
+    report = Report.query.filter_by(id=report_id, baby_id=baby_id).first()
 
     if not report:
-        return jsonify({"error": "Report not found"}), 404
+        return jsonify({"error": "Report not found for this baby"}), 404
 
     try:
         report.date = datetime.strptime(data.get('date', report.date.isoformat()), '%Y-%m-%d')
