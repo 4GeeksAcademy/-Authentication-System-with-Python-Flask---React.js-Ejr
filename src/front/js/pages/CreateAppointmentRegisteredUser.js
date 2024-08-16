@@ -38,7 +38,9 @@ const CreateAppointmentRegisteredUser = () => {
         });
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
-        setServices(data);
+        const maxAppointmentsH = data.setting.max_appointments_per_hour
+        console.log(maxAppointmentsH)
+        setServices(data.services);
       } catch (error) {
         console.error("Error getting services:", error);
       }

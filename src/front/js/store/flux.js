@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			totalAppointments: null,
 			totalServices: null,
 			totalCars: null,
+			
 		},
 		actions: {
 			loadSession: async () => {

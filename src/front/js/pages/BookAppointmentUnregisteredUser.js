@@ -30,7 +30,9 @@ const BookAppointmentUnregisteredUser = () => {
         const response = await fetch(`${apiUrl}/services`);
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
-        setServices(data);
+        const maxAppointmentsH = data.setting.max_appointments_per_hour
+        console.log(maxAppointmentsH)
+        setServices(data.services);
         console.log("set service data", setServices);
         console.log("service data", data);
       } catch (error) {
