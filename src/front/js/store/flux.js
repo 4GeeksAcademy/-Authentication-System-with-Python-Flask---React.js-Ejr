@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             oneExercise: {},
             allExerciseRoutineList: [],
             allExerciseRoutineOneDayList: [],
+            oneExerciseRoutine: {},
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
@@ -547,13 +548,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            //GET ONE ExerciseRoutine / TRAER UNA RUTINA EJERCICIO
+            oneExerciseRoutine: async (routine_id, exercise_id) => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + `/exercise-routine/${routine_id}/${exercise_id}`);
+
+                    if (resp.status == 200) {
+                        setStore({ oneExerciseRoutine: resp.data })
+                        console.log(getStore().oneExerciseRoutine);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
             // POST ExerciseRoutine / AGREGAR RUTINA EJERCICIO
             postExerciseRoutine: async (routine_id, exercise_id) => {
                 try {
-                    const token = localStorage.getItem('token')
-                    if (!token) {
-                        return ({ "error": "no token found" })
-                    }
+                    // const token = localStorage.getItem('token')
+                    // if (!token) {
+                    //     return ({ "error": "no token found" })
+                    // }
 
                     const payload = {
                         "routine_id": routine_id,
@@ -562,9 +579,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Sending payload:', payload);
 
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise-routine', payload, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
+                        // headers: {
+                        //     Authorization: `Bearer ${token}`
+                        // }
                     });
 
                     if (response.status == 200) {
@@ -616,22 +633,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             // POST FollowUp / AGREGAR SEGUIMIENTO
             postFollowUp: async (weekly_routine_id, exercise_routine_id) => {
                 try {
-                    const token = localStorage.getItem('token')
-                    if (!token) {
-                        return ({ "error": "no token found" })
-                    }
-
                     const payload = {
                         "weekly_routine_id": weekly_routine_id,
                         "exercise_routine_id": exercise_routine_id
                     };
                     console.log('Sending payload:', payload);
 
-                    let response = await axios.post(process.env.BACKEND_URL + '/follow-up', payload, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+                    let response = await axios.post(process.env.BACKEND_URL + '/follow-up', payload);
+                    console.log(response);
 
                     if (response.status == 200) {
                         console.log('follow-up successfully added:', response.data);
@@ -645,6 +654,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.log('Error:', error);
                         return error;
                     }
+                }
+            },
+            //DELETE ExerciseRoutine / ELIMINAR UNA RUTINA EJERCICIO
+            deleteFollowUp: async (weekly_routine_id, exercise_routine_id) => {
+                try {
+                    const resp = await axios.delete(process.env.BACKEND_URL + `/follow-up/${weekly_routine_id}/${exercise_routine_id}`);
+
+                    if (resp.status == 200) {
+                        console.log(resp.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
                 }
             },
             //CATEGORY

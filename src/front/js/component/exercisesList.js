@@ -2,42 +2,57 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 
 
-export const ExercisesList = ({ routine, day }) => {
+export const ExercisesList = ({ weeklyRoutine, day }) => {
   const { store, actions } = useContext(Context);
-  const [total, setTotal] = useState(0);
-  const [done, setDone] = useState(0);
-  const [percentage, setPercentage] = useState();
+  // const [isChecked, setIsChecked] = useState(null);
+  const [exercise, setExercise] = useState({});
+  // const [percentage, setPercentage] = useState();
 
-
-  const handleChange = (e) => (e.target.checked == true ? setDone(done + 1) : setDone(done - 1));
-
-  useEffect(() => {
-    setTotal(routine.exercises.length);
-  }, [routine.exercises]);
-
-  useEffect(() => {
-    // console.log(total);
-  }, [total]);
-
-  useEffect(() => {
-    // console.log(done);
-  }, [done]);
-
-  useEffect(() => {
-    console.log("done:", done);
-    console.log("total:", total);
-    if (total > 0) {
-      setPercentage((done / total) * 100)
-      // console.log(percentage);
+  const handleChange = async (e, excersice) => {
+    if (e.target.checked == true) {
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, excersice);
+      const excersiceRoutine = await store.oneExerciseRoutine;
+      await actions.postFollowUp(weeklyRoutine.id, excersiceRoutine.id)
     }
-  }, [done]);
+    if (e.target.checked == false) {
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, excersice);
+      const excersiceRoutine = await store.oneExerciseRoutine;
+      await actions.deleteFollowUp(weeklyRoutine.id, excersiceRoutine.id)
+    }
+  }
 
   useEffect(() => {
-    actions.updateElementAtIndex(day - 1, percentage)
-    // console.log(percentage);
-    // console.log(store.porcentajes);
-    
-  }, [percentage]);
+    console.log(exercise);
+    // actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise.exercise.id);
+  }, [exercise]);
+
+  // useEffect(() => {
+  //   setTotal(weeklyRoutine.routine.exercises.length);
+  // }, [weeklyRoutine.routine.exercises]);
+
+  // useEffect(() => {
+  //   // console.log(total);
+  // }, [total]);
+
+  // useEffect(() => {
+  //   // console.log(done);
+  // }, [done]);
+
+  // useEffect(() => {
+  //   console.log("done:", done);
+  //   console.log("total:", total);
+  //   if (total > 0) {
+  //     setPercentage((done / total) * 100)
+  //     // console.log(percentage);
+  //   }
+  // }, [done]);
+
+  // useEffect(() => {
+  //   actions.updateElementAtIndex(day - 1, percentage)
+  //   // console.log(percentage);
+  //   // console.log(store.porcentajes);
+
+  // }, [percentage]);
 
   return (
     <>
@@ -54,13 +69,13 @@ export const ExercisesList = ({ routine, day }) => {
           />
         </div>
         <div>
-          <p className="font-bold text-white">{routine.name}</p>
+          <p className="font-bold text-white">{weeklyRoutine.day}</p>
         </div>
       </label>
       <ul className="bg-neutral-900 p-3 space-y-3">
 
+        {weeklyRoutine.routine.exercises.map((item, index) => {
 
-        {routine.exercises.map((item, index) => {
           return (
             < label
               key={index}
@@ -70,14 +85,19 @@ export const ExercisesList = ({ routine, day }) => {
               <div className="flex items-center">
                 <input
                   type="checkbox"
+                  checked={item.exercise.done}
                   className="myCheckbox size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"
                   id={`option ${index}`}
-                  onChange={handleChange}
+                  name="name"
+                  onChange={(e) => {
+                    item.exercise.done = !item.exercise.done
+                    handleChange(e, item.exercise.id)
+                  }}
                 />
                 {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
               </div>
               <div>
-                <p className="font-medium text-white">{item.name}</p>
+                <p className="font-medium text-white">{item.exercise.name}</p>
               </div>
             </label>
           )
