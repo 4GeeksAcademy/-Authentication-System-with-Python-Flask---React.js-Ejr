@@ -17,6 +17,7 @@ import VistaModal from "./component/vistaModal.jsx";
 import ProfilePage from "./pages/vista-modal";
 import PregFrecuentes from "./pages/pregFrecuentes";
 import Emergencias from "./pages/emergencias";
+import VistaModal from "./component/vistaModal.jsx";
 
 
 //create your first component
