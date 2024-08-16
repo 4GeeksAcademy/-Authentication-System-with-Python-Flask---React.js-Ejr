@@ -434,6 +434,7 @@ def create_appointment():
     user_id = data.get('user_id')
     car_id = data.get('car_id')
     service_id = data.get('service_id')
+    comment = data.get('comment')
     
     if not date or not user_id or not car_id or not service_id:
         return jsonify({"error": "Date, user ID, car ID, and service ID are required"}), 400
@@ -467,6 +468,16 @@ def create_appointment():
             status="pending"
         )
         db.session.add(new_appointment)
+        db.session.commit()
+
+        if comment:
+            new_comment = Comment(
+            content = comment,
+            author_id = user_id,
+            appointment_id = new_appointment.id,
+            is_mechanic=False
+        )
+        db.session.add(new_comment)
         db.session.commit()
 
         response_body = new_appointment.serialize()
