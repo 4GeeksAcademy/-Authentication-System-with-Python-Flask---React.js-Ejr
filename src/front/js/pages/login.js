@@ -43,9 +43,9 @@ export const Login = () =>{
                     <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Password
-                <div className="input-group">
+                <div className="contenedor-password">
                     <input className="form-control" name="password" value={dataForm.password} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
-                    {visible? <span class="fa-solid fa-eye-slash" onClick={handleClick}></span>:<span className="fa-solid fa-eye" onClick={handleClick}></span>}
+                    {visible? <span class="fa-solid fa-eye-slash icon" onClick={handleClick}></span>:<span className="fa-solid fa-eye icon" onClick={handleClick}></span>}
                 </div>
                 </label>
 				<input className="btn btn-primary mt-3" value="Iniciar sesión" type="submit"/>
