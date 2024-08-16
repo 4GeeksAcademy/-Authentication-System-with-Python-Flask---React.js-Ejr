@@ -67,4 +67,6 @@ section{
   box-shadow: none !important; /* Quita la sombra al enfocar */
 }
 
-
+#shadow-host-companion {
+  display: none !important;
+}
