@@ -12,6 +12,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer.jsx";
+import { Navbarsearch } from "./component/navbar-search.jsx";
 
 //create your first component
 const Layout = () => {
@@ -25,6 +26,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                <Navbarsearch />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Search />} path="/search" />

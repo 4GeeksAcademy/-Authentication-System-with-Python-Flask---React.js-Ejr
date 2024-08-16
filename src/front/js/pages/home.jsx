@@ -5,20 +5,28 @@ import { Navbar } from "../component/navbar.jsx";
 import { LoginRegister } from "../component/registerModal.jsx";
 import { Jumbotron } from "../component/jumbotron.jsx";
 import RutaDestacada from "../component/rutaDestacada.jsx";
+import { ForgotPassword } from "../component/recuperar-contraseña.jsx";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <LoginRegister />
+      {/* <ForgotPassword /> */}
       <Jumbotron />
-      <h2>Rutas destacadas 🔥</h2>
-      <div className="d-flex justify-content-around justify-content-xxl-evenly mx-5">
+      <h4>Rutas destacadas 🔥</h4>
+      <div className=" row justify-content-around justify-content-xxl-evenly mx-5">
+        <div className="col-xs-12 col-md-4 d-flex justify-content-center">
         <RutaDestacada />
+        </div>
+        <div className="col-xs-12 col-md-4 d-flex justify-content-center">
         <RutaDestacada />
+        </div>
+        <div className="col-xs-12 col-md-4 d-flex justify-content-center">
         <RutaDestacada />
+        </div>
       </div>
 
       {/* // Aquí irá el componente Jumbotron+searchbar

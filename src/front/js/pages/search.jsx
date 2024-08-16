@@ -10,7 +10,7 @@ export const Search = () => {
 
   return (
     <main>
-      <Navbarsearch />
+      {/* <Navbarsearch /> */}
       <LoginRegister />
       <h6 className="mt-5 mb-3 founded">
         Se han encontrado <b>{store.itineraryData.length}</b> itinerarios:
