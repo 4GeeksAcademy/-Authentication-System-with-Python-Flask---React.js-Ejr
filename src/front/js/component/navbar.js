@@ -30,7 +30,8 @@ export const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto">
-            <Link className="nav-link mx-4 text-light" aria-current="page" to="/">Preguntas frecuentes</Link>
+          <Link className="nav-link mx-4 text-light" aria-current="page" to="/emergencias">Emergencias</Link>
+            <Link className="nav-link mx-4 text-light" aria-current="page" to="/preguntas-frecuentes">Preguntas frecuentes</Link>
             {store.logged && (<Link className="nav-link mx-4 text-light" to="/profesionales">Profesionales</Link>
             )}
              {store.logged && (<Link className="nav-link mx-4 text-light" to="/perfil">Perfil</Link>
