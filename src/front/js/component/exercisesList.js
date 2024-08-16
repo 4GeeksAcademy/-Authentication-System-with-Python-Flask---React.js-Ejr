@@ -1,66 +1,58 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
+import { Progress } from "./progress";
 
-
-export const ExercisesList = ({ routine, day }) => {
+export const ExercisesList = ({ weeklyRoutine }) => {
   const { store, actions } = useContext(Context);
   const [total, setTotal] = useState(0);
   const [done, setDone] = useState(0);
-  const [percentage, setPercentage] = useState();
+  const [percentage, setPercentage] = useState(0);
 
-
-  const handleChange = (e) => (e.target.checked == true ? setDone(done + 1) : setDone(done - 1));
+  const handleChange = async (e, exercise) => {
+    // e.persist()
+    if (e.target.checked == true) {
+      setDone(done + 1)
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      const exerciseRoutine = await store.oneExerciseRoutine;
+      await actions.postFollowUp(weeklyRoutine.id, exerciseRoutine.id)
+    }
+    if (e.target.checked == false) {
+      setDone(done - 1)
+      console.log(done);
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      const exerciseRoutine = await store.oneExerciseRoutine;
+      await actions.deleteFollowUp(weeklyRoutine.id, exerciseRoutine.id)
+    }
+  }
 
   useEffect(() => {
-    setTotal(routine.exercises.length);
-  }, [routine.exercises]);
+    setTotal(weeklyRoutine.routine.exercises.length);
+  }, [weeklyRoutine.routine.exercises]);
 
   useEffect(() => {
-    // console.log(total);
-  }, [total]);
+    setDone(weeklyRoutine.routine.exercises.filter(item => item.exercise.done === true).length);
+  }, [weeklyRoutine.routine.exercises]);
 
   useEffect(() => {
-    // console.log(done);
-  }, [done]);
-
-  useEffect(() => {
-    console.log("done:", done);
-    console.log("total:", total);
     if (total > 0) {
       setPercentage((done / total) * 100)
-      // console.log(percentage);
     }
-  }, [done]);
+  }, [done, total]);
 
   useEffect(() => {
-    actions.updateElementAtIndex(day - 1, percentage)
-    // console.log(percentage);
-    // console.log(store.porcentajes);
+    console.log("done:",done);
     
-  }, [percentage]);
+  }, [done]);
+
 
   return (
     <>
-      <label
-        htmlFor='exerciseDay'
-        className="flex flex-row-reverse justify-between items-center cursor-pointer gap-4 p-4"
-      >
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            className="size-4 text-green-600 bg-gray-100 border-gray-300 rounded ring-offset-gray-800 focus:ring-2border-gray-600"
-            id='exerciseDay'
-          // value={item.i}
-          />
-        </div>
-        <div>
-          <p className="font-bold text-white">{routine.name}</p>
-        </div>
-      </label>
+      <div>
+        <p className="font-bold text-white text-center">{weeklyRoutine.day}</p>
+      </div>
       <ul className="bg-neutral-900 p-3 space-y-3">
 
-
-        {routine.exercises.map((item, index) => {
+        {weeklyRoutine.routine.exercises.map((item, index) => {
           return (
             < label
               key={index}
@@ -70,19 +62,25 @@ export const ExercisesList = ({ routine, day }) => {
               <div className="flex items-center">
                 <input
                   type="checkbox"
+                  checked={item.exercise.done}
                   className="myCheckbox size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"
                   id={`option ${index}`}
-                  onChange={handleChange}
+                  name="name"
+                  onChange={(e) => {
+                    item.exercise.done = !item.exercise.done
+                    handleChange(e, item.exercise.id)
+                  }}
                 />
                 {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
               </div>
               <div>
-                <p className="font-medium text-white">{item.name}</p>
+                <p className="font-medium text-white">{item.exercise.name}</p>
               </div>
             </label>
           )
         })}
       </ul >
+      <Progress percentage={percentage} />
     </>
   );
 };

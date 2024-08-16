@@ -9,7 +9,7 @@ export const VistaPrueba = () => {
 		// actions.allWeeklyRoutineUser();
 		// actions.oneWeeklyRoutineUser(1)
 		// actions.postPhysicalInformation("190", "90");
-		actions.category();
+		// actions.category();
 
 
 		// actions.postWeeklyRoutine("1", "SEMANA1", "MIERCOLES")
@@ -22,6 +22,7 @@ export const VistaPrueba = () => {
 		// actions.oneExercise(1);
 		// actions.allExerciseRoutine();
 		// actions.allExerciseRoutineOneDay(1);
+		// actions.oneExerciseRoutine(2,1)
 		// actions.allFollowUp();
 		// actions.oneFollowUp(1);
 		// actions.signup("juan", "juan@gmail.com", "11", "11");
@@ -32,8 +33,10 @@ export const VistaPrueba = () => {
 		// actions.login("juan@gmail.com", "1");
 		// actions.validToken();
 
+		// actions.postFollowUp(1, 1)
+		actions.deleteFollowUp(1, 1)
 	}, [])
-	console.log(store.allCategoryList);
+	// console.log(store.allCategoryList);
 	// console.log(Object.keys(store.allCategoryList));
 
 	return (

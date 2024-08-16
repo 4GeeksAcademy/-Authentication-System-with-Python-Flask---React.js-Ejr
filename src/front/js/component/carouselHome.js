@@ -23,10 +23,7 @@ const CarouselComplete = () => {
 
             {store.oneWeeklyRoutineUserList.sort((a, b) => a.day - b.day).map((item, index) => (
                 <div key={index} className="w-2/3 mx-auto">
-                    <ExercisesList routine={item.routine} day={item.day}/>
-                    {/* {console.log(store.porcentajes)} */}
-                    <Progress day={item.day} />
-
+                    <ExercisesList weeklyRoutine={item} />
                 </div>
             ))}
         </Carousel>

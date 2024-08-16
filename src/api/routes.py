@@ -318,14 +318,25 @@ def get_all_exercise_routine():
         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
 
+# GET ONE ExerciseRoutine / TRAER UNA RUTINA EJERCICIO
+@api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['GET'])
+def get_one_exercise_routine(routine_id, exercise_id):
+    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+    if exercise_routine is None:
+        return ({'error':'exercise routine not found'}), 404
+    else:
+        data_serialized = exercise_routine.serialize()
+        return jsonify(data_serialized), 200
+
+
 # POST ExerciseRoutine / AGREGAR RUTINA EJERCICIO
 @api.route('/exercise-routine', methods=['POST'])
 def post_exercise_routine():
     exercise_routine = request.get_json()
-    if not isinstance(exercise_routine['routine_id'], str) or len(exercise_routine['routine_id'].strip()) == 0 :
-        return ({'error': "'routine_id' must be a string"}), 400
-    if not isinstance(exercise_routine['exercise_id'], str) or len(exercise_routine['exercise_id'].strip()) == 0 :
-        return ({'error': "'exercise_id' must be a string"}), 400
+    if len(exercise_routine['routine_id']) == 0 :
+        return ({'error': "'routine_id' must not be empty"}), 400
+    if len(exercise_routine['exercise_id']) == 0 :
+        return ({'error': "'exercise_id' must not be empty"}), 400
 
     exercise_routine_created = ExerciseRoutine(routine_id = exercise_routine['routine_id'], exercise_id = exercise_routine['exercise_id'])
     db.session.add(exercise_routine_created)
@@ -344,29 +355,59 @@ def get_all_follow_up():
 
 # GET ALL FollowUp weekly_routine / TRAER TODOS SEGUIMIENTO DE UNA RUITNA SEMANA
 @api.route('/follow-up/<int:weekly_routine_id>', methods=['GET'])
-def get_one_follow_up(weekly_routine_id):
+def get_all_weekly_routine_follow_up(weekly_routine_id):
     follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id).all()
     if len(follow_up) == 0:
         return ({'error':'followUp of one week not found'}), 404
     else:
         data_serialized = list(map(lambda followUp: followUp.serialize(), follow_up))
         return jsonify(data_serialized), 200
+    
+# GET ONE FollowUp / TRAER UN SEGUIMIENTO
+@api.route('/follow-up/<int:weekly_routine_id>/<int:exercise_routine_id>', methods=['GET'])
+def get_one_follow_up(weekly_routine_id, exercise_routine_id):
+    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id, exercise_routine_id=exercise_routine_id).first()
+    if follow_up is None:
+        return ({'error':'Follow Up not found'}), 404
+    else:
+        data_serialized = follow_up.serialize()
+        return jsonify(data_serialized), 200
 
 # POST FollowUp / AGREGAR SEGUIMIENTO
 @api.route('/follow-up', methods=['POST'])
 def post_follow_up():
     follow_up = request.get_json()
-    if not isinstance(follow_up['weekly_routine_id'], str) or len(follow_up['weekly_routine_id'].strip()) == 0 :
-        return ({'error': "'weekly_routine_id' must be a string"}), 400
-    if not isinstance(follow_up['exercise_routine_id'], str) or len(follow_up['exercise_routine_id'].strip()) == 0 :
-        return ({'error': "'exercise_routine_id' must be a string"}), 400
+    # if follow_up['weekly_routine_id'] is None :
+    #     return ({'error': "'weekly_routine_id' must not be empty"}), 400
+    
+    weekly_routine = WeeklyRoutine.query.filter_by(id=follow_up['weekly_routine_id']).first()
+    if weekly_routine is None:
+        return ({'error': "weekly routine not found"}), 404
+    
+    # if follow_up['exercise_routine_id'] is None:
+    #     return ({'error': "'exercise_routine_id' must not be empty"}), 400
+    
+    exercise_routine = ExerciseRoutine.query.filter_by(id=follow_up['exercise_routine_id']).first()
+    if exercise_routine is None:
+        return ({'error': "exercise routine not found"}), 404
 
     follow_up_created = FollowUp(weekly_routine_id = follow_up['weekly_routine_id'], exercise_routine_id = follow_up['exercise_routine_id'])
     db.session.add(follow_up_created)
     db.session.commit()
-    return jsonify(follow_up_created.serialize())
+    return jsonify(follow_up_created.serialize()), 200
+
+# DELETE FollowUp / ELIMINAR SEGUIMIENTO
+@api.route('/follow-up/<int:weekly_routine_id>/<int:exercise_routine_id>', methods=['DELETE'])
+def delete_follow_up(weekly_routine_id, exercise_routine_id):
+    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id, exercise_routine_id=exercise_routine_id).first()
+    if follow_up is None:
+        return ({'error':'Follow Up not found'}), 404
+
+    db.session.delete(follow_up)
+    db.session.commit()
+    return jsonify("successfully removed"), 200
 
 @api.route('/exercises-category', methods=['GET'])
 def get_exercises_category():
     categories = {category.name: category.value for category in Category}
-    return jsonify(categories)
+    return jsonify(categories), 200
