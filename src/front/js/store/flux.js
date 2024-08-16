@@ -2,13 +2,15 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 		store: {
 			correo: [],
 			clave: [],
 			logged: false,
 			psicologos: [],
-			dataUser:null
+			dataUser: null,
+			imagenURL:""
 		},
 		actions: {
 
@@ -34,7 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem('token', data.access_token);
 						setStore({ currentUser: { correo: correo } });
 						setStore({ logged: true });
-						
+
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
@@ -70,10 +72,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
 						return false;
 					}
-			
+
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
-						/* console.log(localStorage.getItem('token')); */
+						
 						setStore({
 							dataUser: {
 								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
@@ -87,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
 					}
-			
+
 				} catch (error) {
 					Swal.fire({
 						title: 'No puede acceder a ésta sección!',
@@ -98,8 +100,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			
-			
+
+
 
 			//Validación de token para contexto global
 			validToken: async () => {
@@ -160,7 +162,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem('token');
 				// Actualizar el estado global
 				setStore({ currentUser: null });
-				setStore({ logged: false });				
+				setStore({ logged: false });
 			},
 
 			/* Hasta ésta línea de código estará trabajando Pablo */
@@ -213,6 +215,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 
 
+				}
+			},
+			//cloudinary (IMAGENES)
+			uploadImage: async (data,cloud_name,preset_name) => {
+				console.log(data);
+				
+			
+			//	setLoading(true);
+			
+				try {
+					const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+						method: 'POST',
+						body: data
+					});
+			
+					const fileData = await response.json();
+					//setProfileImage(fileData.secure_url);  // Actualiza el estado profileImage con la URL de la imagen subida.
+					//setLoading(false);
+					//console.log(fileData.secure_url);
+					setStore({imagenURL:fileData.secure_url})
+					
+				} catch (error) {
+					console.error('Error uploading image:', error);
+				//	setLoading(false);
 				}
 			},
 		}
