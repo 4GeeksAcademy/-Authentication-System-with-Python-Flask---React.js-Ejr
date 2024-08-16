@@ -10,7 +10,7 @@ export const Inicio = () => {
             <div className="row align-items-center">
                 <div className="col-lg-6 text-center text-lg-start">
                     <h1 className="display-4 fw-bold">
-                        Bienvenido a <span className="titulo" style={{color: '#6793AE', padding: '0 10px', borderRadius: '5px' }}>Loopy: <span class= "small">Freelance Code Connect</span></span>
+                        Bienvenido a <span className="titulo" style={{color: '#6793AE', padding: '0 10px', borderRadius: '5px' }}>Loopy: <span className="small">Freelance Code Connect</span></span>
                     </h1>
                     <p className="lead text-secondary mt-3">
                         ¿Eres un programador en busca de proyectos desafiantes? ¿O una empresa que necesita talento tecnológico para llevar sus ideas al siguiente nivel? ¡Estás en el lugar indicado!
@@ -36,7 +36,7 @@ export const Inicio = () => {
 
             {/* Features Section */}
             <div className="row mt-5 text-center text-lg-start">
-                <div className="col-md-6 mb-4" style={{ borderRadius: "10px", padding: "20px"}}>
+                <div className="col-md-6 mb-4" style={{ borderRadius: "10px", padding: "40px 30px", border: "2px solid #6793AE", marginBottom: "30px", marginRight: "25px", marginLeft: "-15px"}}>
                     <div className="feature-box">
                         <h3 className="text-secondary">Para Programadores</h3>
                         <ul className="list-unstyled mt-3 text-secondary">
@@ -46,7 +46,7 @@ export const Inicio = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="col-md-6 mb-4" style={{backgroundColor: '#6793AE', borderRadius: "10px", padding: "20px"}}>
+                <div className="col-md-6 mb-4" style={{backgroundColor: '#6793AE', borderRadius: "10px", padding: "40px 30px", marginBottom: "30px", marginRight: "-15px"}}>
                     <div className="feature-box">
                         <h3 className="text-white">Para Empresas</h3>
                         <ul className="list-unstyled mt-3 text-white">
