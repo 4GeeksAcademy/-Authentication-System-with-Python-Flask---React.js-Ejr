@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			psicologos: [],
 			dataUser: null,
 			imagenURL:""
+
 		},
 		actions: {
 
@@ -76,8 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
 						return false;
 					}
-
-
+          
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						setStore({
@@ -104,10 +104,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-
-
-
 
 			//Validación de token para contexto global
 			validToken: async () => {
