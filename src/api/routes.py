@@ -347,4 +347,3 @@ def get_report(baby_id, report_id):
         return jsonify({"error": "Report not found for this baby"}), 404
 
     return jsonify(report.serialize()), 200
-               
