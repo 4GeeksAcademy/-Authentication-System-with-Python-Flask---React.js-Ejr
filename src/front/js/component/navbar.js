@@ -62,7 +62,7 @@ export const Navbar = () => {
               <li className="nav-item">
                 <h1 className="titulo-navItem" style={{color:'#B4E49D'}}>Profile</h1>
                 <ul className="no-bullets">
-                  <li>See profile</li>
+                  <li><Link to="/gestor_perfil" style={{ color: 'inherit', textDecoration: 'none' }}>See profile</Link></li> {/* Enlace a Gestor Perfil */}
                   <li>Edit profile</li>
                 </ul>
               </li>
