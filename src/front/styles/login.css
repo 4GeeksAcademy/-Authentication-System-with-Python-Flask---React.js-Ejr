@@ -1,0 +1,13 @@
+#formularioLogin{
+    background-color: #64B6AC;
+    width: 500px;
+    border-radius: 20px;
+}
+
+.contenedor-password{
+    display: flex
+}
+
+.icon{
+    transform: translate(-25px, 10px);
+}

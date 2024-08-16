@@ -2,16 +2,21 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
+//Barra de búsqueda
+import BarraBusqueda from "../component/barraBusqueda";
+import "../../styles/barraBusqueda.css";
+
 
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
 // esto para que al presionar la pestaña, nos lleve a una pagina LINEA 12
-    return (
+return (
+    <div>
         <div id="carouselExampleFade" className="carousel slide carousel-fade">
             <div className="carousel-inner">
-                <div className="carousel-item active">    
-                    <a href="https://example.com/page1" target="_blank" rel="noopener noreferrer"> 
+                <div className="carousel-item active">
+                    <a href="https://example.com/page1" target="_blank" rel="noopener noreferrer">
                         <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100" alt="First Slide" />
                     </a>
                 </div>
@@ -35,6 +40,9 @@ export const Home = () => {
                 <span className="visually-hidden">Next</span>
             </button>
         </div>
-    );
+        {/* Aquí se agrega el componente BarraBusqueda */}
+        <BarraBusqueda />
+    </div>
+);
 };
 
