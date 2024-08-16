@@ -17,7 +17,9 @@ import { LoginPage } from "./pages/login";
 =======
 >>>>>>> b5c2fbf (Ruta añadida del front para el timeLine)
 import { Inicio } from "./pages/inicio.js";
+import { LoginPage } from "./pages/login";
 import { TimeLine } from "./pages/TimeLine.jsx";
+import { SobreNosotros } from "./pages/sobreNosotros.js";
 
 //create your first component
 const Layout = () => {
@@ -34,6 +36,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element ={<Inicio />} path="/" />
+                        <Route element ={<SobreNosotros />} path="/sobrenosotros" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<LoginPage />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
