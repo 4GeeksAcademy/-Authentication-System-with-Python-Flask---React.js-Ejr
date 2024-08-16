@@ -32,6 +32,7 @@ class User(db.Model):
     reports = db.relationship('Reports', back_populates='author', foreign_keys='Reports.author_id')
     reported_user_reports = db.relationship('Reports', back_populates='reported_user', foreign_keys='Reports.reported_user_id')
     
+    
     followers = db.relationship(
         'User', 
         secondary='follows_followers_rel',
@@ -204,3 +205,22 @@ class Score(db.Model):
             "intinerary_id": self.itinerary_id,
             "author_id": self.author_id,
         }
+    
+class Contacts(db.Model):
+    __tablename__= 'contacts'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(200), unique=False, nullable=False)
+    title = db.Column(db.String(90), unique=False, nullable=False)
+    description = db.Column(db.String(250), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Contacts {self.email}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "title": self.title,
+            "description": self.description,
+        }
+    
