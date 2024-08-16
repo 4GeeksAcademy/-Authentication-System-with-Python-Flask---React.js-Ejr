@@ -45,7 +45,7 @@ function About() {
       </div>
         </div>
         <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/2041540/pexels-photo-2041540.jpeg" class="card-img-top"/>
+          <img src="https://images.pexels.com/photos/6476577/pexels-photo-6476577.jpeg?auto=compress&cs=tinysrgb&w=800" class="card-img-top"/>
       <div class="card-body">
           <h5 class="card-title">Que Ofrecemos</h5>
           <p>Variedad de Cursos: Desde habilidades técnicas y profesionales hasta intereses personales y académicos, ofrecemos cursos en una amplia gama de temas.</p>
