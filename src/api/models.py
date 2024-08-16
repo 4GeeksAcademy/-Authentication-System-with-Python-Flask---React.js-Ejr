@@ -106,6 +106,7 @@ class Blog_recipe(db.Model):
             "text_steps": self.text_steps,
             "img_final": self.img_final,
             "source": self.source,
+            "type": "recipe" 
             # do not serialize the password, its a security breach
         }    
                 
@@ -130,6 +131,6 @@ class Blog_news(db.Model):
             "text": self.text,
             "img_final": self.img_final,
             "source": self.source,
+            "type": "news" 
             # do not serialize the password, its a security breach
-        }    
-                              
+        }                       

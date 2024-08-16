@@ -20,7 +20,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 age: "",
                 height: "",
                 weight: ""
-            }
+            },
+			blogs: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -67,6 +68,38 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+			// Crear Blog
+			createBlog: async (blogData) => {
+                const store = getStore();
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "api/new_blog", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            // Authorization: `Bearer ${store.token}` // 
+                        },
+                        body: JSON.stringify(blogData)
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log("Blog created successfully:", data);
+
+                        setStore({
+                            blogs: [...store.blogs, data.blog]
+                        });
+
+                        return true;
+                    } else {
+                        const errorData = await response.json();
+                        console.error("Failed to create blog:", errorData);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    return false;
+                }
+            },
 
 			getMessage: async () => {
 				try{

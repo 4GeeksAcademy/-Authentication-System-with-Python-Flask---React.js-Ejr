@@ -42,6 +42,9 @@ export const Navbar = () => {
                 <Link to="/login">Login</Link>
               </li>
               <li className="nav-item">
+                <Link to="/blog">Blog</Link>
+              </li>
+              <li className="nav-item">
                 <h1 className="titulo-navItem" style={{color:'#FBEE84'}}>Blog</h1>
                 <ul className="no-bullets">
                   <li>Recipes</li>

@@ -118,14 +118,7 @@ def edit_baby(id):
     
 #[POST] Nuevo Blog
 @api.route('/new_blog', methods=['POST'])
-@jwt_required()
 def new_blog():
-    
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    if not user or not user.is_admin:
-        return jsonify({"success": False, "msg": "Admin access required"}), 403
-
     data = request.json
     blog_type = data.get('type')
     author_id = data.get('author')
@@ -138,6 +131,9 @@ def new_blog():
         text_intro = data.get('text_intro')
         text_ingredients = data.get('text_ingredients')
         text_steps = data.get('text_steps')
+        # Si los campos obligatorios están vacíos, retorna un error 422
+        if not (text_intro and text_ingredients and text_steps):
+            return jsonify({"error": "Missing recipe fields"}), 422
         new_blog = Blog_recipe(
             author=author_id,
             title=title,
@@ -150,6 +146,8 @@ def new_blog():
         )
     elif blog_type == 'news':
         text = data.get('text')
+        if not text:
+            return jsonify({"error": "Missing news content"}), 422
         new_blog = Blog_news(
             author=author_id,
             title=title,
@@ -161,76 +159,70 @@ def new_blog():
     else:
         return jsonify({"error": "Invalid blog type"}), 400
 
-    db.session.add(new_blog)
-    db.session.commit()
-    return jsonify({"message": "Blog created successfully", "blog_id": new_blog.id}), 201
+    try:
+        db.session.add(new_blog)
+        db.session.commit()
+        return jsonify({"message": "Blog created successfully", "blog_id": new_blog.id}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 
 #[PUT] Editar Blog
-@api.route('/edit_blog/<int:id>', methods=['PUT'])
-@jwt_required()
-def edit_blog(id):
-    
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    if not user or not user.is_admin:
-        return jsonify({"success": False, "msg": "Admin access required"}), 403
+@api.route('/edit_blog/<string:type>/<int:id>', methods=['PUT'])
+def edit_blog(type, id):
 
+    # Obtener datos de la solicitud
     data = request.json
-    blog_type = data.get('type')
     title = data.get('title')
     img_header = data.get('img_header')
     img_final = data.get('img_final')
     source = data.get('source')
-    
-    blog = Blog_news.query.get(id)
-    
-    if not blog:
+
+    # Buscar el blog en la base de datos según el tipo
+    if type == 'news':
+        blog = Blog_news.query.get(id)
+        if not blog:
+            return jsonify({"error": "News blog not found"}), 404
+        blog.text = data.get('text', blog.text)
+    elif type == 'recipe':
         blog = Blog_recipe.query.get(id)
         if not blog:
-            return jsonify({"error": "Blog not found"}), 404
-    
+            return jsonify({"error": "Recipe blog not found"}), 404
+        blog.text_intro = data.get('text_intro', blog.text_intro)
+        blog.text_ingredients = data.get('text_ingredients', blog.text_ingredients)
+        blog.text_steps = data.get('text_steps', blog.text_steps)
+    else:
+        return jsonify({"error": "Invalid blog type"}), 400
+
+    # Actualizar los campos comunes
     blog.title = title
     blog.img_header = img_header
     blog.img_final = img_final
     blog.source = source
-    
-    if isinstance(blog, Blog_news):
-        if blog_type != 'news':
-            return jsonify({"error": "Blog type mismatch"}), 400
-        blog.text = data.get('text', blog.text)
-    
-    elif isinstance(blog, Blog_recipe):
-        if blog_type != 'recipe':
-            return jsonify({"error": "Blog type mismatch"}), 400
-        blog.text_intro = data.get('text_intro', blog.text_intro)
-        blog.text_ingredients = data.get('text_ingredients', blog.text_ingredients)
-        blog.text_steps = data.get('text_steps', blog.text_steps)
-    
-    else:
-        return jsonify({"error": "Invalid blog type"}), 400
-    
-    db.session.commit()
-    
-    return jsonify({"message": "Blog updated successfully", "blog_id": blog.id}), 200
 
+    try:
+        db.session.commit()
+        return jsonify({"message": "Blog updated successfully", "blog_id": blog.id}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 #[DELETE] Borrar Blog
-@api.route('/delete_blog/<int:id>', methods=['DELETE'])
-@jwt_required()
-def delete_blog(id):
+@api.route('/delete_blog/<string:type>/<int:id>', methods=['DELETE'])
+def delete_blog(type, id):
     
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    if not user or not user.is_admin:
-        return jsonify({"success": False, "msg": "Admin access required"}), 403
-
-    blog = Blog_news.query.get(id)
-    
-    if not blog:
+    # Eliminar el blog en función del tipo
+    if type == 'news':
+        blog = Blog_news.query.get(id)
+        if not blog:
+            return jsonify({"error": "News blog not found"}), 404
+    elif type == 'recipe':
         blog = Blog_recipe.query.get(id)
         if not blog:
-            return jsonify({"error": "Blog not found"}), 404
+            return jsonify({"error": "Recipe blog not found"}), 404
+    else:
+        return jsonify({"error": "Invalid blog type"}), 400
 
     db.session.delete(blog)
     db.session.commit()
@@ -252,20 +244,19 @@ def get_all_blogs():
 
 
 #[GET] Ver un blog (id)
-@api.route('/blog/<int:id>', methods=['GET'])
-def get_blog(id):
-
-    blog = Blog_news.query.get(id)
-    if blog:
-        serialized_blog = blog.serialize()
-        return jsonify({'msg': 'OK', 'data': serialized_blog}), 200
+@api.route('/blog/<string:type>/<int:id>', methods=['GET'])
+def get_blog(type, id):
     
+    if type == 'recipe':
+        blog = Blog_recipe.query.get(id)
+    elif type == 'news':
+        blog = Blog_news.query.get(id)
+    else:
+        return jsonify({'msg': 'Blog type not recognized'}), 400
 
-    blog = Blog_recipe.query.get(id)
     if blog:
         serialized_blog = blog.serialize()
         return jsonify({'msg': 'OK', 'data': serialized_blog}), 200
-
     return jsonify({'msg': 'Blog not found'}), 404
 
 
