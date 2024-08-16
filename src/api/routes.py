@@ -1,11 +1,13 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, send_from_directory
 from api.models import db, User, Baby, Report, Blog_recipe, Blog_news
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from werkzeug.utils import secure_filename
+import os
 
 api = Blueprint('api', __name__)
 
@@ -259,6 +261,27 @@ def get_blog(type, id):
         return jsonify({'msg': 'OK', 'data': serialized_blog}), 200
     return jsonify({'msg': 'Blog not found'}), 404
 
+# [POST] agregar imagen
+
+api = Blueprint('api', __name__)
+UPLOAD_FOLDER = 'uploads'
+# Asegúrate de que la carpeta de uploads existe
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+@api.route('/upload', methods=['POST'])
+def upload_file():
+    if 'image' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
+    return jsonify({"filePath": f"/uploads/{filename}"})
+
+@api.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 
 
