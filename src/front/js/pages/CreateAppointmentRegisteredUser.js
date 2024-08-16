@@ -82,23 +82,24 @@ const CreateAppointmentRegisteredUser = () => {
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
+    const now = moment().startOf('day');
+    const endDate = moment().add(30, 'days').endOf('day');
+    
     // Deshabilitar todos los días que no sean de lunes a viernes
-    return (
-      current &&
-      (current < moment().startOf("day") ||
-        current.day() === 0 ||
-        current.day() === 6)
-    );
+    const isWeekend = current.day() === 0 || current.day() === 6;
+
+    // Deshabilitar fechas fuera del rango de hoy a 30 días adelante
+    const isOutOfRange = current < now || current > endDate;
+
+    return current && (isWeekend || isOutOfRange);
   };
 
-  // Función para deshabilitar horas fuera del horario laboral
   const disabledTime = (date) => {
-    const hours = {
+    return {
       disabledHours: () => {
-        // Deshabilitar horas fuera del rango de 9:00 a 17:00
         const disabledHours = [];
         for (let i = 0; i < 24; i++) {
-          if (i < 8 || i >= 18) {
+          if (i < 8 || i >= 18) {  // Deshabilitar horas fuera del rango de 8:00 a 18:00
             disabledHours.push(i);
           }
         }
@@ -111,8 +112,10 @@ const CreateAppointmentRegisteredUser = () => {
         );
       },
     };
-    return hours;
   };
+
+  //------------------------------------------------------------------------------------
+
 
   //------------------------------------------------------------------------------------
 
@@ -227,6 +230,7 @@ const CreateAppointmentRegisteredUser = () => {
     setError("");
     setCurrentStep(currentStep + 1);
   };
+  
 
   const confirmAppointment = async () => {
     //------------------------------------------------------------------------------------
@@ -239,32 +243,29 @@ const CreateAppointmentRegisteredUser = () => {
       }
     } catch (error) {
       console.error("Failed to fetch user info:", error);
-    }
-
-    //------------------------------------------------------------------------------------
+  }
     navigate("/appointmentconfirmed");
+};
+    //------------------------------------------------------------------------------------
+    const MailSender = (userInfo) => {
+      const data = {
+          "sender": {
+              "name": "AutoAgenda",
+              "email": "autoagenda3@gmail.com"
+          },
+          "to": [{
+              "email": userInfo.email,
+              "name": userInfo.name
+          }],
+          "subject": "Appointment created successfully",
+          "htmlContent": `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          <h1 class="default-heading1" style="margin: 0; color: #1f2d3d; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
+          Your appointment on the day ${appointmentDate} has been created successfully.</p>
+          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`
+      };
+      actions.SendMail(data);
   };
-  //------------------------------------------------------------------------------------
-  const MailSender = (userInfo) => {
-    const data = {
-      sender: {
-        name: "AutoAgenda",
-        email: "autoagenda3@gmail.com",
-      },
-      to: [
-        {
-          email: userInfo.email,
-          name: userInfo.name,
-        },
-      ],
-      subject: "Appointment created successfully",
-      htmlContent: `<html><head></head><body><p>Hello,${userInfo.name}</p>This is my first transactional email sent from Brevo.</p></body></html>`,
-    };
-
-    console.log("Data ready to send:", data);
-    actions.SendMail(data);
-  };
-
+ 
   //------------------------------------------------------------------------------------
 
   const requireLicensePlate = (e) => {
@@ -276,64 +277,64 @@ const CreateAppointmentRegisteredUser = () => {
     }
   };
 
-  const confirmAppointmentRegisteredUser = async (e) => {
-    e.preventDefault();
+  // const confirmAppointmentRegisteredUser = async (e) => {
+  //   e.preventDefault();
   
-    // Error handling for missing details
-    if (!carId || !appointmentDate || !serviceChosen) {
-      setError("Missing required appointment details.");
-      return;
-    }
+  //   // Error handling for missing details
+  //   if (!carId || !appointmentDate || !serviceChosen) {
+  //     setError("Missing required appointment details.");
+  //     return;
+  //   }
   
-    try {
-      // Retrieve the necessary data from localStorage
-      const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("user_id");
+  //   try {
+  //     // Retrieve the necessary data from localStorage
+  //     const token = localStorage.getItem("token");
+  //     const userId = localStorage.getItem("user_id");
   
-      // Format the appointment date
-      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+  //     // Format the appointment date
+  //     const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
   
-      console.log("Sending appointment data:", {
-        date: dateFormat,
-        user_id: userId,
-        car_id: carId,
-        service_id: parseInt(serviceChosen, 10),
-      });
+  //     console.log("Sending appointment data:", {
+  //       date: dateFormat,
+  //       user_id: userId,
+  //       car_id: carId,
+  //       service_id: parseInt(serviceChosen, 10),
+  //     });
   
-      // Send the appointment request
-      const response = await fetch(`${apiUrl}/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          date: dateFormat,
-          user_id: userId,
-          car_id: carId,
-          service_id: parseInt(serviceChosen, 10),
-        }),
-      });
+  //     // Send the appointment request
+  //     const response = await fetch(`${apiUrl}/appointments`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         date: dateFormat,
+  //         user_id: userId,
+  //         car_id: carId,
+  //         service_id: parseInt(serviceChosen, 10),
+  //       }),
+  //     });
   
-      // Check for HTTP errors
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.error || "Failed to book the appointment. Please try again.");
-        return;
-      }
+  //     // Check for HTTP errors
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       setError(errorData.error || "Failed to book the appointment. Please try again.");
+  //       return;
+  //     }
   
-      // Process successful response
-      const appointmentData = await response.json();
-      console.log("Appointment details:", appointmentData);
+  //     // Process successful response
+  //     const appointmentData = await response.json();
+  //     console.log("Appointment details:", appointmentData);
   
-      // Navigate to confirmation page
-      navigate("/appointmentconfirmed");
-    } catch (error) {
-      // Set a more appropriate error message
-      setError("Failed to create the appointment. Please try again.");
-      console.error("Error creating appointment:", error);
-    }
-  };
+  //     // Navigate to confirmation page
+  //     navigate("/appointmentconfirmed");
+  //   } catch (error) {
+  //     // Set a more appropriate error message
+  //     setError("Failed to create the appointment. Please try again.");
+  //     console.error("Error creating appointment:", error);
+  //   }
+  // };
   
 
   const displayCurrentStep = () => {
