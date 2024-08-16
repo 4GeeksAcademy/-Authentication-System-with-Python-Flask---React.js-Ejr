@@ -1,0 +1,19 @@
+.form-box{
+    position: relative;
+    right: 17%;
+    background-color: white;
+    height:600px;
+    width: 800px;
+    border: 1px solid #f3eaea;
+    border-radius: 4px;
+}
+
+.form-header h2{
+    font-size: 4.5rem;
+    color: rgba(33, 37, 41, 0.75);
+    
+}
+.form-header span{
+    font-size: 2.5rem;
+    color: rgb(103, 147, 174);
+}
