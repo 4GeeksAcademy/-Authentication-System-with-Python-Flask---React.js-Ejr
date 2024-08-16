@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			totalAppointments: null,
 			totalServices: null,
 			totalCars: null,
+			corsEnabled: {"Access-Control-Allow-Origin": "*",}, // Esto se debe eliminar en producción
 		},
 		actions: {
 			loadSession: async () => {
@@ -40,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + storageToken,
-							// "Access-Control-Allow-Origin": "*"
+							"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
 						},
 					});
 					
@@ -82,6 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify({ email, password }),
 					headers: {
 						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
 					},
 				});
 				if (!resp.ok) {
@@ -91,7 +93,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				
 				let data = await resp.json();
-				// const token = data.access_token;
 				setStore({ token: data.access_token });
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem("role_id", data.role_id);
@@ -107,6 +108,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify({email, password, name, phone_number}),
 					headers: {
 						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
 					},
 				});
 				if(!resp.ok) {
@@ -124,31 +126,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 			
-					let resp = await fetch(apiUrl + "/logout", {
+					let resp = await fetch(`${apiUrl}/logout`, { 
 						method: "POST",
 						headers: {
 							"Authorization": "Bearer " + token,
 						},
 					});
-					localStorage.clear();
-					setStore({ token: null, userId: null, roleId: null });
-					
+			
 					if (!resp.ok) {
 						console.error("Error en la solicitud de logout:", resp.statusText);
 						return false;
 					}
-					
+			
 					localStorage.clear();
 					setStore({ token: null, userId: null, roleId: null });
 					return true;
 			
 				} catch (error) {
+					console.error("Error en logout:", error); // Añadido para mejor depuración
 					localStorage.clear();
 					setStore({ token: null, userId: null, roleId: null });
 					return false;
 				}
 			},
-			
 			
 			saveProfile: async (updatedProfile) => {
 				let { token } = getStore();
@@ -157,6 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: "Bearer " + token,
+						"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
 					},
 					body: JSON.stringify(updatedProfile),
 				});
@@ -175,6 +176,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + token,
+							"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
 						},
 						body: JSON.stringify(updatedCar),
 					});
@@ -183,7 +185,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const errorData = await resp.json();
 						return { success: false, error: errorData };
 					}
-			
+					
 					const data = await resp.json();
 					return { success: true, data: data };
 				} catch (error) {
@@ -191,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-		
+			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mails
 			SendMail: async (data) => {
 				console.log(data)
@@ -201,7 +203,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							'accept': 'application/json',
 							'api-key': process.env.MYKEY,
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
+							"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
 							
 						},
 						  body: JSON.stringify(data)
