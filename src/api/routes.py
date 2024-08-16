@@ -331,7 +331,7 @@ def get_reports(baby_id):
     if not baby:
         return jsonify({"error": "Baby not found"}), 404
 
-    reports = [report.serialize() for report in baby.reports]  # Corregido: usar 'reports' en plural
+    reports = [report.serialize() for report in baby.reports]  
     return jsonify(reports), 200
 
 

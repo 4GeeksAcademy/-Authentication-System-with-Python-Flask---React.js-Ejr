@@ -17,6 +17,7 @@ import { New_Blog } from "./pages/new_blog.jsx";
 import { All_Blogs } from "./pages/all_blogs.jsx";
 import { EditBlog } from "./pages/edit_blog.jsx";
 import { BlogDetail } from "./pages/blog_detail.jsx";
+import { AddReport } from "./pages/add_report.jsx";
 
 //create your first component
 const Layout = () => {
@@ -36,6 +37,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
+                        <Route element={<AddReport />} path="/Today" />
                         <Route element={<Gestor_bebe />} path="/gestor_bebe" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<New_Blog />} path="/new_blog" />
