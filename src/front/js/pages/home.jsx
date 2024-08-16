@@ -18,20 +18,16 @@ export const Home = () => {
       <Jumbotron />
       <h4>Rutas destacadas 🔥</h4>
       <div className=" row justify-content-around justify-content-xxl-evenly mx-5">
-        <div className="col-xs-12 col-md-4 d-flex justify-content-center">
-        <RutaDestacada />
+        <div className="col-xs-12 col-xxl-4 d-flex justify-content-center">
+          <RutaDestacada />
         </div>
-        <div className="col-xs-12 col-md-4 d-flex justify-content-center">
-        <RutaDestacada />
+        <div className="col-xs-12 col-xxl-4 d-flex justify-content-center">
+          <RutaDestacada />
         </div>
-        <div className="col-xs-12 col-md-4 d-flex justify-content-center">
-        <RutaDestacada />
+        <div className="col-xs-12 col-xxl-4 d-flex justify-content-center">
+          <RutaDestacada />
         </div>
       </div>
-
-      {/* // Aquí irá el componente Jumbotron+searchbar
-		// Aquí irá el componente RutasDestacadas
-		//El footer se renderiza en layout de manera predefinida */}
     </>
   );
 };
