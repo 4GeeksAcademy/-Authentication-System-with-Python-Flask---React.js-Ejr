@@ -23,7 +23,7 @@ export const Navbar = () => {
           <i className="fa-solid fa-circle-user" style={{ fontSize: '30px', color: 'white' }}></i>
         </Link>
       </div>
-      <div className="offcanvas offcanvas-start text-bg-dark offcanvas-custom" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div className="offcanvas offcanvas-start text-bg-dark offcanvas-custom" tabIndex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
           <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="offcanvasDarkNavbarLabel">
               <img src={logo_bebe} style={{ width: '50px', height: 'auto' }} alt="Baby Logo"/>
