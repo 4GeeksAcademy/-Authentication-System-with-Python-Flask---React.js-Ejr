@@ -35,7 +35,7 @@ export const AddReport = () => {
         };
 
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/report`, {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/report`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
