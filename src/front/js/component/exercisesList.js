@@ -9,7 +9,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
   const [percentage, setPercentage] = useState(0);
 
   const handleChange = async (e, exercise) => {
-    e.persist()
+    // e.persist()
     if (e.target.checked == true) {
       setDone(done + 1)
       await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
@@ -18,6 +18,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
     }
     if (e.target.checked == false) {
       setDone(done - 1)
+      console.log(done);
       await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
       const exerciseRoutine = await store.oneExerciseRoutine;
       await actions.deleteFollowUp(weeklyRoutine.id, exerciseRoutine.id)
@@ -37,6 +38,11 @@ export const ExercisesList = ({ weeklyRoutine }) => {
       setPercentage((done / total) * 100)
     }
   }, [done, total]);
+
+  useEffect(() => {
+    console.log("done:",done);
+    
+  }, [done]);
 
 
   return (
