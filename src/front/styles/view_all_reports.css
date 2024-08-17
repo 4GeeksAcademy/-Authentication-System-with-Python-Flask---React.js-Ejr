@@ -1,19 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    background-color: #C1D6DF;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: white;
+    width: 50%;
+}
+
+.title {
+    text-align: center; 
+    margin-bottom: 20px; 
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    font-size: 34pt;
+    color: #075E81;
+}
+
 .reports-container {
-    overflow-x: auto;
+    width: 100%;
+    max-width: 600px; 
 }
 
 .reports-wrapper {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 15px; /* Espacio entre las tarjetas */
-    padding: 10px;
+    flex-direction: column;
+    gap: 40px; 
 }
 
 .card {
-    min-width: 300px; /* Ancho mínimo de las tarjetas */
-    flex: 0 0 auto; /* Evita que las tarjetas se reduzcan de tamaño */
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-size: 14pt;
+    border-color: #075E81;
+    border-width: 3px;
 }
 
 .card-body {
-    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre las columnas */
+}
+
+.card-column {
+    flex: 1;
+    min-width: 200px; /* Asegura que las columnas tengan un ancho mínimo */
+}
+
+.card-footer {
+    margin-top: auto; 
+    text-align: right; 
+    border-color: #075E81;
+    border-width: 3px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.btn {
+    margin-top: 10px; /* Espacio arriba del botón */
+    background-color: #075E81; 
+    color: white; 
+    border-radius: 25px; 
+    height: 50px; 
+    font-size: 15pt;
+    border: none;
+    padding: 8px 15px;
+    font-weight: 500;
+}
+
+
+.btn:hover {
+    background-color: #C1D6DF;
+    color: #075E81;
 }
