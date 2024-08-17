@@ -7,13 +7,20 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
 import mercadopago
-import json
+import json, os
+import cloudinary 
+import cloudinary.uploader
 sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
 from flask import render_template
 # Allow CORS requests to this API
 CORS(api)
 
+cloudinary.config(
+    cloud_name=os.environ['CLOUDINARY_CLOUD_NAME'],
+    api_key=os.environ['CLOUDINARY_API_KEY'],
+    api_secret=os.environ['CLOUDINARY_API_SECRET']
+)
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -86,12 +93,12 @@ def valid_token():
     #con la identidad valida del usuario hago a User una consulta para retornar una respuesta
     #con la informacion de usuario propiamente dicho
     current_user = get_jwt_identity() #verifica si mi correo tiene una identidad
-    user_exist = User.query.filter_by(email = current_user).first
+    user_exist = User.query.filter_by(email = current_user).first()
     print(user_exist)
     # print(current_user)
     if user_exist is None:
         return jsonify (logged = False), 404
-    return jsonify(logged = True), 200 
+    return jsonify(logged = True, user = user_exist.serialize()), 200
 
 # Get users
 @api.route('/users', methods=['GET'])
@@ -286,3 +293,10 @@ def home():
     products = Product.query.all()
     return render_template('home.html', products=products)   
  
+@api.route('/upload', methods=['POST'])
+@jwt_required()
+def upload_image():
+    print(request.files)
+    file = request.files['image']
+    result = cloudinary.uploader.upload(file)
+    return result, 200
