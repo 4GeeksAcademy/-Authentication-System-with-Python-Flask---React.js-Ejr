@@ -1,0 +1,34 @@
+.main-container {
+    display: flex;
+}
+
+.calendar-placeholder {
+    width: 300px;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+}
+
+.form-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.column-one, .column-two {
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 10px;
+}

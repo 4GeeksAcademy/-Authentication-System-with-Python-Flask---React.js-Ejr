@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import "../../styles/view_all_reports.css";
 
 export const ViewReports = () => {
     const { babyId } = useParams(); // Obtenemos el babyId de los parámetros de la URL
@@ -25,6 +26,10 @@ export const ViewReports = () => {
 
                 const result = await response.json();
                 console.log("Reports result:", result); // Verifica el resultado del JSON
+
+                // Ordenar los reportes por fecha en orden cronológico inverso
+                result.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
                 setReports(result);
             } catch (error) {
                 console.error("Network error:", error); // Imprime el error de red en la consola
@@ -44,22 +49,26 @@ export const ViewReports = () => {
             <h2>Reports for Baby {babyId}</h2>
             {error && <div className="error">{error}</div>}
             {reports.length > 0 ? (
-                <ul>
-                    {reports.map(report => (
-                        <li key={report.id}>
-                            <p><strong>Date:</strong> {report.date}</p>
-                            <p><strong>Bedtime:</strong> {report.bedtime} hours</p>
-                            <p><strong>Meals:</strong> {report.meals}</p>
-                            <p><strong>Diapers:</strong> {report.diapers}</p>
-                            <p><strong>Walks:</strong> {report.walks}</p>
-                            <p><strong>Water:</strong> {report.water} liters</p>
-                            <p><strong>Medications:</strong> {report.meds ? "Yes" : "No"}</p>
-                            <p><strong>Kindergarten:</strong> {report.kindergarden ? "Yes" : "No"}</p>
-                            <p><strong>Extra Notes:</strong> {report.extra}</p>
-                            <Link to={`/edit_report/${babyId}/${report.id}`}>Edit Report</Link>
-                        </li>
-                    ))}
-                </ul>
+                <div className="reports-container">
+                    <div className="reports-wrapper">
+                        {reports.map(report => (
+                            <div className="card" key={report.id}>
+                                <div className="card-body">
+                                    <h5 className="card-title">Report from {report.date}</h5>
+                                    <p><strong>Bedtime:</strong> {report.bedtime} hours</p>
+                                    <p><strong>Meals:</strong> {report.meals}</p>
+                                    <p><strong>Diapers:</strong> {report.diapers}</p>
+                                    <p><strong>Walks:</strong> {report.walks}</p>
+                                    <p><strong>Water:</strong> {report.water} liters</p>
+                                    <p><strong>Medications:</strong> {report.meds ? "Yes" : "No"}</p>
+                                    <p><strong>Kindergarten:</strong> {report.kindergarden ? "Yes" : "No"}</p>
+                                    <p><strong>Extra Notes:</strong> {report.extra}</p>
+                                    <Link to={`/edit_report/${babyId}/${report.id}`} className="btn btn-primary">Edit Report</Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             ) : (
                 <p>No reports available.</p>
             )}

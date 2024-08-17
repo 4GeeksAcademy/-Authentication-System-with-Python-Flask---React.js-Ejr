@@ -116,6 +116,15 @@ def edit_baby(id):
 
     db.session.commit()
     return jsonify({'msg': 'Datos del bebe editado', 'data': baby.serialize()}), 200    
+
+#[GET] Listado del nombre de los bebés
+@api.route('/babies', methods=['GET'])
+def get_babies():
+    babies = Baby.query.all()
+    return jsonify([{
+        'id': baby.id,
+        'name': baby.name
+    } for baby in babies])
     
 #[POST] Nuevo Blog
 @api.route('/new_blog', methods=['POST'])

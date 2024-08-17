@@ -1,0 +1,19 @@
+.reports-container {
+    overflow-x: auto;
+}
+
+.reports-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px; /* Espacio entre las tarjetas */
+    padding: 10px;
+}
+
+.card {
+    min-width: 300px; /* Ancho mínimo de las tarjetas */
+    flex: 0 0 auto; /* Evita que las tarjetas se reduzcan de tamaño */
+}
+
+.card-body {
+    padding: 15px;
+}
