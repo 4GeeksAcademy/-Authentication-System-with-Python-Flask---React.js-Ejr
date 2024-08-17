@@ -101,6 +101,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Crear medias
+            fetchAverages: async (babyId, interval) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/report/averages/${babyId}?interval=${interval}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log("Averages fetched successfully:", data);
+                        return data.averages;
+                    } else {
+                        console.error("Failed to fetch averages");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error fetching averages", error);
+                    return null;
+                }
+            },
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend

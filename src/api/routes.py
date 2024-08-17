@@ -6,7 +6,7 @@ from api.models import db, User, Baby, Report, Blog_recipe, Blog_news
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from datetime import datetime
+from datetime import datetime, timedelta
 
 api = Blueprint('api', __name__)
 
@@ -132,7 +132,7 @@ def new_blog():
         text_intro = data.get('text_intro')
         text_ingredients = data.get('text_ingredients')
         text_steps = data.get('text_steps')
-        # Si los campos obligatorios están vacíos, retorna un error 422
+ 
         if not (text_intro and text_ingredients and text_steps):
             return jsonify({"error": "Missing recipe fields"}), 422
         new_blog = Blog_recipe(
@@ -173,14 +173,12 @@ def new_blog():
 @api.route('/edit_blog/<string:type>/<int:id>', methods=['PUT'])
 def edit_blog(type, id):
 
-    # Obtener datos de la solicitud
     data = request.json
     title = data.get('title')
     img_header = data.get('img_header')
     img_final = data.get('img_final')
     source = data.get('source')
 
-    # Buscar el blog en la base de datos según el tipo
     if type == 'news':
         blog = Blog_news.query.get(id)
         if not blog:
@@ -196,7 +194,6 @@ def edit_blog(type, id):
     else:
         return jsonify({"error": "Invalid blog type"}), 400
 
-    # Actualizar los campos comunes
     blog.title = title
     blog.img_header = img_header
     blog.img_final = img_final
@@ -213,7 +210,6 @@ def edit_blog(type, id):
 @api.route('/delete_blog/<string:type>/<int:id>', methods=['DELETE'])
 def delete_blog(type, id):
     
-    # Eliminar el blog en función del tipo
     if type == 'news':
         blog = Blog_news.query.get(id)
         if not blog:
@@ -282,7 +278,7 @@ def add_report():
             meds=data.get('meds'),
             kindergarden=data.get('kindergarden'),
             extra=data.get('extra'),
-            baby_id=baby_id  # Asociar el reporte con el bebé
+            baby_id=baby_id  
         )
         
         db.session.add(new_report)
@@ -347,3 +343,40 @@ def get_report(baby_id, report_id):
         return jsonify({"error": "Report not found for this baby"}), 404
 
     return jsonify(report.serialize()), 200
+
+
+#[GET] Calcular report
+@api.route('/report/averages/<int:baby_id>', methods=['GET'])
+def get_averages(baby_id):
+    interval = request.args.get('interval')  
+    
+    if interval == 'weekly':
+        days = 7
+    elif interval == 'biweekly':
+        days = 14
+    elif interval == 'monthly':
+        days = 30
+    else:
+        return jsonify({"error": "Invalid interval"}), 400
+
+    end_date = datetime.utcnow()
+    start_date = end_date - timedelta(days=days)
+
+    reports = Report.query.filter(
+        Report.baby_id == baby_id,
+        Report.date >= start_date.date(),
+        Report.date <= end_date.date()
+    ).all()
+
+    if not reports:
+        return jsonify({"error": "No reports found"}), 404
+
+    average_data = {
+        "bedtime": sum(r.bedtime for r in reports) / len(reports),
+        "meals": sum(r.meals for r in reports) / len(reports),
+        "diapers": sum(r.diapers for r in reports) / len(reports),
+        "walks": sum(r.walks for r in reports) / len(reports),
+        "water": sum(r.water for r in reports) / len(reports),
+    }
+
+    return jsonify({"averages": average_data})
