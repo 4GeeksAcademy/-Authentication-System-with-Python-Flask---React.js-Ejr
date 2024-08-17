@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import { Context } from "../store/appContext"; // Ajusta la ruta según tu estructura
+import { Context } from "../store/appContext"; 
+import { useNavigate } from 'react-router-dom'; 
 
 export const AverageReportPage = () => {
     const { babyId } = useParams();
     const { actions } = useContext(Context);
     const [interval, setInterval] = useState("weekly");
     const [averages, setAverages] = useState(null);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +39,8 @@ export const AverageReportPage = () => {
             ) : (
                 <p>No data available for the selected interval.</p>
             )}
+            {/* Botón para volver a la página de agregar reportes */}
+            <button onClick={() => navigate('/Today')} className="btn btn-secondary mt-3">Back to Add Report</button>
         </div>
     );
 };
