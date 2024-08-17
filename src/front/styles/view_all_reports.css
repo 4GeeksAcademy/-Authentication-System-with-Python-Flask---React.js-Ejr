@@ -1,21 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-body {
+.background-container {
     background-color: #C1D6DF;
+    width: 100%;
+    height: 100%;
 }
 
-.container {
+.vr-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px;
     background-color: white;
     width: 50%;
+    margin: auto;
 }
 
-.title {
+.vr-title {
     text-align: center; 
-    margin-bottom: 20px; 
+    margin-bottom: 50px; 
     font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-style: normal;
@@ -23,18 +26,18 @@ body {
     color: #075E81;
 }
 
-.reports-container {
+.vr-reports-container {
     width: 100%;
     max-width: 600px; 
 }
 
-.reports-wrapper {
+.vr-reports-wrapper {
     display: flex;
     flex-direction: column;
     gap: 40px; 
 }
 
-.card {
+.vr-card {
     border-radius: 8px;
     padding: 10px;
     background-color: #fff;
@@ -47,18 +50,18 @@ body {
     border-width: 3px;
 }
 
-.card-body {
+.vr-card-body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px; /* Espacio entre las columnas */
 }
 
-.card-column {
+.vr-card-column {
     flex: 1;
     min-width: 200px; /* Asegura que las columnas tengan un ancho mínimo */
 }
 
-.card-footer {
+.vr-card-footer {
     margin-top: auto; 
     text-align: right; 
     border-color: #075E81;
@@ -67,7 +70,7 @@ body {
     background-color: white;
 }
 
-.btn {
+.vr-btn {
     margin-top: 10px; /* Espacio arriba del botón */
     background-color: #075E81; 
     color: white; 
@@ -80,7 +83,7 @@ body {
 }
 
 
-.btn:hover {
+.vr-btn:hover {
     background-color: #C1D6DF;
     color: #075E81;
 }

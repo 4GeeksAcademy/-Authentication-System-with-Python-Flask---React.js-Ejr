@@ -6,8 +6,8 @@ import "../../styles/add_report.css";
 
 const CalendarPlaceholder = () => {
     return (
-        <div className="card calendar-card">
-            <div className="card-body">
+        <div className="card ar-calendar-card">
+            <div className="ar-card-body">
                 <h3><FontAwesomeIcon icon={faCalendar} /> Calendar</h3>
                 {/* Aquí puedes agregar tu implementación de calendario en el futuro */}
             </div>
@@ -109,18 +109,18 @@ export const AddReport = () => {
     };
 
     return (
-        <div className="container main-container">
-            <div className="card calendar-card">
-                <div className="card-body">
+        <div className="ar-container main-container">
+            <div className="card ar-calendar-card">
+                <div className="ar-card-body">
                     <CalendarPlaceholder />
                 </div>
             </div>
-            <div className="card form-card">
-                <div className="card-body">
+            <div className="card ar-form-card">
+                <div className="ar-card-body">
                     {error && <div className="error">{error}</div>}
-                    <form onSubmit={handleSubmit} className="form-grid">
-                        <div className="column-one">
-                            <div className="form-group">
+                    <form onSubmit={handleSubmit} className="ar-form-grid">
+                        <div className="ar-column-one">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faBaby} /></label>
                                 <select
                                     value={babyName}
@@ -140,7 +140,7 @@ export const AddReport = () => {
                                 </select>
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faCalendar} /></label>
                                 <input
                                     type="date"
@@ -150,7 +150,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label>
                                     <FontAwesomeIcon icon={faMoon} />
                                 </label>
@@ -163,7 +163,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faUtensils} /></label>
                                 <input
                                     type="number"
@@ -173,7 +173,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faBabyCarriage} /></label>
                                 <input
                                     type="number"
@@ -204,7 +204,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faDroplet} /></label>
                                 <input
                                     type="number"
@@ -215,8 +215,8 @@ export const AddReport = () => {
                                 />
                             </div>
                         </div>
-                        <div className="column-two">
-                            <div className="form-group">
+                        <div className="ar-column-two">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faPills} /></label>
                                 <Switch
                                     checked={meds}
@@ -224,7 +224,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            <div className="ar-form-group">
                                 <label><FontAwesomeIcon icon={faSchool} /></label>
                                 <Switch
                                     checked={kindergarden}
@@ -232,7 +232,7 @@ export const AddReport = () => {
                                 />
                             </div>
 
-                            <div className="form-group textarea-group">
+                            <div className="ar-form-group textarea-group">
                                 <label>Notes:</label>
                                 <textarea
                                     value={extra}
@@ -240,21 +240,21 @@ export const AddReport = () => {
                                 ></textarea>
                             </div>
 
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="ar-btn ar-btn-primary">
                                     <FontAwesomeIcon icon={faPlus} /> Submit
                                 </button>
 
-                            <div className="button-container">
+                            <div className="ar-button-container">
                                 
                                 <button
                                     onClick={() => navigate(`/average-report/${selectedBabyId}`)}
-                                    className="btn btn-secondary"
+                                    className="ar-btn ar-btn-secondary"
                                 >
                                     <FontAwesomeIcon icon={faChartBar} /> Report
                                 </button>
                                 <button
                                     onClick={() => navigate(`/baby/${selectedBabyId}/reports`)}
-                                    className="btn btn-secondary"
+                                    className="ar-btn ar-btn-secondary"
                                 >
                                     <FontAwesomeIcon icon={faCalendar} /> View All
                                 </button>

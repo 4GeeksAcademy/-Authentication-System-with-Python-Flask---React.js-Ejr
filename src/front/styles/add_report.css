@@ -2,46 +2,47 @@
 
 
 /* Contenedor principal */
-.container {
+.ar-container {
     display: flex; /* Utiliza Flexbox para alinear las tarjetas en una fila */
     gap: 20px; /* Espacio entre las tarjetas */
     padding: 20px;
 }
 
 
+
 /* CALENDARIO */
 
-.calendar-card {
+.ar-calendar-card {
     max-width: 50%; 
 }
 
 
 /* FORM */
 
-.form-card {
+.ar-form-card {
     max-width: 50%;
     border: none;
 }
 
-.card-body {
+.ar-card-body {
     padding: 20px;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
-.form-grid {
+.ar-form-grid {
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     gap: 75px;
 }
 
-.column-one, .column-two {
+.ar-column-one, .ar-column-two {
     display: flex;
     flex-direction: column; 
 }
 
-.form-group {
+.ar-form-group {
     display: flex; 
     align-items: center; 
     margin-bottom: 35px; 
@@ -49,7 +50,7 @@
 }
 
 /* Label */
-.form-group label {
+.ar-form-group label {
     display: flex; 
     align-items: center; 
     justify-content: center; 
@@ -67,8 +68,8 @@
 }
 
 /* Input */
-.form-group input, 
-.form-group textarea {
+.ar-form-group input, 
+.ar-form-group textarea {
     border-radius: 25px;
     width: 160px;
     height: 50px; 
@@ -80,15 +81,16 @@
     outline: none; 
     padding-left: 5px;
     text-align: center;
+    font-size: 13pt;
 }
 
 /* Textarea */
-.form-group.textarea-group {
+.ar-form-group.textarea-group {
     flex-direction: column;
     align-items: flex-start; 
 }
 
-.form-group.textarea-group label {
+.ar-form-group.textarea-group label {
     display: flex; 
     align-items: center; 
     justify-content: left; 
@@ -107,7 +109,7 @@
     margin-bottom: 35px;
 }
 
-.form-group textarea {
+.ar-form-group textarea {
     border-radius: 25px; 
     border-width: 3px; 
     border-color: #075E81; 
@@ -120,7 +122,7 @@
 }
 
 /* Botones */
-.button-container {
+.ar-button-container {
     display: flex; 
     gap: 14px; 
     justify-content: center; 
@@ -128,7 +130,7 @@
     width: 100%;
 }
 
-button {
+.ar-button {
     font-family: "Poppins", sans-serif; 
     font-size: 18pt; 
     padding: 0 20px;
@@ -136,7 +138,7 @@ button {
     border: none;
 }
 
-.btn-primary {
+.ar-btn-primary {
     background-color: #B4E49D; 
     color: #075E81; 
     border-radius: 25px; 
@@ -146,7 +148,7 @@ button {
     border: none;
 }
 
-.btn-secondary {
+.ar-btn-secondary {
     background-color: #075E81; 
     color: white; 
     border-radius: 25px; 
@@ -156,12 +158,14 @@ button {
     width: 50%;
 }
 
-.btn-primary:hover {
+.ar-btn-primary:hover {
     background-color: #075E81; 
+    color: white;
 }
 
-.btn-secondary:hover {
+.ar-btn-secondary:hover {
     background-color: #B4E49D;
+    color: #075E81;
 }
 
 
@@ -217,7 +221,7 @@ button {
 
 
   /* Estilo para el menú desplegable */
-  .form-group select {
+  .ar-form-group select {
       border-radius: 25px;
       width: 160px;
       height: 50px;
@@ -228,11 +232,11 @@ button {
       padding: 0 10px;
       outline: none;
       font-family: "Poppins", sans-serif;
-      font-size: 12pt;
+      font-size: 13pt;
       background-color: white;
   }
 
-  .form-group select {
+  .ar-form-group select {
       -webkit-appearance: none; 
       -moz-appearance: none;
       appearance: none; 
@@ -242,7 +246,7 @@ button {
       background-size: 20px;
   }
   
-  .form-group select[type="number"] {
+  .ar-form-group select[type="number"] {
       -moz-appearance: textfield;
   }
 
