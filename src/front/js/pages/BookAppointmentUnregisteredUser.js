@@ -231,6 +231,7 @@ const BookAppointmentUnregisteredUser = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           name,
@@ -253,6 +254,7 @@ const BookAppointmentUnregisteredUser = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           email,
@@ -276,6 +278,7 @@ const BookAppointmentUnregisteredUser = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           car_model: carModel,
@@ -298,6 +301,7 @@ const BookAppointmentUnregisteredUser = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
