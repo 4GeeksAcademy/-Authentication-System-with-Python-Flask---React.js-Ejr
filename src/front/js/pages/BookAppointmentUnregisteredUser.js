@@ -225,12 +225,13 @@ const BookAppointmentUnregisteredUser = () => {
 
   const confirmAccountAndAppointment = async (e) => {
     e.preventDefault();
-
+  
     try {
       const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           name,
@@ -239,43 +240,45 @@ const BookAppointmentUnregisteredUser = () => {
           phone_number: phoneNumber,
         }),
       });
-
+  
       if (!signUpNewUser.ok) {
         const errorData = await signUpNewUser.json();
         setError(errorData.error || "Failed to create account");
         return;
       }
-
+  
       const userData = await signUpNewUser.json();
       setUserId(userData.id);
-
+  
       const loginResponse = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           email,
           password,
         }),
       });
-
+  
       if (!loginResponse.ok) {
         const errorData = await loginResponse.json();
         setError(errorData.error || "Failed to log in");
         return;
       }
-
+  
       const loginData = await loginResponse.json();
       localStorage.setItem("token", loginData.access_token);
       localStorage.setItem("role_id", loginData.role_id);
       localStorage.setItem("user_id", loginData.user_id);
-
+  
       const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           car_model: carModel,
@@ -283,44 +286,48 @@ const BookAppointmentUnregisteredUser = () => {
           user_id: userData.id,
         }),
       });
-
+  
       if (!addNewCarNewUser.ok) {
         const errorData = await addNewCarNewUser.json();
         setError(errorData.error || "Failed to register car details");
         return;
       }
       const carData = await addNewCarNewUser.json();
-
+  
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-
+  
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
           user_id: userData.id,
           car_id: carData.id,
           service_id: parseInt(serviceChosen, 10),
+          comment: comment, 
         }),
       });
-
+  
       if (!submitAppointment.ok) {
         const errorData = await submitAppointment.json();
         setError(errorData.error || "Failed to book the appointment. Please try again.");
         return;
       }
-
+  
       const appointmentData = await submitAppointment.json();
       console.log("Appointment details:", appointmentData);
-
+  
       navigate("/accountandappointmentcreated");
     } catch (error) {
-      setError("Failed to create account or register car details");
+      console.error("Failed to create account or register car details", error);
+      setError("An error occurred. Please try again.");
     }
   };
+  
 
   const displayCurrentStep = () => {
     return (

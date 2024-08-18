@@ -626,7 +626,6 @@ def total_count():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// GET /slots-taken
 @api.route('/slots-taken', methods=['GET'])
-# @jwt_required()
 def get_slots_taken():
     now = datetime.now()
     end_date = now + timedelta(days=7) 
