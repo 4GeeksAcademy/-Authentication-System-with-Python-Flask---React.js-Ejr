@@ -80,27 +80,47 @@ const BookAppointmentUnregisteredUser = () => {
         current.day() === 6)
     );
   };
+
   // Función para deshabilitar horas fuera del horario laboral
   const disabledTime = (date) => {
-    const hours = {
-      disabledHours: () => {
-        // Deshabilitar horas fuera del rango de 9:00 a 17:00
-        const disabledHours = [];
-        for (let i = 0; i < 24; i++) {
-          if (i < 9 || i >= 17) {
-            disabledHours.push(i);
-          }
-        }
-        return disabledHours;
-      },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos a las horas permitidas
-        return [0, 15, 30, 45];
-      },
-    };
-    return hours;
-  };
+    const now = new Date(); // Hora actual
 
+    const hours = {
+        disabledHours: () => {
+            const disabledHours = [];
+            const selectedDate = new Date(date); // Fecha seleccionada
+
+            // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
+            if (
+                selectedDate.getFullYear() === now.getFullYear() &&
+                selectedDate.getMonth() === now.getMonth() &&
+                selectedDate.getDate() === now.getDate()
+            ) {
+                for (let i = 0; i < 24; i++) {
+                    if (i < now.getHours() || i < 9 || i >= 18) {
+                        disabledHours.push(i);
+                    }
+                }
+            } else {
+                // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
+                for (let i = 0; i < 24; i++) {
+                    if (i < 8 || i >= 18) {
+                        disabledHours.push(i);
+                    }
+                }
+            }
+            return disabledHours;
+        },
+        disabledMinutes: () => {
+            // Habilitar solo los minutos 0 y 30
+            return Array.from({ length: 60 }, (_, i) => i).filter(
+                (min) => min !== 0 && min !== 30
+            );
+        },
+    };
+
+    return hours;
+};
   //------------------------------------------------------------------------------------
   const checkSlotAvailability = async (dateTime) => {
     try {
@@ -367,7 +387,11 @@ const BookAppointmentUnregisteredUser = () => {
                 ref={datePickerRef}
                 format="DD/MM/YYYY HH:mm"
                 onChange={manageDateChange}
-                showTime={{ use12Hours: false, format: "HH:mm" }}
+                showTime={{
+                  use12Hours: false,
+                  format: "HH:mm",
+                  hideDisabledOptions: true,
+                }}
                 className="form-control"
                 disabledDate={disabledDate}
                 disabledTime={disabledTime}

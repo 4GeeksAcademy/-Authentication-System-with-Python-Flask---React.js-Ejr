@@ -52,6 +52,7 @@ const AdminDashboard = () => {
           const response = await fetch(`${apiUrl}/users/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
+              ...store.corsEnabled // Deshabilitar una vez en producción
             },
           });
 
@@ -76,6 +77,7 @@ const AdminDashboard = () => {
           const response = await fetch(`${apiUrl}/totalcount`, {
             headers: {
               Authorization: `Bearer ${token}`,
+              ...store.corsEnabled // Deshabilitar una vez en producción
             },
           });
           if (!response.ok) {
@@ -112,6 +114,7 @@ const AdminDashboard = () => {
           const response = await fetch(`${apiUrl}/settings`, {
             headers: {
               Authorization: `Bearer ${token}`,
+              ...store.corsEnabled // Deshabilitar una vez en producción
             },
           });
           if (!response.ok) {
