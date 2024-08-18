@@ -1,13 +1,18 @@
-import heroImg from "../../img/hero-img.png";
-import worldDottedMap from "../../img/world-dotted-map.png";
 import React, { useContext } from "react";
+import { useCountUp } from 'use-count-up';
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { useNavigate } from "react-router-dom";
+import heroImg from "../../img/hero-img.png";
+import worldDottedMap from "../../img/world-dotted-map.png";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+
+  const { value: happyClients } = useCountUp({ isCounting: true, end: 1232, duration: 3 });
+  const { value: scheduledServices } = useCountUp({ isCounting: true, end: 521, duration: 3 });
+  const { value: yearsOfExperience } = useCountUp({ isCounting: true, end: 32, duration: 3 });
 
   return (
     <>
@@ -46,19 +51,19 @@ export const Home = () => {
               >
                 <div className="col-lg-6 col-md-6 col-6 mx-auto my-3">
                   <div className="stats-item text-center w-100 h-100">
-                    <span>1232</span>
+                    <span>{happyClients}</span>
                     <p>Happy Clients</p>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-6 mx-auto my-3">
                   <div className="stats-item text-center w-100 h-100">
-                    <span>521</span>
+                    <span>{scheduledServices}</span>
                     <p>Scheduled Services</p>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-6 mx-auto my-3">
                   <div className="stats-item text-center w-100 h-100">
-                    <span>32</span>
+                    <span>{yearsOfExperience}</span>
                     <p>Years of Experience</p>
                   </div>
                 </div>

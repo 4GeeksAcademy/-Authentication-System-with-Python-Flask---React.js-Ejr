@@ -6,6 +6,7 @@ import { Context } from "../store/appContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
 
+
 const CreateAppointmentRegisteredUser = () => {
   const { store, actions } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
@@ -258,6 +259,29 @@ const CreateAppointmentRegisteredUser = () => {
 
       const appointmentData = await submitAppointment.json();
       console.log("Appointment details:", appointmentData);
+
+      const MailSender = (userInfo) => {
+        const data = {
+        sender: {
+              name: "AutoAgenda",
+              email: "autoagenda3@gmail.com",
+            },
+            to: [
+              {
+                email: userInfo.email,
+                name: userInfo.name,
+              },
+            ],
+            subject: "Appointment created successfully",
+            htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
+          Your appointment on the day ${dateFormat} has been created successfully.</p>
+          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
+          };
+      
+          console.log("Data ready to send:", data);
+          actions.SendMail(data);
+        };
 
       const userInfo = await actions.GetUser();
       if (userInfo && userInfo.email && userInfo.name) {
