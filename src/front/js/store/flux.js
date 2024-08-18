@@ -88,6 +88,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('error:'+error)
 				}
 			},
+			resetStore: ()=> {
+				setStore({msg:"", success:""})
+			}
+			
 		}
 	};
 };
