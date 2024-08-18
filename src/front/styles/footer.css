@@ -14,14 +14,17 @@
     font-size: 20px;
 }
 
-a {
+.footer-link {
     text-decoration: none;
     color: inherit;
 }
 
-a:hover {
+.footer-link:hover {
     border-bottom: 1px solid white;
     font-weight: bold;
     padding-bottom: 3px;
     color: white;
+}
+.rrss{
+    color: rgb(235 243 255)
 }

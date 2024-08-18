@@ -1,65 +1,36 @@
+import React from "react";
+import "../../styles/CardOffer.css";
+import { Link } from "react-router-dom";
 
-import React, {useState} from "react";
-import "../../styles/CardOffer.css"
-import { Link } from "react-router-dom"
-
-
-
-export const CardOffer = ({ title, company, modality, location, salary, description,id }) => {
-
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const toggleDescription = () => {
-        setIsExpanded(!isExpanded);
-    };
-
-
-
-
-
+export const CardOffer = ({ title, company, modality, location, salary, description, id }) => {
     return (
-        <div className="container mt-5">
-            <div className="card m-auto" style={{ width: "55rem" }}>
-                <div className="card-body d-flex align-items-center">
-                    <img
-                        className="img-fluid me-3"
-                        src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
-                        alt="Job Offer"
-                        style={{ width: "180px", height: "180px", objectFit: "cover" }}
-                    />
-                    <div>
-                        <h5 className="card-title">{title}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{company}</h6>
-                        <p className="card-text lh-1">
-                            <strong>Location:</strong> {location}
-                        </p>
-                        <p className="card-text lh-1">
-                            <strong>Modality:</strong> {modality}
-                        </p>
-                        <p className="card-text lh-1">
-                            <strong>Salary:</strong> {salary}
 
-                        </p>
-                        <p className="card-text">
-                            <strong>Description:</strong> {isExpanded ? description : `${description.substring(0, 100)}...`}
-                            <button onClick={toggleDescription} className="btn btn-link text-muted p-0 ms-2">
-                                {isExpanded ? "Leer menos" : "Leer más"}
-                            </button>
-                        </p>
-                        <Link to={`/singleoffer/${id}`} className="btn btn-card">
-                            Ver Oferta
-                        </Link>
-                        <Link to = {`/`} href="#" className="btn btn-card ms-2">
-
-                            Inscribirse
-                        </Link>
-                        <a href="#" className="ms-2">
-                            <i className="bi bi-heart"></i>
-                        </a>
+        <div className="card-offer my-2 p-3 d-flex align-items-center">
+            <div className="card-offer-logo me-3">
+                <img 
+                    className="card-offer-logo"
+                    src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg" 
+                    alt="Company Logo" 
+                />
+            </div>
+            <div className="card-offer-body">
+                <h2 className="card-offer-title">{title}</h2>
+                <p className="card-offer-company mb-1">{company} - {location}</p>
+                <div className="card-offer-description text-muted">
+                    {description}
+                </div>
+                <div className="card-offer-footer d-flex justify-content-between align-items-center mt-2">
+                    <div className="card-offer-details text-muted">
+                        <span>{modality}</span>
+                        <span className="mx-2">|</span>
+                        <span>{salary}</span>
+                    </div>
+                    <div className="card-offer-actions">
+                        <Link to={`/singleoffer/${id}`} className="btn btn-link text-decoration-none">View Details</Link>
+                        <button className="btn btn-primary btn-sm">Inscribirse</button>
                     </div>
                 </div>
             </div>
         </div>
-
-    )
-}
+    );
+};

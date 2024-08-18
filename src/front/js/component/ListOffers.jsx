@@ -16,7 +16,7 @@ export const ListOffers = () =>{
         <div className="container d-flex justify-content-center my-5">
           <div className="row d-flex flex-column">
             {jobOffers.map((offer, index) => (
-              <div className="col-md-4" key={index}>
+              <div className="col" key={index}>
                 <CardOffer 
                   title={offer.title}
                   company={offer.company}
