@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged: false,
 			psicologos: [],
 			dataUser: null,
-			imagenURL:   ""
+			imagenURL:  ""
 
 		},
 		actions: {
@@ -76,11 +76,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario', requestOptions);
 					const data = await response.json();
 
+
 					if (!token) {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
 
+
 						return false;
 					}
+
           
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
