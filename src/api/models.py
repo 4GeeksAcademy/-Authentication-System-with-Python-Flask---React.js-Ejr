@@ -128,8 +128,8 @@ class WeeklyRoutine(db.Model):
             for item_follow in follow_up:   
                 if item_follow["exercise_routine"]["exercise"]["id"] == item_routine["exercise"]["id"]:
                     item_routine["exercise"]["done"] = True
-                # else:
-                #     item_routine["exercise"]["done"] = False
+                else:
+                    item_routine["exercise"]["done"] = False
 
         return {
             "id": self.id,
