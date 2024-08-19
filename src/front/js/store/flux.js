@@ -25,14 +25,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password
 						})
 					})
+					let data = await response.json()
+					console.log(response);
+					
 					if (response.status === 200) {
-						let data = await response.json()
 						setStore({ currentUser: data.user })
 						localStorage.setItem("token", data.access_token)
 						return true
 					}
 					if (response.status === 404) {
-						let data = await response.json()
 						setStore({ error: data.msj })
 
 						return false

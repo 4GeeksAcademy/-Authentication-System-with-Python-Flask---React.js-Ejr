@@ -60,7 +60,7 @@ def add_new_user():
 # POST login
 @api.route("/login", methods=["POST"])
 def login():
-    print(login)
+    
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
@@ -296,13 +296,13 @@ def get_favorites():
 
 @api.route('/wishlist/users', methods=['GET'])
 @jwt_required()
-def get_favorites_by_user_id(id):
+def get_favorites_by_user_id():
     current_user = get_jwt_identity()
-    print(current_user)
-    # favorite = Favorite.query.filter_by(id=id).first()
-    favorite = Favorite.query.filter_by(user_id=id).all()
+    user = User.query.filter_by(email=current_user).first()
+    favorite = Favorite.query.filter_by(user_id=user.id).all()
     result= list(map(lambda item:item.serialize(),favorite))
     return jsonify (result), 200
+    # return jsonify ("ok"), 200
 
 
 #MERCADO PAGO
