@@ -37,8 +37,8 @@ export const Footer = () => {
 				<div className="lg:flex lg:items-end lg:justify-between">
 					<div>
 						<div className="flex justify-center items-center text-teal-600 lg:justify-start">
-							<LogoGymtrack
-							/>
+						<LogoGymtrack logoSize="large" />
+
 						</div>
 
 						<p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-neutral-500 lg:text-left">

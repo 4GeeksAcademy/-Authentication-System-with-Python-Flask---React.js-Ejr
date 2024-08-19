@@ -10,6 +10,37 @@ html{
   scroll-behavior: smooth
 }
 
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 0px;
+  background-color: #404040;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #404040;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #262626;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #10B981;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #34D399;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #10B981;
+}
+
 /*
 ! tailwindcss v3.4.7 | MIT License | https://tailwindcss.com
 */
@@ -754,10 +785,6 @@ video {
   margin-left: 0.75rem;
 }
 
-.mr-2{
-  margin-right: 0.5rem;
-}
-
 .ms-3{
   margin-inline-start: 0.75rem;
 }
@@ -826,6 +853,14 @@ video {
   display: none;
 }
 
+.aspect-\[3\/2\]{
+  aspect-ratio: 3/2;
+}
+
+.aspect-\[2\/3\]{
+  aspect-ratio: 2/3;
+}
+
 .size-10{
   width: 2.5rem;
   height: 2.5rem;
@@ -834,6 +869,11 @@ video {
 .size-16{
   width: 4rem;
   height: 4rem;
+}
+
+.size-20{
+  width: 5rem;
+  height: 5rem;
 }
 
 .size-4{
@@ -851,19 +891,9 @@ video {
   height: 12rem;
 }
 
-.size-7{
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
 .size-9{
   width: 2.25rem;
   height: 2.25rem;
-}
-
-.size-20{
-  width: 5rem;
-  height: 5rem;
 }
 
 .h-0{
@@ -930,6 +960,10 @@ video {
   min-height: 4rem;
 }
 
+.min-h-32{
+  min-height: 8rem;
+}
+
 .min-h-\[60vh\]{
   min-height: 60vh;
 }
@@ -960,6 +994,10 @@ video {
 
 .w-2\/3{
   width: 66.666667%;
+}
+
+.w-2\/5{
+  width: 40%;
 }
 
 .w-20{
@@ -1101,6 +1139,17 @@ video {
 
 .animate-infinite-slider{
   animation: infiniteSlider 20s linear infinite;
+}
+
+@keyframes ping{
+  75%, 100%{
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-ping{
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 @keyframes pulse{
@@ -1446,6 +1495,11 @@ video {
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.object-fill{
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 
 .object-scale-down{
@@ -2380,6 +2434,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 24rem;
   }
 
+  .md\:w-auto{
+    width: auto;
+  }
+
+  .md\:w-max{
+    width: -moz-max-content;
+    width: max-content;
+  }
+
   .md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2388,8 +2451,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: row;
   }
 
+  .md\:flex-nowrap{
+    flex-wrap: nowrap;
+  }
+
+  .md\:items-start{
+    align-items: flex-start;
+  }
+
   .md\:items-center{
     align-items: center;
+  }
+
+  .md\:justify-start{
+    justify-content: flex-start;
   }
 
   .md\:gap-8{
@@ -2403,6 +2478,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .md\:px-12{
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .md\:text-start{
+    text-align: start;
   }
 
   .md\:text-2xl{
@@ -2455,6 +2534,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .lg\:h-full{
     height: 100%;
+  }
+
+  .lg\:h-screen{
+    height: 100vh;
   }
 
   .lg\:min-h-screen{
