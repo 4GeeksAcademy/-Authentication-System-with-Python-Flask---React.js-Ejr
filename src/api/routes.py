@@ -35,10 +35,10 @@ def register():
     country = request.json.get("country", None)
     cif= request.json.get("cif", None)
     if not name or not username or not email or not password or not country:
-        return jsonify({'register':False, 'msg':'Todos los campos son necesarios'})
+        return jsonify({'success':False, 'msg':'Todos los campos son necesarios'})
     email_exist = User.query.filter_by(email=email).first()
     if email_exist:
-        return jsonify({'register': False, 'msg':'Ya existe una cuenta registrada con el email '+ email}),400
+        return jsonify({'success': False, 'msg':'Ya existe una cuenta registrada con el email '+ email}),400
 
     hashed_password = generate_password_hash(password).decode('utf-8')
     

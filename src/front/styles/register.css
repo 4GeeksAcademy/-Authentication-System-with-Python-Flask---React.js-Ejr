@@ -1,0 +1,10 @@
+.stylebutton {
+    background-color: #6693ae;
+    color: white;
+}
+
+.stylebutton:hover {
+    background-color: #5e88a3;
+    color: white;
+}
+

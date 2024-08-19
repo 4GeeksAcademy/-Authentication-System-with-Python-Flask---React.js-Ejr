@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export const CardOffer = ({ title, company, modality, location, salary, description, id }) => {
     return (
+
         <div className="card-offer my-2 p-3 d-flex align-items-center">
             <div className="card-offer-logo me-3">
                 <img 
