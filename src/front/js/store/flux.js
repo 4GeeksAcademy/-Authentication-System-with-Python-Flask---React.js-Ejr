@@ -12,7 +12,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			dataUser: null,
 			imagenURL:  ""
 
-
 		},
 		actions: {
 
