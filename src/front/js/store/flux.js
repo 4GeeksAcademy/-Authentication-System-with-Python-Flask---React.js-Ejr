@@ -12,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			totalServices: null,
 			totalCars: null,
 			
-			corsEnabled: {"Access-Control-Allow-Origin": "*",}, // Esto se debe eliminar en producción
+			// corsEnabled: {"Access-Control-Allow-Origin": "*",}, // Esto se debe eliminar en producción
 		},
 		actions: {
 			loadSession: async () => {
