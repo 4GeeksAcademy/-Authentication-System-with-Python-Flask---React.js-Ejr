@@ -32,6 +32,8 @@ export const Gestor_bebe = () => {
         setIsEditing(false);
     };
 
+	
+
 	return (
 		<div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: '#FBEE84', marginTop:'55px' }}>
 			<div className="d-flex justify-content-center align-items-center">
@@ -68,6 +70,10 @@ export const Gestor_bebe = () => {
                 <button onClick={() => setIsEditing(true)} className="btn btn-secondary mt-3">Edit</button>
             )}
 			
+			<div>
+
+			</div>
+
 			<Link to="/">
 				<button className="btn btn-dark mt-3">Back home</button>
 			</Link>
