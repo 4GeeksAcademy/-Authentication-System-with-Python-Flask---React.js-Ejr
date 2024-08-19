@@ -14,6 +14,22 @@ function UserAppointments() {
 
   const apiUrl = process.env.BACKEND_URL + "/api";
 
+  const compareDates = (a, b) => {
+    const today = new Date().setHours(0, 0, 0, 0);
+    const dateA = new Date(a.date).setHours(0, 0, 0, 0);
+    const dateB = new Date(b.date).setHours(0, 0, 0, 0);
+
+    if (dateA >= today && dateB >= today) {
+      return dateA - dateB;
+    }
+
+    if (dateA < today && dateB < today) {
+      return dateA - dateB;
+    }
+
+    return dateA < today ? 1 : -1;
+  };
+
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
 
@@ -22,13 +38,14 @@ function UserAppointments() {
         const response = await fetch(`${apiUrl}/appointmentsuser/${userId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-          ...store.corsEnabled // Deshabilitar una vez en producción
+            ...store.corsEnabled,
           },
         });
 
         if (response.ok) {
           const appointmentsData = await response.json();
-          setAppointments(appointmentsData);
+          const sortedAppointments = appointmentsData.sort(compareDates);
+          setAppointments(sortedAppointments);
         } else {
           console.error("Failed to fetch appointments");
         }
@@ -38,12 +55,10 @@ function UserAppointments() {
     };
 
     loadAppointments();
-  }, []); 
+  }, [apiUrl, store.corsEnabled]);
 
   const handleAddComment = async (appointmentId) => {
     const token = localStorage.getItem("token");
-    const role_id = localStorage.getItem("role_id");
-    const isMechanic = role_id === "2";
 
     if (newComments[appointmentId]?.trim()) {
       try {
@@ -52,13 +67,13 @@ function UserAppointments() {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            ...store.corsEnabled // Deshabilitar una vez en producción
-        },
+            ...store.corsEnabled,
+          },
           body: JSON.stringify({
             comment: newComments[appointmentId],
             user_id: localStorage.getItem("user_id"),
-            appointment_id: appointmentId, 
-            is_mechanic: false, 
+            appointment_id: appointmentId,
+            is_mechanic: false,
           }),
         });
 
@@ -101,6 +116,12 @@ function UserAppointments() {
     setErrors((prevState) => ({ ...prevState, [appointmentId]: "" }));
   };
 
+  const handleKeyDown = (e, appointmentId) => {
+    if (e.key === "Enter") {
+      handleAddComment(appointmentId); 
+    }
+  };
+
   const handleCancelClick = (appointmentId) => {
     setAppointmentToCancel(appointmentId);
     setShowConfirmModal(true);
@@ -115,8 +136,8 @@ function UserAppointments() {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-            ...store.corsEnabled // Deshabilitar una vez en producción
-        },
+            ...store.corsEnabled,
+          },
         }
       );
 
@@ -126,9 +147,11 @@ function UserAppointments() {
         return false;
       }
 
-      setAppointments(
-        appointments.filter((app) => app.id !== appoinmentToDelete)
+      const updatedAppointments = appointments.filter(
+        (app) => app.id !== appoinmentToDelete
       );
+
+      setAppointments(updatedAppointments);
       setShowConfirmModal(false);
       return true;
     } catch (error) {
@@ -192,6 +215,7 @@ function UserAppointments() {
                     onChange={(e) =>
                       handleCommentChange(app.id, e.target.value)
                     }
+                    onKeyDown={(e) => handleKeyDown(e, app.id)}
                   />
                   <button
                     className="btn btn-secondary mt-2"
@@ -201,12 +225,14 @@ function UserAppointments() {
                   </button>
                 </td>
                 <td>
-                  <button
-                    className="btn btn-danger ms-2"
-                    onClick={() => handleCancelClick(app.id)}
-                  >
-                    Cancel
-                  </button>
+                  {new Date(app.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && (
+                    <button
+                      className="btn btn-danger ms-2"
+                      onClick={() => handleCancelClick(app.id)}
+                    >
+                      Cancel
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
