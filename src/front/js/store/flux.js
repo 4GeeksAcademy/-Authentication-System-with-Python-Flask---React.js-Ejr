@@ -29,10 +29,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			//Nueva accion para obtener datos del bebe
+			// Nueva accion para obtener datos del bebe
 			fetchBabyData: async () => {
                 try {
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/one_baby/1"); // Ejemplo: obtener datos del bebé con id=1
+                    const resp = await fetch(process.env.BACKEND_URL + "api/one_baby/1"); // Ejemplo: obtener datos del bebé con id=1
                     const data = await resp.json();
                     if (data && data.bebe) {
                         setStore({ babyData: data.bebe });
@@ -42,16 +42,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Acción para actualizar los datos del bebé
-            //updateBabyData: (newData) => {
-            //    const store = getStore();
-            //    setStore({ babyData: { ...store.babyData, ...newData } });
-            //},
-
 			// Actualizar los datos del bebé
             updateBabyData: async (updatedData) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/edit_baby/1`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}api/edit_baby/1`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -137,6 +131,64 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Login
+            login: async (formData) => {
+                try {
+                    // Asegúrate de que BACKEND_URL esté definido correctamente
+                const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                });
+              
+                if (!response.ok) {
+                      // Manejo de errores HTTP
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+              
+                const data = await response.json();
+              
+                    // Verifica que la respuesta tenga las propiedades necesarias
+                if (data && data.token) {
+                    setStore({ user: data.user, token: data.token });
+                    localStorage.setItem('token', data.token);
+                } else {
+                    throw new Error('Invalid response data');
+                }
+              
+                return data;
+                } catch (error) {
+                    console.error("Error during login:", error);
+                // Opcional: podrías devolver un objeto que indique el error
+                    return { success: false, msg: error.message };
+                }
+            },              
+
+            // Register
+			register: async (formData) => {
+				try{
+					// fetching data from the backend
+
+					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						method: 'POST',
+						body: JSON.stringify(formData)
+
+					})
+					const data = await resp.json()
+					setStore({ user: data.user,token: data.token })
+					localStorage.setItem('token', data.token)
+					// don't forget to return something, that is how the async resolves
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
@@ -149,6 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

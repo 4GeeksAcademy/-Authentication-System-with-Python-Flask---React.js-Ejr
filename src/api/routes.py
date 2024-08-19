@@ -33,50 +33,51 @@ def login():
     user = User.query.filter_by (email=email).first()
     if user:
         if (user.password == password):
-            access_token = create_access_token(identity=user.id)
+            access_token = create_access_token(identity= user.id)
             return jsonify({'success' : True, 'user':user.serialize(), 'token' :access_token }), 200
-        return jsonify({'success' : False, 'msg':'usuario o contraseña no válidos'}), 400
+        return jsonify({'success' : False, 'msg':'Usuario o contraseña no válidos'}), 400
     return jsonify({'success' : False,  'msg' : 'El correo electrónico no existe'}), 404
 
 
 #[POST] Signup
 @api.route('/signup', methods=['POST'])
 def signup():
-    username = request.json.get('username', None)
     email = request.json.get('email', None)
     password = request.json.get('password', None)
-    if not email or not password or not username:
+    username = request.json.get('username', None)
+    if not email or not password:
         return jsonify({'success': False, 'msg': 'Faltan datos para el registro'}), 400
     user = User.query.filter_by(email=email).first()
     if user:
         return jsonify({'success': False, 'msg': 'Este correo electrónico ya tiene una cuenta'}), 400
-    new_user = User(username=username, email=email, password=password, is_admin=False)  # Considera si is_admin debe ser true o false por defecto
+    new_user = User(email=email, password=password, username=username, is_admin=False)
     db.session.add(new_user)
     db.session.commit()
-    access_token = create_access_token(identity=new_user.id)
-    return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
-
+    access_token = create_access_token(identity= new_user.id)
+    return jsonify({'success' : True, 'user':new_user.serialize(), 'token':access_token}), 200
+       
 
 #[GET] Token
-@api.route('/token', methods=['GET'])
+@api.route('/token', methods=['POST'])
 @jwt_required()
 def check_jwt():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+    user_id= get_jwt_identity()
+    user= User.query.get(user_id)
     if user:
-        return jsonify({'success' : True, 'user': user.serialize()}), 200
-    return jsonify({'success' : False, 'msg': 'Bad Token'}), 401
+        return jsonify({'success' : True, 'user':user.serialize()}), 200
+    return jsonify({'success' : False, 'msg': 'Bad token'}), 200
 
 
-#[Get] Protected
+#[GET] Protected
 @api.route('/protected', methods=['GET'])
 @jwt_required()
 def handle_protected():
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+    user= User.query.get(user_id)
     if user:
-         return jsonify({'msg' : 'Has logrado acceder a una ruta protegida, ' + user})
-    return jsonify({'Success' : False, 'msg' : 'Bad Token'})
+        return jsonify({'msg':'Has logrado acceder a una ruta protegida '})
+    return jsonify({'success':False, 'msg': 'Bad token'})
+
 
 #[GET] Listar todos los bebes que hay en la base de datos.
 @api.route('/all_babies', methods=['GET'])
@@ -116,15 +117,6 @@ def edit_baby(id):
 
     db.session.commit()
     return jsonify({'msg': 'Datos del bebe editado', 'data': baby.serialize()}), 200    
-
-#[GET] Listado del nombre de los bebés
-@api.route('/babies', methods=['GET'])
-def get_babies():
-    babies = Baby.query.all()
-    return jsonify([{
-        'id': baby.id,
-        'name': baby.name
-    } for baby in babies])
     
 #[POST] Nuevo Blog
 @api.route('/new_blog', methods=['POST'])
@@ -265,6 +257,17 @@ def get_blog(type, id):
         return jsonify({'msg': 'OK', 'data': serialized_blog}), 200
     return jsonify({'msg': 'Blog not found'}), 404
 
+#[GET] Listado del nombre de los bebés
+@api.route('/babies', methods=['GET'])
+@jwt_required()
+def get_babies():
+    user_id = get_jwt_identity()
+    print(f'User ID: {user_id}')  # Agrega un mensaje de depuración
+    babies = Baby.query.filter_by(user_id=user_id).all()
+    return jsonify([{
+        'id': baby.id,
+        'name': baby.name
+    } for baby in babies])
 
 #[POST] Añadir datos al Report
 @api.route('/report', methods=['POST'])
