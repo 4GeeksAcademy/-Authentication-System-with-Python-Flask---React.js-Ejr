@@ -187,9 +187,9 @@ def get_one_physical_user_information():
         return jsonify(data_serialized), 200
 
 # GET LAST PhysicalInformation / TRAER LA ULTIMA INFORMACION FISICA
-@api.route('/last-physical-user-information', methods=['GET'])
+@api.route('/last-one-physical-user-information', methods=['GET'])
 @jwt_required()
-def get_last_physical_user_information():
+def get_last_one_physical_user_information():
     current_user = get_jwt_identity()
     physical_information_list = PhysicalInformation.query.filter_by(user_id=current_user["id"]).all()
     last_value = physical_information_list[-1]
@@ -197,6 +197,22 @@ def get_last_physical_user_information():
         return ({'error':'physical information not found'}), 404
     else:
         data_serialized = last_value.serialize()
+        return jsonify(data_serialized), 200
+
+
+# GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
+@api.route('/last-physical-user-information', methods=['GET'])
+@jwt_required()
+def get_last_physical_user_information():
+    current_user = get_jwt_identity()
+    query = db.select(PhysicalInformation).where(PhysicalInformation.user_id==current_user["id"]).order_by(desc(PhysicalInformation.date)).limit(10)
+    result = db.session.execute(query)
+    physical_information_list = result.scalars()
+    if len(physical_information_list) is None:
+        return ({'error':'physical information not found'}), 404
+    else:
+        data_serialized = list(map(lambda information: information.serialize(), physical_information_list))
+        print(data_serialized)
         return jsonify(data_serialized), 200
 
 # POST PhysicalInformation / AGREGAR INFORMACION FISICA
