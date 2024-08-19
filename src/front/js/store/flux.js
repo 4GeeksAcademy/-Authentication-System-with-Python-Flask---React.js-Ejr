@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged: false,
 			psicologos: [],
 			dataUser: null,
-			imagenURL:""
+			imagenURL: ""
 
 		},
 		actions: {
@@ -73,22 +73,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario', requestOptions);
 					const data = await response.json();
+
 					if (!token) {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
+
 						return false;
 					}
-          
+
+
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						setStore({
 							dataUser: {
 								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
+								apellido: data.apellido || "Apellido no disponible",
 								correo: data.correo || "Correo no disponible",
-								foto: data.foto || "https://example.com/default-image.jpg",
+								foto: data.foto || null,
 								telefono: data.telefono || "Teléfono no disponible",
 								descripcion: data.descripcion || "descripcion no disponible"
 							}
 						});
+
 						return true;
 					} else {
 						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
@@ -252,29 +257,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			//cloudinary (IMAGENES)
-			uploadImage: async (data,cloud_name,preset_name) => {
-				console.log(data);
-				
-			
-			//	setLoading(true);
-			
-				try {
-					const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
-						method: 'POST',
-						body: data
-					});
-			
-					const fileData = await response.json();
-					//setProfileImage(fileData.secure_url);  // Actualiza el estado profileImage con la URL de la imagen subida.
-					//setLoading(false);
-					//console.log(fileData.secure_url);
-					setStore({imagenURL:fileData.secure_url})
-					
-				} catch (error) {
-					console.error('Error uploading image:', error);
-				//	setLoading(false);
+			uploadImage: async (data, cloud_name) => {
+				const actions = getActions()
+				const inputFile = new FormData()
+				inputFile.append("file", data)
+				console.log(inputFile.get("file"));
+
+				inputFile.append('upload_preset', 'hablemosuy');
+
+				const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+					method: 'POST',
+					body: inputFile
+				});
+
+				const fileData = await response.json();
+				console.log("Foto URL:", fileData.secure_url);
+				if (fileData.secure_url) {
+					const result = await actions.saveProfileImg(fileData.secure_url)
+					if(result){
+						return result
+					}
+					return false
 				}
 			},
+			saveProfileImg : async (url) =>{
+				const store = getStore()
+				const updateResponse = await fetch(process.env.BACKEND_URL + `/usuario/foto`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ foto: url, correo: store.dataUser.correo })
+				});
+
+				if (!updateResponse.ok) {
+					throw new Error('Error al actualizar la foto de perfil en la base de datos');
+				}
+				setStore({dataUser: {...store.dataUser,foto: url }})
+				return url
+			}
+
+
 		}
 	};
 }
