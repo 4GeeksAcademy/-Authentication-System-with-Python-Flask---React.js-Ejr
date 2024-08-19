@@ -45,12 +45,17 @@ export const Register = () => {
 	}, [])
 
 	const onSuccess = (response) => {
-		console.log(response)
+		const userData = response.profileObj
 		//conectar con los actions de flux para registrar usuario y luego con la base de datos
+		console.log(userData)
+		const registro = actions.register(userData.givenName, userData.familyName, null, null, null, userData.imageUrl, userData.email, userData.googleId)
+		if (registro) {
+			navigate('/vista-login')
+		}
 	}
 
 	const onFailure = () => {
-		console.log('Algo salió mal')
+		console.log('Algo salió mal al seleccionar la cuenta de google')
 	}
 
 	const formik = useFormik({

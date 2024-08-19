@@ -17,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Obtengo el token de usuario para la sesión
 			iniciarSesion: async (correo, clave) => {
+					 
+				const actions = getActions(); // Obtén todas las acciones disponibles
 				const options = {
 					method: 'POST',
 					headers: {
@@ -31,7 +33,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/login', options);
 					const data = await response.json();
-
 					if (response.status === 200) {
 						// Guardar el token en Local Storage y actualizar el estado global
 						localStorage.setItem('token', data.access_token);
@@ -39,6 +40,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ currentUser: { correo: correo } });
 						setStore({ logged: true });
 
+						// Configuramos el temporizador para renovar el token
+						setTimeout(() => actions.refreshToken(), (data.expires_in - 60) * 1000); // Se renueva un minuto antes de expirar
+					
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
@@ -179,11 +183,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Función para refrescar el token
 			refreshToken: async () => {
-				const refresh_token = localStorage.getItem('refresh_token');
+				const refresh_token = localStorage.getItem('refresh_token')
 				const options = {
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${refresh_token}`,
 					},
 					body: JSON.stringify({ refresh_token })
 				};
@@ -191,10 +196,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/refresh-token', options);
 					const data = await response.json();
-
 					if (response.status === 200) {
 						localStorage.setItem('token', data.access_token);
-						setTimeout(() => getActions.refreshToken(), (data.expires_in - 60) * 1000); // Renueva un minuto antes de expirar
 					} else {
 						throw new Error('Error al refrescar el token');
 					}
@@ -255,7 +258,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			/* Hasta ésta línea de código estará trabajando Pablo */
-			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, correo, clave) => {
+			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, foto, correo, clave) => {
 				const options = {
 					method: 'POST',
 					headers: {
@@ -267,11 +270,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						fecha_de_nacimiento: fecha_de_nacimiento,
 						codigo_de_area: codigo_de_area,
 						telefono: telefono,
+						foto: foto,
 						correo: correo,
 						clave: clave,
 					})
 				};
-
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
@@ -286,6 +289,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
 					} else if (response.status === 500) {
+						console.log(data)
 						throw new Error('Internal Server Error: ' + data.msg);
 					} else {
 
