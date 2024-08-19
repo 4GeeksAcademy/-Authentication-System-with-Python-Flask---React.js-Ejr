@@ -15,6 +15,15 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
+@api.after_request
+def apply_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+    response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+    response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+    return response
+
 
 # Crea una ruta para autenticar a tus usuarios y devolver los JWT.
 # La función create_access_token() se utiliza para generar el JWT   
@@ -89,6 +98,7 @@ def valid_token():
 @jwt_required(refresh=True)
 def refresh():
     current_user = get_jwt_identity()
+
     new_access_token = create_access_token(identity=current_user)
     return jsonify({"access_token": new_access_token}), 200
 
@@ -118,7 +128,7 @@ def create_user():
         if existing_user:
             return jsonify({"msg": "Email already exists"}), 400
         
-        fecha_de_nacimiento = datetime.strptime(data['fecha_de_nacimiento'], '%Y-%m-%d').date()
+        # fecha_de_nacimiento = datetime.strptime(data['fecha_de_nacimiento'], '%Y-%m-%d').date()
 
         user_created = User(
             nombre_usuario=data["nombre_usuario"],
@@ -134,7 +144,9 @@ def create_user():
             is_psicologo=data.get('is_psicologo', False)
         )
          # Hasheamos y almacenamos la contraseña
-        user_created.set_password(data["clave"])
+        if data["clave"]:
+             user_created.set_password(data["clave"])
+
         db.session.add(user_created)
         db.session.commit()
 
