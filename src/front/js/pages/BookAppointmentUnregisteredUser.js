@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { DatePicker } from "antd";
+import { Context } from "../store/appContext";
 import moment from "moment";
 import "../../styles/bookappointmentunregistereduser.css";
 import { useNavigate } from "react-router-dom";
 
 const BookAppointmentUnregisteredUser = () => {
+  const { store, actions } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
@@ -27,12 +29,16 @@ const BookAppointmentUnregisteredUser = () => {
   useEffect(() => {
     const getServices = async () => {
       try {
-        const response = await fetch(`${apiUrl}/services`);
+        const response = await fetch(`${apiUrl}/services`,{
+          // mode: 'no-cors',
+          headers: {
+            "Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
+          },
+        });
+        
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
-        const maxAppointmentsH = data.setting.max_appointments_per_hour
-        console.log(maxAppointmentsH)
-        setServices(data.services);
+        setServices(data);
         console.log("set service data", setServices);
         console.log("service data", data);
       } catch (error) {
@@ -322,6 +328,35 @@ const BookAppointmentUnregisteredUser = () => {
   
       const appointmentData = await submitAppointment.json();
       console.log("Appointment details:", appointmentData);
+
+      const MailSender = () => {
+        const data = {
+            sender: {
+                name: "AutoAgenda",
+                email: "autoagenda3@gmail.com",
+            },
+            to: [
+                {
+                    email: userData.email,
+                    name: userData.name,
+                },
+            ],
+            subject: "Account and Appointment Created Successfully",
+            htmlContent: `<html><head></head><body><p>Hello, ${userData.name}</p>
+            <p>Your account has been created successfully, and your appointment has been scheduled.</p>
+            <p>Date and Time: ${appointmentDate.format("DD/MM/YYYY HH:mm")}</p>
+            <p>This email is for informational purposes only, and you do not have to respond.</p></body></html>`,
+        };
+
+        console.log("Data ready to send:", data);
+        actions.SendMail(data);
+    };
+    if (userData && userData.email && userData.name) {
+      MailSender(userData);
+    } else {
+      console.error("User Info is missing email or name.");
+    }
+
   
       navigate("/accountandappointmentcreated");
     } catch (error) {
@@ -548,3 +583,4 @@ const BookAppointmentUnregisteredUser = () => {
 };
 
 export default BookAppointmentUnregisteredUser;
+
