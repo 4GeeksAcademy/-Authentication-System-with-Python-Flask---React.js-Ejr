@@ -46,7 +46,7 @@ export const AddReport = () => {
     const [error, setError] = useState("");
     const [selectedBabyId, setSelectedBabyId] = useState("");
 
-    const { store } = useContext(Context); // Accede al contexto para verificar el estado de autenticación
+    const { store, logout } = useContext(Context); // Accede al contexto para verificar el estado de autenticación
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -275,7 +275,6 @@ export const AddReport = () => {
                                     <FontAwesomeIcon icon={faCalendar} /> View All
                                 </button>
                             </div>
-
                         </div>
                     </form>
                 </div>

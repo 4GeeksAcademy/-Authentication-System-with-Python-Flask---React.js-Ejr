@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext"; // Importa el contexto para verificar autenticación
 import "../../styles/view_all_reports.css";
 
 export const ViewReports = () => {
@@ -9,14 +10,27 @@ export const ViewReports = () => {
     const [loading, setLoading] = useState(true);
     const [babyName, setBabyName] = useState(""); // Nuevo estado para el nombre del bebé
 
+    const { store } = useContext(Context); // Accede al contexto para verificar el estado de autenticación
+    const navigate = useNavigate();
+
     useEffect(() => {
+        // Redirige al login si no hay un token en el contexto
+        if (!store.token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchReportsAndBabyName = async () => {
-            const reportsUrl = `${process.env.BACKEND_URL}api/baby/${babyId}/reports`;
+            const reportsUrl = `${process.env.BACKEND_URL}api/baby/${babyId}/reports`; // URL actualizada
             const babyUrl = `${process.env.BACKEND_URL}api/babies`; // URL para obtener los bebés
 
             try {
                 // Obtener el nombre del bebé
-                const babyResponse = await fetch(babyUrl);
+                const babyResponse = await fetch(babyUrl, { 
+                    headers: {
+                        'Authorization': `Bearer ${store.token}` // Incluye el token en la solicitud
+                    }
+                });
                 if (!babyResponse.ok) {
                     const errorText = await babyResponse.text();
                     console.error("Error fetching babies:", errorText);
@@ -34,7 +48,11 @@ export const ViewReports = () => {
                 }
 
                 // Obtener los informes
-                const reportsResponse = await fetch(reportsUrl);
+                const reportsResponse = await fetch(reportsUrl, { 
+                    headers: {
+                        'Authorization': `Bearer ${store.token}` // Incluye el token en la solicitud
+                    }
+                });
                 if (!reportsResponse.ok) {
                     const errorText = await reportsResponse.text();
                     console.error("Error fetching reports:", errorText);
@@ -55,7 +73,7 @@ export const ViewReports = () => {
         };
 
         fetchReportsAndBabyName();
-    }, [babyId]);
+    }, [babyId, store.token, navigate]);
 
     if (loading) return <p>Loading...</p>;
 

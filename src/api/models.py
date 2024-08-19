@@ -7,11 +7,11 @@ class User(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    baby_id= db.Column(db.Integer, db.ForeignKey('baby.id'))
     avatar_path = db.Column(db.String(255))  # Almacenar la ruta de la imagen
     is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    baby = db.relationship('Baby', backref='user', lazy=True)
+    # Relación uno-a-muchos con Baby: Un usuario puede tener múltiples bebés
+    babies = db.relationship('Baby', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -21,10 +21,10 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "username": self.username,
-            "baby_id": self.baby_id,
-            # do not serialize the password, its a security breach
+            # No serializar la contraseña por razones de seguridad
         }
-    
+
+
 class Baby(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     avatar_path = db.Column(db.String(255))
@@ -34,7 +34,10 @@ class Baby(db.Model):
     height = db.Column(db.Float)
     weight = db.Column(db.Float)
     
-    # Definir la relación uno-a-muchos
+    # Clave foránea que apunta al usuario propietario del bebé
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    # Relación uno-a-muchos con Report: Un bebé puede tener múltiples informes
     reports = db.relationship('Report', backref='baby', lazy=True)
 
     def __repr__(self):

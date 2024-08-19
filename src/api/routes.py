@@ -272,23 +272,19 @@ def get_babies():
             print('User not found')
             return jsonify({'error': 'User not found'}), 404
 
-        # Verifica si el usuario tiene un bebé asociado
-        baby_id = user.baby_id
-        if baby_id is None:
-            print('No baby associated with user')
+        # Verifica si el usuario tiene bebés asociados
+        babies = Baby.query.filter_by(user_id=user_id).all()
+        
+        # Si no hay bebés, devuelve una lista vacía
+        if not babies:
+            print('No babies associated with user')
             return jsonify([])
 
-        # Busca el bebé asociado
-        baby = Baby.query.get(baby_id)
-        if baby is None:
-            print('Baby not found')
-            return jsonify([])
-
-        # Devuelve el bebé
-        return jsonify({
+        # Devuelve la lista de bebés
+        return jsonify([{
             'id': baby.id,
             'name': baby.name
-        })
+        } for baby in babies])
 
     except SQLAlchemyError as e:
         print(f'SQLAlchemy Error: {e}')
