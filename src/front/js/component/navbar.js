@@ -51,7 +51,7 @@ export const Navbar = () => {
       setHasAccess(false);
       setUserRole(null);
     }
-  }, [store.token]);
+  }, [store.token,localStorage.token]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
