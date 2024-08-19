@@ -43,40 +43,40 @@ export const Demo = () => {
 	return (
 		<div className="container">
 			<form onSubmit={handleSubmit}>
-				<h1>Want to join us?</h1>
+				<h1 className="register">Want to join us?</h1>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
 				<div className="mb-3">
-					<label htmlFor="name" className="form-label">Name</label>
-					<input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} />
+					<label htmlFor="name" className="form-label"></label>
+					<input type="text" className="form-control" id="name" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="username" className="form-label">Username</label>
-					<input type="text" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} />
+					<label htmlFor="username" className="form-label"></label>
+					<input type="text" className="form-control" id="username" name="username" placeholder="username" value={formData.username} onChange={handleChange} />
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="email" className="form-label">Email</label>
-					<input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} />
+					<label htmlFor="email" className="form-label"></label>
+					<input type="email" className="form-control" id="email" name="email"placeholder="Email" value={formData.email} onChange={handleChange} />
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="password" className="form-label">Password</label>
-					<input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} />
+					<label htmlFor="password" className="form-label"></label>
+					<input type="password" className="form-control" id="password" name="password"placeholder="Password" value={formData.password} onChange={handleChange} />
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="repeatPassword" className="form-label">Repeat Password</label>
-					<input type="password" className="form-control" id="repeatPassword" name="repeatPassword" value={formData.repeatPassword} onChange={handleChange} />
+					<label htmlFor="repeatPassword" className="form-label"></label>
+					<input type="password" className="form-control" id="repeatPassword" name="repeatPassword"placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} />
 				</div>
 
-				<button type="submit" className="btn btn-primary">Submit</button>
+				<button type="submit" className="btn-register btn-primary">Submit</button>
 				{error && <p className="text-danger">Todos los campos son obligatorios y las contraseñas deben coincidir</p>}
 			</form>
 			<p>
 				<Link className="link-opacity-50-hover" to="/">
-					Already have an account? Login
+					Already have an account? <span>Login</span>
 				</Link>
 			</p>
 		</div>

@@ -32,50 +32,54 @@ export const Home = () => {
 
 	return (
 		<div className="container">
-			<div id="my-signin2"></div>
-			<GoogleLogin
-				clientId="953402330168-infsbkt3uifhc81i1ohvn4oiq8dl596t.apps.googleusercontent.com"
-				buttonText="Iniciar sesión con Google"
-				onSuccess={respuestaGoogle}
-				onFailure={respuestaGoogle}
-				cookiePolicy={'single_host_origin'}
-			/>
-			<h1>Welcome Back!</h1>
+			<h1 className="login">Welcome Back!</h1>
 			<h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h5>
 			<form onSubmit={handleSubmit}>
 				<div className="mb-3">
-					<label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+					<label htmlFor="exampleInputEmail1" className="form-label"></label>
 					<input
 						type="text"
 						name="email"
 						value={formData.email}
 						onChange={handleChange}
-						className="form-control"
+						className="form-control1"
 						id="exampleInputEmail1"
 						aria-describedby="emailHelp"
-						placeholder="Email address"
+						placeholder="Email"
 					/>
 					<div id="emailHelp" className="form-text"></div>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+					<label htmlFor="exampleInputPassword1" className="form-label"></label>
 					<input
 						type="password"
 						name="password"
 						value={formData.password}
 						onChange={handleChange}
-						className="form-control"
+						className="form-control1"
 						id="exampleInputPassword1"
 						placeholder="Password"
 					/>
-					<p>Forgot your password?</p>
+					<p>
+						<a className="link-opacity-50-hover" href="#">Forgot your password?</a>
+					</p>
 				</div>
-				<button type="submit" className="btn btn-primary">Login</button>
+				<div className="button-container">
+					<button type="submit" className="btn-login btn-primary">Login</button>
+					<GoogleLogin className="googlebutton"
+						clientId="953402330168-infsbkt3uifhc81i1ohvn4oiq8dl596t.apps.googleusercontent.com"
+						buttonText="Iniciar sesión con Google"
+						onSuccess={respuestaGoogle}
+						onFailure={respuestaGoogle}
+						cookiePolicy={'single_host_origin'}
+					/>
+				</div>
 				{error && <p className="text-danger">Todos los campos son obligatorios</p>}
 			</form>
+			<img src="img/Group 2.png" alt="Descripción de tu imagen" />
 			<p>
 				<a className="link-opacity-50-hover" href="https://expert-guacamole-r475gg7979j9cg57-3000.app.github.dev/demo">
-					Not a member? Sign up
+					Not a member? <span>Sign up</span>
 				</a>
 			</p>
 		</div>

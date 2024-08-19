@@ -1,7 +1,81 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.login {
+    color: #075E81;
+    text-align: center;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+h5 {
+    color: #075E81
+}
+
+.form-control1 {
+    width: 655px;
+    height: 40px;
+    border: 2px solid #FBEE84;
+    border-radius: 20px;
+    font-family: sans-serif;
+    padding: 10px;
+}
+
+.btn-login{
+    width: 655px;
+    height: 40px;
+    border: 2px solid #FBEE84;
+    background-color: #FBEE84;
+    font-family: sans-serif;
+    color: #075E81;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;    
+}
+
+span {
+    font-weight: bold;
+}
+
+.link-opacity-50-hover {
+    text-decoration: none;
+    color: #075E81;
+}
+
+p {
+    text-align: center;
+}
+
+h5 {
+    text-align: center;
+}
+
+.googlebutton {
+    margin-top: 25px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register {
+    color: #B4E49D;
+}
+
+.form-control {
+    width: 655px;
+    height: 40px;
+    border: 3px solid #075E81;
+    border-radius: 20px;
+    font-family: sans-serif;
+    padding: 10px;
+}
+
+.btn-register{
+    width: 655px;
+    height: 40px;
+    border: 2px solid #B4E49D;
+    background-color: #B4E49D;
+    font-family: sans-serif;
+    color: #075E81;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;    
+}
