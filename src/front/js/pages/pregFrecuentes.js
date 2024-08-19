@@ -2,7 +2,7 @@ import React from 'react';
 
 const PregFrecuentes = () => {
     return (
-      <section className="container my-5 col-10 col-md-8">
+      <section className="container my-5 col-12 col-md-8">
         <h2 className="mb-4 text-inicio">Preguntas Frecuentes</h2>
         <div className="accordion" id="accordionExample">
           <div className="accordion-item">
