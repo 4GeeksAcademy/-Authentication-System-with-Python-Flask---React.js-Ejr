@@ -9,18 +9,17 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-
+from flask_bcrypt import Bcrypt
 
 
 
 api = Blueprint('api', __name__)
 
-
 # Allow CORS requests to this API
 CORS(api)
 
-
-
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -53,14 +52,57 @@ def post_user():
     if user_by_email:
         if user_by_email.email == user['email']:
             return ({'error':'This email is already used'}), 400
-    if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
-         return({'error':'"password" must be a string'}), 400
-    if not isinstance(user['confirm_password'], str) or len(user['confirm_password'].strip()) == 0:
-         return({'error':'"confirm_password" must be a string'}), 400
+    # PASSWORD
+    # PASSWORD
+    espacio = False
+    numeros=False
+    mayuscula = False
+    minuscula = False
+    mayus_minus = False
+    caract_espec = False
+    caract_especiales = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
+    if not isinstance(user['password'], str) or len(user['password']) < 6 or len(user['password']) > 12:
+         return({'error':'"password" must be between 6 and 12 characters long'}), 400
+    
+    for caracter in user['password']:
+        if caracter.isspace() == True:
+            espacio = True
+        if caracter.isdigit() == True:
+            numeros = True
+        
+        if caracter.isupper() == True:
+            mayuscula = True
+            print("mayuscula",mayuscula)
+        if caracter.islower() == True:
+            minuscula = True
+            print("minuscula",minuscula)
+
+        for caract_especial in caract_especiales:
+            print(caracter)
+            print(caract_especial)
+            if caracter == caract_especial:
+                caract_espec = True
+                print(caract_espec)
+
+    if mayuscula == True and minuscula == True:
+        mayus_minus = True
+        print("mayus_minus", mayus_minus)
+
+    if espacio == True:
+        return({'error':'"password" there can be no blank spaces'}), 400
+    if numeros == False:
+        return({'error':'"password" must have at least one number'}), 400
+    if mayus_minus == False:
+        return({'error':'"password" must have at least one uppercase and one lowercase letter'}), 400
+    if caract_espec == False:
+        return({'error':'"password" must have at least one special character'}), 400
     if user['password'] != user['confirm_password']:
         return({'error':'"password" and "confirm_password" must be the same'}), 400
 
-    user_created = User(name=user['name'], birthday=user['birthday'], sex=user['sex'], email=user['email'], password=user['password'])
+    password = user['password']
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8') 
+
+    user_created = User(name=user['name'], birthday=user['birthday'], sex=user['sex'], email=user['email'].lower(), password=hashed_password)
     db.session.add(user_created)
     db.session.commit()
     return jsonify(user_created.serialize()), 200
@@ -74,13 +116,17 @@ def login():
          return({'error':'"email" must be a string'}), 400
     if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
          return({'error':'"password" must be a string'}), 400
-
-    user_db = User.query.filter_by(email=user['email'], password=user['password']).first()
+    
+    user_db = User.query.filter_by(email=user['email'].lower()).first()
     if user_db is None:
+        return({'error':'this email does not exist'}), 400
+    is_valid = bcrypt.check_password_hash(user_db.password, user['password'])
+
+    if user_db and is_valid:
+        access_token = create_access_token(identity={"email": user_db.email, "id": user_db.id})
+        return jsonify({"access_token":access_token, "logged":True}), 200
+    else:
         return jsonify({"error":"incorrect credentials"}), 401
-   
-    access_token = create_access_token(identity={"email": user_db.email, "id": user_db.id})
-    return jsonify({"access_token":access_token, "logged":True}), 200
 
 # VALIDAR TOKEN
 @api.route("/valid-token", methods=["GET"])
