@@ -45,7 +45,7 @@ export const LoginForm = () => {
     )
 
     loginPromise.then(() => {
-      navigate("/dashboard")
+      navigate("/")
     }).catch((error) => {
       console.error(error)
     })
@@ -54,8 +54,8 @@ export const LoginForm = () => {
   return (
     <section className="animate__animated animate__fadeIn absolute min-h-screen w-full top-0 z-50 bg-white dark:bg-neutral-900">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="relative flex h-32 items-end bg-neutral-900 lg:col-span-5 lg:h-full xl:col-span-6">
-          <img alt="" src={formImg} className="absolute inset-0 h-full w-full object-cover opacity-80" />
+        <section className="relative flex h-32 items-end bg-neutral-900 lg:col-span-5 w-full  lg:h-screen xl:col-span-6 aspect-[2/3] object-cover">
+          <img alt="" src={formImg} className="object-[0%_35%] absolute inset-0 h-full w-full object-cover opacity-80 " />
         </section>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-12 lg:py-12 xl:col-span-6">

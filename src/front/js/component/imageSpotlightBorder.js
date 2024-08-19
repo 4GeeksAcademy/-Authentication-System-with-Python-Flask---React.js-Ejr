@@ -45,7 +45,7 @@ export const ImageSpotlightBorder = ({ src, alt }) => {
         onBlur={handleBlur}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="base-image rounded-lg"
+        className="base-image rounded-lg aspect-[3/2] "
       />
       <div
         style={{

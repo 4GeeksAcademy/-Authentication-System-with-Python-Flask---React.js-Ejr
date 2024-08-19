@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
@@ -17,24 +17,62 @@ import { Profile } from "./pages/profile";
 import { ToastContainer } from "react-toastify";
 
 import { VistaPrueba } from "./pages/vistaPrueba.jsx";
-
 import { Dashboard } from "./pages/dashboard";
 import { Exercises } from "./pages/exercises";
 import { ErrorView } from "./pages/error";
 
+const usePageTitle = (defaultTitle) => {
+    const location = useLocation();
+
+    useEffect(() => {
+        switch (location.pathname) {
+            case '/':
+                document.title = 'Inicio | GYMTRACK';
+                break;
+            case '/vistaprueba':
+                document.title = 'Vista Prueba | GYMTRACK';
+                break;
+            case '/exercises':
+                document.title = 'Ejercicios | GYMTRACK';
+                break;
+            case '/dashboard':
+                document.title = 'Dashboard | GYMTRACK';
+                break;
+            case '/login':
+                document.title = 'Iniciar sesión | GYMTRACK';
+                break;
+            case '/signup':
+                document.title = 'Registrarse | GYMTRACK';
+                break;
+            case '/private':
+                document.title = 'Private | GYMTRACK';
+                break;
+            case '/profile':
+                document.title = 'Perfil | GYMTRACK';
+                break;
+            case '/demo':
+                document.title = 'Demo | GYMTRACK';
+                break;
+            case '/single':
+                document.title = 'Single | GYMTRACK';
+                break;
+            default:
+                document.title = defaultTitle;
+        }
+    }, [location, defaultTitle]);
+};
 
 //create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
     return (
         <div className="bg-neutral-900 min-h-screen flex flex-col gap-6">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                    <PageTitleManager defaultTitle="Mi Aplicación" />
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
@@ -55,6 +93,11 @@ const Layout = () => {
             </BrowserRouter>
         </div>
     );
+};
+
+const PageTitleManager = ({ defaultTitle }) => {
+    usePageTitle(defaultTitle);
+    return null;
 };
 
 export default injectContext(Layout);

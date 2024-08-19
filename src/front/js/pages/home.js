@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
-import { SideMenu } from "../component/sideMenu";
 import { HomeBanner } from "../component/homeBanner";
 import { HomeExercises } from "../component/homeExercises";
 import { SectionTest } from "../component/sectionTest";
@@ -21,7 +18,7 @@ export const Home = () => {
 			<SectionTabs />
 			<hr className="divider"></hr>
 			<SectionTest />
-			<hr className="divider"></hr>
+			<hr className="divider animate-ping"></hr>
 		</>
 	);
 };

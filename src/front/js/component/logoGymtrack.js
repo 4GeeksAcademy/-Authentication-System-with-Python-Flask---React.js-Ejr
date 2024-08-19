@@ -1,9 +1,28 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export const LogoGymtrack = () => {
+export const LogoGymtrack = ({ logoSize = 'medium' }) => {
+    // Para poner diferentes medidas y no tener que editar las clases 1x1
+    const sizeMap = {
+        small: {
+            svgSize: 'size-10',
+            textSize: 'text-sm',
+        },
+        medium: {
+            svgSize: 'size-16',
+            textSize: 'text-xl',
+        },
+        large: {
+            svgSize: 'size-20',
+            textSize: 'text-4xl',
+        },
+    };
+
+    const { svgSize, textSize } = sizeMap[logoSize] || sizeMap['medium'];
+
     return (
-        <>
-            <svg className='size-20 invert' version="1.0" xmlns="http://www.w3.org/2000/svg"
+        <Link className='flex items-center' to={"/"}>
+            <svg className={`${svgSize}  invert`} version="1.0" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1000.000000 1000.000000"
                 preserveAspectRatio="xMidYMid meet">
                 <g transform="translate(0.000000,1000.000000) scale(0.100000,-0.100000)"
@@ -433,8 +452,7 @@ export const LogoGymtrack = () => {
         -223 3 0 6 47 6 104 l0 104 -81 46 c-84 47 -93 50 -119 37z"/>
                 </g>
             </svg>
-            <h4 className="font-bold text-white text-4xl">GYMTRACK</h4>
-        </>
-
-    )
-}
+            <h4 className={`font-bold text-white ${textSize}`}>GYMTRACK</h4>
+        </Link>
+    );
+};
