@@ -65,6 +65,37 @@ export const Login = () => {
 		},
 	});
 
+	// Función para manejar "Olvidé mi contraseña"
+	const handleForgotPassword = async () => {
+		if (!formik.values.correo) {
+			Swal.fire({
+				title: 'Error',
+				text: 'Por favor, ingresa tu correo electrónico antes de solicitar la recuperación.',
+				icon: 'error',
+				confirmButtonText: 'Aceptar'
+			});
+			return;
+		}
+
+		const { success, message } = await actions.solicitarRecuperacion(formik.values.correo);
+
+		if (success) {
+			Swal.fire({
+				title: 'Correo enviado',
+				text: message,
+				icon: 'success',
+				confirmButtonText: 'Aceptar'
+			});
+		} else {
+			Swal.fire({
+				title: 'Error',
+				text: message,
+				icon: 'error',
+				confirmButtonText: 'Aceptar'
+			});
+		}
+	};
+
 
 
 	return (
@@ -73,15 +104,15 @@ export const Login = () => {
 				<h2 className="title fw-semibold text-secondary">Iniciar sesión</h2>
 
 				<div className="left">
-				<div className="d-flex justify-content-center">
-					<input type="email" className="form-control m-2" name="correo" placeholder="Email:"
-						if='correo'
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						value={formik.values.correo} />
-					{formik.touched.correo && formik.errors.correo ? (
-						<div className="text-danger">{formik.errors.correo}</div>
-					) : null}
+					<div className="d-flex justify-content-center">
+						<input type="email" className="form-control m-2" name="correo" placeholder="Email:"
+							if='correo'
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							value={formik.values.correo} />
+						{formik.touched.correo && formik.errors.correo ? (
+							<div className="text-danger">{formik.errors.correo}</div>
+						) : null}
 					</div>
 
 					<div className="d-flex justify-content-center">
@@ -102,7 +133,7 @@ export const Login = () => {
 						<GoogleLogin className="btn-login-registro d-flex justify-content-center" clientId={clientID} onSuccess={onSuccess} onFailure={onFailure} cookiePolicy="single_host_policy" />
 					</div>
 					<div className="p-2">
-						<Link to="/" className="login__forgot m-3">Olvidé mi contraseña</Link>
+						<Link to="#" onClick={handleForgotPassword} className="login__forgot m-3">Olvidé mi contraseña</Link>
 					</div>
 					<div className="linea-divisoria">
 						<span className="linea"></span>
