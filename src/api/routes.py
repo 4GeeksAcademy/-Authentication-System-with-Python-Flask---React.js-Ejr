@@ -158,7 +158,7 @@ def reset_password_token(token):
     except Exception as e:
         return jsonify({"msg": f"Error: {str(e)}"}), 500
 
-    user = User.query.filter_by(correo=correo).first()
+    user = User.query.filter_by(correo=user['correo']).first()
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
