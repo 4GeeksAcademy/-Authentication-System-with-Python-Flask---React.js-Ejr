@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Dropdown } from 'react-bootstrap'; //biblioteca que reescribe los componentes de Bootstrap como componentes de React.
 import '../../styles/barraBusqueda.css'; // Importa los estilos para el componente
 import { Context } from '../store/appContext'; // Importa el contexto global
+import 'bootstrap-icons/font/bootstrap-icons.css'; // Importa los iconos de Bootstrap
+
 
 const BarraBusqueda = () => {
     // Accede al estado global y las acciones desde el contexto
@@ -169,17 +171,18 @@ const BarraBusqueda = () => {
                             </div>
                         </Form.Group>
                     </Col>
-                    <Col> {/* Columna para el filtro de valoraciones */}
-                        <Form.Group controlId="formValoracion">
+                    <Col> {/* Columna dentro de una fila (row) para el filtro de valoraciones */}
+                        <Form.Group controlId="formValoracion"> {/* Agrupa elementos de formulario relacionados. controlId se usa para asociar el grupo con una etiqueta de formulario (<Form.Label>). */}
                             <Form.Label>Valoraciones</Form.Label>
-                            <div className="filtro">
+                            <div className="estrellas">
                                 {/* Muestra estrellas según la valoración actual */}
-                                {[...Array(5)].map((_, i) => (
-                                    <span 
-                                        key={i} 
+                                {[...Array(5)].map((_, i) => ( /* Crea un array de 5 elementos (para representar 5 estrellas) e itera sobre el y genera un span para cada estrella*/
+                                    <span
+                                        key={i}
+                                        className={i < store.filtros.valoracion ? "estrella rellena" : "estrella vacia"} /* Si la estrella está activada (onclick) (de menos a más ), recibe la clase estrella rellena, si no recibe la clase estrella vacia*/
                                         onClick={() => handleChange({ target: { name: 'valoracion', value: i + 1 } })}
                                     >
-                                        {i < store.filtros.valoracion ? "★" : "☆"}
+                                        ★
                                     </span>
                                 ))}
                             </div>
@@ -219,7 +222,6 @@ const BarraBusqueda = () => {
                                 type="range" 
                                 min="0" 
                                 max="350" 
-                                name="precio" 
                                 value={store.filtros.precio[1]} /* Flux */
                                 onChange={(e) => handleChange({ target: { name: 'precio', value: [0, e.target.value] } })} 
                                 className="filtro-precio-select"
@@ -267,24 +269,26 @@ const BarraBusqueda = () => {
                     <Col>
                         <Form.Group controlId="formBusqueda">
                             <Form.Label>Búsqueda</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                name="busqueda" 
-                                value={store.filtros.busqueda} 
-                                onChange={handleChange}
-                                className="filtro-busqueda" 
-                            />
+                            <div className="buscadorContenedor">
+                                <Form.Control
+                                    type="text"
+                                    name="busqueda"
+                                    value={store.filtros.busqueda}
+                                    onChange={handleChange}
+                                    placeholder="Buscar cursos"
+                                />
+                                <i className="bi bi-search iconoBuscador"></i>
+                            </div>
                         </Form.Group>
                     </Col>
-                </Row>
-                <Row>
-                    <div className="botones">
-                        {/* Botones para aplicar o restablecer los filtros */}
-                        <Button variant="primary" onClick={filtrosAplicar} disabled={loading}>
-                            {loading ? 'Cargando...' : 'Aceptar'}
-                        </Button>
-                        <Button variant="secondary" onClick={resetFiltros}>Restablecer</Button>
-                    </div>
+                    <Col>
+                        <div className="botones">
+                            <Button variant="primary" onClick={filtrosAplicar} disabled={loading}>
+                                {loading ? 'Cargando...' : 'Aceptar'}
+                            </Button>
+                            <Button variant="secondary" onClick={resetFiltros}>Restablecer</Button>
+                        </div>
+                    </Col>
                 </Row>
             </Form>
             {error && <div className="error">{error}</div>}
