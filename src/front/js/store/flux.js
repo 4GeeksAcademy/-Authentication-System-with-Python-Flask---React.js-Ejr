@@ -83,7 +83,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 						return false;
 					}
-
           
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {

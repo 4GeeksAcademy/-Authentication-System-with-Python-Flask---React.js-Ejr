@@ -84,7 +84,11 @@ export const Login = () => {
 		},
 	});
 
+<<<<<<< HEAD
 	// Función para "Olvidé mi contraseña"
+=======
+	// Función para manejar "Olvidé mi contraseña"
+>>>>>>> f2de04d (reset password)
 	const handleForgotPassword = async () => {
 		if (!formik.values.correo) {
 			Swal.fire({
