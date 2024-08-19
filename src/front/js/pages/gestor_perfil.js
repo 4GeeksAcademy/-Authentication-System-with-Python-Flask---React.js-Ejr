@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
     export const Gestor_perfil = () => {
             
@@ -27,21 +28,40 @@ import React, { useState } from "react";
             setResponse(data);
         };
         return (
-            <div>
-            <h2>Upload your profile picture</h2>
-            <p>Name: {user.name}</p>
-            <p>Email: {user.email}</p>
-            <p>Username: {user.username}</p>
-            <form onSubmit={handleSubmit}>
-                <input type="file" onChange={handleFileChange} required />
-                <button type="submit">Upload</button>
-            </form>
-            {response && (
-                <div>
-                <h3>Upload Successful:</h3>
-                {response.filePath && <img src={`http://localhost:3001${response.filePath}`} alt="Uploaded" />}
-                </div>
-            )}
+            
+            <div className="container mt-5 text-center">
+                <h2 className="text-center pt-5">Upload your profile picture</h2>
+                <form onSubmit={handleSubmit} className="py-5">
+                    <div className="form-group">
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            className="form-control-file"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">Upload</button>
+                </form>
+                
+                <p className="border border-success rounded-pill"><strong>Name:</strong> {user.name}</p>
+                <p className="border border-success rounded-pill"><strong>Email:</strong> {user.email}</p>
+                <p className="border border-success rounded-pill"><strong>Username:</strong> {user.username}</p>
+                
+                {response && (
+                    <div className="alert alert-success">
+                        <h3 className="alert-heading">Upload Successful:</h3>
+                        {response.filePath && (
+                            <img
+                                src={`http://localhost:3001${response.filePath}`}
+                                alt="Uploaded"
+                                className="img-fluid mt-3"
+                            />
+                        )}
+                    </div>
+                )}
+                <Link to="/">
+				<button className="btn btn-dark mt-3">Back home</button>
+			</Link>
             </div>
         );
 	}

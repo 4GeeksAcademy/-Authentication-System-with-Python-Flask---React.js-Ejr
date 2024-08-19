@@ -39,6 +39,9 @@ export const Navbar = () => {
                 <Link to="/demo">Demo</Link>
               </li>
               <li className="nav-item">
+                <Link to="/gestor_perfil">Perfil</Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/login">Login</Link>
               </li>
               <li className="nav-item">
