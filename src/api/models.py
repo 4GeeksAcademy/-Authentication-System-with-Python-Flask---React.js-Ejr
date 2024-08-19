@@ -46,6 +46,13 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.email}>'
+    
+    def __init__(self, name, email, password, birthday, sex):
+        self.name = name
+        self.email = email
+        self.password = password
+        self.birthday = birthday
+        self.sex = sex
 
     def serialize(self):
         return {
