@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+
+.red-btn{
+    background-color: #FFFAFF;
+    color: #D16753;
+    border: 1px solid #D16753;
+  }
+.red-btn:hover {
+  background-color: #D16753;
+  color: #FFFAFF;
+}
