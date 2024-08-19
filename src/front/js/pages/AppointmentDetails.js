@@ -133,6 +133,12 @@ const AppointmentDetails = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleAddComment();
+    }
+  };
+
   const handleBackClick = () => {
     navigate("/mechanicdashboard");
   };
@@ -188,6 +194,7 @@ const AppointmentDetails = () => {
               className="form-control"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             {error && <div className="alert alert-danger mt-2">{error}</div>}
             <button className="btn btn-primary mt-2" onClick={handleAddComment}>
