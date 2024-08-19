@@ -55,7 +55,7 @@ function UserAppointments() {
     };
 
     loadAppointments();
-  }, [apiUrl, store.corsEnabled]);
+  }, []);
 
   const handleAddComment = async (appointmentId) => {
     const token = localStorage.getItem("token");
@@ -67,7 +67,7 @@ function UserAppointments() {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            ...store.corsEnabled,
+            ...store.corsEnabled, // Deshabilitar una vez en producción
           },
           body: JSON.stringify({
             comment: newComments[appointmentId],
