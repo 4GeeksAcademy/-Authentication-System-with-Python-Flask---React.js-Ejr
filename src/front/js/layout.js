@@ -15,6 +15,8 @@ import { Inicio } from "./pages/inicio.js";
 import { LoginPage } from "./pages/login";
 import { Register } from "./pages/register.js"
 import { TimeLine } from "./pages/TimeLine.jsx";
+import { SobreNosotros } from "./pages/sobreNosotros.js";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -30,6 +32,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element ={<Inicio />} path="/" />
+                        <Route element ={<SobreNosotros />} path="/sobrenosotros" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<LoginPage />} path="/login" />
                         <Route element={<Register />} path="/register" />

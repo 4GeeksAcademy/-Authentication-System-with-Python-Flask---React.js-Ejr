@@ -33,7 +33,7 @@ export const Navbar = () => {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '115px' }} aria-current="page" to="/">Sobre nosotros</Link>
+                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '115px' }} aria-current="page" to="/sobrenosotros">Sobre nosotros</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">Contáctanos</Link>
