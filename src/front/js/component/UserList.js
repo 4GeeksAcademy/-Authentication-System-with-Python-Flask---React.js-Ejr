@@ -145,17 +145,17 @@ function UserList() {
           <thead>
             <tr>
               <th>
-                <button type="button" onClick={() => requestSort('lastAppointmentDate')} className="btn btn-link p-0">
-                  Fecha {sortConfig.key === 'lastAppointmentDate' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+                <button type="button" onClick={() => requestSort('lastAppointmentDate')} className="btn-light btn-link p-0">
+                  Date {sortConfig.key === 'lastAppointmentDate' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
                 </button>
               </th>
               <th>
-                <button type="button" onClick={() => requestSort('lastAppointmentStatus')} className="btn btn-link p-0">
+                <button type="button" onClick={() => requestSort('lastAppointmentStatus')} className="btn-light btn-link p-0">
                   Status {sortConfig.key === 'lastAppointmentStatus' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
                 </button>
               </th>
               <th>
-                <button type="button" onClick={() => requestSort('name')} className="btn btn-link p-0">
+                <button type="button" onClick={() => requestSort('name')} className="btn-light btn-link p-0">
                   Client Name {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
                 </button>
               </th>
