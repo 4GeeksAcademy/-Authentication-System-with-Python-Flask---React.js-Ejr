@@ -333,7 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return result
 					}
 					return false
-
 				}
 			},
 			saveProfileImg : async (url) =>{
