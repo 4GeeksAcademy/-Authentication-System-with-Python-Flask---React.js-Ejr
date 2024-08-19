@@ -88,7 +88,7 @@ export const Login = () => {
 		},
 	});
 
-	// Función para "Olvidé mi contraseña"
+	// Función para manejar "Olvidé mi contraseña"
 	const handleForgotPassword = async () => {
 		if (!formik.values.correo) {
 			Swal.fire({
