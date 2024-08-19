@@ -87,6 +87,7 @@
 		"react-multi-form": "^1.0.5",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",
-		"rsuite": "^5.68.1"
+		"rsuite": "^5.68.1",
+		"use-count-up": "^3.0.1"
 	}
 }

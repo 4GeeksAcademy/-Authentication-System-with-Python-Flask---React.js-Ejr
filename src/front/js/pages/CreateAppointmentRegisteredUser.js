@@ -34,6 +34,7 @@ const CreateAppointmentRegisteredUser = () => {
         const response = await fetch(`${apiUrl}/services`, {
           headers: {
             Authorization: `Bearer ${myToken}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
         if (!response.ok) throw new Error("Network response failed");
@@ -258,6 +259,7 @@ const CreateAppointmentRegisteredUser = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${myToken}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
