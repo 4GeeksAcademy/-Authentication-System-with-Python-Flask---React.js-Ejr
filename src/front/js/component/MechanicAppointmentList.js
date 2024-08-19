@@ -15,14 +15,17 @@ function MechanicAppointmentList() {
         const response = await fetch(`${apiUrl}/appointments`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
 
         if (response.ok) {
           const appointmentsData = await response.json();
-          setAppointments(appointmentsData);
+          const sortedAppointments = appointmentsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+          setAppointments(sortedAppointments);
         } else {
-          console.error('Failed to fetch appointments');
+          const errorData = await response.json();
+          console.error('Failed to fetch appointments', errorData);
         }
       } catch (error) {
         console.error('Error loading appointments:', error);
@@ -30,7 +33,7 @@ function MechanicAppointmentList() {
     };
 
     loadAppointments();
-  }, [store.token]);
+  }, []);
 
   const handleStatusChange = async (appointmentId, status) => {
     try {
@@ -39,6 +42,7 @@ function MechanicAppointmentList() {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({ status }),
       });
@@ -50,7 +54,8 @@ function MechanicAppointmentList() {
           )
         );
       } else {
-        console.error('Failed to update appointment status');
+        const errorData = await response.json(); 
+        console.error('Failed to update appointment status', errorData);
       }
     } catch (error) {
       console.error('Error updating appointment status:', error);

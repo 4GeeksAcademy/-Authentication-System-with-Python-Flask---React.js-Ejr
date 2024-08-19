@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DatePicker } from "antd";
-import moment from "moment"; 
+import moment from "moment";
 import "../../styles/bookappointmentunregistereduser.css";
 import { useNavigate } from "react-router-dom";
 
 const BookAppointmentUnregisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
-  const [appointmentId, setAppointmentId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
-  const [carId, setCarId] = useState("");
   const [carLicensePlate, setCarLicensePlate] = useState("");
   const [carModel, setCarModel] = useState("");
   const [services, setServices] = useState([]);
@@ -33,6 +31,8 @@ const BookAppointmentUnregisteredUser = () => {
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
+        console.log("set service data", setServices);
+        console.log("service data", data);
       } catch (error) {
         console.error("Error getting services:", error);
       }
@@ -43,35 +43,84 @@ const BookAppointmentUnregisteredUser = () => {
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
+      console.log("calendar details", datePickerRef.current);
     }
   }, [currentStep]);
+
+  const handleServiceChange = (e) => {
+    const selectServiceId = e.target.value;
+    console.log("selected service id", selectServiceId);
+    setServiceChosen(selectServiceId);
+  };
+
+  useEffect(() => {
+    console.log("service list", services);
+    if (serviceChosen) {
+      const selectedServiceId = parseInt(serviceChosen, 10);
+      const selectedService = services.find(
+        (service) => service.id === selectedServiceId
+      );
+      console.log("service being selected", selectedService);
+      if (selectedService) {
+        // const nameOfService = selectedService.name;
+        console.log("showing service name", selectedService.name);
+        console.log("showing service id", selectedService.id);
+        // console.log(nameOfService);
+      }
+    }
+  }, [serviceChosen, services]);
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
     // Deshabilitar todos los días que no sean de lunes a viernes
-    return current && (current < moment().startOf('day') || current.day() === 0 || current.day() === 6);
-  };
-  // Función para deshabilitar horas fuera del horario laboral
-  const disabledTime = (date) => {
-    const hours = {
-      disabledHours: () => {
-        // Deshabilitar horas fuera del rango de 9:00 a 17:00
-        const disabledHours = [];
-        for (let i = 0; i < 24; i++) {
-          if (i < 9 || i >= 17) {
-            disabledHours.push(i);
-          }
-        }
-        return disabledHours;
-      },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos a las horas permitidas
-        return [0, 15, 30, 45];
-      }
-    };
-    return hours;
+    return (
+      current &&
+      (current < moment().startOf("day") ||
+        current.day() === 0 ||
+        current.day() === 6)
+    );
   };
 
+  // Función para deshabilitar horas fuera del horario laboral
+  const disabledTime = (date) => {
+    const now = new Date(); // Hora actual
+
+    const hours = {
+        disabledHours: () => {
+            const disabledHours = [];
+            const selectedDate = new Date(date); // Fecha seleccionada
+
+            // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
+            if (
+                selectedDate.getFullYear() === now.getFullYear() &&
+                selectedDate.getMonth() === now.getMonth() &&
+                selectedDate.getDate() === now.getDate()
+            ) {
+                for (let i = 0; i < 24; i++) {
+                    if (i < now.getHours() || i < 9 || i >= 18) {
+                        disabledHours.push(i);
+                    }
+                }
+            } else {
+                // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
+                for (let i = 0; i < 24; i++) {
+                    if (i < 8 || i >= 18) {
+                        disabledHours.push(i);
+                    }
+                }
+            }
+            return disabledHours;
+        },
+        disabledMinutes: () => {
+            // Habilitar solo los minutos 0 y 30
+            return Array.from({ length: 60 }, (_, i) => i).filter(
+                (min) => min !== 0 && min !== 30
+            );
+        },
+    };
+
+    return hours;
+};
   //------------------------------------------------------------------------------------
   const checkSlotAvailability = async (dateTime) => {
     try {
@@ -109,54 +158,7 @@ const BookAppointmentUnregisteredUser = () => {
     setAppointmentDate(date);
     if (date) {
       checkSlotAvailability(date);
-    }
-  };
-
-  const submitAppointment = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!serviceChosen) {
-      setError("Service required. Please select one from the list.");
-      return;
-    }
-
-    try {
-      const commentResponse = await fetch(`${apiUrl}/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          comment,
-          user_id: userId,
-          appointment_id: appointmentId,
-        }),
-      });
-
-      if (!commentResponse.ok) throw new Error("Error adding comment");
-
-      const commentData = await commentResponse.json();
-      console.log("Comment added:", commentData);
-
-      const serviceResponse = await fetch(`${apiUrl}/services`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: serviceChosen,
-          description: "Service description",
-          duration: 60,
-          slots_required: 1,
-          car_id: carId,
-          appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"),
-        }),
-      });
-
-      if (!serviceResponse.ok) throw new Error("Error booking service");
-
-      const serviceData = await serviceResponse.json();
-      console.log("Service booked:", serviceData);
-    } catch (error) {
-      console.error("Error submitting appointment:", error);
+      console.log("date details set", setAppointmentDate);
     }
   };
 
@@ -176,8 +178,9 @@ const BookAppointmentUnregisteredUser = () => {
         );
         return;
       }
-
       await checkSlotAvailability(appointmentDate);
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+      console.log("date details", dateFormat);
 
       if (!isAvailable) {
         return;
@@ -202,10 +205,6 @@ const BookAppointmentUnregisteredUser = () => {
     setCurrentStep(currentStep + 1);
   };
 
-  const confirmAccountAndAppointment = () => {
-    navigate("/accountandappointmentcreated");
-  };
-
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();
     const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
@@ -223,6 +222,112 @@ const BookAppointmentUnregisteredUser = () => {
       setPhoneNumber(numericInput);
     }
   };
+
+  const confirmAccountAndAppointment = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...store.corsEnabled // Deshabilitar una vez en producción
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          phone_number: phoneNumber,
+        }),
+      });
+  
+      if (!signUpNewUser.ok) {
+        const errorData = await signUpNewUser.json();
+        setError(errorData.error || "Failed to create account");
+        return;
+      }
+  
+      const userData = await signUpNewUser.json();
+      setUserId(userData.id);
+  
+      const loginResponse = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...store.corsEnabled // Deshabilitar una vez en producción
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+  
+      if (!loginResponse.ok) {
+        const errorData = await loginResponse.json();
+        setError(errorData.error || "Failed to log in");
+        return;
+      }
+  
+      const loginData = await loginResponse.json();
+      localStorage.setItem("token", loginData.access_token);
+      localStorage.setItem("role_id", loginData.role_id);
+      localStorage.setItem("user_id", loginData.user_id);
+  
+      const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loginData.access_token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
+        },
+        body: JSON.stringify({
+          car_model: carModel,
+          license_plate: carLicensePlate,
+          user_id: userData.id,
+        }),
+      });
+  
+      if (!addNewCarNewUser.ok) {
+        const errorData = await addNewCarNewUser.json();
+        setError(errorData.error || "Failed to register car details");
+        return;
+      }
+      const carData = await addNewCarNewUser.json();
+  
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+  
+      const submitAppointment = await fetch(`${apiUrl}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loginData.access_token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
+        },
+        body: JSON.stringify({
+          date: dateFormat,
+          user_id: userData.id,
+          car_id: carData.id,
+          service_id: parseInt(serviceChosen, 10),
+          comment: comment, 
+        }),
+      });
+  
+      if (!submitAppointment.ok) {
+        const errorData = await submitAppointment.json();
+        setError(errorData.error || "Failed to book the appointment. Please try again.");
+        return;
+      }
+  
+      const appointmentData = await submitAppointment.json();
+      console.log("Appointment details:", appointmentData);
+  
+      navigate("/accountandappointmentcreated");
+    } catch (error) {
+      console.error("Failed to create account or register car details", error);
+      setError("An error occurred. Please try again.");
+    }
+  };
+  
 
   const displayCurrentStep = () => {
     return (
@@ -263,12 +368,13 @@ const BookAppointmentUnregisteredUser = () => {
               <select
                 id="service"
                 value={serviceChosen}
-                onChange={(e) => setServiceChosen(e.target.value)}
+                // onChange={(e) => setServiceChosen(e.target.value)}
+                onChange={handleServiceChange}
                 className="form-control"
               >
                 <option value="">Select a service</option>
                 {services.map((service) => (
-                  <option key={service.id} value={service.name}>
+                  <option key={service.id} value={service.id}>
                     {service.name}
                   </option>
                 ))}
@@ -285,7 +391,11 @@ const BookAppointmentUnregisteredUser = () => {
                 ref={datePickerRef}
                 format="DD/MM/YYYY HH:mm"
                 onChange={manageDateChange}
-                showTime={{ use12Hours: false, format: "HH:mm" }}
+                showTime={{
+                  use12Hours: false,
+                  format: "HH:mm",
+                  hideDisabledOptions: true,
+                }}
                 className="form-control"
                 disabledDate={disabledDate}
                 disabledTime={disabledTime}
@@ -376,7 +486,7 @@ const BookAppointmentUnregisteredUser = () => {
             </p>
             <p>
               <strong>Appointment Time:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("HH:mm:ss") : ""}
+              {appointmentDate ? appointmentDate.format("HH:mm") : ""}
             </p>
             <p>
               <strong>Comments:</strong> {comment}
@@ -412,7 +522,9 @@ const BookAppointmentUnregisteredUser = () => {
     <div id="content" className="padding">
       <div className="card shadow-sm">
         <div className="card-header text-center">Appointment Booking</div>
-        <form onSubmit={submitAppointment}>{displayCurrentStep()}</form>
+        <form onSubmit={confirmAccountAndAppointment}>
+          {displayCurrentStep()}
+        </form>
         <div className="card-footer d-flex justify-content-between">
           {currentStep > 1 && (
             <button

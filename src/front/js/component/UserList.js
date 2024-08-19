@@ -25,6 +25,7 @@ function UserList() {
         const response = await fetch(`${apiUrl}/appointments`, {
           headers: {
             Authorization: `Bearer ${token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
 
@@ -106,6 +107,7 @@ function UserList() {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
       });
   

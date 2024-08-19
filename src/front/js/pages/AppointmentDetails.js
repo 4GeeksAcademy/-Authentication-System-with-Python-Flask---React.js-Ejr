@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../styles/appointmentdetails.css";
+import { Context } from "../store/appContext";
+
 
 const apiUrl = process.env.BACKEND_URL + "/api";
 
 const AppointmentDetails = () => {
+  const { store } = useContext(Context);
   const { appointmentId } = useParams();
   const navigate = useNavigate();
   
@@ -24,6 +27,7 @@ const AppointmentDetails = () => {
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
 
@@ -38,6 +42,7 @@ const AppointmentDetails = () => {
           const serviceResponse = await fetch(`${apiUrl}/services/${data.result.service_id}`, {
             headers: {
               "Authorization": `Bearer ${token}`,
+              ...store.corsEnabled // Deshabilitar una vez en producción
             },
           });
           const serviceData = await serviceResponse.json();
@@ -48,7 +53,8 @@ const AppointmentDetails = () => {
           const carResponse = await fetch(`${apiUrl}/cars/${data.result.car_id}`, {
             headers: {
               "Authorization": `Bearer ${token}`,
-            },
+              ...store.corsEnabled // Deshabilitar una vez en producción
+        }, 
           });
           const carData = await carResponse.json();
           setCar(carData.result);
@@ -58,7 +64,8 @@ const AppointmentDetails = () => {
           const userResponse = await fetch(`${apiUrl}/users/${data.result.user_id}`, {
             headers: {
               "Authorization": `Bearer ${token}`,
-            },
+              ...store.corsEnabled // Deshabilitar una vez en producción
+        },
           });
           const userData = await userResponse.json();
           setUser(userData.result);
@@ -67,6 +74,7 @@ const AppointmentDetails = () => {
         const commentsResponse = await fetch(`${apiUrl}/comments?appointment_id=${appointmentId}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
         const commentsData = await commentsResponse.json();
@@ -93,6 +101,7 @@ const AppointmentDetails = () => {
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
           body: JSON.stringify({
             comment: newComment,
@@ -121,6 +130,12 @@ const AppointmentDetails = () => {
       }
     } else {
       setError("Comment cannot be blank");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleAddComment();
     }
   };
 
@@ -179,6 +194,7 @@ const AppointmentDetails = () => {
               className="form-control"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             {error && <div className="alert alert-danger mt-2">{error}</div>}
             <button className="btn btn-primary mt-2" onClick={handleAddComment}>

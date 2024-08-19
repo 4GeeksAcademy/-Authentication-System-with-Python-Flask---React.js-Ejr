@@ -31,6 +31,7 @@ const MechanicDashboard = () => {
           const response = await fetch(`${apiUrl}/users/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
+              ...store.corsEnabled // Deshabilitar una vez en producción
             },
           });
 

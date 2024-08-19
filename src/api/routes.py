@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, Blueprint
 from api.models import db, User, Role, Car, Appointment, Service, Comment, Setting, TokenBlockList
 from api.utils import generate_sitemap, APIException
+from flask import Flask
 from flask_cors import CORS
 from datetime import datetime, timedelta
 from flask_bcrypt import Bcrypt
@@ -15,7 +16,8 @@ bcrypt = Bcrypt(app)
 
 api = Blueprint('api', __name__)
 CORS(api)
-# CORS(app, resources={r"/api/*": {"origins": "https://tu-frontend.github.dev"}})
+
+
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /create users from admin
@@ -85,30 +87,50 @@ def create_signupusers():
 @api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    if not data or not data.get('email') or not data.get('password'):
-        return jsonify({"error": "Email and password are required"}), 400
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
 
     email = data.get('email')
     password = data.get('password')
 
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
     user = User.query.filter_by(email=email).first()
+    
     if not user or not bcrypt.check_password_hash(user.password, password):
-        # Incrementar el contador de intentos fallidos
-        user.failed_login_attempts += 1
-        if user.failed_login_attempts >= 5:
-            # Bloquear la cuenta temporalmente
-            user.is_blocked = True
-            db.session.commit()
-            return jsonify({"error": "Account blocked due to excessive login attempts"}), 401
         return jsonify({"error": "Invalid credentials"}), 401
 
     role = Role.query.filter_by(id=user.role_id).first()
-    if not role:
-        return jsonify({"error": "Invalid role"}), 401
-
     access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})
-    # access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id}, expires_in=3600)
     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
+# @api.route('/login', methods=['POST'])
+# def login():
+#     data = request.get_json()
+#     if not data or not data.get('email') or not data.get('password'):
+#         return jsonify({"error": "Email and password are required"}), 400
+
+#     email = data.get('email')
+#     password = data.get('password')
+
+#     user = User.query.filter_by(email=email).first()
+#     if not user or not bcrypt.check_password_hash(user.password, password):
+#         # Incrementar el contador de intentos fallidos
+#         # user.failed_login_attempts += 1
+#         # if user.failed_login_attempts >= 5:
+#         #     # Bloquear la cuenta temporalmente
+#         #     user.is_blocked = True
+#         #     db.session.commit()
+#         #     return jsonify({"error": "Account blocked due to excessive login attempts"}), 401
+#         # return jsonify({"error": "Invalid credentials"}), 401
+
+#     role = Role.query.filter_by(id=user.role_id).first()
+#     if not role:
+#         return jsonify({"error": "Invalid role"}), 401
+
+#     access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id})
+#     # access_token = create_access_token(identity=user.id, additional_claims={"role_id": role.id}, expires_in=3600)
+#     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
 @api.route('/api/pinguser', methods=['GET'])
@@ -376,7 +398,6 @@ def create_service():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services 
 @api.route('/services', methods=['GET'])
-@jwt_required()
 def get_services():
     services_query = Service.query.all()
     services_list = list(map(lambda service: service.serialize(), services_query))
@@ -434,6 +455,7 @@ def create_appointment():
     user_id = data.get('user_id')
     car_id = data.get('car_id')
     service_id = data.get('service_id')
+    comment = data.get('comment')
     
     if not date or not user_id or not car_id or not service_id:
         return jsonify({"error": "Date, user ID, car ID, and service ID are required"}), 400
@@ -467,6 +489,16 @@ def create_appointment():
             status="pending"
         )
         db.session.add(new_appointment)
+        db.session.commit()
+
+        if comment:
+            new_comment = Comment(
+            content = comment,
+            author_id = user_id,
+            appointment_id = new_appointment.id,
+            is_mechanic=False
+        )
+        db.session.add(new_comment)
         db.session.commit()
 
         response_body = new_appointment.serialize()
@@ -594,7 +626,6 @@ def total_count():
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// GET /slots-taken
 @api.route('/slots-taken', methods=['GET'])
-# @jwt_required()
 def get_slots_taken():
     now = datetime.now()
     end_date = now + timedelta(days=7) 

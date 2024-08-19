@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
-import moment from "moment"; 
+import moment from "moment";
 import { Context } from "../store/appContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
@@ -12,7 +12,6 @@ const CreateAppointmentRegisteredUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
-  const [appointmentId, setAppointmentId] = useState("");
   const [carId, setCarId] = useState("");
   const [carLicensePlate, setCarLicensePlate] = useState("");
   const [carModel, setCarModel] = useState("");
@@ -27,10 +26,17 @@ const CreateAppointmentRegisteredUser = () => {
 
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
+  const myToken = localStorage.getItem("token");
+
   useEffect(() => {
     const getServices = async () => {
       try {
-        const response = await fetch(`${apiUrl}/services`);
+        const response = await fetch(`${apiUrl}/services`, {
+          headers: {
+            Authorization: `Bearer ${myToken}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
+          },
+        });
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
@@ -39,71 +45,94 @@ const CreateAppointmentRegisteredUser = () => {
       }
     };
 
-   
-const getUserCars = async () => {
-  try {
-    // Actualiza la URL para que apunte a la ruta correcta usando owner_id
-    const response = await fetch(`${apiUrl}/cars/user/${myuserId}`);
-    if (!response.ok) throw new Error("Network response failed");
+    const getUserCars = async () => {
+      try {
+        // Actualiza la URL para que apunte a la ruta correcta usando owner_id
+        const response = await fetch(`${apiUrl}/cars/user/${myuserId}`, {
+          headers: {
+            Authorization: `Bearer ${myToken}`,
+          },
+        });
+        if (!response.ok) throw new Error("Network response failed");
 
-    // Desestructura el resultado de la respuesta
-    const { result, msg } = await response.json();
+        // Desestructura el resultado de la respuesta
+        const { result, msg } = await response.json();
 
-    // Verifica si result es un array y tiene contenido
-    if (Array.isArray(result) && result.length > 0) {
-      setUserCars(result); // Guarda todos los coches en el estado
-    } else {
-      console.error("No valid car data received or user has no cars", msg, result);
-    }
-  } catch (error) {
-    console.error("Error getting user cars:", error);
-  }
-};
+        // Verifica si result es un array y tiene contenido
+        if (Array.isArray(result) && result.length > 0) {
+          setUserCars(result); // Guarda todos los coches en el estado
+        } else {
+          console.error(
+            "No valid car data received or user has no cars",
+            msg,
+            result
+          );
+        }
+      } catch (error) {
+        console.error("Error getting user cars:", error);
+      }
+    };
     getServices();
     getUserCars();
   }, [apiUrl, userId]);
-
-  
 
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
     }
   }, [currentStep]);
+
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
-    const now = moment().startOf('day');
-    const endDate = moment().add(30, 'days').endOf('day');
-    
     // Deshabilitar todos los días que no sean de lunes a viernes
-    const isWeekend = current.day() === 0 || current.day() === 6;
-
-    // Deshabilitar fechas fuera del rango de hoy a 30 días adelante
-    const isOutOfRange = current < now || current > endDate;
-
-    return current && (isWeekend || isOutOfRange);
+    return (
+      current &&
+      (current < moment().startOf("day") ||
+        current.day() === 0 ||
+        current.day() === 6)
+    );
   };
 
+  // Función para deshabilitar horas fuera del horario laboral
   const disabledTime = (date) => {
-    return {
-      disabledHours: () => {
-        const disabledHours = [];
-        for (let i = 0; i < 24; i++) {
-          if (i < 8 || i >= 18) {  // Deshabilitar horas fuera del rango de 8:00 a 18:00
-            disabledHours.push(i);
-          }
-        }
-        return disabledHours;
-      },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos 0 y 30
-        return Array.from({ length: 60 }, (_, i) => i).filter(min => min !== 0 && min !== 30);
-      }
+    const now = new Date(); // Hora actual
+
+    const hours = {
+        disabledHours: () => {
+            const disabledHours = [];
+            const selectedDate = new Date(date); // Fecha seleccionada
+
+            // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
+            if (
+                selectedDate.getFullYear() === now.getFullYear() &&
+                selectedDate.getMonth() === now.getMonth() &&
+                selectedDate.getDate() === now.getDate()
+            ) {
+                for (let i = 0; i < 24; i++) {
+                    if (i < now.getHours() || i < 9 || i >= 18) {
+                        disabledHours.push(i);
+                    }
+                }
+            } else {
+                // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
+                for (let i = 0; i < 24; i++) {
+                    if (i < 8 || i >= 18) {
+                        disabledHours.push(i);
+                    }
+                }
+            }
+            return disabledHours;
+        },
+        disabledMinutes: () => {
+            // Habilitar solo los minutos 0 y 30
+            return Array.from({ length: 60 }, (_, i) => i).filter(
+                (min) => min !== 0 && min !== 30
+            );
+        },
     };
-  };
 
-  //------------------------------------------------------------------------------------
-
+    return hours;
+};
 
   //------------------------------------------------------------------------------------
 
@@ -146,54 +175,6 @@ const getUserCars = async () => {
     }
   };
 
-  const submitAppointment = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!serviceChosen) {
-      setError("Service required. Please select one from the list.");
-      return;
-    }
-
-    try {
-      const commentResponse = await fetch(`${apiUrl}/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          comment,
-          user_id: userId,
-          appointment_id: appointmentId,
-        }),
-      });
-
-      if (!commentResponse.ok) throw new Error("Error adding comment");
-
-      const commentData = await commentResponse.json();
-      console.log("Comment added:", commentData);
-
-      const serviceResponse = await fetch(`${apiUrl}/services`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: serviceChosen,
-          description: "Service description",
-          duration: 60,
-          slots_required: 1,
-          car_id: carId,
-          appointment_date: appointmentDate.format("YYYY-MM-DD"),
-          appointment_time: appointmentDate.format("HH:mm"),
-        }),
-      });
-
-      if (!serviceResponse.ok) throw new Error("Error booking service");
-
-      const serviceData = await serviceResponse.json();
-      console.log("Service booked:", serviceData);
-    } catch (error) {
-      console.error("Error submitting appointment:", error);
-    }
-  };
-
   const nextStep = async () => {
     if (currentStep === 1 && !carId && (!carLicensePlate || !carModel)) {
       setError("Please select a car or add a new one.");
@@ -218,44 +199,125 @@ const getUserCars = async () => {
     setError("");
     setCurrentStep(currentStep + 1);
   };
- 
-  const confirmAppointment = async () => {
-    //------------------------------------------------------------------------------------
-    try {
-        const userInfo = await actions.GetUser();
-        if (userInfo && userInfo.email && userInfo.name) {
-          
-          MailSender(userInfo);
-      } else {
-          console.error("User Info is missing email or name.");
-      }
-  } catch (error) {
-      console.error("Failed to fetch user info:", error);
-  }
-    navigate("/appointmentconfirmed");
-};
-    //------------------------------------------------------------------------------------
-    const MailSender = (userInfo) => {
-      const data = {
-          "sender": {
-              "name": "AutoAgenda",
-              "email": "autoagenda3@gmail.com"
-          },
-          "to": [{
-              "email": userInfo.email,
-              "name": userInfo.name
-          }],
-          "subject": "Appointment created successfully",
-          "htmlContent": `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
-          <h1 class="default-heading1" style="margin: 0; color: #1f2d3d; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
-          Your appointment on the day ${appointmentDate} has been created successfully.</p>
-          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`
-      };
-      actions.SendMail(data);
-  };
-    
-    //------------------------------------------------------------------------------------
 
+  const confirmAppointment = async (e) => {
+    e.preventDefault();
+
+    // const token = localStorage.getItem("token");
+    const role_id = localStorage.getItem("role_id");
+    const user_id = localStorage.getItem("user_id");
+    const carSelectedId = carId;
+
+    if (!carSelectedId) {
+      try {
+        const addNewCarResponse = await fetch(`${apiUrl}/cars`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${myToken}`,
+          },
+          body: JSON.stringify({
+            car_model: carModel,
+            license_plate: carLicensePlate,
+            user_id: user_id,
+          }),
+        });
+
+        if (!addNewCarResponse.ok) {
+          const errorData = await addNewCarResponse.json();
+          setError(errorData.error || "Failed to register car details");
+          return;
+        }
+
+        const carData = await addNewCarResponse.json();
+        await bookAppointment(carData.id);
+      } catch (error) {
+        console.error("Error while registering car:", error);
+        setError(
+          "An error occurred while registering the car. Please try again."
+        );
+      }
+    } else {
+      await bookAppointment(carSelectedId);
+    }
+  };
+
+  const bookAppointment = async (carId) => {
+    try {
+      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
+
+      console.log("Date", dateFormat);
+      console.log("User id", myuserId);
+      console.log("Car ID", carId);
+      console.log("Serv. ID", parseInt(serviceChosen, 10));
+      console.log("service being chosen", serviceChosen);
+
+      const submitAppointment = await fetch(`${apiUrl}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${myToken}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
+        },
+        body: JSON.stringify({
+          date: dateFormat,
+          user_id: myuserId,
+          car_id: carId,
+          service_id: parseInt(serviceChosen, 10),
+          comment: comment,
+        }),
+      });
+
+      if (!submitAppointment.ok) {
+        const errorData = await submitAppointment.json();
+        setError(
+          errorData.error || "Failed to book the appointment. Please try again."
+        );
+        return;
+      }
+
+      const appointmentData = await submitAppointment.json();
+      console.log("Appointment details:", appointmentData);
+
+      const MailSender = (userInfo) => {
+        const data = {
+        sender: {
+              name: "AutoAgenda",
+              email: "autoagenda3@gmail.com",
+            },
+            to: [
+              {
+                email: userInfo.email,
+                name: userInfo.name,
+              },
+            ],
+            subject: "Appointment created successfully",
+            htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
+          Your appointment on the day ${dateFormat} has been created successfully.</p>
+          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
+          };
+      
+          console.log("Data ready to send:", data);
+          actions.SendMail(data);
+        };
+
+      const userInfo = await actions.GetUser();
+      if (userInfo && userInfo.email && userInfo.name) {
+        MailSender(userInfo);
+      } else {
+        console.error("User Info is missing email or name.");
+      }
+
+      navigate("/appointmentconfirmed");
+    } catch (error) {
+      console.error("Error while booking appointment:", error);
+      console.log("Error while booking appointment:", error);
+      setError(
+        "An error occurred while booking the appointment. Please try again."
+      );
+    }
+  };
   const requireLicensePlate = (e) => {
     const value = e.target.value.toUpperCase();
     const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
@@ -327,7 +389,7 @@ const getUserCars = async () => {
             >
               <option value="">Select a service</option>
               {services.map((service) => (
-                <option key={service.id} value={service.name}>
+                <option key={service.id} value={service.id}>
                   {service.name}
                 </option>
               ))}
@@ -344,7 +406,11 @@ const getUserCars = async () => {
               ref={datePickerRef}
               format="DD/MM/YYYY HH:mm"
               onChange={manageDateChange}
-              showTime={{ use12Hours: false, format: "HH:mm", hideDisabledOptions: true }}
+              showTime={{
+                use12Hours: false,
+                format: "HH:mm",
+                hideDisabledOptions: true,
+              }}
               className="form-control"
               disabledDate={disabledDate}
               disabledTime={disabledTime}

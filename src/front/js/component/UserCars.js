@@ -6,7 +6,7 @@ import { Context } from "../store/appContext";
 const apiUrl = process.env.BACKEND_URL + "/api";
 
 function UserCars() {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [cars, setCars] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -25,6 +25,7 @@ function UserCars() {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
         if (!getCarsUser.ok) {
@@ -76,6 +77,7 @@ function UserCars() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           car_model: updatedCar.car_model,
@@ -99,7 +101,7 @@ function UserCars() {
     }
   };
 
-  // Agregar coche con POST en la base de datos
+  
   const handleAddCar = async (newCar) => {
     if (!newCar.model.trim() || !newCar.licensePlate.trim()) {
       setError("Model and License Plate cannot be blank");
@@ -112,6 +114,7 @@ function UserCars() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           car_model: newCar.model,
@@ -143,6 +146,7 @@ function UserCars() {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
       });
 
