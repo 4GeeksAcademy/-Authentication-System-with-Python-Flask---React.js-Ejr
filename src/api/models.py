@@ -5,7 +5,7 @@ db = SQLAlchemy()
 class User(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         role_id = db.Column(db.Integer,db.ForeignKey("role.id"), nullable=False)
-        name = db.Column(db.String(120), unique=True, nullable=False)
+        name = db.Column(db.String(120), nullable=False)
         email = db.Column(db.String(120), unique=True, nullable=False)
         password = db.Column(db.String(80), unique=False, nullable=False)
         address = db.Column(db.String(80), unique=False, nullable=False)
@@ -13,7 +13,7 @@ class User(db.Model):
         is_active = db.Column(db.Boolean(), unique=False, nullable=False)
         favorites = db.relationship("Favorite", backref="user")
         cart = db.relationship("Cart", backref="user")
-        user_professions = db.relationship("UserProfession", backref="user")
+        user_professions = db.relationship("UserProfession", backref="user", lazy='dynamic')
 
         def __repr__(self):
             return f'<User {self.email}>'
@@ -27,7 +27,7 @@ class User(db.Model):
             "address":self.address,
             "phone": self.phone,
             "is_active":self.is_active,
-            "professions":self.user_professions
+            "professions":[user_profession.serialize() for user_profession in self.user_professions.all()]
         }
 class Role(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +46,7 @@ class Role(db.Model):
 class Profession(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(120), unique=True, nullable=False)
-        user_professions = db.relationship('UserProfession', backref='profession')
+        user_professions = db.relationship('UserProfession', backref='profession', lazy='dynamic')
 
         def __repr__(self):
             return f'<Profession {self.id}>'
@@ -69,7 +69,7 @@ class UserProfession(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "profession_id": self.profession_id
+            "profession": self.profession.serialize()
         }
 
 #  id	id-user	id-profesion	importe       
