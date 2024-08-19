@@ -13,6 +13,7 @@ class User(db.Model):
         is_active = db.Column(db.Boolean(), unique=False, nullable=False)
         favorites = db.relationship("Favorite", backref="user")
         cart = db.relationship("Cart", backref="user")
+        user_professions = db.relationship("UserProfession", backref="user")
 
         def __repr__(self):
             return f'<User {self.email}>'
@@ -25,7 +26,8 @@ class User(db.Model):
             # do not serialize the password, its a security breach
             "address":self.address,
             "phone": self.phone,
-            "is_active":self.is_active
+            "is_active":self.is_active,
+            "professions":self.user_professions
         }
 class Role(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -40,9 +42,11 @@ class Role(db.Model):
             "id": self.id,
             "name": self.name,
         }
+
 class Profession(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(120), unique=True, nullable=False)
+        user_professions = db.relationship('UserProfession', backref='profession')
 
         def __repr__(self):
             return f'<Profession {self.id}>'
@@ -51,6 +55,21 @@ class Profession(db.Model):
             return {
             "id": self.id,
             "name": self.name
+        }
+
+class UserProfession(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    profession_id = db.Column(db.Integer, db.ForeignKey('profession.id'), nullable=False)
+
+    def __repr__(self):
+        return f'<UserProfession {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "profession_id": self.profession_id
         }
 
 #  id	id-user	id-profesion	importe       
@@ -147,6 +166,7 @@ class Product(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name= db.Column(db.String(120), nullable=False)
         cost= db.Column(db.Float, nullable=False)
+        image_url = db.Column(db.String(120), nullable=True)
         favorites = db.relationship("Favorite", backref="product")
         cart = db.relationship("Cart", backref="product")
 
@@ -158,6 +178,7 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "cost": self.cost,
+            "image_url": self.image_url
     }  
 # cart:id	id-user	id-product	units	importe-total
 class Cart(db.Model):

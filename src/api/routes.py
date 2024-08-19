@@ -197,6 +197,20 @@ def get_product(id):
     print(query_result)
     return jsonify(query_result), 200
 
+# GET product image
+@api.route('/product/<int:id>/image', methods=['GET'])
+def get_product_image(id):
+    try:
+        product= Product.query.filter_by(id=id).first()
+
+        if not product.image_url:
+            return jsonify({"msj": "El producto no tiene imagen"}), 404
+        
+        return jsonify({'image-url': product.image_url}), 200
+    except Exception as e:
+        return jsonify({"msj":str(e)}), 500
+    
+
 #DELETE 
 @api.route('/product/<int:id>', methods=['DELETE'])
 def delete_product(id):
