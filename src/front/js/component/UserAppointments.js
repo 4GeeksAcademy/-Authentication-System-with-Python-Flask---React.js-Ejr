@@ -38,7 +38,7 @@ function UserAppointments() {
         const response = await fetch(`${apiUrl}/appointmentsuser/${userId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-            ...store.corsEnabled, // Deshabilitar una vez en producción
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         });
 
@@ -67,7 +67,7 @@ function UserAppointments() {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            ...store.corsEnabled, // Deshabilitar una vez en producción
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
           body: JSON.stringify({
             comment: newComments[appointmentId],
@@ -136,7 +136,7 @@ function UserAppointments() {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-            ...store.corsEnabled, // Deshabilitar una vez en producción
+            ...store.corsEnabled // Deshabilitar una vez en producción
           },
         }
       );
