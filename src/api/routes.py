@@ -43,9 +43,10 @@ def register():
     hashed_password = generate_password_hash(password).decode('utf-8')
     
     new_user = User(name=name, username=username, email=email, password=hashed_password, country=country )
-    access_token = create_access_token(identity=new_user.id)
+    
     db.session.add(new_user)
     db.session.commit()
+    access_token = create_access_token(identity=new_user.id)
     if cif is not None:
         empleador = Empleador(user_id=new_user.id,cif=cif)
         db.session.add(empleador)
@@ -84,30 +85,27 @@ def getAllUsers():
 @api.route('/user/editEmpleador', methods=['PUT'])
 @jwt_required()
 def editEmpleador():
-    name = request.json.get("name", None)
-    username = request.json.get("username", None)
-    email = request.json.get("email", None)
-    country = request.json.get("country", None)
-    cif = request.json.get('cif', None)
-    metodo_pago = request.json.get('metodo_pago', None)
-    descripcion = request.json.get('descripcion', None)
-    photo = request.json.get('photo', None)
-    #Sale null el get_jwt_identity no funciona
+    name = request.json.get("name")
+    username = request.json.get("username")
+    email = request.json.get("email")
+    country = request.json.get("country")
+    cif = request.json.get('cif')
+    metodo_pago = request.json.get('metodo_pago')
+    descripcion = request.json.get('descripcion')
+    photo = request.json.get('photo')
     id_user = get_jwt_identity()
-    print(id_user)
-    print(name)
-    user = User.query.filter_by(id=id_user)
-    #empleador = Empleador.query.filter_by(user_id=user.id)
+    user = User.query.get(id_user)
+    empleador = Empleador.query.filter_by(user_id=user.id)
     user.name=name
-    #user.username = username
-    #user.email=email
-    #user.country = country
-    #user.photo = photo
-    #empleador.cif = cif
-    #empleador.metodo_pago = metodo_pago
-    #empleador.descripcion=descripcion
+    user.username = username
+    user.email=email
+    user.country = country
+    user.photo = photo
+    empleador.cif = cif
+    empleador.metodo_pago = metodo_pago
+    empleador.descripcion=descripcion
     db.session.commit()
-    return jsonify({'msg': 'OK', 'user': user.serialize()}), 200
+    return jsonify({'msg': 'OK', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
     
 
 
