@@ -119,6 +119,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            // Crear maximos y minimos
+            fetchExtremes: async (babyId, interval) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/report/extremes/${babyId}?interval=${interval}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log("Extremes fetched successfully:", data);
+                        return data; // Retorna todo el objeto con "max" y "min"
+                    } else {
+                        console.error("Failed to fetch extremes");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error fetching extremes", error);
+                    return null;
+                }
+            },
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend

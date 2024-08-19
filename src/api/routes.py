@@ -354,7 +354,7 @@ def get_report(baby_id, report_id):
     return jsonify(report.serialize()), 200
 
 
-#[GET] Calcular report
+#[GET] Calcular avg
 @api.route('/report/averages/<int:baby_id>', methods=['GET'])
 def get_averages(baby_id):
     interval = request.args.get('interval')  
@@ -389,3 +389,48 @@ def get_averages(baby_id):
     }
 
     return jsonify({"averages": average_data})
+
+
+# [GET] Calcular min/max
+@api.route('/report/extremes/<int:baby_id>', methods=['GET'])
+def get_extremes(baby_id):
+    interval = request.args.get('interval')
+
+    if interval == 'weekly':
+        days = 7
+    elif interval == 'biweekly':
+        days = 14
+    elif interval == 'monthly':
+        days = 30
+    else:
+        return jsonify({"error": "Invalid interval"}), 400
+
+    end_date = datetime.utcnow()
+    start_date = end_date - timedelta(days=days)
+
+    reports = Report.query.filter(
+        Report.baby_id == baby_id,
+        Report.date >= start_date.date(),
+        Report.date <= end_date.date()
+    ).all()
+
+    if not reports:
+        return jsonify({"error": "No reports found"}), 404
+
+    max_data = {
+        "bedtime": max(r.bedtime for r in reports),
+        "meals": max(r.meals for r in reports),
+        "diapers": max(r.diapers for r in reports),
+        "walks": max(r.walks for r in reports),
+        "water": max(r.water for r in reports),
+    }
+
+    min_data = {
+        "bedtime": min(r.bedtime for r in reports),
+        "meals": min(r.meals for r in reports),
+        "diapers": min(r.diapers for r in reports),
+        "walks": min(r.walks for r in reports),
+        "water": min(r.water for r in reports),
+    }
+
+    return jsonify({"max": max_data, "min": min_data})
