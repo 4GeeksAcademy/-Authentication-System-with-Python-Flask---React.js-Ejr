@@ -1,0 +1,18 @@
+.header-preguntas {
+    background: #6793AE;
+    min-width: 50rem;
+    height: 15rem;
+    margin: 50px auto;
+    color: white;
+}
+
+.fuente {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+.banner-preguntas{
+    background: #6793AE;
+    color: white;
+    margin: 3rem 0;
+}
