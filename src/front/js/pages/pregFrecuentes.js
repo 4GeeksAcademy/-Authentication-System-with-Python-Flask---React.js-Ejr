@@ -50,7 +50,7 @@ const PregFrecuentes = () => {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                Haz clic en <a href="/vista-login">"Olvidé mi contraseña"</a> en la página de inicio de sesión ingresa tu correo, recibirás un mail desde HablemosUY para restablecerla siguiendo las instrucciones desde el enlace.
+                Haz clic en <a href="/vista-login">"Olvidé mi contraseña"</a> en la página de inicio de sesión, ingresa tu correo y recibirás un mail de HablemosUY Salud Mental para restablecer tu contraseña siguiendo las instrucciones desde el enlace.
               </div>
             </div>
           </div>

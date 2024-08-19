@@ -127,13 +127,13 @@ def reset_password():
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404 # Generamos el token
     serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
-    token = serializer.dumps({'correo':user.correo, 'clave':clave}, salt='password-reset-salt')
+    token = serializer.dumps(user.correo, salt=os.getenv('SECRET_KEY'))
     # Guardamos el token en la base de datos
     reset_token = ClaveResetToken(user_id=user.id, token=token, expiration=datetime.now())
     db.session.add(reset_token)
     db.session.commit()
     # Enviamos el correo electrónico
-    reset_url = f"{os.getenv('BACKEND_URL' + '/login')}/{token}"
+    reset_url = f"{os.getenv('FRONTEND_URL')}/reset-password/{token}"
     msg = Message(subject="Password Reset", sender=os.getenv('MAIL_DEFAULT_SENDER'), recipients=[correo])
     msg.body = f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {reset_url}'
     current_app.mail.send(msg)
@@ -145,7 +145,8 @@ def reset_password():
 def reset_password_token(token):
     serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
     try:
-        user_data = serializer.loads(token, salt='password-reset-salt', max_age=3600)
+        correo = serializer.loads(token, salt=os.getenv('SECRET_KEY'), max_age=3600)
+        clave = request.json['clave']
     except SignatureExpired:
         return jsonify({"msg": "El token ha expirado."}), 400
     except BadSignature:
@@ -153,12 +154,12 @@ def reset_password_token(token):
     except Exception as e:
         return jsonify({"msg": f"Error: {str(e)}"}), 500
 
-    user = User.query.filter_by(correo=user_data['correo']).first()
+    user = User.query.filter_by(correo=correo).first()
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    user.password(user_data['clave'])
+    user.password(clave)
     db.session.commit()
 
     return jsonify({"msg": "Contraseña actualizada con éxito"}), 200
