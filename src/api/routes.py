@@ -40,6 +40,12 @@ def post_user():
     user = request.get_json()
     user_by_email = User.query.filter_by(email=user['email']).first()
 
+    # PASSWORD
+    espacio = False
+    numeros=False
+    mayuscula = False
+    minuscula = False
+    mayus_minus = False
     # Arreglar lo que son los codigos de estado y poner los mensajes desde el frontend
 
     if not isinstance(user['name'], str) or len(user['name'].strip()) == 0:
@@ -53,10 +59,34 @@ def post_user():
     if user_by_email:
         if user_by_email.email == user['email']:
             return ({'error':'This email is already used'}), 400
-    if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
-         return({'error':'"password" must be a string'}), 400
-    if not isinstance(user['confirm_password'], str) or len(user['confirm_password'].strip()) == 0:
-         return({'error':'"confirm_password" must be a string'}), 400
+    # PASSWORD
+    if not isinstance(user['password'], str) or len(user['password']) < 6 or len(user['password']) > 12:
+         return({'error':'"password" must be between 6 and 12 characters long'}), 400
+    
+    for caracter in user['password']:
+        if caracter.isspace() == True:
+            espacio = True
+        if caracter.isdigit() == True:
+            numeros = True
+        
+        if caracter.isupper() == True:
+            mayuscula = True
+            print("mayuscula",mayuscula)
+        if caracter.islower() == True:
+            minuscula = True
+            print("minuscula",minuscula)
+
+    if mayuscula == True and minuscula == True:
+        mayus_minus = True
+        print("mayus_minus", mayus_minus)
+
+    if espacio == True:
+        return({'error':'"password" there can be no blank spaces'}), 400
+    if numeros == False:
+        return({'error':'"password" must have at least one number'}), 400
+    if mayus_minus == False:
+        return({'error':'"password" must have at least one uppercase and one lowercase letter'}), 400
+        
     if user['password'] != user['confirm_password']:
         return({'error':'"password" and "confirm_password" must be the same'}), 400
 
