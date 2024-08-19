@@ -10,6 +10,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_bcrypt import Bcrypt
+from sqlalchemy import desc
 
 
 
@@ -186,7 +187,7 @@ def get_one_physical_user_information():
         data_serialized = physical_information.serialize()
         return jsonify(data_serialized), 200
 
-# GET LAST PhysicalInformation / TRAER LA ULTIMA INFORMACION FISICA
+# GET LAST ONE PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
 @api.route('/last-one-physical-user-information', methods=['GET'])
 @jwt_required()
 def get_last_one_physical_user_information():
@@ -208,7 +209,7 @@ def get_last_physical_user_information():
     query = db.select(PhysicalInformation).where(PhysicalInformation.user_id==current_user["id"]).order_by(desc(PhysicalInformation.date)).limit(10)
     result = db.session.execute(query)
     physical_information_list = result.scalars()
-    if len(physical_information_list) is None:
+    if physical_information_list is None:
         return ({'error':'physical information not found'}), 404
     else:
         data_serialized = list(map(lambda information: information.serialize(), physical_information_list))

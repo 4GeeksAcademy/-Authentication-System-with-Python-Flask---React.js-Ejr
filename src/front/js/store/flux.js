@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             onePhysicalUserInformationList: [],
             lastPhysicalUserInformation: '',
             allPhysicalUserInformationList: [],
+            lastPhysicalUserInformationList: [],
             allRoutineList: [],
             oneRoutine: {},
             allExerciseList: [],
@@ -204,7 +205,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-            // GET  LAST PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+            // GET LAST ONE PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+            get_last_one_physical_user_information: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/last-one-physical-user-information", {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (resp.status == 200) {
+                        setStore({ lastPhysicalUserInformation: resp.data })
+                        console.log(getStore().lastPhysicalUserInformation);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            // GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
             get_last_physical_user_information: async () => {
                 let token = localStorage.getItem("token")
                 try {
@@ -215,8 +237,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (resp.status == 200) {
-                        setStore({ lastPhysicalUserInformation: resp.data })
-                        console.log(getStore().lastPhysicalUserInformation);
+                        setStore({ lastPhysicalUserInformationList: resp.data })
+                        console.log(getStore().lastPhysicalUserInformationList);
                         return true;
                     }
                 }
