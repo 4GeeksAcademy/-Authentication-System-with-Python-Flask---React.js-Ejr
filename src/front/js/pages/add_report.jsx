@@ -33,7 +33,7 @@ const Switch = ({ checked, onChange }) => {
 
 export const AddReport = () => {
     const [babyName, setBabyName] = useState("");
-    const [babies, setBabies] = useState([]);
+    const [babies, setBabies] = useState([]); // Inicializar como arreglo vacío
     const [date, setDate] = useState("");
     const [bedtime, setBedtime] = useState("");
     const [meals, setMeals] = useState("");
@@ -63,12 +63,20 @@ export const AddReport = () => {
                         'Authorization': `Bearer ${store.token}` 
                     }
                 });
+
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new Error(`Failed to fetch babies: ${errorText}`);
                 }
+
                 const data = await response.json();
-                setBabies(data);
+
+                // Asegúrate de que `data` sea un arreglo
+                if (Array.isArray(data)) {
+                    setBabies(data);
+                } else {
+                    throw new Error('Unexpected response format');
+                }
             } catch (error) {
                 console.error('Error fetching babies:', error);
                 setError('Error fetching baby names');
@@ -81,7 +89,7 @@ export const AddReport = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!babyName || !date || !bedtime || !meals || !diapers || !walks || !water) {
+        if (!selectedBabyId || !date || !bedtime || !meals || !diapers || !walks || !water) {
             setError("Please fill in all required fields.");
             return;
         }
@@ -118,6 +126,7 @@ export const AddReport = () => {
             const result = await response.json();
             console.log('Report added successfully:', result);
             setError("");
+            // Opcional: Redirige o limpia el formulario
         } catch (error) {
             setError('Network error: ' + error.message);
         }
@@ -190,7 +199,7 @@ export const AddReport = () => {
 
                             <div className="ar-form-group">
                                 <label>
-                                    diaper
+                                    Diapers
                                 </label>
                                 <input
                                     type="number"
@@ -254,12 +263,14 @@ export const AddReport = () => {
                                 <button
                                     onClick={() => navigate(`/average-report/${selectedBabyId}`)}
                                     className="ar-btn ar-btn-secondary"
+                                    disabled={!selectedBabyId} // Deshabilitar si no hay bebé seleccionado
                                 >
                                     <FontAwesomeIcon icon={faChartBar} /> Report
                                 </button>
                                 <button
                                     onClick={() => navigate(`/baby/${selectedBabyId}/reports`)}
                                     className="ar-btn ar-btn-secondary"
+                                    disabled={!selectedBabyId} // Deshabilitar si no hay bebé seleccionado
                                 >
                                     <FontAwesomeIcon icon={faCalendar} /> View All
                                 </button>

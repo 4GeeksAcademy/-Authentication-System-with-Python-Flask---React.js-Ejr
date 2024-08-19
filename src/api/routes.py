@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import datetime, timedelta
+from sqlalchemy.exc import SQLAlchemyError
 
 api = Blueprint('api', __name__)
 
@@ -262,12 +263,40 @@ def get_blog(type, id):
 @jwt_required()
 def get_babies():
     user_id = get_jwt_identity()
-    print(f'User ID: {user_id}')  # Agrega un mensaje de depuración
-    babies = Baby.query.filter_by(user_id=user_id).all()
-    return jsonify([{
-        'id': baby.id,
-        'name': baby.name
-    } for baby in babies])
+    print(f'User ID: {user_id}')  # Mensaje de depuración para verificar el user_id
+
+    try:
+        # Verifica si el usuario existe
+        user = User.query.get(user_id)
+        if user is None:
+            print('User not found')
+            return jsonify({'error': 'User not found'}), 404
+
+        # Verifica si el usuario tiene un bebé asociado
+        baby_id = user.baby_id
+        if baby_id is None:
+            print('No baby associated with user')
+            return jsonify([])
+
+        # Busca el bebé asociado
+        baby = Baby.query.get(baby_id)
+        if baby is None:
+            print('Baby not found')
+            return jsonify([])
+
+        # Devuelve el bebé
+        return jsonify({
+            'id': baby.id,
+            'name': baby.name
+        })
+
+    except SQLAlchemyError as e:
+        print(f'SQLAlchemy Error: {e}')
+        return jsonify({'error': 'Database error'}), 500
+    except Exception as e:
+        print(f'General Error: {e}')
+        return jsonify({'error': 'Error fetching babies'}), 500
+
 
 #[POST] Añadir datos al Report
 @api.route('/report', methods=['POST'])
