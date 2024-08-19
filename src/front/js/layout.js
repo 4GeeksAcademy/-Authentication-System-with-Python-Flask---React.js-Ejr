@@ -15,6 +15,7 @@ import Perfil from "./pages/perfil";
 import Profesionales from "./pages/profesionales";
 import PregFrecuentes from "./pages/pregFrecuentes";
 import Emergencias from "./pages/emergencias";
+import ResetPassword from "./pages/reset_password";
 
 
 
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route element={<Inicio />} path="/" />
                         <Route element={<VistaRegister />} path="/vista-register" />
                         <Route element={<VistaLogin />} path="/vista-login" />
+                        <Route element={<ResetPassword />} path="/reset-password/:token" />
                         <Route element={<Perfil />} path="/perfil" />
                         <Route element={<Profesionales />} path="/profesionales" />
                         <Route element={<PregFrecuentes />} path="/preguntas-frecuentes" />
