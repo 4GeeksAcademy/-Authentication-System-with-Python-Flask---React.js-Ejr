@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Dropdown } from 'react-bootstrap'; //biblioteca que reescribe los componentes de Bootstrap como componentes de React.
 import '../../styles/barraBusqueda.css'; // Importa los estilos para el componente
 import { Context } from '../store/appContext'; // Importa el contexto global
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Importa los iconos de Bootstrap
+
 
 
 const BarraBusqueda = () => {
@@ -277,7 +277,7 @@ const BarraBusqueda = () => {
                                     onChange={handleChange}
                                     placeholder="Buscar cursos"
                                 />
-                                <i className="bi bi-search iconoBuscador"></i>
+                                <span className="fa-solid fa-magnifying-glass iconoBuscador"></span>
                             </div>
                         </Form.Group>
                     </Col>
