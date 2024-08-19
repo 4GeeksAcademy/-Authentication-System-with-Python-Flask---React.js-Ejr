@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged: false,
 			psicologos: [],
 			dataUser: null,
-			imagenURL:  ""
+			imagenURL:   ""
 
 		},
 		actions: {
@@ -81,8 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 						return false;
 					}
-
-
+          
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						setStore({
