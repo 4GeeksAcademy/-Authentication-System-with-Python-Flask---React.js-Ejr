@@ -24,9 +24,28 @@ export const Login = () => {
 		}
 		gapi.load("client:auth2", start)
 	}, [])
-	const onSuccess = (response) => {
-		console.log(response)
+	const onSuccess = async (response) => {
+		// console.log(response)
+		const dataUser = response.profileObj
 		//conectar con los actions de flux para hacer el login y luego con la base de datos.
+		const isLogged = await actions.iniciarSesion(dataUser.email, dataUser.googleId)
+		if(isLogged){
+			Swal.fire({
+				title: 'Bienvenido!',
+				text: 'Ingresaste satisfactoriamente!',
+				icon: 'success',
+				timer: 4000
+			})
+			navigate("/perfil")
+		}else {
+			Swal.fire({
+				title: 'Lo sentimos!',
+				text: 'Correo o contraseña incorrectos, intente nuevamente!',
+				icon: 'error',
+				timer: 4000
+			})
+			navigate("/vista-login")
+		}
 	}
 	const onFailure = () => {
 		console.log('Algo salió mal')
@@ -56,7 +75,7 @@ export const Login = () => {
 			} else {
 				Swal.fire({
 					title: 'Lo sentimos!',
-					text: 'Ha habido un error en su correo o contraseña, intente nuevamente!',
+					text: 'Correo o contraseña incorrectos, intente nuevamente!',
 					icon: 'error',
 					timer: 4000
 				})

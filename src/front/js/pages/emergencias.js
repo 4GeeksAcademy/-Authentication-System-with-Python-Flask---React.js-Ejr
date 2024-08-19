@@ -2,7 +2,7 @@ import React from "react";
 
 const Emergencias = () => {
     return(
-        <div className="container mt-5 col-10 col-md-8" style={{ minHeight: '70vh' }}>
+        <div className="container mt-5 col-12 col-md-8" style={{ minHeight: '70vh' }}>
             <h2 className="text-start text-inicio mb-4">Teléfonos de Emergencias</h2>
             <div className="d-flex flex-column">
                 <div className="card card-emergencia text-dark mb-3">
