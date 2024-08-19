@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Comentarios, Especialidades, ClaveResetToken
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -11,19 +11,21 @@ from flask_jwt_extended.exceptions import NoAuthorizationError, InvalidHeaderErr
 from werkzeug.exceptions import Unauthorized
 from datetime import datetime, timezone, timedelta
 import os
+from dotenv import load_dotenv
 from itsdangerous.serializer import Serializer
-from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message, Mail
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-s = Serializer(SECRET_KEY)
+load_dotenv()  # Cargamos las variables del archivo .env
+SECRET_KEY = os.getenv("SECRET_KEY")
+# Verificamos que la clave secreta se haya cargado correctamente
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY no está configurado.")
+
+serializer = URLSafeTimedSerializer(SECRET_KEY)
 
 api = Blueprint('api', __name__)
 
-mail = Mail()
-
-app = Flask(__name__)
-mail.init_app(app)
 
 # Allow CORS requests to this API
 CORS(api)
@@ -110,21 +112,22 @@ def refresh():
 @api.route('/reset_password', methods=['POST'])
 def reset_password():
     correo = request.json.get("correo", None)
+    clave = request.json.get("clave", None)
     user = User.query.filter_by(correo=correo).first()
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404 # Generamos el token
     serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
-    token = serializer.dumps(user.correo, salt='password-reset-salt')
+    token = serializer.dumps({'correo':user.correo, 'clave':clave}, salt='password-reset-salt')
     # Guardamos el token en la base de datos
-    reset_token = ClaveResetToken(user_id=user.id, token=token, expiration=datetime.now(timezone.utc) + timedelta(hours=1))
+    reset_token = ClaveResetToken(user_id=user.id, token=token, expiration=datetime.now())
     db.session.add(reset_token)
     db.session.commit()
     # Enviamos el correo electrónico
-    reset_url = url_for('api.reset_password_token', token=token, _external=True)
+    reset_url = f"{os.getenv('BACKEND_URL' + '/login')}/{token}"
     msg = Message(subject="Password Reset", sender=os.getenv('MAIL_DEFAULT_SENDER'), recipients=[correo])
     msg.body = f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {reset_url}'
-    mail.send(msg)
+    current_app.mail.send(msg)
 
     return jsonify({"msg": "Correo enviado para restablecer la contraseña"}), 200
 
@@ -133,17 +136,20 @@ def reset_password():
 def reset_password_token(token):
     serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
     try:
-        correo = serializer.loads(token, salt='password-reset-salt', max_age=3600)
-    except:
-        return jsonify({"msg": "El token es inválido o ha expirado"}), 400
+        user_data = serializer.loads(token, salt='password-reset-salt', max_age=3600)
+    except SignatureExpired:
+        return jsonify({"msg": "El token ha expirado."}), 400
+    except BadSignature:
+        return jsonify({"msg": "El token es inválido."}), 400
+    except Exception as e:
+        return jsonify({"msg": f"Error: {str(e)}"}), 500
 
-    user = User.query.filter_by(correo=correo).first()
+    user = User.query.filter_by(correo=user_data['correo']).first()
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    nueva_clave = request.json.get("nueva_clave", None)
-    user.set_password(nueva_clave)
+    user.password(user_data['clave'])
     db.session.commit()
 
     return jsonify({"msg": "Contraseña actualizada con éxito"}), 200
