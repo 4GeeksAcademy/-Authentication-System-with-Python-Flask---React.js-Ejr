@@ -21,6 +21,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
+            
+            routineData: '',
 
             porcentajes: [1, 2, 3, 4, 5, 6, 7],
             porcentaje: 0,
@@ -431,6 +433,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.status == 200) {
                         console.log('Routine successfully added:', response.data);
+                        setStore({ routineData: response.data })
                         return true;
                     }
                 } catch (error) {
