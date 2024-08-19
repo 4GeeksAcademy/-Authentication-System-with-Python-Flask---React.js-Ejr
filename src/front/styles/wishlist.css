@@ -1,0 +1,76 @@
+@import url('./variables.css');
+
+.wishlist-container * {
+    outline: 1px solid red;
+}
+
+.wishlist-container {
+    display: flex;
+}
+
+.wishlist-container .main-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+}
+
+.wishlist-container .aside-container {
+    position: relative;
+    width: 30%;
+}
+.wishlist-container .aside-container .buttons-container{
+    position: fixed;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 20%;
+}
+
+.wishlist-container .aside-container .buttons-container a{
+    width: 80%;
+    color: var(--color-forest);
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+}
+
+.wishlist-container .aside-container button {
+    border: 1px solid var(--color-forest);
+    background: var(--color-light-green);
+    border-radius: 4px;
+    padding: 0.6em;
+    margin: 1em;
+    font-weight: bolder;
+    transition: 0.4s ease;
+    width: 80%;
+}
+
+.wishlist-container .aside-container button:hover {
+    border: 1px solid var(--color-forest);
+    background: var(--color-green);
+}
+
+@media (width < 600px) {
+    .wishlist-container {
+        flex-direction: column;
+    }
+
+    .wishlist-container .main-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .wishlist-container .aside-container .buttons-container{
+        position: static;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        min-width: 100%;
+        margin: 1em 0;
+    }
+
+}

@@ -13,6 +13,8 @@ import Register from "./pages/register.jsx";
 import ListOfProducts from "./pages/listofproducts.jsx";
 import ProductDetail from "./pages/productDetail.jsx";
 import Editor from "./pages/editor.jsx";
+import WishList from "./pages/wishlist.jsx";
+import Agenda from "./pages/agenda.jsx";
 
 import { Navbar } from "./component/navbar";
 import  Footer  from "./component/footer";
@@ -40,11 +42,13 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<ListOfProducts />} path="/products" />
                         <Route element={<Editor />} path="/editor" />
+                        <Route element={<WishList />} path="/wishlist/users/:id" />
                         <Route element={<ProductDetail />} path="/product-detail/:id" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<About />} path="/about" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Social />} path="/social" />
+                        <Route element={<Agenda />} path="/agenda" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

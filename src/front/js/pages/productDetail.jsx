@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useParams } from "react";
+import { Context } from "../store/appContext";
 import '../../styles/productdetail.css';
 import ImgA from '../../../../public/images/cereal.png'
 import ImageGallery from "react-image-gallery";
@@ -15,7 +16,14 @@ const images = [
 ];
 
 
-const ProductDetail = () => {
+const ProductDetail = ({ id, name, cost }) => {
+
+    const { actions, store } = useContext(Context);
+
+    const verifyExist = (name) => {
+        return store.favorites.some(item => item.name == name)
+    }
+
     return (
         <div className="product-detail-container">
             <div className="invisible-header-box"></div>
@@ -27,8 +35,8 @@ const ProductDetail = () => {
                     />
                 </div>
                 <div className="detail-container">
-                    <button className="heart-container">
-                        <i className="bi bi-suit-heart-fill"></i>
+                    <button className="heart-container" onClick={() => actions.addFavorite(name)} >
+                        <i className={`${verifyExist(name) && "text-danger"} bi bi-suit-heart-fill`}></i>
                     </button>
                     <button className="cart-container">
                         <i className="bi bi-cart4"></i>
@@ -43,7 +51,7 @@ const ProductDetail = () => {
                             <p className="col">10 Unidades</p>
                         </div>
                         <button className="buy-btn">Comprar</button>
-
+                        
                         {/* <button className="add-cart-btn">Agregar al carrito</button> */}
                     </div>
                 </div>

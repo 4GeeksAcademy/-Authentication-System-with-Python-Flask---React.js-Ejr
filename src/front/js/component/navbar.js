@@ -44,7 +44,7 @@ export const Navbar = () => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/wishlist" className="link">
+                                    <Link to="/wishlist/users/1" className="link">
                                         <button type="button nav-text-btn">
                                             <i className="bi bi-suit-heart-fill"></i>
                                             <span className="i-name">Favoritos</span>

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product
+from api.models import db, User, Product, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
@@ -242,8 +242,34 @@ def update_product(id):
     db.session.commit()
     return jsonify (product.serialize(),{"msg":"El producto ha sido actualizado"}), 200
 
-#MERCADO PAGO
+#GET favorites
+@api.route('/wishlist', methods=['GET'])
+def get_favorites():
+    all_favorites = Favorite.query.all()
+    if all_favorites == []: #sin productos
+        return jsonify({"msj":"Aún no hay favoritos"}), 404 
+    
+    result= list(map(lambda item:item.serialize(),all_favorites))
 
+    response_body = {
+        "msg": "Todos los favoritos", 
+        "results": result #tus productos
+    }
+    return jsonify(response_body), 200
+
+
+@api.route('/wishlist/users', methods=['GET'])
+@jwt_required()
+def get_favorites_by_user_id(id):
+    current_user = get_jwt_identity()
+    print(current_user)
+    # favorite = Favorite.query.filter_by(id=id).first()
+    favorite = Favorite.query.filter_by(user_id=id).all()
+    result= list(map(lambda item:item.serialize(),favorite))
+    return jsonify (result), 200
+
+
+#MERCADO PAGO
 @api.route("/preference", methods=["POST"]) 
 def preference(): 
     # body = json.loads(request.data)  # aca trae la info 
