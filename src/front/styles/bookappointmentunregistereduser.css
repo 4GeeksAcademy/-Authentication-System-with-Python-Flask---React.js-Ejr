@@ -8,23 +8,23 @@
     justify-content: center;
 } */
 
-.padding {
+.padding-nonuser {
     padding: 5rem;
 }
 
 @media (max-width: 991.98px) {
-    .padding {
+    .padding-nonuser {
         padding: 1.5rem;
     }
 }
 
 @media (max-width: 767.98px) {
-    .padding {
+    .padding-nonuser {
         padding: 1rem;
     }
 }
 
-.card {
+.card shadow-sm nonuser {
     background-color: transparent; 
     border-width: 0;
     border-radius: .25rem;
@@ -33,7 +33,7 @@
     padding: 2rem;
 }
 
-.card-header {
+.card-header text-center nonuser {
     background-color: transparent;
     border-color: rgba(160, 175, 185, .15);
     background-clip: padding-box;
@@ -98,14 +98,14 @@ button {
     cursor: pointer;
 }
 
-button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
+form button[type="submit"].btn.btn-primary.nonuser {
+    background-color: #035cb5 !important;
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
+form button[type="submit"].btn.btn-primary.nonuser:hover {
+    background-color: #003366 !important;
 }
+
 
 .d-flex .justify-content-end {
     justify-content: flex-end;
