@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.description {
+    max-width: 40%;
+ 
+}
+.tag {
+  background-color: #fffaff;
+  color: #050401;
+  font-size: medium;
+  border: none;
+  padding: 5px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;}

@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+.profile{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.comments{
+  max-width: 90%;
+  margin-bottom: 1rem;
+}
+
+.allcomments{
+  color: #267192;
+  cursor: pointer;
+}
+
+.header{
+  gap: 5rem
+}
+.date{
+  margin-left: 5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .comments{
+    max-width: fit-content !important;
+  }
+  .date{
+    margin-left: 5rem;
+  }
+  .profile{
+    border-radius: 50%;
+    width: 100px!important;
+    height: 100px!important;
+  }
+}
