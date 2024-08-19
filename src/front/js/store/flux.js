@@ -3,7 +3,7 @@ import axios from "axios";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			users: [],
+			currentUser: null,
 			auth: false,
 			error: {},
 			mercadoPago: {},
@@ -25,9 +25,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password
 						})
 					})
-					if (response.status === 201) {
+					if (response.status === 200) {
 						let data = await response.json()
-						setStore({ auth: data.logged })
+						setStore({ currentUser: data.user })
+						localStorage.setItem("token", data.access_token)
 						return true
 					}
 					if (response.status === 404) {
@@ -37,11 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false
 					}
 
-					let data = await response.json()
-					localStorage.setItem("token", data.access_token)
-					setStore({ auth: data.logged })
 
-					return true
 				} catch (error) {
 					console.log(error);
 					return false
@@ -60,13 +57,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${process.env.BACKEND_URL}/api/valid_token`, {
 						method: 'GET',
 						headers: {
-							'Content-Type': 'application/json',
+
 							'Authorization': `Bearer ${token}`
 						},
 
 					})
-					let data = await response.json()
-					console.log(data); // me muestra data en consola
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							currentUser: data.user
+						})
+					}
+
+
 
 				}
 				catch (error) {
@@ -222,7 +225,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-			
+
 			getFavoritesByUserId: async (user_id) => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/users/${user_id}`, {
@@ -238,6 +241,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return { success: false, error: error.message };
 				}
+			},
+			uploadImage: async (data) => {
+				console.log(data)
+				const response = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
+					method: 'POST',
+					body: data,
+					headers: {
+						'Authorization': `Bearer ${localStorage.getItem('token')}`
+
+					}
+				})
+				const data_result = await response.json()
+				console.log(data_result)
 			}
 
 			// // Agregar a Favoritos

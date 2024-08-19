@@ -2,18 +2,25 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Favorite
+from api.models import db, User, Product, Profession, UserProfession, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
 import mercadopago
-import json
+import json, os
+import cloudinary 
+import cloudinary.uploader
 sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
 from flask import render_template
 # Allow CORS requests to this API
 CORS(api)
 
+# cloudinary.config(
+#     cloud_name=os.getenv['CLOUDINARY_CLOUD_NAME'],
+#     api_key=os.getenv['CLOUDINARY_API_KEY'],
+#     api_secret=os.getenv['CLOUDINARY_API_SECRET']
+# )
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -86,12 +93,12 @@ def valid_token():
     #con la identidad valida del usuario hago a User una consulta para retornar una respuesta
     #con la informacion de usuario propiamente dicho
     current_user = get_jwt_identity() #verifica si mi correo tiene una identidad
-    user_exist = User.query.filter_by(email = current_user).first
+    user_exist = User.query.filter_by(email = current_user).first()
     print(user_exist)
     # print(current_user)
     if user_exist is None:
         return jsonify (logged = False), 404
-    return jsonify(logged = True), 200 
+    return jsonify(logged = True, user = user_exist.serialize()), 200
 
 # Get users
 @api.route('/users', methods=['GET'])
@@ -161,6 +168,35 @@ def update_user(id):
 # guardo los cambios en la db
     db.session.commit()
     return jsonify (user.serialize(),{"msg":"El usuario ha sido actualizado"}), 200
+
+#ENDPOINTS - GET Professionals (Nutricionistas - Personal Trainers)   
+@api.route('/users/personal-trainers', methods=['GET'])
+def get_personal_trainers():
+    profession = Profession.query.filter(Profession.name.ilike('personal trainer')).first() 
+
+    if not profession:
+        return jsonify({"error": "Profesión 'Personal Trainer' no encontrada"}), 404
+    
+    #obtengo los usuarios con la profesión personal trainer
+    users = User.query.join(UserProfession).filter(
+        UserProfession.profession_id == profession.id
+    ).all()
+
+    return jsonify([user.serialize() for user in users]), 200
+
+@api.route('/users/nutritionists', methods=['GET'])
+def get_nutritionists():
+    profession = Profession.query.filter(Profession.name.ilike('nutricionista')).first()
+    print(profession)
+    if not profession:
+        return jsonify({"error": "Profesión 'Nutricionista' no encontrada"}), 404
+    
+    #obtengo los usuarios con profesión Nutricionista
+    users = User.query.join(UserProfession).filter(
+        UserProfession.profession_id == profession.id
+    ).all()
+
+    return jsonify([user.serialize() for user in users]), 200
 
 # ENDPOINT PRODUCTOS
 #GET products
@@ -312,3 +348,10 @@ def home():
     products = Product.query.all()
     return render_template('home.html', products=products)   
  
+@api.route('/upload', methods=['POST'])
+@jwt_required()
+def upload_image():
+    print(request.files)
+    file = request.files['image']
+    result = cloudinary.uploader.upload(file)
+    return result, 200
