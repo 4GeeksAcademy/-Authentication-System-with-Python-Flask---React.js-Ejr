@@ -49,11 +49,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			login : async (username, password) => {
+			login : async (email, password) => {
 				const resp = await fetch(process.env.BACKEND_URL + "/api/login", { 
 					 method: "POST",
 					 headers: { "Content-Type": "application/json" },
-					 body: JSON.stringify({ username, password }) 
+					 body: JSON.stringify({ email, password }) 
 				})
 		   
 				if(!resp.ok) throw Error("There was a problem in the login request")
