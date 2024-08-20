@@ -43,7 +43,7 @@ const CreateAppointmentRegisteredUser = () => {
         console.log(maxAppointmentsH)
         setServices(data.services);
       } catch (error) {
-        console.error("Error getting services:", error);
+        // console.error("Error getting services:", error);
       }
     };
 
@@ -248,11 +248,11 @@ const CreateAppointmentRegisteredUser = () => {
     try {
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
 
-      console.log("Date", dateFormat);
-      console.log("User id", myuserId);
-      console.log("Car ID", carId);
-      console.log("Serv. ID", parseInt(serviceChosen, 10));
-      console.log("service being chosen", serviceChosen);
+      // console.log("Date", dateFormat);
+      // console.log("User id", myuserId);
+      // console.log("Car ID", carId);
+      // console.log("Serv. ID", parseInt(serviceChosen, 10));
+      // console.log("service being chosen", serviceChosen);
 
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
@@ -279,7 +279,7 @@ const CreateAppointmentRegisteredUser = () => {
       }
 
       const appointmentData = await submitAppointment.json();
-      console.log("Appointment details:", appointmentData);
+      // console.log("Appointment details:", appointmentData);
 
       const MailSender = (userInfo) => {
         const data = {
@@ -300,7 +300,7 @@ const CreateAppointmentRegisteredUser = () => {
           <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
           };
       
-          console.log("Data ready to send:", data);
+          // console.log("Data ready to send:", data);
           actions.SendMail(data);
         };
 
@@ -313,8 +313,8 @@ const CreateAppointmentRegisteredUser = () => {
 
       navigate("/appointmentconfirmed");
     } catch (error) {
-      console.error("Error while booking appointment:", error);
-      console.log("Error while booking appointment:", error);
+      // console.error("Error while booking appointment:", error);
+      // console.log("Error while booking appointment:", error);
       setError(
         "An error occurred while booking the appointment. Please try again."
       );
@@ -333,8 +333,8 @@ const CreateAppointmentRegisteredUser = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="step-content">
-            <h3>Select or Add a Car</h3>
+          <div className="card-body">
+            <h3>Please Select or Add a Car</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="userCars">Select a Car</label>
             <select
@@ -342,6 +342,11 @@ const CreateAppointmentRegisteredUser = () => {
               className="form-select"
               value={carId}
               onChange={(e) => setCarId(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  nextStep();
+                }
+              }}
             >
               <option value="">Select one of your cars</option>
               {userCars.map((car) => (
@@ -379,8 +384,8 @@ const CreateAppointmentRegisteredUser = () => {
 
       case 2:
         return (
-          <div className="step-content">
-            <h3>Select a Service</h3>
+          <div className="card-body">
+            <h3>Please Select a Service</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="service">Service</label>
             <select
@@ -398,10 +403,11 @@ const CreateAppointmentRegisteredUser = () => {
             </select>
           </div>
         );
+
       case 3:
         return (
-          <div className="step-content datetimepicker-component">
-            <h3>Select Appointment Date, Time, and Add a Comment</h3>
+          <div className="card-body datetimepicker-component">
+            <h3>Please Select Appointment Date, Time, and Add a Comment</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="date">Appointment Date</label>
             <DatePicker
@@ -418,16 +424,17 @@ const CreateAppointmentRegisteredUser = () => {
               disabledTime={disabledTime}
             />
 
-            <label htmlFor="comment">Comment</label>
+            <label htmlFor="comment">Comments</label>
             <textarea
               id="comment"
               className="form-control"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Enter your comment"
+              placeholder="Add a comment"
             />
           </div>
         );
+
       case 4:
         const selectedCar = userCars.find((car) => car.id === parseInt(carId));
 
@@ -439,7 +446,7 @@ const CreateAppointmentRegisteredUser = () => {
           : carModel;
 
         return (
-          <div className="step-content">
+          <div className="card-body">
             <h3>Appointment Summary</h3>
             <p>
               <strong>Car:</strong> {displayedCarLicensePlate} -{" "}
@@ -468,50 +475,52 @@ const CreateAppointmentRegisteredUser = () => {
   };
 
   return (
-    <div className="card-content py-5">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card">
-            <div className="card-header">Appointment Booking</div>
-            <div className="card-body">{displayCurrentStep()}</div>
-            <div
-              className={`button-container d-flex ${
-                currentStep === 1
-                  ? "justify-content-end"
-                  : "justify-content-between"
-              }`}
+    <div id="content" className="padding">
+      <div className="card shadow-sm">
+        <div className="card-header text-center">
+          Appointment Booking
+        </div>
+        <form
+          onSubmit={
+            currentStep === 4
+              ? confirmAppointment
+              : (e) => e.preventDefault()
+          }
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              nextStep();
+            }
+          }}
+        >
+          {displayCurrentStep()}
+        </form>
+
+        <div className="card-footer d-flex justify-content-between">
+          {currentStep > 1 && (
+            <button
+              className="btn btn-secondary"
+              onClick={() => setCurrentStep(currentStep - 1)}
             >
-              {currentStep > 1 && (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setCurrentStep(currentStep - 1)}
-                >
-                  Previous
-                </button>
-              )}
-              {currentStep < 4 && (
-                <button className="btn btn-primary" onClick={nextStep}>
-                  Next
-                </button>
-              )}
-              {currentStep === 4 && (
-                <div className="d-flex justify-content-between w-100">
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => setCurrentStep(1)}
-                  >
-                    Back to Start
-                  </button>
-                  <button
-                    className="btn btn-primary ml-auto"
-                    onClick={confirmAppointment}
-                  >
-                    Confirm Appointment
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+              Previous
+            </button>
+          )}
+          {currentStep < 4 && (
+            <button
+              className="btn btn-primary"
+              onClick={nextStep}
+            >
+              Next
+            </button>
+          )}
+          {currentStep === 4 && (
+            <button
+              className="btn btn-primary ml-auto"
+              onClick={confirmAppointment}
+            >
+              Confirm Appointment
+            </button>
+          )}
         </div>
       </div>
     </div>
