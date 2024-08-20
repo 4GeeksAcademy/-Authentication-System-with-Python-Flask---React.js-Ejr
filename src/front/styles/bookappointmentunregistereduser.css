@@ -63,7 +63,7 @@ input[type="submit"] {
 }
 
 .error-message {
-    color: #f54394;
+    color: red;
     margin-bottom: 1rem;
 }
 
