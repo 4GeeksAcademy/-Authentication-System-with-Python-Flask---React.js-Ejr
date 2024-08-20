@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faTag } from '@fortawesome/free-solid-svg-icons';
+import "../../styles/blog_detail.css";
+
 
 export const BlogDetail = () => {
-    const { type, id } = useParams(); // Obtiene el tipo y el ID del blog desde los parámetros de la URL
+    const { type, id } = useParams();
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -35,21 +39,27 @@ export const BlogDetail = () => {
     }
 
     return (
-        <div className="container">
-            <h1 className="display-4">{blog.title}</h1>
-            <img src={blog.img_header} className="img-fluid mb-3" alt={blog.title} />
-            <p><strong>Author:</strong> {blog.author}</p>
-            <p><strong>Source:</strong> {blog.source}</p>
-            <div>
-                {blog.text_intro && <p><strong>Introduction:</strong> {blog.text_intro}</p>}
-                {blog.text_ingredients && <p><strong>Ingredients:</strong> {blog.text_ingredients}</p>}
-                {blog.text_steps && <p><strong>Steps:</strong> {blog.text_steps}</p>}
-                {blog.text && <p><strong>Content:</strong> {blog.text}</p>}
+        <div className="container blog-detail-container-bg">
+            <div className="container blog-detail-container">
+                <img src={blog.img_header} className="img-fluid mb-3 img-header" alt={blog.title} />
+                <h1 className="display-4">{blog.title}</h1>
+                <div className="blog-detail-legend">
+                    <p><strong><FontAwesomeIcon icon={faUser} /></strong> {blog.author}</p>
+                    <p><strong><FontAwesomeIcon icon={faTag} /></strong> {blog.source}</p>
+                </div>
+                <div className="blog-detail-text">
+                    {blog.text_intro && <p>{blog.text_intro}</p>}
+                    <div className="blog-detail-text-ingredients">{blog.text_ingredients && <p><strong>Ingredients:</strong> {blog.text_ingredients}</p>}</div>
+                    {blog.text_steps && <p>{blog.text_steps}</p>}
+                    {blog.text && <p>{blog.text}</p>}
+                </div>
+                <img src={blog.img_final} className="img-fluid mt-3 blog-detail-container-img-final" alt="Final" />
+                <div className="blog-detail-btn-container">
+                    <Link to="/blog" className="btn btn-secondary mt-3 blog-detail-btn">
+                        ...
+                    </Link>
+                </div>
             </div>
-            <img src={blog.img_final} className="img-fluid mt-3" alt="Final" />
-            <Link to="/blog" className="btn btn-secondary mt-3">
-                Back to all blogs
-            </Link>
         </div>
     );
 };

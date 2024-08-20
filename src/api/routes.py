@@ -6,6 +6,8 @@ from api.models import db, User, Baby, Report, Blog_recipe, Blog_news
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from datetime import datetime, timedelta
+from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 import os
 
@@ -34,50 +36,51 @@ def login():
     user = User.query.filter_by (email=email).first()
     if user:
         if (user.password == password):
-            access_token = create_access_token(identity=user.id)
+            access_token = create_access_token(identity= user.id)
             return jsonify({'success' : True, 'user':user.serialize(), 'token' :access_token }), 200
-        return jsonify({'success' : False, 'msg':'usuario o contraseña no válidos'}), 400
+        return jsonify({'success' : False, 'msg':'Usuario o contraseña no válidos'}), 400
     return jsonify({'success' : False,  'msg' : 'El correo electrónico no existe'}), 404
 
 
 #[POST] Signup
 @api.route('/signup', methods=['POST'])
 def signup():
-    username = request.json.get('username', None)
     email = request.json.get('email', None)
     password = request.json.get('password', None)
-    if not email or not password or not username:
+    username = request.json.get('username', None)
+    if not email or not password:
         return jsonify({'success': False, 'msg': 'Faltan datos para el registro'}), 400
     user = User.query.filter_by(email=email).first()
     if user:
         return jsonify({'success': False, 'msg': 'Este correo electrónico ya tiene una cuenta'}), 400
-    new_user = User(username=username, email=email, password=password, is_admin=False)  # Considera si is_admin debe ser true o false por defecto
+    new_user = User(email=email, password=password, username=username, is_admin=False)
     db.session.add(new_user)
     db.session.commit()
-    access_token = create_access_token(identity=new_user.id)
-    return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
-
+    access_token = create_access_token(identity= new_user.id)
+    return jsonify({'success' : True, 'user':new_user.serialize(), 'token':access_token}), 200
+       
 
 #[GET] Token
-@api.route('/token', methods=['GET'])
+@api.route('/token', methods=['POST'])
 @jwt_required()
 def check_jwt():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+    user_id= get_jwt_identity()
+    user= User.query.get(user_id)
     if user:
-        return jsonify({'success' : True, 'user': user.serialize()}), 200
-    return jsonify({'success' : False, 'msg': 'Bad Token'}), 401
+        return jsonify({'success' : True, 'user':user.serialize()}), 200
+    return jsonify({'success' : False, 'msg': 'Bad token'}), 200
 
 
-#[Get] Protected
+#[GET] Protected
 @api.route('/protected', methods=['GET'])
 @jwt_required()
 def handle_protected():
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+    user= User.query.get(user_id)
     if user:
-         return jsonify({'msg' : 'Has logrado acceder a una ruta protegida, ' + user})
-    return jsonify({'Success' : False, 'msg' : 'Bad Token'})
+        return jsonify({'msg':'Has logrado acceder a una ruta protegida '})
+    return jsonify({'success':False, 'msg': 'Bad token'})
+
 
 #[GET] Listar todos los bebes que hay en la base de datos.
 @api.route('/all_babies', methods=['GET'])
@@ -120,7 +123,17 @@ def edit_baby(id):
     
 #[POST] Nuevo Blog
 @api.route('/new_blog', methods=['POST'])
+@jwt_required()
 def new_blog():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({'success': False, 'msg': 'Bad token'}), 401
+    
+    if not user.is_admin:
+        return jsonify({'success': False, 'msg': 'Admin access required!'}), 403
+    
     data = request.json
     blog_type = data.get('type')
     author_id = data.get('author')
@@ -133,7 +146,7 @@ def new_blog():
         text_intro = data.get('text_intro')
         text_ingredients = data.get('text_ingredients')
         text_steps = data.get('text_steps')
-        # Si los campos obligatorios están vacíos, retorna un error 422
+ 
         if not (text_intro and text_ingredients and text_steps):
             return jsonify({"error": "Missing recipe fields"}), 422
         new_blog = Blog_recipe(
@@ -172,16 +185,20 @@ def new_blog():
 
 #[PUT] Editar Blog
 @api.route('/edit_blog/<string:type>/<int:id>', methods=['PUT'])
+@jwt_required()
 def edit_blog(type, id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
 
-    # Obtener datos de la solicitud
+    if not user or not user.is_admin:
+        return jsonify({"error": "Unauthorized"}), 403
+
     data = request.json
     title = data.get('title')
     img_header = data.get('img_header')
     img_final = data.get('img_final')
     source = data.get('source')
 
-    # Buscar el blog en la base de datos según el tipo
     if type == 'news':
         blog = Blog_news.query.get(id)
         if not blog:
@@ -197,7 +214,6 @@ def edit_blog(type, id):
     else:
         return jsonify({"error": "Invalid blog type"}), 400
 
-    # Actualizar los campos comunes
     blog.title = title
     blog.img_header = img_header
     blog.img_final = img_final
@@ -210,11 +226,17 @@ def edit_blog(type, id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
 #[DELETE] Borrar Blog
 @api.route('/delete_blog/<string:type>/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_blog(type, id):
-    
-    # Eliminar el blog en función del tipo
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user or not user.is_admin:
+        return jsonify({"error": "Unauthorized"}), 403
+
     if type == 'news':
         blog = Blog_news.query.get(id)
         if not blog:
@@ -261,9 +283,223 @@ def get_blog(type, id):
         return jsonify({'msg': 'OK', 'data': serialized_blog}), 200
     return jsonify({'msg': 'Blog not found'}), 404
 
-# [POST] agregar imagen
+#[GET] is_admin
+@api.route('/check_admin', methods=['GET'])
+@jwt_required()
+def check_admin():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({"is_admin": user.is_admin}), 200
+    return jsonify({"error": "User not found"}), 404
 
-api = Blueprint('api', __name__)
+#[GET] Listado del nombre de los bebés
+@api.route('/babies', methods=['GET'])
+@jwt_required()
+def get_babies():
+    user_id = get_jwt_identity()
+    print(f'User ID: {user_id}')  # Mensaje de depuración para verificar el user_id
+
+    try:
+        # Verifica si el usuario existe
+        user = User.query.get(user_id)
+        if user is None:
+            print('User not found')
+            return jsonify({'error': 'User not found'}), 404
+
+        # Verifica si el usuario tiene bebés asociados
+        babies = Baby.query.filter_by(user_id=user_id).all()
+        
+        # Si no hay bebés, devuelve una lista vacía
+        if not babies:
+            print('No babies associated with user')
+            return jsonify([])
+
+        # Devuelve la lista de bebés
+        return jsonify([{
+            'id': baby.id,
+            'name': baby.name
+        } for baby in babies])
+
+    except SQLAlchemyError as e:
+        print(f'SQLAlchemy Error: {e}')
+        return jsonify({'error': 'Database error'}), 500
+    except Exception as e:
+        print(f'General Error: {e}')
+        return jsonify({'error': 'Error fetching babies'}), 500
+
+
+#[POST] Añadir datos al Report
+@api.route('/report', methods=['POST'])
+def add_report():
+    data = request.get_json()
+
+    try:
+        baby_id = data.get('baby_id')
+        baby = Baby.query.get(baby_id)
+        if not baby:
+            return jsonify({"error": "Baby not found"}), 404
+
+        new_report = Report(
+            date=datetime.strptime(data.get('date'), '%Y-%m-%d'),
+            bedtime=data.get('bedtime'),
+            meals=data.get('meals'),
+            diapers=data.get('diapers'),
+            walks=data.get('walks'),
+            water=data.get('water'),
+            meds=data.get('meds'),
+            kindergarden=data.get('kindergarden'),
+            extra=data.get('extra'),
+            baby_id=baby_id  
+        )
+        
+        db.session.add(new_report)
+        db.session.commit()
+
+        return jsonify(new_report.serialize()), 201
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
+    
+
+#[PUT] Editar datos del Report
+@api.route('/baby/<int:baby_id>/report/<int:report_id>', methods=['PUT'])
+def edit_report(baby_id, report_id):
+    data = request.get_json()
+    report = Report.query.filter_by(id=report_id, baby_id=baby_id).first()
+
+    if not report:
+        return jsonify({"error": "Report not found for this baby"}), 404
+
+    try:
+        report.date = datetime.strptime(data.get('date', report.date.isoformat()), '%Y-%m-%d')
+        report.bedtime = data.get('bedtime', report.bedtime)
+        report.meals = data.get('meals', report.meals)
+        report.diapers = data.get('diapers', report.diapers)
+        report.walks = data.get('walks', report.walks)
+        report.water = data.get('water', report.water)
+        report.meds = data.get('meds', report.meds)
+        report.kindergarden = data.get('kindergarden', report.kindergarden)
+        report.extra = data.get('extra', report.extra)
+
+        db.session.commit()
+
+        return jsonify(report.serialize()), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
+    
+
+#[GET] Ver todos los reports de un bebé
+@api.route('/baby/<int:baby_id>/reports', methods=['GET'])
+def get_reports(baby_id):
+    baby = Baby.query.get(baby_id)
+    if not baby:
+        return jsonify({"error": "Baby not found"}), 404
+
+    reports = [report.serialize() for report in baby.reports]  
+    return jsonify(reports), 200
+
+
+#[GET] Ver un report de un bebé (id)
+@api.route('/baby/<int:baby_id>/<int:report_id>', methods=['GET'])
+def get_report(baby_id, report_id):
+    baby = Baby.query.get(baby_id)
+    if not baby:
+        return jsonify({"error": "Baby not found"}), 404
+    
+    report = Report.query.filter_by(id=report_id, baby_id=baby_id).first()
+    if not report:
+        return jsonify({"error": "Report not found for this baby"}), 404
+
+    return jsonify(report.serialize()), 200
+
+
+#[GET] Calcular avg
+@api.route('/report/averages/<int:baby_id>', methods=['GET'])
+def get_averages(baby_id):
+    interval = request.args.get('interval')  
+    
+    if interval == 'weekly':
+        days = 7
+    elif interval == 'biweekly':
+        days = 14
+    elif interval == 'monthly':
+        days = 30
+    else:
+        return jsonify({"error": "Invalid interval"}), 400
+
+    end_date = datetime.utcnow()
+    start_date = end_date - timedelta(days=days)
+
+    reports = Report.query.filter(
+        Report.baby_id == baby_id,
+        Report.date >= start_date.date(),
+        Report.date <= end_date.date()
+    ).all()
+
+    if not reports:
+        return jsonify({"error": "No reports found"}), 404
+
+    average_data = {
+        "bedtime": sum(r.bedtime for r in reports) / len(reports),
+        "meals": sum(r.meals for r in reports) / len(reports),
+        "diapers": sum(r.diapers for r in reports) / len(reports),
+        "walks": sum(r.walks for r in reports) / len(reports),
+        "water": sum(r.water for r in reports) / len(reports),
+    }
+
+    return jsonify({"averages": average_data})
+
+
+# [GET] Calcular min/max
+@api.route('/report/extremes/<int:baby_id>', methods=['GET'])
+def get_extremes(baby_id):
+    interval = request.args.get('interval')
+
+    if interval == 'weekly':
+        days = 7
+    elif interval == 'biweekly':
+        days = 14
+    elif interval == 'monthly':
+        days = 30
+    else:
+        return jsonify({"error": "Invalid interval"}), 400
+
+    end_date = datetime.utcnow()
+    start_date = end_date - timedelta(days=days)
+
+    reports = Report.query.filter(
+        Report.baby_id == baby_id,
+        Report.date >= start_date.date(),
+        Report.date <= end_date.date()
+    ).all()
+
+    if not reports:
+        return jsonify({"error": "No reports found"}), 404
+
+    max_data = {
+        "bedtime": max(r.bedtime for r in reports),
+        "meals": max(r.meals for r in reports),
+        "diapers": max(r.diapers for r in reports),
+        "walks": max(r.walks for r in reports),
+        "water": max(r.water for r in reports),
+    }
+
+    min_data = {
+        "bedtime": min(r.bedtime for r in reports),
+        "meals": min(r.meals for r in reports),
+        "diapers": min(r.diapers for r in reports),
+        "walks": min(r.walks for r in reports),
+        "water": min(r.water for r in reports),
+    }
+
+    return jsonify({"max": max_data, "min": min_data})
+  
+  
+# [POST] agregar imagen
 UPLOAD_FOLDER = 'uploads'
 # Asegúrate de que la carpeta de uploads existe
 if not os.path.exists(UPLOAD_FOLDER):
@@ -282,8 +518,3 @@ def upload_file():
 @api.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
-
-
-
-            
-               

@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/edit_blog.css";
 
 export const New_Blog = props => {
     const { store, actions } = useContext(Context);
@@ -20,6 +21,13 @@ export const New_Blog = props => {
         text: ""
     });
 
+    useEffect(() => {
+        if (!store.token) {
+            navigate('/login');
+            return;
+        }
+    }, [store.token, navigate]);
+
     const handleChange = e => {
         setFormData({
             ...formData,
@@ -30,46 +38,41 @@ export const New_Blog = props => {
     const handleSubmit = async e => {
         e.preventDefault();
     
-        // Validación básica
         if (!formData.author || !formData.title || !formData.img_header || !formData.img_final || !formData.source) {
-            console.error("Faltan campos obligatorios");
+            console.error("Required fields are missing");
             return;
         }
     
         if (blogType === "recipe" && (!formData.text_intro || !formData.text_ingredients || !formData.text_steps)) {
-            console.error("Faltan campos obligatorios en la receta");
+            console.error("Required 'Recipe' fields are missing");
             return;
         }
     
         if (blogType === "news" && !formData.text) {
-            console.error("Falta el contenido para las noticias");
+            console.error("Required 'News' fields are missing");
             return;
         }
-    
-        // Crea el objeto de datos a enviar
-        const dataToSend = {
-            type: blogType,
-            ...formData
-        };
-    
+
         try {
             const response = await fetch(process.env.BACKEND_URL + "api/new_blog", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    // Eliminar autorización si no se requiere en esta fase
-                    // Authorization: `Bearer ${store.token}`
+                    "Authorization": `Bearer ${store.token}`  
                 },
-                body: JSON.stringify(dataToSend)
+                body: JSON.stringify({
+                    type: blogType,
+                    ...formData
+                })
             });
     
             if (response.ok) {
                 const data = await response.json();
-                console.log("Blog creado con éxito:", data);
+                console.log("Blog created successfully:", data);
                 navigate("/blog");
             } else {
                 const errorData = await response.json();
-                console.error("Error al crear el blog:", errorData);
+                console.error("Error creating Blog:", errorData);
             }
         } catch (error) {
             console.error("Error:", error);
@@ -77,10 +80,10 @@ export const New_Blog = props => {
     };
 
     return (
-        <div className="container">
-            <h1 className="display-4">NEW BLOG</h1>
+        <div className="container edit-blog-container">
+            <h1 className="display-4">New Blog</h1>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="type">Blog Type</label>
                     <select
                         name="type"
@@ -93,7 +96,7 @@ export const New_Blog = props => {
                     </select>
                 </div>
 
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="author">Author</label>
                     <input
                         type="text"
@@ -104,7 +107,7 @@ export const New_Blog = props => {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="title">Title</label>
                     <input
                         type="text"
@@ -115,7 +118,7 @@ export const New_Blog = props => {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="img_header">Header Image URL</label>
                     <input
                         type="text"
@@ -128,7 +131,7 @@ export const New_Blog = props => {
 
                 {blogType === "recipe" && (
                     <>
-                        <div className="form-group">
+                        <div className="form-group edit-blog-form">
                             <label htmlFor="text_intro">Introduction</label>
                             <textarea
                                 name="text_intro"
@@ -138,7 +141,7 @@ export const New_Blog = props => {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group edit-blog-form">
                             <label htmlFor="text_ingredients">Ingredients</label>
                             <textarea
                                 name="text_ingredients"
@@ -148,7 +151,7 @@ export const New_Blog = props => {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group edit-blog-form">
                             <label htmlFor="text_steps">Steps</label>
                             <textarea
                                 name="text_steps"
@@ -161,7 +164,7 @@ export const New_Blog = props => {
                 )}
 
                 {blogType === "news" && (
-                    <div className="form-group">
+                    <div className="form-group edit-blog-form">
                         <label htmlFor="text">Content</label>
                         <textarea
                             name="text"
@@ -172,7 +175,7 @@ export const New_Blog = props => {
                     </div>
                 )}
 
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="img_final">Final Image URL</label>
                     <input
                         type="text"
@@ -183,7 +186,7 @@ export const New_Blog = props => {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="source">Source</label>
                     <input
                         type="text"
@@ -194,13 +197,13 @@ export const New_Blog = props => {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary edit-blog-btn-save">
                     Create Blog
                 </button>
             </form>
 
             <Link to="/blog">
-                <span className="btn btn-secondary mt-3" role="button">
+                <span className="btn btn-secondary mt-3 edit-blog-btn-save" role="button">
                     All Blogs
                 </span>
             </Link>

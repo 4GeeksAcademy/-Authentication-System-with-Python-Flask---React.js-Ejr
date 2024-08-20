@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.edit-blog-container {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+.edit-blog-container h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    font-size: 42pt;
+    align-items: center;
+    text-align: center;
+    color: #075E81;
+}
+
+.edit-blog-form {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14pt;
+    color: #075E81;
+    margin-bottom: 30px;
+}
+
+.edit-blog-form label {
+    font-weight: 600;
+}
+
+.edit-blog-form input {
+    border-radius: 25px;
+    border-width: 3px;
+    border-color: #FBEE84;
+}
+
+.edit-blog-form textarea {
+    border-radius: 25px;
+    border-width: 3px;
+    border-color: #FBEE84;
+}
+
+.edit-blog-form select {
+    border-radius: 25px;
+    border-width: 3px;
+    border-color: #FBEE84;
+}
+
+.edit-blog-btn-container {
+    align-items: center;
+    text-align: center;
+}
+
+.edit-blog-btn-save {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    border-radius: 25px;
+    background-color: #FBEE84;
+    color: #075E81;
+    border-width: 3px;
+    border-color: #FBEE84;
+    margin: auto;
+    margin-right: 20px;
+}
+
+.edit-blog-btn-save:hover {
+    background-color: #075E81;
+    color: #FBEE84;
+}
+
+.edit-blog-btn-delete {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    border-radius: 25px;
+    color: red;
+    background-color: white;
+    border-width: 3px;
+    border-color: red;
+    margin: auto;
+}
+
+.edit-blog-btn-delete:hover {
+    background-color: red;
+    color: white;
+}
