@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged: false,
 			psicologos: [],
 			dataUser: null,
-			imagenURL:""
+			imagenURL: ""
 
 		},
 		actions: {
@@ -79,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
 						return false;
 					}
-          
+
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						setStore({
@@ -167,7 +167,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			/* Cierre de sesión */
+			//Cierre de sesión
 			cerrarSesion: () => {
 				const store = getStore();
 				// Eliminamos el token del Local Storage
@@ -177,7 +177,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ logged: false });
 			},
 
-			/* Función para refrescar el token */
+			//Función para refrescar el token
 			refreshToken: async () => {
 				const refresh_token = localStorage.getItem('refresh_token')
 				const options = {
@@ -200,6 +200,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error al refrescar el token: ', error);
 					actions.logout(); // Si el refresh falla, cierra la sesión
+				}
+			},
+
+			// Manejo de recuperación de contraseña, token de recuperación y mail
+			solicitarRecuperacion: async (correo) => {
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ correo: correo })
+				};
+			
+				try {
+					const response = await fetch(process.env.BACKEND_URL + '/reset_password', options);
+					const data = await response.json();
+			
+					if (response.status === 200) {
+						return { success: true, message: "Correo de recuperación enviado." };
+					} else {
+						return { success: false, message: data.msg || response.statusText };
+					}
+				} catch (error) {
+					console.error('Error al solicitar recuperación de contraseña: ', error);
+					return { success: false, message: 'Ocurrió un error al solicitar la recuperación de contraseña.' };
+				}
+			},
+			
+			//Enviamos la NUEVA contraseña usando el token de recuperación
+			restablecerClave: async (token, nuevaClave) => {
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ nueva_clave: nuevaClave })
+				};
+			
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/reset_password/${token}`, options);
+					const data = await response.json();
+			
+					if (response.status === 200) {
+						return { success: true, message: "Contraseña actualizada con éxito." };
+					} else {
+						return { success: false, message: data.msg || response.statusText };
+					}
+				} catch (error) {
+					console.error('Error al restablecer la contraseña: ', error);
+					return { success: false, message: 'Ocurrió un error al restablecer la contraseña.' };
 				}
 			},
 
@@ -254,27 +304,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			//cloudinary (IMAGENES)
-			uploadImage: async (data,cloud_name,preset_name) => {
+			uploadImage: async (data, cloud_name, preset_name) => {
 				console.log(data);
-				
-			
-			//	setLoading(true);
-			
+
+
+				//	setLoading(true);
+
 				try {
 					const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
 						method: 'POST',
 						body: data
 					});
-			
+
 					const fileData = await response.json();
 					//setProfileImage(fileData.secure_url);  // Actualiza el estado profileImage con la URL de la imagen subida.
 					//setLoading(false);
 					//console.log(fileData.secure_url);
-					setStore({imagenURL:fileData.secure_url})
-					
+					setStore({ imagenURL: fileData.secure_url })
+
 				} catch (error) {
 					console.error('Error uploading image:', error);
-				//	setLoading(false);
+					//	setLoading(false);
 				}
 			},
 		}

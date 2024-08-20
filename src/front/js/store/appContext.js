@@ -29,7 +29,7 @@ const injectContext = PassedComponent => {
 			 * store, instead use actions, like this:
 			 **/
 
-			//state.actions.validToken(); // <---- calling this function from the flux.js actions
+			state.actions.validToken(); // <---- calling this function from the flux.js actions
 			state.actions.getPsicologos(); // Traemos todos los psicologos cuando se carga la página
 			
 
