@@ -72,32 +72,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("jwt-token", data.token);
 		   
 				return data
-		   },
+			},
 
-		   signup : async (username, password) => {
-			const resp = await fetch(process.env.BACKEND_URL + "/api/signup", { 
-				 method: "POST",
-				 headers: { "Content-Type": "application/json" },
-				 body: JSON.stringify({ username, password }) 
-			})
-	   
-			if(!resp.ok) throw Error("There was a problem in the signup request")
-	   
-			if(resp.status === 401){
-				 throw("Invalid credentials")
+			signup: async (email, password, partner) => {
+				const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email, password, partner })
+				})
+
+				if (!resp.ok) throw Error("There was a problem in the signup request")
+
+				if (resp.status === 401) {
+					throw ("Invalid credentials")
+				}
+				else if (resp.status === 400) {
+					throw ("Invalid email or password format")
+				}
+				const data = await resp.json()
+				// Save your token in the localStorage
+				// Also you should set your user into the store using the setItem function
+				const store = getStore();
+				setStore({ ...store, token: data.token });
+				localStorage.setItem("jwt-token", data.token);
+
+				return data
+			},
+			setToken: (token) => {
+				const store = getStore();
+				setStore({...store, token})
 			}
-			else if(resp.status === 400){
-				 throw ("Invalid email or password format")
-			}
-			const data = await resp.json()
-			// Save your token in the localStorage
-			// Also you should set your user into the store using the setItem function
-			const store = getStore();
-			setStore({...store, token:data.token});
-			localStorage.setItem("jwt-token", data.token);
-	   
-			return data
-	   		}
 		}
 	};
 };
