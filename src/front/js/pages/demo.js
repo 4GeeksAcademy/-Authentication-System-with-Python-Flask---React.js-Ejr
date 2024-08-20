@@ -13,6 +13,8 @@ const MultiStepForm = () => {
   })
   const [addedExercises, setAddedExercises] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("")
 
   const toggleDropdown = (e) => {
     e.preventDefault()
@@ -195,6 +197,12 @@ const MultiStepForm = () => {
     }
   }
 
+  const filteredExercises = store.allExerciseList.filter((item) => {
+    const matchesCategory = selectedCategory === "" || item.category === selectedCategory;
+    const matchesSearchTerm = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearchTerm;
+  })
+
   useEffect(() => {
     actions.allExercise()
     actions.category()
@@ -317,7 +325,8 @@ const MultiStepForm = () => {
               <button
                 type="button"
                 onClick={handleCreateRoutine}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+                className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+                disabled={formData.routineName == '' ? true : false}
               >
                 Siguiente
               </button>
@@ -376,7 +385,8 @@ const MultiStepForm = () => {
               <button
                 type="button"
                 onClick={handleChooseDays}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+                className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+                disabled={formData.selectedDay == '' || formData.selectedWeek == '' ? true : false}
               >
                 Siguiente
               </button>
@@ -396,11 +406,12 @@ const MultiStepForm = () => {
                   id="Search"
                   placeholder="buscar ejercicios..."
                   className="border-none max-w-40 h-8 rounded-md px-4 py-2 pe-10 shadow-sm sm:text-sm dark:bg-neutral-900 dark:text-white focus:ring-emerald-500 focus:border-emerald-500"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
 
                 <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                  <button
-                    type="button"
+                  <span
                     className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
                   >
                     <span className="sr-only">Search</span>
@@ -419,7 +430,7 @@ const MultiStepForm = () => {
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
                       />
                     </svg>
-                  </button>
+                  </span>
                 </span>
               </div>
 
@@ -429,15 +440,17 @@ const MultiStepForm = () => {
                   name="HeadlineAct"
                   id="HeadlineAct"
                   className="bg-neutral-900 border-none text-neutral-300 text-sm/none font-medium ms-2 md:me-2 px-4 py-2 h-8 rounded-md focus:ring-transparent focus:border-transparent"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
                 >
                   <option className="flex items-center border-e px-4 py-2 text-sm/none font-medium text-neutral-600 dark:border-e-neutral-800 dark:text-neutral-300" value="">
                     Filtrar
                   </option>
-                  {
-                    store.allCategoryList.map((item, index) => (
-                      <option className="lowercase px-4 py-2" value="">{item}</option>
-                    ))
-                  }
+                  {store.allCategoryList.map((item, index) => (
+                    <option key={index} className="lowercase px-4 py-2" value={item}>
+                      {item}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -507,7 +520,7 @@ const MultiStepForm = () => {
               </div>
             </div>
             <div className="mb-4 flex flex-wrap gap-4">
-              {store.allExerciseList.map((item, index) => {
+              {filteredExercises.map((item, index) => {
                 return (
                   <article className="flex-grow flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
                     <div className="hidden sm:block sm:basis-36">
@@ -573,7 +586,8 @@ const MultiStepForm = () => {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+                className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+                disabled={addedExercises.length == 0 ? true : false}
               >
                 Siguiente
               </button>

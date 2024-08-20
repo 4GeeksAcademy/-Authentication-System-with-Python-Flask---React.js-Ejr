@@ -332,6 +332,28 @@ def post_exercise_routine():
     db.session.commit()
     return jsonify(exercise_routine_created.serialize())
 
+# DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
+@api.route('/exercise-routine', methods=['DELETE'])
+def delete_exercise_routine():
+    exercise_routine = request.get_json()
+    routine_id = exercise_routine.get('routine_id')
+    exercise_id = exercise_routine.get('exercise_id')
+
+    if not isinstance(routine_id, str) or len(routine_id.strip()) == 0:
+        return ({'error': "'routine_id' must be a string"}), 400
+    if not isinstance(exercise_id, str) or len(exercise_id.strip()) == 0:
+        return ({'error': "'exercise_id' must be a string"}), 400
+
+    exercise_routine_to_delete = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+
+    if not exercise_routine_to_delete:
+        return ({'error': 'ExerciseRoutine not found'}), 404
+
+    db.session.delete(exercise_routine_to_delete)
+    db.session.commit()
+    return jsonify({'message': 'Exercise removed from routine successfully'})
+
+
 # GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
 @api.route('/follow-up', methods=['GET'])
 def get_all_follow_up():
