@@ -53,6 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			token: '',
+			login: false
 		},
 			actions: {
 			// Use getActions to call a function within a fuction
@@ -112,7 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (formData) => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + '/api/login',{
+					const resp = await fetch(process.env.BACKEND_URL + '/api/login', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
@@ -132,6 +133,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error login user:', error.message);
        				return { success: false, msg: error.message };
+				}
+			},
+			validateToken: async (token) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + '/api/validate-token', {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							accept: 'application/json',
+							Authorization: `Bearer ${token}`,
+						}
+					});
+					const data = await resp.json();
+					if (data.success){
+						setStore({token : token})
+						return true
+					}
+					else {
+						localStorage.removeItem('token')
+						return false
+					}
+				} catch (error) {
+					console.error('Error validating token', error)
 				}
 			}
 		}
