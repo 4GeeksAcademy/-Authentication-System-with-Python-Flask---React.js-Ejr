@@ -157,3 +157,21 @@ def login():
 if __name__ == '__main__':
     api.run(host='0.0.0.0', port=3245, debug=True)
         
+@api.route('/login', methods=['POST'])
+def login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user= User.query.filter_by(email=email).first()
+    if user:
+        if (check_password_hash(user.password, password)):
+            access_token = create_access_token(identity=user.id)
+            return jsonify({'login': True, 'msg': 'Has iniciado sesión', 'user':user.serialize(), 'token': access_token}),200
+        return jsonify({'login': False, 'msg': 'La contraseña es incorrecta'}),400
+    return jsonify({'login': False, 'msg': 'No hay ningún usuario registrado con los datos introducidos'}),404
+
+if __name__ == '__main__':
+    api.run(host='0.0.0.0', port=3245, debug=True)
+
+
+
+
