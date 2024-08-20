@@ -258,6 +258,7 @@ def add_new_product():
     new_product = Product(
         name = request_body['name'],
         cost = request_body['cost'],
+        image_url = request_body['image_url']
     )
     db.session.add(new_product)
     db.session.commit()
@@ -275,6 +276,8 @@ def update_product(id):
         product.name = data ['name']
     if 'cost' in data:
         product.cost = data ['cost']
+    if 'image_url' in data:
+        product.image_url = data ['image_url']
     db.session.commit()
     return jsonify (product.serialize(),{"msg":"El producto ha sido actualizado"}), 200
 

@@ -92,10 +92,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"address": address,
 							"phone": phone,
 							"is_active": true,
-							"role_id": 1
+							"role_id": 2
 						})
 					})
-
+console.log(response)
 					if (response.status === 201) {
 						let data = await response.json()
 
