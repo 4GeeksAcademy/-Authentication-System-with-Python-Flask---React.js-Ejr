@@ -23,6 +23,8 @@ import { AverageReportPage } from "./pages/average_report.jsx";
 
 import injectContext from "./store/appContext";
 
+import { Gestor_perfil } from "./pages/gestor_perfil.js";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -43,6 +45,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/Login" />
                         <Route element={<Register />} path="/Register" />
                         {/* Bebé */}
+                        <Route element={<Gestor_perfil />} path="/gestor_perfil" />
                         <Route element={<Gestor_bebe />} path="/gestor_bebe" />
                         {/* Report */}
                         <Route element={<AddReport />} path="/dashboard" />
