@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			dataUser: null,
 			imagenURL:  ""
 
+
 		},
 		actions: {
 
@@ -83,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 						return false;
 					}
-          
+
 					// Si los datos son válidos y el usuario está logueado
 					if (data.logged) {
 						setStore({
@@ -331,6 +332,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return result
 					}
 					return false
+
 				}
 			},
 			saveProfileImg : async (url) =>{
