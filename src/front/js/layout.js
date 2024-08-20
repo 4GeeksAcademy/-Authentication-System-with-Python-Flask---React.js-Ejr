@@ -20,6 +20,7 @@ import { VistaPrueba } from "./pages/vistaPrueba.jsx";
 import { Dashboard } from "./pages/dashboard";
 import { Exercises } from "./pages/exercises";
 import { ErrorView } from "./pages/error";
+import { HistoricoFisico } from "./pages/historicoFisico.js";
 
 const usePageTitle = (defaultTitle) => {
     const location = useLocation();
@@ -77,6 +78,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<VistaPrueba />} path="/vistaprueba" />
+                        <Route element={<HistoricoFisico/>} path="/historicofisico" />
                         <Route element={<Exercises />} path="/exercises" />
                         <Route element={<Dashboard />} path="/dashboard" />
                         <Route element={<Login />} path="/login" />

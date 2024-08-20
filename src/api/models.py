@@ -82,7 +82,13 @@ class PhysicalInformation(db.Model):
             "weight": self.weight,
             "date": self.date,
         }
-
+    
+    def graphicSerialize(self):
+        return {
+            "weight": self.weight,
+            "date": self.date.strftime("%d/%m/%Y"),
+        }
+    
 # RUTINA 
 class Routine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -128,8 +134,8 @@ class WeeklyRoutine(db.Model):
             for item_follow in follow_up:   
                 if item_follow["exercise_routine"]["exercise"]["id"] == item_routine["exercise"]["id"]:
                     item_routine["exercise"]["done"] = True
-                # else:
-                #     item_routine["exercise"]["done"] = False
+                else:
+                    item_routine["exercise"]["done"] = False
 
         return {
             "id": self.id,

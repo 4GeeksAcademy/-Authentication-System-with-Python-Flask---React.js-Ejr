@@ -76,6 +76,7 @@
 	},
 	"dependencies": {
 		"animate.css": "^4.1.1",
+		"apexcharts": "^3.52.0",
 		"axios": "^1.7.3",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",

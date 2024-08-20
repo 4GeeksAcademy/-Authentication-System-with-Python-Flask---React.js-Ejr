@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from datetime import date
+from datetime import datetime
 from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -10,6 +10,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_bcrypt import Bcrypt
+from sqlalchemy import desc
 
 
 
@@ -186,10 +187,10 @@ def get_one_physical_user_information():
         data_serialized = physical_information.serialize()
         return jsonify(data_serialized), 200
 
-# GET LAST PhysicalInformation / TRAER LA ULTIMA INFORMACION FISICA
-@api.route('/last-physical-user-information', methods=['GET'])
+# GET LAST ONE PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+@api.route('/last-one-physical-user-information', methods=['GET'])
 @jwt_required()
-def get_last_physical_user_information():
+def get_last_one_physical_user_information():
     current_user = get_jwt_identity()
     physical_information_list = PhysicalInformation.query.filter_by(user_id=current_user["id"]).all()
     last_value = physical_information_list[-1]
@@ -197,6 +198,22 @@ def get_last_physical_user_information():
         return ({'error':'physical information not found'}), 404
     else:
         data_serialized = last_value.serialize()
+        return jsonify(data_serialized), 200
+
+
+# GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
+@api.route('/last-physical-user-information', methods=['GET'])
+@jwt_required()
+def get_last_physical_user_information():
+    current_user = get_jwt_identity()
+    query = db.select(PhysicalInformation).where(PhysicalInformation.user_id==current_user["id"]).order_by(desc(PhysicalInformation.date))
+    result = db.session.execute(query)
+    physical_information_list = result.scalars()
+    if physical_information_list is None:
+        return ({'error':'physical information not found'}), 404
+    else:
+        data_serialized = list(map(lambda information: information.graphicSerialize(), physical_information_list))
+        print(data_serialized)
         return jsonify(data_serialized), 200
 
 # POST PhysicalInformation / AGREGAR INFORMACION FISICA
@@ -209,8 +226,7 @@ def post_physical_information():
          return({'error':'"height" must be a string'}), 400
     if not isinstance(physical_information['weight'], str) or len(physical_information['weight'].strip()) == 0:
          return({'error':'"weight" must be a string'}), 400
-
-    physical_information_created = PhysicalInformation(user_id=current_user["id"], height=physical_information["height"], weight=physical_information["weight"], date=date.today())
+    physical_information_created = PhysicalInformation(user_id=current_user["id"], height=physical_information["height"], weight=physical_information["weight"], date=datetime.now().date())
     
     db.session.add(physical_information_created)
     db.session.commit()
