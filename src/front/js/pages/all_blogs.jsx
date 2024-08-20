@@ -26,7 +26,7 @@ export const All_Blogs = props => {
             try {
                 const response = await fetch(process.env.BACKEND_URL + "api/check_admin", {
                     headers: {
-                        'Authorization': `Bearer ${store.token}` // Asegúrate de que el token se envía en la cabecera
+                        'Authorization': `Bearer ${store.token}`
                     }
                 });
                 const data = await response.json();

@@ -70,7 +70,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            // Authorization: `Bearer ${store.token}` // 
                         },
                         body: JSON.stringify(blogData)
                     });

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext"; // Importa el contexto
+import { Context } from "../store/appContext"; 
+import "../../styles/edit_blog.css";
 
 export const EditBlog = () => {
-    const { store } = useContext(Context); // Accede al contexto para verificar el estado de autenticación
-    const { type, id } = useParams(); // Obtiene el tipo y el ID del blog desde los parámetros de la URL
+    const { store } = useContext(Context); 
+    const { type, id } = useParams(); 
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ export const EditBlog = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Redirige al login si no hay un token en el contexto
+
         if (!store.token) {
             navigate('/login');
             return;
@@ -84,7 +85,7 @@ export const EditBlog = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log("Blog updated successfully:", data);
-                navigate(`/blog/${type}/${id}`); // Redirige a la vista de detalle del blog después de actualizar
+                navigate(`/blog/${type}/${id}`); 
             } else {
                 const errorData = await response.json();
                 console.error("Failed to update blog:", errorData);
@@ -106,7 +107,7 @@ export const EditBlog = () => {
 
             if (response.ok) {
                 console.log("Blog deleted successfully");
-                navigate('/blog'); // Redirige a la lista de blogs después de eliminar
+                navigate('/blog'); 
             } else {
                 const errorData = await response.json();
                 console.error("Failed to delete blog:", errorData);
@@ -125,10 +126,10 @@ export const EditBlog = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container edit-blog-container">
             <h1 className="display-4">Edit Blog</h1>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="title">Title</label>
                     <input
                         type="text"
@@ -140,7 +141,7 @@ export const EditBlog = () => {
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="img_header">Header Image URL</label>
                     <input
                         type="text"
@@ -151,7 +152,7 @@ export const EditBlog = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="img_final">Final Image URL</label>
                     <input
                         type="text"
@@ -162,7 +163,7 @@ export const EditBlog = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group edit-blog-form">
                     <label htmlFor="source">Source</label>
                     <input
                         type="text"
@@ -175,7 +176,7 @@ export const EditBlog = () => {
                 </div>
                 {type === 'recipe' && (
                     <>
-                        <div className="form-group">
+                        <div className="form-group edit-blog-form">
                             <label htmlFor="text_intro">Introduction</label>
                             <textarea
                                 id="text_intro"
@@ -186,7 +187,7 @@ export const EditBlog = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group edit-blog-form">
                             <label htmlFor="text_ingredients">Ingredients</label>
                             <textarea
                                 id="text_ingredients"
@@ -197,7 +198,7 @@ export const EditBlog = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group edit-blog-form">
                             <label htmlFor="text_steps">Steps</label>
                             <textarea
                                 id="text_steps"
@@ -211,7 +212,7 @@ export const EditBlog = () => {
                     </>
                 )}
                 {type === 'news' && (
-                    <div className="form-group">
+                    <div className="form-group edit-blog-form">
                         <label htmlFor="text">Content</label>
                         <textarea
                             id="text"
@@ -223,8 +224,10 @@ export const EditBlog = () => {
                         />
                     </div>
                 )}
-                <button type="submit" className="btn btn-primary">Save Changes</button>
-                <button type="button" className="btn btn-danger ml-3" onClick={handleDelete}>Delete Blog</button>
+                <div className="edit-blog-btn-container">
+                <button type="submit" className="btn btn-primary edit-blog-btn-save">Save Changes</button>
+                <button type="button" className="btn btn-danger ml-3 edit-blog-btn-delete" onClick={handleDelete}>Delete Blog</button>
+                </div>
             </form>
         </div>
     );
