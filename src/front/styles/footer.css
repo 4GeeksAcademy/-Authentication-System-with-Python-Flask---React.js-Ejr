@@ -35,3 +35,13 @@
   cursor: default !important;
   user-select: text !important;
 }
+
+@media only screen and (max-width: 600px){
+.about {
+  margin-top: 10%;
+  margin-bottom: 0 !important;
+}
+.media {
+  margin-top: 1%;
+}
+}

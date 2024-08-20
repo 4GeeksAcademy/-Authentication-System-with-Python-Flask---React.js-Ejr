@@ -32,7 +32,7 @@ export const Footer = () => {
           </div>
 
           {/* Sobre Nosotros */}
-          <div className="col-12 col-md-6 col-lg-4 text-center">
+          <div className="col-12 col-md-6 col-lg-4 text-center about">
             <h3>Sobre Nosotros</h3>
             <ul className="list p-0">
               <li className="fs-5">
@@ -45,7 +45,7 @@ export const Footer = () => {
           </div>
 
           {/* Redes Sociales */}
-          <div className="col-12 col-md-6 col-lg-4">
+          <div className="col-12 col-md-6 col-lg-4 media">
             <h3>Síguenos</h3>
             <br />
             <a
