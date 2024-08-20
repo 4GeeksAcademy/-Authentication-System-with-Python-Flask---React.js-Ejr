@@ -73,7 +73,7 @@ export const Register = () => {
 		onSubmit: async (values) => {
 			console.log(values);
 
-			const registro = await actions.register(values.nombre, values.apellido, "1990-01-01", values.codigo_de_area, values.telefono, values.correo, values.clave)
+			const registro = await actions.register(values.nombre, values.apellido, "1990-01-01", values.codigo_de_area, values.telefono, null, values.correo, values.clave)
 			if (registro) {
 				navigate('/vista-login')
 			}
