@@ -29,7 +29,7 @@ export const Login = () => {
       const result = await actions.login(formData); // Usa `actions.login` para manejar el inicio de sesión
       if (result && result.token) {
         alert('Login successful!');
-        navigate('/edit_blog/recipe/1'); // Redirige al usuario a otra página después del inicio de sesión
+        navigate('/blog'); // Redirige al usuario a otra página después del inicio de sesión
       } else {
         alert('Login failed: ' + result.msg);
       }
@@ -43,7 +43,7 @@ export const Login = () => {
     console.log(response);
     if (response.profileObj) {
       alert('Google login successful!');
-      navigate('/edit_blog/recipe/1'); // Redirige a otra página después del inicio de sesión
+      navigate('/blog'); // Redirige a otra página después del inicio de sesión
     } else {
       alert('Google login failed.');
     }

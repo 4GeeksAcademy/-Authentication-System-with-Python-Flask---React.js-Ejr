@@ -281,6 +281,16 @@ def get_blog(type, id):
         return jsonify({'msg': 'OK', 'data': serialized_blog}), 200
     return jsonify({'msg': 'Blog not found'}), 404
 
+#[GET] is_admin
+@api.route('/check_admin', methods=['GET'])
+@jwt_required()
+def check_admin():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({"is_admin": user.is_admin}), 200
+    return jsonify({"error": "User not found"}), 404
+
 #[GET] Listado del nombre de los bebés
 @api.route('/babies', methods=['GET'])
 @jwt_required()

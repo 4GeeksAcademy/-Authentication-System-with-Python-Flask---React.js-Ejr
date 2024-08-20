@@ -6,21 +6,36 @@ import { Context } from "../store/appContext";
 export const All_Blogs = props => {
     const { store, actions } = useContext(Context);
     const [blogs, setBlogs] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
                 const response = await fetch(process.env.BACKEND_URL + "api/blog");
                 const data = await response.json();
-                console.log(data.data); // Verifica aquí los datos
                 setBlogs(data.data);
             } catch (error) {
                 console.error("Error fetching blogs:", error);
             }
         };
-    
+
+        const checkAdminStatus = async () => {
+            try {
+                const response = await fetch(process.env.BACKEND_URL + "api/check_admin", {
+                    headers: {
+                        'Authorization': `Bearer ${store.token}` // Asegúrate de que el token se envía en la cabecera
+                    }
+                });
+                const data = await response.json();
+                setIsAdmin(data.is_admin);
+            } catch (error) {
+                console.error("Error checking admin status:", error);
+            }
+        };
+
         fetchBlogs();
-    }, []);
+        checkAdminStatus();
+    }, [store.token]);
 
     return (
         <div className="container">
@@ -37,15 +52,24 @@ export const All_Blogs = props => {
                             <Link to={`/blog/${blog.type}/${blog.id}`} className="btn btn-primary">
                                 Read More
                             </Link>
+                            {isAdmin && (
+                                <div className="mt-2">
+                                    <Link to={`/edit_blog/${blog.type}/${blog.id}`} className="btn btn-warning me-2">
+                                        Edit Blog
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
             </div>
+            {isAdmin && (
+                <Link to="/new_blog" className="btn btn-secondary mt-3">
+                    New Blog
+                </Link>
+            )}
             <Link to="/" className="btn btn-secondary mt-3">
                 Back home
-            </Link>
-            <Link to="/new_blog" className="btn btn-secondary mt-3">
-                New Blog
             </Link>
         </div>
     );
