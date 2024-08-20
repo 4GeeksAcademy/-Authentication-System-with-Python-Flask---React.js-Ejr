@@ -1,11 +1,7 @@
 @import url('./variables.css');
 
 /*LIST OF PRODUCTS STYLES*/
-*{
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-primary);
-}
+
 .banner-products-title{
     position: absolute;
     top: 40%;
@@ -17,6 +13,7 @@
     width: 100dvw;
     position: relative;
     z-index: 0;
+    mask-image: linear-gradient(red 77%, transparent);
 }
 /*PRODUCT STYLES*/
 .background {
@@ -25,18 +22,19 @@
     height:40vh;
     margin-top: 8em;
     border-radius: 30px;
+    position: relative;
 }
 .container-background{
     position: relative;
-    margin-top: 5em;
+    
 }
 .protein {
     max-width: 50%;
 }
 .card-item {
     position: absolute;
-    top: 10%;
-   width: 20%;
+    top: -25%;
+   width: 30%;
 }
 
 .btn-see-more {
@@ -47,7 +45,7 @@
     max-width: 25em;
 }
 .dynamic-products {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
  
 }
 .product-card{
@@ -56,6 +54,69 @@
 .card-img-top{
     width: 45%;
 }
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.card-products{
+    width: 70%;
+    height: 50%;
+    position: relative;
+    top: -35%;
+}
+  .heart-container,
+.cart-container {
+    filter: drop-shadow(1px 1px 0px var(--color-forest));
+    background: var(--color-white);
+    border-radius: 50%;
+    width: 66px;
+    height: 66px;
+    border: none;
+    display: grid;
+    place-items: center;
+    position: absolute;
+}
+
+.card-product-container .heart-container {
+    color: var(--color-light-gray);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+ .heart-container:hover {
+    background: var(--color-light-gray);
+    color: var(--color-red);
+}
+
+.card-product-container .cart-container {
+    color: var(--color-green);
+   position: absolute;
+   bottom: 0;
+   left: 0;
+}
+
+.cart-container:hover {
+    color: var(--color-white);
+    background: var(--color-green);
+}
+
+.heart-container .bi-suit-heart-fill,
+.cart-container .bi-cart4 {
+    filter: drop-shadow(1px 1px 0px var(--color-forest));
+    margin: auto;
+    display: grid;
+    place-items: center;
+    font-size: 1.8em;
+   
+
+}
+
+
 /*MEDIA QUERIES FOR PRODUCTS*/
 @media screen and (max-width:600px) {
     .card-item {
@@ -77,6 +138,14 @@
         align-items: center;
         justify-content: center;
     }
+    .card-img-top{
+        width: 100%;
+    }
+    .container-top-products {
+        display: flex;
+        flex-direction: column;
+    }
+
 }
 
 /*MEDIA QUERIES*/
