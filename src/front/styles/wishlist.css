@@ -1,9 +1,5 @@
 @import url('./variables.css');
 
-.wishlist-container * {
-    outline: 1px solid red;
-}
-
 .wishlist-container {
     display: flex;
 }
@@ -11,12 +7,14 @@
 .wishlist-container .main-container {
     display: flex;
     flex-wrap: wrap;
-    width: 70%;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 .wishlist-container .aside-container {
     position: relative;
     width: 30%;
+    border-left: 1px solid var(--color-forest);
 }
 .wishlist-container .aside-container .buttons-container{
     position: fixed;
@@ -29,7 +27,8 @@
 }
 
 .wishlist-container .aside-container .buttons-container a{
-    width: 80%;
+    width: 100%;
+    height: min-content;
     color: var(--color-forest);
     text-decoration: none;
     display: flex;
@@ -52,7 +51,7 @@
     background: var(--color-green);
 }
 
-@media (width < 600px) {
+@media (width < 768px) {
     .wishlist-container {
         flex-direction: column;
     }
@@ -63,6 +62,13 @@
         width: 100%;
     }
 
+    .wishlist-container .aside-container {
+        border-top: 1px solid var(--color-forest);
+        border-left: none;
+        min-width: 90%;
+        min-height: 160px;
+        margin: 1em auto;
+    }
     .wishlist-container .aside-container .buttons-container{
         position: static;
         display: flex;
@@ -72,5 +78,4 @@
         min-width: 100%;
         margin: 1em 0;
     }
-
 }

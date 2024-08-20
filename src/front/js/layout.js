@@ -42,8 +42,8 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<ListOfProducts />} path="/products" />
                         <Route element={<Editor />} path="/editor" />
-                        <Route element={<WishList />} path="/wishlist/users/:id" />
-                        <Route element={<ProductDetail />} path="/product-detail/:id" />
+                        <Route element={<WishList />} path="/wishlist/users/:token" />
+                        <Route element={<ProductDetail />} path="/product/:id" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<About />} path="/about" />
                         <Route element={<Contact />} path="/contact" />

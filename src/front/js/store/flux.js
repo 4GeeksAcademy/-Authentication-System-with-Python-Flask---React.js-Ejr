@@ -26,8 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					})
 					let data = await response.json()
-					console.log(response);
-					
+
 					if (response.status === 200) {
 						setStore({ currentUser: data.user })
 						localStorage.setItem("token", data.access_token)
@@ -133,13 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getProducts: async () => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/products`);
-					// if (response.ok) {
 					const data = await response.json();
-					// 	//return { success: true, data: data.results };
-					// } else {
-					// 	const errorData = await response.json();
-					// 	return { success: false, error: errorData.msj };
-					// }
 					console.log(data)
 					setStore({ products: data.results })
 					return true
@@ -153,6 +146,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`);
 					if (response.ok) {
 						const data = await response.json();
+						setStore({ product: data });
 						return { success: true, data };
 					} else {
 						const errorData = await response.json();
@@ -162,6 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+
 			// Agregar un nuevo producto
 			addProduct: async (product) => {
 				try {
@@ -215,25 +210,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getFavorites: async (user_id) => {
+			getFavoritesByUserId: async () => {
+				let token = localStorage.getItem("token");
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/users/${user_id}`);
-					const data = await response.json();
-					console.log(data)
-					setStore({ favorites: data.results })
-					return true
-				} catch (error) {
-					return { success: false, error: error.message };
-				}
-			},
-
-			getFavoritesByUserId: async (user_id) => {
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/users/${user_id}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/users`, {
 						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
 					});
 					if (response.ok) {
 						const data = await response.json();
+						console.log('Datos recibidos en getFavoritesByUserId:', data); // Verifica la estructura aquí
+						setStore({ favorites: data });
 						return { success: true, data };
 					} else {
 						const errorData = await response.json();
@@ -243,6 +232,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+
 			uploadImage: async (data) => {
 				console.log(data)
 				const response = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
@@ -256,33 +246,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data_result = await response.json()
 				console.log(data_result)
 			}
-
-			// // Agregar a Favoritos
-			// addFavorite: (name) => {
-			// 	const actions = getActions();
-			// 	const store = getStore();
-			// 	let isFavorite = actions.favoriteExist(name)
-			// 	console.log(isFavorite);
-			// 	if (!isFavorite) {
-			// 		setStore({ favorites: [...store.favorites, { name: name }] })
-			// 	}
-			// },
-			// // Borrar de Favoritos
-			// deleteFavorite: (name) => {
-			// 	const store = getStore();
-			// 	setStore({ favorites: store.favorites.filter(item => item.name != name) })
-			// },
-			// // Verificar si existe favorito para evitar duplicados
-			// favoriteExist: (name) => {
-			// 	const actions = getActions();
-			// 	const store = getStore();
-			// 	let isFavorite = store.favorites.some(item => item.name == name)
-			// 	if (isFavorite) {
-			// 		actions.deleteFavorite(name)
-			// 		return true
-			// 	}
-			// 	return false
-			// }
 		}
 	}
 };

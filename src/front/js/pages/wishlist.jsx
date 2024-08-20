@@ -5,8 +5,7 @@ import WishCard from "../component/wishCard.jsx"
 import '../../styles/wishlist.css'
 
 const WishList = () => {
-
-    const { store, actions } = useContext(Context)
+    const { store, actions } = useContext(Context);
     const { favorites } = store;
 
     useEffect(() => {
@@ -15,34 +14,36 @@ const WishList = () => {
 
     return (
         <>
-            <div className="invisible-header-box" style={{width: "5"}} ></div>
+            <div className="invisible-header-box" style={{ width: "5dvh" }} ></div>
             <h1 className="text-center">Lista de deseos</h1>
             <div className="wishlist-container">
                 <div className="main-container">
-                    {store.favorites && store.favorites.length > 0 &&
-                        store.favorites.map((product, index) => (
-                            <WishCard
+                    {favorites && favorites.length > 0 ? (
+                        favorites.map((product, index) => (
+                            <WishCard 
                                 key={index}
-
-                                id={product.id}
-                                name={product.name}
-                                cost={product.cost}
-                            // image_url={product.image_url}
+                                id={product.fav_product.id}
+                                name={product.fav_product.name}
+                                cost={product.fav_product.cost}
+                                image_url={product.fav_product.image_url}
                             />
-                        ))}
+                        ))
+                    ) : (
+                        <h4 className="text-center text-danger m-4">No hay Favoritos</h4>
+                    )}
                 </div>
                 <div className="aside-container">
                     <div className="buttons-container">
-                        <Link to="/products" >
+                        <Link to="/products">
                             <button className="products-btn">
                                 Explorar productos
                             </button>
-                        </Link >
-                        <Link to="/cart" >
+                        </Link>
+                        <Link to="/cart">
                             <button className="cart-btn">
                                 Ir al carrito
                             </button>
-                        </Link >
+                        </Link>
                     </div>
                 </div>
             </div>

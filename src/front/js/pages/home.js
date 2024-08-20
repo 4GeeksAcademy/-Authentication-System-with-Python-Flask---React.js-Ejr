@@ -23,13 +23,13 @@ export const Home = () => {
 			{/* **********___BANNER___********** */}
 			<div className="banner w-100 p-0">
 				<div className="title-container text-center">
-					<h1>Bienvenid@{store.currentUser && store.currentUser.name}</h1>
-
+					<h1>Bienvenid@</h1>
+					<h2>{store.currentUser && store.currentUser.name}</h2>
 				</div>
 				<img src={GirlImg} />
 			</div>
 
-			<input class="form-control" name="image"  type="file"  onChange={(e) => {setFile(e.target.files[0])}} id="image"/>
+			<input className="form-control" name="image"  type="file"  onChange={(e) => {setFile(e.target.files[0])}} id="image"/>
 			<button className="btn btn-primary" onClick={()=> uploadImage()}>Subir</button>
 			{/* **********___PRIMER___SECCION___********** */}
 			<section className="first-section mx-auto col-10">

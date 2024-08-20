@@ -1,60 +1,29 @@
-import React, { useContext, useParams } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { useParams } from "react-router-dom";
 import '../../styles/productdetail.css';
 import ImgA from '../../../../public/images/cereal.png'
-import ImageGallery from "react-image-gallery";
+import ProductDetailCard from "../component/productCardDetail.jsx";
 
-const images = [
-    {
-        original: "https://quaker.lat/cl/sites/cl/files/2023-07/QUAKER%C2%AE%20AVENA%20TRADICIONAL.png",
-        thumbnail: "https://quaker.lat/cl/sites/cl/files/2023-07/QUAKER%C2%AE%20AVENA%20TRADICIONAL.png",
-    },
-    {
-        original: "https://images.lider.cl/wmtcl?source=url%5Bfile%3A%2Fproductos%2F296899d.jpg%5D&scale=size%5B450x450%5D&sink=format%5Bwebp%5D",
-        thumbnail: "https://images.lider.cl/wmtcl?source=url%5Bfile%3A%2Fproductos%2F296899d.jpg%5D&scale=size%5B450x450%5D&sink=format%5Bwebp%5D",
-    }
-];
-
-
-const ProductDetail = ({ id, name, cost }) => {
-
+const ProductDetail = () => {
     const { actions, store } = useContext(Context);
+    const { product } = store;
+    const { id } = useParams();
 
-    const verifyExist = (name) => {
-        return store.favorites.some(item => item.name == name)
-    }
+    useEffect(() => {
+        actions.getProduct(id);
+    }, [id]);
 
     return (
         <div className="product-detail-container">
             <div className="invisible-header-box"></div>
             <div className="first-container w-md-100">
-                <div className="images-container">
-                    <ImageGallery items={images}
-                        showPlayButton={false}
-                        thumbnailPosition="top"
-                    />
-                </div>
-                <div className="detail-container">
-                    <button className="heart-container" onClick={() => actions.addFavorite(name)} >
-                        <i className={`${verifyExist(name) && "text-danger"} bi bi-suit-heart-fill`}></i>
-                    </button>
-                    <button className="cart-container">
-                        <i className="bi bi-cart4"></i>
-                    </button>
-                    <div className="data-container">
-                        <div className="add-container p-2 m-2">
-                            <h3>Avena QUAKER Tradicional</h3>
-                            <h4>$144.00</h4>
-                        </div>
-                        <div className="add-container p-2 m-2 mt-4">
-                            <h4 className="col">Stock Disponible</h4>
-                            <p className="col">10 Unidades</p>
-                        </div>
-                        <button className="buy-btn">Comprar</button>
-                        
-                        {/* <button className="add-cart-btn">Agregar al carrito</button> */}
-                    </div>
-                </div>
+                <ProductDetailCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    cost={product.cost}
+                />
             </div>
             <h1 className="border-bottom mt-4 mb-2">
                 Productos Relacionados
