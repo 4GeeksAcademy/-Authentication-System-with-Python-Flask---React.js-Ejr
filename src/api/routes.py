@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product
+from api.models import db, User, Product, Profession, UserProfession, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
@@ -16,11 +16,11 @@ from flask import render_template
 # Allow CORS requests to this API
 CORS(api)
 
-cloudinary.config(
-    cloud_name=os.environ['CLOUDINARY_CLOUD_NAME'],
-    api_key=os.environ['CLOUDINARY_API_KEY'],
-    api_secret=os.environ['CLOUDINARY_API_SECRET']
-)
+# cloudinary.config(
+#     cloud_name=os.getenv['CLOUDINARY_CLOUD_NAME'],
+#     api_key=os.getenv['CLOUDINARY_API_KEY'],
+#     api_secret=os.getenv['CLOUDINARY_API_SECRET']
+# )
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -60,7 +60,7 @@ def add_new_user():
 # POST login
 @api.route("/login", methods=["POST"])
 def login():
-    print(login)
+    
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
@@ -169,6 +169,35 @@ def update_user(id):
     db.session.commit()
     return jsonify (user.serialize(),{"msg":"El usuario ha sido actualizado"}), 200
 
+#ENDPOINTS - GET Professionals (Nutricionistas - Personal Trainers)   
+@api.route('/users/personal-trainers', methods=['GET'])
+def get_personal_trainers():
+    profession = Profession.query.filter(Profession.name.ilike('personal trainer')).first() 
+
+    if not profession:
+        return jsonify({"error": "Profesión 'Personal Trainer' no encontrada"}), 404
+    
+    #obtengo los usuarios con la profesión personal trainer
+    users = User.query.join(UserProfession).filter(
+        UserProfession.profession_id == profession.id
+    ).all()
+
+    return jsonify([user.serialize() for user in users]), 200
+
+@api.route('/users/nutritionists', methods=['GET'])
+def get_nutritionists():
+    profession = Profession.query.filter(Profession.name.ilike('nutricionista')).first()
+    print(profession)
+    if not profession:
+        return jsonify({"error": "Profesión 'Nutricionista' no encontrada"}), 404
+    
+    #obtengo los usuarios con profesión Nutricionista
+    users = User.query.join(UserProfession).filter(
+        UserProfession.profession_id == profession.id
+    ).all()
+
+    return jsonify([user.serialize() for user in users]), 200
+
 # ENDPOINT PRODUCTOS
 #GET products
 @api.route('/products', methods=['GET'])
@@ -252,8 +281,17 @@ def update_product(id):
     db.session.commit()
     return jsonify (product.serialize(),{"msg":"El producto ha sido actualizado"}), 200
 
-#MERCADO PAGO
+@api.route('/wishlist/users', methods=['GET'])
+@jwt_required()
+def get_favorites_by_user_id():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+    favorite = Favorite.query.filter_by(user_id=user.id).all()
+    result= list(map(lambda item:item.serialize(),favorite))
+    return jsonify (result), 200
 
+
+#MERCADO PAGO
 @api.route("/preference", methods=["POST"]) 
 def preference(): 
     # body = json.loads(request.data)  # aca trae la info 

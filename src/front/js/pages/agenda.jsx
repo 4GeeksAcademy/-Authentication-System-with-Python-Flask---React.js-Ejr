@@ -1,5 +1,5 @@
 import React from "react";
-import CalendlyWidget from "../component/calendlyWidget";
+// import CalendlyWidget from "../component/calendlyWidget.jsx";
 
 const Agenda = () => {
     return (
