@@ -33,7 +33,10 @@ CORS(api)
 @api.after_request
 def apply_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST,PUT, OPTIONS"
+
+    
+
     response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
     response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
@@ -77,6 +80,7 @@ def get_perfil():
         return jsonify({
             "logged": True,
             "nombre_usuario": user.nombre_usuario,
+            "apellido": user.apellido,
             "correo": user.correo,
             "foto": user.foto,
             "telefono": user.telefono,
@@ -251,15 +255,15 @@ def create_comentario():
         return jsonify({"msg": str(e)}), 500
     
 # #OBTENER TODOS LOS USUARIOS
-# @api.route('/usuarios', methods=['GET'])
-# def get_users():
-#     try:
-#         users = User.query.all()
-#         users_serialized = [user.serialize() for user in users]
+@api.route('/usuarios', methods=['GET'])
+def get_users():
+     try:
+        users = User.query.all()
+        users_serialized = [user.serialize() for user in users]
 
-#         return jsonify(users_serialized), 200
-#     except Exception as e:
-#         return jsonify({"msg": str(e)}), 500
+        return jsonify(users_serialized), 200
+     except Exception as e:
+        return jsonify({"msg": str(e)}), 500
 
 #OBTENER TODOS LOS PROFESIONALES
 @api.route('/psicologos', methods=['GET'])
@@ -320,6 +324,24 @@ def update_user(user_id):
         return jsonify({"msg": "Usuario actualizado exitosamente"}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500   
+#MODIFICAR FOTO USUARIO
+@api.route('/usuario/<int:user_id>/foto', methods=['PUT'])
+def update_user_photo(user_id):
+    try:
+        data = request.get_json()
+        user = User.query.get(user_id)
+
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        # Actualiza solo la foto de perfil
+        user.foto = data.get("foto", user.foto)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Foto de perfil actualizada exitosamente"}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
 #ELIMINAR USUARIO
 @api.route('/usuario/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
@@ -371,4 +393,21 @@ def delete_comentario(comentario_id):
         return jsonify({"msg": "Comentario eliminado exitosamente"}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+# MODIFICAR FOTO USUARIO USANDO CORREO
+@api.route('/usuario/foto', methods=['PUT'])
+def update_user_photo_by_email():
+    try:
+        data = request.get_json()
+        user = User.query.filter_by(correo=data.get("correo")).first()
 
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        # Actualiza solo la foto de perfil
+        user.foto = data.get("foto", user.foto)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Foto de perfil actualizada exitosamente"}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500

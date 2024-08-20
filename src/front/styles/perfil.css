@@ -6,7 +6,10 @@
 }
 
 .profile-image {
-    max-width: 100%;
+    width: 150px; /* O cualquier otro valor que prefieras */
+    height: 150px; /* Mantener las dimensiones iguales para hacerla circular */
+    object-fit: cover; /* Asegura que la imagen ocupe todo el espacio del contenedor sin distorsionarse */
+    border-radius: 50%; /* Para hacerla circular */
 }
 
 /* Media query para pantallas medianas (>= 768px) */

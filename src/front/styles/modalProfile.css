@@ -79,6 +79,6 @@
         font-size: 14px;
     }
 }
-input[type="file"]{
+ input[type="file"]{
     display: none;
-  }
+  } 
