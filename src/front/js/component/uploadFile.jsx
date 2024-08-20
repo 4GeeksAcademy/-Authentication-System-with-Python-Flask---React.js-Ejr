@@ -28,22 +28,23 @@ const UploadFile = () => {
     setFile(e.target.files[0]);
   };
   return (
-    <div className="upload-file my-5 mx-5  justify-content-center">
+    <div className="col-4 upload-file my-5 mx-5 justify-content-center">
       <img
         src="http://via.placeholder.com/750x450"
         alt=""
         width={"750px"}
         height={"450px"}
       />
-      <form className="d-flex mt-3" onSubmit={handleSubmit}>
+      <form className="d-flex mt-3 w-75" onSubmit={handleSubmit}>
         <input
-          className="form-control w-50 h-50 "
+          className="form-control w-75 h-50 "
           type="file"
-          accept="image/*"
+          accept=".jpg, .jpeg, .png, .heif, .webp"
           onChange={handleFile}
+          multiple
         />
         <button className="send rounded-pill px-3 py-2 mx-3">
-          <i class="fa-solid fa-upload"></i>
+          <i className="fa-solid fa-upload"></i>
         </button>
       </form>
 

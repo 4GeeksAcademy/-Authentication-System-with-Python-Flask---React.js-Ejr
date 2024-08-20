@@ -9,7 +9,7 @@ const AccordionContainer = ({ title, children }) => {
   };
 
   return (
-    <div className={`accordion ${isOpen ? "active" : ""}`}>
+    <div className= {`mx-auto accordion ${isOpen ? "active" : ""}`}>
       <div
         className={`accordion-header ${isOpen ? "active" : ""}`}
         onClick={toggleAccordion}
