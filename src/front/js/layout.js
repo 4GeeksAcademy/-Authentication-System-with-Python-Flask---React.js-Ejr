@@ -11,6 +11,8 @@ import { Login } from "./component/Login";
 import { Register } from "./component/Register";
 import { New_Blog } from "./pages/new_blog.jsx";
 import { All_Blogs } from "./pages/all_blogs.jsx";
+import { All_Recipes } from "./pages/all_recipes.jsx";
+import { All_News } from "./pages/all_news.jsx";
 import { EditBlog } from "./pages/edit_blog.jsx";
 import { BlogDetail } from "./pages/blog_detail.jsx";
 import { AddReport } from "./pages/add_report.jsx";
@@ -51,6 +53,8 @@ const Layout = () => {
                         {/* Blog */}
                         <Route element={<New_Blog />} path="/new_blog" />
                         <Route element={<All_Blogs />} path="/blog" />
+                        <Route element={<All_Recipes />} path="/recipes" />
+                        <Route element={<All_News />} path="/news" />
                         <Route path="/blog/:type/:id" element={<BlogDetail />} />
                         <Route path="/edit_blog/:type/:id" element={<EditBlog />} />
                         {/* 404 */}

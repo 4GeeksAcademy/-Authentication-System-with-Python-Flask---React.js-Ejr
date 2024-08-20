@@ -26,8 +26,8 @@ export const Navbar = () => {
               <li className="nav-item">
                 <h1 className="titulo-navItem" style={{ color: '#FBEE84' }}><Link to="/blog" style={{ color:'inherit', textDecoration: 'none' }}>Blog</Link></h1>
                 <ul className="no-bullets">
-                  <li>**Recipes</li>
-                  <li>**News</li>
+                  <li><Link to="/recipes" style={{ color:'inherit', textDecoration: 'none' }}>Recipes</Link></li>
+                  <li><Link to="/news" style={{ color:'inherit', textDecoration: 'none' }}>News</Link></li>
                 </ul>
               </li>
               <li className="nav-item">

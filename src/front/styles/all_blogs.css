@@ -56,3 +56,11 @@
     background-color: white;
     color: #075E81;
 }
+
+.no-found {
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 30pt;
+
+}
