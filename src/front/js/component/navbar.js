@@ -16,7 +16,7 @@ export const Navbar = () => {
           </div>
         </button>
         <div className="d-flex justify-content-end">
-          <Link to="/profile">
+          <Link to="/login">
             <i className="fa-solid fa-circle-user" style={{ fontSize: '30px', color: 'white' }}></i>
           </Link>
         </div>
@@ -43,6 +43,7 @@ export const Navbar = () => {
                 <ul className="no-bullets">
                   <li>**See profile</li>
                   <li>**Edit profile</li>
+                  <li>**Log Out</li>
                 </ul>
               </li>
             </ul>

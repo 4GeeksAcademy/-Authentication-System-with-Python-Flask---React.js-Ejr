@@ -2,6 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import "../../styles/all_blogs.css";
 
 export const All_Blogs = props => {
     const { store, actions } = useContext(Context);
@@ -38,39 +41,38 @@ export const All_Blogs = props => {
     }, [store.token]);
 
     return (
-        <div className="container">
-            <h1 className="display-4 mb-4">All Blogs</h1>
+        <div className="container all-blogs-container">
+            <h1 className="display-4 mb-4 all-blogs-title">Blog</h1>
             <div className="d-flex overflow-auto">
                 {blogs.map(blog => (
-                    <div key={blog.id} className="card me-3" style={{ minWidth: '250px', maxWidth: '250px' }}>
+                    <div key={blog.id} className="card me-3 all-blogs-card" style={{ minWidth: '300px', maxWidth: '300px' }}>
                         <img src={blog.img_header} className="card-img-top" alt={blog.title} />
                         <div className="card-body">
                             <h5 className="card-title">{blog.title}</h5>
                             <p className="card-text">
                                 {blog.text_intro ? blog.text_intro : blog.text}
                             </p>
-                            <Link to={`/blog/${blog.type}/${blog.id}`} className="btn btn-primary">
-                                Read More
-                            </Link>
-                            {isAdmin && (
-                                <div className="mt-2">
-                                    <Link to={`/edit_blog/${blog.type}/${blog.id}`} className="btn btn-warning me-2">
-                                        Edit Blog
-                                    </Link>
-                                </div>
-                            )}
+                            <div className="all-blogs-btn-container">
+                                <Link to={`/blog/${blog.type}/${blog.id}`} className="btn btn-primary all-blogs-btn">
+                                    Learn More
+                                </Link>
+                                {isAdmin && (
+                                    <div className="mt-2">
+                                        <Link to={`/edit_blog/${blog.type}/${blog.id}`} className="btn btn-warning me-2 all-blogs-btn">
+                                            <FontAwesomeIcon icon={faPencil} />
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
             {isAdmin && (
-                <Link to="/new_blog" className="btn btn-secondary mt-3">
+                <Link to="/new_blog" className="btn btn-secondary mt-3 all-blogs-btn">
                     New Blog
                 </Link>
             )}
-            <Link to="/" className="btn btn-secondary mt-3">
-                Back home
-            </Link>
         </div>
     );
 };

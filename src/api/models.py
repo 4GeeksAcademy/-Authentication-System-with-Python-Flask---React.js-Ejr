@@ -80,8 +80,8 @@ class Blog_recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column(db.String(120))
-    img_header = db.Column(db.String(120))
-    text_intro = db.Column(db.String(120))
+    img_header = db.Column(db.String(500))
+    text_intro = db.Column(db.String(500))
     text_ingredients = db.Column(db.String(120))
     text_steps = db.Column(db.String(120))
     img_final = db.Column(db.String(120))
@@ -109,9 +109,9 @@ class Blog_news(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column(db.String(120))
-    img_header = db.Column(db.String(120))
+    img_header = db.Column(db.String(500))
     text = db.Column(db.String(120))
-    img_final = db.Column(db.String(120))
+    img_final = db.Column(db.String(500))
     source = db.Column(db.String(120))
 
     def __repr__(self):
