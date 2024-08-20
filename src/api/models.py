@@ -20,7 +20,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False)
     #favorite = db.Column(db.String(50), unique = False) #nullable = True)
     #favorite_game_id = db.Column(db.Integer, ForeignKey('game.id')) #nullable=False)
-    favorite_game = db.relationship('Favorite', backref='user', cascade='all, delete-orphan')
+    favorite_game = db.relationship('Favorite', back_populates='user', cascade='all, delete-orphan')
     
 
 
@@ -36,31 +36,14 @@ class User(db.Model):
 
             # do not serialize the password, its a security breach
         }
-    
-class Favorite(db.Model):
-    __tablename__ = "favorite"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
-    game_id = db.Column(db.Integer, ForeignKey('game.id'))
-    # user= db.relationship('User', back_populates='favorite_game')
-    # game= db.relationship('Game', back_populates='favorited_by')
 
-    def __repr__(self):
-        return f'<game {self.name}>'
-
-    def serialize(self):
-            return {
-                "id": self.id,
-                "user_id": self.user_id,
-                "game_id": self.game_id
-        }
 
 class Game(db.Model):
     __tablename__ = "game"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique = False, nullable = False)
     category = db.Column(db.String(100), unique = False, nullable = False) 
-    favorited_by = db.relationship('Favorite', backref='game', cascade='all, delete-orphan')
+    favorited_by = db.relationship('Favorite', back_populates='game', cascade='all, delete-orphan')
     def __repr__(self):
         return f'<game {self.name}>'
 
@@ -70,3 +53,23 @@ class Game(db.Model):
             "name": self.name,
             "category": self.category
         }
+
+    
+class Favorite(db.Model):
+    __tablename__ = "favorite"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
+    game_id = db.Column(db.Integer, ForeignKey('game.id'), nullable=False)
+    user= db.relationship('User', back_populates='favorite_game')
+    game= db.relationship('Game', back_populates='favorited_by')
+
+    def __repr__(self):
+        return f'<game {self.game}>'
+
+    def serialize(self):
+            return {
+                "id": self.id,
+                "user_id": self.user_id,
+                "game_id": self.game_id
+        }
+

@@ -5,11 +5,10 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Game, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 
 api = Blueprint('api', __name__)
 
-# Allow CORS requests to this API
-CORS(api)
 
 
 @api.route('/users', methods=['GET'])
@@ -64,8 +63,17 @@ def one_user(req, id):
 
 @api.route('/login', methods=['POST'])
 def login():
-     email = request.json.get('email', None)
-     login = request.json.get('password', None)
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    user = User.query.filter_by(email = email, password = password).first()
+    if user is None:
+         return jsonify("Username NOT found"), 404
+    # if user doesn't exist we need to return a message saying the information is wrong and a 400 response
+
+    token = create_access_token(identity = user.id)
+    return jsonify({"user_email": user.email, "token": token})
+
+# i know its hard u got this boy
 
 # @api.route('/signup', methods=['POST'])
 
