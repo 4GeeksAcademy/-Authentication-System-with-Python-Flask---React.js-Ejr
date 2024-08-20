@@ -23,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
+            allSetsList:[]
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -730,7 +731,47 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // SEIRES
+            // GET ALL Sets / TRAER TODAS LAS SERIES
+            allSets: async () => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/sets");
+                    if (resp.status == 200) {
+                        setStore({ allSetsList: resp.data })
+                        console.log(getStore().allSetsList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            // POST Sets / AGREGAR SERIES
+            postSets: async (sets, repetitions) => {
+                try {
+                    const payload = {
+                        "sets": sets,
+                        "repetitions": repetitions
+                    };
+                    console.log('Sending payload:', payload);
 
+                    let response = await axios.post(process.env.BACKEND_URL + '/sets', payload);
+
+                    if (response.status == 200) {
+                        console.log('sets successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
         }
     };
 };

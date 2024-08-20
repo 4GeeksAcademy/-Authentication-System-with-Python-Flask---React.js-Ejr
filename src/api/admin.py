@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, PhysicalInformation
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, PhysicalInformation, Sets
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -18,6 +18,7 @@ def setup_admin(app):
     admin.add_view(ModelView(Exercise, db.session))
     admin.add_view(ModelView(ExerciseRoutine, db.session))
     admin.add_view(ModelView(FollowUp, db.session))
+    admin.add_view(ModelView(Sets, db.session))
 
 
 

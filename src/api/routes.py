@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category, Sets
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -405,6 +405,7 @@ def post_exercise_routine():
     db.session.commit()
     return jsonify(exercise_routine_created.serialize())
 
+# FOLLOW UP
 # GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
 @api.route('/follow-up', methods=['GET'])
 def get_all_follow_up():
@@ -469,7 +470,48 @@ def delete_follow_up(weekly_routine_id, exercise_routine_id):
     db.session.commit()
     return jsonify("successfully removed"), 200
 
+# CATEGORIA DE EJERCICIOS
 @api.route('/exercises-category', methods=['GET'])
 def get_exercises_category():
     categories = {category.name: category.value for category in Category}
     return jsonify(categories), 200
+
+# SERIES
+# GET ALL Sets / TRAER TODAS LAS SERIES
+@api.route('/sets', methods=['GET'])
+def get_all_sets():
+    sets = Sets.query.all()
+    if len(sets) == 0:
+        return ({'error':'sets list not found'}), 404
+    else:
+        data_serialized = list(map(lambda set: set.serialize(), sets))
+        return jsonify(data_serialized), 200
+    
+# GET ONE Sets / TRAER UNA SERIES
+@api.route('/sets/<int:sets>/<int:repetitions>', methods=['GET'])
+def get_one_sets(sets, repetitions):
+    sets = Sets.query.filter_by(sets=sets, repetitions=repetitions).first()
+    if sets is None:
+        return ({'error':'sets not found'}), 404
+    else:
+        data_serialized = sets.serialize()
+        return jsonify(data_serialized), 200
+
+# POST Sets / AGREGAR UNA SERIES
+@api.route('/sets', methods=['POST'])
+def post_sets():
+    sets = request.get_json()
+    if not isinstance(sets['sets'], str) or len(sets['sets'].strip()) == 0 :
+        return ({'error': "'sets' must not be empty"}), 400
+    
+    if not isinstance(sets['repetitions'], str) or len(sets['repetitions']) == 0 :
+        return ({'error': "'repetitions' must not be empty"}), 400
+
+    sets_exist = Sets.query.filter_by(sets=sets['sets'], repetitions=sets['repetitions']).first()
+    if sets_exist:
+        return ({'error': "'sets' already exists"}), 400
+
+    sets_created = Sets(sets = sets['sets'], repetitions = sets['repetitions'])
+    db.session.add(sets_created)
+    db.session.commit()
+    return jsonify(sets_created.serialize())
