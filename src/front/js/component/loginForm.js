@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import { Context } from "../store/appContext"
 import { Link, useNavigate } from "react-router-dom"
-import { ToastContainer, toast } from "react-toastify"
+import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import "../../styles/home.css"
 import formImg from '../../img/login-form-img.jpg'
@@ -22,34 +22,46 @@ export const LoginForm = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Crear una promesa para manejar el login
     const loginPromise = new Promise(async (resolve, reject) => {
-      const success = await actions.login(user.email, user.password)
-      if (success === true) {
-        await actions.getUserProfile()
-        resolve("Sesion iniciada")
+      const response = await actions.login(user.email, user.password);
+
+      if (response.success) {
+        await actions.getUserProfile();
+        resolve("Sesión iniciada");
       } else {
-        reject("Error al iniciar sesión")
+        reject(response.error || "Error al iniciar sesión");
       }
-    })
+    });
 
     toast.promise(
       loginPromise,
       {
         pending: 'Iniciando sesión...',
         success: 'Inicio de sesión exitoso 👌',
-        error: 'Credenciales incorrectas 🤯'
+        error: {
+          render({ data }) {
+            const errorMessages = {
+              "Invalid email or password": "Correo o contraseña incorrectos",
+              "User not found": "Usuario no encontrado",
+              "Unexpected error": "Error inesperado durante el inicio de sesión",
+            };
+
+            return errorMessages[data] || "Error inesperado durante el inicio de sesión";
+          }
+        }
       }
-    )
+    );
 
     loginPromise.then(() => {
-      navigate("/")
+      navigate("/");
     }).catch((error) => {
-      console.error(error)
-    })
-  }
+      console.error(error);
+    });
+  };
+
 
   return (
     <section className="animate__animated animate__fadeIn absolute min-h-screen w-full top-0 z-50 bg-white dark:bg-neutral-900">

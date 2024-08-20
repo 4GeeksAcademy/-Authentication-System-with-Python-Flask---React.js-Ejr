@@ -73,7 +73,7 @@ export const HomeBanner = () => {
                                     </Link>
                                 </div>
                             </>
-                    })
+                    }
                 </div>
 
                 <ImageSpotlightBorder src={imgHome} alt="Home Image" />
