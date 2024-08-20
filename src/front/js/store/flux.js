@@ -43,27 +43,47 @@ const getState = ({ getStore, getActions, setStore }) => {
             signup: async (name, birthday, sex, email, password, confirmPassword) => {
                 try {
                     const payload = {
-                        "name": name,
-                        "birthday": birthday,
-                        "sex": sex,
-                        "email": email,
-                        "password": password,
-                        "confirm_password": confirmPassword,
+                        name: name,
+                        birthday: birthday,
+                        sex: sex,
+                        email: email,
+                        password: password,
+                        confirm_password: confirmPassword,
                     };
                     console.log('Sending payload:', payload);
 
                     let response = await axios.post(process.env.BACKEND_URL + '/register', payload);
-                    if (response.status == 200) {
+
+                    if (response.status === 200) {
                         console.log('Registration successful:', response.data);
-                        return true;
+                        return { success: true, data: response.data };
                     }
                 } catch (error) {
                     if (error.response && error.response.data) {
                         console.log('Error response data:', error.response.data);
-                        return error.response.data;
+
+                        // Manejo de errores específico para la contraseña
+                        const errorMessage = error.response.data.error;
+                        if (errorMessage.includes("password")) {
+                            if (errorMessage.includes("no blank spaces")) {
+                                return { success: false, error: 'La contraseña no puede contener espacios en blanco.' };
+                            } else if (errorMessage.includes("at least one number")) {
+                                return { success: false, error: 'La contraseña debe contener al menos un número.' };
+                            } else if (errorMessage.includes("at least one uppercase and one lowercase letter")) {
+                                return { success: false, error: 'La contraseña debe tener al menos una letra mayúscula y una minúscula.' };
+                            } else if (errorMessage.includes("at least one special character")) {
+                                return { success: false, error: 'La contraseña debe tener al menos un carácter especial.' };
+                            } else if (errorMessage.includes("must be between 6 and 12 characters long")) {
+                                return { success: false, error: 'La contraseña debe tener entre 6 y 12 caracteres.' };
+                            } else if (errorMessage.includes("confirm_password")) {
+                                return { success: false, error: 'La contraseña y la confirmación de la contraseña deben coincidir.' };
+                            }
+                        }
+
+                        return { success: false, error: errorMessage };
                     } else {
                         console.log('Error:', error);
-                        return error;
+                        return { success: false, error: 'Unexpected error' };
                     }
                 }
             },
@@ -71,23 +91,24 @@ const getState = ({ getStore, getActions, setStore }) => {
             login: async (email, password) => {
                 try {
                     let response = await axios.post(process.env.BACKEND_URL + '/login', {
-                        'email': email,
-                        'password': password
-                    })
-                    if (response.status == 200) {
+                        email: email,
+                        password: password
+                    });
+
+                    if (response.status === 200) {
                         localStorage.setItem('token', response.data.access_token);
-                        setStore({ auth: response.data.logged })
+                        setStore({ auth: response.data.logged });
                         console.log(response.data);
-                        return true;
+                        return { success: true, data: response.data };
                     }
-                }
-                catch (error) {
-                    if (error.response.data) {
-                        console.log(error.response.data);
-                        return error.response.data;
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log('Error response data:', error.response.data);
+                        return { success: false, error: error.response.data.error };
+                    } else {
+                        console.log('Error:', error);
+                        return { success: false, error: 'Unexpected error' };
                     }
-                    console.log(error);
-                    return error;
                 }
             },
             // VALIDAR TOKEN

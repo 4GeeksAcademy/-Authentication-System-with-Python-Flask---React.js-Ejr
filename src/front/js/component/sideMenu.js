@@ -96,7 +96,7 @@ export const SideMenu = () => {
 
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 md:w-64 w-screen h-screen transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} drop-shadow-2xl backdrop-blur`}
+        className={`fixed top-0 left-0 z-40 md:w-64 w-screen h-screen transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} backdrop-blur`}
         aria-label="Sidenav"
       >
         <div className="flex flex-col overflow-y-auto py-5 px-3 h-full border-r bg-neutral-900/75 border-neutral-700 w-screen md:w-64">
@@ -147,7 +147,10 @@ export const SideMenu = () => {
                 ))}
               </ul>
               <button
-                onClick={() => actions.logout()}
+                onClick={() => {
+                  actions.logout();
+                  closeSidebar();
+                }}
                 type="button"
                 className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95"
               >
