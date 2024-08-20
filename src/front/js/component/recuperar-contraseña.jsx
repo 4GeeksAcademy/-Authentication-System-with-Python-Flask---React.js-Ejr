@@ -28,14 +28,14 @@ export const ForgotPassword = () => {
                         </div>
                         <form action="" className="">
                             <div className="w-75 mx-auto mt-3 input-group-sm">
-                                <label htmlFor="email" className="ms-2">
+                                <label htmlFor="recoveryEmail" className="ms-2">
                                     Email
                                 </label>
                                 <input
                                     onChange={handleChange}
                                     type="email"
-                                    id="email"
-                                    name="email"
+                                    id="recoveryEmail"
+                                    name="recoveryEmail"
                                     className="form-control rounded-pill input-sm mx-auto mt-1"
                                     required
                                 />

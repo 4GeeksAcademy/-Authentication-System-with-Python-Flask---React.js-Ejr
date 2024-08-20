@@ -65,7 +65,10 @@ def register():
         # Verificar si el email ya está en uso
         user = User.query.filter_by(email=data['email']).first()
         if user:
-            return jsonify({'success': False, 'msg': 'Este email ya está en uso'}), 400
+            return jsonify({'success': False, 'msg': 'Este email ya está en uso.'}), 400
+        username = User.query.filter_by(username=data['username']).first()
+        if username:
+            return jsonify({'success': False, 'msg': 'Este username ya está en uso.'}), 400
 
         # Encriptar la contraseña usando bcrypt
         hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
@@ -96,7 +99,7 @@ def login():
     
     # Verificar si el usuario existe y si la contraseña es correcta
     if not user or not bcrypt.checkpw(data['password'].encode('utf-8'), user.password.encode('utf-8')):
-        return jsonify({'msg': 'Bad credentials'}), 401
+        return jsonify({'msg': 'Email o contraseña incorrectos.'}), 401
     
     # Crear el token de acceso JWT si la autenticación es exitosa
     access_token = create_access_token(identity=user.id)

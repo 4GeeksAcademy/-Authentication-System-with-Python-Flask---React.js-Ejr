@@ -1,28 +1,31 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../../styles/navbar.css";
 import Searchbar from "./searchbar.jsx";
+import "../../styles/jumbotron.css";
+import { Link } from "react-router-dom";
 
-export const Navbarsearch = () => {
+export const Jumbotron = () => {
   return (
-    <nav className="navbar navbar-light bg-light navbar-shadow py-4">
-      <div className="container d-flex justify-content-between align-items-center">
-        <Link to="/" className="order-xs-1 custom-link d-flex align-items-center">
-          <span className="navbar-brand mb-0 h1 custom-font">ShareTrips</span>
-        </Link>
-        <div className="d-flex align-items-center searchbar">
-          <Searchbar />
+    <div className="mb-4 jumbotron">
+      <div>
+        <div id="carouselExampleSlidesOnly" className="container-fluid carousel jumbo-slider slide p-0" data-bs-ride="carousel">
+          <div className="carousel-inner jumbo-slider">
+            <div className="carousel-item jumbo-slider active">
+              <img src="https://images.unsplash.com/photo-1468183654773-77e2f0bb6bf9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100 jumbo-slider" alt="..."/>
+            </div>
+            <div className="carousel-item jumbo-slider">
+              <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100 jumbo-slider" alt="..."/>
+            </div>
+            <div className="carousel-item jumbo-slider">
+              <img src="https://images.unsplash.com/photo-1437652633673-cc02b9c67a1b?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100 jumbo-slider" alt="..."/>
+            </div>
+          </div>
         </div>
-        <div className="ml-auto d-flex align-items-center">
-          <button
-            className="custom-button rounded-pill py-2 px-3"
-            data-bs-toggle="modal"
-            data-bs-target="#loginModal"
-          >
-            <i className="bi bi-person-circle"></i> Iniciar Sesión
-          </button>
-        </div>
+        <h1 className="fw-bold ps-0">
+            Tu próxima aventura
+            <br/>
+            <span>comienza con las mejores rutas.</span>
+        </h1>
       </div>
-    </nav>
+    </div>
   );
 };
