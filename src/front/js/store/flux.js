@@ -51,7 +51,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					desc: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) hacer un libro de textos especimen.',
 					score: '4/5'
 				}
-			]
+			],
+			token: '',
 		},
 			actions: {
 			// Use getActions to call a function within a fuction
@@ -84,6 +85,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			register: async (formData) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + '/api/register',{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							accept: 'application/json'
+						},
+						body: JSON.stringify(formData)
+					});
+					const data = await resp.json();
+
+					if (!resp.ok) {
+						const errorMsg = data.msg
+						throw new Error(errorMsg);
+					}
+					setStore({token: data.access_token});
+					localStorage.setItem('token', data.access_token)
+					return { success: true }
+				} catch (error) {
+					console.error('Error creating user:', error.message);
+       				return { success: false, msg: error.message };
+				}
+			},
+			login: async (formData) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + '/api/login',{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							accept: 'application/json'
+						},
+						body: JSON.stringify(formData)
+					});
+					const data = await resp.json();
+
+					if (!resp.ok) {
+						const errorMsg = data.msg
+						throw  new Error(errorMsg);
+					}
+					setStore({token: data.access_token});
+					localStorage.setItem('token', data.access_token)
+					return { success: true }
+				} catch (error) {
+					console.error('Error login user:', error.message);
+       				return { success: false, msg: error.message };
+				}
 			}
 		}
 	};
