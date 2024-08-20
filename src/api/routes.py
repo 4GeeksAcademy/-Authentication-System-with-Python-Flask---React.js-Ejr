@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Profession, UserProfession, Favorite
+from api.models import db, User, Product, Profession, UserProfession, Favorite, Recipe
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
@@ -281,11 +281,61 @@ def update_product(id):
 @api.route('/wishlist/users', methods=['GET'])
 @jwt_required()
 def get_favorites_by_user_id():
-    current_user = get_jwt_identity()
-    user = User.query.filter_by(email=current_user).first()
+    user = get_current_user()
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
     favorite = Favorite.query.filter_by(user_id=user.id).all()
     result= list(map(lambda item:item.serialize(),favorite))
     return jsonify (result), 200
+
+def get_current_user():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+    return user
+
+# agregar Favorito
+@api.route('/wishlist/user', methods=['POST'])
+@jwt_required()
+def add_favorite():
+    user = get_current_user()
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    fav_recipe = request.json.get('fav_recipe', None)
+    fav_product = request.json.get('fav_product', None)
+
+    if fav_recipe is None and fav_product is None:
+        return jsonify({"msg": "Debe proporcionar una receta o un producto para agregar a favoritos."}), 400
+
+    new_favorite = Favorite(user_id=user.id, fav_recipe=fav_recipe, fav_product=fav_product)
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return jsonify({"msg": "Favorito creado exitosamente."}), 201
+
+
+#delete Favorite
+#Elimina un favorito identificado por su id y verifica que pertenezca al usuario autenticado.
+@api.route('wishlist/<int:favorite_id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite(favorite_id):
+    user = get_current_user()
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    favorite = Favorite.query.filter_by(id=favorite_id, user_id=user.id).first()
+    if not favorite:
+        return jsonify({"msg": "Favorito no encontrado."}), 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify({"msg": "Favorito eliminado exitosamente."}), 200
+
 
 
 #MERCADO PAGO
