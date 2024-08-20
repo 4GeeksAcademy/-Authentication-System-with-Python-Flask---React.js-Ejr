@@ -1,46 +1,88 @@
-.contact-section {
-    padding: 50px 0;
-   
-    
-}
 
-
-.contact-form-section {
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-label {
-    font-weight: 600;
+.container-contact {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
     color: #333;
 }
 
-.form-control {
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-    padding: 10px;
+
+.contact-info {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    
 }
 
-.btn-primary {
+.contact-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.contact-info p i {
+    margin-right: 10px;
+    color: #6793AE;
+    font-size: 20px;
+}
+
+.contact-form-section {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.contact-form-section form .form-label {
+    font-weight: bold;
+    color: #6793AE;
+}
+
+.contact-form-section form .form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+
+.contact-form-section form .btn {
     background-color: #6793AE;
-    border-color: #6793AE;
+    color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-}
-
-.section-margin {
-    margin-bottom: 50px;
+.contact-form-section form .btn:hover {
+    background-color: #50758a;
 }
 
 
-
-.text-center {
-    text-align: center;
+.contact-section h2 {
+    color: #6793AE;
+    font-size: 36px;
+    margin-bottom: 20px;
 }
+
+.contact-section p {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
