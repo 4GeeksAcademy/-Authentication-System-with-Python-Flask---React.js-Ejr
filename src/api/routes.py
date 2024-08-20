@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Profession, UserProfession
+from api.models import db, User, Product, Profession, UserProfession, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
@@ -60,7 +60,7 @@ def add_new_user():
 # POST login
 @api.route("/login", methods=["POST"])
 def login():
-    print(login)
+    
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
@@ -278,8 +278,17 @@ def update_product(id):
     db.session.commit()
     return jsonify (product.serialize(),{"msg":"El producto ha sido actualizado"}), 200
 
-#MERCADO PAGO
+@api.route('/wishlist/users', methods=['GET'])
+@jwt_required()
+def get_favorites_by_user_id():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+    favorite = Favorite.query.filter_by(user_id=user.id).all()
+    result= list(map(lambda item:item.serialize(),favorite))
+    return jsonify (result), 200
 
+
+#MERCADO PAGO
 @api.route("/preference", methods=["POST"]) 
 def preference(): 
     # body = json.loads(request.data)  # aca trae la info 

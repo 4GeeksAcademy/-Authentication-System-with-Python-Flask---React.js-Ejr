@@ -8,22 +8,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			error: {},
 			mercadoPago: {},
 			products: [],
-			product:{},
-			favorites:[],
+			product: {},
+			favorites: [],
 		},
 		actions: {
-			// loginFetch: async () => {
-			// 	try {
-			// 	  let response = await axios.get(`${process.env.BACKEND_URL}/api/login`);
-			// 	 console.log(response)
-			// 	  return response.data;
-			// 	} catch (error) {
-			// 	  console.error('Error:', error);
-			// 	  throw error; 
-			// 	}
-
-
-
 			login: async (email, password) => {
 				// hacer fetch que envie el email y password para poder loguearme
 				try {
@@ -37,26 +25,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password
 						})
 					})
+					let data = await response.json()
+
 					if (response.status === 200) {
-						let data = await response.json()
-						setStore({ currentUser: data.user})
+						setStore({ currentUser: data.user })
 						localStorage.setItem("token", data.access_token)
 						return true
 					}
 					if (response.status === 404) {
-						let data = await response.json()
 						setStore({ error: data.msj })
 
 						return false
 					}
 
-			
+
 				} catch (error) {
 					console.log(error);
 					return false
 				}
 			},
-
 			logout: () => {
 				// console.log("funciona");
 				localStorage.removeItem("token");
@@ -64,25 +51,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return true
 
 			},
-
 			validToken: async () => {
 				let token = localStorage.getItem("token");
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/api/valid_token`, {
 						method: 'GET',
 						headers: {
-					
+
 							'Authorization': `Bearer ${token}`
 						},
 
 					})
-					if(response.ok){
+					if (response.ok) {
 						let data = await response.json()
-						setStore({currentUser: data.user
+						setStore({
+							currentUser: data.user
 						})
 					}
-				
-			
+
+
 
 				}
 				catch (error) {
@@ -131,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			pagoMercadoPago: async (total) => {
 				try {
-					const response = await axios.post(back + "/api/preference", {
+					const response = await axios.post(`${process.env.BACKEND_URL}/api/preference`, {
 						total: total,  //acá está de nuevo la variable  donde se guarda el total a pagar por el cliente 
 					});
 					console.log(response.data);
@@ -140,19 +127,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+
 			// Obtener todos los productos
 			getProducts: async () => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/products`);
-					// if (response.ok) {
-						const data = await response.json();
-					// 	//return { success: true, data: data.results };
-					// } else {
-					// 	const errorData = await response.json();
-					// 	return { success: false, error: errorData.msj };
-					// }
+					const data = await response.json();
 					console.log(data)
-					setStore({products: data.results})
+					setStore({ products: data.results })
 					return true
 				} catch (error) {
 					return { success: false, error: error.message };
@@ -161,9 +143,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Obtener un producto específico
 			getProduct: async (id) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/product/${id}`);
+					const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`);
 					if (response.ok) {
 						const data = await response.json();
+						setStore({ product: data });
 						return { success: true, data };
 					} else {
 						const errorData = await response.json();
@@ -173,10 +156,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
+
 			// Agregar un nuevo producto
 			addProduct: async (product) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/product`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/product`, {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(product),
@@ -195,7 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Eliminar un producto
 			deleteProduct: async (id) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/product/${id}`, { method: 'DELETE' });
+					const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`, { method: 'DELETE' });
 					if (response.ok) {
 						return { success: true };
 					} else {
@@ -209,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Actualizar un producto
 			updateProduct: async (id, updates) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/products/${id}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/products/${id}`, {
 						method: 'PUT',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(updates),
@@ -225,22 +209,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-			uploadImage: async (data)=> {
+
+			getFavoritesByUserId: async () => {
+				let token = localStorage.getItem("token");
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/users`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+					if (response.ok) {
+						const data = await response.json();
+						console.log('Datos recibidos en getFavoritesByUserId:', data); // Verifica la estructura aquí
+						setStore({ favorites: data });
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+
+			uploadImage: async (data) => {
 				console.log(data)
-				const response = await fetch(`${process.env.BACKEND_URL}/api/upload`,{
+				const response = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
 					method: 'POST',
-					body:data,
+					body: data,
 					headers: {
 						'Authorization': `Bearer ${localStorage.getItem('token')}`
-						
+
 					}
 				})
 				const data_result = await response.json()
 				console.log(data_result)
 			}
-
 		}
-
 	}
 };
 
