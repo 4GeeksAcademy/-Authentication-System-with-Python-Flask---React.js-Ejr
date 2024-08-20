@@ -1,9 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ApexCharts from "apexcharts";
 import { Context } from "../store/appContext";
 
-export const GraficoHistorico = ({ exercise }) => {
+export const GraficoHistorico = () => {
     const { store, actions } = useContext(Context);
+    const [pesos, setPesos] = useState([]);
+    const [fechas, setFechas] = useState([]);
+    console.log(store.lastPhysicalUserInformationList);
+
+    useEffect(() => {
+        // Iterar sobre store.lastPhysicalUserInformationList y actualizar los estados
+        store.lastPhysicalUserInformationList.forEach((item) => {
+            setPesos(prevPesos => [...prevPesos, item.weight]);
+            setFechas(prevFechas => [...prevFechas, item.date]);
+        });
+    }, [store.lastPhysicalUserInformationList]);
+
+
+    console.log(pesos);
+    console.log(fechas);
 
     const options = {
         dataLabels: {
@@ -23,14 +38,9 @@ export const GraficoHistorico = ({ exercise }) => {
         },
         series: [
             {
-                name: "Developer Edition",
-                data: [150, 141, 145, 152, 135, 125],
+                name: "",
+                data: [...pesos],
                 color: "#1A56DB",
-            },
-            {
-                name: "Designer Edition",
-                data: [64, 41, 76, 41, 113, 173],
-                color: "#7E3BF2",
             },
         ],
         chart: {
@@ -67,7 +77,7 @@ export const GraficoHistorico = ({ exercise }) => {
             width: 6,
         },
         xaxis: {
-            categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+            categories: [...fechas],
             labels: {
                 show: false,
             },
@@ -82,7 +92,7 @@ export const GraficoHistorico = ({ exercise }) => {
             show: false,
             labels: {
                 formatter: function (value) {
-                    return '$' + value;
+                    return value + " Kg";
                 }
             }
         },
@@ -101,25 +111,29 @@ export const GraficoHistorico = ({ exercise }) => {
         }
     }, [options]); // Dependencias que puedan afectar al gráfico
 
+    useEffect(() => {
+        actions.get_last_physical_user_information()
+    }, []);
+
     return (
         <>
-            <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
                 <div className="flex justify-between mb-5">
                     <div>
-                        <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">$12,423</h5>
-                        <p className="text-base font-normal text-gray-500 dark:text-gray-400">Sales this week</p>
+                        <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">Peso Corporal</h5>
+                        {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">En KG</p> */}
                     </div>
-                    <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+                    {/* <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
                         23%
                         <svg className="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                         </svg>
-                    </div>
+                    </div> */}
                 </div>
                 <div id="data-labels-chart"></div>
                 <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
                     <div className="flex justify-between items-center pt-5">
-                        <button
+                        {/* <button
                             id="dropdownDefaultButton"
                             data-dropdown-toggle="lastDaysdropdown"
                             data-dropdown-placement="bottom"
@@ -129,8 +143,8 @@ export const GraficoHistorico = ({ exercise }) => {
                             <svg className="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
-                        </button>
-                        <div id="lastDaysdropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        </button> */}
+                        {/* <div id="lastDaysdropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                 <li>
                                     <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
@@ -148,15 +162,15 @@ export const GraficoHistorico = ({ exercise }) => {
                                     <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
                                 </li>
                             </ul>
-                        </div>
-                        <a
+                        </div> */}
+                        {/* <a
                             href="#"
                             className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
                             Sales Report
                             <svg className="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                             </svg>
-                        </a>
+                        </a> */}
                     </div>
                 </div>
             </div>

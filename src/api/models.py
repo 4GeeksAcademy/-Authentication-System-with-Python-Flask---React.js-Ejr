@@ -82,7 +82,13 @@ class PhysicalInformation(db.Model):
             "weight": self.weight,
             "date": self.date,
         }
-
+    
+    def graphicSerialize(self):
+        return {
+            "weight": self.weight,
+            "date": self.date.strftime("%d/%m/%Y"),
+        }
+    
 # RUTINA 
 class Routine(db.Model):
     id = db.Column(db.Integer, primary_key=True)

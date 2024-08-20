@@ -3,8 +3,7 @@ import { Context } from "../store/appContext";
 
 export const Exercise = ({ exercise }) => {
     const { store, actions } = useContext(Context);
-    const [state, setState] = useState('');
-
+    store.lastPhysicalUserInformationList
     console.log(exercise);
 
     return (

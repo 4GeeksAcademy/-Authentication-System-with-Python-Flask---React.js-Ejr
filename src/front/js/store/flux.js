@@ -237,7 +237,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (resp.status == 200) {
-                        setStore({ lastPhysicalUserInformationList: resp.data })
+                        let reverseData = resp.data.reverse();
+                        console.log(reverseData);
+                        console.log(resp.data);
+                        setStore({ lastPhysicalUserInformationList: reverseData })
                         console.log(getStore().lastPhysicalUserInformationList);
                         return true;
                     }
