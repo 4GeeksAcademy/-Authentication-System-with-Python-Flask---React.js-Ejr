@@ -32,7 +32,7 @@ const Perfil = () => {
         <div className="container mt-4 col-md-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
                 <div className="col-md-4 text-center position-relative">
-                    <img src={store.dataUser?.foto || "https://example.com/default-image.jpg"}
+                    <img src={store.dataUser?.foto || "https://static.vecteezy.com/system/resources/thumbnails/000/495/460/small/22_Profile.jpg"}
                         alt="User Image"
                         className="img-fluid rounded-circle profile-image"
                     />
@@ -57,7 +57,7 @@ const Perfil = () => {
                         <VistaModal
                             show={showModal}
                             onClose={closeModal}
-                            imageSrc={store.dataUser?.foto || "https://example.com/default-image.jpg"}
+                            imageSrc={store.dataUser?.foto || null}
                             onDelete={() => {
                                 // Aquí puedes agregar la lógica para eliminar la foto de perfil si es necesario.
                             }}
@@ -65,7 +65,7 @@ const Perfil = () => {
                     )}
                 </div>
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
-                    <h2>{store.dataUser?.nombre_usuario}</h2>
+                    <h2>{store.dataUser?.nombre_usuario+" "+store.dataUser?.apellido}</h2>
                 </div>
                 <div className="accordion mt-3" id="accordionExample">
                     <div className="accordion-item">
@@ -79,7 +79,7 @@ const Perfil = () => {
                                 <div className="container mt-4">
                                     <div className="row align-items-center">
                                         <div className="col-md-8">
-                                            <p><strong>Nombre: {store.dataUser?.nombre_usuario}</strong> </p>
+                                            <p><strong>Nombre: {store.dataUser?.nombre_usuario+" "+store.dataUser?.apellido}</strong> </p>
                                             <p><strong>Email:</strong> {store.dataUser?.correo}</p>
                                             <p><strong>Teléfono:</strong> {store.dataUser?.telefono}</p>
                                             <p><strong>Descripción:</strong> {store.dataUser?.descripcion}</p>
