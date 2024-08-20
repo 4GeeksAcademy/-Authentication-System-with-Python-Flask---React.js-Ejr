@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -19,6 +19,14 @@ export const New_Blog = props => {
         text_steps: "",
         text: ""
     });
+
+    // Verificación de autenticación
+    useEffect(() => {
+        if (!store.token) {
+            navigate('/login');
+            return;
+        }
+    }, [store.token, navigate]);
 
     const handleChange = e => {
         setFormData({
@@ -45,22 +53,18 @@ export const New_Blog = props => {
             console.error("Falta el contenido para las noticias");
             return;
         }
-    
-        // Crea el objeto de datos a enviar
-        const dataToSend = {
-            type: blogType,
-            ...formData
-        };
-    
+
         try {
             const response = await fetch(process.env.BACKEND_URL + "api/new_blog", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    // Eliminar autorización si no se requiere en esta fase
-                    // Authorization: `Bearer ${store.token}`
+                    "Authorization": `Bearer ${store.token}`  // Envía el token en el encabezado
                 },
-                body: JSON.stringify(dataToSend)
+                body: JSON.stringify({
+                    type: blogType,
+                    ...formData
+                })
             });
     
             if (response.ok) {

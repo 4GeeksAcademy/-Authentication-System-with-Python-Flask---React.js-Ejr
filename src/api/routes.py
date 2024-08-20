@@ -121,7 +121,17 @@ def edit_baby(id):
     
 #[POST] Nuevo Blog
 @api.route('/new_blog', methods=['POST'])
+@jwt_required()
 def new_blog():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({'success': False, 'msg': 'Bad token'}), 401
+    
+    if not user.is_admin:
+        return jsonify({'success': False, 'msg': 'Admin access required!'}), 403
+    
     data = request.json
     blog_type = data.get('type')
     author_id = data.get('author')
@@ -173,7 +183,13 @@ def new_blog():
 
 #[PUT] Editar Blog
 @api.route('/edit_blog/<string:type>/<int:id>', methods=['PUT'])
+@jwt_required()
 def edit_blog(type, id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user or not user.is_admin:
+        return jsonify({"error": "Unauthorized"}), 403
 
     data = request.json
     title = data.get('title')
@@ -208,10 +224,17 @@ def edit_blog(type, id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
 #[DELETE] Borrar Blog
 @api.route('/delete_blog/<string:type>/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_blog(type, id):
-    
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user or not user.is_admin:
+        return jsonify({"error": "Unauthorized"}), 403
+
     if type == 'news':
         blog = Blog_news.query.get(id)
         if not blog:

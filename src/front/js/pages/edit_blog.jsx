@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext"; // Importa el contexto
 
 export const EditBlog = () => {
+    const { store } = useContext(Context); // Accede al contexto para verificar el estado de autenticación
     const { type, id } = useParams(); // Obtiene el tipo y el ID del blog desde los parámetros de la URL
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -18,9 +20,19 @@ export const EditBlog = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Redirige al login si no hay un token en el contexto
+        if (!store.token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchBlog = async () => {
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}api/blog/${type}/${id}`);
+                const response = await fetch(`${process.env.BACKEND_URL}api/blog/${type}/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${store.token}`
+                    }
+                });
                 const data = await response.json();
                 if (data.msg === 'OK') {
                     setBlog(data.data);
@@ -45,7 +57,7 @@ export const EditBlog = () => {
         };
 
         fetchBlog();
-    }, [type, id]);
+    }, [type, id, store.token, navigate]);
 
     const handleChange = (e) => {
         setFormData({
@@ -61,7 +73,7 @@ export const EditBlog = () => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    // Authorization: `Bearer ${store.token}` // Comentado si estás probando sin autenticación
+                    "Authorization": `Bearer ${store.token}`
                 },
                 body: JSON.stringify({
                     type,
@@ -88,7 +100,7 @@ export const EditBlog = () => {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    // Authorization: `Bearer ${store.token}` // Comentado si estás probando sin autenticación
+                    "Authorization": `Bearer ${store.token}`
                 }
             });
 
