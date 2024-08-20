@@ -11,3 +11,7 @@
 .icon{
     transform: translate(-25px, 10px);
 }
+
+body{
+    min-height: 100vh;
+}
