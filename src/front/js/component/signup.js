@@ -7,6 +7,7 @@ import { Context } from "../store/appContext";
 const Signup = () => {
     const [isActive, setIsActive] = useState(false);
     const [isPartner, setIsPartner] = useState(false);
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const { store, actions } = useContext(Context);
@@ -27,6 +28,11 @@ const Signup = () => {
     const login = async (email, password) => {
         await actions.login(email, password);
         navigate("/app/exemplo")
+    };
+
+    const signup = async (email, password, isPartner) => {
+        await actions.signup(email, password, isPartner);
+        navigate("/app/exemplo")
     }
 
     return (
@@ -38,11 +44,11 @@ const Signup = () => {
                 <div className="singup-form-container singup-sign-up">
                     <div className="form">
                         <h1>Crear Cuenta</h1>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <div className="signup-toggle-wrapper">
-                            <button type="submit">Regístrate</button>
+                            <button onClick={() => signup(email, password, isPartner)}>Regístrate</button>
                             <label className="switch">
                                 <input type="checkbox" checked={isPartner} onChange={handleToggleChange} />
                                 <span className="slider round"></span>

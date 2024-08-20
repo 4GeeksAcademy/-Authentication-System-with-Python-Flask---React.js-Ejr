@@ -44,7 +44,10 @@ def handle_signup():
         db.session.add(new_user_profile)
     
     db.session.commit()  
-    return jsonify({"success": True}), 201
+    user = User.query.filter_by(email=data["email"], password=data["password"]).first()
+    access_token = create_access_token(identity=user.id)
+
+    return jsonify({"token": access_token, "user": user.serialize()})
 
 @api.route('/login', methods=['POST'])
 def login():
