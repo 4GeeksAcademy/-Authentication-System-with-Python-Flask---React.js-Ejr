@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { Context } from "../store/appContext";
 import "/workspaces/hablemos-uy-api/src/front/styles/modalProfile.css";
 import defaultAvatar from "../../img/avatar.jpg"
-
+import TrashButton from "../component/trashButton.jsx";
+import SaveButton from "../component/saveButton.jsx";
 
 const VistaModal = ({ show, onClose, imageSrc }) => {
     const { actions, store } = useContext(Context);
@@ -32,8 +33,10 @@ const VistaModal = ({ show, onClose, imageSrc }) => {
         }
     };
     if (!show) return null;
+    console.log(profileImage);
 
     return (
+        
         <div className="modal-overlay">
             <div className="modal-content">
                 <div className="modal-header">
@@ -77,13 +80,15 @@ const VistaModal = ({ show, onClose, imageSrc }) => {
                             <i className="far fa-save"></i>
                             <span>Guardar</span>
                         </button>
-                        <button
+                        <SaveButton />
+                        {/* <button
                             onClick={handleDeleteClick}
                             className="btn btn-light d-flex flex-column align-items-center"
                         >
                             <i className="far fa-trash-alt"></i>
                             <span>Eliminar</span>
-                        </button>
+                        </button> */}
+                        <TrashButton />
                     </div>
                 </div>
             </div>
