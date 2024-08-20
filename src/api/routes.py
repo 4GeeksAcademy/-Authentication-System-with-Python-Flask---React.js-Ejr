@@ -34,9 +34,6 @@ CORS(api)
 def apply_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST,PUT, OPTIONS"
-
-    
-
     response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
     response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
