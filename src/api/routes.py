@@ -105,6 +105,12 @@ def login():
     access_token = create_access_token(identity=user.id)
     return jsonify(access_token=access_token), 200
 
+@api.route('/validate-token', methods=['GET'])
+@jwt_required()
+def validate_token():
+    current_user_id = get_jwt_identity()
+    return jsonify({'success': True, 'msg': 'Token is valid', 'user_id': current_user_id}), 200
+
 @api.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
