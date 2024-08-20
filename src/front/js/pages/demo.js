@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 
 const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(1) // Para controlar el paso actual
+  const [step, setStep] = useState(3) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
     selectedWeek: '',
@@ -114,37 +114,43 @@ const MultiStepForm = () => {
 
 
   const handleAddExercises = async (id, name) => {
-    // Crear una promesa para manejar la adición de ejercicios
-    const addExercise = new Promise(async (resolve, reject) => {
+    const isExerciseAdded = addedExercises.some(exercise => exercise.id === id);
+
+    const actionPromise = new Promise(async (resolve, reject) => {
       try {
-        const exercisesResponse = await actions.postExerciseRoutine(store.routineData.id.toString(), id.toString());
-        if (!exercisesResponse || exercisesResponse.error) {
-          throw new Error('Error al agregar los ejercicios');
+        let response;
+        if (isExerciseAdded) {
+          // Elimina el ejercicio si ya está agregado
+          response = await actions.deleteExerciseRoutine(store.routineData.id.toString(), id.toString());
+          if (!response || response.error) throw new Error('Error al eliminar el ejercicio');
+          resolve('Ejercicio eliminado exitosamente');
+        } else {
+          // Agrega el ejercicio si no está en la rutina
+          response = await actions.postExerciseRoutine(store.routineData.id.toString(), id.toString());
+          if (!response || response.error) throw new Error('Error al agregar el ejercicio');
+          resolve('Ejercicio agregado exitosamente');
         }
-        resolve('Ejercicio agregado exitosamente');
       } catch (error) {
-        reject('No se pudo agregar el ejercicio');
+        reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio');
       }
     });
 
     toast.promise(
-      addExercise,
+      actionPromise,
       {
-        pending: 'Agregando ejercicio...',
-        success: 'Ejercicio agregado exitosamente 👌',
-        error: 'No se pudo agregar el ejercicio 🤯',
+        pending: isExerciseAdded ? 'Eliminando ejercicio...' : 'Agregando ejercicio...',
+        success: isExerciseAdded ? 'Ejercicio eliminado exitosamente 👌' : 'Ejercicio agregado exitosamente 👌',
+        error: isExerciseAdded ? 'No se pudo eliminar el ejercicio 🤯' : 'No se pudo agregar el ejercicio 🤯',
       }
     );
 
-    addExercise.then(() => {
+    actionPromise.then(() => {
       setAddedExercises(prevExercises => {
-        const isExerciseAdded = prevExercises.some(exercise => exercise.id === id);
-
         if (isExerciseAdded) {
-          // Elimina el ejercicio si ya está en la lista
+          // Elimina el ejercicio de la lista
           return prevExercises.filter(exercise => exercise.id !== id);
         } else {
-          // Agrega el ejercicio si no está en la lista
+          // Agrega el ejercicio a la lista
           return [...prevExercises, { id, name }];
         }
       });
@@ -154,12 +160,9 @@ const MultiStepForm = () => {
   };
 
 
+
   const isExerciseSelected = (id) => {
     return addedExercises.some(exercise => exercise.id === id)
-  }
-
-  const handleRemoveExercise = (id) => {
-    setAddedExercises(prevExercises => prevExercises.filter(exercise => exercise.id !== id))
   }
 
   const handleStepCircle = (index) => {
@@ -168,7 +171,7 @@ const MultiStepForm = () => {
     } else if (step === index) {
       return "bg-emerald-500 text-emerald-100" // Paso actual
     } else {
-      return "bg-gray-800 text-gray-300" // No alcanzado
+      return "bg-neutral-800 text-neutral-300" // No alcanzado
     }
   }
 
@@ -212,9 +215,9 @@ const MultiStepForm = () => {
       <div className="w-full mb-10">
         <h2 className="sr-only">Steps</h2>
 
-        <div className="relative after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">
+        <div className="relative after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-neutral-200">
           <div className={`absolute bottom-0 h-1 transition-all ease-in rounded-full bg-emerald-500 ${handleProgressBar(step)}`}></div>
-          <ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
+          <ol className="grid grid-cols-3 text-sm font-medium text-neutral-500">
             <li className="relative flex justify-start text-emerald-600">
               <span className={`absolute -bottom-[1.90rem] start-0 rounded-full transition-all ease-in ${handleStepCircle(1)}`}>
                 <svg
@@ -239,7 +242,7 @@ const MultiStepForm = () => {
             <li className="relative flex justify-center text-emerald-600">
               <span className={`absolute -bottom-[1.90rem] left-1/2 transform -translate-x-1/2 rounded-full transition-all ease-in ${handleStepCircle(2)}`}>
                 {
-                  step == 2 ? (
+                  step >= 2 ? (
                     <svg
                       className="size-6"
                       xmlns="http://www.w3.org/2000/svg"
@@ -383,9 +386,64 @@ const MultiStepForm = () => {
         {step === 3 && (
           <div className='w-full flex flex-col'>
             {/* Paso 3: Ejercicios */}
-            <div className="flex w-full justify-end mb-5">
+            <div className="flex flex-row flex-wrap gap-2 w-full items-end justify-end mb-5">
+
+              {/* search input */}
               <div className="relative">
-                <div className="inline-flex items-center overflow-hidden rounded-md border bg-white dark:border-neutral-800 dark:bg-neutral-900">
+                <label htmlFor="Search" className="sr-only"> Search for... </label>
+                <input
+                  type="text"
+                  id="Search"
+                  placeholder="buscar ejercicios..."
+                  className="border-none max-w-40 h-8 rounded-md px-4 py-2 pe-10 shadow-sm sm:text-sm dark:bg-neutral-900 dark:text-white focus:ring-emerald-500 focus:border-emerald-500"
+                />
+
+                <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                  <button
+                    type="button"
+                    className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  >
+                    <span className="sr-only">Search</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                      />
+                    </svg>
+                  </button>
+                </span>
+              </div>
+
+              {/* filtrar */}
+              <div>
+                <select
+                  name="HeadlineAct"
+                  id="HeadlineAct"
+                  className="bg-neutral-900 border-none text-neutral-300 text-sm/none font-medium ms-2 md:me-2 px-4 py-2 h-8 rounded-md focus:ring-transparent focus:border-transparent"
+                >
+                  <option className="flex items-center border-e px-4 py-2 text-sm/none font-medium text-neutral-600 dark:border-e-neutral-800 dark:text-neutral-300" value="">
+                    Filtrar
+                  </option>
+                  {
+                    store.allCategoryList.map((item, index) => (
+                      <option className="lowercase px-4 py-2" value="">{item}</option>
+                    ))
+                  }
+                </select>
+              </div>
+
+              {/* lista de ejercicios */}
+              <div className="relative">
+                <div className="inline-flex items-center overflow-hidden rounded-md h-8 border bg-white dark:border-neutral-800 dark:bg-neutral-900">
                   <div
                     className="border-e px-4 py-2 text-sm/none font-medium text-neutral-600 dark:border-e-neutral-800 dark:text-neutral-300"
                   >
@@ -428,7 +486,7 @@ const MultiStepForm = () => {
                           role="menuitem"
                         >
                           {item.name}
-                          <button onClick={() => handleRemoveExercise(item.id)} type="button" className="w-fit flex p-1 cursor-pointer items-center justify-center rounded-lg border-neutral-200 bg-white text-neutral-500 hover:text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:peer-checked:text-neutral-300 active:scale-95 transition-all ease-in">
+                          <button onClick={() => handleAddExercises(item.id, item.name)} type="button" className="w-fit flex p-1 cursor-pointer items-center justify-center rounded-lg border-neutral-200 bg-white text-neutral-500 hover:text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:peer-checked:text-neutral-300 active:scale-95 transition-all ease-in">
                             <div>
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
                             </div>
