@@ -17,8 +17,8 @@ export const Profile = () => {
   })
 
   const calcIMC = () => {
-    const height = store.lastPhysicalUserInformation.height / 100
-    const weight = store.lastPhysicalUserInformation.weight
+    const height = store.lastOnePhysicalUserInformation.height / 100
+    const weight = store.lastOnePhysicalUserInformation.weight
     const result = weight / (height * height)
     return result.toFixed(1)
   }
@@ -38,7 +38,7 @@ export const Profile = () => {
       );
       if (success === true) {
         resolve("Registro exitoso");
-        actions.get_last_physical_user_information()
+        actions.get_last_one_physical_user_information()
         calcIMC()
       } else {
         reject("Error al registrarse");
@@ -57,7 +57,7 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    actions.get_last_physical_user_information()
+    actions.get_last_one_physical_user_information()
     calcIMC()
   }, [])
 
@@ -174,28 +174,28 @@ export const Profile = () => {
         <div className="grid gap-1">
           <div className="text-xs font-bold  text-neutral-400">Peso</div>
           <div className="text-lg">
-            {!store.lastPhysicalUserInformation
+            {!store.lastOnePhysicalUserInformation
               ? <>
                 <div role="status" className="max-w-sm animate-pulse">
                   <div className="h-6 bg-neutral-200 rounded-full dark:bg-neutral-700 w-16"></div>
                   <span className="sr-only">Loading...</span>
                 </div>
               </>
-              : `${store.lastPhysicalUserInformation.weight} kg`
+              : `${store.lastOnePhysicalUserInformation.weight} kg`
             }
           </div>
         </div>
         <div className="grid gap-1">
           <div className="text-xs font-bold  text-neutral-400">Altura</div>
           <div className="text-lg">
-            {!store.lastPhysicalUserInformation
+            {!store.lastOnePhysicalUserInformation
               ? <>
                 <div role="status" className="max-w-sm animate-pulse">
                   <div className="h-6 bg-neutral-200 rounded-full dark:bg-neutral-700 w-20"></div>
                   <span className="sr-only">Loading...</span>
                 </div>
               </>
-              : `${store.lastPhysicalUserInformation.height} cm`
+              : `${store.lastOnePhysicalUserInformation.height} cm`
             }
           </div>
         </div>
@@ -281,7 +281,7 @@ export const Profile = () => {
 
           </div>
           <div className="text-lg" >
-            {!store.lastPhysicalUserInformation
+            {!store.lastOnePhysicalUserInformation
               ? <>
                 <div role="status" className="max-w-sm animate-pulse">
                   <div className="h-6 bg-neutral-200 rounded-full dark:bg-neutral-700 w-20"></div>

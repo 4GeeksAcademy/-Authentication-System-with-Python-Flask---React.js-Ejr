@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             allWeeklyRoutineUserList: [],
             oneWeeklyRoutineUserList: [],
             onePhysicalUserInformationList: [],
-            lastPhysicalUserInformation: '',
+            lastOnePhysicalUserInformation: '',
             allPhysicalUserInformationList: [],
             lastPhysicalUserInformationList: [],
             allRoutineList: [],
@@ -238,8 +238,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (resp.status == 200) {
-                        setStore({ lastPhysicalUserInformation: resp.data })
-                        console.log(getStore().lastPhysicalUserInformation);
+                        setStore({ lastOnePhysicalUserInformation: resp.data })
+                        console.log(getStore().lastOnePhysicalUserInformation);
                         return true;
                     }
                 }
