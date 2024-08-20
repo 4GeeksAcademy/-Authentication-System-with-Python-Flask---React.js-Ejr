@@ -35,7 +35,9 @@ export const VistaPrueba = () => {
 
 		// actions.postFollowUp(1, 1)
 		// actions.deleteFollowUp(1, 1)
-		actions.get_last_physical_user_information()
+		// actions.get_last_physical_user_information()
+		actions.allSets()
+		actions.postSets("2", "10")
 	}, [])
 	// console.log(store.allCategoryList);
 	// console.log(Object.keys(store.allCategoryList));

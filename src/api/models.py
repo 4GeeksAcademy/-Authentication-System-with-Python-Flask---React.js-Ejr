@@ -169,14 +169,32 @@ class Exercise(db.Model):
             "image": self.image,
         }
 
+# SERIES
+class Sets(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sets = db.Column(db.Integer, nullable=False)
+    repetitions = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<Sets {self.id, self.sets, self.repetitions}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sets": self.sets,
+            "repetitions": self.repetitions
+        }
+    
 # EJERCICIO RUTINA
 class ExerciseRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     routine_id = db.Column(db.Integer, db.ForeignKey('routine.id'), nullable=False)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercise.id'), nullable=False)
+    sets_id = db.Column(db.Integer, db.ForeignKey('sets.id'), nullable=False)
 
     exercise = db.relationship(Exercise)
     routine = db.relationship(Routine)
+    sets = db.relationship(Sets)
     
     follow_up = db.relationship('FollowUp', back_populates = 'exercise_routine', lazy = True)
 
@@ -186,9 +204,9 @@ class ExerciseRoutine(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "exercise": self.exercise.serialize()
+            "exercise": self.exercise.serialize(),
+            "sets": self.sets.serialize()
         }
-            
 
 # SEGUIMIENTO 
 class FollowUp(db.Model):
