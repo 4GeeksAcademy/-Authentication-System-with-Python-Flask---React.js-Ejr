@@ -1,3 +1,4 @@
+const corsOrigin = process.env.CORS_ORIGIN;
 const apiUrl = process.env.BACKEND_URL + "/api";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -11,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			totalAppointments: null,
 			totalServices: null,
 			totalCars: null,
-			corsEnabled: {"Access-Control-Allow-Origin": "*",}, // Esto se debe eliminar en producción
+			corsEnabled: {"Access-Control-Allow-Origin": "*",},  // Comentado para deshabilitar en producción
 		},
 		actions: {
 			loadSession: async () => {
@@ -36,13 +37,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 					console.log("Datos en localStorage correctos, haciendo ping al usuario...");
 			
+					let headers = {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + storageToken,
+					};
+			
+					if (corsOrigin && corsOrigin !== "DISABLED") {
+						headers["Access-Control-Allow-Origin"] = corsOrigin;
+					}
+			
 					let resp = await fetch(apiUrl + "/pinguser", {
-						// mode: 'no-cors',
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: "Bearer " + storageToken,
-							"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
-						},
+						headers: headers, 
 					});
 					
 					console.log("Respuesta del servidor:", resp);
@@ -59,10 +64,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 					const updateTokenAndState = (token, userId, roleId) => {
 						setStore({ token, userId, roleId });
-                        localStorage.setItem("token", token);
-                        localStorage.setItem("user_id", userId);
-                        localStorage.setItem("role_id", roleId);
-                    };
+						localStorage.setItem("token", token);
+						localStorage.setItem("user_id", userId);
+						localStorage.setItem("role_id", roleId);
+					};
 					
 					updateTokenAndState(data.access_token, data.user_id, data.role_id);
 					
@@ -75,19 +80,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			
-			
+
 			login: async (email, password) => {
+				let headers = {
+					"Content-Type": "application/json",
+				};
+
+				if (corsOrigin && corsOrigin !== "DISABLED") {
+					headers["Access-Control-Allow-Origin"] = corsOrigin;
+				}
+
 				let resp = await fetch(apiUrl + "/login", {
 					method: "POST",
 					body: JSON.stringify({ email, password }),
-					headers: {
-						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
-					},
+					headers: headers, 
 				});
 				if (!resp.ok) {
 					setStore({ token: null });
+					const errorData = await resp.json();
 					console.error("Error al hacer login:", errorData);
 					return { success: false, message: errorData.error || "Error desconocido" };
 				};
@@ -98,25 +108,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("role_id", data.role_id);
 				localStorage.setItem("user_id", data.user_id);
 				return { success: true };
-			  }, catch (error) {
+			  }, 
+			catch (error) {
 				console.error("Error en la solicitud de login:", error);
 				return { success: false, message: "Error en la red o en el servidor" };
-			},			
+			},
+
 			signup: async (email, password, name, phone_number) => {
+				let headers = {
+					"Content-Type": "application/json",
+				};
+
+				if (corsOrigin && corsOrigin !== "DISABLED") {
+					headers["Access-Control-Allow-Origin"] = corsOrigin;
+				}
+
 				let resp = await fetch(apiUrl + "/signupuser", {
 					method: "POST",
 					body: JSON.stringify({email, password, name, phone_number}),
-					headers: {
-						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
-					},
+					headers: headers,
 				});
 				if(!resp.ok) {
 					const errorData = await resp.json();
 					return false;
 				}
 				let data = await resp.json();
-					return true;
+				return true;
 			},
 			logout: async () => {
 				try {
@@ -152,13 +169,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			saveProfile: async (updatedProfile) => {
 				let { token } = getStore();
+				let headers = {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + token,
+				};
+
+				if (corsOrigin && corsOrigin !== "DISABLED") {
+					headers["Access-Control-Allow-Origin"] = corsOrigin;
+				}
+
 				let resp = await fetch(apiUrl + "/update_profile", {
 					method: "PATCH",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: "Bearer " + token,
-						"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
-					},
+					headers: headers, 
 					body: JSON.stringify(updatedProfile),
 				});
 				if (!resp.ok) {
@@ -171,13 +193,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			saveCarDetails: async (carId, updatedCar) => {
 				let { token } = getStore();
 				try {
+					let headers = {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + token,
+					};
+
+					if (corsOrigin && corsOrigin !== "DISABLED") {
+						headers["Access-Control-Allow-Origin"] = corsOrigin;
+					}
+
 					let resp = await fetch(`${apiUrl}/cars/${carId}`, {
 						method: "PATCH",
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: "Bearer " + token,
-							"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
-						},
+						headers: headers,
 						body: JSON.stringify(updatedCar),
 					});
 			
@@ -204,43 +231,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'accept': 'application/json',
 							'api-key': process.env.MYKEY,
 							'Content-Type': 'application/json',
-							"Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
-							
 						},
-						  body: JSON.stringify(data)
-						});
-						if (response.ok){
-							//mail enviado con exito
-						}
+						body: JSON.stringify(data)
+					});
+					if (response.ok){
+						//mail enviado con exito
 					}
-					catch (error) {
-							console.error("Error:", error);
-					}
+				}
+				catch (error) {
+					console.error("Error:", error);
+				}
 			},
-			GetUser:async () => {
+			GetUser: async () => {
 				try{
 					const storageUserId = localStorage.getItem("user_id");
-					console.log(storageUserId)
 					const response = await fetch(`${apiUrl}/users/${storageUserId}`);
-						
-						if (!response.ok) throw new Error("Network response failed");
-							
-						const data = await response.json();
-
-           				const { result } = data;
-            			const email = result.email;
-            			const name = result.name;
-
-						return { email, name };
-						
-					} catch (error) {
-						console.error("Error:", error);
-					}
-				},
-
+					
+					if (!response.ok) throw new Error("Network response failed");
+					
+					const data = await response.json();
+					
+					const { result } = data;
+            		const email = result.email;
+            		const name = result.name;
+					
+					return { email, name };
+					
+				} catch (error) {
+					console.error("Error:", error);
+				}
+			},
 		}
-	}
-			//////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio mail
+	};
 };
+
 
 export default getState;
