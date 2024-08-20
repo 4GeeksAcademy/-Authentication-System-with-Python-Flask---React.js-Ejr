@@ -277,6 +277,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						clave: clave,
 					})
 				};
+				console.log(options.body)
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
