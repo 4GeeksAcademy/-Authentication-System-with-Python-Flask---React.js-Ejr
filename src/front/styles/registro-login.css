@@ -66,6 +66,15 @@
   font-weight: 800;
 }
 
+.input-group-text {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+}
+
 /* Estilos de línea divisoria formulario */
 .linea-divisoria {
   display: flex;

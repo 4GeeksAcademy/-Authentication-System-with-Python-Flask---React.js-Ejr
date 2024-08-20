@@ -163,7 +163,8 @@ def reset_password_token(token):
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
-    user.password(clave)
+    # Asignamos la nueva contraseña cifrada al atributo clave de nuestra tabla User
+    user.set_password(clave)
     db.session.commit()
 
     return jsonify({"msg": "Contraseña actualizada con éxito"}), 200

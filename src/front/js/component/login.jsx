@@ -1,18 +1,22 @@
-import React, { useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2'
-import { Context } from "../store/appContext";
 import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
-import { useNavigate } from "react-router-dom";
-
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
 
 	const { store, actions } = useContext(Context)
 	const navigate = useNavigate();
+	const [showPassword, setShowPassword] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setShowPassword(!showPassword);
+	};
+
 
 	const clientID = "715425283913-rjqjvf4uv4d78qc39hip0pdctti1mcja.apps.googleusercontent.com"
 
@@ -29,7 +33,7 @@ export const Login = () => {
 		const dataUser = response.profileObj
 		//conectar con los actions de flux para hacer el login y luego con la base de datos.
 		const isLogged = await actions.iniciarSesion(dataUser.email, dataUser.googleId)
-		if(isLogged){
+		if (isLogged) {
 			Swal.fire({
 				title: 'Bienvenido!',
 				text: 'Ingresaste satisfactoriamente!',
@@ -37,7 +41,7 @@ export const Login = () => {
 				timer: 4000
 			})
 			navigate("/perfil")
-		}else {
+		} else {
 			Swal.fire({
 				title: 'Lo sentimos!',
 				text: 'Correo o contraseña incorrectos, intente nuevamente!',
@@ -135,13 +139,18 @@ export const Login = () => {
 					</div>
 
 					<div className="d-flex justify-content-center">
-						<input type="password" className="form-control m-2" name="clave" placeholder="Password:"
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							value={formik.values.clave} />
+						<div className="input-group">
+							<input type={showPassword ? "text" : "password"} className="form-control m-2" name="clave" placeholder="Password:"
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								value={formik.values.clave} />
+							<span className="input-group-text cursor-pointer" onClick={togglePasswordVisibility}>
+								<i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
+							</span>						
+						</div>
 						{formik.touched.clave && formik.errors.clave ? (
-							<div className="text-danger">{formik.errors.clave}</div>
-						) : null}
+								<div className="text-danger">{formik.errors.clave}</div>
+							) : null}
 					</div>
 					<div>
 						<button type="submit" className="btn btn-login-registro  btn-primary mt-2">Iniciar sesión</button>

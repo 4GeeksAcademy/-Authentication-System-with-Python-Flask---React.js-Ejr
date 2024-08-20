@@ -236,13 +236,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			
 			//Enviamos la NUEVA contraseña usando el token de recuperación
-			restablecerClave: async (token, nuevaClave) => {
+			restablecerClave: async (token, clave) => {
 				const options = {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({ nueva_clave: nuevaClave })
+					body: JSON.stringify({ clave: clave })
 				};
 			
 				try {
