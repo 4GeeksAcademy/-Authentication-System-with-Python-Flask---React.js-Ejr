@@ -106,7 +106,7 @@ def editEmpleador():
     photo = request.json.get('photo')
     id_user = get_jwt_identity()
     user = User.query.get(id_user)
-    empleador = Empleador.query.filter_by(user_id=user.id)
+    empleador = user.profile_empleador
     user.name=name
     user.username = username
     user.email=email
@@ -122,23 +122,30 @@ def editEmpleador():
 
 
 #Agregar usuario a Programador   PENDIENTE
-#@api.route('/user/editProgramador', methods=['PUT'])
-#@jwt_required
-#def editProgramador():
-    #user_id = get_jwt_identity()
-    #precio_hora = request.json.get("precio_hora", None)
-    #tecnologias = request.json.get("tecnologias", None)
-    #experiencia = request.json.get("experiencia", None)
-    #descripcion = request.json.get("descripcion", None)
-    #id_exist = Programador.query.get(id)
-    #if id_exist:
-        #return jsonify({'msg':'el usuario ya es programador'}
-        #)
-    #else:
-     #   programador = Programador(user_id=id,precio_hora=precio_hora, tecnologias=tecnologias, descripcion=descripcion, experiencia=experiencia)
-      #  db.session.add(programador)
-       # db.session.commit()
-        #return jsonify({'msg':'Programador creado correctamente', 'user':programador.serialize()}), 201
+@api.route('/user/editProgramador', methods=['PUT'])
+@jwt_required()
+def editProgramador():
+    user_id = get_jwt_identity()
+    name = request.json.get("name")
+    username = request.json.get("username")
+    email = request.json.get("email")
+    country = request.json.get("country")
+    precio_hora = request.json.get("precio_hora", None)
+    tecnologias = request.json.get("tecnologias", None)
+    experiencia = request.json.get("experiencia", None)
+    descripcion = request.json.get("descripcion", None)
+    user = User.query.get(user_id)
+    programador = user.profile_programador
+    user.name= name
+    user.username=username
+    user.email=email
+    user.country=country
+    programador.precio_hora = precio_hora
+    programador.tecnologias = tecnologias
+    programador.experiencia = experiencia
+    programador.descripcion = descripcion
+    db.session.commit()
+    return jsonify({'msg': 'OK', 'user': user.serialize(), 'programador':programador.serialize()}), 200
 
 
 #Iniciar sesión
