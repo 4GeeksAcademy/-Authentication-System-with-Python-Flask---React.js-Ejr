@@ -54,11 +54,11 @@ export const ChangePassword = () => {
 			<form action="#" id="login-form" onSubmit={formik.handleSubmit}>
 				<h2 className="title fw-semibold text-secondary">Ingresa tu nueva contraseña</h2>
 
-				<div className="d-flex justify-content-center">
-					<div className="input-group">
+				<div className="d-flex justify-content-center flex-column align-items-center">
+					<div className="input-group mb-3">
 						<input
 							type={showPassword ? "text" : "password"}
-							className="form-control m-2"
+							className="form-control"
 							name="clave"
 							placeholder="Password:"
 							onChange={formik.handleChange}
@@ -67,18 +67,18 @@ export const ChangePassword = () => {
 						/>
 						<span className="input-group-text cursor-pointer" onClick={togglePasswordVisibility}>
 							<i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-						</span>						
+						</span>
 					</div>
 					{formik.touched.clave && formik.errors.clave ? (
-							<div className="text-danger">{formik.errors.clave}</div>
-						) : null}
+						<div className="text-danger">{formik.errors.clave}</div>
+					) : null}
 				</div>
 
-				<div className="d-flex justify-content-center">
-					<div className="input-group">
+				<div className="d-flex justify-content-center flex-column align-items-center">
+					<div className="input-group mb-3">
 						<input
 							type={showPassword ? "text" : "password"}
-							className="form-control m-2"
+							className="form-control"
 							name="confirmar_clave"
 							placeholder="Confirme su contraseña:"
 							onChange={formik.handleChange}
@@ -87,11 +87,11 @@ export const ChangePassword = () => {
 						/>
 						<span className="input-group-text cursor-pointer" onClick={togglePasswordVisibility}>
 							<i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-						</span>						
+						</span>
 					</div>
 					{formik.touched.confirmar_clave && formik.errors.confirmar_clave ? (
-							<div className="text-danger">{formik.errors.confirmar_clave}</div>
-						) : null}
+						<div className="text-danger">{formik.errors.confirmar_clave}</div>
+					) : null}
 				</div>
 
 				<div>
