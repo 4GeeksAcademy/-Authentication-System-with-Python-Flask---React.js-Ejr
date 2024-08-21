@@ -12,7 +12,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			dataUser: null,
 			imagenURL:  ""
 
-
 		},
 		actions: {
 
@@ -76,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario', requestOptions);
 					const data = await response.json();
-
+	
 
 					if (!token) {
 						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
@@ -93,6 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 								apellido: data.apellido || "Apellido no disponible",
 								correo: data.correo || "Correo no disponible",
 								foto: data.foto || null,
+								is_psicologo: data.is_psicologo,
 								telefono: data.telefono || "Teléfono no disponible",
 								descripcion: data.descripcion || "descripcion no disponible"
 							}
@@ -333,7 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return result
 					}
 					return false
-
 				}
 			},
 			saveProfileImg : async (url) =>{

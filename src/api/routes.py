@@ -34,9 +34,6 @@ CORS(api)
 def apply_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST,PUT, OPTIONS"
-
-    
-
     response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
     response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
@@ -75,7 +72,7 @@ def get_perfil():
         user = User.query.filter_by(id=current_user).first()
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
-
+      
         # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify({
             "logged": True,
@@ -84,6 +81,7 @@ def get_perfil():
             "correo": user.correo,
             "foto": user.foto,
             "telefono": user.telefono,
+            "is_psicologo": user.is_psicologo,
             "descripcion": user.descripcion
         }), 200    
     except NoAuthorizationError:
@@ -167,13 +165,7 @@ def reset_password_token(token):
     user.set_password(clave)
     db.session.commit()
 
-    return jsonify({"msg": "Contraseña actualizada con éxito"}), 200
-
-
-
-
- 
-
+    return jsonify({"msg": "Contraseña actualizada con éxitoo"}), 200
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])
 def create_user():
