@@ -117,3 +117,19 @@ def protected():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     return jsonify(logged_in_as=user.username), 200
+
+# Nueva ruta para eliminar la cuenta del usuario
+@api.route('/delete-account', methods=['DELETE'])
+@jwt_required()
+def delete_account():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    
+    if not user:
+        return jsonify({'error': 'Usuario no encontrado'}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    
+    return jsonify({"message": "Cuenta eliminada"}), 200
+
