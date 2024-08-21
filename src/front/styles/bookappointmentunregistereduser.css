@@ -1,30 +1,20 @@
-/* #content {
-    background-color: #0c2346;
-    background-image: url("https://effective-computing-machine-v6vjj55rvpj524v7-3000.app.github.dev/world-dotted-map.png");
-    background-size: cover;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
-
-.padding {
+.padding-nonuser {
     padding: 5rem;
 }
 
 @media (max-width: 991.98px) {
-    .padding {
+    .padding-nonuser {
         padding: 1.5rem;
     }
 }
 
 @media (max-width: 767.98px) {
-    .padding {
+    .padding-nonuser {
         padding: 1rem;
     }
 }
 
-.card {
+.card shadow-sm nonuser {
     background-color: transparent; 
     border-width: 0;
     border-radius: .25rem;
@@ -33,7 +23,7 @@
     padding: 2rem;
 }
 
-.card-header {
+.card-header text-center nonuser {
     background-color: transparent;
     border-color: rgba(160, 175, 185, .15);
     background-clip: padding-box;
@@ -73,7 +63,7 @@ input[type="submit"] {
 }
 
 .error-message {
-    color: #f54394;
+    color: red;
     margin-bottom: 1rem;
 }
 
@@ -98,14 +88,14 @@ button {
     cursor: pointer;
 }
 
-button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
+form button[type="submit"].btn.btn-primary.nonuser {
+    background-color: #035cb5 !important;
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
+form button[type="submit"].btn.btn-primary.nonuser:hover {
+    background-color: #003366 !important;
 }
+
 
 .d-flex .justify-content-end {
     justify-content: flex-end;
@@ -126,8 +116,22 @@ button[type="submit"]:hover {
 }
 
 .appointment-description {
-    max-width: 400px; 
+    max-width: auto; 
     margin-bottom: 20px;
     line-height: 1.5;
   }
+
+  .appointment-summary-container {
+    background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+    padding: 2rem;
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+
 

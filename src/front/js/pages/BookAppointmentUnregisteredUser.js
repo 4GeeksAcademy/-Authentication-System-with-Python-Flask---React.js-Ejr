@@ -31,10 +31,10 @@ const BookAppointmentUnregisteredUser = () => {
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
-        console.log("set service data", setServices);
-        console.log("service data", data);
+        // console.log("set service data", setServices);
+        // console.log("service data", data);
       } catch (error) {
-        console.error("Error getting services:", error);
+        // console.error("Error getting services:", error);
       }
     };
     getServices();
@@ -43,28 +43,28 @@ const BookAppointmentUnregisteredUser = () => {
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
-      console.log("calendar details", datePickerRef.current);
+      // console.log("calendar details", datePickerRef.current);
     }
   }, [currentStep]);
 
   const handleServiceChange = (e) => {
     const selectServiceId = e.target.value;
-    console.log("selected service id", selectServiceId);
+    // console.log("selected service id", selectServiceId);
     setServiceChosen(selectServiceId);
   };
 
   useEffect(() => {
-    console.log("service list", services);
+    // console.log("service list", services);
     if (serviceChosen) {
       const selectedServiceId = parseInt(serviceChosen, 10);
       const selectedService = services.find(
         (service) => service.id === selectedServiceId
       );
-      console.log("service being selected", selectedService);
+      // console.log("service being selected", selectedService);
       if (selectedService) {
         // const nameOfService = selectedService.name;
-        console.log("showing service name", selectedService.name);
-        console.log("showing service id", selectedService.id);
+        // console.log("showing service name", selectedService.name);
+        // console.log("showing service id", selectedService.id);
         // console.log(nameOfService);
       }
     }
@@ -86,41 +86,41 @@ const BookAppointmentUnregisteredUser = () => {
     const now = new Date(); // Hora actual
 
     const hours = {
-        disabledHours: () => {
-            const disabledHours = [];
-            const selectedDate = new Date(date); // Fecha seleccionada
+      disabledHours: () => {
+        const disabledHours = [];
+        const selectedDate = new Date(date); // Fecha seleccionada
 
-            // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
-            if (
-                selectedDate.getFullYear() === now.getFullYear() &&
-                selectedDate.getMonth() === now.getMonth() &&
-                selectedDate.getDate() === now.getDate()
-            ) {
-                for (let i = 0; i < 24; i++) {
-                    if (i < now.getHours() || i < 9 || i >= 18) {
-                        disabledHours.push(i);
-                    }
-                }
-            } else {
-                // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
-                for (let i = 0; i < 24; i++) {
-                    if (i < 8 || i >= 18) {
-                        disabledHours.push(i);
-                    }
-                }
+        // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
+        if (
+          selectedDate.getFullYear() === now.getFullYear() &&
+          selectedDate.getMonth() === now.getMonth() &&
+          selectedDate.getDate() === now.getDate()
+        ) {
+          for (let i = 0; i < 24; i++) {
+            if (i < now.getHours() || i < 9 || i >= 18) {
+              disabledHours.push(i);
             }
-            return disabledHours;
-        },
-        disabledMinutes: () => {
-            // Habilitar solo los minutos 0 y 30
-            return Array.from({ length: 60 }, (_, i) => i).filter(
-                (min) => min !== 0 && min !== 30
-            );
-        },
+          }
+        } else {
+          // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
+          for (let i = 0; i < 24; i++) {
+            if (i < 8 || i >= 18) {
+              disabledHours.push(i);
+            }
+          }
+        }
+        return disabledHours;
+      },
+      disabledMinutes: () => {
+        // Habilitar solo los minutos 0 y 30
+        return Array.from({ length: 60 }, (_, i) => i).filter(
+          (min) => min !== 0 && min !== 30
+        );
+      },
     };
 
     return hours;
-};
+  };
   //------------------------------------------------------------------------------------
   const checkSlotAvailability = async (dateTime) => {
     try {
@@ -158,7 +158,7 @@ const BookAppointmentUnregisteredUser = () => {
     setAppointmentDate(date);
     if (date) {
       checkSlotAvailability(date);
-      console.log("date details set", setAppointmentDate);
+      // console.log("date details set", setAppointmentDate);
     }
   };
 
@@ -180,7 +180,7 @@ const BookAppointmentUnregisteredUser = () => {
       }
       await checkSlotAvailability(appointmentDate);
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-      console.log("date details", dateFormat);
+      // console.log("date details", dateFormat);
 
       if (!isAvailable) {
         return;
@@ -225,13 +225,13 @@ const BookAppointmentUnregisteredUser = () => {
 
   const confirmAccountAndAppointment = async (e) => {
     e.preventDefault();
-  
+
     try {
       const signUpNewUser = await fetch(`${apiUrl}/signupuser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...store.corsEnabled // Deshabilitar una vez en producción
+          // ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           name,
@@ -240,45 +240,45 @@ const BookAppointmentUnregisteredUser = () => {
           phone_number: phoneNumber,
         }),
       });
-  
+
       if (!signUpNewUser.ok) {
         const errorData = await signUpNewUser.json();
         setError(errorData.error || "Failed to create account");
         return;
       }
-  
+
       const userData = await signUpNewUser.json();
       setUserId(userData.id);
-  
+
       const loginResponse = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...store.corsEnabled // Deshabilitar una vez en producción
+          // ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           email,
           password,
         }),
       });
-  
+
       if (!loginResponse.ok) {
         const errorData = await loginResponse.json();
         setError(errorData.error || "Failed to log in");
         return;
       }
-  
+
       const loginData = await loginResponse.json();
       localStorage.setItem("token", loginData.access_token);
       localStorage.setItem("role_id", loginData.role_id);
       localStorage.setItem("user_id", loginData.user_id);
-  
+
       const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
-          ...store.corsEnabled // Deshabilitar una vez en producción
+          // ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           car_model: carModel,
@@ -286,52 +286,53 @@ const BookAppointmentUnregisteredUser = () => {
           user_id: userData.id,
         }),
       });
-  
+
       if (!addNewCarNewUser.ok) {
         const errorData = await addNewCarNewUser.json();
         setError(errorData.error || "Failed to register car details");
         return;
       }
       const carData = await addNewCarNewUser.json();
-  
+
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-  
+
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
-          ...store.corsEnabled // Deshabilitar una vez en producción
+          // ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
           user_id: userData.id,
           car_id: carData.id,
           service_id: parseInt(serviceChosen, 10),
-          comment: comment, 
+          comment: comment,
         }),
       });
-  
+
       if (!submitAppointment.ok) {
         const errorData = await submitAppointment.json();
-        setError(errorData.error || "Failed to book the appointment. Please try again.");
+        setError(
+          errorData.error || "Failed to book the appointment. Please try again."
+        );
         return;
       }
-  
+
       const appointmentData = await submitAppointment.json();
-      console.log("Appointment details:", appointmentData);
-  
+      // console.log("Appointment details:", appointmentData);
+
       navigate("/accountandappointmentcreated");
     } catch (error) {
-      console.error("Failed to create account or register car details", error);
+      // console.error("Failed to create account or register car details", error);
       setError("An error occurred. Please try again.");
     }
   };
-  
 
   const displayCurrentStep = () => {
     return (
-      <div className="card-body">
+      <div className="card-body container-fluid px-1">
         {error && <p className="error-message">{error}</p>}
         {currentStep === 1 && (
           <div>
@@ -368,9 +369,14 @@ const BookAppointmentUnregisteredUser = () => {
               <select
                 id="service"
                 value={serviceChosen}
-                // onChange={(e) => setServiceChosen(e.target.value)}
                 onChange={handleServiceChange}
                 className="form-control"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    nextStep();
+                  }
+                }}
               >
                 <option value="">Select a service</option>
                 {services.map((service) => (
@@ -399,6 +405,12 @@ const BookAppointmentUnregisteredUser = () => {
                 className="form-control"
                 disabledDate={disabledDate}
                 disabledTime={disabledTime}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    nextStep();
+                  }
+                }}
               />
             </div>
             <div>
@@ -419,8 +431,8 @@ const BookAppointmentUnregisteredUser = () => {
             <h3>Sign Up</h3>
             <div className="appointment-description">
               To confirm your appointment with us, we kindly ask that you create
-              an account by providing your full name, email address, and a
-              password.
+              an account by providing your full name, email address, phone
+              number and a password.
             </div>
             <div>
               <label htmlFor="name">Full Name</label>
@@ -469,48 +481,35 @@ const BookAppointmentUnregisteredUser = () => {
           </div>
         )}
         {currentStep === 5 && (
-          <div>
-            <h3>Appointment Summary</h3>
-            <p>
-              <strong>Car License Plate:</strong> {carLicensePlate}
-            </p>
-            <p>
-              <strong>Car Model:</strong> {carModel}
-            </p>
-            <p>
-              <strong>Service:</strong> {serviceChosen}
-            </p>
-            <p>
-              <strong>Appointment Date:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
-            </p>
-            <p>
-              <strong>Appointment Time:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("HH:mm") : ""}
-            </p>
-            <p>
-              <strong>Comments:</strong> {comment}
-            </p>
-            <p>
-              <strong>Email Address:</strong> {email}
-            </p>
-            <p>
-              <strong>Phone Number:</strong> {phoneNumber}
-            </p>
-            <div className="d-flex justify-content-between">
-              <button
-                className="btn btn-secondary"
-                onClick={() => setCurrentStep(1)}
-              >
-                Back to Start
-              </button>
-              <button
-                className="btn btn-primary"
-                type="submit"
-                onClick={confirmAccountAndAppointment}
-              >
-                Create Account and Submit
-              </button>
+          <div className="appointment-summary-container">
+            <div>
+              <h3>Appointment Summary</h3>
+              <p>
+                <strong>Car License Plate:</strong> {carLicensePlate}
+              </p>
+              <p>
+                <strong>Car Make & Model:</strong> {carModel}
+              </p>
+              <p>
+                <strong>Service:</strong> {serviceChosen}
+              </p>
+              <p>
+                <strong>Appointment Date:</strong>{" "}
+                {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
+              </p>
+              <p>
+                <strong>Appointment Time:</strong>{" "}
+                {appointmentDate ? appointmentDate.format("HH:mm") : ""}
+              </p>
+              <p>
+                <strong>Comments:</strong> {comment}
+              </p>
+              <p>
+                <strong>Email Address:</strong> {email}
+              </p>
+              <p>
+                <strong>Phone Number:</strong> {phoneNumber}
+              </p>
             </div>
           </div>
         )}
@@ -519,27 +518,65 @@ const BookAppointmentUnregisteredUser = () => {
   };
 
   return (
-    <div id="content" className="padding">
-      <div className="card shadow-sm">
-        <div className="card-header text-center">Appointment Booking</div>
-        <form onSubmit={confirmAccountAndAppointment}>
+    <div id="content" className="padding-nonuser">
+      <div className="card shadow-sm nonuser">
+        <div className="card-header text-center nonuser">
+          Appointment Booking
+        </div>
+        <form
+          onSubmit={
+            currentStep === 5
+              ? confirmAccountAndAppointment
+              : (e) => e.preventDefault()
+          }
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              nextStep();
+            }
+          }}
+        >
           {displayCurrentStep()}
         </form>
-        <div className="card-footer d-flex justify-content-between">
-          {currentStep > 1 && (
+
+        {currentStep < 5 && (
+          <div className="card-footer d-flex justify-content-between">
+            {currentStep > 1 && (
+              <button
+                className="btn btn-secondary previous-button"
+                onClick={() => setCurrentStep(currentStep - 1)}
+              >
+                Previous
+              </button>
+            )}
+            {currentStep < 5 && (
+              <button
+                className="btn btn-primary next-button"
+                onClick={nextStep}
+              >
+                Next
+              </button>
+            )}
+          </div>
+        )}
+
+        {currentStep === 5 && (
+          <div className="d-flex justify-content-between">
             <button
               className="btn btn-secondary previous-button"
               onClick={() => setCurrentStep(currentStep - 1)}
             >
               Previous
             </button>
-          )}
-          {currentStep < 5 && (
-            <button className="btn btn-primary next-button" onClick={nextStep}>
-              Next
+            <button
+              className="btn btn-primary nonuser"
+              type="submit"
+              onClick={confirmAccountAndAppointment}
+            >
+              Create Account and Submit
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

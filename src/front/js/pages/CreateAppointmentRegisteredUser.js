@@ -6,7 +6,6 @@ import { Context } from "../store/appContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/createappointmentregistereduser.css";
 
-
 const CreateAppointmentRegisteredUser = () => {
   const { store, actions } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
@@ -34,14 +33,14 @@ const CreateAppointmentRegisteredUser = () => {
         const response = await fetch(`${apiUrl}/services`, {
           headers: {
             Authorization: `Bearer ${myToken}`,
-            ...store.corsEnabled // Deshabilitar una vez en producción
+            ...store.corsEnabled, // Deshabilitar una vez en producción
           },
         });
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
       } catch (error) {
-        console.error("Error getting services:", error);
+        // console.error("Error getting services:", error);
       }
     };
 
@@ -98,41 +97,41 @@ const CreateAppointmentRegisteredUser = () => {
     const now = new Date(); // Hora actual
 
     const hours = {
-        disabledHours: () => {
-            const disabledHours = [];
-            const selectedDate = new Date(date); // Fecha seleccionada
+      disabledHours: () => {
+        const disabledHours = [];
+        const selectedDate = new Date(date); // Fecha seleccionada
 
-            // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
-            if (
-                selectedDate.getFullYear() === now.getFullYear() &&
-                selectedDate.getMonth() === now.getMonth() &&
-                selectedDate.getDate() === now.getDate()
-            ) {
-                for (let i = 0; i < 24; i++) {
-                    if (i < now.getHours() || i < 9 || i >= 18) {
-                        disabledHours.push(i);
-                    }
-                }
-            } else {
-                // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
-                for (let i = 0; i < 24; i++) {
-                    if (i < 8 || i >= 18) {
-                        disabledHours.push(i);
-                    }
-                }
+        // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
+        if (
+          selectedDate.getFullYear() === now.getFullYear() &&
+          selectedDate.getMonth() === now.getMonth() &&
+          selectedDate.getDate() === now.getDate()
+        ) {
+          for (let i = 0; i < 24; i++) {
+            if (i < now.getHours() || i < 9 || i >= 18) {
+              disabledHours.push(i);
             }
-            return disabledHours;
-        },
-        disabledMinutes: () => {
-            // Habilitar solo los minutos 0 y 30
-            return Array.from({ length: 60 }, (_, i) => i).filter(
-                (min) => min !== 0 && min !== 30
-            );
-        },
+          }
+        } else {
+          // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
+          for (let i = 0; i < 24; i++) {
+            if (i < 8 || i >= 18) {
+              disabledHours.push(i);
+            }
+          }
+        }
+        return disabledHours;
+      },
+      disabledMinutes: () => {
+        // Habilitar solo los minutos 0 y 30
+        return Array.from({ length: 60 }, (_, i) => i).filter(
+          (min) => min !== 0 && min !== 30
+        );
+      },
     };
 
     return hours;
-};
+  };
 
   //------------------------------------------------------------------------------------
 
@@ -246,18 +245,18 @@ const CreateAppointmentRegisteredUser = () => {
     try {
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
 
-      console.log("Date", dateFormat);
-      console.log("User id", myuserId);
-      console.log("Car ID", carId);
-      console.log("Serv. ID", parseInt(serviceChosen, 10));
-      console.log("service being chosen", serviceChosen);
+      // console.log("Date", dateFormat);
+      // console.log("User id", myuserId);
+      // console.log("Car ID", carId);
+      // console.log("Serv. ID", parseInt(serviceChosen, 10));
+      // console.log("service being chosen", serviceChosen);
 
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${myToken}`,
-          ...store.corsEnabled // Deshabilitar una vez en producción
+          ...store.corsEnabled, // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
@@ -277,30 +276,30 @@ const CreateAppointmentRegisteredUser = () => {
       }
 
       const appointmentData = await submitAppointment.json();
-      console.log("Appointment details:", appointmentData);
+      // console.log("Appointment details:", appointmentData);
 
       const MailSender = (userInfo) => {
         const data = {
-        sender: {
-              name: "AutoAgenda",
-              email: "autoagenda3@gmail.com",
+          sender: {
+            name: "AutoAgenda",
+            email: "autoagenda3@gmail.com",
+          },
+          to: [
+            {
+              email: userInfo.email,
+              name: userInfo.name,
             },
-            to: [
-              {
-                email: userInfo.email,
-                name: userInfo.name,
-              },
-            ],
-            subject: "Appointment created successfully",
-            htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          ],
+          subject: "Appointment created successfully",
+          htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userInfo.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
           <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
           Your appointment on the day ${dateFormat} has been created successfully.</p>
           <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
-          };
-      
-          console.log("Data ready to send:", data);
-          actions.SendMail(data);
         };
+
+        // console.log("Data ready to send:", data);
+        actions.SendMail(data);
+      };
 
       const userInfo = await actions.GetUser();
       if (userInfo && userInfo.email && userInfo.name) {
@@ -311,8 +310,8 @@ const CreateAppointmentRegisteredUser = () => {
 
       navigate("/appointmentconfirmed");
     } catch (error) {
-      console.error("Error while booking appointment:", error);
-      console.log("Error while booking appointment:", error);
+      // console.error("Error while booking appointment:", error);
+      // console.log("Error while booking appointment:", error);
       setError(
         "An error occurred while booking the appointment. Please try again."
       );
@@ -331,8 +330,8 @@ const CreateAppointmentRegisteredUser = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="step-content">
-            <h3>Select or Add a Car</h3>
+          <div className="card-body">
+            <h3>Please Select or Add a Car</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="userCars">Select a Car</label>
             <select
@@ -340,6 +339,11 @@ const CreateAppointmentRegisteredUser = () => {
               className="form-select"
               value={carId}
               onChange={(e) => setCarId(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  nextStep();
+                }
+              }}
             >
               <option value="">Select one of your cars</option>
               {userCars.map((car) => (
@@ -377,8 +381,8 @@ const CreateAppointmentRegisteredUser = () => {
 
       case 2:
         return (
-          <div className="step-content">
-            <h3>Select a Service</h3>
+          <div className="card-body">
+            <h3>Please Select a Service</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="service">Service</label>
             <select
@@ -396,10 +400,11 @@ const CreateAppointmentRegisteredUser = () => {
             </select>
           </div>
         );
+
       case 3:
         return (
-          <div className="step-content datetimepicker-component">
-            <h3>Select Appointment Date, Time, and Add a Comment</h3>
+          <div className="card-body datetimepicker-component">
+            <h3>Please Select Appointment Date, Time, and Add a Comment</h3>
             {error && <p className="error-message text-danger">{error}</p>}
             <label htmlFor="date">Appointment Date</label>
             <DatePicker
@@ -416,16 +421,17 @@ const CreateAppointmentRegisteredUser = () => {
               disabledTime={disabledTime}
             />
 
-            <label htmlFor="comment">Comment</label>
+            <label htmlFor="comment">Comments</label>
             <textarea
               id="comment"
               className="form-control"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Enter your comment"
+              placeholder="Add a comment"
             />
           </div>
         );
+
       case 4:
         const selectedCar = userCars.find((car) => car.id === parseInt(carId));
 
@@ -437,26 +443,28 @@ const CreateAppointmentRegisteredUser = () => {
           : carModel;
 
         return (
-          <div className="step-content">
-            <h3>Appointment Summary</h3>
-            <p>
-              <strong>Car:</strong> {displayedCarLicensePlate} -{" "}
-              {displayedCarModel}
-            </p>
-            <p>
-              <strong>Service:</strong> {serviceChosen}
-            </p>
-            <p>
-              <strong>Date:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
-            </p>
-            <p>
-              <strong>Time:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("hh:mm A") : ""}
-            </p>
-            <p>
-              <strong>Comment:</strong> {comment}
-            </p>
+          <div className="appointment-summary-container mx-3">
+            <div className="card-body">
+              <h3>Appointment Summary</h3>
+              <p>
+                <strong>Car:</strong> {displayedCarLicensePlate} -{" "}
+                {displayedCarModel}
+              </p>
+              <p>
+                <strong>Service:</strong> {serviceChosen}
+              </p>
+              <p>
+                <strong>Date:</strong>{" "}
+                {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
+              </p>
+              <p>
+                <strong>Time:</strong>{" "}
+                {appointmentDate ? appointmentDate.format("hh:mm A") : ""}
+              </p>
+              <p>
+                <strong>Comment:</strong> {comment}
+              </p>
+            </div>
           </div>
         );
 
@@ -466,50 +474,45 @@ const CreateAppointmentRegisteredUser = () => {
   };
 
   return (
-    <div className="card-content py-5">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card">
-            <div className="card-header">Appointment Booking</div>
-            <div className="card-body">{displayCurrentStep()}</div>
-            <div
-              className={`button-container d-flex ${
-                currentStep === 1
-                  ? "justify-content-end"
-                  : "justify-content-between"
-              }`}
+    <div id="content" className="padding">
+      <div className="card shadow-sm">
+        <div className="card-header text-center">Appointment Booking</div>
+        <form
+          onSubmit={
+            currentStep === 4 ? confirmAppointment : (e) => e.preventDefault()
+          }
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              nextStep();
+            }
+          }}
+        >
+          {displayCurrentStep()}
+        </form>
+
+        <div className="card-footer d-flex justify-content-between">
+          {currentStep > 1 && (
+            <button
+              className="btn btn-secondary"
+              onClick={() => setCurrentStep(currentStep - 1)}
             >
-              {currentStep > 1 && (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setCurrentStep(currentStep - 1)}
-                >
-                  Previous
-                </button>
-              )}
-              {currentStep < 4 && (
-                <button className="btn btn-primary" onClick={nextStep}>
-                  Next
-                </button>
-              )}
-              {currentStep === 4 && (
-                <div className="d-flex justify-content-between w-100">
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => setCurrentStep(1)}
-                  >
-                    Back to Start
-                  </button>
-                  <button
-                    className="btn btn-primary ml-auto"
-                    onClick={confirmAppointment}
-                  >
-                    Confirm Appointment
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+              Previous
+            </button>
+          )}
+          {currentStep < 4 && (
+            <button className="btn btn-primary ms-auto" onClick={nextStep}>
+              Next
+            </button>
+          )}
+          {currentStep === 4 && (
+            <button
+              className="btn btn-primary ml-auto"
+              onClick={confirmAppointment}
+            >
+              Confirm Appointment
+            </button>
+          )}
         </div>
       </div>
     </div>
