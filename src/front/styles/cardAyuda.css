@@ -1,3 +1,10 @@
-.colorGeneral{
+.colorGeneral {
     color: #6793AE;
 }
+
+.icon-eye:hover {
+    color: white;
+    background-color: #6793AE;
+    cursor: pointer;
+}
+
