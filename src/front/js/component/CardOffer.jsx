@@ -23,10 +23,12 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                         <span>{modality}</span>
                         <span className="mx-2">|</span>
                         <span>{salary}</span>
+                        <span className="mx-2">|</span>
+                        <span>{modality}</span>
                     </div>
                     <div className="card-offer-actions">
-                        <Link to={`/singleoffer/${id}`} className="btn btn-link text-decoration-none">View Details</Link>
-                        <button className="btn btn-primary btn-sm">Inscribirse</button>
+                        <Link to={`/singleoffer/${id}`} className="btn btn-details  btn-sm text-decoration-none me-2">View Details</Link>
+                        <button className="btn btn-inscribirse btn-sm">Inscribirse</button>
                     </div>
                 </div>
             </div>
