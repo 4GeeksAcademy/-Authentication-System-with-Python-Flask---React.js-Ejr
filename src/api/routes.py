@@ -168,6 +168,7 @@ def eliminar_oferta():
     except Exception as e:
         db.session.rollback()
         return jsonify({"success": False, "msg": f"Error al eliminar la oferta: {str(e)}"}), 500
+    
 
 
 if __name__ == '__main__':
