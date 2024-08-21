@@ -15,6 +15,10 @@ import { Footer } from "./component/footer";
 import {Login} from "./pages/login";
 import {SignUp} from "./pages/signUp";
 import Cursos from "./pages/cursos";
+import VistaProfe from "./pages/vistaProfe"; // importar VistaProfe
+import PrivateRoute from "./component/privadaProfe"; 
+import PrivateRouteAlumno from "./component/privadaAlumno";
+import VistaAlumno from "./pages/vistaAlumno";
 
 
 
@@ -37,6 +41,10 @@ const Layout = () => {
                         <Route element={<Perfil />} path="/perfil"/>
                         <Route element={<Cursos />} path="/cursos" />
                         <Route element={<About />} path="/about" />
+                         {/* Protege la ruta VistaAlumno con PrivateRouteAlumno, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
+                         <Route element={<PrivateRouteAlumno vista={VistaAlumno} />} path="/vistaAlumno" />
+                         {/* Protege la ruta VistaProfe con PrivateRoute, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
+                        <Route element={<PrivateRoute vista={VistaProfe} />} path="/vistaProfe" />
                         <Route element={<h1>Not found!</h1>} path="*" /> 
                     </Routes>
                     <Footer />
