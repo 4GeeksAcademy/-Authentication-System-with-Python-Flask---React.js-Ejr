@@ -107,6 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			pagoMercadoPago: async (total) => {
+				console.log(total)
 				try {
 					const response = await axios.post(`${process.env.BACKEND_URL}/api/preference`, {
 						total: total,  //acá está de nuevo la variable  donde se guarda el total a pagar por el cliente 
