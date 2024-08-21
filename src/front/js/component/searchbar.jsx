@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/searchbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 
 const Searchbar = () => {
-  const { store, actions } = useContext(Context)
-  const navigate = useNavigate()
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     search: '',
     duration: undefined
-  })
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,11 +28,13 @@ const Searchbar = () => {
       });
       const data = await resp.json()
       if (!resp.ok) {
+        store.itineraries = {};
+        navigate('/search', { state: { itineraries: {} } });
         const errorMsg = data.msg
         throw  new Error(errorMsg);
       }
       store.itineraries = data.itineraries;
-      navigate('/search')
+      navigate('/search', { state: { itineraries: data.itineraries } });
       return { success: true }
     } catch (error) {
       console.error('Error:', error);
@@ -42,7 +44,6 @@ const Searchbar = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
       setFormData({...formData, [name]: value})
-
   }
 
   return (
