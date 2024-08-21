@@ -79,6 +79,8 @@
         font-size: 14px;
     }
 }
- input[type="file"]{
-    display:none;
+
+ #fileInput{
+    display: none;
   } 
+ 

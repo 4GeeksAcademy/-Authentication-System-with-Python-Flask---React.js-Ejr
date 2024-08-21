@@ -72,7 +72,7 @@ def get_perfil():
         user = User.query.filter_by(id=current_user).first()
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
-
+      
         # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify({
             "logged": True,
@@ -81,6 +81,7 @@ def get_perfil():
             "correo": user.correo,
             "foto": user.foto,
             "telefono": user.telefono,
+            "is_psicologo": user.is_psicologo,
             "descripcion": user.descripcion
         }), 200    
     except NoAuthorizationError:

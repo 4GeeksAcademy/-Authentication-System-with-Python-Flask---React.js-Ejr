@@ -20,7 +20,12 @@ const Perfil = () => {
             new bootstrap.Popover(popoverTriggerEl);
         });
 
+
     }, []);
+    useEffect(() => {
+        console.log(store.dataUser)
+    }, [store.dataUser])
+
     const [showModal, setShowModal] = useState(false);
 
     // Función para mostrar el modal
@@ -65,7 +70,7 @@ const Perfil = () => {
                     )}
                 </div>
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
-                    <h2>{store.dataUser?.nombre_usuario+" "+store.dataUser?.apellido}</h2>
+                    <h2>{store.dataUser?.nombre_usuario + " " + store.dataUser?.apellido}</h2>
                 </div>
                 <div className="accordion mt-3" id="accordionExample">
                     <div className="accordion-item">
@@ -79,7 +84,7 @@ const Perfil = () => {
                                 <div className="container mt-4">
                                     <div className="row align-items-center">
                                         <div className="col-md-8">
-                                            <p><strong>Nombre: {store.dataUser?.nombre_usuario+" "+store.dataUser?.apellido}</strong> </p>
+                                            <p><strong>Nombre: {store.dataUser?.nombre_usuario + " " + store.dataUser?.apellido}</strong> </p>
                                             <p><strong>Email:</strong> {store.dataUser?.correo}</p>
                                             <p><strong>Teléfono:</strong> {store.dataUser?.telefono}</p>
                                             <p><strong>Descripción:</strong> {store.dataUser?.descripcion}</p>
@@ -136,6 +141,99 @@ const Perfil = () => {
                             </div>
                         </div>
                     </div>
+                    {store.dataUser && !store.dataUser.is_psicologo && <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePsicologo" aria-expanded="false" aria-controls="collapsePsicologo">
+                                Solicitud de perfil profesional
+                            </button>
+                        </h2>
+                        <div id="collapsePsicologo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div className="accordion-body">
+                                <div className="container mt-3">
+                                    <h4 className="mb-3 text-inicio">Formulario de Solicitud de Perfil Profesional</h4>
+                                    <form>
+                                        <div className="mb-3">
+                                            <label for="nombreCompleto" className="form-label text-inicio"><strong>Nombre Completo</strong></label>
+                                            <input type="text" className="form-control" id="nombreCompleto" placeholder="Ingrese su nombre completo" required />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label for="cedula" className="form-label text-inicio"><strong>Cédula</strong></label>
+                                            <input type="text" className="form-control" id="cedula" placeholder="Ingrese su cédula" required />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label for="correo" className="form-label text-inicio"><strong>Correo Electrónico</strong></label>
+                                            <input type="email" className="form-control" id="correo" placeholder="Ingrese su correo electrónico" required />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label for="direccion" className="form-label text-inicio"><strong>Dirección</strong></label>
+                                            <input type="text" className="form-control" id="direccion" placeholder="Ingrese su dirección" required />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label for="escolaridad" className="form-label text-inicio"><strong>Escolaridad que Acredite Conocimientos</strong></label>
+                                            <input type="file" className="form-control" id="escolaridad" multiple required />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label for="motivacion" className="form-label text-inicio"><strong>¿Por qué quieres trabajar con nosotros?</strong></label>
+                                            <textarea className="form-control" id="motivacion" rows="4" placeholder="Cuéntanos tus motivaciones" required></textarea>
+                                        </div>
+                                        <div className="d-flex justify-content-center row mt-3">
+                                            <small className="text-inicio text-center">En el caso de que el equipo de RRHH te considere un buen candidato para itegrar nuesto equipo de profesionales, se pondrán en contacto a la brevedad para coordinar una entrevista</small>
+                                            <button type="submit" className="btn btn-primary btn-login-registro mt-3">Enviar Solicitud</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+                    {store.dataUser && !store.dataUser.is_psicologo && <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInfoProfesional" aria-expanded="false" aria-controls="collapseInfoProfesional">
+                                Información del profesional
+                            </button>
+                        </h2>
+                        <div id="collapseInfoProfesional" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div className="accordion-body">
+                                <div className="container mt-4">
+                                    <div className="row align-items-center">
+                                        <div className="col-md-8">
+                                            <p><strong>Nombre: {store.dataUser?.nombre_usuario + " " + store.dataUser?.apellido}</strong> </p>
+                                            <p><strong>Email:</strong> {store.dataUser?.correo}</p>
+                                            <p><strong>Teléfono:</strong> {store.dataUser?.telefono}</p>
+                                            <p><strong>Descripción:</strong> {store.dataUser?.descripcion}</p>
+                                        </div>
+                                        <div className="col-md-4 text-end align-self-start d-flex justify-content-end">
+                                            <span className="d-inline-block" tabIndex="0" data-bs-placement="left" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Esta información es visible para los usuarios que buscan profesionales en nuestra web, es lo primero que saben de tí; tu nombre, tu descripcion y las especialidades que tratas.">
+                                                <button className="btn btn-outline-secondary me-2" type="button" ><i className="fa-regular fa-circle-question"></i></button>
+                                            </span>
+                                            <button className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalInfoPsicologo"><i className="fa-regular fa-pen-to-square"></i></button>
+
+                                            <div className="modal fade" id="modalInfoPsicologo" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalInfoPsicologoLabel" aria-hidden="true">
+                                                <div className="modal-dialog">
+                                                    <div className="modal-content">
+                                                        <div className="modal-header">
+                                                            <h1 className="modal-title fs-5" id="modalInfoPsicologoLabel">Modificar información de profesional</h1>
+                                                        </div>
+                                                        <div className="modal-body">
+                                                            ...
+                                                        </div>
+                                                        <div className="modal-footer">
+                                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="button" className="btn btn-primary">Confirmar edición</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
                 </div>
             </div>
         </div>
