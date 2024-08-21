@@ -39,10 +39,14 @@ const CreateAppointmentRegisteredUser = () => {
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
-      } catch (error) {
-        // console.error("Error getting services:", error);
-      }
+      } catch (error) {}
     };
+
+    const selectedService = services.find(
+      (service) => service.id === parseInt(serviceChosen, 10)
+    );
+
+    const serviceName = selectedService ? selectedService.name : "Not selected";
 
     const getUserCars = async () => {
       try {
@@ -202,7 +206,6 @@ const CreateAppointmentRegisteredUser = () => {
   const confirmAppointment = async (e) => {
     e.preventDefault();
 
-    // const token = localStorage.getItem("token");
     const role_id = localStorage.getItem("role_id");
     const user_id = localStorage.getItem("user_id");
     const carSelectedId = carId;
@@ -245,12 +248,6 @@ const CreateAppointmentRegisteredUser = () => {
     try {
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
 
-      // console.log("Date", dateFormat);
-      // console.log("User id", myuserId);
-      // console.log("Car ID", carId);
-      // console.log("Serv. ID", parseInt(serviceChosen, 10));
-      // console.log("service being chosen", serviceChosen);
-
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
@@ -276,7 +273,6 @@ const CreateAppointmentRegisteredUser = () => {
       }
 
       const appointmentData = await submitAppointment.json();
-      // console.log("Appointment details:", appointmentData);
 
       const MailSender = (userInfo) => {
         const data = {
@@ -297,7 +293,6 @@ const CreateAppointmentRegisteredUser = () => {
           <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
         };
 
-        // console.log("Data ready to send:", data);
         actions.SendMail(data);
       };
 
@@ -310,8 +305,6 @@ const CreateAppointmentRegisteredUser = () => {
 
       navigate("/appointmentconfirmed");
     } catch (error) {
-      // console.error("Error while booking appointment:", error);
-      // console.log("Error while booking appointment:", error);
       setError(
         "An error occurred while booking the appointment. Please try again."
       );
@@ -451,7 +444,7 @@ const CreateAppointmentRegisteredUser = () => {
                 {displayedCarModel}
               </p>
               <p>
-                <strong>Service:</strong> {serviceChosen}
+                <strong>Service:</strong> {serviceName}
               </p>
               <p>
                 <strong>Date:</strong>{" "}
