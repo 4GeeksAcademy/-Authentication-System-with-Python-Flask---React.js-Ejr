@@ -9,7 +9,7 @@
     background-color: #f5f5f5;
 }
 
-.contact-form {
+.contact-form-container .contact-form {
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
@@ -24,7 +24,7 @@
     color: var(--color-forest);
 }
 
-.form-group {
+.contact-form-container .form-group {
     margin-bottom: 1.5rem;
 }
 
@@ -33,10 +33,10 @@
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
-.logo-nutri {
+ .logo-nutri {
     width: 20%;
 }
-.form-control {
+.contact-form-container .form-control {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--color-olive);
@@ -45,18 +45,18 @@
     font-size: 1rem;
 }
 
-.form-control:focus {
-    border-color: #007bff;
+.contact-form-container .form-control:focus {
+    border-color: var(--color-olive);
     outline: none;
 }
 
-.error-message {
+.contact-form-container .error-message {
     color: red;
     margin-top: 0.25rem;
     font-size: 0.875rem;
 }
 
-.submit-button {
+.contact-form-container .submit-button{
     width: 100%;
     padding: 0.75rem;
     background-color: var(--color-olive);
@@ -67,11 +67,11 @@
     cursor: pointer;
     transition: background-color ease 0.3s;
 }
-.submit-button:hover{
+.contact-form-container .submit-button:hover{
     background-color: var(--color-forest);
     
 }
 
-.submit-button:disabled {
+.contact-form-container .submit-button:disabled {
     background-color: #ccc;
 }

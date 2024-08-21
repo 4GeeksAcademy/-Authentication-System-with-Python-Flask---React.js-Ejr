@@ -7,7 +7,7 @@ const ContactForm = () => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .required('Nombre es requerido')
-      .min(2, 'Name must be at least 2 characters'),
+      .min(2, 'El nombre tiene que tener al menos 2 caracteres'),
     email: Yup.string()
       .email('Dirección de email inválida')
       .required('Email es requerido'),
@@ -48,7 +48,7 @@ const ContactForm = () => {
               <ErrorMessage name="message" component="div" className="error-message" />
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="submit-button ">
+            <button type="submit" disabled={isSubmitting} className="submit-button">
               Enviar
             </button>
           </Form>

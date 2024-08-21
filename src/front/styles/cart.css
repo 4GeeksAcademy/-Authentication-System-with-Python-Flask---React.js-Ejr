@@ -1,0 +1,7 @@
+@import url('./variables.css');
+
+
+.btn-mp {
+    background-color: var(--color-olive);
+    color: var(--color-forest);
+}

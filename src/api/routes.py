@@ -357,8 +357,8 @@ def preference():
         # "unit_price": 75.76,   #aca va el total a pagar por el cliente. 
         "title": request.json.get('title', 'Mi producto'),
         "quantity": int(request.json.get('quantity', 1)),
-        "unit_price": float(request.json.get('price', 100))
-
+        # "unit_price": float(request.json.get('price', 100))
+        "unit_price":total
  #también podríamos mandar más datos como nombre del producto, etc. 
     } ],
  # acá vamos a poner más líneas de código
