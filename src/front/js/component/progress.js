@@ -1,25 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-
-
-export const Progress = ({ day }) => {
-    const { store, actions } = useContext(Context);
-    const [percentage, setPercentage] = useState(0);
-
-    useEffect(() => {
-        setPercentage(actions.returnElementAtIndex(day - 1))
-        console.log(percentage);
-    }, [store.porcentajes])
-
-    useEffect(() => {
-        console.log(percentage);
-        console.log(typeof percentage);
-
-    }, [store.porcentaje])
-
+export const Progress = ({ percentage }) => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-4 pb-11">

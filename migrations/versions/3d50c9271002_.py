@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6c1ff4435709
+Revision ID: 3d50c9271002
 Revises: 
-Create Date: 2024-08-12 19:54:11.993075
+Create Date: 2024-08-20 17:48:08.153349
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6c1ff4435709'
+revision = '3d50c9271002'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,12 @@ def upgrade():
     sa.Column('image', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
+    )
+    op.create_table('sets',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('sets', sa.Integer(), nullable=False),
+    sa.Column('repetitions', sa.Integer(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -58,8 +64,10 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('routine_id', sa.Integer(), nullable=False),
     sa.Column('exercise_id', sa.Integer(), nullable=False),
+    sa.Column('sets_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['exercise_id'], ['exercise.id'], ),
     sa.ForeignKeyConstraint(['routine_id'], ['routine.id'], ),
+    sa.ForeignKeyConstraint(['sets_id'], ['sets.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('weekly_routine',
@@ -91,5 +99,6 @@ def downgrade():
     op.drop_table('routine')
     op.drop_table('physical_information')
     op.drop_table('user')
+    op.drop_table('sets')
     op.drop_table('exercise')
     # ### end Alembic commands ###

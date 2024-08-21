@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import HorizontalTimeline from 'react-horizontal-timeline';
 import fireGif from '../../img/fire.gif'
 const EXAMPLE = [
   { data: "2024-08-01", statusB: "Gimnasio", completed: true },

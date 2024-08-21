@@ -2,25 +2,25 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from datetime import date
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category
+from datetime import datetime
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category, Sets
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-
+from flask_bcrypt import Bcrypt
+from sqlalchemy import desc
 
 
 
 api = Blueprint('api', __name__)
 
-
 # Allow CORS requests to this API
 CORS(api)
 
-
-
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -53,14 +53,57 @@ def post_user():
     if user_by_email:
         if user_by_email.email == user['email']:
             return ({'error':'This email is already used'}), 400
-    if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
-         return({'error':'"password" must be a string'}), 400
-    if not isinstance(user['confirm_password'], str) or len(user['confirm_password'].strip()) == 0:
-         return({'error':'"confirm_password" must be a string'}), 400
+    # PASSWORD
+    # PASSWORD
+    espacio = False
+    numeros=False
+    mayuscula = False
+    minuscula = False
+    mayus_minus = False
+    caract_espec = False
+    caract_especiales = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
+    if not isinstance(user['password'], str) or len(user['password']) < 6 or len(user['password']) > 12:
+         return({'error':'"password" must be between 6 and 12 characters long'}), 400
+    
+    for caracter in user['password']:
+        if caracter.isspace() == True:
+            espacio = True
+        if caracter.isdigit() == True:
+            numeros = True
+        
+        if caracter.isupper() == True:
+            mayuscula = True
+            print("mayuscula",mayuscula)
+        if caracter.islower() == True:
+            minuscula = True
+            print("minuscula",minuscula)
+
+        for caract_especial in caract_especiales:
+            print(caracter)
+            print(caract_especial)
+            if caracter == caract_especial:
+                caract_espec = True
+                print(caract_espec)
+
+    if mayuscula == True and minuscula == True:
+        mayus_minus = True
+        print("mayus_minus", mayus_minus)
+
+    if espacio == True:
+        return({'error':'"password" there can be no blank spaces'}), 400
+    if numeros == False:
+        return({'error':'"password" must have at least one number'}), 400
+    if mayus_minus == False:
+        return({'error':'"password" must have at least one uppercase and one lowercase letter'}), 400
+    if caract_espec == False:
+        return({'error':'"password" must have at least one special character'}), 400
     if user['password'] != user['confirm_password']:
         return({'error':'"password" and "confirm_password" must be the same'}), 400
 
-    user_created = User(name=user['name'], birthday=user['birthday'], sex=user['sex'], email=user['email'], password=user['password'])
+    password = user['password']
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8') 
+
+    user_created = User(name=user['name'], birthday=user['birthday'], sex=user['sex'], email=user['email'].lower(), password=hashed_password)
     db.session.add(user_created)
     db.session.commit()
     return jsonify(user_created.serialize()), 200
@@ -74,13 +117,17 @@ def login():
          return({'error':'"email" must be a string'}), 400
     if not isinstance(user['password'], str) or len(user['password'].strip()) == 0:
          return({'error':'"password" must be a string'}), 400
-
-    user_db = User.query.filter_by(email=user['email'], password=user['password']).first()
+    
+    user_db = User.query.filter_by(email=user['email'].lower()).first()
     if user_db is None:
+        return({'error':'this email does not exist'}), 400
+    is_valid = bcrypt.check_password_hash(user_db.password, user['password'])
+
+    if user_db and is_valid:
+        access_token = create_access_token(identity={"email": user_db.email, "id": user_db.id})
+        return jsonify({"access_token":access_token, "logged":True}), 200
+    else:
         return jsonify({"error":"incorrect credentials"}), 401
-   
-    access_token = create_access_token(identity={"email": user_db.email, "id": user_db.id})
-    return jsonify({"access_token":access_token, "logged":True}), 200
 
 # VALIDAR TOKEN
 @api.route("/valid-token", methods=["GET"])
@@ -140,10 +187,10 @@ def get_one_physical_user_information():
         data_serialized = physical_information.serialize()
         return jsonify(data_serialized), 200
 
-# GET LAST PhysicalInformation / TRAER LA ULTIMA INFORMACION FISICA
-@api.route('/last-physical-user-information', methods=['GET'])
+# GET LAST ONE PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+@api.route('/last-one-physical-user-information', methods=['GET'])
 @jwt_required()
-def get_last_physical_user_information():
+def get_last_one_physical_user_information():
     current_user = get_jwt_identity()
     physical_information_list = PhysicalInformation.query.filter_by(user_id=current_user["id"]).all()
     last_value = physical_information_list[-1]
@@ -151,6 +198,22 @@ def get_last_physical_user_information():
         return ({'error':'physical information not found'}), 404
     else:
         data_serialized = last_value.serialize()
+        return jsonify(data_serialized), 200
+
+
+# GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
+@api.route('/last-physical-user-information', methods=['GET'])
+@jwt_required()
+def get_last_physical_user_information():
+    current_user = get_jwt_identity()
+    query = db.select(PhysicalInformation).where(PhysicalInformation.user_id==current_user["id"]).order_by(desc(PhysicalInformation.date))
+    result = db.session.execute(query)
+    physical_information_list = result.scalars()
+    if physical_information_list is None:
+        return ({'error':'physical information not found'}), 404
+    else:
+        data_serialized = list(map(lambda information: information.graphicSerialize(), physical_information_list))
+        print(data_serialized)
         return jsonify(data_serialized), 200
 
 # POST PhysicalInformation / AGREGAR INFORMACION FISICA
@@ -163,8 +226,7 @@ def post_physical_information():
          return({'error':'"height" must be a string'}), 400
     if not isinstance(physical_information['weight'], str) or len(physical_information['weight'].strip()) == 0:
          return({'error':'"weight" must be a string'}), 400
-
-    physical_information_created = PhysicalInformation(user_id=current_user["id"], height=physical_information["height"], weight=physical_information["weight"], date=date.today())
+    physical_information_created = PhysicalInformation(user_id=current_user["id"], height=physical_information["height"], weight=physical_information["weight"], date=datetime.now().date())
     
     db.session.add(physical_information_created)
     db.session.commit()
@@ -318,14 +380,25 @@ def get_all_exercise_routine():
         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
         return jsonify(data_serialized), 200
 
+# GET ONE ExerciseRoutine / TRAER UNA RUTINA EJERCICIO
+@api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['GET'])
+def get_one_exercise_routine(routine_id, exercise_id):
+    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+    if exercise_routine is None:
+        return ({'error':'exercise routine not found'}), 404
+    else:
+        data_serialized = exercise_routine.serialize()
+        return jsonify(data_serialized), 200
+
+
 # POST ExerciseRoutine / AGREGAR RUTINA EJERCICIO
 @api.route('/exercise-routine', methods=['POST'])
 def post_exercise_routine():
     exercise_routine = request.get_json()
-    if not isinstance(exercise_routine['routine_id'], str) or len(exercise_routine['routine_id'].strip()) == 0 :
-        return ({'error': "'routine_id' must be a string"}), 400
-    if not isinstance(exercise_routine['exercise_id'], str) or len(exercise_routine['exercise_id'].strip()) == 0 :
-        return ({'error': "'exercise_id' must be a string"}), 400
+    if len(exercise_routine['routine_id']) == 0 :
+        return ({'error': "'routine_id' must not be empty"}), 400
+    if len(exercise_routine['exercise_id']) == 0 :
+        return ({'error': "'exercise_id' must not be empty"}), 400
 
     exercise_routine_created = ExerciseRoutine(routine_id = exercise_routine['routine_id'], exercise_id = exercise_routine['exercise_id'])
     db.session.add(exercise_routine_created)
@@ -354,6 +427,7 @@ def delete_exercise_routine():
     return jsonify({'message': 'Exercise removed from routine successfully'})
 
 
+# FOLLOW UP
 # GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
 @api.route('/follow-up', methods=['GET'])
 def get_all_follow_up():
@@ -366,29 +440,100 @@ def get_all_follow_up():
 
 # GET ALL FollowUp weekly_routine / TRAER TODOS SEGUIMIENTO DE UNA RUITNA SEMANA
 @api.route('/follow-up/<int:weekly_routine_id>', methods=['GET'])
-def get_one_follow_up(weekly_routine_id):
+def get_all_weekly_routine_follow_up(weekly_routine_id):
     follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id).all()
     if len(follow_up) == 0:
         return ({'error':'followUp of one week not found'}), 404
     else:
         data_serialized = list(map(lambda followUp: followUp.serialize(), follow_up))
         return jsonify(data_serialized), 200
+    
+# GET ONE FollowUp / TRAER UN SEGUIMIENTO
+@api.route('/follow-up/<int:weekly_routine_id>/<int:exercise_routine_id>', methods=['GET'])
+def get_one_follow_up(weekly_routine_id, exercise_routine_id):
+    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id, exercise_routine_id=exercise_routine_id).first()
+    if follow_up is None:
+        return ({'error':'Follow Up not found'}), 404
+    else:
+        data_serialized = follow_up.serialize()
+        return jsonify(data_serialized), 200
 
 # POST FollowUp / AGREGAR SEGUIMIENTO
 @api.route('/follow-up', methods=['POST'])
 def post_follow_up():
     follow_up = request.get_json()
-    if not isinstance(follow_up['weekly_routine_id'], str) or len(follow_up['weekly_routine_id'].strip()) == 0 :
-        return ({'error': "'weekly_routine_id' must be a string"}), 400
-    if not isinstance(follow_up['exercise_routine_id'], str) or len(follow_up['exercise_routine_id'].strip()) == 0 :
-        return ({'error': "'exercise_routine_id' must be a string"}), 400
+    # if follow_up['weekly_routine_id'] is None :
+    #     return ({'error': "'weekly_routine_id' must not be empty"}), 400
+    
+    weekly_routine = WeeklyRoutine.query.filter_by(id=follow_up['weekly_routine_id']).first()
+    if weekly_routine is None:
+        return ({'error': "weekly routine not found"}), 404
+    
+    # if follow_up['exercise_routine_id'] is None:
+    #     return ({'error': "'exercise_routine_id' must not be empty"}), 400
+    
+    exercise_routine = ExerciseRoutine.query.filter_by(id=follow_up['exercise_routine_id']).first()
+    if exercise_routine is None:
+        return ({'error': "exercise routine not found"}), 404
 
     follow_up_created = FollowUp(weekly_routine_id = follow_up['weekly_routine_id'], exercise_routine_id = follow_up['exercise_routine_id'])
     db.session.add(follow_up_created)
     db.session.commit()
-    return jsonify(follow_up_created.serialize())
+    return jsonify(follow_up_created.serialize()), 200
 
+# DELETE FollowUp / ELIMINAR SEGUIMIENTO
+@api.route('/follow-up/<int:weekly_routine_id>/<int:exercise_routine_id>', methods=['DELETE'])
+def delete_follow_up(weekly_routine_id, exercise_routine_id):
+    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id, exercise_routine_id=exercise_routine_id).first()
+    if follow_up is None:
+        return ({'error':'Follow Up not found'}), 404
+
+    db.session.delete(follow_up)
+    db.session.commit()
+    return jsonify("successfully removed"), 200
+
+# CATEGORIA DE EJERCICIOS
 @api.route('/exercises-category', methods=['GET'])
 def get_exercises_category():
     categories = {category.name: category.value for category in Category}
-    return jsonify(categories)
+    return jsonify(categories), 200
+
+# SERIES
+# GET ALL Sets / TRAER TODAS LAS SERIES
+@api.route('/sets', methods=['GET'])
+def get_all_sets():
+    sets = Sets.query.all()
+    if len(sets) == 0:
+        return ({'error':'sets list not found'}), 404
+    else:
+        data_serialized = list(map(lambda set: set.serialize(), sets))
+        return jsonify(data_serialized), 200
+    
+# GET ONE Sets / TRAER UNA SERIES
+@api.route('/sets/<int:sets>/<int:repetitions>', methods=['GET'])
+def get_one_sets(sets, repetitions):
+    sets = Sets.query.filter_by(sets=sets, repetitions=repetitions).first()
+    if sets is None:
+        return ({'error':'sets not found'}), 404
+    else:
+        data_serialized = sets.serialize()
+        return jsonify(data_serialized), 200
+
+# POST Sets / AGREGAR UNA SERIES
+@api.route('/sets', methods=['POST'])
+def post_sets():
+    sets = request.get_json()
+    if not isinstance(sets['sets'], str) or len(sets['sets'].strip()) == 0 :
+        return ({'error': "'sets' must not be empty"}), 400
+    
+    if not isinstance(sets['repetitions'], str) or len(sets['repetitions']) == 0 :
+        return ({'error': "'repetitions' must not be empty"}), 400
+
+    sets_exist = Sets.query.filter_by(sets=sets['sets'], repetitions=sets['repetitions']).first()
+    if sets_exist:
+        return ({'error': "'sets' already exists"}), 400
+
+    sets_created = Sets(sets = sets['sets'], repetitions = sets['repetitions'])
+    db.session.add(sets_created)
+    db.session.commit()
+    return jsonify(sets_created.serialize())

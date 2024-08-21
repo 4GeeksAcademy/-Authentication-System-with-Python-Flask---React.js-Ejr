@@ -10,22 +10,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             allWeeklyRoutineUserList: [],
             oneWeeklyRoutineUserList: [],
             onePhysicalUserInformationList: [],
-            lastPhysicalUserInformation: '',
+            lastOnePhysicalUserInformation: '',
             allPhysicalUserInformationList: [],
+            lastPhysicalUserInformationList: [],
             allRoutineList: [],
             oneRoutine: {},
             allExerciseList: [],
             oneExercise: {},
             allExerciseRoutineList: [],
             allExerciseRoutineOneDayList: [],
+            oneExerciseRoutine: {},
             allFollowUpList: [],
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
-
             routineData: '',
             
-            porcentajes: [1, 2, 3, 4, 5, 6, 7],
-            porcentaje: 0,
+            allSetsList:[]
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -46,27 +46,47 @@ const getState = ({ getStore, getActions, setStore }) => {
             signup: async (name, birthday, sex, email, password, confirmPassword) => {
                 try {
                     const payload = {
-                        "name": name,
-                        "birthday": birthday,
-                        "sex": sex,
-                        "email": email,
-                        "password": password,
-                        "confirm_password": confirmPassword,
+                        name: name,
+                        birthday: birthday,
+                        sex: sex,
+                        email: email,
+                        password: password,
+                        confirm_password: confirmPassword,
                     };
                     console.log('Sending payload:', payload);
 
                     let response = await axios.post(process.env.BACKEND_URL + '/register', payload);
-                    if (response.status == 200) {
+
+                    if (response.status === 200) {
                         console.log('Registration successful:', response.data);
-                        return true;
+                        return { success: true, data: response.data };
                     }
                 } catch (error) {
                     if (error.response && error.response.data) {
                         console.log('Error response data:', error.response.data);
-                        return error.response.data;
+
+                        // Manejo de errores específico para la contraseña
+                        const errorMessage = error.response.data.error;
+                        if (errorMessage.includes("password")) {
+                            if (errorMessage.includes("no blank spaces")) {
+                                return { success: false, error: 'La contraseña no puede contener espacios en blanco.' };
+                            } else if (errorMessage.includes("at least one number")) {
+                                return { success: false, error: 'La contraseña debe contener al menos un número.' };
+                            } else if (errorMessage.includes("at least one uppercase and one lowercase letter")) {
+                                return { success: false, error: 'La contraseña debe tener al menos una letra mayúscula y una minúscula.' };
+                            } else if (errorMessage.includes("at least one special character")) {
+                                return { success: false, error: 'La contraseña debe tener al menos un carácter especial.' };
+                            } else if (errorMessage.includes("must be between 6 and 12 characters long")) {
+                                return { success: false, error: 'La contraseña debe tener entre 6 y 12 caracteres.' };
+                            } else if (errorMessage.includes("confirm_password")) {
+                                return { success: false, error: 'La contraseña y la confirmación de la contraseña deben coincidir.' };
+                            }
+                        }
+
+                        return { success: false, error: errorMessage };
                     } else {
                         console.log('Error:', error);
-                        return error;
+                        return { success: false, error: 'Unexpected error' };
                     }
                 }
             },
@@ -74,23 +94,24 @@ const getState = ({ getStore, getActions, setStore }) => {
             login: async (email, password) => {
                 try {
                     let response = await axios.post(process.env.BACKEND_URL + '/login', {
-                        'email': email,
-                        'password': password
-                    })
-                    if (response.status == 200) {
+                        email: email,
+                        password: password
+                    });
+
+                    if (response.status === 200) {
                         localStorage.setItem('token', response.data.access_token);
-                        setStore({ auth: response.data.logged })
+                        setStore({ auth: response.data.logged });
                         console.log(response.data);
-                        return true;
+                        return { success: true, data: response.data };
                     }
-                }
-                catch (error) {
-                    if (error.response.data) {
-                        console.log(error.response.data);
-                        return error.response.data;
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log('Error response data:', error.response.data);
+                        return { success: false, error: error.response.data.error };
+                    } else {
+                        console.log('Error:', error);
+                        return { success: false, error: 'Unexpected error' };
                     }
-                    console.log(error);
-                    return error;
                 }
             },
             // VALIDAR TOKEN
@@ -208,7 +229,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-            // GET  LAST PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+            // GET LAST ONE PhysicalInformation / TRAER ULTIMA INFORMACION FISICA
+            get_last_one_physical_user_information: async () => {
+                let token = localStorage.getItem("token")
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/last-one-physical-user-information", {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (resp.status == 200) {
+                        setStore({ lastOnePhysicalUserInformation: resp.data })
+                        console.log(getStore().lastOnePhysicalUserInformation);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
+            // GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
             get_last_physical_user_information: async () => {
                 let token = localStorage.getItem("token")
                 try {
@@ -219,8 +261,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (resp.status == 200) {
-                        setStore({ lastPhysicalUserInformation: resp.data })
-                        console.log(getStore().lastPhysicalUserInformation);
+                        let reverseData = resp.data.reverse();
+                        console.log(reverseData);
+                        console.log(resp.data);
+                        setStore({ lastPhysicalUserInformationList: reverseData })
+                        console.log(getStore().lastPhysicalUserInformationList);
                         return true;
                     }
                 }
@@ -550,13 +595,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            //GET ONE ExerciseRoutine / TRAER UNA RUTINA EJERCICIO
+            oneExerciseRoutine: async (routine_id, exercise_id) => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + `/exercise-routine/${routine_id}/${exercise_id}`);
+
+                    if (resp.status == 200) {
+                        setStore({ oneExerciseRoutine: resp.data })
+                        console.log(getStore().oneExerciseRoutine);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
             // POST ExerciseRoutine / AGREGAR RUTINA EJERCICIO
             postExerciseRoutine: async (routine_id, exercise_id) => {
                 try {
-                    const token = localStorage.getItem('token')
-                    if (!token) {
-                        return ({ "error": "no token found" })
-                    }
+                    // const token = localStorage.getItem('token')
+                    // if (!token) {
+                    //     return ({ "error": "no token found" })
+                    // }
 
                     const payload = {
                         "routine_id": routine_id,
@@ -565,9 +626,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Sending payload:', payload);
 
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise-routine', payload, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
+                        // headers: {
+                        //     Authorization: `Bearer ${token}`
+                        // }
                     });
 
                     if (response.status == 200) {
@@ -637,7 +698,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // GET ALL FollowUp FOR weekly_routine_id / TRAER TODOS SEGUIMIENTO POR RUITNA_SEMANA_ID
-            oneFollowUp: async (id) => {
+            allFollowUpWeek: async (id) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + `/follow-up/${id}`);
 
@@ -655,22 +716,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             // POST FollowUp / AGREGAR SEGUIMIENTO
             postFollowUp: async (weekly_routine_id, exercise_routine_id) => {
                 try {
-                    const token = localStorage.getItem('token')
-                    if (!token) {
-                        return ({ "error": "no token found" })
-                    }
-
                     const payload = {
                         "weekly_routine_id": weekly_routine_id,
                         "exercise_routine_id": exercise_routine_id
                     };
                     console.log('Sending payload:', payload);
 
-                    let response = await axios.post(process.env.BACKEND_URL + '/follow-up', payload, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+                    let response = await axios.post(process.env.BACKEND_URL + '/follow-up', payload);
+                    console.log(response);
 
                     if (response.status == 200) {
                         console.log('follow-up successfully added:', response.data);
@@ -684,6 +737,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.log('Error:', error);
                         return error;
                     }
+                }
+            },
+            //DELETE ExerciseRoutine / ELIMINAR UNA RUTINA EJERCICIO
+            deleteFollowUp: async (weekly_routine_id, exercise_routine_id) => {
+                try {
+                    const resp = await axios.delete(process.env.BACKEND_URL + `/follow-up/${weekly_routine_id}/${exercise_routine_id}`);
+
+                    if (resp.status == 200) {
+                        console.log(resp.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
                 }
             },
             //CATEGORY
@@ -702,19 +770,46 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
-
-            // CAROUSEL
-            updateElementAtIndex: (index, newElement) => {
-                const newArray = [...getStore().porcentajes];
-                newArray[index] = newElement;
-                setStore({ porcentajes: newArray });
-
+            // SEIRES
+            // GET ALL Sets / TRAER TODAS LAS SERIES
+            allSets: async () => {
+                try {
+                    const resp = await axios.get(process.env.BACKEND_URL + "/sets");
+                    if (resp.status == 200) {
+                        setStore({ allSetsList: resp.data })
+                        console.log(getStore().allSetsList);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
             },
-            returnElementAtIndex: (index) => {
-                const newArray = [...getStore().porcentajes];
-                setStore({ porcentaje: newArray[index] })
-                console.log(getStore().porcentaje);
-                return getStore().porcentaje
+            // POST Sets / AGREGAR SERIES
+            postSets: async (sets, repetitions) => {
+                try {
+                    const payload = {
+                        "sets": sets,
+                        "repetitions": repetitions
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.post(process.env.BACKEND_URL + '/sets', payload);
+
+                    if (response.status == 200) {
+                        console.log('sets successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
             },
         }
     };

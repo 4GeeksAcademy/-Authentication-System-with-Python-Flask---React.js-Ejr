@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import { Context } from "../store/appContext"
 import { Link, useNavigate } from "react-router-dom"
-import { ToastContainer, toast } from "react-toastify"
+import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import "../../styles/home.css"
 import formImg from '../../img/login-form-img.jpg'
@@ -22,40 +22,52 @@ export const LoginForm = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Crear una promesa para manejar el login
     const loginPromise = new Promise(async (resolve, reject) => {
-      const success = await actions.login(user.email, user.password)
-      if (success === true) {
-        await actions.getUserProfile()
-        resolve("Sesion iniciada")
+      const response = await actions.login(user.email, user.password);
+
+      if (response.success) {
+        await actions.getUserProfile();
+        resolve("Sesión iniciada");
       } else {
-        reject("Error al iniciar sesión")
+        reject(response.error || "Error al iniciar sesión");
       }
-    })
+    });
 
     toast.promise(
       loginPromise,
       {
         pending: 'Iniciando sesión...',
         success: 'Inicio de sesión exitoso 👌',
-        error: 'Credenciales incorrectas 🤯'
+        error: {
+          render({ data }) {
+            const errorMessages = {
+              "Invalid email or password": "Correo o contraseña incorrectos",
+              "User not found": "Usuario no encontrado",
+              "Unexpected error": "Error inesperado durante el inicio de sesión",
+            };
+
+            return errorMessages[data] || "Error inesperado durante el inicio de sesión";
+          }
+        }
       }
-    )
+    );
 
     loginPromise.then(() => {
-      navigate("/dashboard")
+      navigate("/");
     }).catch((error) => {
-      console.error(error)
-    })
-  }
+      console.error(error);
+    });
+  };
+
 
   return (
     <section className="animate__animated animate__fadeIn absolute min-h-screen w-full top-0 z-50 bg-white dark:bg-neutral-900">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="relative flex h-32 items-end bg-neutral-900 lg:col-span-5 lg:h-full xl:col-span-6">
-          <img alt="" src={formImg} className="absolute inset-0 h-full w-full object-cover opacity-80" />
+        <section className="relative flex h-32 items-end bg-neutral-900 lg:col-span-5 w-full  lg:h-screen xl:col-span-6 aspect-[2/3] object-cover">
+          <img alt="" src={formImg} className="object-[0%_35%] absolute inset-0 h-full w-full object-cover opacity-80 " />
         </section>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-12 lg:py-12 xl:col-span-6">

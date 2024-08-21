@@ -46,6 +46,13 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.email}>'
+    
+    def __init__(self, name, email, password, birthday, sex):
+        self.name = name
+        self.email = email
+        self.password = password
+        self.birthday = birthday
+        self.sex = sex
 
     def serialize(self):
         return {
@@ -75,7 +82,13 @@ class PhysicalInformation(db.Model):
             "weight": self.weight,
             "date": self.date,
         }
-
+    
+    def graphicSerialize(self):
+        return {
+            "weight": self.weight,
+            "date": self.date.strftime("%d/%m/%Y"),
+        }
+    
 # RUTINA 
 class Routine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -83,7 +96,7 @@ class Routine(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     weekly_routine = db.relationship('WeeklyRoutine', cascade="all, delete", back_populates = 'routine', lazy = True)
-    exercise_routine = db.relationship('ExerciseRoutine', cascade="all, delete", backref = 'routine', lazy = True)
+    exercise_routine = db.relationship('ExerciseRoutine', cascade="all, delete", back_populates = 'routine', lazy = True)
     
     def __repr__(self):
         return f'<Routine {self.name}>'
@@ -111,15 +124,27 @@ class WeeklyRoutine(db.Model):
     routine = db.relationship(Routine)
 
     def __repr__(self):
-        return f'<WeeklyRoutine {self.id}>'
+        return f'<WeeklyRoutine {self.id, self.week, self.day}>'
 
     def serialize(self):
+        follow_up = list(map(lambda item: item.serialize(), self.follow_up))
+        routine = self.routine.serialize()
+        for item_routine in routine["exercises"]:
+            item_routine["exercise"]["done"] = False
+            for item_follow in follow_up:   
+                if item_follow["exercise_routine"]["exercise"]["id"] == item_routine["exercise"]["id"]:
+                    item_routine["exercise"]["done"] = True
+                else:
+                    item_routine["exercise"]["done"] = False
+
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "routine": self.routine.serialize(),
+            "routine": routine,
             "week": self.week.value,
-            "day": self.day.value
+            "day": self.day.name,
+            "day_num": self.day.value,
+            # "follow_up": list(map(lambda item: item.serialize(), self.follow_up))
         }
 
 # EJERCICIO 
@@ -144,27 +169,51 @@ class Exercise(db.Model):
             "image": self.image,
         }
 
+# SERIES
+class Sets(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sets = db.Column(db.Integer, nullable=False)
+    repetitions = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<Sets {self.id, self.sets, self.repetitions}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sets": self.sets,
+            "repetitions": self.repetitions
+        }
+    
 # EJERCICIO RUTINA
 class ExerciseRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     routine_id = db.Column(db.Integer, db.ForeignKey('routine.id'), nullable=False)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercise.id'), nullable=False)
+    sets_id = db.Column(db.Integer, db.ForeignKey('sets.id'), nullable=False)
 
     exercise = db.relationship(Exercise)
-    follow_up = db.relationship('FollowUp', backref = 'exercise_routine', lazy = True)
+    routine = db.relationship(Routine)
+    sets = db.relationship(Sets)
+    
+    follow_up = db.relationship('FollowUp', back_populates = 'exercise_routine', lazy = True)
 
     def __repr__(self):
-        return f'<ExerciseRoutine {self.id}>'
+        return f'<ExerciseRoutine {self.id, self.exercise.name, self.routine.name}>'
 
     def serialize(self):
-        return self.exercise.serialize()
-            
+        return {
+            "id": self.id,
+            "exercise": self.exercise.serialize(),
+            "sets": self.sets.serialize()
+        }
 
 # SEGUIMIENTO 
 class FollowUp(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     weekly_routine_id = db.Column(db.Integer, db.ForeignKey('weekly_routine.id'), nullable=False)
     exercise_routine_id = db.Column(db.Integer, db.ForeignKey('exercise_routine.id'), nullable=False)
+    exercise_routine = db.relationship(ExerciseRoutine)
 
     def __repr__(self):
         return f'<Category {self.id}>'
@@ -173,5 +222,5 @@ class FollowUp(db.Model):
         return {
             "id": self.id,
             "routine_id": self.weekly_routine_id,
-            "exercise_routine_id": self.exercise_routine_id
+            "exercise_routine": self.exercise_routine.serialize()
         }
