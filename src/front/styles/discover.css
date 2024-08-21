@@ -270,3 +270,38 @@
 .modal-purchase-button:hover {
   background-color: #2980b9;
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  position: relative; 
+}
+
+.title {
+  margin: 0; 
+  font-size: 40px; 
+  text-align: center; 
+  flex-grow: 1; 
+}
+
+.add-event-button {
+  position: absolute; 
+  right: 0; 
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+}
+
+.add-event-button:hover {
+  background-color: #0056b3;
+}
