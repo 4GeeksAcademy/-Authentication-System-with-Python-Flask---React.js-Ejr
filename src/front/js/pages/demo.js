@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 
 const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(3) // Para controlar el paso actual
+  const [step, setStep] = useState(1) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
     selectedWeek: '',
