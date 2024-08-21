@@ -1,14 +1,13 @@
 
 .container-contact {
     padding: 20px;
-    font-family: 'Arial', sans-serif;
     background-color: #f4f7fa;
-    color: #333;
+    
 }
 
 
 .contact-info {
-    background-color: #ffffff;
+    background-color: #f0f0f0; 
     border-radius: 10px;
     padding: 20px;
     margin-top: 30px;
@@ -35,7 +34,7 @@
 }
 
 .contact-form-section {
-    background-color: #ffffff;
+  background-color: #f0f0f0; 
     border-radius: 10px;
     padding: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
