@@ -22,7 +22,6 @@ export const SingleOffer = () => {
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="card-offer-logo">
                                     <img
-
                                         src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
                                         alt="Company Logo"
                                     />
@@ -31,10 +30,7 @@ export const SingleOffer = () => {
                                     <h2 className="mb-0 ">{offer.title}</h2>
                                     <span className="text-muted">{offer.company}<span className="ms-3">{offer.location}</span></span>
                                     <div className="salary-box">
-                                        <p className="mb-1 text-success">
-                                            <i className="bi bi-currency-euro me-2"></i>
-                                            <span>{offer.salary}</span>
-                                        </p>
+                                        <span className="text-success">{offer.salary}</span>
                                     </div>
                                 </div>
                                 <button className="btn btn-single-offer-up btn-lg">Inscribirse a la oferta</button>

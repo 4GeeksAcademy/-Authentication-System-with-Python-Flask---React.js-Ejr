@@ -20,8 +20,6 @@
 }
 
 .salary-box{
-    position: relative;
-    right: 5px;
     font-size: 0.7rem;
     text-decoration: underline;
 }
