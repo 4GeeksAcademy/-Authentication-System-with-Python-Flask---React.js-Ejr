@@ -7,7 +7,7 @@ function vistacurso() {
       <div className='vistacurso__main-content'>
         <div className="card" style={{width: "40rem"}}>
           <div className="card-body">
-            <h5 className="card-title">React.JS, Guía desde 0 (Actualizado 2024)</h5>
+            <h1 className="card-title">React.JS, Guía desde 0 (Actualizado 2024)</h1>
             <h6 className="card-subtitle mb-2 text-body-secondary">Aprende a crear sitios web de forma rápida y sencilla con React Js</h6>
             <button type="button" class="btn btn-primary me-3 btn-lg">Calificaciones</button>
             <button type="button" class="btn btn-primary btn-lg">Creado por Roberto Losada</button>
@@ -55,6 +55,17 @@ function vistacurso() {
             <p>Analizando useState</p>
             <p>Ciclo de vida de un componente</p>
             <p>Renderizado condicional</p>
+          </div>
+        </div>
+        <div className="container">
+          <div className="clearfix">
+            <img src="https://picsum.photos/200" className="col-md-6 float-md-end mb-3 ms-md-3" alt="..."/>
+            <h1>89,99 € Precio original .</h1>
+            <h5>Si realizas tu inscripcion en el mes de Agosto 2024 tendras en 30% de descuento en el valor total del curso.</h5>
+            <h5>Acceso de por vida</h5>
+            <h5>Puedes pagarlo hasta en 3 cuotas.</h5>
+            <a className="btn btn-primary" href="#" role="button">Completar Inscripcion</a>
+            <button className="btn btn-primary" type="submit">Añadir a lista de favoritos</button>
           </div>
         </div>
       </div>

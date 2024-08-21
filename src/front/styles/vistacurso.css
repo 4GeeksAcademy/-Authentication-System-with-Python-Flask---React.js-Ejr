@@ -13,3 +13,14 @@
     margin: 0 auto;
     letter-spacing: 2px;
 }
+.container{
+      width: 45%;
+      float: right;
+      margin: 2.3%;
+      padding: 5px;
+      position: fixed;
+      margin-left: 50%;
+}
+.btn{
+    margin: 2px;  
+}
