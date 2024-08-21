@@ -3,11 +3,15 @@ import { Context } from "../store/appContext";
 import { useNavigate, Outlet } from "react-router-dom";
 
 export const TokenValidator = () => {
-    const {store} = useContext (Context);
+    const {store, actions} = useContext (Context);
     const navigate = useNavigate();
     useEffect(() => {
+        if (!store.token && localStorage.getItem("jwt-token")){
+            console.log(localStorage.getItem("jwt-token"))
+            actions.setToken(localStorage.getItem("jwt-token"))
+        }
         if (!store.token){
-            navigate("/login")
+            navigate("/register")
         }
     }, [])
     return <>

@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/singup.css";
+import { useNavigate } from "react-router-dom";
+
+import { Context } from "../store/appContext";
 
 const Signup = () => {
     const [isActive, setIsActive] = useState(false);
     const [isPartner, setIsPartner] = useState(false);
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
 
     const handleRegisterClick = () => {
         setIsActive(true);
@@ -17,6 +25,16 @@ const Signup = () => {
         setIsPartner(!isPartner);
     };
 
+    const login = async (email, password) => {
+        await actions.login(email, password);
+        navigate("/app/exemplo")
+    };
+
+    const signup = async (email, password, isPartner) => {
+        await actions.signup(email, password, isPartner);
+        navigate("/app/exemplo")
+    }
+
     return (
         <div className="singup-body">
             <video autoPlay muted loop id="myVideo">
@@ -24,30 +42,30 @@ const Signup = () => {
             </video>
             <div className={`singup-container ${isActive ? "singup-active" : ""}`} id="container">
                 <div className="singup-form-container singup-sign-up">
-                    <form>
+                    <div className="form">
                         <h1>Crear Cuenta</h1>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <div className="signup-toggle-wrapper">
-                            <button type="submit">Regístrate</button>
+                            <button onClick={() => signup(email, password, isPartner)}>Regístrate</button>
                             <label className="switch">
                                 <input type="checkbox" checked={isPartner} onChange={handleToggleChange} />
                                 <span className="slider round"></span>
                             </label>
                             <span className="toggle-text">{isPartner ? "Partner" : "Usuario"}</span>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div className="singup-form-container singup-sign-in">
-                    <form>
+                    <div className="form">
                         <h1>Iniciar sesión</h1>
                         <span>Usa tu correo y contraseña</span>
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <a href="#">¿Has olvidado tu contraseña?</a>
-                        <button type="submit">Iniciar sesión</button>
-                    </form>
+                        <button onClick={() => login(email,password)}>Iniciar sesión</button>
+                    </div>
                 </div>
                 <div className="singup-toggle-container">
                     <div className="singup-toggle">
