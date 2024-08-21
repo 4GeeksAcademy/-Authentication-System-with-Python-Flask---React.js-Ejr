@@ -7,13 +7,13 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí iría la lógica de autenticación
+    
     console.log('Username:', username, 'Password:', password);
   };
 
   return (
     <form className="login-container" onSubmit={handleSubmit}>
-      <h4>Iniciar Sesión</h4>
+      <h4 className='iniciosesion'>Iniciar Sesión</h4>
       <div className="username">
         <label>Nombre Usuario:</label>
         <input
@@ -21,20 +21,22 @@ const Login = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          className='input-username'
         />
       </div>
       <div className="password">
-        <label>Contraseña:</label>
+        <label className='contraseñalabel'>Contraseña:</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className='input-password'
         />
       </div>
       <button type="submit" className="loginbutton">Login</button>
       <div>
-        <p>
+        <p className='contraseña'>
           ¿Olvidaste tu contraseña?
         </p>
       </div>

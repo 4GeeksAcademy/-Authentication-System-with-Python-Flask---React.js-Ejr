@@ -150,6 +150,26 @@ def login():
         return jsonify({'login': False, 'msg': 'La contraseña es incorrecta'}),400
     return jsonify({'login': False, 'msg': 'No hay ningún usuario registrado con los datos introducidos'}),404
 
+@api.route('/eliminarOferta/<int:oferta_id>', methods=['DELETE'])
+@jwt_required 
+def eliminar_oferta():
+    empleador_id=get_jwt_identity
+    empleador= Empleador.query.filter_by(user_id=empleador_id).first() 
+    if not empleador:
+        return jsonify({"success": False, "msg":"Opción no disponible"}),400
+    oferta= Ofertas.query.filter_by(id=oferta,empleador_id=empleador.id).first()
+    if not oferta:
+        return jsonify({"success": False, "msg":"Oferta no disponible"}),400
+
+    try:
+        db.session.delete(oferta)
+        db.session.commit()
+        return jsonify({"succes": True, "msg": "Oferta eliminada con éxito"}),200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al eliminar la oferta: {str(e)}"}), 500
+
+
 if __name__ == '__main__':
     api.run(host='0.0.0.0', port=3245, debug=True)
         
