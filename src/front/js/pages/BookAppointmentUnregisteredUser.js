@@ -273,8 +273,6 @@ const BookAppointmentUnregisteredUser = () => {
       localStorage.setItem("role_id", loginData.role_id);
       localStorage.setItem("user_id", loginData.user_id);
 
-  
-
       const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
         method: "POST",
         headers: {
@@ -334,7 +332,7 @@ const BookAppointmentUnregisteredUser = () => {
 
   const displayCurrentStep = () => {
     return (
-      <div className="card-body">
+      <div className="card-body container-fluid px-1">
         {error && <p className="error-message">{error}</p>}
         {currentStep === 1 && (
           <div>
@@ -375,8 +373,8 @@ const BookAppointmentUnregisteredUser = () => {
                 className="form-control"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    e.preventDefault(); 
-                    nextStep(); 
+                    e.preventDefault();
+                    nextStep();
                   }
                 }}
               >
@@ -408,12 +406,10 @@ const BookAppointmentUnregisteredUser = () => {
                 disabledDate={disabledDate}
                 disabledTime={disabledTime}
                 onKeyDown={(e) => {
-                  tabIndex="0"
                   if (e.key === "Enter") {
-                    e.preventDefault(); 
-                    nextStep(); 
+                    e.preventDefault();
+                    nextStep();
                   }
-                  
                 }}
               />
             </div>
@@ -435,8 +431,8 @@ const BookAppointmentUnregisteredUser = () => {
             <h3>Sign Up</h3>
             <div className="appointment-description">
               To confirm your appointment with us, we kindly ask that you create
-              an account by providing your full name, email address, and a
-              password.
+              an account by providing your full name, email address, phone
+              number and a password.
             </div>
             <div>
               <label htmlFor="name">Full Name</label>
@@ -485,48 +481,35 @@ const BookAppointmentUnregisteredUser = () => {
           </div>
         )}
         {currentStep === 5 && (
-          <div>
-            <h3>Appointment Summary</h3>
-            <p>
-              <strong>Car License Plate:</strong> {carLicensePlate}
-            </p>
-            <p>
-              <strong>Car Make & Model:</strong> {carModel}
-            </p>
-            <p>
-              <strong>Service:</strong> {serviceChosen}
-            </p>
-            <p>
-              <strong>Appointment Date:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
-            </p>
-            <p>
-              <strong>Appointment Time:</strong>{" "}
-              {appointmentDate ? appointmentDate.format("HH:mm") : ""}
-            </p>
-            <p>
-              <strong>Comments:</strong> {comment}
-            </p>
-            <p>
-              <strong>Email Address:</strong> {email}
-            </p>
-            <p>
-              <strong>Phone Number:</strong> {phoneNumber}
-            </p>
-            <div className="d-flex justify-content-between">
-              <button
-                className="btn btn-secondary previous-button"
-                onClick={() => setCurrentStep(currentStep - 1)}
-              >
-                Previous
-              </button>
-              <button
-                className="btn btn-primary nonuser"
-                type="submit"
-                onClick={confirmAccountAndAppointment}
-              >
-                Create Account and Submit
-              </button>
+          <div className="appointment-summary-container">
+            <div>
+              <h3>Appointment Summary</h3>
+              <p>
+                <strong>Car License Plate:</strong> {carLicensePlate}
+              </p>
+              <p>
+                <strong>Car Make & Model:</strong> {carModel}
+              </p>
+              <p>
+                <strong>Service:</strong> {serviceChosen}
+              </p>
+              <p>
+                <strong>Appointment Date:</strong>{" "}
+                {appointmentDate ? appointmentDate.format("DD/MM/YYYY") : ""}
+              </p>
+              <p>
+                <strong>Appointment Time:</strong>{" "}
+                {appointmentDate ? appointmentDate.format("HH:mm") : ""}
+              </p>
+              <p>
+                <strong>Comments:</strong> {comment}
+              </p>
+              <p>
+                <strong>Email Address:</strong> {email}
+              </p>
+              <p>
+                <strong>Phone Number:</strong> {phoneNumber}
+              </p>
             </div>
           </div>
         )}
@@ -574,6 +557,24 @@ const BookAppointmentUnregisteredUser = () => {
                 Next
               </button>
             )}
+          </div>
+        )}
+
+        {currentStep === 5 && (
+          <div className="d-flex justify-content-between">
+            <button
+              className="btn btn-secondary previous-button"
+              onClick={() => setCurrentStep(currentStep - 1)}
+            >
+              Previous
+            </button>
+            <button
+              className="btn btn-primary nonuser"
+              type="submit"
+              onClick={confirmAccountAndAppointment}
+            >
+              Create Account and Submit
+            </button>
           </div>
         )}
       </div>
