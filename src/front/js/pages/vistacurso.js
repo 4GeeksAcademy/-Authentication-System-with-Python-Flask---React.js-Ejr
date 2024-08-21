@@ -57,7 +57,7 @@ function vistacurso() {
             <p>Renderizado condicional</p>
           </div>
         </div>
-        <div className="container">
+        <div className="containerCurso">
           <div className="clearfix">
             <img src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="col-md-6 float-md-end mb-3 ms-md-3" alt="..."/>
             <h1>89,99 € Precio original .</h1>
