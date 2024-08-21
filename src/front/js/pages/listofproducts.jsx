@@ -59,7 +59,7 @@ const ListOfProducts = () => {
                 )}
             </div>
 
-            {visibleProducts < products.length && (
+            {products && visibleProducts < products.length && (
                 <div className="btn-container w-100 d-flex justify-content-center mt-5">
                     <button className="btn-see-more px-5 py-3 rounded" onClick={loadMoreProducts}>
                         Ver más

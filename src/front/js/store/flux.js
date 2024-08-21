@@ -45,11 +45,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			logout: () => {
-				// console.log("funciona");
 				localStorage.removeItem("token");
 				setStore({ auth: false })
 				return true
-
 			},
 			validToken: async () => {
 				let token = localStorage.getItem("token");
@@ -57,10 +55,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${process.env.BACKEND_URL}/api/valid_token`, {
 						method: 'GET',
 						headers: {
-
 							'Authorization': `Bearer ${token}`
 						},
-
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -68,9 +64,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 							currentUser: data.user
 						})
 					}
-
-
-
 				}
 				catch (error) {
 					console.log(error);
@@ -95,19 +88,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"role_id": 1
 						})
 					})
-console.log(response)
+					console.log(response)
 					if (response.status === 201) {
 						let data = await response.json()
-
 						// localStorage.setItem("token", data.access_token)
 						setStore({ auth: data.logged })
-
 						return true
 					}
 					if (response.status === 404) {
 						let data = await response.json()
 						setStore({ error: data.msj })
-
 						return false
 					}
 				} catch (error) {
@@ -134,7 +124,6 @@ console.log(response)
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/products`);
 					const data = await response.json();
-					console.log(data)
 					setStore({ products: data.results })
 					return true
 				} catch (error) {
@@ -222,12 +211,73 @@ console.log(response)
 					});
 					if (response.ok) {
 						const data = await response.json();
-						console.log('Datos recibidos en getFavoritesByUserId:', data); // Verifica la estructura aquí
 						setStore({ favorites: data });
 						return { success: true, data };
 					} else {
 						const errorData = await response.json();
 						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+
+			addFavorite: async (productId) => {
+				const store = getStore();
+				const token = localStorage.getItem("token");
+			
+				const isFavorited = store.favorites.some(fav => fav.fav_product.id === productId);
+			
+				try {
+					let response;
+					if (isFavorited) {
+						const favorite = store.favorites.find(fav => fav.fav_product.id === productId);
+						response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/${favorite.id}`, {
+							method: 'DELETE',
+							headers: {
+								'Authorization': `Bearer ${token}`
+							}
+						});
+					} else {
+						response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/user`, {
+							method: 'POST',
+							headers: {
+								'Authorization': `Bearer ${token}`,
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({ fav_product: productId })
+						});
+					}
+			
+					if (response.ok) {
+						actions.getFavoritesByUserId();
+						return { success: true };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msg };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},			
+			
+			deleteFavorite: async (favoriteId) => {
+				let token = localStorage.getItem("token");
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/wishlist/${favoriteId}`, {
+						method: 'DELETE',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+			
+					if (response.ok) {
+						const data = await response.json();
+						await getActions().getFavoritesByUserId();
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msg };
 					}
 				} catch (error) {
 					return { success: false, error: error.message };
@@ -241,7 +291,6 @@ console.log(response)
 					body: data,
 					headers: {
 						'Authorization': `Bearer ${localStorage.getItem('token')}`
-
 					}
 				})
 				const data_result = await response.json()
@@ -254,7 +303,7 @@ console.log(response)
 					behavior: "smooth"
 				});
 			}
-			
+
 		}
 	}
 };

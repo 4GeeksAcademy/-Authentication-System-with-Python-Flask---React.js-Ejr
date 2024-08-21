@@ -15,6 +15,7 @@
     position: relative;
     width: 30%;
     border-left: 1px solid var(--color-forest);
+    min-height: 200px;
 }
 .wishlist-container .aside-container .buttons-container{
     position: fixed;

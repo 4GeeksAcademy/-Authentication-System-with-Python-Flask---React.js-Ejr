@@ -14,8 +14,8 @@ const WishList = () => {
 
     return (
         <>
-            <div className="invisible-header-box" style={{ width: "5dvh" }} ></div>
-            <h1 className="text-center">Lista de deseos</h1>
+            <div className="invisible-header-box" style={{ width: "50dvh" }} ></div>
+            <h1 className="text-center m-4">Lista de deseos</h1>
             <div className="wishlist-container">
                 <div className="main-container">
                     {favorites && favorites.length > 0 ? (
@@ -29,7 +29,7 @@ const WishList = () => {
                             />
                         ))
                     ) : (
-                        <h4 className="text-center text-danger m-4">No hay Favoritos</h4>
+                        <h4 className="text-center text-danger m-5">No hay Favoritos</h4>
                     )}
                 </div>
                 <div className="aside-container">
