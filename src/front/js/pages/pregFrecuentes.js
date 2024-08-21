@@ -40,7 +40,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
-                ¿Cómo puedo recuperar mi contraseña?
+                ¿Cómo puedo recuperar o cambiar mi contraseña?
               </button>
             </h2>
             <div
@@ -50,7 +50,7 @@ const PregFrecuentes = () => {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-              En la página de inicio de sesión ingresa tu correo, haz clic en <a href="/vista-login">"Olvidé mi contraseña"</a> y recibirás un mail de HablemosUY Salud Mental para restablecer tu contraseña siguiendo las instrucciones desde el enlace.
+              En la página de inicio de sesión ingresa tu correo, haz clic en <a href="/vista-login">"Olvidé mi contraseña"</a> y recibirás un mail de HablemosUY Salud Mental para restablecer o cambiar tu contraseña siguiendo las instrucciones desde el enlace.
               </div>
             </div>
           </div>

@@ -127,31 +127,32 @@ export const Login = () => {
 				<h2 className="title fw-semibold text-secondary">Iniciar sesión</h2>
 
 				<div className="left">
-					<div className="d-flex justify-content-center">
-						<input type="email" className="form-control m-2" name="correo" placeholder="Email:"
-							if='correo'
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							value={formik.values.correo} />
-						{formik.touched.correo && formik.errors.correo ? (
-							<div className="text-danger">{formik.errors.correo}</div>
-						) : null}
-					</div>
-
-					<div className="d-flex justify-content-center">
-						<div className="input-group">
-							<input type={showPassword ? "text" : "password"} className="form-control m-2" name="clave" placeholder="Password:"
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								value={formik.values.clave} />
-							<span className="input-group-text cursor-pointer" onClick={togglePasswordVisibility}>
-								<i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-							</span>						
+						<div className="d-flex justify-content-center flex-column align-items-center">
+							<div className="input-group mb-3">
+								<input type="email" className="form-control" name="correo" placeholder="Email:"
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									value={formik.values.correo} />
+							</div>
+							{formik.touched.correo && formik.errors.correo ? (
+								<div className="text-danger">{formik.errors.correo}</div>
+							) : null}
 						</div>
-						{formik.touched.clave && formik.errors.clave ? (
+
+						<div className="d-flex justify-content-center flex-column align-items-center">
+							<div className="input-group mb-3">
+								<input type={showPassword ? "text" : "password"} className="form-control" name="clave" placeholder="Password:"
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									value={formik.values.clave} />
+								<span className="input-group-text cursor-pointer" onClick={togglePasswordVisibility}>
+									<i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
+								</span>
+							</div>
+							{formik.touched.clave && formik.errors.clave ? (
 								<div className="text-danger">{formik.errors.clave}</div>
 							) : null}
-					</div>
+						</div>					
 					<div>
 						<button type="submit" className="btn btn-login-registro  btn-primary mt-2">Iniciar sesión</button>
 					</div>
