@@ -17,6 +17,7 @@ const Login = () => {
       <div className="username">
         <label>Nombre Usuario:</label>
         <input
+        className="inputname"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -26,6 +27,7 @@ const Login = () => {
       <div className="password">
         <label>Contraseña:</label>
         <input
+        className="inputpassword"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
