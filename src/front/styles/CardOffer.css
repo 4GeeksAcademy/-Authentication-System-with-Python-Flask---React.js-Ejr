@@ -42,9 +42,12 @@
     white-space: nowrap;
 }
 
+.title-box{
+    position: relative;
+    bottom: 25px;
+}
 .card-offer-company {
     position: relative;
-    bottom: 20px;
     font-size: 0.9rem;
     color: #007bff;
 }

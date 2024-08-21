@@ -48,20 +48,17 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     access_token = create_access_token(identity=new_user.id)
-    if cif is not None:
-        empleador = Empleador(user_id=new_user.id,cif=cif)
-        db.session.add(empleador)
-        db.session.commit()
-        return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user': new_user.serialize(), 'token': access_token, 'empleador': empleador.serialize()}),201
-    elif cif is None:
+   
+    if cif is None or cif == '':
         programador = Programador(user_id=new_user.id)
         db.session.add(programador)
         db.session.commit()
         return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user':new_user.serialize(), 'token':access_token, 'programador':programador.serialize()}),201
     else:
-        db.session.rollback()
-        return jsonify({'success':False, 'msg':'Error'}),418
-    
+        empleador = Empleador(user_id=new_user.id,cif=cif)
+        db.session.add(empleador)
+        db.session.commit()
+        return jsonify({'success': True, 'msg':'Usuario registrado correctamente', 'user': new_user.serialize(), 'token': access_token, 'empleador': empleador.serialize()}),201
     
 
 #Mostrar el usuario con ese id
@@ -200,6 +197,18 @@ def crear_oferta():
     except Exception as e:
         db.session.rollback()
         return jsonify({"success": False, "msg": f"Error al crear la oferta: {str(e)}"}), 500
+
+@api.route('/oferta/<int:id>', methods=['GET'])
+def get_offer(id):
+    try:
+        oferta = Ofertas.query.get(id)
+
+        if not oferta:
+            return jsonify({"success": False, "msg": "Oferta no encontrada"}), 404
+        return jsonify({"success": True,"msg": 'Oferta creada con exito!', "oferta": oferta.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
 
 
 

@@ -20,7 +20,7 @@ export const Navbar = () => {
         <button type="button" 
         onClick={()=>navigate("/login")}
         className="btn rounded-pill me-4" style={{ backgroundColor: '#70879C', borderColor: '#70879C', color: 'white' }}>INICIAR SESIÓN</button>
-        <button type="button" className="btn rounded-pill me-3" style={{ backgroundColor: 'white', borderColor: 'white', color: '#70879C' }}>REGISTRARSE</button>
+        <button type="button" className="btn rounded-pill me-3" style={{ backgroundColor: 'white', borderColor: 'white', color: '#70879C' }} onClick={()=>navigate('/register')}>REGISTRARSE</button>
       </div>
     </div>
   </div>

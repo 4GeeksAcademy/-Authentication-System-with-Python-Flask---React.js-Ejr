@@ -86,7 +86,7 @@ export const Register = () => {
             {!isDev &&(
                 <div className="form-group">
                 <label htmlFor="cif" className="form-label m-0 fw-semibold">CIF:</label>
-                <input type="text" className="form-control" id="cif" {...register("cif", {required:true})} placeholder="Escriba el CIF.."/>
+                <input type="text" className="form-control" id="cif" {...register("cif")} placeholder="Escriba el CIF.."/>
             </div>
             )}
             <button type="submit" className="btn w-100 mt-2 stylebutton">Registrarse</button>
