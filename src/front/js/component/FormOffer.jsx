@@ -15,6 +15,7 @@ export const FormOffer = () => {
         contract: "",
         plazo: "",
         modality: "Teletrabajo",
+        modality: "Teletrabajo",
         location: "",
         salary: "",
         experience: "",
@@ -240,6 +241,8 @@ export const FormOffer = () => {
                                     placeholder="Introduzca el plazo límite"
                                     name="plazo"
                                     id="plazo"
+                                    minLength="120"
+                                    maxLength="120"
                                     required
                                     onChange={handleChange}
                                     value={formData.plazo}
