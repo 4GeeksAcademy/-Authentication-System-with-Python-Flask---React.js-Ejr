@@ -1,8 +1,9 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos
+from api.models import Modalidad, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -168,11 +169,11 @@ def crear_oferta():
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
 
-    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str:
+    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     try:
-        modalidad_enum = Modalidad(modalidad)
+        modalidad_enum = Modalidad(modalidad.upper())
     except ValueError:
         return jsonify({"success": False, "msg": "Modalidad no válida"}), 400
 
