@@ -25,6 +25,7 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(215), unique=False, nullable=True)
     social_media = db.Column(db.JSON, unique=False, nullable=True)
+    profile_image = db.Column(db.String(250), unique=False, nullable=True)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
 
     itineraries = db.relationship('Itinerary', back_populates='author')
@@ -70,6 +71,7 @@ class Itinerary(db.Model):
     title = db.Column(db.String(90), unique=False, nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=False)
     duration = db.Column(db.Integer, unique=False, nullable=False)
+    city = db.Column(db.String(100), unique=False, nullable=False)
     images = db.Column(db.JSON, unique=False, nullable=False)
     itinerary = db.Column(db.JSON, unique=False, nullable=False)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
@@ -96,6 +98,7 @@ class Itinerary(db.Model):
             'title': self.title,
             'description': self.description,
             'duration': self.duration,
+            'city': self.city,
             'images': self.images,
             'itinerary': self.itinerary,
             'creation_date': self.creation_date,
@@ -111,8 +114,6 @@ class Comments(db.Model):
     text = db.Column(db.String(250), unique=False, nullable=False)
     itinerary_id = db.Column(db.Integer, db.ForeignKey('itinerary.id'), nullable=False)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
-
-    
 
     author = db.relationship('User', back_populates='comments')
     itinerary = db.relationship('Itinerary', back_populates='comments')
@@ -138,7 +139,6 @@ class Reports(db.Model):
     comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'), nullable=False)
     reported_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
-
 
     comment = db.relationship('Comments', back_populates='reports')  # One-to-many comment
     author = db.relationship('User', back_populates='reports', foreign_keys=[author_id])
@@ -212,6 +212,8 @@ class Contacts(db.Model):
     email = db.Column(db.String(200), unique=False, nullable=False)
     title = db.Column(db.String(90), unique=False, nullable=False)
     description = db.Column(db.String(250), unique=False, nullable=False)
+    creation_date = db.Column(db.Date, default=func.current_date(), unique=False, nullable=False)
+
 
     def __repr__(self):
         return f'<Contacts {self.email}>'
