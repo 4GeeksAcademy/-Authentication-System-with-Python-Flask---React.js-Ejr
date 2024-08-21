@@ -50,6 +50,10 @@
 }
 .iniciosesion{
   font-family: 'Lucida Sans';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
 }
 .contraseña{
   margin-top: 20px;
