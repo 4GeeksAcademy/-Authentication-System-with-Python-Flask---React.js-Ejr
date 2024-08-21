@@ -31,12 +31,14 @@ const Perfil = () => {
         <div className="container mt-4 col-md-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
                 <div className="col-md-4 text-center position-relative">
-                    <img src={store.dataUser?.foto || defaultAvatar}
-                        alt="User Image"
-                        className="img-fluid rounded-circle profile-image"
-                    />
+                    <div className="profile-image-container">
+                        <img src={store.dataUser?.foto || defaultAvatar}
+                            alt="User Image"
+                            className="profile-image"
+                        />
+                    </div>
                     <button
-                        className="btn btn-light position-absolute align-items-center d-flex"
+                        className="btn btn-secondary position-absolute align-items-center d-flex"
                         style={{
                             borderRadius: "50%",
                             height: "40px",
@@ -44,14 +46,12 @@ const Perfil = () => {
                             top: "15%",
                             left: "85%",
                             transform: "translate(-50%, -50%)",
-                            backgroundColor: "#afb4b8"
+                            backgroundColor: "#c1b4c3"
                         }}
-                        onClick={openModal} // Abre el modal al hacer clic en el botón
+                        onClick={openModal}
                     >
-                        <i className="fa-regular fa-pen-to-square"></i>
+                        <i className="fa-regular text-secondary fa-pen-to-square"></i>
                     </button>
-
-                    {/* Renderiza el modal condicionalmente */}
                     {showModal && (
                         <VistaModal
                             show={showModal}
@@ -63,6 +63,7 @@ const Perfil = () => {
                         />
                     )}
                 </div>
+
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
                     <h2>{store.dataUser?.nombre_usuario + " " + store.dataUser?.apellido}</h2>
                 </div>
@@ -141,7 +142,7 @@ const Perfil = () => {
                                 Solicitud de perfil profesional
                             </button>
                         </h2>
-                        
+
                         <div id="collapsePsicologo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div className="accordion-body">
                                 <div className="container mt-3">
@@ -176,9 +177,9 @@ const Perfil = () => {
                                             <label htmlFor="motivacion" className="form-label text-inicio"><strong>¿Por qué quieres trabajar con nosotros?</strong></label>
                                             <textarea className="form-control" id="motivacion" rows="4" placeholder="Cuéntanos tus motivaciones" required></textarea>
                                         </div>
-                                        <div className="d-flex justify-content-center row mt-3">
-                                            <small className="text-inicio text-center">En el caso de que el equipo de RRHH te considere un buen candidato para itegrar nuesto equipo de profesionales, se pondrán en contacto a la brevedad para coordinar una entrevista</small>
-                                            <button type="submit" className="btn btn-primary btn-login-registro mt-3">Enviar Solicitud</button>
+                                        <div className="d-flex justify-content-center row mt-3 ">
+                                            <small className="text-inicio text-center">En el caso de que el equipo de RRHH te considere un buen candidato para integrar nuesto equipo de profesionales, se pondrán en contacto a la brevedad para coordinar una entrevista.</small>
+                                            <button type="submit" className=" col-12 col-md-8 btn btn-primary btn-login-registro mt-3">Enviar Solicitud</button>
                                         </div>
                                     </form>
                                 </div>
