@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/preguntasFrecuentes.css";
 import CardAyuda from "../component/CardAyuda";
 import AcordeonPreguntas from "../component/AcordeonPreguntas";
@@ -9,6 +9,7 @@ import { BsPersonWorkspace } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 
 const preguntasFrecuentes = () => {
+  const [isDevelop, setIsDevelop] =useState(false)
   return (
     <>
     <div className="container">
@@ -18,7 +19,7 @@ const preguntasFrecuentes = () => {
             ¿Cómo podemos ayudarte?
           </h1>
           <div className="row justify-content-center ">
-            <CardAyuda text="EMPLEADOR" />
+            <CardAyuda text="EMPLEADOR" setIsDevelop={setIsDevelop}/>
             <CardAyuda text="PROGRAMADOR" />
           </div>
         </div>

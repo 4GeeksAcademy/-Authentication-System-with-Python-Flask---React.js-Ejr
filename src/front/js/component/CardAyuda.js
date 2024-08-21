@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import "../../styles/cardAyuda.css";
 import { AiFillShop } from "react-icons/ai";
 import { BsPersonBoundingBox } from "react-icons/bs";
+import { IoMdEye } from "react-icons/io";
 
-const CardAyuda = ({ text }) => {
+const CardAyuda = ({ text, setIsDevelop }) => {
+  const [isShown, setIsShown] = useState(false);
+
   return (
     <div className="col-4 bg-white colorGeneral w-40 mx-2 rounded">
       <div>
@@ -17,7 +20,15 @@ const CardAyuda = ({ text }) => {
         </div>
       </div>
       <hr />
-      <p className="text-center">Pulsa <button>Aquí</button> para ver las preguntas más frecuentes</p>
+      <div
+      
+        className="d-flex justify-content-center m-2 align-items-center"
+      >
+        {isShown && <button className="icon-eye"><IoMdEye size={40} /></button>}
+
+        <p className="px-4 fs-5">Ver las preguntas más frecuentes</p>
+        
+      </div>
     </div>
   );
 };
