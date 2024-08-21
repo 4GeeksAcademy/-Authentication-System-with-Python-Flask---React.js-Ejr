@@ -5,23 +5,21 @@ export const Navbar = () => {
   return (
     <div className="main-div">
       <h1>ThunderCats</h1>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> 
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Dark background */}
         <div className="container-fluid">
-          
+          {/* Left Side */}
           <div
             className="left-div"
             style={{ display: 'flex', alignItems: 'center' }}
           >
-            <a
-              className="navbar-brand"
-              href="#"
-              style={{ marginRight: '15px' }}
+            <button
+              className="btn btn-secondary"
+              style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
             >
               Home
-            </a>
+            </button>
             <div
               className="dropdown"
-              data-bs-theme="dark"
               style={{ marginRight: '15px' }}
             >
               <button
@@ -33,35 +31,36 @@ export const Navbar = () => {
               >
                 Categories
               </button>
-              <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButtonDark">
+              <ul className="dropdown-menu dropdown-menu-dark">
                 <li><a className="dropdown-item" id="actionGames" href="#">Action</a></li>
                 <li><a className="dropdown-item" id="roleplayingGames" href="#">RPG</a></li>
                 <li><a className="dropdown-item" id="strategy" href="#">Strategy</a></li>
               </ul>
             </div>
-            <a
-              className="nav-link"
-              href="#"
-              style={{ marginRight: '15px' }}
+            <button
+              className="btn btn-secondary"
+              style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
             >
               Favorites
-            </a>
+            </button>
           </div>
-          
-          
+
+          {/* Right Side */}
           <div className="right-div" style={{ display: 'flex', alignItems: 'center' }}>
-            <a
-              href="#"
-              style={{ marginRight: '15px' }}
+            <Link
+              to="/signup"
+              className="btn btn-secondary"
+              style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
             >
-              <span className="glyphicon glyphicon-user"></span> Sign Up
-            </a>
-            <a href="#">
-              <span className="glyphicon glyphicon-log-in"></span> Login
-            </a>
+              Sign Up
+            </Link>
+            <button className="btn btn-secondary" style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}>
+              Login
+            </button>
           </div>
         </div>
-      </nav>
-    </div>
+      </nav >
+    </div >
   );
 };
+
