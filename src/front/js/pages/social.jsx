@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import '../../styles/social.css';
-
+import Logo from "../../../../public/images/nutri-logo-icon-b.png"
 const Social = () => {
     const navigate = useNavigate();
     const handleGoHome = () => {
@@ -10,12 +10,13 @@ const Social = () => {
     return (
         <div className="social-page">
         <header className="social-header">
-            <h1>Conéctate con Nosotros</h1>
+            <h1 className="header-title">Conéctate con Nosotros</h1>
         </header>
         
         <section className="social-links">
             <h2>Síguenos en Redes Sociales</h2>
-            <ul>
+            <ul className="d-flex justify-content-between">
+                <div className="social-links-container">
                 <li>
                     <a href="https://www.facebook.com/4geeksacademylatinoamerica/" target="_blank" rel="noopener noreferrer">
                         Facebook
@@ -31,7 +32,12 @@ const Social = () => {
                         Instagram
                     </a>
                 </li>
+                </div>
+                <div className="logo-container-social">
+            <img src={Logo} className="logo-social-img" alt="nutri-4-well-logo" />
+            </div>
             </ul>
+            
         </section>
 
         <section className="testimonials">

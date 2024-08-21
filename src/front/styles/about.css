@@ -1,21 +1,35 @@
 @import url('./variables.css');
 
 .about-container {
-    background-color: #f8f9fa; /* Color de fondo suave */
-    padding: 30px; /* Espaciado interno */
-    border-radius: 8px; /* Esquinas redondeadas */
+    background-color: #f8f9fa; 
+    padding: 30px; 
+    border-radius: 8px; 
 }
 
 .about-container h1 {
-    color: #007bff; /* Color del encabezado */
-    font-size: 2.5rem; /* Tamaño del texto del encabezado */
-    font-weight: bold; /* Negrita */
+    color: var(--color-forest); 
+    font-size: 2.5rem; 
+    font-weight: bold; 
 }
 
 .about-container p.lead {
-    font-size: 1.2rem; /* Tamaño del texto */
-    color: #333; /* Color del texto */
-    line-height: 1.6; /* Altura de línea para mejor legibilidad */
-    max-width: 800px; /* Ancho máximo del párrafo */
-    margin: 0 auto; /* Centrar el párrafo */
+    font-size: 1.2rem; 
+    color: var(--color-olive); 
+  background-color: var(--color-forest);
+    line-height: 1.6; 
+    padding: 4px;
+    border-radius: 5px;
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+.nutrition-text, .personal-trainer-text{
+text-align: left;
+color: var(--color-olive); 
+background-color: var(--color-forest);
+padding: 1em;
+border-radius: 5px;
+
+}
+.personal-trainer-title, .nutrition-title {
+    color: var(--color-cream);
 }

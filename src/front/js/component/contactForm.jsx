@@ -31,24 +31,24 @@ const ContactForm = () => {
         {({ isSubmitting }) => (
           <Form className="contact-form">
             <div className="form-group">
-              <label htmlFor="name">Nombre</label>
+              <label className="contact-label" htmlFor="name">Nombre</label>
               <Field type="text" name="name" className="form-control" />
               <ErrorMessage name="name" component="div" className="error-message" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label className="contact-label" htmlFor="email">Email</label>
               <Field type="email" name="email" className="form-control" />
               <ErrorMessage name="email" component="div" className="error-message" />
             </div>
 
             <div className="form-group">
-              <label htmlFor="message">Mensaje</label>
+              <label className="contact-label" htmlFor="message">Mensaje</label>
               <Field as="textarea" name="message" className="form-control" />
               <ErrorMessage name="message" component="div" className="error-message" />
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="submit-button">
+            <button type="submit" disabled={isSubmitting} className="submit-button ">
               Enviar
             </button>
           </Form>
