@@ -166,12 +166,6 @@ def reset_password_token(token):
     db.session.commit()
 
     return jsonify({"msg": "Contraseña actualizada con éxito"}), 200
-
-
-
-
- 
-
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])
 def create_user():

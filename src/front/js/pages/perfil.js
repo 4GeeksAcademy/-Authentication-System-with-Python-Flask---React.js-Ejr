@@ -147,6 +147,7 @@ const Perfil = () => {
                                 Solicitud de perfil profesional
                             </button>
                         </h2>
+                        
                         <div id="collapsePsicologo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div className="accordion-body">
                                 <div className="container mt-3">
