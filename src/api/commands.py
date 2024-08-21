@@ -29,8 +29,8 @@ def setup_commands(app):
 
     #     print("All test users created")
 
-    @app.cli.command("insert-test-products")
-    def insert_test_products():
+    # @app.cli.command("insert-test-products")
+    # def insert_test_products():
 
 #This script will add demo data to the database: 
     
@@ -88,7 +88,6 @@ def setup_commands(app):
                     new_product = Product(name=product["name"], cost=product["cost"])
                     db.session.add(new_product)
                 db.session.commit()
-            
 
             print("Test data inserted successfully.")
         except Exception as e:

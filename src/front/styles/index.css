@@ -8,6 +8,7 @@
 
 body{
     background-color: var(--color-light-gray);
+    position: relative;
 }
 
 body::-webkit-scrollbar {
@@ -29,4 +30,40 @@ body::-webkit-scrollbar-thumb {
     body {
         scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
     }
+}
+
+/* BOTON para Scroll to Top */
+.scroll-to-top {
+    background-color: var(--color-white);
+    outline: 2px solid var(--color-olive);
+    border: 3px solid var(--color-white);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.3s ease;
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top i {
+    color: var(--color-olive);
+    font-size: 2.2rem;
+    padding: 0;
+    height: min-content;
+    width: min-content;
+}
+
+.scroll-to-top:hover {
+    transform: rotateZ(360deg);
 }

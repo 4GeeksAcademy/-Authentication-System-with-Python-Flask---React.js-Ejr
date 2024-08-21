@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import ScrollToTopButton from "../component/ScrollToTopButton.jsx";
 import { Context } from "../store/appContext";
 import BannerProducts from "../../../../public/images/image_480.png";
 import "../../styles/listofproducts.css";
@@ -8,69 +9,66 @@ import Product from "../component/product.jsx";
 const ListOfProducts = () => {
     const { store, actions } = useContext(Context);
     const { products } = store;
-    const [visibleProducts, setVisibleProducts] = useState(6);
+    const [visibleProducts, setVisibleProducts] = useState(6); // Mostrará 6 productos por defecto
 
     useEffect(() => {
         actions.getProducts();
     }, []);
 
     const loadMoreProducts = () => {
-        setVisibleProducts(prevVisible => prevVisible + 3); 
+        setVisibleProducts(prevVisibleProducts => prevVisibleProducts + 3); // Carga 3 productos más
     };
 
     return (
-        
-        <div className="w-100 m-0 p-0 list-of-products-container">
+        <div className="list-of-products-container">
             <div className="invisible-header-box"></div>
-            <div className="banner-container w-100 d-flex">
-                <div className="container-banner-title align-items-center">
-                    <h1 className="banner-products-title">
-                        Nuestros productos
-                    </h1>
-                </div>
-                <img src={BannerProducts} className="banner-img mb-5" alt="banner-img" />
+            <div className="w-100 p-0 banner-container products-list-banner">
+                <h1 className="banner-products-title">
+                    Nuestros productos
+                </h1>
+                <img src={BannerProducts} className="banner-img" alt="banner-img" />
             </div>
 
-            <div className="container-background align-items-center justify-content-center d-flex mt-5">
-                <div className="container background">
-                    <div className="row d-flex container-top-products col-xs-12">
-                        <div className="col-md-4 col-xs-12 container-top-product">
-                            <TopProduct />
-                        </div>
-                        <div className="col-md-4 col-xs-12 container-top-product">
-                            <TopProduct />
-                        </div>
-                        <div className="col-md-4 col-xs-12 container-top-product">
-                            <TopProduct />
-                        </div>
+            <div className="container-background align-items-center justify-content-center d-flex h-50">
+                <div className="row container background d-flex align-center justify-content-evenly">
+                    <div className="top-prod-container">
+                        <TopProduct />
+                    </div>
+                    <div className="top-prod-container">
+                        <TopProduct />
+                    </div>
+                    <div className="top-prod-container">
+                        <TopProduct />
                     </div>
                 </div>
             </div>
 
-            <div className="container background mt-5">
-                <div className="row d-flex container-top-products dynamic-products">
-                    {products && products.length > 0 && 
-                        products.slice(0, visibleProducts).map((product, index) => (
-                            <Product 
-                                className="col-md-4 col-xs-12"
-                                key={index}
-                                id={product.id}
-                                name={product.name}
-                                cost={product.cost}
-                            />
-                        ))}
-                </div>
+            <div className="main-container">
+                {products && products.length > 0 ? (
+                    products.slice(0, visibleProducts).map((product, index) => (
+                        <Product
+                            key={index}
+                            id={product.id}
+                            name={product.name}
+                            cost={product.cost}
+                            image_url={product.image_url}
+                        />
+                    ))
+                ) : (
+                    <h4 className="text-center text-danger m-4">No hay productos disponibles</h4>
+                )}
             </div>
 
-            
-                <div className="btn-container w-100 d-flex justify-content-center mt-4">
+            {visibleProducts < products.length && (
+                <div className="btn-container w-100 d-flex justify-content-center mt-5">
                     <button className="btn-see-more px-5 py-3 rounded" onClick={loadMoreProducts}>
                         Ver más
                     </button>
                 </div>
-           
+            )}
+            <ScrollToTopButton />
         </div>
     );
-}
+};
 
 export default ListOfProducts;

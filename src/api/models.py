@@ -103,12 +103,13 @@ class Favorite(db.Model):
             return f'<Favorite {self.id}>'
 
         def serialize(self):
+            especific_product = Product.query.filter_by(id=self.fav_product).first()
             return {
             "id": self.id,
             "user_id": self.user_id,
             "fav_recipe": self.fav_recipe,
-            "fav_product": self.fav_product
-    }   
+            "fav_product": especific_product.serialize() if especific_product else None
+    } 
 # Recipe id		name	instr
 class Recipe(db.Model):
         id = db.Column(db.Integer, primary_key=True)
