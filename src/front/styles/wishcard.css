@@ -4,6 +4,9 @@
     background: var(--color-white);
     border-radius: 10px;
     overflow: hidden;
+    max-width: 200px;
+    min-width: 200px;
+    align-items: center;
 }
 
 .wish-card-container button{
@@ -15,6 +18,8 @@
     max-width: 200px;
     min-width: 200px;
     overflow: hidden;
+    padding: 1em;
+    padding-bottom: 0;
 }
 
 .wish-card-container .image-container img{

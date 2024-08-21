@@ -92,7 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"address": address,
 							"phone": phone,
 							"is_active": true,
-							"role_id": 2
+							"role_id": 1
 						})
 					})
 console.log(response)
@@ -245,7 +245,15 @@ console.log(response)
 				})
 				const data_result = await response.json()
 				console.log(data_result)
+			},
+
+			scrollToTop: () => {
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
 			}
+			
 		}
 	}
 };
