@@ -144,7 +144,7 @@ const Galery = () => {
         className="custom-modal"
       >
         <Modal.Body className='modalPrincipal'>
-          <img src={modalImage} alt="Evento" className='modalImg' />
+          <img src={modalImage} alt="" className='modalImg' />
         </Modal.Body>
         <Modal.Header closeButton />
       </Modal>
