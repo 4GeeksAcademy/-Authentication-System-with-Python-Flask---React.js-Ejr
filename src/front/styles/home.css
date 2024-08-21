@@ -1,10 +1,27 @@
+.container {
+    display: flex;
+    flex-direction:column;
+    align-items: flex-start;
+}
+
 .login {
     color: #075E81;
     text-align: center;
+    margin-left: 13rem;
+    font-weight: bold;
+    margin-top: 30px;
+
 }
 
-h5 {
-    color: #075E81
+p {
+    color: #075E81;
+    font-size: 12px;
+    margin-top: 30px;
+    margin-bottom: 55px;
+    margin-left: 70px;
+    text-align: center;
+    
+    
 }
 
 .form-control1 {
@@ -35,10 +52,7 @@ span {
 .link-opacity-50-hover {
     text-decoration: none;
     color: #075E81;
-}
-
-p {
-    text-align: center;
+    margin-left: 28rem;
 }
 
 h5 {
@@ -57,6 +71,10 @@ h5 {
 
 .register {
     color: #B4E49D;
+    text-align: center;
+    margin-left: 13rem;
+    font-weight: bold;
+    margin-top: 30px;
 }
 
 .form-control {
@@ -66,6 +84,7 @@ h5 {
     border-radius: 20px;
     font-family: sans-serif;
     padding: 10px;
+    margin-right: 10rem;
 }
 
 .btn-register{
@@ -78,4 +97,22 @@ h5 {
     border-radius: 20px;
     font-size: 16px;
     font-weight: bold;    
+}
+
+.link-opacity-50-hover1 {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -20px;
+    text-decoration: none;
+    color: #075E81;
+}
+
+img {
+    width: 250px;
+}
+
+.container-register {
+    display: flex;
+    flex-direction:column;
+    align-items: flex-end;
 }

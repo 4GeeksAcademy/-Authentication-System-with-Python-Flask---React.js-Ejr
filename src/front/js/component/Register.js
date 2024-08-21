@@ -41,11 +41,12 @@ export const Demo = () => {
 	}
 
 	return (
-		<div className="container">
-			<form onSubmit={handleSubmit}>
-				<h1 className="register">Want to join us?</h1>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+		<div className="container-register">
 
+			<h1 className="register">Want to join us?</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod<br /> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim<br /> veniam, quis nostrud exercitation.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut<br /> labore et dolore magna aliqua.</p>
+			<form className="formulario" onSubmit={handleSubmit}>
 				<div className="mb-3">
 					<label htmlFor="name" className="form-label"></label>
 					<input type="text" className="form-control" id="name" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
@@ -58,17 +59,17 @@ export const Demo = () => {
 
 				<div className="mb-3">
 					<label htmlFor="email" className="form-label"></label>
-					<input type="email" className="form-control" id="email" name="email"placeholder="Email" value={formData.email} onChange={handleChange} />
+					<input type="email" className="form-control" id="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
 				</div>
 
 				<div className="mb-3">
 					<label htmlFor="password" className="form-label"></label>
-					<input type="password" className="form-control" id="password" name="password"placeholder="Password" value={formData.password} onChange={handleChange} />
+					<input type="password" className="form-control" id="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
 				</div>
 
 				<div className="mb-3">
 					<label htmlFor="repeatPassword" className="form-label"></label>
-					<input type="password" className="form-control" id="repeatPassword" name="repeatPassword"placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} />
+					<input type="password" className="form-control" id="repeatPassword" name="repeatPassword" placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} />
 				</div>
 
 				<button type="submit" className="btn-register btn-primary">Submit</button>

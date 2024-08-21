@@ -3,6 +3,9 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import GoogleLogin from 'react-google-login';
+import family from '../../../front/img/family.png'
+import decoration from '../../../front/img/decoration.png'
+
 
 export const Home = () => {
 	const [error, setError] = useState(false);
@@ -32,8 +35,12 @@ export const Home = () => {
 
 	return (
 		<div className="container">
+			<div className="image-family">
+				<img src={decoration}  />	
+			</div>
 			<h1 className="login">Welcome Back!</h1>
-			<h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h5>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+				<br />labore et dolore magna aliqua.</p>
 			<form onSubmit={handleSubmit}>
 				<div className="mb-3">
 					<label htmlFor="exampleInputEmail1" className="form-label"></label>
@@ -61,7 +68,7 @@ export const Home = () => {
 						placeholder="Password"
 					/>
 					<p>
-						<a className="link-opacity-50-hover" href="#">Forgot your password?</a>
+						<a className="link-opacity-50-hover1" href="#">Forgot your password?</a>
 					</p>
 				</div>
 				<div className="button-container">
@@ -76,12 +83,14 @@ export const Home = () => {
 				</div>
 				{error && <p className="text-danger">Todos los campos son obligatorios</p>}
 			</form>
-			<img src="img/Group 2.png" alt="Descripción de tu imagen" />
 			<p>
 				<a className="link-opacity-50-hover" href="https://expert-guacamole-r475gg7979j9cg57-3000.app.github.dev/demo">
 					Not a member? <span>Sign up</span>
 				</a>
 			</p>
+			<div className="image-family">
+				<img src={family}  />	
+			</div>
 		</div>
 	);
 }
