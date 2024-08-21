@@ -4,7 +4,9 @@
 body {
     background-color: white ;
 }
-
+nav + div{
+  min-height: 100vh;
+}
 * {
   box-sizing: border-box !important;
 }
@@ -43,9 +45,23 @@ height: 50px;
 section{
   min-height: 100vh;
 }
-.card{
-    background-color: rgba(11, 135, 147, 0.2) !important;
+.card.profesional {
+  overflow: hidden;
 }
+
+.image-container {
+  height: 100%;
+  width: 100%;
+}
+
+.card.profesional img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
 .text-presentacion{
   background: linear-gradient(90deg, rgba(54, 0, 51, 0.3), rgba(11, 135, 147, 0.3)) !important;
 }
@@ -69,4 +85,96 @@ section{
 
 #shadow-host-companion {
   display: none !important;
+}
+
+/* Estilo base para la tarjeta */
+.card.profesional {
+  height: auto; /* Permite que la tarjeta se ajuste automáticamente */
+  overflow: hidden; /* Evita el desbordamiento */
+  background: linear-gradient(90deg, rgba(54, 0, 51, 0.3), rgba(11, 135, 147, 0.3));
+}
+/* Media query para pantallas a partir de 768px */
+@media (min-width: 768px) {
+  .card.profesional {
+    height: 300px; /* Altura máxima de 300px en pantallas medianas y grandes */
+  }
+}
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 767px) {
+  .card.profesional {
+    margin: 10px; /* Reduce el margen en pantallas pequeñas */
+  }
+
+  .card-body {
+    padding-bottom: 60px; /* Espacio para el botón en pantallas pequeñas */
+  }
+
+  .button-container {
+    position: static; /* Hace que el botón se coloque en el flujo normal del documento */
+    margin-top: 10px; /* Añade margen superior para separación */
+  }
+
+ 
+}
+
+/* Ajustes para pantallas medianas */
+@media (min-width: 768px) and (max-width: 991px) {
+  .card.profesional {
+    margin: 20px; /* Ajusta el margen en pantallas medianas */
+  }
+
+  .card-body {
+    padding-bottom: 60px; /* Espacio para el botón en pantallas medianas */
+  }
+
+  .button-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 992px) {
+  .card.profesional {
+    margin: 30px; /* Ajusta el margen en pantallas grandes */
+  }
+
+  .card-body {
+    padding-bottom: 60px; /* Espacio para el botón en pantallas grandes */
+  }
+
+  .button-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+/* Estilo base para el botón custom-btn */
+.btn.custom-btn {
+  background: linear-gradient(90deg, rgba(54, 0, 51, 0.8), rgba(11, 135, 147, 0.8)); /* Gradiente de fondo que combina con el fondo de la tarjeta */
+  color: #fff; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  transition: background 0.3s ease, transform 0.3s ease; /* Transiciones para el fondo y el tamaño */
+}
+
+/* Efecto hover para el botón custom-btn */
+.btn.custom-btn:hover {
+  background: linear-gradient(90deg, rgba(54, 0, 51, 1), rgba(11, 135, 147, 1)); /* Fondo más intenso al pasar el ratón */
+  transform: scale(1.05); /* Aumenta el tamaño del botón ligeramente */
+}
+
+/* Efecto active para el botón custom-btn */
+.btn.custom-btn:active {
+  background: linear-gradient(90deg, rgba(54, 0, 51, 1), rgba(11, 135, 147, 1)); /* Fondo del botón al hacer clic */
+  transform: scale(0.95); /* Reduce el tamaño del botón ligeramente */
+}
+
+/* Efecto focus para el botón custom-btn */
+.btn.custom-btn:focus {
+  outline: none; /* Quita el contorno por defecto */
+  box-shadow: 0 0 0 2px rgba(11, 135, 147, 0.5); /* Añade una sombra alrededor del botón al estar en foco */
 }

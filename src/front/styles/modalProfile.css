@@ -37,15 +37,23 @@
 }
 
 .image-container {
-    margin-bottom: 20px;
+    width: 250px; /* Tamaño fijo del contenedor de la imagen */
+    height: 250px; /* Tamaño fijo del contenedor de la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Redondea el contenedor para hacerlo circular */
+    overflow: hidden; /* Oculta partes de la imagen que excedan el contenedor */
+    background-color: #f0f0f0; /* Color de fondo para el contenedor */
 }
 
-.profile-image {
-    width: 100%;
-    max-width: 250px; /* Tamaño máximo de la imagen */
-    height: auto;
-    border-radius: 50%;
+.modal-image {
+    width: 100%; /* Asegura que la imagen cubra el 100% del contenedor */
+    height: 100%; /* Asegura que la imagen cubra el 100% del contenedor */
+    object-fit: cover; /* Mantiene la proporción de la imagen y la recorta para ajustarla al contenedor */
+    border-radius: 50%; /* Asegura que la imagen mantenga la forma circular */
 }
+
 
 .modal-actions {
     display: flex;
@@ -64,14 +72,14 @@
         padding: 15px;
     }
 
-    .profile-image {
-        max-width: 200px;
+    .modal-image {
+        max-width: 2px;
     }
 }
 
 @media (max-width: 480px) {
-    .profile-image {
-        max-width: 150px;
+    .modal-image {
+        max-width: 250px;
     }
 
     .modal-actions button {
