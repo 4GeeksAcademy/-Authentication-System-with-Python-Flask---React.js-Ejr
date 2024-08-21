@@ -1,7 +1,14 @@
+/*Login*/
+
 .container {
     display: flex;
     flex-direction:column;
     align-items: flex-start;
+}
+.image-family-2{
+    width: 600px;
+    margin-left: 42rem;
+    margin-top: 10rem;
 }
 
 .login {
@@ -13,7 +20,7 @@
 
 }
 
-p {
+.p1 {
     color: #075E81;
     font-size: 12px;
     margin-top: 30px;
@@ -71,8 +78,7 @@ h5 {
 
 .register {
     color: #B4E49D;
-    text-align: center;
-    margin-left: 13rem;
+    margin-right: 21rem;
     font-weight: bold;
     margin-top: 30px;
 }
@@ -107,12 +113,28 @@ h5 {
     color: #075E81;
 }
 
-img {
-    width: 250px;
-}
+
 
 .container-register {
     display: flex;
     flex-direction:column;
     align-items: flex-end;
+}
+
+.p2 {
+    color: #075E81;
+    font-size: 12px;
+    margin-top: 30px;
+    margin-bottom: 55px;
+    margin-left: 70px;
+    text-align: center;
+}
+
+.p3 {
+    color: #075E81;
+    font-size: 12px;
+    margin-top: 30px;
+    margin-bottom: 55px;
+    margin-left: 70px;
+    text-align: center;
 }

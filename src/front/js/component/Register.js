@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
@@ -13,12 +13,14 @@ export const Demo = () => {
 		repeatPassword: '',
 	});
 
+	const navigate = useNavigate();
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const { name, username, email, password, repeatPassword } = formData;
 
@@ -37,15 +39,18 @@ export const Demo = () => {
 
 		setError(false);
 		// Aquí puedes agregar la lógica para enviar los datos o realizar alguna acción adicional
-		actions.register(formData)
+		const success = await actions.register(formData);
+		if (success) {
+			navigate("/"); 
+		}
 	}
 
 	return (
 		<div className="container-register">
 
 			<h1 className="register">Want to join us?</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod<br /> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim<br /> veniam, quis nostrud exercitation.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut<br /> labore et dolore magna aliqua.</p>
+			<p className="p2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod<br /> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim<br /> veniam, quis nostrud exercitation.</p>
+			<p className="p3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut<br /> labore et dolore magna aliqua.</p>
 			<form className="formulario" onSubmit={handleSubmit}>
 				<div className="mb-3">
 					<label htmlFor="name" className="form-label"></label>
