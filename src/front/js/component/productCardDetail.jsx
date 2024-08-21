@@ -1,28 +1,41 @@
 import React, { useContext, useParams } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/listofproducts.css";
 import ImageGallery from "react-image-gallery";
-import ImgA from '../../../../public/images/cereal.png'
+import NoProductImg from "../../../../public/images/no-product-img.png";
 
-const ProductDetailCard = ({ id, name, cost }) => {
-
+const ProductDetailCard = ({ id, name, cost, image_url }) => {
     const { actions, store } = useContext(Context);
-
+    const navigate = useNavigate();
 
     const images = [
         {
-            original: "https://quaker.lat/cl/sites/cl/files/2023-07/QUAKER%C2%AE%20AVENA%20TRADICIONAL.png",
-            thumbnail: "https://quaker.lat/cl/sites/cl/files/2023-07/QUAKER%C2%AE%20AVENA%20TRADICIONAL.png",
+            original: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
+            thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
         },
         {
-            original: "https://images.lider.cl/wmtcl?source=url%5Bfile%3A%2Fproductos%2F296899d.jpg%5D&scale=size%5B450x450%5D&sink=format%5Bwebp%5D",
-            thumbnail: "https://images.lider.cl/wmtcl?source=url%5Bfile%3A%2Fproductos%2F296899d.jpg%5D&scale=size%5B450x450%5D&sink=format%5Bwebp%5D",
+            original: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
+            thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
         }
     ];
 
-    const verifyExist = (name) => {
-        return store.favorites.some(item => item.name == name)
-    }
+    const isFavorite = () => {
+        return store.favorites.some(favorite => favorite.fav_product.id === id);
+    };
+
+    const toggleFavorite = async () => {
+        if (isFavorite()) {
+            const favorite = store.favorites.find(fav => fav.fav_product.id === id);
+            await actions.deleteFavorite(favorite.id);
+        } else {
+            await actions.addFavorite(id);
+        }
+    };
+
+    const handleNavigate = () => {
+        navigate(`/cart`);
+    };
 
     return (
         <>
@@ -33,8 +46,8 @@ const ProductDetailCard = ({ id, name, cost }) => {
                 />
             </div>
             <div className="detail-container">
-                <button className="heart-container" onClick={() => actions.addFavorite(name)} >
-                    <i className={`${verifyExist(name) && "text-danger"} bi bi-suit-heart-fill`}></i>
+                <button className={`heart-container ${isFavorite() ? "favorite-on" : ""}`} onClick={toggleFavorite} >
+                    <i className="bi bi-suit-heart-fill"></i>
                 </button>
                 <button className="cart-container">
                     <i className="bi bi-cart4"></i>
@@ -50,7 +63,7 @@ const ProductDetailCard = ({ id, name, cost }) => {
                     </div>
                     <button className="buy-btn">Comprar</button>
 
-                    {/* <button className="add-cart-btn">Agregar al carrito</button> */}
+                    <button className="add-cart-btn" onClick={handleNavigate} >Agregar al carrito</button>
                 </div>
             </div>
         </>

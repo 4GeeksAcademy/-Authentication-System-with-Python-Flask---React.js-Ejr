@@ -67,3 +67,14 @@ body::-webkit-scrollbar-thumb {
 .scroll-to-top:hover {
     transform: rotateZ(360deg);
 }
+
+/* ESTILO PARA PRODUCTOS ACTIVOS */
+.favorite-on {
+    background: var(--color-red) !important;
+    color: var(--color-light-gray) !important;
+}
+
+.cart-on {
+    background: var(--color-green) !important;
+    color: var(--color-light-gray) !important;
+}

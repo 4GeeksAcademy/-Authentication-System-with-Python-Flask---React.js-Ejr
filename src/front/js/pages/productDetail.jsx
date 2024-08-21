@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useParams } from "react-router-dom";
 import '../../styles/productdetail.css';
-import ImgA from '../../../../public/images/cereal.png'
+import NoProductImg from "../../../../public/images/no-product-img.png";
 import ProductDetailCard from "../component/productCardDetail.jsx";
 
 const ProductDetail = () => {
@@ -23,6 +23,7 @@ const ProductDetail = () => {
                     id={product.id}
                     name={product.name}
                     cost={product.cost}
+                    image_url={product.image_url}
                 />
             </div>
             <h1 className="border-bottom mt-4 mb-2">
@@ -33,30 +34,18 @@ const ProductDetail = () => {
                     <div className="carousel-inner">
                         <div className="carousel-item active" data-bs-interval="3000">
                             <button className="w-75 mx-auto d-flex align-center justify-content-center border-0 bg-transparent">
-                                <img src={ImgA} className="bg-success d-block w-75" alt="..." loading="lazy" />
+                                <img src={NoProductImg} className="bg-success d-block w-75 rounded" alt="..." loading="lazy" />
                             </button>
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>Prod 1</h5>
-                                <p>$20.00</p>
-                            </div>
                         </div>
                         <div className="carousel-item" data-bs-interval="3000">
                             <button className="w-75 mx-auto d-flex align-center justify-content-center border-0 bg-transparent">
-                                <img src={ImgA} className="bg-danger d-block w-75" alt="..." loading="lazy" />
+                                <img src={NoProductImg} className="bg-danger d-block w-75 rounded" alt="..." loading="lazy" />
                             </button>
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>Prod 2</h5>
-                                <p>$20.00</p>
-                            </div>
                         </div>
                         <div className="carousel-item" data-bs-interval="3000">
                             <button className="w-75 mx-auto d-flex align-center justify-content-center border-0 bg-transparent">
-                                <img src={ImgA} className="bg-warning d-block w-75" alt="..." loading="lazy" />
+                                <img src={NoProductImg} className="bg-warning d-block w-75 rounded" alt="..." loading="lazy" />
                             </button>
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>Prod 1</h5>
-                                <p>$20.00</p>
-                            </div>
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
