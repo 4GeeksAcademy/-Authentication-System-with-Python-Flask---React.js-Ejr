@@ -1,4 +1,6 @@
-/* src/pages/Social.css */
+h2 {
+    color: var(--color-olive);
+}
 
 .social-page {
     font-family: Arial, sans-serif;
@@ -11,6 +13,7 @@
     text-align: center;
     margin-bottom: 20px;
 }
+
 
 .social-links h2, .testimonials h2 {
     font-size: 1.5em;
@@ -28,7 +31,7 @@
 
 .social-links a {
     text-decoration: none;
-    color: #007bff;
+    color: var(--color-forest);
     font-size: 1.2em;
 }
 
@@ -41,7 +44,7 @@
 }
 
 .testimonial {
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-olive);
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -53,7 +56,7 @@
     padding: 10px 20px;
     font-size: 1.2em;
     color: #fff;
-    background-color: #007bff;
+    background-color: var(--color-olive);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -61,11 +64,18 @@
 }
 
 .go-home-button:hover {
-    background-color: #0056b3;
+    background-color: var(--color-forest);
 }
 
 .social-footer {
     text-align: center;
     margin-top: 20px;
     font-size: 0.8em;
+}
+.header-title {
+    display: block;
+}
+
+.logo-social-img{
+    width: 100px;
 }
