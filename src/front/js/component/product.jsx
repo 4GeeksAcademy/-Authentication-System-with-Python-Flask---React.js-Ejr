@@ -6,23 +6,34 @@ import NoProductImg from "../../../../public/images/no-product-img.png";
 
 const Product = ({ id, name, cost, image_url }) => {
     const navigate = useNavigate();
+    const { store, actions } = useContext(Context);
+
+    const isFavorite = () => {
+        return store.favorites.some(favorite => favorite.fav_product.id === id);
+    };
+
+    const toggleFavorite = async () => {
+        if (isFavorite()) {
+            const favorite = store.favorites.find(fav => fav.fav_product.id === id);
+            await actions.deleteFavorite(favorite.id);
+        } else {
+            await actions.addFavorite(id);
+        }
+    };
 
     const handleNavigate = () => {
         navigate(`/product/${id}`);
     };
-    const { store, actions } = useContext(Context);
-    const verifyExist = (name) => {
-        return store.favorites.some(item => item.name == name)
-    }
+
     return (
         <div className="card product-card-container d-flex flex-column m-3">
-            <button className="heart-container" onClick={() => actions.addFavorite(name)} >
-                <i className={`${verifyExist(name) && "text-danger"} bi bi-suit-heart-fill`}></i>
+            <button className={`heart-container ${isFavorite() ? "favorite-on" : ""}`} onClick={toggleFavorite}>
+                <i className="bi bi-suit-heart-fill"></i>
             </button>
             <button className="cart-container">
                 <i className="bi bi-cart4"></i>
             </button>
-            <button onClick={handleNavigate} className="h-100 card-link-button" >
+            <button onClick={handleNavigate} className="h-100 card-link-button">
                 <div className="image-container">
                     <img src={image_url || NoProductImg} alt={name} className="card-img-top" />
                 </div>

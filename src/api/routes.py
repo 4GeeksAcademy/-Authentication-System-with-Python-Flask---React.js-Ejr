@@ -239,7 +239,6 @@ def get_product_image(id):
     except Exception as e:
         return jsonify({"msj":str(e)}), 500
     
-
 #DELETE 
 @api.route('/product/<int:id>', methods=['DELETE'])
 def delete_product(id):
@@ -306,19 +305,18 @@ def add_favorite():
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
-
-    fav_recipe = request.json.get('fav_recipe', None)
+    
     fav_product = request.json.get('fav_product', None)
+    
+    existing_favorite = Favorite.query.filter_by(user_id=user.id, fav_product=fav_product).first()
 
-    if fav_recipe is None and fav_product is None:
-        return jsonify({"msg": "Debe proporcionar una receta o un producto para agregar a favoritos."}), 400
-
-    new_favorite = Favorite(user_id=user.id, fav_recipe=fav_recipe, fav_product=fav_product)
+    if existing_favorite:
+        return jsonify({"msg": "El producto ya está en favoritos."}), 200
+    
+    new_favorite = Favorite(user_id=user.id, fav_product=fav_product)
     db.session.add(new_favorite)
     db.session.commit()
-
-    return jsonify({"msg": "Favorito creado exitosamente."}), 201
-
+    return jsonify({"msg": "Favorito creado."}), 201
 
 #delete Favorite
 #Elimina un favorito identificado por su id y verifica que pertenezca al usuario autenticado.
@@ -338,8 +336,6 @@ def delete_favorite(favorite_id):
     db.session.commit()
 
     return jsonify({"msg": "Favorito eliminado exitosamente."}), 200
-
-
 
 #MERCADO PAGO
 @api.route("/preference", methods=["POST"]) 
