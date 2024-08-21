@@ -4,6 +4,7 @@ import "/workspaces/hablemos-uy-api/src/front/styles/modalProfile.css";
 import defaultAvatar from "../../img/avatar.jpg"
 import TrashButton from "../component/trashButton.jsx";
 import SaveButton from "../component/saveButton.jsx";
+import CameraButton from "../component/cameraButton.jsx";
 
 const VistaModal = ({ show, onClose, imageSrc }) => {
     const { actions, store } = useContext(Context);
@@ -33,10 +34,10 @@ const VistaModal = ({ show, onClose, imageSrc }) => {
         }
     };
     if (!show) return null;
-    console.log(profileImage);
+
 
     return (
-        
+
         <div className="modal-overlay">
             <div className="modal-content">
                 <div className="modal-header">
@@ -57,11 +58,16 @@ const VistaModal = ({ show, onClose, imageSrc }) => {
                     <div className="modal-actions d-flex flex-row gap-3">
                         <div>
                             <label
-                                className="btn btn-light d-flex flex-column align-items-center"
+                                className="d-flex flex-column align-items-center"
                                 htmlFor="fileInput"
+                                style={{ cursor: "pointer" }}
                             >
-                                <i className="fas fa-camera"></i>
-                                <span>Añadir foto</span>
+                                <span onClick={() => document.getElementById("fileInput").click()}>
+                                    <CameraButton />
+                                </span>
+                                <span onClick={() => document.getElementById("fileInput").click()}>
+                                    Añadir foto
+                                </span>
                             </label>
                             <input id="fileInput"
                                 type="file"
@@ -73,26 +79,28 @@ const VistaModal = ({ show, onClose, imageSrc }) => {
                             />
 
                         </div>
-                        <button
+                        <div
                             onClick={handleSave}
-                            className="btn btn-light d-flex flex-column align-items-center"
+                            className="d-flex flex-column align-items-center"
                         >
-                            <i className="far fa-save"></i>
+                            <SaveButton />
                             <span>Guardar</span>
-                        </button>
-                        <SaveButton />
-                        {/* <button
+                        </div>
+
+                        <div
                             onClick={handleDeleteClick}
-                            className="btn btn-light d-flex flex-column align-items-center"
+                            className="d-flex flex-column align-items-center"
                         >
-                            <i className="far fa-trash-alt"></i>
+                            <TrashButton />
                             <span>Eliminar</span>
-                        </button> */}
-                        <TrashButton />
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

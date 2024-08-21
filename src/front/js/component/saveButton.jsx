@@ -2,30 +2,11 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { Context } from "../store/appContext";
 //import defaultAvatar from "../../img/avatar.jpg"
 import styled from "styled-components";
-const SaveButton = (imageSrc) => {
-    const { actions, store } = useContext(Context);
-
-    const [file, setFile] = useState()
-    const [profileImage, setProfileImage] = useState(imageSrc || null);
-    const handleSave = async () => {
-        const cloud_name = 'dooy3klb6'; // Reemplaza con tu nombre de cloud
-        if (profileImage) {
-
-            if (store.dataUser && store.dataUser.correo) {
-                const response = await actions.uploadImage(file, cloud_name);
-                if (response) {
-                    setProfileImage(response)
-                }
-            } else {
-                console.error("User Correo is undefined or null.");
-            }
-        } else {
-            console.error("No hay una imagen seleccionada para guardar.");
-        }
-    };
+const SaveButton = () => {
+  
   return (
     <StyledWrapper>
-      <button className="action_has has_saved" aria-label="save" type="button" onClick={handleSave}>
+      <button className="action_has has_saved" aria-label="save" type="button">
         <svg
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
@@ -64,18 +45,21 @@ const SaveButton = (imageSrc) => {
 
 const StyledWrapper = styled.div`
   .action_has {
+  width: 50px;
+  height: 50px;
   --color: 0 0% 60%;
-  --color-has: 211deg 100% 48%;
+  --color-has: 211deg 100% 48%;    
   --sz: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(var(--sz) * 2.5);
-  width: calc(var(--sz) * 2.5);
   padding: 0.4rem 0.5rem;
   border-radius: 0.375rem;
-  border: 0.0625rem solid hsl(var(--color));
+  border-color:white;
+  background-color: white; /* Fondo blanco */
+  color: black; /* Texto y bordes negros */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .has_saved:hover {
@@ -92,9 +76,9 @@ const StyledWrapper = styled.div`
   height: calc(var(--sz) * 1.75);
   width: calc(var(--sz) * 1.75);
   --ease: cubic-bezier(0.5, 0, 0.25, 1);
-  --zoom-from: 1.75;
+  --zoom-from: 1;
   --zoom-via: 0.75;
-  --zoom-to: 1;
+  --zoom-to: 0.;
   --duration: 1s;
 }
 

@@ -1,24 +1,11 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
-import { Context } from "../store/appContext";
-import defaultAvatar from "../../img/avatar.jpg"
+import React from "react";
 import styled from "styled-components";
 
-const TrashButton = (imageSrc) => {
-    const { actions, store } = useContext(Context);
-
-
-    const [profileImage, setProfileImage] = useState(imageSrc || null);
-
-    const handleDeleteClick = () => {
-
-        setProfileImage(defaultAvatar);
-        actions.saveProfileImg(null)
-    };
-    console.log(profileImage);
+const TrashButton = () => {
     
   return (
     <StyledWrapper>
-      <button className="button" onClick={handleDeleteClick}>
+      <button className="button">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -66,14 +53,14 @@ const StyledWrapper = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: rgb(20, 20, 20);
+  background-color: white;
   border: none;
   font-weight: 600;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition-duration: 0.3s;
   overflow: hidden;
@@ -87,7 +74,7 @@ const StyledWrapper = styled.div`
 }
 
 .svgIcon path {
-  fill: white;
+ fill: black;
 }
 
 .button:hover {
