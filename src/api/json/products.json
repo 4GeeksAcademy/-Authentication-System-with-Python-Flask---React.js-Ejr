@@ -1,10 +1,33 @@
 [
     {
-      "name": "Proteina",
-      "cost": "22"
+      "name": "Proteina Whey 1kg",
+      "cost": "50"
     },
     {
-      "name": "Barras de proteina",
-      "cost": "1"
+      "name": "Aminoacidos BCAA 200gr",
+      "cost": "25"
+    },
+    {
+      "name": "Glutamina 500g",
+      "cost": "35"
+    },
+    {
+      "name": "Multivitaminico 90 capsulas",
+      "cost": "15"
+    },
+    {"name": "Omega 3 120 capsulas",
+      "cost": "15"
+    },
+    {"name": "Pre-Entrenamiento 300g",
+      "cost": "30"
+    },
+    {"name": "Colageno Hidrolizado 400gr",
+      "cost": "40"
+    },
+    {"name": "Barra Energetica 12 unidades",
+      "cost": "18"
+    },
+    {"name": "Creatina 300g",
+      "cost": "20"
     }
   ]

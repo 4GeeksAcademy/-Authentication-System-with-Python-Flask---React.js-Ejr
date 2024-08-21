@@ -95,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"role_id": 1
 						})
 					})
-
+console.log(response)
 					if (response.status === 201) {
 						let data = await response.json()
 
@@ -245,7 +245,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				const data_result = await response.json()
 				console.log(data_result)
+			},
+
+			scrollToTop: () => {
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
 			}
+			
 		}
 	}
 };

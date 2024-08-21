@@ -10,14 +10,6 @@ import ScrollBanner from "../../../../public/images/scroll-banner-bg.png";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const [file, setFile] = useState()
-	const uploadImage = async (image) =>{
-		const data = new FormData()
-		data.append('image', file)
-		console.log(data)
-		const response = await actions.uploadImage(data)
-	}
-	console.log(store.currentUser)
 	return (
 		<div className="home-container mx-auto w-100 row">
 			{/* **********___BANNER___********** */}
@@ -28,9 +20,6 @@ export const Home = () => {
 				</div>
 				<img src={GirlImg} />
 			</div>
-
-			<input className="form-control" name="image"  type="file"  onChange={(e) => {setFile(e.target.files[0])}} id="image"/>
-			<button className="btn btn-primary" onClick={()=> uploadImage()}>Subir</button>
 			{/* **********___PRIMER___SECCION___********** */}
 			<section className="first-section mx-auto col-10">
 				<article className="d-flex flex-column align-center justify-content-between">

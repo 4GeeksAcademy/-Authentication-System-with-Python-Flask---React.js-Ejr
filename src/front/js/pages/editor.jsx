@@ -1,6 +1,7 @@
 import React from "react";
 import '../../styles/editor.css';
 import EditHome from "../component/editHome.jsx";
+import AddProduct from "../component/addProduct.jsx";
 
 
 const Editor = () => {
@@ -20,7 +21,7 @@ const Editor = () => {
             </ul>
             <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <EditHome />
+                    <AddProduct />
                 </div>
                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <EditHome />
