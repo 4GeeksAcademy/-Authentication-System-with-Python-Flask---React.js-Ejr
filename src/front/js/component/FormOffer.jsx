@@ -14,6 +14,7 @@ export const FormOffer = () => {
         location: "",
         salary: "",
         experience: "",
+        fecha_publicacion: null,
         description: "",
     });
     const [selectedFile, setSelectedFile] = useState(null);
@@ -67,8 +68,11 @@ export const FormOffer = () => {
             setError('Por favor, completa todos los campos y selecciona al menos una tecnología.');
         } else {
             setError('');
+            const offerDate = new Date().toLocaleDateString();
+            const updatedOfferDate = {...formData, ...fecha_publicacion}
+            
+            
             console.log('Datos del formulario enviados correctamente: ', formData);
-            // Reset form data and file
             setFormData({
                 photo: null,
                 title: "",
@@ -92,9 +96,9 @@ export const FormOffer = () => {
                     <div className="col-12">
                         <div className="form-header text-center">
                             <h2 className="display-4  fw-bold">
-                                ¡Bienvenido de nuevo!
+                                ¡Lleva Tu Equipo al Siguiente Nivel!
                             </h2>
-                            <span className="fw-bold">Crea tus ofertas y contacta con los mejores</span>
+                            <span className="fw-bold">Completa el formulario para publicar tu oferta de empleo y conecta con profesionales calificados.</span>
                         </div>
                     </div>
                 </div>
