@@ -61,6 +61,7 @@ def delete_user(user_id):
     else:
         return jsonify({"error": "User not found"}), 404
 
+
 # Rutas protegidas por JWT
 @api.route('/crear_curso', methods=['POST'])
 @jwt_required()
@@ -74,8 +75,9 @@ def ver_curso():
 
 @api.route('/login', methods=['POST'])
 def login():
-    email = request.json.get('email', None)
-    password = request.json.get('password', None)
+    print("Request JSON:", request.json)
+    email = request.json.get('email')
+    password = request.json.get('password')
     user = User.query.filter_by(email=email).first()
     if user:
         if user.password == password:
@@ -84,8 +86,10 @@ def login():
         return jsonify({'success': False, 'msg': 'Combinación usuario/contraseña no es válida'}), 400
     return jsonify({'success': False, 'msg': 'El correo electrónico no tiene una cuenta asociada'}), 404
 
+
 @api.route('/signup', methods=['POST'])
 def signup():
+
     email = request.json.get('email', None)
     password = request.json.get('password', None)
     if not email or not password:
