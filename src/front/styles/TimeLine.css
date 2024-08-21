@@ -1,0 +1,11 @@
+.search-bar {
+    position: relative;
+    top: 25px;
+    max-width: 800px;
+}
+
+.btn-search {
+    background-color: rgb(103, 147, 174);
+    padding: 5px 11px;
+    height: 100%;
+}
