@@ -31,11 +31,7 @@ const BookAppointmentUnregisteredUser = () => {
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
         setServices(data);
-        // console.log("set service data", setServices);
-        // console.log("service data", data);
-      } catch (error) {
-        // console.error("Error getting services:", error);
-      }
+      } catch (error) {}
     };
     getServices();
   }, [apiUrl]);
@@ -43,32 +39,30 @@ const BookAppointmentUnregisteredUser = () => {
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.focus();
-      // console.log("calendar details", datePickerRef.current);
     }
   }, [currentStep]);
 
   const handleServiceChange = (e) => {
     const selectServiceId = e.target.value;
-    // console.log("selected service id", selectServiceId);
     setServiceChosen(selectServiceId);
   };
 
   useEffect(() => {
-    // console.log("service list", services);
     if (serviceChosen) {
       const selectedServiceId = parseInt(serviceChosen, 10);
       const selectedService = services.find(
         (service) => service.id === selectedServiceId
       );
-      // console.log("service being selected", selectedService);
       if (selectedService) {
-        // const nameOfService = selectedService.name;
-        // console.log("showing service name", selectedService.name);
-        // console.log("showing service id", selectedService.id);
-        // console.log(nameOfService);
       }
     }
   }, [serviceChosen, services]);
+
+  const selectedService = services.find(
+    (service) => service.id === parseInt(serviceChosen, 10)
+  );
+  
+  const serviceName = selectedService ? selectedService.name : "Not selected";
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
@@ -158,7 +152,6 @@ const BookAppointmentUnregisteredUser = () => {
     setAppointmentDate(date);
     if (date) {
       checkSlotAvailability(date);
-      // console.log("date details set", setAppointmentDate);
     }
   };
 
@@ -180,8 +173,6 @@ const BookAppointmentUnregisteredUser = () => {
       }
       await checkSlotAvailability(appointmentDate);
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-      // console.log("date details", dateFormat);
-
       if (!isAvailable) {
         return;
       }
@@ -321,11 +312,9 @@ const BookAppointmentUnregisteredUser = () => {
       }
 
       const appointmentData = await submitAppointment.json();
-      // console.log("Appointment details:", appointmentData);
 
       navigate("/accountandappointmentcreated");
     } catch (error) {
-      // console.error("Failed to create account or register car details", error);
       setError("An error occurred. Please try again.");
     }
   };
@@ -491,7 +480,7 @@ const BookAppointmentUnregisteredUser = () => {
                 <strong>Car Make & Model:</strong> {carModel}
               </p>
               <p>
-                <strong>Service:</strong> {serviceChosen}
+                <strong>Service:</strong> {serviceName}
               </p>
               <p>
                 <strong>Appointment Date:</strong>{" "}
