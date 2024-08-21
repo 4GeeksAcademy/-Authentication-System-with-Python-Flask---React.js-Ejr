@@ -47,7 +47,7 @@ export const Register = () => {
 	const onSuccess = (response) => {
 		const userData = response.profileObj
 		//conectar con los actions de flux para registrar usuario y luego con la base de datos
-		console.log(userData)
+		//console.log(userData)
 		const registro = actions.register(userData.givenName, userData.familyName, null, null, null, userData.imageUrl, userData.email, userData.googleId)
 		if (registro) {
 			navigate('/vista-login')
@@ -71,9 +71,10 @@ export const Register = () => {
 		},
 		validationSchema,
 		onSubmit: async (values) => {
-			console.log(values);
+			//console.log(values);
 
-			const registro = await actions.register(values.nombre, values.apellido, "1990-01-01", values.codigo_de_area, values.telefono, null, values.correo, values.clave)
+
+			const registro = await actions.register(values.nombre, values.apellido, values.fecha_de_nacimiento, values.codigo_de_area, values.telefono, null, values.correo, values.clave)
 			if (registro) {
 				navigate('/vista-login')
 			}
@@ -122,46 +123,48 @@ export const Register = () => {
 					</label>
 					<input
 						type="date"
-						className="form-control"
+						className="form-control  bday"
 						name="fecha_de_nacimiento"
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 						value={formik.values.fecha_de_nacimiento}
 					/>
+
 					{formik.touched.fecha_de_nacimiento && formik.errors.fecha_de_nacimiento ? (
 						<div className="text-danger">{formik.errors.fecha_de_nacimiento}</div>
 					) : null}
 				</div>
 
 				<div className="col-md-6">
-					<label htmlFor="codigo_de_area" className="form-label text-start">
-						Código de Área:
-					</label>
-					<input
-						list="codigos-pais"
-						className="form-control"
-						id="codigo_de_area"
-						name="codigo_de_area"
-						placeholder="+589"
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						value={formik.values.codigo_de_area}
-					/>
-					{formik.touched.codigo_de_area && formik.errors.codigo_de_area ? (
-						<div className="text-danger">{formik.errors.codigo_de_area}</div>
-					) : null}
+                <label htmlFor="codigo_de_area" className="form-label text-start">
+                    Código de Área:
+                </label>
 
-					<datalist id="codigo_de_area">
-						<option value="+54">Argentina</option>
-						<option value="+56">Chile</option>
-						<option value="+57">Colombia</option>
-						<option value="+52">México</option>
-						<option value="+595">Paraguay</option>
-						<option value="+51">Perú</option>
-						<option value="+589">Uruguay</option>
-						<option value="+58">Venezuela</option>
-					</datalist>
-				</div>
+                <input
+                    list="codigos-pais"
+                    className="form-control"
+                    id="codigo_de_area_input"
+                    name="codigo_de_area"
+                    placeholder="+589"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.codigo_de_area}
+                />
+                <datalist id="codigos-pais">
+                    <option value="+54">Argentina (+54)</option>
+                    <option value="+56">Chile (+56)</option>
+                    <option value="+57">Colombia (+57)</option>
+                    <option value="+52">México (+52)</option>
+                    <option value="+595">Paraguay (+595)</option>
+                    <option value="+51">Perú (+51)</option>
+                    <option value="+598">Uruguay (+598)</option>
+                    <option value="+58">Venezuela (+58)</option>
+                </datalist>
+
+                {formik.touched.codigo_de_area && formik.errors.codigo_de_area ? (
+                    <div className="text-danger">{formik.errors.codigo_de_area}</div>
+                ) : null}
+            </div>
 
 				<div className="col-md-6">
 					<input
@@ -248,7 +251,7 @@ export const Register = () => {
 					Inicia sesión
 				</Link>
 			</p>
-			
+
 		</div>
 
 	);
