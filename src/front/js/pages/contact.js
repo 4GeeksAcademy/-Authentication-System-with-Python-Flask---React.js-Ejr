@@ -17,13 +17,13 @@ export const Contact = () => {
       
         <div className="contact-info">
           <p>
-            <i className="fas fa-phone-alt"></i> <strong>Teléfono: </strong> +34 123 456 789
+            <i className="fas fa-phone-alt"></i> <div className="text-secondary"><strong>Teléfono: </strong> +34 123 456 789</div>
           </p>
           <p>
-            <i className="fas fa-map-marker-alt"></i> <strong>Dirección: </strong> Barcelona, España
+            <i className="fas fa-map-marker-alt"></i>  <div className="text-secondary"><strong>Dirección: </strong> Barcelona, España</div>
           </p>
           <p>
-            <i className="fas fa-envelope"></i> <strong>Correo Electrónico: </strong> loopy@gmail.com
+            <i className="fas fa-envelope"></i> <div className="text-secondary"><strong>Correo Electrónico: </strong> loopy@gmail.com</div>
           </p>
         </div>
       </section>
@@ -32,14 +32,14 @@ export const Contact = () => {
       <section className="contact-form-section">
         <form className="row g-3 justify-content-center">
           
-          <div className="col-md-6">
+          <div className="col-6">
             <label htmlFor="first-name" className="form-label">
               Nombre
             </label>
             <input type="text" className="form-control" id="first-name" placeholder="Ingresa tu nombre" />
           </div>
 
-          <div className="col-md-6">
+          <div className="col-6">
             <label htmlFor="last-name" className="form-label">
               Apellido
             </label>
