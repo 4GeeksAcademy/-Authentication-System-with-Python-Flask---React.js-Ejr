@@ -63,7 +63,7 @@ def setup_commands(app):
                      address="Av. Brasil 123",
                      phone="099222222",
                      is_active=True,
-                     role_id=role[0].id
+                     role_id=role[1].id
                      ),
                      
                     User(name="Jorge",
@@ -72,7 +72,7 @@ def setup_commands(app):
                      address="Bvar Espana 111",
                      phone="099333333",
                      is_active=True,
-                     role_id=role[1].id
+                     role_id=role[2].id
                      )
                     ]
             db.session.add_all(users)
