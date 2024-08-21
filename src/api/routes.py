@@ -161,6 +161,61 @@ def login():
         return jsonify({'login': False, 'msg': 'La contraseña es incorrecta'}),400
     return jsonify({'login': False, 'msg': 'No hay ningún usuario registrado con los datos introducidos'}),404
 
+#Crear Oferta
+@api.route('/crearOferta', methods=['POST'])
+@jwt_required()
+def crear_oferta():
+    empleador_id = get_jwt_identity()
+
+    empleador = Empleador.query.filter_by(user_id=empleador_id).first()
+    if not empleador:
+        return jsonify({"success": False, "msg": "El usuario no es un empleador"}), 400
+
+    name = request.json.get("name")
+    descripcion = request.json.get("descripcion")
+    salario = request.json.get("salario")
+    plazo = request.json.get("plazo")
+    modalidad = request.json.get("modalidad")
+    experiencia_minima = request.json.get("experiencia_minima")
+    fecha_publicacion_str = request.json.get("fecha_publicacion")
+
+    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str:
+        return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
+
+    try:
+        modalidad_enum = Modalidad(modalidad)
+    except ValueError:
+        return jsonify({"success": False, "msg": "Modalidad no válida"}), 400
+
+    try:
+        fecha_publicacion = datetime.strptime(fecha_publicacion_str, "%Y-%m-%d").date()
+    except ValueError:
+        return jsonify({"success": False, "msg": "Fecha de publicación no válida"}), 400
+
+    nueva_oferta = Ofertas(
+        name=name,
+        descripcion=descripcion,
+        salario=salario,
+        plazo=plazo,
+        modalidad=modalidad_enum,
+        experiencia_minima=experiencia_minima,
+        fecha_publicacion=fecha_publicacion,
+        empleador_id=empleador.id
+    )
+
+    try:
+        db.session.add(nueva_oferta)
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Oferta creada exitosamente", "oferta": nueva_oferta.serialize()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al crear la oferta: {str(e)}"}), 500
+
+
+
+
+
+
 if __name__ == '__main__':
     api.run(host='0.0.0.0', port=3245, debug=True)
         
