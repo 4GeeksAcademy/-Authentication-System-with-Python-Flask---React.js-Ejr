@@ -10,7 +10,7 @@ const Discover = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Con esto se verifica si ya inicioo sesion
+    // con esto se verifica si ya inicioo sesion
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
   }, []);
@@ -34,7 +34,7 @@ const Discover = () => {
   };
 
   const handleAddEvent = () => {
-    // Lógica para agregar un evento
+    // agregar evento
     console.log("Agregar un nuevo evento");
   };
 
