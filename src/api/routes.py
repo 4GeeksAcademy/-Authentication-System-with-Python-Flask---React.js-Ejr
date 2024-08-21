@@ -212,6 +212,18 @@ def crear_oferta():
         db.session.rollback()
         return jsonify({"success": False, "msg": f"Error al crear la oferta: {str(e)}"}), 500
 
+@api.route('/oferta/<int:id>', methods=['GET'])
+def get_offer(id):
+    try:
+        oferta = Ofertas.query.get(id)
+
+        if not oferta:
+            return jsonify({"success": False, "msg": "Oferta no encontrada"}), 404
+        return jsonify({"success": True,"msg": 'Oferta creada con exito!', "oferta": oferta.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
+
 
 
 
