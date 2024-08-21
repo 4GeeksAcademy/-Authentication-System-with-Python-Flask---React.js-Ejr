@@ -9,12 +9,11 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from flask import jsonify
 from flask_jwt_extended.exceptions import NoAuthorizationError, InvalidHeaderError, RevokedTokenError
 from werkzeug.exceptions import Unauthorized
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 import os
 from dotenv import load_dotenv
-from itsdangerous.serializer import Serializer
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
-from flask_mail import Message, Mail
+from flask_mail import Message
 
 load_dotenv()  # Cargamos las variables del archivo .env
 SECRET_KEY = os.getenv("SECRET_KEY")

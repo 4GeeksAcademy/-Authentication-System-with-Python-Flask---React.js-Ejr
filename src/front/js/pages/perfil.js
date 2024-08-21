@@ -1,16 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/perfil.css"
 import VistaModal from "../component/vistaModal.jsx";
-import Swal from 'sweetalert2'
 import defaultAvatar from "../../img/avatar.jpg"
 
 
 const Perfil = () => {
 
     const { store, actions } = useContext(Context)
-    const navigate = useNavigate()
 
     useEffect(() => {
         actions.getPerfilUsuario()
@@ -22,9 +19,6 @@ const Perfil = () => {
 
 
     }, []);
-    useEffect(() => {
-        console.log(store.dataUser)
-    }, [store.dataUser])
 
     const [showModal, setShowModal] = useState(false);
 
@@ -155,32 +149,32 @@ const Perfil = () => {
                                     <h4 className="mb-3 text-inicio">Formulario de Solicitud de Perfil Profesional</h4>
                                     <form>
                                         <div className="mb-3">
-                                            <label for="nombreCompleto" className="form-label text-inicio"><strong>Nombre Completo</strong></label>
+                                            <label htmlFor="nombreCompleto" className="form-label text-inicio"><strong>Nombre Completo</strong></label>
                                             <input type="text" className="form-control" id="nombreCompleto" placeholder="Ingrese su nombre completo" required />
                                         </div>
 
                                         <div className="mb-3">
-                                            <label for="cedula" className="form-label text-inicio"><strong>Cédula</strong></label>
+                                            <label htmlFor="cedula" className="form-label text-inicio"><strong>Cédula</strong></label>
                                             <input type="text" className="form-control" id="cedula" placeholder="Ingrese su cédula" required />
                                         </div>
 
                                         <div className="mb-3">
-                                            <label for="correo" className="form-label text-inicio"><strong>Correo Electrónico</strong></label>
+                                            <label htmlFor="correo" className="form-label text-inicio"><strong>Correo Electrónico</strong></label>
                                             <input type="email" className="form-control" id="correo" placeholder="Ingrese su correo electrónico" required />
                                         </div>
 
                                         <div className="mb-3">
-                                            <label for="direccion" className="form-label text-inicio"><strong>Dirección</strong></label>
+                                            <label htmlFor="direccion" className="form-label text-inicio"><strong>Dirección</strong></label>
                                             <input type="text" className="form-control" id="direccion" placeholder="Ingrese su dirección" required />
                                         </div>
 
                                         <div className="mb-3">
-                                            <label for="escolaridad" className="form-label text-inicio"><strong>Escolaridad que Acredite Conocimientos</strong></label>
+                                            <label htmlFor="escolaridad" className="form-label text-inicio"><strong>Escolaridad que Acredite Conocimientos</strong></label>
                                             <input type="file" className="form-control" id="escolaridad" multiple required />
                                         </div>
 
                                         <div className="mb-3">
-                                            <label for="motivacion" className="form-label text-inicio"><strong>¿Por qué quieres trabajar con nosotros?</strong></label>
+                                            <label htmlFor="motivacion" className="form-label text-inicio"><strong>¿Por qué quieres trabajar con nosotros?</strong></label>
                                             <textarea className="form-control" id="motivacion" rows="4" placeholder="Cuéntanos tus motivaciones" required></textarea>
                                         </div>
                                         <div className="d-flex justify-content-center row mt-3 ">

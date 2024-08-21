@@ -44,8 +44,8 @@ setup_commands(app)
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-agent-secret-86"
 jwt = JWTManager(app)
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)  # Token de acceso válido por 15 minutos
-app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=1)     # Refresh token válido por 1 días
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=30)  # Token de acceso válido por 30 minutos
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=15)     # Refresh token válido por 15 días
 
 # Configuración del correo electrónico para reestablecer contraseña
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')

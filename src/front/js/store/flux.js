@@ -1,5 +1,4 @@
 import Swal from 'sweetalert2'
-import axios from 'axios';
 
 const getState = ({ getStore, getActions, setStore }) => {
 
@@ -16,9 +15,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 
 			//Obtengo el token de usuario para la sesión
-			iniciarSesion: async (correo, clave) => {
-					 
-				const actions = getActions(); // Obtén todas las acciones disponibles
+			iniciarSesion: async (correo, clave) => {					 
+				const actions = getActions();
+				await actions.verificarToken();  // Verifica el token antes de proceder
 				const options = {
 					method: 'POST',
 					headers: {
@@ -40,9 +39,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ currentUser: { correo: correo } });
 						setStore({ logged: true });
 
-						// Configuramos el temporizador para renovar el token
-						setTimeout(() => actions.refreshToken(), (data.expires_in - 60) * 1000); // Se renueva un minuto antes de expirar
-					
 						return true;
 					} else if (response.status === 400) {
 						throw new Error('Bad Request: ' + data.msg);
@@ -193,7 +189,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						'Content-Type': 'application/json',
 						'Authorization': `Bearer ${refresh_token}`,
 					},
-					body: JSON.stringify({ refresh_token })
 				};
 
 				try {
@@ -207,6 +202,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error al refrescar el token: ', error);
 					actions.logout(); // Si el refresh falla, cierra la sesión
+				}
+			},
+
+			// Función para verificar cuando el token está a punto de expirar
+			verificarToken: async () => {
+				const token = localStorage.getItem('token');
+				if (!token) return false;
+			
+				const tokenData = JSON.parse(atob(token.split('.')[1])); // Decodifica el payload del JWT
+				const expTime = tokenData.exp * 1000; // Tiempo de expiración en milisegundos
+				const now = Date.now();
+			
+				if (expTime - now < 2 * 60 * 1000) { // Si faltan menos de 2 minutos
+					await actions.refreshToken();
 				}
 			},
 
@@ -316,7 +325,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				const inputFile = new FormData()
 				inputFile.append("file", data)
-				console.log(inputFile.get("file"));
 
 				inputFile.append('upload_preset', 'hablemosuy');
 
@@ -326,7 +334,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 
 				const fileData = await response.json();
-				console.log("Foto URL:", fileData.secure_url);
 				if (fileData.secure_url) {
 					const result = await actions.saveProfileImg(fileData.secure_url)
 					if(result){
@@ -336,7 +343,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			saveProfileImg : async (url) =>{
-				console.log(url);
 				
 				const store = getStore()
 				const updateResponse = await fetch(process.env.BACKEND_URL + `/usuario/foto`, {
