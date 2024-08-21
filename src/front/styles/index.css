@@ -1,9 +1,11 @@
 body{
     height: 100vh;
+    /*poner tamaño mínimo del 100% de la pantalla*/
 }
 #app{
     height: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
+    /*hace que el contenido del body ocupe todo el espacio del body*/
 }
