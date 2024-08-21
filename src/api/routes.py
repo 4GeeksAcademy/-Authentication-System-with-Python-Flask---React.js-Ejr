@@ -202,7 +202,7 @@ def create_user():
         )
          # Hasheamos y almacenamos la contraseña
         if data["clave"]:
-             user_created.set_password(data["clave"])
+            user_created.set_password(data["clave"])
 
         db.session.add(user_created)
         db.session.commit()
