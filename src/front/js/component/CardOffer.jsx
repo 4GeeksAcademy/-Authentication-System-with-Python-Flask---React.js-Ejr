@@ -18,7 +18,9 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                     <span className="card-offer-company mb-1">{company} - {location}</span>
                 </div>
                 <div className="card-offer-description text-muted">
-                    {description}
+                    <p>
+                        {description}
+                    </p>
                 </div>
                 <div className="card-offer-footer d-flex justify-content-between align-items-center mt-2">
                     <div className="card-offer-details text-muted">

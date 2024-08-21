@@ -12,7 +12,7 @@ export const FormOffer = () => {
         technologies: [],
         contract: "",
         plazo: "",
-        modality: "Remoto",
+        modality: "Teletrabajo",
         location: "",
         salary: "",
         experience: "",
@@ -142,9 +142,8 @@ export const FormOffer = () => {
                                     value={formData.modality}
                                 >
                                     <option value="">Seleccione una opción</option>
-                                    <option value="Remoto">Remoto</option>
+                                    <option value="Remoto">Teletrabajo</option>
                                     <option value="Presencial">Presencial</option>
-                                    <option value="Híbrido">Híbrido</option>
                                 </select>
                             </div>
                             <div className="col-4">
@@ -159,9 +158,9 @@ export const FormOffer = () => {
                                 >
                                     <option value="">Seleccione una opción</option>
                                     <option value="Sin experiencia">Sin experiencia</option>
-                                    <option value="Entre 1 y 2 años">Entre 1 y 2 años</option>
-                                    <option value="Entre 3 y 5 años">Entre 3 y 5 años</option>
-                                    <option value="Más de 5 años">Más de 5 años</option>
+                                    <option value="Junior">Junior</option>
+                                    <option value="Mid-senior">Mid-senior</option>
+                                    <option value="Senior">Senior</option>
                                 </select>
                             </div>
                         </div>
@@ -235,14 +234,15 @@ export const FormOffer = () => {
                                     placeholder="Introduzca el plazo límite"
                                     name="plazo"
                                     id="plazo"
-                                    maxLength="20"
+                                    minLength="120"
+                                    maxLength="120"
                                     required
                                     onChange={handleChange}
                                     value={formData.plazo}
                                 />
                             </div>
                         </div>
-                        <div className="row my-5">
+                        <div className="row my-3">
                             <div className="col-6">
                                 <div className="form-group">
                                     <label className="form-label text-secondary fw-bold">Tecnologías</label>
@@ -267,8 +267,8 @@ export const FormOffer = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-5">
-                            <div className="col-6">
+                        <div className="row">
+                            <div className="col-6 box-description">
                                 <label htmlFor="description" className="form-label text-muted fw-bold">Descripción</label>
                                 <textarea
                                     className="form-control mt-2"

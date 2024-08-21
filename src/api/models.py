@@ -162,11 +162,11 @@ class Ofertas(db.Model):
     salario = db.Column (db.Integer, nullable=False)
     plazo = db.Column(db.String(100), nullable=False)
     modalidad = db.Column(db.Enum(Modalidad), nullable=False)
-    experiencia_minima = db.Column (db.String (100))
+    experiencia_minima = db.Column (db.Enum(Experience), nullable=False)
     fecha_publicacion = db.Column(db.Date, nullable=False)
     postulados= db.relationship ("Postulados", backref= "ofertas", lazy=True)
     favoritos = db.relationship ("Favoritos", backref="ofertas", lazy=True)
-    empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id",))
+    empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"))
    
 
     def __repr__(self):

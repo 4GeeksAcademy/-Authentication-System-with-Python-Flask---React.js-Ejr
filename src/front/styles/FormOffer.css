@@ -29,8 +29,8 @@
 }
 .img-container{
     position: relative;
-    bottom: 280px;
-    left: 230px;
+    bottom: 300px;
+    left: 110px;
 }
 .img-thumbnail {
     max-width: 100%; 
@@ -52,4 +52,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.box-description{
+    position: relative;
+    top: 32px;
 }
