@@ -5,24 +5,33 @@
     padding: 20px;
 }
 
-.profile-image {
-    width: 150px; /* O cualquier otro valor que prefieras */
-    height: 150px; /* Mantener las dimensiones iguales para hacerla circular */
-    object-fit: cover; /* Asegura que la imagen ocupe todo el espacio del contenedor sin distorsionarse */
-    border-radius: 50%; /* Para hacerla circular */
+.profile-image-container {
+    width: 100%;
+    max-width: 250px; /* Ajusta según sea necesario */
+    aspect-ratio: 1 / 1; /* Mantiene la relación de aspecto 1:1 */
+    position: relative;
+    margin: 0 auto; /* Centra la imagen en el contenedor */
 }
 
-/* Media query para pantallas medianas (>= 768px) */
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Para hacerla circular */
+    object-fit: cover; /* Mantiene la relación de aspecto sin distorsión */
+}
+
+/* Media query para pantallas medianas (<= 768px) */
 @media (max-width: 768px) {
-    .profile-image {
-        max-width: 50%;
-        /* Cambia el ancho máximo a 75% en pantallas medianas */
+    .profile-image-container {
+        max-width: 200px; /* Ajusta según sea necesario */
     }
 }
+
 
 button.accordion-button {
     max-width: 100% !important;
 }
+
 .modal-content {
     z-index: 1050 !important;
     position: fixed;
@@ -30,15 +39,16 @@ button.accordion-button {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .modal-backdrop {
     z-index: 1040!important; /* Asegúrate de que esté debajo del modal-content */
     background-color: rgba(0, 0, 0, 0.5); /* Un color semitransparente */
 }
+
 button.accordion-button {
     z-index: 1000!important; /* Un valor más bajo que el modal */
     position: relative;
 }
-
 
 /* Overlay */
 .modal-overlay {
@@ -132,6 +142,8 @@ button.accordion-button {
 .modal-actions .btn span {
     font-size: 0.9rem;
 }
+
+
 textarea{
     field-sizing:content;
-}
+
