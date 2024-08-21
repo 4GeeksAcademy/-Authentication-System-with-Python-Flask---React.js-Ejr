@@ -336,6 +336,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			saveProfileImg : async (url) =>{
+				console.log(url);
+				
 				const store = getStore()
 				const updateResponse = await fetch(process.env.BACKEND_URL + `/usuario/foto`, {
 					method: 'PUT',

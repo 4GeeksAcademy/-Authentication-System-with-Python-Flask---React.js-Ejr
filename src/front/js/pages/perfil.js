@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 import "../../styles/perfil.css"
 import VistaModal from "../component/vistaModal.jsx";
 import Swal from 'sweetalert2'
-
+import defaultAvatar from "../../img/avatar.jpg"
 
 
 const Perfil = () => {
@@ -32,7 +32,7 @@ const Perfil = () => {
         <div className="container mt-4 col-md-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
                 <div className="col-md-4 text-center position-relative">
-                    <img src={store.dataUser?.foto || "https://static.vecteezy.com/system/resources/thumbnails/000/495/460/small/22_Profile.jpg"}
+                    <img src={store.dataUser?.foto || defaultAvatar}
                         alt="User Image"
                         className="img-fluid rounded-circle profile-image"
                     />
