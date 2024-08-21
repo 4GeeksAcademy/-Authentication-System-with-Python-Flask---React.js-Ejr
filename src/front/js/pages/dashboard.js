@@ -14,8 +14,10 @@ export const Dashboard = () => {
 
 	return (
 		<>
-			<CarouselHome />
-			<Streak />
+			<div className="min-h-[600px]">
+				<CarouselHome />
+				<Streak />
+			</div>
 		</>
 	);
 };
