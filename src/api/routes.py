@@ -18,11 +18,24 @@ def handle_hello():
 
 @api.route('/itineraries', methods=['GET'])
 def get_itineraries():
-    itineraries = Itinerary.query.all()
+    city = request.args.get('city')
+    duration = request.args.get('duration')
+
+    query = Itinerary.query
+    
+    if city:
+        query = query.filter_by(city=city)
+    
+    if duration:
+        query = query.filter_by(duration=duration)
+    
+    itineraries = query.all()
     itineraries = [itinerary.serialize() for itinerary in itineraries]
+
     if not itineraries:
         return jsonify({'msg': 'Data not found'}), 404
-    return jsonify({'msg' : 'ok', 'itineraries': itineraries}), 200
+
+    return jsonify({'msg': 'ok', 'itineraries': itineraries}), 200
 
 @api.route('/itineraries/<int:id>', methods=['GET'])
 def get_single_itinerary(id):

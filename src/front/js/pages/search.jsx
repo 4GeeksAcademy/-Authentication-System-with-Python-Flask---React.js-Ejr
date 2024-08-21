@@ -13,11 +13,11 @@ export const Search = () => {
       {/* <Navbarsearch /> */}
       <LoginRegister />
       <h6 className="mt-5 mb-3 founded">
-        Se han encontrado <b>{store.itineraryData.length}</b> itinerarios:
+        Se han encontrado <b>{store.itineraries.length}</b> itinerarios:
       </h6>
       <div className="row justify-content-center mb-4 gx-0 p-4">
-        {store.itineraryData && store.itineraryData.length > 0 ? (
-          store.itineraryData.map((itinerary, index) => (
+        {store.itineraries && store.itineraries.length > 0 ? (
+          store.itineraries.map((itinerary, index) => (
             <div
               className="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center mb-4 gx-3"
               key={index}
@@ -25,8 +25,8 @@ export const Search = () => {
               <RouteCard
                 id={index}
                 title={itinerary.title}
-                img={itinerary.img}
-                desc={itinerary.desc}
+                img={itinerary.images.img[0]}
+                desc={itinerary.description}
                 score={itinerary.score}
               />
             </div>
