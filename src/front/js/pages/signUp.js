@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import "../../styles/signUp.css";
 import { Context } from "../store/appContext";
 
-//PENDIENTE CAMBIAR FUNCIONES Y CONECTAR CON API
 
-//PENDIENTE CAMBIAR FUNCIONES Y CONECTAR CON API
 
 export const SignUp = () =>{
 	const { store, actions } = useContext(Context);
@@ -44,7 +42,7 @@ export const SignUp = () =>{
     return(
         <div>
             <form className="container d-flex flex-column align-items-center mt-5 p-3" id="formularioRegistro" onSubmit={handleSubmit}>
-                <h4 className="mt-2 mb-4">Regístrate y comienza a aprender</h4>
+                <h4 className="mt-2 mb-4">Regístrate</h4>
 				<label>Email
                     <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
