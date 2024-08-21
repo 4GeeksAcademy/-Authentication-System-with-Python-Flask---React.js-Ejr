@@ -32,7 +32,7 @@ const BookAppointmentUnregisteredUser = () => {
         const response = await fetch(`${apiUrl}/services`,{
           // mode: 'no-cors',
           headers: {
-            "Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
+            // "Access-Control-Allow-Origin": "*", // Una vez en producción eliminar
           },
         });
         
@@ -332,6 +332,35 @@ const BookAppointmentUnregisteredUser = () => {
 
       const appointmentData = await submitAppointment.json();
       // console.log("Appointment details:", appointmentData);
+
+      const MailSender = () => {
+        const data = {
+        sender: {
+              name: "AutoAgenda",
+              email: "autoagenda3@gmail.com",
+            },
+            to: [
+              {
+                email: userData.email,
+                name: userData.name,
+              },
+            ],
+            subject: "Appointment created successfully",
+            htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userData.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
+          Your appointment on the day ${dateFormat} has been created successfully.</p>
+          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
+          };
+      
+          // console.log("Data ready to send:", data);
+          actions.SendMail(data);
+        };
+
+      if (userData && userData.email && userData.name) {
+        MailSender();
+      } else {
+        console.error("User Info is missing email or name.");
+      }
 
       navigate("/accountandappointmentcreated");
     } catch (error) {

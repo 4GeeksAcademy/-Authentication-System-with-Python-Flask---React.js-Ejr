@@ -399,21 +399,10 @@ def create_service():
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /services 
 @api.route('/services', methods=['GET'])
 def get_services():
-    # Obtener todos los servicios
     services_query = Service.query.all()
     services_list = list(map(lambda service: service.serialize(), services_query))
+    return jsonify(services_list), 200
 
-    # Obtener la configuración
-    setting = Setting.query.first()
-    setting_data = setting.serialize() if setting else None
-
-    # Combinar ambos resultados en un solo diccionario
-    response_body = {
-        "services": services_list,
-        "setting": setting_data
-    }
-
-    return jsonify(response_body), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /settings 
 @api.route('/settings', methods=['POST'])
@@ -640,7 +629,7 @@ def total_count():
 @api.route('/slots-taken', methods=['GET'])
 def get_slots_taken():
     now = datetime.now()
-    end_date = now + timedelta(days=7) 
+    end_date = now + timedelta(days=30) 
 
     appointments = Appointment.query.filter(
         Appointment.date >= now,
