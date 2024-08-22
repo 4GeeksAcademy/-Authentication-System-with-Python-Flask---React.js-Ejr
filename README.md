@@ -16,6 +16,8 @@ Build web applications using React.js for the front end and python/flask for you
 It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
 
 1. Install the python packages: `$ pipenv install`
+1. Install JWT packages : `$ pipenv install flask-jwt-extended`
+1. Install Bcrypt: `$ pipenv install bcrypt`
 2. Create a .env file based on the .env.example: `$ cp .env.example .env`
 3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
 
