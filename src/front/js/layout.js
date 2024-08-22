@@ -17,6 +17,7 @@ import { Register } from "./pages/register.js"
 import { TimeLine } from "./pages/TimeLine.jsx";
 import { FormOffer } from "./component/FormOffer.jsx";
 import { SobreNosotros } from "./pages/sobreNosotros.js";
+import { Contact } from "./pages/contact.js";
 import  PreguntasFrecuentes  from "./pages/preguntasFrecuentes.js";
 
 //create your first component
@@ -35,6 +36,7 @@ const Layout = () => {
                     <Routes>
                         <Route element ={<Inicio />} path="/" />
                         <Route element ={<SobreNosotros />} path="/sobrenosotros" />
+                        <Route element ={<Contact />} path="/contact" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<LoginPage />} path="/login" />
                         <Route element={<Register />} path="/register" />
