@@ -45,7 +45,6 @@ const CreateAppointmentRegisteredUser = () => {
     const selectedService = services.find(
       (service) => service.id === parseInt(serviceChosen, 10)
     );
-
     const serviceName = selectedService ? selectedService.name : "Not selected";
 
     const getUserCars = async () => {
@@ -85,9 +84,32 @@ const CreateAppointmentRegisteredUser = () => {
     }
   }, [currentStep]);
 
+  
+  const handleServiceChange = (e) => {
+    const selectServiceId = e.target.value;
+    setServiceChosen(selectServiceId);
+  };
+
+  useEffect(() => {
+    if (serviceChosen) {
+      const selectedServiceId = parseInt(serviceChosen, 10);
+      const selectedService = services.find(
+        (service) => service.id === selectedServiceId
+      );
+      if (selectedService) {
+      }
+    }
+  }, [serviceChosen, services]);
+
+  const selectedService = services.find(
+    (service) => service.id === parseInt(serviceChosen, 10)
+  );
+  
+  const serviceName = selectedService ? selectedService.name : "Not selected";
+
+
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
-    // Deshabilitar todos los días que no sean de lunes a viernes
     return (
       current &&
       (current < moment().startOf("day") ||
@@ -96,64 +118,41 @@ const CreateAppointmentRegisteredUser = () => {
     );
   };
 
-  // Función para deshabilitar horas fuera del horario laboral
+  // Función para deshabilitar horas fuera del horario laboral y las que tienen 4 citas
   const disabledTime = (date) => {
     const now = new Date(); // Hora actual
+    const selectedDate = date.format("YYYY-MM-DD"); // Fecha seleccionada
 
     const hours = {
       disabledHours: () => {
         const disabledHours = [];
-        const selectedDate = new Date(date); // Fecha seleccionada
-      disabledHours: () => {
-        const disabledHours = [];
-        const selectedDate = new Date(date); // Fecha seleccionada
 
-        // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
-        if (
-          selectedDate.getFullYear() === now.getFullYear() &&
-          selectedDate.getMonth() === now.getMonth() &&
-          selectedDate.getDate() === now.getDate()
-        ) {
-          for (let i = 0; i < 24; i++) {
-            if (i < now.getHours() || i < 9 || i >= 18) {
-              disabledHours.push(i);
-            }
-          }
-        } else {
-          // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
-          for (let i = 0; i < 24; i++) {
-            if (i < 8 || i >= 18) {
-              disabledHours.push(i);
-            }
-          }
-        }
-        return disabledHours;
-      },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos 0 y 30
-        return Array.from({ length: 60 }, (_, i) => i).filter(
-          (min) => min !== 0 && min !== 30
+        // Filtrar los slots tomados por la fecha seleccionada
+        const slotsForSelectedDate = takenSlots.filter(
+          (slot) => slot.date === selectedDate
         );
-      },
-        // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
-        if (
-          selectedDate.getFullYear() === now.getFullYear() &&
-          selectedDate.getMonth() === now.getMonth() &&
-          selectedDate.getDate() === now.getDate()
-        ) {
-          for (let i = 0; i < 24; i++) {
-            if (i < now.getHours() || i < 9 || i >= 18) {
-              disabledHours.push(i);
-            }
+
+        // Contar las citas por hora
+        const hourCounts = {};
+        slotsForSelectedDate.forEach((slot) => {
+          const slotHour = parseInt(slot.start_time.split(":")[0], 10);
+          hourCounts[slotHour] = (hourCounts[slotHour] || 0) + 1;
+        });
+
+        // Deshabilitar las horas que tienen 4 o más citas
+        Object.keys(hourCounts).forEach((hour) => {
+          if (hourCounts[hour] >= 4) {
+            disabledHours.push(parseInt(hour, 10));
           }
-        } else {
-          // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
-          for (let i = 0; i < 24; i++) {
-            if (i < 8 || i >= 18) {
-              disabledHours.push(i);
-            }
+        });
+
+        // También deshabilitar las horas fuera del horario laboral
+        for (let i = 0; i < 24; i++) {
+          if (i < 9 || i >= 18 || (selectedDate === now.toISOString().split('T')[0] && i < now.getHours())) {
+            disabledHours.push(i);
           }
         }
+
         return disabledHours;
       },
       disabledMinutes: () => {
@@ -166,46 +165,25 @@ const CreateAppointmentRegisteredUser = () => {
 
     return hours;
   };
-  };
 
-  //------------------------------------------------------------------------------------
-  const checkSlotAvailability = async (dateTime) => {
+  // Función para obtener los slots tomados desde la API
+  const fetchTakenSlots = async () => {
     try {
       const response = await fetch(`${apiUrl}/slots-taken`);
       if (!response.ok) throw new Error("Failed to fetch taken slots");
 
-      const takenSlots = await response.json();
-
-      const selectedDate = dateTime.format("YYYY-MM-DD");
-      const selectedTime = dateTime.format("HH:mm:ss");
-
-      const slotIsAvailable = !takenSlots.some((slot) => {
-        return (
-          slot.date === selectedDate &&
-          selectedTime >= slot.start_time &&
-          selectedTime < slot.end_time
-        );
-      });
-
-      setIsAvailable(slotIsAvailable);
-
-      if (!slotIsAvailable) {
-        setError(
-          "Appointment unavailable for the selected date & time, please choose a different one."
-        );
-      } else {
-        setError("");
-      }
+      const slots = await response.json();
+      setTakenSlots(slots); // Guardamos las citas tomadas en el estado
     } catch (error) {
-      setError("Failed to check slot availability.");
+      console.error("Error fetching taken slots:", error);
     }
   };
 
+  // Función para manejar cambios en la fecha seleccionada
   const manageDateChange = (date) => {
     setAppointmentDate(date);
     if (date) {
-      checkSlotAvailability(date);
-      // console.log("date details set", setAppointmentDate);
+      fetchTakenSlots(); // Cargar los slots tomados cada vez que se selecciona una fecha nueva
     }
   };
 
@@ -413,7 +391,7 @@ const CreateAppointmentRegisteredUser = () => {
               id="service"
               className="form-select"
               value={serviceChosen}
-              onChange={(e) => setServiceChosen(e.target.value)}
+              onChange={handleServiceChange}
             >
               <option value="">Select a service</option>
               {services.map((service) => (
@@ -541,6 +519,6 @@ const CreateAppointmentRegisteredUser = () => {
       </div>
     </div>
   );
-};
+}
 
 export default CreateAppointmentRegisteredUser;

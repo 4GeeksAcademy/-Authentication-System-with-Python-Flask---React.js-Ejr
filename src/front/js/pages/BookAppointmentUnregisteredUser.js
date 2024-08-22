@@ -67,11 +67,6 @@ const BookAppointmentUnregisteredUser = () => {
   
   const serviceName = selectedService ? selectedService.name : "Not selected";
 
-  const selectedService = services.find(
-    (service) => service.id === parseInt(serviceChosen, 10)
-  );
-  
-  const serviceName = selectedService ? selectedService.name : "Not selected";
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
@@ -257,7 +252,7 @@ const BookAppointmentUnregisteredUser = () => {
       localStorage.setItem("token", loginData.access_token);
       localStorage.setItem("role_id", loginData.role_id);
       localStorage.setItem("user_id", loginData.user_id);
-
+      
       const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
         method: "POST",
         headers: {
@@ -280,13 +275,13 @@ const BookAppointmentUnregisteredUser = () => {
       const carData = await addNewCarNewUser.json();
 
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-
+      const token = localStorage.getItem("token");
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${loginData.access_token}`,
-          // ...store.corsEnabled // Deshabilitar una vez en producción
+          Authorization: `Bearer ${token}`,
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
