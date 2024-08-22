@@ -216,23 +216,27 @@ def get_offer(id):
 
 
 @api.route('/eliminarOferta/<int:oferta_id>', methods=['DELETE'])
-@jwt_required 
-def eliminar_oferta():
-    empleador_id=get_jwt_identity
-    empleador= Empleador.query.filter_by(user_id=empleador_id).first() 
+@jwt_required()
+def eliminar_oferta(oferta_id):
+    empleador_id = get_jwt_identity()
+    empleador = Empleador.query.filter_by(user_id=empleador_id).first()
+    
     if not empleador:
-        return jsonify({"success": False, "msg":"Opción no disponible"}),400
-    oferta= Ofertas.query.filter_by(id=oferta,empleador_id=empleador.id).first()
+        return jsonify({"success": False, "msg": "Opción no disponible"}), 400
+    
+    oferta = Ofertas.query.filter_by(id=oferta_id, empleador_id=empleador.id).first()
+    
     if not oferta:
-        return jsonify({"success": False, "msg":"Oferta no disponible"}),400
+        return jsonify({"success": False, "msg": "Oferta no encontrada o no pertenece al empleador"}), 404
 
     try:
         db.session.delete(oferta)
         db.session.commit()
-        return jsonify({"succes": True, "msg": "Oferta eliminada con éxito"}),200
+        return jsonify({"success": True, "msg": "Oferta eliminada con éxito"}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({"success": False, "msg": f"Error al eliminar la oferta: {str(e)}"}), 500
+
     
 
 
@@ -242,6 +246,7 @@ def modificar_oferta(oferta_id):
     empleador_id = get_jwt_identity()
 
     oferta = Ofertas.query.filter_by(id=oferta_id, empleador_id=empleador_id).first()
+    
     if not oferta:
         return jsonify({"success": False, "msg": "Oferta no encontrada o no pertenece al usuario"}), 404
 
@@ -280,6 +285,7 @@ def modificar_oferta(oferta_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"success": False, "msg": f"Error al modificar la oferta: {str(e)}"}), 500
+
 
     
 
