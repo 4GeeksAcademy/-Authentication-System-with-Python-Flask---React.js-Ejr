@@ -92,7 +92,8 @@ def signup():
 
     email = request.json.get('email', None)
     password = request.json.get('password', None)
-    if not email or not password:
+    type = request.json.get('type', None)
+    if not email or not password or not type or type is None:
         return jsonify({'success': False, 'msg': 'Todos los campos son necesarios'}), 400
     user = User.query.filter_by(email=email).first()
     if user:
@@ -101,4 +102,11 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
     access_token = create_access_token(identity=new_user.id)
-    return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
+    if type == 'alumno':
+        #crear registro en tabla de alumno con este id como user
+        print(type)
+        return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
+    if type== 'profesor':
+        #crear registro en tabla de profesor con este id como user
+        print(type)
+        return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200

@@ -41,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Acción para iniciar sesión alumno
             loginAlumno: async (dataForm) => {
                 try {
-                    const response = await fetch('/api/login', { // Solicitud POST a la API para autenticar al usuario alumno.
+                    const response = await fetch(process.env.BACKEND_URL+'/api/login', { // Solicitud POST a la API para autenticar al usuario alumno.
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             login: async (dataForm) => {
                 try {
                     // solicitud POST a la API para autenticar al usuario profe.
-                    const response = await fetch('/api/login', {
+                    const response = await fetch(process.env.BACKEND_URL+'/api/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -207,8 +207,43 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Acción para manejar errores
             handleError: (error) => {
                 setStore({ error: error.message });
-            }
+            },
 
+            register: async (formData) => {
+                console.log(formData);
+                
+                // try {
+                //     const response = await fetch(process.env.BACKEND_URL+'/api/signup', { // 
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
+                //         body: JSON.stringify({email: email, password: password })
+                //     });
+            
+                //     const data = await response.json();
+                //     console.log('Response data:', data);
+            
+                //     if (response.ok) {
+                //         // Asegúrate de que `data` contenga información relevante para el registro
+                //         return {
+                //             success: true,
+                //             message: 'Registro exitoso. Puedes iniciar sesión ahora.'
+                //         };
+                //     } else {
+                //         return {
+                //             success: false,
+                //             message: data.message || 'Error desconocido durante el registro'
+                //         };
+                //     }
+                // } catch (error) {
+                //     console.error('Error en registerUser:', error);
+                //     return {
+                //         success: false,
+                //         message: 'Error de conexión o servidor no disponible'
+                //     };
+                // }
+            }
             
         }
     };
