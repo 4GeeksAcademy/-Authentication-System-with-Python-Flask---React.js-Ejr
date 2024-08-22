@@ -50,7 +50,7 @@ const DeleteAccountLink = () => {
           data-bs-toggle="modal"
           data-bs-target="#deleteAccount"
         >
-          Borrar Cuenta
+          Eliminar Cuenta
         </a>
       </p>
 
