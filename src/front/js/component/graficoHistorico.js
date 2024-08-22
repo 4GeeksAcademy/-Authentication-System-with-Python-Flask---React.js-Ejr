@@ -40,7 +40,7 @@ export const GraficoHistorico = () => {
             {
                 name: "",
                 data: [...pesos],
-                color: "#1A56DB",
+                color: "#4ade80",
             },
         ],
         chart: {
@@ -69,8 +69,8 @@ export const GraficoHistorico = () => {
             gradient: {
                 opacityFrom: 0.55,
                 opacityTo: 0,
-                shade: "#1C64F2",
-                gradientToColors: ["#1C64F2"],
+                shade: "#10b981",
+                gradientToColors: ["#22c55e"],
             },
         },
         stroke: {
@@ -117,8 +117,9 @@ export const GraficoHistorico = () => {
 
     return (
         <>
-            <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            <div className="w-2/3 bg-white rounded-lg shadow dark:bg-neutral-800 p-4 md:p-6 mx-auto">
                 <div className="flex justify-between mb-5">
+
                     <div>
                         <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">Peso Corporal</h5>
                         {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">En KG</p> */}
@@ -141,36 +142,36 @@ export const GraficoHistorico = () => {
                             type="button">
                             Last 7 days
                             <svg className="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
-                        </button> */}
+                            </button> */}
                         {/* <div id="lastDaysdropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
-                                </li>
+                            <li>
+                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                            </li>
+                            <li>
+                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                            </li>
+                            <li>
+                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                            </li>
+                            <li>
+                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                            </li>
+                            <li>
+                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                            </li>
                             </ul>
-                        </div> */}
+                            </div> */}
                         {/* <a
                             href="#"
                             className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
                             Sales Report
                             <svg className="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                             </svg>
-                        </a> */}
+                            </a> */}
                     </div>
                 </div>
             </div>

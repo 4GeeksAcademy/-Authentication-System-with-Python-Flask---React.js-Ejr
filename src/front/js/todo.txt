@@ -1,0 +1,7 @@
+Arreglar textos de home, arreglar textos footer
+arreglar links footer
+
+arreglar vista que no muestra nada en dashboard (si está vacio mostrar mensaje)
+
+si el perfil está vacío, pedir datos de peso y altura
+
