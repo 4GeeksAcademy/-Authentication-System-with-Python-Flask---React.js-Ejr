@@ -12,7 +12,7 @@ const AccountAndAppointmentCreated = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="d-flex justify-content-center align-items-center vh-100 page-background">
       <div className="card padding text-center">
         <div className="card-body">
           <h1 className="card-header">Account and Appointment Created!</h1>
