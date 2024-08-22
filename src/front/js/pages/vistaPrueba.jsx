@@ -33,11 +33,13 @@ export const VistaPrueba = () => {
 		// actions.login("juan@gmail.com", "1");
 		// actions.validToken();
 
+		// actions.allFollowUpWeek(1)
 		// actions.postFollowUp(1, 1)
 		// actions.deleteFollowUp(1, 1)
 		// actions.get_last_physical_user_information()
-		actions.allSets()
-		actions.postSets("2", "10")
+		// actions.allSets()
+		// actions.postSets("2", "10")
+		actions.postExerciseRoutine("4", "1", "1")
 	}, [])
 	// console.log(store.allCategoryList);
 	// console.log(Object.keys(store.allCategoryList));

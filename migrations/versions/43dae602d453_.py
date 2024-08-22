@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3d50c9271002
+Revision ID: 43dae602d453
 Revises: 
-Create Date: 2024-08-20 17:48:08.153349
+Create Date: 2024-08-21 14:07:34.672954
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3d50c9271002'
+revision = '43dae602d453'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -74,7 +74,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('routine_id', sa.Integer(), nullable=False),
-    sa.Column('week', sa.Enum('SEMANA1', 'SEMANA2', 'SEMANA3', 'SEMANA4', 'SEMANA5', name='week'), nullable=False),
     sa.Column('day', sa.Enum('LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO', name='day'), nullable=False),
     sa.ForeignKeyConstraint(['routine_id'], ['routine.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
@@ -84,6 +83,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('weekly_routine_id', sa.Integer(), nullable=False),
     sa.Column('exercise_routine_id', sa.Integer(), nullable=False),
+    sa.Column('date', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['exercise_routine_id'], ['exercise_routine.id'], ),
     sa.ForeignKeyConstraint(['weekly_routine_id'], ['weekly_routine.id'], ),
     sa.PrimaryKeyConstraint('id')

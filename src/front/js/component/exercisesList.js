@@ -8,6 +8,19 @@ export const ExercisesList = ({ weeklyRoutine }) => {
   const [done, setDone] = useState(0);
   const [percentage, setPercentage] = useState(0);
 
+  const [day, setDay] = useState(0);
+  const [currentDay, setCurrentDay] = useState(0);
+
+  useEffect(() => {
+    setDay(weeklyRoutine.day_num)
+    setCurrentDay(new Date().getDay())
+  }, []);
+
+  useEffect(() => {
+    console.log(day);
+    console.log(currentDay)
+  }, [day, currentDay]);
+
   const handleChange = async (e, exercise) => {
     // e.persist()
     if (e.target.checked == true) {
@@ -40,10 +53,9 @@ export const ExercisesList = ({ weeklyRoutine }) => {
   }, [done, total]);
 
   useEffect(() => {
-    console.log("done:",done);
-    
-  }, [done]);
+    console.log("done:", done);
 
+  }, [done]);
 
   return (
     <>
@@ -53,6 +65,8 @@ export const ExercisesList = ({ weeklyRoutine }) => {
       <ul className="bg-neutral-900 p-3 space-y-3">
 
         {weeklyRoutine.routine.exercises.map((item, index) => {
+          // console.log(new Date());
+
           return (
             < label
               key={index}
@@ -61,6 +75,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
             >
               <div className="flex items-center">
                 <input
+                  disabled={currentDay !== day}
                   type="checkbox"
                   checked={item.exercise.done}
                   className="myCheckbox size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"

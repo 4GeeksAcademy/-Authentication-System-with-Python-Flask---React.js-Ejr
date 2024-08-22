@@ -387,7 +387,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // POST WeeklyRoutine / AGREGAR RUTINA SEMANA DE USUARIO
-            postWeeklyRoutine: async (routine_id, week, day) => {
+            postWeeklyRoutine: async (routine_id, day) => {
                 try {
                     const token = localStorage.getItem('token')
                     if (!token) {
@@ -396,7 +396,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const payload = {
                         "routine_id": routine_id,
-                        "week": week,
                         "day": day
                     };
                     console.log('Sending payload:', payload);
@@ -609,7 +608,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // POST ExerciseRoutine / AGREGAR RUTINA EJERCICIO
-            postExerciseRoutine: async (routine_id, exercise_id) => {
+            postExerciseRoutine: async (routine_id, exercise_id, sets_id) => {
                 try {
                     // const token = localStorage.getItem('token')
                     // if (!token) {
@@ -618,7 +617,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const payload = {
                         "routine_id": routine_id,
-                        "exercise_id": exercise_id
+                        "exercise_id": exercise_id,
+                        "sets_id": sets_id
                     };
                     console.log('Sending payload:', payload);
 

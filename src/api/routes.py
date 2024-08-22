@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from datetime import datetime
-from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, Week, PhysicalInformation, Category, Sets
+from api.models import db, User, WeeklyRoutine, Routine, Exercise, ExerciseRoutine, FollowUp, PhysicalInformation, Category, Sets
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -201,7 +201,7 @@ def get_last_one_physical_user_information():
         return jsonify(data_serialized), 200
 
 
-# GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
+# GET LAST PhysicalInformation / TRAER LAS ULTIMAS INFORMACION FISICA
 @api.route('/last-physical-user-information', methods=['GET'])
 @jwt_required()
 def get_last_physical_user_information():
@@ -266,17 +266,17 @@ def get_all_weekly_user_routine():
 #         data_serialized = list(map(lambda routine: routine.serialize(), weekly_routine))
 #         return jsonify(data_serialized), 200
 
-# GET ONE weekly-user-routine / TRAER TODAS RUTINA DEL USUARIO DE UNA SEMANA
-@api.route('/weekly-user-routine/<int:week>', methods=['GET'])
-@jwt_required()
-def get_all_exercise_routine_one_day(week):
-    current_user=get_jwt_identity()
-    exercise_routine = WeeklyRoutine.query.filter_by(week=Week(week), user_id=current_user["id"]).all()
-    if len(exercise_routine) == 0:
-        return ({'error':'exercise routine list of one day not found'}), 404
-    else:
-        data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
-        return jsonify(data_serialized), 200
+# # GET ONE weekly-user-routine / TRAER TODAS RUTINA DEL USUARIO DE UNA SEMANA
+# @api.route('/weekly-user-routine/<int:week>', methods=['GET'])
+# @jwt_required()
+# def get_all_exercise_routine_one_day(week):
+#     current_user=get_jwt_identity()
+#     exercise_routine = WeeklyRoutine.query.filter_by(week=Week(week), user_id=current_user["id"]).all()
+#     if len(exercise_routine) == 0:
+#         return ({'error':'exercise routine list of one day not found'}), 404
+#     else:
+#         data_serialized = list(map(lambda routine: routine.serialize(), exercise_routine))
+#         return jsonify(data_serialized), 200
     
 # POST WeeklyRoutine / AGREGAR RUTINA SEMANA DE USUARIO
 @api.route('/weekly-routine', methods=['POST'])
@@ -286,12 +286,10 @@ def post_weekly_routine():
     weekly_routine = request.get_json()
     if not isinstance(weekly_routine['routine_id'], str) or len(weekly_routine['routine_id'].strip()) == 0:
          return({'error':'"routine_id" must be a string'}), 400
-    if not isinstance(weekly_routine['week'], str) or len(weekly_routine['week'].strip()) == 0:
-         return({'error':'"week" must be a string'}), 400
     if not isinstance(weekly_routine['day'], str) or len(weekly_routine['day'].strip()) == 0:
          return({'error':'"day" must be a string'}), 400
 
-    weekly_routine_created = WeeklyRoutine(user_id=current_user["id"], routine_id=weekly_routine["routine_id"], week=weekly_routine["week"], day=weekly_routine["day"])
+    weekly_routine_created = WeeklyRoutine(user_id=current_user["id"], routine_id=weekly_routine["routine_id"], day=weekly_routine["day"])
     db.session.add(weekly_routine_created)
     db.session.commit()
     return jsonify(weekly_routine_created.serialize()), 200
@@ -399,8 +397,10 @@ def post_exercise_routine():
         return ({'error': "'routine_id' must not be empty"}), 400
     if len(exercise_routine['exercise_id']) == 0 :
         return ({'error': "'exercise_id' must not be empty"}), 400
+    if len(exercise_routine['sets_id']) == 0 :
+        return ({'error': "'sets_id' must not be empty"}), 400
 
-    exercise_routine_created = ExerciseRoutine(routine_id = exercise_routine['routine_id'], exercise_id = exercise_routine['exercise_id'])
+    exercise_routine_created = ExerciseRoutine(routine_id = exercise_routine['routine_id'], exercise_id = exercise_routine['exercise_id'], sets_id=exercise_routine['sets_id'])
     db.session.add(exercise_routine_created)
     db.session.commit()
     return jsonify(exercise_routine_created.serialize())
@@ -453,8 +453,8 @@ def post_follow_up():
     exercise_routine = ExerciseRoutine.query.filter_by(id=follow_up['exercise_routine_id']).first()
     if exercise_routine is None:
         return ({'error': "exercise routine not found"}), 404
-
-    follow_up_created = FollowUp(weekly_routine_id = follow_up['weekly_routine_id'], exercise_routine_id = follow_up['exercise_routine_id'])
+    
+    follow_up_created = FollowUp(weekly_routine_id = follow_up['weekly_routine_id'], exercise_routine_id = follow_up['exercise_routine_id'], date=datetime.now().date())
     db.session.add(follow_up_created)
     db.session.commit()
     return jsonify(follow_up_created.serialize()), 200
