@@ -37,14 +37,10 @@ export const Register = () => {
             
             <form onSubmit={handleSubmit(onSubmit)} className="w-50 mx-auto my-5 m-0 ">
                 
-            
             <h1 className="border-bottom w-100 text-center">Registro</h1>
            
                 {store?.msg && ( <AlertSuccess/>)}
                 
-                
-            
-            
             <div className="w-100 px-4 ">
             
             <div className="form-group mb-2">
