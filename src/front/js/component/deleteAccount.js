@@ -1,50 +1,108 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const DeleteAccountLink = () => {
+  const [password, setPassword] = useState('');
+
   const handleDeleteAccount = async (token) => {
-    const confirmation = window.confirm(
-      '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
-    );
+    // Verificación del token y la contraseña
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/verify-password/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ password }),
+      });
 
-    if (confirmation) {
-      try {
-        const response = await fetch(`${process.env.BACKEND_URL}/api/delete-account/`, {
-
+      if (response.ok) {
+        // Si la contraseña es correcta, proceder a eliminar la cuenta
+        const deleteResponse = await fetch(`${process.env.BACKEND_URL}/api/delete-account/`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         });
 
-        if (response.ok) {
-          // Cuenta eliminada exitosamente
+        if (deleteResponse.ok) {
           alert('Cuenta eliminada');
-          // Aquí puedes redirigir al usuario, cerrar sesión, etc.
+          // Redirigir al usuario, cerrar sesión, etc.
         } else {
-          // Error al eliminar la cuenta
-          const data = await response.json();
+          const data = await deleteResponse.json();
           alert(`Error: ${data.error}`);
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un problema al eliminar la cuenta');
+      } else {
+        alert('Contraseña incorrecta. Inténtalo de nuevo.');
       }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Hubo un problema al eliminar la cuenta');
     }
   };
 
   return (
-    <p>
-      <a
-        href="#"
-        className="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-        onClick={(e) => {
-          e.preventDefault(); // Evita la recarga de la página
-          handleDeleteAccount(localStorage.getItem('token')); // Llama a la función para borrar la cuenta
-        }}
+    <>
+      {/* Enlace para borrar la cuenta */}
+      <p>
+        <a
+          href="#deleteAccount"
+          className="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteAccount"
+        >
+          Borrar Cuenta
+        </a>
+      </p>
+
+      {/* Modal de confirmación para borrar la cuenta */}
+      <div 
+        className="modal fade"
+        id="deleteAccount"
+        tabIndex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
       >
-        Borrar Cuenta
-      </a>
-    </p>
+        <div className="modal-dialog">
+          <div className="modal-content border-0 rounded-4">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5 logo">ShareTrips</h1>
+              <button
+                type="button"
+                className="btn-close me-1"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <p>¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Introduce tu contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => handleDeleteAccount(localStorage.getItem('token'))}
+              >
+                Aceptar
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
