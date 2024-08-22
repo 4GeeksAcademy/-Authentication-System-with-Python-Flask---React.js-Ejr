@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../styles/CardOffer.css";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const CardOffer = ({ title, company, modality, location, salary, description, id }) => {
+    const {actions, store} = useContext(Context)
+    
     return (
         <div className="card-offer my-2 p-3 d-flex align-items-center">
             <div className="card-offer-logo me-3">

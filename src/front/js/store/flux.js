@@ -8,16 +8,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			loadJobOffers: async () => {
 				try {
-					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/`, {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/ofertas`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
 						}
 					});
-					
+			
 					if (resp.ok) {
 						const data = await resp.json();
-						setStore({ jobOffers: data.oferta });
+						setStore({ jobOffers: data.ofertas });
 					} else {
 						console.error("Error al cargar ofertas");
 					}
@@ -25,10 +25,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
+			loadJobOffers: async (id) => {
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						}
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({ jobOffers: [data.oferta] });
+					} else {
+						console.error("Error al cargar la oferta");
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de oferta:", error);
+				}
+			},
 			CreateJobOffers: async (offerData) => {
 				try {
 					const token = localStorage.getItem('token'); 
-					const resp = await fetch(`${process.env.BACKEND_URL}/api/crearOferta`, {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/crearOferta", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
