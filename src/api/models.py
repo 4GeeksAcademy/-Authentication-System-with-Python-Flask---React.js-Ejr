@@ -218,13 +218,13 @@ class Contact(db.Model):
     __tablename__ = "contact"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    lastName = db.Column(db.String(50), nullable=False)  # Corrección: nullable=False
+    lastName = db.Column(db.String(50), nullable=False)  
     email = db.Column(db.String(120), nullable=False)
     message = db.Column(db.String(1000), nullable=False)
     privacy_policy_accepted = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
-        return f'<Contact {self.id}>'
+        return f'<Contact {self.name}>'
 
     def serialize(self):
         return {
