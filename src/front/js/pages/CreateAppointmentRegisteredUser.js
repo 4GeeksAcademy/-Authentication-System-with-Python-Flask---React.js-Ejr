@@ -39,9 +39,7 @@ const CreateAppointmentRegisteredUser = () => {
         });
         if (!response.ok) throw new Error("Network response failed");
         const data = await response.json();
-        const maxAppointmentsH = data.setting.max_appointments_per_hour
-        console.log(maxAppointmentsH)
-        setServices(data.services);
+        setServices(data);
       } catch (error) {
         // console.error("Error getting services:", error);
       }
@@ -100,44 +98,42 @@ const CreateAppointmentRegisteredUser = () => {
     const now = new Date(); // Hora actual
 
     const hours = {
-        disabledHours: () => {
-            const disabledHours = [];
-            const selectedDate = new Date(date); // Fecha seleccionada
+      disabledHours: () => {
+        const disabledHours = [];
+        const selectedDate = new Date(date); // Fecha seleccionada
 
-            // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
-            if (
-                selectedDate.getFullYear() === now.getFullYear() &&
-                selectedDate.getMonth() === now.getMonth() &&
-                selectedDate.getDate() === now.getDate()
-            ) {
-                for (let i = 0; i < 24; i++) {
-                    if (i < now.getHours() || i < 9 || i >= 18) {
-                        disabledHours.push(i);
-                    }
-                }
-            } else {
-                // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
-                for (let i = 0; i < 24; i++) {
-                    if (i < 8 || i >= 18) {
-                        disabledHours.push(i);
-                    }
-                }
+        // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
+        if (
+          selectedDate.getFullYear() === now.getFullYear() &&
+          selectedDate.getMonth() === now.getMonth() &&
+          selectedDate.getDate() === now.getDate()
+        ) {
+          for (let i = 0; i < 24; i++) {
+            if (i < now.getHours() || i < 9 || i >= 18) {
+              disabledHours.push(i);
             }
-            return disabledHours;
-        },
-        disabledMinutes: () => {
-            // Habilitar solo los minutos 0 y 30
-            return Array.from({ length: 60 }, (_, i) => i).filter(
-                (min) => min !== 0 && min !== 30
-            );
-        },
+          }
+        } else {
+          // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
+          for (let i = 0; i < 24; i++) {
+            if (i < 8 || i >= 18) {
+              disabledHours.push(i);
+            }
+          }
+        }
+        return disabledHours;
+      },
+      disabledMinutes: () => {
+        // Habilitar solo los minutos 0 y 30
+        return Array.from({ length: 60 }, (_, i) => i).filter(
+          (min) => min !== 0 && min !== 30
+        );
+      },
     };
 
     return hours;
-};
-
+  };
   //------------------------------------------------------------------------------------
-
   const checkSlotAvailability = async (dateTime) => {
     try {
       const response = await fetch(`${apiUrl}/slots-taken`);
@@ -148,7 +144,7 @@ const CreateAppointmentRegisteredUser = () => {
       const selectedDate = dateTime.format("YYYY-MM-DD");
       const selectedTime = dateTime.format("HH:mm:ss");
 
-      const isAvailable = !takenSlots.some((slot) => {
+      const slotIsAvailable = !takenSlots.some((slot) => {
         return (
           slot.date === selectedDate &&
           selectedTime >= slot.start_time &&
@@ -156,9 +152,9 @@ const CreateAppointmentRegisteredUser = () => {
         );
       });
 
-      setIsAvailable(isAvailable);
+      setIsAvailable(slotIsAvailable);
 
-      if (!isAvailable) {
+      if (!slotIsAvailable) {
         setError(
           "Appointment unavailable for the selected date & time, please choose a different one."
         );
@@ -174,6 +170,7 @@ const CreateAppointmentRegisteredUser = () => {
     setAppointmentDate(date);
     if (date) {
       checkSlotAvailability(date);
+      // console.log("date details set", setAppointmentDate);
     }
   };
 
