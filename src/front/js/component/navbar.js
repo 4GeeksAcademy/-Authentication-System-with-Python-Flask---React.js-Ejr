@@ -27,7 +27,7 @@ export const Navbar = () => {
 </div>
 
 <button className="navbar-toggler navHamburguer"  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-  <span class="fa-solid fa-bars text-white"></span>
+  <span className="fa-solid fa-bars text-white"></span>
 </button>
         <div className="offcanvas offcanvas-end text-bg-dark" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
           <div className="offcanvas-body">
@@ -36,10 +36,10 @@ export const Navbar = () => {
                 <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '115px' }} aria-current="page" to="/sobrenosotros">Sobre nosotros</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">Contáctanos</Link>
+                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/contact">Contáctanos</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">FAQ</Link>
+                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/preguntasFrecuentes">FAQ</Link>
               </li>
             </ul>
           </div>
