@@ -35,48 +35,59 @@ export const Gestor_bebe = () => {
 	
 
 	return (
-		<div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: '#FBEE84', marginTop:'55px' }}>
+	
+		<div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: '#FBEE84', marginTop: '55px' }}>
 			<div className="d-flex justify-content-center align-items-center">
 				<div>
-					<img src={bebe1} className="img-fluid" alt="IMG_Baby"/>
+					<img src={bebe1} className="img-fluid" alt="IMG_Baby" style={{ width: '150px', height: 'auto', objectFit: 'cover', borderRadius: '50%' }} />
 				</div>
-				<div className="d-flex flex-column justify-content-center" style={{ borderRadius: '10px', padding: '10px', border: '2px solid #63DDFC' }}>
+				<div className="d-flex flex-column justify-content-center ms-4" style={{ borderRadius: '10px', padding: '10px', border: '2px solid #63DDFC' }}>
 					<label>Name</label>
-					<input type="text" name="name" placeholder="Baby name" value={editableData.name} onChange={handleChange} disabled={!isEditing}/>
+					<input type="text" name="name" placeholder="Baby name" value={editableData.name} onChange={handleChange} disabled={!isEditing} className="form-control" />
 				</div>
 			</div>
-			
-			<div>	
-				<div className="d-flex flex-column justify-content-center">
-					<label>Gender</label>
-					<input type="text" name="gender" placeholder="Gender" value={editableData.gender} onChange={handleChange} disabled={!isEditing} style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border:'none' }}/>
-				</div>
-				<div className="d-flex flex-column justify-content-center">
-					<label>Height (cm)</label>
-					<input type="text" name="height" placeholder="Height" value={editableData.height} onChange={handleChange} disabled={!isEditing} style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border:'none' }}/> 
-				</div>
-				<div className="d-flex flex-column justify-content-center">
-					<label>Age (months)</label>
-					<input type="text" name="age" placeholder="Age" value={editableData.age} onChange={handleChange} disabled={!isEditing} style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border:'none'}}/>
-				</div>
-				<div className="d-flex flex-column justify-content-center">
-					<label>Weight (kg)</label>
-					<input type="text" name="weight" placeholder="Weight" value={editableData.weight} onChange={handleChange} disabled={!isEditing} style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border:'none'}}/>
-				</div>
-			</div>	
-			{isEditing ? (
-                <button onClick={handleSave} className="btn btn-primary mt-3">Save</button>
-            ) : (
-                <button onClick={() => setIsEditing(true)} className="btn btn-secondary mt-3">Edit</button>
-            )}
-			
-			<div>
 
+			<div className="row mt-4">
+				<div className="col-md-6 mb-3 d-flex justify-content-center align-items-center">
+					<div className="d-flex flex-column" style={{ width: 'fit-content' }}>
+						<label style={{ borderRadius: '10px', padding: '5px', border: '2px solid #63DDFC' }}>Gender</label>
+						<input type="text" name="gender" placeholder="Gender" value={editableData.gender} onChange={handleChange} disabled={!isEditing} className="form-control" style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border: 'none' }} />
+					</div>
+				</div>
+				<div className="col-md-6 mb-3 d-flex justify-content-center align-items-center">
+					<div className="d-flex flex-column" style={{ width: 'fit-content' }}>
+						<label style={{ borderRadius: '10px', padding: '5px', border: '2px solid #63DDFC' }}>Height (cm)</label>
+						<input type="text" name="height" placeholder="Height" value={editableData.height} onChange={handleChange} disabled={!isEditing} className="form-control" style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border: 'none'}} />
+					</div>
+				</div>
 			</div>
 
-			<Link to="/">
-				<button className="btn btn-dark mt-3">Back home</button>
-			</Link>
-		</div>	
+			<div className="row">
+				<div className="col-md-6 mb-3 d-flex justify-content-center align-items-center">
+					<div className="d-flex flex-column" style={{ width: 'fit-content' }}>
+						<label style={{ borderRadius: '10px', padding: '5px', border: '2px solid #63DDFC' }}>Age (months)</label>
+						<input type="text" name="age" placeholder="Age" value={editableData.age} onChange={handleChange} disabled={!isEditing} className="form-control" style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border: 'none'}} />
+					</div>
+				</div>
+				<div className="col-md-6 mb-3 d-flex justify-content-center align-items-center">
+					<div className="d-flex flex-column" style={{ width: 'fit-content' }}>
+						<label style={{ borderRadius: '10px', padding: '5px', border: '2px solid #63DDFC' }}>Weight (kg)</label>
+						<input type="text" name="weight" placeholder="Weight" value={editableData.weight} onChange={handleChange} disabled={!isEditing} className="form-control" style={{ backgroundColor: '#63DDFC', borderRadius: '10px', border: 'none' }} />
+					</div>
+				</div>
+			</div>
+
+			<div className="d-flex justify-content-end">
+				{isEditing ? (
+					<button onClick={handleSave} className="btn btn-primary">Save</button>
+				) : (
+					<button onClick={() => setIsEditing(true)} className="btn btn-secondary">Edit</button>
+				)}
+
+				<Link to="/">
+					<button className="btn btn-dark">Back home</button>
+				</Link>
+			</div>
+		</div>
 	);
 };

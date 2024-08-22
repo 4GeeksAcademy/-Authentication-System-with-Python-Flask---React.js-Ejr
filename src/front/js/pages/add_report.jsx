@@ -133,7 +133,7 @@ export const AddReport = () => {
     };
 
     return (
-        <div className="ar-container main-container">
+        <div className="ar-container main-container" style={{marginTop:'55px'}}>
             <div className="card ar-calendar-card">
                 <div className="ar-card-body">
                     <CalendarPlaceholder />
