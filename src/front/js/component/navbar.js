@@ -20,7 +20,7 @@ export const Navbar = () => {
         <button type="button" 
         onClick={()=>navigate("/login")}
         className="btn rounded-pill me-4" style={{ backgroundColor: '#70879C', borderColor: '#70879C', color: 'white' }}>INICIAR SESIÓN</button>
-        <button type="button" className="btn rounded-pill me-3" style={{ backgroundColor: 'white', borderColor: 'white', color: '#70879C' }}>REGISTRARSE</button>
+        <button type="button" onClick={()=>navigate("/register")} className="btn rounded-pill me-3" style={{ backgroundColor: 'white', borderColor: 'white', color: '#70879C' }}>REGISTRARSE</button>
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@ export const Navbar = () => {
                 <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">Contáctanos</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">FAQ</Link>
+                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/preguntasFrecuentes">FAQ</Link>
               </li>
             </ul>
           </div>
