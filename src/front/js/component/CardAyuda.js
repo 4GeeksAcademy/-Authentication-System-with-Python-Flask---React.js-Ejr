@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/cardAyuda.css";
 import { AiFillShop } from "react-icons/ai";
 import { BsPersonBoundingBox } from "react-icons/bs";
-import { IoMdEye } from "react-icons/io";
+import 'animate.css';
 
-const CardAyuda = ({ text, setIsDevelop }) => {
-  const [isShown, setIsShown] = useState(false);
-
+const CardAyuda = ({ text,validationisDev}) => {
+  
   return (
     <div className="col-4 bg-white colorGeneral w-40 mx-2 rounded">
       <div>
@@ -21,12 +20,11 @@ const CardAyuda = ({ text, setIsDevelop }) => {
       </div>
       <hr />
       <div
-      
+        
         className="d-flex justify-content-center m-2 align-items-center"
       >
-        {isShown && <button className="icon-eye"><IoMdEye size={40} /></button>}
-
-        <p className="px-4 fs-5">Ver las preguntas más frecuentes</p>
+        
+        <button onClick={()=>validationisDev(text)} className=" btn btn-outline-secondary px-4 fs-5 animate__animated animate__heartBeat fw-bolder colorGeneral">Ver las preguntas más frecuentes</button>
         
       </div>
     </div>
