@@ -20,7 +20,9 @@ import { VistaPrueba } from "./pages/vistaPrueba.jsx";
 import { Dashboard } from "./pages/dashboard";
 import { Exercises } from "./pages/exercises";
 import { ErrorView } from "./pages/error";
-import { HistoricoFisico } from "./pages/historicoFisico.js";
+import { Stats } from "./pages/stats";
+import ProtectedRoute from "./component/protectedRoute";
+
 
 const usePageTitle = (defaultTitle) => {
     const location = useLocation();
@@ -38,6 +40,9 @@ const usePageTitle = (defaultTitle) => {
                 break;
             case '/dashboard':
                 document.title = 'Dashboard | GYMTRACK';
+                break;
+            case '/stats':
+                document.title = 'Estadísticas | GYMTRACK';
                 break;
             case '/login':
                 document.title = 'Iniciar sesión | GYMTRACK';
@@ -73,23 +78,30 @@ const Layout = () => {
         <div className="bg-neutral-900 min-h-screen flex flex-col gap-6">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <PageTitleManager defaultTitle="Mi Aplicación" />
+                    <PageTitleManager defaultTitle="GYMTRACK" />
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<VistaPrueba />} path="/vistaprueba" />
-                        <Route element={<HistoricoFisico/>} path="/historicofisico" />
-                        <Route element={<Exercises />} path="/exercises" />
-                        <Route element={<Dashboard />} path="/dashboard" />
+                        <Route element={<ProtectedRoute><Stats /></ProtectedRoute>} path="/stats" />
+                        <Route element={<ProtectedRoute><Exercises /></ProtectedRoute>} path="/exercises" />
+                        <Route element={<ProtectedRoute><Dashboard /></ProtectedRoute>} path="/dashboard" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
-                        <Route element={<Private />} path="/private" />
-                        <Route element={<Profile />} path="/profile" />
+                        <Route
+                            element={
+                                <ProtectedRoute>
+                                    <Private />
+                                </ProtectedRoute>
+                            }
+                            path="/private"
+                        />
+                        <Route element={<ProtectedRoute><Profile /></ProtectedRoute>} path="/profile" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<ErrorView />} path="/*" />
                     </Routes>
-                    <ToastContainer theme="dark" />
+                    <ToastContainer pauseOnHover={false} closeOnClick autoClose={2500} theme="dark" />
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
