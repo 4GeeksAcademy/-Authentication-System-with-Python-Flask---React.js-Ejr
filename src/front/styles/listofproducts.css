@@ -1,0 +1,206 @@
+@import url('./variables.css');
+
+/*LIST OF PRODUCTS STYLES*/
+
+.banner-conatiner{
+    z-index: 999;
+    max-height: 100dvh;
+    position: relative !important; 
+}
+
+.banner-products-title {
+    z-index: 999;
+    text-shadow: 2px 2px 0px var(--color-cream);
+    color: var(--color-forest);
+    font-size: 3rem;
+    position: absolute;
+    left: 8%;
+    top: 33%;
+}
+
+.banner-img {
+    max-width: 100%;
+    mask-image: linear-gradient(red 77%, transparent);
+    z-index: -1;
+}
+
+/*PRODUCT STYLES*/
+.background {
+    background-color: rgba(177, 178, 132, 47%);
+    margin: 7em 1em 1em;
+    border-radius: 30px;
+    position: relative;
+}
+
+.card-item {
+    background: transparent;
+    transform: translateY(-4em);
+    overflow: hidden;
+    max-width: calc(100% + 44px);
+    min-width: calc(100% + 44px);
+    transition: 0.4s ease;
+    border: none;
+}
+
+.top-prod-container{
+    max-width:min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-of-products-container .main-container {
+    min-width: 90%;
+    max-width: 90%;
+    margin: 1em auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* BOTÓN PARA VER MÁS */
+.btn-see-more {
+    background-color: var(--color-olive);
+    color: var(--color-white);
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--color-forest);
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-see-more:hover {
+    background-color: var(--color-forest);
+}
+
+.list-of-products-container .product-card-container {
+    box-shadow: 0px 1px 4px -1px var(--color-forest);
+    background: var(--color-white);
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+    max-width: 200px;
+    min-width: 200px;
+    align-items: center;
+    transition: 0.4s ease;
+}
+
+.list-of-products-container .product-card-container .card-link-button {
+    background: var(--color-white);
+    border-radius: 10px;
+    border: none;
+}
+
+.list-of-products-container .product-card-container .image-container {
+    max-width: 200px;
+    min-width: 200px;
+    overflow: hidden;
+    padding: 1em;
+    padding-bottom: 0;
+}
+
+.list-of-products-container .product-card-container .image-container img {
+    object-fit: contain;
+    aspect-ratio: 1;
+}
+
+/* ESTILO ICONOS CORAZON Y CARRITO */
+.product-card-container .cart-container,
+.product-card-container .heart-container {
+    box-shadow: 0px 1px 3px -1px var(--color-forest);
+    background: var(--color-light-gray);
+    border: 10px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 0;
+    transition: 0.4s ease;
+}
+
+.product-card-container .heart-container {
+    border-bottom-right-radius: 50%;
+    left: 0;
+    color: var(--color-red);
+}
+
+.product-card-container .cart-container {
+    border-bottom-left-radius: 50%;
+    right: 0;
+    color: var(--color-green);
+}
+
+.product-card-container .heart-container:hover {
+    background: var(--color-red);
+    color: var(--color-light-gray);
+}
+
+.product-card-container .cart-container:hover {
+    background: var(--color-green);
+    color: var(--color-light-gray);
+}
+
+.product-card-container .heart-container .bi-suit-heart-fill,
+.product-card-container .cart-container .bi-cart4 {
+    filter: drop-shadow(1px 1px 0px var(--color-forest));
+    margin: auto;
+    display: grid;
+    place-items: center;
+    font-size: 1.4em;
+}
+
+/* MEDIA QUERIES */
+
+@media (width < 774px) {
+    .list-of-products-container .main-container {
+        min-width: 80%;
+        max-width: 100%;
+    }
+}
+
+
+/* AJUSTANDO TÍTULO DE BANNER 💀💀💀 */
+@media (width < 950px) {
+    .banner-products-title {
+        font-size: 2.8rem;
+        left: 6%;
+        top: 30%;
+    }
+}
+@media (width < 800px) {
+    .banner-products-title {
+        font-size: 2.6rem;
+        left: 4%;
+        top: 27%;
+    }
+}
+@media (width < 700px) {
+    .banner-products-title {
+        font-size: 2.4rem;
+        left: 3%;
+        top: 24%;
+    }
+}
+@media (width < 640px) {
+    .banner-products-title {
+        font-size: 2rem;
+        top: 20%;
+    }
+}
+@media (width < 520px) {
+    .banner-products-title {
+        font-size: 1.4rem;
+        left: 8%;
+        top: 20%;
+    }
+}
+@media (width < 425px) {
+    .banner-products-title {
+        font-size: 1rem;
+        left: 8%;
+        top: 20%;
+    }
+}

@@ -1,0 +1,28 @@
+@import url('./variables.css');
+
+.wish-card-container{
+    background: var(--color-white);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 200px;
+    min-width: 200px;
+    align-items: center;
+}
+
+.wish-card-container button{
+    background: var(--color-white);
+    border-radius: 10px;
+    border: none;
+}
+.wish-card-container .image-container{
+    max-width: 200px;
+    min-width: 200px;
+    overflow: hidden;
+    padding: 1em;
+    padding-bottom: 0;
+}
+
+.wish-card-container .image-container img{
+    object-fit: contain;
+    aspect-ratio: 1;
+}
