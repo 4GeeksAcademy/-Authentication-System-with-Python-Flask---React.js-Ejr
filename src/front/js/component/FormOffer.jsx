@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import "../../styles/FormOffer.css"
+import React, { useState, useContext } from "react";
+import "../../styles/FormOffer.css";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext.js"; 
 
 export const FormOffer = () => {
+    const { actions } = useContext(Context); 
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({
@@ -12,7 +14,7 @@ export const FormOffer = () => {
         technologies: [],
         contract: "",
         plazo: "",
-        modality: "Remoto",
+        modality: "Teletrabajo",
         location: "",
         salary: "",
         experience: "",
@@ -27,84 +29,88 @@ export const FormOffer = () => {
         "Python", "JavaScript", "SQL",
         "MongoDB", "React", "Angular",
         "Java", "C#", "Ruby", "BBDD",
-        "Sringboot", "React-Native",
+        "Springboot", "React-Native",
         "Flask", "Node.js", "API",
         "RESTfullapi", "Scrum", "SOLID",
         "CRUD", "Arquitectura de servicios",
         "Maquetación", "Microservicios", "Git",
         "Github", "Testing"];
 
-        const handleChange = (e) => {
-            const { name, value, type, checked } = e.target;
-    
-            if (type === "checkbox") {
-                setFormData((prevData) => {
-                    if (checked) {
-                        return { ...prevData, technologies: [...prevData.technologies, value] };
-                    } else {
-                        return { ...prevData, technologies: prevData.technologies.filter((tech) => tech !== value) };
-                    }
-                });
-            } else {
-                setFormData({ ...formData, [name]: value });
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+
+        if (type === "checkbox") {
+            setFormData((prevData) => {
+                if (checked) {
+                    return { ...prevData, technologies: [...prevData.technologies, value] };
+                } else {
+                    return { ...prevData, technologies: prevData.technologies.filter((tech) => tech !== value) };
+                }
+            });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setSelectedFile(reader.result);
+                setFormData(prevData => ({ ...prevData, photo: file }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { title, contract, modality, location, salary, technologies } = formData;
+
+        if (!title || !contract || !modality || !location || !salary || technologies.length === 0) {
+            setError('Por favor, completa todos los campos y selecciona al menos una tecnología.');
+        } else {
+            setError('');
+            const offerDate = new Date().toLocaleDateString();
+            const updatedFormData = {
+                ...formData,
+                fecha_publicacion: offerDate
+            };
+
+            try {
+                await actions.CreateJobOffers(updatedFormData); 
+                navigate('/timeline'); 
+            } catch (error) {
+                setError('Ocurrió un error al crear la oferta.');
             }
-        };
-    
-        const handleFileChange = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setSelectedFile(reader.result);
-                    setFormData(prevData => ({ ...prevData, photo: file }));
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-    
-        const handleSubmit = (e) => {
-            e.preventDefault();
-            const { title, contract, modality, location, salary, technologies } = formData;
-    
-            if (!title || !contract || !modality || !location || !salary || technologies.length === 0) {
-                setError('Por favor, completa todos los campos y selecciona al menos una tecnología.');
-            } else {
-                setError('');
-                const offerDate = new Date().toLocaleDateString();
-                const updatedFormData = {
-                    ...formData,
-                    fecha_publicacion: offerDate
-                };
-                
-                console.log('Datos del formulario enviados correctamente: ', updatedFormData);
-    
-                setFormData({
-                    photo: null,
-                    title: "",
-                    sector: "",
-                    technologies: [],
-                    contract: "",
-                    plazo: "",
-                    modality: "Remoto",
-                    location: "",
-                    salary: "",
-                    experience: "",
-                    fecha_publicacion: null,
-                    description: "",
-                });
-                setSelectedFile(null);
-    
-                navigate('/timeline');
-            }
-        };
-    
-        return (
-            <>
+
+            setFormData({
+                photo: null,
+                title: "",
+                sector: "",
+                technologies: [],
+                contract: "",
+                plazo: "",
+                modality: "Teletrabajo",
+                location: "",
+                salary: "",
+                experience: "",
+                fecha_publicacion: null,
+                description: "",
+            });
+            setSelectedFile(null);
+        }
+    };
+
+    return (
+        <>
+            <div className="container">
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-12">
                             <div className="form-header text-center">
-                                <h2 className="display-4  fw-bold">
+                                <h2 className="display-4 fw-bold">
                                     ¡Lleva Tu Equipo al Siguiente Nivel!
                                 </h2>
                                 <span className="fw-bold">Completa el formulario para publicar tu oferta de empleo y conecta con profesionales calificados.</span>
@@ -142,9 +148,8 @@ export const FormOffer = () => {
                                     value={formData.modality}
                                 >
                                     <option value="">Seleccione una opción</option>
-                                    <option value="Remoto">Remoto</option>
+                                    <option value="Remoto">Teletrabajo</option>
                                     <option value="Presencial">Presencial</option>
-                                    <option value="Híbrido">Híbrido</option>
                                 </select>
                             </div>
                             <div className="col-4">
@@ -159,9 +164,9 @@ export const FormOffer = () => {
                                 >
                                     <option value="">Seleccione una opción</option>
                                     <option value="Sin experiencia">Sin experiencia</option>
-                                    <option value="Entre 1 y 2 años">Entre 1 y 2 años</option>
-                                    <option value="Entre 3 y 5 años">Entre 3 y 5 años</option>
-                                    <option value="Más de 5 años">Más de 5 años</option>
+                                    <option value="Junior">Junior</option>
+                                    <option value="Mid-senior">Mid-senior</option>
+                                    <option value="Senior">Senior</option>
                                 </select>
                             </div>
                         </div>
@@ -204,7 +209,7 @@ export const FormOffer = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Madrid, España, Italia, Netherlands..."
+                                    placeholder="Madrid, Barcelona, Valencia..."
                                     name="location"
                                     id="location"
                                     maxLength="15"
@@ -235,15 +240,14 @@ export const FormOffer = () => {
                                     placeholder="Introduzca el plazo límite"
                                     name="plazo"
                                     id="plazo"
-                                    maxLength="20"
                                     required
                                     onChange={handleChange}
                                     value={formData.plazo}
                                 />
                             </div>
                         </div>
-                        <div className="row my-5">
-                            <div className="col-6">
+                        <div className="row my-3">
+                            <div className="col-12">
                                 <div className="form-group">
                                     <label className="form-label text-secondary fw-bold">Tecnologías</label>
                                     <div className="form-check check-box-grid">
@@ -267,8 +271,8 @@ export const FormOffer = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row my-5">
-                            <div className="col-6">
+                        <div className="row last-row">
+                            <div className="col-6 box-description">
                                 <label htmlFor="description" className="form-label text-muted fw-bold">Descripción</label>
                                 <textarea
                                     className="form-control mt-2"
@@ -303,7 +307,7 @@ export const FormOffer = () => {
                                 />
                             </div>
                         </div>
-                        <div className="d-flex justify-content-end me-3">
+                        <div className="d-flex justify-content-end me-3 button-box">
                             <button type="submit" className="btn btn-primary mx-3 my-3">
                                 Enviar
                             </button>
@@ -313,6 +317,7 @@ export const FormOffer = () => {
                         </div>
                     </form>
                 </div>
-            </>
-        );
-    }
+            </div>
+        </>
+    );
+};

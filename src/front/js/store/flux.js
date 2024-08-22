@@ -7,55 +7,68 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			loadJobOffers: async () => {
-				// datos fake (Aqui llamadas api)
-				const offers = [
-					{
-						id: 1,
-						title: "Frontend Developer",
-						company: "Tech Company S.L",
-						sector: "IT",
-						tecnologies: "HTML, CSS, Javascript, Python",
-						modality: "Remote",
-						location: "Spain",
-						salary: "$40,000 - $60,000/year",
-						description: "Nuestra esencia nos ha llevado a la vanguardia de la tecnología, a romper paradigmas y a brindar las soluciones que realmente se corresponden a las necesidades de cada cliente. Nuestro talento nos ha hecho poder decir con orgullo que somos una de las 6 empresas TOP de tecnologías en el mundo. Buscamos a grandes profesionales que tengan experiencia en proyectos desarrollando con tecnologías Front End: React, Angular. Trabajaras siempre acompañado de un gran equipo y con metodologías ágiles como Scrum, usando herramientas como Jira y Confluence para estar unido a tu equipo y a los avances del proyecto"
-					},
-					{
-						id: 2,
-						title: "Backend Developer",
-						company: "Tech Company S.L",
-						sector: "IT",
-						tecnologies: "HTML, CSS, Javascript, Python",
-						modality: "On-site",
-						location: "Spain",
-						salary: "$50,000 - $70,000/year",
-						description: "We are looking for a skilled Backend Developer to..."
-					},
-					{
-						id: 3,
-						title: "Project Manager",
-						company: "Consulting Company S.L",
-						sector: "Administrative",
-						tecnologies: "HTML, CSS, Javascript, Python",
-						modality: "On-site",
-						location: "Spain",
-						salary: "$90,000 - $100,000/year",
-						description: "We are looking for a skilled Project Manager to..."
-					},
-					{
-						id: 4,
-						title: "UI/UX",
-						company: "Design Company S.L",
-						sector: "Real state",
-						modality: "Hibryd",
-						tecnologies: "HTML, CSS, Javascript, Python",
-						location: "Spain",
-						salary: "$40,000 - $60,000/year",
-						description: "We are looking for a skilled Backend Developer to..."
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/ofertas`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						}
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({ jobOffers: data.ofertas });
+					} else {
+						console.error("Error al cargar ofertas");
 					}
-					
-				];
-				setStore({ jobOffers: offers });
+				} catch (error) {
+					console.error("Error en la solicitud de ofertas:", error);
+				}
+			},
+			loadJobOffers: async (id) => {
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						}
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({ jobOffers: [data.oferta] });
+					} else {
+						console.error("Error al cargar la oferta");
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de oferta:", error);
+				}
+			},
+			CreateJobOffers: async (offerData) => {
+				try {
+					const token = localStorage.getItem('token'); 
+					const resp = await fetch(process.env.BACKEND_URL + "/api/crearOferta", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify(offerData)
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						const store = getStore();
+						setStore({ jobOffers: [...store.jobOffers, data.oferta] });
+						return data;
+					} else {
+						const errorData = await resp.json();
+						console.error("Error al crear la oferta:", errorData.msg);
+						return errorData;
+					}
+				} catch (error) {
+					console.error("Error al conectarse con el backend:", error);
+				}
 			},
 
 			getMessage: async () => {
