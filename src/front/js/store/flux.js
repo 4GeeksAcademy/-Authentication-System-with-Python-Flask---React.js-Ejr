@@ -210,39 +210,37 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             register: async (formData) => {
-                console.log(formData);
-                
-                // try {
-                //     const response = await fetch(process.env.BACKEND_URL+'/api/signup', { // 
-                //         method: 'POST',
-                //         headers: {
-                //             'Content-Type': 'application/json'
-                //         },
-                //         body: JSON.stringify({email: email, password: password })
-                //     });
+                try {
+                    const response = await fetch(process.env.BACKEND_URL+'/api/signup', { // 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({email: email, password: password })
+                    });
             
-                //     const data = await response.json();
-                //     console.log('Response data:', data);
+                    const data = await response.json();
+                    console.log('Response data:', data);
             
-                //     if (response.ok) {
-                //         // Asegúrate de que `data` contenga información relevante para el registro
-                //         return {
-                //             success: true,
-                //             message: 'Registro exitoso. Puedes iniciar sesión ahora.'
-                //         };
-                //     } else {
-                //         return {
-                //             success: false,
-                //             message: data.message || 'Error desconocido durante el registro'
-                //         };
-                //     }
-                // } catch (error) {
-                //     console.error('Error en registerUser:', error);
-                //     return {
-                //         success: false,
-                //         message: 'Error de conexión o servidor no disponible'
-                //     };
-                // }
+                    if (response.ok) {
+                        // Asegúrate de que `data` contenga información relevante para el registro
+                        return {
+                            success: true,
+                            message: 'Registro exitoso. Puedes iniciar sesión ahora.'
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            message: data.message || 'Error desconocido durante el registro'
+                        };
+                    }
+                } catch (error) {
+                    console.error('Error en registerUser:', error);
+                    return {
+                        success: false,
+                        message: 'Error de conexión o servidor no disponible'
+                    };
+                }
             }
             
         }
