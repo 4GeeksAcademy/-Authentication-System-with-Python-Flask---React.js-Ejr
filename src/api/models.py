@@ -167,7 +167,7 @@ class Product(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name= db.Column(db.String(120), nullable=False)
         cost= db.Column(db.Float, nullable=False)
-        image_url = db.Column(db.String(120), nullable=True)
+        image_url = db.Column(db.String(300), nullable=True)
         favorites = db.relationship("Favorite", backref="product")
         cart = db.relationship("Cart", backref="product")
 

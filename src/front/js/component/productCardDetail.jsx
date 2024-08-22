@@ -54,8 +54,8 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
                 </button>
                 <div className="data-container">
                     <div className="add-container p-2 m-2">
-                        <h3>{name}</h3>
-                        <h4>${cost}.00</h4>
+                        <h3>{name || "Ejemplo"}</h3>
+                        <h4>${cost || "00"}.00</h4>
                     </div>
                     <div className="add-container p-2 m-2 mt-4">
                         <h4 className="col">Stock Disponible</h4>
