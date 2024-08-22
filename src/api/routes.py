@@ -286,12 +286,10 @@ def post_weekly_routine():
     weekly_routine = request.get_json()
     if not isinstance(weekly_routine['routine_id'], str) or len(weekly_routine['routine_id'].strip()) == 0:
          return({'error':'"routine_id" must be a string'}), 400
-    if not isinstance(weekly_routine['week'], str) or len(weekly_routine['week'].strip()) == 0:
-         return({'error':'"week" must be a string'}), 400
     if not isinstance(weekly_routine['day'], str) or len(weekly_routine['day'].strip()) == 0:
          return({'error':'"day" must be a string'}), 400
 
-    weekly_routine_created = WeeklyRoutine(user_id=current_user["id"], routine_id=weekly_routine["routine_id"], week=weekly_routine["week"], day=weekly_routine["day"])
+    weekly_routine_created = WeeklyRoutine(user_id=current_user["id"], routine_id=weekly_routine["routine_id"], day=weekly_routine["day"])
     db.session.add(weekly_routine_created)
     db.session.commit()
     return jsonify(weekly_routine_created.serialize()), 200
@@ -399,8 +397,9 @@ def post_exercise_routine():
         return ({'error': "'routine_id' must not be empty"}), 400
     if len(exercise_routine['exercise_id']) == 0 :
         return ({'error': "'exercise_id' must not be empty"}), 400
-
-    exercise_routine_created = ExerciseRoutine(routine_id = exercise_routine['routine_id'], exercise_id = exercise_routine['exercise_id'])
+    if len(exercise_routine['sets_id']) == 0 :
+        return ({'error': "'sets_id' must not be empty"}), 400
+    exercise_routine_created = ExerciseRoutine(routine_id = exercise_routine['routine_id'], exercise_id = exercise_routine['exercise_id'], sets_id=exercise_routine['sets_id'])
     db.session.add(exercise_routine_created)
     db.session.commit()
     return jsonify(exercise_routine_created.serialize())

@@ -117,14 +117,13 @@ class WeeklyRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     routine_id = db.Column(db.Integer, db.ForeignKey('routine.id'), nullable=False)
-    week = db.Column(db.Enum(Week), nullable=False) # ENUM
     day = db.Column(db.Enum(Day), nullable=False) # ENUM
 
     follow_up = db.relationship('FollowUp', cascade="all, delete", backref = 'weekly_routine', lazy = True)
     routine = db.relationship(Routine)
 
     def __repr__(self):
-        return f'<WeeklyRoutine {self.id, self.week, self.day}>'
+        return f'<WeeklyRoutine {self.id, self.day}>'
 
     def serialize(self):
         follow_up = list(map(lambda item: item.serialize(), self.follow_up))
@@ -141,7 +140,6 @@ class WeeklyRoutine(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "routine": routine,
-            "week": self.week.value,
             "day": self.day.name,
             "day_num": self.day.value,
             # "follow_up": list(map(lambda item: item.serialize(), self.follow_up))

@@ -14,6 +14,7 @@ const CarouselComplete = () => {
 
     useEffect(() => {
         actions.oneWeeklyRoutineUser(1);
+        actions.allWeeklyRoutineUser();
     }, [])
     // console.log(store.oneWeeklyRoutineUserList);
 
@@ -21,7 +22,7 @@ const CarouselComplete = () => {
 
         <Carousel showThumbs={false} showStatus={false}>
 
-            {store.oneWeeklyRoutineUserList.sort((a, b) => a.day - b.day).map((item, index) => (
+            {store.allWeeklyRoutineUserList.sort((a, b) => a.day - b.day).map((item, index) => (
                 <div key={index} className="w-2/3 mx-auto">
                     <ExercisesList weeklyRoutine={item} />
                 </div>

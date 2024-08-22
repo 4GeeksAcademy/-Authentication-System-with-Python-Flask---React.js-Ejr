@@ -4,10 +4,9 @@ import { toast } from "react-toastify"
 
 const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(1) // Para controlar el paso actual
+  const [step, setStep] = useState(3) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
-    selectedWeek: '',
     selectedDay: '',
     exercises: ''
   })
@@ -15,12 +14,30 @@ const MultiStepForm = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' });
+  const [setsInput, setSetsInput] = useState('') // Valor del input de series
+  const [repsInput, setRepsInput] = useState('') // Valor del input de repeticiones
+
+  const handleOpenModal = (item) => {
+    setSelectedExercise({ id: item.id, name: item.name });
+    console.log(item.id)
+    setIsModalOpen(true);  // Esto asume que tienes un estado para manejar la visibilidad del modal
+  }
 
   const toggleDropdown = (e) => {
     e.preventDefault()
     setIsOpen(!isOpen)
   }
   const closeDropdown = () => setIsOpen(false)
+
+  const handleSeriesChange = (e) => {
+    setSeries(e.target.value);
+  };
+
+  const handleRepsChange = (e) => {
+    setReps(e.target.value);
+  }
 
   const handleInputChange = (input) => (e) => {
     setFormData({
@@ -80,7 +97,6 @@ const MultiStepForm = () => {
       try {
         const weekResponse = await actions.postWeeklyRoutine(
           store.routineData.id.toString(),
-          formData.selectedWeek,
           formData.selectedDay
         );
         if (!weekResponse || weekResponse.error) {
@@ -115,7 +131,7 @@ const MultiStepForm = () => {
   };
 
 
-  const handleAddExercises = async (id, name) => {
+  const handleAddExercises = async (id, name, setId) => {
     const isExerciseAdded = addedExercises.some(exercise => exercise.id === id);
 
     const actionPromise = new Promise(async (resolve, reject) => {
@@ -128,7 +144,7 @@ const MultiStepForm = () => {
           resolve('Ejercicio eliminado exitosamente');
         } else {
           // Agrega el ejercicio si no está en la rutina
-          response = await actions.postExerciseRoutine(store.routineData.id.toString(), id.toString());
+          response = await actions.postExerciseRoutine(store.routineData.id.toString(), id.toString(), setId.toString());
           if (!response || response.error) throw new Error('Error al agregar el ejercicio');
           resolve('Ejercicio agregado exitosamente');
         }
@@ -161,6 +177,23 @@ const MultiStepForm = () => {
     });
   };
 
+  const createSeries = async (sets, repetitions) => {
+    try {
+      // Llamamos a la función `postSets` para crear las series y repeticiones
+      const result = await actions.postSets(sets, repetitions);
+
+      if (result && result !== true) {
+        console.error('Error al crear las series:', result);
+        return null;
+      }
+
+      console.log('Series y repeticiones creadas exitosamente');
+      return result; // Aquí puedes devolver el resultado, como el ID de las series creadas, si es necesario
+    } catch (error) {
+      console.error('Ocurrió un error al crear las series:', error);
+      return null;
+    }
+  };
 
 
   const isExerciseSelected = (id) => {
@@ -185,6 +218,16 @@ const MultiStepForm = () => {
     } else {
       return "w-full" // paso 3
     }
+  }
+
+  const handleFinishRoutine = () => {
+    setFormData({
+      routineName: '',
+      selectedWeek: '',
+      selectedDay: '',
+      exercises: ''
+    })
+    setStep(1)
   }
 
   const handleStepText = (index) => {
@@ -235,16 +278,16 @@ const MultiStepForm = () => {
                   fill="currentColor"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
               </span>
 
               <span className={`hidden sm:block ${handleStepText(1)}`}> Nombre </span>
 
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class={`${handleStepText(1)} size-6 sm:hidden icon icon-tabler icons-tabler-outline icon-tabler-pencil`}><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" reps="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`${handleStepText(1)} size-6 sm:hidden icon icon-tabler icons-tabler-outline icon-tabler-pencil`}><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
             </li>
 
             <li className="relative flex justify-center text-emerald-600">
@@ -258,9 +301,9 @@ const MultiStepForm = () => {
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   ) : (
@@ -272,7 +315,7 @@ const MultiStepForm = () => {
 
               <span className={`hidden sm:block ${handleStepText(2)}`}> Dia y semana </span>
 
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class={`${handleStepText(2)} mx-auto size-6 sm:hidden icon icon-tabler icons-tabler-outline icon-tabler-calendar-month`}><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" reps="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`${handleStepText(2)} mx-auto size-6 sm:hidden icon icon-tabler icons-tabler-outline icon-tabler-calendar-month`}><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>
             </li>
 
             <li className="relative flex justify-end">
@@ -286,9 +329,9 @@ const MultiStepForm = () => {
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   ) : (
@@ -300,7 +343,7 @@ const MultiStepForm = () => {
 
               <span className={`hidden sm:block ${handleStepText(3)}`}> Ejercicios </span>
 
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class={`${handleStepText(3)} size-6 sm:hidden icon icon-tabler icons-tabler-outline icon-tabler-barbell`}><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M2 12h1" /><path d="M6 8h-2a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h2" /><path d="M6 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1z" /><path d="M9 12h6" /><path d="M15 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1z" /><path d="M18 8h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2" /><path d="M22 12h-1" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" reps="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`${handleStepText(3)} size-6 sm:hidden icon icon-tabler icons-tabler-outline icon-tabler-barbell`}><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M2 12h1" /><path d="M6 8h-2a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h2" /><path d="M6 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1z" /><path d="M9 12h6" /><path d="M15 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1z" /><path d="M18 8h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2" /><path d="M22 12h-1" /></svg>
             </li>
           </ol>
         </div>
@@ -337,23 +380,6 @@ const MultiStepForm = () => {
           <div className="w-full flex flex-col">
             {/* Paso 2: Semana y Día */}
             <div className="w-full flex gap-5 flex-col sm:flex-row sm:gap-10 sm:justify-between mb-5">
-              <div className="w-full sm:w-1/2">
-                <label htmlFor="week" className="block mb-2 text-sm font-bold text-neutral-100">Semana</label>
-                <select
-                  id="week"
-                  value={formData.selectedWeek}
-                  onChange={handleInputChange("selectedWeek")}
-                  className="w-full p-2 rounded bg-neutral-700 border border-neutral-600 focus:ring-emerald-500 focus:border-emerald-500 text-neutral-200"
-                  required
-                >
-                  <option value="">Elige una semana</option>
-                  <option value="SEMANA1">Semana 1</option>
-                  <option value="SEMANA2">Semana 2</option>
-                  <option value="SEMANA3">Semana 3</option>
-                  <option value="SEMANA4">Semana 4</option>
-                  <option value="SEMANA5">Semana 5</option>
-                </select>
-              </div>
               <div className="w-full sm:w-1/2">
                 <label htmlFor="day" className="block mb-2 text-sm font-bold text-neutral-100">Días</label>
                 <select
@@ -519,17 +545,17 @@ const MultiStepForm = () => {
                 )}
               </div>
             </div>
-            <div className="mb-4 flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredExercises.map((item, index) => {
                 return (
-                  <article className="flex-grow flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
-                    <div className="hidden sm:block sm:basis-36">
-                      <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-                        className="aspect-square h-full w-full object-cover"
-                      />
-                    </div>
+                  <article className="flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">                    
+                  <div className="hidden sm:block sm:basis-36">
+                    <img
+                      alt=""
+                      src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
+                      className="aspect-square h-full w-full object-cover"
+                    />
+                  </div>
                     <div className="p-3 flex flex-1 flex-col gap-4 justify-between">
                       <div className="flex flex-col gap-3 dark:border-white/10">
                         <h3 className="font-bold uppercase text-neutral-900 dark:text-white">
@@ -540,6 +566,14 @@ const MultiStepForm = () => {
                         </span>
                       </div>
                       <div className="self-end">
+                        {/* Modal toggle button */}
+                        <button
+                          onClick={() => handleOpenModal(item)}
+                          className="block text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded text-sm px-5 py-3 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
+                          type="button"
+                        >
+                          Agregar ejercicio
+                        </button>
                         <input
                           checked={isExerciseSelected(item.id)}
                           onChange={() => handleAddExercises(item.id, item.name)}
@@ -585,17 +619,148 @@ const MultiStepForm = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setStep(1)}
+                onClick={handleFinishRoutine}
                 className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
                 disabled={addedExercises.length == 0 ? true : false}
               >
-                Siguiente
+                Finalizar
               </button>
             </div>
           </div>
         )}
       </form>
-    </div>
+      {/* Main modal */}
+      {/* modal */}
+      <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen backdrop-blur-sm transition-all ease-in flex`}>
+        <div className="relative p-4 w-full max-w-md max-h-full">
+          <div className="relative bg-white rounded-lg shadow dark:bg-neutral-700">
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-neutral-600">
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
+                Información física
+              </h3>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white"
+              >
+                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+            <form
+              className="p-4 md:p-5 space-y-4"
+              onSubmit={async (event) => {
+                event.preventDefault();
+
+                // Obtén los valores de los inputs
+                 
+
+                // // Obtén las series y repeticiones seleccionadas de los select
+                // let setsId = selectedSeries;
+                // let repsId = selectedReps;
+
+                // Si no hay series y repeticiones seleccionadas, crea nuevas
+                // if (!setsId || !repsId) {
+                  const newSets = await createSeries(setsInput, repsInput);
+                  if (newSets) {
+                    console.log(newSets, store.setId);
+                    // setsId = newSets.id;  // Obtén el id de la serie recién creada
+                    // repsId = newSets.repetitions; // Ajusta según la respuesta
+                  }
+                // }
+
+                // Lógica para crear las series y repeticiones
+                // const success = await createSeries(setsId, repsId);
+
+                 if (newSets) {
+                   // Luego de que se creen las series y repeticiones, agrega el ejercicio
+                   handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId);
+                   console.log(store.routineData.id, selectedExercise.id, store.setId);
+                 } else {
+                   console.error("No se pudo crear las series y repeticiones");
+                 }
+
+              }}
+            >
+              <div className="flex flex-col gap-4">
+                <div className='flex flex-col md:flex-row gap-4 w-full'>
+                  <div className="w-full">
+                    <label htmlFor="sets" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Series</label>
+                    <input
+                      onChange={(e) => setSetsInput(e.target.value)}
+                      type="text" name="sets" id="sets" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las series" required />
+                  </div>
+                  <div className="w-full">
+                    <label htmlFor="reps" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Repeticiones</label>
+                    <input
+                      onChange={(e) => setRepsInput(e.target.value)}
+                      type="text" name="reps" id="reps" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las repeticiones" required />
+                  </div>
+                </div>
+                <span className="flex items-center">
+                  <span className="h-px flex-1 bg-neutral-400"></span>
+                  <span className="shrink-0 px-6 text-neutral-400">Elegir series previas</span>
+                  <span className="h-px flex-1 bg-neutral-400"></span>
+                </span>
+                <div className="flex flex-col md:flex-row gap-4 w-full">
+                  <div className="w-full">
+                    <label
+                      htmlFor="series"
+                      className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white"
+                    >
+                      Series
+                    </label>
+                    <select
+                      name="series"
+                      id="series"
+                      className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
+
+                    >
+                      <option value="" disabled selected>
+                        Select Series
+                      </option>
+                      <option value="3">3 series</option>
+                      <option value="4">4 series</option>
+                      <option value="5">5 series</option>
+                      {/* Agrega más opciones según sea necesario */}
+                    </select>
+                  </div>
+
+                  <div className="w-full">
+                    <label
+                      htmlFor="reps"
+                      className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white"
+                    >
+                      Repeticiones
+                    </label>
+                    <select
+                      name="reps"
+                      id="reps"
+                      className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
+
+                    >
+                      <option value="" disabled selected>
+                        Select Reps
+                      </option>
+                      <option value="8">8 reps</option>
+                      <option value="10">10 reps</option>
+                      <option value="12">12 reps</option>
+                      {/* Agrega más opciones según sea necesario */}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" className="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
+                <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
+                Guardar ejercicio
+              </button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div >
   )
 }
 
