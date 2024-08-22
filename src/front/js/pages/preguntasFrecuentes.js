@@ -9,7 +9,7 @@ import { BsPersonWorkspace } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
-const preguntasFrecuentes = () => {
+const PreguntasFrecuentes = () => {
   const [isDevelop, setIsDevelop] =useState(false)
   const [showAcordeon, setShowAcordeon] = useState(false)
   const validationisDev =(text)=>{
@@ -84,4 +84,4 @@ const preguntasFrecuentes = () => {
   );
 };
 
-export default preguntasFrecuentes;
+export default PreguntasFrecuentes;

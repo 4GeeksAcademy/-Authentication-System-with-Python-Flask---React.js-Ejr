@@ -28,7 +28,6 @@ export const Contact = () => {
         </div>
       </section>
 
-      {/* Sección del formulario */}
       <section className="contact-form-section">
         <form className="row g-3 justify-content-center">
           
