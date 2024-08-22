@@ -10,9 +10,12 @@ export const SignUp = () =>{
     const [dataForm,setDataForm]=useState({
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        //is_teacher: false,  // Nuevo campo para registrar como profesor
+        
     });
     const [visible,setVisible]=useState(false);
+    //const navigate = useNavigate();  // Para redirigir después del registro
 
     const handleChange = (e) =>{
         const{name,value}=e.target
@@ -24,8 +27,9 @@ export const SignUp = () =>{
         setVisible(!visible)
     };
 
+
     const handleSubmit = (e) =>{ 
-        e.preventDefault() //evita que se recargue la página
+        e.preventDefault() 
         actions.createContact(dataForm)
         setDataForm({
             email: '',
