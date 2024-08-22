@@ -5,14 +5,25 @@
 .card-single-offer{
     box-shadow: -1px 2px 20px 4px #d4c4c4;
 }
+.card-offer-company{
+    position: relative;
+    top: 1px;
+}
+.card-offer-description{
+    position: relative;
+    top: 10px;
+}
+
+.card-offer-details span{
+    position: relative;
+    top: 20px;
+}
 
 .salary-box{
-    position: relative;
-    bottom: 22px;
-    right: 5px;
     font-size: 0.7rem;
     text-decoration: underline;
 }
+
 .btn-single-offer-up{
     position: relative;
     bottom: 35px;
@@ -23,7 +34,7 @@
     background-color: rgb(103, 147, 174);
 }
 
-.btn-single-offer:hover{
+.btn-single-offer .btn:hover{
     background-color: rgb(175, 206, 225);
     
 }
@@ -41,4 +52,5 @@
     position: relative;
     right: 40px;
     bottom: 20px;
+    cursor: pointer;
 }
