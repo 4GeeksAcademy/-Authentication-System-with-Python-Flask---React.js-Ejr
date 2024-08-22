@@ -22,7 +22,7 @@ export const Gestor_perfil = () => {
             }
         };
         fetchUserProfile();
-    }, [actions]);
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>;

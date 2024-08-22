@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bebe2 from '../../img/bebe2.jpg'; // Imagen predeterminada en caso de que no haya una foto del bebé
 
 export const Add_baby = () => {
     const { actions } = useContext(Context);
+    const navigate = useNavigate();
     const [babyData, setBabyData] = useState({
         name: '',
         gender: '',
@@ -36,6 +37,7 @@ export const Add_baby = () => {
                     weight: '',
                     photoUrl: ''
                 });
+                navigate('/gestor_bebes'); // Redirigir a la página de gestión de bebés
             } else {
                 alert('Failed to add baby');
             }

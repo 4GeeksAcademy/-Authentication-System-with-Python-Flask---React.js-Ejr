@@ -291,31 +291,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
             //Accion para crear un nuevo bebe
             createBaby: async (babyData) => {
-				try {
-					const store = getStore();
-					const response = await fetch(process.env.BACKEND_URL + "/api/babies", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify(babyData)
-					});
+                try {
+                    const store = getStore();
+                    const userId = store.userData.id || 1; // Usa el userId del store, o 1 por defecto
+                    const response = await fetch(process.env.BACKEND_URL + `/api/babies/user/${userId}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(babyData)
+                    });
 
-					if (response.ok) {
-						const data = await response.json();
-						// Actualiza la lista de bebés en el store
-						setStore({ babies: [...store.babies, data] });
-						console.log("Baby created successfully:", data);
-						return true;
-					} else {
-						const errorData = await response.json();
-						console.error("Failed to create baby:", errorData);
-						return false;
-					}
-				} catch (error) {
-					console.error("Error creating baby:", error);
-					return false;
-				}
+                    if (response.ok) {
+                        const data = await response.json();
+                        // Actualiza la lista de bebés en el store
+                        setStore({ babies: [...store.babies, data] });
+                        console.log("Baby created successfully:", data);
+                        return true;
+                    } else {
+                        const errorData = await response.json();
+                        console.error("Failed to create baby:", errorData);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error("Error creating baby:", error);
+                    return false;
+                }
+            },
+            //Accion LOGOUT
+            logout: () => {
+				localStorage.removeItem('token')
+				setStore({user:null, token:null})
+				return true
 			},
 
 			getMessage: async () => {

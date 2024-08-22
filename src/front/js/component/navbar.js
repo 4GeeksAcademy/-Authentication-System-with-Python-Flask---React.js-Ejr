@@ -1,10 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 
 import logo_bebe from "../../img/logo_bebe.png";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
+
+  const { actions } = useContext(Context);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    actions.logout();
+    navigate('/login'); // Redirige a la página de login
+  };
+
   return (
     <nav className="navbar navbar-dark fixed-top" style={{ backgroundColor: '#075E81' }}>
       <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -43,7 +53,7 @@ export const Navbar = () => {
                 <ul className="no-bullets">
                   <li> <Link to="/gestor_perfil" style={{ color: 'inherit', textDecoration: 'none' }}>**See profile</Link></li>
                   <li>**Edit profile</li>
-                  <li>**Log Out</li>
+                  <li><button className="btn btn-link" onClick={handleLogout} style={{ color: 'inherit', textDecoration: 'none' }}>**Log Out</button></li>
                 </ul>
               </li>
             </ul>

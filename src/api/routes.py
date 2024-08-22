@@ -593,15 +593,20 @@ def get_babies_by_user(user_id):
     except Exception as e:
         print(f"Error fetching babies: {e}")
         return jsonify({"msg": "An error occurred"}), 500
-    
-#Ruta para agregar bebes
-@api.route('/api/babies', methods=['POST'])
-def create_baby():
+
+#agregar un bebé a un usuario
+@api.route('/babies/user/<int:user_id>', methods=['POST'])
+def add_baby(user_id):
     data = request.get_json()
     
     # Validar que el usuario proporcione todos los campos requeridos
-    if not data or not 'name' in data or not 'gender' in data or not 'user_id' in data:
+    if not data or not 'name' in data or not 'gender' in data:
         return jsonify({"error": "Missing data"}), 400
+
+    # Verificar si el usuario existe
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
 
     new_baby = Baby(
         name=data['name'],
@@ -610,7 +615,7 @@ def create_baby():
         height=data.get('height', 0.0),  # Valor por defecto en 0.0 si no se proporciona
         weight=data.get('weight', 0.0),  # Valor por defecto en 0.0 si no se proporciona
         avatar_path=data.get('avatar_path', None),
-        user_id=data['user_id']
+        user_id=user_id
     )
 
     try:

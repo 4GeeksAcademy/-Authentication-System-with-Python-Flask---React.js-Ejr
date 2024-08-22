@@ -21,7 +21,7 @@ export const Gestor_bebes = () => {
             }
         };
         fetchBabies();
-    }, [actions]);
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>;
