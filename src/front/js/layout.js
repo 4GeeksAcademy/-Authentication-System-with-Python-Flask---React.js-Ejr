@@ -85,7 +85,7 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Private />} path="/private" />
                         <Route element={<Profile />} path="/profile" />
-                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Demo />} path="/routine/new" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<ErrorView />} path="/*" />
                     </Routes>
