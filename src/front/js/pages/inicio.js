@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
 
 export const Inicio = () => {
     const { store, actions } = useContext(Context);
+
 
     return (
         <div className="inicio-container container mt-5 text-muted">
@@ -16,12 +18,14 @@ export const Inicio = () => {
                         ¿Eres un programador en busca de proyectos desafiantes? ¿O una empresa que necesita talento tecnológico para llevar sus ideas al siguiente nivel? ¡Estás en el lugar indicado!
                     </p>
                     <div className="mt-4">
+                        <Link to={"/register"}>
                         <button type="button" className="btn btn-primary btn-lg me-5 mb-2 shadow-lg" style={{backgroundColor: "#6793AE", borderColor: "#6793AE"}}>
                             Inscribirse a Ofertas
                         </button>
                         <button type="button" className="btn btn-primary btn-lg mb-2 shadow-lg" style={{backgroundColor: "#ffffff", color:"#6793AE", borderColor: "#6793AE"}}>
                             Contratar Freelancers
                         </button>
+                        </Link>
                     </div>
                 </div>
                 <div className="col-lg-6 text-center mt-4 mt-lg-0">
