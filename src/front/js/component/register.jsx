@@ -225,7 +225,7 @@ export const Register = () => {
 					{formik.touched.checkTerminos && formik.errors.checkTerminos ? (
 						<div className="text-danger">{formik.errors.checkTerminos}</div>
 					) : null}
-					<span>He leído y acepto los términos y condiciones de uso.</span>
+					<Link to="/vistaLegalDocs" className="login__forgot m-3">He leído y acepto los términos y condiciones de uso.</Link>
 				</div>
 
 				<div className="col-md-12 d-flex justify-content-center">

@@ -16,6 +16,7 @@ import Profesionales from "./pages/profesionales";
 import PregFrecuentes from "./pages/pregFrecuentes";
 import Emergencias from "./pages/emergencias";
 import ResetPassword from "./pages/reset_password";
+import VistaLegalDocs from "./pages/vistaLegalDocs";
 
 
 
@@ -43,6 +44,7 @@ const Layout = () => {
                         <Route element={<Profesionales />} path="/profesionales" />
                         <Route element={<PregFrecuentes />} path="/preguntas-frecuentes" />
                         <Route element={<Emergencias />} path="/emergencias" />
+                        <Route element={<VistaLegalDocs />} path="/vistaLegalDocs" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

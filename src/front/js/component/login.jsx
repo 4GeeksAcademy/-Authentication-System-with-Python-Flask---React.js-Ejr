@@ -111,7 +111,7 @@ export const Login = () => {
 			});
 		} else {
 			Swal.fire({
-				title: 'Error',
+				title: 'Error, verifique su correo',
 				text: message,
 				icon: 'error',
 				confirmButtonText: 'Aceptar'
