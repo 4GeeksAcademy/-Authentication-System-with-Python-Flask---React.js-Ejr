@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, User, Itinerary
+from api.models import db, User, Itinerary, Contacts
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import bcrypt
 from flask_cors import CORS
+from flask_mail import Mail, Message
 
 api = Blueprint('api', __name__)
 
@@ -123,6 +124,33 @@ def login():
 def validate_token():
     current_user_id = get_jwt_identity()
     return jsonify({'success': True, 'msg': 'Token is valid', 'user_id': current_user_id}), 200
+
+@api.route('/contact', methods=['POST'])
+def create_contact():
+    data = request.json
+    from app import app, mail
+
+    required_fields = ['contactEmail', 'asunto', 'descripcion']
+    missing_fields = [field for field in required_fields if field not in data or not data[field]]
+    if missing_fields:
+        return jsonify({'msg': f'Missing fields: {", ".join(missing_fields)}'}), 400
+    new_contact = Contacts(email=data['contactEmail'], title=data['asunto'], description=data['descripcion'])
+
+    db.session.add(new_contact)
+    db.session.commit()
+
+    try:
+        msg = Message(subject=data['asunto'],
+                      sender=('Formulario de contacto', app.config['MAIL_DEFAULT_SENDER']),
+                      recipients=[data['contactEmail']],
+                      bcc=['sharetrips.help@gmail.com'])
+        msg.body = f"Email: {data['contactEmail']}\nAsunto: {data['asunto']}\nDescripción:\n{data['descripcion']}"
+        mail.send(msg)
+    except Exception as e:
+        return jsonify({'msg': 'Error al enviar el correo', 'error': str(e)}), 500
+
+    return jsonify({'msg': 'ok'}), 200
+
 
 @api.route('/protected', methods=['GET'])
 @jwt_required()
