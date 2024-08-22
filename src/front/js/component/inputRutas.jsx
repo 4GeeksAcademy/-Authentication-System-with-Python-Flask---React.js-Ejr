@@ -57,17 +57,7 @@ export const InputRutas = () => {
                     onKeyDown={handleKeyDown}
                 />
             </div>
-
-            <div className="input-group mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Titulo"
-                    aria-label="Titulo"
-                    aria-describedby="basic-addon1"
-                />
-            </div>
-
+            
             <div className="mb-3">
                 <textarea
                     className="form-control"
