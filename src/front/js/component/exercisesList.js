@@ -16,23 +16,18 @@ export const ExercisesList = ({ weeklyRoutine }) => {
     setCurrentDay(new Date().getDay())
   }, []);
 
-  useEffect(() => {
-    console.log(day);
-    console.log(currentDay)
-  }, [day, currentDay]);
-
-  const handleChange = async (e, exercise) => {
+  const handleChange = async (isDone, exerciseId) => {
     // e.persist()
-    if (e.target.checked == true) {
+    if (isDone == true) {
       setDone(done + 1)
-      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exerciseId);
       const exerciseRoutine = await store.oneExerciseRoutine;
       await actions.postFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
-    if (e.target.checked == false) {
+    if (isDone == false) {
       setDone(done - 1)
       console.log(done);
-      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exerciseId);
       const exerciseRoutine = await store.oneExerciseRoutine;
       await actions.deleteFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
@@ -52,11 +47,6 @@ export const ExercisesList = ({ weeklyRoutine }) => {
     }
   }, [done, total]);
 
-  useEffect(() => {
-    console.log("done:", done);
-
-  }, [done]);
-
   return (
     <>
       <div>
@@ -65,7 +55,6 @@ export const ExercisesList = ({ weeklyRoutine }) => {
       <ul className="bg-neutral-900 p-3 space-y-3">
 
         {weeklyRoutine.routine.exercises.map((item, index) => {
-          // console.log(new Date());
 
           return (
             < label
@@ -77,13 +66,13 @@ export const ExercisesList = ({ weeklyRoutine }) => {
                 <input
                   disabled={currentDay !== day}
                   type="checkbox"
-                  checked={item.exercise.done}
+                  defaultChecked={item.exercise.done}
                   className="myCheckbox size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"
                   id={`option ${index}`}
                   name="name"
                   onChange={(e) => {
                     item.exercise.done = !item.exercise.done
-                    handleChange(e, item.exercise.id)
+                    handleChange(item.exercise.done, item.exercise.id)
                   }}
                 />
                 {/* {`option ${index}` == false ? setDone(done + 1) : null} */}

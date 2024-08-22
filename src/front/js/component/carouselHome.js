@@ -17,16 +17,13 @@ const CarouselComplete = () => {
     }, [])
 
     return (
-
         <Carousel showThumbs={false} showStatus={false}>
-
             {store.allWeeklyRoutineUserList.sort((a, b) => a.day_num - b.day_num).map((item, index) => (
                 <div key={index} className="w-2/3 mx-auto">
                     <ExercisesList weeklyRoutine={item} />
                 </div>
             ))}
         </Carousel>
-
     );
 };
 

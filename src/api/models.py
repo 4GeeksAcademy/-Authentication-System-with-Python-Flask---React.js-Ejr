@@ -137,14 +137,14 @@ class WeeklyRoutine(db.Model):
         follow_up = list(map(lambda item: item.serialize(), self.follow_up))
         routine = self.routine.serialize()
         for item_routine in routine["exercises"]:
-            item_routine["exercise"]["done"] = False
+            # item_routine["exercise"]["done"] = False
             for item_follow in follow_up:   
-                # print(item_follow["date"])
-                # print(datetime.now().date().strftime("%d/%m/%Y"))
+                print(item_follow["date"])
+                print(datetime.now().date().strftime("%d/%m/%Y"))
                 if last_monday <= item_follow["date"] <= today.strftime("%d/%m/%Y") and item_follow["exercise_routine"]["exercise"]["id"] == item_routine["exercise"]["id"]:
                     item_routine["exercise"]["done"] = True
-                else:
-                    item_routine["exercise"]["done"] = False
+                # else:
+                #     item_routine["exercise"]["done"] = False
         return {
             "id": self.id,
             "user_id": self.user_id,

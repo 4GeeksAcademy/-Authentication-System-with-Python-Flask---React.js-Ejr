@@ -37,6 +37,7 @@ export const Profile = () => {
         userData.weight,
       );
       if (success === true) {
+        setIsModalOpen(false)
         resolve("Registro exitoso");
         actions.get_last_one_physical_user_information()
         calcIMC()
@@ -95,7 +96,7 @@ export const Profile = () => {
   }
 
   return (
-    <div className="sm:w-2/3 w-11/12 mx-auto flex flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-3 h-full bg-neutral-800 border-neutral-700 relative">
+    <div className="sm:w-2/3 w-11/12 mx-auto flex flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-3 h-full bg-neutral-800 border-neutral-700 relative min-h-[800px]">
       <h1 className="text-neutral-50 font-bold text-3xl">Perfil</h1>
       <div className="flex flex-col items-center">
         {
@@ -313,7 +314,7 @@ export const Profile = () => {
         </button>
 
         {/* <!-- Main modal --> */}
-        <div id="default-modal" tabIndex="-1" aria-hidden="true" className={`${isDeleteModalOpen ? '' : 'hidden'}  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
+        <div tabIndex="-1" aria-hidden="true" className={`${isDeleteModalOpen ? '' : 'hidden'}  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
           <div className="relative p-4 w-full max-w-2xl max-h-full">
             {/* <!-- Modal content --> */}
             <div className="relative rounded-lg shadow dark:bg-neutral-700">
@@ -322,7 +323,7 @@ export const Profile = () => {
                 <h3 className="text-xl text-neutral-50 font-bold">
                   Eliminar cuenta permanentemente
                 </h3>
-                <button type="button" onClick={() => setIsModalOpen(false)} className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white" data-modal-hide="default-modal">
+                <button type="button" onClick={() => setIsDeleteModalOpen(false)} className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white">
                   <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                   </svg>
@@ -337,8 +338,8 @@ export const Profile = () => {
               </div>
               {/* <!-- Modal footer --> */}
               <div className="flex items-center p-4 md:p-5 border-t border-neutral-200 rounded-b dark:border-neutral-600">
-                <button onClick={handleDeleteSubmit} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Eliminar Cuenta</button>
-                <button onClick={() => setIsModalOpen(false)} type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-neutral-900 focus:outline-none bg-white rounded-lg border border-neutral-200 hover:bg-neutral-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-neutral-100 dark:focus:ring-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:text-white dark:hover:bg-neutral-700">Cancelar</button>
+                <button onClick={handleDeleteSubmit} type="button" className="transition-all duration-200 text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-900 dark:hover:bg-red-800 dark:focus:ring-red-800">Eliminar Cuenta</button>
+                <button onClick={() => setIsDeleteModalOpen(false)} type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-neutral-900 focus:outline-none bg-white rounded-lg border border-neutral-200 hover:bg-neutral-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-neutral-100 dark:focus:ring-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:text-white dark:hover:bg-neutral-700">Cancelar</button>
               </div>
             </div>
           </div>
