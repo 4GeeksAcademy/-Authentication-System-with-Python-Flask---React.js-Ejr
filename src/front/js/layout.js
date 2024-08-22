@@ -17,11 +17,8 @@ import { Register } from "./pages/register.js"
 import { TimeLine } from "./pages/TimeLine.jsx";
 import { FormOffer } from "./component/FormOffer.jsx";
 import { SobreNosotros } from "./pages/sobreNosotros.js";
-<<<<<<< HEAD
 import { Contact } from "./pages/contact.js";
-=======
 import  PreguntasFrecuentes  from "./pages/preguntasFrecuentes.js";
->>>>>>> f72914c405b1de997805710de69da6c6d133c4c1
 
 //create your first component
 const Layout = () => {
