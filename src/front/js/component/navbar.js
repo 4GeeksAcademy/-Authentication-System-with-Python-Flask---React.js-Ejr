@@ -27,7 +27,7 @@ export const Navbar = () => {
 </div>
 
 <button className="navbar-toggler navHamburguer"  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-  <span class="fa-solid fa-bars text-white"></span>
+  <span className="fa-solid fa-bars text-white"></span>
 </button>
         <div className="offcanvas offcanvas-end text-bg-dark" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
           <div className="offcanvas-body">

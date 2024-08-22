@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 const alertSuccess = () => {
     const { store } = useContext(Context);
   return (
-    <div class={`text-center alert alert-${store.success ? "success" : "warning"}`} role="alert">
+    <div className={`text-center alert alert-${store.success ? "success" : "warning"}`} role="alert">
                 {store.msg}
                 </div>
   )
