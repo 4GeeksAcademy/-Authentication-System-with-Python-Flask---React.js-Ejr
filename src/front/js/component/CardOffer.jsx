@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, { useContext }, {useState} from "react";
 import "../../styles/CardOffer.css"
 import { Link } from "react-router-dom"
 
 
+import { Context } from "../store/appContext";
 
 export const CardOffer = ({ title, company, modality, location, salary, description,id }) => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -14,6 +15,8 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
 
 
 
+    const {actions, store} = useContext(Context)
+    
     return (
         <div className="container mt-5">
             <div className="card m-auto" style={{ width: "55rem" }}>
