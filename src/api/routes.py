@@ -236,6 +236,53 @@ def eliminar_oferta():
     
 
 
+@api.route('/modificarOferta/<int:oferta_id>', methods=['PUT'])
+@jwt_required()
+def modificar_oferta(oferta_id):
+    empleador_id = get_jwt_identity()
+
+    oferta = Ofertas.query.filter_by(id=oferta_id, empleador_id=empleador_id).first()
+    if not oferta:
+        return jsonify({"success": False, "msg": "Oferta no encontrada o no pertenece al usuario"}), 404
+
+    name = request.json.get("name")
+    descripcion = request.json.get("descripcion")
+    salario = request.json.get("salario")
+    plazo = request.json.get("plazo")
+    modalidad = request.json.get("modalidad")
+    experiencia_minima = request.json.get("experiencia_minima")
+    fecha_publicacion_str = request.json.get("fecha_publicacion")
+
+    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
+        return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
+
+    try:
+        modalidad_enum = Modalidad(modalidad.upper())
+    except ValueError:
+        return jsonify({"success": False, "msg": "Modalidad no válida"}), 400
+
+    try:
+        fecha_publicacion = datetime.strptime(fecha_publicacion_str, "%Y-%m-%d").date()
+    except ValueError:
+        return jsonify({"success": False, "msg": "Fecha de publicación no válida"}), 400
+
+    oferta.name = name
+    oferta.descripcion = descripcion
+    oferta.salario = salario
+    oferta.plazo = plazo
+    oferta.modalidad = modalidad_enum
+    oferta.experiencia_minima = experiencia_minima
+    oferta.fecha_publicacion = fecha_publicacion
+
+    try:
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Oferta modificada exitosamente", "oferta": oferta.serialize()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al modificar la oferta: {str(e)}"}), 500
+
+    
+
 if __name__ == '__main__':
     api.run(host='0.0.0.0', port=3245, debug=True)
 
