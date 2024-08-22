@@ -10,7 +10,7 @@ export const ListOffers = ({ searchTerm }) => {
         actions.loadJobOffers();
     }, [actions]);
 
-    const filteredOffers = jobOffers.filter((offer) =>
+    const searchOffers = jobOffers.filter((offer) =>
         offer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         offer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
         offer.location.toLowerCase().includes(searchTerm.toLowerCase())
@@ -19,8 +19,8 @@ export const ListOffers = ({ searchTerm }) => {
     return (
         <div className="container d-flex justify-content-center my-5">
             <div className="row d-flex flex-column">
-                {filteredOffers.length > 0 ? (
-                    filteredOffers.map((offer, index) => (
+                {searchOffers.length > 0 ? (
+                    searchOffers.map((offer, index) => (
                         <div className="col" key={index}>
                             <CardOffer
                                 title={offer.title}
@@ -34,7 +34,7 @@ export const ListOffers = ({ searchTerm }) => {
                         </div>
                     ))
                 ) : (
-                    <p>No hay ofertas disponibles</p>
+                    <p className="text-secondary">No hay ofertas disponibles</p>
                 )}
             </div>
         </div>
