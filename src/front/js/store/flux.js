@@ -27,7 +27,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				email:"",
 				password:""
             },
-            babies: [] // Agregado para almacenar la lista de bebés
+            babies: [], // Agregado para almacenar la lista de bebés
+            selectedBabyId: null // Para seleccionar un bebé específico
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -110,23 +111,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-			// Accion para obtener datos del bebe
-			fetchBabyData: async () => {
-                try {
-                    const resp = await fetch(process.env.BACKEND_URL + "api/one_baby/1"); // Ejemplo: obtener datos del bebé con id=1
-                    const data = await resp.json();
-                    if (data && data.bebe) {
-                        setStore({ babyData: data.bebe });
+			// Accion para obtener datos del bebe 
+			// fetchBabyData: async () => {
+            //     try {
+            //         const resp = await fetch(process.env.BACKEND_URL + "api/one_baby/1"); // Ejemplo: obtener datos del bebé con id=1
+            //         const data = await resp.json();
+            //         if (data && data.bebe) {
+            //             setStore({ babyData: data.bebe });
+            //         }
+            //     } catch (error) {
+            //         console.log("Error fetching baby data", error);
+            //     }
+            // },
+
+            // Obtener datos de un bebé específico
+			fetchBabyData: async (babyId) => {
+				try {
+                    console.log(`Fetching data for baby with ID: ${babyId}`);
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/one_baby/${babyId}`);
+                    const data = await response.json();
+            
+                    if (response.ok && data && data.bebe) {
+                        console.log("Fetched baby data:", data.bebe);
+                        setStore({ babyData: data.bebe, selectedBabyId: babyId });
+                    } else {
+                        console.error("Failed to fetch baby data or data is missing:", data);
                     }
                 } catch (error) {
-                    console.log("Error fetching baby data", error);
+                    console.error("Error fetching baby data:", error);
                 }
-            },
+			},
 
 			// Actualizar los datos del bebé
             updateBabyData: async (updatedData) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}api/edit_baby/1`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}api/edit_baby/${updatedData.id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -134,7 +153,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify(updatedData),
                     });
                     if (response.ok) {
-                        setStore({ babyData: updatedData });
+                        const data = await response.json();
+                        console.log("Baby data updated successfully:", data);
+                        setStore({ babyData: data.data });
                     } else {
                         console.error("Failed to update baby data");
                     }
@@ -266,6 +287,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
+				}
+			},
+            //Accion para crear un nuevo bebe
+            createBaby: async (babyData) => {
+				try {
+					const store = getStore();
+					const response = await fetch(process.env.BACKEND_URL + "/api/babies", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(babyData)
+					});
+
+					if (response.ok) {
+						const data = await response.json();
+						// Actualiza la lista de bebés en el store
+						setStore({ babies: [...store.babies, data] });
+						console.log("Baby created successfully:", data);
+						return true;
+					} else {
+						const errorData = await response.json();
+						console.error("Failed to create baby:", errorData);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error creating baby:", error);
+					return false;
 				}
 			},
 

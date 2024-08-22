@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 import os
+from flask_mail import Mail, Message
 
 api = Blueprint('api', __name__)
 
@@ -560,12 +561,12 @@ def reset_password():
         db.session.commit()
 
          # Enviar correo electrónico de confirmación
-        # msg = Message(subject="Password Reset Confirmation",
-        #               sender="sandbox.smtp.mailtrap.io",
-        #               recipients=[email],
-        #               body=f"Hi {user.username}, your password has been successfully reset.")
+        #  msg = Message(subject="Password Reset Confirmation",
+        #                sender="sandbox.smtp.mailtrap.io",
+        #                recipients=[email],
+        #                body=f"Hi {user.username}, your password has been successfully reset.")
         
-        # mail.send(msg)
+         #mail.send(msg)
 
         return jsonify({"success": True, "message": "Password updated successfully."}), 200
 
@@ -592,3 +593,29 @@ def get_babies_by_user(user_id):
     except Exception as e:
         print(f"Error fetching babies: {e}")
         return jsonify({"msg": "An error occurred"}), 500
+    
+#Ruta para agregar bebes
+@api.route('/api/babies', methods=['POST'])
+def create_baby():
+    data = request.get_json()
+    
+    # Validar que el usuario proporcione todos los campos requeridos
+    if not data or not 'name' in data or not 'gender' in data or not 'user_id' in data:
+        return jsonify({"error": "Missing data"}), 400
+
+    new_baby = Baby(
+        name=data['name'],
+        gender=data['gender'],
+        age=data.get('age', 0),  # Valor por defecto en 0 si no se proporciona
+        height=data.get('height', 0.0),  # Valor por defecto en 0.0 si no se proporciona
+        weight=data.get('weight', 0.0),  # Valor por defecto en 0.0 si no se proporciona
+        avatar_path=data.get('avatar_path', None),
+        user_id=data['user_id']
+    )
+
+    try:
+        db.session.add(new_baby)
+        db.session.commit()
+        return jsonify(new_baby.serialize()), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
