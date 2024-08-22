@@ -85,7 +85,7 @@ def setup_commands(app):
                 d = json.load(f)
                 print(d)
                 for product in d:
-                    new_product = Product(name=product["name"], cost=product["cost"])
+                    new_product = Product(name=product["name"], cost=product["cost"], image_url=product["image_url"])
                     db.session.add(new_product)
                 db.session.commit()
 

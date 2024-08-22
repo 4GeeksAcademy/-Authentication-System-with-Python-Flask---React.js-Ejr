@@ -294,6 +294,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				const data_result = await response.json()
+				if(response.ok){
+					return data_result
+				}
 				console.log(data_result)
 			},
 

@@ -9,16 +9,22 @@ const AddProduct = () => {
   const [file, setFile] = useState()
   const uploadImage = async (image) => {
     const data = new FormData()
-    data.append('image', file)
+    data.append('image', image)
     console.log(data)
     const response = await actions.uploadImage(data)
+    if (response){
+      const product = formik.values
+      product.image_url = response.secure_url
+      actions.addProduct(product)
+    }else{
+      alert("Hubo un error al agregar el producto")
+    }
   }
 
   const formik = useFormik({
     initialValues: {
       name: '',
       cost: '',
-      image_url: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -27,7 +33,11 @@ const AddProduct = () => {
         .required('Required'),
     }),
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      if (file){
+        uploadImage(file)
+        return
+      }
+      actions.addProduct(formik.values)
     },
   });
   return (
@@ -78,9 +88,8 @@ const AddProduct = () => {
 
         <div className="form-buttons">
           <button
-            type="button"
+            type="submit"
             className="btn btn-primary"
-            onClick={uploadImage}
           >
             Subir
           </button>

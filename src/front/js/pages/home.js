@@ -7,6 +7,7 @@ import GirlImg from "../../../../public/images/girl-ph.jpg";
 import NutriImg from "../../../../public/images/chicken-plate.jpg";
 import SportsImg from "../../../../public/images/chicken-plate.jpg";
 import ScrollBanner from "../../../../public/images/scroll-banner-bg.png";
+import ScrollToTopButton from "../component/ScrollToTopButton.jsx";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -119,6 +120,7 @@ export const Home = () => {
 					</div>
 				</article>
 			</section>
+			<ScrollToTopButton/>
 		</div>
 	);
 };
