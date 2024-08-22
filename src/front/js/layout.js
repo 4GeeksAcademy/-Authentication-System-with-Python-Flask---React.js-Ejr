@@ -25,6 +25,8 @@ import injectContext from "./store/appContext";
 
 import { Gestor_perfil } from "./pages/gestor_perfil.js";
 import { Reset_password } from "./pages/reset_password.js";
+import { Gestor_bebes } from "./pages/gestor_bebes.js";
+import { Add_baby } from "./pages/add_baby";
 
 //create your first component
 const Layout = () => {
@@ -48,7 +50,9 @@ const Layout = () => {
                         <Route element={<Reset_password />} path="/reset_password" />
                         {/* Bebé */}
                         <Route element={<Gestor_perfil />} path="/gestor_perfil" />
-                        <Route element={<Gestor_bebe />} path="/gestor_bebe" />
+                        <Route element={<Gestor_bebe />} path="/gestor_bebe/:id" />
+                        <Route element={<Gestor_bebes />} path="/gestor_bebes" />
+                        <Route element={<Add_baby />} path="/add_baby" />
                         {/* Report */}
                         <Route element={<AddReport />} path="/dashboard" />
                         <Route path="/baby/:babyId/:reportId" element={<ViewReport />} />

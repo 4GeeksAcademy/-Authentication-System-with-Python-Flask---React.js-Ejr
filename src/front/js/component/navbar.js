@@ -34,7 +34,7 @@ export const Navbar = () => {
                 <h1 className="titulo-navItem"><Link to="/dashboard" style={{ color: '#63DDFC', textDecoration: 'none' }}>Baby</Link></h1>
                 <ul className="no-bullets">
                   <li><Link to="/dashboard" style={{ color:'inherit', textDecoration: 'none' }}>Baby's Diary</Link></li>
-                  <li><Link to="/gestor_bebe" style={{ color:'inherit', textDecoration: 'none' }}>**Edit Baby's Profile</Link></li>
+                  <li><Link to="/gestor_bebes" style={{ color:'inherit', textDecoration: 'none' }}>**Edit Baby's Profile</Link></li>
                   <li><Link to="/gestor_bebes" style={{ color:'inherit', textDecoration: 'none' }}>**Manage Babies</Link></li>
                 </ul>
               </li>

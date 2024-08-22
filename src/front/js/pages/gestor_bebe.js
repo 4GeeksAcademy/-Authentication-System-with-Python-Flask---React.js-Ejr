@@ -1,25 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
 import bebe1 from "../../img/bebe1.jpg";
 
 export const Gestor_bebe = () => {
+	const { id } = useParams(); // Obtener el id del bebé desde los parámetros de la URL
 	const { store, actions } = useContext(Context);
 
 	const { babyData } = store;
 
-	const [editableData, setEditableData] = useState(babyData);
+	const [editableData, setEditableData] = useState({
+        name: "",
+        gender: "",
+        age: "",
+        height: "",
+        weight: ""
+    });
     const [isEditing, setIsEditing] = useState(false);
 
 	useEffect(() => {
-        // Obtener datos del bebé cuando se monta el componente
-        actions.fetchBabyData();
-    }, []);
+		console.log("Fetching data for baby with id:", id);
+		if (id) {
+        	actions.fetchBabyData(id); // Obtener datos del bebé
+		}
+    }, [id, actions]);
 
 	useEffect(() => {
-        setEditableData(babyData);
+        console.log("Received new babyData:", babyData);
+        if (babyData) {
+            setEditableData(babyData);
+        }
     }, [babyData]);
 
     const handleChange = (e) => {
@@ -27,7 +39,8 @@ export const Gestor_bebe = () => {
         setEditableData({ ...editableData, [name]: value });
     };
 
-	const handleSave = () => {
+	const handleSave = (event) => {
+		event.preventDefault();
         actions.updateBabyData(editableData);
         setIsEditing(false);
     };
@@ -79,13 +92,13 @@ export const Gestor_bebe = () => {
 
 			<div className="d-flex justify-content-end">
 				{isEditing ? (
-					<button onClick={handleSave} className="btn btn-primary">Save</button>
+					<button type="button" onClick={handleSave} className="btn btn-primary">Save</button>
 				) : (
-					<button onClick={() => setIsEditing(true)} className="btn btn-secondary">Edit</button>
+					<button type="button" onClick={() => setIsEditing(true)} className="btn btn-secondary">Edit</button>
 				)}
 
 				<Link to="/">
-					<button className="btn btn-dark">Back home</button>
+					<button type="button" className="btn btn-dark">Back home</button>
 				</Link>
 			</div>
 		</div>
