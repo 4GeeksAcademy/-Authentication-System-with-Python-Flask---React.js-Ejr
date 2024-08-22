@@ -47,8 +47,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			CreateJobOffer: async (offerData) => {
 				try {
-					const token = localStorage.getItem('token');
-					const resp = await fetch(`${process.env.BACKEND_URL}/api/crearOferta`, {
+					const token = localStorage.getItem('token'); 
+					const resp = await fetch(process.env.BACKEND_URL + "/api/crearOferta", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
