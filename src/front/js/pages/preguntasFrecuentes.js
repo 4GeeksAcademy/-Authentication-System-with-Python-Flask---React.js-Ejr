@@ -7,9 +7,21 @@ import { RiCodeBoxLine } from "react-icons/ri";
 import { MdWork } from "react-icons/md";
 import { BsPersonWorkspace } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const preguntasFrecuentes = () => {
   const [isDevelop, setIsDevelop] =useState(false)
+  const [showAcordeon, setShowAcordeon] = useState(false)
+  const validationisDev =(text)=>{
+    if(text == "PROGRAMADOR"){
+      setIsDevelop(true)
+      setShowAcordeon(true)
+    }else{
+      setIsDevelop(false)
+      setShowAcordeon(true)
+    }
+  }
+
   return (
     <>
     <div className="container">
@@ -19,12 +31,18 @@ const preguntasFrecuentes = () => {
             ¿Cómo podemos ayudarte?
           </h1>
           <div className="row justify-content-center ">
-            <CardAyuda text="EMPLEADOR" setIsDevelop={setIsDevelop}/>
-            <CardAyuda text="PROGRAMADOR" />
+            <CardAyuda text="EMPLEADOR" validationisDev={validationisDev} />
+            <CardAyuda text="PROGRAMADOR"  validationisDev={validationisDev}/>
           </div>
         </div>
         <div>
-          <AcordeonPreguntas />
+          {showAcordeon && (
+            <>            
+            {isDevelop ? (<AcordeonPreguntas text="PROGRAMADOR" isDevelop={isDevelop} />): (<AcordeonPreguntas text="EMPLEADOR" />)}
+            </>
+
+          )}
+          
         </div>
         
       </div>
@@ -34,7 +52,9 @@ const preguntasFrecuentes = () => {
           <div className="col-7 borde">
             <h1>Registrate en floppy</h1>
             <p>Encuentra lo que estás buscando</p>
+            <Link to={"/register"}>
             <button className="btn btn-light colorGeneral fs-5">Registrarse</button>
+            </Link>
             
           </div>
           <div className="col-5">

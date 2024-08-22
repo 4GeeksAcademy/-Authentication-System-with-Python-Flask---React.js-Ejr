@@ -39,7 +39,7 @@ export const Navbar = () => {
                 <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">Contáctanos</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/">FAQ</Link>
+                <Link className="nav-link active" style={{ color: '#6793AE', marginTop: '20px' }} aria-current="page" to="/preguntasFrecuentes">FAQ</Link>
               </li>
             </ul>
           </div>
