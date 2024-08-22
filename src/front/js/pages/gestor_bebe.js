@@ -25,7 +25,7 @@ export const Gestor_bebe = () => {
 		if (id) {
         	actions.fetchBabyData(id); // Obtener datos del bebé
 		}
-    }, [id, actions]);
+    }, [id]);
 
 	useEffect(() => {
         console.log("Received new babyData:", babyData);
