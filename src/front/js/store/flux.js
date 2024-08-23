@@ -457,6 +457,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
+            // DELETE WeeklyRoutine / ELIMINAR RUTINA SEMANA
+            deleteWeeklyUserRoutine: async (day) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const resp = await axios.delete(process.env.BACKEND_URL + `/weekly-user-routine/${day}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                    if (resp.status == 200) {
+                        console.log(resp.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
 
             // ROUTINE
             // GET ALL Routine / TRAER TODAS RUTINA
@@ -556,6 +582,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.log('Error:', error);
                         return error;
                     }
+                }
+            },
+            // DELETE Routine / ELIMINAR RUTINA
+            deleteRoutine: async (id) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const resp = await axios.delete(process.env.BACKEND_URL + `/delete-routine/${id}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                    if (resp.status == 200) {
+                        console.log(resp.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
                 }
             },
 
@@ -740,41 +792,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
-            // // DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
-            // deleteExerciseRoutine: async (routine_id, exercise_id) => {
-            //     try {
-            //         const token = localStorage.getItem('token');
-            //         if (!token) {
-            //             return { "error": "no token found" };
-            //         }
+            // DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
+            deleteExerciseRoutine: async (routine_id, exercise_id) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
 
-            //         const payload = {
-            //             "routine_id": routine_id,
-            //             "exercise_id": exercise_id
-            //         };
-            //         console.log('Sending payload:', payload);
+                    const resp = await axios.delete(process.env.BACKEND_URL + `/exercise-routine/${routine_id}/${exercise_id}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
+                    );
 
-            //         let response = await axios.delete(process.env.BACKEND_URL + '/exercise-routine', {
-            //             headers: {
-            //                 Authorization: `Bearer ${token}`
-            //             },
-            //             data: payload // La data se envía en el body con axios.delete
-            //         });
-
-            //         if (response.status == 200) {
-            //             console.log('Exercise successfully removed from routine:', response.data);
-            //             return true;
-            //         }
-            //     } catch (error) {
-            //         if (error.response && error.response.data) {
-            //             console.log(error.response.data);
-            //             return error.response.data;
-            //         } else {
-            //             console.log('Error:', error);
-            //             return error;
-            //         }
-            //     }
-            // },
+                    if (resp.status == 200) {
+                        console.log(resp.data);
+                        return true;
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            },
 
             // PUT ExerciseRoutine / ACTUALIZAR EJERCICIO DE RUTINA
             putExerciseRoutine: async (idRoutine, idExercise, routine_id, exercise_id, sets_id) => {

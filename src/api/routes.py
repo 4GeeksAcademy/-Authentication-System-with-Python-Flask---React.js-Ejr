@@ -315,6 +315,18 @@ def put_weekly_user_routine(day):
         db.session.commit()
         return jsonify('weekly_user_routine update'), 200
 
+# DELETE WeeklyRoutine / ELIMINAR RUTINA SEMANA
+@api.route('/weekly-user-routine/<day>', methods=['DELETE'])
+@jwt_required()
+def delete_weekly_routine(day):
+    current_user = get_jwt_identity()
+    weekly_user_routine = WeeklyRoutine.query.filter_by(user_id=current_user['id'], day=day).first()
+    if not weekly_user_routine:
+        return jsonify({"error":"weekly_user_routine not found"}), 404
+    db.session.delete(weekly_user_routine)
+    db.session.commit()
+    return jsonify("weekly_user_routine successfully deleted"), 200
+
 # ROUTINE
 # GET ALL Routine / TRAER TODAS RUTINA
 @api.route('/routine', methods=['GET'])
@@ -367,6 +379,16 @@ def put_routine(id):
         routine.verified = True
         db.session.commit()
         return jsonify('routine update'), 200
+
+# DELETE Routine / ELIMINAR RUTINA
+@api.route('/delete-routine/<int:id>', methods=['DELETE'])
+def delete_routine(id):
+    routine = Routine.query.filter_by(id=id).first()
+    if not routine:
+        return jsonify({"error":"routine not found"}), 404
+    db.session.delete(routine)
+    db.session.commit()
+    return jsonify("routine successfully deleted"), 200
 
 # EXERCISE
 # GET ALL EXERCICE / TRAER TODOS EJERCICIO
@@ -471,35 +493,16 @@ def post_exercise_routine():
     db.session.commit()
     return jsonify(exercise_routine_created.serialize())
 
-# # DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
-# @api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['DELETE'])
-# def delete_exercise_routine(routine_id, exercise_id):
-#     exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
-#     if exercise_routine is None:
-#         return ({'error':'exercise_routine not found'}), 404
+# DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
+@api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['DELETE'])
+def delete_exercise_routine(routine_id, exercise_id):
+    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+    if exercise_routine is None:
+        return ({'error':'exercise_routine not found'}), 404
 
-#     db.session.delete(exercise_routine)
-#     db.session.commit()
-#     return jsonify("successfully removed"), 200
-
-# @api.route('/exercise-routine', methods=['DELETE'])
-#     # exercise_routine = request.get_json()
-#     # routine_id = exercise_routine.get('routine_id')
-#     # exercise_id = exercise_routine.get('exercise_id')
-
-#     if not isinstance(routine_id, str) or len(routine_id.strip()) == 0:
-#         return ({'error': "'routine_id' must be a string"}), 400
-#     if not isinstance(exercise_id, str) or len(exercise_id.strip()) == 0:
-#         return ({'error': "'exercise_id' must be a string"}), 400
-
-#     exercise_routine_to_delete = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
-
-#     if not exercise_routine_to_delete:
-#         return ({'error': 'ExerciseRoutine not found'}), 404
-
-#     db.session.delete(exercise_routine_to_delete)
-#     db.session.commit()
-#     return jsonify({'message': 'Exercise removed from routine successfully'})
+    db.session.delete(exercise_routine)
+    db.session.commit()
+    return jsonify("successfully removed"), 200
 
 # PUT ExerciseRoutine / ACTUALIZAR EJERCICIO DE RUTINA
 @api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['PUT'])

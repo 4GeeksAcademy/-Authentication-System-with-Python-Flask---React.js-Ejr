@@ -45,7 +45,10 @@ export const VistaPrueba = () => {
 		// actions.putExercise(6, "Remoss", "ESPALDA", "Ejercicio de Espalda", "011")
 		// actions.putExerciseRoutine(7, 8, 7, 2, 1)
 		// actions.putFollowUp(10, 7, "2024-06-01", 10, 7, "2022-06-01")
-		actions.putSets(1, 1, 4, 12)
+		// actions.putSets(1, 1, 4, 12)
+		// actions.deleteWeeklyUserRoutine("DOMINGO")
+		// actions.deleteRoutine(12)
+		actions.deleteExerciseRoutine(11,1)
 	}, [])
 	// console.log(store.allCategoryList);
 	// console.log(Object.keys(store.allCategoryList));
