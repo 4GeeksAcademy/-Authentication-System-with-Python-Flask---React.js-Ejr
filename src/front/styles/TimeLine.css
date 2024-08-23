@@ -1,3 +1,7 @@
+body{
+    min-height: 1200px;
+}
+
 .search-bar {
     position: relative;
     top: 25px;

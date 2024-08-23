@@ -1,31 +1,39 @@
 import React, { useState } from "react";
-
+import '../../styles/ratings.css';
 
 export const StarRating = ({ totalStars = 5 }) => {
-    const [rating, setRating] = useState(0);
-
+    const [ratings, setRatings] = useState([]);
 
     const handleRating = (rate) => {
-        setRating(rate);
+        setRatings((prevRatings) => [...prevRatings, rate]);
     };
 
+    const calculateAverageRating = () => {
+        if (ratings.length === 0) return 0;
+        const total = ratings.reduce((sum, rating) => sum + rating, 0);
+        return (total / ratings.length).toFixed(1); 
+    };
+
+    const averageRating = calculateAverageRating();
+
     return (
-        <div className="rating">
+        <div className="rating d-flex">
             {[...Array(totalStars)].map((_, index) => (
-                <span key={index}
+                <span
+                    key={index}
                     onClick={() => handleRating(index + 1)}
-                    style={{ color: index < rating ? '#ffd700' : '#ccc' }}
+                    style={{ color: index < averageRating ? '#ffd700' : '#ccc' }}
                 >
                     ★
-
                 </span>
             ))}
-            <p style={{color: 'white'}}>
-                Rating: {rating} / {totalStars}
+            <p>
+                ({averageRating})
             </p>
         </div>
-    )
-}
+    );
+};
+
 
 
 

@@ -31,13 +31,14 @@ export const FilterListOffer = () => {
     return (
         <div className="FilterListOffer-box p-3 ms-5 shadow-lg">
             <h2 className="text-start fw-bold text-muted fs-4">Filtrar Ofertas</h2>
+
             <div>
                 <h3>Categoría</h3>
                 <label>
                     <input
                         type="radio"
-                        name="Frontend"
-                        value="tech"
+                        name="selectedCategory"
+                        value="Frontend"
                         checked={filters.selectedCategory === "Frontend"}
                         onChange={handleFilterChange}
                     />
@@ -67,7 +68,9 @@ export const FilterListOffer = () => {
 
             <div>
                 <h3>Rango de Salario</h3>
+                <label htmlFor="salaryMin">Salario Mínimo:</label>
                 <input
+                    id="salaryMin"
                     type="range"
                     min="0"
                     max="100000"
@@ -75,7 +78,9 @@ export const FilterListOffer = () => {
                     value={filters.salary[0]}
                     onChange={(e) => handleSalaryChange({ target: { value: `${e.target.value},${filters.salary[1]}` } })}
                 />
+                <label htmlFor="salaryMax">Salario Máximo:</label>
                 <input
+                    id="salaryMax"
                     type="range"
                     min="0"
                     max="100000"
@@ -93,7 +98,7 @@ export const FilterListOffer = () => {
                 <label>
                     <input
                         type="radio"
-                        name="contractType"
+                        name="modality"
                         value="full-time"
                         checked={filters.modality === "full-time"}
                         onChange={handleFilterChange}
@@ -103,7 +108,7 @@ export const FilterListOffer = () => {
                 <label>
                     <input
                         type="radio"
-                        name="contractType"
+                        name="modality"
                         value="part-time"
                         checked={filters.modality === "part-time"}
                         onChange={handleFilterChange}
@@ -113,7 +118,7 @@ export const FilterListOffer = () => {
                 <label>
                     <input
                         type="radio"
-                        name="contractType"
+                        name="modality"
                         value="freelance"
                         checked={filters.modality === "freelance"}
                         onChange={handleFilterChange}
@@ -124,22 +129,23 @@ export const FilterListOffer = () => {
 
             <div>
                 <h3>Ubicación</h3>
-                <select
+                <label htmlFor="location">Buscar por Provincia o País:</label>
+                <input
+                    id="location"
+                    type="text"
                     name="location"
+                    placeholder="Buscar por Provincia o País"
                     value={filters.location}
                     onChange={handleFilterChange}
-                >
-                    <option value="">Seleccionar ubicación</option>
-                    <option value="remote">Remoto</option>
-                    <option value="new-york">Nueva York</option>
-                    <option value="san-francisco">San Francisco</option>
-                </select>
+                />
             </div>
 
             <div>
                 <h3>Nivel de Experiencia</h3>
+                <label htmlFor="experience">Seleccionar nivel:</label>
                 <select
-                    name="experienceLevel"
+                    id="experience"
+                    name="experience"
                     value={filters.experience}
                     onChange={handleFilterChange}
                 >
@@ -152,7 +158,9 @@ export const FilterListOffer = () => {
 
             <div>
                 <h3>Buscar</h3>
+                <label htmlFor="searchText">Buscar por título o descripción:</label>
                 <input
+                    id="searchText"
                     type="text"
                     name="searchText"
                     placeholder="Buscar por título o descripción"
