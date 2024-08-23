@@ -159,6 +159,20 @@ function UserAppointments() {
     }
   };
 
+  const convertUTCToLocal = (date) => {
+    const utcDate = new Date(date);
+    const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+    return localDate;
+  };
+  
+  const convertUTCToLocalDate = (date) => {
+    return convertUTCToLocal(date).toLocaleDateString();
+  };
+  
+  const convertUTCToLocalTime = (date) => {
+    return convertUTCToLocal(date).toLocaleTimeString();
+  };
+
   return (
     <div className="user-appointments">
       <h2 className="fw-bolder text-dark py-3">My Appointments</h2>
@@ -183,60 +197,61 @@ function UserAppointments() {
             </tr>
           </thead>
           <tbody>
-            {appointments.map((app) => (
-              <tr key={app.id}>
-                <td>{new Date(app.date).toLocaleDateString()}</td>
-                <td>{new Date(app.date).toLocaleTimeString()}</td>
-                <td>{app.service?.name || "Unknown"}</td>
-                <td>{app.car?.car_model || "Unknown"}</td>
-                <td>{app.status || "Unknown"}</td>
-                <td>
-                  {app.comments.map((comment, index) => (
-                    <p key={index}>
-                      <strong>
-                        {comment.is_mechanic ? "Mechanic" : "Client"}:
-                      </strong>{" "}
-                      {comment.content}
-                      <br />
-                      <small>
-                        ({new Date(comment.timestamp).toLocaleString()})
-                      </small>
-                    </p>
-                  ))}
-                </td>
-                <td>
-                  {errors[app.id] && (
-                    <div className="alert alert-danger">{errors[app.id]}</div>
-                  )}
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={newComments[app.id] || ""}
-                    onChange={(e) =>
-                      handleCommentChange(app.id, e.target.value)
-                    }
-                    onKeyDown={(e) => handleKeyDown(e, app.id)}
-                  />
-                  <button
-                    className="btn btn-secondary mt-2"
-                    onClick={() => handleAddComment(app.id)}
-                  >
-                    Add Comment
-                  </button>
-                </td>
-                <td>
-                  {new Date(app.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && (
-                    <button
-                      className="btn btn-danger ms-2"
-                      onClick={() => handleCancelClick(app.id)}
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+                {appointments.map((app) => (
+                  <tr key={app.id}>
+                    <td>{convertUTCToLocalDate(app.date)}</td>  {/* Muestra la fecha correcta */}
+                    <td>{convertUTCToLocalTime(app.date)}</td>  {/* Muestra la hora correcta */}
+                    <td>{app.service?.name || "Unknown"}</td>
+                    <td>{app.car?.car_model || "Unknown"}</td>
+                    <td>{app.status || "Unknown"}</td>
+                    <td>
+                      {app.comments.map((comment, index) => (
+                        <p key={index}>
+                          <strong>
+                            {comment.is_mechanic ? "Mechanic" : "Client"}:
+                          </strong>{" "}
+                          {comment.content}
+                          <br />
+                          <small>
+                            ({convertUTCToLocalDate(comment.timestamp)}{" "}
+                            {convertUTCToLocalTime(comment.timestamp)})
+                          </small>
+                        </p>
+                      ))}
+                    </td>
+                    <td>
+                      {errors[app.id] && (
+                        <div className="alert alert-danger">{errors[app.id]}</div>
+                      )}
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={newComments[app.id] || ""}
+                        onChange={(e) =>
+                          handleCommentChange(app.id, e.target.value)
+                        }
+                        onKeyDown={(e) => handleKeyDown(e, app.id)}
+                      />
+                      <button
+                        className="btn btn-secondary mt-2"
+                        onClick={() => handleAddComment(app.id)}
+                      >
+                        Add Comment
+                      </button>
+                    </td>
+                    <td>
+                      {new Date(app.date).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && (
+                        <button
+                          className="btn btn-danger ms-2"
+                          onClick={() => handleCancelClick(app.id)}
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
         </table>
       </div>
 
