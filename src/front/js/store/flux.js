@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			jobOffers: [],
+			selectedJobOffer: null
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -36,18 +37,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (resp.ok) {
 						const data = await resp.json();
-						setStore({ jobOffers: [data.oferta] });
+						setStore({ selectedJobOffer: data.oferta }); 
 					} else {
 						console.error("Error al cargar la oferta");
 					}
 				} catch (error) {
 					console.error("Error en la solicitud de oferta:", error);
 				}
-				const store = getStore();
-				setStore({ jobOffers: [...store.jobOffers, data.oferta] });
-
 			},
-
 			CreateJobOffer: async (offerData) => {
 				try {
 					const token = localStorage.getItem('token');
@@ -63,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.ok) {
 						const data = await resp.json();
 						const store = getStore();
-						setStore({ jobOffers: [...store.jobOffers, data.oferta] });
+						setStore({ jobOffers: [...store.jobOffers, data.oferta] }); 
 						return data;
 					} else {
 						const errorData = await resp.json();
