@@ -49,9 +49,6 @@ export const Register = () => {
 	return (
 		<div className="container-register">
 			<div className="register-img">
-			<div className="register-text">
-					<p>Capture every precious moment of your baby's journey. Sign up now to create a personalized baby journal!</p>
-				</div>
 				<div className="register-img-register">
 					<svg width="864" height="477" viewBox="0 0 864 477" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M634.467 475.651C631.813 475.651 629.84 474.562 628.547 472.316C623.239 463.401 629.908 438.698 636.441 419.506C644.607 395.551 655.564 371.324 662.302 359.006L662.438 358.802L690.544 397.117V397.185C690.068 398.001 658.082 475.651 634.467 475.651Z" fill="#075E81" />
@@ -160,7 +157,9 @@ export const Register = () => {
 						<path d="M216.888 229.819C216.616 229.819 216.344 229.751 216.072 229.546C215.459 229.07 215.391 228.253 215.799 227.641C216.004 227.369 220.699 221.312 230.091 218.522C230.839 218.317 231.588 218.726 231.792 219.406C231.996 220.155 231.588 220.904 230.907 221.108C222.333 223.626 218.045 229.206 217.977 229.274C217.705 229.614 217.297 229.819 216.888 229.819Z" fill="black" />
 						<path d="M211.852 222.264C211.512 222.264 211.172 222.128 210.9 221.856C210.355 221.312 210.355 220.495 210.9 219.951L211.308 219.542C213.486 217.365 217.092 213.69 224.442 211.716C225.191 211.512 225.939 211.92 226.144 212.669C226.348 213.417 225.939 214.166 225.191 214.37C218.522 216.208 215.391 219.406 213.281 221.516L212.873 221.924C212.533 222.128 212.193 222.264 211.852 222.264Z" fill="black" />
 					</svg>
-
+				</div>
+				<div className="register-text">
+					<p>Capture every precious moment of your baby's journey. Sign up now to create a personalized baby journal!</p>
 				</div>
 			</div>
 			<div className="container register-form">
@@ -189,12 +188,12 @@ export const Register = () => {
 						<input type="password" className="form-control" id="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
 					</div>
 
-					<div className="mb-2 register-form-detail">
+					<div className="mb-1 register-form-detail">
 						<label htmlFor="repeatPassword" className="form-label"></label>
 						<input type="password" className="form-control" id="repeatPassword" name="repeatPassword" placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} />
 					</div>
 
-					<button type="submit" className="btn-register btn-primary btn-register mt-1">Submit</button>
+					<button type="submit" className="btn-register btn-primary btn-register mt-6">Submit</button>
 					{error && <p className="text-danger">Todos los campos son obligatorios y las contraseñas deben coincidir</p>}
 				</form>
 				<p>

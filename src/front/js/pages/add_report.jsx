@@ -58,9 +58,9 @@ export const AddReport = () => {
 
         const fetchBabies = async () => {
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}api/babies`, { 
+                const response = await fetch(`${process.env.BACKEND_URL}api/babies`, {
                     headers: {
-                        'Authorization': `Bearer ${store.token}` 
+                        'Authorization': `Bearer ${store.token}`
                     }
                 });
 
@@ -133,7 +133,7 @@ export const AddReport = () => {
     };
 
     return (
-        <div className="ar-container main-container" style={{marginTop:'55px'}}>
+        <div className="ar-container main-container" style={{ marginTop: '55px' }}>
             <div className="card ar-calendar-card">
                 <div className="ar-card-body">
                     <CalendarPlaceholder />
@@ -199,7 +199,7 @@ export const AddReport = () => {
 
                             <div className="ar-form-group">
                                 <label>
-                                <svg
+                                    <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 512 600"
                                         fill="currentColor"
@@ -240,20 +240,22 @@ export const AddReport = () => {
                             </div>
                         </div>
                         <div className="ar-column-two">
-                            <div className="ar-form-group">
-                                <label><FontAwesomeIcon icon={faPills} /></label>
-                                <Switch
-                                    checked={meds}
-                                    onChange={(e) => setMeds(e.target.checked)}
-                                />
-                            </div>
+                            <div className="ar-switch-container">
+                                <div className="ar-form-group">
+                                    <label><FontAwesomeIcon icon={faPills} /></label>
+                                    <Switch
+                                        checked={meds}
+                                        onChange={(e) => setMeds(e.target.checked)}
+                                    />
+                                </div>
 
-                            <div className="ar-form-group">
-                                <label><FontAwesomeIcon icon={faSchool} /></label>
-                                <Switch
-                                    checked={kindergarden}
-                                    onChange={(e) => setKindergarden(e.target.checked)}
-                                />
+                                <div className="ar-form-group">
+                                    <label><FontAwesomeIcon icon={faSchool} /></label>
+                                    <Switch
+                                        checked={kindergarden}
+                                        onChange={(e) => setKindergarden(e.target.checked)}
+                                    />
+                                </div>
                             </div>
 
                             <div className="ar-form-group textarea-group">

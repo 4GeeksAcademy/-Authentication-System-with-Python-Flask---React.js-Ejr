@@ -3,7 +3,8 @@
 .background-container {
     background-color: #C1D6DF;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
 }
 
 .vr-container {
