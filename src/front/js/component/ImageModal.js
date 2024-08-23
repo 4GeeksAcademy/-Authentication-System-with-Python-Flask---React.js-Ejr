@@ -8,8 +8,33 @@ const ImageModal = ({ show, handleClose, imageUrl, imageAlt }) => {
         <Modal.Title>Imagen</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src={imageUrl} alt={imageAlt} style={{ width: '100%' }} />
-      </Modal.Body>
+  {filteredData && (
+    <div className="custom-modal-body">
+      <div className="custom-modal-main-image">
+        <img
+          src={filteredData.images[currentImageIndex]}
+          alt={modalInfo?.title}
+        />
+      </div>
+      <Row className="custom-modal-thumbnails">
+        {filteredData.images.map((img, index) => (
+          <Col key={index} className="custom-thumbnail-col">
+            <img
+              className={`custom-thumbnail-img ${index === currentImageIndex ? 'active' : ''}`}
+              src={img}
+              alt={`Thumbnail ${index}`}
+              onClick={() => setCurrentImageIndex(index)}
+            />
+          </Col>
+        ))}
+      </Row>
+      <div className="custom-modal-description">
+        <h4>Descripción:</h4>
+        <p>{filteredData.description}</p>
+      </div>
+    </div>
+  )}
+</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cerrar
