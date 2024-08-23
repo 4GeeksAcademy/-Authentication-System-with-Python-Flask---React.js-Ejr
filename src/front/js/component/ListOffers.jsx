@@ -7,13 +7,13 @@ export const ListOffers = ({ searchTerm }) => {
     const { jobOffers } = store;
 
     useEffect(() => {
-        actions.loadJobOffers();
+        actions.loadAllJobOffers();
     }, [actions]);
 
     const searchOffers = jobOffers.filter((offer) =>
         offer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         offer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        offer.location.toLowerCase().includes(searchTerm.toLowerCase())
+        offer.location.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
 
     return (

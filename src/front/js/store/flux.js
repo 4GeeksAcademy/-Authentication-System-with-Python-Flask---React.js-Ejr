@@ -2,11 +2,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			jobOffers: [], 
-			
+			jobOffers: [],
 		},
 		actions: {
-			loadJobOffers: async () => {
+			loadAllJobOffers: async () => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/ofertas`, {
 						method: 'GET',
@@ -14,7 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						}
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						setStore({ jobOffers: data.ofertas });
@@ -25,7 +24,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
-			loadJobOffers: async (id) => {
+
+			loadJobOfferById: async (id) => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {
 						method: 'GET',
@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						}
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						setStore({ jobOffers: [data.oferta] });
@@ -43,11 +43,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error("Error en la solicitud de oferta:", error);
 				}
+				const store = getStore();
+				setStore({ jobOffers: [...store.jobOffers, data.oferta] });
+
 			},
-			CreateJobOffers: async (offerData) => {
+
+			CreateJobOffer: async (offerData) => {
 				try {
-					const token = localStorage.getItem('token'); 
-					const resp = await fetch(process.env.BACKEND_URL + "/api/crearOferta", {
+					const token = localStorage.getItem('token');
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/crearOferta`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
@@ -55,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 						body: JSON.stringify(offerData)
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						const store = getStore();
@@ -85,26 +89,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			register: async (formData) => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/register",{
+					const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
 						method: 'POST',
-							headers: {
-								'Content-Type': 'application/json'
-							},
-							body: JSON.stringify(formData),
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(formData),
 					})
-						const data = await resp.json()
-						setStore(data)
-						localStorage.setItem('token', data.token)
-						return data
-								
+					const data = await resp.json()
+					setStore(data)
+					localStorage.setItem('token', data.token)
+					return data
+
 				} catch (error) {
-					console.log('error:'+error)
+					console.log('error:' + error)
 				}
 			},
-			resetStore: ()=> {
-				setStore({msg:"", success:""})
+			resetStore: () => {
+				setStore({ msg: "", success: "" })
 			}
-			
+
 		}
 	};
 };
