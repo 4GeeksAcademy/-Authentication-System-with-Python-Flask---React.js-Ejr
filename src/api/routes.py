@@ -133,7 +133,7 @@ def login():
 #     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
-@api.route('/api/pinguser', methods=['GET'])
+@api.route('/pinguser', methods=['GET'])
 @jwt_required()
 def ping_user():
     print("Iniciando ping_user")
