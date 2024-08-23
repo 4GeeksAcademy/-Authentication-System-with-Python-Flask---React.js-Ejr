@@ -80,6 +80,7 @@ class Appointment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     car_id = db.Column(db.Integer, db.ForeignKey('cars.id'), nullable=False)
     service_id = db.Column(db.Integer, db.ForeignKey('services.id'), nullable=False)
+    service = db.relationship('Service', backref='appointments')
     status = db.Column(db.String(50), default="pending")
     
     comments = db.relationship('Comment', backref='appointment', lazy=True)

@@ -34,20 +34,24 @@ const Login = () => {
 
     setError(null);
 
-    let logged = await actions.login(email, password);
-    const roleId = localStorage.getItem("role_id");
-    if (logged) {
-      if (roleId == 1) {
-        navigate("/admindashboard");
+    try {
+      let response = await actions.login(email, password);
+      
+      if (response.success) {
+        const roleId = localStorage.getItem("role_id");
+        if (roleId == 1) {
+          navigate("/admindashboard");
+        } else if (roleId == 2) {
+          navigate("/mechanicdashboard");
+        } else if (roleId == 3) {
+          navigate("/userdashboard");
+        }
+      } else {
+        setError(response.message || "Invalid email or password. Please try again.");
       }
-      else if (roleId == 2){
-        navigate("/mechanicdashboard");
-      }
-      else if (roleId == 3){
-        navigate("/userdashboard");
-      }
-    } else {
-      setError("Invalid email or password. Please try again.");
+    } catch (error) {
+      console.error("Error al hacer login:", error);
+      setError("An error occurred while trying to log in. Please try again later.");
     }
   }
 
@@ -63,7 +67,11 @@ const Login = () => {
           </div>
           <div className="card-body">
             <form onSubmit={submitForm}>
-              {error && <div className="alert alert-danger">{error}</div>}
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
               <div className="form-group">
                 <label className="text-muted" htmlFor="inputEmail">
                   Email address

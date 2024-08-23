@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { DatePicker } from "antd";
+import { Context } from "../store/appContext";
 import moment from "moment";
 import "../../styles/bookappointmentunregistereduser.css";
 import { useNavigate } from "react-router-dom";
 
 const BookAppointmentUnregisteredUser = () => {
+  const { store, actions } = useContext(Context);
   const [currentStep, setCurrentStep] = useState(1);
   const [userId, setUserId] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
@@ -21,7 +23,8 @@ const BookAppointmentUnregisteredUser = () => {
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
   const [isAvailable, setIsAvailable] = useState(true);
-
+  const [takenSlots, setTakenSlots] = useState([]);
+  const maxAppointmentsPerHour = 4
   const apiUrl = process.env.BACKEND_URL + "/api";
 
   useEffect(() => {
@@ -64,9 +67,9 @@ const BookAppointmentUnregisteredUser = () => {
   
   const serviceName = selectedService ? selectedService.name : "Not selected";
 
+
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
-    // Deshabilitar todos los días que no sean de lunes a viernes
     return (
       current &&
       (current < moment().startOf("day") ||
@@ -75,86 +78,86 @@ const BookAppointmentUnregisteredUser = () => {
     );
   };
 
-  // Función para deshabilitar horas fuera del horario laboral
+  // Función para deshabilitar horas fuera del horario laboral y las que tienen 4 citas
   const disabledTime = (date) => {
     const now = new Date(); // Hora actual
-
+    const selectedDate = date.format("YYYY-MM-DD"); // Fecha seleccionada
+  
     const hours = {
       disabledHours: () => {
         const disabledHours = [];
-        const selectedDate = new Date(date); // Fecha seleccionada
-
-        // Si la fecha seleccionada es hoy, deshabilitar horas pasadas
-        if (
-          selectedDate.getFullYear() === now.getFullYear() &&
-          selectedDate.getMonth() === now.getMonth() &&
-          selectedDate.getDate() === now.getDate()
-        ) {
-          for (let i = 0; i < 24; i++) {
-            if (i < now.getHours() || i < 9 || i >= 18) {
-              disabledHours.push(i);
-            }
+        
+        // Filtrar los slots tomados por la fecha seleccionada
+        const slotsForSelectedDate = takenSlots.filter(
+          (slot) => slot.date === selectedDate
+        );
+  
+        // Contar las citas por hora
+        const hourCounts = {};
+        slotsForSelectedDate.forEach((slot) => {
+          const slotHour = parseInt(slot.start_time.split(":")[0], 10);
+          hourCounts[slotHour] = (hourCounts[slotHour] || 0) + 1;
+        });
+  
+        // Deshabilitar las horas que tienen el máximo de citas permitidas
+        Object.keys(hourCounts).forEach((hour) => {
+          if (hourCounts[hour] >= maxAppointmentsPerHour) { // maxAppointmentsPerHour es el límite máximo
+            disabledHours.push(parseInt(hour, 10));
           }
-        } else {
-          // Si no es hoy, deshabilitar fuera del rango de 9:00 a 17:00
-          for (let i = 0; i < 24; i++) {
-            if (i < 8 || i >= 18) {
-              disabledHours.push(i);
-            }
+        });
+  
+        // También deshabilitar las horas fuera del horario laboral
+        for (let i = 0; i < 24; i++) {
+          if (i < 9 || i >= 18 || (selectedDate === now.toISOString().split('T')[0] && i < now.getHours())) {
+            disabledHours.push(i);
           }
         }
+  
         return disabledHours;
       },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos 0 y 30
+      disabledMinutes: (hour) => {
+        if (takenSlots.find(slot => parseInt(slot.start_time.split(":")[0], 10) === hour && slot.date === selectedDate)) {
+          const slotsForHour = takenSlots.filter(slot => parseInt(slot.start_time.split(":")[0], 10) === hour && slot.date === selectedDate);
+  
+          // Deshabilitar todos los minutos si la hora está llena
+          if (slotsForHour.length >= maxAppointmentsPerHour) {
+            return Array.from({ length: 60 }, (_, i) => i);
+          }
+        }
+  
+        // Deshabilitar solo los minutos 0 y 30
         return Array.from({ length: 60 }, (_, i) => i).filter(
-          (min) => min !== 0 && min !== 30
+          (min) => min !== 0 
         );
       },
     };
-
+  
     return hours;
   };
-  //------------------------------------------------------------------------------------
-  const checkSlotAvailability = async (dateTime) => {
+  
+
+  // Función para obtener los slots tomados desde la API
+  const fetchTakenSlots = async () => {
     try {
       const response = await fetch(`${apiUrl}/slots-taken`);
       if (!response.ok) throw new Error("Failed to fetch taken slots");
 
-      const takenSlots = await response.json();
-
-      const selectedDate = dateTime.format("YYYY-MM-DD");
-      const selectedTime = dateTime.format("HH:mm:ss");
-
-      const slotIsAvailable = !takenSlots.some((slot) => {
-        return (
-          slot.date === selectedDate &&
-          selectedTime >= slot.start_time &&
-          selectedTime < slot.end_time
-        );
-      });
-
-      setIsAvailable(slotIsAvailable);
-
-      if (!slotIsAvailable) {
-        setError(
-          "Appointment unavailable for the selected date & time, please choose a different one."
-        );
-      } else {
-        setError("");
-      }
+      const slots = await response.json();
+      setTakenSlots(slots); // Guardamos las citas tomadas en el estado
     } catch (error) {
-      setError("Failed to check slot availability.");
+      console.error("Error fetching taken slots:", error);
     }
   };
 
+  // Función para manejar cambios en la fecha seleccionada
   const manageDateChange = (date) => {
     setAppointmentDate(date);
     if (date) {
-      checkSlotAvailability(date);
+      fetchTakenSlots(); // Cargar los slots tomados cada vez que se selecciona una fecha nueva
     }
   };
 
+  // Manejo del paso siguiente en el formulario
   const nextStep = async () => {
     if (currentStep === 1 && (!carLicensePlate || !carModel)) {
       setError("Car license plate, make & model are required.");
@@ -162,8 +165,10 @@ const BookAppointmentUnregisteredUser = () => {
     }
     if (currentStep === 2 && !serviceChosen) {
       setError("Service required. Please select one from the list.");
+      
       return;
     }
+     await fetchTakenSlots();
     if (currentStep === 3) {
       if (!appointmentDate) {
         setError(
@@ -171,11 +176,7 @@ const BookAppointmentUnregisteredUser = () => {
         );
         return;
       }
-      await checkSlotAvailability(appointmentDate);
-      const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-      if (!isAvailable) {
-        return;
-      }
+      // await fetchTakenSlots(); // Asegurarse de que los slots se carguen antes de avanzar
     }
     if (currentStep === 4) {
       if (!name || !email || !password) {
@@ -263,7 +264,7 @@ const BookAppointmentUnregisteredUser = () => {
       localStorage.setItem("token", loginData.access_token);
       localStorage.setItem("role_id", loginData.role_id);
       localStorage.setItem("user_id", loginData.user_id);
-
+      
       const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
         method: "POST",
         headers: {
@@ -286,13 +287,13 @@ const BookAppointmentUnregisteredUser = () => {
       const carData = await addNewCarNewUser.json();
 
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-
+      
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
-          // ...store.corsEnabled // Deshabilitar una vez en producción
+          ...store.corsEnabled // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
@@ -312,6 +313,36 @@ const BookAppointmentUnregisteredUser = () => {
       }
 
       const appointmentData = await submitAppointment.json();
+      // console.log("Appointment details:", appointmentData);
+
+      const MailSender = () => {
+        const data = {
+        sender: {
+              name: "AutoAgenda",
+              email: "autoagenda3@gmail.com",
+            },
+            to: [
+              {
+                email: userData.email,
+                name: userData.name,
+              },
+            ],
+            subject: "Appointment created successfully",
+            htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userData.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
+          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
+          Your appointment on the day ${dateFormat} has been created successfully.</p>
+          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
+          };
+      
+          // console.log("Data ready to send:", data);
+          actions.SendMail(data);
+        };
+
+      if (userData && userData.email && userData.name) {
+        MailSender();
+      } else {
+        console.error("User Info is missing email or name.");
+      }
 
       navigate("/accountandappointmentcreated");
     } catch (error) {
@@ -572,3 +603,4 @@ const BookAppointmentUnregisteredUser = () => {
 };
 
 export default BookAppointmentUnregisteredUser;
+

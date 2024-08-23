@@ -3,12 +3,29 @@ import React, { useState } from 'react';
 function AddCarModal({ onSave, onClose, error }) {
   const [newCar, setNewCar] = useState({ model: '', licensePlate: '' });
 
+  const requireLicensePlate = (e) => {
+    const value = e.target.value.toUpperCase();
+    const regex = /^[0-9]{0,4}[A-Z]{0,3}$/;
+
+    if (regex.test(value)) {
+      setNewCar(prevState => ({
+        ...prevState,
+        licensePlate: value
+      }));
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewCar(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+
+    if (name === 'licensePlate') {
+      requireLicensePlate(e);
+    } else {
+      setNewCar(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };
 
   const handleSave = () => {

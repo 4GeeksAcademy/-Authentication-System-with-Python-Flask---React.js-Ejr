@@ -6,9 +6,10 @@ from api.models import db, User, Role, Car, Appointment, Service, Comment, Setti
 from api.utils import generate_sitemap, APIException
 from flask import Flask
 from flask_cors import CORS
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+
 
 
 app = Flask(__name__)
@@ -133,7 +134,7 @@ def login():
 #     return jsonify(access_token=access_token, role_id=role.id, user_id=user.id), 200
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post en /ping user
-@api.route('/api/pinguser', methods=['GET'])
+@api.route('/pinguser', methods=['GET'])
 @jwt_required()
 def ping_user():
     print("Iniciando ping_user")
@@ -403,6 +404,7 @@ def get_services():
     services_list = list(map(lambda service: service.serialize(), services_query))
     return jsonify(services_list), 200
 
+
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /settings 
 @api.route('/settings', methods=['POST'])
 @jwt_required()
@@ -463,24 +465,25 @@ def create_appointment():
     existing_user = User.query.filter_by(id=user_id).first()
     if not existing_user:
         return jsonify({"error": "Bad user_id"}), 400
-    service = Service.query.get(service_id)
 
+    service = Service.query.get(service_id)
     if not service:
         return jsonify({"error": "Service not found"}), 404
 
-    max_appointments_per_hour = Setting.query.first().max_appointments_per_hour
+    max_appointments_per_hour = Setting.query.first().max_appointments_per_hour   
 
+    # Verificar citas existentes en la misma hora
     start_time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+    start_time = start_time.replace(tzinfo=timezone.utc)
     end_time = start_time + timedelta(hours=1)
-
-    appointments_in_hour = Appointment.query.filter(
-        Appointment.date >= start_time,
-        Appointment.date < end_time
+    appointments_in_hour = Appointment.query.filter(  
+        Appointment.date >= start_time,  
+        Appointment.date < end_time  
     ).all()
 
-    total_slots_booked = sum([app.service.slots_required for app in appointments_in_hour])
+    total_slots_booked = sum([app.service.slots_required for app in appointments_in_hour])  
 
-    if (total_slots_booked + service.slots_required) <= max_appointments_per_hour:
+    if (total_slots_booked + service.slots_required) <= max_appointments_per_hour:  
         new_appointment = Appointment(
             date=start_time,
             user_id=user_id,
@@ -493,19 +496,18 @@ def create_appointment():
 
         if comment:
             new_comment = Comment(
-            content = comment,
-            author_id = user_id,
-            appointment_id = new_appointment.id,
-            is_mechanic=False
-        )
-        db.session.add(new_comment)
-        db.session.commit()
+                content=comment,
+                author_id=user_id,
+                appointment_id=new_appointment.id,
+                is_mechanic=False
+            )
+            db.session.add(new_comment)
+            db.session.commit()
 
         response_body = new_appointment.serialize()
         return jsonify(response_body), 201
     else:
         return jsonify({"error": "No available slots for this time"}), 400
-
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// PATCH a /appointments con id
 @api.route('/appointments/<int:appointment_id>', methods=['PATCH'])
@@ -628,7 +630,7 @@ def total_count():
 @api.route('/slots-taken', methods=['GET'])
 def get_slots_taken():
     now = datetime.now()
-    end_date = now + timedelta(days=7) 
+    end_date = now + timedelta(days=30) 
 
     appointments = Appointment.query.filter(
         Appointment.date >= now,
