@@ -1,36 +1,44 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
-import { Context } from "../store/appContext";
 import "../../styles/login.css";
-import GoogleLogin from 'react-google-login';
-import { Link } from 'react-router-dom'
+import { Context } from "../store/appContext";
 
 
-export const Home = () => {
-	const [error, setError] = useState(false);
-	const [formData, setFormData] = useState({
-		email: '',
-		password: '',
-	});
+export const Login = () => {
+    const { store, actions } = useContext(Context); // Obtienes 'actions' desde el contexto
+    const [error, setError] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	}
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    }
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (formData.email === "" || formData.password === "") {
-			setError(true);
-			return;
-		}
-		setError(false);
-	}
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.email === "" || formData.password === "") {
+            setError(true);
+            return;
+        }
+        setError(false);
 
-	const respuestaGoogle = (respuesta) => {
-		console.log(respuesta);
-	}
+        const success = await actions.login(formData); // Usa 'actions.login'
+        if (success) {
+            navigate("/dashboard");
+        } else {
+            alert("Login failed. Please check your credentials.");
+        }
+    }
+
+    const navigate = useNavigate();
+
+    const respuestaGoogle = (respuesta) => {
+        console.log(respuesta);
+    }
 
 	return (
 		<div className="container container-login">
@@ -85,9 +93,9 @@ export const Home = () => {
 					</div>
 					{error && <p className="text-danger">Todos los campos son obligatorios</p>}
 					<div>
-						<a className="link-opacity-50-hover not-a-member" href="https://expert-guacamole-r475gg7979j9cg57-3000.app.github.dev/demo">
-							Not a member? <span>Sign up</span>
-						</a>
+						<Link className="link-opacity-50-hover not-a-member" to="/register">
+							Not a member? <span>Sign In</span>
+						</Link>
 					</div>
 				</form>
 			</div>

@@ -235,7 +235,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Login
             login: async (formData) => {
                 try {
-                    // Asegúrate de que BACKEND_URL esté definido correctamente
                 const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
                     headers: {
                     'Content-Type': 'application/json',
@@ -251,7 +250,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               
                 const data = await response.json();
               
-                    // Verifica que la respuesta tenga las propiedades necesarias
                 if (data && data.token) {
                     setStore({ user: data.user, token: data.token });
                     localStorage.setItem('token', data.token);
@@ -262,7 +260,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
                 } catch (error) {
                     console.error("Error during login:", error);
-                // Opcional: podrías devolver un objeto que indique el error
                     return { success: false, msg: error.message };
                 }
             },              

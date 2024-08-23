@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Demo = () => {
+export const Register = () => {
 	const { store, actions } = useContext(Context);
 	const [error, setError] = useState(false);
 	const [formData, setFormData] = useState({
@@ -81,7 +81,7 @@ export const Demo = () => {
 				{error && <p className="text-danger">Todos los campos son obligatorios y las contraseñas deben coincidir</p>}
 			</form>
 			<p>
-				<Link className="link-opacity-50-hover" to="/">
+				<Link className="link-opacity-50-hover" to="/login">
 					Already have an account? <span>Login</span>
 				</Link>
 			</p>

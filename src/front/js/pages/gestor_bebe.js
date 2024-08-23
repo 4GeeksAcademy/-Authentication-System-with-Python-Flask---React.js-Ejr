@@ -97,7 +97,7 @@ export const Gestor_bebe = () => {
 					<button type="button" onClick={() => setIsEditing(true)} className="btn btn-secondary">Edit</button>
 				)}
 
-				<Link to="/">
+				<Link to="/dashboard">
 					<button type="button" className="btn btn-dark">Back home</button>
 				</Link>
 			</div>

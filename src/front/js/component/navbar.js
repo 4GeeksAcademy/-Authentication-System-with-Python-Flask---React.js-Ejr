@@ -53,7 +53,7 @@ export const Navbar = () => {
                 <ul className="no-bullets">
                   <li> <Link to="/gestor_perfil" style={{ color: 'inherit', textDecoration: 'none' }}>**See profile</Link></li>
                   <li>**Edit profile</li>
-                  <li><button className="btn btn-link" onClick={handleLogout} style={{ color: 'inherit', textDecoration: 'none' }}>**Log Out</button></li>
+                  <li><button className="btn btn-link" onClick={handleLogout} style={{ color: 'inherit', textDecoration: 'none' }}>Log Out</button></li>
                 </ul>
               </li>
             </ul>

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .avg-container {
+    margin-top: 10%;
     display: flex;
     flex-direction: row;
     gap: 20px;
