@@ -315,7 +315,7 @@ const BookAppointmentUnregisteredUser = () => {
       const appointmentData = await submitAppointment.json();
       // console.log("Appointment details:", appointmentData);
 
-      const MailSender = () => {
+      const Sender = () => {
         const data = {
         sender: {
               name: "AutoAgenda",
@@ -327,23 +327,30 @@ const BookAppointmentUnregisteredUser = () => {
                 name: userData.name,
               },
             ],
-            subject: "Appointment created successfully",
+            subject: "Account and Appointment created successfully",
             htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userData.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
-          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Appointment scheduled successfully</h1>
-          Your appointment on the day ${dateFormat} has been created successfully.</p>
+          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Account and Appointment scheduled successfully</h1>
+          The account on our system and Your appointment on the day ${dateFormat} has been created successfully.</p>
           <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
           };
-      
-          // console.log("Data ready to send:", data);
+          const SMSInfo = {
+            type: "transactional",
+            unicodeEnabled: true,
+            sender: "AutoAgenda",
+            recipient:`+34${phoneNumber}`,
+            content: `hello ${userData.name}, Your appointment on the day ${dateFormat} has been created successfully.`,
+            tag: "t1",
+            organisationPrefix:"AutoAgenda info:"
+          }
+          actions.SMSSender(SMSInfo);
           actions.SendMail(data);
         };
 
-      if (userData && userData.email && userData.name) {
-        MailSender();
+      if (userData && userData.email && userData.name && phoneNumber) {
+        Sender();
       } else {
         console.error("User Info is missing email or name.");
       }
-
       navigate("/accountandappointmentcreated");
     } catch (error) {
       setError("An error occurred. Please try again.");
