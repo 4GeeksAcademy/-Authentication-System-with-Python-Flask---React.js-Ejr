@@ -3,7 +3,7 @@ import "../../styles/FilterListOffer.css";
 
 export const FilterListOffer = () => {
     const [filters, setFilters] = useState({
-        selectedCategories: [], 
+        tecnologies: [], 
         salary: [0, 100000],
         searchText: "",
         modalities: [], 
@@ -52,9 +52,9 @@ export const FilterListOffer = () => {
                 <label>
                     <input
                         type="checkbox"
-                        name="selectedCategories"
+                        name="tecnologies"
                         value="Frontend"
-                        checked={filters.selectedCategories.includes("Frontend")}
+                        checked={filters.tecnologies.includes("Frontend")}
                         onChange={handleCheckboxChange}
                     />
                     Frontend
@@ -62,9 +62,9 @@ export const FilterListOffer = () => {
                 <label>
                     <input
                         type="checkbox"
-                        name="selectedCategories"
+                        name="tecnologies"
                         value="Backend"
-                        checked={filters.selectedCategories.includes("Backend")}
+                        checked={filters.tecnologies.includes("Backend")}
                         onChange={handleCheckboxChange}
                     />
                     Backend
@@ -72,9 +72,9 @@ export const FilterListOffer = () => {
                 <label>
                     <input
                         type="checkbox"
-                        name="selectedCategories"
+                        name="tecnologies"
                         value="UI/UX"
-                        checked={filters.selectedCategories.includes("UI/UX")}
+                        checked={filters.tecnologies.includes("UI/UX")}
                         onChange={handleCheckboxChange}
                     />
                     UI/UX

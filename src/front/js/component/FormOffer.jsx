@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import "../../styles/FormOffer.css";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.js"; 
+import { Context } from "../store/appContext.js";
+import { SectionRight } from "./SectionRight.jsx";
 
 export const FormOffer = () => {
-    const { actions } = useContext(Context); 
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({
@@ -80,8 +81,8 @@ export const FormOffer = () => {
             };
 
             try {
-                await actions.CreateJobOffers(updatedFormData); 
-                navigate('/timeline'); 
+                await actions.CreateJobOffers(updatedFormData);
+                navigate('/timeline');
             } catch (error) {
                 setError('Ocurrió un error al crear la oferta.');
             }
@@ -106,20 +107,21 @@ export const FormOffer = () => {
 
     return (
         <>
-            <div className="container">
-                <div className="container mt-5">
+        <div className="d-flex">
+            <div className="form-container">
+                <div className="mt-5">
                     <div className="row">
                         <div className="col-12">
                             <div className="form-header text-center">
                                 <h2 className="display-4 fw-bold">
                                     ¡Lleva Tu Equipo al Siguiente Nivel!
                                 </h2>
-                                <span className="fw-bold">Completa el formulario para publicar tu oferta de empleo y conecta con profesionales calificados.</span>
+                                <span className="fw-bold">Completa el formulario para publicar tu oferta de empleo y conecta con profesionales cualificados.</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="container form-box my-5 shadow-lg">
+                <div className="form-box my-5 shadow-lg">
                     <form onSubmit={handleSubmit}>
                         {error && <div className="alert alert-danger">{error}</div>}
                         <div className="row my-3 text-secondary fw-bold">
@@ -272,21 +274,21 @@ export const FormOffer = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row last-row">
+                        <div className="row last-row mt-3">
                             <div className="col-6 box-description">
                                 <label htmlFor="description" className="form-label text-muted fw-bold">Descripción</label>
                                 <textarea
-                                    className="form-control mt-2"
+                                    className="form-control text-area mt-2"
                                     name="description"
                                     id="description"
-                                    placeholder="Describe lo más detalladamente posible la oferta..."
+                                    placeholder="Describe la oferta lo más detalladamente posible..."
                                     aria-describedby="cardHelpBlock"
                                     required
                                     onChange={handleChange}
                                     value={formData.description}
                                 />
                             </div>
-                            <div className="col-6 my-4">
+                            <div className="col-6 update-photo-box my-4">
                                 <div className="img-container">
                                     {selectedFile && (
                                         <div className="img-preview mt-3">
@@ -297,28 +299,32 @@ export const FormOffer = () => {
                                             />
                                         </div>
                                     )}
+                                    <label htmlFor="file-upload" className="form-label text-muted fw-bold mt-2">Sube una imagen</label>
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        className="form-control"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                    />
                                 </div>
-                                <label htmlFor="file-upload" className="form-label text-muted fw-bold mt-2">Sube una imagen</label>
-                                <input
-                                    type="file"
-                                    id="file-upload"
-                                    className="form-control"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                />
                             </div>
                         </div>
                         <div className="d-flex justify-content-end me-3 button-box">
-                            <button type="submit" className="btn btn-primary mx-3 my-3">
+                            <button type="submit" className="btn btn-submit mx-3 my-3">
                                 Enviar
                             </button>
-                            <button type="reset" className="btn btn-danger my-3">
+                            <button type="reset" className="btn btn-reset my-3">
                                 Cancelar
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+            <div className="section">
+                <SectionRight />
+            </div>
+        </div>
         </>
     );
 };

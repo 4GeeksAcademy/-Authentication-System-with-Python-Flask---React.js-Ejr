@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import "../../styles/CardOffer.css";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
