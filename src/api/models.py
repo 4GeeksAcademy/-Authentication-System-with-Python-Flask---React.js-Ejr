@@ -5,9 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=True)
-    telefono = db.Column(db.String(120), nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     is_teacher = db.Column(db.Boolean, default=False)
@@ -16,11 +15,49 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.name,
-            "telefono": self.telefono,
             "email": self.email,
             "is_teacher": self.is_teacher
         }
 
     def __repr__(self):
         return f'<User {self.email}>'
+    
+class Profesor(db.Model):
+    __tablename__ = "profesor"
+    id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(120), nullable=True)
+    lastname = db.Column(db.String(120),nullable=True)
+    telefono = db.Column(db.String(120), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    relationship_user = db.relationship('User',back_populates ='Profesor', lazy=True)
+
+class Alumno(db.Model):
+    __tablename__ = "alumno"
+    id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(120), nullable=True)
+    lastname = db.Column(db.String(120),nullable=True)
+    telefono = db.Column(db.String(120), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    relationship_user = db.relationship('User',back_populates ='Alumno', lazy=True)
+
+class Curso(db.Model):
+    __tablename__ = "curso"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120), nullable=False)
+    #añadir linea de codigo donde va la imagen del curso
+    resumen = db.Column(db.String(120), nullable=True)
+    modulos = db.Column(db.String(120),nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    relationship_user = db.relationship('User',back_populates ='Alumno', lazy=True)
+
+class Pagos(db.Model):
+    __tablename__ = "pagos"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    relationship_user = db.relationship('User',back_populates ='Alumno', lazy=True)
+
+class Matricula(db.Model):
+    __tablename__ = "matricula"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    relationship_user = db.relationship('User',back_populates ='Alumno', lazy=True)
