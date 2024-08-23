@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-import datetime
+from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import Modalidad, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
@@ -137,7 +137,7 @@ def editProgramador():
 
 #Iniciar sesión
 @api.route('/login', methods=['POST'])
-def login():
+def login(): 
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user= User.query.filter_by(email=email).first()
@@ -165,17 +165,19 @@ def crear_oferta():
     modalidad = request.json.get("modalidad")
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
-
+    
     if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
-
+    
+    
+    print(Modalidad(modalidad))
     try:
-        modalidad_enum = Modalidad(modalidad.upper())
+        modalidad_enum = Modalidad(modalidad)
     except ValueError:
         return jsonify({"success": False, "msg": "Modalidad no válida"}), 400
 
     try:
-        fecha_publicacion = datetime.strptime(fecha_publicacion_str, "%Y-%m-%d").date()
+        fecha_publicacion = datetime.strptime(fecha_publicacion_str, "%Y-%m-%d")
     except ValueError:
         return jsonify({"success": False, "msg": "Fecha de publicación no válida"}), 400
 
@@ -222,11 +224,6 @@ def get_offer(id):
         return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
 
 
-
-if __name__ == '__main__':
-    api.run(host='0.0.0.0', port=3245, debug=True)
-
-
 #contact
 @api.route('/contact', methods=['POST'])
 def contact():
@@ -244,7 +241,13 @@ def contact():
 
 @api.route('/getAllContacts', methods=['GET'])
 def get_contacts():
-    contacts = Contact.query.all()  
+    contacts = Contact.query.all() 
+    
+    return jsonify([contact.serialize() for contact in contacts]), 200
+
     if contacts:
         return jsonify([contact.serialize() for contact in contacts]), 200
     return jsonify({'msg':'Ningún contacto encontrado'}),404
+  
+  if __name__ == '__main__':
+    api.run(host='0.0.0.0', port=3245, debug=True)

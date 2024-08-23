@@ -157,7 +157,7 @@ class Modalidad(Enum):
 class Ofertas(db.Model):
     __tablename__="ofertas"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column (db.String (100), unique=True, nullable=False)
+    name = db.Column (db.String (100), nullable=False)
     descripcion = db.Column (db.String(700), nullable=False)
     salario = db.Column (db.Integer, nullable=False)
     plazo = db.Column(db.String(100), nullable=False)
@@ -179,10 +179,9 @@ class Ofertas(db.Model):
             "descripcion": self.descripcion,
             "salario": self.salario,
             "plazo": self.plazo,
-            "modalidad": self.modalidad,
-            "experiencia_minima": self.experiencia_minima,
-            "fecha_publicacion": self.fecha_publicacion,
-            "favorito": self.favorito,
+            "modalidad": self.modalidad.value,
+            "experiencia_minima": self.experiencia_minima.value,
+            "fecha_publicacion": self.fecha_publicacion.isoformat(),
             "empleador_id": self.empleador_id,
             "favoritos": [favoritos.serialize() for favoritos in self.favoritos] if self.favoritos else None
         }
