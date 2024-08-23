@@ -1,0 +1,79 @@
+/* trabajando en el modal para agregar eventos que solo puedan ver los partners */
+
+.modal-discover-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-discover-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-discover-close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-discover-details {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.modal-discover-details-item {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #2C3E50;
+}
+
+.modal-discover-details-item label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-discover-details-item input,
+.modal-discover-details-item textarea,
+.modal-discover-details-item select {
+  margin-left: 10px;
+  padding: 5px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.modal-discover-purchase-button {
+  background-color: #3498DB;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  cursor: pointer;
+  border-radius: 25px;
+  font-size: 16px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-discover-purchase-button:hover {
+  background-color: #2980B9;
+}

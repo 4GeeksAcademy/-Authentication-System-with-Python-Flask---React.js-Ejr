@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../styles/discover.css";
-import Modal from "../component/discoverModal"; 
+import Modal from "../component/discoverModal";
 
 const Discover = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // con esto se verifica si ya inicioo sesion
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-  }, []);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -31,11 +24,6 @@ const Discover = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedEvent(null);
-  };
-
-  const handleAddEvent = () => {
-    // agregar evento
-    console.log("Agregar un nuevo evento");
   };
 
   const events = [
@@ -60,7 +48,6 @@ const Discover = () => {
       description: "Competición de freestyle rap donde los mejores MCs se enfrentan por el título de campeón.",
       category: "Hip Hop",
     },
-
     // Teatro
     {
       id: 4,
@@ -83,7 +70,6 @@ const Discover = () => {
       description: "Experimenta la magia de Broadway con este espectacular musical lleno de música y baile.",
       category: "Teatro",
     },
-
     // Salsa
     {
       id: 7,
@@ -106,7 +92,6 @@ const Discover = () => {
       description: "Las mejores parejas de baile compiten por el título de campeones de salsa.",
       category: "Salsa",
     },
-
     // Jazz
     {
       id: 10,
@@ -129,7 +114,6 @@ const Discover = () => {
       description: "Revive la era dorada del swing con una noche de música big band en vivo.",
       category: "Jazz",
     },
-
     // Rock
     {
       id: 13,
@@ -151,7 +135,7 @@ const Discover = () => {
       image: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       description: "Descubre las mejores bandas independientes en este festival que celebra el espíritu del rock alternativo.",
       category: "Rock",
-    },  
+    },
   ];
 
   const filteredEvents = events.filter((event) =>
@@ -161,23 +145,20 @@ const Discover = () => {
 
   return (
     <div className="discover-container">
-      <div className="header">
-        <h1 className="title">Descubre Eventos</h1>
-        {isAuthenticated && (
-          <button className="add-event-button" onClick={handleAddEvent}>
-            +
-          </button>
-        )}
-      </div>
-      <div className="search-and-filters">
+      <h1 className="discover-title">Descubre Eventos</h1>
+      <div className="discover-search-and-filters">
         <input
           type="text"
           placeholder="Buscar eventos..."
-          className="search-bar"
+          className="discover-search-bar"
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <select className="filter-dropdown" value={filter} onChange={handleFilterChange}>
+        <select
+          className="discover-filter-dropdown"
+          value={filter}
+          onChange={handleFilterChange}
+        >
           <option value="">Todos los eventos</option>
           <option value="Hip Hop">Hip Hop</option>
           <option value="Teatro">Teatro</option>
@@ -186,16 +167,16 @@ const Discover = () => {
           <option value="Rock">Rock</option>
         </select>
       </div>
-      <div className="gallery">
-        <div className="gallery-grid">
+      <div className="discover-gallery">
+        <div className="discover-gallery-grid">
           {filteredEvents.map((event) => (
-            <div key={event.id} className="gallery-item">
+            <div key={event.id} className="discover-gallery-item">
               <img
                 src={event.image}
                 alt={event.title}
-                className="gallery-item-image"
+                className="discover-gallery-item-image"
               />
-              <div className="gallery-item-content">
+              <div className="discover-gallery-item-content">
                 <h2>{event.title}</h2>
                 <p>{event.description}</p>
                 <button onClick={() => handleOpenModal(event)}>

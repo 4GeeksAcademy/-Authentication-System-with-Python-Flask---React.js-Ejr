@@ -100,18 +100,21 @@ const Galery = () => {
 
   return (
     <div className="galery-container" style={{ padding: '20px' }}>
-      <div className="miniJumbotronGalery text-center py-5 bg-light" style={{ position: 'relative' }}>
-        <h1 className="display-4 fw-bold">Galería de Eventos</h1>
-        <p className="lead">Sumérgete en un mundo encantado con nuestras fotos de eventos. Cada imagen revela la magia y el misterio de nuestros festivales. ¡Descubre momentos inolvidables y déjate llevar por el hechizo!</p>
-        <button
-          style={buttonStyle}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onClick={() => window.location.href = '/galeria'}
-        >
-          Ver Galería
-        </button>
-      </div>
+<div className="miniJumbotronGalery text-center py-5" style={{ position: 'relative', backgroundColor: 'rgba(29, 14, 63, 0.9)', color: '#fff' }}>
+  <h1 className="display-4 fw-bold">Galería de Eventos</h1>
+  <p className="lead">Sumérgete en un mundo encantado con nuestras fotos de eventos. Cada imagen revela la magia y el misterio de nuestros festivales. ¡Descubre momentos inolvidables y déjate llevar por el hechizo!</p>
+  <div className="button-container">
+    <button
+      style={buttonStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => window.location.href = '/galeria'}
+    >
+      Ver Galería
+    </button>
+  </div>
+</div>
+
       <Slider
         ref={sliderRef}
         {...settings}

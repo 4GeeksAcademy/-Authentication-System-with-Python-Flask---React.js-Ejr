@@ -1,44 +1,30 @@
 .custom-jumbotron {
-    background-color: #d3d3d3; 
-    padding: 2rem 1rem; 
+    background-color: rgba(29, 14, 63, 0.9); /* Color de fondo personalizado */
+    color: #fff; /* Texto blanco para buena legibilidad */
+    padding: 2rem 1rem;
+    border: 1px solid #ccc; /* Bordes opcionales */
+    border-radius: 8px; /* Bordes redondeados */
 }
 
 .custom-jumbotron h1 {
     font-size: 1.75rem;
     margin-bottom: 1rem;
+    color: #fff; /* Texto blanco */
 }
 
 .custom-jumbotron p {
-    font-size: 1.25rem; 
-}
-
-.custom-jumbotron img {
-    border-radius: 8px; 
-}
-
-.custom-jumbotron {
-    background-color: #f1f1f1;
-    padding: 2rem 1rem;
-    border: 1px solid #ccc; 
-}
-
-.custom-jumbotron h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.custom-jumbotron p.lead {
-    font-size: 1rem;
-    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    color: #fff; /* Texto blanco */
 }
 
 .custom-jumbotron .percentage {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    color: #fff; /* Texto blanco */
 }
 
-.custom-jumbotron .image-container {
-    max-width: 600px; 
-    margin-left: 2rem; 
+.custom-jumbotron .image-container img {
+    border-radius: 8px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para destacar la imagen */
 }
