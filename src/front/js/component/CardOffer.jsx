@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import "../../styles/CardOffer.css";
-
 import { useNavigate } from "react-router-dom"; 
-import { Context } from "../store/appContext";
 import { StarRating } from "./StarsRating.jsx";
 
-export const CardOffer = ({ title, company, modality, location, salary, description, id }) => {
-    const { actions, store } = useContext(Context);
+export const CardOffer = ({ title, company, modality, location, salary, description, id, rating }) => {
     const navigate = useNavigate();
 
     const handleViewDetails = () => {
@@ -21,7 +18,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                     src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
                     alt="Company Logo"
                 />
-                <StarRating/>
+                <StarRating rating={rating} />
             </div>
             <div className="card-offer-body">
                 <div className="title-box">
@@ -29,9 +26,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                     <span className="card-offer-company mb-1">{company} - {location}</span>
                 </div>
                 <div className="card-offer-description text-muted">
-                    <p>
-                        {description}
-                    </p>
+                    <p>{description}</p>
                 </div>
                 <div className="card-offer-footer d-flex justify-content-between align-items-center mt-2">
                     <div className="card-offer-details text-muted">
