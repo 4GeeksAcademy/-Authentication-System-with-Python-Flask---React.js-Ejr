@@ -14,9 +14,46 @@
 
 
 const getState = ({ getStore, getActions, setStore }) => {
+    
+
     return {
         store: {
-            cursos: [], //  Almacena todos los cursos obtenidos desde el backend.
+            cursos: [
+                {
+                    id: 1,
+                    nombre: "Curso de Desarrollo Web",
+                    categoria: "Desarrollo",
+                    subcategoria: "Desarrollo Web",
+                    valoracion: 5,
+                    nivel: "principiante",
+                    precio: 100,
+                    fecha: "2023-09-01",
+                    idioma: "espanol"
+                },
+                {
+                    id: 2,
+                    nombre: "Curso de Finanzas",
+                    categoria: "Negocios",
+                    subcategoria: "Finanzas",
+                    valoracion: 4,
+                    nivel: "intermedio",
+                    precio: 200,
+                    fecha: "2023-10-01",
+                    idioma: "ingles"
+                },
+                {
+                    id: 3,
+                    nombre: "Curso de Diseño Web",
+                    categoria: "Diseño",
+                    subcategoria: "Diseño Web",
+                    valoracion: 3,
+                    nivel: "avanzado",
+                    precio: 150,
+                    fecha: "2023-11-01",
+                    idioma: "aleman"
+                }
+                
+            ], //  Almacena todos los cursos obtenidos desde el backend.
             cursosConFiltros: [], // Almacena los cursos después de aplicar filtros
             loading: false, // Estado para mostrar carga
             error: null, // Estado para errores
@@ -34,9 +71,57 @@ const getState = ({ getStore, getActions, setStore }) => {
                 idioma: "",
                 busqueda: "",
                 
-            }
+            },
         },
         actions: {
+
+        
+            // Cargar los cursos desde el backend
+            cargarCursos: async () => {
+                const store = getStore();
+                setStore({ ...store, loading: true }); // Muestra el estado de carga
+
+                try { // Enviamos una solicitud GET para obtener todos los cursos.
+                    const response = await fetch(process.env.BACKEND_URL+'/api/cursos'); // Solicita los datos de cursos
+                    const data = await response.json(); // Convierte la respuesta en JSON
+                    setStore({ cursos: data, cursosConFiltros: data, loading: false }); 
+                    // Actualizamos ambos estados tanto de cursos y cursosConFiltrado
+                } catch (error) {
+                    setStore({ error: error.message, loading: false }); // Maneja el error
+                    console.error('Error loading courses:', error);
+                }
+            },
+            
+        
+
+            // Aplicar filtros a los cursos
+            aplicarFiltrosCursos: () => {
+                const store = getStore();
+                const { cursos, filtros } = store;
+
+                const cursosFiltrados = cursos.filter(curso => {
+                    return (
+                        (!filtros.categoria || curso.categoria === filtros.categoria) &&
+                        (!filtros.valoracion || curso.valoracion >= filtros.valoracion) &&
+                        (!filtros.nivel || curso.nivel === filtros.nivel) &&
+                        (!filtros.precio || (curso.precio >= filtros.precio[0] && curso.precio <= filtros.precio[1])) &&
+                        (!filtros.fecha || new Date(curso.fecha) >= new Date(filtros.fecha)) &&
+                        (!filtros.idioma || curso.idioma === filtros.idioma) &&
+                        (!filtros.busqueda || curso.nombre.includes(filtros.busqueda))
+                    );
+                });
+
+                setStore({ cursosConFiltros: cursosFiltrados });
+            },
+
+            // Acción para actualizar los filtros
+            actualizarFiltros: (nuevosFiltros) => {
+                const store = getStore();
+                setStore({ filtros: { ...store.filtros, ...nuevosFiltros } }); 
+                // Actualizamos el estado de los filtros con los nuevos filtros proporcionados.
+                getActions().aplicarFiltrosCursos();
+            },
+
 
             // Acción para iniciar sesión alumno
             loginAlumno: async (dataForm) => {
@@ -173,35 +258,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({ error: error.message, loading: false }); // Maneja el error
                     console.error('Error loading courses:', error);
                 }
-            },
-
-            // Alicamos filtros a los cursos
-            aplicarFiltrosCursos: () => {
-                const store = getStore();
-                const { cursos, filtros } = store;
-
-                // Filtra los cursos según los filtros proporcionados
-                const cursosFiltrados = cursos.filter(curso => {
-                    return (
-                        (!filtros.categoria || curso.categoria === filtros.categoria) &&
-                        (!filtros.valoracion || curso.valoracion >= filtros.valoracion) &&
-                        (!filtros.nivel || curso.nivel === filtros.nivel) &&
-                        (!filtros.precio || (curso.precio >= filtros.precio[0] && curso.precio <= filtros.precio[1])) &&
-                        (!filtros.fecha || new Date(curso.fecha) >= new Date(filtros.fecha)) &&
-                        (!filtros.idioma || curso.idioma === filtros.idioma) &&
-                        (!filtros.busqueda || curso.nombre.includes(filtros.busqueda)) &&
-                        (!filtros.cursoRelacionado || curso.relacionados.includes(filtros.cursoRelacionado))
-                    );
-                });
-
-                setStore({ cursosConFiltros: cursosFiltrados }); // Actualiza los cursos filtrados
-            },
-
-            // Acción para actualizar los filtros
-            actualizarFiltros: (nuevosFiltros) => {
-                const store = getStore();
-                setStore({ filtros: { ...store.filtros, ...nuevosFiltros } });
-                // Actualizamos el estado de los filtros con los nuevos filtros proporcionados.
             },
 
             // Acción para manejar errores

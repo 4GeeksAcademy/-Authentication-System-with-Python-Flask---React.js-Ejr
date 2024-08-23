@@ -9,6 +9,7 @@ const BarraBusqueda = () => {
     // Accede al estado global y las acciones desde el contexto
     const { store, actions } = useContext(Context);
 
+
     // Estado para la categoría seleccionada y la categoría que está siendo sobrevolada (hover)
     const [seleCategoria, setSeleCategoria] = useState(null);
     const [hoveredCategoria, setHoveredCategoria] = useState(null);
@@ -66,7 +67,7 @@ const BarraBusqueda = () => {
         setError(null); // Limpiar errores anteriores
 
         try {
-            await actions.cargarCursos(); // Llama a la acción (cargarCursos del flux) desde el backend
+            await actions.aplicarFiltrosCursos(); //  Aplica los filtros a los cursos cargados
         } catch (err) {
             setError(err.message); // Maneja errores en la carga de datos
         } finally {
