@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import { loginUser } from "../component/actions"; // Asegúrate de que la ruta sea correcta
 import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
 
