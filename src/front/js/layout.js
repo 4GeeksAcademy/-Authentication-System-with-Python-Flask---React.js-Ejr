@@ -22,6 +22,7 @@ import Contact from "./pages/contact.jsx";
 import About from "./pages/about.jsx";
 import Social from "./pages/social.jsx";
 import Cart from "./pages/cart.jsx"
+import CardProfile from "./pages/profile.jsx";
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -45,6 +46,7 @@ const Layout = () => {
                         <Route element={<Cart />} path="/cart" />
                         <Route element={<WishList />} path="/wishlist/users/:token" />
                         <Route element={<ProductDetail />} path="/product/:id" />
+                        <Route element={<CardProfile />} path="/user/:id" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<About />} path="/about" />
                         <Route element={<Contact />} path="/contact" />

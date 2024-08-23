@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Product, Profession, UserProfession, Favorite, Recipe
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -42,11 +42,13 @@ def add_new_user():
     if especific_user:
         return jsonify({"msj":"El usuario ya existe"}), 404 #en el caso que exista me avisa y da el error 404
     
+    pw_hash = current_app.bcrypt.generate_password_hash(request_body["password"]).decode("utf-8")
+
     new_user = User(
         # id_role = request_body ['id_role']# informacion que quiero de mi usuario y que tengo contenida en mi request_body
         name = request_body['name'],
         email = request_body['email'],
-        password = request_body['password'],
+        password = pw_hash,
         address = request_body ['address'],
         phone = request_body  ['phone'],
         is_active = request_body ['is_active'],
@@ -68,8 +70,9 @@ def login():
     user_query = User.query.filter_by(email=email).first() #en mi solicitud hago un filtro con email
     if user_query is None:
         return jsonify({"msg":"Usuario no registrado"}), 404
+    checkPass = current_app.bcrypt.check_password_hash(user_query.password, password)
 
-    if email != user_query.email or password != user_query.password:
+    if email != user_query.email or not checkPass:
         return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
 
     access_token = create_access_token(identity=email)
