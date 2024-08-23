@@ -69,37 +69,40 @@ const getState = ({ getStore, getActions, setStore }) => {
         let headers = {
           "Content-Type": "application/json",
         };
-
+    
         if (corsOrigin && corsOrigin !== "DISABLED") {
           headers["Access-Control-Allow-Origin"] = corsOrigin;
         }
-
-        let resp = await fetch(apiUrl + "/login", {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-          headers: headers,
-        });
-        if (!resp.ok) {
-          setStore({ token: null });
-          const errorData = await resp.json();
-          console.error("Error al hacer login:", errorData);
-          return {
-            success: false,
-            message: errorData.error || "Error desconocido",
-          };
+    
+        try {
+          let resp = await fetch(apiUrl + "/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: headers,
+          });
+    
+          if (!resp.ok) {
+            setStore({ token: null });
+            const errorData = await resp.json();
+            console.error("Error al hacer login:", errorData);
+            return {
+              success: false,
+              message: errorData.error || "Error desconocido",
+            };
+          }
+    
+          let data = await resp.json();
+          setStore({ token: data.access_token });
+          localStorage.setItem("token", data.access_token);
+          localStorage.setItem("role_id", data.role_id);
+          localStorage.setItem("user_id", data.user_id);
+          return { success: true };
+        } catch (error) {
+          console.error("Error en la solicitud de login:", error);
+          return { success: false, message: "Error en la red o en el servidor" };
         }
-
-        let data = await resp.json();
-        setStore({ token: data.access_token });
-        localStorage.setItem("token", data.access_token);
-        localStorage.setItem("role_id", data.role_id);
-        localStorage.setItem("user_id", data.user_id);
-        return { success: true };
       },
-      catch(error) {
-        console.error("Error en la solicitud de login:", error);
-        return { success: false, message: "Error en la red o en el servidor" };
-      },
+    
 
       signup: async (email, password, name, phone_number) => {
         let headers = {
