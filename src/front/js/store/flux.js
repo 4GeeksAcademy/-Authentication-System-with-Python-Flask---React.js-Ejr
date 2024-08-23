@@ -102,8 +102,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('error:' + error)
 				}
 			},
-			resetStore: () => {
-				setStore({ msg: "", success: "" })
+			resetStore: ()=> {
+				setStore({msg:"", success:""})
+			},
+			logOut: () =>{
+				localStorage.removeItem("token")
+				setStore({msg:"", token:"", success:"", user:"", empleador:"", programador:""})
+				return true
 			}
 
 		}
