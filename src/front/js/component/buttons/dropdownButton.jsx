@@ -1,4 +1,5 @@
 import React from "react";
+import LogoutLink from "../logout.js";
 
 const DropdownButton = ({ buttonName, icon }) => {
   return (
@@ -11,19 +12,17 @@ const DropdownButton = ({ buttonName, icon }) => {
       >
         {icon} {buttonName}
       </button>
-      <ul class="dropdown-menu dropdown-menu-light">
+      <ul className="dropdown-menu dropdown-menu-light">
         <li>
-          <a class="dropdown-item" href="#">
+          <a className="dropdown-item" href="#">
             Mi perfil
           </a>
         </li>
         <li>
-          <hr class="dropdown-divider" />
+          <hr className="dropdown-divider" />
         </li>
         <li>
-          <a class="dropdown-item" href="#">
-            Cerrar sesión
-          </a>
+          <LogoutLink />
         </li>
       </ul>
     </div>

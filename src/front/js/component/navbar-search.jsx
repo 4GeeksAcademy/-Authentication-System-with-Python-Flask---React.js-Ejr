@@ -4,6 +4,7 @@ import "../../styles/navbar.css";
 import Searchbar from "./searchbar.jsx";
 import BlueButton from "./buttons/blueButton.jsx";
 import { Context } from "../store/appContext.js";
+import DropdownButton from "./buttons/dropdownButton.jsx";
 
 export const Navbarsearch = () => {
   const { store, actions } = useContext(Context);

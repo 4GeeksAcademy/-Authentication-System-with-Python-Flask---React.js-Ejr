@@ -6,7 +6,7 @@ import { LoginRegister } from "../component/registerModal.jsx";
 import { Jumbotron } from "../component/jumbotron.jsx";
 import RutaDestacada from "../component/rutaDestacada.jsx";
 import { ForgotPassword } from "../component/recuperar-contraseña.jsx";
-import LogoutLink from "../component/logout.jsx";
+
 
 
 
@@ -18,7 +18,6 @@ export const Home = () => {
     <>
       {/* <Navbar /> */}
       <LoginRegister />
-      <LogoutLink />
       {/* <ForgotPassword /> */}
       <Jumbotron />
       <h4>Rutas destacadas 🔥</h4>
