@@ -2,24 +2,24 @@
   text-align: center;
   color: #333;
   padding: 40px;
-  background-color: #f5f5f5;
+  background-color: #F5F5F5;
 }
 
-.title {
-  color: #2c3e50;
+.discover-title {
+  color: #2C3E50;
   margin-bottom: 30px;
   font-size: 2.5em;
   font-weight: bold;
 }
 
-.search-and-filters {
+.discover-search-and-filters {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-bottom: 40px;
 }
 
-.search-bar, .filter-dropdown {
+.discover-search-bar, .discover-filter-dropdown {
   padding: 12px 20px;
   border-radius: 25px;
   border: 1px solid #ddd;
@@ -27,23 +27,23 @@
   transition: all 0.3s ease;
 }
 
-.search-bar {
+.discover-search-bar {
   width: 100%;
   max-width: 400px;
 }
 
-.search-bar:focus, .filter-dropdown:focus {
+.discover-search-bar:focus, .discover-filter-dropdown:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.gallery-grid {
+.discover-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 
-.gallery-item {
+.discover-gallery-item {
   display: flex;
   flex-direction: column;
   background: white;
@@ -53,37 +53,37 @@
   transition: transform 0.3s ease;
 }
 
-.gallery-item:hover {
+.discover-gallery-item:hover {
   transform: translateY(-5px);
 }
 
-.gallery-item-image {
+.discover-gallery-item-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.gallery-item-content {
+.discover-gallery-item-content {
   padding: 20px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.gallery-item-content h2 {
-  color: #2c3e50;
+.discover-gallery-item-content h2 {
+  color: #2C3E50;
   margin-bottom: 10px;
   font-size: 1.5em;
 }
 
-.gallery-item-content p {
-  color: #7f8c8d;
+.discover-gallery-item-content p {
+  color: #7F8C8D;
   margin-bottom: 20px;
   flex-grow: 1;
 }
 
-.gallery-item-content button {
-  background-color: #3498db;
+.discover-gallery-item-content button {
+  background-color: #3498DB;
   color: white;
   border: none;
   padding: 12px 25px;
@@ -91,182 +91,29 @@
   border-radius: 25px;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  align-self: center; 
+  align-self: center;
 }
 
-.gallery-item-content button:hover {
-  background-color: #2980b9;
+.discover-gallery-item-content button:hover {
+  background-color: #2980B9;
 }
 
 @media (max-width: 1200px) {
-  .gallery-grid {
+  .discover-gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .search-and-filters {
+  .discover-search-and-filters {
     flex-direction: column;
   }
-  
-  .search-bar, .filter-dropdown {
+
+  .discover-search-bar, .discover-filter-dropdown {
     width: 100%;
   }
 
-  .gallery-grid {
+  .discover-gallery-grid {
     grid-template-columns: 1fr;
   }
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 500px;
-  width: 100%;
-  position: relative; 
-  max-height: 90vh; 
-  overflow-y: auto; 
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.modal-image {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  max-height: 250px; 
-  object-fit: cover; 
-}
-
-.modal-details {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.modal-details-item {
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #2c3e50;
-}
-
-.modal-details-item label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-details-item input {
-  margin-left: 10px;
-  padding: 5px;
-  width: 60px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.modal-details-item p {
-  margin: 0;
-}
-
-.modal-purchase-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  cursor: pointer;
-  border-radius: 25px;
-  font-size: 16px;
-  margin-top: 20px;
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-.modal-purchase-button:hover {
-  background-color: #2980b9;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 500px;
-  width: 100%;
-  position: relative; /* Asegura que la posición del botón de cierre sea correcta */
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.modal-image {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.modal-details {
-  margin-top: 20px;
-}
-
-.modal-details input {
-  margin-left: 10px;
-  padding: 5px;
-  width: 50px;
-}
-
-.modal-purchase-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  cursor: pointer;
-  border-radius: 25px;
-  font-size: 16px;
-  margin-top: 20px;
-}
-
-.modal-purchase-button:hover {
-  background-color: #2980b9;
 }

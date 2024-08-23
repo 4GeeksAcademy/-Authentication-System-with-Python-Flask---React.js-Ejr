@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/discover.css";
+import "../../styles/discoverModal.css"; 
 
 const Modal = ({ show, event, onClose }) => {
   const [quantity, setQuantity] = useState(1);
@@ -10,27 +10,8 @@ const Modal = ({ show, event, onClose }) => {
     setQuantity(parseInt(e.target.value));
   };
 
-  const handlePurchase = async () => {
-    const response = await fetch('http://localhost:4242/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        amount: totalPrice,
-      }),
-    });
-
-    const session = await response.json();
-    const stripe = window.Stripe('pk_test_51PoUGbKRUE81lQChEmIzvoi9n0jNfoASUukIwuRez0f5cAxrxO0OnOOEdocXMHFhCcTFRWWGOahB5d2CJhNWuCBS00raBmJoom'); // Reemplaza con tu clave publicable
-
-    const { error } = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (error) {
-      console.error("Error redirecting to checkout:", error);
-    }
+  const handlePurchase = () => {
+    alert(`Compra confirmada para ${quantity} entradas. Precio total: $${totalPrice}. Gracias por usar Tickeate`);
   };
 
   if (!show) {
@@ -44,13 +25,19 @@ const Modal = ({ show, event, onClose }) => {
   };
 
   return (
-    <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className="modal-content">
-        <span className="close-button" onClick={onClose}>&times;</span>
-        <img src={event.image} alt={event.title} className="modal-image" />
+    <div className="modal-discover-overlay" onClick={handleOverlayClick}>
+      <div className="modal-discover-content">
+        <span className="modal-discover-close-button" onClick={onClose}>
+          &times;
+        </span>
+        <img
+          src={event.image}
+          alt={event.title}
+          className="modal-discover-image"
+        />
         <h2>{event.title}</h2>
         <p>{event.description}</p>
-        <div className="modal-details">
+        <div className="modal-discover-details">
           <label>
             Cantidad de Entradas:
             <input
@@ -63,7 +50,10 @@ const Modal = ({ show, event, onClose }) => {
           <p>Precio por Entrada: ${ticketPrice}</p>
           <p>Precio Total: ${totalPrice}</p>
         </div>
-        <button className="modal-purchase-button" onClick={handlePurchase}>
+        <button
+          className="modal-discover-purchase-button"
+          onClick={handlePurchase}
+        >
           Confirmar Compra
         </button>
       </div>
