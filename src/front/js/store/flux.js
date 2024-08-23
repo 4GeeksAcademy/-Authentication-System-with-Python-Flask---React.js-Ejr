@@ -104,8 +104,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			resetStore: () => {
 				setStore({ msg: "", success: "" })
-			resetStore: ()=> {
-				setStore({msg:"", success:""})
 			},
 			logOut: () =>{
 				localStorage.removeItem("token")

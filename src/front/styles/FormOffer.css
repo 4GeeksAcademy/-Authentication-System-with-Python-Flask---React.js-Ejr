@@ -1,38 +1,40 @@
-.form-box{
-    width: 60%;
+.form-container{
+    position: relative;
+    height: fit-content;
+    left: 35px;
+    width: 50%;
+}
+
+.form-box {
+    max-width:fit-content; 
+    max-height: 50%;
     background-color: white;
     border: 1px solid #f3eaea;
     border-radius: 4px;
-    position: relative; 
+    padding: 20px;
 }
 
-.form-header{
-    position: relative;
-    left: 190px;
-    width: 70%;
+.form-header {
+    text-align: center;
 }
 
-.form-header h2{
-    font-size: 3rem;
+.form-header h2 {
+    font-size: 2.5rem;
     color: rgba(33, 37, 41, 0.75);
+    text-shadow: 5px 5px 15px #909090;
+    text-wrap: nowrap;
 }
 
-.form-header span{
-    font-size: 1.8rem;
+.form-header span {
+    font-size: 1.5rem;
     color: rgb(103, 147, 174);
+    text-shadow: 5px 5px 15px #909090;;
 }
 
 .check-box-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-}
-
-.img-container{
-    position: relative;
-    bottom: 300px;
-    left: 110px;
-    box-sizing: border-box;
 }
 
 .img-thumbnail {
@@ -42,30 +44,55 @@
     border: 1px solid #ddd;
     padding: 5px;
     border-radius: 4px;
-    box-sizing: border-box;
 }
 
-.img-preview{
-    position: absolute;
-    max-width: 100%; 
-    max-height: 300px; 
-    width: 250px;
-    height: 250px;
+.img-preview {
+    max-width: 200px; 
+    max-height: 200px;
     overflow: hidden; 
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
+    margin: 10px auto; 
 }
 
-.box-description{
+.button-box {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px; 
+}
+
+.text-area {
     position: relative;
-    top: 32px;
-    box-sizing: border-box;
+    height: 300px; 
+    max-height: 300px;
+    width: 100%; 
+    resize:none; 
 }
-
-.button-box{
+.btn-submit{
+    background-color: rgb(103, 147, 174);
+    color: rgb(0, 0, 0);
+}
+.btn-submit:hover{
+    background-color: rgb(0, 157, 255);
+    color: white;
+    
+}
+.btn-reset{
+    background-color: rgb(103, 147, 174);
+    color: rgb(0, 0, 0);
+}
+.btn-reset:hover{
+    background-color: rgb(0, 157, 255);
+    color: white;
+    
+}
+.last-row{
+    position: relative;
+}
+.update-photo-box{
     position: absolute;
-    bottom: 15px;
-    right: 15px;
+    right: 5px;
+    bottom: -22px;
 }
