@@ -101,6 +101,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('error:'+error)
 				}
 			},
+			login: async (username, password) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/login",{
+						method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(username, password),
+					})
+						const data = await resp.json()
+						setStore(data)
+						localStorage.setItem('token', data.token)
+						return data
+								
+				} catch (error) {
+					console.log('error:'+error)
+				}
+			},
 			resetStore: ()=> {
 				setStore({msg:"", success:""})
 			}
