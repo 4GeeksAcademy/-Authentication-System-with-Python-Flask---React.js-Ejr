@@ -286,7 +286,9 @@ def contact():
     db.session.commit()
     return jsonify(new_contact.serialize()), 201
 
-@api.route('/contact', methods=['GET'])
+@api.route('/getAllContacts', methods=['GET'])
 def get_contacts():
     contacts = Contact.query.all()  
-    return jsonify([contact.serialize() for contact in contacts]), 200
+    if contacts:
+        return jsonify([contact.serialize() for contact in contacts]), 200
+    return jsonify({'msg':'Ningún contacto encontrado'}),404
