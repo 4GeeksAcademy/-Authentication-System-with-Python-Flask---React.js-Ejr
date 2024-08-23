@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Row, Col } from 'react-bootstrap';
+import { Modal, Row, Col, Button, Form } from 'react-bootstrap';
+import { PencilSquare } from 'react-bootstrap-icons'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/gallery.css';
 import ImageUpload from '../component/ImageUpload';
@@ -8,18 +9,22 @@ const Gallery = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showImageUpload, setShowImageUpload] = useState(false); // Estado para el modal de carga de imágenes
+  const [isEditing, setIsEditing] = useState(false); // Estado para habilitar edición
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editImages, setEditImages] = useState([]);
+  const [showImageUpload, setShowImageUpload] = useState(false);
   const [galleryData, setGalleryData] = useState([
     {
       id: 1,
       title: "Concierto Slipknot",
       image: 'https://cdn.midjourney.com/404707fc-1d26-4573-8890-99396329498f/0_2.png',
-      description: "Un gran concierto de Slipknot con increíbles actuaciones y energía.",
+      description: "Una noche inolvidable con Slipknot: El pasado 15 de julio de 2023, a las 8:00 PM, más de 50,000 fanáticos se reunieron en el legendario estadio O2 Arena para presenciar uno de los conciertos más épicos del año. Con una energía desbordante y actuaciones que llevaron la adrenalina al máximo, Slipknot hizo vibrar cada rincón del recinto...",
       images: [
         'https://cdn.midjourney.com/404707fc-1d26-4573-8890-99396329498f/0_2.png',
         'https://cdn.midjourney.com/e5decda0-4dda-4397-863b-a64ffc411aea/0_3.png',
-        'https://cdn.midjourney.com/e5decda0-4dda-4397-863b-a64ffc411aea/0_3.png',
-        'https://cdn.midjourney.com/e5decda0-4dda-4397-863b-a64ffc411aea/0_3.png'
+        'https://cdn.midjourney.com/e46d9f62-119b-4a1c-8b0b-f60119774077/0_0.png',
+        'https://cdn.midjourney.com/e46d9f62-119b-4a1c-8b0b-f60119774077/0_2.png'
       ],
       category: "Rock",
     },
@@ -80,15 +85,20 @@ const Gallery = () => {
     }
   ]);
 
+
   const handleShow = (item) => {
     setModalInfo(item);
     setCurrentImageIndex(0);
+    setEditTitle(item.title); // Inicializar el título para editar
+    setEditDescription(item.description); // Inicializar la descripción para editar
+    setEditImages(item.images); // Inicializar las imágenes para editar
     setModalShow(true);
   };
 
   const handleClose = () => {
     setModalShow(false);
     setModalInfo(null);
+    setIsEditing(false); // Cerrar el modo de edición al cerrar el modal
   };
 
   const handleAddImageClick = () => {
@@ -104,7 +114,7 @@ const Gallery = () => {
         image: newImage.image,
         description: newImage.description,
         images: [newImage.image],
-        category: "Nuevo" // Puedes ajustar esto según sea necesario
+        category: "Nuevo"
       }
     ]);
   };
@@ -113,11 +123,39 @@ const Gallery = () => {
     setShowImageUpload(false);
   };
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveEdit = () => {
+    // Actualizar los datos de la galería con los valores editados
+    const updatedData = galleryData.map(item =>
+      item.id === modalInfo.id
+        ? { ...item, title: editTitle, description: editDescription, images: editImages }
+        : item
+    );
+    setGalleryData(updatedData);
+    setIsEditing(false); // Desactivar modo de edición después de guardar
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    // Restaurar los valores originales
+    setEditTitle(modalInfo.title);
+    setEditDescription(modalInfo.description);
+    setEditImages(modalInfo.images);
+  };
+
+  const handleImageDelete = (index) => {
+    const updatedImages = editImages.filter((_, i) => i !== index);
+    setEditImages(updatedImages);
+  };
+
   const filteredData = galleryData.find(item => item.id === modalInfo?.id);
 
   return (
     <div className="discover-container">
-      <h1 className="title">Descubre Eventos</h1>
+      <h1 className="title">Galeria de imagenes</h1>
       <div className="gallery">
         <div className="gallery-grid">
           {galleryData.map((event) => (
@@ -145,14 +183,32 @@ const Gallery = () => {
         onHide={handleClose}
         size="lg"
         centered
-        dialogClassName="custom-modal"
+        dialogClassName="gallery-modal"
       >
         <Modal.Header closeButton className="custom-modal-header">
-          <Modal.Title>{modalInfo?.title}</Modal.Title>
+          {isEditing ? (
+            <Form.Control
+              type="text"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              className="custom-modal-title-edit"
+            />
+          ) : (
+            <Modal.Title>{modalInfo?.title}</Modal.Title>
+          )}
+          {!isEditing && (
+            <PencilSquare
+              className="edit-icon custom-spacing"
+              size={20}
+              onClick={handleEditClick}
+              style={{ cursor: 'pointer', marginLeft: 'auto' }}
+            />
+          )}
         </Modal.Header>
+
         <Modal.Body>
           {filteredData && (
-            <>
+            <div className="custom-modal-body">
               <div className="custom-modal-main-image">
                 <img
                   src={filteredData.images[currentImageIndex]}
@@ -160,7 +216,7 @@ const Gallery = () => {
                 />
               </div>
               <Row className="custom-modal-thumbnails">
-                {filteredData.images.map((img, index) => (
+                {editImages.map((img, index) => (
                   <Col key={index} className="custom-thumbnail-col">
                     <img
                       className={`custom-thumbnail-img ${index === currentImageIndex ? 'active' : ''}`}
@@ -168,14 +224,44 @@ const Gallery = () => {
                       alt={`Thumbnail ${index}`}
                       onClick={() => setCurrentImageIndex(index)}
                     />
+                    {isEditing && (
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleImageDelete(index)}
+                        className="delete-image-button"
+                      >
+                        Borrar
+                      </Button>
+                    )}
                   </Col>
                 ))}
               </Row>
               <div className="custom-modal-description">
                 <h4>Descripción:</h4>
-                <p>{filteredData.description}</p>
+                {isEditing ? (
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                    className="custom-modal-description-edit"
+                  />
+                ) : (
+                  <p>{filteredData.description}</p>
+                )}
               </div>
-            </>
+              {isEditing && (
+                <div className="edit-buttons">
+                  <Button variant="primary" onClick={handleSaveEdit}>
+                    Guardar
+                  </Button>
+                  <Button variant="secondary" onClick={handleCancelEdit}>
+                    Cancelar
+                  </Button>
+                </div>
+              )}
+            </div>
           )}
         </Modal.Body>
       </Modal>
