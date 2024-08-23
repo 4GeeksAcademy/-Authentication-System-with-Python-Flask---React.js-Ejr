@@ -46,8 +46,6 @@ const CreateAppointmentRegisteredUser = () => {
       (service) => service.id === parseInt(serviceChosen, 10)
     );
 
-    const serviceName = selectedService ? selectedService.name : "Not selected";
-
     const getUserCars = async () => {
       try {
         // Actualiza la URL para que apunte a la ruta correcta usando owner_id
@@ -320,6 +318,11 @@ const CreateAppointmentRegisteredUser = () => {
   };
 
   const displayCurrentStep = () => {
+    const selectedService = services.find(
+      (service) => service.id === parseInt(serviceChosen, 10)
+    );
+    const serviceName = selectedService ? selectedService.name : "Not selected";
+    
     switch (currentStep) {
       case 1:
         return (
