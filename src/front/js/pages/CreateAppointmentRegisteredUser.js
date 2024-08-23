@@ -294,7 +294,7 @@ const CreateAppointmentRegisteredUser = () => {
 
       const appointmentData = await submitAppointment.json();
 
-      const MailSender = (userInfo) => {
+      const Sender = (userInfo) => {
         const data = {
           sender: {
             name: "AutoAgenda",
@@ -312,13 +312,21 @@ const CreateAppointmentRegisteredUser = () => {
           Your appointment on the day ${dateFormat} has been created successfully.</p>
           <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
         };
-
+        const SMSInfo = {
+          type: "transactional",
+          unicodeEnabled: true,
+          sender: "AutoAgenda",
+          recipient:`+34${userInfo.phoneNumber}`,
+          content: `hello ${userInfo.name}, Your appointment on the day ${dateFormat} has been created successfully.`,
+          tag: "t1",
+          organisationPrefix:"AutoAgenda info:"
+        }
+        actions.SMSSender(SMSInfo);
         actions.SendMail(data);
       };
-
       const userInfo = await actions.GetUser();
-      if (userInfo && userInfo.email && userInfo.name) {
-        MailSender(userInfo);
+      if (userInfo && userInfo.email && userInfo.name && userInfo.phoneNumber) {
+        Sender(userInfo);
       } else {
         console.error("User Info is missing email or name.");
       }

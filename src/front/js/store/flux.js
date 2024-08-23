@@ -229,6 +229,25 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error:", error);
         }
       },
+      //////////////////////////////////////////////////////////////////////////////////////////////////////// manejo envio SMS
+      SMSSender: async (SMSInfo) => {
+        try {
+          const response = await fetch("https://api.brevo.com/v3/transactionalSMS/sms", {
+            method: "POST",
+            headers: {
+              accept: "application/json",
+              "api-key": process.env.SMSKEY,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(SMSInfo),
+          });
+          if (response.ok) {
+            console.log("sms enviado con exito")
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      },
       GetUser: async () => {
         try {
           const storageUserId = localStorage.getItem("user_id");
@@ -241,8 +260,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           const { result } = data;
           const email = result.email;
           const name = result.name;
+          const phoneNumber = result.phone_number
 
-          return { email, name };
+          return { email, name, phoneNumber };
         } catch (error) {
           console.error("Error:", error);
         }
