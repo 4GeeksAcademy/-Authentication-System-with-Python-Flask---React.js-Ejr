@@ -22,7 +22,8 @@ const CreateAppointmentRegisteredUser = () => {
   const [isAvailable, setIsAvailable] = useState(true);
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
-
+  const [takenSlots, setTakenSlots] = useState([]);
+  const maxAppointmentsPerHour = 4
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
   const myToken = localStorage.getItem("token");
@@ -107,7 +108,6 @@ const CreateAppointmentRegisteredUser = () => {
   
   const serviceName = selectedService ? selectedService.name : "Not selected";
 
-
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
     return (
@@ -122,49 +122,59 @@ const CreateAppointmentRegisteredUser = () => {
   const disabledTime = (date) => {
     const now = new Date(); // Hora actual
     const selectedDate = date.format("YYYY-MM-DD"); // Fecha seleccionada
-
+  
     const hours = {
       disabledHours: () => {
         const disabledHours = [];
-
+        
         // Filtrar los slots tomados por la fecha seleccionada
         const slotsForSelectedDate = takenSlots.filter(
           (slot) => slot.date === selectedDate
         );
-
+  
         // Contar las citas por hora
         const hourCounts = {};
         slotsForSelectedDate.forEach((slot) => {
           const slotHour = parseInt(slot.start_time.split(":")[0], 10);
           hourCounts[slotHour] = (hourCounts[slotHour] || 0) + 1;
         });
-
-        // Deshabilitar las horas que tienen 4 o más citas
+  
+        // Deshabilitar las horas que tienen el máximo de citas permitidas
         Object.keys(hourCounts).forEach((hour) => {
-          if (hourCounts[hour] >= 4) {
+          if (hourCounts[hour] >= maxAppointmentsPerHour) { // maxAppointmentsPerHour es el límite máximo
             disabledHours.push(parseInt(hour, 10));
           }
         });
-
+  
         // También deshabilitar las horas fuera del horario laboral
         for (let i = 0; i < 24; i++) {
           if (i < 9 || i >= 18 || (selectedDate === now.toISOString().split('T')[0] && i < now.getHours())) {
             disabledHours.push(i);
           }
         }
-
+  
         return disabledHours;
       },
-      disabledMinutes: () => {
-        // Habilitar solo los minutos 0 y 30
+      disabledMinutes: (hour) => {
+        if (takenSlots.find(slot => parseInt(slot.start_time.split(":")[0], 10) === hour && slot.date === selectedDate)) {
+          const slotsForHour = takenSlots.filter(slot => parseInt(slot.start_time.split(":")[0], 10) === hour && slot.date === selectedDate);
+  
+          // Deshabilitar todos los minutos si la hora está llena
+          if (slotsForHour.length >= maxAppointmentsPerHour) {
+            return Array.from({ length: 60 }, (_, i) => i);
+          }
+        }
+  
+        // Deshabilitar solo los minutos 0 y 30
         return Array.from({ length: 60 }, (_, i) => i).filter(
-          (min) => min !== 0 && min !== 30
+          (min) => min !== 0 
         );
       },
     };
-
+  
     return hours;
   };
+  
 
   // Función para obtener los slots tomados desde la API
   const fetchTakenSlots = async () => {
@@ -196,6 +206,7 @@ const CreateAppointmentRegisteredUser = () => {
       setError("Service required. Please select one from the list.");
       return;
     }
+      await fetchTakenSlots();
     if (currentStep === 3) {
       if (!appointmentDate) {
         setError(
@@ -203,10 +214,10 @@ const CreateAppointmentRegisteredUser = () => {
         );
         return;
       }
-      await checkSlotAvailability(appointmentDate);
-      if (!isAvailable) {
-        return;
-      }
+      // await checkSlotAvailability(appointmentDate);
+      // if (!isAvailable) {
+      //   return;
+      // }
     }
     setError("");
     setCurrentStep(currentStep + 1);
