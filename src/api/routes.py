@@ -239,10 +239,15 @@ def contact():
     db.session.commit()
     return jsonify(new_contact.serialize()), 201
 
-@api.route('/contact', methods=['GET'])
+@api.route('/getAllContacts', methods=['GET'])
 def get_contacts():
-    contacts = Contact.query.all()  
+    contacts = Contact.query.all() 
+    
     return jsonify([contact.serialize() for contact in contacts]), 200
 
-if __name__ == '__main__':
+    if contacts:
+        return jsonify([contact.serialize() for contact in contacts]), 200
+    return jsonify({'msg':'Ningún contacto encontrado'}),404
+  
+  if __name__ == '__main__':
     api.run(host='0.0.0.0', port=3245, debug=True)
