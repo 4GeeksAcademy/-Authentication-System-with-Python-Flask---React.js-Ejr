@@ -12,7 +12,7 @@ import {SingleOffer} from "./pages/SingleOffer.jsx"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Inicio } from "./pages/inicio.js";
-import { LoginPage } from "./pages/login";
+import  LoginPage  from "./pages/login.js";
 import { Register } from "./pages/register.js"
 import { TimeLine } from "./pages/TimeLine.jsx";
 import { FormOffer } from "./component/FormOffer.jsx";

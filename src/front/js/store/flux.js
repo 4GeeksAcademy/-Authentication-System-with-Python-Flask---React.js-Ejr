@@ -110,6 +110,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 							},
 							body: JSON.stringify(username, password),
 					})
+
+					if (Response.ok) {
+						const data = await Response.jason();
+						console.log('Login existoso', data);
+						return data;
+					} else {
+						console.error('Error en el login');
+						return null;
+					}
+					
+					
+				
+
 						const data = await resp.json()
 						setStore(data)
 						localStorage.setItem('token', data.token)
