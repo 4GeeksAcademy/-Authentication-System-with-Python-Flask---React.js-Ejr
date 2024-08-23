@@ -82,7 +82,7 @@ def handle_protected():
         return jsonify({'msg':'Has logrado acceder a una ruta protegida '})
     return jsonify({'success':False, 'msg': 'Bad token'})
 
-
+  
 #[GET] Listar todos los bebes que hay en la base de datos.
 @api.route('/all_babies', methods=['GET'])
 def get_all_babies():

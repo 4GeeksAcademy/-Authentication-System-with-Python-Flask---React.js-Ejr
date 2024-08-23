@@ -8,7 +8,8 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --config webpack.dev.js --port 3000",
-		"build": "webpack --config webpack.prod.js"
+		"build": "webpack --config webpack.prod.js",
+		"run": "npm-run-dev"
 	},
 	"author": {
 		"name": "Alejandro Sanchez",
@@ -73,6 +74,11 @@
 		]
 	},
 	"dependencies": {
+		"bootstrap": "^5.3.3",
+		"firebase": "^10.12.5",
+		"prop-types": "^15.6.1",
+		"react": "^16.8.4",
+		"react-bootstrap": "^2.10.4",
 		"@fortawesome/fontawesome-svg-core": "^6.6.0",
 		"@fortawesome/free-solid-svg-icons": "^6.6.0",
 		"@fortawesome/react-fontawesome": "^0.2.2",
