@@ -13,7 +13,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		},
 		actions: {
-
+			solicitudProfesional: async (formData) => {
+				const options = {
+					method: 'POST',
+					body: formData,
+				}
+				try{
+					const response = await fetch(process.env.BACKEND_URL + '/solicitud-profesional', options)
+					const data = await response.json()
+					console.log(response.status, data)
+					return true
+				}
+				catch (e){
+					console.log(e)
+				}
+			},
 			//Obtengo el token de usuario para la sesión
 			iniciarSesion: async (correo, clave) => {					 
 				const actions = getActions();

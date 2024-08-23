@@ -43,7 +43,6 @@ export const Inicio = () => {
        <div className="my-auto">
        <h2 className="text-inicio my-5 text-center">Profesionales Destacados</h2>
         <div className="row justify-content-center">
-
           <ProfDestacados />
         </div>
        </div>
