@@ -11,27 +11,18 @@ export const Register = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = (formData) => actions.register(formData);
+  const onSubmit = (formData) => {
+    actions.register(formData)
 
-  useEffect(() => {
-    if (store.success) {
-      const timer = setTimeout(() => {
-        navigate("/");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-    else {
-      const timer = setTimeout(() => {
-        reset();
-        actions.resetStore();
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [store.success]);
+    const timer = setTimeout(() => {
+      if (store.success) navigate("/")
+    }, 3000);
+    return () => clearTimeout(timer);
+  }
+
 
   return (
     <div className="container-fluid p-0">
