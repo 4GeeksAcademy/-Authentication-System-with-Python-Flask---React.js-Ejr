@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 203c844d0929
+Revision ID: b406f5978c7c
 Revises: 
-Create Date: 2024-08-21 12:02:29.701801
+Create Date: 2024-08-23 17:27:55.584819
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '203c844d0929'
+revision = 'b406f5978c7c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('email', sa.String(length=200), nullable=False),
     sa.Column('title', sa.String(length=90), nullable=False),
     sa.Column('description', sa.String(length=250), nullable=False),
+    sa.Column('creation_date', sa.Date(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('tags',
@@ -38,6 +39,7 @@ def upgrade():
     sa.Column('username', sa.String(length=64), nullable=False),
     sa.Column('description', sa.String(length=215), nullable=True),
     sa.Column('social_media', sa.JSON(), nullable=True),
+    sa.Column('profile_image', sa.String(length=250), nullable=True),
     sa.Column('creation_date', sa.Date(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
@@ -56,6 +58,7 @@ def upgrade():
     sa.Column('title', sa.String(length=90), nullable=False),
     sa.Column('description', sa.String(length=250), nullable=False),
     sa.Column('duration', sa.Integer(), nullable=False),
+    sa.Column('city', sa.String(length=100), nullable=False),
     sa.Column('images', sa.JSON(), nullable=False),
     sa.Column('itinerary', sa.JSON(), nullable=False),
     sa.Column('creation_date', sa.Date(), nullable=False),
