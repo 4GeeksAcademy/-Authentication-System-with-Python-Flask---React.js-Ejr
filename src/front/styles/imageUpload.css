@@ -1,0 +1,12 @@
+/* imageUpload.css */
+
+.image-preview {
+  margin-top: 1rem;
+}
+
+.image-preview__img {
+  width: 100%;
+  height: auto;
+  max-height: 300px; /* Ajusta la altura máxima de la vista previa */
+  object-fit: contain;
+}

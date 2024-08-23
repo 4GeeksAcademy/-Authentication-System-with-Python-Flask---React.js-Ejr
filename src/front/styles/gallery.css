@@ -1,66 +1,147 @@
-.gallery-container .gallery-item{
-  background-size: cover;
-  background-position: center;
-  height: 300px;
-  width: 350px;
-  position: relative;
-  margin: 30px; 
-  overflow: hidden; 
-  flex: 0 0 auto;
-  
-}
-/* Estilos para el contenedor de la galería */
-.gallery-container {
+/* Contenedor principal */
+.discover-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
   display: flex;
-  flex-wrap: wrap;
-  padding: 10px;
-  margin-left: 4%;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Estilos para la superposición de cada item de la galería */
+/* Título */
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+  width: 100%;
+}
+
+/* Estilos para la galería */
+.gallery {
+  width: 100%;
+  position: relative; /* Necesario para posicionar el botón correctamente */
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* Estilo de los elementos de la galería */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03);
+}
+
+.gallery-item-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .gallery-item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  height: 100%;
-  position: absolute; 
-  top: 0;
-  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s;
 }
 
-/* Estilo de hover para la superposición */
 .gallery-item:hover .gallery-item-overlay {
-  opacity: 1; 
+  opacity: 1;
 }
 
-/* Título del item de la galería */
-.gallery-item-title {
-  color: rgb(255, 255, 255); 
-  font-size: 3rem;
+.gallery-item-overlay h2 {
+  font-size: 1.5rem;
   text-align: center;
   margin: 0;
 }
 
-/*Estilos para el modal*/
+/* Botón para añadir publicación */
+.add-post-wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.add-post-button {
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.add-post-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.add-post-tooltip {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  background-color: #000;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.add-post-button:hover .add-post-tooltip {
+  opacity: 1;
+}
+
+/* Modal personalizado */
 .custom-modal .modal-dialog {
-  max-width: auto;
+  max-width: 90%;
   margin: 30px auto;
 }
 
 .custom-modal .modal-content {
   border-radius: 15px;
-  box-shadow: 0 40px 15px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 40px 15px rgba(0, 0, 0, 0.3);
   background: #322d38;
-  border: none; 
+  border: none;
 }
 
 .custom-modal-header {
-  background-color: #322d38; 
+  background-color: #322d38;
   color: white;
 }
 
@@ -73,66 +154,45 @@
   font-size: 1rem;
 }
 
-/* Main Image */
-.modal-main-image {
+/* Imagen principal del modal */
+.custom-modal-main-image {
   position: relative;
+  text-align: center;
 }
 
-.modal-main-image img {
-  margin-left: 2%;
+.custom-modal-main-image img {
+  max-width: 100%;
   height: auto;
-  
   border-radius: 10px;
-  
 }
 
-/* Thumbnail Styles */
-.modal-thumbnails {
+/* Miniaturas del modal */
+.custom-modal-thumbnails {
   margin-top: 15px;
   display: flex;
-  overflow-x: auto;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
   padding-bottom: 20px;
-  padding-left: 20px;
 }
 
-.thumbnail-col {
-  flex: 0 0 auto;
+.custom-thumbnail-col {
+  flex: 1;
+  max-width: calc(33.333% - 10px);
 }
 
-.thumbnail-img {
-  width: 100px; /* Tamaño fijo para las miniaturas */
+.custom-thumbnail-img {
+  width: 100%;
   cursor: pointer;
   border-radius: 5px;
   transition: transform 0.3s;
 }
 
-.thumbnail-img.active {
-  transform: scale(1.1); /* Destaca la miniatura activa */
+.custom-thumbnail-img.active {
+  transform: scale(1.1);
 }
 
-.thumbnail-img:hover {
-  transform: scale(1.05); /* Agranda la miniatura al pasar el cursor */
+/* Descripción del modal */
+.custom-modal-description {
+  margin-top: 15px;
+  color: #fff;
 }
-
-/* Modal Description */
-.modal-description {
-  margin-top: 20px;
-  color: white;
-}
-
-.modal-description h4 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #f8f9fa; /* Color claro para contraste */
-}
-
-.modal-description p {
-  font-size: 1rem;
-  color: #e9ecef; /* Color claro para contraste */
-}
-
-
-
-
