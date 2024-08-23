@@ -1,140 +1,79 @@
-/*Login*/
 
-.container {
-    display: flex;
-    flex-direction:column;
-    align-items: flex-start;
-}
-.image-family-2{
-    width: 600px;
-    margin-left: 42rem;
-    margin-top: 10rem;
-}
 
-.login {
-    color: #075E81;
-    text-align: center;
-    margin-left: 13rem;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+
+.tituloApp{
+    color:#075E81;
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    margin-top: 30px;
-
+}
+.img-size {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 }
 
-.p1 {
+.custom-btn {
+    z-index: 1;
     color: #075E81;
-    font-size: 12px;
-    margin-top: 30px;
-    margin-bottom: 55px;
-    margin-left: 70px;
-    text-align: center;
-    
-    
-}
-
-.form-control1 {
-    width: 655px;
-    height: 40px;
-    border: 2px solid #FBEE84;
-    border-radius: 20px;
-    font-family: sans-serif;
-    padding: 10px;
-}
-
-.btn-login{
-    width: 655px;
-    height: 40px;
-    border: 2px solid #FBEE84;
+    font-weight: bold;
     background-color: #FBEE84;
-    font-family: sans-serif;
-    color: #075E81;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;    
+    border-color: #FBEE84;
+    border-radius: 20px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
-span {
-    font-weight: bold;
+.custom-btn:hover {
+    background-color: #fbed84b7;
+    border-color: #fbed84b7;
 }
-
-.link-opacity-50-hover {
-    text-decoration: none;
-    color: #075E81;
-    margin-left: 28rem;
-}
-
-h5 {
-    text-align: center;
-}
-
-.googlebutton {
-    margin-top: 25px;
-}
-
-.button-container {
+.jumbotron {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 75vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-.register {
-    color: #B4E49D;
-    margin-right: 21rem;
+.overlay {
+    position: relative;
+    z-index: 1; /* Para asegurar que el contenido esté por encima de la imagen */
+    
+}
+.jumbotron::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Gris oscuro con opacidad */
+    z-index: 0;
+}
+
+/* Cambia el color de fondo del offcanvas */
+.offcanvas-custom {
+    background-color: #075E81; /* Cambia este color al que desees */
+  }
+
+.titulo-navItem{
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    margin-top: 30px;
+}
+.no-bullets {
+    list-style-type: none;  /* Quitar los puntos */
+    padding-left: 20px;     /* Mantener el espacio a la izquierda */
 }
 
-.form-control {
-    width: 655px;
-    height: 40px;
-    border: 3px solid #075E81;
-    border-radius: 20px;
-    font-family: sans-serif;
-    padding: 10px;
-    margin-right: 10rem;
+.no-bullets li {
+    margin-bottom: 10px; /* Añadir un espacio entre los elementos de la lista */
 }
-
-.btn-register{
-    width: 655px;
-    height: 40px;
-    border: 2px solid #B4E49D;
-    background-color: #B4E49D;
-    font-family: sans-serif;
-    color: #075E81;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;    
-}
-
-.link-opacity-50-hover1 {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -20px;
-    text-decoration: none;
-    color: #075E81;
-}
-
-
-
-.container-register {
-    display: flex;
-    flex-direction:column;
-    align-items: flex-end;
-}
-
-.p2 {
-    color: #075E81;
-    font-size: 12px;
-    margin-top: 30px;
-    margin-bottom: 55px;
-    margin-left: 70px;
-    text-align: center;
-}
-
-.p3 {
-    color: #075E81;
-    font-size: 12px;
-    margin-top: 30px;
-    margin-bottom: 55px;
-    margin-left: 70px;
-    text-align: center;
+li{
+    font-family: 'Poppins', sans-serif;
 }

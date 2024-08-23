@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.blog-detail-container-bg {
+    padding-top: 0;
+    background-color: #FFFCE3; 
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0; 
+}
+
+.blog-detail-container {
+    background-color: white;
+    width: 50%; 
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.img-header {
+    width: 100%;
+    max-height: 250px;
+    overflow: hidden;
+    object-fit: cover;
+    margin: 0; 
+    padding: 0; 
+    position: relative;
+}
+
+.blog-detail-container h1{
+    color: #075E81;
+    text-align: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 42pt;
+    margin: 25pt;
+}
+
+.blog-detail-legend {
+    display: flex;
+    margin-left: 200px;
+    align-items: center;
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-size: 14pt;
+}
+
+.blog-detail-legend p:first-child {
+    flex-grow: 1; 
+}
+
+.blog-detail-legend p:last-child {
+    margin-right: 200px; 
+}
+
+.blog-detail-text {
+    margin: 30px 20px 20px 80px;
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 14pt;
+}
+
+.blog-detail-text-ingredients {
+    margin: 0; 
+    align-items: center;
+    background-color: #FBEE84;
+    color: #075E81;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    width: calc(100% + 100px);
+    position: relative;
+    left: -80px;
+}
+.blog-detail-text-ingredients p{
+    padding-top: 30px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;    
+}
+
+.blog-detail-container-img-final {
+    width: 100%; 
+    max-height: 300px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.blog-detail-btn-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+}
+
+.blog-detail-btn {
+    margin: auto;
+    text-align: center;
+    background-color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-size: 20pt;
+    border: none;
+    color: #075E81;
+}
+
+.blog-detail-btn:hover {
+    background-color: white;
+    color: #075E81;
+}
