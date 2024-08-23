@@ -294,6 +294,27 @@ def post_weekly_routine():
     db.session.commit()
     return jsonify(weekly_routine_created.serialize()), 200
 
+# PUT WeeklyRoutine / ACTUALIZAR RUTINA SEMANA
+@api.route('/weekly-user-routine/<day>', methods=['PUT'])
+@jwt_required()
+def put_weekly_user_routine(day):
+    current_user=get_jwt_identity()
+    weekly_user_routine = WeeklyRoutine.query.filter_by(user_id=current_user['id'],day=day).first()
+    if weekly_user_routine == None:
+        return jsonify('weekly_user_routine not found'), 404
+    else: 
+        weekly_user_routine_update = request.get_json()
+        if weekly_user_routine_update['routine_id'] is None:
+            return({'error':'"routine_id" must be a number'}), 400
+        if not isinstance(weekly_user_routine_update['day'], str) or len(weekly_user_routine_update['day'].strip()) == 0:
+            return({'error':'"day" must be a string'}), 400
+
+        weekly_user_routine.routine_id=weekly_user_routine_update['routine_id']
+        weekly_user_routine.day=weekly_user_routine_update['day']
+        weekly_user_routine.verified = True
+        db.session.commit()
+        return jsonify('weekly_user_routine update'), 200
+
 # ROUTINE
 # GET ALL Routine / TRAER TODAS RUTINA
 @api.route('/routine', methods=['GET'])
@@ -328,6 +349,24 @@ def post_routine():
     db.session.add(routine_created)
     db.session.commit()
     return jsonify(routine_created.serialize()), 200
+
+# PUT Routine / ACTUALIZAR RUTINA
+@api.route('/routine/<int:id>', methods=['PUT'])
+@jwt_required()
+def put_routine(id):
+    current_user=get_jwt_identity()
+    routine = Routine.query.filter_by(id=id, user_id=current_user['id']).first()
+    if routine == None:
+        return jsonify('routine not found'), 404
+    else: 
+        routine_update = request.get_json()
+        if not isinstance(routine_update['name'], str) or len(routine_update['name'].strip()) == 0:
+            return({'error':'"name" must be a string'}), 400
+
+        routine.name=routine_update['name']
+        routine.verified = True
+        db.session.commit()
+        return jsonify('routine update'), 200
 
 # EXERCISE
 # GET ALL EXERCICE / TRAER TODOS EJERCICIO
@@ -368,6 +407,33 @@ def post_exercise():
     db.session.commit()
     return jsonify(exercise_created.serialize())
 
+# PUT EXERCISE / ACTUALIZAR EJERCICIO
+@api.route('/exercise/<int:id>', methods=['PUT'])
+def put_exercise(id):
+    exercise = Exercise.query.filter_by(id=id).first()
+    if exercise == None:
+        return jsonify('exercise not found'), 404
+    else: 
+        exercise_update = request.get_json()
+        if not isinstance(exercise_update['name'], str) or len(exercise_update['name'].strip()) == 0 :
+            return ({'error': "'name' must be a string"}), 400
+        if not isinstance(exercise_update['category'], str) or len(exercise_update['category'].strip()) == 0 :
+            return ({'error': "'category' must be a string"}), 400
+        if not isinstance(exercise_update['description'], str) or len(exercise_update['description'].strip()) == 0 :
+            return ({'error': "'description' must be a string"}), 400
+        if not isinstance(exercise_update['image'], str) or len(exercise_update['image'].strip()) == 0 :
+            return ({'error': "'image' must be a string"}), 400
+
+        exercise.name=exercise_update['name']
+        exercise.category=exercise_update['category']
+        exercise.description=exercise_update['description']
+        exercise.image=exercise_update['image']
+        
+        exercise.verified = True
+        db.session.commit()
+        return jsonify('exercise update'), 200
+
+# ExerciseRoutine
 # GET ALL ExerciseRoutine / TRAER TODAS RUTINA EJERCICIO
 @api.route('/exercise-routine', methods=['GET'])
 def get_all_exercise_routine():
@@ -405,27 +471,58 @@ def post_exercise_routine():
     db.session.commit()
     return jsonify(exercise_routine_created.serialize())
 
-# DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
-@api.route('/exercise-routine', methods=['DELETE'])
-def delete_exercise_routine():
-    exercise_routine = request.get_json()
-    routine_id = exercise_routine.get('routine_id')
-    exercise_id = exercise_routine.get('exercise_id')
+# # DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
+# @api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['DELETE'])
+# def delete_exercise_routine(routine_id, exercise_id):
+#     exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+#     if exercise_routine is None:
+#         return ({'error':'exercise_routine not found'}), 404
 
-    if not isinstance(routine_id, str) or len(routine_id.strip()) == 0:
-        return ({'error': "'routine_id' must be a string"}), 400
-    if not isinstance(exercise_id, str) or len(exercise_id.strip()) == 0:
-        return ({'error': "'exercise_id' must be a string"}), 400
+#     db.session.delete(exercise_routine)
+#     db.session.commit()
+#     return jsonify("successfully removed"), 200
 
-    exercise_routine_to_delete = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+# @api.route('/exercise-routine', methods=['DELETE'])
+#     # exercise_routine = request.get_json()
+#     # routine_id = exercise_routine.get('routine_id')
+#     # exercise_id = exercise_routine.get('exercise_id')
 
-    if not exercise_routine_to_delete:
-        return ({'error': 'ExerciseRoutine not found'}), 404
+#     if not isinstance(routine_id, str) or len(routine_id.strip()) == 0:
+#         return ({'error': "'routine_id' must be a string"}), 400
+#     if not isinstance(exercise_id, str) or len(exercise_id.strip()) == 0:
+#         return ({'error': "'exercise_id' must be a string"}), 400
 
-    db.session.delete(exercise_routine_to_delete)
-    db.session.commit()
-    return jsonify({'message': 'Exercise removed from routine successfully'})
+#     exercise_routine_to_delete = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
 
+#     if not exercise_routine_to_delete:
+#         return ({'error': 'ExerciseRoutine not found'}), 404
+
+#     db.session.delete(exercise_routine_to_delete)
+#     db.session.commit()
+#     return jsonify({'message': 'Exercise removed from routine successfully'})
+
+# PUT ExerciseRoutine / ACTUALIZAR EJERCICIO DE RUTINA
+@api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['PUT'])
+def put_exercise_routine(routine_id, exercise_id):
+    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+    if exercise_routine == None:
+        return jsonify('exercise_routine not found'), 404
+    else: 
+        exercise_routine_update = request.get_json()
+        if exercise_routine_update['routine_id'] is None:
+            return({'error':'"routine_id" must be a number'}), 400
+        if exercise_routine_update['exercise_id'] is None:
+            return({'error':'"exercise_id" must be a number'}), 400
+        if exercise_routine_update['sets_id'] is None:
+            return({'error':'"sets_id" must be a number'}), 400
+
+        exercise_routine.routine_id=exercise_routine_update['routine_id']
+        exercise_routine.exercise_id=exercise_routine_update['exercise_id']
+        exercise_routine.sets_id=exercise_routine_update['sets_id']
+        
+        exercise_routine.verified = True
+        db.session.commit()
+        return jsonify('exercise_routine update'), 200
 
 # FOLLOW UP
 # GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
@@ -484,7 +581,10 @@ def post_follow_up():
 # DELETE FollowUp / ELIMINAR SEGUIMIENTO
 @api.route('/follow-up/<int:weekly_routine_id>/<int:exercise_routine_id>', methods=['DELETE'])
 def delete_follow_up(weekly_routine_id, exercise_routine_id):
-    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id, exercise_routine_id=exercise_routine_id).first()
+    query = db.select(FollowUp).where(FollowUp.weekly_routine_id==weekly_routine_id, FollowUp.exercise_routine_id==exercise_routine_id).order_by(desc(FollowUp.date)).limit(1)  
+    result = db.session.execute(query)
+    follow_up = result.scalars().first()
+    print(follow_up)
     if follow_up is None:
         return ({'error':'Follow Up not found'}), 404
 
@@ -492,6 +592,29 @@ def delete_follow_up(weekly_routine_id, exercise_routine_id):
     db.session.commit()
     return jsonify("successfully removed"), 200
 
+# PUT FollowUp / ACTUALIZAR SEGUIMIENTO
+@api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['PUT'])
+def put_exercise_routine(routine_id, exercise_id):
+    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
+    if exercise_routine == None:
+        return jsonify('exercise_routine not found'), 404
+    else: 
+        exercise_routine_update = request.get_json()
+        if exercise_routine_update['routine_id'] is None:
+            return({'error':'"routine_id" must be a number'}), 400
+        if exercise_routine_update['exercise_id'] is None:
+            return({'error':'"exercise_id" must be a number'}), 400
+        if exercise_routine_update['sets_id'] is None:
+            return({'error':'"sets_id" must be a number'}), 400
+
+        exercise_routine.routine_id=exercise_routine_update['routine_id']
+        exercise_routine.exercise_id=exercise_routine_update['exercise_id']
+        exercise_routine.sets_id=exercise_routine_update['sets_id']
+        
+        exercise_routine.verified = True
+        db.session.commit()
+        return jsonify('exercise_routine update'), 200
+    
 # CATEGORIA DE EJERCICIOS
 @api.route('/exercises-category', methods=['GET'])
 def get_exercises_category():

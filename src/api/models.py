@@ -211,6 +211,7 @@ class ExerciseRoutine(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "routine_id":self.routine_id,
             "exercise": self.exercise.serialize(),
             "sets": self.sets.serialize()
         }

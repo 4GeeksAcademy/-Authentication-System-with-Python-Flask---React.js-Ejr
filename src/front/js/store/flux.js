@@ -645,41 +645,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
-            // DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
-            deleteExerciseRoutine: async (routine_id, exercise_id) => {
-                try {
-                    const token = localStorage.getItem('token');
-                    if (!token) {
-                        return { "error": "no token found" };
-                    }
+            // // DELETE ExerciseRoutine / ELIMINAR EJERCICIO DE RUTINA
+            // deleteExerciseRoutine: async (routine_id, exercise_id) => {
+            //     try {
+            //         const token = localStorage.getItem('token');
+            //         if (!token) {
+            //             return { "error": "no token found" };
+            //         }
 
-                    const payload = {
-                        "routine_id": routine_id,
-                        "exercise_id": exercise_id
-                    };
-                    console.log('Sending payload:', payload);
+            //         const payload = {
+            //             "routine_id": routine_id,
+            //             "exercise_id": exercise_id
+            //         };
+            //         console.log('Sending payload:', payload);
 
-                    let response = await axios.delete(process.env.BACKEND_URL + '/exercise-routine', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        data: payload // La data se envía en el body con axios.delete
-                    });
+            //         let response = await axios.delete(process.env.BACKEND_URL + '/exercise-routine', {
+            //             headers: {
+            //                 Authorization: `Bearer ${token}`
+            //             },
+            //             data: payload // La data se envía en el body con axios.delete
+            //         });
 
-                    if (response.status == 200) {
-                        console.log('Exercise successfully removed from routine:', response.data);
-                        return true;
-                    }
-                } catch (error) {
-                    if (error.response && error.response.data) {
-                        console.log(error.response.data);
-                        return error.response.data;
-                    } else {
-                        console.log('Error:', error);
-                        return error;
-                    }
-                }
-            },
+            //         if (response.status == 200) {
+            //             console.log('Exercise successfully removed from routine:', response.data);
+            //             return true;
+            //         }
+            //     } catch (error) {
+            //         if (error.response && error.response.data) {
+            //             console.log(error.response.data);
+            //             return error.response.data;
+            //         } else {
+            //             console.log('Error:', error);
+            //             return error;
+            //         }
+            //     }
+            // },
 
             // FOLLOW UP
             // GET ALL FollowUp / TRAER TODOS SEGUIMIENTO

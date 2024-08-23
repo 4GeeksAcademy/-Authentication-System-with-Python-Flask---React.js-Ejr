@@ -19,9 +19,14 @@ export const ExercisesList = ({ weeklyRoutine }) => {
   const handleChange = async (isDone, exerciseId) => {
     // e.persist()
     if (isDone == true) {
+      console.log(weeklyRoutine.routine.id);
+      console.log(exerciseId);
       setDone(done + 1)
       await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exerciseId);
       const exerciseRoutine = await store.oneExerciseRoutine;
+      console.log(weeklyRoutine.id);
+      console.log(exerciseRoutine);
+
       await actions.postFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
     if (isDone == false) {
