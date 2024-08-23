@@ -504,18 +504,18 @@ def post_exercise_routine():
 # PUT ExerciseRoutine / ACTUALIZAR EJERCICIO DE RUTINA
 @api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['PUT'])
 def put_exercise_routine(routine_id, exercise_id):
+    exercise_routine_update = request.get_json()
+    if exercise_routine_update['routine_id'] is None:
+        return({'error':'"routine_id" must be a number'}), 400
+    if exercise_routine_update['exercise_id'] is None:
+        return({'error':'"exercise_id" must be a number'}), 400
+    if exercise_routine_update['sets_id'] is None:
+        return({'error':'"sets_id" must be a number'}), 400
+    
     exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
     if exercise_routine == None:
         return jsonify('exercise_routine not found'), 404
     else: 
-        exercise_routine_update = request.get_json()
-        if exercise_routine_update['routine_id'] is None:
-            return({'error':'"routine_id" must be a number'}), 400
-        if exercise_routine_update['exercise_id'] is None:
-            return({'error':'"exercise_id" must be a number'}), 400
-        if exercise_routine_update['sets_id'] is None:
-            return({'error':'"sets_id" must be a number'}), 400
-
         exercise_routine.routine_id=exercise_routine_update['routine_id']
         exercise_routine.exercise_id=exercise_routine_update['exercise_id']
         exercise_routine.sets_id=exercise_routine_update['sets_id']
@@ -593,27 +593,32 @@ def delete_follow_up(weekly_routine_id, exercise_routine_id):
     return jsonify("successfully removed"), 200
 
 # PUT FollowUp / ACTUALIZAR SEGUIMIENTO
-@api.route('/exercise-routine/<int:routine_id>/<int:exercise_id>', methods=['PUT'])
-def put_exercise_routine(routine_id, exercise_id):
-    exercise_routine = ExerciseRoutine.query.filter_by(routine_id=routine_id, exercise_id=exercise_id).first()
-    if exercise_routine == None:
-        return jsonify('exercise_routine not found'), 404
-    else: 
-        exercise_routine_update = request.get_json()
-        if exercise_routine_update['routine_id'] is None:
-            return({'error':'"routine_id" must be a number'}), 400
-        if exercise_routine_update['exercise_id'] is None:
-            return({'error':'"exercise_id" must be a number'}), 400
-        if exercise_routine_update['sets_id'] is None:
-            return({'error':'"sets_id" must be a number'}), 400
+@api.route('/follow-up/<int:weekly_routine_id>/<int:exercise_routine_id>/<date>', methods=['PUT'])
+def put_follow_up(weekly_routine_id, exercise_routine_id, date):
+    try:
+        date_obj = datetime.fromisoformat(date).date()
+    except ValueError:
+        return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD.'}), 400
 
-        exercise_routine.routine_id=exercise_routine_update['routine_id']
-        exercise_routine.exercise_id=exercise_routine_update['exercise_id']
-        exercise_routine.sets_id=exercise_routine_update['sets_id']
+    follow_up = FollowUp.query.filter_by(weekly_routine_id=weekly_routine_id, exercise_routine_id=exercise_routine_id, date=date_obj).first()
+    if follow_up == None:
+        return jsonify('follow_up not found'), 404
+    else: 
+        follow_up_update = request.get_json()
+        if follow_up_update['weekly_routine_id'] is None:
+            return({'error':'"weekly_routine_id" must be a number'}), 400
+        if follow_up_update['exercise_routine_id'] is None:
+            return({'error':'"exercise_routine_id" must be a number'}), 400
+        if not isinstance(follow_up_update['date'], str) :
+            return({'error':'"date" must be a string'}), 400
+
+        follow_up.weekly_routine_id=follow_up_update['weekly_routine_id']
+        follow_up.exercise_routine_id=follow_up_update['exercise_routine_id']
+        follow_up.date=follow_up_update['date']
         
-        exercise_routine.verified = True
+        follow_up.verified = True
         db.session.commit()
-        return jsonify('exercise_routine update'), 200
+        return jsonify('follow_up update'), 200
     
 # CATEGORIA DE EJERCICIOS
 @api.route('/exercises-category', methods=['GET'])
@@ -660,3 +665,23 @@ def post_sets():
     db.session.add(sets_created)
     db.session.commit()
     return jsonify(sets_created.serialize())
+
+# PUT Sets / ACTUALIZAR SERIES
+@api.route('/sets/<int:sets>/<int:repetitions>', methods=['PUT'])
+def put_sets(sets, repetitions):
+    sets = Sets.query.filter_by(sets=sets, repetitions=repetitions).first()
+    if sets == None:
+        return jsonify('sets not found'), 404
+    else: 
+        sets_update = request.get_json()
+        if sets_update['sets'] is None:
+            return({'error':'"sets" must be a number'}), 400
+        if sets_update['repetitions'] is None:
+            return({'error':'"repetitions" must be a number'}), 400
+
+        sets.sets=sets_update['sets']
+        sets.repetitions=sets_update['repetitions']
+        
+        sets.verified = True
+        db.session.commit()
+        return jsonify('sets update'), 200

@@ -24,8 +24,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
             routineData: '',
-            
-            allSetsList:[]
+
+            allSetsList: []
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -389,7 +389,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // POST WeeklyRoutine / AGREGAR RUTINA SEMANA DE USUARIO
-            postWeeklyRoutine: async (routine_id, day) => {
+            postWeeklyRoutine: async (routineId, day) => {
                 try {
                     const token = localStorage.getItem('token')
                     if (!token) {
@@ -397,7 +397,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const payload = {
-                        "routine_id": routine_id,
+                        "routineId": routineId,
                         "day": day
                     };
                     console.log('Sending payload:', payload);
@@ -410,6 +410,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.status == 200) {
                         console.log('Weekly Routine successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
+            // PUT WeeklyRoutine / ACTUALIZAR RUTINA SEMANA
+            putWeeklyRoutine: async (oldDay, routine_id, day) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "routine_id": routine_id,
+                        "day": day
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.put(process.env.BACKEND_URL + `/weekly-user-routine/${oldDay}`, payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('Weekly Routine successfully update:', response.data);
                         return true;
                     }
                 } catch (error) {
@@ -490,6 +525,39 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
+            // PUT Routine / ACTUALIZAR RUTINA
+            putRoutine: async (id, name) => {
+                try {
+                    const token = localStorage.getItem('token')
+                    if (!token) {
+                        return ({ "error": "no token found" })
+                    }
+
+                    const payload = {
+                        "name": name,
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.put(process.env.BACKEND_URL + `/routine/${id}`, payload, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status == 200) {
+                        console.log('Routine successfully update:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
 
             // EXERCISE
             // # GET ALL EXERCICE / TRAER TODOS EJERCICIO
@@ -548,6 +616,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.status == 200) {
                         console.log('Exercise successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+            // PUT EXERCISE / ACTUALIZAR EJERCICIO
+            putExercise: async (id, name, category, description, image) => {
+                try {
+                    const payload = {
+                        "name": name,
+                        "category": category,
+                        "description": description,
+                        "image": image,
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.put(process.env.BACKEND_URL + `/exercise/${id}`, payload);
+
+                    if (response.status == 200) {
+                        console.log('Exercise successfully update:', response.data);
                         return true;
                     }
                 } catch (error) {
@@ -681,6 +776,33 @@ const getState = ({ getStore, getActions, setStore }) => {
             //     }
             // },
 
+            // PUT ExerciseRoutine / ACTUALIZAR EJERCICIO DE RUTINA
+            putExerciseRoutine: async (idRoutine, idExercise, routine_id, exercise_id, sets_id) => {
+                try {
+                    const payload = {
+                        "routine_id": routine_id,
+                        "exercise_id": exercise_id,
+                        "sets_id": sets_id
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.put(process.env.BACKEND_URL + `/exercise-routine/${idRoutine}/${idExercise}`, payload);
+
+                    if (response.status == 200) {
+                        console.log('Exercise successfully update:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
             // FOLLOW UP
             // GET ALL FollowUp / TRAER TODOS SEGUIMIENTO
             allFollowUp: async () => {
@@ -754,6 +876,33 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return false;
                 }
             },
+            // PUT FollowUp / ACTUALIZAR SEGUIMIENTO
+            putFollowUp: async (weeklyRoutineId, exerciseRoutineId, oldDate, weekly_routine_id, exercise_routine_id, date) => {
+                try {
+                    const payload = {
+                        "weekly_routine_id": weekly_routine_id,
+                        "exercise_routine_id": exercise_routine_id,
+                        "date": date
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.put(process.env.BACKEND_URL + `/follow-up/${weeklyRoutineId}/${exerciseRoutineId}/${oldDate}`, payload);
+
+                    if (response.status == 200) {
+                        console.log('Exercise successfully update:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+
             //CATEGORY
             // GET ALL Category / TRAER TODAS LAS CATEGORIAS
             category: async () => {
@@ -799,6 +948,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.status == 200) {
                         console.log('sets successfully added:', response.data);
+                        return true;
+                    }
+                } catch (error) {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                        return error.response.data;
+                    } else {
+                        console.log('Error:', error);
+                        return error;
+                    }
+                }
+            },
+            // PUT Sets / ACTUALIZAR SERIES
+            putSets: async (oldSets, oldRepetitions, sets, repetitions) => {
+                try {
+                    const payload = {
+                        "sets": sets,
+                        "repetitions": repetitions,
+                    };
+                    console.log('Sending payload:', payload);
+
+                    let response = await axios.put(process.env.BACKEND_URL + `/sets/${oldSets}/${oldRepetitions}`, payload);
+
+                    if (response.status == 200) {
+                        console.log('Exercise successfully update:', response.data);
                         return true;
                     }
                 } catch (error) {
