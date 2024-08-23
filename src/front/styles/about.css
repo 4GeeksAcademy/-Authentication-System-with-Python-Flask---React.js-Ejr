@@ -5,9 +5,6 @@
     align-items: flex-start;
     gap: 1rem;
     background-color: #64b6ac;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-block-end: 5%;
 }
 .about__main-content{
     display:flex;
