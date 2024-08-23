@@ -3,20 +3,35 @@ import "../../styles/FilterListOffer.css";
 
 export const FilterListOffer = () => {
     const [filters, setFilters] = useState({
-        selectedCategory: "",
+        selectedCategories: [], 
         salary: [0, 100000],
         searchText: "",
-        modality: "",
+        modalities: [], 
         location: "",
         experience: ""
     });
 
-    const handleFilterChange = (event) => {
-        const { name, value, type, checked } = event.target;
+    const handleCheckboxChange = (event) => {
+        const { name, value, checked } = event.target;
+
+        setFilters(prevFilters => {
+            const newValue = checked
+                ? [...prevFilters[name], value] 
+                : prevFilters[name].filter(item => item !== value); 
+
+            return {
+                ...prevFilters,
+                [name]: newValue
+            };
+        });
+    };
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
 
         setFilters(prevFilters => ({
             ...prevFilters,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value
         }));
     };
 
@@ -36,31 +51,31 @@ export const FilterListOffer = () => {
                 <h3>Categoría</h3>
                 <label>
                     <input
-                        type="radio"
-                        name="selectedCategory"
+                        type="checkbox"
+                        name="selectedCategories"
                         value="Frontend"
-                        checked={filters.selectedCategory === "Frontend"}
-                        onChange={handleFilterChange}
+                        checked={filters.selectedCategories.includes("Frontend")}
+                        onChange={handleCheckboxChange}
                     />
                     Frontend
                 </label>
                 <label>
                     <input
-                        type="radio"
-                        name="selectedCategory"
+                        type="checkbox"
+                        name="selectedCategories"
                         value="Backend"
-                        checked={filters.selectedCategory === "Backend"}
-                        onChange={handleFilterChange}
+                        checked={filters.selectedCategories.includes("Backend")}
+                        onChange={handleCheckboxChange}
                     />
                     Backend
                 </label>
                 <label>
                     <input
-                        type="radio"
-                        name="selectedCategory"
+                        type="checkbox"
+                        name="selectedCategories"
                         value="UI/UX"
-                        checked={filters.selectedCategory === "UI/UX"}
-                        onChange={handleFilterChange}
+                        checked={filters.selectedCategories.includes("UI/UX")}
+                        onChange={handleCheckboxChange}
                     />
                     UI/UX
                 </label>
@@ -97,31 +112,32 @@ export const FilterListOffer = () => {
                 <h3>Tipo de Contrato</h3>
                 <label>
                     <input
-                        type="radio"
-                        name="modality"
+                        
+                        type="checkbox"
+                        name="modalities"
                         value="full-time"
-                        checked={filters.modality === "full-time"}
-                        onChange={handleFilterChange}
+                        checked={filters.modalities.includes("full-time")}
+                        onChange={handleCheckboxChange}
                     />
                     Tiempo Completo
                 </label>
                 <label>
                     <input
-                        type="radio"
-                        name="modality"
+                        type="checkbox"
+                        name="modalities"
                         value="part-time"
-                        checked={filters.modality === "part-time"}
-                        onChange={handleFilterChange}
+                        checked={filters.modalities.includes("part-time")}
+                        onChange={handleCheckboxChange}
                     />
                     Medio Tiempo
                 </label>
-                <label>
+                <label htmlFor="modalities">
                     <input
-                        type="radio"
-                        name="modality"
+                        type="checkbox"
+                        name="modalities"
                         value="freelance"
-                        checked={filters.modality === "freelance"}
-                        onChange={handleFilterChange}
+                        checked={filters.modalities.includes("freelance")}
+                        onChange={handleCheckboxChange}
                     />
                     Freelance
                 </label>
@@ -131,12 +147,13 @@ export const FilterListOffer = () => {
                 <h3>Ubicación</h3>
                 <label htmlFor="location">Buscar por Provincia o País:</label>
                 <input
+                    className="form-control"
                     id="location"
                     type="text"
                     name="location"
                     placeholder="Buscar por Provincia o País"
                     value={filters.location}
-                    onChange={handleFilterChange}
+                    onChange={handleInputChange}
                 />
             </div>
 
@@ -144,15 +161,16 @@ export const FilterListOffer = () => {
                 <h3>Nivel de Experiencia</h3>
                 <label htmlFor="experience">Seleccionar nivel:</label>
                 <select
+                    className="form-control"
                     id="experience"
                     name="experience"
                     value={filters.experience}
-                    onChange={handleFilterChange}
+                    onChange={handleInputChange}
                 >
                     <option value="">Seleccionar nivel</option>
-                    <option value="entry">Entrada</option>
-                    <option value="mid">Medio</option>
-                    <option value="senior">Senior</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Mid-senior">Mid-senior</option>
+                    <option value="Senior">Senior</option>
                 </select>
             </div>
 
@@ -160,12 +178,13 @@ export const FilterListOffer = () => {
                 <h3>Buscar</h3>
                 <label htmlFor="searchText">Buscar por título o descripción:</label>
                 <input
+                    className="form-control"
                     id="searchText"
                     type="text"
                     name="searchText"
                     placeholder="Buscar por título o descripción"
                     value={filters.searchText}
-                    onChange={handleFilterChange}
+                    onChange={handleInputChange}
                 />
             </div>
         </div>

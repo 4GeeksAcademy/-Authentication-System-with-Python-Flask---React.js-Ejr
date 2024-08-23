@@ -34,7 +34,7 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                 </div>
                 <div className="card-offer-footer d-flex justify-content-between align-items-center mt-2">
                     <div className="card-offer-details text-muted">
-                        <span>{modality}</span>
+                        <span>{location}</span>
                         <span className="mx-2">|</span>
                         <span>{salary}</span>
                         <span className="mx-2">|</span>
