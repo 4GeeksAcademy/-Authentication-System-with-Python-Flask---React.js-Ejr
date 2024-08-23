@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 
 const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(3) // Para controlar el paso actual
+  const [step, setStep] = useState(1) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
     selectedDay: '',
@@ -18,8 +18,10 @@ const MultiStepForm = () => {
   const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' });
   const [setsInput, setSetsInput] = useState('') // Valor del input de series
   const [repsInput, setRepsInput] = useState('') // Valor del input de repeticiones
+  const [selectSets, setSelectSets] = useState('') // id del set que viene del select
 
   const handleOpenModal = (item) => {
+    actions.allSets()
     setSelectedExercise({ id: item.id, name: item.name });
     console.log(item.id)
     setIsModalOpen(true);  // Esto asume que tienes un estado para manejar la visibilidad del modal
@@ -223,11 +225,15 @@ const MultiStepForm = () => {
   const handleFinishRoutine = () => {
     setFormData({
       routineName: '',
-      selectedWeek: '',
       selectedDay: '',
       exercises: ''
     })
+    setSelectedExercise({ id: '', name: '' })
+    setRepsInput('')
+    setSetsInput('')
+    setSelectSets('')
     setStep(1)
+    setAddedExercises([])
   }
 
   const handleStepText = (index) => {
@@ -246,10 +252,27 @@ const MultiStepForm = () => {
     return matchesCategory && matchesSearchTerm;
   })
 
+  async function checkIfSetExists(sets, reps) {
+    try {  
+      // Filtra para ver si ya existe un set con las mismas series y repeticiones
+      const existingSet = store.allSetsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps));
+  
+      return existingSet || null; // Si existe, retorna el set; si no, retorna null
+    } catch (error) {
+      console.error("Error al verificar el set:", error);
+      return null;
+    }
+  }
+  
+
   useEffect(() => {
     actions.allExercise()
     actions.category()
   }, [])
+
+  const handleSelectChange = (e) => {
+    setSelectSets(e.target.value);
+  }
 
   return (
     <div className="w-3/4 mx-auto flex rounded-md flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-5 h-full bg-neutral-800 border-neutral-700 relative">
@@ -652,35 +675,36 @@ const MultiStepForm = () => {
               className="p-4 md:p-5 space-y-4"
               onSubmit={async (event) => {
                 event.preventDefault();
-
-                // Obtén los valores de los inputs
-                 
-
-                // // Obtén las series y repeticiones seleccionadas de los select
-                // let setsId = selectedSeries;
-                // let repsId = selectedReps;
-
-                // Si no hay series y repeticiones seleccionadas, crea nuevas
-                // if (!setsId || !repsId) {
-                  const newSets = await createSeries(setsInput, repsInput);
-                  if (newSets) {
-                    console.log(newSets, store.setId);
-                    // setsId = newSets.id;  // Obtén el id de la serie recién creada
-                    // repsId = newSets.repetitions; // Ajusta según la respuesta
+              
+                if (!selectSets) {
+                  try {
+                    // Verifica si ya existe un set con las series y repeticiones ingresadas
+                    const existingSet = await checkIfSetExists(setsInput, repsInput);
+              
+                    if (existingSet) {
+                      // Si ya existe, usa el id del set existente
+                      store.setId = existingSet.id;
+                      handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId);
+                    } else {
+                      // Si no existe, crea el set y guárdalo en el store
+                      const newSets = await actions.postSets(setsInput, repsInput);
+              
+                      if (newSets) {
+                        handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId);
+                      } else {
+                        console.error("No se pudo crear las series y repeticiones");
+                      }
+                    }
+                  } catch (error) {
+                    console.error("Error al verificar o crear las series y repeticiones:", error);
                   }
-                // }
-
-                // Lógica para crear las series y repeticiones
-                // const success = await createSeries(setsId, repsId);
-
-                 if (newSets) {
-                   // Luego de que se creen las series y repeticiones, agrega el ejercicio
-                   handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId);
-                   console.log(store.routineData.id, selectedExercise.id, store.setId);
-                 } else {
-                   console.error("No se pudo crear las series y repeticiones");
-                 }
-
+                } else {
+                  // Caso 2: El usuario seleccionó un set previo
+                  handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets);
+                }
+                setSetsInput('')
+                setRepsInput('')
+                setSelectSets('')
               }}
             >
               <div className="flex flex-col gap-4">
@@ -688,14 +712,16 @@ const MultiStepForm = () => {
                   <div className="w-full">
                     <label htmlFor="sets" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Series</label>
                     <input
+                      value={setsInput}
                       onChange={(e) => setSetsInput(e.target.value)}
-                      type="text" name="sets" id="sets" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las series" required />
+                      type="text" name="sets" id="sets" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las series" />
                   </div>
                   <div className="w-full">
                     <label htmlFor="reps" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Repeticiones</label>
                     <input
+                      value={repsInput}
                       onChange={(e) => setRepsInput(e.target.value)}
-                      type="text" name="reps" id="reps" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las repeticiones" required />
+                      type="text" name="reps" id="reps" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las repeticiones" />
                   </div>
                 </div>
                 <span className="flex items-center">
@@ -712,6 +738,8 @@ const MultiStepForm = () => {
                       Series
                     </label>
                     <select
+                      value={selectSets}
+                      onChange={handleSelectChange}
                       name="series"
                       id="series"
                       className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
@@ -720,33 +748,11 @@ const MultiStepForm = () => {
                       <option value="" disabled selected>
                         Select Series
                       </option>
-                      <option value="3">3 series</option>
-                      <option value="4">4 series</option>
-                      <option value="5">5 series</option>
-                      {/* Agrega más opciones según sea necesario */}
-                    </select>
-                  </div>
-
-                  <div className="w-full">
-                    <label
-                      htmlFor="reps"
-                      className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white"
-                    >
-                      Repeticiones
-                    </label>
-                    <select
-                      name="reps"
-                      id="reps"
-                      className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
-
-                    >
-                      <option value="" disabled selected>
-                        Select Reps
-                      </option>
-                      <option value="8">8 reps</option>
-                      <option value="10">10 reps</option>
-                      <option value="12">12 reps</option>
-                      {/* Agrega más opciones según sea necesario */}
+                      {
+                        store.allSetsList.map((item, index) => (
+                          <option key={index} value={item.id}>{item.sets}/{item.repetitions}</option>
+                        ))
+                      }
                     </select>
                   </div>
                 </div>
