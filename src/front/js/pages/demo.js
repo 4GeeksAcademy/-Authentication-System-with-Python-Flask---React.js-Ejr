@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 
 const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(1) // Para controlar el paso actual
+  const [step, setStep] = useState(3) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
     selectedDay: '',
@@ -20,11 +20,17 @@ const MultiStepForm = () => {
   const [repsInput, setRepsInput] = useState('') // Valor del input de repeticiones
   const [selectSets, setSelectSets] = useState('') // id del set que viene del select
 
+  const setsList = store.allSetsList.slice(0, 5)
+
   const handleOpenModal = (item) => {
-    actions.allSets()
-    setSelectedExercise({ id: item.id, name: item.name });
-    console.log(item.id)
-    setIsModalOpen(true);  // Esto asume que tienes un estado para manejar la visibilidad del modal
+    if (isExerciseSelected(item.id)) {
+      handleAddExercises(item.id, item.name)
+    } else {
+      actions.allSets()
+      setSelectedExercise({ id: item.id, name: item.name });
+      console.log(item.id)
+      setIsModalOpen(true);  // Esto asume que tienes un estado para manejar la visibilidad del modal
+    }
   }
 
   const toggleDropdown = (e) => {
@@ -149,6 +155,7 @@ const MultiStepForm = () => {
           response = await actions.postExerciseRoutine(store.routineData.id.toString(), id.toString(), setId.toString());
           if (!response || response.error) throw new Error('Error al agregar el ejercicio');
           resolve('Ejercicio agregado exitosamente');
+          setIsModalOpen(false)
         }
       } catch (error) {
         reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio');
@@ -171,12 +178,15 @@ const MultiStepForm = () => {
           return prevExercises.filter(exercise => exercise.id !== id);
         } else {
           // Agrega el ejercicio a la lista
-          return [...prevExercises, { id, name }];
+          const exerciseSet = setsList.find((item) => item.id == setId)
+          console.log(exerciseSet)
+          return [...prevExercises, { id, name, exerciseSet }];
         }
       });
     }).catch(error => {
       console.error(error);
     });
+    console.log(addedExercises)
   };
 
   const createSeries = async (sets, repetitions) => {
@@ -253,17 +263,17 @@ const MultiStepForm = () => {
   })
 
   async function checkIfSetExists(sets, reps) {
-    try {  
+    try {
       // Filtra para ver si ya existe un set con las mismas series y repeticiones
-      const existingSet = store.allSetsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps));
-  
+      const existingSet = setsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps));
+
       return existingSet || null; // Si existe, retorna el set; si no, retorna null
     } catch (error) {
       console.error("Error al verificar el set:", error);
       return null;
     }
   }
-  
+
 
   useEffect(() => {
     actions.allExercise()
@@ -547,7 +557,9 @@ const MultiStepForm = () => {
                           className="flex justify-between rounded-lg px-4 py-2 text-sm text-neutral-500 hover:bg-neutral-50 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-300"
                           role="menuitem"
                         >
-                          {item.name}
+                          <div>
+                            {item.name} - <span className="text-neutral-500">{item.exerciseSet.sets}/{item.exerciseSet.repetitions}</span>
+                          </div>
                           <button onClick={() => handleAddExercises(item.id, item.name)} type="button" className="w-fit flex p-1 cursor-pointer items-center justify-center rounded-lg border-neutral-200 bg-white text-neutral-500 hover:text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:peer-checked:text-neutral-300 active:scale-95 transition-all ease-in">
                             <div>
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
@@ -571,14 +583,14 @@ const MultiStepForm = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredExercises.map((item, index) => {
                 return (
-                  <article className="flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">                    
-                  <div className="hidden sm:block sm:basis-36">
-                    <img
-                      alt=""
-                      src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
-                      className="aspect-square h-full w-full object-cover"
-                    />
-                  </div>
+                  <article className="flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
+                    <div className="hidden sm:block sm:basis-36">
+                      <img
+                        alt=""
+                        src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
+                        className="aspect-square h-full w-full object-cover"
+                      />
+                    </div>
                     <div className="p-3 flex flex-1 flex-col gap-4 justify-between">
                       <div className="flex flex-col gap-3 dark:border-white/10">
                         <h3 className="font-bold uppercase text-neutral-900 dark:text-white">
@@ -589,24 +601,16 @@ const MultiStepForm = () => {
                         </span>
                       </div>
                       <div className="self-end">
-                        {/* Modal toggle button */}
-                        <button
-                          onClick={() => handleOpenModal(item)}
-                          className="block text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded text-sm px-5 py-3 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                          type="button"
-                        >
-                          Agregar ejercicio
-                        </button>
                         <input
                           checked={isExerciseSelected(item.id)}
-                          onChange={() => handleAddExercises(item.id, item.name)}
+                          onChange={() => handleOpenModal(item)} // Solo abre la modal al cambiar el estado del checkbox
                           type="checkbox"
                           id={`react-${index}`}
                           className="peer hidden"
                         />
                         <label
                           htmlFor={`react-${index}`}
-                          className="dark:hover:text-emearld-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
+                          className="dark:hover:text-emerald-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
                         >
                           <div>
                             <svg
@@ -626,6 +630,8 @@ const MultiStepForm = () => {
                           </div>
                         </label>
                       </div>
+
+
                     </div>
                   </article>
                 )
@@ -654,7 +660,7 @@ const MultiStepForm = () => {
       </form>
       {/* Main modal */}
       {/* modal */}
-      <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen backdrop-blur-sm transition-all ease-in flex`}>
+      <div id="crud-modal" tabIndex="-1" className={`${isModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen backdrop-blur-sm transition-all ease-in flex`}>
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-neutral-700">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-neutral-600">
@@ -665,7 +671,7 @@ const MultiStepForm = () => {
                 onClick={() => setIsModalOpen(false)}
                 className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white"
               >
-                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                 </svg>
                 <span className="sr-only">Close modal</span>
@@ -675,12 +681,12 @@ const MultiStepForm = () => {
               className="p-4 md:p-5 space-y-4"
               onSubmit={async (event) => {
                 event.preventDefault();
-              
+
                 if (!selectSets) {
                   try {
                     // Verifica si ya existe un set con las series y repeticiones ingresadas
                     const existingSet = await checkIfSetExists(setsInput, repsInput);
-              
+
                     if (existingSet) {
                       // Si ya existe, usa el id del set existente
                       store.setId = existingSet.id;
@@ -688,7 +694,7 @@ const MultiStepForm = () => {
                     } else {
                       // Si no existe, crea el set y guárdalo en el store
                       const newSets = await actions.postSets(setsInput, repsInput);
-              
+
                       if (newSets) {
                         handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId);
                       } else {
@@ -745,11 +751,11 @@ const MultiStepForm = () => {
                       className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
 
                     >
-                      <option value="" disabled selected>
+                      <option value="" selected>
                         Select Series
                       </option>
                       {
-                        store.allSetsList.map((item, index) => (
+                        setsList.map((item, index) => (
                           <option key={index} value={item.id}>{item.sets}/{item.repetitions}</option>
                         ))
                       }
