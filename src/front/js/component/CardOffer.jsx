@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import "../../styles/CardOffer.css";
+
 import { useNavigate } from "react-router-dom"; 
 import { Context } from "../store/appContext";
 import { StarRating } from "./StarsRating.jsx";
