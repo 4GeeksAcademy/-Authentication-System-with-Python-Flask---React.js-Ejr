@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Modalidad, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos
+from api.models import Modalidad, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -230,5 +230,24 @@ if __name__ == '__main__':
     api.run(host='0.0.0.0', port=3245, debug=True)
 
 
+#contact
+@api.route('/contact', methods=['POST'])
+def contact():
+    data = request.json
+    new_contact = Contact(
+        name=data.get('name'),
+        lastName=data.get('lastName'),
+        email=data.get('email'),
+        message=data.get('message'),
+        privacy_policy_accepted=data.get('privacy_policy_accepted', False)  
+    )
+    db.session.add(new_contact)
+    db.session.commit()
+    return jsonify(new_contact.serialize()), 201
 
-
+@api.route('/getAllContacts', methods=['GET'])
+def get_contacts():
+    contacts = Contact.query.all()  
+    if contacts:
+        return jsonify([contact.serialize() for contact in contacts]), 200
+    return jsonify({'msg':'Ningún contacto encontrado'}),404

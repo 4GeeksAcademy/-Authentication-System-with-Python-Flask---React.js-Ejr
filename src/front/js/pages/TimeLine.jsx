@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ListOffers } from "../component/ListOffers.jsx";
 import "../../styles/TimeLine.css"
+import { FilterListOffer } from "../component/FilterListOffer.jsx";
 
 export const TimeLine = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -22,6 +23,14 @@ export const TimeLine = () => {
 
     return (
         <>
+            <div className="container my-3">
+                <div className="row">
+                    <div className="col-12 text-center fw-bold text-muted header-box">
+                        <h2 className="fw-bold">Construyendo un Futuro</h2>
+                        <h3 className="fw-bold">Encuentra aquí las mejores oportunidades para tu carrera</h3>
+                    </div>
+                </div>
+            </div>
             <div className="search-bar container my-3 d-flex justify-content-center">
                 <input
                     type="text"
@@ -39,6 +48,7 @@ export const TimeLine = () => {
                 </button>
             </div>
             <ListOffers searchTerm={filterTerm} />
+            <FilterListOffer/>
         </>
     );
 };
