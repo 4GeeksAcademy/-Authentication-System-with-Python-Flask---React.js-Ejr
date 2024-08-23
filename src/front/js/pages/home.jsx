@@ -10,6 +10,7 @@ import { ForgotPassword } from "../component/recuperar-contraseña.jsx";
 
 
 
+
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
