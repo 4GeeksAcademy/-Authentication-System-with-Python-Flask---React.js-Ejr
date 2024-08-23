@@ -1,9 +1,54 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import "../../styles/contact.css"; // Asegúrate de crear y enlazar este archivo CSS
+import React, { useState } from "react";
+import "../../styles/contact.css"; 
+
 
 export const Contact = () => {
-  const { store, actions } = useContext(Context);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    message: "",
+    privacyPolicyAccepted: false,
+  });
+
+  const [submissionStatus, setSubmissionStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [id]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!formData.name || !formData.lastName || !formData.email || !formData.message || !formData.privacyPolicyAccepted) {
+      setSubmissionStatus("Todos los campos son obligatorios y debes aceptar la política de privacidad.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmissionStatus("Mensaje enviado con éxito.");
+        setFormData({ name: "", lastName: "", email: "", message: "", privacyPolicyAccepted: false });
+      } else {
+        setSubmissionStatus("Hubo un problema al enviar el mensaje. Inténtalo de nuevo.");
+      }
+    } catch (error) {
+      setSubmissionStatus("Error al conectar con el servidor.");
+    }
+  };
 
   return (
     <div className="container-contact">
@@ -29,40 +74,75 @@ export const Contact = () => {
       </section>
 
       <section className="contact-form-section">
-        <form className="row g-3 justify-content-center">
+        <form className="row g-3 justify-content-center" onSubmit={handleSubmit}>
           
           <div className="col-6">
-            <label htmlFor="first-name" className="form-label">
+            <label htmlFor="name" className="form-label">
               Nombre
             </label>
-            <input type="text" className="form-control" id="first-name" placeholder="Ingresa tu nombre" />
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              placeholder="Ingresa tu nombre"
+              value={formData.name}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="col-6">
-            <label htmlFor="last-name" className="form-label">
+            <label htmlFor="lastName" className="form-label">
               Apellido
             </label>
-            <input type="text" className="form-control" id="last-name" placeholder="Ingresa tu apellido" />
+            <input
+              type="text"
+              className="form-control"
+              id="lastName"
+              placeholder="Ingresa tu apellido"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="col-md-10">
             <label htmlFor="email" className="form-label">
               Correo Electrónico
             </label>
-            <input type="email" className="form-control" id="email" placeholder="correo@ejemplo.com" />
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              placeholder="correo@ejemplo.com"
+              value={formData.email}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="col-md-10">
             <label htmlFor="message" className="form-label">
               Mensaje
             </label>
-            <textarea className="form-control" id="message" aria-label="Mensaje" style={{ height: "150px" }} placeholder="Describe cómo podemos ayudarte"></textarea>
+            <textarea
+              className="form-control"
+              id="message"
+              aria-label="Mensaje"
+              style={{ height: "150px" }}
+              placeholder="Describe cómo podemos ayudarte"
+              value={formData.message}
+              onChange={handleChange}
+            ></textarea>
           </div>
 
           <div className="col-md-10 d-flex justify-content-start">
             <div className="form-check">
-              <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-              <label className="form-check-label" htmlFor="flexCheckDefault">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="privacyPolicyAccepted"
+                checked={formData.privacyPolicyAccepted}
+                onChange={handleChange}
+              />
+              <label className="form-check-label" htmlFor="privacyPolicyAccepted">
                 Acepto la Política de Privacidad
               </label>
             </div>
@@ -73,6 +153,12 @@ export const Contact = () => {
               Enviar
             </button>
           </div>
+
+          {submissionStatus && (
+            <div className="col-md-10 text-center mt-3">
+              <p>{submissionStatus}</p>
+            </div>
+          )}
         </form>
       </section>
     </div>
