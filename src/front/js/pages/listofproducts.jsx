@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import ScrollToTopButton from "../component/ScrollToTopButton.jsx";
 import { Context } from "../store/appContext";
 import BannerProducts from "../../../../public/images/image_480.png";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import "../../styles/listofproducts.css";
 import TopProduct from '../component/topproduct.jsx';
 import Product from "../component/product.jsx";
@@ -10,6 +12,7 @@ const ListOfProducts = () => {
     const { store, actions } = useContext(Context);
     const { products } = store;
     const [visibleProducts, setVisibleProducts] = useState(6); // Mostrará 6 productos por defecto
+    const [bannerLoaded, setBannerLoaded] = useState(false); // Nuevo estado para controlar la carga de la imagen del banner
 
     useEffect(() => {
         actions.getProducts();
@@ -26,7 +29,14 @@ const ListOfProducts = () => {
                 <h1 className="banner-products-title">
                     Nuestros productos
                 </h1>
-                <img src={BannerProducts} className="banner-img" alt="banner-img" />
+                {!bannerLoaded && <Skeleton height={600} width="100%" />} 
+                <img 
+                    src={BannerProducts} 
+                    className="banner-img" 
+                    alt="banner-img" 
+                    onLoad={() => setBannerLoaded(true)} 
+                    style={{ display: bannerLoaded ? 'block' : 'none' }} 
+                />
             </div>
 
             <div className="container-background align-items-center justify-content-center d-flex h-50">

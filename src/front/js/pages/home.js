@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
@@ -8,18 +8,29 @@ import NutriImg from "../../../../public/images/chicken-plate.jpg";
 import SportsImg from "../../../../public/images/chicken-plate.jpg";
 import ScrollBanner from "../../../../public/images/scroll-banner-bg.png";
 import ScrollToTopButton from "../component/ScrollToTopButton.jsx";
-
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const [isGirlImgLoaded, setIsGirlImgLoaded] = useState(false);
+	console.log(store.currentUser)
+	console.log(store.auth)
+
 	return (
 		<div className="home-container mx-auto w-100 row">
 			{/* **********___BANNER___********** */}
 			<div className="banner w-100 p-0">
 				<div className="title-container text-center">
 					<h1>Bienvenid@</h1>
-					<h2>{store.currentUser && store.currentUser.name}</h2>
+					<h2>{store.auth && store.currentUser.name}</h2>
+
 				</div>
-				<img src={GirlImg} />
+				{!isGirlImgLoaded && <Skeleton height={600} width="100%" />} 
+				<img   src={GirlImg} 
+                    className="banner-img" 
+                    alt="banner-img" 
+                    onLoad={() => setIsGirlImgLoaded(true)} 
+                    style={{ display: isGirlImgLoaded ? 'block' : 'none' }}  />
 			</div>
 			{/* **********___PRIMER___SECCION___********** */}
 			<section className="first-section mx-auto col-10">

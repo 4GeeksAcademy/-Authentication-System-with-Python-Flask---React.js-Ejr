@@ -28,7 +28,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let data = await response.json()
 
 					if (response.status === 200) {
-						setStore({ currentUser: data.user })
+						setStore({ currentUser: data.user,
+							auth:true
+						 })
 						localStorage.setItem("token", data.access_token)
 						return true
 					}
@@ -58,12 +60,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`
 						},
 					})
-					if (response.ok) {
-						let data = await response.json()
+					console.log(response)
+					let data = await response.json()
+					console.log(data)
+					if(response.status > 400 ){
 						setStore({
-							currentUser: data.user
-						})
+							auth:false
+						}) 
+						return 
 					}
+					// if (response.ok) {
+					
+						setStore({
+							currentUser: data.user,
+							auth:true
+
+						})
+					// }
 				}
 				catch (error) {
 					console.log(error);
@@ -305,8 +318,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					top: 0,
 					behavior: "smooth"
 				});
-			}
+			},
+			updateUser: async (id, userData) => {
+				try {
+					const response = await axios.put(`${process.env.BACKEND_URL}/api/users/${id}`, userData, {
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`
+						}
+					});
+					if (response.status === 200) {
+						console.log("Perfil actualizado exitosamente:", response.data);
+						setStore({ currentUser: response.data }); 
+						return { success: true, data: response.data };
+					}else{
+						console.log(response)
+					}
 
+				} catch (error) {
+					console.error("Hubo un problema con la solicitud:", error);
+					return { success: false, error: error.message };
+				}
+			}
 		}
 	}
 };
