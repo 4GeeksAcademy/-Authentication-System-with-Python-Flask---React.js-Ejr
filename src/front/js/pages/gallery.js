@@ -8,7 +8,7 @@ const Gallery = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showImageUpload, setShowImageUpload] = useState(false); 
+  const [showImageUpload, setShowImageUpload] = useState(false); // Estado para el modal de carga de imágenes
   const [galleryData, setGalleryData] = useState([
     {
       id: 1,
@@ -104,7 +104,7 @@ const Gallery = () => {
         image: newImage.image,
         description: newImage.description,
         images: [newImage.image],
-        category: "Nuevo" 
+        category: "Nuevo" // Puedes ajustar esto según sea necesario
       }
     ]);
   };
