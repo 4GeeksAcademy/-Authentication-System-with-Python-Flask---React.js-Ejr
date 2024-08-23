@@ -38,6 +38,51 @@ def apply_headers(response):
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
     return response
 
+# Endpoint para enviar correo con la información del usuario que solicita el perfil profesional.
+@api.route('/solicitud-profesional', methods=['POST'])
+def send_email():
+    try:
+        # Obtener datos del formulario
+        nombre_completo = request.form.get('nombreCompleto')
+        cedula = request.form.get('cedula')
+        correo = request.form.get('correo')  # Dirección del remitente
+        direccion = request.form.get('direccion')
+        motivacion = request.form.get('motivacion')
+        
+        # Obtener el archivo
+        escolaridad = request.files.get('escolaridad')
+
+        # Preparar el contenido del correo
+        msg = Message(
+            subject='Nueva Solicitud Profesional',
+            sender=correo,  # Dirección del remitente desde el formulario
+            recipients=['hablemosuysaludmental@gmail.com']  # Destinatario fijo
+        )
+
+        # Construir el cuerpo del correo
+        msg.body = (
+            f"Nombre Completo: {nombre_completo}\n"
+            f"Cédula: {cedula}\n"
+            f"Correo Electrónico: {correo}\n"
+            f"Dirección: {direccion}\n"
+            f"Motivación: {motivacion}"
+        )
+
+        # Adjuntar el archivo si existe
+        if escolaridad:
+            msg.attach(
+                escolaridad.filename,
+                escolaridad.content_type,
+                escolaridad.read()
+            )
+
+        # Enviar el correo
+        current_app.mail.send(msg)
+
+        return jsonify({"msg": "Correo enviado exitosamente"}), 201
+    
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
 
 # Crea una ruta para autenticar a tus usuarios y devolver los JWT.
 # La función create_access_token() se utiliza para generar el JWT   

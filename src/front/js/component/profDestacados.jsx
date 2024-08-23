@@ -62,7 +62,7 @@ const SimpleCarousel = () => {
                 psicologos.map((elm, index) => {
                     return (
                         <div className='d-flex justify-content-center' key={index}>
-                            <div className="card profesional mb-3 text-start col-10 col-md-8 bg-light" style={{ height: '300px', overflow: 'hidden' }}>
+                            <div className="card profesional mb-3 text-start col-10 col-md-8 bg-light" style={{ minHeight: '300px', overflow: 'hidden' }}>
                                 <div className="row g-0 h-100">
                                     <div className="col-md-4">
                                         <img
@@ -70,8 +70,7 @@ const SimpleCarousel = () => {
                                             className="img-fluid rounded-start"
                                             alt={elm.nombre}
                                             style={{
-                                                maxHeight: '300px',
-                                                height: '100%',
+                                                height: '300px',
                                                 width: '100%',
                                                 objectFit: 'cover',
                                                 objectPosition: 'center'

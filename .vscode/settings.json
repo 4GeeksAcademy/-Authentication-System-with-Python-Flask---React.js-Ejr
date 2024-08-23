@@ -9,6 +9,10 @@
     },
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "css.validate": false,
+    "postcss.enable": true,
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
     }
-    
 }
