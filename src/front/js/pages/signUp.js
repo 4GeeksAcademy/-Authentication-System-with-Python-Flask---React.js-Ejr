@@ -26,22 +26,11 @@ export const SignUp = () => {
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '10px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>First Name:</label>
+          <label style={{ display: 'block', marginBottom: '5px' }}>Full Name:</label>
           <input
             type="text"
-            name="firstName"
+            name="Full_Name"
             value={formData.firstName}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Last Name:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
             onChange={handleChange}
             style={{ width: '100%', padding: '8px' }}
             required

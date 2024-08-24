@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+
 export const Footer = () => {
     return (
         <footer className="footer mt-auto py-3 text-center bg-light">
@@ -20,7 +23,7 @@ export const Footer = () => {
 						<ul className="list-unstyled">
 							<li><a href="/about">About Us</a></li>
 							<li><a href="/services">Services Us</a></li>
-							<li><a href="/contact">Contact Us</a></li>
+							<li><Link to="/contact" className="nav-link">Contact Us</Link></li>
 						</ul>
 					</div>
 					<div className="col-4 col-md-4">
