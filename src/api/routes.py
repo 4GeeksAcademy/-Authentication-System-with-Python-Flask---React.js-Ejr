@@ -4,8 +4,21 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 import bcrypt
 from flask_cors import CORS
 from flask_mail import Mail, Message
+import re
 
 api = Blueprint('api', __name__)
+
+# Regex patterns basados en las restricciones del front-end
+EMAIL_REGEX = r"^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+PASSWORD_REGEX = r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
+
+def validate_email(email):
+    return re.match(EMAIL_REGEX, email)
+
+def validate_password(password):
+    return re.match(PASSWORD_REGEX, password)
+
+
 
 # Allow CORS requests to this API
 CORS(api)
@@ -70,35 +83,43 @@ def create_itinerary():
 # Rutas de autenticación
 @api.route('/register', methods=['POST'])
 def register():
-        data = request.json
-        required_fields = ['email', 'password', 'username']
-        missing_fields = [field for field in required_fields if field not in data or not data[field]]
-        if missing_fields:
-            return jsonify({'msg': f'Missing fields: {", ".join(missing_fields)}'}), 400
+    data = request.json
+    required_fields = ['email', 'password', 'username']
+    missing_fields = [field for field in required_fields if field not in data or not data[field]]
+    if missing_fields:
+        return jsonify({'msg': f'Missing fields: {", ".join(missing_fields)}'}), 400
 
-        # Verificar si el email ya está en uso
-        user = User.query.filter_by(email=data['email']).first()
-        if user:
-            return jsonify({'success': False, 'msg': 'Este email ya está en uso.'}), 400
-        username = User.query.filter_by(username=data['username']).first()
-        if username:
-            return jsonify({'success': False, 'msg': 'Este username ya está en uso.'}), 400
+    # Validar email
+    if not validate_email(data['email']):
+        return jsonify({"success": False, "msg": "Email inválido."}), 400
 
-        # Encriptar la contraseña usando bcrypt
-        hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+    # Validar contraseña
+    if not validate_password(data['password']):
+        return jsonify({"success": False, "msg": "La contraseña no cumple con los requisitos."}), 400
 
-        # Crear nuevo usuario
-        new_user = User(email=data['email'], username=data['username'], password=hashed_password.decode('utf-8'))
-
-        # Guardar usuario en la base de datos
-        db.session.add(new_user)
-        db.session.commit()
-
-        # Crear token de acceso JWT
-        access_token = create_access_token(identity=new_user.id)
-
-        return jsonify({'msg': 'User registered successfully', 'access_token': access_token}), 201
+    # Verificar si el email ya está en uso
+    user = User.query.filter_by(email=data['email']).first()
+    if user:
+        return jsonify({'success': False, 'msg': 'Este email ya está en uso.'}), 400
     
+    username = User.query.filter_by(username=data['username']).first()
+    if username:
+        return jsonify({'success': False, 'msg': 'Este username ya está en uso.'}), 400
+
+    # Encriptar la contraseña usando bcrypt
+    hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+
+    # Crear nuevo usuario
+    new_user = User(email=data['email'], username=data['username'], password=hashed_password.decode('utf-8'))
+
+    # Guardar usuario en la base de datos
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Crear token de acceso JWT
+    access_token = create_access_token(identity=new_user.id)
+
+    return jsonify({'msg': 'User registered successfully', 'access_token': access_token}), 201
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -108,6 +129,14 @@ def login():
     if missing_fields:
         return jsonify({'msg': f'Missing fields: {", ".join(missing_fields)}'}), 400
     
+    # Validar email
+    if not validate_email(data['email']):
+        return jsonify({"success": False, "msg": "Email inválido."}), 400
+    
+    # Validar contraseña
+    if not validate_password(data['password']):
+        return jsonify({"success": False, "msg": "Contraseña inválida."}), 400
+
     # Buscar el usuario por email
     user = User.query.filter_by(email=data['email']).first()
     
