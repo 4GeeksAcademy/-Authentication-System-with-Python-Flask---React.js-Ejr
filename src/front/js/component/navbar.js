@@ -56,9 +56,11 @@ export const Navbar = () => {
             >
               Sign Up
             </Link>
-            <button className="btn btn-secondary" style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}>
+            <Link
+              to="/Login" className="btn btn-secondary" 
+              style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}>
               Login
-            </button>
+            </Link>
           </div>
         </div>
       </nav >
