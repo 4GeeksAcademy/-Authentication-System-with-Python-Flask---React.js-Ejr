@@ -93,7 +93,7 @@ def getAllUsers():
     return jsonify({'msg':'Ningún usuario encontrado'}),404
 
 
-#Agregar usuario a Empleador  PENDIENTE
+#Agregar usuario a Empleador  
 @api.route('/user/editEmpleador', methods=['PUT'])
 @jwt_required()
 def editEmpleador():
@@ -122,7 +122,7 @@ def editEmpleador():
 
 
 
-#Agregar usuario a Programador   PENDIENTE
+#Agregar usuario a Programador   
 @api.route('/user/editProgramador', methods=['PUT'])
 @jwt_required()
 def editProgramador():
