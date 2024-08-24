@@ -40,7 +40,7 @@
     background: url('https://t4.ftcdn.net/jpg/04/23/41/61/240_F_423416137_voueqROw16TIR7dZ7WWNtwvcZ1m2rMEd.jpg');
 } */
 
-.parallax {
+.home-container .parallax {
     background: url('https://img.freepik.com/premium-vector/abstract-green-stripes-vector-background_88343-4632.jpg?w=740');
     background-attachment: fixed;
     background-position: center;
