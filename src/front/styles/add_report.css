@@ -169,16 +169,32 @@
     color: #075E81;
 }
 
-.ar-switch-container {
-    display: flex;
-}
+
 
 /* Switch */
+.ar-switch-container {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.ar-switch-container label {
+    margin: 0;
+    padding: 0;
+    margin-right: 30px;
+}
+
+.ar-form-group-kinder{
+    margin-right: 0 !important;
+}
+
 .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin: 0;
   }
   
   .switch input {

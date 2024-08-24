@@ -42,38 +42,35 @@ export const All_Blogs = props => {
 
     return (
         <div className="container all-blogs-container">
-            <h1 className="display-4 mb-4 all-blogs-title">Blog</h1>
-            <div className="d-flex overflow-auto">
-                {blogs.map(blog => (
-                    <div key={blog.id} className="card me-3 all-blogs-card" style={{ minWidth: '300px', maxWidth: '300px' }}>
+        <h1 className="display-4 mb-4 all-blogs-big-title">Blog</h1>
+        <div className="d-flex overflow-auto">
+            {blogs.map(blog => (
+                <div key={blog.id} className="card all-blogs-card" >
+                    <Link to={`/blog/${blog.type}/${blog.id}`} className="stretched-link">
                         <img src={blog.img_header} className="card-img-top" alt={blog.title} />
-                        <div className="card-body">
-                            <h5 className="card-title">{blog.title}</h5>
-                            <p className="card-text">
-                                {blog.text_intro ? blog.text_intro : blog.text}
-                            </p>
-                            <div className="all-blogs-btn-container">
-                                <Link to={`/blog/${blog.type}/${blog.id}`} className="btn btn-primary all-blogs-btn">
-                                    Learn More
-                                </Link>
-                                {isAdmin && (
-                                    <div className="mt-2">
-                                        <Link to={`/edit_blog/${blog.type}/${blog.id}`} className="btn btn-warning me-2 all-blogs-btn">
-                                            <FontAwesomeIcon icon={faPencil} />
-                                        </Link>
-                                    </div>
-                                )}
-                            </div>
+                        <div className="card-img-overlay d-flex align-items-end p-0">
+                            <h5 className="card-title all-blogs-title text-white p-3 m-0">
+                                {blog.title}
+                            </h5>
                         </div>
-                    </div>
-                ))}
-            </div>
-            {isAdmin && (
-                <Link to="/new_blog" className="btn btn-secondary mt-3 all-blogs-btn">
-                    New Blog
-                </Link>
-            )}
+                    </Link>
+                    {isAdmin && (
+                        <div className="position-absolute top-0 end-0 p-2">
+                            <Link to={`/edit_blog/${blog.type}/${blog.id}`} className="btn btn-warning all-blogs-btn">
+                                <FontAwesomeIcon icon={faPencil} />
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
+        {isAdmin && (
+            <Link to="/new_blog" className="btn btn-secondary mt-3 all-blogs-btn">
+                New Blog
+            </Link>
+        )}
+    </div>
+    
     );
 };
 

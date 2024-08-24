@@ -249,7 +249,7 @@ export const AddReport = () => {
                                     />
                                 </div>
 
-                                <div className="ar-form-group">
+                                <div className="ar-form-group ar-form-group-kinder">
                                     <label><FontAwesomeIcon icon={faSchool} /></label>
                                     <Switch
                                         checked={kindergarden}

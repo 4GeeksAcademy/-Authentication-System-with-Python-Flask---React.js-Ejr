@@ -168,27 +168,27 @@ export const Register = () => {
 					<p>Keep track of your baby's milestones and memories. Join our baby journal community today!</p>
 				</div>
 				<form onSubmit={handleSubmit}>
-					<div className="mb-1 register-form-detail">
+					<div className="register-form-detail">
 						<label htmlFor="name" className="form-label"></label>
 						<input type="text" className="form-control" id="name" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
 					</div>
 
-					<div className="mb-1 register-form-detail">
+					<div className="register-form-detail">
 						<label htmlFor="username" className="form-label"></label>
 						<input type="text" className="form-control" id="username" name="username" placeholder="username" value={formData.username} onChange={handleChange} />
 					</div>
 
-					<div className="mb-1 register-form-detail">
+					<div className="register-form-detail">
 						<label htmlFor="email" className="form-label"></label>
 						<input type="email" className="form-control" id="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
 					</div>
 
-					<div className="mb-1 register-form-detail">
+					<div className="register-form-detail">
 						<label htmlFor="password" className="form-label"></label>
 						<input type="password" className="form-control" id="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
 					</div>
 
-					<div className="mb-1 register-form-detail">
+					<div className="register-form-detail">
 						<label htmlFor="repeatPassword" className="form-label"></label>
 						<input type="password" className="form-control" id="repeatPassword" name="repeatPassword" placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} />
 					</div>

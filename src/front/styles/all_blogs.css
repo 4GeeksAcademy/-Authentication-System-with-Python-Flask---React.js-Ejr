@@ -2,7 +2,6 @@
 
 .all-blogs-container {
     padding-top: 100px;
-    background-color: #FFFCE3; 
     min-height: 100vh;
     min-width: 100vw;
     display: flex;
@@ -12,30 +11,36 @@
 
 .all-blogs-title {
     font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 22pt;
+    color: white;
+}
+
+.all-blogs-big-title {
+    font-family: "Poppins", sans-serif;
     font-weight: 800;
     font-style: normal;
+    font-size: 36pt;
     color: #075E81;
+    margin-bottom: 20px;
 }
 
 .all-blogs-card {
-    background-color: #075E81;
     color: white;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
-    margin: 30px;
+    width: 300px;
+    height: 500px;
+    border-radius: 10px;
+    border: 0 solid;
+    margin-inline: 40px;
 }
 
-.all-blogs-card h5 {
-    color: #FBEE84;
-    font-family: "Poppins", sans-serif;
-    font-weight: 700;
-    font-size: 21pt;
-}
-
-.all-blogs-card .card-img-top {
-    width: 300px; 
-    height: 300px;
+.card-img-top {
+    height: 499px;
     object-fit: cover; 
+    border-radius: 10px;
 }
 
 .all-blogs-btn-container {
@@ -50,6 +55,8 @@
     text-decoration: underline;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
+    padding: 12px;
+    border-radius: 25px;
 }
 
 .all-blogs-btn:hover {
@@ -63,4 +70,38 @@
     font-weight: 600;
     font-size: 30pt;
 
+}
+
+@media (max-width: 768px) {
+    .all-blogs-container {
+        flex-direction: column;
+    }
+
+    .d-flex {
+        flex-direction: column;
+    }
+
+    .all-blogs-card {
+        width: 270px;
+        max-width: 100%;
+        margin-inline: 0;
+        min-height: 50%;
+        height: 270px;
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        height: 270px;
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .all-blogs-title {
+        font-size: 18pt;
+        text-align: center;
+    }
+
+    .all-blogs-btn-container {
+        justify-content: center;
+    }
 }
