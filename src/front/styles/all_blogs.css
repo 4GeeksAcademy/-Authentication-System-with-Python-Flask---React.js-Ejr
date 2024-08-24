@@ -104,4 +104,8 @@
     .all-blogs-btn-container {
         justify-content: center;
     }
+
+    .all-blogs-btn {
+        z-index: 0;
+    }
 }

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faTag } from '@fortawesome/free-solid-svg-icons';
 import "../../styles/blog_detail.css";
 
-
 export const BlogDetail = () => {
     const { type, id } = useParams();
     const [blog, setBlog] = useState(null);
@@ -39,25 +38,29 @@ export const BlogDetail = () => {
     }
 
     return (
-        <div className="container blog-detail-container-bg">
-            <div className="container blog-detail-container">
-                <img src={blog.img_header} className="img-fluid mb-3 img-header" alt={blog.title} />
-                <h1 className="display-4">{blog.title}</h1>
-                <div className="blog-detail-legend">
-                    <p><strong><FontAwesomeIcon icon={faUser} /></strong> {blog.author}</p>
-                    <p><strong><FontAwesomeIcon icon={faTag} /></strong> {blog.source}</p>
+        <div className="blog-detail-container-bg">
+            <div className="blog-detail-container">
+                <div className="blog-detail-left">
+                    <img src={blog.img_header} className="img-header" alt={blog.title} />
+                    <div className="blog-detail-overlay">
+                        <h1>{blog.title}</h1>
+                        <div className="blog-detail-legend">
+                            <p><strong><FontAwesomeIcon icon={faUser} /></strong> {blog.author}</p>
+                            <p><strong><FontAwesomeIcon icon={faTag} /></strong> {blog.source}</p>
+                        </div>
+                    </div>
                 </div>
-                <div className="blog-detail-text">
-                    {blog.text_intro && <p>{blog.text_intro}</p>}
-                    <div className="blog-detail-text-ingredients">{blog.text_ingredients && <p><strong>Ingredients:</strong> {blog.text_ingredients}</p>}</div>
-                    {blog.text_steps && <p>{blog.text_steps}</p>}
-                    {blog.text && <p>{blog.text}</p>}
-                </div>
-                <img src={blog.img_final} className="img-fluid mt-3 blog-detail-container-img-final" alt="Final" />
-                <div className="blog-detail-btn-container">
-                    <Link to="/blog" className="btn btn-secondary mt-3 blog-detail-btn">
-                        ...
-                    </Link>
+                <div className="blog-detail-right">
+                    <div className="blog-detail-text">
+                        {blog.text_intro && <p>{blog.text_intro}</p>}
+                        {blog.text_ingredients && <div className="blog-detail-text-ingredients"><strong>Ingredients:</strong> {blog.text_ingredients}</div>}
+                        {blog.text_steps && <p>{blog.text_steps}</p>}
+                        {blog.text && <p>{blog.text}</p>}
+                    </div>
+                    <img src={blog.img_final} className="img-fluid mt-3 blog-detail-container-img-final" alt="Final" />
+                    <div className="blog-detail-btn-container">
+                        <Link to="/blog" className="btn btn-secondary mt-3 blog-detail-btn">➜</Link>
+                    </div>
                 </div>
             </div>
         </div>
