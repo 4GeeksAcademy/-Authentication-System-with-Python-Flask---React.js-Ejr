@@ -38,6 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             //Accion para obtener el perfil del usuario por EMAIL
 			getUserInfo: async () => {
 				try {
+                    const store = getStore();
                     const token = store.token;
 					const resp = await fetch(process.env.BACKEND_URL + "api/userinfo", {
                         headers: {
