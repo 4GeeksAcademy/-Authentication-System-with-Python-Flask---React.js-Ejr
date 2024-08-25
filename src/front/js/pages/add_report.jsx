@@ -126,7 +126,7 @@ export const AddReport = () => {
             const result = await response.json();
             console.log('Report added successfully:', result);
             setError("");
-            // Opcional: Redirige o limpia el formulario
+
         } catch (error) {
             setError('Network error: ' + error.message);
         }
@@ -151,7 +151,7 @@ export const AddReport = () => {
                                     onChange={(e) => {
                                         const name = e.target.value;
                                         setBabyName(name);
-                                        // Encuentra el ID del bebé seleccionado
+
                                         const selectedBaby = babies.find(baby => baby.name === name);
                                         setSelectedBabyId(selectedBaby ? selectedBaby.id : "");
                                     }}

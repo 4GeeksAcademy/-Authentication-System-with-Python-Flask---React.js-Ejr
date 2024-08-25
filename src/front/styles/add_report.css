@@ -280,3 +280,62 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+@media (max-width: 768px) {
+    .ar-container {
+        flex-direction: column; 
+        padding: 20px;
+        width: 100%; 
+    }
+
+    .ar-calendar-card {
+        width: 100%; 
+        margin-bottom: 20px; 
+    }
+
+    .ar-form-card {
+        width: 100%; 
+        padding: 20px;
+        margin-right: 20px;
+    }
+
+    .ar-form-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px; 
+    }
+
+    .ar-form-group label {
+        width: 50%; 
+        margin-right: 10px;
+        text-align: left; 
+    }
+    
+
+    .ar-form-group input, 
+    .ar-form-group textarea,
+    .ar-form-group select {
+        width: 100%; 
+    }
+
+    .ar-button-container {
+        flex-direction: column; 
+        gap: 10px; 
+    }
+
+    .ar-btn-secondary {
+        width: 100%; 
+    }
+
+    .ar-switch-container {
+        flex-direction: row; 
+        justify-content: space-between;
+    }
+
+    .ar-switch-container label {
+        width: 120px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(73px); 
+    }
+}

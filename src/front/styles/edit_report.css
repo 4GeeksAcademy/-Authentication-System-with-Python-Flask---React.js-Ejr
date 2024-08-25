@@ -6,7 +6,6 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: #C1D6DF;
     min-height: 100vh;
 }
 
@@ -40,13 +39,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 15px;
 }
 
 .edit-report__form-group {
     display: flex;
-    flex-direction: row; /* Cambiado de column a row */
-    align-items: center; /* Alinea verticalmente los elementos */
+    flex-direction: row;
+    align-items: center; 
     width: 48%;
     margin-bottom: 15px;
 }
@@ -117,9 +115,9 @@
 }
 
 .edit-report-textarea__form-group textarea {
-    height: 100px; /* Ajusta la altura según sea necesario */
-    padding: 12px; /* Opcional: Espacio interno dentro del textarea */
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    height: 100px; 
+    padding: 12px; 
+    box-sizing: border-box; 
     border-radius: 25px; 
     border-width: 3px; 
     border-color: #075E81; 
@@ -154,11 +152,23 @@
     color: #075E81;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     .edit-report__form-group {
         width: 100%;
     }
+
+    .edit-report__form-group input[type="date"],
+    .edit-report__form-group input[type="number"],
+    .edit-report__form-group textarea{
+        width: 100%;
+    }
+
+    .edit-report__form-group label {
+        width: 20%;
+    }
+
+
 }
 
 .switch-edit {
@@ -185,7 +195,7 @@
     background-color: white;
     transition: .4s;
     border-radius: 34px;
-    border: 3px solid #075E81; /* Borde añadido */
+    border: 3px solid #075E81; 
 }
 
 /* El círculo dentro del slider */
@@ -202,10 +212,10 @@
 }
 
 input:checked + .slider-edit {
-    background-color: #075E81; /* Color cuando está activado */
+    background-color: #075E81; 
 }
 
 input:checked + .slider-edit:before {
-    transform: translateX(33px); /* Ajusta este valor según el tamaño del slider */
+    transform: translateX(33px); 
     background-color: white;
 }
