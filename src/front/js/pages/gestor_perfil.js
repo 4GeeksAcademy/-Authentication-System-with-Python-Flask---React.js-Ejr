@@ -8,13 +8,13 @@ export const Gestor_perfil = () => {
     const { actions, store } = useContext(Context);
     const [loading, setLoading] = useState(true);
 
-    const { userData, babies } = store;
+    const { user, babies } = store;
     
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                await actions.getUserProfileById(); // Cargar datos del usuario
-                await actions.getBabiesByUserId(); // Cargar bebés del usuario
+                await actions.getUserInfo(); // Cargar datos del usuario
+                await actions.getBabiesByUser(); // Cargar bebés del usuario
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching user profile in useEffect:", error);
@@ -28,7 +28,7 @@ export const Gestor_perfil = () => {
         return <div>Loading...</div>;
     }
 
-    if (!userData) {
+    if (!user) {
         return <div>No user data found</div>;
     }
 
@@ -39,17 +39,18 @@ export const Gestor_perfil = () => {
                 <div className="d-flex justify-content-center mb-3">
                     <img src={user1} className="img-fluid" alt="IMG_user" style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}/>
                 </div>
+                
                 <div className="d-flex flex-column justify-content-center">
                         <label>Username</label>
-                        <input type="text" name="username" placeholder="Username" value={userData.username} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly/>
+                        <input type="text" name="username" placeholder="Username" value={user.username} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly/>
                 </div>
                 <div className="d-flex flex-column justify-content-center">
                         <label>Email</label>
-                        <input type="text" name="email" placeholder="email" value={userData.email} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly/>
+                        <input type="text" name="email" placeholder="email" value={user.email} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly/>
                 </div>
                 <div className="d-flex flex-column justify-content-center">
                     <label>Password</label>
-                    <input type="text" name="password" placeholder="password" value={userData.password} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly />
+                    <input type="text" name="password" placeholder="password" value={user.password} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly />
                 </div>
                 <div className="mb-3">
                     <Link to="/reset_password" style={{ color: '#075E81', textDecoration: 'underline' }}>Want to reset your password?</Link>

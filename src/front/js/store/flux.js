@@ -22,10 +22,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 weight: ""
             },
 			blogs: [],
-            userData:{
-				username: "",
-				email:"",
-				password:""
+            userData: {
+                username: "",
+                email: "",
+                password:"",
             },
             babies: [], // Agregado para almacenar la lista de bebés
             selectedBabyId: null // Para seleccionar un bebé específico
@@ -36,45 +36,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
             //Accion para obtener el perfil del usuario por EMAIL
-			getUserProfileByEmail: async (email) => {
+			getUserInfo: async () => {
 				try {
-					const response = await fetch(process.env.BACKEND_URL + `/api/user/email/${email}`);
-					if (response.ok) {
-						const data = await response.json();
-						return data.user;
+                    const store = getStore();
+                    const token = store.token;
+					const resp = await fetch(process.env.BACKEND_URL + "api/userinfo", {
+                        headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}` // Enviar el token en la cabecera
+						}
+                    });
+					if (resp.ok) {
+						const data = await resp.json();
+						if (data && data.user) {
+                            setStore({ userData: data.user }); // Guardar los datos del usuario en userInfo
+                        } else {
+                            console.error("Failed to fetch user info: Data format is incorrect");
+                        }
 					} else {
-						const errorData = await response.json();
-						console.error("Failed to fetch user profile:", errorData.msg);
-						return null;
+						console.error("Failed to fetch user info");
 					}
 				} catch (error) {
-					console.error("Error fetching user profile:", error);
-					return null;
-				}
-			},
-			//Accion para obtener el perfil del usuario por ID
-			getUserProfileById: async () => {
-				
-				try {
-					//pasando el userID como paramentro
-					//const response = await fetch(process.env.BACKEND_URL + `/api/user/${userId}`);
-					const resp = await fetch(process.env.BACKEND_URL + "/api/user/1"); // Ejemplo: obtener datos del user id=1
-					// if (response.ok) {
-					// 	const data = await response.json();
-					// 	return data.user;
-					// } else {
-					// 	const errorData = await response.json();
-					// 	console.error("Failed to fetch user profile:", errorData.msg);
-					// 	return null;
-					// }
-					const data = await resp.json();
-                    if (resp.ok && data && data.user) {
-                        setStore({ userData: data.user });
-                    }else{
-						console.error("Failed to fetch user profile:", data.msg || "Unknown error");
-					}
-				} catch (error) {
-					console.error("Error fetching user profile:", error);
+					console.error("Error fetching user info:", error);
 				}
 			},
 			//accion para reset password
@@ -95,34 +78,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // Accion para obtener la lista de bebés del usuario
-            getBabiesByUserId: async () => {
+            getBabiesByUser: async () => {
                 try {
                     const store = getStore();
+                    const token = store.token; // Obtener el token del store
                     //const userId = store.userData.id; // Suponiendo que userData contiene el id del usuario
-                    const response = await fetch(process.env.BACKEND_URL + "api/babies/user/1");
+                    const response = await fetch(process.env.BACKEND_URL + "api/babies", {
+                        method: "GET",
+                        headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${token}`
+                         }
+                    });
                     if (response.ok) {
                         const data = await response.json();
-                        setStore({ babies: data.babies }); // Asumiendo que la respuesta contiene una lista de bebés
+                        setStore({ babies: data }); // Actualizar el store con los datos de los bebés
                     } else {
-                        console.error("Failed to fetch babies");
+                        console.error("Failed to fetch babies:", errorData.error);
                     }
                 } catch (error) {
                     console.error("Error fetching babies", error);
                 }
             },
-
-			// Accion para obtener datos del bebe 
-			// fetchBabyData: async () => {
-            //     try {
-            //         const resp = await fetch(process.env.BACKEND_URL + "api/one_baby/1"); // Ejemplo: obtener datos del bebé con id=1
-            //         const data = await resp.json();
-            //         if (data && data.bebe) {
-            //             setStore({ babyData: data.bebe });
-            //         }
-            //     } catch (error) {
-            //         console.log("Error fetching baby data", error);
-            //     }
-            // },
 
             // Obtener datos de un bebé específico
 			fetchBabyData: async (babyId) => {

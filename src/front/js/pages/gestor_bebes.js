@@ -13,7 +13,7 @@ export const Gestor_bebes = () => {
     useEffect(() => {
         const fetchBabies = async () => {
             try {
-                await actions.getBabiesByUserId(); // Cargar bebés del usuario
+                await actions.getBabiesByUser(); // Cargar bebés del usuario
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching babies in useEffect:", error);
