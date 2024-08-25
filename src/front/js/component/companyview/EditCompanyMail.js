@@ -4,7 +4,7 @@ import { faEdit, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 export const EditCompanyMail = ({ increaseProgress }) => {
-    const [companyMail, setCompanyMail] = useState('Email'); 
+    const [companyMail, setCompanyMail] = useState('Correo Electronico'); 
     const [showModal, setShowModal] = useState(false); 
     const [newMail, setNewMail] = useState(companyMail); 
 
@@ -28,16 +28,16 @@ export const EditCompanyMail = ({ increaseProgress }) => {
     return (
         <>
             <div className="d-flex align-items-center" style={{ color: 'black', fontFamily: 'Arial, sans-serif', 
-    fontWeight: 'bold' }}>
-                <FontAwesomeIcon icon={faEnvelope} />
+    fontWeight: 'bold' , fontSize: '25px', }}>
+                <FontAwesomeIcon icon={faEnvelope} style={{ color: '#6793AE', width: '25px', height: '25px', marginRight: '10px' }}/>
                 <p className="mb-0"> {companyMail}</p>
                 <button
                     type="button"
                     className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center ms-2"
-                    style={{ width: 30, height: 30, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
+                    style={{ width: 25, height: 25, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
                     onClick={handleShow}
                 >
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon icon={faEdit}  style={{width: '15px', height: '15px',}}/>
                 </button>
             </div>
 

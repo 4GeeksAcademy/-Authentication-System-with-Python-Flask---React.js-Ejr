@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
 
 const styles = {
   star: {
     color: '#FFD700',
-    fontSize: '24px',
+    fontSize: '30px',
     
   },
   ratingText: {
-    fontSize: '30px',
+    fontSize: '25px',
     color: 'white',
     fontFamily: 'Arial, sans-serif', 
     fontWeight: 'bold',
@@ -40,7 +40,7 @@ const RatingStars = ({ userRatings }) => {
         ))}
         {halfStar === 1 && <FontAwesomeIcon icon={faStar} style={{ ...styles.star, color: '#FFD70080' }} />}
         {[...Array(emptyStars)].map((_, index) => (
-          <FontAwesomeIcon key={`empty-${index}`} icon={faStar} style={{ ...styles.star, color: '#ccc' }} />
+          <FontAwesomeIcon key={`empty-${index}`} icon={faStar} style={{ ...styles.star, color: '#3b3f42' }} />
         ))}
       </>
     );
@@ -50,7 +50,7 @@ const RatingStars = ({ userRatings }) => {
     <div className="mb-2 d-flex align-items-center">
       {renderStars(averageRating)}
       <span className="ms-2" style={styles.ratingText}>
-        {averageRating}/5 ({totalVotes} votos)
+        {averageRating}/5 
       </span>
     </div>
   );

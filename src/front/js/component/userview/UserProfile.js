@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import ProfileProgress from './ProfileProgress';
-import EditCompanyDescription from './companyview/EditCompanyDescription';
-import { EditCompanyMail } from './companyview/EditCompanyMail';
-import { EditCompanyPhone } from './companyview/EditCompanyPhone';
-import ProfileImage from './ProfileImage';
-import { EditCompanyName } from './companyview/EditCompanyName';
+import ProfileProgress from '../ProfileProgress';
+import EditCompanyDescription from '../companyview/EditCompanyDescription';
+import { EditCompanyMail } from '../companyview/EditCompanyMail';
+import { EditCompanyPhone } from '../companyview/EditCompanyPhone';
+import ProfileImage from '../ProfileImage';
+import { EditCompanyName } from '../companyview/EditCompanyName';
 
 
 const UserProfile = () => {

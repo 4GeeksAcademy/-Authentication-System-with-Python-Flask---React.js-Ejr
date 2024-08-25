@@ -39,8 +39,8 @@ function ProfileImage() {
           src={preview || "https://via.placeholder.com/150"}
           alt="Profile"
           className="rounded"
-          width="150"
-          height="150"
+          width="200"
+          height="200"
           
         />
         <Button

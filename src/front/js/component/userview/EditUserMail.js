@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faEdit,  } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 export const EditUserMail = ({ increaseProgress }) => {
-    const [UserMail, setUserMail] = useState('Email'); 
+    const [UserMail, setUserMail] = useState('Correo Electronico'); 
     const [showModal, setShowModal] = useState(false); 
     const [newUserMail, setNewUserMail] = useState(UserMail); 
 
@@ -28,16 +29,16 @@ export const EditUserMail = ({ increaseProgress }) => {
     return (
         <>
             <div className="d-flex align-items-center" style={{ color: 'black', fontFamily: 'Arial, sans-serif', 
-    fontWeight: 'bold' }}>
-                <FontAwesomeIcon icon={faEnvelope} />
+    fontWeight: 'bold' , fontSize: '25px', }}>
+                <FontAwesomeIcon icon={faEnvelope} style={{ color: '#6793AE', width: '25px', height: '25px', marginRight: '10px' }}/>
                 <p className="mb-0"> {UserMail}</p>
                 <button
                     type="button"
                     className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center ms-2"
-                    style={{ width: 30, height: 30, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
+                    style={{ width: 25, height: 25, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
                     onClick={handleShow}
                 >
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon icon={faEdit}  style={{width: '15px', height: '15px',}}/>
                 </button>
             </div>
 

@@ -28,14 +28,14 @@ export const UserNameEdit = ({ increaseProgress }) => {
     return (
         <>
             <div className="d-flex align-items-center" style={{ color: 'white' }}>
-                <h2 className="mb-0">{UserName}</h2>
+                <h1 className="mb-0">{UserName}</h1>
                 <button
                     type="button"
                     className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center ms-2"
-                    style={{ width: 30, height: 30, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
+                    style={{ width: 25, height: 25, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
                     onClick={handleShow}
                 >
-                    <FontAwesomeIcon icon={faEdit} />
+                    <FontAwesomeIcon icon={faEdit}  style={{width: '15px', height: '15px',}}/>
                 </button>
             </div>
 

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 
-
 const CarrerSelector = () => {
-    const [selectedCarrer, setSelectedCarrer] = useState();
+    const [selectedCarrer, setSelectedCarrer] = useState(null);
 
     const handleSelect = (e) => {
         setSelectedCarrer(e);
@@ -12,15 +11,26 @@ const CarrerSelector = () => {
     return (
         <div className="d-flex align-items-center">
            
+            <span
+                style={{
+                    color: selectedCarrer ? 'black' : 'gray', 
+                    fontFamily: 'Arial, sans-serif',
+                    fontWeight: 'bold',
+                    fontSize: '20px',
+                    marginLeft: '10px' 
 
-            <div >
-                <span className="fw-bold">¿Qué Tipo de diseñador eres?: </span>
-                {selectedCarrer}
-            </div>     
-            <Dropdown onSelect={handleSelect}>
-                <Dropdown.Toggle variant="link" id="dropdown-basic" className="ms-2 dropdown-toggle-custom" style={{color: 'rgba(103, 147, 174, 1)'}}>
-                    
-                   
+                }}
+            >
+                {selectedCarrer || '¿Qué Tipo de diseñador eres?:'}
+            </span>
+            <Dropdown onSelect={handleSelect} className="ms-2">
+                <Dropdown.Toggle 
+                    variant="link" 
+                    id="dropdown-basic" 
+                    className="dropdown-toggle-custom" 
+                    style={{ color: 'rgba(103, 147, 174, 1)' }}
+                >
+                    ▼
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
@@ -32,8 +42,7 @@ const CarrerSelector = () => {
                     <Dropdown.Item eventKey="FullStack Senior">FullStack Senior</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-
-    </div>
+        </div>
     );
 };
 

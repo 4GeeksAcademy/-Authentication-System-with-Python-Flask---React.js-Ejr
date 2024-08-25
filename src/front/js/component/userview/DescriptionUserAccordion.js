@@ -4,7 +4,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 export const EditDescriptionUserAccordion = () => {
-    const [descriptionUserAccordion, setDescriptionUserAccordion] = useState('Descripcion'); 
+    const [descriptionUserAccordion, setDescriptionUserAccordion] = useState('Cuentanos lo mas importante de ti'); 
     const [showModal, setShowModal] = useState(false); 
     const [newDescriptionUserAccordion, setNewDescriptionUserAccordion] = useState(descriptionUserAccordion); 
 

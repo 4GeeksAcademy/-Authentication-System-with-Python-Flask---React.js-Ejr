@@ -1,21 +1,25 @@
 import React from 'react';
+import { Button, Card } from 'react-bootstrap';
 
-const OfferCard = ({ title, description, status }) => {
+const OfferCard = ({ title, description, status, price, onEdit }) => {
     return (
-        <div className="card p-3 m-2" style={styles.card}>
-            <h5>{title}</h5>
-            <p>{description}</p>
-            <button className="btn btn-primary">{status}</button>
-        </div>
+        <Card style={{ width: '18rem', margin: '10px', backgroundColor: '#70879C' }}>
+            <Card.Body>
+                <Card.Title style={{COLOR: 'black', fontStyle: 'bold' }}>{title}</Card.Title>
+                <Card.Text style={{color: 'white'}} >{description}</Card.Text>
+                <Card.Text style={{color: 'white'}}><strong>Precio:</strong> € {price}</Card.Text>
+                <Card.Text style={{color: 'white'}}><strong>Estado:</strong> {status}</Card.Text>
+                {status === 'Activo' ? (
+                    <Button variant="primary">Postular</Button>
+                ) : (
+                    <Button variant="danger" disabled>Cerrado</Button>
+                )}
+                <Button variant="outline-success" onClick={onEdit} className="ml-2" style={{marginLeft: '30PX'}}>
+                    Editar
+                </Button>
+            </Card.Body>
+        </Card>
     );
-};
-
-const styles = {
-    card: {
-        backgroundColor: '#d0e1f2',
-        borderRadius: '10px',
-        minWidth: '250px',
-    },
 };
 
 export default OfferCard;

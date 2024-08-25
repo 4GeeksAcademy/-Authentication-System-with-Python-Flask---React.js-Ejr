@@ -27,38 +27,7 @@ const SkillRow = ({ skill }) => {
 
 const SkillsTable = () => {
     const [skills, setSkills] = useState([
-        {
-            language: 'JavaScript',
-            icon: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png',
-            experience: '2 Años',
-            certificateName: 'Js certificado.doc',
-            certificateLink: '#',
-            projects: 4
-        },
-        {
-            language: 'HTML',
-            icon: 'https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg',
-            experience: '2 Años',
-            certificateName: 'Html certificado.doc',
-            certificateLink: '#',
-            projects: 6
-        },
-        {
-            language: 'CSS',
-            icon: 'https://upload.wikimedia.org/wikipedia/commons/6/62/CSS3_logo.svg',
-            experience: '3 Años',
-            certificateName: 'Css certificado.doc',
-            certificateLink: '#',
-            projects: 7
-        },
-        {
-            language: 'Python',
-            icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg',
-            experience: '1 Año',
-            certificateName: 'Py certificado.doc',
-            certificateLink: '#',
-            projects: 2
-        }
+        
     ]);
 
     const [showModal, setShowModal] = useState(false);
