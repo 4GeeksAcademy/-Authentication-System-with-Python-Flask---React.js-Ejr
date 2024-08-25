@@ -5,3 +5,53 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+/* Estilo general para el contenedor del carrusel */
+#carouselExampleFade {
+    width: 80%; /* Ancho del carrusel */
+    margin: 0 auto; /* Centra el carrusel horizontalmente */
+    position: relative; /* Necesario para posicionar las flechas absolutamente dentro del carrusel */
+}
+
+/* Estilo para los elementos dentro del carrusel */
+.carousel-inner {
+    justify-content: center; /* Centra las imágenes dentro del carrusel */
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+}
+
+.carousel-item img {
+    width: 100%; /* Ajusta la imagen al 100% del ancho del carrusel */
+    height: 300px; /* Altura fija de la imagen */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionar */
+}
+
+/* Oculta los botones de navegación del carrusel por defecto */
+.carousel-control-prev,
+.carousel-control-next {
+    opacity: 0; /* Hace los botones invisibles por defecto */
+    pointer-events: none; /* Desactiva el evento de clic en los botones */
+    transition: opacity 0.5s ease; /* Añade una transición suave para el cambio de opacidad */
+    position: absolute; /* Posiciona los botones absolutamente dentro del carrusel */
+    top: 50%; /* Centra los botones verticalmente en el carrusel */
+    transform: translateY(-50%); /* Ajusta el botón al centro verticalmente */
+    width: 5%; /* Ajusta el tamaño de los botones */
+    border: none; /* Elimina cualquier borde que pueda aparecer */
+}
+
+/* Posiciona el botón de la izquierda a 5% del borde izquierdo */
+.carousel-control-prev {
+    left: 5%;
+}
+
+/* Posiciona el botón de la derecha a 5% del borde derecho */
+.carousel-control-next {
+    right: 5%;
+}
+
+/* Muestra los botones cuando se hace hover sobre el carrusel */
+#carouselExampleFade:hover .carousel-control-prev,
+#carouselExampleFade:hover .carousel-control-next {
+    opacity: 0.5; /* Muestra los botones con algo de opacidad cuando el carrusel es hover */
+    pointer-events: auto; /* Habilita el evento de clic en los botones cuando el carrusel es hover */
+}
+
