@@ -10,11 +10,8 @@ import { Userview } from "./pages/UserView";
 import {Companyview} from "./pages/CompanyView";
 import injectContext from "./store/appContext";
 
- 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-
-
 
 //create your first component
 const Layout = () => {
@@ -30,11 +27,15 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element ={<Inicio />} path="/" />
+                        <Route element ={<SobreNosotros />} path="/sobrenosotros" />
+                        <Route element ={<Contact />} path="/contact" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<Userview />} path="/user" />
-                        <Route element={<Companyview />} path="/company" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<TimeLine/>} path="/timeline"/>
+                        <Route element={<FormOffer/>} path="/formoffer"/>
+                        <Route element={<PreguntasFrecuentes/>} path="/preguntasfrecuentes"/>
+                        <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

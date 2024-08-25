@@ -1,0 +1,44 @@
+.header-section-box h3{
+    position: relative;
+    bottom: 120px;
+    font-size: 2.5rem;
+    text-wrap: nowrap;
+    color: rgba(33, 37, 41, 0.75);
+    text-shadow: 5px 5px 15px #909090;
+    
+
+}
+.header-section-box span{
+    position:relative;
+    bottom: 102px;
+    font-size: 1.5rem;
+    color: rgb(103, 147, 174);
+    text-shadow: 5px 5px 15px #909090;
+
+}
+.section-box{
+    position: relative;
+    left: 50px;
+    top: 150px;
+    width: 65%;
+    height: fit-content;
+}
+
+.card-section{
+    position: relative;
+    width: 500px;
+
+}
+.no-offers-section{
+    position: relative;
+    bottom: 55px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    opacity: 0.45; 
+}
+
+.button-and-rating button{
+    padding: auto;
+}
+
