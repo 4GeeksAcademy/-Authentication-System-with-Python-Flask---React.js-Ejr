@@ -10,10 +10,16 @@ from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 import os
-from flask_mail import Mail, Message
+#para encriptar la password:
+from flask_bcrypt import Bcrypt
+
+
 
 api = Blueprint('api', __name__)
 
+#para encriptar la password:
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 # Allow CORS requests to this API
 CORS(api)
@@ -36,8 +42,9 @@ def login():
     password = request.json.get('password', None)
     user = User.query.filter_by (email=email).first()
     if user:
-        if (user.password == password):
-            access_token = create_access_token(identity= user.id)
+        password_checked= bcrypt.check_password_hash(user.password,password)
+        if password_checked:
+            access_token = create_access_token(identity= user.id, additional_claims={"type":"access"})
             return jsonify({'success' : True, 'user':user.serialize(), 'token' :access_token }), 200
         return jsonify({'success' : False, 'msg':'Usuario o contraseña no válidos'}), 400
     return jsonify({'success' : False,  'msg' : 'El correo electrónico no existe'}), 404
@@ -54,7 +61,9 @@ def signup():
     user = User.query.filter_by(email=email).first()
     if user:
         return jsonify({'success': False, 'msg': 'Este correo electrónico ya tiene una cuenta'}), 400
-    new_user = User(email=email, password=password, username=username, is_admin=False)
+    
+    encrypted_password=bcrypt.generate_password_hash(password).decode('utf-8')
+    new_user = User(email=email, password=encrypted_password, username=username, is_admin=False)
     db.session.add(new_user)
     db.session.commit()
     access_token = create_access_token(identity= new_user.id)
@@ -522,20 +531,16 @@ def uploaded_file(filename):
 
 
 #Ruta para Ver la Información de un Perfil
-#Obtener perfil por EMAIL
-@api.route('/user/email/<string:email>', methods=['GET'])
-def get_user_by_email(email):
-    user = User.query.filter_by(email=email).first()
+@api.route('/userinfo', methods=['GET'])
+@jwt_required()
+def user_info():
+    user_id=get_jwt_identity() #aqui te devuelve la identidad del usuario almacenada en el token JWT, pero esa identidad normalmente es solo un ID (o algún identificador) del usuario, no el objeto User completo. 
+    #necesario realizar una consulta a la base de datos para recuperar la información completa del usuario a partir de ese ID
+    user = User.query.get(user_id)
     if user:
         return jsonify({'success': True, 'user': user.serialize()}), 200
-    return jsonify({'success': False, 'msg': 'User not found'}), 404
-#Obtener perfil por EMAIL
-@api.route('/user/<int:id>', methods=['GET'])
-def get_user_by_id(id):
-    user = User.query.get(id)
-    if user:
-        return jsonify({'success': True, 'user': user.serialize()}), 200
-    return jsonify({'success': False, 'msg': 'User not found'}), 404
+    else:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
 
 # Ruta para restablecer la contraseña
 @api.route('/reset_password', methods=['POST'])
