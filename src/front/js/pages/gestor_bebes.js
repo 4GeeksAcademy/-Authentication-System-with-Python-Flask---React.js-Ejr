@@ -2,7 +2,8 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-import bebe1 from "../../img/bebe1.jpg"; // Imagen predeterminada en caso de que no haya una foto del bebé
+import bebe1 from "../../img/bebe1.jpg";
+import "../../styles/gestor_bebes.css";
 
 export const Gestor_bebes = () => {
     const { actions, store } = useContext(Context);
@@ -13,7 +14,7 @@ export const Gestor_bebes = () => {
     useEffect(() => {
         const fetchBabies = async () => {
             try {
-                await actions.getBabiesByUser(); // Cargar bebés del usuario
+                await actions.getBabiesByUser();
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching babies in useEffect:", error);
@@ -28,45 +29,36 @@ export const Gestor_bebes = () => {
     }
 
     return (
-        <div style={{backgroundColor:'#FBEE84'}}>
-            <div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: 'white', marginTop: '55px' }}>
-                <div className="d-flex flex-column justify-content-center">
-                    <div className="d-flex flex-column justify-content-center mt-3">
-                        <label className="tituloApp" style={{ fontSize: '24px', fontWeight: 'bold' }}>Babies</label>
-                        {/* Mostrar los bebés con foto, nombre y enlace para editar */}
-                        {babies.length > 0 ? (
-                            <ul style={{ listStyleType: 'none', padding: 0 }}>
-                                {babies.map((baby) => (
-                                    <li key={baby.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', borderRadius: '10px', padding: '10px', border: '2px solid #FBEE84' }}>
-                                        <img
-                                            src={baby.photoUrl || bebe1}
-                                            alt={baby.name}
-                                            style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '50%', marginRight: '15px' }}
-                                        />
-                                        <span style={{ flex: 1 }}>{baby.name}</span>
-                                        <Link
-                                            to={`/gestor_bebe/${baby.id}`}
-                                            style={{ color: '#075E81', textDecoration: 'underline', marginLeft: '10px' }}
-                                        >
-                                            Edit Baby
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <div>No babies found</div>
-                        )}
+        <div>
+            <div className="container-gestor-bebes" >
+                <div className="container-gestor-bebes">
+                    {babies.length > 0 ? (
+                        <ul>
+                            {babies.map((baby) => (
+                                <li key={baby.id} className="card-gestor-bebes">
+                                    <img
+                                        src={baby.photoUrl || bebe1}
+                                        alt={baby.name}
+                                    />
+                                    <span>{baby.name}</span>
+                                    <Link to={`/gestor_bebe/${baby.id}`}>
+                                        <div className="btn-edit-baby-gestor-bebes">Edit Baby</div>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <div className="no-babies-found">Add your baby now!</div>
+                    )}
+                    <div className="add-new-baby">
+                        <Link
+                            to="/add_baby"
+                            className="btn add-new-baby-text"
+                        >
+                            +
+                        </Link>
+                        <div className="add-new-baby-text-2">Add Baby</div>
                     </div>
-                    {/* Botón para añadir un bebé */}
-                    <div className="mb-3">
-                            <Link
-                                to="/add_baby"  
-                                className="btn btn-primary"
-                                style={{ backgroundColor: '#075E81', borderColor: '#075E81' }}
-                            >
-                                Add New Baby
-                            </Link>
-                        </div>
                 </div>
             </div>
         </div>

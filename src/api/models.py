@@ -65,7 +65,7 @@ class Report(db.Model):
     water = db.Column(db.Integer)
     meds = db.Column(db.Boolean)
     kindergarden = db.Column(db.Boolean)
-    extra = db.Column(db.String(120))
+    extra = db.Column(db.String(500))
 
     baby_id = db.Column(db.Integer, db.ForeignKey('baby.id'), nullable=False)
 
@@ -90,13 +90,13 @@ class Report(db.Model):
 class Blog_recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.Integer, db.ForeignKey('user.id'))
-    title = db.Column(db.String(120))
-    img_header = db.Column(db.String(500))
-    text_intro = db.Column(db.String(500))
-    text_ingredients = db.Column(db.String(120))
-    text_steps = db.Column(db.String(120))
-    img_final = db.Column(db.String(120))
-    source = db.Column(db.String(120))
+    title = db.Column(db.String(500))
+    img_header = db.Column(db.String(1000000))
+    text_intro = db.Column(db.String(1000000))
+    text_ingredients = db.Column(db.String(1000000))
+    text_steps = db.Column(db.String(1000000))
+    img_final = db.Column(db.String(1000000))
+    source = db.Column(db.String(1000000))
 
     def __repr__(self):
         return f'<Blog_recipe {self.id}>'
@@ -119,11 +119,11 @@ class Blog_recipe(db.Model):
 class Blog_news(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.Integer, db.ForeignKey('user.id'))
-    title = db.Column(db.String(120))
-    img_header = db.Column(db.String(500))
-    text = db.Column(db.String(120))
-    img_final = db.Column(db.String(500))
-    source = db.Column(db.String(120))
+    title = db.Column(db.String(1000000))
+    img_header = db.Column(db.String(1000000))
+    text = db.Column(db.String(1000000))
+    img_final = db.Column(db.String(1000000))
+    source = db.Column(db.String(1000000))
 
     def __repr__(self):
         return f'<Blog_news {self.id}>'
