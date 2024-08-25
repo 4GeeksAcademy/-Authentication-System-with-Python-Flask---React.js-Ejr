@@ -103,7 +103,7 @@ def editEmpleador():
     empleador.metodo_pago = metodo_pago
     empleador.descripcion=descripcion
     db.session.commit()
-    return jsonify({'msg': 'OK', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
+    return jsonify({'editar':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
     
 
 
@@ -132,7 +132,7 @@ def editProgramador():
     programador.experiencia = experiencia
     programador.descripcion = descripcion
     db.session.commit()
-    return jsonify({'msg': 'OK', 'user': user.serialize(), 'programador':programador.serialize()}), 200
+    return jsonify({'edit':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'programador':programador.serialize()}), 200
 
 
 #Iniciar sesión
