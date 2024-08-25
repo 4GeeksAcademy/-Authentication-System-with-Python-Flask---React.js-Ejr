@@ -119,3 +119,20 @@
     margin-right: 100px;
     width: 150%;
 }
+
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column; 
+        padding-left: 0; 
+    }
+
+    .login-img {
+        display: none; 
+        width: 0; 
+    }
+
+    .login-form {
+        width: 100%; 
+        padding: 2%; 
+    }
+}

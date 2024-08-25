@@ -1,59 +1,70 @@
-/* Icono Hamburguesa Personalizado */
+/* Mostrar el icono de perfil solo en pantallas grandes */
+.profile-icon {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    /* Oculta el icono de perfil en pantallas pequeñas */
+    .profile-icon {
+        display: none;
+    }
+}
+
+/* Estilos del botón de hamburguesa */
 .custom-toggler {
-    border: none; 
-    background-color: transparent; 
-    outline: none; 
-    padding: 0; 
+    border: none;
+    background-color: transparent;
+    outline: none;
+    padding: 0;
 }
 
 .custom-toggler-icon {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
     width: 30px;
     height: 10px;
 }
 
 .dot {
     display: block;
-    width: 8px; 
-    height: 8px; 
-    background-color: #FFFFFF; 
+    width: 8px;
+    height: 8px;
+    background-color: #FFFFFF;
     border-radius: 50%;
 }
 
 .dot1 {
-    background-color: #FBEE84; 
+    background-color: #FBEE84;
 }
 
 .dot2 {
-    background-color: #63DDFC; 
+    background-color: #63DDFC;
 }
 
 .dot3 {
-    background-color: #B4E49D; 
+    background-color: #B4E49D;
 }
 
 .navbar-toggler-icon {
-    display: none; 
+    display: none;
 }
 
 .custom-toggler:focus, .custom-toggler:hover {
-    box-shadow: none; 
+    box-shadow: none;
     outline: none;
 }
 
-
 /* Margen Interno */
 .offcanvas-body .navbar-nav .nav-item {
-    margin-top: 80px; 
-    margin-left: 60px; 
+    margin-top: 80px;
+    margin-left: 60px;
 }
 
 /* Logo Offcanvas */
 .offcanvas-body {
-    position: relative; 
+    position: relative;
 }
 
 .offcanvas-body .logo-container {
@@ -64,7 +75,7 @@
 }
 
 .offcanvas-body .logo-container img {
-    width: 40px; 
+    width: 40px;
     height: auto;
     opacity: 0.2;
 }
