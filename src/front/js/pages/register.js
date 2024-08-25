@@ -18,7 +18,7 @@ export const Register = () => {
     actions.register(formData)
 
     const timer = setTimeout(() => {
-      if (store.success) navigate("/")
+      if (store.success) navigate("/perfil")
     }, 3000);
     return () => clearTimeout(timer);
   }
