@@ -1,0 +1,238 @@
+/*  form-gestor-perfil-reset, gestor-perfil-bebes, gestor-perfil-bebes-titulo, gestor-perfil-bebes-no-found, gestor-perfil-bebes-bebe, container-gestor-perfil-right */
+
+.container-gestor-perfil {
+    width: 66%;
+    padding-top: 150px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.gestor-perfil-img {
+    width: 33%;
+}
+.gestor-perfil-img img {
+    width:250px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+.container-gestor-perfil-right {
+    width: 66%;
+}
+
+.form-gestor-perfil {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-gestor-perfil label {
+    min-width: 150px;
+    max-width: 150px;
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-align: center;
+    line-height: 33px;
+    height: 40px;
+    border: 3px solid #FBEE84;
+    border-radius: 25px;
+    margin-right: 20px;
+    font-size: 14pt;
+}
+
+.form-gestor-perfil input {
+    background-color: white !important;
+    height: 40px;
+    border: 3px solid #075E81;
+    border-radius: 25px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    width: 600px;
+    padding: 10px;
+    font-size: 14pt;
+}
+
+.form-gestor-perfil-reset {
+    text-decoration: underline;
+    text-decoration-color: #075E81; 
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12pt;
+    color: #075E81; 
+    right: 0; 
+    transform: translateY(-50%); 
+    text-align: right; 
+}
+
+
+.form-gestor-perfil-reset a {
+    color: #075E81; 
+    text-decoration: underline; 
+}
+
+.form-gestor-perfil-reset a:hover {
+    color: #063C5F; 
+    text-decoration: underline;
+}
+
+.gestor-perfil-edit {
+    background-color: #FBEE84;
+    height: 40px;
+    color: #075E81;
+    width: 100%;
+    margin-right: 30px;
+    font-size: 14pt;
+    border-radius: 25pt;
+    outline: none;
+    border: 3px solid #FBEE84;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    margin-top: 15px;
+}
+
+.gestor-perfil-bebes {
+    margin-top: 50px;
+    border: 3px solid #075E81;
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.gestor-perfil-bebes-titulo {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    color: #075E81;
+    font-size: 17pt;
+    margin-bottom: 25px;
+}
+
+.gestor-perfil-baby-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+}
+
+.gestor-perfil-baby-list-item {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    color: #075E81;
+    margin-right: 25px;
+}
+
+.gestor-perfil-baby-list-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.add-new-baby-text-gestor {
+    height: 100px;
+    width: 100px;
+    border: 3px solid #075E81;
+    border-radius: 50%; 
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-size: 80pt;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    padding-top: 12px;
+    margin-right: 15px;
+}
+
+.add-new-baby-text-gestor:hover {
+    background-color: #075E81;
+    color: #FBEE84;
+    border-color: #075E81;
+}
+
+@media (max-width: 768px) {
+    .container-gestor-perfil {
+        width: 100%;
+        padding-top: 80px;
+        flex-direction: column; 
+    }
+
+    .gestor-perfil-img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px; 
+    }
+
+    .gestor-perfil-img img {
+        width: 150px; 
+        height: 150px;
+    }
+
+    .container-gestor-perfil-right {
+        width: 100%;
+    }
+
+    .form-gestor-perfil {
+        flex-direction: column; 
+        align-items: stretch;
+    }
+
+    .form-gestor-perfil label,
+    .form-gestor-perfil input {
+        min-width: 100%;
+        max-width: 100%;
+        margin-right: 0; 
+        margin-bottom: 10px; 
+    }
+
+    .form-gestor-perfil input {
+        font-size: 12pt; 
+    }
+
+    .form-gestor-perfil-reset {
+        text-align: center; 
+        right: 0;
+        transform: none; 
+        margin-top: 20px; 
+    }
+
+    .gestor-perfil-edit {
+        margin-right: 0; 
+    }
+
+    .gestor-perfil-bebes {
+        margin-top: 20px;
+        padding: 15px; 
+    }
+
+    .gestor-perfil-bebes-titulo {
+        font-size: 14pt; 
+    }
+
+
+    .gestor-perfil-baby-list-item {
+        margin-right: 0; 
+        margin-bottom: 10px; 
+    }
+
+    .gestor-perfil-baby-list-item img {
+        width: 80px; 
+        height: 80px;
+        margin-right: 10px;
+    }
+
+    .add-new-baby-text-gestor {
+        width: 80px; 
+        height: 80px;
+        font-size: 50pt;
+    }
+}

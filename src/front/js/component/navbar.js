@@ -31,7 +31,7 @@ export const Navbar = () => {
         </button>
         {/* Icono de perfil visible solo en pantallas grandes */}
         <div className="d-none d-md-flex justify-content-end">
-          <Link to="/login">
+          <Link to="/gestor_perfil">
             <i className="fa-solid fa-circle-user profile-icon" style={{ fontSize: '30px', color: 'white' }}></i>
           </Link>
         </div>

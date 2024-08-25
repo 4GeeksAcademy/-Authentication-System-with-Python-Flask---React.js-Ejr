@@ -2,14 +2,16 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 
 import user1 from "../../img/user1.png";
+import bebe1 from "../../img/bebe1.jpg";
 import { Link } from "react-router-dom";
+import "../../styles/gestor_perfil.css";
 
 export const Gestor_perfil = () => {
     const { actions, store } = useContext(Context);
     const [loading, setLoading] = useState(true);
 
     const { user, babies } = store;
-    
+
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
@@ -34,42 +36,58 @@ export const Gestor_perfil = () => {
 
 
     return (
-        <div style={{backgroundColor: '#B4E49D'}}>
-            <div className="container" style={{ width: '80vw', height: '80vw', backgroundColor: 'white', marginTop:'55px' }}>
-                <div className="d-flex justify-content-center mb-3">
-                    <img src={user1} className="img-fluid" alt="IMG_user" style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}/>
-                </div>
-                
-                <div className="d-flex flex-column justify-content-center">
-                        <label>Username</label>
-                        <input type="text" name="username" placeholder="Username" value={user.username} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly/>
-                </div>
-                <div className="d-flex flex-column justify-content-center">
-                        <label>Email</label>
-                        <input type="text" name="email" placeholder="email" value={user.email} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly/>
-                </div>
-                <div className="d-flex flex-column justify-content-center">
-                    <label>Password</label>
-                    <input type="text" name="password" placeholder="password" value={user.password} style={{ backgroundColor: '#B4E49D', borderRadius: '10px', border:'none' }} readOnly />
-                </div>
-                <div className="mb-3">
-                    <Link to="/reset_password" style={{ color: '#075E81', textDecoration: 'underline' }}>Want to reset your password?</Link>
-                </div> 
-                <div className="d-flex flex-column justify-content-center mt-3" style={{ borderRadius: '10px', padding: '10px', border: '2px solid #B4E49D' }}>
-                        <label className="tituloApp">Babies</label>
-                        {/* Mostrar los nombres de los bebés */}
-                        {babies.length > 0 ? (
-                            <ul>
-                                {babies.map((baby) => (
-                                    <li key={baby.id}>{baby.name}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <div>No babies found</div>
-                        )}
-                </div>
-
+        <div className="container container-gestor-perfil" >
+            <div className="gestor-perfil-img">
+                <img src={user1} className="gestor-perfil-img-perfil" alt="IMG_user" />
             </div>
+            <div className="container-gestor-perfil-right">
+                <div className="form-gestor-perfil">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username" value={user.username} readOnly />
+                </div>
+                <div className="form-gestor-perfil">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="email" value={user.email} readOnly />
+                </div>
+                <div className="form-gestor-perfil">
+                    <label>Password</label>
+                    <input type="text" name="password" placeholder="password" value={user.password} readOnly />
+                </div>
+                <div className="form-gestor-perfil-reset">
+                    <Link to="/reset_password" >Want to reset your password?</Link>
+                </div>
+                <div>
+                    <button type="submit" className="ar-btn gestor-perfil-edit">
+                        Edit / Save
+                    </button>
+                </div>
+                <div className="gestor-perfil-bebes">
+                    <label className="gestor-perfil-bebes-titulo">Babies</label>
+                    {/* Mostrar las fotos de los bebés */}
+                    {babies.length > 0 ? (
+                        <div className="gestor-perfil-bebes-bebe">
+                            <ul className="gestor-perfil-baby-list">
+                                {babies.map((baby) => (
+                                    <li key={baby.id} className="gestor-perfil-baby-list-item">
+                                        <img src={bebe1} alt={baby.name} className="baby-photo" />
+                                    </li>
+                                ))}
+                                <li>
+                                    <Link
+                                        to="/add_baby"
+                                        className="btn add-new-baby-text-gestor"
+                                    >
+                                        +
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className="gestor-perfil-bebes-no-found">No babies found</div>
+                    )}
+                </div>
+            </div>
+
         </div>
     );
 };
