@@ -6,9 +6,12 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Userview } from "./pages/UserView";
+import {Companyview} from "./pages/CompanyView";
 import injectContext from "./store/appContext";
 import {SingleOffer} from "./pages/SingleOffer.jsx"
 
+ 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Inicio } from "./pages/inicio.js";
@@ -20,6 +23,8 @@ import { SobreNosotros } from "./pages/sobreNosotros.js";
 import { Contact } from "./pages/contact.js";
 import  PreguntasFrecuentes  from "./pages/preguntasFrecuentes.js";
 import  Perfil  from "./pages/perfil.js";
+
+
 
 //create your first component
 const Layout = () => {
@@ -42,6 +47,8 @@ const Layout = () => {
                         <Route element={<LoginPage />} path="/login" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Perfil />} path="/perfil" />
+                        <Route element={<Userview />} path="/user" />
+                        <Route element={<Companyview />} path="/company" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<TimeLine/>} path="/timeline"/>
                         <Route element={<FormOffer/>} path="/formoffer"/>
