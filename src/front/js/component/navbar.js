@@ -21,8 +21,12 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark nav nav-underline">
       <div className="container-fluid">
         <div className="ms-5">
+        <Link className="navbar-brand text-light ms-3" to="/">
           <img className="logo" src={logo} alt="Logo" />
-          <Link className="navbar-brand text-light ms-3" to="/">HablemosUY</Link>
+          </Link>
+          <Link className="navbar-brand text-light ms-3" to="/">
+          <span className="fs-4">HablemosUY</span>
+          </Link>
         </div>
 
         <button className="navbar-toggler text-dark me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

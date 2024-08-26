@@ -181,10 +181,10 @@ export const Login = () => {
 			{/* Modal de recuperación de contraseña */}
 			<Modal show={showModal} onHide={handleCloseModal}>
 				<Modal.Header closeButton>
-					<Modal.Title>Recuperar Contraseña</Modal.Title>
+					<Modal.Title className="w-100 text-center text-secondary">Recuperar Contraseña</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form>
+					<Form className="justify-content-center">
 						<Form.Group controlId="formBasicEmail">
 							<Form.Label>Ingrese su dirección de correo electrónico</Form.Label>
 							<Form.Control
@@ -196,7 +196,7 @@ export const Login = () => {
 						</Form.Group>
 					</Form>
 				</Modal.Body>
-				<Modal.Footer>
+				<Modal.Footer className="d-flex justify-content-center">
 					<Button variant="secondary" onClick={handleCloseModal}>
 						Cancelar
 					</Button>
