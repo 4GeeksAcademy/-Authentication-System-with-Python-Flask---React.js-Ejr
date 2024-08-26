@@ -1,12 +1,17 @@
-//import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom"; // Importa BrowserRouter
 
-//include your index.scss file into the bundle
+// Include your index.css file into the bundle
 import "../styles/index.css";
 
-//import your own components
+// Import your own components
 import Layout from "./layout";
 
-//render your react application
-ReactDOM.render(<Layout />, document.querySelector("#app"));
+// Render your React application
+ReactDOM.render(
+  <BrowserRouter>
+    <Layout />
+  </BrowserRouter>,
+  document.querySelector("#app")
+);

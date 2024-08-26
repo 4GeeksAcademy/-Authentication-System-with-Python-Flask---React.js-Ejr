@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
@@ -27,52 +27,48 @@ import { Gestor_perfil } from "./pages/gestor_perfil.js";
 import { Reset_password } from "./pages/reset_password.js";
 import { Gestor_bebes } from "./pages/gestor_bebes.js";
 import { Add_baby } from "./pages/add_baby";
-import { Change_password } from "./pages/change_password.js";
 
-//create your first component
+// Create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-    const basename = process.env.BASENAME || "";
+    const location = useLocation();
+    const showFooter = !['/login', '/register'].includes(location.pathname);
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                {<Navbar /> }
-                    <Routes>
-                        {/* Home */}
-                        <Route element={<Home />} path="/" />
-                        {/* Perfil */}
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Register />} path="/register" />
-                        <Route element={<Reset_password />} path="/reset_password" />
-                        <Route element={<Change_password />} path="/change_password" />
-                        {/* Bebé */}
-                        <Route element={<Gestor_perfil />} path="/gestor_perfil" />
-                        <Route element={<Gestor_bebe />} path="/gestor_bebe/:id" />
-                        <Route element={<Gestor_bebes />} path="/gestor_bebes" />
-                        <Route element={<Add_baby />} path="/add_baby" />
-                        {/* Report */}
-                        <Route element={<AddReport />} path="/dashboard" />
-                        <Route path="/baby/:babyId/:reportId" element={<ViewReport />} />
-                        <Route path="/edit_report/:babyId/:reportId" element={<EditReport />} />
-                        <Route path="/baby/:babyId/reports" element={<ViewReports />} />
-                        <Route path="/average-report/:babyId" element={<AverageReportPage />} />
-                        {/* Blog */}
-                        <Route element={<New_Blog />} path="/new_blog" />
-                        <Route element={<All_Blogs />} path="/blog" />
-                        <Route element={<All_Recipes />} path="/recipes" />
-                        <Route element={<All_News />} path="/news" />
-                        <Route path="/blog/:type/:id" element={<BlogDetail />} />
-                        <Route path="/edit_blog/:type/:id" element={<EditBlog />} />
-                        {/* 404 */}
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                </ScrollToTop>
-            </BrowserRouter>
+            <ScrollToTop>
+                <Navbar />
+                <Routes>
+                    {/* Home */}
+                    <Route path="/" element={<Home />} />
+                    {/* Perfil */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/reset_password" element={<Reset_password />} />
+                    {/* Bebé */}
+                    <Route path="/gestor_perfil" element={<Gestor_perfil />} />
+                    <Route path="/gestor_bebe/:id" element={<Gestor_bebe />} />
+                    <Route path="/gestor_bebes" element={<Gestor_bebes />} />
+                    <Route path="/add_baby" element={<Add_baby />} />
+                    {/* Report */}
+                    <Route path="/dashboard" element={<AddReport />} />
+                    <Route path="/baby/:babyId/:reportId" element={<ViewReport />} />
+                    <Route path="/edit_report/:babyId/:reportId" element={<EditReport />} />
+                    <Route path="/baby/:babyId/reports" element={<ViewReports />} />
+                    <Route path="/average-report/:babyId" element={<AverageReportPage />} />
+                    {/* Blog */}
+                    <Route path="/new_blog" element={<New_Blog />} />
+                    <Route path="/blog" element={<All_Blogs />} />
+                    <Route path="/recipes" element={<All_Recipes />} />
+                    <Route path="/news" element={<All_News />} />
+                    <Route path="/blog/:type/:id" element={<BlogDetail />} />
+                    <Route path="/edit_blog/:type/:id" element={<EditBlog />} />
+                    {/* 404 */}
+                    <Route path="*" element={<h1>Not found!</h1>} />
+                </Routes>
+                {showFooter && <Footer />}
+            </ScrollToTop>
         </div>
     );
 };
