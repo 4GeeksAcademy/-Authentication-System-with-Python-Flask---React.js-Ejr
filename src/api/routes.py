@@ -246,5 +246,3 @@ def get_contacts():
         return jsonify([contact.serialize() for contact in contacts]), 200
     return jsonify({'msg':'Ningún contacto encontrado'}),404
 
-if __name__ == '__main__':
-    api.run(host='0.0.0.0', port=3245, debug=True)
