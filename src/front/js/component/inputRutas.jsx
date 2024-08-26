@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
 
 export const InputRutas = () => {
+    const { store, actions } = useContext(Context)
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
+    const [titleValue, setTitleValue] = useState("");
+    const [descriptionValue, setDescriptionValue] = useState("");
 
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && inputValue.trim() !== "") {
@@ -19,15 +23,30 @@ export const InputRutas = () => {
         setInputValue(e.target.value);
     };
 
+    const handleInputTitleChange = (e) => {
+        setTitleValue(e.target.value);
+        store.newItineraryData.title = titleValue;
+    };
+
+    const handleInputDescChange = (e) => {
+        setDescriptionValue(e.target.value);
+        store.newItineraryData.description = descriptionValue;
+    };
+
     return (
         <div>
+            <hr />
+            <h5 className="mb-2">Información del itinerario:</h5>
             <div className="input-group mb-3">
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Titulo"
+                    placeholder="Título"
                     aria-label="Titulo"
                     aria-describedby="basic-addon1"
+                    maxLength="35"
+                    onChange={handleInputTitleChange}
+                    required
                 />
             </div>
 
@@ -35,12 +54,12 @@ export const InputRutas = () => {
                 {tags.map((tag, index) => (
                     <span key={index} className="tag-item">
                         #{tag}
-                        <button
+                        <span
                             type="button"
-                            className="btn-close ms-1"
+                            className="ms-1"
                             aria-label="Remove"
                             onClick={() => handleRemoveTag(index)}
-                        ></button>
+                        ><i className="fa-solid fa-x fa-xs" style={{color: '#949494'}}></i></span>
                     </span>
                 ))}
             </div>
@@ -61,9 +80,12 @@ export const InputRutas = () => {
             <div className="mb-3">
                 <textarea
                     className="form-control"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
+                    id="itiDescInput" 
+                    rows="6"
                     placeholder="Escribe algo aquí..."
+                    maxLength="250"
+                    onChange={handleInputDescChange}
+                    required
                 ></textarea>
             </div>
         </div>

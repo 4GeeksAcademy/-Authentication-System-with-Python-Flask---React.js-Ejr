@@ -14,3 +14,9 @@
   .upload-file {
     max-width: 90%;
   }
+
+  .uploaded {
+    border-radius: 20px !important;
+    height: 450px;
+    width: 750px;
+  }

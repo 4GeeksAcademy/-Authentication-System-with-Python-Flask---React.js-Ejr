@@ -9,7 +9,7 @@ const RutaDestacada = () => {
           <div className="carousel-item active">
             <img
               src="https://www.spain.info/.content/imagenes/cabeceras-grandes/andalucia/vistas-cordoba-s158982617.jpg"
-              className="d-block "
+              className="d-block home"
               alt="..."
             />
           </div>
