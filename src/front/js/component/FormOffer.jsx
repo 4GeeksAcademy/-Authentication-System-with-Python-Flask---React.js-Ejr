@@ -14,61 +14,46 @@ export const FormOffer = () => {
         salario: "",
         plazo: "",
         modalidad: "Teletrabajo",
-        experiencia_minima: "Sin experiencia",
-        fecha_publicacion: "",
+        experiencia_minima: "",
+        fecha_publicacion: null,
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({ ...prevState, [name]: value }));
-    };
-
-    const formatDate = (date) => {
-        const d = new Date(date);
-        return d.toISOString().split('T')[0]; // yyyy-mm-dd format
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const today = new Date();
-        const todayDate = formatDate(today);
-
         const { name, descripcion, salario, plazo, modalidad, experiencia_minima } = formData;
 
         if (!name || !descripcion || !salario || !plazo || !modalidad || !experiencia_minima) {
             setError('Por favor, completa todos los campos.');
-            return;
+        } else {
+            setError('');
+            const offerDate = new Date().toISOString();
+            const updatedFormData = {
+                ...formData,
+                fecha_publicacion: offerDate,
+            };
+
+            try {
+                await actions.CreateJobOffers(updatedFormData);
+                navigate('/timeline');
+            } catch (error) {
+                setError('Ocurrió un error al crear la oferta.');
+            }
+
+            setFormData({
+                name: "",
+                descripcion: "",
+                salario: "",
+                plazo: "",
+                modalidad: "Teletrabajo",
+                experiencia_minima: "Sin experiencia",
+                fecha_publicacion: null,
+            });
         }
-
-        const formattedPlazo = formatDate(plazo);
-
-        if (plazo <= todayDate) {
-            setError('El plazo debe ser mayor a la fecha actual.');
-            return;
-        }
-
-        const updatedFormData = {
-            ...formData,
-            plazo: formattedPlazo,
-            fecha_publicacion: todayDate,
-        };
-
-        try {
-            await actions.CreateJobOffers(updatedFormData);
-            navigate('/timeline');
-        } catch (error) {
-            setError('Ocurrió un error al crear la oferta.');
-        }
-
-        setFormData({
-            name: "",
-            descripcion: "",
-            salario: "",
-            plazo: "",
-            modalidad: "Teletrabajo",
-            experiencia_minima: "Sin experiencia",
-            fecha_publicacion: "",
-        });
     };
 
     return (
@@ -99,6 +84,7 @@ export const FormOffer = () => {
                                     id="name"
                                     placeholder="Software ing full-stack"
                                     maxLength="30"
+                                    aria-describedby="cardHelpBlock"
                                     required
                                     onChange={handleChange}
                                     value={formData.name}
@@ -130,7 +116,6 @@ export const FormOffer = () => {
                                     value={formData.experiencia_minima}
                                 >
                                     <option value="">Seleccione una opción</option>
-                                    <option value="Sin experiencia">Sin experiencia</option>
                                     <option value="Junior">Junior</option>
                                     <option value="Mid-senior">Mid-senior</option>
                                     <option value="Senior">Senior</option>
@@ -155,6 +140,7 @@ export const FormOffer = () => {
                                 <input
                                     type="date"
                                     className="form-control"
+                                    placeholder="Introduzca el plazo límite"
                                     name="plazo"
                                     id="plazo"
                                     required
@@ -171,6 +157,7 @@ export const FormOffer = () => {
                                     name="descripcion"
                                     id="descripcion"
                                     placeholder="Describe la oferta lo más detalladamente posible..."
+                                    aria-describedby="cardHelpBlock"
                                     required
                                     onChange={handleChange}
                                     value={formData.descripcion}
