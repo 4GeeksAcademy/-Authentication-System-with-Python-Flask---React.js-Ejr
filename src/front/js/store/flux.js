@@ -47,14 +47,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de oferta:", error);
 				}
 			},
-			CreateJobOffer: async (offerData) => {
+			createJobOffer: async (offerData) => {
+				console.log(offerData);
+				
 				try {
 					const token = localStorage.getItem('token');
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/crearOferta`, {
 						method: 'POST',
 						headers: {
-							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${token}`
+							"Content-Type": 'application/json',
+							Authorization: `Bearer ${token}`
 						},
 						body: JSON.stringify(offerData)
 					});
