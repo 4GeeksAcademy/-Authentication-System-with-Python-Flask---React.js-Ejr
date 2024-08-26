@@ -1,11 +1,10 @@
 import React from "react";
-// import CalendlyWidget from "../component/calendlyWidget.jsx";
-
+import { InlineWidget } from "react-calendly";
 const Agenda = () => {
     return (
         <div>
             <h1>Agenda tu Reunión</h1>
-            <CalendlyWidget />
+            <InlineWidget/>
         </div>
     );
 };
