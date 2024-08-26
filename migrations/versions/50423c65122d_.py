@@ -62,7 +62,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('descripcion', sa.String(length=700), nullable=False),
-    sa.Column('salario', sa.Integer(), nullable=False),
+    sa.Column('salario', sa.String(15), nullable=False),
     sa.Column('plazo', sa.String(length=100), nullable=False),
     sa.Column('modalidad', sa.Enum('TELETRABAJO', 'PRESENCIAL', name='modalidad'), nullable=False),
     sa.Column('experiencia_minima', sa.Enum('JUNIOR', 'MID', 'SENIOR', name='experience'), nullable=False),
