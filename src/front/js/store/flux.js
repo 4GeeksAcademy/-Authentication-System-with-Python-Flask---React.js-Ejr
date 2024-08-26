@@ -372,7 +372,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				setStore({dataUser: {...store.dataUser,foto: url }})
 				return url
-			}
+			},
+			fetchEspecialidades : async () => {
+				const store = getStore();
+				console.log(store.token);
+				
+				let token = localStorage.getItem("token")
+				console.log(token);
+				
+				try {
+					const response = await fetch(process.env.BACKEND_URL +`/especialidades`, {
+						headers: {
+							'Authorization': `Bearer ${token}`,  // Envía el token JWT en el encabezado
+						},
+					});
+					const data = await response.json();
+					if (response.ok) {
+					
+						setStore({especialidades:data});
+					} else {
+						console.error('Error al cargar las especialidades', response.statusText);
+					}
+				console.log(response);
+				
+				} catch (error) {
+					console.error('Error:', error);
+				}
+			},
+			saveUserSpecialties: async (especialidadesSeleccionadas) => {
+				const store = getStore();
+				try {
+					const response = await fetch(process.env.BACKEND_URL + '/user/specialties', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${store.token}`,  // JWT token if applicable
+						},
+						body: JSON.stringify({ specialties: especialidadesSeleccionadas }),
+					});
+			
+					if (response.ok) {
+						console.log('Especialidades guardadas correctamente');
+					} else {
+						console.error('Error al guardar las especialidades');
+					}
+				} catch (error) {
+					console.error('Error:', error);
+				}
+			},
 
 
 		}
