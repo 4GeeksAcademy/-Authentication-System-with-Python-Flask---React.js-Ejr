@@ -398,7 +398,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const payload = {
-                        "routineId": routineId,
+                        "routine_id": routineId,
                         "day": day
                     };
                     console.log('Sending payload:', payload);

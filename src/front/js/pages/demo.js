@@ -60,42 +60,51 @@ const MultiStepForm = () => {
   const handlePreviousStep = () => setStep(step - 1)
 
   const handleCreateRoutine = async (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
+  
     // Crear una promesa para manejar la creación de la rutina
     const createRoutine = new Promise(async (resolve, reject) => {
       try {
-        const routineResponse = await actions.postRoutine(formData.routineName)
+        const routineResponse = await actions.postRoutine(formData.routineName);
+  
         if (!routineResponse || routineResponse.error) {
-          throw new Error('Error al crear la rutina')
+          // Lanza el mensaje de error que viene del endpoint
+          throw new Error(routineResponse?.error || 'Error al crear la rutina');
         }
+  
         // Si la rutina se crea correctamente, resolver la promesa
-        resolve('Rutina creada exitosamente')
+        resolve('Rutina creada exitosamente');
         // Avanzar al siguiente paso
-        handleNextStep()
+        handleNextStep();
       } catch (error) {
-        // Rechazar la promesa en caso de error
-        reject('Error al crear la rutina')
+        // Rechazar la promesa en caso de error y pasar el mensaje de error
+        reject(error.message);
       }
-    })
-
+    });
+  
     // Usar toast.promise para mostrar los estados de la promesa
     toast.promise(
       createRoutine,
       {
         pending: 'Creando rutina...',
         success: 'Rutina creada exitosamente 👌',
-        error: 'No se pudo crear la rutina 🤯',
+        error: {
+          render({ data }) {
+            // Mostrar el mensaje de error específico que fue rechazado
+            return data;
+          },
+        },
       }
-    )
-
+    );
+  
     // Manejar el resultado de la promesa si es necesario
     createRoutine.then(() => {
       // Puedes realizar acciones adicionales aquí si es necesario
     }).catch((error) => {
-      console.error(error)
-    })
-  }
+      console.error(error); // Manejar el error de manera adicional si es necesario
+    });
+  };
+  
 
 
   const handleChooseDays = async (e) => {
@@ -117,6 +126,7 @@ const MultiStepForm = () => {
         handleNextStep();
       } catch (error) {
         // Rechazar la promesa en caso de error
+        console.log(error)
         reject('Error al asociar la rutina con los días');
       }
     });
