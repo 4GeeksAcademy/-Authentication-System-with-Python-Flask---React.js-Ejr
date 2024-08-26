@@ -31,7 +31,7 @@ export const Contact = () => {
     }
 
     try {
-      const response = await fetch("/contact", {
+      const response = await fetch(process.env.BACKEND_URL+"/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
