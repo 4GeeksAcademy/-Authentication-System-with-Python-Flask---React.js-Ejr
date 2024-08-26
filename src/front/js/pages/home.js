@@ -31,7 +31,11 @@ export const Home = () => {
 					<div className="titulo-texto-header-landing">BabyTracker</div>
 					<div className="catchprhase-texto-header-landing">Track Every Milestone, Cherish Every Moment</div>
 				</div>
-				<div className="btn-header-landing">Sign up now!</div>
+				<div className="btn-closing-landing-container">
+						<Link className="btn-closing-landing" to="/register">
+							Sign up now!
+						</Link>
+					</div>
 			</div>
 			<div className="info-landing">
 				<div className="info-landing-top">
@@ -312,7 +316,11 @@ export const Home = () => {
 				<div className="texto-closing-landing">
 					<div className="titulo-texto-closing-landing">What are you waiting for?</div>
 					<div className="catchprhase-texto-closing-landing">There's no better time to take control of your baby's development. With BabyTracker's powerful tracking and visualization tools, you'll easily monitor every stage of their growth.</div>
-					<div className="btn-closing-landing">Join us</div>
+					<div className="btn-closing-landing-container">
+						<Link className="btn-closing-landing" to="/register">
+							Join us
+						</Link>
+					</div>
 				</div>
 
 			</div>
