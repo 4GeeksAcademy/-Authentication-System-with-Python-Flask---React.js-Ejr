@@ -111,6 +111,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
 				return true
 			},
+			editUser: async (formData, texto, token) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/user/edit${texto}`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify(formData),
+					})
+					const data = await resp.json()
+					setStore(data)
+					localStorage.setItem('token', data.token)
+					return data
+
+				} catch (error) {
+					console.log('error:' + error)
+				}
+			},
+			resetStore: () => {
+				setStore({ msg: "", success: "" })
+			},
+			logOut: () => {
+				localStorage.removeItem("token")
+				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
+				return true
+			},
 			login: async (credentials) => {
                 try {
                     const resp = await fetch(`${process.env.BACKEND_URL}/api/login`, {

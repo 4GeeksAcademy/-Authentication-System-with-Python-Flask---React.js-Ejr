@@ -79,7 +79,7 @@ def getAllUsers():
     return jsonify({'msg':'Ningún usuario encontrado'}),404
 
 
-#Agregar usuario a Empleador  PENDIENTE
+#Agregar usuario a Empleador  
 @api.route('/user/editEmpleador', methods=['PUT'])
 @jwt_required()
 def editEmpleador():
@@ -103,12 +103,12 @@ def editEmpleador():
     empleador.metodo_pago = metodo_pago
     empleador.descripcion=descripcion
     db.session.commit()
-    return jsonify({'msg': 'OK', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
+    return jsonify({'editar':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
     
 
 
 
-#Agregar usuario a Programador   PENDIENTE
+#Agregar usuario a Programador   
 @api.route('/user/editProgramador', methods=['PUT'])
 @jwt_required()
 def editProgramador():
@@ -132,7 +132,7 @@ def editProgramador():
     programador.experiencia = experiencia
     programador.descripcion = descripcion
     db.session.commit()
-    return jsonify({'msg': 'OK', 'user': user.serialize(), 'programador':programador.serialize()}), 200
+    return jsonify({'editar':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'programador':programador.serialize()}), 200
 
 
 #Iniciar sesión
@@ -243,8 +243,6 @@ def contact():
 def get_contacts():
     contacts = Contact.query.all() 
     
-    return jsonify([contact.serialize() for contact in contacts]), 200
-
     if contacts:
         return jsonify([contact.serialize() for contact in contacts]), 200
     return jsonify({'msg':'Ningún contacto encontrado'}),404
