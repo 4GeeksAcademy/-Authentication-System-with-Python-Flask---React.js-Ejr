@@ -40,7 +40,7 @@ const ListaCursos = () => {
                     ))}
                 </div>
             ) : (
-                <p className="noCursos">No hay cursos disponibles</p> /* Mensaje cuando no hay cursos filtrados */
+                <p className="noCursos">Filtre para encontrar el curso deseado</p> /* Mensaje cuando no hay cursos filtrados */
             )}
         </div>
     );

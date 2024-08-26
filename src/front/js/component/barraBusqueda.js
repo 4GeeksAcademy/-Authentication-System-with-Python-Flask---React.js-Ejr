@@ -8,20 +8,22 @@ import { Context } from '../store/appContext'; // Importa el contexto global
 const BarraBusqueda = () => {
     // Accede al estado global y las acciones desde el contexto
     const { store, actions } = useContext(Context);
-
-
     // Estado para la categoría seleccionada  y la categoría que está siendo sobrevolada (hover)
     const [seleCategoria, setSeleCategoria] = useState(null);
     const [hoveredCategoria, setHoveredCategoria] = useState(null);
-    //const [seleSubcategoria, setSelecSubcategoria] = useState('');
-
     // Validación de formularios
     const [erroresFormulario, setErroresFormulario] = useState({});
     const [esFormularioValido, setEsFormularioValido] = useState(true);
-
     // Estado local para manejar el estado de carga y errores
     const [loading, setLoading] = useState(store.loading);
     const [error, setError] = useState(store.error);
+
+
+
+
+
+
+
 
     // Función para validar el formulario
     const validarFormulario = () => {
@@ -79,20 +81,28 @@ const BarraBusqueda = () => {
 
 
 
-   // Función para restablecer los filtros a sus valores por defecto
-   const resetFiltros = () => {
-    actions.actualizarFiltros({
-        categoria: "",
-        valoracion: 0,
-        nivel: "",
-        precio: [0, 100],
-        fecha: "",
-        idioma: "",
-        busqueda: "",
-        cursoRelacionado: ""
-    }); // Resetea los filtros en el estado global
-    setSeleCategoria(null);
+    // Función para restablecer los filtros a sus valores iniciales
+    const resetFiltros = async () => {
+        actions.actualizarFiltros({
+            categoria: "",
+            valoracion: 0,
+            nivel: "",
+            precio: [0, 350],
+            fecha: "",
+            idioma: "",
+            busqueda: "",
+        }); // Resetea los filtros en el estado global
+        
+        setSeleCategoria(null);
+
+        // Llama a la acción para recargar los cursos (puedes necesitar ajustar esta función según tu implementación)
+        await actions.cargarCursos(); // Esta acción debe manejar la lógica para cargar cursos y manejar el estado de "No hay cursos disponibles"
     };
+
+
+
+
+
 
     // Función para manejar los cambios en los campos del formulario
     const handleChange = (e) => {

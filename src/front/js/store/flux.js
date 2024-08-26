@@ -86,10 +86,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try { // Enviamos una solicitud GET para obtener todos los cursos.
                     const response = await fetch(process.env.BACKEND_URL+'/api/cursos'); // Solicita los datos de cursos
                     const data = await response.json(); // Convierte la respuesta en JSON
-                    setStore({ cursos: data, cursosConFiltros: data, loading: false }); 
-                    // Actualizamos ambos estados tanto de cursos y cursosConFiltrado
+                    setStore({ ...store, cursos: data, cursosConFiltros: data, loading: false }); 
+                    // Actualizamos ambos estados tanto de cursos y cursosConFiltrado y oculta el estado de carga
                 } catch (error) {
-                    setStore({ error: error.message, loading: false }); // Maneja el error
+                    setStore({ ...store, error: error.message, loading: false }); // Maneja el error
                     console.error('Error loading courses:', error);
                 }
             },
@@ -109,7 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         (!filtros.precio || (curso.precio >= filtros.precio[0] && curso.precio <= filtros.precio[1])) &&
                         (!filtros.fecha || new Date(curso.fecha) >= new Date(filtros.fecha)) &&
                         (!filtros.idioma || curso.idioma === filtros.idioma) &&
-                        (!filtros.busqueda || curso.nombre.includes(filtros.busqueda))
+                        (!filtros.busqueda || curso.nombre.toLowerCase().includes(filtros.busqueda.toLowerCase()))
                     );
                 });
 
