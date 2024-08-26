@@ -1,31 +1,68 @@
-.perfil{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    background-color: #64b6ac;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-block-end: 5%;
+.btnInvisible {
+    background: none; /* Sin fondo */
+    border: none;     /* Sin borde */
+    color: inherit;   /* Hereda el color del texto */
+    font: inherit;    /* Hereda el estilo de la fuente */
+    cursor: pointer;  /* Muestra el cursor de puntero al pasar sobre el enlace */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-flex; /* Alinea el SVG y el texto en línea */
+    align-items: center; /* Alinea el contenido verticalmente */
+    padding: 0;       /* Sin relleno adicional */
 }
-.perfil__side-content{
-    display:flex;
+
+.btnInvisible svg {
+    vertical-align: middle; /* Alinea el SVG verticalmente con el texto */
+    margin-right: 5px; /* Espacio entre el SVG y el texto */
+}
+
+.confIzq {
+    border-radius: 5%;
+    background-color: 
+    #e0e0e2;
+    height: 290px;
+    width: 280px;
+    margin-left: 250px;
+    margin-top: 50px;
+    text-indent:24px;
+    padding-top: 20px;
+    margin-right: 0px;
+}
+
+.confiDere {
+    border-radius: 2%;
+    background-color: #e0e0e2;
+    height: 1000px;
+    width: 1000px;
+    margin-right: 250px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+.imagen2 img{
+    height: 200px;
+    width: 200px;
+    margin-top: 60px;
+    margin-left: -100px;
+    border-radius: 50%;
+    max-width: 100%;
+}
+
+
+.lado2{
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    max-width: 20%;
-    padding: 1rem;
+    justify-content: center; /* Alinea verticalmente el contenido */
+    margin-left: -600px;
+    margin-top: 100px;
 }
-.perfil__main-content{
-    display:flex;
-    flex-direction:column;
-    justify-content: flex-start;
-    align-items: stretch;
-    width: 100%;  
-    padding: 1rem;
+
+.firstName{
+    margin-top: 30px;
+    text-indent:24px;
+    margin-left: 40px;
+    margin-right: 500px;
 }
-.perfil__divider{
-    border-left: 2px solid #DAFFEF;
-    height: 45vw;
+.nombrePersona{
+    margin-top: ;
+    margin-left: 20px;
 }
