@@ -35,7 +35,7 @@ const Signup = () => {
     const data = {
       sender: {
         name: "AutoAgenda",
-        email: "autoagenda3@gmail.com",
+        email: "autoagenda3@devstack.top",
       },
       to: [
         {
