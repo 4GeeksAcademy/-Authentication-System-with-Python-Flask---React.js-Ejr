@@ -141,7 +141,7 @@ const perfil = () => {
                         )}
 
 
-                        {store?.msg && store?.editar(
+                        {store?.editar &&(
                             <div class="alert alert-success" role="alert">{store.msg}</div>
                         )}
 

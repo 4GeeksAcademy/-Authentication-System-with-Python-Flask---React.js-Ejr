@@ -39,7 +39,7 @@ export const SectionRight = () => {
                         </div>
                     ))
                 ) : (
-                    <p className=" no-offers-section text-secondary text-muted text-center shadow-lg">No hay ofertas destacadas con más de 4 estrellas.</p>
+                    <p className=" no-offers-section text-secondary text-muted text-center shadow-lg mb-5">No hay ofertas destacadas.</p>
                 )}
             </div>
         </div>

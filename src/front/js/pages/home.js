@@ -11,10 +11,11 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	
 
-	return (
-		<div>
-
-
+return (
+	
+		<div className="container-fluid">
+			
 		</div>
-	);
+	
+	  );
 };
