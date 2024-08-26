@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (resp.ok) {
 						const data = await resp.json();
-						setStore({ selectedJobOffer: data.oferta }); 
+						setStore({ selectedJobOffer: data.oferta });
 					} else {
 						console.error("Error al cargar la oferta");
 					}
@@ -60,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.ok) {
 						const data = await resp.json();
 						const store = getStore();
-						setStore({ jobOffers: [...store.jobOffers, data.oferta] }); 
+						setStore({ jobOffers: [...store.jobOffers, data.oferta] });
 						return data;
 					} else {
 						const errorData = await resp.json();
@@ -105,9 +105,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			resetStore: () => {
 				setStore({ msg: "", success: "" })
 			},
-			logOut: () =>{
+			logOut: () => {
 				localStorage.removeItem("token")
-				setStore({msg:"", token:"", success:"", user:"", empleador:"", programador:""})
+				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
+				return true
+			},
+			editUser: async (formData, texto, token) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/user/edit${texto}`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify(formData),
+					})
+					const data = await resp.json()
+					setStore(data)
+					localStorage.setItem('token', data.token)
+					return data
+
+				} catch (error) {
+					console.log('error:' + error)
+				}
+			},
+			resetStore: () => {
+				setStore({ msg: "", success: "" })
+			},
+			logOut: () => {
+				localStorage.removeItem("token")
+				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
 				return true
 			}
 
