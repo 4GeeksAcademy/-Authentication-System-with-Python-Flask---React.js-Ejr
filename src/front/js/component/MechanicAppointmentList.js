@@ -65,6 +65,19 @@ function MechanicAppointmentList() {
   const handleViewDetails = appointmentId => {
     navigate(`/appointmentdetails/${appointmentId}`);
   };
+  const convertUTCToLocal = (date) => {
+    const utcDate = new Date(date);
+    const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+    return localDate;
+  };
+  
+  const convertUTCToLocalDate = (date) => {
+    return convertUTCToLocal(date).toLocaleDateString();
+  };
+  
+  const convertUTCToLocalTime = (date) => {
+    return convertUTCToLocal(date).toLocaleTimeString();
+  };
 
   return (
     <div className="mechanic-appointments">
@@ -86,8 +99,8 @@ function MechanicAppointmentList() {
           <tbody>
             {appointments.map(app => (
               <tr key={app.id}>
-                <td>{new Date(app.date).toLocaleDateString()}</td>
-                <td>{new Date(app.date).toLocaleTimeString()}</td>
+                <td>{convertUTCToLocalDate(app.date)}</td>  {/* Muestra la fecha correcta */}
+                <td>{convertUTCToLocalTime(app.date)}</td>  {/* Muestra la hora correcta */}
                 <td>{app.service?.name || 'Unknown'}</td>
                 <td>{app.car?.car_model || 'Unknown'}</td>
                 <td>{app.user?.name || 'Unknown'}</td>

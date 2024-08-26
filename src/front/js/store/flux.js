@@ -236,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: {
               accept: "application/json",
-              "api-key": process.env.SMSKEY,
+              "api-key": process.env.MYKEY,
               "Content-Type": "application/json",
             },
             body: JSON.stringify(SMSInfo),
@@ -267,6 +267,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error:", error);
         }
       },
+      getMaxAppointmentsHour: async () => {
+        const response = await fetch(`${apiUrl}/settings`);
+        if (!response.ok) throw new Error("Network response failed");
+        const data = await response.json();
+        return data.max_appointments_per_hour;  
+    }
+
     },
   };
 };

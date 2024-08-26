@@ -24,8 +24,21 @@ const BookAppointmentUnregisteredUser = () => {
   const navigate = useNavigate();
   const [isAvailable, setIsAvailable] = useState(true);
   const [takenSlots, setTakenSlots] = useState([]);
-  const maxAppointmentsPerHour = 4
+  const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
   const apiUrl = process.env.BACKEND_URL + "/api";
+   // Obtener el valor de maxAppointmentsPerHour solo una vez al montar el componente
+   useEffect(() => {
+    const fetchMaxAppointmentsPerHour = async () => {
+      try {
+        const maxHour = await actions.getMaxAppointmentsHour();
+        setMaxAppointmentsPerHour(maxHour); // Almacena el valor en el estado
+      } catch (error) {
+        console.error("Error fetching max appointments per hour:", error);
+      }
+    };
+  
+    fetchMaxAppointmentsPerHour();
+  }, [actions]);
 
   useEffect(() => {
     const getServices = async () => {
@@ -64,9 +77,8 @@ const BookAppointmentUnregisteredUser = () => {
   const selectedService = services.find(
     (service) => service.id === parseInt(serviceChosen, 10)
   );
-  
-  const serviceName = selectedService ? selectedService.name : "Not selected";
 
+  const serviceName = selectedService ? selectedService.name : "Not selected";
 
   //------------------------------------------------------------------------------------ manejo horario laboral
   const disabledDate = (current) => {
@@ -78,63 +90,78 @@ const BookAppointmentUnregisteredUser = () => {
     );
   };
 
-  // Función para deshabilitar horas fuera del horario laboral y las que tienen 4 citas
+  // Función para deshabilitar horas fuera del horario laboral y las que tienen maximo de citas
   const disabledTime = (date) => {
     const now = new Date(); // Hora actual
     const selectedDate = date.format("YYYY-MM-DD"); // Fecha seleccionada
-  
+
     const hours = {
       disabledHours: () => {
         const disabledHours = [];
-        
+
         // Filtrar los slots tomados por la fecha seleccionada
         const slotsForSelectedDate = takenSlots.filter(
           (slot) => slot.date === selectedDate
         );
-  
+
         // Contar las citas por hora
         const hourCounts = {};
         slotsForSelectedDate.forEach((slot) => {
           const slotHour = parseInt(slot.start_time.split(":")[0], 10);
           hourCounts[slotHour] = (hourCounts[slotHour] || 0) + 1;
         });
-  
+
         // Deshabilitar las horas que tienen el máximo de citas permitidas
         Object.keys(hourCounts).forEach((hour) => {
-          if (hourCounts[hour] >= maxAppointmentsPerHour) { // maxAppointmentsPerHour es el límite máximo
+          if (hourCounts[hour] >= maxAppointmentsPerHour) {
+            // maxAppointmentsPerHour es el límite máximo
             disabledHours.push(parseInt(hour, 10));
           }
         });
-  
+
         // También deshabilitar las horas fuera del horario laboral
         for (let i = 0; i < 24; i++) {
-          if (i < 9 || i >= 18 || (selectedDate === now.toISOString().split('T')[0] && i < now.getHours())) {
+          if (
+            i < 9 ||
+            i >= 18 ||
+            (selectedDate === now.toISOString().split("T")[0] &&
+              i < now.getHours())
+          ) {
             disabledHours.push(i);
           }
         }
-  
+
         return disabledHours;
       },
       disabledMinutes: (hour) => {
-        if (takenSlots.find(slot => parseInt(slot.start_time.split(":")[0], 10) === hour && slot.date === selectedDate)) {
-          const slotsForHour = takenSlots.filter(slot => parseInt(slot.start_time.split(":")[0], 10) === hour && slot.date === selectedDate);
-  
+        if (
+          takenSlots.find(
+            (slot) =>
+              parseInt(slot.start_time.split(":")[0], 10) === hour &&
+              slot.date === selectedDate
+          )
+        ) {
+          const slotsForHour = takenSlots.filter(
+            (slot) =>
+              parseInt(slot.start_time.split(":")[0], 10) === hour &&
+              slot.date === selectedDate
+          );
+
           // Deshabilitar todos los minutos si la hora está llena
           if (slotsForHour.length >= maxAppointmentsPerHour) {
             return Array.from({ length: 60 }, (_, i) => i);
           }
         }
-  
+
         // Deshabilitar solo los minutos 0 y 30
         return Array.from({ length: 60 }, (_, i) => i).filter(
-          (min) => min !== 0 
+          (min) => min !== 0
         );
       },
     };
-  
+
     return hours;
   };
-  
 
   // Función para obtener los slots tomados desde la API
   const fetchTakenSlots = async () => {
@@ -165,10 +192,10 @@ const BookAppointmentUnregisteredUser = () => {
     }
     if (currentStep === 2 && !serviceChosen) {
       setError("Service required. Please select one from the list.");
-      
+
       return;
     }
-     await fetchTakenSlots();
+    await fetchTakenSlots();
     if (currentStep === 3) {
       if (!appointmentDate) {
         setError(
@@ -264,7 +291,7 @@ const BookAppointmentUnregisteredUser = () => {
       localStorage.setItem("token", loginData.access_token);
       localStorage.setItem("role_id", loginData.role_id);
       localStorage.setItem("user_id", loginData.user_id);
-      
+
       const addNewCarNewUser = await fetch(`${apiUrl}/cars`, {
         method: "POST",
         headers: {
@@ -287,13 +314,13 @@ const BookAppointmentUnregisteredUser = () => {
       const carData = await addNewCarNewUser.json();
 
       const dateFormat = appointmentDate.format("YYYY-MM-DD HH:mm:ss");
-      
+
       const submitAppointment = await fetch(`${apiUrl}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginData.access_token}`,
-          ...store.corsEnabled // Deshabilitar una vez en producción
+          ...store.corsEnabled, // Deshabilitar una vez en producción
         },
         body: JSON.stringify({
           date: dateFormat,
@@ -317,34 +344,87 @@ const BookAppointmentUnregisteredUser = () => {
 
       const Sender = () => {
         const data = {
-        sender: {
-              name: "AutoAgenda",
-              email: "autoagenda3@gmail.com",
+          sender: {
+            name: "AutoAgenda",
+            email: "autoagenda@devstack.top",
+          },
+          to: [
+            {
+              email: userData.email,
+              name: userData.name,
             },
-            to: [
-              {
-                email: userData.email,
-                name: userData.name,
-              },
-            ],
-            subject: "Account and Appointment created successfully",
-            htmlContent: `<html><head></head><body><p font-size: 16px;>Hello,${userData.name}</p>  <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" width="390" border="0">
-          <h1 class="default-heading1" style="margin: 0; color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-size: 36px; word-break: break-word;">Account and Appointment scheduled successfully</h1>
-          The account on our system and Your appointment on the day ${dateFormat} has been created successfully.</p>
-          <p>This email is for informational purposes only and you do not have to respond.</p></body></html>`,
-          };
-          const SMSInfo = {
-            type: "transactional",
-            unicodeEnabled: true,
-            sender: "AutoAgenda",
-            recipient:`+34${phoneNumber}`,
-            content: `hello ${userData.name}, Your appointment on the day ${dateFormat} has been created successfully.`,
-            tag: "t1",
-            organisationPrefix:"AutoAgenda info:"
-          }
-          actions.SMSSender(SMSInfo);
-          actions.SendMail(data);
+          ],
+          subject: "Account and Appointment created successfully",
+          htmlContent: `<!DOCTYPE html>
+            <html lang="en">
+            
+            <head>
+                <meta charset="UTF-8">
+                <title>Account and Appointment Created</title>
+            </head>
+            
+            <body style="font-family: Arial, sans-serif; background-color: #E3DDDB; margin: 0; padding: 0; text-align: center; color: #333333;">
+                <div style="max-width: 600px; width: 100%; margin: 20px auto; padding: 20px; background-color: #F8F4F3;">
+                    <div style="text-align: center; padding: 20px 0;">
+                        <img src="https://img.mailinblue.com/7996011/images/content_library/original/66bcf74479b71d7506636d4a.png" alt="Logo" style="width: 120px; height: auto;">
+                        <h1 style="font-size: 28px; font-weight: bold; margin: 20px 0 10px; color: #333333;">Account and Appointment created successfully</h1>
+                    </div>
+                    <div style="text-align: left; padding: 0 20px; margin-top: 20px;">
+                        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Dear <strong>${
+                          userData.name
+                        },</strong></p>
+                        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">We are pleased to inform you that your account has been successfully created, and your appointment is confirmed for <strong>${
+                          dateFormat.split(" ")[0]
+                        }</strong> at <strong>${
+            dateFormat.split(" ")[1]
+          }</strong>.</p>
+                        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0; color: #333333;">Please note, this email is for informational purposes only, and no response is required.</p>
+                    </div>
+                    <div style="margin-top: 30px; padding: 20px; font-size: 14px; color: #888888; text-align: center; background-color: #E3DDDB;">
+                        <p style="margin: 5px 0;"><strong>AutoAgenda | Drive Your Time</strong></p>
+                        <p style="margin: 5px 0;">&copy; 2024 All rights reserved</p>
+                        <div style="margin-top: 10px;">
+                            <a href="#" style="text-decoration: none; margin: 0 5px; color: #333333;">
+                                <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #333333;">
+                                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" style="text-decoration: none; margin: 0 5px; color: #333333;">
+                                <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #333333;">
+                                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" style="text-decoration: none; margin: 0 5px; color: #333333;">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                                </svg>
+                            </a>
+                            <a href="#" style="text-decoration: none; margin: 0 5px; color: #333333;">
+                                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #333333;">
+                                    <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                    <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            
+            </html>`,
         };
+        const SMSInfo = {
+          type: "transactional",
+          unicodeEnabled: true,
+          sender: "AutoAgenda",
+          recipient: `+34${phoneNumber}`,
+          content: `hello ${userData.name}, Your appointment on the day ${dateFormat} has been created successfully.`,
+          tag: "t1",
+          organisationPrefix: "AutoAgenda info:",
+        };
+        actions.SMSSender(SMSInfo);
+        actions.SendMail(data);
+      };
 
       if (userData && userData.email && userData.name && phoneNumber) {
         Sender();
@@ -610,4 +690,3 @@ const BookAppointmentUnregisteredUser = () => {
 };
 
 export default BookAppointmentUnregisteredUser;
-
