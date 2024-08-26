@@ -1,8 +1,9 @@
 footer {
-    background-color: #5D737E;;
-    color: white;
+    background-color: #000022;;
+    color: #E0E0E2;
     padding: 40px 0;
     text-align: center;
+    position: relative;
     width: 100%;
     margin-top: auto;
 }
@@ -24,13 +25,11 @@ footer {
 }
 
 .footer-links a {
-    color: #64b6ac;
+    color: #7389AE;
     text-decoration: none;
 }
 
 .footer-links a:hover {
     text-decoration: underline;
-    background-color: #DAffef;
-    border-color: #DAffef;
-    color:#5D737E
+    background-color: #B5BAD0;
 }
