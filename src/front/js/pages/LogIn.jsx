@@ -68,7 +68,7 @@ const LogIn = () => {
                             <Link className="register-link" to='/register'>Registrarse</Link>
                         </div>
                         <div className="col-auto d-flex justify-content-center w-75">
-                            <button type="submit" className="btn btn-login mb-3 p-2 w-75">Iniciar sesión</button>
+                            <button type="submit" className="btn btn-login mb-3 p-2 w-100">Iniciar sesión</button>
                         </div>
 
                     </Form>

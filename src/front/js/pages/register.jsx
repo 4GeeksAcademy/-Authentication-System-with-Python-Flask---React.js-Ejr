@@ -103,7 +103,7 @@ const Register = () => {
                             <div className="register-link-container d-flex justify-content-center">
                                 <Link className="register-link" to='/login'>¿Ya tienes una cuenta? Inicia sesión</Link>
                             </div>
-                            <div className="col-auto d-flex justify-content-center w-75">
+                            <div className="col-auto d-flex justify-content-center w-100">
                                 <button type="submit" className="btn btn-login mb-3 p-2 w-75">Registrarse</button>
                             </div>
                         </Form>

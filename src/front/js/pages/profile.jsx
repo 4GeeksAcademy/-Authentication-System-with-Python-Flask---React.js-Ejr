@@ -2,11 +2,14 @@ import React, { useState, useContext } from "react";
 import "../../styles/CardProfile.css";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
+import Swal from 'sweetalert2';
+
 const ImgUpload = ({ onChange, src }) => (
   <div className="d-flex justify-content-center mb-3">
     <label htmlFor="photo-upload" className="custom-file-upload">
-      <div className="img-wrap img-thumbnail rounded-circle small-img-wrap"> 
-        <img alt="profile" src={src} className="img-fluid rounded-circle small-img" /> 
+      <div className="img-wrap img-thumbnail rounded-circle small-img-wrap">
+        <img alt="profile" src={src} className="img-fluid rounded-circle small-img" />
       </div>
       <input id="photo-upload" type="file" onChange={onChange} style={{ display: 'none' }} />
     </label>
@@ -25,6 +28,33 @@ const Name = ({ onChange, value }) => (
       value={value}
       placeholder="Ingrésa tu nuevo nombre"
       required
+    />
+  </div>
+);
+
+const CalendlyUrl = () => (
+  <div className="mb-3">
+    <label htmlFor="url" className="form-label">Calendly url:</label>
+    <input
+      id="url"
+      type="text"
+      className="form-control"
+      maxLength="150"
+      placeholder="Ingrésa tu url de calendly"
+  
+    />
+  </div>
+);
+
+const Description = () => (
+  <div className="mb-3">
+    <label htmlFor="description" className="form-label">Descripción:</label>
+    <textarea
+      id="description"
+      className="form-control"
+      maxLength="2000"
+      placeholder="Ingrésa tu descripción aquí"
+   
     />
   </div>
 );
@@ -66,7 +96,7 @@ const Edit = ({ onSubmit, children }) => (
       <h1 className="card-title mb-4 text-center">Editar Perfil</h1>
       {children}
       <div className="text-center">
-        <button type="submit" className="btn-profile save-button"> 
+        <button type="submit" className="btn-profile save-button">
           Guardar
         </button>
       </div>
@@ -83,7 +113,8 @@ const CardProfile = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const photoUpload = (e) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -97,7 +128,7 @@ const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = store.currentUser?.id; 
+    const userId = store.currentUser?.id;
     const updatedUserData = {
       name,
       email,
@@ -107,11 +138,18 @@ const navigate = useNavigate()
     const result = await actions.updateUser(userId, updatedUserData);
 
     if (result.success) {
-      console.log("Usuario actualizado con éxito");
-     navigate('/login')
+      Swal.fire({
+        icon: 'success',
+        title: 'Perfil actualizado',
+        text: '¡Tu perfil ha sido actualizado con éxito!',
+      });
+      navigate('/login');
     } else {
-      console.log(result)
-    alert("Error al actualizar el usuario");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al actualizar tu perfil. Por favor, intenta nuevamente.',
+      });
     }
   };
 
@@ -122,6 +160,8 @@ const navigate = useNavigate()
         <Name onChange={(e) => setName(e.target.value)} value={name} />
         <Email onChange={(e) => setEmail(e.target.value)} value={email} />
         <Password onChange={(e) => setPassword(e.target.value)} value={password} />
+        <CalendlyUrl />
+        <Description />
       </Edit>
     </div>
   );
