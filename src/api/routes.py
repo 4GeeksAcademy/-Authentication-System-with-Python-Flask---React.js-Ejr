@@ -314,15 +314,15 @@ def get_psicologos():
         return jsonify({"msg": str(e)}), 500
     
 #OBTENER TODAS LAS ESPECIALIDADES  
-@api.route('/especialidades', methods=['GET'])
-def get_especialidades():
-    try:
-        especialidades = Especialidades.query.all()
-        especialidades_serialized = [especialidad.serialize() for especialidad in especialidades]
+# @api.route('/especialidades', methods=['GET'])
+# def get_especialidades():
+#     try:
+#         especialidades = Especialidades.query.all()
+#         especialidades_serialized = [especialidad.serialize() for especialidad in especialidades]
 
-        return jsonify(especialidades_serialized), 200
-    except Exception as e:
-        return jsonify({"msg": str(e)}), 500
+#         return jsonify(especialidades_serialized), 200
+#     except Exception as e:
+#         return jsonify({"msg": str(e)}), 500
 
 #OBTENER TODOS LOS COMENTARIOS 
 @api.route('/comentarios', methods=['GET'])
@@ -447,4 +447,16 @@ def update_user_photo_by_email():
 
         return jsonify({"msg": "Foto de perfil actualizada exitosamente"}), 200
     except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
+@api.route('/especialidades', methods=['GET'])
+@jwt_required()
+def get_especialidades():
+    try:
+    
+        especialidades = Especialidades.query.all()
+        especialidades_serializadas = [especialidad.serialize() for especialidad in especialidades]
+        return jsonify(especialidades_serializadas), 200
+    except Exception as e:
+        
         return jsonify({"msg": str(e)}), 500
