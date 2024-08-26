@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 # Crear una instancia global de SQLAlchemy
 db = SQLAlchemy()
 
@@ -12,74 +11,103 @@ class User(db.Model):
     is_teacher = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
 
+    profesor = db.relationship('Profesor', backref='user', lazy=True)
+    alumno = db.relationship('Alumno', backref='user', lazy=True)
+
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "is_teacher": self.is_teacher
+            "is_teacher": self.is_teacher,
+            "profesor": self.profesor.serialize() if self.profesor else None,
+            "alumno": self.alumno.serialize() if self.alumno else None
         }
 
     def __repr__(self):
         return f'<User {self.email}>'
-    
+
+
 class Profesor(db.Model):
     __tablename__ = "profesor"
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(120), nullable=True)
-    lastname = db.Column(db.String(120),nullable=True)
-    telefono = db.Column(db.Integer(), nullable=True)
-    address = db.Column(db.String(120),nullable=True)
-    avatar=db.Column(db.String(250))
+    lastname = db.Column(db.String(120), nullable=True)
+    telefono = db.Column(db.String(15), nullable=True)
+    address = db.Column(db.String(120), nullable=True)
+    avatar = db.Column(db.String(250))
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id')) 
-    relationship_user = db.relationship('User',backref ='profesor', lazy=True)
 
+    cursos = db.relationship('Curso', backref='profesor', lazy=True)
+    pagos = db.relationship('Pagos', backref='profesor', lazy=True)
+
+    def __repr__(self):
+        return f'<Profesor {self.name}>'
+    
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
+            "lastname": self.lastname,
             "telefono": self.telefono,
             "address": self.address,
             "user_id": self.user_id,
-            #añadir linea de codigo donde va la foto del usuario
+            "avatar": self.avatar,
+            "cursos": [curso.serialize() for curso in self.cursos] if self.cursos else None,
+            "pagos": [pago.serialize() for pago in self.pagos] if self.pagos else None,
         }
+    
 
 
 class Alumno(db.Model):
     __tablename__ = "alumno"
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(120), nullable=True)
-    lastname = db.Column(db.String(120),nullable=True)
-    telefono = db.Column(db.Integer(), nullable=True)
-    address = db.Column(db.String(120),nullable=True)
-    #añadir linea de codigo donde va la foto del usuario
+    lastname = db.Column(db.String(120), nullable=True)
+    telefono = db.Column(db.String(15), nullable=True)
+    address = db.Column(db.String(120), nullable=True)
+    avatar = db.Column(db.String(250))
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id')) 
-    relationship_user = db.relationship('User',backref ='alumno', lazy=True)
 
+    matriculas = db.relationship('Matricula', backref='alumno', lazy=True)
+    pagos = db.relationship('Pagos', backref='alumno', lazy=True)
+    
+    def __repr__(self):
+        return f'<Alumno {self.name}>'
+    
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
+            "lastname": self.lastname,
             "telefono": self.telefono,
             "address": self.address,
             "user_id": self.user_id,
-            #añadir linea de codigo donde va la foto del usuario
+            "avatar": self.avatar,
+            "matriculas": [matricula.serialize() for matricula in self.matriculas] if self.matriculas else None,
         }
+
 
 class Curso(db.Model):
     __tablename__ = "curso"
     id = db.Column(db.Integer(), primary_key=True)
     title = db.Column(db.String(120), nullable=False)
-    portada=db.Column(db.String(120), nullable=False)
-    resumen = db.Column(db.String(120), nullable=True)
+    portada = db.Column(db.String(250), nullable=False)
+    resumen = db.Column(db.String(250), nullable=True)
     categoria = db.Column(db.String(120), nullable=True)
     valoraciones = db.Column(db.Integer(), nullable=True)
     niveles = db.Column(db.String(120), nullable=True)
     precio = db.Column(db.Integer(), nullable=True)
-    fecha_inicio = db.Column(db.String(120), nullable=True)#no se si es String u otro tipo
+    fecha_inicio = db.Column(db.String(120), nullable=True)
     idioma = db.Column(db.String(120), nullable=True)
-    modulos = db.Column(db.String(120),nullable=True)
+    modulos = db.Column(db.String(120), nullable=True)
     profesor_id = db.Column(db.Integer(), db.ForeignKey('profesor.id')) 
-    relationship_profesor = db.relationship('Profesor',backref ='curso', lazy=True)
+
+    videos = db.relationship('Videos', backref='curso', lazy=True)
+    matriculas = db.relationship('Matricula', backref='curso', lazy=True)
+
+    def __repr__(self):
+        return f'<Curso {self.title}>'
+
 
     def serialize(self):
         return {
@@ -94,32 +122,38 @@ class Curso(db.Model):
             "idioma": self.idioma,
             "modulos": self.modulos,
             "profesor_id": self.profesor_id,
-            #añadir linea de codigo donde va la imagen del curso
+            "portada": self.portada,
+            "matriculas": [matricula.serialize() for matricula in self.matriculas] if self.matriculas else None,
+            "videos": [video.serialize() for video in self.videos] if self.videos else None,
         }
-    
-class Videos(db.Model) :
+
+
+class Videos(db.Model):
     __tablename__ = "videos"
     id = db.Column(db.Integer(), primary_key=True)
     title = db.Column(db.String(120), nullable=True)
-    url = db.Column(db.String(120), nullable=True)
+    url = db.Column(db.String(250), nullable=True)
     text = db.Column(db.String(250), nullable=False)
     curso_id = db.Column(db.Integer(), db.ForeignKey('curso.id'))
-    relationship_contenido = db.relationship('Curso',backref ='contenido', lazy=True)
+
+    def __repr__(self):
+        return f'<title {self.title}>'
 
     def serialize(self):
         return {
             "id": self.id,
             "title": self.title,
-            "resumen": self.resumen,
+            "url": self.url,
+            "text": self.text,
+            "curso_id": self.curso_id
         }
+
 
 class Matricula(db.Model):
     __tablename__ = "matricula"
     id = db.Column(db.Integer(), primary_key=True)
     curso_id = db.Column(db.Integer(), db.ForeignKey('curso.id'))
-    relationship_curso = db.relationship('Curso',backref ='matricula', lazy=True) 
     alumno_id = db.Column(db.Integer(), db.ForeignKey('alumno.id'))
-    relationship_alumno = db.relationship('Alumno',backref ='matricula', lazy=True)
 
     def serialize(self):
         return {
@@ -128,16 +162,17 @@ class Matricula(db.Model):
             "alumno_id": self.alumno_id,
         }
 
+
 class Pagos(db.Model):
     __tablename__ = "pagos"
     id = db.Column(db.Integer, primary_key=True)
     matricula_id = db.Column(db.Integer(), db.ForeignKey('matricula.id'))
-    relationship_curso = db.relationship('Curso',back_populates ='matricula', lazy=True) 
     alumno_id = db.Column(db.Integer(), db.ForeignKey('alumno.id'))
-    relationship_alumno = db.relationship('Alumno',back_populates ='matricula', lazy=True)
     profesor_id = db.Column(db.Integer(), db.ForeignKey('profesor.id')) 
-    relationship_profesor = db.relationship('Profesor',back_populates ='matricula', lazy=True)
-    fecha_pago = db.Column(db.String(120), nullable=True)#no se si es String u otro tipo
+    fecha_pago = db.Column(db.String(120), nullable=True)  
+
+    def __repr__(self):
+        return f'<Pagos {self.fecha_pago}>'
 
     def serialize(self):
         return {
