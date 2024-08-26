@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 const UserProfileView = ({ user, onClose }) => {
   if (!user) {
     return null;
   }
 
-  const latestAppointments = user.appointments
-    ? user.appointments.slice(-2)
-    : [];
-  const latestComments = user.comments ? user.comments.slice(-4) : [];
-  const cars = user.cars ? user.cars : [];
+  const [commentsToShow, setCommentsToShow] = useState(4); 
+  const latestAppointments = user.appointments ? user.appointments.slice(-2) : [];
+  const comments = user.comments || [];
+  const cars = user.cars || [];
+
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  };
+
+  const handleLoadMoreComments = () => {
+    setCommentsToShow(prevCount => prevCount + 4); 
+  };
 
   return (
     <div
@@ -40,7 +52,7 @@ const UserProfileView = ({ user, onClose }) => {
             {cars.length > 0 ? (
               <ul>
                 {cars.map((car, index) => (
-                  <li key={index}>
+                  <li key={car.id || index}>
                     {car.car_model || "Unknown Model"} (
                     {car.license_plate || "Unknown License Plate"})
                   </li>
@@ -55,8 +67,8 @@ const UserProfileView = ({ user, onClose }) => {
             {latestAppointments.length > 0 ? (
               <ul>
                 {latestAppointments.map((appointment, index) => (
-                  <li key={index}>
-                    {appointment.date || "Unknown Date"} -{" "}
+                  <li key={appointment.id || index}>
+                    {new Date(appointment.date).toLocaleString(undefined, options) || "Unknown Date"} -{" "}
                     {appointment.service?.name || "Unknown Service"} (
                     {appointment.status || "Unknown Status"})
                   </li>
@@ -66,24 +78,31 @@ const UserProfileView = ({ user, onClose }) => {
               <p>No recent appointments.</p>
             )}
             <p>
-              <strong>Latest Comments:</strong>
+              <strong>Comments:</strong>
             </p>
-            {latestComments.length > 0 ? (
-              <ul>
-                {latestComments.map((comment, index) => (
-                  <li key={index}>
-                    <strong>
-                      {comment.is_mechanic === true ? "Mechanic" : "Client"}:
-                    </strong>{" "}
-                    {comment.content || "No content"}{" "}
-                    <p>
-                      <small>({comment.timestamp || "Unknown time"})</small>
-                    </p>
-                  </li>
-                ))}
-              </ul>
+            {comments.length > 0 ? (
+              <>
+                <ul>
+                  {comments.slice(0, commentsToShow).map((comment, index) => (
+                    <li key={comment.id || index}>
+                      <strong>
+                        {comment.is_mechanic === true ? "Mechanic" : "Client"}:
+                      </strong>{" "}
+                      {comment.content || "No content"}{" "}
+                      <p>
+                        <small>{comment.timestamp ? new Date(comment.timestamp).toLocaleString(undefined, options) : "Unknown time"}</small>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+                {commentsToShow < comments.length && (
+                  <button className="btn btn-light btn-link" onClick={handleLoadMoreComments}>
+                    Load More
+                  </button>
+                )}
+              </>
             ) : (
-              <p>No recent comments.</p>
+              <p>No comments found.</p>
             )}
           </div>
           <div className="modal-footer">
