@@ -54,7 +54,7 @@ export const Gestor_perfil = () => {
                     <input type="text" name="password" placeholder="password" value={user.password} readOnly />
                 </div>
                 <div className="form-gestor-perfil-reset">
-                    <Link to="/reset_password" >Want to reset your password?</Link>
+                    <Link to="/change_password" >Want to reset your password?</Link>
                 </div>
                 <div>
                     <button type="submit" className="ar-btn gestor-perfil-edit">
