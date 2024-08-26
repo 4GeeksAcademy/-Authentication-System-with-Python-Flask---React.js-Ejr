@@ -236,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: {
               accept: "application/json",
-              "api-key": process.env.SMSKEY,
+              "api-key": process.env.MYKEY,
               "Content-Type": "application/json",
             },
             body: JSON.stringify(SMSInfo),
