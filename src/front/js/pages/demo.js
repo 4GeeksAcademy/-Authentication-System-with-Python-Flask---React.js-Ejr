@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 
 const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(3) // Para controlar el paso actual
+  const [step, setStep] = useState(1) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
     selectedDay: '',
@@ -15,6 +15,7 @@ const MultiStepForm = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [cancelRoutineCreation, setCancelRoutineCreation] = useState(false)
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' });
   const [setsInput, setSetsInput] = useState('') // Valor del input de series
@@ -40,14 +41,6 @@ const MultiStepForm = () => {
   }
   const closeDropdown = () => setIsOpen(false)
 
-  const handleSeriesChange = (e) => {
-    setSeries(e.target.value);
-  };
-
-  const handleRepsChange = (e) => {
-    setReps(e.target.value);
-  }
-
   const handleInputChange = (input) => (e) => {
     setFormData({
       ...formData,
@@ -59,21 +52,28 @@ const MultiStepForm = () => {
   const handleNextStep = () => setStep(step + 1)
   const handlePreviousStep = () => setStep(step - 1)
 
+  const handleOnDeleteRoutine = () => {
+    actions.deleteRoutine(store.routineData.id)
+    handleFinishRoutine()
+    setCancelRoutineCreation(false)
+  }
+
   const handleCreateRoutine = async (e) => {
     e.preventDefault();
-  
+
     // Crear una promesa para manejar la creación de la rutina
     const createRoutine = new Promise(async (resolve, reject) => {
       try {
         const routineResponse = await actions.postRoutine(formData.routineName);
-  
+
         if (!routineResponse || routineResponse.error) {
           // Lanza el mensaje de error que viene del endpoint
           throw new Error(routineResponse?.error || 'Error al crear la rutina');
         }
-  
+
         // Si la rutina se crea correctamente, resolver la promesa
         resolve('Rutina creada exitosamente');
+        actions.setCompleteRoutine(false)
         // Avanzar al siguiente paso
         handleNextStep();
       } catch (error) {
@@ -81,7 +81,7 @@ const MultiStepForm = () => {
         reject(error.message);
       }
     });
-  
+
     // Usar toast.promise para mostrar los estados de la promesa
     toast.promise(
       createRoutine,
@@ -96,7 +96,7 @@ const MultiStepForm = () => {
         },
       }
     );
-  
+
     // Manejar el resultado de la promesa si es necesario
     createRoutine.then(() => {
       // Puedes realizar acciones adicionales aquí si es necesario
@@ -104,7 +104,7 @@ const MultiStepForm = () => {
       console.error(error); // Manejar el error de manera adicional si es necesario
     });
   };
-  
+
 
 
   const handleChooseDays = async (e) => {
@@ -256,6 +256,7 @@ const MultiStepForm = () => {
     setStep(1)
     setAddedExercises([])
     setIsFinishModalOpen(false)
+    actions.setCompleteRoutine(true)
   }
 
   const handleStepText = (index) => {
@@ -286,15 +287,14 @@ const MultiStepForm = () => {
     }
   }
 
+  const handleSelectChange = (e) => {
+    setSelectSets(e.target.value);
+  }
 
   useEffect(() => {
     actions.allExercise()
     actions.category()
   }, [])
-
-  const handleSelectChange = (e) => {
-    setSelectSets(e.target.value);
-  }
 
   return (
     <div className="w-3/4 mx-auto flex rounded-md flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-5 h-full bg-neutral-800 border-neutral-700 relative">
@@ -448,10 +448,10 @@ const MultiStepForm = () => {
             <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
               <button
                 type="button"
-                onClick={handlePreviousStep}
+                onClick={() => setCancelRoutineCreation(true)}
                 className="bg-transparent hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
               >
-                Anterior
+                Cancelar
               </button>
               <button
                 type="button"
@@ -653,10 +653,10 @@ const MultiStepForm = () => {
             <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
               <button
                 type="button"
-                onClick={handlePreviousStep}
+                onClick={() => setCancelRoutineCreation(true)}
                 className="bg-transparent hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
               >
-                Anterior
+                Cancelar
               </button>
               <button
                 type="button"
@@ -815,11 +815,48 @@ const MultiStepForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Cancel modal */}
+      {/* modal */}
+      <div id="finish-modal" tabIndex="-1" className={`${cancelRoutineCreation ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen backdrop-blur-sm transition-all ease-in flex`}>
+        <div className="relative p-4 w-full max-w-md max-h-full">
+          <div className="relative bg-white rounded-lg shadow dark:bg-neutral-700">
+            <div className="flex items-center justify-between p-4 md:p-5 rounded-t">
+
+              <div className="flex flex-col gap-3">
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
+                Seguro que quieres cancelar la creación?
+              </h3>
+              <p className="text-neutral-300">
+                Esto eliminará lo creado hasta el momento
+              </p>
+              </div>
+            </div>
+            <div className="flex gap-4 items-center justify-end w-full p-4">
+              <button onClick={() => setCancelRoutineCreation(false)} type="button" className="text-white inline-flex items-center bg-neutral-700 hover:bg-neutral-800 focus:ring-4 focus:outline-none focus:ring-neutral-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-neutral-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
+                Cancelar
+              </button>
+              <button onClick={handleOnDeleteRoutine} className="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div >
   )
 }
 
 export const Demo = () => {
+  // useEffect(() => {
+  //   const handleOnBeforeUnload = (event) => {
+  //     console.log('el usuario se fue de la página')
+  //     event.preventDefault()
+  //     return (event.returnValue = '')
+  //   }
+  //   window.addEventListener('beforeunload', handleOnBeforeUnload, { capture: true })
+  // }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-900">
       <MultiStepForm />

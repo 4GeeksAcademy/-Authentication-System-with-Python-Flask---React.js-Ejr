@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const getState = ({ getStore, getActions, setStore }) => {
     return {
@@ -25,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             allCategoryList: [],
             routineData: '',
             setId: '',
-
+            completeRoutine: false,
             allSetsList: []
         },
         actions: {
@@ -602,6 +603,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     );
 
                     if (resp.status == 200) {
+                        setStore({ routineData: '' })
                         console.log(resp.data);
                         return true;
                     }
@@ -1026,6 +1028,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         return error;
                     }
                 }
+            },
+            setCompleteRoutine: (value) => {
+                setStore({ completeRoutine: value })
             },
         }
     };

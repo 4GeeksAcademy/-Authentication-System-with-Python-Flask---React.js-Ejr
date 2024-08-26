@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
@@ -26,6 +27,7 @@ import ProtectedRoute from "./component/protectedRoute";
 
 const usePageTitle = (defaultTitle) => {
     const location = useLocation();
+    const { store, actions } = useContext(Context)
 
     useEffect(() => {
         switch (location.pathname) {
@@ -66,6 +68,14 @@ const usePageTitle = (defaultTitle) => {
                 document.title = defaultTitle;
         }
     }, [location, defaultTitle]);
+
+    useEffect(() => {
+        if ( store.routineData ) {
+            if (location.pathname !== '/routine/new'  && store.completeRoutine === false) {
+                actions.deleteRoutine(store.routineData.id)
+            }
+        }
+    }, [location])
 };
 
 //create your first component
