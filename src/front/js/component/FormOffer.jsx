@@ -25,20 +25,22 @@ export const FormOffer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { name, descripcion, salario, plazo, modalidad, experiencia_minima } = formData;
+        const { name, descripcion, salario, plazo, modalidad, experiencia_minima } = formData;        
 
         if (!name || !descripcion || !salario || !plazo || !modalidad || !experiencia_minima) {
             setError('Por favor, completa todos los campos.');
         } else {
-            setError('');
             const offerDate = new Date().toISOString();
             const updatedFormData = {
                 ...formData,
                 fecha_publicacion: offerDate,
+            
             };
+            console.log(updatedFormData)
 
             try {
-                await actions.CreateJobOffers(updatedFormData);
+                const resp = await actions.createJobOffers(updatedFormData);
+                console.log(resp);
                 navigate('/timeline');
             } catch (error) {
                 setError('Ocurrió un error al crear la oferta.');
@@ -72,7 +74,7 @@ export const FormOffer = () => {
                     </div>
                 </div>
                 <div className="form-box my-5 shadow-lg">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={ e => handleSubmit(e)}>
                         {error && <div className="alert alert-danger">{error}</div>}
                         <div className="row my-3 text-secondary fw-bold">
                             <div className="col-4 d-flex flex-column">
