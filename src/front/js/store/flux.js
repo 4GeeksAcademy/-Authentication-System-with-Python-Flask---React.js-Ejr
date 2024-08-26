@@ -53,8 +53,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     idioma: "aleman"
                 }
                 
-            ], //  Almacena todos los cursos obtenidos desde el backend.
-            cursosConFiltros: [], // Almacena los cursos después de aplicar filtros
+            ], //  Almacena todos los cursos obtenidos del mockup mientras no funciona la API del el backend. Siempre tiene los cursos sin filtrar.
+            cursosConFiltros: [], // Almacena los cursos después de aplicar filtros. Se actualiza cuando aplicas filtros
+            //categorias: [], // Asegúrate de tener categorías en el estado
+            //subcategorias: [], // Y también subcategorías si son independientes
             loading: false, // Estado para mostrar carga
             error: null, // Estado para errores
             cursosProfe: [], //Almacena los cursos asignados al profesor específico.
@@ -121,6 +123,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                 // Actualizamos el estado de los filtros con los nuevos filtros proporcionados.
                 getActions().aplicarFiltrosCursos();
             },
+            
+
+            // // Ejemplo de función para cargar categorías y subcategorías
+            // cargarCategorias: async () => {
+            //     const store = getStore();
+            //     setStore({ ...store, loading: true });
+
+            //     try {
+            //         const response = await fetch(process.env.BACKEND_URL+'/api/categorias');
+            //         const data = await response.json();
+            //         setStore({ categorias: data, loading: false });
+            //     } catch (error) {
+            //         setStore({ error: error.message, loading: false });
+            //         console.error('Error loading categories:', error);
+            //     }
+            // },
+
+// Llama a cargarCategorias en algún lugar de tu aplicación para que las categorías estén disponibles
 
 
             // Acción para iniciar sesión alumno
@@ -240,25 +260,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error('Error fetching courses:', error);
                 }
-            },
-
-
-
-            // Cargar los cursos desde el backend
-            cargarCursos: async () => {
-                const store = getStore();
-                setStore({ ...store, loading: true }); // Muestra el estado de carga
-
-                try { // Enviamos una solicitud GET para obtener todos los cursos.
-                    const response = await fetch('/api/cursos'); // Solicita los datos de cursos
-                    const data = await response.json(); // Convierte la respuesta en JSON
-                    setStore({ cursos: data, cursosConFiltros: data, loading: false }); 
-                    // Actualizamos ambos estados tanto de cursos y cursosConFiltrado
-                } catch (error) {
-                    setStore({ error: error.message, loading: false }); // Maneja el error
-                    console.error('Error loading courses:', error);
-                }
-            },
+            },            
 
             // Acción para manejar errores
             handleError: (error) => {

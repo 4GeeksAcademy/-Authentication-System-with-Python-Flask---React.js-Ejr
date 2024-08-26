@@ -10,9 +10,10 @@ const BarraBusqueda = () => {
     const { store, actions } = useContext(Context);
 
 
-    // Estado para la categoría seleccionada y la categoría que está siendo sobrevolada (hover)
+    // Estado para la categoría seleccionada  y la categoría que está siendo sobrevolada (hover)
     const [seleCategoria, setSeleCategoria] = useState(null);
     const [hoveredCategoria, setHoveredCategoria] = useState(null);
+    //const [seleSubcategoria, setSelecSubcategoria] = useState('');
 
     // Validación de formularios
     const [erroresFormulario, setErroresFormulario] = useState({});
@@ -293,9 +294,6 @@ const BarraBusqueda = () => {
                 </Row>
             </Form>
             {error && <div className="error">{error}</div>}
-            {store.cursosConFiltros && store.cursosConFiltros.map(curso => (
-                <div key={curso.id}>{curso.nombre}</div>
-            ))}
         </div>
     );
 };
