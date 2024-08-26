@@ -29,9 +29,6 @@ class Profesor(db.Model):
     lastname = db.Column(db.String(120),nullable=True)
     telefono = db.Column(db.Integer(120), nullable=True)
     address = db.Column(db.String(120),nullable=True)
-    city = db.Column(db.String(120),nullable=True)
-    state = db.Column(db.String(120),nullable=True)
-    zipcode = db.Column(db.String(120),nullable=True)
     #añadir linea de codigo donde va la foto del usuario
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
     relationship_user = db.relationship('User',back_populates ='profesor', lazy=True)
@@ -42,9 +39,6 @@ class Profesor(db.Model):
             "name": self.name,
             "telefono": self.telefono,
             "address": self.address,
-            "city": self.city,
-            "state": self.sate,
-            "zipcode": self.zipcode,
             "user_id": self.user_id,
             #añadir linea de codigo donde va la foto del usuario
         }
@@ -57,9 +51,6 @@ class Alumno(db.Model):
     lastname = db.Column(db.String(120),nullable=True)
     telefono = db.Column(db.Integer(120), nullable=True)
     address = db.Column(db.String(120),nullable=True)
-    city = db.Column(db.String(120),nullable=True)
-    state = db.Column(db.String(120),nullable=True)
-    zipcode = db.Column(db.String(120),nullable=True)
     #añadir linea de codigo donde va la foto del usuario
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
     relationship_user = db.relationship('User',back_populates ='alumno', lazy=True)
@@ -70,9 +61,6 @@ class Alumno(db.Model):
             "name": self.name,
             "telefono": self.telefono,
             "address": self.address,
-            "city": self.city,
-            "state": self.sate,
-            "zipcode": self.zipcode,
             "user_id": self.user_id,
             #añadir linea de codigo donde va la foto del usuario
         }
