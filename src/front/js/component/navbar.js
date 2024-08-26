@@ -9,8 +9,15 @@ export const Navbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
-    setIsAuthenticated(!!token); // pasa a true si el token está
-  }, []);
+    console.log("Token encontrado:", token); 
+    setIsAuthenticated(!!token); 
+  }, []); 
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken"); 
+    setIsAuthenticated(false); 
+    navigate("/"); 
+  };
 
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(29, 14, 63, 0.9)', padding: '1rem 0' }}>
@@ -44,31 +51,36 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/events" style={{ color: 'white' }}> {/* Cambiado a blanco para contraste */}
+              <a className="nav-link active" aria-current="page" href="/events" style={{ color: 'white' }}>
                 Descubre eventos
               </a>
             </li>
             <li className="nav-item">
-              <a href="/galeria" className="nav-link" style={{ color: 'white' }}> {/* Cambiado a blanco para contraste */}
+              <a href="/galeria" className="nav-link" style={{ color: 'white' }}>
                 Galería
               </a>
             </li>
             <li className="nav-item">
-              <a onClick={() => navigate("/contact-us")} className="nav-link" style={{ color: 'white', cursor: 'pointer' }}> {/* Cambiado a blanco para contraste */}
+              <a onClick={() => navigate("/contact-us")} className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>
                 Contáctanos
               </a>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto">
             {isAuthenticated ? (
-              <li className="nav-item">
-                <a onClick={handleLogout} className="nav-link" style={{ color: 'white', cursor: 'pointer' }}> {/* Cambiado a blanco para contraste */}
-                  <i className="fas fa-user"></i> Cerrar sesión
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ color: 'white' }}>
+                  <i className="fas fa-user"></i> {/* Ícono de perfil */}
                 </a>
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a className="dropdown-item" href="/profile">Perfil</a></li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><a className="dropdown-item" onClick={handleLogout} style={{ cursor: 'pointer' }}>Cerrar sesión</a></li>
+                </ul>
               </li>
             ) : (
               <li className="nav-item">
-                <a href="/register" className="nav-link" style={{ color: 'white' }}> {/* Cambiado a blanco para contraste */}
+                <a href="/register" className="nav-link" style={{ color: 'white' }}>
                   Registrarse / Iniciar sesión
                 </a>
               </li>

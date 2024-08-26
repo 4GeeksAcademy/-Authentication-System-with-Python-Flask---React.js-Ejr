@@ -1,0 +1,30 @@
+.pay-button {
+    width: auto; 
+    padding: 10px 20px; 
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; 
+    transition: background-color 0.3s ease;
+    margin: 20px auto; 
+    display: block; 
+}
+
+.pay-button:hover {
+    background-color: #2980b9;
+}
+
+.pay-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.payment-message {
+    margin-top: 20px;
+    color: green;
+    font-weight: bold;
+    text-align: center;
+}
+
