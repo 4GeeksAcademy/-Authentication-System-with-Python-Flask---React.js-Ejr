@@ -6,20 +6,12 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import injectContext, { Context } from "./store/appContext";
-import {SingleOffer} from "./pages/SingleOffer.jsx"
+import { Userview } from "./pages/UserView";
+import {Companyview} from "./pages/CompanyView";
+import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Inicio } from "./pages/inicio.js";
-import { LoginPage } from "./pages/login";
-import { Register } from "./pages/register.js"
-import { TimeLine } from "./pages/TimeLine.jsx";
-import { FormOffer } from "./component/FormOffer.jsx";
-import { SobreNosotros } from "./pages/sobreNosotros.js";
-import { Contact } from "./pages/contact.js";
-import  PreguntasFrecuentes  from "./pages/preguntasFrecuentes.js";
-import  Perfil  from "./pages/perfil.js";
 
 //create your first component
 const Layout = () => {
@@ -48,9 +40,13 @@ const Layout = () => {
                         <Route element={<LoginPage />} path="/login" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Perfil />} path="/perfil" />
+                        <Route element={<Userview />} path="/user" />
+                        <Route element={<Companyview />} path="/company" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<TimeLine/>} path="/timeline"/>
                         <Route element={<FormOffer/>} path="/formoffer"/>
+                        <Route element={<Userview/>} path="/Userview"/>
+                        <Route element={<Companyview/>} path="/Companyview"/>
                         <Route element={<PreguntasFrecuentes/>} path="/preguntasfrecuentes"/>
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<h1>Not found!</h1>} />
