@@ -28,7 +28,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 password:"",
             },
             babies: [], // Agregado para almacenar la lista de bebés
-            selectedBabyId: null // Para seleccionar un bebé específico
+            selectedBabyId: null, // Para seleccionar un bebé específico
+            token:null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -356,6 +357,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+            
+            /// accion para cambiar la contraseña
+            changePassword: async (currentPassword, newPassword) => {
+                const store = getStore(); 
+                const token = store.token;
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/api/changepassworduser", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Authorization': `Bearer ${token}` 
+                        },
+                        body: JSON.stringify({
+                            current_password: currentPassword,
+                            new_password: newPassword
+                        })
+                    });
+            
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.msg || "Error updating password");
+                    }
+            
+                    const data = await response.json();
+                    console.log(data.msg);
+
+                    // Si se cambia la contraseña, invalidar el token
+                    // Limpiar el localStorage y el store
+                    localStorage.removeItem('token');
+                    setStore({ token: null, user: null });
+
+                    return data;
+                } catch (error) {
+                    console.error("Error changing password:", error);
+                    return null; 
+                }
+            },
       
 			changeColor: (index, color) => {
 				//get the store
