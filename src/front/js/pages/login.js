@@ -92,7 +92,7 @@ export const Login = () => {
                     </div>
                 </label>
                 <input
-                    className="btn btn-primary mt-3"
+                    className="btn btn-secondary mt-3"
                     value="Iniciar sesión"
                     type="submit"
                     disabled={loading}

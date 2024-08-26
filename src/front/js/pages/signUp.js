@@ -99,7 +99,7 @@ export const SignUp = () => {
                         Profesor
                     </label>
                 </div>
-                <input className="btn btn-primary mt-3" value="Regístrate" type="submit" />
+                <input className="btn btn-secondary mt-3" value="Regístrate" type="submit" />
             </form>
         </div>
     )
