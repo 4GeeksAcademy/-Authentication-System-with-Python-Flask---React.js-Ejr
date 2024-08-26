@@ -15,6 +15,7 @@ import ProductDetail from "./pages/productDetail.jsx";
 import Editor from "./pages/editor.jsx";
 import WishList from "./pages/wishlist.jsx";
 import Agenda from "./pages/agenda.jsx";
+import Professionals from "./pages/professionals.jsx";
 
 import { Navbar } from "./component/navbar";
 import  Footer  from "./component/footer";
@@ -42,6 +43,7 @@ const Layout = () => {
                         <Route element={<LogIn />} path="/logIn" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<ListOfProducts />} path="/products" />
+                        <Route element={<Professionals />} path="/professionals" />
                         <Route element={<Editor />} path="/editor" />
                         <Route element={<Cart />} path="/cart" />
                         <Route element={<WishList />} path="/wishlist/users/:token" />

@@ -10,6 +10,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			products: [],
 			product: {},
 			favorites: [],
+			nutritionists: [],
+			personalTrainers: [],
+			nutritionist: {},
+			personalTrainer: {},
 		},
 		actions: {
 			login: async (email, password) => {
@@ -159,7 +163,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-
 			// Agregar un nuevo producto
 			addProduct: async (product) => {
 				try {
@@ -234,7 +237,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-
 			addFavorite: async (productId) => {
 				const store = getStore();
 				const token = localStorage.getItem("token");
@@ -273,7 +275,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},			
-			
 			deleteFavorite: async (favoriteId) => {
 				let token = localStorage.getItem("token");
 				try {
@@ -297,6 +298,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Obtener todos los nutricionistas
+			getNutritionists: async () => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/users/nutritionists`);
+					const data = await response.json();
+					setStore({ nutritionists: data })
+					return true
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+
+			// Obtener todos los peronal-trainers
+			getPersonalTrainers: async () => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/users/personal-trainers`);
+					const data = await response.json();
+					setStore({ personalTrainers: data })
+					return true
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+			
 			uploadImage: async (data) => {
 				console.log(data)
 				const response = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
