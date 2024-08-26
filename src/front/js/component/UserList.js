@@ -137,6 +137,17 @@ function UserList() {
     setSelectedUser(null);
   };
 
+  
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false // Usa formato de 24 horas, pon `true` para formato de 12 horas
+  };
+
   return (
     <div className="user-list">
       <h2>User List</h2>
@@ -170,7 +181,7 @@ function UserList() {
           <tbody>
             {sortedUsers.map((user, index) => (
               <tr key={user.id}>
-                <td>{user.lastAppointmentDate ? user.lastAppointmentDate.toUTCString() : 'No Date'}</td>
+                <td>{user.lastAppointmentDate ? user.lastAppointmentDate.toLocaleString(undefined, options) : 'No Date'}</td>
                 <td>{user.lastAppointmentStatus || 'No Status'}</td>
                 <td>{user.name}</td>
                 <td>{user.phone_number}</td>
@@ -180,7 +191,7 @@ function UserList() {
                 <td>{user.comments.length}</td>
                 <td>
                   <button className="btn btn-primary" onClick={() => handleViewProfile(user)}>View Profile</button>
-                  <button className="btn btn-danger ms-2" onClick={() => handleDeleteClick(user)}>Delete</button>
+                  <button className="btn btn-danger ms-2" onClick={() => handleDeleteClick(user)}>Delete Client</button>
                 </td>
               </tr>
             ))}
