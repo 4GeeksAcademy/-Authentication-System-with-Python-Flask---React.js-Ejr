@@ -28,23 +28,23 @@ const Signup = () => {
     }
 
     let signedUp = await actions.signup(email, password, name, phone_number);
-//------------------------------------------------------------------------------- manejo mails 
-  const MailSender = () => {
-    let email = formData.get("inputEmail");
-    let name = formData.get("inputName");
-    const data = {
-      sender: {
-        name: "AutoAgenda",
-        email: "autoagenda3@gmail.com",
-      },
-      to: [
-        {
-          email: email,
-          name: name,
+    //------------------------------------------------------------------------------- manejo mails
+    const MailSender = () => {
+      let email = formData.get("inputEmail");
+      let name = formData.get("inputName");
+      const data = {
+        sender: {
+          name: "AutoAgenda",
+          email: "autoagenda@devstack.top",
         },
-      ],
-      subject: "Account created successfully",
-      htmlContent: `<!DOCTYPE html>
+        to: [
+          {
+            email: email,
+            name: name,
+          },
+        ],
+        subject: "Account created successfully",
+        htmlContent: `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -59,9 +59,9 @@ const Signup = () => {
             <h1 style="font-size: 28px; font-weight: bold; margin: 20px 0 10px; color: #333333;">Account created successfully</h1>
         </div>
         <div style="text-align: left; padding: 0 20px; margin-top: 20px;">
-            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Hello, <strong>${name}</strong></p>
-            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Your Account on our website has been created successfully.</p>
-            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">This email is for informational purposes only, and you do not have to respond.</p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Dear <strong>${name}</strong>,</p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0; color: #333333;">We are delighted to inform you that your account on our website has been created successfully.</p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0; color: #333333;">Please note, this email is for informational purposes only, and no response is required.</p>
         </div>
         <div style="margin-top: 30px; padding: 20px; font-size: 14px; color: #888888; text-align: center; background-color: #E3DDDB;">
             <p style="margin: 5px 0;"><strong>AutoAgenda | Drive Your Time</strong></p>
@@ -95,55 +95,107 @@ const Signup = () => {
 </body>
 
 </html>`,
+      };
+
+      // console.log("Data ready to send:", data);
+      actions.SendMail(data);
     };
 
-    // console.log("Data ready to send:", data);
-    actions.SendMail(data);
-  };
+    if (name && email) {
+      MailSender();
+    } else {
+      console.error("User Info is missing email or name.");
+    }
 
-if (name && email) {
-  MailSender();
-} else {
-  console.error("User Info is missing email or name.");
-}
-
-
-
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
     if (signedUp) navigate("/login");
   }
 
   return (
-    <div id="content" className="d-flex justify-content-center align-items-center min-vh-100">
+    <div
+      id="content"
+      className="d-flex justify-content-center align-items-center min-vh-100"
+    >
       <div className="col-md-5">
         <div className="card">
-          <div className="card-header"><strong>Create a new account</strong></div>
+          <div className="card-header">
+            <strong>Create a new account</strong>
+          </div>
           <div className="card-body">
             <form onSubmit={submitForm}>
               {error && <div className="alert alert-danger">{error}</div>}
               <div className="form-group">
-                <label className="text-muted mt-1" htmlFor="inputName">Name</label>
-                <input name="inputName" type="text" className="form-control" id="inputName" placeholder="Full Name" />
+                <label className="text-muted mt-1" htmlFor="inputName">
+                  Name
+                </label>
+                <input
+                  name="inputName"
+                  type="text"
+                  className="form-control"
+                  id="inputName"
+                  placeholder="Full Name"
+                />
               </div>
               <div className="form-group">
-                <label className="text-muted mt-1" htmlFor="inputEmail">Email address</label>
-                <input name="inputEmail" type="email" className="form-control" id="inputEmail" placeholder="Email" />
-                <small id="emailHelp" className="form-text text-muted">We don't share your email with anyone</small>
+                <label className="text-muted mt-1" htmlFor="inputEmail">
+                  Email address
+                </label>
+                <input
+                  name="inputEmail"
+                  type="email"
+                  className="form-control"
+                  id="inputEmail"
+                  placeholder="Email"
+                />
+                <small id="emailHelp" className="form-text text-muted">
+                  We don't share your email with anyone
+                </small>
               </div>
               <div className="form-group">
-                <label className="text-muted mt-1" htmlFor="inputPhone_number">Phone Number</label>
-                <input name="inputPhone_number" type="text" className="form-control" id="inputPhone_number" placeholder="Phone Number" />
+                <label className="text-muted mt-1" htmlFor="inputPhone_number">
+                  Phone Number
+                </label>
+                <input
+                  name="inputPhone_number"
+                  type="text"
+                  className="form-control"
+                  id="inputPhone_number"
+                  placeholder="Phone Number"
+                />
               </div>
               <div className="form-group">
-                <label className="text-muted mt-1" htmlFor="inputPassword">Password</label>
-                <input name="inputPassword" type="password" className="form-control" id="inputPassword" placeholder="Enter Password" />
-                <small id="passwordHelp" className="form-text text-muted">Your password is saved in encrypted form</small>
+                <label className="text-muted mt-1" htmlFor="inputPassword">
+                  Password
+                </label>
+                <input
+                  name="inputPassword"
+                  type="password"
+                  className="form-control"
+                  id="inputPassword"
+                  placeholder="Enter Password"
+                />
+                <small id="passwordHelp" className="form-text text-muted">
+                  Your password is saved in encrypted form
+                </small>
               </div>
               <div className="form-group">
-                <label className="text-muted mt-1" htmlFor="inputConfirmPassword">Confirm Password</label>
-                <input name="inputConfirmPassword" type="password" className="form-control" id="inputConfirmPassword" placeholder="Re-enter Password" />
+                <label
+                  className="text-muted mt-1"
+                  htmlFor="inputConfirmPassword"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  name="inputConfirmPassword"
+                  type="password"
+                  className="form-control"
+                  id="inputConfirmPassword"
+                  placeholder="Re-enter Password"
+                />
               </div>
-              <button type="submit" className="btn btn-primary mt-3">Sign Up</button>
+              <button type="submit" className="btn btn-primary mt-3">
+                Sign Up
+              </button>
             </form>
           </div>
         </div>
