@@ -1,13 +1,20 @@
+
+.Titulo-principal{
+    font-size: 48px;
+    color: #000022; 
+    text-align: center;
+}
 .about{
     display:flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    background-color: #64b6ac;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-block-end: 5%;
+    background-color: #000022;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-block-end: 10%;
+    margin-top: 4%;
 }
 .about__main-content{
     display:flex;
