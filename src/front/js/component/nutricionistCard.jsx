@@ -26,7 +26,7 @@ const NutricionistCard = ({ id, name }) => {
                         Ver perfil
                     </h5>
                 </Link>
-                <button className='agenda-btn'>
+                <button className='agenda-btn' >
                     <h5>
                         Agendarme
                     </h5>

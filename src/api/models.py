@@ -11,6 +11,8 @@ class User(db.Model):
         address = db.Column(db.String(80), unique=False, nullable=False)
         phone = db.Column(db.String(80), unique=False, nullable=False)
         is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+        calendly_url = db.Column(db.String(120), nullable=True)
+        description = db.Column(db.String(2000), nullable=True)
         favorites = db.relationship("Favorite", backref="user")
         cart = db.relationship("Cart", backref="user")
         user_professions = db.relationship("UserProfession", backref="user", lazy='dynamic')

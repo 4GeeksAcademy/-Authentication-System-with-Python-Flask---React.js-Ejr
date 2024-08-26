@@ -2,23 +2,11 @@ import React, { useContext, useParams } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import "../../styles/listofproducts.css";
-import ImageGallery from "react-image-gallery";
-import NoProductImg from "../../../../public/images/no-product-img.png";
+import Slider from "react-slick";
 
 const ProductDetailCard = ({ id, name, cost, image_url }) => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
-
-    const images = [
-        {
-            original: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
-            thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
-        },
-        {
-            original: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
-            thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDKwG2BjRvK8M-R86MG5AKYtJggmux_0f8IA&s",
-        }
-    ];
 
     const isFavorite = () => {
         return store.favorites.some(favorite => favorite.fav_product.id === id);
@@ -37,13 +25,65 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
         navigate(`/cart`);
     };
 
+    // CARRUSEL_____________________________________
+    function SampleNextArrow(props) {
+        const { className, onClick } = props;
+        return (
+            <div
+                className={className}
+                onClick={onClick}
+            />
+        );
+    }
+
+    function SamplePrevArrow(props) {
+        const { className, onClick } = props;
+        return (
+            <div
+                className={className}
+                onClick={onClick}
+            />
+        );
+    }
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        swipeToSlide: true,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
+        appendDots: dots => (
+            <div
+                style={{
+                    backgroundColor: "transparent",
+                }}
+            >
+                <ul style={{ margin: "0px 4px" }}> {dots} </ul>
+            </div>
+        ),
+        customPaging: i => (
+            <div
+                style={{
+                    width: "30px",
+                    padding: "2px",
+                    color: "#394B3F",
+                    border: "1px solid #394B3F",
+                    borderRadius: "50%",
+                }}
+            >
+                {i + 1}
+            </div>
+        ),
+    };
+
     return (
         <>
             <div className="images-container">
-                <ImageGallery items={images}
-                    showPlayButton={false}
-                    thumbnailPosition="top"
-                />
+                <img src={image_url} alt={name} />
             </div>
             <div className="detail-container">
                 <button className={`heart-container ${isFavorite() ? "favorite-on" : ""}`} onClick={toggleFavorite} >
@@ -61,7 +101,7 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
                         <h4 className="col">Stock Disponible</h4>
                         <p className="col">10 Unidades</p>
                     </div>
-                    <button className="buy-btn" onClick={handleNavigate}>Comprar</button>
+                    <button className="buy-btn mb-1" onClick={handleNavigate}>Comprar</button>
                     <button className="add-cart-btn">Agregar al carrito</button>
                 </div>
             </div>

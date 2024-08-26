@@ -8,20 +8,44 @@ import NoProductImg from "../../../../public/images/no-product-img.png";
 
 const WishCard = ({ id, name, cost, image_url }) => {
     const navigate = useNavigate();
+    const { store, actions } = useContext(Context);
+
+    const isFavorite = () => {
+        return store.favorites.some(favorite => favorite.fav_product.id === id);
+    };
+
+    const toggleFavorite = async () => {
+        if (isFavorite()) {
+            const favorite = store.favorites.find(fav => fav.fav_product.id === id);
+            await actions.deleteFavorite(favorite.id);
+        } else {
+            await actions.addFavorite(id);
+        }
+    };
 
     const handleNavigate = () => {
         navigate(`/product/${id}`);
     };
     return (
-        <div className="card wish-card-container d-flex flex-column m-2">
-            <button onClick={handleNavigate} className="h-100" >
+        <div className="card wish-card-container d-flex flex-column m-2 my-4">
+            <button className='card-btn top-btn' onClick={toggleFavorite}>
+                <h6>
+                    Eliminar de favoritos
+                </h6>
+            </button>
+            <button onClick={handleNavigate} className="card-main-btn" >
                 <div className="image-container">
                     <img src={image_url || NoProductImg} alt={name} className="card-img-top" />
                 </div>
-                <div className="card-body mt-auto">
+                <div className="card-body mx-auto">
                     <h5 className="card-title">{name || "Ejemplo"}</h5>
                     <p className="card-text">${cost || "00"}.00</p>
                 </div>
+            </button>
+            <button className='card-btn bottom-btn'>
+                <h6>
+                    Agregar al carrito
+                </h6>
             </button>
         </div>
     );

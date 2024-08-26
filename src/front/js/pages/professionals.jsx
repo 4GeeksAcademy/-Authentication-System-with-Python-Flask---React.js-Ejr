@@ -36,7 +36,7 @@ const Professionals = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
     swipeToSlide: true,
@@ -149,7 +149,7 @@ const Professionals = () => {
                         />
                     ))
                 ) : (
-                    <h4 className="text-center text-danger m-4">No hay nutricionistas disponibles</h4>
+                    <h4 className="text-center text-danger m-4">No hay personal trainers disponibles</h4>
                 )}
             </Slider>
           </div>
