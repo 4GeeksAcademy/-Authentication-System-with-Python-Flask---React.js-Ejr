@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './login.css';
+import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Aquí iría la lógica de autenticación
-    console.log('Username:', username, 'Password:', password);
-  };
-
+    const { actions } = useContext(Context);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate= useNavigate()
+    const handleLogin = async (e) => {
+      e.preventDefault()
+      const credentials = { email: email, password: password };
+      const result = await actions.login(credentials);
+      if (result.token) {
+          console.log("Inicio de sesión correcto");
+          navigate("/")
+      } else {
+          console.log("Error al iniciar sesión");
+          
+      }
+    }
   return (
-    <form className="login-container" onSubmit={handleSubmit}>
+    <form className="login-container" onSubmit={e=>handleLogin(e)}>
       <h4>Iniciar Sesión</h4>
       <div className="username">
         <label>Nombre Usuario:</label>
         <input
         className="inputname"
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
