@@ -23,10 +23,25 @@ const CreateAppointmentRegisteredUser = () => {
   const datePickerRef = useRef(null);
   const navigate = useNavigate();
   const [takenSlots, setTakenSlots] = useState([]);
-  const maxAppointmentsPerHour = 4
+  const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
+  
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
   const myToken = localStorage.getItem("token");
+
+  // Obtener el valor de maxAppointmentsPerHour solo una vez al montar el componente
+  useEffect(() => {
+    const fetchMaxAppointmentsPerHour = async () => {
+      try {
+        const maxHour = await actions.getMaxAppointmentsHour();
+        setMaxAppointmentsPerHour(maxHour); // Almacena el valor en el estado
+      } catch (error) {
+        console.error("Error fetching max appointments per hour:", error);
+      }
+    };
+  
+    fetchMaxAppointmentsPerHour();
+  }, [actions]);
 
   useEffect(() => {
     const getServices = async () => {
@@ -43,41 +58,28 @@ const CreateAppointmentRegisteredUser = () => {
       } catch (error) {}
     };
 
-    const selectedService = services.find(
-      (service) => service.id === parseInt(serviceChosen, 10)
-    );
-    const serviceName = selectedService ? selectedService.name : "Not selected";
-
     const getUserCars = async () => {
       try {
-        // Actualiza la URL para que apunte a la ruta correcta usando owner_id
         const response = await fetch(`${apiUrl}/cars/user/${myuserId}`, {
           headers: {
             Authorization: `Bearer ${myToken}`,
           },
         });
         if (!response.ok) throw new Error("Network response failed");
-
-        // Desestructura el resultado de la respuesta
         const { result, msg } = await response.json();
-
-        // Verifica si result es un array y tiene contenido
         if (Array.isArray(result) && result.length > 0) {
-          setUserCars(result); // Guarda todos los coches en el estado
+          setUserCars(result); 
         } else {
-          console.error(
-            "No valid car data received or user has no cars",
-            msg,
-            result
-          );
+          console.error("No valid car data received or user has no cars", msg, result);
         }
       } catch (error) {
         console.error("Error getting user cars:", error);
       }
     };
+
     getServices();
     getUserCars();
-  }, [apiUrl, userId]);
+  }, [apiUrl, myuserId, myToken, store.corsEnabled]);
 
   useEffect(() => {
     if (datePickerRef.current) {
@@ -85,7 +87,6 @@ const CreateAppointmentRegisteredUser = () => {
     }
   }, [currentStep]);
 
-  
   const handleServiceChange = (e) => {
     const selectServiceId = e.target.value;
     setServiceChosen(selectServiceId);
@@ -118,7 +119,7 @@ const CreateAppointmentRegisteredUser = () => {
     );
   };
 
-  // Función para deshabilitar horas fuera del horario laboral y las que tienen 4 citas
+  // Función para deshabilitar horas fuera del horario laboral y las que tienen maximo de citas
   const disabledTime = (date) => {
     const now = new Date(); // Hora actual
     const selectedDate = date.format("YYYY-MM-DD"); // Fecha seleccionada
@@ -141,7 +142,7 @@ const CreateAppointmentRegisteredUser = () => {
   
         // Deshabilitar las horas que tienen el máximo de citas permitidas
         Object.keys(hourCounts).forEach((hour) => {
-          if (hourCounts[hour] >= maxAppointmentsPerHour) { // maxAppointmentsPerHour es el límite máximo
+          if (hourCounts[hour] >= maxAppointmentsPerHour) { 
             disabledHours.push(parseInt(hour, 10));
           }
         });
@@ -174,26 +175,23 @@ const CreateAppointmentRegisteredUser = () => {
   
     return hours;
   };
-  
 
   // Función para obtener los slots tomados desde la API
   const fetchTakenSlots = async () => {
     try {
       const response = await fetch(`${apiUrl}/slots-taken`);
       if (!response.ok) throw new Error("Failed to fetch taken slots");
-
       const slots = await response.json();
-      setTakenSlots(slots); // Guardamos las citas tomadas en el estado
+      setTakenSlots(slots);
     } catch (error) {
       console.error("Error fetching taken slots:", error);
     }
   };
 
-  // Función para manejar cambios en la fecha seleccionada
   const manageDateChange = (date) => {
     setAppointmentDate(date);
     if (date) {
-      fetchTakenSlots(); // Cargar los slots tomados cada vez que se selecciona una fecha nueva
+      fetchTakenSlots(); 
     }
   };
 
@@ -206,7 +204,7 @@ const CreateAppointmentRegisteredUser = () => {
       setError("Service required. Please select one from the list.");
       return;
     }
-      await fetchTakenSlots();
+      await fetchTakenSlots();  
     if (currentStep === 3) {
       if (!appointmentDate) {
         setError(
@@ -214,10 +212,6 @@ const CreateAppointmentRegisteredUser = () => {
         );
         return;
       }
-      // await checkSlotAvailability(appointmentDate);
-      // if (!isAvailable) {
-      //   return;
-      // }
     }
     setError("");
     setCurrentStep(currentStep + 1);
