@@ -45,7 +45,7 @@
 }
 
 .contactUs-container button {
-    background-color: #1d0e3f;
+    background-color: rgba(29, 14, 63, 0.9);
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -77,8 +77,18 @@
     outline: none;
 }
 
+.contactUs-container textarea {
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    width: 100%;
+    outline: none;
+}
+
 .contactUs-container-left {
-    background-color: #1d0e3f;
+    background-color: rgba(29, 14, 63, 0.9);
     color: white;
     position: absolute;
     height: 100%;

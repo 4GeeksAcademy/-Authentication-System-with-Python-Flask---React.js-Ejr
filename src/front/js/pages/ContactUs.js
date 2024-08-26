@@ -44,7 +44,7 @@ const ContactUs = () => {
                         <input type="name" placeholder="Nombre" />
                         <input type="email" placeholder="Email" />
                         <input type="phone" placeholder="Telefono" />
-                        <input type="help" placeholder="Como podemos ayudarte?" />
+                        <textarea name="help" placeholder="¿Cómo podemos ayudarte?" rows="4" />
                         <button type="submit">Enviar</button>
                     </form>
                 </div>
