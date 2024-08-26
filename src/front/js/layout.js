@@ -22,6 +22,7 @@ import { Exercises } from "./pages/exercises";
 import { ErrorView } from "./pages/error";
 import { Stats } from "./pages/stats";
 import ProtectedRoute from "./component/protectedRoute";
+import { EditarRutina } from "./pages/editarRutina.js";
 
 
 const usePageTitle = (defaultTitle) => {
@@ -83,6 +84,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<VistaPrueba />} path="/vistaprueba" />
+                        <Route element={<EditarRutina/>} path="/editarrutina" />
                         <Route element={<ProtectedRoute><Stats /></ProtectedRoute>} path="/stats" />
                         <Route element={<ProtectedRoute><Exercises /></ProtectedRoute>} path="/exercises" />
                         <Route element={<ProtectedRoute><Dashboard /></ProtectedRoute>} path="/dashboard" />

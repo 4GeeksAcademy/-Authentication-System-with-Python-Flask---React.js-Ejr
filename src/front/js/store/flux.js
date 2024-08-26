@@ -397,7 +397,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const payload = {
-                        "routineId": routineId,
+                        "routine_id": routineId,
                         "day": day
                     };
                     console.log('Sending payload:', payload);
@@ -572,6 +572,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.status == 200) {
                         console.log('Routine successfully update:', response.data);
+                        await getActions().oneRoutine(id)
+                        console.log("funciona");
+                        
                         return true;
                     }
                 } catch (error) {

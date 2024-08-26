@@ -69,7 +69,6 @@ export const Profile = () => {
   const handleDeleteSubmit = async (e) => {
     e.preventDefault()
 
-    // Crear una promesa para manejar el login
     const deleteAccount = new Promise(async (resolve, reject) => {
       const success = await actions.deleteAccount()
       if (success === true) {
