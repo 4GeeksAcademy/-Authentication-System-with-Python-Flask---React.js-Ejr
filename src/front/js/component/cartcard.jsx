@@ -13,32 +13,31 @@ const CartCard = ({ id, name, cost, image_url }) => {
     };
 
     const handlePago = async () => {
-       await actions.pagoMercadoPago(20);  
-let url = store.mercadoPago.init_point;
-console.log(url)
-window.location.replace(url)
+        await actions.pagoMercadoPago(20);
+        let url = store.mercadoPago.init_point;
+        console.log(url)
+        window.location.replace(url)
     };
-console.log(cost)
+    console.log(cost)
     return (
         <div className="container">
-        <div className="card wish-card-container d-flex flex-column m-2">
-            <button onClick={handleNavigate} className="h-100">
-                <div className="image-container">
-                    <img src={image_url || NoProductImg} alt={name} className="card-img-top" />
-                </div>
-                <div className="card-body mt-auto">
-                    <h5 className="card-title">{name || "Ejemplo"}</h5>
-                    <p className="card-text">${cost || "00"}.00</p>
-                   
-                </div>
-            </button>
-            
-        </div>
-        <div className="container">
-            <button className="btn-mp" onClick={handlePago}>
-                        Comprar
-                    </button>
-        </div>
+            <h1 className="mt-5 text-center">Carrito</h1>
+            <div className="card wish-card-container d-flex flex-column m-2">
+                <button onClick={handleNavigate} className="h-100">
+                    <div className="image-container">
+                        <img src={image_url || NoProductImg} alt={name} className="card-img-top" />
+                    </div>
+                    <div className="card-body mt-auto">
+                        <h5 className="card-title">{name || "Ejemplo"}</h5>
+                        <p className="card-text">${cost || "00"}.00</p>
+                    </div>
+                </button>
+            </div>
+            <div className="container text-center">
+                <button className="btn-mp w-50 mx-auto fs-3 p-2 border-rounded" onClick={handlePago}>
+                    Comprar
+                </button>
+            </div>
         </div>
     );
 };

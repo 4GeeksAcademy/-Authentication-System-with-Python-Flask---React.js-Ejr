@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
-import BannerImg from "../../../../public/images/banner-2-bg.png";
 import GirlImg from "../../../../public/images/girl-ph.jpg";
 import NutriImg from "../../../../public/images/chicken-plate.jpg";
 import SportsImg from "../../../../public/images/chicken-plate.jpg";

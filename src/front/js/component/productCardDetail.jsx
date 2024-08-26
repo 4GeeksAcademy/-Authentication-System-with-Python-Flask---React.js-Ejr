@@ -61,9 +61,8 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
                         <h4 className="col">Stock Disponible</h4>
                         <p className="col">10 Unidades</p>
                     </div>
-                    <button className="buy-btn">Comprar</button>
-
-                    <button className="add-cart-btn" onClick={handleNavigate} >Agregar al carrito</button>
+                    <button className="buy-btn" onClick={handleNavigate}>Comprar</button>
+                    <button className="add-cart-btn">Agregar al carrito</button>
                 </div>
             </div>
         </>
