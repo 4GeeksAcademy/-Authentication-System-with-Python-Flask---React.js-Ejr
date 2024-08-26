@@ -24,8 +24,21 @@ const BookAppointmentUnregisteredUser = () => {
   const navigate = useNavigate();
   const [isAvailable, setIsAvailable] = useState(true);
   const [takenSlots, setTakenSlots] = useState([]);
-  const maxAppointmentsPerHour = 4
+  const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
   const apiUrl = process.env.BACKEND_URL + "/api";
+   // Obtener el valor de maxAppointmentsPerHour solo una vez al montar el componente
+   useEffect(() => {
+    const fetchMaxAppointmentsPerHour = async () => {
+      try {
+        const maxHour = await actions.getMaxAppointmentsHour();
+        setMaxAppointmentsPerHour(maxHour); // Almacena el valor en el estado
+      } catch (error) {
+        console.error("Error fetching max appointments per hour:", error);
+      }
+    };
+  
+    fetchMaxAppointmentsPerHour();
+  }, [actions]);
 
   useEffect(() => {
     const getServices = async () => {
@@ -78,7 +91,7 @@ const BookAppointmentUnregisteredUser = () => {
     );
   };
 
-  // Función para deshabilitar horas fuera del horario laboral y las que tienen 4 citas
+  // Función para deshabilitar horas fuera del horario laboral y las que tienen maximo de citas
   const disabledTime = (date) => {
     const now = new Date(); // Hora actual
     const selectedDate = date.format("YYYY-MM-DD"); // Fecha seleccionada

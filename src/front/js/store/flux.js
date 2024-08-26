@@ -267,6 +267,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error:", error);
         }
       },
+      getMaxAppointmentsHour: async () => {
+        const response = await fetch(`${apiUrl}/settings`);
+        if (!response.ok) throw new Error("Network response failed");
+        const data = await response.json();
+        return data.max_appointments_per_hour;  
+    }
+
     },
   };
 };
