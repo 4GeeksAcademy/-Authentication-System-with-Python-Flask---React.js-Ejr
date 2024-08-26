@@ -103,16 +103,29 @@ const Galery = () => {
 <div className="miniJumbotronGalery text-center py-5" style={{ position: 'relative', backgroundColor: 'rgba(29, 14, 63, 0.9)', color: '#fff' }}>
   <h1 className="display-4 fw-bold">Galería de Eventos</h1>
   <p className="lead">Sumérgete en un mundo encantado con nuestras fotos de eventos. Cada imagen revela la magia y el misterio de nuestros festivales. ¡Descubre momentos inolvidables y déjate llevar por el hechizo!</p>
-  <div className="button-container">
+  <div className="button-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
     <button
-      style={buttonStyle}
+      style={{
+        backgroundColor: '#1D1E2C',
+        color: 'white',
+        border: 'none',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        boxShadow: isHovered ? '0 5px 15px rgba(0,0,0,0.3)' : 'none',
+        transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+        display: 'inline-block',
+        textAlign: 'center'
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => window.location.href = '/galeria'}
     >
       Ver Galería
     </button>
-  </div>
+</div>
+
 </div>
 
       <Slider

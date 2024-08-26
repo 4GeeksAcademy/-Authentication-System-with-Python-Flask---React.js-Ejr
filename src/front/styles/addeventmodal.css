@@ -1,6 +1,4 @@
-/* trabajando en el modal para agregar eventos que solo puedan ver los partners */
-
-.modal-discover-overlay {
+.add-event-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,67 +11,77 @@
   z-index: 1000;
 }
 
-.modal-discover-content {
+.add-event-modal-content {
   background: white;
   padding: 30px;
   border-radius: 10px;
-  text-align: center;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
 }
 
-.modal-discover-close-button {
+.add-event-modal-close-button {
   position: absolute;
   top: 10px;
   right: 20px;
   font-size: 24px;
   cursor: pointer;
+  color: #333;
 }
 
-.modal-discover-details {
-  margin-top: 20px;
-  text-align: left;
+.add-event-modal-content h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.8rem;
+  color: #333;
 }
 
-.modal-discover-details-item {
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #2C3E50;
-}
-
-.modal-discover-details-item label {
+.add-event-modal-details {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 }
 
-.modal-discover-details-item input,
-.modal-discover-details-item textarea,
-.modal-discover-details-item select {
-  margin-left: 10px;
-  padding: 5px;
+.add-event-modal-details-item {
+  margin-bottom: 15px;
+}
+
+.add-event-modal-details-item label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.add-event-modal-details-item input,
+.add-event-modal-details-item textarea {
   width: 100%;
-  font-size: 16px;
-  border-radius: 5px;
+  padding: 10px;
   border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
 }
 
-.modal-discover-purchase-button {
+.add-event-modal-details-item input:focus,
+.add-event-modal-details-item textarea:focus {
+  border-color: #3498DB;
+  outline: none;
+}
+
+.add-event-modal-purchase-button {
   background-color: #3498DB;
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 15px 30px;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: 5px;
   font-size: 16px;
-  margin-top: 20px;
-  width: 100%;
-  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.modal-discover-purchase-button:hover {
+.add-event-modal-purchase-button:hover {
   background-color: #2980B9;
 }
