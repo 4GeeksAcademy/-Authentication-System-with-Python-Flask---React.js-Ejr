@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-export const CheckoutForm = ({ amount }) => {
+export const CheckoutForm = ({ amount, onClose }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true); // Mueve esta línea arriba
-    
+        setLoading(true);
+
         const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
             },
         });
-    
-        setLoading(false); // Mueve esta línea abajo
-    
+
+        setLoading(false);
+
         if (error) {
             console.error(error.message);
         } else if (paymentIntent && paymentIntent.status === 'succeeded') {
             console.log("Payment successful!");
+            setTimeout(() => {
+                onClose(); // Cierra el modal después de 2 segundos
+            }, 2000);
         }
     };
 

@@ -29,9 +29,18 @@ const Modal = ({ show, event, onClose }) => {
         }
     };
 
+    const handlePaymentSuccess = () => {
+        setTimeout(() => {
+            setShowPayment(false);
+            setTimeout(() => {
+                onClose();
+            }, 3000); // Close modal after 3 seconds
+        }, 2000); // Wait for 2 seconds before starting the close process
+    };
+
     return (
         <>
-            {show && (
+            {show && !showPayment && (
                 <div className="modal-discover-overlay" onClick={handleOverlayClick}>
                     <div className="modal-discover-content">
                         <span className="modal-discover-close-button" onClick={onClose}>
@@ -75,7 +84,7 @@ const Modal = ({ show, event, onClose }) => {
                         </span>
                         <h2>Información de Pago</h2>
                         <Elements stripe={stripePromise}>
-                            <Payment amount={totalPrice} />
+                            <Payment amount={totalPrice} onSuccess={handlePaymentSuccess} />
                         </Elements>
                     </div>
                 </div>

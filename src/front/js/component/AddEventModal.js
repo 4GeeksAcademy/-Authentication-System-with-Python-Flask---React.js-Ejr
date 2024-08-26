@@ -1,34 +1,27 @@
 import React, { useState } from "react";
 import "../../styles/addeventmodal.css"; 
-// trabajando en el modal para agregar eventos que solo puedan ver los partners
 
-const AddEventModal = ({ show, onClose }) => {
+const AddEventModal = ({ show, onClose, addEvent }) => {
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [eventType, setEventType] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [price, setPrice] = useState("");
-  const [organizer, setOrganizer] = useState("");
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Nuevo evento agregado:", {
-      title,
-      image,
-      description,
-      category,
-      eventType,
-      date,
-      time,
-      location,
-      price,
-      organizer,
-    });
-    onClose();
+    if (title && description && image) {
+      const newEvent = {
+        id: Math.random().toString(36).substr(2, 9),
+        title,
+        description,
+        image: URL.createObjectURL(image), // Convierte la imagen en una URL
+      };
+      addEvent(newEvent);
+      onClose();
+    }
   };
 
   if (!show) {
@@ -36,15 +29,15 @@ const AddEventModal = ({ show, onClose }) => {
   }
 
   return (
-    <div className="modal-discover-overlay">
-      <div className="modal-discover-content">
-        <span className="modal-discover-close-button" onClick={onClose}>
+    <div className="add-event-modal-overlay">
+      <div className="add-event-modal-content">
+        <span className="add-event-modal-close-button" onClick={onClose}>
           &times;
         </span>
         <h2>Agregar Nuevo Evento</h2>
         <form onSubmit={handleSubmit}>
-          <div className="modal-discover-details">
-            <div className="modal-discover-details-item">
+          <div className="add-event-modal-details">
+            <div className="add-event-modal-details-item">
               <label>
                 Título del Evento:
                 <input
@@ -55,18 +48,7 @@ const AddEventModal = ({ show, onClose }) => {
                 />
               </label>
             </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Imagen URL:
-                <input
-                  type="text"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
-            <div className="modal-discover-details-item">
+            <div className="add-event-modal-details-item">
               <label>
                 Descripción:
                 <textarea
@@ -76,95 +58,18 @@ const AddEventModal = ({ show, onClose }) => {
                 />
               </label>
             </div>
-            <div className="modal-discover-details-item">
+            <div className="add-event-modal-details-item">
               <label>
-                Categoría:
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  required
-                >
-                  <option value="">Selecciona una categoría</option>
-                  <option value="Hip Hop">Hip Hop</option>
-                  <option value="Teatro">Teatro</option>
-                  <option value="Salsa">Salsa</option>
-                  <option value="Jazz">Jazz</option>
-                  <option value="Rock">Rock</option>
-                </select>
-              </label>
-            </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Tipo de Evento:
-                <select
-                  value={eventType}
-                  onChange={(e) => setEventType(e.target.value)}
-                  required
-                >
-                  <option value="">Selecciona un tipo de evento</option>
-                  <option value="Conferencia">Conferencia</option>
-                  <option value="Concierto">Concierto</option>
-                  <option value="Taller">Taller</option>
-                  <option value="Exposición">Exposición</option>
-                </select>
-              </label>
-            </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Fecha:
+                Imagen del Evento:
                 <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
                   required
                 />
               </label>
             </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Hora:
-                <input
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Ubicación:
-                <input
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Precio:
-                <input
-                  type="number"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
-            <div className="modal-discover-details-item">
-              <label>
-                Organizador:
-                <input
-                  type="text"
-                  value={organizer}
-                  onChange={(e) => setOrganizer(e.target.value)}
-                  required
-                />
-              </label>
-            </div>
-            <button type="submit" className="modal-discover-purchase-button">
+            <button type="submit" className="add-event-modal-purchase-button">
               Agregar Evento
             </button>
           </div>

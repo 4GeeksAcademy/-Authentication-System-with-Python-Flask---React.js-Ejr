@@ -1,36 +1,19 @@
 import React, { useState } from "react";
 import "../../styles/discover.css";
 import Modal from "../component/discoverModal";
+import AddEventModal from "../component/AddEventModal";
 
 const Discover = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
-
-  const handleOpenModal = (event) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedEvent(null);
-  };
-
-  const events = [
+  const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false); 
+  const [events, setEvents] = useState([
     {
       id: 1,
       title: "Blue Concert",
-      image: "https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      image: "https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg",
       description: "Prepárate para sumergirte en una experiencia musical inolvidable en el 'Blue Concert', donde la magia de la música se fusiona con la serenidad del color azul.",
       category: "Hip Hop",
     },
@@ -136,7 +119,37 @@ const Discover = () => {
       description: "Descubre las mejores bandas independientes en este festival que celebra el espíritu del rock alternativo.",
       category: "Rock",
     },
-  ];
+  ]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const handleOpenModal = (event) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  };
+
+  const handleOpenAddEventModal = () => {
+    setIsAddEventModalOpen(true);
+  };
+
+  const handleCloseAddEventModal = () => {
+    setIsAddEventModalOpen(false);
+  };
+
+  const addEvent = (newEvent) => {
+    setEvents([...events, newEvent]);
+  };
 
   const filteredEvents = events.filter((event) =>
     event.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -160,12 +173,14 @@ const Discover = () => {
           onChange={handleFilterChange}
         >
           <option value="">Todos los eventos</option>
-          <option value="Hip Hop">Hip Hop</option>
-          <option value="Teatro">Teatro</option>
-          <option value="Salsa">Salsa</option>
-          <option value="Jazz">Jazz</option>
-          <option value="Rock">Rock</option>
+          {/* Añade más opciones según tus categorías */}
         </select>
+        <button
+          className="add-event-button"
+          onClick={handleOpenAddEventModal}
+        >
+          +
+        </button>
       </div>
       <div className="discover-gallery">
         <div className="discover-gallery-grid">
@@ -191,6 +206,11 @@ const Discover = () => {
         show={isModalOpen}
         event={selectedEvent}
         onClose={handleCloseModal}
+      />
+      <AddEventModal
+        show={isAddEventModalOpen}
+        onClose={handleCloseAddEventModal}
+        addEvent={addEvent}
       />
     </div>
   );

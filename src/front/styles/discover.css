@@ -117,3 +117,40 @@
     grid-template-columns: 1fr;
   }
 }
+
+.add-event-button {
+  background-color: #3498DB;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 20px;
+  margin-left: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.add-event-button:hover {
+  background-color: #2980B9;
+}
+
+.add-event-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3498DB;
+  color: white;
+  font-size: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: auto; /* Empuja el botón hacia la derecha */
+  margin-right: 20px; /* Opcional: ajusta este valor según necesites */
+}
+
+.add-event-button:hover {
+  background-color: #2980B9;
+}
