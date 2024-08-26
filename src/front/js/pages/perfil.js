@@ -64,7 +64,8 @@ function Perfil() {
 
 
                 <div class="col">
-                  <div class="p-3" className='lado2' ><button type="button" class="btn btn-secondary" >Cambiar foto</button>   //CAmbiar color
+                  <div class="p-3" className='lado2' ><button type="button" id="boton"   >Cambiar foto</button>
+                    
                     <div> JPG o PNG  </div>
                     <div> Podrás cambiarla cuando quieras. </div>
                   </div>
@@ -117,7 +118,8 @@ function Perfil() {
                 aria-describedby="inputGroup-sizing-sm"
               />
             </div>
-              
+
+            <div className="saveChanges"  ><button type="button" id="boton">Save Changes</button></div>
 
           </div>
         </div>
