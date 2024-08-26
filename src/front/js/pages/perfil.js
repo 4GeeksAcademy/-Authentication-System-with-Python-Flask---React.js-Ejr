@@ -26,19 +26,24 @@ const perfil = () => {
         metodo_pago: store.empleador?.metodo_pago
     })
 
-    const handleChange = (e) => {
-        setEditProgramador({ ...editProgramador, [e.target.name]: e.target.value })
+    const handleChangeEmpleador = (e) => {
+
         setEditEmpleador({ ...editEmpleador, [e.target.name]: e.target.value })
+    }
+
+    const handleChangeProgramador = (e) => {
+        setEditProgramador({ ...editProgramador, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const token = localStorage.getItem('token')
-        console.log(token)
         if (editEmpleador.cif === undefined) {
             actions.editUser(editProgramador, "Programador", token)
+            setEdit(true)
         } else {
             actions.editUser(editEmpleador, "Empleador", token)
+            setEdit(true)
         }
     }
 
@@ -52,44 +57,45 @@ const perfil = () => {
                             && (
                                 <>
                                     <div className="mb-3">
-                                        <label for="name" className="form-label">Name</label>
-                                        <input type="text" className="form-control" name='name' value={editProgramador.name} onChange={handleChange} id="name" disabled={edit} />
+                                        <label htmlFor="name" className="form-label">Name</label>
+                                        <input type="text" className="form-control" name='name' value={editProgramador.name} onChange={handleChangeProgramador} id="name" disabled={edit} />
 
                                     </div>
                                     <div className="mb-3">
-                                        <label for="username" className="form-label">Username</label>
-                                        <input type="text" className="form-control" name='username' value={editProgramador.username} onChange={handleChange} id="username" disabled={edit} />
+                                        <label htmlFor="username" className="form-label">Username</label>
+                                        <input type="text" className="form-control" name='username' value={editProgramador.username} onChange={handleChangeProgramador} id="username" disabled={edit} />
 
                                     </div>
                                     <div className="mb-3">
-                                        <label for="email" className="form-label">Email</label>
-                                        <input type="email" className="form-control" name='email' value={editProgramador.email} onChange={handleChange} id="email" disabled={edit} />
+                                        <label htmlFor="email" className="form-label">Email</label>
+                                        <input type="email" className="form-control" name='email' value={editProgramador.email} onChange={handleChangeProgramador} id="email" disabled={edit} />
 
                                     </div>
                                     <div className="mb-3">
-                                        <label for="pais" className="form-label">Pais</label>
-                                        <input type="text" className="form-control" name='country' value={editProgramador.country} onChange={handleChange} id="pais" disabled={edit} />
+                                        <label htmlFor="pais" className="form-label">Pais</label>
+                                        <input type="text" className="form-control" name='country' value={editProgramador.country} onChange={handleChangeProgramador} id="pais" disabled={edit} />
 
                                     </div>
 
                                     <div className="mb-3">
-                                        <label for="descripcion" className="form-label">Descripcion</label>
-                                        <input type="text" className="form-control" name='descripcion' value={editProgramador.descripcion} onChange={handleChange} id="descripcion" disabled={edit} />
+                                        <label htmlFor="descripcion" className="form-label">Descripcion</label>
+                                        <input type="text" className="form-control" name='descripcion' value={editProgramador.descripcion} onChange={handleChangeProgramador} id="descripcion" disabled={edit} />
 
                                     </div>
                                     <div className="mb-3">
-                                        <label for="experiencia" className="form-label">Experiencia</label>
-                                        <input type="text" className="form-control" name='experiencia' value={editProgramador.experiencia} onChange={handleChange} id="experiencia" disabled={edit} />
+                                        <label htmlFor="experiencia" className="form-label">Experiencia</label>
+
+                                        <input type="text" className="form-control" name='experiencia' value={editProgramador.experiencia} onChange={handleChangeProgramador} id="experiencia" disabled={edit} />
 
                                     </div>
                                     <div className="mb-3">
-                                        <label for="precio_hora" className="form-label">Precio hora</label>
-                                        <input type="number" className="form-control" name='precio_hora' value={editProgramador.precio_hora} onChange={handleChange} id="precio_hora" disabled={edit} />
+                                        <label htmlFor="precio_hora" className="form-label">Precio hora</label>
+                                        <input type="number" className="form-control" name='precio_hora' value={editProgramador.precio_hora} onChange={handleChangeProgramador} id="precio_hora" disabled={edit} />
 
                                     </div>
                                     <div className="mb-3">
-                                        <label for="tecnologias" className="form-label">Tecnologias</label>
-                                        <input type="text" className="form-control" name='tecnologias' value={editProgramador.tecnologias} onChange={handleChange} id="tecnologias" disabled={edit} />
+                                        <label htmlFor="tecnologias" className="form-label">Tecnologias</label>
+                                        <input type="text" className="form-control" name='tecnologias' value={editProgramador.tecnologias} onChange={handleChangeProgramador} id="tecnologias" disabled={edit} />
 
                                     </div>
                                 </>)}
@@ -97,45 +103,53 @@ const perfil = () => {
                             <>
 
                                 <div className="mb-3">
-                                    <label for="name" className="form-label">Name</label>
-                                    <input type="text" className="form-control" name='name' value={editEmpleador.name} onChange={handleChange} id="name" disabled={edit} />
+                                    <label htmlFor="name" className="form-label">Name</label>
+                                    <input type="text" className="form-control" name='name' value={editEmpleador.name} onChange={handleChangeEmpleador} id="name" disabled={edit} />
 
                                 </div>
                                 <div className="mb-3">
-                                    <label for="username" className="form-label">Username</label>
-                                    <input type="text" className="form-control" name='username' value={editEmpleador.username} onChange={handleChange} id="username" disabled={edit} />
+                                    <label htmlFor="username" className="form-label">Username</label>
+                                    <input type="text" className="form-control" name='username' value={editEmpleador.username} onChange={handleChangeEmpleador} id="username" disabled={edit} />
 
                                 </div>
                                 <div className="mb-3">
-                                    <label for="email" className="form-label">Email</label>
-                                    <input type="email" className="form-control" name='email' value={editEmpleador.email} onChange={handleChange} id="email" disabled={edit} />
+                                    <label htmlFor="email" className="form-label">Email</label>
+                                    <input type="email" className="form-control" name='email' value={editEmpleador.email} onChange={handleChangeEmpleador} id="email" disabled={edit} />
 
                                 </div>
                                 <div className="mb-3">
-                                    <label for="pais" className="form-label">Pais</label>
-                                    <input type="text" className="form-control" name='country' value={editEmpleador.country} onChange={handleChange} id="pais" disabled={edit} />
+                                    <label htmlFor="pais" className="form-label">Pais</label>
+                                    <input type="text" className="form-control" name='country' value={editEmpleador.country} onChange={handleChangeEmpleador} id="pais" disabled={edit} />
 
                                 </div>
                                 <div className="mb-3">
-                                    <label for="cif" className="form-label">Cif</label>
-                                    <input type="text" className="form-control" name='cif' value={editEmpleador.cif} onChange={handleChange} id="cif" disabled={edit} />
+                                    <label htmlFor="cif" className="form-label">Cif</label>
+                                    <input type="text" className="form-control" name='cif' value={editEmpleador.cif} onChange={handleChangeEmpleador} id="cif" disabled={edit} />
 
                                 </div>
                                 <div className="mb-3">
-                                    <label for="descripcion" className="form-label">Descripcion</label>
-                                    <input type="text" className="form-control" name='descripcion' value={editEmpleador.descripcion} onChange={handleChange} id="descripcion" disabled={edit} />
+                                    <label htmlFor="descripcion" className="form-label">Descripcion</label>
+                                    <input type="text" className="form-control" name='descripcion' value={editEmpleador.descripcion} onChange={handleChangeEmpleador} id="descripcion" disabled={edit} />
 
                                 </div>
                                 <div className="mb-3">
-                                    <label for="metodo_pago" className="form-label">Metodo_pago</label>
-                                    <input type="text" className="form-control" name='metodo_pago' value={editEmpleador.metodo_pago} onChange={handleChange} id="metodo_pago" disabled={edit} />
+                                    <label htmlFor="metodo_pago" className="form-label">Metodo_pago</label>
+                                    <input type="text" className="form-control" name='metodo_pago' value={editEmpleador.metodo_pago} onChange={handleChangeEmpleador} id="metodo_pago" disabled={edit} />
 
                                 </div>
                             </>
                         )}
 
-                        <button onClick={() => setEdit(false)} type="button" class="btn btn-primary">Editar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+
+                        {store?.editar &&(
+                            <div class="alert alert-success" role="alert">{store.msg}</div>
+                        )}
+
+
+                        <div className='row'>
+                            <button onClick={() => setEdit(false)} type="button" className="btn btn-primary w-25 mx-2">Editar</button>
+                            <button type="submit" className="btn btn-primary w-25">Guardar</button>
+                        </div>
                     </div>
 
                 </form>
@@ -165,9 +179,9 @@ const perfil = () => {
                         <div className='row border'>
                             <div className='col'>
                                 <Link to={"/formoffer"} >
-                                <button  className='btn btn-primary'>Crear Oferta</button>
+                                    <button className='btn btn-primary'>Crear Oferta</button>
                                 </Link>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
