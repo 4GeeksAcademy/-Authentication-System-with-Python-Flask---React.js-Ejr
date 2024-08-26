@@ -132,7 +132,7 @@ def editProgramador():
     programador.experiencia = experiencia
     programador.descripcion = descripcion
     db.session.commit()
-    return jsonify({'edit':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'programador':programador.serialize()}), 200
+    return jsonify({'editar':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'programador':programador.serialize()}), 200
 
 
 #Iniciar sesión
