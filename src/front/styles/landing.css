@@ -222,3 +222,123 @@
 .closing-landing-img {
     padding: 30pt;
 }
+
+@media (max-width: 768px) {
+    .header-landing {
+        padding-top: 200px;
+    }
+
+    .logo-header-landing, .texto-header-landing, .btn-header-landing {
+        text-align: center;
+    }
+
+    .texto-header-landing {
+        font-size: 14pt;
+    }
+
+    .titulo-texto-header-landing {
+        font-size: 40pt;
+    }
+
+    .catchphrase-texto-header-landing {
+        margin-bottom: 40px;
+    }
+
+    .info-landing {
+        width: 90%;
+        margin-top: 80px;
+    }
+
+    .info-landing-top, .info-landing-bot {
+        flex-direction: column;
+    }
+
+    .info-landing-img {
+        width: 100%;
+    }
+
+    .info-landing-img-top svg, .info-landing-img svg {
+        width: 80%;
+    }
+
+    .info-landing-top, .info-landing-bot {
+        font-size: 14pt;
+    }
+
+    .info-landing-text-top-title, .info-landing-text-bot-title {
+        font-size: 24pt;
+    }
+
+    .info-landing-text-top, .info-landing-text-bot {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 60px;
+    }
+
+    .opinions-landing {
+        width: 90%;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    .opinions-landing-title {
+        font-size: 28pt;
+        margin-bottom: 30px;
+    }
+
+    .opinions-landing-body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .opinions-landing-left, .opinions-landing-right {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .opinions-landing-text {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .opinions-landing-img svg {
+        width: 150px;
+    }
+
+    .closing-landing {
+        height: auto;
+        padding: 10px;
+        display: block;
+        text-align: center;
+    }
+
+    .texto-closing-landing {
+        width: 90%;
+        font-size: 14pt;
+        padding-bottom: 80px;
+    }
+
+    .titulo-texto-closing-landing {
+        margin-top: 0;
+        font-size: 32pt;
+    }
+
+    .btn-closing-landing-container {
+        margin-top: 50px;
+    }
+
+    .btn-closing-landing {
+        font-size: 16pt;
+        padding: 10px;
+        margin: auto;
+    }
+
+    .closing-landing-img {
+        padding: 10px;
+    }
+
+    .closing-landing-img svg {
+        width: 90%;
+    }
+}
