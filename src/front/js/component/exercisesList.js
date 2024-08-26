@@ -8,18 +8,31 @@ export const ExercisesList = ({ weeklyRoutine }) => {
   const [done, setDone] = useState(0);
   const [percentage, setPercentage] = useState(0);
 
-  const handleChange = async (e, exercise) => {
+  const [day, setDay] = useState(0);
+  const [currentDay, setCurrentDay] = useState(0);
+
+  useEffect(() => {
+    setDay(weeklyRoutine.day_num)
+    setCurrentDay(new Date().getDay())
+  }, []);
+
+  const handleChange = async (isDone, exerciseId) => {
     // e.persist()
-    if (e.target.checked == true) {
+    if (isDone == true) {
+      console.log(weeklyRoutine.routine.id);
+      console.log(exerciseId);
       setDone(done + 1)
-      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exerciseId);
       const exerciseRoutine = await store.oneExerciseRoutine;
+      console.log(weeklyRoutine.id);
+      console.log(exerciseRoutine);
+
       await actions.postFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
-    if (e.target.checked == false) {
+    if (isDone == false) {
       setDone(done - 1)
       console.log(done);
-      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exercise);
+      await actions.oneExerciseRoutine(weeklyRoutine.routine.id, exerciseId);
       const exerciseRoutine = await store.oneExerciseRoutine;
       await actions.deleteFollowUp(weeklyRoutine.id, exerciseRoutine.id)
     }
@@ -39,12 +52,6 @@ export const ExercisesList = ({ weeklyRoutine }) => {
     }
   }, [done, total]);
 
-  useEffect(() => {
-    console.log("done:",done);
-    
-  }, [done]);
-
-
   return (
     <>
       <div>
@@ -53,6 +60,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
       <ul className="bg-neutral-900 p-3 space-y-3">
 
         {weeklyRoutine.routine.exercises.map((item, index) => {
+
           return (
             < label
               key={index}
@@ -61,14 +69,15 @@ export const ExercisesList = ({ weeklyRoutine }) => {
             >
               <div className="flex items-center">
                 <input
+                  disabled={currentDay !== day}
                   type="checkbox"
-                  checked={item.exercise.done}
+                  defaultChecked={item.exercise.done}
                   className="myCheckbox size-4 rounded border-gray-300 bg-gray-800 ring-offset-gray-900"
                   id={`option ${index}`}
                   name="name"
                   onChange={(e) => {
                     item.exercise.done = !item.exercise.done
-                    handleChange(e, item.exercise.id)
+                    handleChange(item.exercise.done, item.exercise.id)
                   }}
                 />
                 {/* {`option ${index}` == false ? setDone(done + 1) : null} */}

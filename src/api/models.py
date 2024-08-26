@@ -3,25 +3,27 @@ import enum
 
 db = SQLAlchemy()
 
+from datetime import datetime, timedelta
+
 class Sex(enum.Enum):
     male='male'
     female='female'
 
-class Week(enum.Enum):
-    SEMANA1=1
-    SEMANA2=2
-    SEMANA3=3
-    SEMANA4=4
-    SEMANA5=5
+# class Week(enum.Enum):
+#     SEMANA1=1
+#     SEMANA2=2
+#     SEMANA3=3
+#     SEMANA4=4
+#     SEMANA5=5
 
 class Day(enum.Enum):
+    DOMINGO=0
     LUNES=1
     MARTES=2
     MIERCOLES=3
     JUEVES=4
     VIERNES=5
     SABADO=6
-    DOMINGO=7
 
 class Category(enum.Enum):
     PECHO=1
@@ -75,6 +77,7 @@ class PhysicalInformation(db.Model):
         return f'<PhysicalInformation {self.id}>'
 
     def serialize(self):
+        # print(self.date)
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -112,6 +115,8 @@ class Routine(db.Model):
     def serialize_routine_exercises(self):
         return list(map(lambda exercise: exercise.serialize(), self.exercise_routine))
 
+def get_last_monday(date):
+    return date - timedelta(days=date.weekday())
 # RUTINA SEMANA
 class WeeklyRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -126,16 +131,20 @@ class WeeklyRoutine(db.Model):
         return f'<WeeklyRoutine {self.id, self.day}>'
 
     def serialize(self):
+        today = datetime.now().date()
+        last_monday = get_last_monday(today)
+        last_monday = last_monday.strftime("%d/%m/%Y")
         follow_up = list(map(lambda item: item.serialize(), self.follow_up))
         routine = self.routine.serialize()
         for item_routine in routine["exercises"]:
-            item_routine["exercise"]["done"] = False
+            # item_routine["exercise"]["done"] = False
             for item_follow in follow_up:   
-                if item_follow["exercise_routine"]["exercise"]["id"] == item_routine["exercise"]["id"]:
+                print(item_follow["date"])
+                print(datetime.now().date().strftime("%d/%m/%Y"))
+                if last_monday <= item_follow["date"] <= today.strftime("%d/%m/%Y") and item_follow["exercise_routine"]["exercise"]["id"] == item_routine["exercise"]["id"]:
                     item_routine["exercise"]["done"] = True
-                else:
-                    item_routine["exercise"]["done"] = False
-
+                # else:
+                #     item_routine["exercise"]["done"] = False
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -202,6 +211,7 @@ class ExerciseRoutine(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "routine_id":self.routine_id,
             "exercise": self.exercise.serialize(),
             "sets": self.sets.serialize()
         }
@@ -211,6 +221,8 @@ class FollowUp(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     weekly_routine_id = db.Column(db.Integer, db.ForeignKey('weekly_routine.id'), nullable=False)
     exercise_routine_id = db.Column(db.Integer, db.ForeignKey('exercise_routine.id'), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+
     exercise_routine = db.relationship(ExerciseRoutine)
 
     def __repr__(self):
@@ -220,5 +232,6 @@ class FollowUp(db.Model):
         return {
             "id": self.id,
             "routine_id": self.weekly_routine_id,
+            "date": self.date.strftime("%d/%m/%Y"),
             "exercise_routine": self.exercise_routine.serialize()
         }

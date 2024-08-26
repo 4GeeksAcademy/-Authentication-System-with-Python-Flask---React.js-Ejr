@@ -15,7 +15,7 @@ export const VistaPrueba = () => {
 		// actions.postWeeklyRoutine("1", "SEMANA1", "MIERCOLES")
 		// actions.postRoutine("Rutina de brazo")
 		// actions.postExercise("elevaciones laterales","HOMBRO","ejericio de hobro", "123")
-		// actions.postFollowUp("1","1")
+		// actions.postFollowUp(10,7)
 		// actions.allRoutine();
 		// actions.oneRoutine(1);
 		// actions.allExercise();
@@ -33,11 +33,22 @@ export const VistaPrueba = () => {
 		// actions.login("juan@gmail.com", "1");
 		// actions.validToken();
 
+		// actions.allFollowUpWeek(1)
 		// actions.postFollowUp(1, 1)
 		// actions.deleteFollowUp(1, 1)
 		// actions.get_last_physical_user_information()
-		actions.allSets()
-		actions.postSets("2", "10")
+		// actions.allSets()
+		// actions.postSets("2", "10")
+		// actions.postExerciseRoutine("4", "1", "1")
+		// actions.putWeeklyRoutine("JUEVES",7,"DOMINGO")
+		// actions.putRoutine(7, "Dia de Hombros")
+		// actions.putExercise(6, "Remoss", "ESPALDA", "Ejercicio de Espalda", "011")
+		// actions.putExerciseRoutine(7, 8, 7, 2, 1)
+		// actions.putFollowUp(10, 7, "2024-06-01", 10, 7, "2022-06-01")
+		// actions.putSets(1, 1, 4, 12)
+		// actions.deleteWeeklyUserRoutine("DOMINGO")
+		// actions.deleteRoutine(12)
+		actions.deleteExerciseRoutine(11,1)
 	}, [])
 	// console.log(store.allCategoryList);
 	// console.log(Object.keys(store.allCategoryList));
