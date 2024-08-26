@@ -16,14 +16,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			itineraries: {},
 			token: '',
-			login: false
+			login: false,
+			newItineraryData: {
+				title: '',
+				description: '',
+				duration: undefined,
+				itinerary: {},
+				images: {"img": []}
+			}
 		},
 			actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			addDay: (count, info) => {
+				const store = getStore();
+				const newItinerary = { ...store.newItineraryData.itinerary };
 
+				newItinerary[`Día ${count}`] = info;
+
+				setStore({
+					newItineraryData: {
+						...store.newItineraryData,
+						itinerary: newItinerary
+					}
+				});
+			},
+			deleteDay: (key) => {
+				const store = getStore();
+				const deleteItinerary = { ...store.newItineraryData.itinerary };
+
+				delete deleteItinerary[key];
+
+				setStore({
+					newItineraryData: {
+						...store.newItineraryData,
+						itinerary: deleteItinerary
+					}
+				});
+			},
+			addImg: (url) => {
+				const store = getStore();
+				const newImage = { ...store.newItineraryData.images };
+
+				newImage.img.push(url)
+
+				setStore({
+					newItineraryData: {
+						...store.newItineraryData,
+						images: newImage
+					}
+				});
+			},
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
