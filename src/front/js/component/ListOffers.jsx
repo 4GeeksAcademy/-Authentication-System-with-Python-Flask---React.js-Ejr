@@ -4,18 +4,17 @@ import { Context } from "../store/appContext.js";
 
 export const ListOffers = ({ searchTerm }) => {
     const { store, actions } = useContext(Context);
-    const { jobOffers } = store;
+  
 
     useEffect(() => {
         actions.loadAllJobOffers();
-    }, [actions]);
+    }, []);
 
 
-    const searchOffers = jobOffers.filter((offer) =>
-
-        offer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        offer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        offer.location.toLowerCase().includes(searchTerm.toLowerCase()) 
+    const searchOffers = store.jobOffers?.filter((offer) =>
+        offer.name.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+        offer.modealidad.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+        offer.salario.toLowerCase().includes(searchTerm?.toLowerCase()) 
     );
 
     return (
