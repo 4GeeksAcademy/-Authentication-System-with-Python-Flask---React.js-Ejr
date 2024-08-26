@@ -3,7 +3,7 @@ import "../../styles/jumbotron2.css";
 
 const Jumbotron2 = () => {
     return (
-        <div className="jumbotron jumbotron-fluid mt-4 custom-jumbotron">
+        <div className="jumbotron jumbotron-fluid custom-jumbotron">
             <div className="container d-flex align-items-center justify-content-between">
                 <div className="text-container">
                     <h1 className="display-5">Descubra las ventajas de utilizar Tickeate para sus eventos musicales</h1>

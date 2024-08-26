@@ -7,7 +7,7 @@ export const Jumbotron = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div>
+        <div className="background-body">
             <header className=" jumbotronPrincipal py-5">
                 <div className="container">
                     <div className="row align-items-center">

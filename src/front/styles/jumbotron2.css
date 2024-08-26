@@ -2,8 +2,7 @@
     background-color: rgba(29, 14, 63, 0.9); /* Color de fondo personalizado */
     color: #fff; /* Texto blanco para buena legibilidad */
     padding: 2rem 1rem;
-    border: 1px solid #ccc; /* Bordes opcionales */
-    border-radius: 8px; /* Bordes redondeados */
+    border: 0px;
 }
 
 .custom-jumbotron h1 {

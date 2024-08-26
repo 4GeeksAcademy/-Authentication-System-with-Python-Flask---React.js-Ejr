@@ -3,7 +3,7 @@ import "../../styles/testimonial-carousel.css";
 
 const TestimonialCarousel = () => {
     return (
-        <div id="testimonialCarousel" className="carousel carousel-dark slide testimonial-carousel mt-5">
+        <div id="testimonialCarousel" className="background-body carousel carousel-dark slide testimonial-carousel mt-5">
             <div className="carousel-indicators testimonial-carousel-indicators">
                 <button
                     type="button"

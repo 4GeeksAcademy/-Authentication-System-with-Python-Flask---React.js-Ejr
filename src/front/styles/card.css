@@ -4,14 +4,6 @@
     margin-top: 1rem;
 }
 
-
-
-
-
-
-
-
-
 .custom-card {
     position: relative;
     background-color: #000;
@@ -55,4 +47,9 @@
     outline: none;
 }
 
+.gradient-body {
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    margin-top: 40px;
+}
 
