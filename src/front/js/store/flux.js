@@ -3,7 +3,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			jobOffers: [],
-			selectedJobOffer: null
+			selectedJobOffer: null,
+			token: null,
+			user: null
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -74,11 +76,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getMessage: async () => {
 				try {
-					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
 					const data = await resp.json();
 					setStore({ message: data.message });
-					// don't forget to return something, that is how the async resolves
+
 					return data;
 				} catch (error) {
 					console.log("Error loading message from backend", error);
@@ -136,7 +137,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem("token")
 				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
 				return true
-			}
+			},
+			login: async (credentials) => {
+                try {
+                    const resp = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(credentials)
+                    });
+
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        localStorage.setItem('token', data.token);
+                        setStore({ token: data.token, user: data.user });
+                        return data;
+                    } else {
+                       
+                        return false;
+                    }
+                } catch (error) {
+                    console.error("Error al conectarse con el backend:", error);
+                }
+            },
+
+            loadUserFromToken: () => {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    setStore({ token: token });
+                }
+            },
 
 		}
 	};
