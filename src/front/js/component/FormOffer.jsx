@@ -33,28 +33,31 @@ export const FormOffer = () => {
             const offerDate = new Date().toISOString();
             const updatedFormData = {
                 ...formData,
-                fecha_publicacion: offerDate,
+                fecha_publicacion: offerDate.slice(0,10),
+                modalidad: formData.modalidad?.toLowerCase(),
+                experiencia_minima: formData.experiencia_minima?.toUpperCase()
             
             };
             console.log(updatedFormData)
 
             try {
-                const resp = await actions.createJobOffers(updatedFormData);
+                const resp = await actions.createJobOffer(updatedFormData);
                 console.log(resp);
                 navigate('/timeline');
             } catch (error) {
+                console.log(error)
                 setError('Ocurrió un error al crear la oferta.');
             }
 
-            setFormData({
-                name: "",
-                descripcion: "",
-                salario: "",
-                plazo: "",
-                modalidad: "Teletrabajo",
-                experiencia_minima: "Sin experiencia",
-                fecha_publicacion: null,
-            });
+            // setFormData({
+            //     name: "",
+            //     descripcion: "",
+            //     salario: "",
+            //     plazo: "",
+            //     modalidad: "Teletrabajo",
+            //     experiencia_minima: "Sin experiencia",
+            //     fecha_publicacion: null,
+            // });
         }
     };
 
