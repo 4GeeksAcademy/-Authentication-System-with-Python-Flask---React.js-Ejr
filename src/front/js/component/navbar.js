@@ -2,23 +2,19 @@ import React, { useState, useEffect } from "react";
 import logo from "../component/tickeateBlanco.png";
 import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
-
 export const Navbar = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
-    console.log("Token encontrado:", token); 
-    setIsAuthenticated(!!token); 
-  }, []); 
-
+    const token = localStorage.getItem("jwt-token");
+    console.log("Token encontrado:", token);
+    setIsAuthenticated(!!token);
+  }, []);
   const handleLogout = () => {
-    localStorage.removeItem("jwtToken"); 
-    setIsAuthenticated(false); 
-    navigate("/"); 
+    localStorage.removeItem("jwt-token");
+    setIsAuthenticated(false);
+    navigate("/");
   };
-
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(29, 14, 63, 0.9)', padding: '1rem 0' }}>
       <div className="container-fluid">
@@ -67,7 +63,13 @@ export const Navbar = () => {
             </li>
           </ul>
           <ul className="navbar-nav ms-auto">
-            {isAuthenticated ? (
+            {!isAuthenticated ? (
+              <li className="nav-item">
+                <a href="/register" className="nav-link" style={{ color: 'white' }}>
+                  Registrarse / Iniciar sesión
+                </a>
+              </li>
+            ) : (
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ color: 'white' }}>
                   <i className="fas fa-user"></i> {/* Ícono de perfil */}
@@ -78,12 +80,6 @@ export const Navbar = () => {
                   <li><a className="dropdown-item" onClick={handleLogout} style={{ cursor: 'pointer' }}>Cerrar sesión</a></li>
                 </ul>
               </li>
-            ) : (
-              <li className="nav-item">
-                <a href="/register" className="nav-link" style={{ color: 'white' }}>
-                  Registrarse / Iniciar sesión
-                </a>
-              </li>
             )}
           </ul>
         </div>
@@ -91,5 +87,4 @@ export const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;
