@@ -4,6 +4,13 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
+// import { UserProfile } from "./pages/userProfile";
+//import { Login } from "./pages/login";
+//import { Signup } from "./pages/singup";
+// import { Favorites } from "./pages/favorites";
+// import { Category } from "./pages/category";
+
+
 
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -26,7 +33,11 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        
+                        {/* <Route element={<UserProfile />} path="/" />
+                        <Route element={<Login />} path="/" />
+                        <Route element={<Signup />} path="/" />
+                        <Route element={<Favorites />} path="/" />
+                        <Route element={<Category />} path="/category/:thecategory" /> */}
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
