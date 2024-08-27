@@ -20,8 +20,8 @@ export const MultiStepForm = () => {
   const [cancelRoutineCreation, setCancelRoutineCreation] = useState(false)
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' })
-  const [setsInput, setSetsInput] = useState('') 
-  const [repsInput, setRepsInput] = useState('') 
+  const [setsInput, setSetsInput] = useState('')
+  const [repsInput, setRepsInput] = useState('')
   const [selectSets, setSelectSets] = useState('')
 
   const setsList = store.allSetsList.slice(0, 5)
@@ -33,11 +33,11 @@ export const MultiStepForm = () => {
       actions.allSets()
       setSelectedExercise({ id: item.id, name: item.name })
       console.log(item.id)
-      setIsModalOpen(true) 
+      setIsModalOpen(true)
     }
   }
 
- 
+
   const handleInputChange = (input) => (e) => {
     setFormData({
       ...formData,

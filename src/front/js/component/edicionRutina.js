@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 export const EdicionRutina = () => {
+
+    const navigate = useNavigate()
     const { store, actions } = useContext(Context);
     const [routine, setRoutine] = useState({});
     const [day, setDay] = useState('');
@@ -11,26 +14,6 @@ export const EdicionRutina = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-    const [searchTerm, setSearchTerm] = useState("")
-    const [selectedCategory, setSelectedCategory] = useState("")
-    const [addedExercises, setAddedExercises] = useState([])
-    const [isOpen, setIsOpen] = useState(false)
-
-    const handleNextStep = () => setStep(step + 1)
-    const isExerciseSelected = (id) => {
-        return addedExercises.some(exercise => exercise.id === id)
-    }
-
-    const filteredExercises = store.allExerciseList.filter((item) => {
-        const matchesCategory = selectedCategory === "" || item.category === selectedCategory;
-        const matchesSearchTerm = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearchTerm;
-    })
-
-    const toggleDropdown = (e) => {
-        e.preventDefault()
-        setIsOpen(!isOpen)
-    }
     // PREVIO A MOSTRAR EJERCICIOS EDITAR
     const setSelectedDay = async (e) => {
         setDay(e.target.options[e.target.selectedIndex].text)
@@ -70,9 +53,43 @@ export const EdicionRutina = () => {
         })
     }
 
+    const handleDeleteExerciseRoutine = async (e, routine_id, exercise_id) => {
+        e.preventDefault()
+        console.log(routine_id);
+        console.log(exercise_id);
+        routine.exercises
+
+        const deleteExerciseRoutine = new Promise(async (resolve, reject) => {
+            const success = await actions.deleteExerciseRoutine(routine_id, exercise_id)
+            if (success === true) {
+                setRoutine(await store.oneRoutine)
+                if (routine.exercises.exercise < 1) {
+                    await actions.deleteWeeklyUserRoutine(day)
+                }
+                resolve("Ejercicio elimindado de la rutina")
+            } else {
+                reject("Elimincacion fallida")
+            }
+        })
+
+        toast.promise(
+            deleteExerciseRoutine,
+            {
+                pending: 'Eliminando...',
+                success: 'Ejercicio eliminado exitosamente 👌',
+                error: 'No se pudo eliminar el ejercicio de la rutina 🤯'
+            }
+        )
+
+        deleteExerciseRoutine.then(() => {
+            navigate("/editarrutina")
+        }).catch((error) => {
+            console.error(error)
+        })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
 
         const editInfoPromise = new Promise(async (resolve, reject) => {
             let success = await actions.putRoutine(
@@ -98,11 +115,6 @@ export const EdicionRutina = () => {
             }
         );
     };
-
-    useEffect(() => {
-        actions.allExercise()
-        actions.category()
-    }, [])
 
     // PREVIO A MOSTRAR EJERCICIOS EDITAR
     useEffect(() => {
@@ -308,232 +320,17 @@ export const EdicionRutina = () => {
                                                             </div>
                                                             {/* <!-- Modal footer --> */}
                                                             <div className="flex items-center p-4 md:p-5 border-t border-neutral-200 rounded-b dark:border-neutral-600">
-                                                                <button onClick={(e) => handleDeleteSubmit(e, day)} type="button" className="transition-all duration-200 text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-900 dark:hover:bg-red-800 dark:focus:ring-red-800">Quitar Ejercicio</button>
+                                                                <button onClick={(e) => handleDeleteExerciseRoutine(e, routine.id, item.exercise.id)} type="button" className="transition-all duration-200 text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-900 dark:hover:bg-red-800 dark:focus:ring-red-800">Quitar Ejercicio</button>
                                                                 <button onClick={() => setIsDeleteModalOpen(false)} type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-neutral-900 focus:outline-none bg-white rounded-lg border border-neutral-200 hover:bg-neutral-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-neutral-100 dark:focus:ring-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:text-white dark:hover:bg-neutral-700">Cancelar</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* modal */}
-                                                <div className="w-3/4 mx-auto flex rounded-md flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-5 h-full bg-neutral-800 border-neutral-700 relative">
 
-                                                    {/* form title */}
-                                                    <span className="relative flex justify-center w-full sm:w-3/4">
-                                                        <div
-                                                            className="absolute inset-x-0 top-1/2 h-px -translate-y-3/4 bg-red bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-75"
-                                                        ></div>
-                                                        <span className="relative z-10 text-white font-bold px-2 sm:px-6 bg-neutral-800 sm:text-xl">Crea tu rutina</span>
-                                                    </span>
-                                                    <div className="w-3/4 mx-auto flex rounded-md flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-5 h-full bg-neutral-800 border-neutral-700 relative">
-                                                        <form className="w-full">
-                                                            <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
-                                                                <div className='w-full flex flex-col'>
-                                                                    {/* Paso 3: Ejercicios */}
-                                                                    <div className="flex flex-row flex-wrap gap-2 w-full items-end justify-end mb-5">
-
-                                                                        {/* search input */}
-                                                                        <div className="relative">
-                                                                            <label htmlFor="Search" className="sr-only"> Search for... </label>
-                                                                            <input
-                                                                                type="text"
-                                                                                id="Search"
-                                                                                placeholder="buscar ejercicios..."
-                                                                                className="border-none max-w-40 h-8 rounded-md px-4 py-2 pe-10 shadow-sm sm:text-sm dark:bg-neutral-900 dark:text-white focus:ring-emerald-500 focus:border-emerald-500"
-                                                                                value={searchTerm}
-                                                                                onChange={(e) => setSearchTerm(e.target.value)}
-                                                                            />
-
-                                                                            <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                                                                                <span
-                                                                                    className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                                                                                >
-                                                                                    <span className="sr-only">Search</span>
-
-                                                                                    <svg
-                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                        fill="none"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        strokeWidth="1.5"
-                                                                                        stroke="currentColor"
-                                                                                        className="size-4"
-                                                                                    >
-                                                                                        <path
-                                                                                            strokeLinecap="round"
-                                                                                            strokeLinejoin="round"
-                                                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                                                                        />
-                                                                                    </svg>
-                                                                                </span>
-                                                                            </span>
-                                                                        </div>
-
-                                                                        {/* filtrar */}
-                                                                        <div>
-                                                                            <select
-                                                                                name="HeadlineAct"
-                                                                                id="HeadlineAct"
-                                                                                className="bg-neutral-900 border-none text-neutral-300 text-sm/none font-medium ms-2 md:me-2 px-4 py-2 h-8 rounded-md focus:ring-transparent focus:border-transparent"
-                                                                                value={selectedCategory}
-                                                                                onChange={(e) => setSelectedCategory(e.target.value)}
-                                                                            >
-                                                                                <option className="flex items-center border-e px-4 py-2 text-sm/none font-medium text-neutral-600 dark:border-e-neutral-800 dark:text-neutral-300" value="">
-                                                                                    Filtrar
-                                                                                </option>
-                                                                                {store.allCategoryList.map((item, index) => (
-                                                                                    <option key={index} className="lowercase px-4 py-2" value={item}>
-                                                                                        {item}
-                                                                                    </option>
-                                                                                ))}
-                                                                            </select>
-                                                                        </div>
-
-                                                                        {/* lista de ejercicios */}
-                                                                        <div className="relative">
-                                                                            <div className="inline-flex items-center overflow-hidden rounded-md h-8 border bg-white dark:border-neutral-800 dark:bg-neutral-900">
-                                                                                <div
-                                                                                    className="border-e px-4 py-2 text-sm/none font-medium text-neutral-600 dark:border-e-neutral-800 dark:text-neutral-300"
-                                                                                >
-                                                                                    Ejercicios
-                                                                                    <span className={`bg-neutral-900 border border-neutral-700 text-neutral-300 text-xs font-medium ms-2 me-2 px-2.5 py-0.5 rounded-full`}>
-                                                                                        {addedExercises.length}
-                                                                                    </span>
-                                                                                </div>
-
-                                                                                <button
-                                                                                    className="h-full p-2 text-neutral-600 hover:bg-neutral-50 hover:text-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-                                                                                    onClick={toggleDropdown}
-                                                                                >
-                                                                                    <span className="sr-only">Menu</span>
-                                                                                    <svg
-                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                        className="size-4"
-                                                                                        viewBox="0 0 20 20"
-                                                                                        fill="currentColor"
-                                                                                    >
-                                                                                        <path
-                                                                                            fillRule="evenodd"
-                                                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                                                            clipRule="evenodd"
-                                                                                        />
-                                                                                    </svg>
-                                                                                </button>
-                                                                            </div>
-
-                                                                            {isOpen && (
-                                                                                <div
-                                                                                    className="absolute end-0 z-10 mt-2 w-56 rounded-md border border-neutral-100 bg-white shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
-                                                                                    role="menu"
-                                                                                >
-                                                                                    {addedExercises.length > 0 ? (
-                                                                                        addedExercises.map((item, index) => (
-                                                                                            <div
-                                                                                                key={index}
-                                                                                                className="flex justify-between rounded-lg px-4 py-2 text-sm text-neutral-500 hover:bg-neutral-50 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-300"
-                                                                                                role="menuitem"
-                                                                                            >
-                                                                                                {item.name}
-                                                                                                <button onClick={() => handleAddExercises(item.id, item.name)} type="button" className="w-fit flex p-1 cursor-pointer items-center justify-center rounded-lg border-neutral-200 bg-white text-neutral-500 hover:text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:peer-checked:text-neutral-300 active:scale-95 transition-all ease-in">
-                                                                                                    <div>
-                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
-                                                                                                    </div>
-                                                                                                </button>
-                                                                                            </div>
-                                                                                        ))) : (
-                                                                                        <div
-                                                                                            className="block rounded-lg px-4 py-2 text-sm text-neutral-500 hover:bg-neutral-50 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-300"
-                                                                                            role="menuitem"
-                                                                                            onClick={closeDropdown}
-                                                                                        >
-                                                                                            No hay ejercicios
-                                                                                        </div>
-                                                                                    )
-                                                                                    }
-                                                                                </div>
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="mb-4 flex flex-wrap gap-4">
-                                                                        {filteredExercises.map((item, index) => {
-                                                                            return (
-                                                                                <article className="flex-grow flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
-                                                                                    <div className="hidden sm:block sm:basis-36">
-                                                                                        <img
-                                                                                            alt=""
-                                                                                            src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-                                                                                            className="aspect-square h-full w-full object-cover"
-                                                                                        />
-                                                                                    </div>
-                                                                                    <div className="p-3 flex flex-1 flex-col gap-4 justify-between">
-                                                                                        <div className="flex flex-col gap-3 dark:border-white/10">
-                                                                                            <h3 className="font-bold uppercase text-neutral-900 dark:text-white">
-                                                                                                {item.name}
-                                                                                            </h3>
-                                                                                            <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
-                                                                                                {item.category}
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div className="self-end">
-                                                                                            <input
-                                                                                                checked={isExerciseSelected(item.id)}
-                                                                                                onChange={() => handleAddExercises(item.id, item.name)}
-                                                                                                type="checkbox"
-                                                                                                id={`react-${index}`}
-                                                                                                className="peer hidden"
-                                                                                            />
-                                                                                            <label
-                                                                                                htmlFor={`react-${index}`}
-                                                                                                className="dark:hover:text-emearld-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
-                                                                                            >
-                                                                                                <div>
-                                                                                                    <svg
-                                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                                        viewBox="0 0 24 24"
-                                                                                                        fill="none"
-                                                                                                        stroke="currentColor"
-                                                                                                        strokeWidth="2"
-                                                                                                        strokeLinecap="round"
-                                                                                                        strokeLinejoin="round"
-                                                                                                        className="icon icon-tabler icons-tabler-outline icon-tabler-plus size-8"
-                                                                                                    >
-                                                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                        <path d="M12 5l0 14" />
-                                                                                                        <path d="M5 12l14 0" />
-                                                                                                    </svg>
-                                                                                                </div>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </article>
-                                                                            )
-                                                                        })}
-                                                                    </div>
-
-                                                                    <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
-                                                                        <button
-                                                                            type="button"
-                                                                            className="bg-transparent hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
-                                                                        >
-                                                                            Cancelar
-                                                                        </button>
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={() => setStep(1)}
-                                                                            className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
-                                                                            disabled={addedExercises.length == 0 ? true : false}
-                                                                        >
-                                                                            Confirmar Cambios
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </label>
                                 </div>
-
                             )
                         })
                     }
