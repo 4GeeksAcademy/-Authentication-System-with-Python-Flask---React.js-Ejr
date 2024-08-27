@@ -89,6 +89,7 @@ class PhysicalInformation(db.Model):
     def graphicSerialize(self):
         return {
             "weight": self.weight,
+            "height": self.height,
             "date": self.date.strftime("%d/%m/%Y"),
         }
     
