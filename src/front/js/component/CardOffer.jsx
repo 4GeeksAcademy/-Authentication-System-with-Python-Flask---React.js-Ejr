@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../styles/CardOffer.css";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { StarRating } from "./StarsRating.jsx";
+import { Context } from "../store/appContext.js";
 
-export const CardOffer = ({ title, company, modality, location, salary, description, id, rating }) => {
+export const CardOffer = ({ id }) => {
+    const { store } = useContext(Context);
+    const offer = store.jobOffers.find(offer => offer.id === id);
     const navigate = useNavigate();
 
+    if (!offer) return <div>Oferta no encontrada</div>;
+
     const handleViewDetails = () => {
-        navigate(`/singleoffer/${id}`); 
+        navigate(`/singleoffer/${id}`);
     };
 
     return (
@@ -18,27 +23,27 @@ export const CardOffer = ({ title, company, modality, location, salary, descript
                     src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
                     alt="Company Logo"
                 />
-                <StarRating rating={rating} />
+                <StarRating rating={offer.rating} />
             </div>
             <div className="card-offer-body">
                 <div className="title-box">
-                    <h2 className="card-offer-title">{title}</h2>
-                    <span className="card-offer-company mb-1">{company} - {location}</span>
+                    <h2 className="card-offer-title">{offer.name}</h2>
+                    <span className="card-offer-company mb-1">Tech-company - España</span>
                 </div>
                 <div className="card-offer-description text-muted">
-                    <p>{description}</p>
+                    <p className="text-description">{offer.descripcion}</p>
                 </div>
                 <div className="card-offer-footer d-flex justify-content-between align-items-center mt-2">
                     <div className="card-offer-details text-muted">
-                        <span>{location}</span>
+                        <span>{offer.experiencia_minima}</span>
                         <span className="mx-2">|</span>
-                        <span>{salary}</span>
+                        <span>{offer.salario}</span>
                         <span className="mx-2">|</span>
-                        <span>{modality}</span>
+                        <span>{offer.modalidad}</span>
                     </div>
                     <div className="card-offer-actions">
-                        <button 
-                            onClick={handleViewDetails} 
+                        <button
+                            onClick={handleViewDetails}
                             className="btn btn-details btn-sm text-decoration-none me-2">
                             View Details
                         </button>

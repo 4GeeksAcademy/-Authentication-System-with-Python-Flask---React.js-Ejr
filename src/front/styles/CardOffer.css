@@ -7,7 +7,6 @@
     width: 100%;
     max-width: 800px; 
     height: 220px; 
-    overflow: hidden;
     border-color: #fff 0.5px;
 }
 
@@ -66,9 +65,18 @@
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
 }
+.text-description{
+    position: relative;
+    bottom: 50px;
+}
 .card-offer-details{
     position: relative;
     top:24px;
+}
+.card-offer-details span{
+    position: absolute;
+    left: 120px;
+    font-size: 0.8rem;
 }
 
 .card-offer-actions{

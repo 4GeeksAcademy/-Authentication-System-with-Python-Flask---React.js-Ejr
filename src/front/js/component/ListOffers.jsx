@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { CardOffer } from "./CardOffer.jsx";
 import { Context } from "../store/appContext.js";
 
+
 export const ListOffers = ({ searchTerm }) => {
     const { store, actions } = useContext(Context);
   
@@ -18,13 +19,13 @@ export const ListOffers = ({ searchTerm }) => {
     );
 
     return (
-        <div className="container d-flex justify-content-center my-5">
+        <div className="container d-flex justify-content-center my-2">
             <div className="row d-flex flex-column">
 
                 {searchOffers.length > 0 ? (
                     searchOffers.map((offer, index) => (
 
-                        <div className="col" key={index}>
+                        <div className="col d-flex justify-content-center" key={index}>
                             <CardOffer
                                 title={offer.title}
                                 company={offer.company}
@@ -38,7 +39,7 @@ export const ListOffers = ({ searchTerm }) => {
                     ))
                 ) : (
 
-                    <p className="text-secondary">No hay ofertas disponibles</p>
+                    <p className="no-offers-section m-auto text-center shadow-lg">No hay ofertas disponibles</p>
 
                 )}
             </div>

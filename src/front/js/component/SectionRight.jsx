@@ -27,13 +27,10 @@ export const SectionRight = () => {
                         <div className="col-12" key={index}>
                             <CardOffer
                                 className ="featured-card"
-                                title={offer.title}
-                                company={offer.company}
-                                modality={offer.modality}
-                                location={offer.location}
-                                salary={offer.salary}
-                                description={offer.description}
-                                id={offer.id}
+                                title={offer.name}
+                                modality={offer.modalidad}
+                                salary={offer.salario}
+                                description={offer.descripcion}
                                 rating={offer.rating} 
                             />
                         </div>

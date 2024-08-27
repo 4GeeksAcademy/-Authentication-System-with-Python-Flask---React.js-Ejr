@@ -7,20 +7,20 @@ export const FilterListOffer = () => {
         salary: [0, 100000],
         searchText: "",
         fecha_publicacion: "",
-        experience: ""
+        experience: [] // Initialize as an array
     });
 
     const handleCheckboxChange = (event) => {
         const { name, value, checked } = event.target;
 
         setFilters(prevFilters => {
-            const newValue = checked
-                ? [...prevFilters[name], value]
-                : prevFilters[name].filter(item => item !== value);
+            const newExperience = checked
+                ? [...prevFilters.experience, value]
+                : prevFilters.experience.filter(item => item !== value);
 
             return {
                 ...prevFilters,
-                [name]: newValue
+                experience: newExperience
             };
         });
     };
@@ -67,7 +67,6 @@ export const FilterListOffer = () => {
                     placeholder="YYYY-M-D"
                     name="plazo"
                     id="plazo"
-                    required
                     onChange={handleInputChange}
                     value={filters.plazo}
                 />
@@ -142,7 +141,7 @@ export const FilterListOffer = () => {
                     id="fecha_publicacion"
                     type="text"
                     name="fecha_publicacion"
-                    placeholder="Buscar por fecha de publicacion:"
+                    placeholder="YYYY-MM-DD"
                     value={filters.fecha_publicacion}
                     onChange={handleInputChange}
                 />
