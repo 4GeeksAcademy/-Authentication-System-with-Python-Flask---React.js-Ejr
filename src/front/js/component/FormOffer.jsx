@@ -121,9 +121,9 @@ export const FormOffer = () => {
                                     value={formData.experiencia_minima}
                                 >
                                     <option value="">Seleccione una opción</option>
-                                    <option value="Junior">Junior</option>
-                                    <option value="Mid-senior">Mid-senior</option>
-                                    <option value="Senior">Senior</option>
+                                    <option value="JUNIOR">JUNIOR</option>
+                                    <option value="MID-SENIOR">MID-SENIOR</option>
+                                    <option value="SENIOR">SENIOR</option>
                                 </select>
                             </div>
                         </div>
