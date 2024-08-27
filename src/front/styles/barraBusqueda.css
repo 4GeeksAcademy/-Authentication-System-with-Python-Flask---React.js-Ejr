@@ -44,6 +44,10 @@
     margin-bottom: 5px; /* Espacio entre la etiqueta y el control */
 }
 
+
+.barra-busqueda .form-control {
+    background-color: #416788; /* Fondo de la barra */
+}
 /* Estilo para los controles dentro de los grupos de formulario */
 .barra-busqueda .form-control, 
 .barra-busqueda .dropdown-toggle {
