@@ -68,6 +68,8 @@ def edit_user():
 def login():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
+    if None in [email,password]:
+        return jsonify("Please provide valid credentials"), 400
     user = User.query.filter_by(email = email, password = password).first()
     if user is None:
          return jsonify("Username NOT found"), 404
@@ -129,7 +131,11 @@ def add_favorite_game():
     #find what game the user is trying to add as their favorite
     #create a variable that with grab the id from the request body and assign it to a game in our model
     req_game_id = request.json.get('game_id', None)
+    if req_game_id is None:
+        return jsonify("Please, provide a valid game id"),400
     game = Game.query.filter_by(id = req_game_id).first()
+    if game is None:
+        return jsonify("Game not found"),404
     # game = {
         #     "id" : 1,
         #     "name": "Andres Games",
@@ -145,6 +151,17 @@ def add_favorite_game():
     # {
     #     "game_id": "2"
     # }
+@api.route('/favorite_delete', methods=['DELETE'])
+@jwt_required()
+def delete_favorite():
+    current_user = get_jwt_identity()
+    favorite_id= request.json.get("favorite_id")
+    if favorite_id is None:
+        return jsonify("Please, provide a valid game id"),400
+    delete_favorite= Favorite.query.filter_by(id = favorite_id).first()
+    db.session.delete(delete_favorite)
+    db.session.commit()
+    return "", 204
 
 @api.route('/games', methods=['GET'])
 def all_games():
