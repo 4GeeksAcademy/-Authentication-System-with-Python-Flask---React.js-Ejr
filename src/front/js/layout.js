@@ -44,7 +44,7 @@ const Layout = () => {
                         <Route element={<Singup />} path="/register" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<ContactUs />} path="/contact-us" />
-                        <Route element={<UserProfile />} path="/user-profile" />
+                        <Route element={<UserProfile />} path="/profile" />
                         <Route element={<TokenValidator />} path="/app">
                             <Route element={<Private />} path="exemplo" /> 
                             {/* qualquer rutas protegida aqui */}
