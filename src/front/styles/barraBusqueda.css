@@ -59,9 +59,21 @@
     box-sizing: border-box; /* Asegura que padding y border no corten el botón */
 }
 
-/* Estilo específico para el botón "Restablecer" */
-.botones .btn-secondary {
-    padding: 0 9px; /* Ajuste específico del padding para el botón Restablecer */
+.botones .btn-secondary { /* Estilo específico para el botón "Restablecer" */
+    padding: 0 6px; /* Ajuste del padding horizontal para evitar que el botón sea demasiado grande */
+    background-color: #000022; /* Color de fondo de los botones */
+    color: #E0E0E2; /* Color del texto de los botones */
+    border: none; /* Sin borde */
+    height: 45px; /* Altura uniforme con el resto de la barra */
+    box-sizing: border-box; /* Asegura que padding y border no corten el botón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+/* Estilo hover para los botones "Aceptar" y "Restablecer" */
+.botones .btn-primary:hover,
+.botones .btn-secondary:hover {
+    background-color: #B5BAD0; /* Color de fondo al pasar el ratón */
+    color: #000022; /* Color del texto al pasar el ratón */
 }
 
 /* Estilos para el botón de restablecer cuando está activo */
