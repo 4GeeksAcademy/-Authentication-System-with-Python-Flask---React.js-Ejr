@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ListOffers } from "../component/ListOffers.jsx";
-import "../../styles/TimeLine.css"
+import "../../styles/TimeLine.css";
 import { FilterListOffer } from "../component/FilterListOffer.jsx";
 
 export const TimeLine = () => {
@@ -31,17 +31,17 @@ export const TimeLine = () => {
                     </div>
                 </div>
             </div>
-            <div className="search-bar container my-3 d-flex justify-content-center">
+            <div className="search-bar d-flex">
                 <input
                     type="text"
-                    className=" form-control me-2"
+                    className="form-control"
                     placeholder="Buscar ofertas..."
                     value={searchTerm}
                     onChange={handleSearchChange}
                     onKeyDown={handleKeyDown}
                 />
                 <button
-                    className="btn btn-search"
+                    className="btn btn-search ms-3"
                     onClick={handleSearchClick}
                 >
                     Buscar
