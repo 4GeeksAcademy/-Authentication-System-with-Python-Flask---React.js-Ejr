@@ -84,11 +84,12 @@
     align-items: center; /* Centra la imagen verticalmente */
     justify-content: center; /* Centra la imagen horizontalmente */
     background-color: white; /* Fondo blanco para el contenedor */
-    margin-bottom: 20px; /* Espacio entre el contenedor de la imagen y el texto */
+    padding-top: 35px; /* Añade espacio interno en la parte superior dentro del contenedor circular */
+    padding-left: 10px;
 }
 
 .profile-image {
-    max-width: 167%; /* Permite que la imagen se ajuste al contenedor */
+    max-width: 220%; /* Permite que la imagen se ajuste al contenedor */
     height: auto; /* Mantiene las proporciones de la imagen */
     display: block; /* Asegura que la imagen no tenga espacio extra alrededor */
 }
