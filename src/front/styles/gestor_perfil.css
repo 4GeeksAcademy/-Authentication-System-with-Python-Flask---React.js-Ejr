@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+    min-height: 100vh;
 }
 
 .gestor-perfil-img {
@@ -158,7 +159,7 @@
     border-color: #075E81;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .container-gestor-perfil {
         width: 100%;
         padding-top: 80px;

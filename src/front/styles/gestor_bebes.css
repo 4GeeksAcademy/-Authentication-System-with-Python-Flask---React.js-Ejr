@@ -1,7 +1,9 @@
 .container-gestor-bebes {
     width: 75%;
+    align-items: center;
     padding-top: 50px;
     margin: auto;
+    min-height: 100vh;
 }
 
 .container-gestor-bebes ul {
