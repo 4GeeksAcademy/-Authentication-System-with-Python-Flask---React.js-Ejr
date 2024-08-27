@@ -3,12 +3,11 @@ import { Context } from "../store/appContext";
 import "../../styles/inputRutas.css";
 
 export const InputRutas = () => {
-    const { store, actions } = useContext(Context)
+    const { store, actions } = useContext(Context);
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [titleValue, setTitleValue] = useState("");
     const [descriptionValue, setDescriptionValue] = useState("");
-
 
     const predefinedTags = [
         "Rutas de senderismo", "Viajes en coche", "Playas", 
@@ -17,19 +16,8 @@ export const InputRutas = () => {
         "Fiestas y tradiciones", "Turismo rural", "Destinos históricos"
     ];
 
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter" && inputValue.trim() !== "") {
-            addTag(inputValue.trim());
-            setInputValue("");
-        }
-    };
-
     const handleRemoveTag = (indexToRemove) => {
         setTags(tags.filter((_, index) => index !== indexToRemove));
-    };
-
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
     };
 
     const handleInputTitleChange = (e) => {
@@ -39,7 +27,12 @@ export const InputRutas = () => {
 
     const handleInputDescChange = (e) => {
         setDescriptionValue(e.target.value);
-        store.newItineraryData.description = descriptionValue;
+        store.newItineraryData.description = e.target.value;
+    };
+
+    const handleSelectTag = (tag) => {
+        addTag(tag);
+        setInputValue(""); // Limpiar el valor del input después de seleccionar un tag
     };
 
     const addTag = (tag) => {
@@ -52,6 +45,8 @@ export const InputRutas = () => {
         <div>
             <hr />
             <h5 className="mb-2">Información del itinerario:</h5>
+
+            {/* Input para el título */}
             <div className="input-group mb-3">
                 <input
                     type="text"
@@ -65,6 +60,7 @@ export const InputRutas = () => {
                 />
             </div>
 
+            {/* Contenedor de etiquetas (tags) */}
             <div className="tags-container mb-3">
                 {tags.map((tag, index) => (
                     <span key={index} className="tag-item">
@@ -74,30 +70,41 @@ export const InputRutas = () => {
                             className="ms-1"
                             aria-label="Remove"
                             onClick={() => handleRemoveTag(index)}
-                        ><i className="fa-solid fa-x fa-xs" style={{color: '#949494'}}></i></span>
+                        >
+                            <i className="fa-solid fa-x fa-xs" style={{ color: '#949494' }}></i>
+                        </span>
                     </span>
                 ))}
             </div>
 
+            {/* Dropdown para seleccionar tags integrado en input-group */}
             <div className="input-group mb-3">
                 <input
                     type="text"
-                    className="form-control"
-                    placeholder="Enter a tag"
-                    aria-label="Enter a tag"
+                    className="form-control dropdown-toggle custom-dropdown-input"
+                    placeholder="Selecciona un tag"
+                    aria-label="Selecciona un tag"
                     aria-describedby="basic-addon2"
                     value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    list="predefined-tags-list"
+                    readOnly
+                    data-bs-toggle="dropdown"
                 />
-                <datalist id="predefined-tags-list">
+                <ul className="dropdown-menu w-100">
                     {predefinedTags.map((tag, index) => (
-                        <option key={index} value={tag} />
+                        <li key={index}>
+                            <button
+                                className="dropdown-item"
+                                type="button"
+                                onClick={() => handleSelectTag(tag)}
+                            >
+                                {tag}
+                            </button>
+                        </li>
                     ))}
-                </datalist>
+                </ul>
             </div>
-            
+
+            {/* Textarea para la descripción */}
             <div className="mb-3">
                 <textarea
                     className="form-control"

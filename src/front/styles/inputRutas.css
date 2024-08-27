@@ -1,3 +1,13 @@
+/* inputRutas.css */
+.custom-dropdown-input {
+    border-radius: 0.25rem; /* Mismo radio de borde que los inputs normales */
+    border: 1px solid #ced4da; /* Mismo estilo de borde que los inputs normales */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el input */
+}
+
+.dropdown-menu {
+    width: 100%; /* Hace que el dropdown ocupe todo el ancho del input */
+}
 
 /* Estilos para los tags en forma de pills */
 .tag-item {
@@ -22,7 +32,7 @@
 
 /* Estilo para el input del datalist */
 .input-group input[list="predefined-tags-list"] {
-    width: 100%; /* Ajusta la anchura del input */
+    width: 50%; /* Ajusta la anchura del input */
 }
 
 /* Opcional: estilos adicionales para inputs o textarea si es necesario */
