@@ -220,8 +220,6 @@ def create_user():
         
         if existing_user:
             return jsonify({"msg": "Email already exists"}), 400
-        
-        fecha_de_nacimiento = datetime.strptime(data['fecha_de_nacimiento'], '%Y-%m-%d').date()
 
         user_created = User(
             nombre_usuario=data["nombre_usuario"],
