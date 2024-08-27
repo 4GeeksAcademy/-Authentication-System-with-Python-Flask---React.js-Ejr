@@ -44,7 +44,7 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
         <div className="w-full flex flex-col">
           {/* Paso 2: Semana y Día */}
           <div className="w-full flex gap-5 flex-col sm:flex-row sm:gap-10 sm:justify-between mb-5">
-            <div className="w-full sm:w-1/2">
+            <div className="w-full">
               <label htmlFor="day" className="block mb-2 text-sm font-bold text-neutral-100">Días</label>
               <select
                 id="day"
