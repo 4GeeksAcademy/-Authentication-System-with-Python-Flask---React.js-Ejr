@@ -271,7 +271,7 @@ export const MultiStepForm = () => {
       {/* form steps */}
       <StepsCount step={step} handleProgressBar={handleProgressBar} handleStepCircle={handleStepCircle} handleStepText={handleStepText} />
 
-      <FormSteps step={step} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} />
+      <FormSteps step={step} setCancelRoutineCreation={setCancelRoutineCreation} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} />
 
       <Modal
         isOpen={isModalOpen}
@@ -386,7 +386,7 @@ export const MultiStepForm = () => {
         onClose={() => setCancelRoutineCreation(false)}
         onConfirm={handleOnDeleteRoutine}
       >
-        <p>Esto eliminará lo creado hasta el momento.</p>
+        <p className="text-neutral-400">Esto eliminará lo creado hasta el momento.</p>
       </Modal>
 
     </div >
