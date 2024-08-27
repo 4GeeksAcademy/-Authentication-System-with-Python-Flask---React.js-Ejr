@@ -74,11 +74,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return data
 			},
 
-			signup: async (email, password, partner) => {
+			signup: async (username, email, password, partner, is_active) => {
 				const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ email, password, partner })
+					body: JSON.stringify({ 
+						username: username,
+						email: email,
+						password: password,
+						partner: partner,
+						is_active: is_active
+						})
 				})
 
 				if (!resp.ok) throw Error("There was a problem in the signup request")

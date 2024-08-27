@@ -30,8 +30,8 @@ const Signup = () => {
         navigate("/app/exemplo")
     };
 
-    const signup = async (email, password, isPartner) => {
-        await actions.signup(email, password, isPartner);
+    const signup = async (username, email, password, isPartner, is_active) => {
+        await actions.signup(username, email, password, isPartner, is_active);
         navigate("/app/exemplo")
     }
 
@@ -48,7 +48,7 @@ const Signup = () => {
                         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <div className="signup-toggle-wrapper">
-                            <button onClick={() => signup(email, password, isPartner)}>Regístrate</button>
+                            <button onClick={() => signup(name, email, password, isPartner, isActive)}>Regístrate</button>
                             <label className="switch">
                                 <input type="checkbox" checked={isPartner} onChange={handleToggleChange} />
                                 <span className="slider round"></span>

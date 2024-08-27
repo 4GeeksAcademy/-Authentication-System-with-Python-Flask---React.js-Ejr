@@ -7,13 +7,13 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(250))
+    username = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'))
-    partner = db.Column(db.Boolean, nullable=False)
+    partner = db.Column(db.Boolean(), nullable=False)
     partner_profile_id = db.Column(db.Integer, db.ForeignKey('partnerProfile.id'))
     password = db.Column(db.String(80), nullable=False)
-    is_active = db.Column(db.Boolean())
+    is_active = db.Column(db.Boolean(), nullable=False)
 
     profile = db.relationship("UserProfile", back_populates="users", lazy=True, uselist=False)
     partner_profile = db.relationship("PartnerProfile", back_populates="users", lazy=True, uselist=False)

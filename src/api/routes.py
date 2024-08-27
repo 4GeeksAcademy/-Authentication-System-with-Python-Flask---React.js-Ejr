@@ -11,6 +11,9 @@ def signup():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
+    name = data.get('username')
+    partner = data.get('partner')
+    is_active = data.get('is_active')
     
     if not email or not password:
         return jsonify({"message": "Email and password are required"}), 400
@@ -21,7 +24,7 @@ def signup():
         return jsonify({"message": "User already exists"}), 400
 
     # Crea un nuevo usuario
-    new_user = User(email=email, password=password)  # Aquí podrías querer hashear la contraseña
+    new_user = User(email=email, password=password, username=name, partner=partner, is_active=is_active)  # Aquí podrías querer hashear la contraseña
     db.session.add(new_user)
     db.session.commit()
 
