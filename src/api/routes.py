@@ -168,9 +168,7 @@ def crear_oferta():
     
     if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
-    
-    
-    print(Modalidad(modalidad))
+
     try:
         modalidad_enum = Modalidad(modalidad)
     except ValueError:
@@ -178,6 +176,7 @@ def crear_oferta():
 
     try:
         fecha_publicacion = datetime.strptime(fecha_publicacion_str, "%Y-%m-%d")
+        print(fecha_publicacion)
     except ValueError:
         return jsonify({"success": False, "msg": "Fecha de publicación no válida"}), 400
 
