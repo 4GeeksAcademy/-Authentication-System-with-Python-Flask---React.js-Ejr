@@ -12,8 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			nutritionists: [],
 			personalTrainers: [],
-			nutritionist: {},
-			personalTrainer: {},
+			user: {}
 		},
 		actions: {
 			login: async (email, password) => {
@@ -32,9 +31,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let data = await response.json()
 
 					if (response.status === 200) {
-						setStore({ currentUser: data.user,
-							auth:true
-						 })
+						setStore({
+							currentUser: data.user,
+							auth: true
+						})
 						localStorage.setItem("token", data.access_token)
 						return true
 					}
@@ -64,22 +64,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`
 						},
 					})
-					console.log(response)
+					// console.log(response)
 					let data = await response.json()
-					console.log(data)
-					if(response.status > 400 ){
+					// console.log(data)
+					if (response.status > 400) {
 						setStore({
-							auth:false
-						}) 
-						return 
+							auth: false
+						})
+						return
 					}
 					// if (response.ok) {
-					
-						setStore({
-							currentUser: data.user,
-							auth:true
 
-						})
+					setStore({
+						currentUser: data.user,
+						auth: true
+
+					})
 					// }
 				}
 				catch (error) {
@@ -152,7 +152,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`);
 					if (response.ok) {
-						const data = await response.json();
+						const data = await response.json();						
 						setStore({ product: data });
 						return { success: true, data };
 					} else {
@@ -240,9 +240,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			addFavorite: async (productId) => {
 				const store = getStore();
 				const token = localStorage.getItem("token");
-			
+
 				const isFavorited = store.favorites.some(fav => fav.fav_product.id === productId);
-			
+
 				try {
 					let response;
 					if (isFavorited) {
@@ -263,7 +263,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							body: JSON.stringify({ fav_product: productId })
 						});
 					}
-			
+
 					if (response.ok) {
 						actions.getFavoritesByUserId();
 						return { success: true };
@@ -274,7 +274,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return { success: false, error: error.message };
 				}
-			},			
+			},
 			deleteFavorite: async (favoriteId) => {
 				let token = localStorage.getItem("token");
 				try {
@@ -284,7 +284,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`
 						}
 					});
-			
+
 					if (response.ok) {
 						const data = await response.json();
 						await getActions().getFavoritesByUserId();
@@ -321,7 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, error: error.message };
 				}
 			},
-			
+
 			uploadImage: async (data) => {
 				console.log(data)
 				const response = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
@@ -332,7 +332,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				const data_result = await response.json()
-				if(response.ok){
+				if (response.ok) {
 					return data_result
 				}
 				console.log(data_result)
@@ -344,6 +344,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					behavior: "smooth"
 				});
 			},
+
+			getUserById: async (id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/users/${id}`);
+					const data = await response.json();
+					
+					if (response.ok) {
+						setStore({ user: data });
+						return { success: true, data };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msj };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+
 			updateUser: async (id, userData) => {
 				try {
 					const response = await axios.put(`${process.env.BACKEND_URL}/api/users/${id}`, userData, {
@@ -354,9 +372,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (response.status === 200) {
 						console.log("Perfil actualizado exitosamente:", response.data);
-						setStore({ currentUser: response.data }); 
+						setStore({ currentUser: response.data });
 						return { success: true, data: response.data };
-					}else{
+					} else {
 						console.log(response)
 					}
 

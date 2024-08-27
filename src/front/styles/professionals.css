@@ -74,10 +74,6 @@
     padding: 0;
 }
 
-.professionals-container .slick-cloned {
-    display: none;
-}
-
 /* ___________________________CARDS___________________________*/
 .prof-card-container {
     z-index: 1;

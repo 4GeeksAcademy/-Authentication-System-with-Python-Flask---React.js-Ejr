@@ -97,7 +97,7 @@ const ProductDetail = () => {
     return (
         <div className="product-detail-container">
             <div className="invisible-header-box"></div>
-            <div className="first-container w-md-100 my-3">
+            <div className="first-container w-md-100 my-3 mt-5">
                 <ProductDetailCard
                     key={product.id}
                     id={product.id}

@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy  # type: ignore
 db = SQLAlchemy()
 
 # id	id-role	name	email	pasword	address	phone	is_active
@@ -29,6 +29,8 @@ class User(db.Model):
             "address":self.address,
             "phone": self.phone,
             "is_active":self.is_active,
+            "calendly_url": self.calendly_url,
+            "description": self.description,
             "professions":[user_profession.serialize() for user_profession in self.user_professions.all()]
         }
 class Role(db.Model):

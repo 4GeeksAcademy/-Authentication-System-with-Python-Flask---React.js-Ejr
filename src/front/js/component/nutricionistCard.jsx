@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import { Context } from '../store/appContext';
 import { Link } from 'react-router-dom';
 import '../../styles/professionals.css';
 import ImgProN from "../../../../public/images/img-profesional-n.png";
 
 const NutricionistCard = ({ id, name }) => {
+    const {actions, store} = useContext(Context)
+    const {nutricionist} = store;
 
     let image_url = "";
     let profession = "";
     let age = "";
 
+    useEffect(() => {
+        actions.getUserById(id);
+    },[])
+    
     return (
         <div className='prof-card-container n-card-container'>
             <div className='top-bg-effect'></div>
@@ -21,12 +28,12 @@ const NutricionistCard = ({ id, name }) => {
                 <h5 className="card-text">{profession || `Acerca de ${name}...`}</h5>
             </div>
             <div className='card-footer'>
-                <Link to={`nutricionist/${id}`} className="more-link" >
+                <Link to={`professional/${id}`} className="more-link" >
                     <h5>
                         Ver perfil
                     </h5>
                 </Link>
-                <button className='agenda-btn' >
+                <button className='agenda-btn'>
                     <h5>
                         Agendarme
                     </h5>

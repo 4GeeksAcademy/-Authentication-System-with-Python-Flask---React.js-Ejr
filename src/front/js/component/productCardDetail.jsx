@@ -2,6 +2,7 @@ import React, { useContext, useParams } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import "../../styles/listofproducts.css";
+import NoProductImg from "../../../../public/images/no-product-img.png";
 import Slider from "react-slick";
 
 const ProductDetailCard = ({ id, name, cost, image_url }) => {
@@ -83,7 +84,7 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
     return (
         <>
             <div className="images-container">
-                <img src={image_url} alt={name} />
+                <img src={image_url || NoProductImg} alt={name} />
             </div>
             <div className="detail-container">
                 <button className={`heart-container ${isFavorite() ? "favorite-on" : ""}`} onClick={toggleFavorite} >

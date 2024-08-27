@@ -66,9 +66,18 @@ const Professionals = () => {
     ),
     responsive: [
       {
-        breakpoint: 1440,
+        breakpoint: 2580,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 5,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 2000,
+        settings: {
+          slidesToShow: 4,
           slidesToScroll: 3,
           infinite: true,
           dots: true
@@ -140,12 +149,12 @@ const Professionals = () => {
           <div className='professionals-carousel '>
             <Slider {...settings}>
               {personalTrainers && personalTrainers.length > 0 ? (
-                    personalTrainers.map((nutricionist, index) => (
+                    personalTrainers.map((trainers, index) => (
                         <PersonalTrainerCard
                             key={index}
-                            id={nutricionist.id}
-                            name={nutricionist.name}
-                            // image_url={nutricionist.image_url}
+                            id={trainers.id}
+                            name={trainers.name}
+                            // image_url={trainers.image_url}
                         />
                     ))
                 ) : (
