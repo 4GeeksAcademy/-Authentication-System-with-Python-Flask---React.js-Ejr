@@ -5,19 +5,17 @@ import { faCalendar, faPlus, faChartBar, faMoon, faUtensils, faBabyCarriage, faD
 import { Context } from "../store/appContext"; // Importa el contexto para verificar autenticación
 import "../../styles/add_report.css";
 
-// Componente para el marcador de posición del calendario
+
 const CalendarPlaceholder = () => {
     return (
         <div className="card ar-calendar-card">
             <div className="ar-card-body">
                 <h3><FontAwesomeIcon icon={faCalendar} /> Calendar</h3>
-                {/* Aquí puedes agregar tu implementación de calendario en el futuro */}
             </div>
         </div>
     );
 };
 
-// Componente para el interruptor (switch)
 const Switch = ({ checked, onChange }) => {
     return (
         <label className="switch">
@@ -33,7 +31,7 @@ const Switch = ({ checked, onChange }) => {
 
 export const AddReport = () => {
     const [babyName, setBabyName] = useState("");
-    const [babies, setBabies] = useState([]); // Inicializar como arreglo vacío
+    const [babies, setBabies] = useState([]);
     const [date, setDate] = useState("");
     const [bedtime, setBedtime] = useState("");
     const [meals, setMeals] = useState("");
@@ -46,11 +44,10 @@ export const AddReport = () => {
     const [error, setError] = useState("");
     const [selectedBabyId, setSelectedBabyId] = useState("");
 
-    const { store, logout } = useContext(Context); // Accede al contexto para verificar el estado de autenticación
+    const { store, logout } = useContext(Context); 
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Redirige al login si no hay un token en el contexto
         if (!store.token) {
             navigate('/login');
             return;
@@ -71,7 +68,6 @@ export const AddReport = () => {
 
                 const data = await response.json();
 
-                // Asegúrate de que `data` sea un arreglo
                 if (Array.isArray(data)) {
                     setBabies(data);
                 } else {
@@ -112,7 +108,7 @@ export const AddReport = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${store.token}` // Incluye el token en la solicitud
+                    'Authorization': `Bearer ${store.token}` 
                 },
                 body: JSON.stringify(reportData),
             });
@@ -133,13 +129,13 @@ export const AddReport = () => {
     };
 
     return (
-        <div className="ar-container main-container" style={{ marginTop: '55px' }}>
+        <div className="ar-container" style={{ marginTop: '55px' }}>
             <div className="card ar-calendar-card">
                 <div className="ar-card-body">
                     <CalendarPlaceholder />
                 </div>
             </div>
-            <div className="card ar-form-card">
+            <div className="ar-form-card">
                 <div className="ar-card-body">
                     {error && <div className="error">{error}</div>}
                     <form onSubmit={handleSubmit} className="ar-form-grid">

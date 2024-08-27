@@ -145,15 +145,23 @@
     font-size: 15pt;
     border: none;
     width: 50%;
+    font-weight: 700px;
 }
 
 .edit-report__btn:hover {
-    background-color: #C1D6DF;
+    background-color: #FBEE84;
     color: #075E81;
 }
 
+.edit-report-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 
-@media (max-width: 768px) {
+}
+
+
+@media (max-width: 1135px) {
     .edit-report__form-group {
         width: 100%;
     }
@@ -164,8 +172,54 @@
         width: 100%;
     }
 
-    .edit-report__form-group label {
-        width: 20%;
+
+    .switch-edit {
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        height: 34px;
+    }
+    
+    .switch-edit input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    /* Estilo para el slider del interruptor */
+    .slider-edit {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        transition: .4s;
+        border-radius: 34px;
+        border: 3px solid #075E81; 
+    }
+    
+    /* El círculo dentro del slider */
+    .slider-edit:before {
+        position: absolute;
+        content: "";
+        height: 37px;
+        width: 37px;
+        border-radius: 50%;
+        left: 3px;
+        bottom: 3px;
+        background-color: #075E81;
+        transition: .4s;
+    }
+    
+    input:checked + .slider-edit {
+        background-color: #075E81; 
+    }
+    
+    input:checked + .slider-edit:before {
+        transform: translateX(33px); 
+        background-color: white;
     }
 
 

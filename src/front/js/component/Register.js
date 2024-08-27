@@ -25,13 +25,11 @@ export const Register = () => {
 		e.preventDefault();
 		const { name, username, email, password, repeatPassword } = formData;
 
-		// Validar que todos los campos estén completos
 		if (name === "" || username === "" || email === "" || password === "" || repeatPassword === "") {
 			setError(true);
 			return;
 		}
 
-		// Validar que las contraseñas coincidan
 		if (password !== repeatPassword) {
 			setError(true);
 			alert("Passwords do not match!");
@@ -39,7 +37,6 @@ export const Register = () => {
 		}
 
 		setError(false);
-		// Aquí puedes agregar la lógica para enviar los datos o realizar alguna acción adicional
 		const success = await actions.register(formData);
 		if (success) {
 			navigate("/");
@@ -175,7 +172,7 @@ export const Register = () => {
 
 					<div className="register-form-detail">
 						<label htmlFor="username" className="form-label"></label>
-						<input type="text" className="form-control" id="username" name="username" placeholder="username" value={formData.username} onChange={handleChange} />
+						<input type="text" className="form-control" id="username" name="username" placeholder="Username" value={formData.username} onChange={handleChange} />
 					</div>
 
 					<div className="register-form-detail">

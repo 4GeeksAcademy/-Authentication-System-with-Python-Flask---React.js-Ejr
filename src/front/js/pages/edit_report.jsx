@@ -215,8 +215,8 @@ export const EditReport = () => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="edit-report__btn">Save Changes</button>
             </form>
+            <button type="submit" className="edit-report__btn">Save Changes</button>
         </div>
     );
 };

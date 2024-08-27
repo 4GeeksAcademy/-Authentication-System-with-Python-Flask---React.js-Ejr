@@ -4,11 +4,12 @@
     display: flex;
     justify-content: space-between; 
     align-items: center; 
-    width: 100%; 
+    width: 80%; 
     height: 100vh; 
     margin: 0;
     padding: 0;
-    margin-left: 10%;
+    padding-left: 10%;
+    padding-right: 5%;
 }
 
 .login-form {
@@ -62,7 +63,7 @@
 .btn-container-login {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Asegura que el botón y otros elementos estén centrados */
+    align-items: center;
 }
 
 .btn-login {
@@ -123,7 +124,8 @@
 @media (max-width: 768px) {
     .container-login {
         flex-direction: column; 
-        padding-left: 0; 
+        padding: 5%;
+        width: 100%;
     }
 
     .login-img {
@@ -133,6 +135,6 @@
 
     .login-form {
         width: 100%; 
-        padding: 2%; 
+        padding: 0; 
     }
 }

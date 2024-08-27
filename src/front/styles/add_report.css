@@ -3,12 +3,13 @@
 
 /* Contenedor principal */
 .ar-container {
-    display: flex; /* Utiliza Flexbox para alinear las tarjetas en una fila */
-    gap: 20px; /* Espacio entre las tarjetas */
+    display: flex; 
+    gap: 20px; 
     padding: 20px;
-    padding-top: 100px;
+    min-height: 93vh;
+    align-items: center;
+    margin: auto;
 }
-
 
 
 /* CALENDARIO */
@@ -21,8 +22,10 @@
 /* FORM */
 
 .ar-form-card {
-    width: 50%;
+    width: 60%;
     border: none;
+    margin: auto;
+    padding: 70px;
 }
 
 .ar-card-body {
@@ -35,12 +38,13 @@
 .ar-form-grid {
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    gap: 45px;
+    gap: 20px;
 }
 
 .ar-column-one, .ar-column-two {
     display: flex;
     flex-direction: column; 
+
 }
 
 .ar-form-group {
@@ -282,6 +286,7 @@ input[type="number"] {
 }
 
 @media (max-width: 768px) {
+
     .ar-container {
         flex-direction: column; 
         padding: 20px;
@@ -295,8 +300,7 @@ input[type="number"] {
 
     .ar-form-card {
         width: 100%; 
-        padding: 20px;
-        margin-right: 20px;
+        padding: 10px;
     }
 
     .ar-form-grid {

@@ -88,7 +88,7 @@ export const Login = () => {
 
 
 	return (
-		<div className="container container-login">
+		<div className="container-login">
 			<div className="login-form">
 				<div className="login-text">
 					<h1>Welcome Back!</h1>

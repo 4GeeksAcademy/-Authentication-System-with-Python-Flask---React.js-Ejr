@@ -99,26 +99,25 @@
 
 @media (max-width: 768px) {
     .container-register {
-        flex-direction: column; /* Apila los elementos verticalmente en pantallas pequeñas */
-        padding: 2%; /* Reduce el padding general para móviles */
-        padding-top: 80px;
+        flex-direction: column;
+        padding: 2%; 
     }
 
     .register-img {
-        display: none; /* Oculta la imagen en pantallas pequeñas */
-        width: 0; /* Asegura que no ocupe espacio */
+        display: none; 
+        width: 0; 
     }
 
     .register-form { 
-        width: 100%; /* Asegura que el formulario ocupe el 100% del ancho */
-        margin-right: 0; /* Elimina el margen derecho en pantallas pequeñas */
+        width: 100%; 
+        margin: auto; 
     }
 
     .register-text h1 {
-        font-size: 28pt; /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
+        font-size: 28pt; 
     }
 
     .register-text p {
-        font-size: 10pt; /* Ajusta el tamaño del texto para pantallas más pequeñas */
+        font-size: 10pt; 
     }
 }

@@ -4,6 +4,7 @@
     background-color: #075E81;
     color: white;
     padding: 20px;
+    min-width: 100vw;
   }
   
   .footer-catchphrase {
@@ -67,8 +68,8 @@
     align-items: center;
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     .footer {
-        display: none; /* Oculta la navbar en pantallas de 768px o menos */
+        display: none; 
     }
 }
