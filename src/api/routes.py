@@ -27,21 +27,42 @@ def all_users():
 
     return jsonify(response_body), 200
 
-# @api.route('/user/<int:id>', methods=['PATCH'])
-# def one_user(req, id):     
-    # if req.method =='POST':
-    #     #add a user into database
+@api.route('/user', methods=['PATCH'])
+@jwt_required()
+def edit_user():
+    """
+    Edits the currently logged-in user.
+    Request Body:
+    {
+    email: String (optional)
+    password: String (optional)
+    name: String (optional)
+    }
+    """
+    #python convention called a doc string
+    # get_jwt_identity() grabs the id out of the JWT (this is set on line 69)
+    current_user = get_jwt_identity()
+    # We take that ID, and grab the user from the database.
+    edit_user = User.query.filter_by(id = current_user).first()
 
-        
+    # For each of email, name, and password we see if that exists in the request body,
+    # and if it does, we overwrite that on the edit_user object.
+    edit_user.email = request.json.get("email", edit_user.email) #The default says that if the key doesn't exist in the object then default to the original
+    edit_user.name = request.json.get("name", edit_user.name)
+    edit_user.password = request.json.get("password", edit_user.password)
+
+    # Now we take the edited user object, and merge the changes back into the database.
+    db.session.merge(edit_user) #merge tells the database session you want to exist and merge into the DB
+    db.session.commit()
+    # Finally, we refresh the user object, serialize it, and send it back to the frontend with changes.
+    db.session.refresh(edit_user)
+    return jsonify(edit_user.serialize()), 200
+
+ 
     # elif req.method == 'GET':
     #         get_user = User.query.filter_by(id = id).first() #.first returns the first encounter of that id
     #         return jsonify(get_user), 200
-    
 
-    # elif req.method == 'DELETE':
-    
-    #elif req.method == 'PATCH':
-            #edit_user = User.query.filter_by(id = id)
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -59,15 +80,20 @@ def login():
 @jwt_required()
 def get_user():
     current_user = get_jwt_identity()
-    get_user = User.query.get(current_user)
+    get_user = User.query.filter_by(id=current_user).first()
     
     return jsonify(get_user.serialize()), 200
 
-# @api.route('/user_delete' methods=['DELETE'])
-#jwt_required()
-# 
-#         delete_user= User.query.filter_by(id = id).delete()
-    #         return jsonify(delete_user), 200
+@api.route('/user_delete', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    current_user = get_jwt_identity()
+    delete_user = User.query.filter_by(id = current_user).first()
+    db.session.delete(delete_user)
+    db.session.commit()
+    return "", 204
+
+
 
 @api.route('/signup', methods=['POST'])
 def sign_up():
@@ -126,7 +152,6 @@ def all_games():
     response_body = list(map(lambda game: game.serialize(), games ))
 
     return jsonify(response_body), 200
-
 
 
 
