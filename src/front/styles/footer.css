@@ -30,6 +30,7 @@
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 600;
+    color: white;
   }
   
   .footer-column ul {
@@ -49,9 +50,25 @@
   .footer-column ul li a:hover {
     text-decoration: underline;
   }
+
+  .social-media {
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    font-size: 15pt;
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+  }
+
+  .social-media p {
+    margin: auto;
+    text-align: auto;
+    align-items: center;
+  }
   
   @media (max-width: 768px) {
-    .navbar {
+    .footer {
         display: none; /* Oculta la navbar en pantallas de 768px o menos */
     }
 }

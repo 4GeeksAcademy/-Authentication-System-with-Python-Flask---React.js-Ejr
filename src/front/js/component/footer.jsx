@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/footer.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInstagram, faFacebookF, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 export const Footer = () => (
 	<footer className="footer">
@@ -22,11 +24,18 @@ export const Footer = () => (
 
 			</div>
 			<div className="footer-catchphrase">
-			Track Every Milestone, Cherish Every Moment.
+				Track Every Milestone, Cherish Every Moment.
 			</div>
 		</div>
 		<div className="footer-column">
-iconos redes sociales
+			<h4>
+				<div className="social-media">
+				<p><FontAwesomeIcon icon={faInstagram} /></p>
+				<p><FontAwesomeIcon icon={faFacebookF} /></p>
+				<p><FontAwesomeIcon icon={faXTwitter} /></p>
+				</div>
+			</h4>
+
 		</div>
 		<div className="footer-column">
 			<h4>Pages</h4>

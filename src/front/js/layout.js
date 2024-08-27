@@ -5,7 +5,7 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Footer } from "./component/footer.jsx";
 import { Gestor_bebe } from "./pages/gestor_bebe";
 import { Login } from "./component/Login";
 import { Register } from "./component/Register";
