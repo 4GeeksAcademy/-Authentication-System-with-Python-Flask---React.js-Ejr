@@ -20,14 +20,15 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark nav nav-underline">
       <div className="container-fluid">
-        <div className="ms-5">
-        <Link className="navbar-brand text-light ms-3" to="/">
-          <img className="logo" src={logo} alt="Logo" />
-          </Link>
-          <Link className="navbar-brand text-light ms-3" to="/">
-          <span className="fs-4">HablemosUY</span>
-          </Link>
-        </div>
+      <div className="d-flex align-items-center ms-5">
+  <Link className="navbar-brand text-light ms-3 d-flex align-items-center" to="/">
+    <img className="logo" src={logo} alt="Logo" />
+    <div className="ms-3">
+      <span className="fs-4 d-block">HablemosUY</span>
+      <span className="fs-6 ms-3 d-block">Salud mental</span>
+    </div>
+  </Link>
+</div>
 
         <button className="navbar-toggler text-dark me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

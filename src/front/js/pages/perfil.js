@@ -1,17 +1,58 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/perfil.css";
 import VistaModal from "../component/vistaModal.jsx";
 import defaultAvatar from "../../img/avatar.jpg";
 import Loader from "../component/loader.jsx";
 import FormSolicitudProf from "../component/formSolicitudProf.jsx";
+import Swal from 'sweetalert2'
 
 const Perfil = () => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        actions.getPerfilUsuario();
+        const fetchPerfil = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                Swal.fire({
+                    title: 'No puede acceder a ésta sección!',
+                    text: 'Token inválido o inexistente',
+                    icon: 'warning',
+                    confirmButtonText: 'Entendido'
+                }).then(() => {
+                    navigate("/vista-login")
+                });
+                return;
+            }
 
+            try {
+                const isPerfilObtenido = await actions.getPerfilUsuario();
+                if (!isPerfilObtenido) {
+                    Swal.fire({
+                        title: 'Error al obtener el perfil',
+                        text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    }).then(() => {
+                        navigate("/vista-login")
+                    });
+                }
+            } catch (error) {
+                console.error("Error al obtener el perfil del usuario:", error);
+                Swal.fire({
+                    title: 'Error inesperado',
+                    text: 'Ocurrió un error inesperado. Por favor, intente de nuevo.',
+                    icon: 'error',
+                    confirmButtonText: 'Entendido'
+                }).then(() => {
+                    navigate("/vista-login")
+                });
+            }
+        };
+        fetchPerfil();
         // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
@@ -19,11 +60,7 @@ const Perfil = () => {
     }, []);
 
     const [showModal, setShowModal] = useState(false);
-
-    // Función para mostrar el modal
     const openModal = () => setShowModal(true);
-
-    // Función para cerrar el modal
     const closeModal = () => setShowModal(false);
 
     return (
@@ -120,7 +157,7 @@ const Perfil = () => {
                             </div>
                             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                 <div className="container mt-3">
-                                   <FormSolicitudProf />
+                                    <FormSolicitudProf />
                                 </div>
                             </div>
                         </div>

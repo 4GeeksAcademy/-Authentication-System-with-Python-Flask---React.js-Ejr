@@ -2,8 +2,8 @@ import React from 'react';
 
 const LegalDocs = () => {
   return (
-    <div className="container mt-5">
-      <h2>Documentación Legal</h2>
+    <div className="container my-5 col-12 col-md-8 mt-5">
+      <h2 className="mb-4 text-inicio">Documentación Legal</h2>
       <div className="accordion" id="legalDocsAccordion">
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingOne">
