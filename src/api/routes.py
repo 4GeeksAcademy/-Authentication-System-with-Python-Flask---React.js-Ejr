@@ -27,7 +27,7 @@ def all_users():
 
     return jsonify(response_body), 200
 
-@api.route('/user', methods=['PATCH'])
+@api.route('/edit-user', methods=['PATCH'])
 @jwt_required()
 def edit_user():
     """
@@ -78,7 +78,7 @@ def login():
     token = create_access_token(identity = user.id)
     return jsonify({"user_email": user.email, "token": token})
 
-@api.route('/user_info', methods=['GET']) #THIS WILL BE A PRIVATE ROUTE TO RENDER USER'S INFORMATION AS WELL AS SAVED GAMES
+@api.route('/user', methods=['GET']) #THIS WILL BE A PRIVATE ROUTE TO RENDER USER'S INFORMATION AS WELL AS SAVED GAMES
 @jwt_required()
 def get_user():
     current_user = get_jwt_identity()
@@ -86,7 +86,7 @@ def get_user():
     
     return jsonify(get_user.serialize()), 200
 
-@api.route('/user_delete', methods=['DELETE'])
+@api.route('/user-delete', methods=['DELETE'])
 @jwt_required()
 def delete_user():
     current_user = get_jwt_identity()
@@ -158,7 +158,7 @@ def delete_favorite():
     favorite_id= request.json.get("favorite_id")
     if favorite_id is None:
         return jsonify("Please, provide a valid game id"),400
-    delete_favorite= Favorite.query.filter_by(id = favorite_id).first()
+    delete_favorite= Favorite.query.filter_by(id = favorite_id, user_id = current_user).first()
     db.session.delete(delete_favorite)
     db.session.commit()
     return "", 204
