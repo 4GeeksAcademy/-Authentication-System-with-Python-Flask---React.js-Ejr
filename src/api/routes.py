@@ -290,6 +290,7 @@ def post_weekly_routine():
          return({'error':'"day" must be a string'}), 400
 
     weekly_routine_created = WeeklyRoutine(user_id=current_user["id"], routine_id=weekly_routine["routine_id"], day=weekly_routine["day"])
+    weekly_routine_created = WeeklyRoutine(user_id=current_user["id"], routine_id=weekly_routine["routine_id"], day=weekly_routine["day"])
     db.session.add(weekly_routine_created)
     db.session.commit()
     return jsonify(weekly_routine_created.serialize()), 200
@@ -349,14 +350,33 @@ def get_routine(id):
         return jsonify(data_serialized), 200
     
 # POST Routine / AGREGAR RUTINA
+# @api.route('/routine', methods=['POST'])
+# @jwt_required()
+# def post_routine():
+#     current_user=get_jwt_identity()
+#     routine = request.get_json()
+#     if not isinstance(routine['name'], str) or len(routine['name'].strip()) == 0:
+#          return({'error':'"name" must be a string'}), 400
+
+#     routine_created = Routine(user_id=current_user["id"], name=routine["name"])
+#     db.session.add(routine_created)
+#     db.session.commit()
+#     return jsonify(routine_created.serialize()), 200
+
 @api.route('/routine', methods=['POST'])
 @jwt_required()
 def post_routine():
-    current_user=get_jwt_identity()
+    current_user = get_jwt_identity()
     routine = request.get_json()
-    if not isinstance(routine['name'], str) or len(routine['name'].strip()) == 0:
-         return({'error':'"name" must be a string'}), 400
 
+    if not isinstance(routine['name'], str) or len(routine['name'].strip()) == 0:
+        return {'error': '"name" must be a string'}, 400
+
+    existing_routine = Routine.query.filter_by(user_id=current_user["id"], name=routine["name"]).first()
+    if existing_routine:
+        return {'error': 'Ya existe una rutina con este nombre'}, 400
+
+    # Crear la nueva rutina
     routine_created = Routine(user_id=current_user["id"], name=routine["name"])
     db.session.add(routine_created)
     db.session.commit()

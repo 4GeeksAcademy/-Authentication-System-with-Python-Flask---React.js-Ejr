@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const getState = ({ getStore, getActions, setStore }) => {
     return {
@@ -24,7 +25,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             allFollowUpForWeeklyRoutineList: [],
             allCategoryList: [],
             routineData: '',
-
+            setId: '',
+            completeRoutine: false,
             allSetsList: []
         },
         actions: {
@@ -397,7 +399,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const payload = {
-                        "routineId": routineId,
+                        "routine_id": routineId,
                         "day": day
                     };
                     console.log('Sending payload:', payload);
@@ -601,6 +603,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     );
 
                     if (resp.status == 200) {
+                        setStore({ routineData: '' })
                         console.log(resp.data);
                         return true;
                     }
@@ -764,20 +767,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     // if (!token) {
                     //     return ({ "error": "no token found" })
                     // }
-
                     const payload = {
                         "routine_id": routine_id,
                         "exercise_id": exercise_id,
                         "sets_id": sets_id
                     };
                     console.log('Sending payload:', payload);
-
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise-routine', payload, {
                         // headers: {
                         //     Authorization: `Bearer ${token}`
                         // }
                     });
-
                     if (response.status == 200) {
                         console.log('Exercise Routine successfully added:', response.data);
                         return true;
@@ -990,6 +990,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let response = await axios.post(process.env.BACKEND_URL + '/sets', payload);
 
                     if (response.status == 200) {
+                        setStore({ setId: response.data.id})
                         console.log('sets successfully added:', response.data);
                         return true;
                     }
@@ -1027,6 +1028,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         return error;
                     }
                 }
+            },
+            setCompleteRoutine: (value) => {
+                setStore({ completeRoutine: value })
             },
         }
     };
