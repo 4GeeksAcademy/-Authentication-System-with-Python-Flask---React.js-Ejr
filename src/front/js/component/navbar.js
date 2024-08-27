@@ -32,7 +32,7 @@ export const Navbar = () => {
                 >
                   INICIO
                 </Link>
-                {store.programador && (
+                {store.user?.profile_programador && (
                   <Link
                     to={"/timeline"}
                     className="nav-link active me-3"
@@ -41,7 +41,7 @@ export const Navbar = () => {
                     OFERTAS
                   </Link>
                 )}
-                {store.empleador && (
+                {store.user?.profile_empleador && (
                   <Link
                     to={"/formoffer"}
                     className="nav-link active me-3"
