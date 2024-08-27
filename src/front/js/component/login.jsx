@@ -5,15 +5,16 @@ import Swal from 'sweetalert2';
 import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
 import { Context } from "../store/appContext";
-import { Link, useNavigate } from "react-router-dom";
-import { Modal, Button, Form } from 'react-bootstrap'; // Importamos los componentes de Bootstrap
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Modal, Button, Form } from 'react-bootstrap';
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
-	const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
-	const [email, setEmail] = useState(''); // Estado para el correo electrónico
+	const [showModal, setShowModal] = useState(false);
+	const [email, setEmail] = useState('');
+	const { token } = useParams();
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
@@ -28,7 +29,32 @@ export const Login = () => {
 			});
 		};
 		gapi.load("client:auth2", start);
-	}, []);
+
+		const verificarToken = async () => {
+			if (token) {
+				const { success, message } = await actions.verifyToken(token);
+				if (success) {
+					Swal.fire({
+						title: 'Verificación exitosa',
+						text: message,
+						icon: 'success',
+						timer: 4000
+					});
+					
+				} else {
+					Swal.fire({
+						title: 'Error en la verificación',
+						text: message,
+						icon: 'error',
+						timer: 4000
+					});
+					
+				}
+			}
+		};
+	
+		verificarToken();
+	}, [token]);
 
 	const onSuccess = async (response) => {
 		const dataUser = response.profileObj;
@@ -78,7 +104,7 @@ export const Login = () => {
 			} else {
 				Swal.fire({
 					title: 'Lo sentimos!',
-					text: 'Correo o contraseña incorrectos, intente nuevamente!',
+					text: 'Correo o contraseña incorrectos, o puede tener pendiente su verificación de correo. Intente nuevamente!',
 					icon: 'error',
 					timer: 4000
 				});

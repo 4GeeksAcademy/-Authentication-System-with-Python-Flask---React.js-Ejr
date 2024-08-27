@@ -98,6 +98,10 @@ def login():
     # Verifica si el usuario proporcionó ambos datos
     if not correo or not clave:
         return jsonify({"msg": "Correo y clave son requeridos"}), 400
+    # Verifica si el correo electrónico ha sido confirmado antes de permitir el inicio de sesión
+    if not user_query.correo_verificado:
+        return jsonify({"msg": "Por favor, verifica tu correo electrónico antes de iniciar sesión."}), 403
+    
     access_token = create_access_token(identity=user_query.id)
     refresh_token = create_refresh_token(identity=user_query.id)
     return jsonify({"access_token":access_token,"refresh_token": refresh_token,"logged":True}), 200
@@ -211,18 +215,37 @@ def reset_password_token(token):
     db.session.commit()
 
     return jsonify({"msg": "Contraseña actualizada con éxitoo"}), 200
+
+#Esta ruta verifica el token que se envió al correo del usuario para verificar el registro.
+@api.route("/verify_email/<token>", methods=["GET"])
+def verify_email(token):
+    try:
+        correo = serializer.loads(token, salt='email-confirm', max_age=7200)  # El token expira en 2 horas
+    except SignatureExpired:
+        return jsonify({"msg": "El enlace de verificación ha expirado."}), 400
+    except BadSignature:
+        return jsonify({"msg": "Enlace de verificación inválido."}), 400
+
+    user = User.query.filter_by(correo=correo).first()
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado."}), 404
+
+    user.correo_verificado = True
+    db.session.commit()
+
+    return jsonify({"msg": "Correo verificado con éxito. Ahora puedes iniciar sesión."}), 200
+
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])
 def create_user():
     try:
         data = request.get_json()
+        correo = request.json.get("correo", None)
         existing_user = User.query.filter_by(correo=data["correo"]).first()
         print(data)
         
         if existing_user:
             return jsonify({"msg": "Email already exists"}), 400
-        
-        fecha_de_nacimiento = datetime.strptime(data['fecha_de_nacimiento'], '%Y-%m-%d').date()
 
         user_created = User(
             nombre_usuario=data["nombre_usuario"],
@@ -244,8 +267,17 @@ def create_user():
         db.session.add(user_created)
         db.session.commit()
 
+         # Generamos un token de verificación
+        token = serializer.dumps(user_created.correo, salt='email-confirm')
+
+        # Enviamos el correo de verificación
+        link =  f"{os.getenv('FRONTEND_URL')}/vista-login/{token}"
+        msg = Message(subject="Verificación de correo", sender=os.getenv('MAIL_DEFAULT_SENDER'), recipients=[correo])
+        msg.body = f'Haz clic en el siguiente enlace para verificar tu correo: {link}'
+        current_app.mail.send(msg)
+
         response_body = {
-            "msg": "User created successfully",
+            "msg": "Usuario creado satisfactoriamente. Correo enviado para verificar tu cuenta.",
             "user": user_created.serialize()
         }
         return jsonify(response_body), 201

@@ -32,6 +32,7 @@ class User(db.Model):
     is_psicologo = db.Column(db.Boolean(), nullable=False)
     foto = db.Column(db.String(255), nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False)
+    correo_verificado = db.Column(db.Boolean(), default=False)
 
     especialidades = db.relationship('ProfEspecialidad', backref="user")
 
@@ -52,7 +53,8 @@ class User(db.Model):
             "is_psicologo": self.is_psicologo,
             "foto": self.foto,
             "is_active": self.is_active,
-            "especialidades": [esp.serialize() for esp in self.especialidades]
+            "correo_verificado": self.correo_verificado,
+            "especialidades": [especialidad.serialize() for especialidad in self.especialidades]
         }
 
     # Métodos para manejar contraseñas

@@ -54,12 +54,12 @@ const FormSolicitudProf = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="cedula" className="form-label text-inicio"><strong>Cédula</strong></label>
+                    <label htmlFor="cedula" className="form-label text-inicio"><strong>Cédula o pasaporte</strong></label>
                     <input 
                         type="text" 
                         className="form-control" 
                         id="cedula" 
-                        placeholder="Ingrese su cédula" 
+                        placeholder="Ingrese su número de documento" 
                         value={cedula} 
                         onChange={(e) => setCedula(e.target.value)} 
                         required 
@@ -93,7 +93,7 @@ const FormSolicitudProf = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="escolaridad" className="form-label text-inicio"><strong>Escolaridad que Acredite Conocimientos</strong></label>
+                    <label htmlFor="escolaridad" className="form-label text-inicio"><strong>Adjunte la documentación que acredite su formación profesional</strong></label>
                     <input 
                         type="file" 
                         className="form-control" 
@@ -105,7 +105,7 @@ const FormSolicitudProf = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="motivacion" className="form-label text-inicio"><strong>¿Por qué quieres trabajar con nosotros?</strong></label>
+                    <label htmlFor="motivacion" className="form-label text-inicio"><strong>¿Por qué le gustaría trabajar con nosotros?</strong></label>
                     <textarea 
                         className="form-control" 
                         id="motivacion" 
@@ -119,7 +119,7 @@ const FormSolicitudProf = () => {
 
                 <div className="d-flex justify-content-center row mt-3">
                     <small className="text-inicio text-center">
-                        En el caso de que el equipo de RRHH te considere un buen candidato para integrar nuestro equipo de profesionales, se pondrán en contacto a la brevedad para coordinar una entrevista.
+                        La información que nos ha proporcionado será sometida a un proceso de evaluación por nuestro equipo de RRHH. De cumplir con nuestros requisitos para integrar nuestro equipo de profesionales, no podremos en contacto con usted a la brevedad para coordinar una entrevista.
                     </small>
                     <button type="submit" className="col-12 col-md-8 btn btn-primary btn-login-registro mt-3">Enviar Solicitud</button>
                 </div>

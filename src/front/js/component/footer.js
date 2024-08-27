@@ -9,9 +9,15 @@ export const Footer = () => (
 		<div className="m-0 col-md-6 col-10 text-end">
 			<p>
 				Síguenos en redes sociales
-				<i className="fa-brands fa-instagram ms-2"></i>
-				<i className="fa-brands fa-x-twitter ms-2"></i>
-				<i className="fa-brands fa-linkedin ms-2"></i>
+				<a href="https://www.instagram.com/" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
+					<i className="fa-brands fa-instagram ms-2"></i>
+				</a>
+				<a href="https://x.com/?lang=es" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
+					<i className="fa-brands fa-x-twitter ms-2"></i>
+				</a>
+				<a href="https://www.linkedin.com/home" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
+					<i className="fa-brands fa-linkedin ms-2"></i>
+				</a>
 			</p>
 			<p>
 				<Link to="/vistaLegalDocs" className="login__forgot text-light mx-3">Términos y Condiciones</Link>
