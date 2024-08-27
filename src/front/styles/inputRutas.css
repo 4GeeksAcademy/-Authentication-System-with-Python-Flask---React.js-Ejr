@@ -1,0 +1,28 @@
+
+/* Estilos para los tags en forma de pills */
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    margin: 0.2rem;
+    font-size: 0.9rem;
+    color: white;
+    background-color: #267192; /* Color de fondo para el tag */
+    border-radius: 9999px; /* Redondeo máximo para crear un efecto de pill */
+}
+
+.tag-item .fa-x {
+    cursor: pointer; /* Cambio de cursor para indicar interactividad */
+    margin-left: 0.3rem; /* Espacio entre el texto del tag y la 'x' de cierre */
+}
+
+.tag-item .fa-x:hover {
+    color: #f0f0f0; /* Cambia el color al pasar el ratón para un mejor feedback visual */
+}
+
+/* Estilo para el input del datalist */
+.input-group input[list="predefined-tags-list"] {
+    width: 100%; /* Ajusta la anchura del input */
+}
+
+/* Opcional: estilos adicionales para inputs o textarea si es necesario */

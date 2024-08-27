@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/inputRutas.css";
 
 export const InputRutas = () => {
     const { store, actions } = useContext(Context)
@@ -8,9 +9,17 @@ export const InputRutas = () => {
     const [titleValue, setTitleValue] = useState("");
     const [descriptionValue, setDescriptionValue] = useState("");
 
+
+    const predefinedTags = [
+        "Rutas de senderismo", "Viajes en coche", "Playas", 
+        "Rutas gastronómicas", "Caminos de Santiago", "Escapadas de fin de semana", 
+        "Montañas", "Pueblos con encanto", "Patrimonio de la Humanidad", 
+        "Fiestas y tradiciones", "Turismo rural", "Destinos históricos"
+    ];
+
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && inputValue.trim() !== "") {
-            setTags([...tags, inputValue.trim()]);
+            addTag(inputValue.trim());
             setInputValue("");
         }
     };
@@ -25,12 +34,18 @@ export const InputRutas = () => {
 
     const handleInputTitleChange = (e) => {
         setTitleValue(e.target.value);
-        store.newItineraryData.title = titleValue;
+        store.newItineraryData.title = e.target.value;
     };
 
     const handleInputDescChange = (e) => {
         setDescriptionValue(e.target.value);
         store.newItineraryData.description = descriptionValue;
+    };
+
+    const addTag = (tag) => {
+        if (!tags.includes(tag)) {
+            setTags([...tags, tag]);
+        }
     };
 
     return (
@@ -74,7 +89,13 @@ export const InputRutas = () => {
                     value={inputValue}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
+                    list="predefined-tags-list"
                 />
+                <datalist id="predefined-tags-list">
+                    {predefinedTags.map((tag, index) => (
+                        <option key={index} value={tag} />
+                    ))}
+                </datalist>
             </div>
             
             <div className="mb-3">
