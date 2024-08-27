@@ -4,16 +4,17 @@
     border-radius: 20px;
 }
 
-.contenedor-password{
-    display: flex
+.contenedor-password {
+    position: relative;
+    display: flex;
+    align-items: right;
 }
 
-.icon{
-    transform: translate(-25px, 10px);
-}
-
-body{
-    min-height: 100vh;
+.icon {
+    position: absolute;
+    right: 1px;
+    height: fit-content;
+    width: fit-content;
 }
 
 .btn {
