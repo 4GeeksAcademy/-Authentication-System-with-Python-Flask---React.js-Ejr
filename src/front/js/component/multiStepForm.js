@@ -252,6 +252,39 @@ export const MultiStepForm = () => {
     setSelectSets(e.target.value)
   }
 
+  const handleFormSubmit = async (event) => {
+      event.preventDefault()
+      if (!selectSets) {
+        try {
+          // Verifica si ya existe un set con las series y repeticiones ingresadas
+          const existingSet = await checkIfSetExists(setsInput, repsInput)
+
+          if (existingSet) {
+            // Si ya existe, usa el id del set existente
+            store.setId = existingSet.id
+            handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
+          } else {
+            // Si no existe, crea el set y guárdalo en el store
+            const newSets = await actions.postSets(setsInput, repsInput)
+
+            if (newSets) {
+              handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
+            } else {
+              console.error("No se pudo crear las series y repeticiones")
+            }
+          }
+        } catch (error) {
+          console.error("Error al verificar o crear las series y repeticiones:", error)
+        }
+      } else {
+        // Caso 2: El usuario seleccionó un set previo
+        handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
+      }
+      setSetsInput('')
+      setRepsInput('')
+      setSelectSets('')
+    }
+
   useEffect(() => {
     actions.allExercise()
     actions.category()
@@ -271,7 +304,7 @@ export const MultiStepForm = () => {
       {/* form steps */}
       <StepsCount step={step} handleProgressBar={handleProgressBar} handleStepCircle={handleStepCircle} handleStepText={handleStepText} />
 
-      <FormSteps step={step} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} />
+      <FormSteps step={step} setCancelRoutineCreation={setCancelRoutineCreation} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} />
 
       <Modal
         isOpen={isModalOpen}
@@ -281,40 +314,7 @@ export const MultiStepForm = () => {
         confirmText="Guardar ejercicio"
       >
         <form
-          className="p-4 md:p-5 space-y-4"
-          onSubmit={async (event) => {
-            event.preventDefault()
-
-            if (!selectSets) {
-              try {
-                // Verifica si ya existe un set con las series y repeticiones ingresadas
-                const existingSet = await checkIfSetExists(setsInput, repsInput)
-
-                if (existingSet) {
-                  // Si ya existe, usa el id del set existente
-                  store.setId = existingSet.id
-                  handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
-                } else {
-                  // Si no existe, crea el set y guárdalo en el store
-                  const newSets = await actions.postSets(setsInput, repsInput)
-
-                  if (newSets) {
-                    handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
-                  } else {
-                    console.error("No se pudo crear las series y repeticiones")
-                  }
-                }
-              } catch (error) {
-                console.error("Error al verificar o crear las series y repeticiones:", error)
-              }
-            } else {
-              // Caso 2: El usuario seleccionó un set previo
-              handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
-            }
-            setSetsInput('')
-            setRepsInput('')
-            setSelectSets('')
-          }}
+          className="space-y-4"
         >
           <div className="flex flex-col gap-4">
             <div className='flex flex-col md:flex-row gap-4 w-full'>
@@ -366,11 +366,11 @@ export const MultiStepForm = () => {
               </div>
             </div>
           </div>
-          <button type="submit" className="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
+        </form>
+          <button type="submit" className="absolute bottom-4 text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
             <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
             Guardar ejercicio
           </button>
-        </form>
       </Modal>
 
       <Modal
@@ -386,7 +386,7 @@ export const MultiStepForm = () => {
         onClose={() => setCancelRoutineCreation(false)}
         onConfirm={handleOnDeleteRoutine}
       >
-        <p>Esto eliminará lo creado hasta el momento.</p>
+        <p className="text-neutral-400">Esto eliminará lo creado hasta el momento.</p>
       </Modal>
 
     </div >

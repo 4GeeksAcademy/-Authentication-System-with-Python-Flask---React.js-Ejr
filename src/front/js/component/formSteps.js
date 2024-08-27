@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { Context } from '../store/appContext'
 
-export const FormSteps = ({ step, formData, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen }) => {
+export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen }) => {
   const { store, actions } = useContext(Context)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -44,7 +44,7 @@ export const FormSteps = ({ step, formData, filteredExercises, addedExercises, s
         <div className="w-full flex flex-col">
           {/* Paso 2: Semana y Día */}
           <div className="w-full flex gap-5 flex-col sm:flex-row sm:gap-10 sm:justify-between mb-5">
-            <div className="w-full sm:w-1/2">
+            <div className="w-full">
               <label htmlFor="day" className="block mb-2 text-sm font-bold text-neutral-100">Días</label>
               <select
                 id="day"
