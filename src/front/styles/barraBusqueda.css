@@ -12,6 +12,7 @@
     font-weight: bold; /* Negrita para el texto */
     color: #E0E0E2; /* Color del texto */
     gap: 10px; /* Espacio entre los elementos */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
 }
 
 /* Grupos de formularios dentro de la barra de búsqueda */
