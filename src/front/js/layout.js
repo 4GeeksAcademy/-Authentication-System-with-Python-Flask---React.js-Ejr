@@ -8,6 +8,7 @@ import injectContext from "./store/appContext";
 import Perfil from "./pages/perfil";
 import About from "./pages/about";
 import Vistacurso from "./pages/vistacurso";
+import Contacto from "./pages/contacto";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -42,6 +43,7 @@ const Layout = () => {
                         <Route element={<Perfil />} path="/perfil"/>
                         <Route element={<Cursos />} path="/cursos" />
                         <Route element={<About />} path="/about" />
+                        <Route element={<Contacto />} path="/contacto" />
                          {/* Protege la ruta VistaAlumno con PrivateRouteAlumno, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
                          <Route element={<PrivateRouteAlumno vista={VistaAlumno} />} path="/vistaAlumno" />
                          {/* Protege la ruta VistaProfe con PrivateRoute, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
