@@ -11,8 +11,9 @@
 }
 
 .icon {
+    transform: translate(-10px, 10px);
     position: absolute;
-    right: 1px;
+    right: 0px;
     height: fit-content;
     width: fit-content;
 }
