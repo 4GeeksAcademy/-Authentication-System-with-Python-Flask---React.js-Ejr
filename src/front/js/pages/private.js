@@ -15,7 +15,7 @@ export const Private = () => {
             <div className="private-container">
                 <div className="private-container-left">
                     <div className="image-container">
-                        <img src="https://cdn.prod.website-files.com/654506076ba62ddb88e187e2/65cf7e29b660bdc3aea4ba26_Untitled-design-14.jpeg" alt="Profile" className="profile-image"/>
+                        <img src="https://www.finect.com/v4/resources/media/images/1bc0491f2a8746a590b44e05558c2c5b-w1332" alt="Profile" className="profile-image"/>
                     </div>
                     <h1>Ya estás Logueado</h1>
                 </div>
