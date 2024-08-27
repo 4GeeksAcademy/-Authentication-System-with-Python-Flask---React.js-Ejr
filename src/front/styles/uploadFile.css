@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.send {
+    background-color: #257895; 
+    color: white; 
+    font-size: medium;
+    border: none; 
+  }
+
+  .upload-file {
+    max-width: 90%;
+  }
+
+  .uploaded {
+    border-radius: 20px !important;
+    height: 450px;
+    width: 750px;
+  }

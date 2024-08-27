@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-content {
+  border-radius: 20px !important;
+}
+
+.logo {
+  font-family: "Lobster";
+  font-size: 25px !important;
+  color: #257895;
+}
+
+.action {
+  font-weight: 600 !important;
+}
+
+form p span {
+  font-size: 13px !important;
+  cursor: pointer;
+}
+
+label {
+  font-weight: 400 !important;
+}

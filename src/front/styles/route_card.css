@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.card {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+@media only screen and (max-width: 600px){
+.card-top{
+  margin-top: 5%;
+  align-items: baseline;
+}
+
+.route-img{
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.founded {
+  margin-bottom: 0 !important;
+}
+}

@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-content {
+  border-radius: 30px;
+}
+
+.modal-title {
+  font-family: "Lobster", sans-serif;
+  color: #257895 !important;
+  font-size: xx-large;
+}
+
+.form-control {
+  border-radius: 20px;
+}
+
+.btn-primary {
+  background-color: #257895;
+}
