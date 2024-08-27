@@ -2,191 +2,135 @@
 .barra-busqueda {
     background-color: #416788; /* Fondo de la barra */
     border: 1px solid #000022; /* Borde oscuro */
-    border-radius: 5px; /* Esquinas redondeadas */
-    padding: 10px; /* Espacio interno */
-    display: flex; /* Uso de flexbox para alinear los elementos */
-    flex-wrap: nowrap; /* No permite que los elementos salten a la siguiente línea */
-    align-items: center; /* Alinea los elementos verticalmente al centro */
-    max-width: 1700px; /* Ancho máximo de la barra */
-    margin: 0 auto; /* Centra la barra horizontalmente */
-    font-weight: bold; /* Negrita para el texto */
-    color: #E0E0E2; /* Color del texto */
-    gap: 10px; /* Espacio entre los elementos */
     box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Cambia la dirección del flex a columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 10px; /* Espacio entre filas de contenido */
+    max-width: 1500px; /* Ancho máximo de la barra de búsqueda */
+    margin: 0 auto; /* Centra la barra de búsqueda horizontalmente */
 }
 
-/* Grupos de formularios dentro de la barra de búsqueda */
+/* Estilos para las columnas */
+.barra-busqueda .colunCategoria,
+.barra-busqueda .colunNivel-col,
+.barra-busqueda .colunPrecio,
+.barra-busqueda .colunFecha,
+.barra-busqueda .colunIdioma,
+.barra-busqueda .colunBusqueda {
+    flex: 1;
+    max-width: 250px; /* Ancho máximo para las columnas para evitar que se expandan demasiado */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos en cada columna */
+    
+}
+
+/* Ajusta el tamaño de los grupos de formulario */
 .barra-busqueda .form-group {
-    margin-bottom: 0; /* Elimina el margen inferior */
-    display: flex; /* Flexbox para alinear los elementos */
-    align-items: center; /* Alinea los elementos verticalmente */
-    height: 100%; /* Ocupa toda la altura disponible */
+    width: 100%; /* Ocupa el 100% del ancho del contenedor padre */
+    max-width: 200px; /* Ancho máximo para los grupos de formulario */
+    margin-bottom: 10px; /* Espacio inferior entre los grupos de formulario */
+    display: flex;
+    flex-direction: column; /* Apilar los elementos verticalmente */
+    align-items: center; /* Centra los elementos dentro del grupo */
 }
 
-/* Asegura que todos los elementos (inputs y botones) tengan la misma altura */
-.barra-busqueda .form-control,
-.barra-busqueda .btn-primary,
+/* Estilo para las etiquetas en los grupos de formulario */
+.barra-busqueda .form-label {
+    font-size: 0.9em; /* Tamaño de la fuente de las etiquetas */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el control */
+}
+
+/* Estilo para los controles dentro de los grupos de formulario */
+.barra-busqueda .form-control, 
+.barra-busqueda .dropdown-toggle {
+    background-color: #416788; /* Fondo de la barra */
+    border: 1px solid #000022; /* Borde oscuro */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    font-size: 0.9em; /* Tamaño de la fuente de los controles */
+    padding: 6px; /* Padding reducido para los controles */
+    border-radius: 4px; /* Radio del borde ajustado */
+    margin-bottom: 5px; /* Espacio entre el control y el siguiente elemento */
+}
+
+/* Alinear las etiquetas en la misma altura */
+.barra-busqueda .form-label {
+    margin-bottom: 0; /* Elimina el margen inferior para alinearlas mejor */
+}
+
+/* Contenedor de botones */
+.colunBotones {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    margin-top: 20px; /* Ajusta el espacio superior para colocar los botones más abajo */
+}
+
+/* Agrupación de botones */
+.colunBotones .botones {
+    display: flex;
+    flex-direction: row; /* Alinea los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+}
+
+/* Estilo para los botones "Aceptar" y "Restablecer" */
+.barra-busqueda .btn-primary, 
 .barra-busqueda .btn-secondary {
-    line-height: 1.5; /* Altura de línea adecuada */
-    vertical-align: middle; /* Alineación vertical al medio */
-    height: 45px; /* Altura uniforme */
-    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del tamaño */
+    background-color: #000022; /* Color de fondo específico */
+    color: #E0E0E2; /* Color de texto específico */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    border: none;
+    padding: 8px 16px; /* Ajusta el padding para igualar el tamaño */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Efecto de transición */
+    font-size: 0.9em; /* Tamaño de la fuente igual al de los controles */
+    line-height: 1.5; /* Altura de línea para alinear verticalmente */
+    min-width: 100px; /* Ancho mínimo para los botones */
+    text-align: center; /* Centra el texto dentro del botón */
+    height: 34px; /* Altura fija para igualar con los controles */
+    display: flex; /* Usar flexbox para alinear verticalmente el texto */
+    align-items: center; /* Centra verticalmente el texto dentro del botón */
+    box-sizing: border-box; /* Incluye padding y border en el ancho/alto del elemento */
 }
 
-/* Estilo de las columnas en la barra de búsqueda */
-.barra-busqueda .col {
-    flex: 1 1 150px; /* Permite que las columnas crezcan o se reduzcan */
-    min-width: 140px; /* Ancho mínimo */
+/* Efecto hover para los botones "Aceptar" y "Restablecer" */
+.barra-busqueda .btn-primary:hover, 
+.barra-busqueda .btn-secondary:hover {
+    background-color: #7389AE; /* Cambio de color al pasar el mouse */
+    color: #E0E0E2; /* Mantener el color del texto */
 }
 
-/* Contenedor de los botones */
-.botones {
-    display: flex; /* Uso de flexbox para alinear los botones */
-    gap: 5px; /* Espacio entre los botones */
-    justify-content: flex-start; /* Alinea los botones al inicio del contenedor */
-    align-items: center; /* Alinea los botones verticalmente */
-    height: 100%; /* Ocupa toda la altura disponible */
-    width: fit-content;
-}
 
-/* Estilos para los botones dentro del contenedor de botones */
-.botones .btn-primary,
-.botones .btn-secondary {
-    padding: 0 6px; /* Ajuste del padding horizontal para evitar que el botón sea demasiado grande */
-    background-color: #000022; /* Color de fondo de los botones */
-    color: #E0E0E2; /* Color del texto de los botones */
-    border: none; /* Sin borde */
-    height: 45px; /* Altura uniforme con el resto de la barra */
-    box-sizing: border-box; /* Asegura que padding y border no corten el botón */
-}
-
-.botones .btn-secondary { /* Estilo específico para el botón "Restablecer" */
-    padding: 0 6px; /* Ajuste del padding horizontal para evitar que el botón sea demasiado grande */
-    background-color: #000022; /* Color de fondo de los botones */
-    color: #E0E0E2; /* Color del texto de los botones */
-    border: none; /* Sin borde */
-    height: 45px; /* Altura uniforme con el resto de la barra */
-    box-sizing: border-box; /* Asegura que padding y border no corten el botón */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
-}
-
-/* Estilo hover para los botones "Aceptar" y "Restablecer" */
-.botones .btn-primary:hover,
-.botones .btn-secondary:hover {
-    background-color: #B5BAD0; /* Color de fondo al pasar el ratón */
-    color: #000022; /* Color del texto al pasar el ratón */
-}
-
-/* Estilos para el botón de restablecer cuando está activo */
-.botones .btn-secondary:active {
-    background-color: #7389AE; /* Cambio de color cuando se presiona */
-}
-
-/* Estilos para el botón de aceptar cuando está activo */
-.botones .btn-primary:active {
-    background-color: #7389AE; /* Cambio de color cuando se presiona */
-}
-
-/* Menú desplegable de categorías */
-.categoria-menu {
-    position: relative; /* Necesario para la posición del submenú */
-}
-
-/* Elementos dentro del submenú desplegable */
-.subcategoria-menu .dropdown-item {
-    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
-}
-
-/* Estilos para el botón desplegable de categoría */
-.dropdown-toggle {
-    background-color: #B5BAD0; /* Fondo del botón desplegable */
-    color: #000022; /* Color del texto */
-    border: none; /* Sin borde */
-    height: 45px; /* Altura uniforme */
-    display: flex; /* Flexbox para alinear el contenido dentro del botón */
-    align-items: center; /* Alinea verticalmente el contenido */
-}
-
-/* Cambio de estilo cuando se hace hover sobre el botón desplegable */
-.dropdown-toggle:hover {
-    background-color: #B5BAD0; /* Cambio de color del fondo */
-    color: #E0E0E2; /* Cambio de color del texto */
-}
-
-/* Menú desplegable de categoría */
-.categoria-menu .dropdown-menu,
-.dropdown-menu {
-    background-color: #7389AE; /* Fondo del menú */
-    color: #E0E0E2; /* Color del texto */
-    border: none; /* Sin borde */
-}
-
-/* Submenú desplegable de subcategorías */
-.subcategoria-menu {
-    position: absolute; /* Posiciona el submenú de manera absoluta */
-    top: 100%; /* Coloca el submenú justo debajo del botón */
-    left: 0; /* Alinea el submenú con el botón */
-    background-color: #7389AE; /* Fondo del submenú */
-    border: none; /* Sin borde */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para el submenú */
-    z-index: 1000; /* Asegura que el submenú esté encima de otros elementos */
-}
-
-/* Estilo de los ítems en el submenú */
-.subcategoria-menu .dropdown-item {
-    color: black; /* Color del texto de los ítems */
-}
-
-/* Estilos para los elementos de selección en la barra */
-.estrellas-fecha-select,
-.estrellas-precio-select,
-.estrellas-busqueda {
-    height: 45px; /* Altura uniforme */
-    padding: 5px; /* Espacio interno */
-}
-
-/* Contenedor del buscador (input) */
-.buscadorContenedor {
-    position: relative; /* Necesario para el icono dentro del input */
-    display: flex; /* Flexbox para alinear el contenido */
-    align-items: center; /* Alinea verticalmente el contenido */
-}
-
-/* Icono dentro del buscador */
-.iconoBuscador {
-    position: absolute; /* Posiciona el icono de manera absoluta */
-    right: 10px; /* Coloca el icono en la parte derecha del input */
-    pointer-events: none; /* Evita que el icono interfiera con la funcionalidad del input */
-    color: #000022; /* Color del icono */
-    height: fit-content; /* Ajusta la altura al contenido */
-    width: fit-content; /* Ajusta el ancho al contenido */
-}
-
-/* Input del buscador */
-.buscadorContenedor input {
-    padding-right: 60px; /* Espacio adicional a la derecha para el icono */
-    height: 45px; /* Altura uniforme */
-}
-
-/* Estilos para las estrellas (rating) */
-.estrellas {
-    font-size: 20px; /* Tamaño de las estrellas */
-}
-
-/* Estilo individual para cada estrella */
+/* Estilo de las estrellas en la valoración */
 .estrellas .estrella {
-    display: inline-block; /* Las estrellas se muestran en línea */
-    margin-right: 5px; /* Espacio entre estrellas */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    font-size: 20px;
+    color: #E0E0E2; /* Color de la estrella vacía */
+    cursor: pointer;
 }
 
-/* Estrella rellena (seleccionada) */
 .estrellas .rellena {
-    color: #ffd700; /* Color dorado para la estrella rellena */
+    color: #e9f322; /* Color de la estrella rellena */
 }
 
-/* Estrella vacía (no seleccionada) */
-.estrellas .vacia {
-    color: #ccc; /* Color gris para la estrella vacía */
+/* Estilos para los errores del formulario */
+.error {
+    color: #000022;
+    font-size: 0.9em;
+    margin-top: 5px;
 }
 
+/* Estilos para la barra de búsqueda */
+.buscadorContenedor {
+    position: relative;
+}
+
+.iconoBuscador {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #000022;
+}

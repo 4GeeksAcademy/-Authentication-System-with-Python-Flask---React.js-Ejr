@@ -1,6 +1,6 @@
 /* Estilos generales para la lista de cursos */
 .lista-cursos {
-    max-width: 1710px; /* Ancho máximo igual al de barraBusqueda.css */
+    max-width: 1500px; /* Ancho máximo igual al de barraBusqueda.css */
     margin: 0 auto; /* Centrado del contenedor horizontalmente */
     box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
     padding: 1rem; /* Espaciado interno del contenedor */

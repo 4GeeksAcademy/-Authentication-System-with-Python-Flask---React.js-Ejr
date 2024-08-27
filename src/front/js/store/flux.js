@@ -119,28 +119,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Acción para actualizar los filtros
             actualizarFiltros: (nuevosFiltros) => {
                 const store = getStore();
-                setStore({ filtros: { ...store.filtros, ...nuevosFiltros } }); 
-                // Actualizamos el estado de los filtros con los nuevos filtros proporcionados.
+                const filtrosActualizados = { ...store.filtros, ...nuevosFiltros };
+                
+                // Si el filtro de precio se actualiza, asegúrate de manejar el caso del rango.
+                if (nuevosFiltros.precio) {
+                    filtrosActualizados.precio = nuevosFiltros.precio;
+                }
+                setStore({ filtros: filtrosActualizados });
                 getActions().aplicarFiltrosCursos();
+
             },
             
-
-            // // Ejemplo de función para cargar categorías y subcategorías
-            // cargarCategorias: async () => {
-            //     const store = getStore();
-            //     setStore({ ...store, loading: true });
-
-            //     try {
-            //         const response = await fetch(process.env.BACKEND_URL+'/api/categorias');
-            //         const data = await response.json();
-            //         setStore({ categorias: data, loading: false });
-            //     } catch (error) {
-            //         setStore({ error: error.message, loading: false });
-            //         console.error('Error loading categories:', error);
-            //     }
-            // },
-
-// Llama a cargarCategorias en algún lugar de tu aplicación para que las categorías estén disponibles
 
 
             // Acción para iniciar sesión alumno
@@ -306,3 +295,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
+
+
+            // // Ejemplo de función para cargar categorías y subcategorías
+            // cargarCategorias: async () => {
+            //     const store = getStore();
+            //     setStore({ ...store, loading: true });
+
+            //     try {
+            //         const response = await fetch(process.env.BACKEND_URL+'/api/categorias');
+            //         const data = await response.json();
+            //         setStore({ categorias: data, loading: false });
+            //     } catch (error) {
+            //         setStore({ error: error.message, loading: false });
+            //         console.error('Error loading categories:', error);
+            //     }
+            // },
+
+// Llama a cargarCategorias en algún lugar de tu aplicación para que las categorías estén disponibles

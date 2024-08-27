@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Dropdown } from 'react-bootstrap'; //biblioteca que reescribe los componentes de Bootstrap como componentes de React.
 import '../../styles/barraBusqueda.css'; // Importa los estilos para el componente
 import { Context } from '../store/appContext'; // Importa el contexto global
+import ListaCursos from "../component/listaCursos";
 
 
 
@@ -17,11 +18,6 @@ const BarraBusqueda = () => {
     // Estado local para manejar el estado de carga y errores
     const [loading, setLoading] = useState(store.loading);
     const [error, setError] = useState(store.error);
-
-
-
-
-
 
 
 
@@ -61,6 +57,8 @@ const BarraBusqueda = () => {
     };
 
 
+
+
     // Función para aplicar los filtros y cargar los datos
     const filtrosAplicar = async () => {
         if (!validarFormulario()) { // Validar el formulario antes de aplicar filtros
@@ -77,8 +75,6 @@ const BarraBusqueda = () => {
             setLoading(false); // Indica que la carga ha terminado, independientemente de si fue exitosa o fallida
         }
     };
-
-
 
 
     // Función para restablecer los filtros a sus valores iniciales
@@ -98,9 +94,6 @@ const BarraBusqueda = () => {
         // Llama a la acción para recargar los cursos (puedes necesitar ajustar esta función según tu implementación)
         await actions.cargarCursos(); // Esta acción debe manejar la lógica para cargar cursos y manejar el estado de "No hay cursos disponibles"
     };
-
-
-
 
 
 
@@ -136,8 +129,8 @@ const BarraBusqueda = () => {
     return (
         <div className="barra-busqueda">
             <Form>
-                <Row className="mb-3">
-                    <Col>  {/* Columna para el filtro de categoría */}
+                <Row className="filaBarra mb-3">
+                    <Col className='colunCategoria' >  {/* Columna para el filtro de categoría */}
                         <Form.Group controlId="formCategoria">
                             <Form.Label>Categoría</Form.Label>
                             <div 
@@ -183,102 +176,112 @@ const BarraBusqueda = () => {
                             </div>
                         </Form.Group>
                     </Col>
-                    <Col> {/* Columna dentro de una fila (row) para el filtro de valoraciones */}
+                    <Col className='colunValoracion'> {/* Columna dentro de una fila (row) para el filtro de valoraciones */}
                         <Form.Group controlId="formValoracion"> {/* Agrupa elementos de formulario relacionados. controlId se usa para asociar el grupo con una etiqueta de formulario (<Form.Label>). */}
                             <Form.Label>Valoraciones</Form.Label>
-                            <div className="estrellas">
-                                {/* Muestra estrellas según la valoración actual */}
-                                {[...Array(5)].map((_, i) => ( /* Crea un array de 5 elementos (para representar 5 estrellas) e itera sobre el y genera un span para cada estrella*/
-                                    <span
-                                        key={i}
-                                        className={i < store.filtros.valoracion ? "estrella rellena" : "estrella vacia"} /* Si la estrella está activada (onclick) (de menos a más ), recibe la clase estrella rellena, si no recibe la clase estrella vacia*/
-                                        onClick={() => handleChange({ target: { name: 'valoracion', value: i + 1 } })}
-                                    >
-                                        ★
-                                    </span>
-                                ))}
+                            <div className="contenedorEstrellas">
+                                <div className="estrellas">
+                                    {/* Muestra estrellas según la valoración actual */}
+                                    {[...Array(5)].map((_, i) => ( /* Crea un array de 5 elementos (para representar 5 estrellas) e itera sobre el y genera un span para cada estrella*/
+                                        <span
+                                            key={i}
+                                            className={i < store.filtros.valoracion ? "estrella rellena" : "estrella vacia"} /* Si la estrella está activada (onclick) (de menos a más ), recibe la clase estrella rellena, si no recibe la clase estrella vacia*/
+                                            onClick={() => handleChange({ target: { name: 'valoracion', value: i + 1 } })}
+                                        >
+                                            ★
+                                        </span>
+                                    ))}
+                                </div>
+                                {erroresFormulario.valoracion && <div className="error">{erroresFormulario.valoracion}</div>}
                             </div>
-                            {erroresFormulario.valoracion && <div className="error">{erroresFormulario.valoracion}</div>}
                         </Form.Group>
                     </Col>
-                    <Col className="filtro-nivel-col">
+                    <Col className="colunNivel-col">
                         <Form.Group controlId="formNivel" className="filtro-nivel-group">
                             <Form.Label className="filtro-nivel-label">Niveles</Form.Label>
-                            <Dropdown>
-                                <Dropdown.Toggle id="dropdown-niveles" title={store.filtros.nivel || "Seleccione un nivel"}>
-                                    {store.filtros.nivel || "Seleccione un nivel"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "principiante" } })}>
-                                        Principiante
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "intermedio" } })}>
-                                        Intermedio
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "avanzado" } })}>
-                                        Avanzado
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "master" } })}>
-                                        Máster
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            {erroresFormulario.nivel && <div className="error">{erroresFormulario.nivel}</div>}
+                            <div className="contenedorNivel">
+                                <Dropdown>
+                                    <Dropdown.Toggle id="dropdown-niveles" title={store.filtros.nivel || "Seleccione un nivel"}>
+                                        {store.filtros.nivel || "Seleccione un nivel"}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "principiante" } })}>
+                                            Principiante
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "intermedio" } })}>
+                                            Intermedio
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "avanzado" } })}>
+                                            Avanzado
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "master" } })}>
+                                            Máster
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                {erroresFormulario.nivel && <div className="error">{erroresFormulario.nivel}</div>}
+                            </div>
                         </Form.Group>
                     </Col>
 
-                    <Col> {/* Columna para el filtro de precio */}
+                    <Col className="colunPrecio"> {/* Columna para el filtro de precio */}
                         <Form.Group controlId="formPrecio">
                             <Form.Label>Precios</Form.Label>
-                            <Form.Control 
-                                type="range" 
-                                min="0" 
-                                max="350" 
-                                value={store.filtros.precio[1]} /* Flux */
-                                onChange={(e) => handleChange({ target: { name: 'precio', value: [0, e.target.value] } })} 
-                                className="filtro-precio-select"
-                            />
-                            <span>{`€0 - €${store.filtros.precio[1]}`}</span>
-                            {erroresFormulario.precio && <div className="error">{erroresFormulario.precio}</div>}
+                            <div className="contenedorPrecio">
+                                <Form.Control 
+                                    type="range" 
+                                    min="0" 
+                                    max="350" 
+                                    value={store.filtros.precio[1]} /* Flux */
+                                    onChange={(e) => handleChange({ target: { name: 'precio', value: [0, e.target.value] } })} 
+                                    className="filtro-precio-select"
+                                />
+                                <span>{`€0 - €${store.filtros.precio[1]}`}</span>
+                                {erroresFormulario.precio && <div className="error">{erroresFormulario.precio}</div>}
+                            </div>
                         </Form.Group>
                     </Col>
-                    <Col>  {/* Columna para el filtro de fecha */}
+                    <Col className="colunFecha">  {/* Columna para el filtro de fecha */}
                         <Form.Group controlId="formFecha">
                             <Form.Label>Fecha de Inicio</Form.Label>
-                            <Form.Control 
-                                type="date" 
-                                name="fecha" 
-                                value={store.filtros.fecha} /* Flux */
-                                onChange={handleChange} 
-                                className="filtro-fecha-select" 
-                            />
-                            {erroresFormulario.fecha && <div className="error">{erroresFormulario.fecha}</div>}
+                            <div className="contenedorFecha">
+                                <Form.Control 
+                                    type="date" 
+                                    name="fecha" 
+                                    value={store.filtros.fecha} /* Flux */
+                                    onChange={handleChange} 
+                                    className="filtro-fecha-select" 
+                                />
+                                {erroresFormulario.fecha && <div className="error">{erroresFormulario.fecha}</div>}
+                            </div>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col className="colunIdioma">
                         <Form.Group controlId="formIdioma">
                             <Form.Label>Idioma</Form.Label>
-                            <Dropdown>
-                                <Dropdown.Toggle id="dropdown-idioma" title={store.filtros.idioma || "Seleccionar idioma"}>
-                                    {store.filtros.idioma || "Seleccionar idioma"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "espanol" } })}>
-                                        Español
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "ingles" } })}>
-                                        Inglés
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "aleman" } })}>
-                                        Alemán
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            {erroresFormulario.idioma && <div className="error">{erroresFormulario.idioma}</div>}
+                            <div className="contenedorIdioma">
+                                <Dropdown>
+                                    <Dropdown.Toggle id="dropdown-idioma" title={store.filtros.idioma || "Seleccionar idioma"}>
+                                        {store.filtros.idioma || "Seleccionar idioma"}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "espanol" } })}>
+                                            Español
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "ingles" } })}>
+                                            Inglés
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "aleman" } })}>
+                                            Alemán
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                {erroresFormulario.idioma && <div className="error">{erroresFormulario.idioma}</div>}
+                            </div>
                         </Form.Group>
                     </Col>
 
-                    <Col>
+                    <Col className="colunBusqueda">
                         <Form.Group controlId="formBusqueda">
                             <Form.Label>Búsqueda</Form.Label>
                             <div className="buscadorContenedor">
@@ -293,12 +296,14 @@ const BarraBusqueda = () => {
                             </div>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col className="colunBotones">
                         <div className="botones">
-                            <Button variant="primary" onClick={filtrosAplicar} disabled={loading}>
+                            <Button className="btn-primary" onClick={filtrosAplicar} disabled={loading}>
                                 {loading ? 'Cargando...' : 'Aceptar'}
                             </Button>
-                            <Button variant="secondary" onClick={resetFiltros}>Restablecer</Button>
+                            <Button className="btn-secondary" onClick={resetFiltros}>
+                                Restablecer
+                            </Button>
                         </div>
                     </Col>
                 </Row>
