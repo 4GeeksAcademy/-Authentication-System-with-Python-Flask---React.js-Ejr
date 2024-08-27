@@ -20,6 +20,8 @@ import Footer from './component/footer';
 import ContactUs from "./pages/ContactUs";
 import { TokenValidator } from "./component/TokenValidator";
 
+import UserProfile from "./component/UserProfile";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -42,6 +44,7 @@ const Layout = () => {
                         <Route element={<Singup />} path="/register" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<ContactUs />} path="/contact-us" />
+                        <Route element={<UserProfile />} path="/user-profile" />
                         <Route element={<TokenValidator />} path="/app">
                             <Route element={<Private />} path="exemplo" /> 
                             {/* qualquer rutas protegida aqui */}
