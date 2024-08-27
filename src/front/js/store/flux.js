@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			jobOffers: [],
 			selectedJobOffer: null,
 			token: null,
-			user: null
+			user: null,
+			favorites: [],
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -169,6 +170,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 if (token) {
                     setStore({ token: token });
                 }
+            },
+
+			addFavorite: (item) => {
+                const store = getStore();
+                setStore({ favorites: [...store.favorites, item] });
+            },
+            removeFavorite: (item) => {
+                const store = getStore();
+                setStore({ favorites: store.favorites.filter(fav => fav !== item) });
             },
 
 		}

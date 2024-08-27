@@ -247,3 +247,40 @@ def get_contacts():
         return jsonify([contact.serialize() for contact in contacts]), 200
     return jsonify({'msg':'Ningún contacto encontrado'}),404
 
+
+#Favoritos
+@api.route('/favoritos', methods=['POST'])
+def add_favorito():
+    data = request.json
+
+    if not data.get('programador_id') and not data.get('empleador_id') and not data.get('oferta_id'):
+        return jsonify({'msg': 'Debe proporcionar al menos un ID de programador, empleador o oferta'}), 400
+    
+    new_favorite = Favoritos(
+        programador_id=data.get('programador_id'),
+        empleador_id=data.get('empleador_id'),
+        oferta_id=data.get('oferta_id')
+    )
+    
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return jsonify(new_favorite.serialize()), 201
+
+
+@api.route('/user/<int:user_id>/favoritos', methods=['GET'])
+def get_user_favorites(user_id):
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({'msg': 'Usuario no encontrado'}), 404
+    
+    favoritos = []
+    
+    if user.profile_programador:
+        favoritos.extend(user.profile_programador.favoritos)
+    
+    if user.profile_empleador:
+        favoritos.extend(user.profile_empleador.favoritos)
+    
+    return jsonify([favorito.serialize() for favorito in favoritos]), 200

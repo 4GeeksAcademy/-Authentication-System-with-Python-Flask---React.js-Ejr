@@ -41,19 +41,19 @@ class Ratings(db.Model):
     
 class Favoritos(db.Model):
     __tablename__="favoritos"
+    id = db.Column(db.Integer, primary_key=True)
     programador_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
     empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
     oferta_id =db.Column (db.Integer, db.ForeignKey ("ofertas.id"), primary_key=True)
     
     def __repr__(self):
-        return f'<Favoritos {self.programador_id}>'
+        return f'<Favoritos {self.id}>'
 
     def serialize(self):
         return {
             "programador_id": self.programador_id,
             "empleador_id": self.empleador_id,
             "oferta_id": self.oferta_id
-
             
         }
     
