@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../component/tickeate.png";
+import logo from "../component/tickeateBlanco.png";
 import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 
