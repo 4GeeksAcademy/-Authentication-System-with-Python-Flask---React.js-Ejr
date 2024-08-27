@@ -16,7 +16,12 @@ import Meets from "../component/meets.jsx";
 
 import Swal from 'sweetalert2'
 
-
+import Meets from "../component/meets.jsx";
+// ID cliente: RrLt2R0t0jbTXChSFJLFIPaSMniKYriRIi6kxAszsWA
+// Secreto de cliente: qdg4iNfaJf7ihnst8Ln4rbtDP3DTBLXl7Q6ZOmC9g_g
+// Clave de firma WebHook: wxCO2fVy0HgDGrihAZuw4y8pZWunAu27OS5ghje2_M8
+// Token: eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzI0Njk1NjU3LCJqdGkiOiI1MTg5ZmExNC00YWVhLTQ2YjktYTQzOS1hOGQzZTY5MGUxYmMiLCJ1c2VyX3V1aWQiOiI2NzZiNTI3NS01NWYzLTRlODgtOTk0ZC00MjQxMzA3YWE0YzgifQ.0tCtUEuUVaMdIACWrxeIWkh6q6ssHOLperR4Yp4_J11rPwITlcDeerMws6PpuT0aAsHLVWOI7gf8WQmuH_L9cQ
+// URI user hablemosuy : https://api.calendly.com/users/676b5275-55f3-4e88-994d-4241307aa4c8
 const Perfil = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();

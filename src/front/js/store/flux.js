@@ -436,7 +436,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return { success: false, error: data.msg || response.statusText };
 					}
 				} catch (error) {
-					return { success: false, error: 'La dirección de correo electrónico ya existe' };
+					console.log('en el catch', error)
+					Swal.fire({
+						title: 'Error!',
+						text: 'La dirección de correo electrónico ya existe',
+						icon: 'error',
+						confirmButtonText: 'Cool'
+					});
+					return false;
 				}
 			},
 			
