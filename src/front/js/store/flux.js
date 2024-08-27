@@ -254,7 +254,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             // GET LAST PhysicalInformation / TRAER LAS ULTIMA INFORMACION FISICA
             get_last_physical_user_information: async () => {
-                let token = localStorage.getItem("token")
+                let token = localStorage.getItem("token");
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/last-physical-user-information", {
                         headers: {
@@ -262,16 +262,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     });
 
-                    if (resp.status == 200) {
+                    console.log(resp)
+
+                    if (resp.status === 200) {
                         let reverseData = resp.data.reverse();
-                        console.log(reverseData);
-                        console.log(resp.data);
-                        setStore({ lastPhysicalUserInformationList: reverseData })
-                        console.log(getStore().lastPhysicalUserInformationList);
+                        const storeData = getStore().lastPhysicalUserInformationList;
+
+                        if (JSON.stringify(storeData) !== JSON.stringify(reverseData)) {
+                            setStore({ lastPhysicalUserInformationList: reverseData });
+                        }
+
+
+
                         return true;
                     }
-                }
-                catch (error) {
+                } catch (error) {
                     console.log(error);
                     return false;
                 }
@@ -990,7 +995,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let response = await axios.post(process.env.BACKEND_URL + '/sets', payload);
 
                     if (response.status == 200) {
-                        setStore({ setId: response.data.id})
+                        setStore({ setId: response.data.id })
                         console.log('sets successfully added:', response.data);
                         return true;
                     }
