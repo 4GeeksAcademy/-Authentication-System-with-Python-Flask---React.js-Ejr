@@ -1,216 +1,179 @@
+/* Contenedor principal de la barra de búsqueda */
 .barra-busqueda {
-    background-color: #DAFFEF; /* Color de fondo */
-    border: 1px solid #64b6ac; /* Borde alrededor del contenedor */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    display: flex; /* Usa Flexbox para layout */
-    flex-wrap: nowrap; /* Asegura que los elementos no se ajusten en múltiples líneas  */
-    align-items: center; /* Centra los elementos horizontalmente */
-    max-width: 1710px; /* Ancho máximo del contenedor */
-    margin: 0 auto; /* Centra el contenedor horizontalmente */
-    font-weight: bold; /* Negrita para la etiqueta */
-    color: #5D737E; /* Color de la etiqueta */
-    gap: 10px; /* Añade espacio entre los elementos */
-    
+    background-color: #416788; /* Fondo de la barra */
+    border: 1px solid #000022; /* Borde oscuro */
+    border-radius: 5px; /* Esquinas redondeadas */
+    padding: 10px; /* Espacio interno */
+    display: flex; /* Uso de flexbox para alinear los elementos */
+    flex-wrap: nowrap; /* No permite que los elementos salten a la siguiente línea */
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    max-width: 1700px; /* Ancho máximo de la barra */
+    margin: 0 auto; /* Centra la barra horizontalmente */
+    font-weight: bold; /* Negrita para el texto */
+    color: #E0E0E2; /* Color del texto */
+    gap: 10px; /* Espacio entre los elementos */
 }
 
+/* Grupos de formularios dentro de la barra de búsqueda */
 .barra-busqueda .form-group {
-    margin-bottom: 0; /* Elimina el margen inferior de los grupos de formularios */
-    display: flex; /* Usa Flexbox para alinear los elementos dentro de .form-group */
-    align-items: center; /* Alinea verticalmente los elementos dentro de .form-group */
+    margin-bottom: 0; /* Elimina el margen inferior */
+    display: flex; /* Flexbox para alinear los elementos */
+    align-items: center; /* Alinea los elementos verticalmente */
+    height: 100%; /* Ocupa toda la altura disponible */
 }
 
+/* Asegura que todos los elementos (inputs y botones) tengan la misma altura */
 .barra-busqueda .form-control,
 .barra-busqueda .btn-primary,
 .barra-busqueda .btn-secondary {
-    line-height: 1.5; /* Asegura que la altura de línea de los campos y los botones sea consistente */
-    vertical-align: middle; /* Alinea verticalmente los elementos */
-   
+    line-height: 1.5; /* Altura de línea adecuada */
+    vertical-align: middle; /* Alineación vertical al medio */
+    height: 45px; /* Altura uniforme */
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del tamaño */
 }
 
-
+/* Estilo de las columnas en la barra de búsqueda */
 .barra-busqueda .col {
-    flex: 1 1 150px; /* Permite que los elementos crezcan y se reduzcan según el espacio disponible, con un ancho base de 150px */
-    min-width: 150px; /* Establece un ancho mínimo para evitar que los elementos se vuelvan demasiado pequeños */
+    flex: 1 1 150px; /* Permite que las columnas crezcan o se reduzcan */
+    min-width: 140px; /* Ancho mínimo */
 }
 
+/* Contenedor de los botones */
 .botones {
-    display: flex; /* Usa Flexbox para alinear los botones */
-    gap: 10px; /* Espacio entre los botones */
+    display: flex; /* Uso de flexbox para alinear los botones */
+    gap: 5px; /* Espacio entre los botones */
     justify-content: flex-start; /* Alinea los botones al inicio del contenedor */
-    flex: 1 1 150px; /* Asegura que los botones ocupen el mismo espacio que las columnas */
-    align-items: center; /* Alinea los botones verticalmente con los campos */
-    height: 100%; /* Asegura que el contenedor de los botones tome toda la altura disponible */
+    align-items: center; /* Alinea los botones verticalmente */
+    height: 100%; /* Ocupa toda la altura disponible */
+    width: fit-content;
 }
 
+/* Estilos para los botones dentro del contenedor de botones */
 .botones .btn-primary,
 .botones .btn-secondary {
-    width: 100%;
-    padding: 10px; /* Asegúrate de que el padding es consistente con los campos de entrada */
+    padding: 0 6px; /* Ajuste del padding horizontal para evitar que el botón sea demasiado grande */
+    background-color: #000022; /* Color de fondo de los botones */
+    color: #E0E0E2; /* Color del texto de los botones */
+    border: none; /* Sin borde */
+    height: 45px; /* Altura uniforme con el resto de la barra */
+    box-sizing: border-box; /* Asegura que padding y border no corten el botón */
 }
 
-/* Estilos para el botón de aceptar */
-.botones .btn-primary {
-    background-color: #5D737E; /* Color de fondo */
-    color: #DAFFEF; /* Color de letra */
-    border: none; /* Elimina el borde del botón por defecto */
+/* Estilo específico para el botón "Restablecer" */
+.botones .btn-secondary {
+    padding: 0 9px; /* Ajuste específico del padding para el botón Restablecer */
 }
-
 
 /* Estilos para el botón de restablecer cuando está activo */
 .botones .btn-secondary:active {
-    background-color: #4a9a8a; /* Color más oscuro para cuando el botón está activo */
+    background-color: #7389AE; /* Cambio de color cuando se presiona */
 }
 
 /* Estilos para el botón de aceptar cuando está activo */
 .botones .btn-primary:active {
-    background-color: #4a6e6f; /* Color más oscuro para cuando el botón está activo */
+    background-color: #7389AE; /* Cambio de color cuando se presiona */
 }
 
-/* Estilos para el menú desplegable */
+/* Menú desplegable de categorías */
 .categoria-menu {
-    position: relative; /* Posiciona el contenedor relativo al resto de los elementos */
+    position: relative; /* Necesario para la posición del submenú */
 }
 
+/* Elementos dentro del submenú desplegable */
 .subcategoria-menu .dropdown-item {
-    white-space: nowrap; /* Evita que el texto se ajuste a varias líneas */
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
 }
 
-/* Estilos para el botón de categoría */
+/* Estilos para el botón desplegable de categoría */
 .dropdown-toggle {
-    background-color: #DAFFEF; /* Color de fondo */
-    color: #5D737E; /* Color de letra */
-    border: none; /* Elimina el borde del botón por defecto */
+    background-color: #B5BAD0; /* Fondo del botón desplegable */
+    color: #000022; /* Color del texto */
+    border: none; /* Sin borde */
+    height: 45px; /* Altura uniforme */
+    display: flex; /* Flexbox para alinear el contenido dentro del botón */
+    align-items: center; /* Alinea verticalmente el contenido */
 }
 
-/* Estilos para el botón de categoría en estado hover */
+/* Cambio de estilo cuando se hace hover sobre el botón desplegable */
 .dropdown-toggle:hover {
-    background-color: #4a9a8a; /* Color de fondo en hover */
-    color: #DAFFEF; /* Color de letra en hover */
+    background-color: #B5BAD0; /* Cambio de color del fondo */
+    color: #E0E0E2; /* Cambio de color del texto */
 }
 
-/* Estilos para el botón de categoría cuando está activo */
-.dropdown-toggle:active {
-    background-color: #4a9a8a; /* Color de fondo cuando el botón está activo */
-    color: #DAFFEF; /* Color de letra cuando el botón está activo */
-}
-
-
-/* Estilos para el menú desplegable de categorías */
-.categoria-menu .dropdown-menu {
-    background-color: #64b6ac; /* Color de fondo del menú */
-    color: #5D737E; /* Color de letra del menú */
-    border: none; /* Elimina el borde del menú por defecto */
-}
-
-/* Estilos para el menú de subcategorías que se despliega automáticamente */
-.subcategoria-menu {
-    position: absolute; /* Posiciona el submenú absolutamente con respecto a .categoria-menu */
-    top: 100%; /* Coloca el submenú justo debajo del menú principal */
-    left: 0; /* Alinea el submenú a la izquierda del contenedor */
-    background-color: #64b6ac; /* Color de fondo del menú de subcategorías */
-    color: #5D737E; /* Color de letra del menú de subcategorías */
-    border: none; /* Elimina el borde del menú de subcategorías por defecto */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el submenú */
-    z-index: 1000; /* Asegura que el submenú esté sobre otros elementos */
-}
-
-/* Estilos para los elementos del menú de subcategorías */
-.subcategoria-menu .dropdown-item {
-    color: black; /* Color de letra de los elementos del menú de subcategorías */
-}
-
-/* Estilos para los elementos del menú de subcategorías cuando se pasa el ratón sobre ellos */
-.subcategoria-menu .dropdown-item:hover {
-    background-color: #4a9a8a; /* Color de fondo en hover */
-    color: #DAFFEF; /* Color de letra en hover */
-}
-
-/* Estilos generales para los menús desplegables idioma y niveles */
+/* Menú desplegable de categoría */
+.categoria-menu .dropdown-menu,
 .dropdown-menu {
-    background-color: #64b6ac; /* Color de fondo del menú */
-    color: #5D737E; /* Color de letra del menú */
-    border: none; /* Elimina el borde del menú por defecto */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para el menú */
-    z-index: 1000; /* Asegura que el menú esté sobre otros elementos */
+    background-color: #7389AE; /* Fondo del menú */
+    color: #E0E0E2; /* Color del texto */
+    border: none; /* Sin borde */
 }
 
-/* Estilos para los menús desplegables que se despliegan automáticamente idioma y niveles */
-.dropdown-menu-absolute {
-    position: absolute; /* Posiciona el submenú absolutamente con respecto al contenedor */
-    top: 100%; /* Coloca el submenú justo debajo del menú principal */
-    left: 0; /* Alinea el submenú a la izquierda del contenedor */
+/* Submenú desplegable de subcategorías */
+.subcategoria-menu {
+    position: absolute; /* Posiciona el submenú de manera absoluta */
+    top: 100%; /* Coloca el submenú justo debajo del botón */
+    left: 0; /* Alinea el submenú con el botón */
+    background-color: #7389AE; /* Fondo del submenú */
+    border: none; /* Sin borde */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para el submenú */
+    z-index: 1000; /* Asegura que el submenú esté encima de otros elementos */
 }
 
-/* Estilos para el input del estrellas de fecha */
-.estrellas-fecha-select {
-    border: 1px solid #64b6ac; /* Borde del input */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px; /* Espaciado interno */
-    color: #5D737E; /* Color del texto */
-    background-color: #DAFFEF; /* Color de fondo */
+/* Estilo de los ítems en el submenú */
+.subcategoria-menu .dropdown-item {
+    color: black; /* Color del texto de los ítems */
 }
 
-/* Estilos para las opciones del input del estrellas de fecha */
-.estrellas-fecha-select.menu {
-    background-color: #64b6ac; /* Color de fondo para las opciones */
-    color: #DAFFEF; /* Color del texto para las opciones */
+/* Estilos para los elementos de selección en la barra */
+.estrellas-fecha-select,
+.estrellas-precio-select,
+.estrellas-busqueda {
+    height: 45px; /* Altura uniforme */
+    padding: 5px; /* Espacio interno */
 }
 
-/* Estilos para el input de rango del estrellas de precio */
-.estrellas-precio-select {
-    border: 1px solid #64b6ac; /* Borde del input */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px; /* Espaciado interno */
-    color: #5D737E; /* Color del texto */
-    background-color: #DAFFEF; /* Color de fondo */
-}
-
-/* Estilos para el input de texto del estrellas de búsqueda */
-.estrellas-busqueda{
-    border: 1px solid #64b6ac; /* Borde del input */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px; /* Espaciado interno */
-    color: #5D737E; /* Color del texto */
-    background-color: #DAFFEF; /* Color de fondo */
-}
-
+/* Contenedor del buscador (input) */
 .buscadorContenedor {
-    position: relative;
-    display: flex;
-    align-items: center;
+    position: relative; /* Necesario para el icono dentro del input */
+    display: flex; /* Flexbox para alinear el contenido */
+    align-items: center; /* Alinea verticalmente el contenido */
 }
 
+/* Icono dentro del buscador */
 .iconoBuscador {
-    position: absolute;
-    right: 10px;
-    pointer-events: none;
-    color: #aaa; /* Puedes cambiar el color a tu preferencia */
-    height: fit-content;
-    width: fit-content;
-    
+    position: absolute; /* Posiciona el icono de manera absoluta */
+    right: 10px; /* Coloca el icono en la parte derecha del input */
+    pointer-events: none; /* Evita que el icono interfiera con la funcionalidad del input */
+    color: #000022; /* Color del icono */
+    height: fit-content; /* Ajusta la altura al contenido */
+    width: fit-content; /* Ajusta el ancho al contenido */
 }
 
+/* Input del buscador */
 .buscadorContenedor input {
-    padding-right: 60px; /* Asegúrate de que el input tenga suficiente espacio para el icono */
-    
+    padding-right: 60px; /* Espacio adicional a la derecha para el icono */
+    height: 45px; /* Altura uniforme */
 }
 
-
+/* Estilos para las estrellas (rating) */
 .estrellas {
     font-size: 20px; /* Tamaño de las estrellas */
 }
 
+/* Estilo individual para cada estrella */
 .estrellas .estrella {
-    display: inline-block;
+    display: inline-block; /* Las estrellas se muestran en línea */
     margin-right: 5px; /* Espacio entre estrellas */
-    cursor: pointer; /* Cambia el cursor al pasar sobre las estrellas */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
 
+/* Estrella rellena (seleccionada) */
 .estrellas .rellena {
-    color: #ffd700; /* Color amarillo para las estrellas rellenas */
+    color: #ffd700; /* Color dorado para la estrella rellena */
 }
 
+/* Estrella vacía (no seleccionada) */
 .estrellas .vacia {
-    color: #ccc; /* Color gris para las estrellas vacías */
+    color: #ccc; /* Color gris para la estrella vacía */
 }
+
