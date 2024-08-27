@@ -354,7 +354,7 @@ export const MultiStepForm = () => {
                   className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
 
                 >
-                  <option value="" selected>
+                  <option value="">
                     Select Series
                   </option>
                   {

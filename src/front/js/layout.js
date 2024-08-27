@@ -5,7 +5,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
+import { CreateRoutine } from "./pages/createRoutine.js";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Single } from "./pages/single";
@@ -107,7 +107,7 @@ const Layout = () => {
                             path="/private"
                         />
                         <Route element={<ProtectedRoute><Profile /></ProtectedRoute>} path="/profile" />
-                        <Route element={<Demo />} path="/routine/new" />
+                        <Route element={<CreateRoutine />} path="/routine/new" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<ErrorView />} path="/*" />
                     </Routes>
