@@ -10,7 +10,7 @@ function VistaPago() {
       <div class="card-header">
         <h1>Información de Pago</h1>
       </div>
-      <div class="card-body">
+      <div class="card-body-vistaPago">
         <form class="row g-3">
           <div class="col-md-6">
               <label for="Card" class="form-label">Card #</label>
