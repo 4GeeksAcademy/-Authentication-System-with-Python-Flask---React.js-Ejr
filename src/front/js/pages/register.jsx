@@ -70,7 +70,7 @@ const Register = () => {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error en el registro',
-                                text: store.error
+                                text: 'Por favor, revisa los datos ingresados e intenta nuevamente.'
                             });
                         }
                         setSubmitting(false);

@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext"
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import nutriLogo from '../../../../public/images/nutri-logo-icon-b.png'
 import '../../styles/navbar.css'
+import { Actions } from "@cloudinary/url-gen/index";
+
 
 export const Navbar = () => {
     let location = useLocation();
-
+    const { actions, store } = useContext(Context)
     let id = 0;
-
+console.log(store.auth, store.currentUser)
     if (location.pathname !== "/login" && location.pathname !== "/register") {
+
         return (
             <>
                 <nav className="navbar-container navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -25,7 +29,9 @@ export const Navbar = () => {
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i className="bi bi-list"></i>
                         </button>
+                        {store.auth?
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            
                             <ul className="navbar-nav ms-auto mb-lg-0 text-lg-end">
                                 <li className="nav-item my-lg-auto nav-text-item">
                                     <Link to="/professionals" className="link">
@@ -74,7 +80,7 @@ export const Navbar = () => {
                                             <li><button type="button">Agendas</button></li>
                                         </Link>
                                         <Link to="/login" className="link">
-                                            <li><button type="button">Cerrar Sesión</button></li>
+                                            <li><button type="button" onClick={() => actions.logout()}>Cerrar Sesión</button></li>
                                         </Link>
                                     </ul>
                                 </li>
@@ -108,6 +114,12 @@ export const Navbar = () => {
                                 </li>
                             </ul>
                         </div>
+                        :
+                        <div className="links-container d-flex fw-bold">
+                         <Link className="home-to-register mx-5" to='register'>Registrarme</Link>
+                         <Link className="home-to-login" to='login'>Iniciar sesión</Link>
+                        </div> 
+                        }
                     </div>
                 </nav>
             </>
