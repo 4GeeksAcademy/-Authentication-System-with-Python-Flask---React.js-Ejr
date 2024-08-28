@@ -3,6 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app # type: ignore
 from api.models import db, User, Product, Profession, UserProfession, Favorite, Recipe, Cart
+from flask_bcrypt import Bcrypt # type: ignore
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS # type: ignore
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token # type: ignore
@@ -141,7 +142,7 @@ def delete_user(id):
     db.session.delete(especific_user)
     db.session.commit()    
     return jsonify({"msj":"Usuario eliminado correctamente"}), 200
-
+bcrypt = Bcrypt()
 # PUT user
 @api.route('/users/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -159,7 +160,7 @@ def update_user(id):
     if 'email' in data:
         user.email = data ['email']
     if 'password' in data:
-        user.password = data ['password']
+      user.password = bcrypt.generate_password_hash(data['password']).decode("utf-8")
     if 'address' in data:
         user.address = data ['address']
     if 'phone' in data:
