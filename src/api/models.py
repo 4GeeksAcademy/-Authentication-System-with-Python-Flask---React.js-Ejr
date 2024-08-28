@@ -41,7 +41,6 @@ class Ratings(db.Model):
     
 class Favoritos(db.Model):
     __tablename__="favoritos"
-    id = db.Column(db.Integer, primary_key=True)
     programador_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
     empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
     oferta_id =db.Column (db.Integer, db.ForeignKey ("ofertas.id"), primary_key=True)
