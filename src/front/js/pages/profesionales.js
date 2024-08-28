@@ -51,19 +51,19 @@ const Profesionales = () => {
 
         switch (profesional) {
             case 'Dr. Juan Pérez':
-                Calendly.showPopupWidget('https://calendly.com/hablemosuysaludmental/dr-juan-perez');
+                Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-juan-perez');
                 break;
             case 'Dr. Luis Rodríguez':
-                Calendly.showPopupWidget('https://calendly.com/hablemosuysaludmental/dr-luis-rodriguez');
+                Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-luis-rodriguez');
                 break;
             case 'Dra. María García':
-                Calendly.showPopupWidget('https://calendly.com/hablemosuysaludmental/dra-maria-garcia');
+                Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dra-maria-garcia');
                 break;
             case 'Dra. Ana Martínez':
-                Calendly.showPopupWidget('https://calendly.com/hablemosuysaludmental/dra-ana-martinez');
+                Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dra-ana-martinez');
                 break;
             case 'Dr. Carlos Gómez':
-                Calendly.showPopupWidget('https://calendly.com/hablemosuysaludmental/dr-carlos-gomez');
+                Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-carlos-gomez');
                 break;
             default:
                 break;

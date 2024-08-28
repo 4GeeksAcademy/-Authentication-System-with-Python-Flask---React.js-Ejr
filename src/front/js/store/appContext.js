@@ -33,6 +33,7 @@ const injectContext = PassedComponent => {
 			state.actions.getPsicologos(); // Traemos todos los psicologos cuando se carga la página
 			
 
+			
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
