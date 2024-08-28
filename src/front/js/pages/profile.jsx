@@ -1,9 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../styles/CardProfile.css";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+
+
+
 
 const ImgUpload = ({ onChange, src }) => (
   <div className="d-flex justify-content-center mb-3">
@@ -27,7 +30,6 @@ const Name = ({ onChange, value }) => (
       maxLength="25"
       value={value}
       placeholder="Ingrésa tu nuevo nombre"
-      required
     />
   </div>
 );
@@ -54,7 +56,6 @@ const Description = () => (
       className="form-control"
       maxLength="2000"
       placeholder="Ingrésa tu descripción aquí"
-   
     />
   </div>
 );
@@ -85,7 +86,7 @@ const Email = ({ onChange, value }) => (
       onChange={onChange}
       value={value}
       placeholder="Ingrésa tu nuevo email"
-      required
+      
     />
   </div>
 );
@@ -114,6 +115,14 @@ const CardProfile = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  
+  useEffect(() => {
+
+    if (store.currentUser) {
+      setName(store.currentUser.name || "");
+      setEmail(store.currentUser.email || "");
+    }
+  }, [store.currentUser]);
 
   const photoUpload = (e) => {
     e.preventDefault();

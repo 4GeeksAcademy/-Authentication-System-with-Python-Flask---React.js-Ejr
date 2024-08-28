@@ -83,6 +83,16 @@
     border-top-right-radius: 8px;
 }
 
+.links-container .home-to-register, 
+.links-container .home-to-login {
+    color: var(--color-forest);
+
+}
+.links-container .home-to-register:hover, 
+.links-container .home-to-login:hover {
+border-bottom: 1px solid var(--color-forest);
+    
+}
 
 
 /* ______________RESPONSIVE______________ */
