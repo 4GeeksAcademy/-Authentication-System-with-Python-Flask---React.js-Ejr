@@ -5,6 +5,7 @@ import "../../styles/home.css";
 //Barra de búsqueda
 import BarraBusqueda from "../component/barraBusqueda";
 import "../../styles/barraBusqueda.css";
+import ListaCursos from "../component/listaCursos";
 
 
 
@@ -42,6 +43,7 @@ return (
         </div>
         {/* Aquí se agrega el componente BarraBusqueda */}
         <BarraBusqueda />
+        <ListaCursos />
     </div>
 );
 };
