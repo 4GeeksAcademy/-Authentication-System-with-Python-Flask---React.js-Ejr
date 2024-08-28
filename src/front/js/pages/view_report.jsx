@@ -1,21 +1,29 @@
-// src/components/ViewReport.js
-
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const ViewReport = () => {
     const { babyId, reportId } = useParams();
     const [report, setReport] = useState(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
+    const { store } = useContext(Context);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        if (!store.token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchReport = async () => {
             const url = `${process.env.BACKEND_URL}api/baby/${babyId}/${reportId}`;
             console.log("Fetching URL:", url); // Verifica la URL
 
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${store.token}` }
+                });
                 console.log("Response status:", response.status); // Verifica el código de estado
 
                 if (!response.ok) {
@@ -37,7 +45,7 @@ export const ViewReport = () => {
         };
 
         fetchReport();
-    }, [babyId, reportId]);
+    }, [babyId, reportId, store.token, navigate]);
 
     return (
         <div className="container">

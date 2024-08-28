@@ -4,15 +4,18 @@ import { Context } from "../store/appContext";
 import "../../styles/register.css";
 
 export const Register = () => {
-	const { store, actions } = useContext(Context);
-	const [error, setError] = useState(false);
-	const [formData, setFormData] = useState({
-		name: '',
-		username: '',
-		email: '',
-		password: '',
-		repeatPassword: '',
-	});
+    const { store, actions } = useContext(Context);
+    const [error, setError] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        username: '',
+        email: '',
+        password: '',
+        repeatPassword: '',
+    });
+
+
+  const navigate = useNavigate();
 
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -29,34 +32,45 @@ export const Register = () => {
 	}
 
 
-	const navigate = useNavigate();
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	}
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    }
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		const { name, username, email, password, repeatPassword } = formData;
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { name, username, email, password, repeatPassword } = formData;
 
-		if (name === "" || username === "" || email === "" || password === "" || repeatPassword === "") {
-			setError(true);
-			return;
-		}
+        if (name === "" || username === "" || email === "" || password === "" || repeatPassword === "") {
+            setError(true);
+            return;
+        }
 
-		if (password !== repeatPassword) {
-			setError(true);
-			alert("Passwords do not match!");
-			return;
-		}
+        if (password !== repeatPassword) {
+            setError(true);
+            alert("Passwords do not match!");
+            return;
+        }
 
-		setError(false);
-		const success = await actions.register(formData);
-		if (success) {
-			navigate("/");
-		}
-	}
+        setError(false);
+        try {
+            const data = await actions.register(formData);
+            if (data && data.token) {
+                // Actualiza el estado global con el token y el usuario
+                actions.setToken(data.token);
+                actions.setUser(data.user);
+                // Redirige al dashboard o la página deseada
+                navigate("/dashboard");
+            } else {
+                // Manejo de errores si el registro falla
+                alert(data.msg || "Registration failed!");
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            alert("An error occurred during registration. Please try again.");
+        }
+    };
 
 	return (
 		<div className="container-register">

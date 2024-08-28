@@ -211,59 +211,73 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             // Login
+            // Register
+            register: async (formData) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "api/signup", {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+                    if (data && data.token) {
+                        setStore({ user: data.user, token: data.token });
+                        localStorage.setItem('token', data.token);
+                    } else {
+                        throw new Error('Invalid response data');
+                    }
+                    return data;
+                } catch (error) {
+                    console.log("Error during registration:", error);
+                    return { success: false, msg: error.message };
+                }
+            },
+
+            // Login
             login: async (formData) => {
                 try {
-                const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    method: 'POST',
-                    body: JSON.stringify(formData),
-                });
-              
-                if (!response.ok) {
-                      // Manejo de errores HTTP
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-              
-                const data = await response.json();
-              
-                if (data && data.token) {
-                    setStore({ user: data.user, token: data.token });
-                    localStorage.setItem('token', data.token);
-                } else {
-                    throw new Error('Invalid response data');
-                }
-              
-                return data;
+                    const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(formData),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data && data.token) {
+                        setStore({ user: data.user, token: data.token });
+                        localStorage.setItem('token', data.token);
+                    } else {
+                        throw new Error('Invalid response data');
+                    }
+
+                    return data;
                 } catch (error) {
                     console.error("Error during login:", error);
                     return { success: false, msg: error.message };
                 }
-            },              
+            },
 
-            // Register
-			register: async (formData) => {
-				try{
-					// fetching data from the backend
+            // Set token
+            setToken: (token) => {
+                setStore(prevStore => ({ ...prevStore, token }));
+                localStorage.setItem('token', token);
+            },
 
-					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						method: 'POST',
-						body: JSON.stringify(formData)
+            // Set user
+            setUser: (user) => {
+                setStore(prevStore => ({ ...prevStore, user }));
+            },
 
-					})
-					const data = await resp.json()
-					setStore({ user: data.user,token: data.token })
-					localStorage.setItem('token', data.token)
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
             //Accion para crear un nuevo bebe
             createBaby: async (babyData) => {
                 try {

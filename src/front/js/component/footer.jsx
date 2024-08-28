@@ -44,6 +44,7 @@ export const Footer = () => (
 				<li><a href="/dashboard">Dashboard</a></li>
 				<li><a href="/gestor_perfil">Profile Manager</a></li>
 				<li><a href="/gestor_bebes">Baby Manager</a></li>
+				<li><a href="/login">Log In</a></li>
 			</ul>
 		</div>
 	</footer>
