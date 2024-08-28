@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../../styles/addeventmodal.css"; 
 
 const AddEventModal = ({ show, onClose, addEvent }) => {
@@ -6,9 +6,19 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
+  const [imagePreview, setImagePreview] = useState(""); // Estado para el preview de la imagen
+  const fileInputRef = useRef(null); // Referencia al input de archivo
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file)); // Crear URL para el preview
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setImagePreview("");
+    fileInputRef.current.value = null; // Resetear el input de archivo
   };
 
   const handleSubmit = (e) => {
@@ -19,7 +29,7 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
         title,
         description,
         category,
-        image: URL.createObjectURL(image),
+        image: imagePreview,
       };
       addEvent(newEvent);
       onClose();
@@ -83,12 +93,24 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
                 id="event-image"
                 accept="image/*"
                 onChange={handleImageChange}
-                required
+                ref={fileInputRef} // Asignar referencia al input
+                required={!imagePreview} // Requerido solo si no hay preview
                 style={{ display: "none" }}
               />
               <label htmlFor="event-image" className="image-input-label">
-                📁
-                <span>Haga clic aquí para seleccionar una imagen</span>
+                {imagePreview ? (
+                  <>
+                    <img src={imagePreview} alt="Preview" className="image-preview-thumbnail" />
+                    <button type="button" className="remove-image-button" onClick={handleRemoveImage}>
+                      Eliminar imagen
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="folder-icon">📁</div>
+                    <span>Haga clic aquí para seleccionar una imagen</span>
+                  </>
+                )}
               </label>
             </div>
             <button type="submit" className="add-event-modal-purchase-button">

@@ -125,45 +125,7 @@
   padding-right: 30px;
 }
 
-/* Estilo para la caja de drag and drop */
-.add-event-modal-drag-drop {
-  border: 2px dashed #3498DB;
-  border-radius: 10px;
-  padding: 30px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  color: #7F8C8D;
-  font-size: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 150px; /* Ajusta la altura según sea necesario */
-}
-
-.add-event-modal-drag-drop:hover {
-  background-color: #f0f8ff;
-}
-
-.add-event-modal-drag-drop p {
-  margin: 0;
-  font-size: 1em;
-}
-
-.add-event-modal-drag-drop .icon {
-  font-size: 2.5em;
-  color: #3498DB;
-  margin-bottom: 10px;
-}
-
-.add-event-modal-file-name {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #333;
-  text-align: center;
-}
-
+/* Estilo para la caja de selección de imagen */
 .add-event-modal-image-input label {
   display: flex;
   flex-direction: column;
@@ -176,6 +138,8 @@
   cursor: pointer;
   transition: border-color 0.3s ease;
   text-align: center;
+  position: relative;
+  min-height: 150px; /* Ajusta la altura mínima */
 }
 
 .add-event-modal-image-input label:hover {
@@ -191,4 +155,30 @@
 .add-event-modal-image-input label span {
   font-size: 16px;
   color: #7F8C8D;
+}
+
+/* Estilo para el preview de la imagen dentro del recuadro */
+.image-preview-thumbnail {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Botón para eliminar la imagen */
+.remove-image-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  bottom: 10px;
+}
+
+.remove-image-button:hover {
+  background-color: #c0392b;
 }
