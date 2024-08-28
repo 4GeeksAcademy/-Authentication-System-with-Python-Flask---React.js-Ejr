@@ -462,6 +462,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // DELETE WeeklyRoutine / ELIMINAR RUTINA SEMANA
             deleteWeeklyUserRoutine: async (day) => {
                 try {
+                    const store = getStore()
                     const token = localStorage.getItem('token')
                     if (!token) {
                         return ({ "error": "no token found" })
@@ -476,6 +477,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     );
 
                     if (resp.status == 200) {
+                        // await getActions().allWeeklyRoutineUser()
+                        console.log(store.allWeeklyRoutineUserList);
+                        setStore({allWeeklyRoutineUserList: store.allWeeklyRoutineUserList.filter(item => item.day != day)})
                         console.log(resp.data);
                         return true;
                     }
@@ -576,7 +580,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.log('Routine successfully update:', response.data);
                         await getActions().oneRoutine(id)
                         console.log("funciona");
-                        
+
                         return true;
                     }
                 } catch (error) {
@@ -812,6 +816,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     );
 
                     if (resp.status == 200) {
+                        await getActions().oneRoutine(routine_id)
+                        await getActions().allWeeklyRoutineUser()
                         console.log(resp.data);
                         return true;
                     }
@@ -993,7 +999,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     let response = await axios.post(process.env.BACKEND_URL + '/sets', payload);
 
                     if (response.status == 200) {
-                        setStore({ setId: response.data.id})
+                        setStore({ setId: response.data.id })
                         console.log('sets successfully added:', response.data);
                         return true;
                     }
