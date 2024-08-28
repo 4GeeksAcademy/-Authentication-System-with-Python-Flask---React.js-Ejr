@@ -1,4 +1,4 @@
-import React, { useContext, useParams } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import "../../styles/listofproducts.css";
@@ -6,11 +6,16 @@ import NoProductImg from "../../../../public/images/no-product-img.png";
 import Slider from "react-slick";
 
 const ProductDetailCard = ({ id, name, cost, image_url }) => {
-    const { actions, store } = useContext(Context);
     const navigate = useNavigate();
+    const { actions, store } = useContext(Context);
 
     const isFavorite = () => {
         return store.favorites.some(favorite => favorite.fav_product.id === id);
+    };
+
+    const isInCart = () => {
+        return store.cart.some(cartItem => cartItem.product_id === id);
+        // console.log(store.cart.some(cartItem => cartItem.product_id === id));
     };
 
     const toggleFavorite = async () => {
@@ -22,9 +27,23 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
         }
     };
 
+    const toggleCart = async () => {
+        if (isInCart()) {
+            await actions.deleteFromCart(id);
+        } else {
+            const totalAmount = cost * 1;
+            await actions.addToCart(id, 1, totalAmount);
+        }
+    };
+
     const handleNavigate = () => {
         navigate(`/cart/users/1`);
     };
+
+    const allInOne = async () => {
+        toggleCart();
+        handleNavigate();
+    }
 
     // CARRUSEL_____________________________________
     function SampleNextArrow(props) {
@@ -102,8 +121,7 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
                         <h4 className="col">Stock Disponible</h4>
                         <p className="col">10 Unidades</p>
                     </div>
-                    <button className="buy-btn mb-1" onClick={handleNavigate}>Comprar</button>
-                    <button className="add-cart-btn" onClick={handleNavigate} >Agregar al carrito</button>
+                    <button className="buy-btn mb-1" onClick={allInOne}>Comprar</button>
                 </div>
             </div>
         </>
