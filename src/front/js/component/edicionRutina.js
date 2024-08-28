@@ -3,7 +3,6 @@ import { Context } from "../store/appContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
 export const EdicionRutina = () => {
 
     const navigate = useNavigate()
@@ -15,7 +14,6 @@ export const EdicionRutina = () => {
     const [isDeleteExerciseModalOpen, setIsDeleteExerciseModalOpen] = useState(false)
     const [isEditRoutineModalOpen, setIsEditRoutineModalOpen] = useState(false)
     const [isDeleteRoutineModalOpen, setIsDeleteRoutineModalOpen] = useState(false)
-
 
     // PREVIO A MOSTRAR EJERCICIOS EDITAR
     const setSelectedDay = async (e) => {
@@ -29,14 +27,16 @@ export const EdicionRutina = () => {
     }
 
     const handleDeleteSubmit = async (e, day) => {
-        if (e){
+        if (e) {
             e.preventDefault()
         }
 
         const deleteWeeklyUserRoutine = new Promise(async (resolve, reject) => {
             const success = await actions.deleteWeeklyUserRoutine(day)
+            
             if (success === true) {
                 resolve("Rutina Dia Eliminada")
+                setRoutine({})
             } else {
                 reject("Elimincacion fallida")
             }
@@ -129,7 +129,7 @@ export const EdicionRutina = () => {
     // PREVIO A MOSTRAR EJERCICIOS EDITAR
     useEffect(() => {
         actions.allWeeklyRoutineUser()
-    }, [store])
+    }, [store.allWeeklyRoutineUser, store.oneRoutine])
 
     // useEffect(() => {
     //     console.log(routine);
@@ -363,13 +363,13 @@ export const EdicionRutina = () => {
                                                                     <span className="sr-only">Cerrar</span>
                                                                 </button>
                                                             </div>
-                                                            <form onSubmit={'handleSubmit'} className="p-4 md:p-5 space-y-4">
+                                                            <form className="p-4 md:p-5 space-y-4">
                                                                 <div className="flex flex-col gap-4">
                                                                     <div className='flex flex-col md:flex-row gap-4 w-full'>
                                                                         <div className="w-full">
                                                                             <label htmlFor="name" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Editar Ejercicio</label>
-                                                                            <input value={name}
-                                                                                onChange={'handleChange'} type="text" name="name" id="name" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingresar nuevo nombre" required />
+                                                                            <input
+                                                                                type="text" name="name" id="name" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingresar nuevo nombre" required />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-span-6 sm:col-span-3">

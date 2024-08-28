@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/43dae602d453_.py
-Revision ID: 43dae602d453
+Revision ID: 415c96c4d6e5
 Revises: 
-Create Date: 2024-08-21 14:07:34.672954
-========
-Revision ID: 54f1dfdeee87
-Revises: 
-Create Date: 2024-08-21 15:25:56.459178
->>>>>>>> bf5787c33f7c0483124a48ccde7b2aa6944dff87:migrations/versions/54f1dfdeee87_.py
+Create Date: 2024-08-28 12:47:01.438222
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/43dae602d453_.py
-revision = '43dae602d453'
-========
-revision = '54f1dfdeee87'
->>>>>>>> bf5787c33f7c0483124a48ccde7b2aa6944dff87:migrations/versions/54f1dfdeee87_.py
+revision = '415c96c4d6e5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -67,8 +57,7 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('exercise_routine',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -84,7 +73,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('routine_id', sa.Integer(), nullable=False),
-    sa.Column('day', sa.Enum('LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO', name='day'), nullable=False),
+    sa.Column('day', sa.Enum('DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', name='day'), nullable=False),
     sa.ForeignKeyConstraint(['routine_id'], ['routine.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')

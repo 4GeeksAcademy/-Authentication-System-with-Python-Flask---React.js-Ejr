@@ -89,13 +89,14 @@ class PhysicalInformation(db.Model):
     def graphicSerialize(self):
         return {
             "weight": self.weight,
+            "height": self.height,
             "date": self.date.strftime("%d/%m/%Y"),
         }
     
 # RUTINA 
 class Routine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     weekly_routine = db.relationship('WeeklyRoutine', cascade="all, delete", back_populates = 'routine', lazy = True)

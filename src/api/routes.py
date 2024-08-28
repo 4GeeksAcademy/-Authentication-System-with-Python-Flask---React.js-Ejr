@@ -374,7 +374,7 @@ def post_routine():
 
     existing_routine = Routine.query.filter_by(user_id=current_user["id"], name=routine["name"]).first()
     if existing_routine:
-        return {'error': 'Ya existe una rutina con este nombre'}, 400
+        return jsonify({'error': 'Ya existe una rutina con este nombre'}), 400
 
     # Crear la nueva rutina
     routine_created = Routine(user_id=current_user["id"], name=routine["name"])
