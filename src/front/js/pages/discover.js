@@ -121,6 +121,8 @@ const Discover = () => {
     },
   ]);
 
+  const categories = [...new Set(events.map(event => event.category))];
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -173,7 +175,11 @@ const Discover = () => {
           onChange={handleFilterChange}
         >
           <option value="">Todos los eventos</option>
-          {/* Añade más opciones según tus categorías */}
+          <option value="Hip Hop">Hip Hop</option>
+          <option value="Teatro">Teatro</option>
+          <option value="Salsa">Salsa</option>
+          <option value="Jazz">Jazz</option>
+          <option value="Rock">Rock</option>
         </select>
         <button
           className="add-event-button"

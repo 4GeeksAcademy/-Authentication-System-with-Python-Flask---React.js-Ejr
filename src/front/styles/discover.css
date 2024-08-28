@@ -1,9 +1,12 @@
 .discover-container {
   text-align: center;
-  color: #333;
-  padding: 40px;
-  background-color: #F5F5F5;
+  background-color: #C9D6FF;
+  background: linear-gradient(to right, #E2E2E2, #C9D6FF);
+  min-height: 100vh; 
+  padding: 20px;
 }
+
+
 
 .discover-title {
   color: #2C3E50;

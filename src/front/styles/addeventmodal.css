@@ -5,6 +5,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px); /* Añadir desenfoque al fondo */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,4 +85,110 @@
 
 .add-event-modal-purchase-button:hover {
   background-color: #2980B9;
+}
+
+/* Estilo para el contenedor de selección de categoría */
+.add-event-modal-details-item select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  transition: border-color 0.3s ease;
+}
+
+/* Estilo para la selección en hover y foco */
+.add-event-modal-details-item select:focus, 
+.add-event-modal-details-item select:hover {
+  border-color: #3498DB;
+  outline: none;
+  background-color: #eef5ff;
+}
+
+/* Estilo para los elementos dentro del select */
+.add-event-modal-details-item select option {
+  padding: 10px;
+  background-color: #fff;
+  font-size: 16px;
+}
+
+/* Para un diseño más moderno del select */
+.add-event-modal-details-item select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray"><polygon points="0,0 20,0 10,10"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+  padding-right: 30px;
+}
+
+/* Estilo para la caja de drag and drop */
+.add-event-modal-drag-drop {
+  border: 2px dashed #3498DB;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #7F8C8D;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px; /* Ajusta la altura según sea necesario */
+}
+
+.add-event-modal-drag-drop:hover {
+  background-color: #f0f8ff;
+}
+
+.add-event-modal-drag-drop p {
+  margin: 0;
+  font-size: 1em;
+}
+
+.add-event-modal-drag-drop .icon {
+  font-size: 2.5em;
+  color: #3498DB;
+  margin-bottom: 10px;
+}
+
+.add-event-modal-file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.add-event-modal-image-input label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border: 2px dashed #3498DB;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  text-align: center;
+}
+
+.add-event-modal-image-input label:hover {
+  border-color: #2980B9;
+}
+
+.add-event-modal-image-input label svg {
+  font-size: 48px;
+  color: #3498DB;
+  margin-bottom: 10px; /* Añade espacio entre el icono y el texto */
+}
+
+.add-event-modal-image-input label span {
+  font-size: 16px;
+  color: #7F8C8D;
 }
