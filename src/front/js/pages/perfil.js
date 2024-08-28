@@ -87,16 +87,18 @@ const Perfil = () => {
     };
 
     // Guardar las especialidades seleccionadas
-    const saveEspecialidades = () => {
-        actions.saveEspecialidades(selectedEspecialidades);
+    const saveEspecialidades = async () => {
+        let resp = await actions.saveEspecialidades(selectedEspecialidades);
+        if (resp) {
+            await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
+        }
     };
 
     // Mostrar las especialidades ya guardadas para el usuario
-    const userEspecialidades = store.dataUser?.especialidades || [];
+    // const userEspecialidades = store.dataUser?.especialidades || [];
+    
+   
 
-
-    console.log(store.especialidades);
-    console.log(store.obtenerEspecialidadesPorProfesional);
     return (
         <div className="container mt-4 col-11 col-md-10 col-lg-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
@@ -198,8 +200,8 @@ const Perfil = () => {
                                 <h4>Especialidades</h4>
                                 <div className="form-group">
                                     <ul>
-                                        {Array.isArray(store.especialidadesPorProfesional) && store.especialidadesPorProfesional.length > 0 ? (
-                                            store.especialidadesPorProfesional.map((especialidad) => (
+                                        {Array.isArray(store.profesionalesPorEspecialidad) && store.profesionalesPorEspecialidad.length > 0 ? (
+                                            store.profesionalesPorEspecialidad.map((especialidad) => (
                                                 <li id="nombreEspecialidad" key={especialidad.id}>
                                                     {especialidad.nombre}
                                                     <i
@@ -213,9 +215,9 @@ const Perfil = () => {
                                             <li>No hay especialidades disponibles.</li>
                                         )}
                                     </ul>
-                                    {Array.isArray(store.especialidades) && Array.isArray(store.especialidadesPorProfesional) && store.especialidades
+                                    {Array.isArray(store.especialidades) && Array.isArray(store.profesionalesPorEspecialidad) && store.especialidades
                                         .filter(especialidad =>
-                                            !store.especialidadesPorProfesional.some(especialidadProfesional => especialidadProfesional.id === especialidad.id)
+                                            !store.profesionalesPorEspecialidad.some(especialidadProfesional => especialidadProfesional.id === especialidad.id)
                                         )
                                         .map(especialidad => (
                                             <div key={especialidad.id} className="form-check">

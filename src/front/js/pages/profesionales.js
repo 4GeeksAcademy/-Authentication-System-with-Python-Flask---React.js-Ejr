@@ -12,7 +12,7 @@ const Profesionales = () => {
 
 
     useEffect(() => {
-        actions.obtenerEspecialidadesPorProfesional();
+      //  actions.obtenerEspecialidadesPorProfesional();
         // Cargar el script de Calendly
         const script = document.createElement("script");
         script.src = "https://assets.calendly.com/assets/external/widget.js";
@@ -20,6 +20,7 @@ const Profesionales = () => {
         document.body.appendChild(script);
 
         const checkLoggedStatus = async () => {
+           await actions.obtenerEspecialidadesPorProfesional();
             try {
                 const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
 
@@ -46,7 +47,10 @@ const Profesionales = () => {
         };
     }, []);
 
-
+useEffect(() => {
+ console.log("hola");
+ 
+},[store.psicologos])
     const openCalendly = (profesional) => {
 
         switch (profesional) {
@@ -99,10 +103,11 @@ const Profesionales = () => {
                                 </div>
                                 <div >
                                     {/* <p className="card-text">
+                                    <p className="card-text"></p>
                                         <ul className="d-flex flex-row gap-3">
                                             {Array.isArray(elm.especialidades) && elm.especialidades.length > 0 ? (
                                                 elm.especialidades.map((especialidad) => (
-                                                    <li id="nombreEspecialidad1"key={especialidad.id}>
+                                                    <li id="nombreEspecialidad1" key={especialidad.id}>
                                                         {especialidad.nombre}
                                                     </li>
                                                 ))
@@ -111,6 +116,7 @@ const Profesionales = () => {
                                             )}
                                         </ul>
                                     </p> */}
+                                    
                                     <div className="button-container mt-5">
                                         <button
                                             type="button"

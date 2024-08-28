@@ -15,6 +15,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     actions.validToken();
+    
   }, []);
 
   return (
