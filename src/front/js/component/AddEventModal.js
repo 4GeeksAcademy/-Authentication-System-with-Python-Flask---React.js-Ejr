@@ -5,6 +5,7 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
+  const [category, setCategory] = useState("");
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -12,12 +13,13 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title && description && image) {
+    if (title && description && image && category) {
       const newEvent = {
         id: Math.random().toString(36).substr(2, 9),
         title,
         description,
-        image: URL.createObjectURL(image), // Convierte la imagen en una URL
+        category,
+        image: URL.createObjectURL(image),
       };
       addEvent(newEvent);
       onClose();
@@ -29,8 +31,8 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
   }
 
   return (
-    <div className="add-event-modal-overlay">
-      <div className="add-event-modal-content">
+    <div className="add-event-modal-overlay" onClick={onClose}>
+      <div className="add-event-modal-content" onClick={(e) => e.stopPropagation()}>
         <span className="add-event-modal-close-button" onClick={onClose}>
           &times;
         </span>
@@ -60,17 +62,37 @@ const AddEventModal = ({ show, onClose, addEvent }) => {
             </div>
             <div className="add-event-modal-details-item">
               <label>
-                Imagen del Evento:
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
+                Tipo de Evento:
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
                   required
-                />
+                >
+                  <option value="">Seleccionar categoría</option>
+                  <option value="Hip Hop">Hip Hop</option>
+                  <option value="Teatro">Teatro</option>
+                  <option value="Salsa">Salsa</option>
+                  <option value="Jazz">Jazz</option>
+                  <option value="Rock">Rock</option>
+                </select>
+              </label>
+            </div>
+            <div className="add-event-modal-details-item add-event-modal-image-input">
+              <input
+                type="file"
+                id="event-image"
+                accept="image/*"
+                onChange={handleImageChange}
+                required
+                style={{ display: "none" }}
+              />
+              <label htmlFor="event-image" className="image-input-label">
+                📁
+                <span>Haga clic aquí para seleccionar una imagen</span>
               </label>
             </div>
             <button type="submit" className="add-event-modal-purchase-button">
-              Agregar Evento
+              Crear Evento
             </button>
           </div>
         </form>
