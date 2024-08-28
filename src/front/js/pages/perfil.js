@@ -6,6 +6,7 @@ import VistaModal from "../component/vistaModal.jsx";
 import defaultAvatar from "../../img/avatar.jpg";
 import Loader from "../component/loader.jsx";
 import FormSolicitudProf from "../component/formSolicitudProf.jsx";
+import PayPalComponent from "../component/PayPal.jsx";
 
 import Meets from "../component/meets.jsx";
 // ID cliente: RrLt2R0t0jbTXChSFJLFIPaSMniKYriRIi6kxAszsWA
@@ -71,7 +72,7 @@ const Perfil = () => {
         });
     }, []);
 
-    
+
 
     const [showModal, setShowModal] = useState(false);
     const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
@@ -95,8 +96,8 @@ const Perfil = () => {
 
     // Mostrar las especialidades ya guardadas para el usuario
     const userEspecialidades = store.dataUser?.especialidades || [];
-    
-   
+
+
     console.log(store.especialidades);
     console.log(store.obtenerEspecialidadesPorProfesional);
     return (
@@ -175,13 +176,19 @@ const Perfil = () => {
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <div className="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{store.dataUser && store.dataUser.is_psicologo ? 'Agendas de pacientes': 'Mis agendass'}</button>
-                            <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Métodos de pago</button>
+                            <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{store.dataUser && store.dataUser.is_psicologo ? 'Agendas de pacientes' : 'Mis agendass'}</button>
+                            <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                Métodos de pago
+                            </button>
                             {store.dataUser && store.dataUser.is_psicologo && (
-                                <button className="nav-link nav-perfil" id="v-pills-especialidad-tab" data-bs-toggle="pill" data-bs-target="#v-pills-especialidad" type="button" role="tab" aria-controls="v-pills-especialidad" aria-selected="false">Mis especialidades</button>
+                                <button className="nav-link nav-perfil" id="v-pills-especialidad-tab" data-bs-toggle="pill" data-bs-target="#v-pills-especialidad" type="button" role="tab" aria-controls="v-pills-especialidad" aria-selected="false">
+                                    Mis especialidades
+                                </button>
                             )}
                             {store.dataUser && !store.dataUser.is_psicologo && (
-                                <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
+                                <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                    Solicitud de perfil profesional
+                                </button>
                             )}
                         </div>
                     </div>
@@ -191,7 +198,7 @@ const Perfil = () => {
                                 <Meets />
                             </div>
                             <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                <p><strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classNames that we use to style each element. These classNames control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</p>
+                                <PayPalComponent/>
                             </div>
                             <div className="tab-pane fade" id="v-pills-especialidad" role="tabpanel" aria-labelledby="v-pills-especialidad-tab">
                                 <h4>Especialidades</h4>
@@ -203,8 +210,8 @@ const Perfil = () => {
                                                     {especialidad.nombre}
                                                     <i
                                                         className="fas fa-times"
-                                                        style={{paddingLeft :"20px"}}
-                                                        onClick={() => actions.eliminarEspecialidadPorProfesional(especialidad.id)} 
+                                                        style={{ paddingLeft: "20px" }}
+                                                        onClick={() => actions.eliminarEspecialidadPorProfesional(especialidad.id)}
                                                     />
                                                 </li>
                                             ))

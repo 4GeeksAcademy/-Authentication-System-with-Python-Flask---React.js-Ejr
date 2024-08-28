@@ -13,6 +13,7 @@ const VistaRegister = () => {
             navigate("/perfil");
         }
     }, [navigate]);
+    
     return (
         <div className="container-fluid d-flex align-items-center justify-content-center row mt-5" style={{ minHeight: '100vh' }}>
                 <div className="col-md-8 d-flex align-items-center justify-content-center rectangle-10">
