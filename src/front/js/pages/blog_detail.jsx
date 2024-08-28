@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faTag } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../img/logo_blog_detail.png';
 import "../../styles/blog_detail.css";
 
 export const BlogDetail = () => {
@@ -41,7 +42,10 @@ export const BlogDetail = () => {
         <div className="blog-detail-container-bg">
             <div className="blog-detail-container">
                 <div className="blog-detail-left">
-                    <img src={blog.img_header} className="img-header" alt={blog.title} />
+                    <div className="image-container">
+                        <img src={blog.img_header} className="img-header" alt={blog.title} />
+                        <img src={logo} className="logo" alt="Logo" />
+                    </div>
                     <div className="blog-detail-overlay">
                         <h1>{blog.title}</h1>
                         <div className="blog-detail-legend">
@@ -57,7 +61,9 @@ export const BlogDetail = () => {
                         {blog.text_steps && <p>{blog.text_steps}</p>}
                         {blog.text && <p>{blog.text}</p>}
                     </div>
+
                     <img src={blog.img_final} className="img-fluid mt-3 blog-detail-container-img-final" alt="Final" />
+
                     <div className="blog-detail-btn-container">
                         <Link to="/blog" className="btn btn-secondary mt-3 blog-detail-btn">➜</Link>
                     </div>
