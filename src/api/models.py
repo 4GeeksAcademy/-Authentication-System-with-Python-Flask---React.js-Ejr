@@ -95,7 +95,7 @@ class Curso(db.Model):
     resumen = db.Column(db.String(250), nullable=True)
     categoria = db.Column(db.String(120), nullable=True)
     valoraciones = db.Column(db.Integer(), nullable=True)
-    niveles = db.Column(db.String(120), nullable=True)
+    nivel = db.Column(db.String(120), nullable=True)
     precio = db.Column(db.Integer(), nullable=True)
     fecha_inicio = db.Column(db.String(120), nullable=True)
     idioma = db.Column(db.String(120), nullable=True)
@@ -116,7 +116,7 @@ class Curso(db.Model):
             "resumen": self.resumen,
             "categoria": self.categoria,
             "valoraciones": self.valoraciones,
-            "niveles": self.niveles,
+            "nivel": self.nivel,
             "precio": self.precio,
             "fecha_inicio": self.fecha_inicio,
             "idioma": self.idioma,

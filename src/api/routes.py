@@ -63,7 +63,7 @@ def delete_user(user_id):
 
 
 # Rutas protegidas por JWT
-@api.route('/crear_curso', methods=['POST'])
+@api.route('/profesor', methods=['POST'])
 @jwt_required()
 def crear_curso():
     return jsonify({"message": "Curso creado exitosamente"})
