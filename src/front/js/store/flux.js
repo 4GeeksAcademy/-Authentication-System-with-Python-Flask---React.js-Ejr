@@ -179,9 +179,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(formData),
 					})
 					const data = await resp.json()
-					setStore({
-						proyectos: [...getStore().proyectos, data.proyectos]
-					})
+					setStore(
+						{proyectos: [...getStore().proyectos, data.proyectos]})
 					return data
 
 				} catch (error) {

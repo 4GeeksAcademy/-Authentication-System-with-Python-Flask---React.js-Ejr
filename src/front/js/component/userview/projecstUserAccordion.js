@@ -34,7 +34,7 @@ const projecstUserAccordion = () => {
         <>
             <div className="d-flex align-items-center flex-wrap">
                 <p className="mb-0" style={{
-                    color: 'white', fontFamily: 'Arial, sans-serif',
+                    color: 'black', fontFamily: 'Arial, sans-serif',
                     fontWeight: 'bold',
                 }}>Agregar Proyecto</p>
                 <button
@@ -122,20 +122,22 @@ const projecstUserAccordion = () => {
             </Modal>
 
             <div className="d-flex flex-wrap" >
-                // Mapear proyectos aquí
-                <div className="card m-2" style={{ width: '18rem', backgroundColor: '#D9D9D9' }}>
+                {store.proyectos?.map((proyecto) => (
+                    <div key={proyecto.id} className="card m-2" style={{ width: '18rem', backgroundColor: '#D9D9D9' }}>
 
-                    <div className="card-body" >
-                        <h5 className="card-title">Title</h5>
-                        <p className="card-text">
-                            <strong>Cargo:</strong> dfsdfsdf<br />
-                            <strong>Fecha de Inicio:</strong> sdfsdfsdfsd<br />
-                            <strong>Fecha de Fin:</strong> sdfsdfsdf<br />
-                            <strong>Cantidad de Proyectos:</strong> sdfsdfsdf
-                        </p>
+                        <div className="card-body" >
+                            <h5 className="card-title">{proyecto.name}</h5>
+                            <p className="card-text">
+                                <strong>Descripción corta:</strong> {proyecto.descripcion_corta}<br />
+                                <strong>Git:</strong> {proyecto.git}<br />
+                                <strong>Link:</strong> {proyecto.link}<br />
+                                <strong>Tecnologias:</strong> {proyecto.tecnologias}
+                            </p>
 
+                        </div>
                     </div>
-                </div>
+                ))}
+
 
             </div>
         </>

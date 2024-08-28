@@ -260,11 +260,16 @@ def addProjects():
         return jsonify({'addProject':False, 'msg':'Todos los campos son necesarios'})
 
     programador = Programador.query.filter_by(user_id=user_id).first()
-
+    print(programador)
+    is_exist = Proyectos.query.filter_by(name=name, descripcion_corta=descripcion_corta, git=git, link=link).first()
+    print(is_exist)
 
     if programador:
-        new_project = Proyectos(name=name, descripcion_corta=descripcion_corta, git=git, link=link, tecnologias=tecnologias, programador_id=programador.id )
-        db.session.add(new_project)
-        db.session.commit()
-        return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
+        if(is_exist):
+            return({'addProject': False, 'msg': 'Ya existe el proyecto'})
+        else:
+            new_project = Proyectos(name=name, descripcion_corta=descripcion_corta, git=git, link=link, tecnologias=tecnologias, programador_id=programador.id )
+            db.session.add(new_project)
+            db.session.commit()
+            return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
     return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404

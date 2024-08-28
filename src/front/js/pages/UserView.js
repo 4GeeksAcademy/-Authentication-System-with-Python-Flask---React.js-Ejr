@@ -6,9 +6,9 @@ import UserExperience from '../component/userview/UserExperience';
 import UserLenguages from '../component/userview/UserLenguages';
 import UserProjects from '../component/userview/UserProjects';
 import UserFavs from '../component/userview/UserFavs';
-import {EditFavoritesUserAccordion} from '../component/userview/FavsUserAccordion';
-import {EditLanguageUserAccordion} from '../component/userview/lenguagesUserAccordion';
-import {EditExperienceUserAccordion} from '../component/userview/experinceUserAccordion';
+import { EditFavoritesUserAccordion } from '../component/userview/FavsUserAccordion';
+import { EditLanguageUserAccordion } from '../component/userview/lenguagesUserAccordion';
+import { EditExperienceUserAccordion } from '../component/userview/experinceUserAccordion';
 import EditProjectsAccordion from '../component/userview/projecstUserAccordion';
 import '../../styles/userview.css';
 
@@ -17,7 +17,7 @@ export const Userview = () => {
 
         <div className="container">
             <div className='body'>
-            <UsersProfile />
+                <UsersProfile />
 
 
                 <UserDescription title="Descripción">
@@ -26,23 +26,23 @@ export const Userview = () => {
 
                 <UserExperience title="Experiencia">
                     <EditExperienceUserAccordion />
-                </UserExperience> 
+                </UserExperience>
 
                 <UserFavs title="Favs">
                     <EditFavoritesUserAccordion />
-                </UserFavs>   
+                </UserFavs>
 
                 <UserLenguages title="Idiomas">
                     <EditLanguageUserAccordion />
-                </UserLenguages>     
+                </UserLenguages>
 
                 <UserProjects title="Proyectos">
-                    <EditProjectsAccordion/>
-                </UserProjects>          
-                   
+                    <EditProjectsAccordion />
+                </UserProjects>
 
-                
-                
+
+
+
             </div>
         </div>
 
