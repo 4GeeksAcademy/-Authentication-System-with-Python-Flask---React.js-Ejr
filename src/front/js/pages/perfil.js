@@ -17,6 +17,7 @@ const Perfil = () => {
         actions.getPerfilUsuario();
         actions.fetchEspecialidades();
         actions.obtenerEspecialidadesPorProfesional();
+
         const fetchPerfil = async () => {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -55,10 +56,6 @@ const Perfil = () => {
                 });
             }
         };
-        fetchPerfil();
-        actions.getPerfilUsuario();
-        actions.fetchEspecialidades();
-        actions.obtenerEspecialidadesPorProfesional();
         // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
@@ -69,6 +66,7 @@ const Perfil = () => {
     const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
 
     // Función para mostrar el modal
+
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
 
@@ -235,6 +233,7 @@ const Perfil = () => {
 
                                 </div>
                                 <div className="container mt-3">
+
                                     <FormSolicitudProf />
                                 </div>
                             </div>

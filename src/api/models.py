@@ -33,8 +33,9 @@ class User(db.Model):
     foto = db.Column(db.String(255), nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False)
     correo_verificado = db.Column(db.Boolean(), default=False)
-
+    
     especialidades = db.relationship('ProfEspecialidad', backref="user")
+
 
 
     def __repr__(self):
