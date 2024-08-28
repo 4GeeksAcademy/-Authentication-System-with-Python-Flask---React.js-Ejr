@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
-    background-color: #5D737E;
+    background-color: #000022;
 }
 
 /* Contenedor navbar */
@@ -25,15 +25,15 @@
 }
 
 .btn-secondary {
-    background-color: #64b6ac;
-    border-color: #64b6ac;
-    color: #DAffef;
+    background-color: #416788;
+    border-color: #416788;
+    color: #E0E0E2;
 }
 
 .btn-secondary:hover {
-    background-color: #DAffef;
-    border-color: #DAffef;
-    color: #5D737E;
+    background-color: #B5BAD0;
+    border-color: #B5BAD0;
+    color: #E0E0E2;
 }
 
 .navbar-buttons {

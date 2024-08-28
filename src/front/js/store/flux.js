@@ -13,6 +13,8 @@
 // Si el usuario cierra la sesión, se elimina el token de localStorage
 
 
+
+
 const getState = ({ getStore, getActions, setStore }) => {
     
 
@@ -62,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             cursosProfe: [], //Almacena los cursos asignados al profesor específico.
             cursosAlumno: [], // Almacena los cursos en los que el alumno está inscrito
             autentificacion: false, // Indica si el usuarioProfe está autenticado.
-            usuarioPr: null,  // Usuario que es un profesor.
+            usuarioPr:  null,  // Usuario que es un profesor.
             usuarioA: null, //información del usuario que se ha autenticado como alumno.
             filtros: { // Define los filtros aplicados para la búsqueda de cursos.
                 categoria: "",
@@ -142,22 +144,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             
 
-
             // Acción para iniciar sesión alumno
             loginAlumno: async (dataForm) => {
                 try {
-                    const response = await fetch(process.env.BACKEND_URL+'/api/login', { // Solicitud POST a la API para autenticar al usuario alumno.
+                    const response = await fetch(process.env.BACKEND_URL + '/api/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(dataForm) // Convierte el formulario de inicio de sesión en JSON.
+                        body: JSON.stringify(dataForm)
                     });
 
                     if (response.ok) {
-                        const userData = await response.json(); // Si la respuesta es exitosa, obtenemos los datos del usuario.
-                        setStore({ usuarioA: userData.user, autentificacion: true }); // Se guardan el usuario alumno en el store.usuarioA y se marca como autenticado.
-                        localStorage.setItem('token', userData.token); // Guarda el token de autenticación en localStorage para futuras solicitudes.
+                        const userData = await response.json();
+                        setStore({ usuarioA: userData.user, autentificacion: true });
+                        localStorage.setItem('token', userData.token);
                         return true;
                     } else {
                         console.error('Login fallido');
@@ -171,12 +172,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Cerrar sesión Alumno
             logoutAlumno: () => {
-                localStorage.removeItem('token'); // Elimina el token del almacenamiento local para cerrar sesión.
-                setStore({ usuarioA: null, autentificacion: false, cursosAlumno: [] }); 
+                localStorage.removeItem('token');
+                setStore({ usuarioA: null, autentificacion: false, cursosAlumno: [] });
                 //Restablece el estado del usuario alumno y borra los cursos del estado, pero NO significa que los cursos se eliminen permanentemente del sistema
                 //simplemente se elimina la referencia a los cursos del usuario en la memoria de la aplicación
             },
-
 
             // Acción para obtener los cursos del alumno
             obtenerCursosAlumno: async (alumnoId) => {
@@ -184,16 +184,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const token = localStorage.getItem('token');
 
                 try {
-                    const response = await fetch(`/api/students/${alumnoId}/courses`, { //solicitud GET a la API para obtener los cursos inscritos por el alumno.
+                    const response = await fetch(`/api/students/${alumnoId}/courses`, {
                         headers: {
-                            'Authorization': `Bearer ${token}`, // Autenticación de la solicitud con el token.
+                            'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json'
                         }
                     });
 
                     if (response.ok) {
-                        const cursosAlumno = await response.json(); // Si la respuesta es ok,  obtiene los datos de los cursos.
-                        setStore({ ...store, cursosAlumno }); // Actualizacion  cursos del alumno
+                        const cursosAlumno = await response.json();
+                        setStore({ ...store, cursosAlumno });
                     } else {
                         console.error('Error al obtener los cursos del alumno');
                     }
@@ -202,25 +202,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-
-
-
             // Acción para iniciar sesión profe
             login: async (dataForm) => {
                 try {
                     // solicitud POST a la API para autenticar al usuario profe.
-                    const response = await fetch(process.env.BACKEND_URL+'/api/login', {
+                    const response = await fetch(process.env.BACKEND_URL + '/api/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(dataForm) // Los datos del formulario de inicio de sesión.
+                        body: JSON.stringify(dataForm) // Los datos del formulario de inicio de sesión
                     });
 
                     if (response.ok) {
                         const userData = await response.json();
-                        setStore({ usuarioPr: userData.user, autentificado: true }); // Actualizamos el store con los datos del usuarioPr y autenticación.
-                        localStorage.setItem('token', userData.token); // Guarda el token en el localStorage para futuras solicitudes.
+                        setStore({ usuarioPr: userData.user, autentificado: true });
+                        localStorage.setItem('token', userData.token);
                         return true;
                     } else {
                         console.error('Login fallido');
@@ -232,15 +229,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-             // Cerrar sesión Profe
-             logout: () => {
+            // Cerrar sesión Profe
+            logout: () => {
                 localStorage.removeItem('token'); // Elimina el token del localStorage
-                setStore({ usuarioPr: null, autentificado: false, cursosProfe: [] }); // // Reseteamos el estado del usuario y los cursos del profesor.
+                setStore({ usuarioPr: null, autentificado: false, cursosProfe: [] });
             },
-            
+
             // Acción para obtener los cursos del profesor
             obtenerCursosTutor: async (profesorId) => {
-                const store = getStore(); // Obtenemos el estado actual del store.
+                const store = getStore();// Obtenemos el estado actual del store.
                 const token = localStorage.getItem('token'); // Obtén el token de autenticación
 
                 try {
@@ -253,7 +250,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (response.ok) {
                         const cursosProfe = await response.json();
-                        setStore({ ...store, cursosProfe }); // Actualiza los cursos en el store
+                        setStore({ ...store, cursosProfe });
                     } else {
                         console.error('Error al obtener los cursos del profesor');
                     }
@@ -267,21 +264,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ error: error.message });
             },
 
+            // Acción para registro de usuario
             register: async (formData) => {
                 try {
-                    const response = await fetch(process.env.BACKEND_URL+'/api/signup', { // 
+                    const response = await fetch(process.env.BACKEND_URL + '/api/signup', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({email: email, password: password })
+                        body: JSON.stringify(formData)
                     });
-            
+
                     const data = await response.json();
                     console.log('Response data:', data);
-            
+
                     if (response.ok) {
-                        // Asegúrate de que `data` contenga información relevante para el registro
                         return {
                             success: true,
                             message: 'Registro exitoso. Puedes iniciar sesión ahora.'
@@ -299,8 +296,79 @@ const getState = ({ getStore, getActions, setStore }) => {
                         message: 'Error de conexión o servidor no disponible'
                     };
                 }
+            },
+
+            // Acción para inicio de sesión de contacto
+            loginUser: async ({ email, password }) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + '/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+                    console.log('Response data:', data);
+
+                    if (response.ok) {
+                        return {
+                            success: true,
+                            user: data.user,
+                            data: {
+                                token: data.token
+                            },
+                            message: 'Conexión exitosa con el servidor'
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            message: data.message || 'Error desconocido'
+                        };
+                    }
+                } catch (error) {
+                    console.error('Error en loginUser:', error);
+                    return {
+                        success: false,
+                        message: 'Error de conexión o servidor no disponible'
+                    };
+                }
+            },
+
+            // Acción para crear un contacto
+            createContact: async ({ name, email, password }) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + '/api/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    const data = await response.json();
+                    console.log('Response data:', data);
+
+                    if (response.ok) {
+                        return {
+                            success: true,
+                            message: 'Registro exitoso. Puedes iniciar sesión ahora.'
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            message: data.message || 'Error desconocido durante el registro'
+                        };
+                    }
+                } catch (error) {
+                    console.error('Error en createContact:', error);
+                    return {
+                        success: false,
+                        message: 'Error de conexión o servidor no disponible'
+                    };
+                }
             }
-            
         }
     };
 };
@@ -325,3 +393,4 @@ export default getState;
             // },
 
 // Llama a cargarCategorias en algún lugar de tu aplicación para que las categorías estén disponibles
+
