@@ -246,3 +246,30 @@ def get_contacts():
         return jsonify([contact.serialize() for contact in contacts]), 200
     return jsonify({'msg':'Ningún contacto encontrado'}),404
 
+@api.route('/user/programador/addProjects', methods=['POST'])
+@jwt_required()
+def addProjects(): 
+    user_id = get_jwt_identity()
+    name = request.json.get("name", None)
+    descripcion_corta = request.json.get("descripcion_corta", None)
+    git = request.json.get("git", None)
+    link = request.json.get("link", None)
+    tecnologias = request.json.get("tecnologias", None)
+
+    if not name or not descripcion_corta or not git or not link or not tecnologias:
+        return jsonify({'addProject':False, 'msg':'Todos los campos son necesarios'})
+
+    programador = Programador.query.filter_by(user_id=user_id).first()
+    print(programador)
+    is_exist = Proyectos.query.filter_by(name=name, descripcion_corta=descripcion_corta, git=git, link=link).first()
+    print(is_exist)
+
+    if programador:
+        if(is_exist):
+            return({'addProject': False, 'msg': 'Ya existe el proyecto'})
+        else:
+            new_project = Proyectos(name=name, descripcion_corta=descripcion_corta, git=git, link=link, tecnologias=tecnologias, programador_id=programador.id )
+            db.session.add(new_project)
+            db.session.commit()
+            return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
+    return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404
