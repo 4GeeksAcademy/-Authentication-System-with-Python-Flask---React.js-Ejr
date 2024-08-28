@@ -48,7 +48,8 @@ const Profesionales = () => {
     }, []);
 
 useEffect(() => {
- console.log("hola");
+    actions.getPsicologos()
+     actions.obtenerEspecialidadesPorProfesional();
  
 },[store.psicologos])
     const openCalendly = (profesional) => {
