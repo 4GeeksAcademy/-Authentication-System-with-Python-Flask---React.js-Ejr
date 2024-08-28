@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from api.models import db, User
+from api.models import db, User, PartnerProfile, UserProfile, Payment, CommentsEvents, CommentsVenue, Events, Favorites, Venue
 from api.utils import APIException
 from flask import Blueprint
 
@@ -27,6 +27,17 @@ def signup():
     new_user = User(email=email, password=password, username=name, partner=partner, is_active=is_active)  # Aquí podrías querer hashear la contraseña
     db.session.add(new_user)
     db.session.commit()
+
+    if data['partner'] == True:
+        new_partner_profile = PartnerProfile(users=[new_user])  
+        db.session.add(new_partner_profile)
+
+    elif data['partner'] == False:
+        new_user_profile = UserProfile(users=[new_user])  
+        db.session.add(new_user_profile)
+
+    db.session.commit()  
+
 
     # Crea un token JWT
     access_token = create_access_token(identity=new_user.id)

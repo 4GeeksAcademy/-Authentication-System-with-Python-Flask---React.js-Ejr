@@ -4,15 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 export const Navbar = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("jwt-token");
-    console.log("Token encontrado:", token);
-    setIsAuthenticated(!!token);
-  }, []);
+  
   const handleLogout = () => {
     localStorage.removeItem("jwt-token");
-    setIsAuthenticated(false);
     navigate("/");
   };
   return (
@@ -63,7 +57,7 @@ export const Navbar = () => {
             </li>
           </ul>
           <ul className="navbar-nav ms-auto">
-            {!isAuthenticated ? (
+            {!localStorage.getItem("jwt-token") ? (
               <li className="nav-item">
                 <a href="/register" className="nav-link" style={{ color: 'white' }}>
                   Registrarse / Iniciar sesión
