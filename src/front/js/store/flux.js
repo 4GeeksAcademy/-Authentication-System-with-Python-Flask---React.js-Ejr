@@ -122,6 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     let response = await axios.get(process.env.BACKEND_URL + '/valid-token', {
                         headers: {
+                            "Content-Type": "application/json",
                             'Authorization': `Bearer ${token}`
                         },
                     })
@@ -194,6 +195,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     let response = await axios.delete(process.env.BACKEND_URL + "/delete-account", {
                         headers: {
+                            "Content-Type": "application/json",
                             'Authorization': `Bearer ${token}`
                         }
                     })
@@ -216,6 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/physical-user-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -237,6 +240,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/last-one-physical-user-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -258,6 +262,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/last-physical-user-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -286,6 +291,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/physical-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -317,6 +323,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/physical-information', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -360,6 +367,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/weekly-user-routine", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -381,6 +389,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + `/weekly-user-routine/${week}`, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -412,6 +421,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/weekly-routine', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -450,6 +460,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.put(process.env.BACKEND_URL + `/weekly-user-routine/${oldDay}`, payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -481,6 +492,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const resp = await axios.delete(process.env.BACKEND_URL + `/weekly-user-routine/${day}`,
                         {
                             headers: {
+                                "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`
                             }
                         }
@@ -543,6 +555,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/routine', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -577,6 +590,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.put(process.env.BACKEND_URL + `/routine/${id}`, payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -609,6 +623,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const resp = await axios.delete(process.env.BACKEND_URL + `/delete-routine/${id}`,
                         {
                             headers: {
+                                "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`
                             }
                         }
@@ -677,6 +692,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -786,9 +802,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     };
                     console.log('Sending payload:', payload);
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise-routine', payload, {
-                        // headers: {
-                        //     Authorization: `Bearer ${token}`
-                        // }
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
                     });
                     console.log(response);
                     if (response.status == 200) {
@@ -820,6 +836,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const resp = await axios.delete(process.env.BACKEND_URL + `/exercise-routine/${routine_id}/${exercise_id}`,
                         {
                             headers: {
+                                "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`
                             }
                         }

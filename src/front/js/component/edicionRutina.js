@@ -33,10 +33,11 @@ export const EdicionRutina = () => {
 
         const deleteWeeklyUserRoutine = new Promise(async (resolve, reject) => {
             const success = await actions.deleteWeeklyUserRoutine(day)
-            
+
             if (success === true) {
                 resolve("Rutina Dia Eliminada")
                 setRoutine({})
+                setIsDeleteRoutineModalOpen(false)
             } else {
                 reject("Elimincacion fallida")
             }
@@ -66,7 +67,7 @@ export const EdicionRutina = () => {
             const success = await actions.deleteExerciseRoutine(routine_id, exercise_id)
             if (success === true) {
                 setRoutine(await store.oneRoutine)
-
+                setIsDeleteExerciseModalOpen(false)
                 if (routine.exercises) {
                     console.log(routine.exercises.length);
 
@@ -124,6 +125,7 @@ export const EdicionRutina = () => {
                 error: 'Error al actualizar'
             }
         );
+        setName("")
     };
 
     // PREVIO A MOSTRAR EJERCICIOS EDITAR
