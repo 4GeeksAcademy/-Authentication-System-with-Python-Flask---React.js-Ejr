@@ -24,6 +24,7 @@ import Contact from "./pages/contact.jsx";
 import About from "./pages/about.jsx";
 import Social from "./pages/social.jsx";
 import Cart from "./pages/cart.jsx"
+import CheckoutForm from "./pages/checkoutform.jsx";
 import CardProfile from "./pages/profile.jsx";
 //create your first component
 const Layout = () => {
@@ -47,7 +48,8 @@ const Layout = () => {
                         <Route element={<Professionals />} path="/professionals" />
                         <Route element={<ProfessionalDetail />} path="/professionals/professional/:id" />
                         <Route element={<Editor />} path="/editor" />
-                        <Route element={<Cart />} path="/cart" />
+                        <Route element={<CheckoutForm />} path="/checkout" />
+                        <Route element={<Cart />} path="/cart/users/:token" />
                         <Route element={<WishList />} path="/wishlist/users/:token" />
                         <Route element={<ProductDetail />} path="/product/:id" />
                         <Route element={<CardProfile />} path="/user/:id" />

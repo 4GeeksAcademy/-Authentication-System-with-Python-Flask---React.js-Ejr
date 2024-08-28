@@ -58,7 +58,7 @@ console.log(store.auth, store.currentUser)
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/cart" className="link">
+                                    <Link to="/cart/users/1" className="link">
                                         <button type="button">
                                             <i className="bi bi-cart4"></i>
                                             <span className="i-name">Carrito</span>

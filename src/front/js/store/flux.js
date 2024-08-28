@@ -10,6 +10,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			products: [],
 			product: {},
 			favorites: [],
+			cart: [],
+			isClearingCart: false,
+			totalAmount: 0,
 			nutritionists: [],
 			personalTrainers: [],
 			user: {}
@@ -296,6 +299,101 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					return { success: false, error: error.message };
 				}
+			},
+
+			getCartByUserId: async () => {
+                let token = localStorage.getItem("token");
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/cart`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setStore({ cart: data });
+                        getActions().calculateTotal(); // Calcular total después de obtener el carrito
+                        return { success: true, data };
+                    } else {
+                        const errorData = await response.json();
+                        return { success: false, error: errorData.msg };
+                    }
+                } catch (error) {
+                    return { success: false, error: error.message };
+                }
+            },
+            addToCart: async (productId, units, totalAmount) => {
+                const token = localStorage.getItem("token");
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/cart`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ product_id: productId, units, total_amount: totalAmount })
+                    });
+
+                    if (response.ok) {
+                        await getActions().getCartByUserId();
+                        return { success: true };
+                    } else {
+                        const errorData = await response.json();
+                        return { success: false, error: errorData.msg };
+                    }
+                } catch (error) {
+                    return { success: false, error: error.message };
+                }
+            },
+            deleteFromCart: async (productId) => {
+				let token = localStorage.getItem("token");
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/cart/product/${productId}`, {
+						method: 'DELETE',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+			
+					if (response.ok) {
+						await getActions().getCartByUserId();
+						getActions().calculateTotal();
+						return { success: true };
+					} else {
+						const errorData = await response.json();
+						return { success: false, error: errorData.msg };
+					}
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			},
+            calculateTotal: () => {
+                const store = getStore();
+                const total = store.cart.reduce((acc, item) => acc + (item.total_ammount * item.units), 0);
+                setStore({ totalAmount: total });
+            },
+            clearCart: async () => {
+				const { cart } = getStore();
+				const { deleteFromCart } = getActions();
+				
+				if (cart.length === 0) {
+					return { success: true, message: "El carrito ya está vacío" };
+				}
+			
+				setStore({ isClearingCart: true });
+			
+				for (let item of cart) {
+					const result = await deleteFromCart(item.product.id);
+					if (!result.success) {
+						setStore({ isClearingCart: false });
+						return { success: false, error: result.error };
+					}
+				}
+			
+				setStore({ cart: [], isClearingCart: false });
+				getActions().calculateTotal();
+				return { success: true, message: "Carrito vaciado" };
 			},
 
 			// Obtener todos los nutricionistas

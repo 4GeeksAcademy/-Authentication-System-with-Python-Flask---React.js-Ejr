@@ -2,8 +2,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app # type: ignore
-from api.models import db, User, Product, Profession, UserProfession, Favorite, Recipe
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt # type: ignore
+from api.models import db, User, Product, Profession, UserProfession, Favorite, Recipe, Cart
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS # type: ignore
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token # type: ignore
@@ -340,6 +340,62 @@ def delete_favorite(favorite_id):
     db.session.commit()
 
     return jsonify({"msg": "Favorito eliminado exitosamente."}), 200
+
+# Obtener productos del carrito de un usuario autenticado
+@api.route('/cart', methods=['GET'])
+@jwt_required()
+def get_cart_by_user_id():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
+    cart_items = Cart.query.filter_by(user_id=user.id).all()
+    result = list(map(lambda item: item.serialize(), cart_items))
+    return jsonify(result), 200
+
+# Carrito de Compras
+@api.route('/cart/', methods=['POST'])
+@jwt_required()
+def add_to_cart():
+    user = get_current_user()
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    data = request.get_json()
+    product_id = data.get('product_id')
+    units = data.get('units')
+    total_amount = data.get('total_amount')
+
+    if not (product_id and units is not None and total_amount is not None):
+        return jsonify({"msg": "Datos faltantes"}), 400
+
+    existing_item = Cart.query.filter_by(user_id=user.id, product_id=product_id).first()
+    if existing_item:
+        existing_item.units += units
+        existing_item.total_ammount += total_amount
+    else:
+        new_item = Cart(user_id=user.id, product_id=product_id, units=units, total_ammount=total_amount)
+        db.session.add(new_item)
+
+    db.session.commit()
+    return jsonify({"msg": "Producto agregado al carrito"}), 200
+
+@api.route('/cart/product/<int:product_id>', methods=['DELETE'])
+@jwt_required()
+def delete_product_from_cart(product_id):
+    user = get_current_user()
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    cart_item = Cart.query.filter_by(user_id=user.id, product_id=product_id).first()
+    if not cart_item:
+        return jsonify({"msg": "Producto no encontrado en el Carrito"}), 404
+
+    db.session.delete(cart_item)
+    db.session.commit()
+    return jsonify({"msg": "Producto eliminado del Carrito"}), 200
 
 #MERCADO PAGO
 @api.route("/preference", methods=["POST"]) 

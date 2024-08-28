@@ -198,12 +198,13 @@ class Cart(db.Model):
             return f'<Cart {self.id}>'
 
         def serialize(self):
+            especific_product = Product.query.filter_by(id=self.product_id).first()
             return {
             "id": self.id,
             "user_id": self.user_id,
-            "product_id": self.product_id,
+            "product": especific_product.serialize() if especific_product else None,
             "units": self.units,
-            "total_ammount": self.total_ammount
+            "total_ammount": self.total_ammount,
     }  
 #order:id	id-car	date	payment-method	total
 class Order(db.Model):
