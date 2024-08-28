@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ReactStars from 'react-rating-stars-component';
 
+
 const psicologos = [
     {
         img: "https://media.licdn.com/dms/image/C5603AQEf2PH1Z6jMaQ/profile-displayphoto-shrink_800_800/0/1542835716681?e=2147483647&v=beta&t=UStaIdaLcPXslHpqfUExnhZpPCiFlveK6_Xf60asB2w",
@@ -48,12 +49,12 @@ const SimpleCarousel = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 1000,
+        speed: 2500,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 5000,  // Tiempo en milisegundos
-        arrows: false,
+        autoplaySpeed: 3500,  // Tiempo en milisegundos
+        arrows: true,
     };
 
     return (
