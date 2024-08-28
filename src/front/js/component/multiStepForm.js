@@ -304,7 +304,7 @@ export const MultiStepForm = () => {
       {/* form steps */}
       <StepsCount step={step} handleProgressBar={handleProgressBar} handleStepCircle={handleStepCircle} handleStepText={handleStepText} />
 
-      <FormSteps step={step} setCancelRoutineCreation={setCancelRoutineCreation} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} />
+      <FormSteps step={step} setCancelRoutineCreation={setCancelRoutineCreation} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} handleAddExercises={handleAddExercises} />
 
       <Modal
         isOpen={isModalOpen}
