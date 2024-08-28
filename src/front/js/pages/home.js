@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GirlImg from "../../../../public/images/girl-ph.jpg";
 import NutriImg from "../../../../public/images/chicken-plate.jpg";
 import SportsImg from "../../../../public/images/chicken-plate.jpg";
@@ -9,11 +10,23 @@ import ScrollBanner from "../../../../public/images/scroll-banner-bg.png";
 import ScrollToTopButton from "../component/ScrollToTopButton.jsx";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import Product from "../component/product.jsx";
+
+
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const { products } = store;
+	const navigate = useNavigate();
+
 	const [isGirlImgLoaded, setIsGirlImgLoaded] = useState(false);
-	console.log(store.currentUser)
-	console.log(store.auth)
+
+	const handleNavigate = () => {
+        navigate(`/products`);
+    };
+
+	useEffect(() => {
+		actions.getProducts();
+	}, []);
 
 	return (
 		<div className="home-container mx-auto w-100 row">
@@ -24,12 +37,12 @@ export const Home = () => {
 					<h2>{store.auth && store.currentUser.name}</h2>
 
 				</div>
-				{!isGirlImgLoaded && <Skeleton height={600} width="100%" />} 
-				<img   src={GirlImg} 
-                    className="banner-img" 
-                    alt="banner-img" 
-                    onLoad={() => setIsGirlImgLoaded(true)} 
-                    style={{ display: isGirlImgLoaded ? 'block' : 'none' }}  />
+				{!isGirlImgLoaded && <Skeleton height={600} width="100%" />}
+				<img src={GirlImg}
+					className="banner-img"
+					alt="banner-img"
+					onLoad={() => setIsGirlImgLoaded(true)}
+					style={{ display: isGirlImgLoaded ? 'block' : 'none' }} />
 			</div>
 			{/* **********___PRIMER___SECCION___********** */}
 			<section className="first-section mx-auto col-10">
@@ -73,8 +86,6 @@ export const Home = () => {
 			</section>
 			<div className="parallax parallax-container-1 w-100"></div>
 
-
-
 			{/* **********___SEGUNDA___SECCION___********** */}
 			<section className="second-section mx-auto col-10">
 				<div className="img-container">
@@ -97,7 +108,6 @@ export const Home = () => {
 				</article>
 			</section>
 			<div className="parallax parallax-container-2 w-100"></div>
-
 
 			{/* **********___SECCION___FINAL___********** */}
 			<section className="second-section mx-auto col-10">
@@ -122,15 +132,29 @@ export const Home = () => {
 					<h1 className="border-bottom">
 						Nuestros productos
 					</h1>
-					<div className="products-container container row row-cols-2 w-100 mx-auto">
-						<div className="col bg-warning p-5">Prod 1</div>
-						<div className="col bg-success p-5">Prod 2</div>
-						<div className="col bg-success p-5">Prod 2</div>
-						<div className="col bg-warning p-5">Prod 3</div>
+					<div className="products-home-container mx-auto">
+						{products && products.length > 0 ? (
+							products.slice(0, 4).map((product, index) => (
+								<Product
+									key={index}
+									id={product.id}
+									name={product.name}
+									cost={product.cost}
+									image_url={product.image_url}
+								/>
+							))
+						) : (
+							<h4 className="text-center text-danger m-4">No hay productos disponibles</h4>
+						)}
+					</div>
+					<div className="btn-container w-100 d-flex justify-content-center mt-5">
+						<button className="btn-see-more px-5 py-3 rounded" onClick={handleNavigate}>
+							Ver catalogo
+						</button>
 					</div>
 				</article>
 			</section>
-			<ScrollToTopButton/>
+			<ScrollToTopButton />
 		</div>
 	);
 };

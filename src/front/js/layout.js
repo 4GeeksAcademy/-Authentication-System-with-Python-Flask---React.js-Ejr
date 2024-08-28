@@ -16,6 +16,7 @@ import Editor from "./pages/editor.jsx";
 import WishList from "./pages/wishlist.jsx";
 import Agenda from "./pages/agenda.jsx";
 import Professionals from "./pages/professionals.jsx";
+import ProfessionalDetail from "./pages/professionalDetail.jsx";
 
 import { Navbar } from "./component/navbar";
 import  Footer  from "./component/footer";
@@ -44,6 +45,7 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<ListOfProducts />} path="/products" />
                         <Route element={<Professionals />} path="/professionals" />
+                        <Route element={<ProfessionalDetail />} path="/professionals/professional/:id" />
                         <Route element={<Editor />} path="/editor" />
                         <Route element={<Cart />} path="/cart" />
                         <Route element={<WishList />} path="/wishlist/users/:token" />

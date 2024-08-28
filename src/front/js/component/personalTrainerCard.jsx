@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import { Context } from '../store/appContext';
 import { Link } from 'react-router-dom';
 import '../../styles/professionals.css';
 import ImgProPT from "../../../../public/images/img-profesional-p-t.png";
 
 const PersonalTrainerCard = ({ id, name }) => {
+    const {actions, store} = useContext(Context)
+    // const {nutricionist} = store;
 
     let image_url = ""
     let profession = "";
     let age = "";
+
+    useEffect(() => {
+        actions.getUserById(id);
+    },[])
 
     return (
         <div className='prof-card-container p-t-card-container'>
@@ -21,7 +28,7 @@ const PersonalTrainerCard = ({ id, name }) => {
                 <h5 className="card-text">{profession || `Acerca de ${name}...`}</h5>
             </div>
             <div className='card-footer'>
-                <Link to={`trainer/${id}`} className="more-link" >
+                <Link to={`professional/${id}`} className="more-link" >
                     <h5>
                         Ver perfil
                     </h5>
