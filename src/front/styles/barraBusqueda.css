@@ -10,7 +10,7 @@
     align-items: center; /* Centra los elementos horizontalmente */
     gap: 10px; /* Espacio entre filas de contenido */
     max-width: 1500px; /* Ancho máximo de la barra de búsqueda */
-    margin: 0 auto; /* Centra la barra de búsqueda horizontalmente */
+    margin: 5px auto 0; /* Añade margen superior para separar de elementos anteriores y Centra la barra de búsqueda horizontalmente*/
 }
 
 /* Estilos para las columnas */

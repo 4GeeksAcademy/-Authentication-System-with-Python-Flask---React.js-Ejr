@@ -62,7 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             cursosProfe: [], //Almacena los cursos asignados al profesor específico.
             cursosAlumno: [], // Almacena los cursos en los que el alumno está inscrito
             autentificacion: false, // Indica si el usuarioProfe está autenticado.
-            usuarioPr:null,  // Usuario que es un profesor.
+            usuarioPr: null,  // Usuario que es un profesor.
             usuarioA: null, //información del usuario que se ha autenticado como alumno.
             filtros: { // Define los filtros aplicados para la búsqueda de cursos.
                 categoria: "",
@@ -112,21 +112,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                         (!filtros.busqueda || curso.nombre.toLowerCase().includes(filtros.busqueda.toLowerCase()))
                     );
                 });
-
+                   // Actualiza el estado global con los cursos filtrados
                 setStore({ cursosConFiltros: cursosFiltrados });
             },
 
-            // Acción para actualizar los filtros
+            // Función para actualizar los filtros aplicados
             actualizarFiltros: (nuevosFiltros) => {
                 const store = getStore();
+                // Combina los filtros existentes con los nuevos filtros proporcionados
                 const filtrosActualizados = { ...store.filtros, ...nuevosFiltros };
                 
                 // Si el filtro de precio se actualiza, asegúrate de manejar el caso del rango.
                 if (nuevosFiltros.precio) {
                     filtrosActualizados.precio = nuevosFiltros.precio;
                 }
+                // Actualiza el estado global con los filtros actualizados
                 setStore({ filtros: filtrosActualizados });
+
+                // Aplica los filtros actualizados a la lista de cursos
                 getActions().aplicarFiltrosCursos();
+
+            },
+            //Actualizar el estado global,limpiando los cursos filtrados. 
+            //Esto significa que el array cursosConFiltros se vacía.
+            resetFiltros: ()=>{
+                const store = getStore(); //devuelve el estado global.
+                setStore ({...store, cursosConFiltros: [] })
 
             },
             

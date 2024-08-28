@@ -77,22 +77,16 @@ const BarraBusqueda = () => {
     };
 
 
-    // Función para restablecer los filtros a sus valores iniciales
-    const resetFiltros = async () => {
-        actions.actualizarFiltros({
-            categoria: "",
-            valoracion: 0,
-            nivel: "",
-            precio: [0, 350],
-            fecha: "",
-            idioma: "",
-            busqueda: "",
-        }); // Resetea los filtros en el estado global
+
+    
+    const resetFiltros =  () => {
+    // Resetea los filtros en el estado global
+        actions.resetFiltros();   
         
-        setSeleCategoria(null);
+        setSeleCategoria(null); // restablece el estado local seleCategoria a null.
 
         // Llama a la acción para recargar los cursos (puedes necesitar ajustar esta función según tu implementación)
-        await actions.cargarCursos(); // Esta acción debe manejar la lógica para cargar cursos y manejar el estado de "No hay cursos disponibles"
+        //await actions.cargarCursos(); // Esta acción debe manejar la lógica para cargar cursos y manejar el estado de "No hay cursos disponibles"
     };
 
 
