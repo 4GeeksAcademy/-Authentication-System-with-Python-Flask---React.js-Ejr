@@ -15,7 +15,7 @@ const PregFrecuentes = () => {
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                ¿Cómo puedo registrarme?
+                <spam className="fw-medium">¿Cómo puedo registrarme?</spam>                
               </button>
             </h2>
             <div
@@ -25,7 +25,7 @@ const PregFrecuentes = () => {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                Para registrarte, haz clic en el botón de <a href="/vista-register">"Registrarme"</a> en la parte inferior del formulario de inicio de sesión y completa el formulario con tus datos.
+                Para registrarte, haz clic en el botón de <a href="/vista-register">"Registrarme"</a> en la parte inferior del formulario de inicio de sesión o en nuestra página de inicio. Completa el formulario con tus datos y si todo es correcto recibirás un correo con un enlace para activar tu cuenta. Este paso es necesario aunque te registres a través del servicio de registro de Google, este proceso de verificación solo se realizará la primer vez que vayas a iniciar sesión.
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
-                ¿Cómo puedo recuperar o cambiar mi contraseña?
+                <spam className="fw-medium">¿Cómo puedo recuperar o cambiar mi contraseña?</spam>               
               </button>
             </h2>
             <div
@@ -50,7 +50,7 @@ const PregFrecuentes = () => {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-              En la página de inicio de sesión ingresa tu correo, haz clic en <a href="/vista-login">"Olvidé mi contraseña"</a> y recibirás un mail de HablemosUY Salud Mental para restablecer o cambiar tu contraseña siguiendo las instrucciones desde el enlace.
+              En nuestra página de inicio de sesión haz clic en <a href="/vista-login">"Olvidé mi contraseña"</a>, se desplegará un modal en el que deberás ingresar tu correo y enviarlo. Recibirás un mail de HablemosUY Salud Mental para restablecer o cambiar tu contraseña siguiendo las instrucciones desde el enlace y una vez completado este proceso ya puedes iniciar sesión con la nueva contraseña que hayas establecido.
               </div>
             </div>
           </div>
@@ -65,7 +65,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseThree"
               >
-                ¿Qué métodos de pago aceptan?
+                <spam className="fw-medium">¿Qué métodos de pago aceptamos?</spam>               
               </button>
             </h2>
             <div
@@ -75,7 +75,7 @@ const PregFrecuentes = () => {
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                Aceptamos todas las tarjetas de crédito principales, <a href="/">PayPal</a> y transferencias bancarias.
+                Aceptamos todas las tarjetas de crédito, <a href="/">PayPal</a> y transferencias bancarias.
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseFour"
               >
-                ¿Cómo puedo conseguir asistencia de emergencia?
+                <spam className="fw-medium">¿Cómo puedo acceder a asistencia de emergencia?</spam>               
               </button>
             </h2>
             <div

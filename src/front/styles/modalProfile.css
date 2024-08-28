@@ -35,7 +35,10 @@
     flex-direction: column;
     align-items: center;
 }
-
+.close-button:hover{
+    background-color: red;
+    color:white
+}
 .image-container {
     width: 250px; /* Tamaño fijo del contenedor de la imagen */
     height: 250px; /* Tamaño fijo del contenedor de la imagen */

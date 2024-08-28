@@ -6,18 +6,24 @@ export const Footer = () => (
 		<p className="m-0 col-md-4 col-10">
 			© 2024 HablemosUY. Todos los derechos reservados.
 		</p>
-		<p className="m-0 col-md-6 col-10 text-end">
+		<div className="m-0 col-md-6 col-10 text-end">
 			<p>
 				Síguenos en redes sociales
-				<i className="fa-brands fa-instagram ms-2"></i>
-				<i className="fa-brands fa-x-twitter ms-2"></i>
-				<i className="fa-brands fa-linkedin ms-2"></i>
+				<a href="https://www.instagram.com/" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
+					<i className="fa-brands fa-instagram ms-2"></i>
+				</a>
+				<a href="https://x.com/?lang=es" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
+					<i className="fa-brands fa-x-twitter ms-2"></i>
+				</a>
+				<a href="https://www.linkedin.com/home" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
+					<i className="fa-brands fa-linkedin ms-2"></i>
+				</a>
 			</p>
 			<p>
 				<Link to="/vistaLegalDocs" className="login__forgot text-light mx-3">Términos y Condiciones</Link>
 				|<Link to="/vistaLegalDocs" className="login__forgot text-light mx-3">Declaración de Privacidad</Link>
 				|<Link to="/vistaLegalDocs" className="login__forgot text-light ms-3">Aviso Legal</Link>
 			</p>
-		</p>
+		</div>
 	</footer>
 );

@@ -10,8 +10,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged: false,
 			psicologos: [],
 			dataUser: null,
-			imagenURL: ""
-
+			imagenURL:  "",
+			especialidades:[],
+			profesionalesPorEspecialidad: [],
 		},
 		actions: {
 			getMeetsPsicologo: async (namePsicologo) => {
@@ -193,6 +194,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (data.logged) {
 						setStore({
 							dataUser: {
+								id:data.id,
 								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
 								apellido: data.apellido || "Apellido no disponible",
 								correo: data.correo || "Correo no disponible",
@@ -209,12 +211,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 				} catch (error) {
-					Swal.fire({
-						title: 'No puede acceder a ésta sección!',
-						text: 'Token inválido o inexistente',
-						icon: 'warning',
-						confirmButtonText: 'Entendido'
-					});
+					
 					return false;
 				}
 			},
@@ -263,10 +260,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Traemos psicologos de la base de datos
 			getPsicologos: async () => {
 				const store = getStore()
-
+				
+				
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/psicologos');
 					const data = await response.json();
+					console.log(data);
 					if (response.status === 200) {
 						// Actualiza solo la propiedad psicologos en el store
 						setStore({
@@ -378,6 +377,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//Verificamos el token recibido desde la URL del link de verificación del correo
+			verifyToken: async (token) => {
+				const options = {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				};
+			
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/verify_email/${token}`, options);
+					const data = await response.json();
+			
+					if (response.status === 200) {
+						return { success: true, message: "Token verificado con éxito." };
+					} else {
+						return { success: false, message: data.msg || response.statusText };
+					}
+				} catch (error) {
+					console.error('Error al verificar el token: ', error);
+					return { success: false, message: 'Ocurrió un error al verificar el token.' };
+				}
+			},
+
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, foto, correo, clave) => {
 				const options = {
@@ -396,38 +419,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 						clave: clave,
 					})
 				};
-				console.log(options.body)
+				console.log(options.body);
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
-
+			
 					if (response.status === 201) {
 						console.log(data);
-						Swal.fire({
-							text: "El registro del usuario se ha realizado con éxito.",
-							icon: "success"
-						});
-						return true;
+						return { success: true, data };
 					} else if (response.status === 400) {
-						throw new Error('Bad Request: ' + data.msg);
+						return { success: false, error: 'Bad Request: ' + data.msg };
 					} else if (response.status === 500) {
-						console.log(data)
-						throw new Error('Internal Server Error: ' + data.msg);
+						console.log(data);
+						return { success: false, error: 'Internal Server Error: ' + data.msg };
 					} else {
-
-						throw new Error(data.msg || response.statusText);
+						return { success: false, error: data.msg || response.statusText };
 					}
 				} catch (error) {
-					console.log('en el catch', error)
-					Swal.fire({
-						title: 'Error!',
-						text: 'La dirección de correo electrónico ya existe',
-						icon: 'error',
-						confirmButtonText: 'Cool'
-					});
-					return false;
+					return { success: false, error: 'La dirección de correo electrónico ya existe' };
 				}
 			},
+			
 			//cloudinary (IMAGENES)
 			uploadImage: async (data, cloud_name) => {
 				const actions = getActions()
@@ -467,13 +479,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ dataUser: { ...store.dataUser, foto: url } })
 				return url
 			},
-			fetchEspecialidades: async () => {
-				const store = getStore();
-				console.log(store.token);
-
+			fetchEspecialidades : async () => {
+			
 				let token = localStorage.getItem("token")
-				console.log(token);
-
+				
 				try {
 					const response = await fetch(process.env.BACKEND_URL + `/especialidades`, {
 						headers: {
@@ -493,29 +502,90 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error:', error);
 				}
 			},
-			saveUserSpecialties: async (especialidadesSeleccionadas) => {
-				const store = getStore();
+			saveEspecialidades : async (especialidadesSeleccionadas) => {
+				let token = localStorage.getItem("token")
+				const store=getStore()
+				console.log(store.dataUser);
+				console.log(especialidadesSeleccionadas);
+				
 				try {
-					const response = await fetch(process.env.BACKEND_URL + '/user/specialties', {
-						method: 'POST',
+					const response = await fetch(process.env.BACKEND_URL + '/save-especialidad', {
+					method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${store.token}`,  // JWT token if applicable
+							'Authorization': `Bearer ${token}`,
 						},
-						body: JSON.stringify({ specialties: especialidadesSeleccionadas }),
+						body: JSON.stringify({
+							
+							especialidades: especialidadesSeleccionadas, // Lista de nombres de especialidades
+						}),
 					});
 
 					if (response.ok) {
-						console.log('Especialidades guardadas correctamente');
+						const data = await response.json();
+						console.log('Especialidades guardadas:', data);
 					} else {
-						console.error('Error al guardar las especialidades');
+						const errorData = await response.json();
+						console.error('Error al guardar especialidades:', errorData);
 					}
 				} catch (error) {
 					console.error('Error:', error);
 				}
 			},
+			
+			obtenerEspecialidadesPorProfesional: async () => {
+                const token = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}/especialidades-por-profesional`;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
 
-
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Especialidades obtenidas:', data);
+                        // Guardar los datos obtenidos en el store
+                        setStore({ especialidadesPorProfesional: data });
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error al obtener especialidades:', errorData);
+                    }
+                } catch (error) {
+                    console.error('Error al realizar la solicitud:', error);
+                }
+            },
+			eliminarEspecialidadPorProfesional: async (especialidadId) => {
+				const token = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/especialidades-por-profesional?especialidad_id=${especialidadId}`;
+				console.log('URL de eliminación:', url);
+				console.log('Token JWT:', token);
+				
+				try {
+					const response = await fetch(url, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+					});
+			
+					if (response.ok) {
+						const data = await response.json();
+						console.log('Especialidad eliminada:', data.message);
+						// Opcional: Actualizar el estado de especialidades después de la eliminación
+					} else {
+						const errorData = await response.json();
+						console.error('Error al eliminar la especialidad:', errorData);
+					}
+				} catch (error) {
+					console.error('Error al realizar la solicitud de eliminación:', error.message || error);
+				}
+			},
 		}
 	};
 }

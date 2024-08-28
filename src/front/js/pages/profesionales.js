@@ -12,7 +12,7 @@ const Profesionales = () => {
 
 
     useEffect(() => {
-
+        actions.obtenerEspecialidadesPorProfesional();
         // Cargar el script de Calendly
         const script = document.createElement("script");
         script.src = "https://assets.calendly.com/assets/external/widget.js";
@@ -46,8 +46,9 @@ const Profesionales = () => {
         };
     }, []);
 
+
     const openCalendly = (profesional) => {
-        console.log(profesional)
+
         switch (profesional) {
             case 'Dr. Juan Pérez':
                 Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-juan-perez');
@@ -94,6 +95,21 @@ const Profesionales = () => {
                                     <p className="card-text">
                                         <small className="text-body-secondary">{elm.descripcion}</small>
                                     </p>
+                                </div>
+                                <div >
+                                    <p className="card-text">
+                                        <ul className="d-flex flex-row gap-3">
+                                            {Array.isArray(elm.especialidades) && elm.especialidades.length > 0 ? (
+                                                elm.especialidades.map((especialidad) => (
+                                                    <li id="nombreEspecialidad1"key={especialidad.id}>
+                                                        {especialidad.nombre}
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li>No hay especialidades disponibles.</li>
+                                            )}
+                                        </ul>
+                                    </p>
                                     <div className="button-container mt-5">
                                         <button
                                             type="button"
@@ -104,7 +120,9 @@ const Profesionales = () => {
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
