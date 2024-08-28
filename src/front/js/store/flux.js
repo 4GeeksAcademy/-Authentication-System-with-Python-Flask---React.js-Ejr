@@ -1,14 +1,70 @@
+//localStorage es una API de almacenamiento web que proporciona una forma de almacenar datos en el navegador de manera persistente, 
+//es decir, los datos almacenados en localStorage permanecen incluso después de cerrar el navegador o recargar la página.
+//está asociado con un dominio web. Solo el mismo dominio puede acceder a los datos que almacenó.
+
+//localStorage.setItem('token', 'mi_token_de_autenticacion'); para guardar un token
+//const token = localStorage.getItem('token'); para recuperar un token
+//localStorage.removeItem('token');Eliminar un token 
+// Ejemplo en un flujo de autenticación:
+// El usuario inicia sesión con sus credenciales.
+// La aplicación recibe un token de autenticación desde el servidor.
+// El token se guarda en localStorage.
+// Para futuras solicitudes, el token se envía en los encabezados para autenticar al usuario.
+// Si el usuario cierra la sesión, se elimina el token de localStorage
+
+
+
+
 const getState = ({ getStore, getActions, setStore }) => {
+    
+
     return {
         store: {
-            cursos: [], //  Almacena todos los cursos obtenidos desde el backend.
-            cursosConFiltros: [], // Almacena los cursos después de aplicar filtros
+            cursos: [
+                {
+                    id: 1,
+                    nombre: "Curso de Desarrollo Web",
+                    categoria: "Desarrollo",
+                    subcategoria: "Desarrollo Web",
+                    valoracion: 5,
+                    nivel: "principiante",
+                    precio: 100,
+                    fecha: "2023-09-01",
+                    idioma: "espanol"
+                },
+                {
+                    id: 2,
+                    nombre: "Curso de Finanzas",
+                    categoria: "Negocios",
+                    subcategoria: "Finanzas",
+                    valoracion: 4,
+                    nivel: "intermedio",
+                    precio: 200,
+                    fecha: "2023-10-01",
+                    idioma: "ingles"
+                },
+                {
+                    id: 3,
+                    nombre: "Curso de Diseño Web",
+                    categoria: "Diseño",
+                    subcategoria: "Diseño Web",
+                    valoracion: 3,
+                    nivel: "avanzado",
+                    precio: 150,
+                    fecha: "2023-11-01",
+                    idioma: "aleman"
+                }
+                
+            ], //  Almacena todos los cursos obtenidos del mockup mientras no funciona la API del el backend. Siempre tiene los cursos sin filtrar.
+            cursosConFiltros: [], // Almacena los cursos después de aplicar filtros. Se actualiza cuando aplicas filtros
+            //categorias: [], // Asegúrate de tener categorías en el estado
+            //subcategorias: [], // Y también subcategorías si son independientes
             loading: false, // Estado para mostrar carga
             error: null, // Estado para errores
             cursosProfe: [], //Almacena los cursos asignados al profesor específico.
             cursosAlumno: [], // Almacena los cursos en los que el alumno está inscrito
             autentificacion: false, // Indica si el usuarioProfe está autenticado.
-            usuarioPr: null,  // Usuario que es un profesor.
+            usuarioPr:  null,  // Usuario que es un profesor.
             usuarioA: null, //información del usuario que se ha autenticado como alumno.
             filtros: { // Define los filtros aplicados para la búsqueda de cursos.
                 categoria: "",
@@ -19,9 +75,75 @@ const getState = ({ getStore, getActions, setStore }) => {
                 idioma: "",
                 busqueda: "",
                 
-            }
+            },
         },
         actions: {
+
+        
+            // Cargar los cursos desde el backend
+            cargarCursos: async () => {
+                const store = getStore();
+                setStore({ ...store, loading: true }); // Muestra el estado de carga
+
+                try { // Enviamos una solicitud GET para obtener todos los cursos.
+                    const response = await fetch(process.env.BACKEND_URL+'/api/cursos'); // Solicita los datos de cursos
+                    const data = await response.json(); // Convierte la respuesta en JSON
+                    setStore({ ...store, cursos: data, cursosConFiltros: data, loading: false }); 
+                    // Actualizamos ambos estados tanto de cursos y cursosConFiltrado y oculta el estado de carga
+                } catch (error) {
+                    setStore({ ...store, error: error.message, loading: false }); // Maneja el error
+                    console.error('Error loading courses:', error);
+                }
+            },
+            
+        
+
+            // Aplicar filtros a los cursos
+            aplicarFiltrosCursos: () => {
+                const store = getStore();
+                const { cursos, filtros } = store;
+
+                const cursosFiltrados = cursos.filter(curso => {
+                    return (
+                        (!filtros.categoria || curso.categoria === filtros.categoria) &&
+                        (!filtros.valoracion || curso.valoracion >= filtros.valoracion) &&
+                        (!filtros.nivel || curso.nivel === filtros.nivel) &&
+                        (!filtros.precio || (curso.precio >= filtros.precio[0] && curso.precio <= filtros.precio[1])) &&
+                        (!filtros.fecha || new Date(curso.fecha) >= new Date(filtros.fecha)) &&
+                        (!filtros.idioma || curso.idioma === filtros.idioma) &&
+                        (!filtros.busqueda || curso.nombre.toLowerCase().includes(filtros.busqueda.toLowerCase()))
+                    );
+                });
+                   // Actualiza el estado global con los cursos filtrados
+                setStore({ cursosConFiltros: cursosFiltrados });
+            },
+
+            // Función para actualizar los filtros aplicados
+            actualizarFiltros: (nuevosFiltros) => {
+                const store = getStore();
+                // Combina los filtros existentes con los nuevos filtros proporcionados
+                const filtrosActualizados = { ...store.filtros, ...nuevosFiltros };
+                
+                // Si el filtro de precio se actualiza, asegúrate de manejar el caso del rango.
+                if (nuevosFiltros.precio) {
+                    filtrosActualizados.precio = nuevosFiltros.precio;
+                }
+                // Actualiza el estado global con los filtros actualizados
+                setStore({ filtros: filtrosActualizados });
+
+                // Aplica los filtros actualizados a la lista de cursos
+                getActions().aplicarFiltrosCursos();
+
+            },
+            //Actualizar el estado global,limpiando los cursos filtrados. 
+            //Esto significa que el array cursosConFiltros se vacía.
+            resetFiltros: ()=>{
+                const store = getStore(); //devuelve el estado global.
+                setStore ({...store, cursosConFiltros: [] })
+
+            },
+            
+
             // Acción para iniciar sesión alumno
             loginAlumno: async (dataForm) => {
                 try {
@@ -52,6 +174,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             logoutAlumno: () => {
                 localStorage.removeItem('token');
                 setStore({ usuarioA: null, autentificacion: false, cursosAlumno: [] });
+                //Restablece el estado del usuario alumno y borra los cursos del estado, pero NO significa que los cursos se eliminen permanentemente del sistema
+                //simplemente se elimina la referencia a los cursos del usuario en la memoria de la aplicación
             },
 
             // Acción para obtener los cursos del alumno
@@ -81,12 +205,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Acción para iniciar sesión profe
             login: async (dataForm) => {
                 try {
+                    // solicitud POST a la API para autenticar al usuario profe.
                     const response = await fetch(process.env.BACKEND_URL + '/api/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(dataForm)
+                        body: JSON.stringify(dataForm) // Los datos del formulario de inicio de sesión
                     });
 
                     if (response.ok) {
@@ -106,19 +231,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Cerrar sesión Profe
             logout: () => {
-                localStorage.removeItem('token');
+                localStorage.removeItem('token'); // Elimina el token del localStorage
                 setStore({ usuarioPr: null, autentificado: false, cursosProfe: [] });
             },
 
             // Acción para obtener los cursos del profesor
             obtenerCursosTutor: async (profesorId) => {
-                const store = getStore();
-                const token = localStorage.getItem('token');
+                const store = getStore();// Obtenemos el estado actual del store.
+                const token = localStorage.getItem('token'); // Obtén el token de autenticación
 
                 try {
                     const response = await fetch(`/api/tutors/${profesorId}/courses`, {
                         headers: {
-                            'Authorization': `Bearer ${token}`,
+                            'Authorization': `Bearer ${token}`, // Autorización de la solicitud con el token.
                             'Content-Type': 'application/json'
                         }
                     });
@@ -132,49 +257,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error('Error fetching courses:', error);
                 }
-            },
-
-            // Cargar los cursos desde el backend
-            cargarCursos: async () => {
-                const store = getStore();
-                setStore({ ...store, loading: true });
-
-                try {
-                    const response = await fetch('/api/cursos');
-                    const data = await response.json();
-                    setStore({ cursos: data, cursosConFiltros: data, loading: false });
-                } catch (error) {
-                    setStore({ error: error.message, loading: false });
-                    console.error('Error loading courses:', error);
-                }
-            },
-
-            // Aplicar filtros a los cursos
-            aplicarFiltrosCursos: () => {
-                const store = getStore();
-                const { cursos, filtros } = store;
-
-                const cursosFiltrados = cursos.filter(curso => {
-                    return (
-                        (!filtros.categoria || curso.categoria === filtros.categoria) &&
-                        (!filtros.valoracion || curso.valoracion >= filtros.valoracion) &&
-                        (!filtros.nivel || curso.nivel === filtros.nivel) &&
-                        (!filtros.precio || (curso.precio >= filtros.precio[0] && curso.precio <= filtros.precio[1])) &&
-                        (!filtros.fecha || new Date(curso.fecha) >= new Date(filtros.fecha)) &&
-                        (!filtros.idioma || curso.idioma === filtros.idioma) &&
-                        (!filtros.busqueda || curso.nombre.includes(filtros.busqueda)) &&
-                        (!filtros.cursoRelacionado || curso.relacionados.includes(filtros.cursoRelacionado))
-                    );
-                });
-
-                setStore({ cursosConFiltros: cursosFiltrados });
-            },
-
-            // Acción para actualizar los filtros
-            actualizarFiltros: (nuevosFiltros) => {
-                const store = getStore();
-                setStore({ filtros: { ...store.filtros, ...nuevosFiltros } });
-            },
+            },            
 
             // Acción para manejar errores
             handleError: (error) => {
@@ -291,3 +374,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
+
+
+            // // Ejemplo de función para cargar categorías y subcategorías
+            // cargarCategorias: async () => {
+            //     const store = getStore();
+            //     setStore({ ...store, loading: true });
+
+            //     try {
+            //         const response = await fetch(process.env.BACKEND_URL+'/api/categorias');
+            //         const data = await response.json();
+            //         setStore({ categorias: data, loading: false });
+            //     } catch (error) {
+            //         setStore({ error: error.message, loading: false });
+            //         console.error('Error loading categories:', error);
+            //     }
+            // },
+
+// Llama a cargarCategorias en algún lugar de tu aplicación para que las categorías estén disponibles
+
