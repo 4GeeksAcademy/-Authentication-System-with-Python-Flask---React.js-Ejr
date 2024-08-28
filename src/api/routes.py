@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
-from api.models import db, User
+from api.models import db, User, Profesor
 
 # Crear el Blueprint para la API
 api = Blueprint('api', __name__)
