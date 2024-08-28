@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Register } from "../component/register.jsx"
 import "../../styles/registro-login.css"
 
 const VistaRegister = () => {
-    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        // Verificar si el token existe en el localStorage
+        const token = localStorage.getItem("token");
+        if (token) {
+            navigate("/perfil");
+        }
+    }, [navigate]);
     return (
         <div className="container-fluid d-flex align-items-center justify-content-center row mt-5" style={{ minHeight: '100vh' }}>
-            {/* <div className="row w-100"> */}
                 <div className="col-md-8 d-flex align-items-center justify-content-center rectangle-10">
 
                     <Register />
