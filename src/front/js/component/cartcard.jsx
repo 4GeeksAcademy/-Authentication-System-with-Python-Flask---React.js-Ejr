@@ -1,43 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-import '../../styles/wishcard.css';
+import '../../styles/cartcard.css';
 import NoProductImg from "../../../../public/images/no-product-img.png";
-import "../../styles/cart.css"
-const CartCard = ({ id, name, cost, image_url }) => {
-    const navigate = useNavigate();
+
+const CartCard = ({ id, product_id, name, cost, image_url, units }) => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
 
     const handleNavigate = () => {
         navigate(`/product/${id}`);
     };
 
-    const handlePago = async () => {
-        await actions.pagoMercadoPago(20);
-        let url = store.mercadoPago.init_point;
-        console.log(url)
-        window.location.replace(url)
+    const handleDelete = async () => {
+        await actions.deleteFromCart(product_id);
     };
-    console.log(cost)
+
     return (
-        <div className="container">
-            <h1 className="mt-5 text-center">Carrito</h1>
-            <div className="card wish-card-container d-flex flex-column m-2">
-                <button onClick={handleNavigate} className="h-100">
-                    <div className="image-container">
-                        <img src={image_url || NoProductImg} alt={name} className="card-img-top" />
-                    </div>
-                    <div className="card-body mt-auto">
-                        <h5 className="card-title">{name || "Ejemplo"}</h5>
-                        <p className="card-text">${cost || "00"}.00</p>
-                    </div>
-                </button>
-            </div>
-            <div className="container text-center">
-                <button className="btn-mp w-50 mx-auto fs-3 p-2 border-rounded" onClick={handlePago}>
-                    Comprar
-                </button>
-            </div>
+        <div className="card cart-card-container d-flex flex-column m-2 my-4">
+            <button onClick={handleNavigate} className="card-main-btn">
+                <div className="image-container">
+                    <img src={image_url || NoProductImg} alt={name} className="card-img-top" />
+                </div>
+                <div className="card-body mx-auto">
+                    <h5 className="card-title">{name || "Producto"}</h5>
+                    <p className="card-text">${cost || "00"}.00</p>
+                    <p className="card-text">Unidades: {units || "1"}</p>
+                </div>
+            </button>
+            <button className="btn btn-danger mt-2" onClick={handleDelete}>Eliminar del carrito</button>
         </div>
     );
 };

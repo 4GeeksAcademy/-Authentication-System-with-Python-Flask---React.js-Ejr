@@ -23,7 +23,7 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
     };
 
     const handleNavigate = () => {
-        navigate(`/cart`);
+        navigate(`/cart/users/1`);
     };
 
     // CARRUSEL_____________________________________
@@ -90,7 +90,7 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
                 <button className={`heart-container ${isFavorite() ? "favorite-on" : ""}`} onClick={toggleFavorite} >
                     <i className="bi bi-suit-heart-fill"></i>
                 </button>
-                <button className="cart-container">
+                <button className={`cart-icon-container ${isInCart() ? "cart-on" : ""}`} onClick={toggleCart} >
                     <i className="bi bi-cart4"></i>
                 </button>
                 <div className="data-container">
@@ -103,7 +103,7 @@ const ProductDetailCard = ({ id, name, cost, image_url }) => {
                         <p className="col">10 Unidades</p>
                     </div>
                     <button className="buy-btn mb-1" onClick={handleNavigate}>Comprar</button>
-                    <button className="add-cart-btn">Agregar al carrito</button>
+                    <button className="add-cart-btn" onClick={handleNavigate} >Agregar al carrito</button>
                 </div>
             </div>
         </>
