@@ -56,6 +56,9 @@ const Perfil = () => {
             }
         };
         fetchPerfil();
+        actions.getPerfilUsuario();
+        actions.fetchEspecialidades();
+        actions.obtenerEspecialidadesPorProfesional();
         // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
@@ -228,6 +231,9 @@ const Perfil = () => {
                                 </button>
                             </div>
                             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <div className="container mt-3">
+
+                                </div>
                                 <div className="container mt-3">
                                     <FormSolicitudProf />
                                 </div>
