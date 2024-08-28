@@ -165,6 +165,9 @@ const perfil = () => {
                             <div className='col'>Favoritos</div>
                         </div>
                     </div>
+                    <Link to={"/user"}>
+                    <button>Ir a la pagina del perfil correcto</button>
+                    </Link>
                 </div>
             )}
             {store.empleador && (

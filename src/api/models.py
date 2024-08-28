@@ -158,7 +158,7 @@ class Ofertas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column (db.String (100), nullable=False)
     descripcion = db.Column (db.String(700), nullable=False)
-    salario = db.Column (db.Integer, nullable=False)
+    salario = db.Column (db.String(20), nullable=False)
     plazo = db.Column(db.String(100), nullable=False)
     modalidad = db.Column(db.Enum(Modalidad), nullable=False)
     experiencia_minima = db.Column (db.Enum(Experience), nullable=False)

@@ -37,23 +37,42 @@ export const Navbar = () => {
                 >
                   INICIO
                 </Link>
-                {store.programador && (
-                  <Link
+                {store.user?.profile_programador && (
+                  <>                  <Link
                     to={"/timeline"}
                     className="nav-link active me-3"
                     style={{ color: "white" }}
                   >
                     OFERTAS
                   </Link>
+                    <Link
+                      to={"/Userview"}
+                      className="nav-link active me-3"
+                      style={{ color: "white" }}
+                    >
+                      PERFIL
+                    </Link>
+                  </>
+
                 )}
-                {store.empleador && (
-                  <Link
-                    to={"/formoffer"}
-                    className="nav-link active me-3"
-                    style={{ color: "white" }}
-                  >
-                    CREAR OFERTA
-                  </Link>
+                {store.user?.profile_empleador && (
+                  <>
+                    <Link
+                      to={"/formoffer"}
+                      className="nav-link active me-3"
+                      style={{ color: "white" }}
+                    >
+                      CREAR OFERTA
+                    </Link>
+                  
+                <Link
+                  to={"/Companyview"}
+                  className="nav-link active me-3"
+                  style={{ color: "white" }}
+                >
+                  PERFIL
+                </Link>
+              </>
                 )}
 
                 {!store.user ? (
@@ -131,58 +150,58 @@ export const Navbar = () => {
           </div>
         </div>
 
-        <button
-          className="navbar-toggler navHamburguer"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasDarkNavbar"
-          aria-label="Toggle navigation"
-        >
-          <span className="fa-solid fa-bars text-white"></span>
-        </button>
-        <div
-          className="offcanvas offcanvas-end text-bg-dark"
-          tabIndex="-1"
-          id="offcanvasNavbar"
-          aria-labelledby="offcanvasDarkNavbarLabel"
-        >
-          <div className="offcanvas-body">
-            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  style={{ color: "#6793AE", marginTop: "115px" }}
-                  aria-current="page"
-                  to="/sobrenosotros"
-                >
-                  Sobre nosotros
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  style={{ color: "#6793AE", marginTop: "20px" }}
-                  aria-current="page"
-                  to="/contact"
-                >
-                  Contáctanos
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  style={{ color: "#6793AE", marginTop: "20px" }}
-                  aria-current="page"
-                  to="/preguntasFrecuentes"
-                >
-                  FAQ
-                </Link>
-              </li>
-            </ul>
-          </div>
+      <button
+        className="navbar-toggler navHamburguer"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasDarkNavbar"
+        aria-label="Toggle navigation"
+      >
+        <span className="fa-solid fa-bars text-white"></span>
+      </button>
+      <div
+        className="offcanvas offcanvas-end text-bg-dark"
+        tabIndex="-1"
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel"
+      >
+        <div className="offcanvas-body">
+          <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li className="nav-item">
+              <Link
+                className="nav-link active"
+                style={{ color: "#6793AE", marginTop: "115px" }}
+                aria-current="page"
+                to="/sobrenosotros"
+              >
+                Sobre nosotros
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link active"
+                style={{ color: "#6793AE", marginTop: "20px" }}
+                aria-current="page"
+                to="/contact"
+              >
+                Contáctanos
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link active"
+                style={{ color: "#6793AE", marginTop: "20px" }}
+                aria-current="page"
+                to="/preguntasFrecuentes"
+              >
+                FAQ
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
-    </nav>
+    </div>
+    </nav >
   );
 };

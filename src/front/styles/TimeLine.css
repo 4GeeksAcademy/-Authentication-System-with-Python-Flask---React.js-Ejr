@@ -3,9 +3,10 @@ body{
 }
 
 .search-bar {
-    position: relative;
-    top: 25px;
+    margin: auto;
     max-width: 820px;
+    display: flex;
+
 }
 
 .btn-search {
