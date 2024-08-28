@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
-from api.models import db, User, Comentarios, Especialidades, ClaveResetToken
+from api.models import db, User, Comentarios, Especialidad, ClaveResetToken,ProfEspecialidad
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, create_refresh_token
@@ -32,7 +32,7 @@ CORS(api)
 @api.after_request
 def apply_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST,PUT, OPTIONS"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST,PUT, DELETE,OPTIONS"
     response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
     response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
@@ -119,6 +119,7 @@ def get_perfil():
       
         # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify({
+            "id": user.id,
             "logged": True,
             "nombre_usuario": user.nombre_usuario,
             "apellido": user.apellido,
@@ -257,7 +258,7 @@ def create_user():
 def create_especialidad():
     try:
         data = request.get_json()
-        nueva_especialidad = Especialidades(especialidad=data['especialidad'])
+        nueva_especialidad = Especialidad(especialidad=data['especialidad'])
 
         db.session.add(nueva_especialidad)
         db.session.commit()
@@ -313,16 +314,6 @@ def get_psicologos():
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
     
-#OBTENER TODAS LAS ESPECIALIDADES  
-# @api.route('/especialidades', methods=['GET'])
-# def get_especialidades():
-#     try:
-#         especialidades = Especialidades.query.all()
-#         especialidades_serialized = [especialidad.serialize() for especialidad in especialidades]
-
-#         return jsonify(especialidades_serialized), 200
-#     except Exception as e:
-#         return jsonify({"msg": str(e)}), 500
 
 #OBTENER TODOS LOS COMENTARIOS 
 @api.route('/comentarios', methods=['GET'])
@@ -454,9 +445,78 @@ def update_user_photo_by_email():
 def get_especialidades():
     try:
     
-        especialidades = Especialidades.query.all()
+        especialidades = Especialidad.query.all()
         especialidades_serializadas = [especialidad.serialize() for especialidad in especialidades]
         return jsonify(especialidades_serializadas), 200
     except Exception as e:
         
         return jsonify({"msg": str(e)}), 500
+@api.route('/save-especialidad', methods=['POST'])
+@jwt_required()
+def save_especialidades():
+    data = request.get_json()
+    user_id = get_jwt_identity()
+    
+    # especialidades_nombres = data.get('especialidades')  # Lista de nombres de especialidades
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    especialidades = [ProfEspecialidad(especialidad_id=id_especialidad,id_profesional=user_id) for id_especialidad in data["especialidades"]]
+    db.session.bulk_save_objects(especialidades)
+    db.session.commit()
+
+    return jsonify({'message': 'Especialidades saved successfully'}), 200
+
+# @api.route('/especialidades-por-profesional', methods=['GET'])
+# @jwt_required()
+# def especialidades_por_profesional():
+#     # Obtener el ID del profesional autenticado
+#     profesional_id = get_jwt_identity()
+
+#     # Verificar si el profesional existe
+#     profesional = User.query.get(profesional_id)
+#     if not profesional:
+#         return jsonify({'error': 'Profesional no encontrado'}), 404
+
+#     # Obtener las especialidades relacionadas con el profesional
+#     especialidades = ProfEspecialidad.query.filter_by(id_profesional=profesional_id).all()
+#     especialidades_data = [esp.especialidad.serialize() for esp in especialidades]
+    
+#     return jsonify(especialidades_data), 200
+
+@api.route('/especialidades-por-profesional', methods=['GET', 'DELETE'])
+@jwt_required()
+def especialidades_por_profesional():
+    # Obtener el ID del profesional autenticado
+    profesional_id = get_jwt_identity()
+
+    # Verificar si el profesional existe
+    profesional = User.query.get(profesional_id)
+    if not profesional:
+        return jsonify({'error': 'Profesional no encontrado'}), 404
+
+    if request.method == 'GET':
+        # Obtener las especialidades relacionadas con el profesional
+        especialidades = ProfEspecialidad.query.filter_by(id_profesional=profesional_id).all()
+        especialidades_data = [esp.especialidad.serialize() for esp in especialidades]
+        return jsonify(especialidades_data), 200
+
+    elif request.method == 'DELETE':
+        # Obtener el ID de la especialidad a eliminar desde los parámetros de la solicitud
+        especialidad_id = request.args.get('especialidad_id')
+        
+        if not especialidad_id:
+            return jsonify({'error': 'ID de especialidad no proporcionado'}), 400
+        
+        # Buscar la relación especialidad-profesional
+        especialidad_a_eliminar = ProfEspecialidad.query.filter_by(id_profesional=profesional_id, especialidad_id=especialidad_id).first()
+
+        if not especialidad_a_eliminar:
+            return jsonify({'error': 'Especialidad no encontrada para este profesional'}), 404
+        
+        # Eliminar la especialidad
+        db.session.delete(especialidad_a_eliminar)
+        db.session.commit()
+        
+        return jsonify({'message': 'Especialidad eliminada exitosamente'}), 200
