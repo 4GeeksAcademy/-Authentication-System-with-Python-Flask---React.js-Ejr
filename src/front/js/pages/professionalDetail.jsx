@@ -37,6 +37,7 @@ const ProfessionalDetail = () => {
                     description={user.description}
                     calendly_url={user.calendly_url}
                 />
+                {/* <a href={calendlyLink} target="_blank" rel="noopener noreferrer">Agenda una consulta</a> */}
             </div>
         </div>
     )

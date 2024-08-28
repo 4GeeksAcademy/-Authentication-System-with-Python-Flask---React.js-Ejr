@@ -133,6 +133,7 @@ const Professionals = () => {
                             id={nutricionist.id}
                             name={nutricionist.name}
                             // image_url={nutricionist.image_url}
+                            // calendlyLink={nutricionist.calendly_link}
                         />
                     ))
                 ) : (
@@ -155,6 +156,7 @@ const Professionals = () => {
                             id={trainers.id}
                             name={trainers.name}
                             // image_url={trainers.image_url}
+                            // calendlyLink={trainer.calendly_link}
                         />
                     ))
                 ) : (

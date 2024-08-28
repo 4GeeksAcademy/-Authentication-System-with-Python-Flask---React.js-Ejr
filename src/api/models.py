@@ -16,7 +16,7 @@ class User(db.Model):
         favorites = db.relationship("Favorite", backref="user")
         cart = db.relationship("Cart", backref="user")
         user_professions = db.relationship("UserProfession", backref="user", lazy='dynamic')
-        calendly=db.relationship("UserCalendly")
+        # calendly=db.relationship("UserCalendly")
 
         def __repr__(self):
             return f'<User {self.email}>'
@@ -34,10 +34,10 @@ class User(db.Model):
             "description": self.description,
             "professions":[user_profession.serialize() for user_profession in self.user_professions.all()]
         }
-        def serialize_nutritionist(self):
-             user=self.serialize()
-             user["calendly_name"] = self.calendly.name
-             return user
+        # def serialize_nutritionist(self):
+        #      user=self.serialize()
+        #      user["calendly_name"] = self.calendly.name
+        #      return user
         
 class Role(db.Model):
         id = db.Column(db.Integer, primary_key=True)
@@ -81,23 +81,23 @@ class UserProfession(db.Model):
             "user_id": self.user_id,
             "profession": self.profession.serialize()
         }
-  #Agenda del usuario  
-class UserCalendly(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
-    calendly_name = db.Column(db.String(128), nullable=False, unique=True)
-    users = db.relationship("User", back_populates="calendly", lazy=True)
+#   #Agenda del usuario  
+# class UserCalendly(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
+#     calendly_name = db.Column(db.String(128), nullable=False, unique=True)
+#     users = db.relationship("User", back_populates="calendly", lazy=True)
 
 
-    def __repr__(self):
-        return f'<UserCalendly {self.id}>'
+#     def __repr__(self):
+#         return f'<UserCalendly {self.id}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "calendly_name": self.calendly_name
-        }
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "user_id": self.user_id,
+#             "calendly_name": self.calendly_name
+#         }
 
 
 #  id	id-user	id-profesion	importe       

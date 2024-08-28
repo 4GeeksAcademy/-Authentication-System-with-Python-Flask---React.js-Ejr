@@ -10,6 +10,7 @@ import mercadopago # type: ignore
 import json, os
 import cloudinary # type: ignore
 import cloudinary.uploader # type: ignore
+# from models import db, Professional
 sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
 from flask import render_template # type: ignore
@@ -390,3 +391,30 @@ def upload_image():
     file = request.files['image']
     result = cloudinary.uploader.upload(file)
     return result, 200
+
+# #Agregar el enlace de Calendly
+# @api.route('/professionals/<int:id>', methods=['PUT'])
+# def update_professional(id):
+#     data = request.get_json()
+#     professional = Professional.query.get(id)
+#     if not professional:
+#         return jsonify({"message": "Professional not found"}), 404
+
+#     if 'calendly_link' in data:
+#         professional.calendly_link = data['calendly_link']
+
+#     db.session.commit()
+#     return jsonify({"message": "Professional updated successfully"}), 200
+
+#Obtener el Enlace de Calendly
+# @api.route('/professionals/<int:id>', methods=['GET'])
+# def get_professional(id):
+#     professional = Professional.query.get(id)
+#     if not professional:
+#         return jsonify({"message": "Professional not found"}), 404
+
+#     return jsonify({
+#         "id": professional.id,
+#         "name": professional.name,
+#         "calendly_link": professional.calendly_link
+#     }), 200
