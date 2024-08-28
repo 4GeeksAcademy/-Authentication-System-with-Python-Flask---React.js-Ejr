@@ -17,6 +17,7 @@ export const ViewReports = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Verifica la autenticación
         if (!store.token) {
             navigate('/login');
             return;
@@ -84,7 +85,10 @@ export const ViewReports = () => {
         try {
             const response = await fetch(url, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${store.token}`
+                },
                 body: JSON.stringify(editReport),
             });
 

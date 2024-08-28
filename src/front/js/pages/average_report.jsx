@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import "../../styles/avg_report.css";
@@ -43,6 +42,7 @@ export const AverageReportPage = () => {
                     'Content-Type': 'application/json'
                 };
 
+                // Obtener datos de promedios y extremos
                 const averagesData = await actions.fetchAverages(babyId, interval, headers);
                 const extremesData = await actions.fetchExtremes(babyId, interval, headers);
                 setAverages(averagesData);
@@ -63,6 +63,7 @@ export const AverageReportPage = () => {
                 console.error('Error fetching data:', error);
             }
         };
+
         fetchData();
     }, [babyId, interval, actions, store.token, navigate]);
 
@@ -158,8 +159,8 @@ export const AverageReportPage = () => {
                                     scales: {
                                         x: {
                                             grid: {
-                                                display: false, // Ocultar cuadrícula en el eje X
-                                                drawBorder: false // Ocultar borde en el eje X
+                                                display: false, 
+                                                drawBorder: false 
                                             },
                                             ticks: {
                                                 font: {
@@ -170,8 +171,8 @@ export const AverageReportPage = () => {
                                         },
                                         y: {
                                             grid: {
-                                                display: false, // Ocultar cuadrícula en el eje Y
-                                                drawBorder: false // Ocultar borde en el eje Y
+                                                display: false, 
+                                                drawBorder: false
                                             },
                                             ticks: {
                                                 font: {
