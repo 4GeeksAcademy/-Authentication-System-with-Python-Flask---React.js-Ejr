@@ -6,7 +6,7 @@ export const Footer = () => (
 		<p className="m-0 col-md-4 col-10">
 			© 2024 HablemosUY. Todos los derechos reservados.
 		</p>
-		<p className="m-0 col-md-6 col-10 text-end">
+		<div className="m-0 col-md-6 col-10 text-end">
 			<p>
 				Síguenos en redes sociales
 				<a href="https://www.instagram.com/" className="login__forgot text-light" target="_blank" rel="noopener noreferrer">
@@ -24,6 +24,6 @@ export const Footer = () => (
 				|<Link to="/vistaLegalDocs" className="login__forgot text-light mx-3">Declaración de Privacidad</Link>
 				|<Link to="/vistaLegalDocs" className="login__forgot text-light ms-3">Aviso Legal</Link>
 			</p>
-		</p>
+		</div>
 	</footer>
 );

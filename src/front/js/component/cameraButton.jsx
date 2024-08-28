@@ -5,7 +5,7 @@ import styled from "styled-components";
 const CameraButton = () => {
     return (
         <StyledWrapper>
-            <button className="btn" type="file" htmlFor="fileInput"><i class="fas fa-camera"></i></button>
+            <button className="btn" type="file" htmlFor="fileInput"><i className="fas fa-camera"></i></button>
         </StyledWrapper>
     );
 };

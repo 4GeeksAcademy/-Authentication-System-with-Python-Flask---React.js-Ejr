@@ -14,6 +14,10 @@ const Perfil = () => {
 
 
     useEffect(() => {
+        actions.getPerfilUsuario();
+        actions.fetchEspecialidades();
+        actions.obtenerEspecialidadesPorProfesional();
+
         const fetchPerfil = async () => {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -52,7 +56,6 @@ const Perfil = () => {
                 });
             }
         };
-        fetchPerfil();
         // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
@@ -60,9 +63,31 @@ const Perfil = () => {
     }, []);
 
     const [showModal, setShowModal] = useState(false);
+    const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
+
+    // Función para mostrar el modal
+
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
 
+    // Manejar la selección de especialidades
+    const handleEspecialidadChange = (id) => {
+        setSelectedEspecialidades(prev =>
+            prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]
+        );
+    };
+
+    // Guardar las especialidades seleccionadas
+    const saveEspecialidades = () => {
+        actions.saveEspecialidades(selectedEspecialidades);
+    };
+
+    // Mostrar las especialidades ya guardadas para el usuario
+    const userEspecialidades = store.dataUser?.especialidades || [];
+    
+   
+    console.log(store.especialidades);
+    console.log(store.obtenerEspecialidadesPorProfesional);
     return (
         <div className="container mt-4 col-11 col-md-10 col-lg-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
@@ -107,33 +132,32 @@ const Perfil = () => {
                             : <Loader width="300px" height="35px" />}
                     </h2>
                     <div className="personal-info text-start mt-3 mb-2">
-                        <p className="d-flex align-items-center">
+                        <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Nombre: </strong>{" "}
                             {store.dataUser?.nombre_usuario && store.dataUser?.apellido
                                 ? `${store.dataUser.nombre_usuario} ${store.dataUser.apellido}`
                                 : <Loader width="200px" height="15px" />}
-                        </p>
-                        <p className="d-flex align-items-center">
+                        </div>
+                        <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Email: </strong>
                             {store.dataUser?.correo
                                 ? store.dataUser.correo
                                 : <Loader width="350px" height="15px" />}
-                        </p>
-                        <p className="d-flex align-items-center">
+                        </div>
+                        <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Teléfono: </strong>
                             {store.dataUser?.telefono
                                 ? store.dataUser.telefono
                                 : <Loader width="200px" height="15px" />}
-                        </p>
-                        <p className="d-flex align-items-center">
+                        </div>
+                        <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Descripción: </strong>
                             {store.dataUser?.descripcion
                                 ? store.dataUser.descripcion
                                 : <Loader width="300px" height="15px" />}
-                        </p>
+                        </div>
                     </div>
                 </div>
-
             </div>
 
             <div className="container mt-4">
@@ -142,6 +166,9 @@ const Perfil = () => {
                         <div className="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Mis agendas</button>
                             <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Métodos de pago</button>
+                            {store.dataUser && store.dataUser.is_psicologo && (
+                                <button className="nav-link nav-perfil" id="v-pills-especialidad-tab" data-bs-toggle="pill" data-bs-target="#v-pills-especialidad" type="button" role="tab" aria-controls="v-pills-especialidad" aria-selected="false">Mis especialidades</button>
+                            )}
                             {store.dataUser && !store.dataUser.is_psicologo && (
                                 <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
                             )}
@@ -155,8 +182,58 @@ const Perfil = () => {
                             <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <p><strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classNames that we use to style each element. These classNames control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</p>
                             </div>
+                            <div className="tab-pane fade" id="v-pills-especialidad" role="tabpanel" aria-labelledby="v-pills-especialidad-tab">
+                                <h4>Especialidades</h4>
+                                <div className="form-group">
+                                    <ul>
+                                        {Array.isArray(store.especialidadesPorProfesional) && store.especialidadesPorProfesional.length > 0 ? (
+                                            store.especialidadesPorProfesional.map((especialidad) => (
+                                                <li id="nombreEspecialidad" key={especialidad.id}>
+                                                    {especialidad.nombre}
+                                                    <i
+                                                        className="fas fa-times"
+                                                        style={{paddingLeft :"20px"}}
+                                                        onClick={() => actions.eliminarEspecialidadPorProfesional(especialidad.id)} 
+                                                    />
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li>No hay especialidades disponibles.</li>
+                                        )}
+                                    </ul>
+                                    {Array.isArray(store.especialidades) && Array.isArray(store.especialidadesPorProfesional) && store.especialidades
+                                        .filter(especialidad =>
+                                            !store.especialidadesPorProfesional.some(especialidadProfesional => especialidadProfesional.id === especialidad.id)
+                                        )
+                                        .map(especialidad => (
+                                            <div key={especialidad.id} className="form-check">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-check-input"
+                                                    id={`especialidad-${especialidad.id}`}
+                                                    checked={selectedEspecialidades.includes(especialidad.id)}
+                                                    onChange={() => handleEspecialidadChange(especialidad.id)}
+                                                />
+                                                <label className="form-check-label" htmlFor={`especialidad-${especialidad.id}`}>
+                                                    {especialidad.nombre}
+                                                </label>
+                                            </div>
+                                        ))}
+
+                                </div>
+                                <button
+                                    className="btn btn-primary mt-3"
+                                    onClick={saveEspecialidades}
+                                >
+                                    Guardar Especialidades
+                                </button>
+                            </div>
                             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                 <div className="container mt-3">
+
+                                </div>
+                                <div className="container mt-3">
+
                                     <FormSolicitudProf />
                                 </div>
                             </div>

@@ -162,7 +162,10 @@ section{
   font-size: 16px; /* Tamaño de fuente */
   transition: background 0.3s ease, transform 0.3s ease; /* Transiciones para el fondo y el tamaño */
 }
-
+.fas:hover{
+color: red;
+cursor: pointer;
+}
 /* Efecto hover para el botón custom-btn */
 .btn.custom-btn:hover {
   background: linear-gradient(90deg, rgba(54, 0, 51, 1), rgba(11, 135, 147, 1)); /* Fondo más intenso al pasar el ratón */

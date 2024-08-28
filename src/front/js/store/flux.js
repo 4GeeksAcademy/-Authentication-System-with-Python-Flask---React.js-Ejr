@@ -9,8 +9,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged: false,
 			psicologos: [],
 			dataUser: null,
-			imagenURL:  ""
-
+			imagenURL:  "",
+			especialidades:[],
+			profesionalesPorEspecialidad: [],
 		},
 		actions: {
 			solicitudProfesional: async (formData) => {
@@ -98,6 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (data.logged) {
 						setStore({
 							dataUser: {
+								id:data.id,
 								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
 								apellido: data.apellido || "Apellido no disponible",
 								correo: data.correo || "Correo no disponible",
@@ -163,10 +165,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Traemos psicologos de la base de datos
 			getPsicologos: async () => {
 				const store = getStore()
-
+				
+				
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/psicologos');
 					const data = await response.json();
+					console.log(data);
 					if (response.status === 200) {
 						// Actualiza solo la propiedad psicologos en el store
 						setStore({
@@ -381,11 +385,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return url
 			},
 			fetchEspecialidades : async () => {
-				const store = getStore();
-				console.log(store.token);
-				
+			
 				let token = localStorage.getItem("token")
-				console.log(token);
 				
 				try {
 					const response = await fetch(process.env.BACKEND_URL +`/especialidades`, {
@@ -406,29 +407,90 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error:', error);
 				}
 			},
-			saveUserSpecialties: async (especialidadesSeleccionadas) => {
-				const store = getStore();
+			saveEspecialidades : async (especialidadesSeleccionadas) => {
+				let token = localStorage.getItem("token")
+				const store=getStore()
+				console.log(store.dataUser);
+				console.log(especialidadesSeleccionadas);
+				
 				try {
-					const response = await fetch(process.env.BACKEND_URL + '/user/specialties', {
-						method: 'POST',
+					const response = await fetch(process.env.BACKEND_URL + '/save-especialidad', {
+					method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${store.token}`,  // JWT token if applicable
+							'Authorization': `Bearer ${token}`,
 						},
-						body: JSON.stringify({ specialties: especialidadesSeleccionadas }),
+						body: JSON.stringify({
+							
+							especialidades: especialidadesSeleccionadas, // Lista de nombres de especialidades
+						}),
 					});
 			
 					if (response.ok) {
-						console.log('Especialidades guardadas correctamente');
+						const data = await response.json();
+						console.log('Especialidades guardadas:', data);
 					} else {
-						console.error('Error al guardar las especialidades');
+						const errorData = await response.json();
+						console.error('Error al guardar especialidades:', errorData);
 					}
 				} catch (error) {
 					console.error('Error:', error);
 				}
 			},
+			
+			obtenerEspecialidadesPorProfesional: async () => {
+                const token = localStorage.getItem("token");
+                const url = `${process.env.BACKEND_URL}/especialidades-por-profesional`;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
 
-
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Especialidades obtenidas:', data);
+                        // Guardar los datos obtenidos en el store
+                        setStore({ especialidadesPorProfesional: data });
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error al obtener especialidades:', errorData);
+                    }
+                } catch (error) {
+                    console.error('Error al realizar la solicitud:', error);
+                }
+            },
+			eliminarEspecialidadPorProfesional: async (especialidadId) => {
+				const token = localStorage.getItem("token");
+				const url = `${process.env.BACKEND_URL}/especialidades-por-profesional?especialidad_id=${especialidadId}`;
+				console.log('URL de eliminación:', url);
+				console.log('Token JWT:', token);
+				
+				try {
+					const response = await fetch(url, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+					});
+			
+					if (response.ok) {
+						const data = await response.json();
+						console.log('Especialidad eliminada:', data.message);
+						// Opcional: Actualizar el estado de especialidades después de la eliminación
+					} else {
+						const errorData = await response.json();
+						console.error('Error al eliminar la especialidad:', errorData);
+					}
+				} catch (error) {
+					console.error('Error al realizar la solicitud de eliminación:', error.message || error);
+				}
+			},
 		}
 	};
 }
