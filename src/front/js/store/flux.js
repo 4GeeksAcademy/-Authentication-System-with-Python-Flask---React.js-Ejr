@@ -77,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getMeetsUser: async (emailUser) => {
-				// Token de autenticación para la API de Calendly. //INHABILITADO
+				// Token de autenticación para la API de Calendly.
 				const tokenHablemosUy = 'eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzI0NzkyMTY0LCJqdGkiOiI5ZDZkODRiZS1mMmE3LTQ1OGYtYjRlZS01MWE2ZGEwZWU5MWYiLCJ1c2VyX3V1aWQiOiJkMjc2ZjFlNy02M2RkLTQ0NDgtOTNhNi0zYjU5OThlZTRjN2EifQ.Eda1NgoxzOG4wnl7IhgNI2F_YqZJx38ia5P6HbzcSgZ6z20X6zLGXRLN2byLNdQafAIzy1AFoKGxiWfxgbT-yA';
 			
 				// URI para obtener los eventos programados en Calendly, filtrando por el email del usuario invitado.
@@ -436,7 +436,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return { success: false, error: data.msg || response.statusText };
 					}
 				} catch (error) {
-					return { success: false, error: 'La dirección de correo electrónico ya existe' };
+					console.log('en el catch', error)
+					Swal.fire({
+						title: 'Error!',
+						text: 'La dirección de correo electrónico ya existe',
+						icon: 'error',
+						confirmButtonText: 'Cool'
+					});
+					return false;
 				}
 			},
 			
