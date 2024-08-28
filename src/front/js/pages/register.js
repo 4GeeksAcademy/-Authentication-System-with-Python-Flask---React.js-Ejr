@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 import { Context } from "../store/appContext";
 import AlertSuccess from "../component/alertSuccess";
 import { useNavigate } from "react-router-dom";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import  CheckoutForm  from "../component/Checkout";
 
 export const Register = () => {
+  const stripePromise = loadStripe(process.env.API_KEY);
   const { store, actions } = useContext(Context);
   const {
     register,
@@ -184,6 +188,9 @@ export const Register = () => {
           </button>
         </div>
       </form>
+      <Elements stripe={stripePromise}>
+				<CheckoutForm />
+			</Elements>
     </div>
   );
 };

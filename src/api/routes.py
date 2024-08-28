@@ -8,10 +8,13 @@ from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash , check_password_hash
+import stripe
 
 
 api = Blueprint('api', __name__)
 
+# API KEY STRIPE
+stripe.api_key = "sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY"
 
 # Allow CORS requests to this API
 CORS(api)
@@ -273,3 +276,23 @@ def addProjects():
             db.session.commit()
             return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
     return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404
+
+
+
+@api.route('/create-payment', methods=['POST'])
+def create_payment():
+    try:
+        data = request.json 
+        intent = stripe.PaymentIntent.create(
+            amount= data.amount,
+            currency= data.currency,
+            description='Suscripción',
+            automatic_payment_methods={
+                'enabled': True
+            }
+        )
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
