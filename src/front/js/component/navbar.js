@@ -5,6 +5,7 @@ export const Navbar = () => {
   return (
     <div className="main-div">
       <h1>ThunderCats</h1>
+
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Dark background */}
         <div className="container-fluid">
           {/* Left Side */}
@@ -36,6 +37,7 @@ export const Navbar = () => {
                 <li><a className="dropdown-item" id="roleplayingGames" href="#">RPG</a></li>
                 <li><a className="dropdown-item" id="strategy" href="#">Strategy</a></li>
               </ul>
+
             </div>
             <button
               className="btn btn-secondary"
@@ -63,6 +65,7 @@ export const Navbar = () => {
         </div>
       </nav >
     </div >
+
   );
 };
 
