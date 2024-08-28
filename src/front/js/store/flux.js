@@ -114,12 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 				} catch (error) {
-					Swal.fire({
-						title: 'No puede acceder a ésta sección!',
-						text: 'Token inválido o inexistente',
-						icon: 'warning',
-						confirmButtonText: 'Entendido'
-					});
+					
 					return false;
 				}
 			},
@@ -283,6 +278,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//Verificamos el token recibido desde la URL del link de verificación del correo
+			verifyToken: async (token) => {
+				const options = {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				};
+			
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/verify_email/${token}`, options);
+					const data = await response.json();
+			
+					if (response.status === 200) {
+						return { success: true, message: "Token verificado con éxito." };
+					} else {
+						return { success: false, message: data.msg || response.statusText };
+					}
+				} catch (error) {
+					console.error('Error al verificar el token: ', error);
+					return { success: false, message: 'Ocurrió un error al verificar el token.' };
+				}
+			},
+
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, foto, correo, clave) => {
 				const options = {
@@ -301,39 +320,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 						clave: clave,
 					})
 				};
-				console.log(options.body)
+				console.log(options.body);
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
-
+			
 					if (response.status === 201) {
 						console.log(data);
-						Swal.fire({
-							text: "El registro del usuario se ha realizado con éxito.",
-							icon: "success"
-						});
-						return true;
+						return { success: true, data };
 					} else if (response.status === 400) {
-						throw new Error('Bad Request: ' + data.msg);
+						return { success: false, error: 'Bad Request: ' + data.msg };
 					} else if (response.status === 500) {
-						console.log(data)
-						throw new Error('Internal Server Error: ' + data.msg);
+						console.log(data);
+						return { success: false, error: 'Internal Server Error: ' + data.msg };
 					} else {
-
-						throw new Error(data.msg || response.statusText);
+						return { success: false, error: data.msg || response.statusText };
 					}
 				} catch (error) {
-					Swal.fire({
-						title: 'Error!',
-						text: 'La dirección de correo electrónico ya existe',
-						icon: 'error',
-						confirmButtonText: 'Cool'
-					});
-					return false;
-
-
+					return { success: false, error: 'La dirección de correo electrónico ya existe' };
 				}
 			},
+			
 			//cloudinary (IMAGENES)
 			uploadImage: async (data, cloud_name) => {
 				const actions = getActions()

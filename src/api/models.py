@@ -23,6 +23,7 @@ class User(db.Model):
     is_psicologo = db.Column(db.Boolean(), nullable=False)
     foto = db.Column(db.String(255), nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False)
+    correo_verificado = db.Column(db.Boolean(), default=False)
 
     # Relación muchos a muchos con Especialidades
     especialidades = db.relationship('Especialidades', secondary=user_especialidad, lazy='subquery',
@@ -44,6 +45,7 @@ class User(db.Model):
             "is_psicologo": self.is_psicologo,
             "foto": self.foto,
             "is_active": self.is_active,
+            "correo_verificado": self.correo_verificado,
             "especialidades": [especialidad.serialize() for especialidad in self.especialidades]
         }
 
