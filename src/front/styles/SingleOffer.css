@@ -5,19 +5,12 @@
 .card-single-offer{
     box-shadow: -1px 2px 20px 4px #d4c4c4;
 }
-.card-offer-company{
-    position: relative;
-    top: 1px;
-}
 .card-offer-description{
     position: relative;
     top: 10px;
 }
 
-.card-offer-details span{
-    position: relative;
-    top: 20px;
-}
+
 
 .salary-box{
     font-size: 0.7rem;
@@ -54,3 +47,4 @@
     bottom: 20px;
     cursor: pointer;
 }
+

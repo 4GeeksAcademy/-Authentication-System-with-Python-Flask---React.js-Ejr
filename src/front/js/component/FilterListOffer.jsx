@@ -7,7 +7,7 @@ export const FilterListOffer = () => {
         salary: [0, 100000],
         searchText: "",
         fecha_publicacion: "",
-        experience: [] // Initialize as an array
+        experience: [] 
     });
 
     const handleCheckboxChange = (event) => {
