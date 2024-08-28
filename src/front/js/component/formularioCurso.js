@@ -20,7 +20,7 @@ export const FormularioCurso = () =>{
 
     const handleSubmit = (e) =>{ 
         e.preventDefault() //evita que se recargue la página
-        actions.createContact(dataForm)
+        actions.crearCurso(dataForm)
         setDataForm({
             title: '',
             portada: '',
@@ -35,26 +35,26 @@ export const FormularioCurso = () =>{
 
     return(<div>
             <form className="w-50 mx-auto" onSubmit={handleSubmit}>
-			    <label>Title
-                    <input className="form-control" name="title" value={dataForm.title} placeholder="Full Name" onChange={handleChange} type="text"></input>
+			    <label>Título
+                    <input className="form-control" name="title" value={dataForm.title} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
                 <label>Portada
-                    <input className="form-control" name="portada" value={dataForm.portada} placeholder="Email" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="portada" value={dataForm.portada} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Resumen
-                    <input className="form-control" name="resumen" value={dataForm.resumen} placeholder="Phone" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
                 <label>Categoría
-                    <input className="form-control" name="categoria" value={dataForm.categoria} placeholder="Address" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="categoria" value={dataForm.categoria} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
                 <label>Nivel
-                    <input className="form-control" name="nivel" value={dataForm.nivel} placeholder="Address" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="nivel" value={dataForm.nivel} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
                 <label>Idioma
-                    <input className="form-control" name="idioma" value={dataForm.idioma} placeholder="Address" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="idioma" value={dataForm.idioma} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
                 <label>Módulos
-                    <input className="form-control" name="modulos" value={dataForm.modulos} placeholder="Address" onChange={handleChange} type="text"></input>
+                    <input className="form-control" name="modulos" value={dataForm.modulos} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
                 <input className="btn btn-primary" value="enviar" type="submit"/>
             </form>

@@ -73,7 +73,7 @@ export const Login = () => {
                         required
                     />
                 </label>
-                <label>Password
+                <label>Contraseña
                     <div className="contenedor-password">
                         <input
                             className="form-control"
