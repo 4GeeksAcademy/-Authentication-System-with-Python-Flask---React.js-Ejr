@@ -14,7 +14,24 @@ export const Register = () => {
         repeatPassword: '',
     });
 
-    const navigate = useNavigate();
+
+  const navigate = useNavigate();
+
+
+	const [showPassword, setShowPassword] = useState(false);
+	const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+
+
+	const togglePasswordVisibility = (type) => {
+		if (type === 'password') {
+			setShowPassword(!showPassword);
+		} else if (type === 'repeatPassword') {
+			setShowRepeatPassword(!showRepeatPassword);
+		}
+	}
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -192,25 +209,53 @@ export const Register = () => {
 						<input type="email" className="form-control" id="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
 					</div>
 
-					<div className="register-form-detail">
+					<div className="register-form-detail position-relative">
 						<label htmlFor="password" className="form-label"></label>
-						<input type="password" className="form-control" id="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+						<input
+							type={showPassword ? "text" : "password"} // Cambia el tipo basado en el estado
+							className="form-control"
+							id="password"
+							name="password"
+							placeholder="Password"
+							value={formData.password}
+							onChange={handleChange}
+						/>
+						<i
+							className={`fa-solid ${showPassword ? "fa-eye" : "fa-eye-slash"} position-absolute`}
+							style={{ right: '25px', top: '68%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+							onClick={() => togglePasswordVisibility('password')}
+						></i>
 					</div>
 
-					<div className="register-form-detail">
+					<div className="register-form-detail position-relative">
 						<label htmlFor="repeatPassword" className="form-label"></label>
-						<input type="password" className="form-control" id="repeatPassword" name="repeatPassword" placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} />
+						<input
+							type={showRepeatPassword ? "text" : "password"} // Cambia el tipo basado en el estado
+							className="form-control"
+							id="repeatPassword"
+							name="repeatPassword"
+							placeholder="Repeat Password"
+							value={formData.repeatPassword}
+							onChange={handleChange}
+						/>
+						<i
+							className={`fa-solid ${showRepeatPassword ? "fa-eye" : "fa-eye-slash"} position-absolute`}
+							style={{ right: '25px', top: '68%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+							onClick={() => togglePasswordVisibility('repeatPassword')}
+						></i>
 					</div>
+
+
 
 					<button type="submit" className="btn-register btn-primary btn-register mt-6">Submit</button>
 					{error && <p className="text-danger">Todos los campos son obligatorios y las contraseñas deben coincidir</p>}
 				</form>
 				<p>
-					<Link className="link-opacity-50-hover not-a-member" to="/login">
+					<Link className="link-opacity-50-hover not-a-member" to="/Login">
 						Already have an account? <span>Login</span>
 					</Link>
 				</p>
 			</div>
-		</div>
+		</div >
 	);
 };
