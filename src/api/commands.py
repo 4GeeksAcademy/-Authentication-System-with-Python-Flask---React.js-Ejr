@@ -41,8 +41,8 @@ def setup_commands(app):
         # db.create_all()
         try:
             role = [
-                    Role(name="Admin"),
                     Role(name="User"),
+                    Role(name="Admin"),
                     Role(name="Professional")
                     ]
             db.session.add_all(role)

@@ -1,18 +1,18 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app # type: ignore
 from api.models import db, User, Product, Profession, UserProfession, Favorite, Recipe
 from api.utils import generate_sitemap, APIException
-from flask_cors import CORS
-from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
-import mercadopago
+from flask_cors import CORS # type: ignore
+from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token # type: ignore
+import mercadopago # type: ignore
 import json, os
-import cloudinary 
-import cloudinary.uploader
+import cloudinary # type: ignore
+import cloudinary.uploader # type: ignore
 sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 api = Blueprint('api', __name__)
-from flask import render_template
+from flask import render_template # type: ignore
 # Allow CORS requests to this API
 CORS(api)
 
@@ -86,7 +86,7 @@ def private():
     #con la identidad valida del usuario hago a User una consulta para retornar una respuesta
     #con la informacion de usuario propiamente dicho
     current_user = get_jwt_identity() #verifica si mi correo tiene una identidad
-    print(current_user)
+    # print(current_user)
     return jsonify(logged_in_as=current_user), 200 #me retorna current_user= email
 
 @api.route("/valid_token", methods=["GET"])
@@ -97,7 +97,7 @@ def valid_token():
     #con la informacion de usuario propiamente dicho
     current_user = get_jwt_identity() #verifica si mi correo tiene una identidad
     user_exist = User.query.filter_by(email = current_user).first()
-    print(user_exist)
+    # print(user_exist)
     # print(current_user)
     if user_exist is None:
         return jsonify (logged = False), 404
@@ -127,7 +127,7 @@ def get_user(id):
         return jsonify({"msj":"El usuario no existe"}), 404
     # print(especific_user)
     query_result= especific_user.serialize()
-    print(query_result)
+    # print(query_result)
     return jsonify(query_result), 200
 
 #ENDPOINT DELETE
@@ -190,7 +190,7 @@ def get_personal_trainers():
 @api.route('/users/nutritionists', methods=['GET'])
 def get_nutritionists():
     profession = Profession.query.filter(Profession.name.ilike('nutricionista')).first()
-    print(profession)
+    # print(profession)
     if not profession:
         return jsonify({"error": "Profesión 'Nutricionista' no encontrada"}), 404
     
@@ -226,7 +226,7 @@ def get_product(id):
         return jsonify({"msj":"Producto no encontrado"}), 404
     # print(especific_product)
     query_result= especific_product.serialize()
-    print(query_result)
+    # print(query_result)
     return jsonify(query_result), 200
 
 # GET product image
@@ -386,7 +386,7 @@ def home():
 @api.route('/upload', methods=['POST'])
 @jwt_required()
 def upload_image():
-    print(request.files)
+    # print(request.files)
     file = request.files['image']
     result = cloudinary.uploader.upload(file)
     return result, 200

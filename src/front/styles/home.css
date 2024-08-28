@@ -32,14 +32,6 @@
 }
 
 /* *************____PARALLAX__EFFECT____***************** */
-/* .parallax-container-1 {
-    background: url('https://img.freepik.com/premium-vector/green-big-diagonal-striped-line-vector-background_682859-484.jpg?ga=GA1.1.100666814.1722880155&semt=ais_hybrid');
-}
-
-.parallax-container-2 {
-    background: url('https://t4.ftcdn.net/jpg/04/23/41/61/240_F_423416137_voueqROw16TIR7dZ7WWNtwvcZ1m2rMEd.jpg');
-} */
-
 .home-container .parallax {
     background: url('https://img.freepik.com/premium-vector/abstract-green-stripes-vector-background_88343-4632.jpg?w=740');
     background-attachment: fixed;
@@ -95,7 +87,6 @@
     flex-wrap: wrap;
 }
 
-
 .home-container section .img-container img {
     border-radius: 10px;
     margin: auto 0;
@@ -115,17 +106,58 @@
     background: var(--color-cream);
 }
 
-.home-container .more-link{
+.home-container .more-link {
     color: var(--color-forest);
     text-decoration: none;
 }
 
+/* LISTA DE PRODUCTOS */
+
+.products-home-container {
+    width: min-content;
+    height: min-content;
+    display: flex;
+}
+
+.products-home-container .product-card-container {
+    box-shadow: 0px 1px 4px -1px var(--color-forest);
+    background: var(--color-white);
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+    max-width: 180px;
+    min-width: 180px;
+    align-items: center;
+    transition: 0.4s ease;
+}
+
+.products-home-container .product-card-container .card-link-button {
+    background: var(--color-white);
+    border-radius: 10px;
+    border: none;
+}
+
+.products-home-container .product-card-container .image-container {
+    max-width: 200px;
+    min-width: 200px;
+    overflow: hidden;
+    padding: 1em;
+    padding-bottom: 0;
+}
+
+.products-home-container .product-card-container .image-container img {
+    object-fit: contain;
+    aspect-ratio: 1;
+}
+
 /* *************____RESPONSIVE____***************** */
-
-
 @media (width > 1400px) {
     .home-container .banner h1 {
         font-size: 6rem;
+    }
+    .products-home-container .product-card-container {
+        max-width: 220px;
+        min-width: 220px;
     }
 }
 
@@ -167,10 +199,30 @@
         display: -webkit-box;
         -webkit-box-orient: vertical;
         overflow: hidden;
-    }    
+    }
 
     .home-container .sports-title {
         margin-top: 1em;
+    }
+
+    .products-home-container {
+        width: min-content;
+        height: min-content;
+        display: grid;
+        grid-template-columns: 200px auto;
+        grid-row: auto auto;
+        grid-column-gap: 20px;
+    }
+
+    .products-home-container .product-card-container {
+        max-width: 200px;
+        min-width: 200px;
+    }
+    
+    .products-home-container .product-card-container .image-container {
+        max-width: 200px;
+        min-width: 200px;
+        margin: auto;
     }
 }
 
@@ -183,10 +235,41 @@
     .home-container .banner h1 {
         font-size: 2rem;
     }
+
+    .products-home-container {
+        grid-template-columns: 160px auto;
+    }
+
+    .products-home-container .product-card-container {
+        max-width: 160px;
+        min-width: 160px;
+    }
+
+    .products-home-container .product-card-container .image-container {
+        max-width: 140px;
+        min-width: 140px;
+        margin: auto;
+    }
 }
 
 @media (width < 400px) {
     .home-container .banner h1 {
         font-size: 1.4rem;
+    }
+
+    .products-home-container {
+        grid-template-columns: 140px auto;
+    }
+
+    .products-home-container .product-card-container {
+        max-width: 140px;
+        min-width: 140px;
+    }
+    
+
+    .products-home-container .product-card-container .image-container {
+        max-width: 120px;
+        min-width: 120px;
+        margin: auto;
     }
 }
