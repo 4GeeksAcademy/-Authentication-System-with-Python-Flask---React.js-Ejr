@@ -54,4 +54,15 @@
     opacity: 0.5; /* Muestra los botones con algo de opacidad cuando el carrusel es hover */
     pointer-events: auto; /* Habilita el evento de clic en los botones cuando el carrusel es hover */
 }
+.text-overlay {
+    position: absolute; /* Posición absoluta respecto al contenedor */
+    top: 0%; /* Posiciona en el centro vertical */
+    left: 50%; /* Posiciona en el centro horizontal */
+    transform: translate(-50%, -50%); /* Centra el texto */
+    color: white; /* Color del texto */
+    font-size: 30px; /* Tamaño del texto */
+    font-weight: bold; /* Peso del texto */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para mejor legibilidad */
+    text-align: center; /* Alineación central */
+}
 
