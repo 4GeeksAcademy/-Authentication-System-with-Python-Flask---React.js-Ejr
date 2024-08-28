@@ -22,7 +22,7 @@ export const ListOffers = ({ searchTerm }) => {
 
     return (
         <div className="list-offer-container">
-            <div className="row d-flex flex-column">
+            <div className="row d-flex flex-column g-2">
                 {searchOffers.length > 0 ? (
                     searchOffers.map((offer, index) => (
                         <div className="col list-offer-box" key={index}>
@@ -36,7 +36,7 @@ export const ListOffers = ({ searchTerm }) => {
                         </div>
                     ))
                 ) : (
-                    <p className="no-offers-section m-auto text-center shadow-lg">
+                    <p className="no-offers-section text-center shadow-lg">
                         No hay ofertas disponibles
                     </p>
                 )}

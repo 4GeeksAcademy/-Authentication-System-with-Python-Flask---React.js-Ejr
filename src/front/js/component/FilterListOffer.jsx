@@ -99,7 +99,7 @@ export const FilterListOffer = () => {
                 </p>
             </div>
 
-            <div>
+            <div className="d-flex flex-column">
                 <h3>Experiencia</h3>
                 <label>
                     <input

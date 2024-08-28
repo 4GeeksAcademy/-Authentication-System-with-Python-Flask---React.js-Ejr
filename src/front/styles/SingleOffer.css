@@ -10,8 +10,6 @@
     top: 10px;
 }
 
-
-
 .salary-box{
     font-size: 0.7rem;
     text-decoration: underline;
@@ -28,7 +26,7 @@
 }
 
 .btn-single-offer .btn:hover{
-    background-color: rgb(175, 206, 225);
+    background-color: rgb(135, 193, 229);
     
 }
 .btn-company{
