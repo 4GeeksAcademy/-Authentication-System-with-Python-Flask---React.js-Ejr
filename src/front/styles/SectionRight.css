@@ -17,6 +17,7 @@
 
 }
 .section-box{
+    margin: auto;
     position: relative;
     left: 50px;
     top: 150px;
@@ -30,12 +31,13 @@
 
 }
 .no-offers-section{
+    margin: auto;
+    width: 400px;
     position: relative;
-    bottom: 55px;
+    bottom: 70px;
     border: none;
     border-radius: 5px;
-    background-color: white;
-    opacity: 0.45; 
+    opacity: 0.85; 
 }
 
 .button-and-rating button{
