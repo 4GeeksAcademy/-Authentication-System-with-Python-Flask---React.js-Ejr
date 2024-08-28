@@ -11,11 +11,12 @@ class User(db.Model):
         address = db.Column(db.String(80), unique=False, nullable=False)
         phone = db.Column(db.String(80), unique=False, nullable=False)
         is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-        calendly_url = db.Column(db.String(120), nullable=True)
+        calendly_name = db.Column(db.String(120), nullable=True)
         description = db.Column(db.String(2000), nullable=True)
         favorites = db.relationship("Favorite", backref="user")
         cart = db.relationship("Cart", backref="user")
         user_professions = db.relationship("UserProfession", backref="user", lazy='dynamic')
+        # calendly=db.relationship("UserCalendly")
 
         def __repr__(self):
             return f'<User {self.email}>'
@@ -29,10 +30,15 @@ class User(db.Model):
             "address":self.address,
             "phone": self.phone,
             "is_active":self.is_active,
-            "calendly_url": self.calendly_url,
+            "calendly_name": self.calendly_name,
             "description": self.description,
             "professions":[user_profession.serialize() for user_profession in self.user_professions.all()]
         }
+        # def serialize_nutritionist(self):
+        #      user=self.serialize()
+        #      user["calendly_name"] = self.calendly.name
+        #      return user
+        
 class Role(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(120), unique=True, nullable=False)
@@ -75,6 +81,24 @@ class UserProfession(db.Model):
             "user_id": self.user_id,
             "profession": self.profession.serialize()
         }
+#   #Agenda del usuario  
+# class UserCalendly(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
+#     calendly_name = db.Column(db.String(128), nullable=False, unique=True)
+#     users = db.relationship("User", back_populates="calendly", lazy=True)
+
+
+#     def __repr__(self):
+#         return f'<UserCalendly {self.id}>'
+
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "user_id": self.user_id,
+#             "calendly_name": self.calendly_name
+#         }
+
 
 #  id	id-user	id-profesion	importe       
 class Fee(db.Model):
