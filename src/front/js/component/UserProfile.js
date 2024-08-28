@@ -4,11 +4,15 @@ import "../../styles/UserProfile.css";
 const UserProfile = () => {
     const [userData, setUserData] = useState({
         avatar: null,
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@example.com",
-        currentPassword: "",
-        newPassword: ""
+        firstName: "Dário",
+        lastName: "Duarte",
+        email: "dario@gmail.com",
+        currentPassword: "dario123",
+        newPassword: "",
+        address: "Calle del Dario, N69",
+        city: "Guadalajara",
+        country: "España",
+        eventStyle: "Latino"
     });
 
     const handleInputChange = (e) => {
@@ -93,6 +97,34 @@ const UserProfile = () => {
                             name="newPassword"
                             placeholder="Nueva contraseña"
                             value={userData.newPassword}
+                            onChange={handleInputChange}
+                        />
+                        <input
+                            type="text"
+                            name="address"
+                            placeholder="Dirección"
+                            value={userData.address}
+                            onChange={handleInputChange}
+                        />
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder="Ciudad"
+                            value={userData.city}
+                            onChange={handleInputChange}
+                        />
+                        <input
+                            type="text"
+                            name="country"
+                            placeholder="País"
+                            value={userData.country}
+                            onChange={handleInputChange}
+                        />
+                        <input
+                            type="text"
+                            name="eventStyle"
+                            placeholder="Estilo del Evento"
+                            value={userData.eventStyle}
                             onChange={handleInputChange}
                         />
                         <button type="submit">Guardar Cambios</button>
