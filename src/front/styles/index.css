@@ -183,3 +183,60 @@ cursor: pointer;
   outline: none; /* Quita el contorno por defecto */
   box-shadow: 0 0 0 2px rgba(11, 135, 147, 0.5); /* Añade una sombra alrededor del botón al estar en foco */
 }
+/*Estilos flechas carrusel*/
+.slick-next {
+  visibility: visible;
+  right: 50px !important;
+  height: 150px !important;
+  width: 150px !important;
+}
+
+.slick-next::before {
+  content: '\f054' !important; /* Código del ícono de Font Awesome para el "chevron-right" */
+  font-family: 'Font Awesome 6 Free' !important; /* Asegúrate de usar el nombre correcto de la fuente */
+  font-weight: 600 !important; /* El peso de la fuente puede ser necesario dependiendo del ícono */
+  font-size: 60px !important; /* Tamaño del ícono */
+  color: rgba(153, 145, 145, 0.479) !important; /* Color del ícono */
+  display: inline-block !important;
+  width: 150px !important; /* Ancho del área del ícono */
+  height: 150px !important; /* Alto del área del ícono */
+  text-align: center !important; /* Centra el ícono */
+  line-height: 150px !important; /* Alinea el ícono verticalmente */
+  font-style:normal !important;
+}
+.slick-prev {
+  visibility: visible !important;
+  left: 50px !important;
+  height: 150px !important;
+  width: 150px !important;
+  z-index: 10 !important; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.slick-prev::before {
+  content: '\f053' !important; /* Código del ícono de Font Awesome para el "chevron-left" */
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 600 !important;
+  font-size: 60px !important;
+  color: rgba(153, 145, 145, 0.479) !important;
+  display: inline-block !important;
+  width: 150px !important;
+  height: 150px !important;
+  text-align: center !important;
+  line-height: 150px !important;
+  font-style: normal !important;
+}
+
+/* Media query para pantallas de 767px o menos */
+@media (max-width: 767px) {
+  .slick-next {
+    right: -30px !important; /* Ajusta el valor según sea necesario */
+    visibility: hidden !important;
+  }
+
+  .slick-prev {
+    left:-30px !important; /* Ajusta el valor según sea necesario */
+    visibility: hidden !important;
+  }
+}
+
+
