@@ -6,11 +6,9 @@ import ImgProN from "../../../../public/images/img-profesional-n.png";
 
 const NutricionistCard = ({ id, name }) => {
     const {actions, store} = useContext(Context)
-    const {nutricionist} = store;
 
     let image_url = "";
     let profession = "";
-    let age = "";
 
     useEffect(() => {
         actions.getUserById(id);
@@ -24,7 +22,6 @@ const NutricionistCard = ({ id, name }) => {
             </div>
             <div className="card-body">
                 <h4 className="card-title">{name || "Nombre"}</h4>
-                <h5 className="card-text">{age || "Edad"}</h5>
                 <h5 className="card-text">{profession || `Acerca de ${name}...`}</h5>
             </div>
             <div className='card-footer'>
