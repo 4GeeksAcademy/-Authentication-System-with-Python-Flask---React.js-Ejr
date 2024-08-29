@@ -2,9 +2,8 @@ import React, { useState, useContext } from "react";
 import "../../styles/CardOffer.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { ModalJobApply } from "./ModalJobApply.jsx";
+import { FcExpired } from "react-icons/fc";
 
 export const CardOffer = ({ id }) => {
     const { actions, store } = useContext(Context);
@@ -19,12 +18,8 @@ export const CardOffer = ({ id }) => {
         navigate(`/singleoffer/${id}`);
     };
 
-    const handleSaveClick = () => {
-        console.log('Guardar oferta', id);
-    };
-
     const handleApplyClick = async () => {
-        if(store.user && store.user.profile_programador){
+        if(!store.user || !store.user.profile_programador){
             setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
             setModalType('warning');
             setIsModalOpen(true);
@@ -57,13 +52,13 @@ export const CardOffer = ({ id }) => {
                     </div>
                     <div className="col-9 header-box d-flex flex-column">
                         <h2 className="card-offer-title">{offer.name}</h2>
-                        <span className="card-offer-company">Tech-company - España</span>
+                        <span className="card-offer-company"> nombreEmpresa - {offer.localidad}</span>
                         <div className="card-offer-description text-muted">
                             <p className="text-description">{offer.descripcion}</p>
                         </div>
                         <div className="data-footer">
                             <ul className="card-offer-details d-flex text-muted">
-                                <li className="list-footer-details">Expira {offer.plazo}</li>
+                                <li className="list-footer-details"><FcExpired className="exp-icon"/> {offer.plazo}</li>
                                 <li className="list-footer-details">{offer.modalidad + " | "}</li>
                                 <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
                                 <li className="list-footer-details">{offer.experiencia_minima}</li>
@@ -79,11 +74,6 @@ export const CardOffer = ({ id }) => {
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-1 save-icon">
-                        <button className="btn btn-save" onClick={handleSaveClick}>
-                            <FontAwesomeIcon icon={faBookmark} />
-                        </button>
                     </div>
                 </div>
             </div>

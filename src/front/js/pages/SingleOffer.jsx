@@ -28,7 +28,7 @@ export const SingleOffer = () => {
                                 </div>
                                 <div className="d-flex flex-column offer-header">
                                     <h2 className="mb-0 ">{offer.name}</h2>
-                                    <span className="text-muted">{offer.company}<span className="ms-3">{offer.location}</span></span>
+                                    <span className="text-muted">{offer.fecha_publicacion}<span className="ms-3">{offer.localidad}</span></span>
                                     <div className="salary-box">
                                         <span className="text-success">{offer.salario}</span>
                                     </div>
@@ -40,8 +40,23 @@ export const SingleOffer = () => {
                                     <li>{offer.modalidad}</li>
                                     <li>{offer.experiencia_minima}</li>
                                     <li>{offer.salario}</li>
-                                    <li>{offer.palazo}</li>
+                                    <li>{offer.plazo}</li>
                                 </ul>
+                                <ul className="text-muted">
+                                    <li>{offer.idiomas}</li>
+                                    <li>{offer.tipo_contrato}</li>
+                                    <li>{offer.horario}</li>
+                                    <li>{offer.estudios_minimos}</li>
+                                </ul>
+                            </div>
+                            <hr />
+                            <div className="requisitos-minimos-single-offer">
+                                <div className="text-secondary fw-bold fs-2 text-decoration-underline">
+                                    <h3>Requisitos Minimos</h3>
+                                </div>
+                                <p className="text-muted text-start">
+                                    {offer.requisitos_minimos}
+                                </p>
                             </div>
                             <hr />
                             <div className="data-single-offer-container">
