@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { Context } from '../store/appContext'
 
-export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen }) => {
+export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen, handleAddExercises }) => {
   const { store, actions } = useContext(Context)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -269,7 +269,7 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
             })}
           </div>
 
-          <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
+          <div className="mt-4 w-full flex gap-4 flex-col-reverse items-center sm:flex-row sm:w-fit self-end">
             <button
               type="button"
               onClick={() => setCancelRoutineCreation(true)}

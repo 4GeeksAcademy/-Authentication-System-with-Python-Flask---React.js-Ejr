@@ -304,7 +304,7 @@ export const MultiStepForm = () => {
       {/* form steps */}
       <StepsCount step={step} handleProgressBar={handleProgressBar} handleStepCircle={handleStepCircle} handleStepText={handleStepText} />
 
-      <FormSteps step={step} setCancelRoutineCreation={setCancelRoutineCreation} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} />
+      <FormSteps step={step} setCancelRoutineCreation={setCancelRoutineCreation} formData={formData} setIsFinishModalOpen={setIsFinishModalOpen} handleChooseDays={handleChooseDays} handleCreateRoutine={handleCreateRoutine} handleInputChange={handleInputChange} filteredExercises={filteredExercises} addedExercises={addedExercises} selectedCategory={selectedCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSelectedCategory={setSelectedCategory} handleOpenModal={handleOpenModal} isExerciseSelected={isExerciseSelected} handleAddExercises={handleAddExercises} />
 
       <Modal
         isOpen={isModalOpen}
@@ -367,7 +367,7 @@ export const MultiStepForm = () => {
             </div>
           </div>
         </form>
-          <button type="submit" className="absolute bottom-4 text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
+          <button onClick={handleFormSubmit} type="submit" className="absolute bottom-4 text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
             <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
             Guardar ejercicio
           </button>
