@@ -144,8 +144,8 @@ def signup():
 
 
 
-# Configura tu "clave_Secreta" por una real de la API de Stripe
-stripe.api_key = "clave_Secreta"
+# "clave_Secreta" real de la API de Stripe (solo para pruebas)
+stripe.api_key = "sk_test_51PtGSIRstQVhPzXOTqBtVc9HQgMmFpYjNvUJY8bi3T7oCHEao3S6C2DcI6DJ4c0faadkaWOXerS9S6X8ySuUyWVg00A7rVCnUf"
 
 @api.route('/pagoCursos', methods=['POST'])
 def create_pagoCurso():

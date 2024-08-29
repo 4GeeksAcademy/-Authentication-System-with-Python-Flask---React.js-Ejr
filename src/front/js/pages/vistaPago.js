@@ -1,24 +1,30 @@
-//VistaPago: Gestiona la cantidad y obtiene el clientSecret desde el backend. Luego redirige al usuario a FormularioPago con el clientSecret y la cantidad.
-//Al hacer clic en el botón de pago, realiza una solicitud POST al backend para obtener un clientSecret y luego redirige al usuario a FormularioPago con el clientSecret y la cantidad.
+//VistaPago:
+
+//Manejo del Pago: La función handleButtonClick se encarga de hacer una solicitud al backend para obtener el clientSecret.
+//luego redirige a FormularioPago con clientSecret y cantidad en el estado de la ubicación.
+
 
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../styles/vistaPago.css";
+import FormularioPago from '../component/formularioPago';
 
 //para el pago y redigirse a completoDisWeb.js
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js'; // Cargar el componente de Stripe para la integración
-import FormularioPago from '../component/formularioPago';
+
 
 
 // Tu clave pública de Stripe (reemplazar 'clave_Secreta' con tu clave real)
-const stripePromise = loadStripe('tu_clave_publica_de_stripe');
+const stripePromise = loadStripe('pk_test_51PtGSIRstQVhPzXOMhApeJt2Ky7Lgo1APlpL0C0b8stfFCrXYGa24t7ArYUEpWPc1wuorRwmWKwoOxSTdSS7wi7E00UXHgWo9o');
 
 // Componente principal de VistaPago
 function VistaPago() {
-    const [cantidad, setCantidad] = useState(100); // Cantidad inicial por defecto
-    const [clientSecret, setClientSecret] = useState(null); // Estado para almacenar el clientSecret (token) del backend
-    const navigate = useNavigate(); // Hook para redirigir a la pagina completoDisWeb.js
+    const location = useLocation(); // Para obtener el estado de la ubicación actual
+    const navigate = useNavigate(); // Hook para navegación
+    const [clientSecret, setClientSecret] = useState('');
+    const [cantidad, setCantidad] = useState(0); // Estado para la cantidad
+    const curso = location.state?.curso; // Obtener el curso desde la ubicación
 
 
     //Cuando el usuario hace clic en el botón de pago, VistaPago solicita un clientSecret al backend y pasa este clientSecret junto con la cantidad a formularioPago.js
@@ -26,12 +32,12 @@ function VistaPago() {
         // Función asíncrona que maneja el BOTON de pago.
           try {
               // solicitud  POST a la ruta /pagoCursos en tu backend, enviando la cantidad como JSON.
-              const response = await fetch('/pagoCursos', {
+              const response = await fetch('${process.env.BACKEND_URL}/pagoCursos', {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json'
                   },
-                  body: JSON.stringify({ cantidad })  // Enviar la cantidad desde el frontend
+                  body: JSON.stringify({ cantidad: curso.precio })  // Pasar el precio del curso
               });
 
               // Obtener la respuesta JSON
@@ -127,7 +133,9 @@ function VistaPago() {
                     <div className="card-footer text-end">
                         <button type="button" className="btn btn-secondary">Close</button>
                         {/* Botón de pago que llama a handleButtonClick */}
-                        <button type="button" className="btn btn-primary" onClick={handleButtonClick}>Pagar {cantidad} EUR</button>
+                        <button type="button" className="btn btn-primary" onClick={handleButtonClick}>
+                            Pagar {curso?.precio} EUR
+                        </button>
                     </div>
                 </div>
             </div>
