@@ -693,6 +693,10 @@ video {
   bottom: 0px;
 }
 
+.bottom-4{
+  bottom: 1rem;
+}
+
 .end-0{
   inset-inline-end: 0px;
 }
@@ -2705,10 +2709,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .sm\:h-80{
     height: 20rem;
-  }
-
-  .sm\:w-1\/2{
-    width: 50%;
   }
 
   .sm\:w-11\/12{

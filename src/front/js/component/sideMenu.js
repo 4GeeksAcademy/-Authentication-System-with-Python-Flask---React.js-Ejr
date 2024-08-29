@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useLocation } from "react-router-dom";
 import { LogoGymtrack } from "./logoGymtrack";
 
-import { HomeIcon, BarbellIcon, ChartbarIcon, StretchingIcon, ScaleIcon, LoginIcon, SignUpIcon, CloseIcon } from "./icons";
+import { HomeIcon, BarbellIcon, ChartbarIcon, StretchingIcon, ScaleIcon, LoginIcon, SignUpIcon, CloseIcon, ProfileIcon } from "./icons";
 
 export const SideMenu = () => {
   const { store, actions } = useContext(Context);
@@ -49,7 +49,7 @@ export const SideMenu = () => {
     {
       to: '/profile',
       label: 'Perfil',
-      icon: <LoginIcon strokeWidth={location.pathname === '/profile' ? '2' : '1.5'} />
+      icon: <ProfileIcon strokeWidth={location.pathname === '/profile' ? '2' : '1.5'} />
     }
   ];
 

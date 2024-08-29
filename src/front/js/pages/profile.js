@@ -152,7 +152,7 @@ export const Profile = () => {
                     <span className="sr-only">Loading...</span>
                   </div>
                 </>
-                : new Date(store.currentUser.user.birthday).toLocaleDateString("en-GB", {
+                : new Date(store.currentUser.user.birthday).toLocaleDateString("es-UY", {
                   day: "2-digit",
                   month: "short",
                   year: "numeric"
@@ -162,15 +162,16 @@ export const Profile = () => {
         </div>
         <div className="grid gap-1">
           <div className="text-xs font-bold  text-neutral-400">Sexo</div>
-          <div className="text-lg">{!store.currentUser
-            ? <>
+          <div className="text-lg">
+            {!store.currentUser ? (
               <div role="status" className="max-w-sm animate-pulse">
                 <div className="h-6 bg-neutral-200 rounded-full dark:bg-neutral-700 w-32 mt-3"></div>
                 <span className="sr-only">Loading...</span>
               </div>
-            </>
-            : store.currentUser.user.sex
-          }</div>
+            ) : store.currentUser.user.sex === 'male' ? 'Masculino'
+              : store.currentUser.user.sex === 'female' ? 'Femenino'
+                : 'Desconocido'}
+          </div>
         </div>
         <div className="grid gap-1">
           <div className="text-xs font-bold  text-neutral-400">Peso</div>

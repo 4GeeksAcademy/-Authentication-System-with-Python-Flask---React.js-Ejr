@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import translations from '../utils/translations';
 
 const getState = ({ getStore, getActions, setStore }) => {
     return {
@@ -688,6 +689,61 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
+
+            translateCategory: (categoryId) => {
+                return translations.categories[categoryId] || translations.categories['Unknown'];
+            },
+
+             fetchExercisesWithImages: async () => {
+                try {
+                    const exercisesUrl = 'https://wger.de/api/v2/exercise?language=4&limit=999';
+                    const exercisesResponse = await axios.get(exercisesUrl);
+                    const exercisesData = exercisesResponse.data.results.map(exercise => ({
+                        id: exercise.id,
+                        name: exercise.name,
+                        exercise_base: exercise.exercise_base,
+                        description: exercise.description,
+                        category: getActions().translateCategory(exercise.category),
+                    }));
+
+                    const imagesUrl = 'https://wger.de/api/v2/exerciseimage/';
+                    const imagesResponse = await axios.get(imagesUrl);
+                    const imagesData = imagesResponse.data.results.reduce((acc, image) => {
+                        const baseId = image.exercise_base;
+                        if (!acc[baseId]) {
+                            acc[baseId] = [];
+                        }
+                        acc[baseId].push(image.image);
+                        return acc;
+                    }, {});
+
+                    const processedExercises = exercisesData.map(exercise => {
+                        const images = imagesData[exercise.exercise_base] || [];
+                        const selectedImage = images.length > 0 ? images[0] : null;
+
+                        return {
+                            /*       id: exercise.id, */
+                            name: exercise.name,
+                            description: exercise.description,
+                            images: selectedImage,
+                            category: exercise.category,
+                        };
+                    });
+
+                    console.log("Ejercicios procesados:", processedExercises);
+
+                    // Guardar en el store
+                    setStore({
+                        exercisesWithImages: processedExercises.filter(exercise => exercise.images !== null),
+                        exercisesWithoutImages: processedExercises.filter(exercise => exercise.images === null),
+                    });
+                    return true;
+                } catch (error) {
+                    console.log('Error fetching exercises with images and categories:', error);
+                    return false;
+                }
+            },
+
             // PUT EXERCISE / ACTUALIZAR EJERCICIO
             putExercise: async (id, name, category, description, image) => {
                 try {

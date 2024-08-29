@@ -26,12 +26,14 @@ class Day(enum.Enum):
     SABADO=6
 
 class Category(enum.Enum):
-    PECHO=1
-    ESPALDA=2
-    PIERNA=3
-    HOMBRO=4
-    TRAPECIO=5
-    ABDOMEN=6
+    BRAZOS = 8
+    PIERNAS = 9
+    ABDOMINALES = 10
+    PECHO = 11
+    ESPALDA = 12
+    PANTORRILLAS = 14
+    HOMBROS = 13
+    CARDIO = 15
 
 # USUARIO
 class User(db.Model):
@@ -161,7 +163,7 @@ class Exercise(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     category = db.Column(db.Enum(Category), nullable=False) #ENUM
     description = db.Column(db.String, nullable=False)
-    image = db.Column(db.String, nullable=False)
+    image = db.Column(db.String, nullable=True)
 
     exercise_routines = db.relationship('ExerciseRoutine', back_populates = 'exercise', lazy = True)
 
