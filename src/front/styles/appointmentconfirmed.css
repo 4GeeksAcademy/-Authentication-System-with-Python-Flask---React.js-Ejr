@@ -1,0 +1,42 @@
+/* appointmentconfirmed.css */
+
+.appointmentConfirmed-page-background {
+    background-color: #003366;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appointmentConfirmed-card {
+    max-width: 500px; 
+    padding: 20px; 
+    background-color: white; /* Keep the container background white */
+    border-radius: 8px; /* Optional: add some rounding to the corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add some shadow for depth */
+}
+
+.appointmentConfirmed-card-header {
+    font-size: 1.5rem; 
+}
+
+.appointmentConfirmed-description {
+    font-size: 1rem; 
+    margin-bottom: 1rem;
+}
+
+.appointmentConfirmed-logo {
+    max-width: 200px; 
+    width: 100%;
+    height: auto;
+    margin-top: 1rem; 
+}
+
+.appointmentConfirmed-mt-4 {
+    margin-top: 1.5rem !important; 
+}
+
+.appointmentConfirmed-mx-3 {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important; 
+}
