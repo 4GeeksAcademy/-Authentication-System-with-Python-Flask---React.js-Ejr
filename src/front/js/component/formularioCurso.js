@@ -52,9 +52,16 @@ export const FormularioCurso = () =>{
                 </label>
                 <label>Idioma
                     <input className="form-control" name="idioma" value={dataForm.idioma} placeholder="" onChange={handleChange} type="text"></input>
-                </label>
-                <label>Módulos
-                    <input className="form-control" name="modulos" value={dataForm.modulos} placeholder="" onChange={handleChange} type="text"></input>
+                    <div className="dropdown">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Elige un idioma
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="#">Español</a></li>
+                                <li><a className="dropdown-item" href="#">Inglés</a></li>
+                                <li><a className="dropdown-item" href="#">Aleman</a></li>
+                            </ul>
+                        </div>
                 </label>
                 <input className="btn btn-primary" value="enviar" type="submit"/>
             </form>
