@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Modal } from "./modal"
+
 
 export const EdicionRutina = () => {
 
@@ -22,8 +24,136 @@ export const EdicionRutina = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' })
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [selectSets, setSelectSets] = useState('')
+    const [isFinishModalOpen, setIsFinishModalOpen] = useState(false)
+    const [setsInput, setSetsInput] = useState('')
+    const [repsInput, setRepsInput] = useState('')
 
+    const setsList = store.allSetsList.slice(0, 5)
 
+    async function checkIfSetExists(sets, reps) {
+        try {
+            // Filtra para ver si ya existe un set con las mismas series y repeticiones
+            const existingSet = setsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps))
+
+            return existingSet || null // Si existe, retorna el set si no, retorna null
+        } catch (error) {
+            console.error("Error al verificar el set:", error)
+            return null
+        }
+    }
+
+    const cerrarModalEjercicio = () => {
+
+        closeDropdown(),
+            setAddedExercises([])
+    }
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault()
+        if (!selectSets) {
+            try {
+                // Verifica si ya existe un set con las series y repeticiones ingresadas
+                const existingSet = await checkIfSetExists(setsInput, repsInput)
+
+                if (existingSet) {
+                    // Si ya existe, usa el id del set existente
+                    store.setId = existingSet.id
+                    handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
+                } else {
+                    // Si no existe, crea el set y guárdalo en el store
+                    const newSets = await actions.postSets(setsInput, repsInput)
+
+                    if (newSets) {
+                        handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
+                    } else {
+                        console.error("No se pudo crear las series y repeticiones")
+                    }
+                }
+            } catch (error) {
+                console.error("Error al verificar o crear las series y repeticiones:", error)
+            }
+        } else {
+            // Caso 2: El usuario seleccionó un set previo
+            handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
+        }
+        setSetsInput('')
+        setRepsInput('')
+        setSelectSets('')
+
+    }
+    const handleSelectChange = (e) => {
+        setSelectSets(e.target.value)
+    }
+    // const handleFinishRoutine = () => {
+    //     setFormData({
+    //         routineName: '',
+    //         selectedDay: '',
+    //         exercises: ''
+    //     })
+    //     setSelectedExercise({ id: '', name: '' })
+    //     setRepsInput('')
+    //     setSetsInput('')
+    //     setSelectSets('')
+    //     setStep(1)
+    //     setAddedExercises([])
+    //     setIsFinishModalOpen(false)
+    //     actions.setCompleteRoutine(true)
+    // }
+
+    const handleAddExercises = async (id, name, setId) => {
+        const isExerciseAdded = addedExercises.some(exercise => exercise.id === id)
+
+        const actionPromise = new Promise(async (resolve, reject) => {
+            try {
+                let response
+                if (isExerciseAdded) {
+                    // Elimina el ejercicio si ya está agregado
+                    response = await actions.deleteExerciseRoutine(routine.id.toString(), id.toString())
+                    if (!response || response.error) throw new Error('Error al eliminar el ejercicio')
+                    resolve('Ejercicio eliminado exitosamente')
+                    setRoutine(await store.oneRoutine)
+                } else {
+                    // Agrega el ejercicio si no está en la rutina
+                    console.log(routine.id);
+
+                    response = await actions.postExerciseRoutine(routine.id.toString(), id.toString(), setId.toString())
+                    if (!response || response.error) throw new Error('Error al agregar el ejercicio')
+                    resolve('Ejercicio agregado exitosamente')
+                    setRoutine(await store.oneRoutine)
+                    setIsModalOpen(false)
+                }
+            } catch (error) {
+                reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio')
+            }
+        })
+
+        toast.promise(
+            actionPromise,
+            {
+                pending: isExerciseAdded ? 'Eliminando ejercicio...' : 'Agregando ejercicio...',
+                success: isExerciseAdded ? 'Ejercicio eliminado exitosamente 👌' : 'Ejercicio agregado exitosamente 👌',
+                error: isExerciseAdded ? 'No se pudo eliminar el ejercicio 🤯' : 'No se pudo agregar el ejercicio 🤯',
+            }
+        )
+
+        actionPromise.then(() => {
+            setAddedExercises(prevExercises => {
+                if (isExerciseAdded) {
+                    // Elimina el ejercicio de la lista
+                    return prevExercises.filter(exercise => exercise.id !== id)
+                } else {
+                    // Agrega el ejercicio a la lista
+                    const exerciseSet = setsList.find((item) => item.id == setId)
+                    console.log(exerciseSet)
+                    return [...prevExercises, { id, name, exerciseSet }]
+                }
+            })
+        }).catch(error => {
+            console.error(error)
+        })
+        console.log(addedExercises)
+    }
 
     const handleOpenModal = (item) => {
         if (isExerciseSelected(item.id)) {
@@ -146,7 +276,9 @@ export const EdicionRutina = () => {
             );
             if (success === true) {
                 setRoutine(await store.oneRoutine)
+
                 setIsEditRoutineModalOpen(false)
+
                 resolve("Actualizacion exitosa");
             } else {
                 reject("Error al actualizar");
@@ -440,52 +572,86 @@ export const EdicionRutina = () => {
                                 </div>
 
                                 <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
-                                    <button
+                                    {/* <button
                                         type="button"
-                                        onClick={() => setCancelRoutineCreation(true)}
+                                        onClick={() => setIsAddExerciseModalOpen(false)}
                                         className="bg-transparent hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
                                     >
                                         Cancelar
-                                    </button>
+                                    </button> */}
                                     <button
                                         type="button"
-                                        onClick={() => setIsFinishModalOpen(true)}
+                                        onClick={() => { setIsAddExerciseModalOpen(false), cerrarModalEjercicio() }}
                                         className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
-                                        disabled={addedExercises.length == 0 ? true : false}
+                                    // disabled={addedExercises.length == 0 ? true : false}
                                     >
                                         Finalizar
                                     </button>
                                 </div>
                             </div>
+                            <Modal
+                                isOpen={isModalOpen}
+                                title="Elegir series y repeticiones"
+                                onClose={() => setIsModalOpen(false)}
+                                onConfirm={handleFormSubmit}
+                                confirmText="Guardar ejercicio"
+                            >
+                                <form
+                                    className="space-y-4"
+                                >
+                                    <div className="flex flex-col gap-4">
+                                        <div className='flex flex-col md:flex-row gap-4 w-full'>
+                                            <div className="w-full">
+                                                <label htmlFor="sets" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Series</label>
+                                                <input
+                                                    value={setsInput}
+                                                    onChange={(e) => setSetsInput(e.target.value)}
+                                                    type="text" name="sets" id="sets" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las series" />
+                                            </div>
+                                            <div className="w-full">
+                                                <label htmlFor="reps" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Repeticiones</label>
+                                                <input
+                                                    value={repsInput}
+                                                    onChange={(e) => setRepsInput(e.target.value)}
+                                                    type="text" name="reps" id="reps" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingrese las repeticiones" />
+                                            </div>
+                                        </div>
+                                        <span className="flex items-center">
+                                            <span className="h-px flex-1 bg-neutral-400"></span>
+                                            <span className="shrink-0 px-6 text-neutral-400">Elegir series previas</span>
+                                            <span className="h-px flex-1 bg-neutral-400"></span>
+                                        </span>
+                                        <div className="flex flex-col md:flex-row gap-4 w-full">
+                                            <div className="w-full">
+                                                <label
+                                                    htmlFor="series"
+                                                    className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white"
+                                                >
+                                                    Series
+                                                </label>
+                                                <select
+                                                    value={selectSets}
+                                                    onChange={handleSelectChange}
+                                                    name="series"
+                                                    id="series"
+                                                    className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500"
 
-                            {/* <div className="relative p-4 w-full max-w-2xl max-h-full"> */}
-                            {/* <!-- Modal content --> */}
-                            {/* <div className="relative rounded-lg shadow dark:bg-neutral-700"> */}
-                            {/* <!-- Modal header --> */}
-                            {/* <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-neutral-700">
-                                        <h3 className="text-xl text-neutral-50 font-bold">
-                                            Agregar ejercicio
-                                        </h3>
-                                        <button type="button" onClick={() => setIsAddExerciseModalOpen(false)} className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white">
-                                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                            </svg>
-                                            <span className="sr-only">Cerrar</span>
-                                        </button>
-                                    </div> */}
-                            {/* <!-- Modal body --> */}
-                            {/* <div className="p-4 md:p-5 space-y-4">
-                                        <p className="text-xs font-bold uppercase text-neutral-400">
-                                            Se agregara este ejercicio a su rutina.
-                                        </p>
-                                    </div> */}
-                            {/* <!-- Modal footer --> */}
-                            {/* <div className="flex items-center p-4 md:p-5 border-t border-neutral-200 rounded-b dark:border-neutral-600">
-                                        <button type="button" className="transition-all duration-200 text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-900 dark:hover:bg-red-800 dark:focus:ring-red-800">Agregar Rutina</button>
-                                        <button onClick={() => setIsAddExerciseModalOpen(false)} type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-neutral-900 focus:outline-none bg-white rounded-lg border border-neutral-200 hover:bg-neutral-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-neutral-100 dark:focus:ring-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:text-white dark:hover:bg-neutral-700">Cancelar</button>
+                                                >
+                                                    <option value="">
+                                                        Select Series
+                                                    </option>
+                                                    {
+                                                        setsList.map((item, index) => (
+                                                            <option key={index} value={item.id}>{item.sets}/{item.repetitions}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div> */}
-                            {/* </div> */}
+                                </form>
+
+                            </Modal>
                         </div>
                         {/* MODAL BOTON CAMBIAR NOMBRE RUTINA */}
                         <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isEditRoutineModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
@@ -583,14 +749,6 @@ export const EdicionRutina = () => {
                                         </div>
                                         <div>
                                             <div className="flex flex-col sm:flex-row items-center gap-4">
-                                                <button
-                                                    onClick={() => setIsExerciseModalOpen(true)}
-                                                    className="block text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded text-sm px-5 py-3 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                                                    type="button"
-                                                >
-                                                    Cambiar ejercicio y/o series
-                                                </button>
-                                                {/* <button type="button" className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95" href="#">Desactivar cuenta</button> */}
                                                 {/* <!-- Modal toggle --> */}
                                                 <button onClick={() => setIsDeleteExerciseModalOpen(true)} className="place-self-center inline-block rounded border border-current px-5 py-3 text-sm font-medium text-neutral-400 hover:text-red-300 transition hover:scale-105 hover:shadow-xl focus:outline-none active:text-red-500 active:scale-95" type="button">
                                                     Quitar Ejercicio
@@ -627,44 +785,6 @@ export const EdicionRutina = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* MODAL BOTON CAMBIAR EJERCICIOS Y/O SERIES */}
-                                                <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isExerciseModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
-                                                    <div className="relative p-4 w-full max-w-md max-h-full">
-                                                        <div className="relative bg-white rounded-lg shadow dark:bg-neutral-700">
-                                                            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-neutral-600">
-                                                                <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
-                                                                    {routine.name}
-                                                                </h3>
-                                                                <button
-                                                                    onClick={() => setIsExerciseModalOpen(false)}
-                                                                    className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-neutral-600 dark:hover:text-white"
-                                                                >
-                                                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                                                    </svg>
-                                                                    <span className="sr-only">Cerrar</span>
-                                                                </button>
-                                                            </div>
-                                                            <form className="p-4 md:p-5 space-y-4">
-                                                                <div className="flex flex-col gap-4">
-                                                                    <div className='flex flex-col md:flex-row gap-4 w-full'>
-                                                                        <div className="w-full">
-                                                                            <label htmlFor="name" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Editar Ejercicio</label>
-                                                                            <input
-                                                                                type="text" name="name" id="name" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ingresar nuevo nombre" required />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="col-span-6 sm:col-span-3">
-                                                                    </div>
-                                                                </div>
-                                                                <button type="submit" className="text-white inline-flex items-center bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 transition-all ease-in">
-                                                                    <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
-                                                                    Guardar cambios
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </label>
@@ -672,7 +792,6 @@ export const EdicionRutina = () => {
                             )
                         })
                     }
-
                 </ul >
             </div>
         </>

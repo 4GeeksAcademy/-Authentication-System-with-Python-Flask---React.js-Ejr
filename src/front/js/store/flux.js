@@ -809,9 +809,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(response);
                     if (response.status == 200) {
                         console.log('Exercise Routine successfully added:', response.data);
-                        console.log(1);
                         await getActions().oneRoutine(routine_id)
-                        console.log(2);
                         await getActions().allWeeklyRoutineUser()
                         return true;
                     }
