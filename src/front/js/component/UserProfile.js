@@ -12,8 +12,9 @@ const UserProfile = () => {
     const [eventStyle, setEventStyle] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [passwordMessage, setPasswordMessage] = useState(""); // Estado para manejar el mensaje
-    const [isError, setIsError] = useState(false); // Estado para manejar el tipo de mensaje (éxito o error)
+    const [passwordMessage, setPasswordMessage] = useState(""); // Estado para manejar el mensaje de cambio de contraseña
+    const [profileMessage, setProfileMessage] = useState(""); // Estado para manejar el mensaje de guardar cambios
+    const [isError, setIsError] = useState(false); // Estado para manejar el tipo de mensaje (éxito o error) en ambos casos
 
     useEffect(() => {
         actions.getUserProfile();
@@ -32,7 +33,7 @@ const UserProfile = () => {
         }
     }, [store.user_profile]);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const profile = {
             avatar: null,
             username: username,
@@ -42,13 +43,22 @@ const UserProfile = () => {
             country: country,
             eventStyle: eventStyle
         };
-        actions.updateUserProfile(profile);
+        try {
+            await actions.updateUserProfile(profile);
+            setProfileMessage("Información guardada con éxito");
+            setIsError(false);
+        } catch (error) {
+            setProfileMessage("Error al guardar la información");
+            setIsError(true);
+        } finally {
+            // Opcionalmente, puedes restablecer los campos aquí si es necesario
+        }
     };
 
     const handleChangePassword = async () => {
         try {
             const response = await actions.changePassword(currentPassword, newPassword);
-            if (response.ok) { // Aquí verificamos si la respuesta es correcta
+            if (response.ok) {
                 setPasswordMessage("Password alterada con éxito");
                 setIsError(false);
             } else {
@@ -60,7 +70,6 @@ const UserProfile = () => {
             setPasswordMessage("Error en el cambio de la Password");
             setIsError(true);
         } finally {
-            // Restablecer los campos de contraseña después del intento
             setCurrentPassword("");
             setNewPassword("");
         }
@@ -122,6 +131,13 @@ const UserProfile = () => {
                         />
                         <button className="save-button" onClick={handleSubmit}>Guardar Cambios</button>
                         
+                        {/* Mostrar mensaje de éxito o error para guardar cambios */}
+                        {profileMessage && (
+                            <p className={isError ? "error-message" : "success-message"}>
+                                {profileMessage}
+                            </p>
+                        )}
+                        
                         {/* Sección para cambiar la contraseña */}
                         <input
                             type="password"
@@ -139,7 +155,7 @@ const UserProfile = () => {
                         />
                         <button onClick={handleChangePassword}>Cambiar Contraseña</button>
                         
-                        {/* Mostrar mensaje de éxito o error */}
+                        {/* Mostrar mensaje de éxito o error para cambiar contraseña */}
                         {passwordMessage && (
                             <p className={isError ? "error-message" : "success-message"}>
                                 {passwordMessage}
