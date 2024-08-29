@@ -22,7 +22,7 @@ return (
                     <a href="https://example.com/page1" target="_blank" rel="noopener noreferrer">
                         <img src="https://i.blogs.es/78408e/programador/1366_2000.jpeg" className="d-block w-100" alt="First Slide" />
                     </a>
-                    <div className="text-overlay">Aprende, Conecta y Crece</div>
+                    <div className="text-overlay">Conecta, Aprende y Crece</div>
                 </div>
                 <div className="carousel-item">
                     <a href="https://example.com/page2" target="_blank" rel="noopener noreferrer">
@@ -52,12 +52,12 @@ return (
             <div className="card-elegirnos mb-3">
                 <div className="row g-0">
                 <div className="imagen-elegirnos col-md-6">
-                <img src="https://images.pexels.com/photos/8199654/pexels-photo-8199654.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid rounded-start" alt="..." />
+                <img src="https://images.pexels.com/photos/8199654/pexels-photo-8199654.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid " alt="..." />
                 </div>
                 <div className="col-md-6">
             <div className="card-body-elegirnos">
                 <h5 className="card-title-elegirnos">Da el primer paso hacia tu nueva carrera profesional</h5>
-                <p className="card-text">Comienza tu camino hacia una carrera gratificante y de gran demanda con nuestra capacitación de nivel profesional. No importa si estás empezando desde cero o buscando cambiar de sector, nuestro programa está diseñado para brindarte las habilidades y conocimientos necesarios para destacar.Al completar nuestro programa, obtendrás una credencial reconocida por las empresas más influyentes del sector, lo que te abrirá puertas en el competitivo mercado laboral. Este reconocimiento es un testimonio de tu dedicación y dominio de las habilidades que las empresas buscan en los profesionales de hoy.</p>
+                <p className="card-text">Comienza tu camino hacia una carrera gratificante y de gran demanda con nuestra capacitación de nivel profesional. No importa si estás empezando desde cero o buscando cambiar de sector, nuestro programa está diseñado para brindarte las habilidades y conocimientos necesarios para destacar. Al completar nuestro programa, obtendrás una credencial reconocida por las empresas más influyentes del sector, lo que te abrirá puertas en el competitivo mercado laboral. Este reconocimiento es un testimonio de tu dedicación y dominio de las habilidades que las empresas buscan en los profesionales de hoy.</p>
                 <p className="card-text"></p>
             </div>
                 </div>
@@ -75,7 +75,7 @@ return (
                 </div>
                 </div>
             <div className="imagen-elegirnos col-md-6">
-                <img src="https://images.pexels.com/photos/7972359/pexels-photo-7972359.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid rounded-start" alt="..." />
+                <img src="https://images.pexels.com/photos/7972359/pexels-photo-7972359.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid" alt="..." />
             </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@ return (
             <div className="card-elegirnos mb-3">
                 <div className="row g-0">
                 <div className="imagen-elegirnos col-md-6">
-                <img src="https://images.pexels.com/photos/6958506/pexels-photo-6958506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid rounded-start" alt="..." />
+                <img src="https://images.pexels.com/photos/6958506/pexels-photo-6958506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid" alt="..." />
                 </div>
                 <div className="col-md-6">
             <div className="card-body-elegirnos">

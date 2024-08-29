@@ -59,8 +59,9 @@
     top: 90%; /* Posiciona en el centro vertical */
     left: 50%; /* Posiciona en el centro horizontal */
     color: #E0E0E2;
-    font-size: 24px; /* Tamaño del texto */
+    font-size: 40px; /* Tamaño del texto */
     transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
 }
 .ContenedorEmpresas{
     margin-top: 10px; /* Margen superior */
@@ -90,7 +91,6 @@
     display: flex;
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
-    min-height: 100vh; /* Altura mínima para centrar en toda la página */
     padding: 40px; /* Espacio adicional alrededor del contenedor de la card */
   }
   
@@ -131,14 +131,18 @@
     font-size: 2rem; /* Tamaño de fuente más grande para el título */
     margin-bottom: 15px; /* Espacio debajo del título */
     text-align: justify; /* Justifica el texto del título */
+    color: #416788;
+    font-family: 'Lora', serif;
   }
   
   .card-text {
     font-size: 1.125rem; /* Tamaño de fuente para el texto */
     text-align: justify; /* Justifica el texto */
     margin-bottom: 15px; /* Espacio entre párrafos */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #416788
   }
-  
   .text-body-secondary {
     font-size: 1rem; /* Ajusta el tamaño de la fuente secundaria */
   }
