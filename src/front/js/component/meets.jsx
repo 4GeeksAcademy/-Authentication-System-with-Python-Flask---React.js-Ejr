@@ -5,6 +5,12 @@ import Loader from "./loader.jsx";
 const Meets = () => {
     const { store, actions } = useContext(Context);
 
+    useEffect(()=>{
+        if(store.dataUser && store.dataUser.is_psicologo){
+            actions.getMeetsPsicologo(`${store.dataUser.nombre_usuario} ${store.dataUser.apellido}`)
+        }
+    },[])
+
     useEffect(() => {
         if (store.dataUser) {
             console.log(store.dataUser)

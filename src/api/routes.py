@@ -38,6 +38,45 @@ def apply_headers(response):
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
     return response
 
+@api.route('/editar-perfil', methods=['POST'])
+def editar_perfil():
+    try:
+        data = request.get_json()
+        correo = data.get("correo", None)
+
+        # Verificamos que el usuario exista
+        existing_user = User.query.filter_by(correo=correo).first()
+        
+        if not existing_user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+
+        # Actualizamos los campos solo si se provee un nuevo valor
+        if "nombre_usuario" in data:
+            existing_user.nombre_usuario = data["nombre_usuario"]
+        if "apellido" in data:
+            existing_user.apellido = data["apellido"]
+        if "descripcion" in data:
+            existing_user.descripcion = data["descripcion"]
+        if "fechaNacimiento" in data:
+            existing_user.fecha_de_nacimiento = data["fechaNacimiento"]
+        if "codigoArea" in data:
+            existing_user.codigo_de_area = data["codigoArea"]
+        if "telefono" in data:
+            existing_user.telefono = data["telefono"]
+
+        # Guardamos los cambios en la base de datos
+        db.session.commit()
+
+        response_body = {
+            "msg": "Perfil actualizado satisfactoriamente.",
+            "user": existing_user.serialize()
+        }
+        return jsonify(response_body), 200
+    
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+
+
 # Endpoint para enviar correo con la información del usuario que solicita el perfil profesional.
 @api.route('/solicitud-profesional', methods=['POST'])
 def send_email():
@@ -120,7 +159,7 @@ def get_perfil():
         user = User.query.filter_by(id=current_user).first()
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
-      
+        print(vars(user))
         # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify({
             "id": user.id,
@@ -131,7 +170,8 @@ def get_perfil():
             "foto": user.foto,
             "telefono": user.telefono,
             "is_psicologo": user.is_psicologo,
-            "descripcion": user.descripcion
+            "descripcion": user.descripcion,
+            "codigo_de_area": user.codigo_de_area
         }), 200    
     except NoAuthorizationError:
         return jsonify({"error": "Autorización no proporcionada"}), 401

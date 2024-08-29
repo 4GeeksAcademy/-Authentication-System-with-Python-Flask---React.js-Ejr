@@ -68,6 +68,7 @@ const Profesionales = () => {
             default:
                 break;
         }
+        actions.getMeetsUser(store.dataUser.correo)
     };
 
     return (
@@ -97,7 +98,7 @@ const Profesionales = () => {
                                     </p>
                                 </div>
                                 <div >
-                                    <p className="card-text">
+                                    {/* <p className="card-text">
                                         <ul className="d-flex flex-row gap-3">
                                             {Array.isArray(elm.especialidades) && elm.especialidades.length > 0 ? (
                                                 elm.especialidades.map((especialidad) => (
@@ -109,7 +110,7 @@ const Profesionales = () => {
                                                 <li>No hay especialidades disponibles.</li>
                                             )}
                                         </ul>
-                                    </p>
+                                    </p> */}
                                     <div className="button-container mt-5">
                                         <button
                                             type="button"
