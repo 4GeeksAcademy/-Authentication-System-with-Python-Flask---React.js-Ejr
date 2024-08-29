@@ -6,6 +6,8 @@ import "../../styles/home.css";
 import BarraBusqueda from "../component/barraBusqueda";
 import "../../styles/barraBusqueda.css";
 import ListaCursos from "../component/listaCursos";
+import Testimonios from "../component/testimonios";
+import "../../styles/testimonios.css";
 
 
 
@@ -46,9 +48,6 @@ return (
         <BarraBusqueda />
         <ListaCursos />
 
-       
-      
-      
         <div className="container-center-elegirnos">
             <div className="card-elegirnos mb-3">
                 <div className="row g-0">
@@ -82,6 +81,7 @@ return (
             </div>
             </div>
    
+        <Testimonios />
 
      <div className="ContenedorEmpresas">
         <div className="BarraDeEmpresas">
