@@ -174,7 +174,7 @@ def crear_oferta():
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
     
-    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
+    if not name or not descripcion or not localidad or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     try:
