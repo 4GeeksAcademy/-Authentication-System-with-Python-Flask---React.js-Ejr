@@ -1,4 +1,5 @@
 import React, { useState,useContext } from "react";
+import { Dropdown } from 'react-bootstrap';
 import { Context } from "../store/appContext";
 
 export const FormularioCurso = () =>{
@@ -9,8 +10,8 @@ export const FormularioCurso = () =>{
         resumen: '',
         categoria: '',
         nivel: '',
+        precio:'',
         idioma: '',
-        modulos: ''
     })
 
     const handleChange = (e) =>{
@@ -27,8 +28,8 @@ export const FormularioCurso = () =>{
             resumen: '',
             categoria: '',
             nivel: '',
+            precio:'',
             idioma: '',
-            modulos: ''
         }) 
         console.log(dataForm)
     }
@@ -42,26 +43,72 @@ export const FormularioCurso = () =>{
                     <input className="form-control" name="portada" value={dataForm.portada} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Resumen
-                    <input className="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"></input>
+                    {/*<input className="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"></input>*/}
+                    <div>
+                        <textarea class="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"rows="5"></textarea>
+                        <p className="text-secondary">Describe tu curso aquí</p>
+                    </div>
                 </label>
                 <label>Categoría
-                    <input className="form-control" name="categoria" value={dataForm.categoria} placeholder="" onChange={handleChange} type="text"></input>
+                    <Dropdown>
+                        <Dropdown.Toggle id="dropdown-categoria" title={dataForm.categoria || "Seleccionar categoría"}>
+                            {dataForm.categoria || "Seleccionar categoría"}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'categoria', value: "Desarrollo" } })}>
+                                Desarrollo               
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'categoria', value: "Negocios" } })}>
+                                Negocios
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'categoria', value: "Diseño" } })}>
+                                Diseño
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </label>
                 <label>Nivel
-                    <input className="form-control" name="nivel" value={dataForm.nivel} placeholder="" onChange={handleChange} type="text"></input>
+                    <Dropdown>
+                        <Dropdown.Toggle id="dropdown-nivel" title={dataForm.nivel || "Seleccionar nivel"}>
+                            {dataForm.nivel || "Seleccionar nivel"}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "Principiante" } })}>
+                                Principiante               
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "Intermedio" } })}>
+                                Intermedio
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "Avanzado" } })}>
+                                Avanzado
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "Master" } })}>
+                                Master
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </label>
+                <label>Precio
+                    <input className="form-control" name="precio" value={dataForm.precio} placeholder="" onChange={handleChange} type="range" min="0" max="350"></input>
+                    <span>{dataForm.precio}</span>
+                </label>        
                 <label>Idioma
-                    <input className="form-control" name="idioma" value={dataForm.idioma} placeholder="" onChange={handleChange} type="text"></input>
-                    <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Elige un idioma
-                            </button>
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Español</a></li>
-                                <li><a className="dropdown-item" href="#">Inglés</a></li>
-                                <li><a className="dropdown-item" href="#">Aleman</a></li>
-                            </ul>
-                        </div>
+                    <Dropdown>
+                        <Dropdown.Toggle id="dropdown-idioma" title={dataForm.idioma || "Seleccionar idioma"}>
+                            {dataForm.idioma || "Seleccionar idioma"}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "Español" } })}>
+                                Español               
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "Inglés" } })}>
+                                Inglés
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleChange({ target: { name: 'idioma', value: "Aleman" } })}>
+                                Alemán
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </label>
                 <input className="btn btn-primary" value="enviar" type="submit"/>
             </form>

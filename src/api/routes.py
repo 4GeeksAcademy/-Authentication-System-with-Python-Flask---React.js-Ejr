@@ -72,7 +72,6 @@ def crear_curso():
     categoria = request.json.get('categoria', None)
     nivel = request.json.get('nivel', None)
     idioma = request.json.get('idioma', None)
-    modulos = request.json.get('modulos', None)
     if not title or not portada or not resumen or not categoria or not nivel or not idioma:
         return jsonify({'success': False, 'msg': 'Todos los campos son necesarios'}), 400
     curso = Curso.query.filter_by(title=title).first()
