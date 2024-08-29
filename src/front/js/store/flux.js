@@ -121,6 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try { // Enviamos una solicitud GET para obtener todos los cursos.
                     const response = await fetch(process.env.BACKEND_URL+'/api/cursos'); // Solicita los datos de cursos
                     const data = await response.json(); // Convierte la respuesta en JSON
+                    console.log('Cursos cargados:', data); // Verifica los cursos cargados
                     setStore({ ...store, cursos: data, cursosConFiltros: data, loading: false }); 
                     // Actualizamos ambos estados tanto de cursos y cursosConFiltrado y oculta el estado de carga
                 } catch (error) {

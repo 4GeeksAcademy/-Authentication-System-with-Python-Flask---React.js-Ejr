@@ -2,6 +2,9 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
 from api.models import db, User, Curso
 
+import stripe #plataforma de pago. Para instalar el paquete de Stripe, tuve que poner: pip install stripe ,en la consola Backend y: npm install @stripe/react-stripe-js @stripe/stripe-js ,en el Fronted
+
+
 # Crear el Blueprint para la API
 api = Blueprint('api', __name__)
 
@@ -138,3 +141,37 @@ def signup():
         #crear registro en tabla de profesor con este id como user
         print(type)
         return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
+
+
+
+# Configura tu "clave_Secreta" por una real de la API de Stripe
+stripe.api_key = "clave_Secreta"
+
+@api.route('/pagoCursos', methods=['POST'])
+def create_pagoCurso():
+    try:
+        data = request.get_json()
+        cantidad = data.get('cantidad')  # El monto que vas a cobrar
+        moneda = data.get('moneda', 'eur')  # Recibir la moneda desde el frontend, con 'eur' como predeterminada.
+
+        # Validar que la moneda sea aceptada por Stripe
+        monedas_aceptadas = ["eur", "usd"]  # Lista de monedas aceptadas
+        if moneda not in monedas_aceptadas:
+            return jsonify(error="Moneda no aceptada"), 400
+
+        # Crear el PaymentIntent
+        pagoCurso = stripe.PaymentIntent.create(
+            amount=int(cantidad * 100),  # Stripe trabaja con centavos
+            currency=moneda,
+        )
+
+        return jsonify({
+            'clientSecret': pagoCurso['client_secret']
+        }), 200
+
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+
+#Para que todo funcione, necesitas hacer que el formulario en tu frontend envíe la solicitud al backend y reciba el clientSecret de Stripe para manejar el proceso de pago
+#Para instalar el paquete de Stripe, tuve que poner: pip install stripe ,en la consola Backend y: npm install @stripe/react-stripe-js @stripe/stripe-js ,en el Fronted

@@ -1,0 +1,50 @@
+import React, { useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Context } from '../store/appContext';
+
+const VistaDetallada = () => {
+    const { id } = useParams(); // Obtiene el id del curso desde la URL
+    const { store, actions } = useContext(Context); // Obtiene el estado global
+    const navigate = useNavigate(); // Hook para navegación
+
+    // Convierte el id de la URL a un número entero
+    const cursoId = parseInt(id, 10);
+
+    console.log('ID desde la URL:', cursoId); // Verifica el ID obtenido de la URL
+
+    // Encuentra el curso por ID en el estado global
+    const curso = store.cursosConFiltros.find(curso => curso.id === cursoId);
+
+
+    console.log('Cursos en store:', store.cursosConFiltros); // Verifica los cursos en el estado global
+    console.log('Curso encontrado:', curso); // Verifica el curso encontrado
+
+    // Función para manejar la navegación a la vista de pago
+    const handleGoToPayment = () => {
+        navigate('/vistaPago');
+    };
+
+    // Cargar cursos cuando el componente se monta
+    useEffect(() => {
+        console.log('Cargando cursos...');
+        actions.cargarCursos();
+    }, [actions]);
+    
+
+
+    if (!curso) {
+        return <p>Curso no encontrado</p>; // Mensaje si el curso no existe
+    }
+
+    return (
+        <div className="curso-detalle">
+            <h1>{curso.nombre}</h1>
+            <p><strong>Descripción:</strong> {curso.descripcion}</p>
+            <p><strong>Precio:</strong> €{curso.precio}</p>
+            <button onClick={handleGoToPayment} className="btn btn-primary">Ir a pagar</button>
+        </div>
+    );
+};
+
+export default VistaDetallada;
+

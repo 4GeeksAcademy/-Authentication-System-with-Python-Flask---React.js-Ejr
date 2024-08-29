@@ -22,7 +22,9 @@ import PrivateRoute from "./component/privadaProfe";
 import PrivateRouteAlumno from "./component/privadaAlumno";
 import VistaAlumno from "./pages/vistaAlumno";
 import VistaPago from "./pages/vistaPago";
-
+import VistaDetallada from "./pages/VistaDetallaDWeb"; // Curso Diseño Web con más info detallada
+import FormularioPago from "./component/formularioPago";
+import CompletoDisWeb from "./pages/completoDisWeb"; //Curso Completo una vez, pagas
 
 
 const Layout = () => {
@@ -45,7 +47,10 @@ const Layout = () => {
                         <Route element={<Cursos />} path="/cursos" />
                         <Route element={<About />} path="/about" />
                         <Route element={<Contacto />} path="/contacto" />
+                        <Route path="/curso/:id" element={<VistaDetallada />} />
                         <Route element={<VistaPago />} path="/vistaPago" />
+                        <Route element={<FormularioPago />} path="/formularioPago" />
+                        <Route element={<CompletoDisWeb />} path="/completoDisWeb" />
                          {/* Protege la ruta VistaAlumno con PrivateRouteAlumno, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
                          <Route element={<PrivateRouteAlumno vista={VistaAlumno} />} path="/vistaAlumno" />
                          {/* Protege la ruta VistaProfe con PrivateRoute, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede acceder */}
