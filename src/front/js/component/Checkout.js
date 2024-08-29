@@ -1,46 +1,62 @@
-import React from 'react'
+import React, {useState, useEffect} from "react";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const Checkout = () => {
-    return (
+const Checkout = () => {    const stripe = useStripe();
+    const elements = useElements();
+    const [clientSecret, setClientSecret] = useState('');
+    const [loading, setLoading] = useState(false);
+  
+    useEffect(() => {
+        // Create PaymentIntent as soon as the page loads 
+        fetch(process.env.BACKEND_URL + '/api/create-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          //la cantidad ha pagar esta puesta fija, pero puede recibir un objeto desde el contexto
+          body: JSON.stringify({ amount: 1000, currency: 'usd' }) // Amount in cents
+        })
+          .then((res) => res.json())
+          .then((data) => setClientSecret(data.clientSecret)); 
+      }, []);
 
-        // PRIMER MODAL, AL SER EMPRESA NECESITAS SUSCRIBIRTE. SEGUNDO MODAL, FORMULARIO
-        <div>
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Show a second modal and hide this one with the button below.
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Hide this modal and show the first with the button below.
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button>
-        </div>
-    )
-}
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+  
+      if (!stripe || !elements) {
+        return;
+      }
+  
+      setLoading(true);
+  
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+       clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        },
+      );
+  
+      setLoading(false);
+  
+      if (error) {
+        console.log('[error]', error);
+      } else if (paymentIntent.status === 'succeeded') {
+        console.log('Payment succeeded!');
+      }
+      else{
+        console.log('some error')
+      }
+    };
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <CardElement />
+        <button type="submit" disabled={!stripe || loading}>
+          Pay
+        </button>
+      </form>
+    );
+  };
 
 export default Checkout

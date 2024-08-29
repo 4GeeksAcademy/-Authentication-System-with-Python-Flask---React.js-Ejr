@@ -6,11 +6,12 @@ import AlertSuccess from "../component/alertSuccess";
 import { useNavigate } from "react-router-dom";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import  CheckoutForm  from "../component/Checkout";
+import CheckoutForm from "../component/Checkout";
 
 export const Register = () => {
-  const stripePromise = loadStripe(process.env.API_KEY);
+
   const { store, actions } = useContext(Context);
+  const stripePromise = loadStripe("pk_test_51PsqIxG3cEcyZuNpill2BXWYLnqGWok6W48xAOpaOlq5BHME5440qc4FGMIzdoADAgiR77Q3VBP3tmrzLuVWmbOy00tZCSphPW");
   const {
     register,
     formState: { errors },
@@ -189,8 +190,8 @@ export const Register = () => {
         </div>
       </form>
       <Elements stripe={stripePromise}>
-				<CheckoutForm />
-			</Elements>
+        <CheckoutForm />
+      </Elements>
     </div>
   );
 };
