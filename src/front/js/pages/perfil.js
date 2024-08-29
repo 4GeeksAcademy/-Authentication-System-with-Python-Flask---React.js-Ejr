@@ -9,6 +9,7 @@ import FormSolicitudProf from "../component/formSolicitudProf.jsx";
 import MercadoPagoComponent from "../component/MercadoPago.jsx";
 import Swal from 'sweetalert2'
 import Meets from "../component/meets.jsx";
+import EditarInformacion from "../component/editarInformacion.jsx";
 // ID cliente: RrLt2R0t0jbTXChSFJLFIPaSMniKYriRIi6kxAszsWA
 // Secreto de cliente: qdg4iNfaJf7ihnst8Ln4rbtDP3DTBLXl7Q6ZOmC9g_g
 // Clave de firma WebHook: wxCO2fVy0HgDGrihAZuw4y8pZWunAu27OS5ghje2_M8
@@ -157,15 +158,17 @@ const Perfil = () => {
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Teléfono: </strong>
                             {store.dataUser?.telefono
-                                ? store.dataUser.telefono
+                                ? `${store.dataUser.codigo_de_area} ${store.dataUser.telefono}` 
                                 : <Loader width="200px" height="15px" />}
                         </div>
-                        <div className="d-flex align-items-center">
-                            <strong className="text-inicio me-2">Descripción: </strong>
-                            {store.dataUser?.descripcion
-                                ? store.dataUser.descripcion
-                                : <Loader width="300px" height="15px" />}
-                        </div>
+                        {store.dataUser && store.dataUser.is_psicologo && (
+                            <div className="d-flex">
+                                <strong className="text-inicio me-2">Descripción profesional: </strong>
+                                {store.dataUser?.descripcion
+                                    ? store.dataUser.descripcion
+                                    : <Loader width="300px" height="15px" />}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -175,9 +178,13 @@ const Perfil = () => {
                     <div className="col-12 col-md-4">
                         <div className="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{store.dataUser && store.dataUser.is_psicologo ? 'Agendas de pacientes' : 'Mis agendass'}</button>
+<<<<<<< HEAD
                             <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
                                 Métodos de pago
                             </button>
+=======
+                            <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Métodos de pago</button>
+>>>>>>> 1525254274660407a627f88b97bf800015ef3428
                             {store.dataUser && store.dataUser.is_psicologo && (
                                 <button className="nav-link nav-perfil" id="v-pills-especialidad-tab" data-bs-toggle="pill" data-bs-target="#v-pills-especialidad" type="button" role="tab" aria-controls="v-pills-especialidad" aria-selected="false">
                                     Mis especialidades
@@ -188,6 +195,7 @@ const Perfil = () => {
                                     Solicitud de perfil profesional
                                 </button>
                             )}
+                            <button className="nav-link nav-perfil" id="vi-pills-edit-info-tab" data-bs-toggle="pill" data-bs-target="#vi-pills-edit-info" type="button" role="tab" aria-controls="vi-pills-edit-info" aria-selected="false">Editar mi información</button>
                         </div>
                     </div>
                     <div className="col-12 col-md-8">
@@ -246,11 +254,12 @@ const Perfil = () => {
                             </div>
                             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                 <div className="container mt-3">
-
-                                </div>
-                                <div className="container mt-3">
-
                                     <FormSolicitudProf />
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="vi-pills-edit-info" role="tabpanel" aria-labelledby="vi-pills-edit-info-tab">
+                                <div className="container mt-3">
+                                    <EditarInformacion />
                                 </div>
                             </div>
                         </div>
