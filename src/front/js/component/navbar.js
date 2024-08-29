@@ -11,7 +11,6 @@ export const Navbar = () => {
     let location = useLocation();
     const { actions, store } = useContext(Context)
     let id = 0;
-console.log(store.auth, store.currentUser)
     if (location.pathname !== "/login" && location.pathname !== "/register") {
 
         return (

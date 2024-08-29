@@ -121,45 +121,50 @@ const Professionals = () => {
       <div className="top-banner parallax w-100 p-0">
         <h1>Profesionales</h1>
       </div>
-      <section id='#nutricionists'>
+      <section>
         <div className="slider-container">
-          <h2>Nutricionistas</h2>
+          <h2 id='nutricionists'>Nutricionistas</h2>
           <div className='professionals-carousel'>
             <Slider {...settings}>
-            {nutritionists && nutritionists.length > 0 ? (
-                    nutritionists.map((nutricionist, index) => (
-                        <NutricionistCard
-                            key={index}
-                            id={nutricionist.id}
-                            name={nutricionist.name}
-                            // image_url={nutricionist.image_url}
-                        />
-                    ))
-                ) : (
-                    <h4 className="text-center text-danger m-4">No hay nutricionistas disponibles</h4>
-                )}
+              {nutritionists && nutritionists.length > 0 ? (
+                nutritionists.map((nutricionist, index) => (
+                  <NutricionistCard
+                    key={index}
+                    id={nutricionist.id}
+                    name={nutricionist.name}
+                  // image_url={nutricionist.image_url}
+                  />
+                ))
+              ) : (
+                <h4 className="text-center text-danger m-4">No hay nutricionistas disponibles</h4>
+              )}
             </Slider>
           </div>
         </div>
       </section>
       <div className="parallax w-100"></div>
-      <section id='#trainers' className='p-t-section'>
+      <section className='p-t-section'>
         <div className="slider-container">
-          <h2>Personal Trainers</h2>
+          <h2 id='trainers'>Personal Trainers</h2>
           <div className='professionals-carousel '>
             <Slider {...settings}>
               {personalTrainers && personalTrainers.length > 0 ? (
-                    personalTrainers.map((trainers, index) => (
-                        <PersonalTrainerCard
-                            key={index}
-                            id={trainers.id}
-                            name={trainers.name}
-                            // image_url={trainers.image_url}
-                        />
-                    ))
-                ) : (
-                    <h4 className="text-center text-danger m-4">No hay personal trainers disponibles</h4>
-                )}
+                personalTrainers.map((trainers, index) => {
+                  if(index == personalTrainers.length - 1 ){
+                    window.location=window.location.hash;
+                  }
+                  return(
+                    <PersonalTrainerCard
+                      key={index}
+                      id={trainers.id}
+                      name={trainers.name}
+                    // image_url={trainers.image_url}
+                    />
+                  )
+                })
+              ) : (
+                <h4 className="text-center text-danger m-4">No hay personal trainers disponibles</h4>
+              )}
             </Slider>
           </div>
         </div>

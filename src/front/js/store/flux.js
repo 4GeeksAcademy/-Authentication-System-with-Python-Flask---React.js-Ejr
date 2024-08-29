@@ -378,6 +378,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const { deleteFromCart } = getActions();
 				
 				if (cart.length === 0) {
+					console.log("El carrito ya está vacío");
 					return { success: true, message: "El carrito ya está vacío" };
 				}
 			
@@ -393,6 +394,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 				setStore({ cart: [], isClearingCart: false });
 				getActions().calculateTotal();
+				console.log("Carrito vaciado");
 				return { success: true, message: "Carrito vaciado" };
 			},
 
