@@ -64,22 +64,38 @@ return (
                 </div>
             </div>
         </div>
-        <div className="container-center-elegirnos2">
-            <div className="card-elegirnos2 mb-3">
+        <div className="container-center-elegirnos">
+            <div className="card-elegirnos mb-3">
                 <div className="row g-0">
                 <div className="col-md-6">
-                <div className="card-body-elegirnos2">
-                <h5 className="card-title-elegirnos2">Experiencia previa opcional</h5>
-                <p className="card-text">No necesitas experiencia previa para comenzar. Ya sea que estés dando tus primeros pasos en un campo nuevo o buscando ampliar tu conjunto de habilidades actuales, nuestro enfoque accesible y comprensible está diseñado para todos. Desarrollarás habilidades esenciales y prácticas que te prepararán para el trabajo, incluso si apenas estás comenzando en el campo.</p>
+                <div className="card-body-elegirnos">
+                <h5 className="card-title-elegirnos">Experiencia previa opcional</h5>
+                <p className="card-text">No necesitas experiencia previa para comenzar. Ya sea que estés dando tus primeros pasos en un campo nuevo o buscando ampliar tu conjunto de habilidades actuales, nuestro enfoque accesible y comprensible está diseñado para todos. Desarrollarás habilidades esenciales y prácticas que te prepararán para el trabajo, incluso si apenas estás comenzando en el campo. No solo aprenderás conceptos teóricos; aplicarás tus nuevas habilidades en proyectos del mundo real utilizando las herramientas y técnicas más actuales del sector. Esta experiencia práctica te permitirá construir un portafolio impresionante que demuestre tu capacidad para resolver problemas reales y agregar valor a los equipos en los que trabajes.</p>
                 <p className="card-text"></p>
                 </div>
                 </div>
-            <div className="imagen-elegirnos2 col-md-6">
-                <img src="https://images.pexels.com/photos/8199654/pexels-photo-8199654.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid rounded-start" alt="..." />
+            <div className="imagen-elegirnos col-md-6">
+                <img src="https://images.pexels.com/photos/7972359/pexels-photo-7972359.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid rounded-start" alt="..." />
             </div>
                 </div>
             </div>
             </div>
+            <div className="container-center-elegirnos">
+            <div className="card-elegirnos mb-3">
+                <div className="row g-0">
+                <div className="imagen-elegirnos col-md-6">
+                <img src="https://images.pexels.com/photos/6958506/pexels-photo-6958506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="img-fluid rounded-start" alt="..." />
+                </div>
+                <div className="col-md-6">
+            <div className="card-body-elegirnos">
+                <h5 className="card-title-elegirnos">Aprende a tu propio ritmo</h5>
+                <p className="card-text">Con la flexibilidad de nuestro programa, podrás aprender a tu propio ritmo y completar la capacitación en menos de 6 meses, incluso si trabajas a tiempo completo. Nuestra metodología de aprendizaje está diseñada para ajustarse a tu vida ocupada, permitiéndote avanzar en tu carrera profesional sin comprometer tus responsabilidades actuales. Con cada módulo, estarás un paso más cerca de alcanzar tus objetivos profesionales. Nuestro programa está estructurado para proporcionarte el apoyo y los recursos necesarios para mantenerte motivado y en el camino correcto, asegurando que termines preparado para enfrentar cualquier desafío que tu nueva carrera pueda presentar.</p>
+                <p className="card-text"></p>
+            </div>
+                </div>
+                </div>
+            </div>
+        </div>
    
         <Testimonios />
 
