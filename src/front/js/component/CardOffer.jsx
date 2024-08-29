@@ -1,14 +1,18 @@
-import React, { useContext } from "react";
+import React, {useState, useContext } from "react";
 import "../../styles/CardOffer.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { ModalJobApply } from "./ModalJobApply.jsx";
 
 export const CardOffer = ({ id }) => {
-    const { store } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const offer = store.jobOffers.find(offer => offer.id === id);
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+
 
     if (!offer) return <div>Oferta no encontrada</div>;
 
@@ -18,6 +22,18 @@ export const CardOffer = ({ id }) => {
 
     const handleSaveClick = () => {
         console.log('Guardar oferta', id);
+    };
+
+    const handleApplyClick = async () =>{
+        const result = await actions.applyToJobOffer(id);
+        if(result.msg){
+            setModalMessage(result.msg);
+            setIsModalOpen(true);
+        }
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -39,7 +55,7 @@ export const CardOffer = ({ id }) => {
                         </div>
                         <div className="data-footer">
                             <ul className="card-offer-details d-flex text-muted">
-                                <li className="list-footer-details">Plazo:{offer.plazo}</li>
+                                <li className="list-footer-details">Expira {offer.plazo}</li>
                                 <li className="list-footer-details">{offer.modalidad + " | "}</li>
                                 <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
                                 <li className="list-footer-details">{offer.experiencia_minima}</li>
@@ -50,10 +66,7 @@ export const CardOffer = ({ id }) => {
                                     className="btn btn-details btn-sm text-decoration-none me-2">
                                     Ver detalles
                                 </button>
-                                <button 
-                                    className="btn btn-inscribirse btn-sm"
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#exampleModalToggle">
+                                <button className="btn btn-inscribirse btn-sm" onClick={handleApplyClick}>
                                     Inscribirse
                                 </button>
                             </div>
@@ -65,7 +78,13 @@ export const CardOffer = ({ id }) => {
                         </button>
                     </div>
                 </div>
-            </div>       
+            </div>
+            {isModalOpen && (
+                <ModalJobApply  
+                    message={modalMessage}
+                    onClose={handleCloseModal}
+                />
+            )}       
         </>
     );
 };
