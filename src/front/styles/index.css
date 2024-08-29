@@ -1052,6 +1052,10 @@ video {
   min-height: 8rem;
 }
 
+.min-h-\[40vh\]{
+  min-height: 40vh;
+}
+
 .min-h-\[600px\]{
   min-height: 600px;
 }
@@ -1062,10 +1066,6 @@ video {
 
 .min-h-\[800px\]{
   min-height: 800px;
-}
-
-.min-h-\[80vh\]{
-  min-height: 80vh;
 }
 
 .min-h-screen{
@@ -1212,10 +1212,6 @@ video {
 
 .flex-1{
   flex: 1 1 0%;
-}
-
-.flex-none{
-  flex: none;
 }
 
 .flex-shrink-0{
@@ -3040,10 +3036,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .lg\:min-h-screen{
     min-height: 100vh;
-  }
-
-  .lg\:w-2\/3{
-    width: 66.666667%;
   }
 
   .lg\:max-w-3xl{
