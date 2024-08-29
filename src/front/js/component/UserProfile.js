@@ -67,14 +67,14 @@ const UserProfile = () => {
                 <div className="profile-container-right text-center pt-2">
                     <div>
                         <h2>Actualiza tu información</h2>
-                        <input
+                        {/* <input
                             type="file"
                             id="avatar"
                             name="avatar"
                             className="file-input"
                             onChange={handleFileChange}
                         />
-                        <label htmlFor="avatar">Elige una foto de perfil</label>
+                        <label htmlFor="avatar">Elige una foto de perfil</label> */}
                         {/* {userData.avatar && (
                             <div>
                                 <img
