@@ -91,3 +91,20 @@ def update_profile():
     db.session.merge(user)
     db.session.commit()
     return jsonify({"message": f"Welcome {user.email}!"}), 200
+
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_user_profile():
+    current_user_id = get_jwt_identity()
+    
+    # Se asume que el `current_user_id` corresponde al ID en la tabla `User`.
+    user = User.query.filter_by(id=current_user_id).first()
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+    
+   
+    # Serializa solo el perfil del usuario
+    user_profile_data = user.user_profile.serialize()
+
+    return jsonify(user_profile_data), 200
