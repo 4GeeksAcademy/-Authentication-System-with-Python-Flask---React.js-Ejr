@@ -25,18 +25,18 @@ def get_users():
     else:
         return jsonify({"error": "User not found"}), 404
 
-@api.route('/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    if not data or 'id' not in data or 'name' not in data or 'telefono' not in data:
-        return jsonify({"error": "Invalid data"}), 400
-    user_id = data['id']
-    if User.query.get(user_id):
-        return jsonify({"error": "User already exists"}), 400
-    new_user = User(id=user_id, name=data['name'], telefono=data['telefono'])
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"status": "User created", "user": new_user.serialize()}), 201
+# @api.route('/users', methods=['POST'])
+# def create_user():
+#     data = request.get_json()
+#     if not data or 'id' not in data or 'name' not in data or 'telefono' not in data:
+#         return jsonify({"error": "Invalid data"}), 400
+#     user_id = data['id']
+#     if User.query.get(user_id):
+#         return jsonify({"error": "User already exists"}), 400
+#     new_user = User(id=user_id, name=data['name'], telefono=data['telefono'])
+#     db.session.add(new_user)
+#     db.session.commit()
+#     return jsonify({"status": "User created", "user": new_user.serialize()}), 201
 
 @api.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
