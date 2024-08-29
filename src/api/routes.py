@@ -228,11 +228,13 @@ def get_offer(id):
 @jwt_required()
 def create_postulado():
     user_id = get_jwt_identity()
+
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"msg": "Usuario no permitido"})
+        return jsonify({"msg": "Usuario no permitido"}), 401
+    
     if not user.profile_programador:
-        return jsonify({"msg": "Solo pueden postularse programadores."})
+        return jsonify({"msg": "Solo pueden postularse programadores."}), 403
     
     oferta_id = request.json.get("oferta_id")
     oferta = Ofertas.query.get(oferta_id)
@@ -241,13 +243,14 @@ def create_postulado():
     
     postulado_existente = Postulados.query.filter_by(user_id=user.id, oferta_id=oferta.id).first()
     if postulado_existente:
-        return jsonify({"msg": "Ya estás inscrito en esta oferta"}), 404
+        return jsonify({"msg": "Ya estás inscrito en esta oferta"}), 409
     
     nuevo_postulado = Postulados(user_id=user.id, oferta_id=oferta.id)
     db.session.add(nuevo_postulado)
     db.session.commit()
     
-    return jsonify({"msg": "Inscripcion realizada con éxito."})
+    return jsonify({"msg": "Inscripcion realizada con éxito."}),200
+    
 
 #contact
 @api.route('/contact', methods=['POST'])
