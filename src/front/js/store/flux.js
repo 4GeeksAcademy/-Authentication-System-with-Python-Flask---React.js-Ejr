@@ -101,15 +101,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ ...store, profile });
             },
             updateUserProfile: async (profile) => {
-                await fetch(process.env.BACKEND_URL + "/api/profile", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${localStorage.getItem("jwt-token")}`
-                    },
-                    body: JSON.stringify(profile)
-                });
-            },
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/profile", {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${localStorage.getItem("jwt-token")}`
+						},
+						body: JSON.stringify(profile)
+					});
+			
+					if (!resp.ok) {
+						throw new Error("Error al guardar el perfil");
+					}
+			
+					const data = await resp.json();
+					console.log(data)
+					setStore({ ...getStore(), profile: data.user }); // Actualizar el perfil en el store con los datos devueltos por el backend
+					localStorage.setItem("profile", JSON.stringify(data.user));
+					return true;
+				} catch (error) {
+					console.error("Error al actualizar el perfil:", error);
+					return false;
+				}
+			},
+			
             getUserProfile: () => {
                 const store = getStore();
                 fetch(process.env.BACKEND_URL + "/api/profile", {

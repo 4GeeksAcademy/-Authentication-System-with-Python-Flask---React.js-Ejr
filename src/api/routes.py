@@ -81,16 +81,21 @@ def update_profile():
     user = User.query.filter_by(id=current_user_id).first()
     if not user:
         return jsonify({"message": "User not found"}), 404
+    
     data = request.get_json()
-    user.username = data.get("username",user.username)
+    user.username = data.get("username", user.username)
     user.email = data.get("email", user.email)
     user.user_profile.city = data.get("city", user.user_profile.city)
     user.user_profile.address = data.get("address", user.user_profile.address)
     user.user_profile.country = data.get("country", user.user_profile.country)
     user.user_profile.event_style = data.get("eventStyle", user.user_profile.event_style)
-    db.session.merge(user)
-    db.session.commit()
-    return jsonify({"message": f"Welcome {user.email}!"}), 200
+    
+    try:
+        db.session.commit()
+        return jsonify({"message": "Profile updated successfully", "user": user.serialize()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating profile", "error": str(e)}), 500
 
 @api.route('/profile', methods=['GET'])
 @jwt_required()
