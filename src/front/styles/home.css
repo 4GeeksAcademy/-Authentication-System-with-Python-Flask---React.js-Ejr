@@ -99,25 +99,26 @@
     width: 100%; /* Hace que la card ocupe todo el ancho disponible del contenedor */
     max-width: 1200px; /* Aumenta el ancho máximo de la card */
     background-color: #fff;
-    overflow: hidden;
     margin: 0 auto; /* Centra la card horizontalmente */
   }
   
   /* Ajustes de Flexbox para alinear imagen y texto */
   .row {
     display: flex; /* Flexbox para alinear elementos en la misma altura */
+    align-items: center;
   }
   
   /* Estilo para la imagen */
   .imagen-elegirnos {
     flex: 1; /* Permite que la imagen ocupe un espacio proporcional */
     margin-right: 20px; /* Aumenta el margen derecho para separar la imagen del texto */
+    margin-left: 40px;
   }
   
   .imagen-elegirnos img {
     width: 100%; /* Asegura que la imagen cubra todo el ancho de su contenedor */
     height: auto; /* Mantiene la proporción de la imagen */
-    border: 4px; /* Borde de 4px de grosor con color azul */
+    border: 4px; /* Borde de 4px de grosor*/
     border-radius: 12px; /* Bordes redondeados para la imagen */
   }
   
@@ -141,4 +142,3 @@
   .text-body-secondary {
     font-size: 1rem; /* Ajusta el tamaño de la fuente secundaria */
   }
-  
