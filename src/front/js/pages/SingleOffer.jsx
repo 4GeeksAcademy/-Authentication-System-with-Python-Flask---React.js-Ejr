@@ -40,7 +40,7 @@ export const SingleOffer = () => {
                                     <li>{offer.modalidad}</li>
                                     <li>{offer.experiencia_minima}</li>
                                     <li>{offer.salario}</li>
-                                    <li>{offer.palazo}</li>
+                                    <li>{offer.plazo}</li>
                                 </ul>
                                 <ul className="text-muted">
                                     <li>{offer.idiomas}</li>
@@ -48,6 +48,15 @@ export const SingleOffer = () => {
                                     <li>{offer.horario}</li>
                                     <li>{offer.estudios_minimos}</li>
                                 </ul>
+                            </div>
+                            <hr />
+                            <div className="requisitos-minimos-single-offer">
+                                <div className="text-secondary fw-bold fs-2 text-decoration-underline">
+                                    <h3>Requisitos Minimos</h3>
+                                </div>
+                                <p className="text-muted text-start">
+                                    {offer.requisitos_minimos}
+                                </p>
                             </div>
                             <hr />
                             <div className="data-single-offer-container">

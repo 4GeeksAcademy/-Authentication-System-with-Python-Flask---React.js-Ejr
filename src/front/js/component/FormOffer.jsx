@@ -181,7 +181,7 @@ export const FormOffer = () => {
                                 />
                             </div>
                             <div className="col-4">
-                                <label htmlFor="contrato" className="form-label text-secondary fw-bold my-3">Estudios Minimos</label>
+                                <label htmlFor="estudios_minimos" className="form-label text-secondary fw-bold my-3">Estudios Minimos</label>
                                 <select 
                                     name="estudios_minimos" 
                                     id="estudios_minimos"
@@ -202,11 +202,11 @@ export const FormOffer = () => {
                                 </select>
                             </div>
                             <div className="col-4">
-                                <label htmlFor="contrato" className="form-label text-secondary fw-bold my-3">Tipo de contrato</label>
+                                <label htmlFor="tipo_contrato" className="form-label text-secondary fw-bold my-3">Tipo de contrato</label>
                                 <input 
                                     type="text" 
-                                    name="contrato" 
-                                    id="contrato"
+                                    name="tipo_contrato" 
+                                    id="tipo_contrato"
                                     className="form-control"
                                     placeholder="Indefinido, fijo, no disponible..."
                                     onChange={handleChange}
@@ -221,7 +221,7 @@ export const FormOffer = () => {
                                 <input
                                     type="text"
                                     className="form-control input-requisits"
-                                    name="requisitos"
+                                    name="requisitos_minimos"
                                     id="requisitos"
                                     placeholder="impresindible..."
                                     onChange={handleChange}
