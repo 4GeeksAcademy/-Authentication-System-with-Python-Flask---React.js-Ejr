@@ -12,15 +12,18 @@ const UserProfile = () => {
     const [eventStyle, setEventStyle] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [passwordMessage, setPasswordMessage] = useState(""); // Estado para manejar el mensaje de cambio de contraseña
-    const [profileMessage, setProfileMessage] = useState(""); // Estado para manejar el mensaje de guardar cambios
-    const [isError, setIsError] = useState(false); // Estado para manejar el tipo de mensaje (éxito o error) en ambos casos
+    const [passwordMessage, setPasswordMessage] = useState("");
+    const [profileMessage, setProfileMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
     useEffect(() => {
         actions.getUserProfile();
+    }, []);
+
+    useEffect(() => {
         if (store.profile) {
-            setUsername(store.profile.username);
-            setEmail(store.profile.email);
+            setUsername(store.profile.username || "");
+            setEmail(store.profile.email || "");
         }
     }, [store.profile]);
 
@@ -44,16 +47,23 @@ const UserProfile = () => {
             eventStyle: eventStyle
         };
         try {
-            await actions.updateUserProfile(profile);
-            setProfileMessage("Información guardada con éxito");
-            setIsError(false);
+            const success = await actions.updateUserProfile(profile);
+            if (success) {
+                setProfileMessage("Información guardada con éxito");
+                setIsError(false);
+                // Asegúrate de que el store se actualice correctamente después de guardar los cambios
+                actions.getUserProfile();
+            } else {
+                setProfileMessage("Error al guardar la información");
+                setIsError(true);
+            }
         } catch (error) {
             setProfileMessage("Error al guardar la información");
             setIsError(true);
-        } finally {
-            // Opcionalmente, puedes restablecer los campos aquí si es necesario
         }
     };
+    
+    
 
     const handleChangePassword = async () => {
         try {
@@ -130,15 +140,13 @@ const UserProfile = () => {
                             onChange={(e) => setEventStyle(e.target.value)}
                         />
                         <button className="save-button" onClick={handleSubmit}>Guardar Cambios</button>
-                        
-                        {/* Mostrar mensaje de éxito o error para guardar cambios */}
+
                         {profileMessage && (
                             <p className={isError ? "error-message" : "success-message"}>
                                 {profileMessage}
                             </p>
                         )}
-                        
-                        {/* Sección para cambiar la contraseña */}
+
                         <input
                             type="password"
                             name="currentPassword"
@@ -154,8 +162,7 @@ const UserProfile = () => {
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
                         <button onClick={handleChangePassword}>Cambiar Contraseña</button>
-                        
-                        {/* Mostrar mensaje de éxito o error para cambiar contraseña */}
+
                         {passwordMessage && (
                             <p className={isError ? "error-message" : "success-message"}>
                                 {passwordMessage}
