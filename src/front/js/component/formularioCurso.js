@@ -10,6 +10,7 @@ export const FormularioCurso = () =>{
         resumen: '',
         categoria: '',
         nivel: '',
+        precio:'',
         idioma: '',
     })
 
@@ -27,6 +28,7 @@ export const FormularioCurso = () =>{
             resumen: '',
             categoria: '',
             nivel: '',
+            precio:'',
             idioma: '',
         }) 
         console.log(dataForm)
@@ -41,12 +43,11 @@ export const FormularioCurso = () =>{
                     <input className="form-control" name="portada" value={dataForm.portada} placeholder="" onChange={handleChange} type="text"></input>
                 </label>
 			    <label>Resumen
-                    <input className="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"></input>
-                    <div class="col-md-6 mb-3">
-                        <label for="Message" class="form-label">Message</label>
-                        <textarea class="form-control" id="Message" rows="3"></textarea>
-                    <p class="text-secondary">Add any notes here.</p>
-                </div>
+                    {/*<input className="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"></input>*/}
+                    <div>
+                        <textarea class="form-control" name="resumen" value={dataForm.resumen} placeholder="" onChange={handleChange} type="text"rows="5"></textarea>
+                        <p className="text-secondary">Describe tu curso aquí</p>
+                    </div>
                 </label>
                 <label>Categoría
                     <Dropdown>
@@ -69,7 +70,7 @@ export const FormularioCurso = () =>{
                 <label>Nivel
                     <Dropdown>
                         <Dropdown.Toggle id="dropdown-nivel" title={dataForm.nivel || "Seleccionar nivel"}>
-                            {dataForm.categoria || "Seleccionar nivel"}
+                            {dataForm.nivel || "Seleccionar nivel"}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => handleChange({ target: { name: 'nivel', value: "Principiante" } })}>
@@ -88,7 +89,8 @@ export const FormularioCurso = () =>{
                     </Dropdown>
                 </label>
                 <label>Precio
-                    <input className="form-control" name="precio" value={dataForm.precio} placeholder="" onChange={handleChange} type="range" min="0" max="350">{dataForm.precio}</input>
+                    <input className="form-control" name="precio" value={dataForm.precio} placeholder="" onChange={handleChange} type="range" min="0" max="350"></input>
+                    <span>{dataForm.precio}</span>
                 </label>        
                 <label>Idioma
                     <Dropdown>

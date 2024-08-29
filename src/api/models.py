@@ -119,7 +119,6 @@ class Curso(db.Model):
             "precio": self.precio,
             "fecha_inicio": self.fecha_inicio,
             "idioma": self.idioma,
-            "modulos": self.modulos,
             "profesor_id": self.profesor_id,
             "portada": self.portada,
             "matriculas": [matricula.serialize() for matricula in self.matriculas] if self.matriculas else None,
