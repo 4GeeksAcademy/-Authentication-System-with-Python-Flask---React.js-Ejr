@@ -23,7 +23,6 @@ import { ErrorView } from "./pages/error";
 import { Stats } from "./pages/stats";
 import ProtectedRoute from "./component/protectedRoute";
 
-
 const usePageTitle = (defaultTitle) => {
     const location = useLocation();
 
