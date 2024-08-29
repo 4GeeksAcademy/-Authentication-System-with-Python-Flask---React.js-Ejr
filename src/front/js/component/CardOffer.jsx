@@ -1,4 +1,4 @@
-import React, {useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "../../styles/CardOffer.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
@@ -12,8 +12,7 @@ export const CardOffer = ({ id }) => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
-
-
+    const [modalType, setModalType] = useState('');
     if (!offer) return <div>Oferta no encontrada</div>;
 
     const handleViewDetails = () => {
@@ -24,13 +23,22 @@ export const CardOffer = ({ id }) => {
         console.log('Guardar oferta', id);
     };
 
-    const handleApplyClick = async () =>{
+    const handleApplyClick = async () => {
+        if(store.user && store.user.profile_programador){
+            setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
+            setModalType('warning');
+            setIsModalOpen(true);
+            return;
+        }
+
         const result = await actions.applyToJobOffer(id);
-        if(result.msg){
+
+        if (result.msg ) {
             setModalMessage(result.msg);
+            setModalType(result.type);
             setIsModalOpen(true);
         }
-    }
+    };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -82,9 +90,10 @@ export const CardOffer = ({ id }) => {
             {isModalOpen && (
                 <ModalJobApply  
                     message={modalMessage}
+                    type={modalType} 
                     onClose={handleCloseModal}
                 />
-            )}       
+            )}
         </>
     );
 };
