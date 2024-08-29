@@ -28,7 +28,7 @@ export const SingleOffer = () => {
                                 </div>
                                 <div className="d-flex flex-column offer-header">
                                     <h2 className="mb-0 ">{offer.name}</h2>
-                                    <span className="text-muted">{offer.company}<span className="ms-3">{offer.location}</span></span>
+                                    <span className="text-muted">{offer.fecha_publicacion}<span className="ms-3">{offer.localidad}</span></span>
                                     <div className="salary-box">
                                         <span className="text-success">{offer.salario}</span>
                                     </div>
@@ -41,6 +41,12 @@ export const SingleOffer = () => {
                                     <li>{offer.experiencia_minima}</li>
                                     <li>{offer.salario}</li>
                                     <li>{offer.palazo}</li>
+                                </ul>
+                                <ul className="text-muted">
+                                    <li>{offer.idiomas}</li>
+                                    <li>{offer.tipo_contrato}</li>
+                                    <li>{offer.horario}</li>
+                                    <li>{offer.estudios_minimos}</li>
                                 </ul>
                             </div>
                             <hr />
