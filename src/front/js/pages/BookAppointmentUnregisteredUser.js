@@ -378,6 +378,8 @@ const BookAppointmentUnregisteredUser = () => {
                         }</strong> at <strong>${
             dateFormat.split(" ")[1]
           }</strong>.</p>
+                        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Service: <strong>${serviceName}</strong></p>
+                        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Car: <strong>${carModel}</strong></p>
                         <p style="font-size: 16px; line-height: 1.5; margin: 10px 0; color: #333333;">Please note, this email is for informational purposes only, and no response is required.</p>
                     </div>
                     <div style="margin-top: 30px; padding: 20px; font-size: 14px; color: #888888; text-align: center; background-color: #E3DDDB;">
