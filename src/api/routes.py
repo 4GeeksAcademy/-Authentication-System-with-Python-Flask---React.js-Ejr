@@ -13,6 +13,8 @@ from flask_bcrypt import generate_password_hash , check_password_hash
 api = Blueprint('api', __name__)
 
 
+
+
 # Allow CORS requests to this API
 CORS(api)
 
@@ -161,6 +163,12 @@ def crear_oferta():
     name = request.json.get("name")
     descripcion = request.json.get("descripcion")
     salario = request.json.get("salario")
+    localidad = request.json.get("localidad")
+    tipo_contrato = request.json.get("tipo_contrato")
+    estudios_minimos = request.json.get("estudios_minimos")
+    horario = request.json.get("horario")
+    requisitos_minimos = request.json.get("requisitos_minimos")
+    idiomas = request.json.get("idiomas")
     plazo = request.json.get("plazo")
     modalidad = request.json.get("modalidad")
     experiencia_minima = request.json.get("experiencia_minima")
@@ -184,13 +192,19 @@ def crear_oferta():
         name=name,
         descripcion=descripcion,
         salario=salario,
+        localidad=localidad,
+        tipo_contrato=tipo_contrato,
+        idiomas=idiomas,
+        estudios_minimos=estudios_minimos,
+        horario=horario,
+        requisitos_minimos=requisitos_minimos,
         plazo=plazo,
         modalidad=modalidad_enum,
         experiencia_minima=experiencia_minima,
         fecha_publicacion=fecha_publicacion,
         empleador_id=empleador.id
     )
-
+    
     try:
         db.session.add(nueva_oferta)
         db.session.commit()
