@@ -1,9 +1,10 @@
 /* Estilos generales para la lista de cursos */
 .lista-cursos {
     max-width: 1500px; /* Ancho máximo igual al de barraBusqueda.css */
-    margin: 0 auto; /* Centrado del contenedor horizontalmente */
+    margin: 15px auto 0; /* Añade margen superior para separar de elementos anteriores y Centra la barra de búsqueda horizontalmente*/
     box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
     padding: 1rem; /* Espaciado interno del contenedor */
+    border-radius: 10px;
 }
 
 /* Estilos para el contenedor de la tarjeta */

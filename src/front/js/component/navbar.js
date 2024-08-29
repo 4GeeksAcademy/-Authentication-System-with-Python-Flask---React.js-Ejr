@@ -11,7 +11,7 @@ export const Navbar = () => {
     const usuarioImage = localStorage.getItem('usuarioImage'); //Obtiene la URL de la imagen del perfil del usuario.
 
     return (
-        <nav className="navbar mb-3">
+        <nav className="navbar mb-0">
             <Link to="/" className="navbar-brand">
                 <img src={logo} alt="Logo Elearning" className="logo"/>
             </Link>

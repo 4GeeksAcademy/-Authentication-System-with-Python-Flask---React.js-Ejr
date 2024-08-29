@@ -9,8 +9,10 @@
 /* Estilo general para el contenedor del carrusel */
 #carouselExampleFade {
     width: 80%; /* Ancho del carrusel */
-    margin: 0 auto; /* Centra el carrusel horizontalmente */
+    margin: 15px auto 0; /* Añade margen superior para separar de elementos anteriores y Centra la barra de búsqueda horizontalmente*/
     position: relative; /* Necesario para posicionar las flechas absolutamente dentro del carrusel */
+    border: 1px solid #000022; /* Borde oscuro */
+    border-radius: 10px;
 }
 
 /* Estilo para los elementos dentro del carrusel */
@@ -23,6 +25,7 @@
     width: 100%; /* Ajusta la imagen al 100% del ancho del carrusel */
     height: 300px; /* Altura fija de la imagen */
     object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionar */
+    border-radius: 10px;
 }
 
 /* Oculta los botones de navegación del carrusel por defecto */
