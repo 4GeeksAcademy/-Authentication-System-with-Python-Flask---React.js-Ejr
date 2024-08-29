@@ -6,17 +6,27 @@ const UserProfile = () => {
 
     const { store, actions } = useContext(Context);
     useEffect(() => {
+        actions.getUserProfile()
         console.log(store)
         if (store.profile) {
             setUsername(store.profile.username);
             setEmail(store.profile.email);
-            setAddress(store.profile.address);
-            setCity(store.profile.city);
-            setCountry(store.profile.country);
-            setEventStyle(store.profile.eventStyle);
         }
         
     }, [store.profile])
+
+    useEffect(() => {
+        
+        console.log(store)
+        if (store.user_profile) {
+            setAddress(store.user_profile.address || "");
+            setCity(store.user_profile.city || "");
+            setCountry(store.user_profile.country || "");
+            setEventStyle(store.user_profile.event_style || "");
+        }
+        
+    }, [store.user_profile])
+    
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");

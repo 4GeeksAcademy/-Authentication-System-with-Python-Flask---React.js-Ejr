@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 
 			token:null,
-			user:null
+			user:null,
+			user_profile:null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -124,6 +125,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(profile)
 				})
 
+			},
+			getUserProfile: () => {
+				const store = getStore()
+				fetch(process.env.BACKEND_URL + "/api/profile",{
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("jwt-token")}`
+					},
+				}
+					
+				)
+				.then(resp => resp.json())
+				.then(data => setStore({...store, user_profile: data}))
+				.catch(error => console.log(error))
 			}
 		}
 	};
