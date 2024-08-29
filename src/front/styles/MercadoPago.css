@@ -68,7 +68,7 @@
 .mercadopago-logo {
   display: block;
   margin: 20px auto;
-  width: 150px;
+  width: 250px;
 }
 
 /* Iconos de seguruidad */
@@ -80,7 +80,7 @@
 
 .security-icons img {
   margin: 0 10px;
-  width: 40px;
+  width: 80px;
   height: auto;
 }
 

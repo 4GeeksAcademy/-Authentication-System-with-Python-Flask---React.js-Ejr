@@ -92,7 +92,7 @@ const MercadoPagoComponent = () => {
               onChange={handleChange}
               required
             />
-           {/*  <CardNumber id="form-checkout__cardNumber" className="form-control" /> */}
+            {/*  <CardNumber id="form-checkout__cardNumber" className="form-control" /> */}
           </Form.Group>
           <Form.Group controlId="form-checkout__cardExpirationDate">
             <Form.Label>Fecha de expiración</Form.Label>
@@ -121,7 +121,6 @@ const MercadoPagoComponent = () => {
         <div className="mercadopago-logo">
           <img src="https://logotipoz.com/wp-content/uploads/2021/10/version-horizontal-large-logo-mercado-pago.webp" alt="Mercado Pago Logo" className="mercadopago-logo" />
         </div>
-
         <div className="security-icons">
           <img src="https://cdn.pixabay.com/photo/2023/02/10/01/41/safe-purchase-7779878_1280.png" alt="Security Icon" />
         </div>
