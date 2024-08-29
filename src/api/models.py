@@ -19,9 +19,9 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "is_teacher": self.is_teacher,
-            "profesor": self.profesor.serialize() if self.profesor else None,
-            "alumno": self.alumno.serialize() if self.alumno else None
-        }
+            "profesor": [p.serialize() for p in self.profesor] if isinstance(self.profesor, list) else (self.profesor.serialize() if self.profesor else None),
+            "alumno": [a.serialize() for a in self.alumno] if isinstance(self.alumno, list) else (self.alumno.serialize() if self.alumno else None)
+    }
 
     def __repr__(self):
         return f'<User {self.email}>'

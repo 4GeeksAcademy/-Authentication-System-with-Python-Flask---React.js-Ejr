@@ -47,9 +47,12 @@ const Layout = () => {
                         <Route element={<Contacto />} path="/contacto" />
                         <Route element={<VistaPago />} path="/vistaPago" />
                         {/* Protege la ruta VistaAlumno con PrivateRouteAlumno, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
-                        <Route element={<PrivateRouteAlumno vista={VistaAlumno} />} path="/vistaAlumno" />
+                        {/*DESCOMENTAR<Route element={<PrivateRouteAlumno vista={VistaAlumno} />} path="/vistaAlumno" />*/}
                          {/* Protege la ruta VistaProfe con PrivateRoute, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede acceder */}
-                        <Route element={<PrivateRoute vista={VistaProfe} />} path="/vistaProfe" />
+                        {/*DESCOMENTAR<Route element={<PrivateRoute vista={VistaProfe} />} path="/vistaProfe" />*/}
+                        {/*ELIMINAR LINEA 54 Y 55 AL TERMINAR ESTA RAMA*/}
+                        <Route element={<VistaAlumno />} path="/vistaAlumno" />
+                        <Route element={<VistaProfe />} path="/vistaProfe" />
                         <Route element={<Vistacurso />} path="/vistacurso" />
                         <Route element={<h1>Not found!</h1>} path="*" /> 
                     </Routes>
