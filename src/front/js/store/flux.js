@@ -123,22 +123,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                     .catch(error => console.log(error));
             },
             changePassword: async (currentPassword, newPassword) => {
-                try {
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/change-password", {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${localStorage.getItem("jwt-token")}`,
-                        },
-                        body: JSON.stringify({ currentPassword, newPassword }),
-                    });
-                    if (!resp.ok) throw new Error("Error al cambiar la contraseña");
-                    const data = await resp.json();
-                    console.log("Contraseña cambiada correctamente:", data);
-                } catch (error) {
-                    console.error("Error durante el cambio de contraseña:", error);
-                }
-            },
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/change-password", {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${localStorage.getItem("jwt-token")}`,
+						},
+						body: JSON.stringify({ currentPassword, newPassword }),
+					});
+					return resp; // Retornar la respuesta para verificarla en UserProfile.js
+				} catch (error) {
+					console.error("Error durante el cambio de contraseña:", error);
+					throw error;
+				}
+			},
 			logout: () => {
 				localStorage.removeItem("jwt-token");
 				localStorage.removeItem("profile");

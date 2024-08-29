@@ -4,6 +4,16 @@ import { Context } from "../store/appContext";
 
 const UserProfile = () => {
     const { store, actions } = useContext(Context);
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [eventStyle, setEventStyle] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [passwordMessage, setPasswordMessage] = useState(""); // Estado para manejar el mensaje
+    const [isError, setIsError] = useState(false); // Estado para manejar el tipo de mensaje (éxito o error)
 
     useEffect(() => {
         actions.getUserProfile();
@@ -22,16 +32,7 @@ const UserProfile = () => {
         }
     }, [store.user_profile]);
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [eventStyle, setEventStyle] = useState("");
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-
-    const handleSubmit = (e) => {
+    const handleSubmit = () => {
         const profile = {
             avatar: null,
             username: username,
@@ -39,15 +40,29 @@ const UserProfile = () => {
             address: address,
             city: city,
             country: country,
-            eventStyle: eventStyle,
+            eventStyle: eventStyle
         };
         actions.updateUserProfile(profile);
     };
 
-    const handleChangePassword = (e) => {
-        e.preventDefault();
-        if (newPassword !== "") {
-            actions.changePassword(currentPassword, newPassword);
+    const handleChangePassword = async () => {
+        try {
+            const response = await actions.changePassword(currentPassword, newPassword);
+            if (response.ok) { // Aquí verificamos si la respuesta es correcta
+                setPasswordMessage("Password alterada con éxito");
+                setIsError(false);
+            } else {
+                const errorData = await response.json();
+                setPasswordMessage(errorData.message || "Error en el cambio de la Password");
+                setIsError(true);
+            }
+        } catch (error) {
+            setPasswordMessage("Error en el cambio de la Password");
+            setIsError(true);
+        } finally {
+            // Restablecer los campos de contraseña después del intento
+            setCurrentPassword("");
+            setNewPassword("");
         }
     };
 
@@ -107,25 +122,29 @@ const UserProfile = () => {
                         />
                         <button className="save-button" onClick={handleSubmit}>Guardar Cambios</button>
                         
-                        {/* Formulario para cambiar la contraseña */}
-                        <h2>Cambiar Contraseña</h2>
-                        <form onSubmit={handleChangePassword}>
-                            <input
-                                type="password"
-                                name="currentPassword"
-                                placeholder="Contraseña actual"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                            />
-                            <input
-                                type="password"
-                                name="newPassword"
-                                placeholder="Nueva contraseña"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
-                            <button type="submit">Cambiar Contraseña</button>
-                        </form>
+                        {/* Sección para cambiar la contraseña */}
+                        <input
+                            type="password"
+                            name="currentPassword"
+                            placeholder="Contraseña actual"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            name="newPassword"
+                            placeholder="Nueva contraseña"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <button onClick={handleChangePassword}>Cambiar Contraseña</button>
+                        
+                        {/* Mostrar mensaje de éxito o error */}
+                        {passwordMessage && (
+                            <p className={isError ? "error-message" : "success-message"}>
+                                {passwordMessage}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
