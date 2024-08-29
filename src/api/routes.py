@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Modalidad, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
+from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -225,6 +225,32 @@ def get_offer(id):
     except Exception as e:
         return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
 
+
+
+@api.route('/postulados', methods=['POST'])
+@jwt_required()
+def create_postulado():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no permitido"})
+    if not user.profile_programador:
+        return jsonify({"msg": "Solo pueden postularse programadores."})
+    
+    oferta_id = request.json.get("oferta_id")
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta:
+        return jsonify({"msg": "Oferta no encontrada o ID inválido"}), 404
+    
+    postulado_existente = Postulados.query.filter_by(user_id=user.id, oferta_id=oferta.id).first()
+    if postulado_existente:
+        return jsonify({"msg": "Ya estás inscrito en esta oferta"}), 404
+    
+    nuevo_postulado = Postulados(user_id=user.id, oferta_id=oferta.id)
+    db.session.add(nuevo_postulado)
+    db.session.commit()
+    
+    return jsonify({"msg": "Inscripcion realizada con éxito."})
 
 #contact
 @api.route('/contact', methods=['POST'])
