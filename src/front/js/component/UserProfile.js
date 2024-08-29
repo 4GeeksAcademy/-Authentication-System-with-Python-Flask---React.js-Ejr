@@ -3,43 +3,33 @@ import "../../styles/UserProfile.css";
 import { Context } from "../store/appContext";
 
 const UserProfile = () => {
-
     const { store, actions } = useContext(Context);
+
     useEffect(() => {
-        actions.getUserProfile()
-        console.log(store)
+        actions.getUserProfile();
         if (store.profile) {
             setUsername(store.profile.username);
             setEmail(store.profile.email);
         }
-        
-    }, [store.profile])
+    }, [store.profile]);
 
     useEffect(() => {
-        
-        console.log(store)
         if (store.user_profile) {
             setAddress(store.user_profile.address || "");
             setCity(store.user_profile.city || "");
             setCountry(store.user_profile.country || "");
             setEventStyle(store.user_profile.event_style || "");
         }
-        
-    }, [store.user_profile])
-    
+    }, [store.user_profile]);
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [eventStyle, setEventStyle] = useState("");
-
-    const handleFileChange = (e) => {
-        // setUserData({
-        //     ...userData,
-        //     avatar: URL.createObjectURL(e.target.files[0]),
-        // });
-    };
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
 
     const handleSubmit = (e) => {
         const profile = {
@@ -49,10 +39,16 @@ const UserProfile = () => {
             address: address,
             city: city,
             country: country,
-            eventStyle: eventStyle
-        }
-        console.log("Datos del usuario actualizados:", profile);
+            eventStyle: eventStyle,
+        };
         actions.updateUserProfile(profile);
+    };
+
+    const handleChangePassword = (e) => {
+        e.preventDefault();
+        if (newPassword !== "") {
+            actions.changePassword(currentPassword, newPassword);
+        }
     };
 
     return (
@@ -67,23 +63,6 @@ const UserProfile = () => {
                 <div className="profile-container-right text-center pt-2">
                     <div>
                         <h2>Actualiza tu información</h2>
-                        {/* <input
-                            type="file"
-                            id="avatar"
-                            name="avatar"
-                            className="file-input"
-                            onChange={handleFileChange}
-                        />
-                        <label htmlFor="avatar">Elige una foto de perfil</label> */}
-                        {/* {userData.avatar && (
-                            <div>
-                                <img
-                                    src={userData.avatar}
-                                    alt="Avatar"
-                                    className="avatar-preview"
-                                />
-                            </div>
-                        )} */}
                         <input
                             type="text"
                             name="username"
@@ -98,20 +77,6 @@ const UserProfile = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        {/* <input
-                            type="password"
-                            name="currentPassword"
-                            placeholder="Contraseña actual"
-                            value={userData.currentPassword}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            type="password"
-                            name="newPassword"
-                            placeholder="Nueva contraseña"
-                            value={userData.newPassword}
-                            onChange={handleInputChange}
-                        /> */}
                         <input
                             type="text"
                             name="address"
@@ -140,7 +105,27 @@ const UserProfile = () => {
                             value={eventStyle}
                             onChange={(e) => setEventStyle(e.target.value)}
                         />
-                        <button onClick= {handleSubmit}>Guardar Cambios</button>
+                        <button className="save-button" onClick={handleSubmit}>Guardar Cambios</button>
+                        
+                        {/* Formulario para cambiar la contraseña */}
+                        <h2>Cambiar Contraseña</h2>
+                        <form onSubmit={handleChangePassword}>
+                            <input
+                                type="password"
+                                name="currentPassword"
+                                placeholder="Contraseña actual"
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
+                            />
+                            <input
+                                type="password"
+                                name="newPassword"
+                                placeholder="Nueva contraseña"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                            />
+                            <button type="submit">Cambiar Contraseña</button>
+                        </form>
                     </div>
                 </div>
             </div>

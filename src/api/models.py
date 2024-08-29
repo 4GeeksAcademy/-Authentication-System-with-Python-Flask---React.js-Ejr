@@ -8,7 +8,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(250), nullable=False)
-    email = db.Column(db.String(250), nullable=False)
+    email = db.Column(db.String(250), nullable=False, unique=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('userProfile.id'))
     partner = db.Column(db.Boolean(), nullable=False)
     partner_profile_id = db.Column(db.Integer, db.ForeignKey('partnerProfile.id'))

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import logo from "../component/tickeateBlanco.png";
 import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
+import { Context } from "../store/appContext";
+
 export const Navbar = () => {
   const navigate = useNavigate();
-  
+  const {actions} = useContext(Context)
   const handleLogout = () => {
-    localStorage.removeItem("jwt-token");
+  actions.logout()
     navigate("/");
   };
   return (

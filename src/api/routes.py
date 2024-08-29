@@ -32,7 +32,7 @@ def signup():
         new_partner_profile = PartnerProfile(users=[new_user])  
         db.session.add(new_partner_profile)
 
-    elif data['partner'] == False:
+    else:
         new_user_profile = UserProfile(users=[new_user])  
         db.session.add(new_user_profile)
 
@@ -108,3 +108,26 @@ def get_user_profile():
     user_profile_data = user.user_profile.serialize()
 
     return jsonify(user_profile_data), 200
+
+@api.route('/change-password', methods=['PUT'])
+@jwt_required()
+def change_password():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+    current_password = data.get("currentPassword")
+    new_password = data.get("newPassword")
+
+    # Verificar si la contraseña actual es correcta (asumiendo que las contraseñas están en texto plano)
+    if user.password != current_password:  # Aquí deberías estar utilizando hashing de contraseñas
+        return jsonify({"message": "Current password is incorrect"}), 400
+
+    # Actualizar la contraseña
+    user.password = new_password  # Asegúrate de hashear la nueva contraseña
+    db.session.commit()
+
+    return jsonify({"message": "Password updated successfully"}), 200

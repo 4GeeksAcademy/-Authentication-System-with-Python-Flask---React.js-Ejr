@@ -36,6 +36,11 @@
     padding: 20px;
     background-color: #fff; /* Establece el fondo blanco */
     border-left: none; /* Asegura que no haya borde entre los contenedores */
+    margin-bottom: 20px; /* Añade este margen para separar del siguiente campo o texto */
+}
+
+button.save-button {
+    margin-bottom: 20px;
 }
 
 .profile-container-right form {
