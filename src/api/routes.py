@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
-from api.models import db, User, Curso
+from api.models import db, User, Curso, Profesor, Alumno, Videos, Matricula, Pagos
 
 # Crear el Blueprint para la API
 api = Blueprint('api', __name__)
@@ -100,40 +100,79 @@ def get_cursos():
     else:
         return jsonify({"error": "Cursos not found"}), 404
 
+# @api.route('/login', methods=['POST'])
+# def login():
+#     print("Request JSON:", request.json)
+#     email = request.json.get('email')
+#     password = request.json.get('password')
+#     user = User.query.filter_by(email=email).first()
+#     if user:
+#         if user.password == password:
+#             access_token = create_access_token(identity=user.id)
+#             return jsonify({'success': True, 'user': user.serialize(), 'token': access_token}), 200
+#         return jsonify({'success': False, 'msg': 'Combinación usuario/contraseña no es válida'}), 400
+#     return jsonify({'success': False, 'msg': 'El correo electrónico no tiene una cuenta asociada'}), 404
+
 @api.route('/login', methods=['POST'])
 def login():
-    print("Request JSON:", request.json)
-    email = request.json.get('email')
-    password = request.json.get('password')
-    user = User.query.filter_by(email=email).first()
-    if user:
-        if user.password == password:
-            access_token = create_access_token(identity=user.id)
-            return jsonify({'success': True, 'user': user.serialize(), 'token': access_token}), 200
-        return jsonify({'success': False, 'msg': 'Combinación usuario/contraseña no es válida'}), 400
-    return jsonify({'success': False, 'msg': 'El correo electrónico no tiene una cuenta asociada'}), 404
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
 
+    if not email or not password:
+        return jsonify({'success': False, 'msg': 'Email y contraseña son requeridos'}), 400
+
+    user = User.query.filter_by(email=email).first()
+    
+    if user and user.password == password:
+        # Crear un token de acceso
+        access_token = create_access_token(identity=user.id)
+        return jsonify({
+            'success': True,
+            'user': user.serialize(),
+            'token': access_token
+        }), 200
+    
+    return jsonify({'success': False, 'msg': 'Combinación usuario/contraseña no es válida'}), 401
+
+# @api.route('/signup', methods=['POST'])
+# def signup():
+
+#     email = request.json.get('email', None)
+#     password = request.json.get('password', None)
+#     type = request.json.get('type', None)
+#     if not email or not password or not type or type is None:
+#         return jsonify({'success': False, 'msg': 'Todos los campos son necesarios'}), 400
+#     user = User.query.filter_by(email=email).first()
+#     if user:
+#         return jsonify({'success': False, 'msg': 'El correo electrónico ya tiene una cuenta, intenta iniciar sesión'}), 400
+#     new_user = User(email=email, password=password, is_active=True)
+#     db.session.add(new_user)
+#     db.session.commit()
+#     access_token = create_access_token(identity=new_user.id)
+#     if type == 'alumno':
+#         #crear registro en tabla de alumno con este id como user
+#         print(type)
+#         return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
+#     if type== 'profesor':
+#         #crear registro en tabla de profesor con este id como user
+#         print(type)
+#         return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
 
 @api.route('/signup', methods=['POST'])
-def signup():
-
-    email = request.json.get('email', None)
-    password = request.json.get('password', None)
-    type = request.json.get('type', None)
-    if not email or not password or not type or type is None:
-        return jsonify({'success': False, 'msg': 'Todos los campos son necesarios'}), 400
-    user = User.query.filter_by(email=email).first()
-    if user:
-        return jsonify({'success': False, 'msg': 'El correo electrónico ya tiene una cuenta, intenta iniciar sesión'}), 400
-    new_user = User(email=email, password=password, is_active=True)
+def create_user2():
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
+    is_teacher = data.get('is_teacher', False)
+    
+    if not email or not password:
+        return jsonify({"error": "Email and password are required."}), 400
+    
+    new_user = User(email=email, password=password, is_teacher=is_teacher)
+    
+    # Add the new user to the session and commit
     db.session.add(new_user)
     db.session.commit()
-    access_token = create_access_token(identity=new_user.id)
-    if type == 'alumno':
-        #crear registro en tabla de alumno con este id como user
-        print(type)
-        return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
-    if type== 'profesor':
-        #crear registro en tabla de profesor con este id como user
-        print(type)
-        return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
+    
+    return jsonify(new_user.serialize()), 201

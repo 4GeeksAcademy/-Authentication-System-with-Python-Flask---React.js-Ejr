@@ -41,9 +41,9 @@ export const Login = () => {
                 console.log("userRole:", userRole); // Muestra el rol en la consola para depuración
     
                 if (userRole) {
-                    navigate('/dashboard-profesor'); // Redirige al panel del profesor
+                    navigate('/vistaProfe'); // Redirige al panel del profesor
                 } else {
-                    navigate('/dashboard-alumno'); // Redirige al panel del alumno
+                    navigate('/vistaAlumno'); // Redirige al panel del alumno
                 }
             } else {
                 // Maneja el caso en que el inicio de sesión no fue exitoso

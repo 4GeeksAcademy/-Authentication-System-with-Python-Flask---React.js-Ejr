@@ -76,7 +76,8 @@ export const SignUp = () => {
                                 "alumno"
                             )
                         }
-                        type="radio" name="flexRadioDefault" id="flexRadioDefault1"></input>
+                        type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    </input>
                     <label className="form-check-label"
                         for="flexRadioDefault1">
                         Alumno
@@ -94,7 +95,8 @@ export const SignUp = () => {
                                 "profesor"
                             )
                         }
-                        type="radio" name="flexRadioDefault" id="flexRadioDefault2"></input>
+                        type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    </input>
                     <label className="form-check-label" for="flexRadioDefault2">
                         Profesor
                     </label>
