@@ -51,3 +51,11 @@
     border-radius: 5px; 
     transition: background-color 0.3s, box-shadow 0.3s; 
   }
+
+  .navbar-username {
+    color: white;
+    margin-right: 10px;
+    font-weight: bold; /* Hace que el texto sea negrita */
+    position: relative;
+    top: 8px; /* Desplaza el texto hacia abajo en 10px */
+}
