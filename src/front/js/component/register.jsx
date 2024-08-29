@@ -105,7 +105,7 @@ export const Register = () => {
 
 			if (registro.success) {
 				Swal.fire({
-					text: "El registro del usuario se ha realizado con éxito. Te enviamos un correo para verificar tu cuenta",
+					text: "El registro del usuario se ha realizado con éxito. Recibirás un correo para verificar tu cuenta",
 					icon: "success"
 				});
 				navigate('/vista-login');

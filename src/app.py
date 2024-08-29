@@ -58,6 +58,7 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
 mail= Mail(app)
 app.mail= mail
 
+
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 

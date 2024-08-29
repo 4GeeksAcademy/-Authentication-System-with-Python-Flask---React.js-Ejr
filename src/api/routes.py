@@ -235,6 +235,7 @@ def verify_email(token):
 
     return jsonify({"msg": "Correo verificado con éxito. Ahora puedes iniciar sesión."}), 200
 
+
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])
 def create_user():

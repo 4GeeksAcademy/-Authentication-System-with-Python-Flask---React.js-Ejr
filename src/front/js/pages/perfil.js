@@ -6,7 +6,7 @@ import VistaModal from "../component/vistaModal.jsx";
 import defaultAvatar from "../../img/avatar.jpg";
 import Loader from "../component/loader.jsx";
 import FormSolicitudProf from "../component/formSolicitudProf.jsx";
-import PayPalComponent from "../component/PayPal.jsx";
+import MercadoPagoComponent from "../component/MercadoPago.jsx";
 import Swal from 'sweetalert2'
 import Meets from "../component/meets.jsx";
 // ID cliente: RrLt2R0t0jbTXChSFJLFIPaSMniKYriRIi6kxAszsWA
@@ -25,7 +25,7 @@ const Perfil = () => {
         actions.fetchEspecialidades();
         actions.obtenerEspecialidadesPorProfesional();
 
-        const fetchPerfil = async () => {
+        const redirectPerfil = async () => {
             const token = localStorage.getItem("token");
             if (!token) {
                 Swal.fire({
@@ -63,6 +63,7 @@ const Perfil = () => {
                 });
             }
         };
+        redirectPerfil();
         // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
@@ -195,7 +196,7 @@ const Perfil = () => {
                                 <Meets />
                             </div>
                             <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                <PayPalComponent/>
+                                <MercadoPagoComponent/>
                             </div>
                             <div className="tab-pane fade" id="v-pills-especialidad" role="tabpanel" aria-labelledby="v-pills-especialidad-tab">
                                 <h4>Especialidades</h4>
