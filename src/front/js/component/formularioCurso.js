@@ -30,6 +30,7 @@ export const FormularioCurso = () =>{
             nivel: '',
             precio:'',
             idioma: '',
+            fecha_inicio:''
         }) 
         console.log(dataForm)
     }
@@ -109,6 +110,9 @@ export const FormularioCurso = () =>{
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
+                </label>
+                <label>Fecha de inicio
+                    <input className="form-control" name="fecha_inicio" value={dataForm.fecha_inicio} placeholder="" onChange={handleChange} type="date"></input>
                 </label>
                 <input className="btn btn-primary" value="enviar" type="submit"/>
             </form>
