@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, { useState, useContext } from 'react'
 import { Context } from '../store/appContext'
 
 export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen, handleAddExercises }) => {
@@ -211,64 +211,65 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredExercises.map((item, index) => {
-              return (
-                <article key={item.id} className="flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
-                  <div className="hidden sm:block sm:basis-36">
-                    <img
-                      alt=""
-                      src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
-                      className="aspect-square h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="p-3 flex flex-1 flex-col gap-4 justify-between">
-                    <div className="flex flex-col gap-3 dark:border-white/10">
-                      <h3 className="font-bold uppercase text-neutral-900 dark:text-white">
-                        {item.name}
-                      </h3>
-                      <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
-                        {item.category}
-                      </span>
-                    </div>
-                    <div className="self-end">
-                      <input
-                        checked={isExerciseSelected(item.id)}
-                        onChange={() => handleOpenModal(item)} // Solo abre la modal al cambiar el estado del checkbox
-                        type="checkbox"
-                        id={`react-${index}`}
-                        className="peer hidden"
+          <div className='h-96 overflow-y-scroll px-4'>
+            <div className="flex flex-wrap mx-auto gap-4 w-content border border-neutral-500 ">
+              {filteredExercises.map((item, index) => {
+                return (
+                  <article key={item.id} className="w-72 h-40 flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
+                    <div className="hidden sm:block sm:basis-36 w-1/2">
+                      <img
+                        alt=""
+                        src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
+                        className="aspect-square h-full w-full object-cover"
                       />
-                      <label
-                        htmlFor={`react-${index}`}
-                        className="dark:hover:text-emerald-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
-                      >
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="icon icon-tabler icons-tabler-outline icon-tabler-plus size-8"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M12 5l0 14" />
-                            <path d="M5 12l14 0" />
-                          </svg>
-                        </div>
-                      </label>
                     </div>
+                    <div className="p-3 flex flex-1 flex-col gap-4 justify-between w-1/2">
+                      <div className="flex flex-col gap-3 dark:border-white/10">
+                        <h3 className="font-bold text-neutral-900 dark:text-white">
+                          {item.name}
+                        </h3>
+                        <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
+                          {item.category}
+                        </span>
+                      </div>
+                      <div className="self-end">
+                        <input
+                          checked={isExerciseSelected(item.id)}
+                          onChange={() => handleOpenModal(item)} // Solo abre la modal al cambiar el estado del checkbox
+                          type="checkbox"
+                          id={`react-${index}`}
+                          className="peer hidden"
+                        />
+                        <label
+                          htmlFor={`react-${index}`}
+                          className="dark:hover:text-emerald-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
+                        >
+                          <div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="icon icon-tabler icons-tabler-outline icon-tabler-plus size-8"
+                            >
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M12 5l0 14" />
+                              <path d="M5 12l14 0" />
+                            </svg>
+                          </div>
+                        </label>
+                      </div>
 
 
-                  </div>
-                </article>
-              )
-            })}
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
           </div>
-
           <div className="mt-4 w-full flex gap-4 flex-col-reverse items-center sm:flex-row sm:w-fit self-end">
             <button
               type="button"

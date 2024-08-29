@@ -7,7 +7,7 @@ import { StepsCount } from "./stepsCount"
 
 export const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
-  const [step, setStep] = useState(1) // Para controlar el paso actual
+  const [step, setStep] = useState(3) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
     selectedDay: '',
@@ -291,7 +291,7 @@ export const MultiStepForm = () => {
   }, [])
 
   return (
-    <div className="w-3/4 mx-auto flex rounded-md flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-5 h-full bg-neutral-800 border-neutral-700 relative">
+    <div className="w-11/12 md:w-3/4 mx-auto flex rounded-md flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-5 h-full bg-neutral-800 border-neutral-700 relative">
 
       {/* form title */}
       <span className="relative flex justify-center w-full sm:w-3/4">
