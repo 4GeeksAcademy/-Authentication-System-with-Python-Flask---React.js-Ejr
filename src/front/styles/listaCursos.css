@@ -21,7 +21,7 @@
 }
 
 /* Estilos para el cuerpo de la tarjeta */
-.card-body {
+.card-body-ListaCurso{
     padding: 1.25rem; /* Espaciado interno del cuerpo de la tarjeta */
     background-color: #416788; /* Color de fondo para el cuerpo de la tarjeta */
     color: #e0e0e2; /* Color del texto dentro del cuerpo de la tarjeta */
