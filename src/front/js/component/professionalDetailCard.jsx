@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 import "../../styles/professionaldetail.css";
 import ImgProN from "../../../../public/images/img-profesional-n.png";
 
-const ProfessionalDetailCard = ({ id, name, description, calendly_url }) => {
+const ProfessionalDetailCard = ({ id, name, description, calendly_name }) => {
     const { actions, store } = useContext(Context);
 
     let image_url = "https://raw.githubusercontent.com/OlgaKoplik/CodePen/master/profile.jpg";
-    let calendly_generico = "https://calendly.com/nutriagend"
 
     return (
         <>
@@ -16,11 +16,12 @@ const ProfessionalDetailCard = ({ id, name, description, calendly_url }) => {
             </div>
             <div>
                 <h1 className="m-5">{name}</h1>
-                <a href={calendly_url || calendly_generico}>Calendly</a>
                 <p>{description}</p>
-                <button className='prof-det-btn m-2' >
-                    Agendarme
-                </button>
+                <Link to={`/agenda/${calendly_name}`} className="more-link" >
+                    <h5>
+                       {`Agendarme con ${name}`}
+                    </h5>
+                </Link>
             </div>
         </>
     )

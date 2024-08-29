@@ -424,9 +424,9 @@ def preference():
      "email":"test_user_17805074@testuser.com"  #este es el usuario de prueba comprador 
  }, 
     "back_urls": { 
-    "success": "https://3000-sumpierrezf-mercadodela-7ms2um6rmsm.ws-us87.gitpod.io", 
-    "failure": "https://3000-sumpierrezf-mercadodela-7ms2um6rmsm.ws-us87.gitpod.io", 
-    "pending": "https://3000-sumpierrezf-mercadodela-7ms2um6rmsm.ws-us87.gitpod.io"  #  En 
+    "success": os.getenv('FRONTEND_URL') + '/pay-callback/success', 
+    "failure": os.getenv('FRONTEND_URL') + '/pay-callback/failure', 
+    "pending": os.getenv('FRONTEND_URL') + '/pay-callback/pending', #  En 
  #este caso las tres están configuradas para que lo manden de nuevo a la página home de la app. 
  }, 
     "auto_return": "approved" 

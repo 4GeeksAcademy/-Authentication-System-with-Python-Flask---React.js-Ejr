@@ -121,9 +121,9 @@ const Professionals = () => {
       <div className="top-banner parallax w-100 p-0">
         <h1>Profesionales</h1>
       </div>
-      <section id='#nutricionists'>
+      <section>
         <div className="slider-container">
-          <h2>Nutricionistas</h2>
+          <h2 id='nutricionists'>Nutricionistas</h2>
           <div className='professionals-carousel'>
             <Slider {...settings}>
             {nutritionists && nutritionists.length > 0 ? (
@@ -132,6 +132,7 @@ const Professionals = () => {
                             key={index}
                             id={nutricionist.id}
                             name={nutricionist.name}
+                            calendly_name={nutricionist.calendly_name}
                             // image_url={nutricionist.image_url}
                             // calendlyLink={nutricionist.calendly_link}
                         />
@@ -144,9 +145,9 @@ const Professionals = () => {
         </div>
       </section>
       <div className="parallax w-100"></div>
-      <section id='#trainers' className='p-t-section'>
+      <section className='p-t-section'>
         <div className="slider-container">
-          <h2>Personal Trainers</h2>
+          <h2 id='trainers'>Personal Trainers</h2>
           <div className='professionals-carousel '>
             <Slider {...settings}>
               {personalTrainers && personalTrainers.length > 0 ? (
@@ -155,6 +156,7 @@ const Professionals = () => {
                             key={index}
                             id={trainers.id}
                             name={trainers.name}
+                            calendly_name={trainers.calendly_name}
                             // image_url={trainers.image_url}
                             // calendlyLink={trainer.calendly_link}
                         />

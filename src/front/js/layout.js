@@ -26,6 +26,7 @@ import Social from "./pages/social.jsx";
 import Cart from "./pages/cart.jsx"
 import CheckoutForm from "./pages/checkoutform.jsx";
 import CardProfile from "./pages/profile.jsx";
+import PayCallback from "./pages/payCallback.jsx";
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -37,7 +38,7 @@ const Layout = () => {
     return (
         <>
             <BrowserRouter basename={basename}>
-                <ScrollToTop>
+                <ScrollToTop />
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
@@ -53,7 +54,7 @@ const Layout = () => {
                         <Route element={<WishList />} path="/wishlist/users/:token" />
                         <Route element={<ProductDetail />} path="/product/:id" />
                         <Route element={<CardProfile />} path="/user/:id" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<PayCallback />} path="/pay-callback/:status" />
                         <Route element={<About />} path="/about" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Social />} path="/social" />
@@ -61,7 +62,6 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
-                </ScrollToTop>
             </BrowserRouter>
         </>
     );

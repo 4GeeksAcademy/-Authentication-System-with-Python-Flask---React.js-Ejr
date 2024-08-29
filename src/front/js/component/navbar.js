@@ -9,9 +9,6 @@ export const Navbar = () => {
     let location = useLocation();
     const { actions, store } = useContext(Context);
     let id = 0;
-    
-    console.log(store.auth, store.currentUser);
-
     if (location.pathname !== "/login" && location.pathname !== "/register") {
         return (
             <>
@@ -56,7 +53,7 @@ export const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="/cart" className="link">
+                                        <Link to="/cart/users/1" className="link">
                                             <button type="button">
                                                 <i className="bi bi-cart4"></i>
                                                 <span className="i-name">Carrito</span>
