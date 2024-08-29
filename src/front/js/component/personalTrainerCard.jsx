@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../../styles/professionals.css';
 import ImgProPT from "../../../../public/images/img-profesional-p-t.png";
 
-const PersonalTrainerCard = ({ id, name }) => {
+const PersonalTrainerCard = ({ id, name, calendly_name }) => {
     const {actions, store} = useContext(Context)
 
     let image_url = "";
@@ -30,11 +30,11 @@ const PersonalTrainerCard = ({ id, name }) => {
                         Ver perfil
                     </h5>
                 </Link>
-                <button className='agenda-btn'>
+                <Link to={`/agenda/${calendly_name}`} className="more-link" >
                     <h5>
-                        Agendarme
+                        Ver agenda
                     </h5>
-                </button>
+                </Link>
             </div>
         </div>
     )

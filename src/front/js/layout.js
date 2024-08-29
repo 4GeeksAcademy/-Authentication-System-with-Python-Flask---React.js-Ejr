@@ -58,7 +58,7 @@ const Layout = () => {
                         <Route element={<About />} path="/about" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<Social />} path="/social" />
-                        <Route element={<Agenda />} path="/agenda" />
+                        <Route element={<Agenda />} path="/agenda/:calendly_name" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
