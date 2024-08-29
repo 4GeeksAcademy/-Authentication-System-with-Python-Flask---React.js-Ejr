@@ -27,32 +27,27 @@ export const SingleOffer = () => {
                                     />
                                 </div>
                                 <div className="d-flex flex-column offer-header">
-                                    <h2 className="mb-0 ">{offer.title}</h2>
+                                    <h2 className="mb-0 ">{offer.name}</h2>
                                     <span className="text-muted">{offer.company}<span className="ms-3">{offer.location}</span></span>
                                     <div className="salary-box">
-                                        <span className="text-success">{offer.salary}</span>
+                                        <span className="text-success">{offer.salario}</span>
                                     </div>
                                 </div>
                                 <button className="btn btn-single-offer-up btn-lg">Inscribirse a la oferta</button>
                             </div>
                             <div className="requisit-list d-flex mt-4">
                                 <ul className="text-muted">
-                                    <li>Estudios mínimos</li>
-                                    <li>Años de experiencia</li>
-                                    <li>{offer.location}</li>
-                                </ul>
-                                <ul className="text-muted">
-                                    <li>Tipo de contrato</li>
-                                    <li>Tecnologías</li>
-                                    <li>Otros</li>
+                                    <li>{offer.modalidad}</li>
+                                    <li>{offer.experiencia_minima}</li>
+                                    <li>{offer.salario}</li>
+                                    <li>{offer.palazo}</li>
                                 </ul>
                             </div>
                             <hr />
                             <div className="data-single-offer-container">
-
                                 <div className="offer-description mt-3">
                                     <h5 className="fw-bold">Descripción</h5>
-                                    <p className="single-offer-description">{offer.description}</p>
+                                    <p className="single-offer-description">{offer.descripcion}</p>
                                 </div>
                                 <button className="btn btn-single-offer-down btn-lg mt-3">Inscribirse a la oferta</button>
                             </div>
