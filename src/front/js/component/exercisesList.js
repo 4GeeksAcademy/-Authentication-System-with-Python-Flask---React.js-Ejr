@@ -54,45 +54,46 @@ export const ExercisesList = ({ weeklyRoutine }) => {
 
   return (
     <>
-      <div className="flex flex-col w-full gap-6">
-        <div >
+      <div className="flex w-full gap-6">
+        <div className="mx-auto w-[80%] flex flex-col gap-4">
           <p className="font-bold text-lg md:text-xl text-white text-center">{weeklyRoutine.routine.name.toUpperCase()} | {weeklyRoutine.day}</p>
+          <div className="flex">
+            <div className="w-1/2 space-y-3 rounded-lg h-96 overflow-y-scroll pr-4">
+              {weeklyRoutine.routine.exercises.map((item, index) => {
+
+                return (
+                  < label
+                    key={index}
+                    htmlFor={`option ${index}`}
+                    className="flex items-center cursor-pointer gap-4 rounded-lg border p-4 transition border-emerald-700 bg-neutral-700 "
+                  >
+                    <div className="flex items-center">
+                      <input
+                        disabled={currentDay !== day}
+                        type="checkbox"
+                        defaultChecked={item.exercise.done}
+                        className="myCheckbox size-4 rounded border-emerald-300 bg-gray-800 ring-offset-emerald-900"
+                        id={`option ${index}`}
+                        name="name"
+                        onChange={(e) => {
+                          item.exercise.done = !item.exercise.done
+                          handleChange(item.exercise.done, item.exercise.id)
+                        }}
+                      />
+                      {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
+                    </div>
+                    <div>
+                      <p className="font-medium text-white">{item.exercise.name}</p>
+                    </div>
+                  </label>
+                )
+              })}
+            </div >
+            <div className="w-1/2">
+              <Progress percentage={percentage} />
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col md:flex-row md:items-center lg:w-2/3 justify-center gap-4 mx-auto w-[80%]">
-
-          <div className="lg:w-2/3 space-y-3 rounded-lg h-96 overflow-y-scroll pr-4">
-            {weeklyRoutine.routine.exercises.map((item, index) => {
-
-              return (
-                < label
-                  key={index}
-                  htmlFor={`option ${index}`}
-                  className="flex items-center cursor-pointer gap-4 rounded-lg border p-4 transition border-emerald-700 bg-neutral-700 "
-                >
-                  <div className="flex items-center">
-                    <input
-                      disabled={currentDay !== day}
-                      type="checkbox"
-                      defaultChecked={item.exercise.done}
-                      className="myCheckbox size-4 rounded border-emerald-300 bg-gray-800 ring-offset-emerald-900"
-                      id={`option ${index}`}
-                      name="name"
-                      onChange={(e) => {
-                        item.exercise.done = !item.exercise.done
-                        handleChange(item.exercise.done, item.exercise.id)
-                      }}
-                    />
-                    {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">{item.exercise.name}</p>
-                  </div>
-                </label>
-              )
-            })}
-          </div >
-        </div >
-        <Progress percentage={percentage} />
       </div>
     </>
   );
