@@ -1,38 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../styles/UserProfile.css";
+import { Context } from "../store/appContext";
 
 const UserProfile = () => {
-    const [userData, setUserData] = useState({
-        avatar: null,
-        firstName: "Dário",
-        lastName: "Duarte",
-        email: "dario@gmail.com",
-        currentPassword: "dario123",
-        newPassword: "",
-        address: "Calle del Dario, N69",
-        city: "Guadalajara",
-        country: "España",
-        eventStyle: "Latino"
-    });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({
-            ...userData,
-            [name]: value,
-        });
-    };
+    const { store, actions } = useContext(Context);
+    useEffect(() => {
+        console.log(store)
+        if (store.profile) {
+            setUsername(store.profile.username);
+            setEmail(store.profile.email);
+            setAddress(store.profile.address);
+            setCity(store.profile.city);
+            setCountry(store.profile.country);
+            setEventStyle(store.profile.eventStyle);
+        }
+        
+    }, [store.profile])
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [eventStyle, setEventStyle] = useState("");
 
     const handleFileChange = (e) => {
-        setUserData({
-            ...userData,
-            avatar: URL.createObjectURL(e.target.files[0]),
-        });
+        // setUserData({
+        //     ...userData,
+        //     avatar: URL.createObjectURL(e.target.files[0]),
+        // });
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Datos del usuario actualizados:", userData);
+        const profile = {
+            avatar: null,
+            username: username,
+            email: email,
+            address: address,
+            city: city,
+            country: country,
+            eventStyle: eventStyle
+        }
+        console.log("Datos del usuario actualizados:", profile);
+        actions.updateUserProfile(profile);
     };
 
     return (
@@ -45,7 +55,7 @@ const UserProfile = () => {
                     </div>
                 </div>
                 <div className="profile-container-right text-center pt-2">
-                    <form onSubmit={handleSubmit}>
+                    <div>
                         <h2>Actualiza tu información</h2>
                         <input
                             type="file"
@@ -55,7 +65,7 @@ const UserProfile = () => {
                             onChange={handleFileChange}
                         />
                         <label htmlFor="avatar">Elige una foto de perfil</label>
-                        {userData.avatar && (
+                        {/* {userData.avatar && (
                             <div>
                                 <img
                                     src={userData.avatar}
@@ -63,29 +73,22 @@ const UserProfile = () => {
                                     className="avatar-preview"
                                 />
                             </div>
-                        )}
+                        )} */}
                         <input
                             type="text"
-                            name="firstName"
+                            name="username"
                             placeholder="Nombre"
-                            value={userData.firstName}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            type="text"
-                            name="lastName"
-                            placeholder="Apellido"
-                            value={userData.lastName}
-                            onChange={handleInputChange}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                         <input
                             type="email"
                             name="email"
                             placeholder="Email"
-                            value={userData.email}
-                            onChange={handleInputChange}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                        <input
+                        {/* <input
                             type="password"
                             name="currentPassword"
                             placeholder="Contraseña actual"
@@ -98,37 +101,37 @@ const UserProfile = () => {
                             placeholder="Nueva contraseña"
                             value={userData.newPassword}
                             onChange={handleInputChange}
-                        />
+                        /> */}
                         <input
                             type="text"
                             name="address"
                             placeholder="Dirección"
-                            value={userData.address}
-                            onChange={handleInputChange}
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                         />
                         <input
                             type="text"
                             name="city"
                             placeholder="Ciudad"
-                            value={userData.city}
-                            onChange={handleInputChange}
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
                         />
                         <input
                             type="text"
                             name="country"
                             placeholder="País"
-                            value={userData.country}
-                            onChange={handleInputChange}
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
                         />
                         <input
                             type="text"
                             name="eventStyle"
                             placeholder="Estilo del Evento"
-                            value={userData.eventStyle}
-                            onChange={handleInputChange}
+                            value={eventStyle}
+                            onChange={(e) => setEventStyle(e.target.value)}
                         />
-                        <button type="submit">Guardar Cambios</button>
-                    </form>
+                        <button onClick= {handleSubmit}>Guardar Cambios</button>
+                    </div>
                 </div>
             </div>
         </div>

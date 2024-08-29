@@ -15,7 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 
-			token:null
+			token:null,
+			user:null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -68,8 +69,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Save your token in the localStorage
 				// Also you should set your user into the store using the setItem function
 				const store = getStore();
-				setStore({...store, token:data.token});
+				setStore({...store, token:data.token,profile:data.user});
 				localStorage.setItem("jwt-token", data.token);
+				localStorage.setItem("profile", JSON.stringify(data.user));
 		   
 				return data
 			},
@@ -107,6 +109,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setToken: (token) => {
 				const store = getStore();
 				setStore({...store, token})
+			},
+			setProfile: (profile) => {
+				const store = getStore();
+				setStore({...store, profile})
+			},
+			updateUserProfile: async (profile) => {
+				const resp = await fetch(process.env.BACKEND_URL + "/api/profile", {
+					method: "PUT",
+					headers: { 
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("jwt-token")}`
+					},
+					body: JSON.stringify(profile)
+				})
+
 			}
 		}
 	};
