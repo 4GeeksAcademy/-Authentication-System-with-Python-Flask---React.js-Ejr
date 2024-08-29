@@ -25,6 +25,7 @@ const CreateAppointmentRegisteredUser = () => {
   const [takenSlots, setTakenSlots] = useState([]);
   const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
 
+
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
   const myToken = localStorage.getItem("token");
@@ -38,7 +39,7 @@ const CreateAppointmentRegisteredUser = () => {
         console.error("Error fetching max appointments per hour:", error);
       }
     };
-  
+
     fetchMaxAppointmentsPerHour();
   }, [actions]);
 
@@ -73,9 +74,13 @@ const CreateAppointmentRegisteredUser = () => {
         if (!response.ok) throw new Error("Network response failed");
         const { result, msg } = await response.json();
         if (Array.isArray(result) && result.length > 0) {
-          setUserCars(result); 
+          setUserCars(result);
         } else {
-          console.error("No valid car data received or user has no cars", msg, result);
+          console.error(
+            "No valid car data received or user has no cars",
+            msg,
+            result
+          );
         }
       } catch (error) {
         console.error("Error getting user cars:", error);
@@ -147,7 +152,7 @@ const CreateAppointmentRegisteredUser = () => {
 
         // Deshabilitar las horas que tienen el máximo de citas permitidas
         Object.keys(hourCounts).forEach((hour) => {
-          if (hourCounts[hour] >= maxAppointmentsPerHour) { 
+          if (hourCounts[hour] >= maxAppointmentsPerHour) {
             disabledHours.push(parseInt(hour, 10));
           }
         });
@@ -211,7 +216,7 @@ const CreateAppointmentRegisteredUser = () => {
   const manageDateChange = (date) => {
     setAppointmentDate(date);
     if (date) {
-      fetchTakenSlots(); 
+      fetchTakenSlots();
     }
   };
 
@@ -243,7 +248,7 @@ const CreateAppointmentRegisteredUser = () => {
     const role_id = localStorage.getItem("role_id");
     const user_id = localStorage.getItem("user_id");
     const carSelectedId = carId;
-
+    
     if (!carSelectedId) {
       try {
         const addNewCarResponse = await fetch(`${apiUrl}/cars`, {
@@ -309,6 +314,7 @@ const CreateAppointmentRegisteredUser = () => {
       const appointmentData = await submitAppointment.json();
       
       const Sender = (userInfo) => {
+
         const data = {
           sender: {
             name: "AutoAgenda",
@@ -344,6 +350,8 @@ const CreateAppointmentRegisteredUser = () => {
             }</strong> at <strong>${
             dateFormat.split(" ")[1]
           }</strong> has been successfully created.</p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">Service: <strong>${serviceName}</strong></p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 10px 0;">For further details or to manage your appointment, please visit your User Dashboard.
             <p style="font-size: 16px; line-height: 1.5; margin: 10px 0; color: #333333;">Please note, this email is for informational purposes only, and no response is required.</p>
         </div>
         <div style="margin-top: 30px; padding: 20px; font-size: 14px; color: #888888; text-align: center; background-color: #E3DDDB;">
