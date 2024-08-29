@@ -104,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         };
                     }
                 } catch (error) {
-                    console.error('Error en registerUser:', error);
+                    console.error('Error en crear curso:', error);
                     return {
                         success: false,
                         message: 'Error de conexión o servidor no disponible'
