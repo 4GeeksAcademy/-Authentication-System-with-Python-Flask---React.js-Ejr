@@ -24,12 +24,11 @@ const CreateAppointmentRegisteredUser = () => {
   const navigate = useNavigate();
   const [takenSlots, setTakenSlots] = useState([]);
   const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
-  
+
   const apiUrl = process.env.BACKEND_URL + "/api";
   const myuserId = localStorage.getItem("user_id");
   const myToken = localStorage.getItem("token");
-
-  // Obtener el valor de maxAppointmentsPerHour solo una vez al montar el componente
+  
   useEffect(() => {
     const fetchMaxAppointmentsPerHour = async () => {
       try {
@@ -308,7 +307,7 @@ const CreateAppointmentRegisteredUser = () => {
       }
 
       const appointmentData = await submitAppointment.json();
-
+      
       const Sender = (userInfo) => {
         const data = {
           sender: {
@@ -387,7 +386,7 @@ const CreateAppointmentRegisteredUser = () => {
           unicodeEnabled: true,
           sender: "AutoAgenda",
           recipient: `+34${userInfo.phoneNumber}`,
-          content: `hello ${userInfo.name}, Your appointment on the day ${dateFormat} has been created successfully.`,
+          content: `hello ${userInfo.name}, Your appointment on the day ${dateFormat} with ${serviceName} has been created succesfuly`,
           tag: "t1",
           organisationPrefix: "AutoAgenda info:",
         };
@@ -530,14 +529,14 @@ const CreateAppointmentRegisteredUser = () => {
 
       case 4:
         const selectedCar = userCars.find((car) => car.id === parseInt(carId));
-
+        
         const displayedCarLicensePlate = selectedCar
           ? selectedCar.license_plate
           : carLicensePlate;
         const displayedCarModel = selectedCar
           ? selectedCar.car_model
           : carModel;
-
+          
         return (
           <div className="appointment-summary-container mx-3">
             <div className="card-body">

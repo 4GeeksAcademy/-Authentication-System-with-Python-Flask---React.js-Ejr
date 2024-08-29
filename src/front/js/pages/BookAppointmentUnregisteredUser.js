@@ -418,7 +418,7 @@ const BookAppointmentUnregisteredUser = () => {
           unicodeEnabled: true,
           sender: "AutoAgenda",
           recipient: `+34${phoneNumber}`,
-          content: `hello ${userData.name}, Your appointment on the day ${dateFormat} has been created successfully.`,
+          content: `hello ${userData.name}, Your appointment on the day ${dateFormat} with ${serviceName} for the ${carModel} has been created succesfuly`,
           tag: "t1",
           organisationPrefix: "AutoAgenda info:",
         };

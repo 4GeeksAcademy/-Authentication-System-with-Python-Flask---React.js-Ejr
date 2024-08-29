@@ -217,7 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: {
               accept: "application/json",
-              "api-key": process.env.MYKEY,
+              "api-key": process.env.KEY,
               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
@@ -236,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: {
               accept: "application/json",
-              "api-key": process.env.MYKEY,
+              "api-key": process.env.KEY,
               "Content-Type": "application/json",
             },
             body: JSON.stringify(SMSInfo),
@@ -273,7 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
         return data.max_appointments_per_hour;  
     }
-
+      
     },
   };
 };
