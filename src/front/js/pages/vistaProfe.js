@@ -1,6 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { FormularioCurso } from "../component/formularioCurso";
 
 const VistaProfe = () => {
     const { store, actions } = useContext(Context);
@@ -31,6 +32,7 @@ const VistaProfe = () => {
                     ))}
                 </ul>
             </div>
+            <FormularioCurso />
         </div>
     );
 };

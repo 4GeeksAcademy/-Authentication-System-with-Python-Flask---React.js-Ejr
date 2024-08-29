@@ -1,15 +1,15 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
-from api.models import db, User, Profesor
+from api.models import db, User, Curso
 
 # Crear el Blueprint para la API
 api = Blueprint('api', __name__)
 
-@api.route("/")
+@api.route('/')
 def root():
     return "Home"
 
-@api.route("/users/<int:user_id>", methods=['GET'])
+@api.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(user_id)
     if user:
@@ -17,7 +17,7 @@ def get_user(user_id):
     else:
         return jsonify({"error": "User not found"}), 404
 
-@api.route("/users/", methods=['GET'])
+@api.route('/users/', methods=['GET'])
 def get_users():
     users = User.query.all()
     if users:
@@ -63,15 +63,43 @@ def delete_user(user_id):
 
 
 # Rutas protegidas por JWT
-@api.route('/crear_curso', methods=['POST'])
-@jwt_required()
+@api.route('/cursos', methods=['POST'])
+#@jwt_required() AUN NO SE SI HACE FALTA
 def crear_curso():
-    return jsonify({"message": "Curso creado exitosamente"})
+    title = request.json.get('title', None)
+    portada = request.json.get('portada', None)
+    resumen = request.json.get('resumen', None)
+    categoria = request.json.get('categoria', None)
+    nivel = request.json.get('nivel', None)
+    idioma = request.json.get('idioma', None)
+    modulos = request.json.get('modulos', None)
+    if not title or not portada or not resumen or not categoria or not nivel or not idioma:
+        return jsonify({'success': False, 'msg': 'Todos los campos son necesarios'}), 400
+    curso = Curso.query.filter_by(title=title).first()
+    if curso:
+        return jsonify({'success': False, 'msg': 'El curso ya existe, intenta otro título'}), 400
+    new_curso = Curso(title=title, portada=portada, resumen=resumen, categoria=categoria, nivel=nivel,idioma=idioma)
+    db.session.add(new_curso)
+    db.session.commit()
+    return jsonify({'success': True, 'curso': new_curso.serialize()}), 200
 
-@api.route('/ver_curso', methods=['GET'])
-@jwt_required()
-def ver_curso():
-    return jsonify({"message": "Aquí están los cursos"})
+@api.route('/cursos/<int:curso_id>', methods=['GET'])
+#@jwt_required() AUN NO SE SI HACE FALTA
+def get_curso(curso_id):
+    curso = Curso.query.get(curso_id)
+    if curso:
+        return jsonify({"msg": curso.serialize()}), 200
+    else:
+        return jsonify({"error": "Curso not found"}), 404
+
+@api.route('/cursos', methods=['GET'])
+#@jwt_required() AUN NO SE SI HACE FALTA
+def get_cursos():
+    cursos = Curso.query.all()
+    if cursos:
+        return jsonify({"msg": [curso.serialize() for curso in cursos]}), 200
+    else:
+        return jsonify({"error": "Cursos not found"}), 404
 
 @api.route('/login', methods=['POST'])
 def login():

@@ -78,8 +78,41 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
         },
         actions: {
+            //FUNCIONES DE JAVIER (mirar abajo)
+            crearCurso: async (dataForm) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + '/api/cursos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataForm)
+                    });
 
-        
+                    const data = await response.json();
+                    console.log('Response data:', data);
+
+                    if (response.ok) {
+                        return {
+                            success: true,
+                            message: 'Curso creado con éxito'
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            message: data.message || 'Error desconocido durante la creación'
+                        };
+                    }
+                } catch (error) {
+                    console.error('Error en crear curso:', error);
+                    return {
+                        success: false,
+                        message: 'Error de conexión o servidor no disponible'
+                    };
+                } 
+            },
+            //FUNCIONES DE JAVIER (mirar arriba)
+
             // Cargar los cursos desde el backend
             cargarCursos: async () => {
                 const store = getStore();
@@ -281,12 +314,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok) {
                         return {
                             success: true,
-                            message: 'Registro exitoso. Puedes iniciar sesión ahora.'
+                            message: 'Curso creado exitosamente.'
                         };
                     } else {
                         return {
                             success: false,
-                            message: data.message || 'Error desconocido durante el registro'
+                            message: data.message || 'Error desconocido durante la creación '
                         };
                     }
                 } catch (error) {
