@@ -54,15 +54,91 @@
     opacity: 0.5; /* Muestra los botones con algo de opacidad cuando el carrusel es hover */
     pointer-events: auto; /* Habilita el evento de clic en los botones cuando el carrusel es hover */
 }
-.text-overlay {
+.text-overlay{
     position: absolute; /* Posición absoluta respecto al contenedor */
-    top: 0%; /* Posiciona en el centro vertical */
+    top: 90%; /* Posiciona en el centro vertical */
     left: 50%; /* Posiciona en el centro horizontal */
-    transform: translate(-50%, -50%); /* Centra el texto */
-    color: white; /* Color del texto */
-    font-size: 30px; /* Tamaño del texto */
-    font-weight: bold; /* Peso del texto */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para mejor legibilidad */
-    text-align: center; /* Alineación central */
+    color: #E0E0E2;
+    font-size: 24px; /* Tamaño del texto */
+    transform: translate(-50%, -50%);
+}
+.ContenedorEmpresas{
+    margin-top: 10px; /* Margen superior */
+    margin-right: 20px; /* Margen derecho */
+    margin-bottom: 20px; /* Margen inferior */
+    margin-left: 20px; /* Margen izquierdo */
+    
+}
+.BarraDeEmpresas{
+    padding: 1.25rem; /* Espaciado interno del cuerpo de la tarjeta */
+    background-color: #416788; /* Color de fondo para el cuerpo de la tarjeta */
+    color: #e0e0e2; /* Color del texto dentro del cuerpo de la tarjeta */
+    text-align: center;
+    border: none; /* Elimina el borde por defecto de la tarjeta */
+    border-radius: 0.25rem; /* Bordes redondeados de la tarjeta */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+}
+.icon-container{
+    font-size:40px; /* Tamaño del icono */
+    display: flex;
+        justify-content: space-around; /* Distribuye espacio entre iconos */
+        align-items: center; /* Alinea iconos verticalmente */
 }
 
+
+.container-center-elegirnos {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    min-height: 100vh; /* Altura mínima para centrar en toda la página */
+    padding: 40px; /* Espacio adicional alrededor del contenedor de la card */
+  }
+  
+  /* Estilos para la card */
+  .card-elegirnos {
+    width: 100%; /* Hace que la card ocupe todo el ancho disponible del contenedor */
+    max-width: 1200px; /* Aumenta el ancho máximo de la card */
+    background-color: #fff;
+    overflow: hidden;
+    margin: 0 auto; /* Centra la card horizontalmente */
+  }
+  
+  /* Ajustes de Flexbox para alinear imagen y texto */
+  .row {
+    display: flex; /* Flexbox para alinear elementos en la misma altura */
+  }
+  
+  /* Estilo para la imagen */
+  .imagen-elegirnos {
+    flex: 1; /* Permite que la imagen ocupe un espacio proporcional */
+    margin-right: 20px; /* Aumenta el margen derecho para separar la imagen del texto */
+  }
+  
+  .imagen-elegirnos img {
+    width: 100%; /* Asegura que la imagen cubra todo el ancho de su contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border: 4px; /* Borde de 4px de grosor con color azul */
+    border-radius: 12px; /* Bordes redondeados para la imagen */
+  }
+  
+  /* Estilos para el texto */
+  .card-body-elegirnos {
+    padding: 20px; /* Aumenta el padding interno para más espacio */
+  }
+  
+  .card-title-elegirnos {
+    font-size: 2rem; /* Tamaño de fuente más grande para el título */
+    margin-bottom: 15px; /* Espacio debajo del título */
+    text-align: justify; /* Justifica el texto del título */
+  }
+  
+  .card-text {
+    font-size: 1.125rem; /* Tamaño de fuente para el texto */
+    text-align: justify; /* Justifica el texto */
+    margin-bottom: 15px; /* Espacio entre párrafos */
+  }
+  
+  .text-body-secondary {
+    font-size: 1rem; /* Ajusta el tamaño de la fuente secundaria */
+  }
+  

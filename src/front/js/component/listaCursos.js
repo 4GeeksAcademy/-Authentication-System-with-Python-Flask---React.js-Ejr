@@ -20,7 +20,7 @@ const ListaCursos = () => {
                                     className="card-img-top" 
                                     alt={curso.nombre} 
                                 /> {/* Muestra la imagen del curso, o una imagen por defecto si no hay imagen */}
-                                <div className="card-body">
+                                <div className="card-body-ListaCurso">
                                     <h5 className="card-title">{curso.nombre}</h5> {/* Muestra el nombre del curso en el título de la tarjeta */}
                                     <p className="card-text">
                                         <strong>Categoría:</strong> {curso.categoria}<br />
