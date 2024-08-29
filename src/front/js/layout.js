@@ -24,7 +24,6 @@ import { Stats } from "./pages/stats";
 import ProtectedRoute from "./component/protectedRoute";
 import { EditarRutina } from "./pages/editarRutina.js";
 
-
 const usePageTitle = (defaultTitle) => {
     const location = useLocation();
 
