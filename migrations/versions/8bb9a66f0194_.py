@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/43dae602d453_.py
-Revision ID: 43dae602d453
+Revision ID: 8bb9a66f0194
 Revises: 
-Create Date: 2024-08-21 14:07:34.672954
-========
-Revision ID: 54f1dfdeee87
-Revises: 
-Create Date: 2024-08-21 15:25:56.459178
->>>>>>>> bf5787c33f7c0483124a48ccde7b2aa6944dff87:migrations/versions/54f1dfdeee87_.py
+Create Date: 2024-08-29 13:48:48.907327
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/43dae602d453_.py
-revision = '43dae602d453'
-========
-revision = '54f1dfdeee87'
->>>>>>>> bf5787c33f7c0483124a48ccde7b2aa6944dff87:migrations/versions/54f1dfdeee87_.py
+revision = '8bb9a66f0194'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,9 +21,9 @@ def upgrade():
     op.create_table('exercise',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.Column('category', sa.Enum('PECHO', 'ESPALDA', 'PIERNA', 'HOMBRO', 'TRAPECIO', 'ABDOMEN', name='category'), nullable=False),
+    sa.Column('category', sa.Enum('BRAZOS', 'PIERNAS', 'ABDOMINALES', 'PECHO', 'ESPALDA', 'PANTORRILLAS', 'HOMBROS', 'CARDIO', name='category'), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
-    sa.Column('image', sa.String(), nullable=False),
+    sa.Column('image', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
@@ -84,7 +74,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('routine_id', sa.Integer(), nullable=False),
-    sa.Column('day', sa.Enum('LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO', name='day'), nullable=False),
+    sa.Column('day', sa.Enum('DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', name='day'), nullable=False),
     sa.ForeignKeyConstraint(['routine_id'], ['routine.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
