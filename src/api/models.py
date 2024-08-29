@@ -15,7 +15,7 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False)
 
-    profile = db.relationship("UserProfile", back_populates="users", lazy=True, uselist=False)
+    user_profile = db.relationship("UserProfile", back_populates="users", lazy=True, uselist=False)
     partner_profile = db.relationship("PartnerProfile", back_populates="users", lazy=True, uselist=False)
 
     def __repr__(self):
@@ -42,7 +42,7 @@ class UserProfile(db.Model):
     id_favorites = db.Column(db.Integer, db.ForeignKey('favorites.id'))
 
 
-    users = db.relationship("User", backref="userProfile", lazy=True, overlaps="userProfile,user_profile_user")
+    users = db.relationship("User", backref="userProfile", lazy=True)
 
     favorites = db.relationship("Favorites", backref="user_profile", lazy=True)
     payments = db.relationship("Payment", backref="user_profile", lazy=True)

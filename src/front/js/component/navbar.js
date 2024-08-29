@@ -69,7 +69,7 @@ export const Navbar = () => {
                   <i className="fas fa-user"></i> {/* Ícono de perfil */}
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <li><a className="dropdown-item" href="/profile">Perfil</a></li>
+                  <li><a className="dropdown-item" href="/app/profile">Perfil</a></li>
                   <li><hr className="dropdown-divider" /></li>
                   <li><a className="dropdown-item" onClick={handleLogout} style={{ cursor: 'pointer' }}>Cerrar sesión</a></li>
                 </ul>
