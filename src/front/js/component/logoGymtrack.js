@@ -452,7 +452,7 @@ export const LogoGymtrack = ({ logoSize = 'medium' }) => {
         -223 3 0 6 47 6 104 l0 104 -81 46 c-84 47 -93 50 -119 37z"/>
                 </g>
             </svg>
-            <h4 className={`font-bold text-white ${textSize}`}>GYMTRACK</h4>
+            <h4 className={`hidden md:block font-bold text-white ${textSize}`}>GYMTRACK</h4>
         </Link>
     );
 };

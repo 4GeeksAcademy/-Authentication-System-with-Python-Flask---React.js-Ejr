@@ -77,9 +77,9 @@ const Layout = () => {
     return (
         <div className="bg-neutral-900 min-h-screen flex flex-col gap-6">
             <BrowserRouter basename={basename}>
+                <PageTitleManager defaultTitle="GYMTRACK" />
+                <Navbar />
                 <ScrollToTop>
-                    <PageTitleManager defaultTitle="GYMTRACK" />
-                    <Navbar />
                     <Routes>
                         {/* Rutas publicas */}
                         <Route element={<Home />} path="/" />
