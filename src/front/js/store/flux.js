@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			editarPerfil: async (nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento,is_psicologo) => {
 				const store = getStore()
 				const actions =getActions()
-				console.log(nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento)
+				
 				if (store.dataUser) {
 					const options = {
 						method: 'POST',
@@ -39,10 +39,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 					try {
 						const response = await fetch(process.env.BACKEND_URL + '/editar-perfil', options)
-						console.log(response.status)
+						//console.log(response.status)
 						if (response.ok) {
 							const data = await response.json()
-							console.log(response.status, data)
+						//	console.log(response.status, data)
 
 							// setStore({dataUser: {
 							// 	...store.dataUser,
@@ -538,28 +538,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return url
 			},
 			fetchEspecialidades: async () => {
-
-				let token = localStorage.getItem("token")
-
-				try {
-					const response = await fetch(process.env.BACKEND_URL + `/especialidades`, {
-						headers: {
-							'Authorization': `Bearer ${token}`,  // Envía el token JWT en el encabezado
-						},
-					});
-					const data = await response.json();
-					if (response.ok) {
-
-						setStore({ especialidades: data });
-					} else {
-						console.error('Error al cargar las especialidades', response.statusText);
+				const store = getStore();  // Obtén el estado actual
+				const token = localStorage.getItem("token");
+			
+				// Verifica si el usuario es un psicólogo antes de proceder
+				if (store.dataUser && store.dataUser.is_psicologo) {
+					try {
+						const response = await fetch(process.env.BACKEND_URL + `/especialidades`, {
+							headers: {
+								'Authorization': `Bearer ${token}`,  // Envía el token JWT en el encabezado
+							},
+						});
+						const data = await response.json();
+						if (response.ok) {
+							setStore({ especialidades: data });
+						} else {
+							console.error('Error al cargar las especialidades', response.statusText);
+						}
+					} catch (error) {
+						console.error('Error:', error);
 					}
-					console.log(response);
-
-				} catch (error) {
-					console.error('Error:', error);
 				}
 			},
+			
 			saveEspecialidad : async (id) => {
 				let token = localStorage.getItem("token")
 				const store=getStore()

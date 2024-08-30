@@ -15,7 +15,7 @@ const PregFrecuentes = () => {
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                <spam className="fw-medium">¿Cómo puedo registrarme?</spam>                
+                <span className="fw-medium">¿Cómo puedo registrarme?</span>                
               </button>
             </h2>
             <div
@@ -40,7 +40,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
-                <spam className="fw-medium">¿Cómo puedo recuperar o cambiar mi contraseña?</spam>               
+                <span className="fw-medium">¿Cómo puedo recuperar o cambiar mi contraseña?</span>               
               </button>
             </h2>
             <div
@@ -65,7 +65,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseThree"
               >
-                <spam className="fw-medium">¿Qué métodos de pago aceptamos?</spam>               
+                <span className="fw-medium">¿Qué métodos de pago aceptamos?</span>               
               </button>
             </h2>
             <div
@@ -90,7 +90,7 @@ const PregFrecuentes = () => {
                 aria-expanded="false"
                 aria-controls="collapseFour"
               >
-                <spam className="fw-medium">¿Cómo puedo acceder a asistencia de emergencia?</spam>               
+                <span className="fw-medium">¿Cómo puedo acceder a asistencia de emergencia?</span>               
               </button>
             </h2>
             <div
