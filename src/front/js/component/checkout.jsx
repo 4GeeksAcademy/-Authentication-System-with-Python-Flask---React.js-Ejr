@@ -20,7 +20,7 @@ export const CheckoutForm = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           //la cantidad ha pagar esta puesta fija, pero puede recibir un objeto desde el contexto
-          body: JSON.stringify({ amount: store.cursoSeleccionado.precio , currency: 'usd' }) // coger el precio del curso seleccionado.
+          body: JSON.stringify({ amount: 1000 , currency: 'usd' }) // coger el precio del curso seleccionado. store.cursoSeleccionado.precio
         })
           .then((res) => res.json())
           .then((data) => setClientSecret(data.clientSecret)); //client_secret, que se almacena en el estado local (setClientSecret)
