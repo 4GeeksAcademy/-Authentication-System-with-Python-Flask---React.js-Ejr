@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/4fe4ff76b622_.py
-Revision ID: 4fe4ff76b622
+Revision ID: 4e1c5163ce85
 Revises: 
-Create Date: 2024-08-28 19:16:43.394031
-========
-Revision ID: bf5164927ac7
-Revises: 
-Create Date: 2024-08-27 10:16:17.860115
->>>>>>>> 0f01ad706f8386da7668078e3b5000be1f239bd4:migrations/versions/bf5164927ac7_.py
+Create Date: 2024-08-29 23:24:48.452142
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/4fe4ff76b622_.py
-revision = '4fe4ff76b622'
-========
-revision = 'bf5164927ac7'
->>>>>>>> 0f01ad706f8386da7668078e3b5000be1f239bd4:migrations/versions/bf5164927ac7_.py
+revision = '4e1c5163ce85'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -71,10 +61,16 @@ def upgrade():
     op.create_table('ofertas',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('descripcion', sa.String(length=700), nullable=False),
+    sa.Column('descripcion', sa.String(), nullable=False),
     sa.Column('salario', sa.String(length=20), nullable=False),
+    sa.Column('localidad', sa.String(length=30), nullable=False),
+    sa.Column('requisitos_minimos', sa.String(length=400), nullable=False),
+    sa.Column('horario', sa.String(length=100), nullable=True),
+    sa.Column('tipo_contrato', sa.String(length=100), nullable=True),
+    sa.Column('estudios_minimos', sa.String(length=100), nullable=True),
+    sa.Column('idiomas', sa.String(length=30), nullable=True),
     sa.Column('plazo', sa.String(length=100), nullable=False),
-    sa.Column('modalidad', sa.Enum('TELETRABAJO', 'PRESENCIAL', name='modalidad'), nullable=False),
+    sa.Column('modalidad', sa.Enum('TELETRABAJO', 'PRESENCIAL', 'HYBRIDO', name='modalidad'), nullable=False),
     sa.Column('experiencia_minima', sa.Enum('JUNIOR', 'MID', 'SENIOR', name='experience'), nullable=False),
     sa.Column('fecha_publicacion', sa.Date(), nullable=False),
     sa.Column('empleador_id', sa.Integer(), nullable=True),
@@ -103,14 +99,13 @@ def upgrade():
     sa.PrimaryKeyConstraint('id', 'from_id', 'to_id')
     )
     op.create_table('favoritos',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('programador_id', sa.Integer(), nullable=True),
-    sa.Column('empleador_id', sa.Integer(), nullable=True),
-    sa.Column('oferta_id', sa.Integer(), nullable=True),
+    sa.Column('programador_id', sa.Integer(), nullable=False),
+    sa.Column('empleador_id', sa.Integer(), nullable=False),
+    sa.Column('oferta_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['empleador_id'], ['empleador.id'], ),
     sa.ForeignKeyConstraint(['oferta_id'], ['ofertas.id'], ),
     sa.ForeignKeyConstraint(['programador_id'], ['programador.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('programador_id', 'empleador_id', 'oferta_id')
     )
     op.create_table('postulados',
     sa.Column('user_id', sa.Integer(), nullable=False),
