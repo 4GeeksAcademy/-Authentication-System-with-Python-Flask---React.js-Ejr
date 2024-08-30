@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from '../store/appContext'
 import ReactStars from 'react-rating-stars-component';
 import Swal from 'sweetalert2'
+import defaultAvatar from "../../img/avatar.jpg";
 
 
 
@@ -55,19 +56,19 @@ useEffect(() => {
     const openCalendly = (profesional) => {
 
         switch (profesional) {
-            case 'Dr. Juan Pérez':
+            case 'Juan Pérez':
                 Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-juan-perez');
                 break;
-            case 'Dr. Luis Rodríguez':
+            case 'Luis Rodríguez':
                 Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-luis-rodriguez');
                 break;
-            case 'Dra. María García':
+            case 'María García':
                 Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dra-maria-garcia');
                 break;
-            case 'Dra. Ana Martínez':
+            case 'Ana Martínez':
                 Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dra-ana-martinez');
                 break;
-            case 'Dr. Carlos Gómez':
+            case 'Carlos Gómez':
                 Calendly.showPopupWidget('https://calendly.com/hablemosuy1234/dr-carlos-gomez');
                 break;
             default:
@@ -75,7 +76,7 @@ useEffect(() => {
         }
         actions.getMeetsUser(store.dataUser.correo)
     };
-console.log(store.psicologos);
+
 
     return (
         <div className="mt-5">
@@ -85,7 +86,7 @@ console.log(store.psicologos);
                         <div className="row g-0 h-100">
                             <div className="col-12 col-md-4">
                                 <img
-                                    src={elm.foto}
+                                    src={elm.foto == null ? defaultAvatar : elm.foto }
                                     className="img-fluid rounded-start"
                                     alt={elm.nombre}
                                     style={{
@@ -104,8 +105,8 @@ console.log(store.psicologos);
                                     </p>
                                 </div>
                                 <div >
-                                     <p className="card-text">
-                                    <p className="card-text"></p>
+                                     <div className="card-text">
+                                    
                                         <ul className="d-flex flex-row gap-3">
                                             {Array.isArray(elm.especialidades) && elm.especialidades.length > 0 ? (
                                                 elm.especialidades.map((especialidad) => (
@@ -118,7 +119,7 @@ console.log(store.psicologos);
                                                 <li>No hay especialidades disponibles.</li>
                                             )}
                                         </ul>
-                                    </p> 
+                                    </div> 
                                     
                                     <div className="button-container mt-5">
                                         <button

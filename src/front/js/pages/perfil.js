@@ -18,13 +18,34 @@ import EditarInformacion from "../component/editarInformacion.jsx";
 
 const Perfil = () => {
     const { store, actions } = useContext(Context);
-    const [perfil, setPerfil] = useState({})
+    const [perfil, setPerfil] = useState({});
     const navigate = useNavigate();
-    const { id } = useParams()
-
+    const { id } = useParams();
     useEffect(() => {
+        // Lógica para cargar el perfil primero desde el store si está disponible
+        if (store.dataUser) {
+            setPerfil(store.dataUser);
+        } else {
+            // Si no está en el store, hacer la solicitud para obtener el perfil
+            actions.getPerfilUsuario(id).then((isPerfilObtenido) => {
+                if (isPerfilObtenido) {
+                    setPerfil(isPerfilObtenido);
+                } else {
+                    Swal.fire({
+                        title: 'Error al obtener el perfil',
+                        text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    }).then(() => {
+                        navigate("/vista-login");
+                    });
+                }
+            });
+        }
+
         actions.fetchEspecialidades();
 
+<<<<<<< HEAD
         const fetchPerfil = async () => {
             const isPerfilObtenido = await actions.getPerfilUsuario(id);
             console.log(isPerfilObtenido);
@@ -44,6 +65,9 @@ const Perfil = () => {
         };
         fetchPerfil();
   
+=======
+        // Inicializar los popovers de Bootstrap
+>>>>>>> 449e6667d6963d6e18be52b682c4e7498f23cf96
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
         });
@@ -72,6 +96,16 @@ const Perfil = () => {
         }
     };
 
+<<<<<<< HEAD
+=======
+    // Mostrar las especialidades ya guardadas para el usuario
+    // const userEspecialidades = perfil?.especialidades || [];
+
+   
+    
+
+
+>>>>>>> 449e6667d6963d6e18be52b682c4e7498f23cf96
 
     return (
         <div className="container mt-4 col-11 col-md-10 col-lg-8" style={{ minHeight: '73vh' }}>

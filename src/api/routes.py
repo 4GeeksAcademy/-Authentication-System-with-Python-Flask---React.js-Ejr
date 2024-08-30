@@ -163,7 +163,7 @@ def get_perfil(id):
         user = User.query.filter_by(id=id).first()
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
-        print(vars(user))
+        #print(vars(user))
         # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
         return jsonify(user.serialize()), 200    
     except NoAuthorizationError:
@@ -276,7 +276,7 @@ def create_user():
         data = request.get_json()
         correo = request.json.get("correo", None)
         existing_user = User.query.filter_by(correo=data["correo"]).first()
-        print(data)
+       # print(data)
         
         if existing_user:
             return jsonify({"msg": "Email already exists"}), 400
@@ -573,14 +573,13 @@ def especialidades_por_profesional():
     elif request.method == 'DELETE':
         # Obtener el ID de la especialidad a eliminar desde los parámetros de la solicitud
         especialidad_id = request.args.get('especialidad_id')
-        print(especialidad_id)
+       # print(especialidad_id)
         if not especialidad_id:
             return jsonify({'error': 'ID de especialidad no proporcionado'}), 400
         
         # Buscar la relación especialidad-profesional
         especialidad_a_eliminar = ProfEspecialidad.query.filter_by(id_profesional=profesional_id, especialidad_id=especialidad_id).first()
-        print(especialidad_a_eliminar)
-        print(profesional_id)
+      
         if not especialidad_a_eliminar:
             return jsonify({'error': 'Especialidad no encontrada para este profesional'}), 404
         

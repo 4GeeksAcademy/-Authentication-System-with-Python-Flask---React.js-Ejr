@@ -13,12 +13,12 @@ const Meets = () => {
 
     useEffect(() => {
         if (store.dataUser) {
-            console.log(store.dataUser)
+           
             if (!store.dataUser.is_psicologo) {
                 actions.getMeetsUser(store.dataUser.correo)
             } else {
                 let namePsicologo = `${store.dataUser.nombre_usuario} ${store.dataUser.apellido}`
-                console.log(namePsicologo)
+               
                 actions.getMeetsPsicologo(namePsicologo)
             }
         }
