@@ -1,65 +1,46 @@
-/* Contenedor principal del formulario de pago */
-.formularioPago {
-    display: flex; /* Flexbox para centrar contenido */
-    flex-direction: column; /* Alinear elementos en una columna */
-    justify-content: center; /* Centrar contenido verticalmente */
-    align-items: center; /* Centrar contenido horizontalmente */
-    background-color: #000022; /* Fondo oscuro para el formulario */
-    margin: 3% auto 10% auto; /* Márgenes superiores e inferiores con auto para centrar horizontalmente */
-    padding: 2rem; /* Espacio interior alrededor del contenido */
-    width: 40%; /* Ancho del contenedor al 40% de la pantalla */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para darle un efecto de elevación */
+/* Estilo general para el formulario */
+.tarjetaCredito {
+    background-color: #E0E0E2; /* Color de fondo del formulario */
+    padding: 20px; /* Espaciado interno del formulario */
+    border-radius: 15px; /* Bordes redondeados para darle apariencia de tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra suave para darle profundidad */
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: 40px auto; /* Centrado del formulario y espacio superior/inferior */
+    border: 1px solid #B5BAD0; /* Borde sutil */
 }
 
-/* Contenedor interno para los elementos del formulario */
-.formularioPago__content {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
-    display: flex; /* Flexbox para alinear contenido */
-    flex-direction: column; /* Alinear elementos verticalmente */
-    align-items: stretch; /* Estirar elementos para que ocupen todo el ancho */
-    gap: 1rem; /* Espacio entre los elementos internos */
+/* Estilo del contenedor del CardElement */
+.StripeElement {
+    background-color: #FFFFFF; /* Fondo blanco para el área de entrada de la tarjeta */
+    padding: 15px; /* Espacio interno más amplio para el área de entrada */
+    border-radius: 10px; /* Bordes redondeados para simular la apariencia de una tarjeta */
+    border: 1px solid #B5BAD0; /* Borde alrededor del área de entrada */
+    margin-bottom: 25px; /* Separación inferior */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    color: #000022; /* Color del texto dentro del campo de la tarjeta */
+    font-size: 16px; /* Tamaño de la fuente del texto dentro del campo */
 }
 
-/* Estilo para el cuerpo de la tarjeta (CardElement) en el formulario */
-.card-body-formularioPago {
-    background-color: #E0E0E2; /* Fondo gris claro */
-    padding: 1.5rem; /* Espaciado interior para un diseño más limpio */
-    border-radius: 10px; /* Bordes redondeados */
-}
-
-/* Estilo para el botón de pago */
-.formularioPago__button {
-    background-color: #008CBA; /* Color de fondo azul */
-    color: white; /* Color del texto en blanco */
+/* Estilo del botón de pago */
+button[type="submit"] {
+    background-color: #416788; /* Color de fondo del botón */
+    color: #FFFFFF; /* Color del texto del botón */
+    padding: 15px 20px; /* Espacio interno del botón */
+    font-size: 16px; /* Tamaño de la fuente */
     border: none; /* Sin borde */
-    padding: 0.75rem 1.5rem; /* Espaciado interno del botón */
-    font-size: 1.2rem; /* Tamaño de la fuente ligeramente más grande */
-    cursor: pointer; /* Cambia el cursor a pointer (mano) */
-    border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s ease; /* Efecto de transición suave al pasar el mouse */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Manito de cursor */
+    transition: background-color 0.3s ease; /* Transición suave */
+    width: 100%; /* Ancho completo del botón */
 }
 
-/* Estilo para el botón deshabilitado */
-.formularioPago__button:disabled {
-    background-color: #888888; /* Fondo gris para el estado deshabilitado */
-    cursor: not-allowed; /* Cursor cambia a no permitido */
+/* Estilo del botón en hover */
+button[type="submit"]:hover {
+    background-color: #7389AE; /* Color del botón al pasar el mouse */
 }
 
-/* Efecto hover para el botón */
-.formularioPago__button:hover {
-    background-color: #005f75; /* Cambio de color al pasar el mouse */
-}
-
-/* Estilo para el CardElement (entrada de tarjeta de crédito) */
-.formularioPago__cardElement {
-    background-color: white; /* Fondo blanco para diferenciarlo del fondo oscuro */
-    padding: 0.75rem; /* Espaciado interno para darle espacio al texto */
-    border-radius: 5px; /* Bordes redondeados */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para el efecto de elevación */
-}
-
-/* Estilo para el modal de pago exitoso */
-.formularioPago__modal {
-    text-align: center; /* Texto centrado en el modal */
+/* Estilo del botón cuando está deshabilitado */
+button[type="submit"]:disabled {
+    background-color: #B5BAD0; /* Color del botón cuando está deshabilitado */
+    cursor: not-allowed; /* Cursor de no permitido */
 }

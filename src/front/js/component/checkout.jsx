@@ -4,6 +4,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Context } from "../store/appContext";
+import "../../styles/checkout.css";
 
 
 
@@ -58,10 +59,10 @@ export const CheckoutForm = () => {
     };
   
     return (
-      <form onSubmit={handleSubmit}>
+      <form className="tarjetaCredito" onSubmit={handleSubmit}>
         <CardElement />
         <button type="submit" disabled={!stripe || loading}>
-          Pay
+          Pagar
         </button>
       </form>
     );
