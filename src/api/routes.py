@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Modalidad, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
+from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -11,6 +11,8 @@ from flask_bcrypt import generate_password_hash , check_password_hash
 
 
 api = Blueprint('api', __name__)
+
+
 
 
 # Allow CORS requests to this API
@@ -104,8 +106,6 @@ def editEmpleador():
     empleador.descripcion=descripcion
     db.session.commit()
     return jsonify({'editar':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
-    
-
 
 
 #Agregar usuario a Programador   
@@ -161,16 +161,20 @@ def crear_oferta():
     name = request.json.get("name")
     descripcion = request.json.get("descripcion")
     salario = request.json.get("salario")
+    localidad = request.json.get("localidad")
+    tipo_contrato = request.json.get("tipo_contrato")
+    estudios_minimos = request.json.get("estudios_minimos")
+    horario = request.json.get("horario")
+    requisitos_minimos = request.json.get("requisitos_minimos")
+    idiomas = request.json.get("idiomas")
     plazo = request.json.get("plazo")
     modalidad = request.json.get("modalidad")
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
     
-    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
+    if not name or not descripcion or not localidad or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
-    
-    
-    print(Modalidad(modalidad))
+
     try:
         modalidad_enum = Modalidad(modalidad)
     except ValueError:
@@ -178,6 +182,7 @@ def crear_oferta():
 
     try:
         fecha_publicacion = datetime.strptime(fecha_publicacion_str, "%Y-%m-%d")
+        print(fecha_publicacion)
     except ValueError:
         return jsonify({"success": False, "msg": "Fecha de publicación no válida"}), 400
 
@@ -185,13 +190,19 @@ def crear_oferta():
         name=name,
         descripcion=descripcion,
         salario=salario,
+        localidad=localidad,
+        tipo_contrato=tipo_contrato,
+        idiomas=idiomas,
+        estudios_minimos=estudios_minimos,
+        horario=horario,
+        requisitos_minimos=requisitos_minimos,
         plazo=plazo,
         modalidad=modalidad_enum,
         experiencia_minima=experiencia_minima,
         fecha_publicacion=fecha_publicacion,
         empleador_id=empleador.id
     )
-
+    
     try:
         db.session.add(nueva_oferta)
         db.session.commit()
@@ -224,6 +235,68 @@ def get_offer(id):
         return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
 
 
+
+@api.route('/postulados', methods=['POST'])
+@jwt_required()
+def create_postulado():
+    user_id = get_jwt_identity()
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no permitido"}), 401
+    
+    if not user.profile_programador:
+        return jsonify({"msg": "Solo pueden postularse programadores."}), 403
+    
+    oferta_id = request.json.get("oferta_id")
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta:
+        return jsonify({"msg": "Oferta no encontrada o ID inválido"}), 404
+    
+    postulado_existente = Postulados.query.filter_by(user_id=user.id, oferta_id=oferta.id).first()
+    if postulado_existente:
+        return jsonify({"msg": "Ya estás inscrito en esta oferta"}), 409
+    
+    nuevo_postulado = Postulados(user_id=user.id, oferta_id=oferta.id)
+    db.session.add(nuevo_postulado)
+    db.session.commit()
+    
+    return jsonify({"msg": "Inscripcion realizada con éxito."}),200
+
+@api.route('/ofertas/<int:oferta_id>/postulados', methods=['GET'])
+@jwt_required(optional=True)  
+def get_numero_postulados(oferta_id):
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta:
+        return jsonify({"msg": "Oferta no encontrada"}), 404
+
+    numero_postulados = Postulados.query.filter_by(oferta_id=oferta_id).count()
+    return jsonify({"numero_postulados": numero_postulados}), 200
+
+@api.route('/postulados/<int:oferta_id>', methods=['DELETE'])
+@jwt_required()
+def delete_postulado(oferta_id):
+    user_id = get_jwt_identity()  
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no permitido"}), 401
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta:
+        return jsonify({"msg": "Oferta no encontrada o ID inválido"}), 404
+
+    postulado = Postulados.query.filter_by(user_id=user.id, oferta_id=oferta.id).first()
+    if not postulado:
+        return jsonify({"msg": "No estás inscrito en esta oferta"}), 404
+
+    db.session.delete(postulado)
+    db.session.commit()
+
+    return jsonify({"msg": "Desinscripción realizada con éxito."}), 200
+    
+
 #contact
 @api.route('/contact', methods=['POST'])
 def contact():
@@ -247,5 +320,30 @@ def get_contacts():
         return jsonify([contact.serialize() for contact in contacts]), 200
     return jsonify({'msg':'Ningún contacto encontrado'}),404
 
-if __name__ == '__main__':
-    api.run(host='0.0.0.0', port=3245, debug=True)
+@api.route('/user/programador/addProjects', methods=['POST'])
+@jwt_required()
+def addProjects(): 
+    user_id = get_jwt_identity()
+    name = request.json.get("name", None)
+    descripcion_corta = request.json.get("descripcion_corta", None)
+    git = request.json.get("git", None)
+    link = request.json.get("link", None)
+    tecnologias = request.json.get("tecnologias", None)
+
+    if not name or not descripcion_corta or not git or not link or not tecnologias:
+        return jsonify({'addProject':False, 'msg':'Todos los campos son necesarios'})
+
+    programador = Programador.query.filter_by(user_id=user_id).first()
+    print(programador)
+    is_exist = Proyectos.query.filter_by(name=name, descripcion_corta=descripcion_corta, git=git, link=link).first()
+    print(is_exist)
+
+    if programador:
+        if(is_exist):
+            return({'addProject': False, 'msg': 'Ya existe el proyecto'})
+        else:
+            new_project = Proyectos(name=name, descripcion_corta=descripcion_corta, git=git, link=link, tecnologias=tecnologias, programador_id=programador.id )
+            db.session.add(new_project)
+            db.session.commit()
+            return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
+    return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404

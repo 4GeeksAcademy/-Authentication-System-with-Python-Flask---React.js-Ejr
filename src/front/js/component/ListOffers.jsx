@@ -1,46 +1,44 @@
 import React, { useContext, useEffect } from "react";
 import { CardOffer } from "./CardOffer.jsx";
 import { Context } from "../store/appContext.js";
+import "../../styles/CardListOffer.css"
+
 
 export const ListOffers = ({ searchTerm }) => {
     const { store, actions } = useContext(Context);
-    const { jobOffers } = store;
 
     useEffect(() => {
         actions.loadAllJobOffers();
-    }, [actions]);
+    }, []);
 
 
-    const searchOffers = jobOffers.filter((offer) =>
+    const searchOffers = store.jobOffers?.filter((offer) => {
+        const nameMatch = offer.name?.toLowerCase().includes(searchTerm?.toLowerCase());
+        const modalityMatch = offer.modality?.toLowerCase().includes(searchTerm?.toLowerCase());
+        const salaryMatch = offer.salary?.toLowerCase().includes(searchTerm?.toLowerCase());
 
-        offer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        offer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        offer.location.toLowerCase().includes(searchTerm.toLowerCase()) 
-    );
+        return nameMatch || modalityMatch || salaryMatch;
+    });
 
     return (
-        <div className="container d-flex justify-content-center my-5">
-            <div className="row d-flex flex-column">
-
+        <div className="list-offer-container">
+            <div className="row d-flex flex-column g-2">
                 {searchOffers.length > 0 ? (
                     searchOffers.map((offer, index) => (
-
-                        <div className="col" key={index}>
+                        <div className="col list-offer-box" key={index}>
                             <CardOffer
-                                title={offer.title}
-                                company={offer.company}
-                                modality={offer.modality}
-                                location={offer.location}
-                                salary={offer.salary}
+                                title={offer.name}
+                                modality={offer.modality}  
+                                salary={offer.salary}    
                                 description={offer.description}
                                 id={offer.id}
                             />
                         </div>
                     ))
                 ) : (
-
-                    <p className="text-secondary">No hay ofertas disponibles</p>
-
+                    <p className="no-offers-section text-center shadow-lg">
+                        No hay ofertas disponibles
+                    </p>
                 )}
             </div>
         </div>

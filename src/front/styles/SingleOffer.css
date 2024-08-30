@@ -5,18 +5,9 @@
 .card-single-offer{
     box-shadow: -1px 2px 20px 4px #d4c4c4;
 }
-.card-offer-company{
-    position: relative;
-    top: 1px;
-}
 .card-offer-description{
     position: relative;
     top: 10px;
-}
-
-.card-offer-details span{
-    position: relative;
-    top: 20px;
 }
 
 .salary-box{
@@ -35,7 +26,7 @@
 }
 
 .btn-single-offer .btn:hover{
-    background-color: rgb(175, 206, 225);
+    background-color: rgb(135, 193, 229);
     
 }
 .btn-company{
@@ -54,3 +45,4 @@
     bottom: 20px;
     cursor: pointer;
 }
+

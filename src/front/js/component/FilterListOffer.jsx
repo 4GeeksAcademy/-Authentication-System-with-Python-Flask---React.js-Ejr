@@ -3,25 +3,24 @@ import "../../styles/FilterListOffer.css";
 
 export const FilterListOffer = () => {
     const [filters, setFilters] = useState({
-        tecnologies: [], 
+        plazo: "",
         salary: [0, 100000],
         searchText: "",
-        modalities: [], 
-        location: "",
-        experience: ""
+        fecha_publicacion: "",
+        experience: [] 
     });
 
     const handleCheckboxChange = (event) => {
         const { name, value, checked } = event.target;
 
         setFilters(prevFilters => {
-            const newValue = checked
-                ? [...prevFilters[name], value] 
-                : prevFilters[name].filter(item => item !== value); 
+            const newExperience = checked
+                ? [...prevFilters.experience, value]
+                : prevFilters.experience.filter(item => item !== value);
 
             return {
                 ...prevFilters,
-                [name]: newValue
+                experience: newExperience
             };
         });
     };
@@ -46,39 +45,31 @@ export const FilterListOffer = () => {
     return (
         <div className="FilterListOffer-box p-3 ms-5 shadow-lg">
             <h2 className="text-start fw-bold text-muted fs-4">Filtrar Ofertas</h2>
-
             <div>
-                <h3>Categoría</h3>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="tecnologies"
-                        value="Frontend"
-                        checked={filters.tecnologies.includes("Frontend")}
-                        onChange={handleCheckboxChange}
-                    />
-                    Frontend
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="tecnologies"
-                        value="Backend"
-                        checked={filters.tecnologies.includes("Backend")}
-                        onChange={handleCheckboxChange}
-                    />
-                    Backend
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="tecnologies"
-                        value="UI/UX"
-                        checked={filters.tecnologies.includes("UI/UX")}
-                        onChange={handleCheckboxChange}
-                    />
-                    UI/UX
-                </label>
+                <h3>Buscar</h3>
+                <label htmlFor="searchText">Buscar por título o descripción:</label>
+                <input
+                    className="form-control"
+                    id="searchText"
+                    type="text"
+                    name="searchText"
+                    placeholder="Buscar por título o descripción"
+                    value={filters.searchText}
+                    onChange={handleInputChange}
+                />
+            </div>
+            <div>
+                <h3>Plazo</h3>
+                <label htmlFor="plazo">Seleccione un plazo:</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="YYYY-M-D"
+                    name="plazo"
+                    id="plazo"
+                    onChange={handleInputChange}
+                    value={filters.plazo}
+                />
             </div>
 
             <div>
@@ -108,82 +99,50 @@ export const FilterListOffer = () => {
                 </p>
             </div>
 
-            <div>
-                <h3>Tipo de Contrato</h3>
-                <label>
-                    <input
-                        
-                        type="checkbox"
-                        name="modalities"
-                        value="full-time"
-                        checked={filters.modalities.includes("full-time")}
-                        onChange={handleCheckboxChange}
-                    />
-                    Tiempo Completo
-                </label>
+            <div className="d-flex flex-column">
+                <h3>Experiencia</h3>
                 <label>
                     <input
                         type="checkbox"
-                        name="modalities"
-                        value="part-time"
-                        checked={filters.modalities.includes("part-time")}
+                        name="experience"
+                        value="Junior"
+                        checked={filters.experience.includes("Junior")}
                         onChange={handleCheckboxChange}
                     />
-                    Medio Tiempo
+                    Junior
                 </label>
-                <label htmlFor="modalities">
+                <label>
                     <input
                         type="checkbox"
-                        name="modalities"
-                        value="freelance"
-                        checked={filters.modalities.includes("freelance")}
+                        name="experience"
+                        value="Mid-senior"
+                        checked={filters.experience.includes("Mid-senior")}
                         onChange={handleCheckboxChange}
                     />
-                    Freelance
+                    Mid-senior
+                </label>
+                <label htmlFor="experience">
+                    <input
+                        type="checkbox"
+                        name="experience"
+                        value="Senior"
+                        checked={filters.experience.includes("Senior")}
+                        onChange={handleCheckboxChange}
+                    />
+                    Senior
                 </label>
             </div>
 
             <div>
-                <h3>Ubicación</h3>
-                <label htmlFor="location">Buscar por Provincia o País:</label>
+                <h3>Fecha de publicacion</h3>
+                <label htmlFor="location">Seleccione fecha:</label>
                 <input
                     className="form-control"
-                    id="location"
+                    id="fecha_publicacion"
                     type="text"
-                    name="location"
-                    placeholder="Buscar por Provincia o País"
-                    value={filters.location}
-                    onChange={handleInputChange}
-                />
-            </div>
-
-            <div>
-                <h3>Nivel de Experiencia</h3>
-                <label htmlFor="experience">Seleccionar nivel:</label>
-                <select
-                    className="form-control"
-                    id="experience"
-                    name="experience"
-                    value={filters.experience}
-                    onChange={handleInputChange}
-                >
-                    <option value="">Seleccionar nivel</option>
-                    <option value="Junior">Junior</option>
-                    <option value="Mid-senior">Mid-senior</option>
-                    <option value="Senior">Senior</option>
-                </select>
-            </div>
-
-            <div>
-                <h3>Buscar</h3>
-                <label htmlFor="searchText">Buscar por título o descripción:</label>
-                <input
-                    className="form-control"
-                    id="searchText"
-                    type="text"
-                    name="searchText"
-                    placeholder="Buscar por título o descripción"
-                    value={filters.searchText}
+                    name="fecha_publicacion"
+                    placeholder="YYYY-MM-DD"
+                    value={filters.fecha_publicacion}
                     onChange={handleInputChange}
                 />
             </div>

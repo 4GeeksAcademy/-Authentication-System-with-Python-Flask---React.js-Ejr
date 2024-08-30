@@ -1,51 +1,124 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../styles/CardOffer.css";
-import { useNavigate } from "react-router-dom"; 
-import { StarRating } from "./StarsRating.jsx";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext.js";
+import { ModalJobApply } from "./ModalJobApply.jsx";
+import { FcExpired } from "react-icons/fc";
 
-export const CardOffer = ({ title, company, modality, location, salary, description, id, rating }) => {
-    const navigate = useNavigate();
+export const CardOffer = ({ id }) => {
+  const { actions, store } = useContext(Context);
+  const offer = store.jobOffers.find(offer => offer.id === id);
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false); 
+  const [numeroPostuladaos, setNumeroPostulados] = useState(0);
 
-    const handleViewDetails = () => {
-        navigate(`/singleoffer/${id}`); 
-    };
+  if (!offer) return <div>Oferta no encontrada</div>;
 
-    return (
-        <div className="card-offer my-2 p-3 d-flex align-items-center">
-            <div className="card-offer-logo me-3">
-                <img
-                    className="card-offer-logo"
-                    src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
-                    alt="Company Logo"
-                />
-                <StarRating rating={rating} />
+  useEffect(() => {
+    if (store.user && store.user.profile_programador) {
+      const subscribed = store.user.inscribedOffers?.includes(id);
+      setIsSubscribed(subscribed);
+    }
+  }, [store.user, id]);
+
+  const handleViewDetails = () => {
+    navigate(`/singleoffer/${id}`);
+  };
+
+  const handleApplyClick = async () => {
+    if (!store.user || !store.user.profile_programador) {
+      setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
+      setModalType('warning');
+      setIsModalOpen(true);
+      return;
+    }
+
+    if (isSubscribed) {
+      const result = await actions.unapplyFromJobOffer(id);
+      if (result.msg) {
+        setModalMessage(result.msg);
+        setModalType(result.type || 'success');
+        setIsSubscribed(false); 
+        setIsModalOpen(true);
+      } else {
+        setModalMessage("Error al desinscribirse, intente nuevamente.");
+        setModalType('error');
+        setIsModalOpen(true);
+      }
+    } else {
+      const result = await actions.applyToJobOffer(id);
+      if (result.msg) {
+        setModalMessage(result.msg);
+        setModalType(result.type || 'success');
+        setIsSubscribed(true); 
+        setIsModalOpen(true);
+      } else {
+        setModalMessage("Error al inscribirse, intente nuevamente.");
+        setModalType('error');
+        setIsModalOpen(true);
+      }
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <div className="container">
+        <div className="row card-offer mt-2">
+          <div className="col-2 img-box">
+            <img
+              className="card-offer-logo"
+              src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
+              alt="Company Logo"
+            />
+          </div>
+          <div className="col-9 header-box d-flex flex-column">
+            <h2 className="card-offer-title">{offer.name}</h2>
+            <span className="fecha-publicacion text-muted">creada el {offer.fecha_publicacion}</span>
+            <span className="card-offer-company">nombreEmpresa - {offer.localidad}</span>
+            <div className="card-offer-description text-muted">
+              <p className="text-description">{offer.descripcion}</p>
             </div>
-            <div className="card-offer-body">
-                <div className="title-box">
-                    <h2 className="card-offer-title">{title}</h2>
-                    <span className="card-offer-company mb-1">{company} - {location}</span>
-                </div>
-                <div className="card-offer-description text-muted">
-                    <p>{description}</p>
-                </div>
-                <div className="card-offer-footer d-flex justify-content-between align-items-center mt-2">
-                    <div className="card-offer-details text-muted">
-                        <span>{location}</span>
-                        <span className="mx-2">|</span>
-                        <span>{salary}</span>
-                        <span className="mx-2">|</span>
-                        <span>{modality}</span>
-                    </div>
-                    <div className="card-offer-actions">
-                        <button 
-                            onClick={handleViewDetails} 
-                            className="btn btn-details btn-sm text-decoration-none me-2">
-                            View Details
-                        </button>
-                        <button className="btn btn-inscribirse btn-sm">Inscribirse</button>
-                    </div>
-                </div>
+            <div className="data-footer">
+              <ul className="card-offer-details d-flex text-muted">
+                <li className="list-footer-details">
+                  <FcExpired className="exp-icon" /> {offer.plazo}
+                </li>
+                <li className="list-footer-details">{offer.modalidad + " | "}</li>
+                <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
+                <li className="list-footer-details">{offer.experiencia_minima}</li>
+              </ul>
+              <div className="card-offer-actions">
+                <button
+                  onClick={handleViewDetails}
+                  className="btn btn-details btn-sm text-decoration-none me-2">
+                  Ver detalles
+                </button>
+                {!store.user || (store.user && store.user.profile_programador) && (
+                  <button
+                    className={`btn ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-sm`}
+                    onClick={handleApplyClick}>
+                    {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
+                  </button>
+                )}
+              </div>
             </div>
+          </div>
         </div>
-    );
+      </div>
+      {isModalOpen && (
+        <ModalJobApply
+          message={modalMessage}
+          type={modalType}
+          onClose={handleCloseModal}
+        />
+      )}
+    </>
+  );
 };

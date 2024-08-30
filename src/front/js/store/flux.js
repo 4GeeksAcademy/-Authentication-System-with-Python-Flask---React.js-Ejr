@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			jobOffers: [],
 			selectedJobOffer: null,
 			token: null,
-			user: null
+			user: null,
+			proyectos: []
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -49,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			createJobOffer: async (offerData) => {
 				console.log(offerData);
-				
+
 				try {
 					const token = localStorage.getItem('token');
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/crearOferta`, {
@@ -73,6 +74,89 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.error("Error al conectarse con el backend:", error);
+				}
+			},
+
+			applyToJobOffer: async (oferta_id) =>{
+				const store = getStore();
+				const token = store.token;
+
+				if(!token){
+					return {msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error'}
+				}
+
+				try{
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados`, {
+						method: 'POST',
+						headers:{
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`
+						},
+						body: JSON.stringify({oferta_id})
+					});
+
+					if(resp.ok){
+						const data = await resp.json();
+						console.log('inscripcion exitosa', data);
+						return {msg: "Inscripcion realizada con exito.", type: "success"};
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al inscribirse: ", errorData.msg);
+						return  {msg: errorData.msg, type: 'warning'};
+						
+					}
+				} catch (error){
+					console.log("Error en la solitud de inscripcion.");
+					return {msg: "Error en la solicitud de inscripcion.", type: "error"}
+					
+				}
+			},
+
+			unapplyFromJobOffer: async (oferta_id) => {
+				const store = getStore();
+				const token = store.token;
+			
+				if (!token) {
+					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
+				}
+			
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`,
+						},
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						console.log('Desinscripción exitosa', data);
+						return { msg: "Desinscripción realizada con éxito.", type: "success" };
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al desinscribirse: ", errorData.msg);
+						return { msg: errorData.msg, type: 'warning' };
+					}
+				} catch (error) {
+					console.log("Error en la solicitud de desinscripción.");
+					return { msg: "Error en la solicitud de desinscripción.", type: "error" };
+				}
+			},
+
+			getNumeroPostulados: async (oferta_id) => {
+				try {
+					const response = await fetch(`/api/ofertas/${oferta_id}/postulados`);
+					if (response.ok) {
+						const data = await response.json();
+						return data.numero_postulados;
+					} else {
+						console.error('Error al obtener número de postulaciones:', response.statusText);
+						return null;
+					}
+				} catch (error) {
+					console.error('Error en la solicitud:', error);
+					return null;
 				}
 			},
 
@@ -132,44 +216,60 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('error:' + error)
 				}
 			},
-			resetStore: () => {
-				setStore({ msg: "", success: "" })
-			},
 			logOut: () => {
 				localStorage.removeItem("token")
 				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
 				return true
 			},
 			login: async (credentials) => {
-                try {
-                    const resp = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(credentials)
-                    });
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(credentials)
+					});
 
-                    if (resp.ok) {
-                        const data = await resp.json();
-                        localStorage.setItem('token', data.token);
-                        setStore({ token: data.token, user: data.user });
-                        return data;
-                    } else {
-                       
-                        return false;
-                    }
-                } catch (error) {
-                    console.error("Error al conectarse con el backend:", error);
-                }
-            },
+					if (resp.ok) {
+						const data = await resp.json();
+						localStorage.setItem('token', data.token);
+						setStore({ token: data.token, user: data.user });
+						return data;
+					} else {
 
-            loadUserFromToken: () => {
-                const token = localStorage.getItem('token');
-                if (token) {
-                    setStore({ token: token });
-                }
-            },
+						return false;
+					}
+				} catch (error) {
+					console.error("Error al conectarse con el backend:", error);
+				}
+			},
+
+			loadUserFromToken: () => {
+				const token = localStorage.getItem('token');
+				if (token) {
+					setStore({ token: token });
+				}
+			},
+			addProjects: async (formData, token) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/user/programador/addProjects", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify(formData),
+					})
+					const data = await resp.json()
+					setStore(
+						{proyectos: [...getStore().proyectos, data.proyectos]})
+					return data
+
+				} catch (error) {
+					console.log('error:' + error)
+				}
+			}
 
 			resetPassword: async (token, password1, password2) => {
 				if (!password1 || !password2) {

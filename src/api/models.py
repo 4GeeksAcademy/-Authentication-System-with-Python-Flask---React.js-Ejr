@@ -12,6 +12,7 @@ class Postulados(db.Model):
 
     def __repr__(self):
         return f'<Postulados {self.user_id}>'
+    
 
     def serialize(self):
         return {
@@ -153,13 +154,20 @@ class Empleador(db.Model):
 class Modalidad(Enum):
     TELETRABAJO = 'teletrabajo'
     PRESENCIAL = 'presencial'
+    HYBRIDO = 'hybrido'
     
 class Ofertas(db.Model):
     __tablename__="ofertas"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column (db.String (100), nullable=False)
-    descripcion = db.Column (db.String(700), nullable=False)
-    salario = db.Column (db.Integer, nullable=False)
+    descripcion = db.Column (db.String(), nullable=False)
+    salario = db.Column (db.String(20), nullable=False)
+    localidad = db.Column(db.String(30), nullable=False)
+    requisitos_minimos = db.Column(db.String(400), nullable=False)
+    horario = db.Column(db.String(100))
+    tipo_contrato = db.Column(db.String(100))
+    estudios_minimos = db.Column(db.String(100))
+    idiomas = db.Column(db.String(30))
     plazo = db.Column(db.String(100), nullable=False)
     modalidad = db.Column(db.Enum(Modalidad), nullable=False)
     experiencia_minima = db.Column (db.Enum(Experience), nullable=False)
@@ -178,6 +186,12 @@ class Ofertas(db.Model):
             "name": self.name,
             "descripcion": self.descripcion,
             "salario": self.salario,
+            "localidad": self.localidad,
+            "requisitos_minimos": self.requisitos_minimos,
+            "horario": self.horario,
+            "tipo_contrato": self.tipo_contrato,
+            "estudios_minimos": self.estudios_minimos,
+            "idiomas": self.idiomas,
             "plazo": self.plazo,
             "modalidad": self.modalidad.value,
             "experiencia_minima": self.experiencia_minima.value,

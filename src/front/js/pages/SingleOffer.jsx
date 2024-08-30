@@ -5,13 +5,39 @@ import "../../styles/SingleOffer.css";
 
 export const SingleOffer = () => {
     const { id } = useParams();
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
     const offer = store.jobOffers.find(offer => offer.id === parseInt(id));
 
     if (!offer) {
         return <div className="container mt-5">Oferta no encontrada</div>;
     }
+
+    // Check if the user is a programmer
+    const isProgramador = store.user && store.user.profile_programador;
+
+    const handleApplyClick = async () => {
+        if (!isProgramador) {
+            alert("Solo los programadores pueden inscribirse en esta oferta.");
+            return;
+        }
+
+        // Check if the user is already subscribed
+        const isSubscribed = store.user.inscribedOffers?.includes(id);
+        if (isSubscribed) {
+            const result = await actions.unapplyFromJobOffer(id);
+            if (result.msg) {
+                alert(result.msg);
+                // Optionally, update the user state here
+            }
+        } else {
+            const result = await actions.applyToJobOffer(id);
+            if (result.msg) {
+                alert(result.msg);
+                // Optionally, update the user state here
+            }
+        }
+    };
 
     return (
         <div className="container my-5">
@@ -27,34 +53,63 @@ export const SingleOffer = () => {
                                     />
                                 </div>
                                 <div className="d-flex flex-column offer-header">
-                                    <h2 className="mb-0 ">{offer.title}</h2>
-                                    <span className="text-muted">{offer.company}<span className="ms-3">{offer.location}</span></span>
+                                    <h2 className="mb-0">{offer.name}</h2>
+                                    <span className="text-muted">
+                                        {offer.fecha_publicacion}
+                                        <span className="ms-3">{offer.localidad}</span>
+                                    </span>
                                     <div className="salary-box">
-                                        <span className="text-success">{offer.salary}</span>
+                                        <span className="text-success">{offer.salario}</span>
                                     </div>
                                 </div>
-                                <button className="btn btn-single-offer-up btn-lg">Inscribirse a la oferta</button>
+                                {/* Show button only if the user is a programmer */}
+                                {isProgramador && (
+                                    <button
+                                        className="btn btn-single-offer-up btn-lg"
+                                        onClick={handleApplyClick}
+                                    >
+                                        Inscribirse a la oferta
+                                    </button>
+                                )}
                             </div>
                             <div className="requisit-list d-flex mt-4">
                                 <ul className="text-muted">
-                                    <li>Estudios mínimos</li>
-                                    <li>Años de experiencia</li>
-                                    <li>{offer.location}</li>
+                                    <li>{offer.modalidad}</li>
+                                    <li>{offer.experiencia_minima}</li>
+                                    <li>{offer.salario}</li>
+                                    <li>{offer.plazo}</li>
                                 </ul>
                                 <ul className="text-muted">
-                                    <li>Tipo de contrato</li>
-                                    <li>Tecnologías</li>
-                                    <li>Otros</li>
+                                    <li>{offer.idiomas}</li>
+                                    <li>{offer.tipo_contrato}</li>
+                                    <li>{offer.horario}</li>
+                                    <li>{offer.estudios_minimos}</li>
                                 </ul>
                             </div>
                             <hr />
+                            <div className="requisitos-minimos-single-offer">
+                                <div className="text-secondary fw-bold fs-2 text-decoration-underline">
+                                    <h3>Requisitos Minimos</h3>
+                                </div>
+                                <p className="text-muted text-start">
+                                    {offer.requisitos_minimos}
+                                </p>
+                            </div>
+                            <hr />
                             <div className="data-single-offer-container">
-
                                 <div className="offer-description mt-3">
                                     <h5 className="fw-bold">Descripción</h5>
-                                    <p className="single-offer-description">{offer.description}</p>
+                                    <p className="single-offer-description">{offer.descripcion}</p>
                                 </div>
-                                <button className="btn btn-single-offer-down btn-lg mt-3">Inscribirse a la oferta</button>
+                                {/* Show button only if the user is a programmer */}
+                                {isProgramador && (
+                                    <button
+                                        className="btn btn-single-offer-down btn-lg mt-3"
+                                        onClick={handleApplyClick}
+                                    >
+                                        Inscribirse a la oferta
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
