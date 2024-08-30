@@ -16,7 +16,7 @@ const VistaPago = () => {
 	
 	return (
 		<div className="text-center mt-5">
-			<h1>Bienvenid@ al pago con Stripe </h1>
+			<h1> Bienvenid@ </h1>
 			<Elements stripe={stripePromise}>
 				<CheckoutForm />
 			</Elements>
