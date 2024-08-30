@@ -26,20 +26,6 @@ const Perfil = () => {
         actions.fetchEspecialidades();
 
         const fetchPerfil = async () => {
-            // const token = localStorage.getItem("token");
-            // if (!token) {
-            //     Swal.fire({
-            //         title: 'No puede acceder a ésta sección!',
-            //         text: 'Token inválido o inexistente',
-            //         icon: 'warning',
-            //         confirmButtonText: 'Entendido'
-            //     }).then(() => {
-            //         navigate("/vista-login")
-            //     });
-            //     return;
-            // }
-
-            //  try {
             const isPerfilObtenido = await actions.getPerfilUsuario(id);
             console.log(isPerfilObtenido);
 
@@ -55,20 +41,9 @@ const Perfil = () => {
                     navigate("/vista-login")
                 });
             }
-            // } catch (error) {
-            //     console.error("Error al obtener el perfil del usuario:", error);
-            //     Swal.fire({
-            //         title: 'Error inesperado',
-            //         text: 'Ocurrió un error inesperado. Por favor, intente de nuevo.',
-            //         icon: 'error',
-            //         confirmButtonText: 'Entendido'
-            //     }).then(() => {
-            //         navigate("/vista-login")
-            //     });
-            // }
         };
         fetchPerfil();
-        // Inicializar los popovers (sin guardar en una variable)
+  
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
         });
@@ -77,44 +52,25 @@ const Perfil = () => {
 
 
     const [showModal, setShowModal] = useState(false);
-    // const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
 
     // Función para mostrar el modal
 
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
 
-    // Manejar la selección de especialidades
-    // const handleEspecialidadChange = (id) => {
-    //     setSelectedEspecialidades(prev =>
-    //         prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]
-    //     );
-    // };
-
     // Guardar las especialidades seleccionadas
     const saveEspecialidad = async (id) => {
         let resp = await actions.saveEspecialidad(id);
         if (resp) {
-            //await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
             setPerfil({ ...perfil, especialidades: [...perfil.especialidades, resp] })
         }
     };
     const deleteEspecialidad = async (id) => {
         let resp = await actions.eliminarEspecialidadPorProfesional(id);
         if (resp) {
-            //await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
             setPerfil({ ...perfil, especialidades: perfil.especialidades.filter(item => item.especialidad_id != id) })
         }
     };
-
-    // Mostrar las especialidades ya guardadas para el usuario
-    // const userEspecialidades = perfil?.especialidades || [];
-
-    console.log(store.especialidades);
-    console.log(perfil.especialidades);
-    console.log(perfil);
-    
-
 
 
     return (
@@ -148,7 +104,6 @@ const Perfil = () => {
                             onClose={closeModal}
                             imageSrc={perfil?.foto || null}
                             onDelete={() => {
-                                // Aquí puedes agregar la lógica para eliminar la foto de perfil si es necesario.
                             }}
                         />
                     )}
@@ -198,9 +153,6 @@ const Perfil = () => {
                                 <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
                             )
                             }
-                            {/* {perfil && !perfil.is_psicologo && (
-                                <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
-                            )}*/}
                             <button className="nav-link nav-perfil" id="vi-pills-edit-info-tab" data-bs-toggle="pill" data-bs-target="#vi-pills-edit-info" type="button" role="tab" aria-controls="vi-pills-edit-info" aria-selected="false">Editar mi información</button>
                         </div>
                     </div>
@@ -241,7 +193,6 @@ const Perfil = () => {
                                                     type="checkbox"
                                                     className="form-check-input"
                                                     id={`especialidad-${especialidad.id}`}
-                                                    // checked={selectedEspecialidades.includes(especialidad.id)}
                                                     onChange={() => saveEspecialidad(especialidad.id)}
                                                 />
                                                 <label className="form-check-label" htmlFor={`especialidad-${especialidad.id}`}>
@@ -251,12 +202,6 @@ const Perfil = () => {
                                         ))}
 
                                 </div>
-                                {/* <button
-                                    className="btn btn-primary mt-3"
-                                    onClick={saveEspecialidad}
-                                >
-                                    Guardar Especialidades
-                                </button> */}
                             </div>
                             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                 <div className="container mt-3">

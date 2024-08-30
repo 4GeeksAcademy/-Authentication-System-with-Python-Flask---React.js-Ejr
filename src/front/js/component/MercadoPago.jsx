@@ -18,7 +18,6 @@ const MercadoPagoComponent = () => {
     }
   }; */
 
-
   return (
     <Card className="mercadopago-card text-center">
       <Card.Body>
