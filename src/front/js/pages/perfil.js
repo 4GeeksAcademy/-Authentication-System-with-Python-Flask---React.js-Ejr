@@ -6,6 +6,7 @@ import VistaModal from "../component/vistaModal.jsx";
 import defaultAvatar from "../../img/avatar.jpg";
 import Loader from "../component/loader.jsx";
 import FormSolicitudProf from "../component/formSolicitudProf.jsx";
+import MercadoPagoComponent from "../component/MercadoPago.jsx";
 import Swal from 'sweetalert2'
 import Meets from "../component/meets.jsx";
 import EditarInformacion from "../component/editarInformacion.jsx";
@@ -209,7 +210,7 @@ const Perfil = () => {
                                 <Meets />
                             </div>
                             <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                <p><strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classNames that we use to style each element. These classNames control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</p>
+                                <MercadoPagoComponent/>
                             </div>
                             <div className="tab-pane fade" id="v-pills-especialidad" role="tabpanel" aria-labelledby="v-pills-especialidad-tab">
                                 <h4>Especialidades</h4>

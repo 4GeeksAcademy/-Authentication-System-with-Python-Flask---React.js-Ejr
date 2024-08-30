@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
 
+
 load_dotenv()  # Cargamos las variables del archivo .env
 SECRET_KEY = os.getenv("SECRET_KEY")
 # Verificamos que la clave secreta se haya cargado correctamente
@@ -24,6 +25,7 @@ if not SECRET_KEY:
 serializer = URLSafeTimedSerializer(SECRET_KEY)
 
 api = Blueprint('api', __name__)
+
 
 
 # Allow CORS requests to this API
@@ -38,6 +40,8 @@ def apply_headers(response):
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
     return response
 
+    
+#Edición de datos de perfil de usuario
 @api.route('/editar-perfil', methods=['POST'])
 def editar_perfil():
     try:
@@ -263,6 +267,7 @@ def verify_email(token):
     db.session.commit()
 
     return jsonify({"msg": "Correo verificado con éxito. Ahora puedes iniciar sesión."}), 200
+
 
 #CREAR USUARIO
 @api.route('/user', methods=['POST'])

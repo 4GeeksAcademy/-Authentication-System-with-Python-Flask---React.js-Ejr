@@ -1,5 +1,6 @@
 import { Await } from 'react-router-dom';
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 const getState = ({ getStore, getActions, setStore }) => {
 
@@ -179,7 +180,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Obtengo el token de usuario para la sesión
 			iniciarSesion: async (correo, clave) => {
 				const actions = getActions();
-			//	await actions.verificarToken();  // Verifica el token antes de proceder
 				const options = {
 					method: 'POST',
 					headers: {
@@ -438,6 +438,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//Post a Mercado Pago
+			/* createPreference: async () => {
+				try {
+					const response = await axios.post(process.env.BACKEND_URL + '/create_preference', {
+						title: 'HablemosUY',
+						quantity: 1,
+						price: 800
+					});
+					const { id } = response.data;
+					return id;
+				} catch (error) {
+					console.log(error);
+					
+
+				}
+			}, */
+
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, foto, correo, clave) => {
 				const options = {
@@ -487,22 +504,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const inputFile = new FormData()
 				inputFile.append("file", data)
 
-				inputFile.append('upload_preset', 'hablemosuy');
+			inputFile.append('upload_preset', 'hablemosuy');
 
-				const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
-					method: 'POST',
-					body: inputFile
-				});
+			const response = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+				method: 'POST',
+				body: inputFile
+			});
 
-				const fileData = await response.json();
-				if (fileData.secure_url) {
-					const result = await actions.saveProfileImg(fileData.secure_url)
-					if (result) {
-						return result
-					}
-					return false
+			const fileData = await response.json();
+			if (fileData.secure_url) {
+				const result = await actions.saveProfileImg(fileData.secure_url)
+				if (result) {
+					return result
 				}
-			},
+				return false
+			}
+		},
 			saveProfileImg: async (url) => {
 
 				const store = getStore()
@@ -537,6 +554,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						console.error('Error al cargar las especialidades', response.statusText);
 					}
+					console.log(response);
 
 				} catch (error) {
 					console.error('Error:', error);

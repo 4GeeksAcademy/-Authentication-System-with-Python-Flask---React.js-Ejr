@@ -7,6 +7,7 @@ import GoogleLogin from "react-google-login";
 import { Context } from "../store/appContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Modal, Button, Form } from 'react-bootstrap';
+import "../../styles/modalProfile.css";
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
