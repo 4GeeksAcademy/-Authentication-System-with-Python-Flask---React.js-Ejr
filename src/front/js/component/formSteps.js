@@ -11,6 +11,30 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
   }
   const closeDropdown = () => setIsOpen(false)
 
+  function showTooltip(index) {
+    const tooltip = document.getElementById(`tooltip-${index}`);
+    if (tooltip) {
+      tooltip.classList.remove('invisible', 'opacity-0');
+      tooltip.classList.add('visible', 'opacity-100');
+    }
+  }
+
+  function hideTooltip(index) {
+    const tooltip = document.getElementById(`tooltip-${index}`);
+    if (tooltip) {
+      tooltip.classList.remove('visible', 'opacity-100');
+      tooltip.classList.add('invisible', 'opacity-0');
+    }
+  }
+
+  function truncateName(name) {
+    const words = name.split(' ');
+    if (words.length > 3) {
+      return words.slice(0, 3).join(' ') + '...';
+    }
+    return name;
+  }
+
   return (
     <form className="w-full">
       {step === 1 && (
@@ -211,23 +235,38 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
               )}
             </div>
           </div>
-          <div className='h-96 overflow-y-scroll px-4'>
-            <div className="flex flex-wrap mx-auto gap-4 w-content border border-neutral-500 ">
+          <div className='h-[50vh] overflow-y-scroll'>
+            <div className="grid grid-cols-1 gap-4 w-full mx-auto p-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))" }}> {/* Grid adaptable */}
+
               {filteredExercises.map((item, index) => {
                 return (
-                  <article key={item.id} className="w-72 h-40 flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
+                  <article key={item.id} className="w-full h-40 flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md">
                     <div className="hidden sm:block sm:basis-36 w-1/2">
                       <img
                         alt=""
-                        src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
-                        className="aspect-square h-full w-full object-cover"
+                        src={item.image ? item.image : "https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"}
+                        className={`${item.image ? 'invert object-scale-down p-2' : ''} aspect-square h-full w-full object-cover overflow-hidden`}
+                        style={{
+                          filter: item.image ? 'invert(100%) sepia(100%) saturate(5000%) hue-rotate(67deg) brightness(83%)' : '',
+                        }}
                       />
                     </div>
                     <div className="p-3 flex flex-1 flex-col gap-4 justify-between w-1/2">
-                      <div className="flex flex-col gap-3 dark:border-white/10">
-                        <h3 className="font-bold text-neutral-900 dark:text-white">
+                      <div className="flex flex-col gap-3 dark:border-white/10 relative">
+                        <div
+                          id={`tooltip-${index}`}
+                          className="absolute -top-10 z-[99999] invisible px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition duration-300 dark:bg-gray-700 overflow-visible"
+                        >
                           {item.name}
+                        </div>
+
+                        {/* Arreglar esto Tooltips */}
+                        <h3 className="font-bold text-neutral-900 dark:text-white" onMouseEnter={() => showTooltip(index)}
+                          onMouseLeave={() => hideTooltip(index)}>
+                          {truncateName(item.name)}
                         </h3>
+
+
                         <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
                           {item.category}
                         </span>
@@ -262,14 +301,13 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
                           </div>
                         </label>
                       </div>
-
-
                     </div>
                   </article>
                 )
               })}
             </div>
           </div>
+
           <div className="mt-4 w-full flex gap-4 flex-col-reverse items-center sm:flex-row sm:w-fit self-end">
             <button
               type="button"
@@ -288,7 +326,8 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
             </button>
           </div>
         </div>
-      )}
-    </form>
+      )
+      }
+    </form >
   )
 }
