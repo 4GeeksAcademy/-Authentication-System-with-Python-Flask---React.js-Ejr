@@ -111,8 +111,7 @@ class ProfEspecialidad(db.Model):
         return f'<ProfEspecialidad {self.id}>'
     
     def serialize(self):
-        print(self.especialidad.serialize())
-        print("funciona")
+        
         return {
             "id": self.id,
             "especialidad_id": self.especialidad_id,  

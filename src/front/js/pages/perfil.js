@@ -18,57 +18,34 @@ import EditarInformacion from "../component/editarInformacion.jsx";
 
 const Perfil = () => {
     const { store, actions } = useContext(Context);
-    const [perfil, setPerfil] = useState({})
+    const [perfil, setPerfil] = useState({});
     const navigate = useNavigate();
-    const { id } = useParams()
-
+    const { id } = useParams();
     useEffect(() => {
+        // Lógica para cargar el perfil primero desde el store si está disponible
+        if (store.dataUser) {
+            setPerfil(store.dataUser);
+        } else {
+            // Si no está en el store, hacer la solicitud para obtener el perfil
+            actions.getPerfilUsuario(id).then((isPerfilObtenido) => {
+                if (isPerfilObtenido) {
+                    setPerfil(isPerfilObtenido);
+                } else {
+                    Swal.fire({
+                        title: 'Error al obtener el perfil',
+                        text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    }).then(() => {
+                        navigate("/vista-login");
+                    });
+                }
+            });
+        }
+
         actions.fetchEspecialidades();
 
-        const fetchPerfil = async () => {
-            // const token = localStorage.getItem("token");
-            // if (!token) {
-            //     Swal.fire({
-            //         title: 'No puede acceder a ésta sección!',
-            //         text: 'Token inválido o inexistente',
-            //         icon: 'warning',
-            //         confirmButtonText: 'Entendido'
-            //     }).then(() => {
-            //         navigate("/vista-login")
-            //     });
-            //     return;
-            // }
-
-            //  try {
-            const isPerfilObtenido = await actions.getPerfilUsuario(id);
-            console.log(isPerfilObtenido);
-
-            if (isPerfilObtenido) {
-                setPerfil(isPerfilObtenido)
-            } else {
-                Swal.fire({
-                    title: 'Error al obtener el perfil',
-                    text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
-                    icon: 'error',
-                    confirmButtonText: 'Entendido'
-                }).then(() => {
-                    navigate("/vista-login")
-                });
-            }
-            // } catch (error) {
-            //     console.error("Error al obtener el perfil del usuario:", error);
-            //     Swal.fire({
-            //         title: 'Error inesperado',
-            //         text: 'Ocurrió un error inesperado. Por favor, intente de nuevo.',
-            //         icon: 'error',
-            //         confirmButtonText: 'Entendido'
-            //     }).then(() => {
-            //         navigate("/vista-login")
-            //     });
-            // }
-        };
-        fetchPerfil();
-        // Inicializar los popovers (sin guardar en una variable)
+        // Inicializar los popovers de Bootstrap
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
         });
@@ -110,9 +87,7 @@ const Perfil = () => {
     // Mostrar las especialidades ya guardadas para el usuario
     // const userEspecialidades = perfil?.especialidades || [];
 
-    console.log(store.especialidades);
-    console.log(perfil.especialidades);
-    console.log(perfil);
+   
     
 
 
