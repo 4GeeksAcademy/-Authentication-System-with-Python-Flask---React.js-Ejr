@@ -125,7 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			register: async (formData) => {
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
+					const resp = await fetch(process.env.BACKEND_URL + "api/register", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'

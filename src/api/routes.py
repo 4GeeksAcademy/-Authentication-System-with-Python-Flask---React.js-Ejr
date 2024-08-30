@@ -316,3 +316,7 @@ def addProjects():
             db.session.commit()
             return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
     return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404
+
+
+
+
