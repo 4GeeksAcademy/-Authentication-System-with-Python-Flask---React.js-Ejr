@@ -9,13 +9,13 @@ export const SignUp = () => {
     const { store, actions } = useContext(Context);
 
 
-    const handleRadioChange = (value) => setDataForm({ ...dataForm, type: value })
+    const handleRadioChange = (value) => setDataForm({ ...dataForm, is_teacher: value })
 
     const [dataForm, setDataForm] = useState({
         email: '',
         password: '',
         confirmPassword: '',
-        type: '',  // Nuevo campo para registrar como profesor
+        is_teacher: false,  // Nuevo campo para registrar como profesor
 
     });
     const [visible, setVisible] = useState(false);
@@ -68,12 +68,11 @@ export const SignUp = () => {
                     <input className="form-check-input"
                         value={'alumno'}
                         checked={
-                            dataForm.type ===
-                            "alumno"
+                            dataForm.is_teacher === false
                         }
                         onChange={() =>
                             handleRadioChange(
-                                "alumno"
+                                false
                             )
                         }
                         type="radio" name="flexRadioDefault" id="flexRadioDefault1">
@@ -87,12 +86,11 @@ export const SignUp = () => {
                     <input className="form-check-input"
                         value={'profesor'}
                         checked={
-                            dataForm.type ===
-                            "profesor"
+                            dataForm.is_teacher === true
                         }
                         onChange={() =>
                             handleRadioChange(
-                                "profesor"
+                                true
                             )
                         }
                         type="radio" name="flexRadioDefault" id="flexRadioDefault2">
