@@ -77,6 +77,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			applyToJobOffer: async (oferta_id) =>{
+				const store = getStore();
+				const token = store.token;
+
+				if(!token){
+					return {msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error'}
+				}
+
+				try{
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados`, {
+						method: 'POST',
+						headers:{
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`
+						},
+						body: JSON.stringify({oferta_id})
+					});
+
+					if(resp.ok){
+						const data = await resp.json();
+						console.log('inscripcion exitosa', data);
+						return {msg: "Inscripcion realizada con exito.", type: "success"};
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al inscribirse: ", errorData.msg);
+						return  {msg: errorData.msg, type: 'warning'};
+						
+					}
+				} catch (error){
+					console.log("Error en la solitud de inscripcion.");
+					return {msg: "Error en la solicitud de inscripcion.", type: "error"}
+					
+				}
+			},
+
 			getMessage: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
