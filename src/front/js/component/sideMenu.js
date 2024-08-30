@@ -42,11 +42,6 @@ export const SideMenu = () => {
       icon: <StretchingIcon strokeWidth={location.pathname === '/exercises' ? '2' : '1.5'} />
     },
     {
-      to: '/weight',
-      label: 'Peso corporal',
-      icon: <ScaleIcon strokeWidth={location.pathname === '/weight' ? '2' : '1.5'} />
-    },
-    {
       to: '/profile',
       label: 'Perfil',
       icon: <ProfileIcon strokeWidth={location.pathname === '/profile' ? '2' : '1.5'} />
