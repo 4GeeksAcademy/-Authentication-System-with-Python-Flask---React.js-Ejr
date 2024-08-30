@@ -104,7 +104,7 @@ console.log(store.psicologos);
                                     </p>
                                 </div>
                                 <div >
-                                    {/* <p className="card-text">
+                                     <p className="card-text">
                                     <p className="card-text"></p>
                                         <ul className="d-flex flex-row gap-3">
                                             {Array.isArray(elm.especialidades) && elm.especialidades.length > 0 ? (
@@ -118,7 +118,7 @@ console.log(store.psicologos);
                                                 <li>No hay especialidades disponibles.</li>
                                             )}
                                         </ul>
-                                    </p> */}
+                                    </p> 
                                     
                                     <div className="button-container mt-5">
                                         <button

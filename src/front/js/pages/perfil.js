@@ -111,7 +111,7 @@ const Perfil = () => {
 
     console.log(store.especialidades);
     console.log(perfil.especialidades);
-    console.log(store.dataUser);
+    console.log(perfil);
     
 
 
@@ -160,12 +160,7 @@ const Perfil = () => {
                             : <Loader width="300px" height="35px" />}
                     </h2>
                     <div className="personal-info text-start mt-3 mb-2">
-                        <div className="d-flex align-items-center">
-                            <strong className="text-inicio me-2">Nombre: </strong>{" "}
-                            {perfil?.nombre_usuario && perfil?.apellido
-                                ? `${perfil.nombre_usuario} ${perfil.apellido}`
-                                : <Loader width="200px" height="15px" />}
-                        </div>
+                       
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Email: </strong>
                             {perfil?.correo
@@ -175,10 +170,10 @@ const Perfil = () => {
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Teléfono: </strong>
                             {perfil?.telefono
-                                ? `${store.dataUser?.codigo_de_area} ${perfil.telefono}` 
+                                ? `${perfil?.codigo_de_area} ${perfil.telefono}` 
                                 : <Loader width="200px" height="15px" />}
                         </div>
-                        {store.dataUser && store.dataUser.is_psicologo && (
+                        {perfil && perfil.is_psicologo && (
                             <div className="d-flex">
                                 <strong className="text-inicio me-2">Descripción profesional: </strong>
                                 {perfil?.descripcion
@@ -204,7 +199,7 @@ const Perfil = () => {
                             }
                             {/* {perfil && !perfil.is_psicologo && (
                                 <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
-                            )}
+                            )}*/}
                             <button className="nav-link nav-perfil" id="vi-pills-edit-info-tab" data-bs-toggle="pill" data-bs-target="#vi-pills-edit-info" type="button" role="tab" aria-controls="vi-pills-edit-info" aria-selected="false">Editar mi información</button>
                         </div>
                     </div>
@@ -269,12 +264,13 @@ const Perfil = () => {
                             </div>
                             <div className="tab-pane fade" id="vi-pills-edit-info" role="tabpanel" aria-labelledby="vi-pills-edit-info-tab">
                                 <div className="container mt-3">
-                                    <EditarInformacion />
+                                    <EditarInformacion perfil={(perfil)} setPerfil={setPerfil} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
     );
 };

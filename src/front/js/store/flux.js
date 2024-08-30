@@ -16,8 +16,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			profesionalesPorEspecialidad: [],
 		},
 		actions: {
-			editarPerfil: async (nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento) => {
+			editarPerfil: async (nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento,is_psicologo) => {
 				const store = getStore()
+				const actions =getActions()
 				console.log(nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento)
 				if (store.dataUser) {
 					const options = {
@@ -42,25 +43,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 							const data = await response.json()
 							console.log(response.status, data)
 
-							setStore({dataUser: {
-								...store.dataUser,
-								 nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario,
-								apellido: apellido ? apellido : store.dataUser.apellido,
-								descripcion: descripcion ? descripcion : store.dataUser.descripcion,
-								telefono: telefono ? telefono : store.dataUser.telefono,
-								codigo_de_area: codigoArea ? codigoArea : store.dataUser.codigo_de_area
-								}})
+							// setStore({dataUser: {
+							// 	...store.dataUser,
+							// 	 nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario,
+							// 	apellido: apellido ? apellido : store.dataUser.apellido,
+							// 	descripcion: descripcion ? descripcion : store.dataUser.descripcion,
+							// 	telefono: telefono ? telefono : store.dataUser.telefono,
+							// 	codigo_de_area: codigoArea ? codigoArea : store.dataUser.codigo_de_area
+							// 	}})
 								
-							if(store.dataUser.is_psicologo){
-								console.log(store.psicologos)
-								setStore({psicologos: store.psicologos.map((psicologo) => {
-									if(psicologo.correo === store.dataUser.correo){
-										return {...psicologo, descripcion: descripcion ? descripcion : store.dataUser.descripcion, nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario, apellido: apellido ? apellido : store.dataUser.apellido} 
-									}else{
-										return psicologo
-									}
-								})})
-							}
+							// if(is_psicologo){
+							// 	console.log(store.psicologos)
+							// 	setStore({psicologos: store.psicologos.map((psicologo) => {
+							// 		if(psicologo.correo === store.dataUser.correo){
+							// 			return {...psicologo, descripcion: descripcion ? descripcion : store.dataUser.descripcion, nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario, apellido: apellido ? apellido : store.dataUser.apellido} 
+							// 		}else{
+							// 			return psicologo
+							// 		}
+							// 	})})
+							// }
+							actions.getPsicologos()
 
 							return true
 						}

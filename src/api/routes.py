@@ -161,19 +161,7 @@ def get_perfil(id):
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
         print(vars(user))
         # Suponiendo que `user` tiene los atributos `nombre_usuario`, `correo`, `foto`,  `telefono`, y  `descripcion`
-        return jsonify({
-            "id": user.id,
-            "logged": True,
-            "nombre_usuario": user.nombre_usuario,
-            "apellido": user.apellido,
-            "correo": user.correo,
-            "foto": user.foto,
-            "telefono": user.telefono,
-            "is_psicologo": user.is_psicologo,
-            "descripcion": user.descripcion,
-            "codigo_de_area": user.codigo_de_area,
-            "especialidades":  [especialidad.serialize() for especialidad in user.especialidades]
-        }), 200    
+        return jsonify(user.serialize()), 200    
     except NoAuthorizationError:
         return jsonify({"error": "Autorización no proporcionada"}), 401
     except InvalidHeaderError:
