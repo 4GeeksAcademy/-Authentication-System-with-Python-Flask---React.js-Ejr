@@ -10,6 +10,6 @@ Terminar home
 
 Arreglar slider 
 
-Mostrar repeticiones dashboard
+✅ Mostrar repeticiones dashboard
 
 ARREGLAR EJERCICIOS, NO MUESTRAN LOS NOMBRES, DESCRIPCIONES NI IMAGENES BIEN

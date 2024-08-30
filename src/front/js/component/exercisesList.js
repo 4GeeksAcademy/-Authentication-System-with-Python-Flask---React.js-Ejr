@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Progress } from "./progress";
+import { MinusIcon } from "./icons";
 
 export const ExercisesList = ({ weeklyRoutine }) => {
   const { store, actions } = useContext(Context);
@@ -85,6 +86,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
                     </div>
                     <div className="flex gap-3">
                       <p className="font-medium text-white">{item.exercise.name}</p>
+                      <MinusIcon />
                       <span className="font-medium text-neutral-400">{item?.sets.sets} / {item?.sets.repetitions}</span>
                     </div>
                   </label>
