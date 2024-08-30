@@ -181,7 +181,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Obtengo el token de usuario para la sesión
 			iniciarSesion: async (correo, clave) => {
 				const actions = getActions();
-				await actions.verificarToken();  // Verifica el token antes de proceder
 				const options = {
 					method: 'POST',
 					headers: {
