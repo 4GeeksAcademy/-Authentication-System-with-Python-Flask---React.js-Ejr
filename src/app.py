@@ -78,21 +78,10 @@ def serve_any_other_file(path):
     return response
 
 
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
 
     
-@app.route('/reset-password', methods=['POST'])
-@jwt_required()
-def reset_password():
-
-    user_id=get_jwt_identity()
-    password=request.json.get('password')
-    user=User.query.get(user_id)
-    if not user:
-        return jsonify({"msg":"User not found"}), 404
-    user.password=user.generate_password_hash(password)
-    db.session.commit()
-    return jsonify({"msg":"Password updated"}), 200

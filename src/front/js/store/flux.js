@@ -269,7 +269,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log('error:' + error)
 				}
-			}
+			},
 
 			resetPassword: async (token, password1, password2) => {
 				if (!password1 || !password2) {
