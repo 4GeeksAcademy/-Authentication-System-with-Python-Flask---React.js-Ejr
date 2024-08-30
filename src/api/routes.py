@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
 from api.models import db, User, Curso
+import os
 
 import stripe #plataforma de pago. Para instalar el paquete de Stripe, tuve que poner: pip install stripe ,en la consola Backend y: npm install @stripe/react-stripe-js @stripe/stripe-js ,en el Fronted
 
@@ -143,34 +144,27 @@ def signup():
         return jsonify({'success': True, 'user': new_user.serialize(), 'token': access_token}), 200
 
 
+ #Pago con API stripe   
 
-# "clave_Secreta" real de la API de Stripe (solo para pruebas)
-stripe.api_key = "sk_test_51PtGSIRstQVhPzXOTqBtVc9HQgMmFpYjNvUJY8bi3T7oCHEao3S6C2DcI6DJ4c0faadkaWOXerS9S6X8ySuUyWVg00A7rVCnUf"
+stripe.api_key = os.getenv("STRIPE_PRIVATE")
 
-@api.route('/pagoCursos', methods=['POST'])
-def create_pagoCurso():
+@api.route('/create-payment', methods=['POST']) #copiado del repositorio codespace de Javi
+def create_payment():
     try:
-        data = request.get_json()
-        cantidad = data.get('cantidad')  # El monto que vas a cobrar
-        moneda = data.get('moneda', 'eur')  # Recibir la moneda desde el frontend, con 'eur' como predeterminada.
-
-        # Validar que la moneda sea aceptada por Stripe
-        monedas_aceptadas = ["eur", "usd"]  # Lista de monedas aceptadas
-        if moneda not in monedas_aceptadas:
-            return jsonify(error="Moneda no aceptada"), 400
-
-        # Crear el PaymentIntent
-        pagoCurso = stripe.PaymentIntent.create(
-            amount=int(cantidad * 100),  # Stripe trabaja con centavos
-            currency=moneda,
+        data = request.json
+        #PODEMOS PASAR TODOS LOS ELEMENTOS QUE PERMITA EL OBJETO DE PAYMENTINTENT.CREATE 
+        intent = stripe.PaymentIntent.create(
+            amount=data['amount'], # se deberia de calcular el precio en el back, no recibirse del front
+            currency=data['currency'],
+            automatic_payment_methods={
+                'enabled': True
+            }
         )
-
         return jsonify({
-            'clientSecret': pagoCurso['client_secret']
-        }), 200
-
+            'clientSecret': intent['client_secret']
+        })
     except Exception as e:
-        return jsonify(error=str(e)), 403
+        return jsonify({'success': False, 'error': str(e)})
 
 
 #Para que todo funcione, necesitas hacer que el formulario en tu frontend envíe la solicitud al backend y reciba el clientSecret de Stripe para manejar el proceso de pago

@@ -1,5 +1,5 @@
 import React from 'react';
-import FormularioPago from '../component/formularioPago';
+
 
 function CompletoDisWeb() {
     return (

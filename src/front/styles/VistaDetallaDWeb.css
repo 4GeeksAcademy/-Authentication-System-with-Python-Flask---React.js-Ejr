@@ -1,0 +1,61 @@
+/* Estilos generales para todo el cuerpo de la página */
+body {
+    font-family: 'Arial', sans-serif; /* Establece la fuente de texto */
+    background-color: #E0E0E2; /* Color de fondo suave para la página */
+    color: #000022; /* Color principal del texto */
+    margin: 0; /* Elimina los márgenes por defecto */
+    padding: 0; /* Elimina el padding por defecto */
+}
+
+/* Estilos para el contenedor principal de la vista detallada del curso */
+.curso-vistaDetallada {
+    max-width: 800px; /* Limita el ancho máximo del contenedor */
+    margin: 40px auto; /* Centra el contenedor y le da espacio vertical */
+    background-color: #FFFFFF; /* Fondo blanco para el contenedor */
+    padding: 20px; /* Espacio interior para el contenido */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    border: 1px solid #B5BAD0; /* Borde sutil */
+}
+
+/* Estilos para el título del curso */
+.curso-vistaDetallada h1 {
+    font-size: 32px; /* Tamaño de fuente grande para el título */
+    color: #000022; /* Color principal del título */
+    margin-bottom: 20px; /* Espacio inferior para separar el título del contenido */
+}
+
+/* Estilos para los párrafos de descripción y precio del curso */
+.curso-vistaDetalladae p {
+    font-size: 18px; /* Tamaño de fuente legible */
+    color: #416788; /* Color de texto que complementa el tema */
+    margin-bottom: 10px; /* Espacio inferior entre los párrafos */
+}
+
+/* Estilo para el texto en negrita dentro de los párrafos */
+.curso-vistaDetallada p strong {
+    color: #000022; /* Color más oscuro para destacar el texto en negrita */
+}
+
+/* Estilos para el botón principal de pago */
+.btn-primary_pagar {
+    background-color: #416788; /* Color de fondo del botón */
+    border-color: #416788; /* Color del borde del botón */
+    color: #FFFFFF; /* Color del texto del botón */
+    padding: 10px 20px; /* Espacio interno del botón */
+    font-size: 18px; /* Tamaño de fuente del botón */
+    border-radius: 5px; /* Bordes ligeramente redondeados para el botón */
+    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón por encima */
+}
+
+/* Estilos para el botón cuando el usuario pasa el ratón por encima */
+.btn-primary_pagar:hover {
+    background-color: #7389AE; /* Cambia el color de fondo al pasar el ratón */
+    border-color: #7389AE; /* Cambia el color del borde al pasar el ratón */
+}
+
+/* Estilos para el botón cuando se hace clic */
+.btn-primary_pagar:active {
+    background-color: #000022; /* Color más oscuro cuando el botón está activo */
+    border-color: #000022; /* Borde oscuro cuando el botón está activo */
+}

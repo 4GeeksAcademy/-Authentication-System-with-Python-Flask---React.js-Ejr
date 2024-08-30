@@ -63,6 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             error: null, // Estado para errores
             cursosProfe: [], //Almacena los cursos asignados al profesor específico.
             cursosAlumno: [], // Almacena los cursos en los que el alumno está inscrito
+            cursoSeleccionado: [], //Almacena los cursos seleccionados por el alumno para comprar.
             autentificacion: false, // Indica si el usuarioProfe está autenticado.
             usuarioPr:  null,  // Usuario que es un profesor.
             usuarioA: null, //información del usuario que se ha autenticado como alumno.
