@@ -81,8 +81,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 
-				if (!token) {
-					return { msg: "Usuario no autenticado" }
+				if(!token){
+					return {msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error'}
 				}
 
 				try {
@@ -98,17 +98,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('inscripcion exitosa', data);
-						return data;
+						return {msg: "Inscripcion realizada con exito.", type: "success"};
 					} else {
 						const errorData = await resp.json();
 						console.log("Error al inscribirse: ", errorData.msg);
-						return errorData;
-
+						return  {msg: errorData.msg, type: 'warning'};
+						
 					}
 				} catch (error) {
 					console.log("Error en la solitud de inscripcion.");
-					return { msg: "Error en la solicitud de inscripcion." }
+					return {msg: "Error en la solicitud de inscripcion.", type: "error"}
+					
+				}
+			},
 
+			unapplyFromJobOffer: async (oferta_id) => {
+				const store = getStore();
+				const token = store.token;
+			
+				if (!token) {
+					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
+				}
+			
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`,
+						},
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						console.log('Desinscripción exitosa', data);
+						return { msg: "Desinscripción realizada con éxito.", type: "success" };
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al desinscribirse: ", errorData.msg);
+						return { msg: errorData.msg, type: 'warning' };
+					}
+				} catch (error) {
+					console.log("Error en la solicitud de desinscripción.");
+					return { msg: "Error en la solicitud de desinscripción.", type: "error" };
+				}
+			},
+
+			getNumeroPostulados: async (oferta_id) => {
+				try {
+					const response = await fetch(`/api/ofertas/${oferta_id}/postulados`);
+					if (response.ok) {
+						const data = await response.json();
+						return data.numero_postulados;
+					} else {
+						console.error('Error al obtener número de postulaciones:', response.statusText);
+						return null;
+					}
+				} catch (error) {
+					console.error('Error en la solicitud:', error);
+					return null;
 				}
 			},
 
@@ -238,7 +286,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}).catch((error) => {
 					console.log('[error]', error)
 				});
-			}
+			},
+
+			resetPassword: async (token, password1, password2) => {
+				if (!password1 || !password2) {
+					console.log("Faltan campos");
+					return false;
+				}
+
+				if (password1.trim() !== password2.trim()) {
+					console.log("Las contraseñas no coinciden");
+					return false;
+				}
+
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/reset-password`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify({
+							password: password1,
+						}),
+					});
+
+					if (resp.ok) {
+						const data = await resp.json();
+						console.log("Contraseña cambiada exitosamente", data);
+						return true;
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al cambiar contraseña:", errorData.message);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error al cambiar contraseña:", error);
+					return false;
+				}
+			},
 
 		}
 	};
