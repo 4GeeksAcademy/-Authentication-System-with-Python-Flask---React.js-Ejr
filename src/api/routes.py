@@ -317,6 +317,43 @@ def addProjects():
             return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
     return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404
 
+#datos company user
 
+@api.route('/company/profile', methods=['GET'])
+@jwt_required()
+def get_company_profile():
+    user_id = get_jwt_identity()
+    company = Company.query.filter_by(user_id=user_id).first()
+    
+    if company:
+        return jsonify({
+            "name": company.name,
+            "description": company.description,
+            "phone": company.phone,
+            "email": company.email,
+            "country": company.country
+        }), 200
+    else:
+        return jsonify({"msg": "Company not found"}), 404
+
+@api.route('/company/profile', methods=['PUT'])
+@jwt_required()
+def update_company_profile():
+    user_id = get_jwt_identity()
+    company = Company.query.filter_by(user_id=user_id).first()
+    
+    if not company:
+        return jsonify({"msg": "Company not found"}), 404
+    
+    data = request.json
+    company.name = data.get('name', company.name)
+    company.description = data.get('description', company.description)
+    company.phone = data.get('phone', company.phone)
+    company.email = data.get('email', company.email)
+    company.country = data.get('country', company.country)
+    
+    db.session.commit()
+    
+    return jsonify({"msg": "Company profile updated successfully"}), 200
 
 

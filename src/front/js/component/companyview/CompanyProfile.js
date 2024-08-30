@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 import ProfileImage from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
 import { EditCompanyDescription } from './EditCompanyDescription';
@@ -9,8 +10,20 @@ import CountrySelector from '../userview/Dropdown';
 import Stars from '../stars';
 
 const CompanyProfile = () => {
-   
+    // Estado para los datos de la compañía
     const [companyData, setCompanyData] = useState({
+        name: '',
+        description: '',
+        phone: '',
+        email: '',
+        country: '',
+    });
+
+    // Estado para controlar la visibilidad del modal
+    const [showModal, setShowModal] = useState(false);
+
+    // Estado para los datos del modal
+    const [modalData, setModalData] = useState({
         name: '',
         description: '',
         phone: '',
@@ -20,7 +33,7 @@ const CompanyProfile = () => {
 
     const apiUrl = "https://studious-garbanzo-g4xv5w4wq96whpg79-3001.app.github.dev";
 
-    
+    // Función para cargar los datos iniciales de la compañía
     useEffect(() => {
         const fetchCompanyData = async () => {
             try {
@@ -32,13 +45,8 @@ const CompanyProfile = () => {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setCompanyData({
-                        name: data.name,
-                        description: data.description,
-                        phone: data.phone,
-                        email: data.email,
-                        country: data.country,
-                    });
+                    setCompanyData(data);
+                    setModalData(data);
                 } else {
                     console.error('Error al obtener los datos de la compañía');
                 }
@@ -50,15 +58,26 @@ const CompanyProfile = () => {
         fetchCompanyData();
     }, []);
 
-    
-    const handleFieldChange = (field, value) => {
-        setCompanyData({
-            ...companyData,
-            [field]: value,
+    // Función para manejar cambios en los campos del modal
+    const handleModalChange = (e) => {
+        const { name, value } = e.target;
+        setModalData({
+            ...modalData,
+            [name]: value,
         });
     };
 
-    
+    // Función para manejar la apertura del modal
+    const handleShowModal = () => {
+        setShowModal(true);
+    };
+
+    // Función para manejar el cierre del modal
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    // Función para enviar los datos actualizados al servidor
     const handleSaveProfile = async () => {
         try {
             const response = await fetch(`${apiUrl}/company/profile`, {
@@ -67,11 +86,13 @@ const CompanyProfile = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(companyData)
+                body: JSON.stringify(modalData),
             });
 
             if (response.ok) {
                 console.log('Perfil actualizado exitosamente');
+                setCompanyData(modalData);
+                handleCloseModal();
             } else {
                 console.error('Error al actualizar el perfil');
             }
@@ -95,27 +116,18 @@ const CompanyProfile = () => {
                             <div className="col-md-6" style={styles.centerColumn}>
                                 <div style={styles.topLeftAligned}>
                                     <div style={styles.buttonEditContainer}>
-                                        <ButtonEdit
-                                            name={companyData.name}
-                                            onSave={(value) => handleFieldChange('name', value)}
-                                        />
+                                        {/* Botón para abrir el modal */}
+                                        <Button variant="primary" onClick={handleShowModal}>
+                                            Editar Perfil
+                                        </Button>
                                     </div>
                                     <div style={styles.companyDescriptionContainer}>
-                                        <EditCompanyDescription
-                                            description={companyData.description}
-                                            onSave={(value) => handleFieldChange('description', value)}
-                                        />
+                                        <EditCompanyDescription description={companyData.description} />
                                     </div>
                                 </div>
                                 <div style={styles.contactContainer}>
-                                    <EditCompanyPhone
-                                        phone={companyData.phone}
-                                        onSave={(value) => handleFieldChange('phone', value)}
-                                    />
-                                    <EditCompanyMail
-                                        email={companyData.email}
-                                        onSave={(value) => handleFieldChange('email', value)}
-                                    />
+                                    <EditCompanyPhone phone={companyData.phone} />
+                                    <EditCompanyMail email={companyData.email} />
                                 </div>
                             </div>
 
@@ -125,18 +137,12 @@ const CompanyProfile = () => {
                                         <Stars />
                                     </div>
                                     <div style={styles.countrySelectorContainer}>
-                                        <CountrySelector
-                                            country={companyData.country}
-                                            onSave={(value) => handleFieldChange('country', value)}
-                                        />
+                                        <CountrySelector country={companyData.country} />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button className="btn btn-primary mt-3" onClick={handleSaveProfile}>
-                        Guardar Cambios
-                    </button>
                 </div>
 
                 <div className="col-lg-3" style={styles.flexContainer}>
@@ -145,11 +151,73 @@ const CompanyProfile = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal para editar datos de la compañía */}
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editar Datos de la Compañía</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formCompanyName">
+                            <Form.Label>Nombre de la Compañía</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="name"
+                                value={modalData.name}
+                                onChange={handleModalChange}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCompanyDescription">
+                            <Form.Label>Descripción</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="description"
+                                value={modalData.description}
+                                onChange={handleModalChange}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCompanyPhone">
+                            <Form.Label>Teléfono</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="phone"
+                                value={modalData.phone}
+                                onChange={handleModalChange}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCompanyEmail">
+                            <Form.Label>Correo Electrónico</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={modalData.email}
+                                onChange={handleModalChange}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCompanyCountry">
+                            <Form.Label>País</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="country"
+                                value={modalData.country}
+                                onChange={handleModalChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveProfile}>
+                        Guardar Cambios
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
-
-
 
 const styles = {
     pageContainer: {
