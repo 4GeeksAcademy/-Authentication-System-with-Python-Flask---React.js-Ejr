@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../store/appContext'
 
-export const FormSteps = (step, formData, setCancelRoutineCreation, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen, handleAddExercises) => {
+export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredExercises, addedExercises, selectedCategory, searchTerm, setSearchTerm, setSelectedCategory, isExerciseSelected, handleOpenModal, handleInputChange, handleCreateRoutine, handleChooseDays, setIsFinishModalOpen, handleAddExercises }) => {
   const { store, actions } = useContext(Context)
   const [isOpen, setIsOpen] = useState(false)
 

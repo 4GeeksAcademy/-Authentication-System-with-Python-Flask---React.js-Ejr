@@ -75,8 +75,6 @@ export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExercis
         } else {
             // Caso 2: El usuario seleccionó un set previo
             handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
-            console.log("HOLA");
-
         }
         setSetsInput('')
         setRepsInput('')
@@ -115,20 +113,26 @@ export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExercis
                 let response
                 if (isExerciseAdded) {
                     // Elimina el ejercicio si ya está agregado
+                    console.log("HOLA");
+
                     response = await actions.deleteExerciseRoutine(routine.id.toString(), id.toString())
+                    setRoutine(await store.oneRoutine)
                     if (!response || response.error) throw new Error('Error al eliminar el ejercicio')
                     resolve('Ejercicio eliminado exitosamente')
-                    setRoutine(await store.oneRoutine)
                 } else {
                     // Agrega el ejercicio si no está en la rutina
                     console.log(routine.id);
                     console.log("routine.id");
 
                     response = await actions.postExerciseRoutine(routine.id.toString(), id.toString(), setId.toString())
+                    console.log(response);
+                    // setRoutine(await store.oneRoutine)
+                    // await actions.oneRoutine(routine.id)
+
                     if (!response || response.error) throw new Error('Error al agregar el ejercicio')
                     resolve('Ejercicio agregado exitosamente')
-                    setRoutine(await store.oneRoutine)
                     setIsModalOpen(false)
+                    await actions.oneRoutine(routine.id)
                 }
             } catch (error) {
                 reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio')
@@ -153,7 +157,6 @@ export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExercis
                     // Elimina el ejercicio de la lista
                     return prevExercises.filter(exercise => exercise.id !== id)
                 } else {
-                    console.log("HOLA");
                     // Agrega el ejercicio a la lista
                     const exerciseSet = setsList.find((item) => item.id == setId)
                     console.log(exerciseSet)
@@ -235,7 +238,7 @@ export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExercis
     // }, [routine])
     return (
         <div tabIndex="-1" aria-hidden="true" className={`${isAddExerciseModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
-            <div className='w-full flex flex-col'>
+            <div className='bg-neutral-800 w-full flex flex-col'>
                 {/* Paso 3: Ejercicios */}
                 <div className="flex flex-row flex-wrap gap-2 w-full items-end justify-end mb-5">
                     {/* search input */}

@@ -717,7 +717,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return translations.categories[categoryId] || translations.categories['Unknown'];
             },
 
-             fetchExercisesWithImages: async () => {
+            fetchExercisesWithImages: async () => {
                 try {
                     const exercisesUrl = 'https://wger.de/api/v2/exercise?language=4&limit=999';
                     const exercisesResponse = await axios.get(exercisesUrl);
@@ -864,9 +864,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     console.log(response);
                     if (response.status == 200) {
-                        console.log('Exercise Routine successfully added:', response.data);
                         await getActions().oneRoutine(routine_id)
                         await getActions().allWeeklyRoutineUser()
+                        console.log('Exercise Routine successfully added:', response.data);
                         return true;
                     }
                 } catch (error) {

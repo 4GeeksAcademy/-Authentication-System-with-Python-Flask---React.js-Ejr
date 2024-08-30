@@ -13,175 +13,10 @@ export const EdicionRutina = () => {
     const [routine, setRoutine] = useState({});
     const [day, setDay] = useState('');
     const [name, setName] = useState('');
-    const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false)
     const [isDeleteExerciseModalOpen, setIsDeleteExerciseModalOpen] = useState(false)
     const [isEditRoutineModalOpen, setIsEditRoutineModalOpen] = useState(false)
     const [isDeleteRoutineModalOpen, setIsDeleteRoutineModalOpen] = useState(false)
     const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false)
-
-    const [searchTerm, setSearchTerm] = useState("")
-    const [selectedCategory, setSelectedCategory] = useState("")
-    const [addedExercises, setAddedExercises] = useState([])
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' })
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [selectSets, setSelectSets] = useState('')
-    const [isFinishModalOpen, setIsFinishModalOpen] = useState(false)
-    const [setsInput, setSetsInput] = useState('')
-    const [repsInput, setRepsInput] = useState('')
-
-    const setsList = store.allSetsList.slice(0, 5)
-
-    async function checkIfSetExists(sets, reps) {
-        try {
-            // Filtra para ver si ya existe un set con las mismas series y repeticiones
-            const existingSet = setsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps))
-
-            return existingSet || null // Si existe, retorna el set si no, retorna null
-        } catch (error) {
-            console.error("Error al verificar el set:", error)
-            return null
-        }
-    }
-
-    const cerrarModalEjercicio = () => {
-
-        closeDropdown(),
-            setAddedExercises([])
-    }
-
-    const handleFormSubmit = async (event) => {
-        event.preventDefault()
-        if (!selectSets) {
-            try {
-                // Verifica si ya existe un set con las series y repeticiones ingresadas
-                const existingSet = await checkIfSetExists(setsInput, repsInput)
-
-                if (existingSet) {
-                    // Si ya existe, usa el id del set existente
-                    store.setId = existingSet.id
-                    handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
-                } else {
-                    // Si no existe, crea el set y guárdalo en el store
-                    const newSets = await actions.postSets(setsInput, repsInput)
-
-                    if (newSets) {
-                        handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
-                    } else {
-                        console.error("No se pudo crear las series y repeticiones")
-                    }
-                }
-            } catch (error) {
-                console.error("Error al verificar o crear las series y repeticiones:", error)
-            }
-        } else {
-            // Caso 2: El usuario seleccionó un set previo
-            handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
-        }
-        setSetsInput('')
-        setRepsInput('')
-        setSelectSets('')
-
-    }
-    const handleSelectChange = (e) => {
-        setSelectSets(e.target.value)
-    }
-    // const handleFinishRoutine = () => {
-    //     setFormData({
-    //         routineName: '',
-    //         selectedDay: '',
-    //         exercises: ''
-    //     })
-    //     setSelectedExercise({ id: '', name: '' })
-    //     setRepsInput('')
-    //     setSetsInput('')
-    //     setSelectSets('')
-    //     setStep(1)
-    //     setAddedExercises([])
-    //     setIsFinishModalOpen(false)
-    //     actions.setCompleteRoutine(true)
-    // }
-
-    const handleAddExercises = async (id, name, setId) => {
-        const isExerciseAdded = addedExercises.some(exercise => exercise.id === id)
-
-        const actionPromise = new Promise(async (resolve, reject) => {
-            try {
-                let response
-                if (isExerciseAdded) {
-                    // Elimina el ejercicio si ya está agregado
-                    response = await actions.deleteExerciseRoutine(routine.id.toString(), id.toString())
-                    if (!response || response.error) throw new Error('Error al eliminar el ejercicio')
-                    resolve('Ejercicio eliminado exitosamente')
-                    setRoutine(await store.oneRoutine)
-                } else {
-                    // Agrega el ejercicio si no está en la rutina
-                    console.log(routine.id);
-
-                    response = await actions.postExerciseRoutine(routine.id.toString(), id.toString(), setId.toString())
-                    if (!response || response.error) throw new Error('Error al agregar el ejercicio')
-                    resolve('Ejercicio agregado exitosamente')
-                    setRoutine(await store.oneRoutine)
-                    setIsModalOpen(false)
-                }
-            } catch (error) {
-                reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio')
-            }
-        })
-
-        toast.promise(
-            actionPromise,
-            {
-                pending: isExerciseAdded ? 'Eliminando ejercicio...' : 'Agregando ejercicio...',
-                success: isExerciseAdded ? 'Ejercicio eliminado exitosamente 👌' : 'Ejercicio agregado exitosamente 👌',
-                error: isExerciseAdded ? 'No se pudo eliminar el ejercicio 🤯' : 'No se pudo agregar el ejercicio 🤯',
-            }
-        )
-
-        actionPromise.then(() => {
-            setAddedExercises(prevExercises => {
-                if (isExerciseAdded) {
-                    // Elimina el ejercicio de la lista
-                    return prevExercises.filter(exercise => exercise.id !== id)
-                } else {
-                    // Agrega el ejercicio a la lista
-                    const exerciseSet = setsList.find((item) => item.id == setId)
-                    console.log(exerciseSet)
-                    return [...prevExercises, { id, name, exerciseSet }]
-                }
-            })
-        }).catch(error => {
-            console.error(error)
-        })
-        console.log(addedExercises)
-    }
-
-    const handleOpenModal = (item) => {
-        if (isExerciseSelected(item.id)) {
-            handleAddExercises(item.id, item.name)
-        } else {
-            actions.allSets()
-            setSelectedExercise({ id: item.id, name: item.name })
-            console.log(item.id)
-            setIsModalOpen(true)
-        }
-    }
-
-    const isExerciseSelected = (id) => {
-        return addedExercises.some(exercise => exercise.id === id)
-    }
-    const closeDropdown = () => setIsOpen(false)
-
-    const toggleDropdown = (e) => {
-        e.preventDefault()
-        setIsOpen(!isOpen)
-    }
-
-    const filteredExercises = store.allExerciseList.filter((item) => {
-        const matchesCategory = selectedCategory === "" || item.category === selectedCategory
-        const matchesSearchTerm = item.name.toLowerCase().includes(searchTerm.toLowerCase())
-        return matchesCategory && matchesSearchTerm
-    })
 
     // PREVIO A MOSTRAR EJERCICIOS EDITAR
     const setSelectedDay = async (e) => {
@@ -386,7 +221,7 @@ export const EdicionRutina = () => {
                             </div>
                         </div>
                         {/* MODAL BOTON AGREGAR EJERCICIO */}
-                            <AgregarEjercicioEditar isAddExerciseModalOpen={isAddExerciseModalOpen} setIsAddExerciseModalOpen={setIsAddExerciseModalOpen} routine={routine} />
+                        <AgregarEjercicioEditar isAddExerciseModalOpen={isAddExerciseModalOpen} setIsAddExerciseModalOpen={setIsAddExerciseModalOpen} routine={routine} setRoutine={setRoutine} />
                         {/* <div tabIndex="-1" aria-hidden="true" className={`${isAddExerciseModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
                             <div className='w-full flex flex-col'>
                                 EJERCICIOS
@@ -686,10 +521,10 @@ export const EdicionRutina = () => {
                     </div></>}
                 <ul className="bg-neutral-900 p-3 space-y-3">
 
-                    {routine.id &&
+                    {store.oneRoutine.id &&
 
 
-                        routine.exercises.map((item, index) => {
+                        store.oneRoutine.exercises.map((item, index) => {
 
                             return (
                                 <div key={item.id + "a"}>
