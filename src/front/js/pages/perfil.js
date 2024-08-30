@@ -74,7 +74,7 @@ function Perfil() {
             </div>
             </div>
             <div className='firstName'>
-              <b>First Name</b>
+              <b>Nombres</b>
               <input
                 type="text"
                 className="form-control"
@@ -83,7 +83,7 @@ function Perfil() {
               />
             </div>
             <div className='firstName'>
-              <b>Last Name</b>
+              <b>Apellidos</b>
               <input
                 type="text"
                 className="form-control"
@@ -101,7 +101,7 @@ function Perfil() {
               />
             </div>
             <div className='firstName'>
-              <b>Password</b>
+              <b>Contraseña</b>
               <input
                 type="password"
                 className="form-control"
@@ -110,7 +110,16 @@ function Perfil() {
               />
             </div>
             <div className='firstName'>
-              <b>Address</b>
+              <b>Dirección</b>
+              <input
+                type="text"
+                className="form-control"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+            </div>
+            <div className='firstName'>
+              <b>Telefono</b>
               <input
                 type="text"
                 className="form-control"
