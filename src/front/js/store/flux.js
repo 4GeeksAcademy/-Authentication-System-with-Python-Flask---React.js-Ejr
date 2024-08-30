@@ -112,6 +112,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			unapplyFromJobOffer: async (oferta_id) => {
+				const store = getStore();
+				const token = store.token;
+			
+				if (!token) {
+					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
+				}
+			
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`,
+						},
+					});
+			
+					if (resp.ok) {
+						const data = await resp.json();
+						console.log('Desinscripción exitosa', data);
+						return { msg: "Desinscripción realizada con éxito.", type: "success" };
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al desinscribirse: ", errorData.msg);
+						return { msg: errorData.msg, type: 'warning' };
+					}
+				} catch (error) {
+					console.log("Error en la solicitud de desinscripción.");
+					return { msg: "Error en la solicitud de desinscripción.", type: "error" };
+				}
+			},
+			getNumeroPostuladaos: async (oferta_id) => {
+				try {
+					const response = await fetch(`/api/ofertas/${oferta_id}/postulados`);
+					if (response.ok) {
+						const data = await response.json();
+						return data.numero_postulados;
+					} else {
+						console.error('Error al obtener número de postulaciones:', response.statusText);
+						return null;
+					}
+				} catch (error) {
+					console.error('Error en la solicitud:', error);
+					return null;
+				}
+			},
+
 			getMessage: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");

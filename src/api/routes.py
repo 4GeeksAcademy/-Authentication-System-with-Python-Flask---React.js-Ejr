@@ -106,8 +106,6 @@ def editEmpleador():
     empleador.descripcion=descripcion
     db.session.commit()
     return jsonify({'editar':True, 'msg': 'Usuario modificado correctamente', 'user': user.serialize(), 'empleador':empleador.serialize()}), 200
-    
-
 
 
 #Agregar usuario a Programador   
@@ -174,7 +172,7 @@ def crear_oferta():
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
     
-    if not name or not descripcion or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
+    if not name or not descripcion or not localidad or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     try:
@@ -264,6 +262,42 @@ def create_postulado():
     db.session.commit()
     
     return jsonify({"msg": "Inscripcion realizada con éxito."}),200
+
+@api.route('/ofertas/<int:oferta_id>/postulados', methods=['GET'])
+@jwt_required(optional=True)  
+def get_numero_postulados(oferta_id):
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta:
+        return jsonify({"msg": "Oferta no encontrada"}), 404
+
+    numero_postulados = Postulados.query.filter_by(oferta_id=oferta_id).count()
+    return jsonify({"numero_postulados": numero_postulados}), 200
+
+@api.route('/postulados/<int:oferta_id>', methods=['DELETE'])
+@jwt_required()
+def delete_postulado(oferta_id):
+    user_id = get_jwt_identity()  
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no permitido"}), 401
+
+    if not user.profile_programador:
+        return jsonify({"msg": "Solo los programadores pueden desinscribirse."}), 403
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta:
+        return jsonify({"msg": "Oferta no encontrada o ID inválido"}), 404
+
+    postulado = Postulados.query.filter_by(user_id=user.id, oferta_id=oferta.id).first()
+    if not postulado:
+        return jsonify({"msg": "No estás inscrito en esta oferta"}), 404
+
+    db.session.delete(postulado)
+    db.session.commit()
+
+    return jsonify({"msg": "Desinscripción realizada con éxito."}), 200
     
 
 #contact
