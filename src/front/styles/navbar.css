@@ -1,0 +1,61 @@
+.navbar-toggler-icon {
+    width: 1.5rem; 
+    height: 1.5rem; 
+    background-image: none; 
+    position: relative;
+    display: block;
+    background-color: transparent; 
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after,
+.navbar-toggler-icon div {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px; 
+    background-color: black; 
+    position: absolute;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler-icon::before {
+    top: 0;
+}
+
+.navbar-toggler-icon::after {
+    bottom: 0;
+}
+
+.navbar-toggler-icon div {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon div {
+    transform: scale(0);
+}
+
+.nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.1); 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px; 
+    transition: background-color 0.3s, box-shadow 0.3s; 
+  }
+
+  .navbar-username {
+    color: white;
+    margin-right: 10px;
+    font-weight: bold; /* Hace que el texto sea negrita */
+    position: relative;
+    top: 8px; /* Desplaza el texto hacia abajo en 10px */
+}

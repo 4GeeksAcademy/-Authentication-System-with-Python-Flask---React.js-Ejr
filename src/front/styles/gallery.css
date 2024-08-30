@@ -1,0 +1,241 @@
+/* Contenedor principal */
+.discover-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Título */
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 3rem;
+  color: #333;
+  width: 100%;
+}
+
+/* Estilos para la galería */
+.gallery {
+  width: 100%;
+  position: relative; 
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* Estilo de los elementos de la galería */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03);
+}
+
+.gallery-item-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 1;
+}
+
+.gallery-item-overlay h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* Botón para añadir publicación */
+.add-post-wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-post-button {
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.add-post-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.add-post-tooltip {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  background-color: #000;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.add-post-button:hover .add-post-tooltip {
+  opacity: 1;
+}
+
+/* Modal personalizado */
+
+/* Asegúrate de que este estilo solo afecte al modal */
+.gallery-modal .modal-dialog {
+  max-width: 90%;
+  margin: 30px auto;
+}
+
+.modal-backdrop.show {
+  background-color: rgb(42, 27, 59); 
+}
+
+.gallery-modal .modal-content {
+  border-radius: 15px;
+  box-shadow: 0 40px 15px rgba(29, 14, 63, 0.9);
+  background: rgb(0, 0, 0);
+  border: none;
+}
+
+.gallery-modal .modal-header {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-bottom: none;
+  gap: 4px;
+}
+
+.gallery-modal .modal-header .close {
+  color: white;
+}
+
+.gallery-modal .btn-close {
+  background-color: #b2f3ff;
+  font-size: 1rem;
+}
+
+/* Contenedor principal del cuerpo del modal */
+.gallery-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Imagen principal del modal */
+.gallery-modal .custom-modal-main-image {
+  width: 100%;
+  max-width: 550px; 
+  text-align: center;
+  margin-bottom: 20px; 
+}
+
+.gallery-modal .custom-modal-main-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* Miniaturas del modal */
+.gallery-modal .custom-modal-thumbnails {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px; 
+  margin-bottom: 20px; 
+}
+
+.gallery-modal .custom-thumbnail-col {
+  flex: 0 0 auto;
+  max-width: 100px; 
+}
+
+.gallery-modal .custom-thumbnail-img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid transparent;
+}
+
+.gallery-modal .custom-thumbnail-img.active {
+  border: 2px solid #ffffff; 
+}
+
+.gallery-modal .modal-title {
+  width: 100%;
+  text-align: center;
+  font-size: 1.8rem; 
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Descripción del modal */
+.gallery-modal .custom-modal-description {
+  width: 100%;
+  max-width: 600px; 
+  text-align: left;
+  color: #fff;
+  margin-top: 20px;
+}
+
+/* Ajuste para mostrar 3 elementos por fila */
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

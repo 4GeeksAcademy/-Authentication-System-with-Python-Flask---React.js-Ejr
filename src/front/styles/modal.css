@@ -1,0 +1,184 @@
+/* Modal personalizado */
+.gallery-modal .modal-dialog {
+  max-width: 90%;
+  margin: 30px auto;
+}
+
+.gallery-modal .modal-content {
+  border-radius: 15px;
+  box-shadow: 0 40px 15px rgba(29, 14, 63, 0.9);
+  background: rgb(29, 14, 63);
+  border: none;
+}
+
+.gallery-modal .modal-header {
+  background-color: rgba(29, 14, 63, 0.9);
+  color: white;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+}
+
+.gallery-modal .modal-header .close {
+  color: white;
+}
+
+.gallery-modal .btn-close {
+  background-color: #b2f3ff;
+  font-size: 1rem;
+}
+
+.gallery-modal .custom-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-modal .custom-modal-main-image {
+  width: 100%;
+  max-width: 550px; /* Limitar el tamaño máximo de la imagen principal */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.gallery-modal .custom-modal-main-image img {
+  width: 100%;
+  height: auto;
+}
+
+.gallery-modal .custom-modal-thumbnails {
+  margin: 10px 0;
+}
+
+.gallery-modal .custom-thumbnail-col {
+  padding: 0;
+}
+
+.gallery-modal .custom-thumbnail-img {
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+  opacity: 0.6;
+}
+
+.gallery-modal .custom-thumbnail-img.active {
+  border: 2px solid #007bff; /* Resaltar la imagen activa */
+  opacity: 1;
+}
+
+.gallery-modal .custom-modal-description {
+  color: white;
+  text-align: center;
+}
+
+.edit-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-modal-body input,
+.edit-modal-body textarea {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.edit-modal-body button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-modal-body .cancel-icon {
+  margin-top: 10px;
+}
+
+.add-post-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-post-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.add-post-tooltip {
+  margin-right: 5px;
+}
+
+.add-post-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Iconos en el modal */
+.gallery-modal .edit-icon,
+.gallery-modal .delete-icon {
+  color: white;
+}
+
+.gallery-modal .delete-icon {
+  margin-left: 10px;
+}
+
+/* Estilos para el modal de edición */
+.edit-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-modal-body input,
+.edit-modal-body textarea {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.edit-modal-body button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-modal-body .cancel-icon {
+  margin-top: 10px;
+}
+
+.add-post-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-post-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.add-post-tooltip {
+  margin-right: 5px;
+}
+
+.add-post-button:hover {
+  background-color: #0056b3;
+}

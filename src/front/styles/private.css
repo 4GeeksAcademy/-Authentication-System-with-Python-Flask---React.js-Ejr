@@ -1,0 +1,119 @@
+.private-body {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff); /* Fondo gradiente personalizado */
+}
+
+.private-container {
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    height: 400px;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.private-container-left {
+    background-color: rgba(29, 14, 63, 0.9); /* Color de fondo morado con opacidad */
+    color: white;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+}
+
+.private-container-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco */
+}
+
+.private-container-right form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    width: 100%;
+    margin: 0; /* Asegura que no haya márgenes extras */
+}
+
+.private-container input,
+.private-container textarea {
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    width: 100%;
+    outline: none;
+}
+
+.private-container button {
+    background-color: rgba(29, 14, 63, 0.9); /* Botón morado con estilo similar */
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.private-container label {
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #333;
+}
+
+.image-container {
+    width: 200px; /* Establece un ancho fijo para el contenedor */
+    height: 200px; /* Establece una altura fija para hacer el contenedor perfectamente circular */
+    border-radius: 50%; /* Crea un círculo */
+    overflow: hidden; /* Asegura que nada se desborde fuera del círculo */
+    display: flex; /* Usa flexbox para centrar la imagen dentro del contenedor */
+    align-items: center; /* Centra la imagen verticalmente */
+    justify-content: center; /* Centra la imagen horizontalmente */
+    background-color: white; /* Fondo blanco para el contenedor */
+    padding-top: 35px; /* Añade espacio interno en la parte superior dentro del contenedor circular */
+    padding-left: 10px;
+}
+
+.profile-image {
+    max-width: 220%; /* Permite que la imagen se ajuste al contenedor */
+    height: auto; /* Mantiene las proporciones de la imagen */
+    display: block; /* Asegura que la imagen no tenga espacio extra alrededor */
+}
+
+@media (max-width: 768px) {
+    .private-container {
+        width: 100%;
+        flex-direction: column;
+        position: static;
+        height: auto;
+        background-color: #fff;
+    }
+
+    .private-container-left,
+    .private-container-right {
+        width: 100%;
+        height: auto;
+    }
+
+    .private-container button {
+        width: 100%;
+    }
+
+    .private-container form {
+        padding: 20px;
+    }
+}

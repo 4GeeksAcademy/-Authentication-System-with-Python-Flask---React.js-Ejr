@@ -1,0 +1,55 @@
+.card-img-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.custom-card {
+    position: relative;
+    background-color: #000;
+    border: none;
+}
+
+.custom-card .card-img {
+    opacity: 0.7; 
+    height: 100%; 
+    object-fit: cover;
+}
+
+.custom-card .card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: white;
+}
+
+.custom-card .card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.custom-card .card-text {
+    font-size: 1.25rem;
+}
+
+.custom-card .button-group .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.-toggler {
+    border: none; 
+    padding: 0.25rem 0.75rem; 
+    outline: none;
+}
+
+.gradient-body {
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    margin-top: 40px;
+}
+

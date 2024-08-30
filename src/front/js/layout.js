@@ -1,15 +1,26 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
+import { Context } from "./store/appContext";
+
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Private } from "./pages/private";
+import Gallery from "./pages/gallery";
+import Discover from "./pages/discover";
+import Singup from "./component/signup";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import Footer from './component/footer';
+
+import ContactUs from "./pages/ContactUs";
+import { TokenValidator } from "./component/TokenValidator";
+
+import UserProfile from "./component/UserProfile";
 
 //create your first component
 const Layout = () => {
@@ -28,7 +39,16 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Gallery />} path="/galeria" />
+                        <Route element={<Discover />} path="/events" />
+                        <Route element={<Singup />} path="/register" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<ContactUs />} path="/contact-us" />
+                        <Route element={<TokenValidator />} path="/app">
+                            <Route element={<UserProfile />} path="profile" />
+                            <Route element={<Private />} path="exemplo" /> 
+                            {/* qualquer rutas protegida aqui */}
+                        </Route>
                     </Routes>
                     <Footer />
                 </ScrollToTop>

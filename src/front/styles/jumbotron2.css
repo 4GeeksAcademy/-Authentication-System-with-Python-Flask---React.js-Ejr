@@ -1,0 +1,56 @@
+.jumbotron2-container {
+    background-color: rgba(29, 14, 63, 0.9); /* Color de fondo personalizado */
+    color: #fff; /* Texto blanco para buena legibilidad */
+    padding: 2rem 2rem; /* Aumentar el padding en los lados */
+    border: 0px;
+}
+
+.jumbotron2-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: #fff; /* Texto blanco */
+}
+
+.jumbotron2-lead {
+    font-size: 1.25rem;
+    color: #fff; /* Texto blanco */
+}
+
+.jumbotron2-percentage {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #fff; /* Texto blanco */
+}
+
+.jumbotron2-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.jumbotron2-text-container {
+    flex: 1 1 55%; /* Reducir un poco el tamaño del texto para hacer espacio para la imagen */
+    padding-right: 2rem; /* Añadir espacio a la derecha del texto */
+}
+
+.jumbotron2-image-container {
+    flex: 1 1 40%; /* Aumentar el tamaño del contenedor de imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Asegura que no haya fondo */
+    border-radius: 0; /* Elimina cualquier borde redondeado */
+}
+
+.jumbotron2-img-fluid {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0; /* Asegura que la imagen no tenga bordes redondeados */
+    background-color: transparent; /* Elimina cualquier fondo */
+    box-shadow: none; /* Elimina cualquier sombra que pueda estar generando el efecto blanco */
+    max-width: 500px; /* Aumentar el tamaño máximo de la imagen */
+    border: none; /* Eliminar cualquier borde aplicado */
+}
