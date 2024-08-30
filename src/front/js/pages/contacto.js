@@ -9,13 +9,13 @@ function Contacto() {
       {/* Bloque de texto de contacto */}
       <div className="mb-4">
         <h1 className="text-center mb-4">Contáctanos</h1>
-        <div className="card mb-3" style={{ maxWidth: "540px" }} id="cajaPrincipal3">
+        <div className="card mb-3" style={{ maxWidth: "540px" }} id="cajaPrincipal-contacto">
           <div className="row g-0">
             <div className="col-md-4">
               <img src={mapa} className="img-fluid rounded-start" alt="Ubicación de nuestras oficinas en Madrid" />
             </div>
             <div className="col-md-8">
-              <div className="card-body">
+              <div className="card-body" >
                 <h5 className="card-title">Plaza España 123</h5>
                 <p className="card-text">Piso 5to Puerta 123, Código Postal 08070109, Madrid - España.</p>
                 <p className="card-text">Teléfono de Contacto: 6008500178</p>
@@ -26,7 +26,7 @@ function Contacto() {
         </div>
       </div>
 
-      <p className="text-center" id="textoCentralContact">
+      <p className="text-center-contacto" id="textoCentralContact">
         <strong>¡Nos encantaría saber de ti!</strong><br /><br />
         En <strong>Learning Network</strong>, valoramos cada oportunidad de conectar y brindar apoyo a nuestros usuarios. Si tienes alguna consulta, necesitas información adicional o simplemente quieres ponerte en contacto con nosotros, estamos aquí para ayudarte.
         <br /><br />
@@ -39,6 +39,7 @@ function Contacto() {
         Tu satisfacción es nuestra prioridad, y estamos comprometidos a ofrecerte el mejor servicio. No dudes en ponerte en contacto con nosotros a través de cualquiera de estos medios. <br /><br /> <strong>¡Esperamos saber de ti pronto!</strong>
       </p>
     </div>
+
 
 
 
