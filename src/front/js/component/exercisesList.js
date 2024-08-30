@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Progress } from "./progress";
+import { MinusIcon } from "./icons";
 
 export const ExercisesList = ({ weeklyRoutine }) => {
   const { store, actions } = useContext(Context);
@@ -50,7 +51,8 @@ export const ExercisesList = ({ weeklyRoutine }) => {
     if (total > 0) {
       setPercentage((done / total) * 100)
     }
-  }, [done, total]);
+  }, [done, total])
+  console.log(weeklyRoutine?.routine.exercises[0])
 
   return (
     <>
@@ -59,7 +61,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
           <p className="font-bold text-lg md:text-xl text-white text-center">{weeklyRoutine.routine.name.toUpperCase()} | {weeklyRoutine.day}</p>
           <div className="flex">
             <div className="w-1/2 space-y-3 rounded-lg h-96 overflow-y-scroll pr-4">
-              {weeklyRoutine.routine.exercises.map((item, index) => {
+              {weeklyRoutine?.routine.exercises.map((item, index) => {
 
                 return (
                   < label
@@ -82,8 +84,10 @@ export const ExercisesList = ({ weeklyRoutine }) => {
                       />
                       {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
                     </div>
-                    <div>
+                    <div className="flex gap-3">
                       <p className="font-medium text-white">{item.exercise.name}</p>
+                      <MinusIcon />
+                      <span className="font-medium text-neutral-400">{item?.sets.sets} / {item?.sets.repetitions}</span>
                     </div>
                   </label>
                 )

@@ -1,15 +1,15 @@
 arreglar links footer
 
-si el perfil está vacío, pedir datos de peso y altura
+✅ si el perfil está vacío, pedir datos de peso y altura
 
-HACER QUE PIDA PRIMEROS DATOS OBLIGATORIAMENTE
+✅ HACER QUE PIDA PRIMEROS DATOS OBLIGATORIAMENTE
 
-arreglar crear rutina que quedan guardados los campos por mas que cambies ejercicio
+✅ arreglar crear rutina que quedan guardados los campos por mas que cambies ejercicio
 
 Terminar home
 
 Arreglar slider 
 
-Mostrar repeticiones dashboard
+✅ Mostrar repeticiones dashboard
 
 ARREGLAR EJERCICIOS, NO MUESTRAN LOS NOMBRES, DESCRIPCIONES NI IMAGENES BIEN
