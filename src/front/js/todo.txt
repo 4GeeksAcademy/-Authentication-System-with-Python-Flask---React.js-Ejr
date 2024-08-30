@@ -1,8 +1,8 @@
 arreglar links footer
 
-si el perfil está vacío, pedir datos de peso y altura
+✅ si el perfil está vacío, pedir datos de peso y altura
 
-HACER QUE PIDA PRIMEROS DATOS OBLIGATORIAMENTE
+✅ HACER QUE PIDA PRIMEROS DATOS OBLIGATORIAMENTE
 
 arreglar crear rutina que quedan guardados los campos por mas que cambies ejercicio
 
