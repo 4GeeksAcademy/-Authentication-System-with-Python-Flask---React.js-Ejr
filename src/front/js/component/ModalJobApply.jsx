@@ -19,8 +19,8 @@ export const ModalJobApply = ({ message, onClose, type, showLoginButton }) => {
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modal-job-apply">
+      <div className="modal-content-job-apply">
         <h5 className='modal-message'>
           {message}
           {messageIcons[type] || messageIcons.error}

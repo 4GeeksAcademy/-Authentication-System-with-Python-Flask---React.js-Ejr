@@ -1,4 +1,4 @@
-.modal {
+.modal-job-apply {
     height: auto;
     position: fixed;
     top: 0;
@@ -12,7 +12,7 @@
     z-index: 1000;
 }
 
-.modal-content {
+.modal-content-job-apple {
     background-color: white;
     padding: 20px;
     border-radius: 10px;

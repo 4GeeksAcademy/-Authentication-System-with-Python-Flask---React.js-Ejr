@@ -22,11 +22,6 @@ body {
 }
 
 
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
 .loginbutton {
   padding: 10px 20px;
   border-radius: 4px;
@@ -70,15 +65,5 @@ label {
   background-color: #fff;
   
 
-}
-h4{
-  font-family: 'Lucida Sans';
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-}
-p{
-  margin-top: 20px;
 }
 
