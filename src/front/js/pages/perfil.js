@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/perfil.css";
 import VistaModal from "../component/vistaModal.jsx";
 import defaultAvatar from "../../img/avatar.jpg";
@@ -17,52 +17,56 @@ import EditarInformacion from "../component/editarInformacion.jsx";
 
 const Perfil = () => {
     const { store, actions } = useContext(Context);
+    const [perfil, setPerfil] = useState({})
     const navigate = useNavigate();
-
+    const { id } = useParams()
 
     useEffect(() => {
-        actions.getPerfilUsuario();
         actions.fetchEspecialidades();
-        actions.obtenerEspecialidadesPorProfesional();
 
         const fetchPerfil = async () => {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                Swal.fire({
-                    title: 'No puede acceder a ésta sección!',
-                    text: 'Token inválido o inexistente',
-                    icon: 'warning',
-                    confirmButtonText: 'Entendido'
-                }).then(() => {
-                    navigate("/vista-login")
-                });
-                return;
-            }
+            // const token = localStorage.getItem("token");
+            // if (!token) {
+            //     Swal.fire({
+            //         title: 'No puede acceder a ésta sección!',
+            //         text: 'Token inválido o inexistente',
+            //         icon: 'warning',
+            //         confirmButtonText: 'Entendido'
+            //     }).then(() => {
+            //         navigate("/vista-login")
+            //     });
+            //     return;
+            // }
 
-            try {
-                const isPerfilObtenido = await actions.getPerfilUsuario();
-                if (!isPerfilObtenido) {
-                    Swal.fire({
-                        title: 'Error al obtener el perfil',
-                        text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
-                        icon: 'error',
-                        confirmButtonText: 'Entendido'
-                    }).then(() => {
-                        navigate("/vista-login")
-                    });
-                }
-            } catch (error) {
-                console.error("Error al obtener el perfil del usuario:", error);
+            //  try {
+            const isPerfilObtenido = await actions.getPerfilUsuario(id);
+            console.log(isPerfilObtenido);
+
+            if (isPerfilObtenido) {
+                setPerfil(isPerfilObtenido)
+            } else {
                 Swal.fire({
-                    title: 'Error inesperado',
-                    text: 'Ocurrió un error inesperado. Por favor, intente de nuevo.',
+                    title: 'Error al obtener el perfil',
+                    text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
                     icon: 'error',
                     confirmButtonText: 'Entendido'
                 }).then(() => {
                     navigate("/vista-login")
                 });
             }
+            // } catch (error) {
+            //     console.error("Error al obtener el perfil del usuario:", error);
+            //     Swal.fire({
+            //         title: 'Error inesperado',
+            //         text: 'Ocurrió un error inesperado. Por favor, intente de nuevo.',
+            //         icon: 'error',
+            //         confirmButtonText: 'Entendido'
+            //     }).then(() => {
+            //         navigate("/vista-login")
+            //     });
+            // }
         };
+        fetchPerfil();
         // Inicializar los popovers (sin guardar en una variable)
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
@@ -72,7 +76,7 @@ const Perfil = () => {
 
 
     const [showModal, setShowModal] = useState(false);
-    const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
+    // const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
 
     // Función para mostrar el modal
 
@@ -80,31 +84,44 @@ const Perfil = () => {
     const closeModal = () => setShowModal(false);
 
     // Manejar la selección de especialidades
-    const handleEspecialidadChange = (id) => {
-        setSelectedEspecialidades(prev =>
-            prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]
-        );
-    };
+    // const handleEspecialidadChange = (id) => {
+    //     setSelectedEspecialidades(prev =>
+    //         prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]
+    //     );
+    // };
 
     // Guardar las especialidades seleccionadas
-    const saveEspecialidades = async () => {
-        let resp = await actions.saveEspecialidades(selectedEspecialidades);
+    const saveEspecialidad = async (id) => {
+        let resp = await actions.saveEspecialidad(id);
         if (resp) {
-            await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
+            //await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
+            setPerfil({ ...perfil, especialidades: [...perfil.especialidades, resp] })
+        }
+    };
+    const deleteEspecialidad = async (id) => {
+        let resp = await actions.eliminarEspecialidadPorProfesional(id);
+        if (resp) {
+            //await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
+            setPerfil({ ...perfil, especialidades: perfil.especialidades.filter(item => item.especialidad_id != id) })
         }
     };
 
     // Mostrar las especialidades ya guardadas para el usuario
-    // const userEspecialidades = store.dataUser?.especialidades || [];
+    // const userEspecialidades = perfil?.especialidades || [];
+
+    console.log(store.especialidades);
+    console.log(perfil.especialidades);
+    console.log(store.dataUser);
     
-   
+
+
 
     return (
         <div className="container mt-4 col-11 col-md-10 col-lg-8" style={{ minHeight: '73vh' }}>
             <div className="row align-items-center user-profile">
                 <div className="col-md-4 text-center position-relative">
                     <div className="profile-image-container">
-                        <img src={store.dataUser?.foto || defaultAvatar}
+                        <img src={perfil?.foto || defaultAvatar}
                             alt="User Image"
                             className="profile-image"
                         />
@@ -128,7 +145,7 @@ const Perfil = () => {
                         <VistaModal
                             show={showModal}
                             onClose={closeModal}
-                            imageSrc={store.dataUser?.foto || null}
+                            imageSrc={perfil?.foto || null}
                             onDelete={() => {
                                 // Aquí puedes agregar la lógica para eliminar la foto de perfil si es necesario.
                             }}
@@ -138,34 +155,34 @@ const Perfil = () => {
 
                 <div className="col-md-8 text-md-start text-center mt-3 mt-md-0 profile-info">
                     <h2 className="text-inicio">
-                        {store.dataUser?.nombre_usuario && store.dataUser?.apellido
-                            ? `${store.dataUser.nombre_usuario} ${store.dataUser.apellido}`
+                        {perfil?.nombre_usuario && perfil?.apellido
+                            ? `${perfil.nombre_usuario} ${perfil.apellido}`
                             : <Loader width="300px" height="35px" />}
                     </h2>
                     <div className="personal-info text-start mt-3 mb-2">
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Nombre: </strong>{" "}
-                            {store.dataUser?.nombre_usuario && store.dataUser?.apellido
-                                ? `${store.dataUser.nombre_usuario} ${store.dataUser.apellido}`
+                            {perfil?.nombre_usuario && perfil?.apellido
+                                ? `${perfil.nombre_usuario} ${perfil.apellido}`
                                 : <Loader width="200px" height="15px" />}
                         </div>
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Email: </strong>
-                            {store.dataUser?.correo
-                                ? store.dataUser.correo
+                            {perfil?.correo
+                                ? perfil.correo
                                 : <Loader width="350px" height="15px" />}
                         </div>
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Teléfono: </strong>
-                            {store.dataUser?.telefono
-                                ? `${store.dataUser.codigo_de_area} ${store.dataUser.telefono}` 
+                            {perfil?.telefono
+                                ? `${store.dataUser.codigo_de_area} ${perfil.telefono}` 
                                 : <Loader width="200px" height="15px" />}
                         </div>
                         {store.dataUser && store.dataUser.is_psicologo && (
                             <div className="d-flex">
                                 <strong className="text-inicio me-2">Descripción profesional: </strong>
-                                {store.dataUser?.descripcion
-                                    ? store.dataUser.descripcion
+                                {perfil?.descripcion
+                                    ? perfil.descripcion
                                     : <Loader width="300px" height="15px" />}
                             </div>
                         )}
@@ -177,12 +194,15 @@ const Perfil = () => {
                 <div className="row">
                     <div className="col-12 col-md-4">
                         <div className="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{store.dataUser && store.dataUser.is_psicologo ? 'Agendas de pacientes' : 'Mis agendass'}</button>
+                            <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{perfil && perfil.is_psicologo ? 'Agendas de pacientes' : 'Mis agendass'}</button>
                             <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Métodos de pago</button>
-                            {store.dataUser && store.dataUser.is_psicologo && (
+                            {perfil && perfil.is_psicologo ==true ? (
                                 <button className="nav-link nav-perfil" id="v-pills-especialidad-tab" data-bs-toggle="pill" data-bs-target="#v-pills-especialidad" type="button" role="tab" aria-controls="v-pills-especialidad" aria-selected="false">Mis especialidades</button>
-                            )}
-                            {store.dataUser && !store.dataUser.is_psicologo && (
+                            ) : perfil.is_psicologo==false && (
+                                <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
+                            )
+                            }
+                            {/* {perfil && !perfil.is_psicologo && (
                                 <button className="nav-link nav-perfil" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Solicitud de perfil profesional</button>
                             )}
                             <button className="nav-link nav-perfil" id="vi-pills-edit-info-tab" data-bs-toggle="pill" data-bs-target="#vi-pills-edit-info" type="button" role="tab" aria-controls="vi-pills-edit-info" aria-selected="false">Editar mi información</button>
@@ -200,14 +220,14 @@ const Perfil = () => {
                                 <h4>Especialidades</h4>
                                 <div className="form-group">
                                     <ul>
-                                        {Array.isArray(store.profesionalesPorEspecialidad) && store.profesionalesPorEspecialidad.length > 0 ? (
-                                            store.profesionalesPorEspecialidad.map((especialidad) => (
+                                        {Array.isArray(perfil.especialidades) && perfil.especialidades.length > 0 ? (
+                                            perfil.especialidades.map((especialidad) => (
                                                 <li id="nombreEspecialidad" key={especialidad.id}>
                                                     {especialidad.nombre}
                                                     <i
                                                         className="fas fa-times"
                                                         style={{ paddingLeft: "20px" }}
-                                                        onClick={() => actions.eliminarEspecialidadPorProfesional(especialidad.id)}
+                                                        onClick={() => deleteEspecialidad(especialidad.especialidad_id)}
                                                     />
                                                 </li>
                                             ))
@@ -215,9 +235,9 @@ const Perfil = () => {
                                             <li>No hay especialidades disponibles.</li>
                                         )}
                                     </ul>
-                                    {Array.isArray(store.especialidades) && Array.isArray(store.profesionalesPorEspecialidad) && store.especialidades
+                                    {Array.isArray(store.especialidades) && Array.isArray(perfil.especialidades) && store.especialidades
                                         .filter(especialidad =>
-                                            !store.profesionalesPorEspecialidad.some(especialidadProfesional => especialidadProfesional.id === especialidad.id)
+                                            !perfil.especialidades.some(especialidadProfesional => especialidadProfesional.especialidad_id === especialidad.id)
                                         )
                                         .map(especialidad => (
                                             <div key={especialidad.id} className="form-check">
@@ -225,8 +245,8 @@ const Perfil = () => {
                                                     type="checkbox"
                                                     className="form-check-input"
                                                     id={`especialidad-${especialidad.id}`}
-                                                    checked={selectedEspecialidades.includes(especialidad.id)}
-                                                    onChange={() => handleEspecialidadChange(especialidad.id)}
+                                                    // checked={selectedEspecialidades.includes(especialidad.id)}
+                                                    onChange={() => saveEspecialidad(especialidad.id)}
                                                 />
                                                 <label className="form-check-label" htmlFor={`especialidad-${especialidad.id}`}>
                                                     {especialidad.nombre}
@@ -235,12 +255,12 @@ const Perfil = () => {
                                         ))}
 
                                 </div>
-                                <button
+                                {/* <button
                                     className="btn btn-primary mt-3"
-                                    onClick={saveEspecialidades}
+                                    onClick={saveEspecialidad}
                                 >
                                     Guardar Especialidades
-                                </button>
+                                </button> */}
                             </div>
                             <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                 <div className="container mt-3">
@@ -256,7 +276,6 @@ const Perfil = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 

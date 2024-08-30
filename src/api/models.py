@@ -10,6 +10,7 @@ db = SQLAlchemy()
 class Especialidad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     especialidad = db.Column(db.String(60), nullable=False)
+    prof_especialidades = db.relationship("ProfEspecialidad", back_populates="especialidad", lazy=True)
 
     def __repr__(self):
         return f'<Especialidad {self.especialidad}>'
@@ -34,7 +35,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), nullable=False)
     correo_verificado = db.Column(db.Boolean(), default=False)
     
-    especialidades = db.relationship('ProfEspecialidad', backref="user")
+    especialidades = db.relationship("ProfEspecialidad", back_populates="profesional", lazy=True)
 
 
 
@@ -104,13 +105,14 @@ class ProfEspecialidad(db.Model):
     especialidad_id = db.Column(db.Integer,db.ForeignKey('especialidad.id'), nullable=False)
     id_profesional = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    especialidad = db.relationship('Especialidad', foreign_keys=[especialidad_id])
-    profesional = db.relationship('User', foreign_keys=[id_profesional]) 
+    especialidad = db.relationship(Especialidad)
+    profesional = db.relationship(User) 
     def __repr__(self):
         return f'<ProfEspecialidad {self.id}>'
     
     def serialize(self):
         print(self.especialidad.serialize())
+        print("funciona")
         return {
             "id": self.id,
             "especialidad_id": self.especialidad_id,  

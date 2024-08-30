@@ -143,20 +143,20 @@ def login():
     
     access_token = create_access_token(identity=user_query.id)
     refresh_token = create_refresh_token(identity=user_query.id)
-    return jsonify({"access_token":access_token,"refresh_token": refresh_token,"logged":True}), 200
+    return jsonify({"access_token":access_token,"refresh_token": refresh_token,"logged":True, "user": user_query.serialize()}), 200
 
 # Proteje una ruta con jwt_required, que expulsará las solicitudes
 # sin un JWT válido presente.
-@api.route("/perfil/usuario", methods=["GET"])
+@api.route("/perfil/usuario/<int:id>", methods=["GET"])
 @jwt_required()
-def get_perfil():
+def get_perfil(id):
     try:
         current_user = get_jwt_identity()       
         if not current_user:
             return jsonify({"error": "Usuario no encontrado"}), 404
         
         # Simulando la obtención de más datos del usuario desde la base de datos
-        user = User.query.filter_by(id=current_user).first()
+        user = User.query.filter_by(id=id).first()
         if not user:
             return jsonify({"error": "Usuario no encontrado en la base de datos"}), 404
         print(vars(user))
@@ -171,7 +171,8 @@ def get_perfil():
             "telefono": user.telefono,
             "is_psicologo": user.is_psicologo,
             "descripcion": user.descripcion,
-            "codigo_de_area": user.codigo_de_area
+            "codigo_de_area": user.codigo_de_area,
+            "especialidades":  [especialidad.serialize() for especialidad in user.especialidades]
         }), 200    
     except NoAuthorizationError:
         return jsonify({"error": "Autorización no proporcionada"}), 401
@@ -197,7 +198,7 @@ def valid_token():
             return jsonify({"error": "Token inválido o no se puede obtener la identidad"}), 400
     if not user_exist:
         return jsonify(logged=False), 404
-    return jsonify(logged=True), 200
+    return jsonify(logged=True,user=user_exist.serialize()), 200
 
  # Endpoint para refrescar el access_token
 @api.route('/refresh-token', methods=['POST'])
@@ -531,14 +532,16 @@ def save_especialidades():
     
     # especialidades_nombres = data.get('especialidades')  # Lista de nombres de especialidades
 
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({'error': 'User not found'}), 404
-    especialidades = [ProfEspecialidad(especialidad_id=id_especialidad,id_profesional=user_id) for id_especialidad in data["especialidades"]]
-    db.session.bulk_save_objects(especialidades)
+    if not "especialidad_id" in data: 
+        return jsonify({"message": "especialidad_id is required"}), 403
+    especialidad_exist = ProfEspecialidad.query.filter_by(id_profesional=user_id, especialidad_id=data["especialidad_id"]).first()
+    if especialidad_exist:
+        return jsonify({"message": "speciality already exist, baby"}), 409
+    new_especialidad=ProfEspecialidad(id_profesional=user_id,especialidad_id=data["especialidad_id"])
+    db.session.add(new_especialidad)
     db.session.commit()
-
-    return jsonify({'message': 'Especialidades saved successfully'}), 200
+    db.session.refresh(new_especialidad)
+    return jsonify(new_especialidad.serialize()), 200
 
 # @api.route('/especialidades-por-profesional', methods=['GET'])
 # @jwt_required()
@@ -571,19 +574,20 @@ def especialidades_por_profesional():
     if request.method == 'GET':
         # Obtener las especialidades relacionadas con el profesional
         especialidades = ProfEspecialidad.query.filter_by(id_profesional=profesional_id).all()
-        especialidades_data = [esp.especialidad.serialize() for esp in especialidades]
+        especialidades_data = [esp.serialize() for esp in especialidades]
         return jsonify(especialidades_data), 200
 
     elif request.method == 'DELETE':
         # Obtener el ID de la especialidad a eliminar desde los parámetros de la solicitud
         especialidad_id = request.args.get('especialidad_id')
-        
+        print(especialidad_id)
         if not especialidad_id:
             return jsonify({'error': 'ID de especialidad no proporcionado'}), 400
         
         # Buscar la relación especialidad-profesional
         especialidad_a_eliminar = ProfEspecialidad.query.filter_by(id_profesional=profesional_id, especialidad_id=especialidad_id).first()
-
+        print(especialidad_a_eliminar)
+        print(profesional_id)
         if not especialidad_a_eliminar:
             return jsonify({'error': 'Especialidad no encontrada para este profesional'}), 404
         

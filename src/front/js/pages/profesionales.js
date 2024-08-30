@@ -20,7 +20,7 @@ const Profesionales = () => {
         document.body.appendChild(script);
 
         const checkLoggedStatus = async () => {
-           await actions.obtenerEspecialidadesPorProfesional();
+         //  await actions.obtenerEspecialidadesPorProfesional();
             try {
                 const logged = await actions.validToken(); // Esperar a que la promesa se resuelva
 
@@ -48,7 +48,7 @@ const Profesionales = () => {
     }, []);
 
 useEffect(() => {
-    actions.getPsicologos()
+// actions.getPsicologos()
      actions.obtenerEspecialidadesPorProfesional();
  
 },[store.psicologos])
@@ -75,6 +75,7 @@ useEffect(() => {
         }
         actions.getMeetsUser(store.dataUser.correo)
     };
+console.log(store.psicologos);
 
     return (
         <div className="mt-5">
@@ -108,7 +109,8 @@ useEffect(() => {
                                         <ul className="d-flex flex-row gap-3">
                                             {Array.isArray(elm.especialidades) && elm.especialidades.length > 0 ? (
                                                 elm.especialidades.map((especialidad) => (
-                                                    <li id="nombreEspecialidad1" key={especialidad.id}>
+                                                    <li id="nombreEspecialidad1" key={especialidad?.id}>
+                                                    
                                                         {especialidad.nombre}
                                                     </li>
                                                 ))

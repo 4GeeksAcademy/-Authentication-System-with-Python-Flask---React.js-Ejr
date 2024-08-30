@@ -177,7 +177,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Obtengo el token de usuario para la sesión
 			iniciarSesion: async (correo, clave) => {
 				const actions = getActions();
-				await actions.verificarToken();  // Verifica el token antes de proceder
+			//	await actions.verificarToken();  // Verifica el token antes de proceder
 				const options = {
 					method: 'POST',
 					headers: {
@@ -196,7 +196,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						// Guardar el token en Local Storage y actualizar el estado global
 						localStorage.setItem('token', data.access_token);
 						localStorage.setItem('refresh_token', data.refresh_token); // Guarda el refresh token
-						setStore({ currentUser: { correo: correo } });
+						setStore({ dataUser: data.user });
 						setStore({ logged: true });
 
 						return true;
@@ -211,15 +211,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.error('Error al iniciar sesión: ', error);
-					localStorage.removeItem('token');  // Elimina el token en caso de error
-					localStorage.removeItem('refresh_token');  // Elimina el refresh token en caso de error
+					//localStorage.removeItem('token');  // Elimina el token en caso de error
+					//localStorage.removeItem('refresh_token');  // Elimina el refresh token en caso de error
 					setStore({ logged: false }); // Asegura que el estado global se actualice
 					return false;
 				}
 			},
 
 			//Fetch con ruta protegida para datos del perfil de usuario
-			getPerfilUsuario: async () => {
+			getPerfilUsuario: async (id) => {
 				let token = localStorage.getItem('token');
 				const requestOptions = {
 					method: "GET",
@@ -228,43 +228,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 						'Authorization': `Bearer ${token}`
 					}
 				};
-				try {
-					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario', requestOptions);
+				// try {
+					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario/'+id, requestOptions);
 					const data = await response.json();
+					console.log(data);
+					console.log(response);
+					
+					
+
+					if (response.ok) {
+						
 
 
-					if (!token) {
-						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
-
-
-						return false;
-					}
-
-					// Si los datos son válidos y el usuario está logueado
-					if (data.logged) {
-						setStore({
-							dataUser: {
-								id: data.id,
-								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
-								apellido: data.apellido || "Apellido no disponible",
-								correo: data.correo || "Correo no disponible",
-								foto: data.foto || null,
-								is_psicologo: data.is_psicologo,
-								telefono: data.telefono || "Teléfono no disponible",
-								descripcion: data.descripcion || "descripcion no disponible",
-								codigo_de_area: data.codigo_de_area || ''
-							}
-						});
-
-						return true;
+						return data;
+					
 					} else {
 						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
 					}
 
-				} catch (error) {
-
-					return false;
-				}
+				// } catch (error) {
+					
+				// 	return false;
+				// }
 			},
 
 			//Validación de token para contexto global
@@ -288,17 +273,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.status === 200) {
 						setStore({ logged: true });
+						setStore({ dataUser: data.user });
 						return true;
-					} else if (response.status === 404) {
-						setStore({ logged: false });
-						localStorage.removeItem('token'); // Limpia el token
-						return false;
-					} else {
-						setStore({ logged: false });
-						localStorage.removeItem('token');
-						console.error('Error:', data.msg || response.statusText);
-						return false;
-					}
+					}// else if (response.status === 404) {
+					// 	setStore({ logged: false });
+					// 	localStorage.removeItem('token'); // Limpia el token
+					// 	return false;
+					// } else {
+					// 	setStore({ logged: false });
+					// 	localStorage.removeItem('token');
+					// 	console.error('Error:', data.msg || response.statusText);
+					// 	return false;
+					// }
+					return false
 				} catch (error) {
 					setStore({ logged: false });
 					localStorage.removeItem('token');
@@ -553,18 +540,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error:', error);
 				}
 			},
-			saveEspecialidades: async (especialidadesSeleccionadas) => {
+			saveEspecialidad : async (id) => {
 				let token = localStorage.getItem("token")
 				const store=getStore()
 				const actions=getActions()
 				
 				
-				for (let index = 0; index < especialidadesSeleccionadas.length; index++) {
-					if (store.profesionalesPorEspecialidad.some(item=>item.id == especialidadesSeleccionadas[index])) {
-						especialidadesSeleccionadas.splice(index,1)
-					}
+				// for (let index = 0; index < especialidadesSeleccionadas.length; index++) {
+				// 	if (store.profesionalesPorEspecialidad.some(item=>item.id == especialidadesSeleccionadas[index])) {
+				// 		especialidadesSeleccionadas.splice(index,1)
+				// 	}
 					
-				}
+				// }
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/save-especialidad', {
 						method: 'POST',
@@ -573,14 +560,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`,
 						},
 						body: JSON.stringify({
-
-							especialidades: especialidadesSeleccionadas, // Lista de nombres de especialidades
+							
+							especialidad_id: id, // Lista de nombres de especialidades
 						}),
 					});
 
 					if (response.ok) {
-						// const data = await response.json();
-						return true
+						 const data = await response.json();
+						actions.getPsicologos()
+						return data
 						//await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
 					} else {
 						const errorData = await response.json();
@@ -621,7 +609,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store=getStore()
 				const token = localStorage.getItem("token");
 				const url = `${process.env.BACKEND_URL}/especialidades-por-profesional?especialidad_id=${especialidadId}`;
-				
+				const actions=getActions()
 								
 				try {
 					const response = await fetch(url, {
@@ -634,14 +622,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						const data = await response.json();
-						
+						actions.getPsicologos()
 						// Opcional: Actualizar el estado de especialidades después de la eliminación
-						setStore({
-							...store,
-							profesionalesPorEspecialidad: store.profesionalesPorEspecialidad.filter(
-								especialidad => especialidad.id !== especialidadId
-							)
-						});
+						// setStore({
+						// 	...store,
+						// 	profesionalesPorEspecialidad: store.profesionalesPorEspecialidad.filter(
+						// 		especialidad => especialidad.id !== especialidadId
+						// 	)
+						// });
+						return true
 					} else {
 						const errorData = await response.json();
 						console.error('Error al eliminar la especialidad:', errorData);
