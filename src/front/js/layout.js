@@ -81,6 +81,7 @@ const Layout = () => {
                 <Navbar />
                 <ScrollToTop>
                     <Routes>
+
                         {/* Rutas publicas */}
                         <Route element={<Home />} path="/" />
                         <Route element={<VistaPrueba />} path="/vistaprueba" />

@@ -37,6 +37,12 @@ export const MultiStepForm = () => {
     }
   }
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSetsInput('')
+    setRepsInput('')
+    setSelectSets('')
+  }
 
   const handleInputChange = (input) => (e) => {
     setFormData({
@@ -309,7 +315,7 @@ export const MultiStepForm = () => {
       <Modal
         isOpen={isModalOpen}
         title="Elegir series y repeticiones"
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         // onConfirm={handleFormSubmit}
         confirmText="Guardar ejercicio"
       >

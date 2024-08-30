@@ -28,10 +28,72 @@ const getState = ({ getStore, getActions, setStore }) => {
             routineData: '',
             setId: '',
             completeRoutine: false,
-            allSetsList: []
+            allSetsList: [],
+
+
+            exercisesWithImages: [],
+            exercisesWithoutImages: [],
+
         },
         actions: {
             // Use getActions to call a function within a fuction
+            translateCategory: (categoryId) => {
+                return translations.categories[categoryId] || translations.categories['Unknown'];
+            },
+
+            fetchExercisesWithImages: async () => {
+                try {
+                    // Obtener ejercicios
+                    const exercisesUrl = 'https://wger.de/api/v2/exercise?language=4&limit=999';
+                    const exercisesResponse = await axios.get(exercisesUrl);
+                    const exercisesData = exercisesResponse.data.results.map(exercise => ({
+                        id: exercise.id,
+                        name: exercise.name,
+                        exercise_base: exercise.exercise_base,
+                        description: exercise.description,
+                        category: getActions().translateCategory(exercise.category),
+                    }));
+
+                    // Obtener imágenes asociadas al exercise_base
+                    const imagesUrl = 'https://wger.de/api/v2/exerciseimage/?limit=100&offset=20&language=4';
+                    const imagesResponse = await axios.get(imagesUrl);
+                    const imagesData = imagesResponse.data.results.reduce((acc, image) => {
+                        const baseId = image.exercise_base;
+                        if (!acc[baseId]) {
+                            acc[baseId] = [];
+                        }
+                        acc[baseId].push(image.image);
+                        return acc;
+                    }, {});
+
+                    // Procesar los ejercicios, agregando solo los campos requeridos
+                    const processedExercises = exercisesData.map(exercise => {
+                        const images = imagesData[exercise.exercise_base] || [];
+                        const selectedImage = images.length > 0 ? images[0] : null;  // Seleccionar solo la primera imagen
+
+                        return {
+                            id: exercise.id,
+                            name: exercise.name,
+                            description: exercise.description,
+                            images: selectedImage,  // Guardar solo la URL de la primera imagen
+                            category: exercise.category,  // Categoría en español en mayúsculas
+                        };
+                    });
+
+                    console.log("Ejercicios procesados:", processedExercises);
+
+                    // Guardar en el store
+                    setStore({
+                        exercisesWithImages: processedExercises.filter(exercise => exercise.images !== null),
+                        exercisesWithoutImages: processedExercises.filter(exercise => exercise.images === null),
+                    });
+                    return true;
+                } catch (error) {
+                    console.log('Error fetching exercises with images and categories:', error);
+                    return false;
+                }
+            },
+
 
             getMessage: async () => {
                 try {

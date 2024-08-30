@@ -58,8 +58,16 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    actions.get_last_one_physical_user_information()
-    calcIMC()
+    async function fetchData() {
+      const data = await actions.get_last_one_physical_user_information();
+      if (data) {
+        calcIMC();
+      } else {
+        setIsModalOpen(true)
+      }
+    }
+  
+    fetchData();
   }, [])
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)

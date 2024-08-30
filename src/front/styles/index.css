@@ -1226,6 +1226,10 @@ video {
   max-width: 36rem;
 }
 
+.max-w-\[1920px\]{
+  max-width: 1920px;
+}
+
 .flex-1{
   flex: 1 1 0%;
 }
@@ -2713,6 +2717,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .disabled\:bg-emerald-300:disabled{
   --tw-bg-opacity: 1;
   background-color: rgb(110 231 183 / var(--tw-bg-opacity));
+}
+
+.group:hover .group-hover\:scale-110{
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .peer:checked ~ .peer-checked\:bg-gradient-to-br{

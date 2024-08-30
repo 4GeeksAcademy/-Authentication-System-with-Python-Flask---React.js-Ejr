@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const SectionTabs = () => {
 	// Cambiar acá para poner cual de todos es el principal
@@ -13,9 +14,7 @@ export const SectionTabs = () => {
 		setActiveTab(tabName);
 	};
 
-	const handleSectionClick = (e) => {
-		e.preventDefault();
-	};
+
 
 	const renderContent = () => {
 
@@ -36,13 +35,12 @@ export const SectionTabs = () => {
 							<p className="mt-4 text-neutral-200">
 								Consulta una visión general de tu día, con un resumen de tus rutinas, y progreso hacia tus objetivos. Todo en un solo lugar para comenzar tu día con el pie derecho.
 							</p>
-							<a
-								onClick={(e) => handleSectionClick(e)}
-								href="#"
+							<Link
+								to="/routine"
 								className="mt-8 inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-400"
 							>
 								Ver Rutinas
-							</a>
+							</Link>
 						</div>
 					</div>
 				);
@@ -61,13 +59,12 @@ export const SectionTabs = () => {
 							<p className="mt-4 text-neutral-200">
 								Revisa un resumen de tu progreso, con mejoras en fuerza, resistencia y composición corporal, para ver claramente cómo has avanzado desde el inicio.
 							</p>
-							<a
-								onClick={(e) => handleSectionClick(e)}
-								href="#"
+							<Link
+								to="/stats"
 								className="mt-8 inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-400"
 							>
 								Ver Estadísticas
-							</a>
+							</Link>
 						</div>
 					</div>
 				);
@@ -87,7 +84,7 @@ export const SectionTabs = () => {
 								Archive Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam veniam sed recusandae!
 							</p>
 							<a
-								onClick={(e) => handleSectionClick(e)}
+								/* 	onClick={(e) => handleSectionClick(e)} */
 								href="#"
 								className="mt-8 inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-400"
 							>
@@ -113,7 +110,7 @@ export const SectionTabs = () => {
 								Notifications Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam veniam sed recusandae!
 							</p>
 							<a
-								onClick={(e) => handleSectionClick(e)}
+								/* 	onClick={(e) => handleSectionClick(e)} */
 								href="#"
 								className="mt-8 inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-400"
 							>
