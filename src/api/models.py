@@ -81,24 +81,6 @@ class UserProfession(db.Model):
             "user_id": self.user_id,
             "profession": self.profession.serialize()
         }
-#   #Agenda del usuario  
-# class UserCalendly(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
-#     calendly_name = db.Column(db.String(128), nullable=False, unique=True)
-#     users = db.relationship("User", back_populates="calendly", lazy=True)
-
-
-#     def __repr__(self):
-#         return f'<UserCalendly {self.id}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "user_id": self.user_id,
-#             "calendly_name": self.calendly_name
-#         }
-
 
 #  id	id-user	id-profesion	importe       
 class Fee(db.Model):

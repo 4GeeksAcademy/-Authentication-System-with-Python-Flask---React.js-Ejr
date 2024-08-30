@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import '../../styles/professionals.css';
 import ImgProPT from "../../../../public/images/img-profesional-p-t.png";
 
-const PersonalTrainerCard = ({ id, name, calendly_name }) => {
+const PersonalTrainerCard = ({ id, name, description, calendly_name }) => {
     const {actions, store} = useContext(Context)
 
     let image_url = "";
-    let profession = "";
 
     useEffect(() => {
         actions.getUserById(id);
@@ -22,7 +21,7 @@ const PersonalTrainerCard = ({ id, name, calendly_name }) => {
             </div>
             <div className="card-body">
                 <h4 className="card-title">{name || "Nombre"}</h4>
-                <h5 className="card-text">{profession || `Acerca de ${name}...`}</h5>
+                <p className="card-text">{description || `Acerca de ${name}...`}</p>
             </div>
             <div className='card-footer'>
                 <Link to={`professional/${id}`} className="more-link" >

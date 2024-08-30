@@ -43,16 +43,35 @@
     "name": "Avena Tradicional",
     "cost": "20",
     "image_url": "https://supercharly.cl/tienda/902-home_default/avena-tradicional-quaker-450g.jpg"
+  },
+  {
+    "name": "Isotonico en Polvo 500g",
+    "cost": "22",
+    "image_url": "https://m.media-amazon.com/images/I/61bX7NNFs9L._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "name": "Vitaminas Multivitaminico 90 capsulas",
+    "cost": "28",
+    "image_url": "https://http2.mlstatic.com/D_NQ_NP_864738-MLU73038744169_112023-O.webp"
+  },
+  {
+    "name": "Galletas de Arroz Integral",
+    "cost": "12",
+    "image_url": "https://images.pricely.ar/images/1/7790070417244.jpg"
+  },
+  {
+    "name": "Bebida de Proteina 500ml",
+    "cost": "10",
+    "image_url": "https://www.masmusculo.com/71367-thickbox_default/bebida-proteica.jpg"
+  },
+  {
+    "name": "Café Verde en Polvo 200g",
+    "cost": "18",
+    "image_url": "https://nuezypecana.com/wp-content/uploads/2024/01/15.jpg"
+  },
+  {
+    "name": "Snack de Almendras y Frutas Secas",
+    "cost": "8",
+    "image_url": "https://static.wixstatic.com/media/a19b94_de120760b88340cea6ea1b8f1784ec50~mv2.jpg/v1/crop/x_0,y_92,w_467,h_839/fill/w_467,h_839,al_c,q_85,enc_auto/mix-pasas.jpg"
   }
 ]
-
-
-
-
-
-
-
-
-
-
-

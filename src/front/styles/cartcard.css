@@ -42,10 +42,9 @@
 }
 
 .cart-card-container .btn-danger {
-    color: var(--color-red);
-    background: var(--color-white);
+    background: var(--color-red);
+    color: var(--color-white);
     border: none;
-    border-top: 2px solid var(--color-red);
     width: 100%;
     font-size: 1.2em;
     border-radius: 0;
@@ -53,9 +52,11 @@
     align-items: center;
     justify-content: center;
     transition: 0.3s ease;
+    border-top: 2px solid #f6f6f600;
 }
 
 .cart-card-container .btn-danger:hover {
-    background: var(--color-red);
-    color: var(--color-white);
+    border-top: 2px solid var(--color-red);
+    color: var(--color-red);
+    background: var(--color-white);
 }

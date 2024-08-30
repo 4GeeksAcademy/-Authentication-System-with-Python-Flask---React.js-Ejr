@@ -14,12 +14,25 @@ const WishCard = ({ id, name, cost, image_url }) => {
         return store.favorites.some(favorite => favorite.fav_product.id === id);
     };
 
+    const isInCart = () => {
+        return store.cart.some(cartItem => cartItem.product_id === id);
+    };
+
     const toggleFavorite = async () => {
         if (isFavorite()) {
             const favorite = store.favorites.find(fav => fav.fav_product.id === id);
             await actions.deleteFavorite(favorite.id);
         } else {
             await actions.addFavorite(id);
+        }
+    };
+
+    const toggleCart = async () => {
+        if (isInCart()) {
+            await actions.deleteFromCart(id);
+        } else {
+            const totalAmount = cost * 1;
+            await actions.addToCart(id, 1, totalAmount);
         }
     };
 
@@ -42,7 +55,7 @@ const WishCard = ({ id, name, cost, image_url }) => {
                     <p className="card-text">${cost || "00"}.00</p>
                 </div>
             </button>
-            <button className='card-btn bottom-btn'>
+            <button className={`card-btn bottom-btn ${isInCart() ? "wish-cart-on" : ""}`} onClick={toggleCart}>
                 <h6>
                     Agregar al carrito
                 </h6>
