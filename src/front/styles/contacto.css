@@ -4,20 +4,27 @@
   }
   
 
-  #cajaPrincipal3 {
+  #cajaPrincipal-contacto {
     margin-top: 20px;
     margin-bottom: 100px; 
-  }
+    background-color: #E0E0E2;
 
-  #cajaPrincipal3 .img-fluid {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
     
   }
+
+  #cajaPrincipal-contacto .img-fluid {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* La imagen cubre el contenedor completamente */
+    top: 0;
+    left: 0;
+      }
   
-  .text-center{
+  .text-center-contacto{
     margin-bottom: 100px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 45px;
+    margin-right: 45px;
+    text-align: center;
   }
+
+  
