@@ -45,29 +45,7 @@ const Perfil = () => {
 
         actions.fetchEspecialidades();
 
-<<<<<<< HEAD
-        const fetchPerfil = async () => {
-            const isPerfilObtenido = await actions.getPerfilUsuario(id);
-            console.log(isPerfilObtenido);
-
-            if (isPerfilObtenido) {
-                setPerfil(isPerfilObtenido)
-            } else {
-                Swal.fire({
-                    title: 'Error al obtener el perfil',
-                    text: 'Hubo un problema al cargar sus datos. Por favor, intente de nuevo.',
-                    icon: 'error',
-                    confirmButtonText: 'Entendido'
-                }).then(() => {
-                    navigate("/vista-login")
-                });
-            }
-        };
-        fetchPerfil();
-  
-=======
         // Inicializar los popovers de Bootstrap
->>>>>>> 449e6667d6963d6e18be52b682c4e7498f23cf96
         document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
             new bootstrap.Popover(popoverTriggerEl);
         });
@@ -96,8 +74,6 @@ const Perfil = () => {
         }
     };
 
-<<<<<<< HEAD
-=======
     // Mostrar las especialidades ya guardadas para el usuario
     // const userEspecialidades = perfil?.especialidades || [];
 
@@ -105,7 +81,6 @@ const Perfil = () => {
     
 
 
->>>>>>> 449e6667d6963d6e18be52b682c4e7498f23cf96
 
     return (
         <div className="container mt-4 col-11 col-md-10 col-lg-8" style={{ minHeight: '73vh' }}>
