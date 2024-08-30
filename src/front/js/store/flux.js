@@ -271,6 +271,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			}
 
+			resetPassword: async (token, password1, password2) => {
+				if (!password1 || !password2) {
+					console.log("Faltan campos");
+					return false;
+				}
+
+				if (password1.trim() !== password2.trim()) {
+					console.log("Las contraseñas no coinciden");
+					return false;
+				}
+
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/reset-password`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify({
+							password: password1,
+						}),
+					});
+
+					if (resp.ok) {
+						const data = await resp.json();
+						console.log("Contraseña cambiada exitosamente", data);
+						return true;
+					} else {
+						const errorData = await resp.json();
+						console.log("Error al cambiar contraseña:", errorData.message);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error al cambiar contraseña:", error);
+					return false;
+				}
+			},
+
 		}
 	};
 };
