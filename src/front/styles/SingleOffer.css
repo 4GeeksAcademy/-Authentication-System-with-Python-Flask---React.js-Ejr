@@ -31,8 +31,12 @@
 }
 .offer-header{
     position: relative;
-    right: 40px;
+    left: 20px;
     bottom: 20px;
     cursor: pointer;
+}
+.fecha-publi-single{
+    font-size: 0.8rem;
+    
 }
 

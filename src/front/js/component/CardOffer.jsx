@@ -94,7 +94,7 @@ export const CardOffer = ({ id }) => {
           <div className="col-9 header-box d-flex flex-column">
             <h2 className="card-offer-title">{offer.name}</h2>
             <span className="fecha-publicacion text-muted">
-              creada el {offer.fecha_publicacion}
+              publicada el {offer.fecha_publicacion}
             </span>
             <span className="card-offer-company">
               nombreEmpresa - {offer.localidad}
