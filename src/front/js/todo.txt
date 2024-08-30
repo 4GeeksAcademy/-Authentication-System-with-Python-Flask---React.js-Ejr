@@ -4,7 +4,7 @@ arreglar links footer
 
 ✅ HACER QUE PIDA PRIMEROS DATOS OBLIGATORIAMENTE
 
-arreglar crear rutina que quedan guardados los campos por mas que cambies ejercicio
+✅ arreglar crear rutina que quedan guardados los campos por mas que cambies ejercicio
 
 Terminar home
 
