@@ -12,15 +12,13 @@ export const CardOffer = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalType, setModalType] = useState('');
-  const [showLoginButton, setShowLoginButton] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false); // Estado para verificar si el usuario está inscrito
+  const [isSubscribed, setIsSubscribed] = useState(false); 
+  const [numeroPostuladaos, setNumeroPostulados] = useState(0);
 
   if (!offer) return <div>Oferta no encontrada</div>;
 
-  // Comprueba si el usuario ya está inscrito en la oferta al cargar el componente
   useEffect(() => {
     if (store.user && store.user.profile_programador) {
-      // Verificar si el usuario está inscrito en la oferta actual
       const subscribed = store.user.inscribedOffers?.includes(id);
       setIsSubscribed(subscribed);
     }
@@ -31,22 +29,19 @@ export const CardOffer = ({ id }) => {
   };
 
   const handleApplyClick = async () => {
-    // Verifica si el usuario no está logueado o no es programador
     if (!store.user || !store.user.profile_programador) {
       setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
       setModalType('warning');
-      setShowLoginButton(!store.user); // Muestra el botón de login solo si el usuario no está registrado
       setIsModalOpen(true);
       return;
     }
 
     if (isSubscribed) {
-      // Acción para desinscribirse
       const result = await actions.unapplyFromJobOffer(id);
       if (result.msg) {
         setModalMessage(result.msg);
         setModalType(result.type || 'success');
-        setIsSubscribed(false); // Actualiza el estado para reflejar la desinscripción
+        setIsSubscribed(false); 
         setIsModalOpen(true);
       } else {
         setModalMessage("Error al desinscribirse, intente nuevamente.");
@@ -54,7 +49,6 @@ export const CardOffer = ({ id }) => {
         setIsModalOpen(true);
       }
     } else {
-      // Acción para inscribirse
       const result = await actions.applyToJobOffer(id);
       if (result.msg) {
         setModalMessage(result.msg);
@@ -71,7 +65,6 @@ export const CardOffer = ({ id }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setShowLoginButton(false); // Resetea el estado al cerrar el modal
   };
 
   return (
@@ -107,11 +100,13 @@ export const CardOffer = ({ id }) => {
                   className="btn btn-details btn-sm text-decoration-none me-2">
                   Ver detalles
                 </button>
-                <button
-                  className={`btn ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-sm`}
-                  onClick={handleApplyClick}>
-                  {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
-                </button>
+                {!store.user || (store.user && store.user.profile_programador) && (
+                  <button
+                    className={`btn ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-sm`}
+                    onClick={handleApplyClick}>
+                    {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -122,7 +117,6 @@ export const CardOffer = ({ id }) => {
           message={modalMessage}
           type={modalType}
           onClose={handleCloseModal}
-          showLoginButton={showLoginButton}
         />
       )}
     </>

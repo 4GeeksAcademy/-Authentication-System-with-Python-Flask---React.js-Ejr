@@ -5,13 +5,39 @@ import "../../styles/SingleOffer.css";
 
 export const SingleOffer = () => {
     const { id } = useParams();
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
     const offer = store.jobOffers.find(offer => offer.id === parseInt(id));
 
     if (!offer) {
         return <div className="container mt-5">Oferta no encontrada</div>;
     }
+
+    // Check if the user is a programmer
+    const isProgramador = store.user && store.user.profile_programador;
+
+    const handleApplyClick = async () => {
+        if (!isProgramador) {
+            alert("Solo los programadores pueden inscribirse en esta oferta.");
+            return;
+        }
+
+        // Check if the user is already subscribed
+        const isSubscribed = store.user.inscribedOffers?.includes(id);
+        if (isSubscribed) {
+            const result = await actions.unapplyFromJobOffer(id);
+            if (result.msg) {
+                alert(result.msg);
+                // Optionally, update the user state here
+            }
+        } else {
+            const result = await actions.applyToJobOffer(id);
+            if (result.msg) {
+                alert(result.msg);
+                // Optionally, update the user state here
+            }
+        }
+    };
 
     return (
         <div className="container my-5">
@@ -27,13 +53,24 @@ export const SingleOffer = () => {
                                     />
                                 </div>
                                 <div className="d-flex flex-column offer-header">
-                                    <h2 className="mb-0 ">{offer.name}</h2>
-                                    <span className="text-muted">{offer.fecha_publicacion}<span className="ms-3">{offer.localidad}</span></span>
+                                    <h2 className="mb-0">{offer.name}</h2>
+                                    <span className="text-muted">
+                                        {offer.fecha_publicacion}
+                                        <span className="ms-3">{offer.localidad}</span>
+                                    </span>
                                     <div className="salary-box">
                                         <span className="text-success">{offer.salario}</span>
                                     </div>
                                 </div>
-                                <button className="btn btn-single-offer-up btn-lg">Inscribirse a la oferta</button>
+                                {/* Show button only if the user is a programmer */}
+                                {isProgramador && (
+                                    <button
+                                        className="btn btn-single-offer-up btn-lg"
+                                        onClick={handleApplyClick}
+                                    >
+                                        Inscribirse a la oferta
+                                    </button>
+                                )}
                             </div>
                             <div className="requisit-list d-flex mt-4">
                                 <ul className="text-muted">
@@ -64,7 +101,15 @@ export const SingleOffer = () => {
                                     <h5 className="fw-bold">Descripción</h5>
                                     <p className="single-offer-description">{offer.descripcion}</p>
                                 </div>
-                                <button className="btn btn-single-offer-down btn-lg mt-3">Inscribirse a la oferta</button>
+                                {/* Show button only if the user is a programmer */}
+                                {isProgramador && (
+                                    <button
+                                        className="btn btn-single-offer-down btn-lg mt-3"
+                                        onClick={handleApplyClick}
+                                    >
+                                        Inscribirse a la oferta
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
