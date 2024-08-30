@@ -223,12 +223,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			paymentCompany: (paymentMethod) => {
-
+				const token = localStorage.getItem('token');
 				let promise = fetch(process.env.BACKEND_URL + '/api/create-payment', {
 					method: 'POST',
 					body: JSON.stringify({ payment_method: paymentMethod.id }),
 					headers: {
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`
 					}
 				}).then((response) =>
 					response.json()

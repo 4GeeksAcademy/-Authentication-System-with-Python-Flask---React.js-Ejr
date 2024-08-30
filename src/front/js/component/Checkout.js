@@ -34,7 +34,6 @@ const Checkout = () => {
   return (
     <div className="col-lg-12">
       <form onSubmit={handleSubmit}>
-        <h1>Suscripción anual: <span>200€</span></h1>
         <div className="form-group">
           <CardSection />
         </div>

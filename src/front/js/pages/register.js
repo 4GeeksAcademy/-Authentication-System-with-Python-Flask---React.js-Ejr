@@ -199,14 +199,7 @@ export const Register = () => {
       </form>
 
 
-      <div className="container">
-        <div className="row">
-          <Elements stripe={stripePromise}>
-            {/* Load the checkout form */}
-            <CheckoutForm />
-          </Elements>
-        </div>
-      </div>
+     
 
     </div>
   );

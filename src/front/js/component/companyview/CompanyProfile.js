@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from "../../store/appContext";
 import ProfileImage from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
 import { EditCompanyDescription } from './EditCompanyDescription';
@@ -6,9 +7,16 @@ import { EditCompanyPhone } from './EditCompanyPhone';
 import { EditCompanyMail } from './EditCompanyMail';
 import ProfileProgress from '../ProfileProgress';
 import CountrySelector from '../userview/Dropdown';
+import CheckoutForm from "../../component/Checkout";
 import Stars from '../stars';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+
 
 const CompanyProfile = () => {
+    const stripePromise = loadStripe("pk_test_51PsqIxG3cEcyZuNpill2BXWYLnqGWok6W48xAOpaOlq5BHME5440qc4FGMIzdoADAgiR77Q3VBP3tmrzLuVWmbOy00tZCSphPW");
+    const { store, actions } = useContext(Context);
+    const [showPay, setShowPay] = useState(false)
     return (
         <div style={styles.pageContainer}>
             <div className="row" style={styles.row}>
@@ -43,6 +51,22 @@ const CompanyProfile = () => {
                                     </div>
                                     <div style={styles.countrySelectorContainer}>
                                         <CountrySelector />
+                                    </div>
+                                    <div className="w-100 text-center">
+                                        <h5>Suscripción actual:{!store.user?.profile_empleador.premium ? " Gratis" : "Premium"}</h5>
+                                        <button onClick={() => setShowPay(true)}>Suscripción anual Premium: 200€</button>
+
+                                        {showPay && (
+
+                                            <div >
+                                                <Elements stripe={stripePromise}>
+                                                    {/* Load the checkout form */}
+                                                    <CheckoutForm />
+                                                </Elements>
+                                            </div>
+
+                                        )}
+
                                     </div>
                                 </div>
                             </div>
@@ -131,11 +155,11 @@ const styles = {
     },
     starsContainer: {
         marginBottom: '20px',
-        marginRight: '30px', 
+        marginRight: '30px',
     },
     countrySelectorContainer: {
         marginBottom: '20px',
-        marginRight: '30px', 
+        marginRight: '30px',
     },
     profileCard: {
         backgroundColor: '#bed5e2',
