@@ -175,7 +175,7 @@ const Perfil = () => {
                         <div className="d-flex align-items-center">
                             <strong className="text-inicio me-2">Teléfono: </strong>
                             {perfil?.telefono
-                                ? `${store.dataUser.codigo_de_area} ${perfil.telefono}` 
+                                ? `${store.dataUser?.codigo_de_area} ${perfil.telefono}` 
                                 : <Loader width="200px" height="15px" />}
                         </div>
                         {store.dataUser && store.dataUser.is_psicologo && (
