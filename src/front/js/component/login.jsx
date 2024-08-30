@@ -67,7 +67,7 @@ export const Login = () => {
 				icon: 'success',
 				timer: 4000
 			});
-			navigate("/perfil");
+			navigate("/perfil/"+store.dataUser.id);
 		} else {
 			Swal.fire({
 				title: 'Lo sentimos!',
@@ -101,7 +101,7 @@ export const Login = () => {
 					icon: 'success',
 					timer: 4000
 				});
-				navigate("/perfil");
+				navigate("/perfil/"+store.dataUser.id);
 			} else {
 				Swal.fire({
 					title: 'Lo sentimos!',

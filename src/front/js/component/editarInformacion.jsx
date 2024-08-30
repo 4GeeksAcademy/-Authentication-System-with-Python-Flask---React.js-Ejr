@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
 
-const EditarInformacion = () => {
+const EditarInformacion = ({perfil,setPerfil}) => {
     const { store, actions } = useContext(Context);
 
     const [nombre, setNombre] = useState('');
@@ -12,24 +12,35 @@ const EditarInformacion = () => {
     const [codigoArea, setCodigoArea] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
 
-    // Establecer valores cuando store.dataUser esté disponible
+    // Establecer valores cuando perfil esté disponible
     useEffect(() => {
-        if (store.dataUser) {
-            setNombre(store.dataUser.nombre_usuario || '');
-            setApellido(store.dataUser.apellido || '');
-            setDescripcion(store.dataUser.descripcion || '');
-            setTelefono(store.dataUser.telefono || '');
-            setCodigoArea(store.dataUser.codigo_de_area || '');
+        if (perfil) {
+            setNombre(perfil.nombre_usuario || '');
+            setApellido(perfil.apellido || '');
+            setDescripcion(perfil.descripcion || '');
+            setTelefono(perfil.telefono || '');
+            setCodigoArea(perfil.codigo_de_area || '');
+            setFechaNacimiento(perfil.fecha_de_nacimiento || '')
         }
-    }, [store.dataUser]);
+    }, [perfil]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Aquí puedes manejar el envío del formulario,
         // posiblemente llamando a una acción de 'actions' para actualizar el store
         console.log(nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento)
-        console.log(store.dataUser)
-        actions.editarPerfil(nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento)
+        console.log(perfil)
+       const result = await actions.editarPerfil(nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento)
+        if (result){
+            setPerfil({...perfil, 
+                nombre_usuario:nombre,
+                apellido:apellido,
+                descripcion:descripcion,
+                telefono:telefono,
+                codigoArea:codigoArea,
+                fechaNacimiento:fechaNacimiento
+            })
+        }
     };
 
     return (
@@ -61,7 +72,7 @@ const EditarInformacion = () => {
                         required
                     />
                 </div>
-                {store.dataUser && store.dataUser.is_psicologo && (
+                {perfil && perfil.is_psicologo && (
                     <div className="mb-3">
                         <label htmlFor="descripcion" className="form-label text-inicio"><strong>Descripción profesional</strong></label>
                         <textarea

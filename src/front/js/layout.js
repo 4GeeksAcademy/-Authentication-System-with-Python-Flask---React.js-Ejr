@@ -41,7 +41,7 @@ const Layout = () => {
                         <Route element={<VistaLogin />} path="/vista-login" />
                         <Route element={<VistaLogin />} path="/vista-login/:token" />
                         <Route element={<ResetPassword />} path="/reset-password/:token" />
-                        <Route element={<Perfil />} path="/perfil" />
+                        <Route element={<Perfil />} path="/perfil/:id" />
                         <Route element={<Profesionales />} path="/profesionales" />
                         <Route element={<PregFrecuentes />} path="/preguntas-frecuentes" />
                         <Route element={<Emergencias />} path="/emergencias" />

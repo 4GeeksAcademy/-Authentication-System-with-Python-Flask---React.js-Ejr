@@ -26,11 +26,15 @@ export const Inicio = () => {
               <h5>
                 HablemosUY es una plataforma de asistencia psicológica remota que conecta a psicólogos con usuarios que buscan apoyo y orientación profesional desde la comodidad de su hogar. Los psicólogos pueden registrarse para ofrecer sus servicios y sesiones, mientras que los usuarios tienen acceso a una gran variedad de especialistas para poder agendar sesiones de terapia según sus necesidades. Nuestro objetivo es facilitar el acceso a la salud mental, proporcionando un entorno seguro y accesible para todos.
               </h5>
+             {store.logged == false &&
+
+             
               <Link to="/vista-register">
                 <button type="button" className="btn btn-outline-light ms-4 me-5">
                   Registrate Gratis
                 </button>
               </Link>
+              }
             </div>
           </div>
         </div>
@@ -39,16 +43,16 @@ export const Inicio = () => {
         <div className="my-auto">
           <h2 className="text-inicio my-5 text-center">¿Cómo funciona?</h2>
           <div className="row justify-content-center text-center">
-
-            <InfoCard title={<Link to="/vista-register" className="text-dark fs-3 text-decoration-none">Regístrate</Link>}
+              
+            <InfoCard title={<Link to={store.logged == false && "/vista-register" } className="text-dark fs-3 text-decoration-none">Regístrate</Link>}
               description={"Para poder agendar una sesión con uno de nuestros profesionales, primero debes registrarte, sólo toma 1 minuto y es gratis."}
               icono={"fa-solid fa-arrow-right"} />
 
-            <InfoCard title={<Link to="/vista-login" className="text-dark fs-3 text-decoration-none">Agendar sesión</Link>}
+            <InfoCard title={<Link to={store.logged == true ? "/profesionales":"/vista-login"}className="text-dark fs-3 text-decoration-none">Agendar sesión</Link>}
               description={"Luego de registrarte, puedes ver la lista de nuestros profesionales y sus especialidades, ver qué días y horarios tienen disponibles y agendar en el que más prefieras."}
               icono={"fa-regular fa-calendar-days"} />
 
-            <InfoCard title={<Link to="/vista-login" className="text-dark fs-3 text-decoration-none">Ingresar a la sesión</Link>}
+            <InfoCard title={<Link to={store.logged == false && "/vista-login" } className="text-dark fs-3 text-decoration-none">Ingresar a la sesión</Link>}
               description={"Por último, debes acceder al sitio el día agendado, donde tendrá lugar la sesión con el/la profesional."}
               icono={"fa-regular fa-comments"} />
           </div>
