@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 1c2b6bab43dc
+Revision ID: 60c83b0e9959
 Revises: 
-Create Date: 2024-08-30 16:27:41.582691
+Create Date: 2024-08-30 16:43:06.361205
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1c2b6bab43dc'
+revision = '60c83b0e9959'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -61,10 +61,16 @@ def upgrade():
     op.create_table('ofertas',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('descripcion', sa.String(length=700), nullable=False),
+    sa.Column('descripcion', sa.String(), nullable=False),
     sa.Column('salario', sa.String(length=20), nullable=False),
+    sa.Column('localidad', sa.String(length=30), nullable=False),
+    sa.Column('requisitos_minimos', sa.String(length=400), nullable=False),
+    sa.Column('horario', sa.String(length=100), nullable=True),
+    sa.Column('tipo_contrato', sa.String(length=100), nullable=True),
+    sa.Column('estudios_minimos', sa.String(length=100), nullable=True),
+    sa.Column('idiomas', sa.String(length=30), nullable=True),
     sa.Column('plazo', sa.String(length=100), nullable=False),
-    sa.Column('modalidad', sa.Enum('TELETRABAJO', 'PRESENCIAL', name='modalidad'), nullable=False),
+    sa.Column('modalidad', sa.Enum('TELETRABAJO', 'PRESENCIAL', 'HYBRIDO', name='modalidad'), nullable=False),
     sa.Column('experiencia_minima', sa.Enum('JUNIOR', 'MID', 'SENIOR', name='experience'), nullable=False),
     sa.Column('fecha_publicacion', sa.Date(), nullable=False),
     sa.Column('empleador_id', sa.Integer(), nullable=True),
@@ -93,13 +99,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('id', 'from_id', 'to_id')
     )
     op.create_table('favoritos',
-    sa.Column('programador_id', sa.Integer(), nullable=False),
-    sa.Column('empleador_id', sa.Integer(), nullable=False),
-    sa.Column('oferta_id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('programador_id', sa.Integer(), nullable=True),
+    sa.Column('empleador_id', sa.Integer(), nullable=True),
+    sa.Column('oferta_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['empleador_id'], ['empleador.id'], ),
     sa.ForeignKeyConstraint(['oferta_id'], ['ofertas.id'], ),
     sa.ForeignKeyConstraint(['programador_id'], ['programador.id'], ),
-    sa.PrimaryKeyConstraint('programador_id', 'empleador_id', 'oferta_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('postulados',
     sa.Column('user_id', sa.Integer(), nullable=False),

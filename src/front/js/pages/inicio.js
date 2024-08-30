@@ -3,11 +3,13 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
+
 export const Inicio = () => {
     const { store, actions } = useContext(Context);
 
 
     return (
+
         <div className="inicio-container container mt-5 text-muted">
             <div className="row align-items-center">
                 <div className="col-lg-6 text-center text-lg-start">

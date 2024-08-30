@@ -39,6 +39,8 @@ class Ratings(db.Model):
             "to_id": self.to_id,
             "value": self.value
         }
+
+        
 class Favoritos(db.Model):
     __tablename__ = "favoritos"
     id = db.Column(db.Integer, primary_key=True)
@@ -116,7 +118,7 @@ class Programador(db.Model):
             "id": self.id,
             "precio_hora": self.precio_hora,
             "tecnologias": self.tecnologias,
-            "experiencia": self.experiencia.value,
+            "experiencia": self.experiencia.value if self.experiencia else None,
             "descripcion": self.descripcion,
             "rating": self.rating,
             "proyectos": [proyectos.serialize()for proyectos in self.proyectos],
