@@ -15,6 +15,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     actions.validToken();
+    
   }, []);
 
   return (
@@ -37,9 +38,9 @@ export const Navbar = () => {
           <div className="navbar-nav ms-auto">
           <Link className="nav-link mx-4 text-light" aria-current="page" to="/emergencias">Emergencias</Link>
             <Link className="nav-link mx-4 text-light" aria-current="page" to="/preguntas-frecuentes">Preguntas frecuentes</Link>
-            {store.logged && (<Link className="nav-link mx-4 text-light" to="/profesionales">Profesionales</Link>
+            {store.logged && store.dataUser?.id &&  (<Link className="nav-link mx-4 text-light" to="/profesionales">Profesionales</Link>
             )}
-             {store.logged && (<Link className="nav-link mx-4 text-light" to="/perfil">Perfil</Link>
+             {store.logged && store.dataUser?.id && (<Link className="nav-link mx-4 text-light" to={"/perfil/"+store.dataUser?.id}>Perfil</Link>
             )}
 
 

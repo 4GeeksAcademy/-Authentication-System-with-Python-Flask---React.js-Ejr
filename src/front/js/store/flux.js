@@ -1,3 +1,4 @@
+import { Await } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -15,8 +16,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			profesionalesPorEspecialidad: [],
 		},
 		actions: {
-			editarPerfil: async (nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento) => {
+			editarPerfil: async (nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento,is_psicologo) => {
 				const store = getStore()
+				const actions =getActions()
 				console.log(nombre, apellido, descripcion, telefono, codigoArea, fechaNacimiento)
 				if (store.dataUser) {
 					const options = {
@@ -41,25 +43,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 							const data = await response.json()
 							console.log(response.status, data)
 
-							setStore({dataUser: {
-								...store.dataUser,
-								 nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario,
-								apellido: apellido ? apellido : store.dataUser.apellido,
-								descripcion: descripcion ? descripcion : store.dataUser.descripcion,
-								telefono: telefono ? telefono : store.dataUser.telefono,
-								codigo_de_area: codigoArea ? codigoArea : store.dataUser.codigo_de_area
-								}})
+							// setStore({dataUser: {
+							// 	...store.dataUser,
+							// 	 nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario,
+							// 	apellido: apellido ? apellido : store.dataUser.apellido,
+							// 	descripcion: descripcion ? descripcion : store.dataUser.descripcion,
+							// 	telefono: telefono ? telefono : store.dataUser.telefono,
+							// 	codigo_de_area: codigoArea ? codigoArea : store.dataUser.codigo_de_area
+							// 	}})
 								
-							if(store.dataUser.is_psicologo){
-								console.log(store.psicologos)
-								setStore({psicologos: store.psicologos.map((psicologo) => {
-									if(psicologo.correo === store.dataUser.correo){
-										return {...psicologo, descripcion: descripcion ? descripcion : store.dataUser.descripcion, nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario, apellido: apellido ? apellido : store.dataUser.apellido} 
-									}else{
-										return psicologo
-									}
-								})})
-							}
+							// if(is_psicologo){
+							// 	console.log(store.psicologos)
+							// 	setStore({psicologos: store.psicologos.map((psicologo) => {
+							// 		if(psicologo.correo === store.dataUser.correo){
+							// 			return {...psicologo, descripcion: descripcion ? descripcion : store.dataUser.descripcion, nombre_usuario: nombre ? nombre : store.dataUser.nombre_usuario, apellido: apellido ? apellido : store.dataUser.apellido} 
+							// 		}else{
+							// 			return psicologo
+							// 		}
+							// 	})})
+							// }
+							actions.getPsicologos()
 
 							return true
 						}
@@ -99,21 +102,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					// Itera sobre cada evento filtrado.
 					for (const element of events) {
-						console.log(element); // Imprime el evento actual en la consola.
 
 						// Obtiene la parte de la URL después de '/scheduled_events/'.
 						const url = element.uri;
 						const uriEvent = url.split('/scheduled_events/')[1];
-						console.log(uriEvent); // Imprime el fragmento después de 'events/'.
-
+						
+			
 						// Define y ejecuta una función asincrónica inmediatamente para obtener los pacientes del evento.
 						await (async () => {
 							try {
 								// Realiza una solicitud para obtener los detalles de los pacientes asociados al evento.
 								const res = await fetch(`https://api.calendly.com/scheduled_events/${uriEvent}/invitees`, options);
 								const inviteesData = await res.json();
-								console.log(inviteesData.collection[0].name); // Imprime el nombre del primer paciente.
-
+							
 								// Crea un nuevo objeto de evento que incluye el nombre del paciente y lo agrega al array.
 								const meet = { ...element, name: inviteesData.collection[0].name };
 								dataMeetsPsicologos.push(meet);
@@ -152,8 +153,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(uriHablemosUy, options);
 					const data = await response.json();
 
-					console.log(data.collection); // Imprime la colección de eventos obtenidos.
-
 					// Actualiza el store con los datos de los eventos del usuario.
 					setStore({ meets: data.collection });
 
@@ -169,9 +168,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/solicitud-profesional', options)
-					const data = await response.json()
-					console.log(response.status, data)
-					return true
+					if(response.ok){
+						return true
+					}
 				}
 				catch (e) {
 					console.log(e)
@@ -180,7 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Obtengo el token de usuario para la sesión
 			iniciarSesion: async (correo, clave) => {
 				const actions = getActions();
-				await actions.verificarToken();  // Verifica el token antes de proceder
+			//	await actions.verificarToken();  // Verifica el token antes de proceder
 				const options = {
 					method: 'POST',
 					headers: {
@@ -199,7 +198,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						// Guardar el token en Local Storage y actualizar el estado global
 						localStorage.setItem('token', data.access_token);
 						localStorage.setItem('refresh_token', data.refresh_token); // Guarda el refresh token
-						setStore({ currentUser: { correo: correo } });
+						setStore({ dataUser: data.user });
 						setStore({ logged: true });
 
 						return true;
@@ -213,17 +212,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw new Error(data.msg || response.statusText);
 					}
 				} catch (error) {
-					console.log('en el catch del login', error)
 					console.error('Error al iniciar sesión: ', error);
-					localStorage.removeItem('token');  // Elimina el token en caso de error
-					localStorage.removeItem('refresh_token');  // Elimina el refresh token en caso de error
+					//localStorage.removeItem('token');  // Elimina el token en caso de error
+					//localStorage.removeItem('refresh_token');  // Elimina el refresh token en caso de error
 					setStore({ logged: false }); // Asegura que el estado global se actualice
 					return false;
 				}
 			},
 
 			//Fetch con ruta protegida para datos del perfil de usuario
-			getPerfilUsuario: async () => {
+			getPerfilUsuario: async (id) => {
 				let token = localStorage.getItem('token');
 				const requestOptions = {
 					method: "GET",
@@ -232,43 +230,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 						'Authorization': `Bearer ${token}`
 					}
 				};
-				try {
-					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario', requestOptions);
+				// try {
+					const response = await fetch(process.env.BACKEND_URL + '/perfil/usuario/'+id, requestOptions);
 					const data = await response.json();
+					console.log(data);
+					console.log(response);
+					
+					
+
+					if (response.ok) {
+						
 
 
-					if (!token) {
-						console.error('Token no encontrado. Redirigiendo al inicio de sesión.'), 400;
-
-
-						return false;
-					}
-
-					// Si los datos son válidos y el usuario está logueado
-					if (data.logged) {
-						setStore({
-							dataUser: {
-								id: data.id,
-								nombre_usuario: data.nombre_usuario || "Nombre no disponible",
-								apellido: data.apellido || "Apellido no disponible",
-								correo: data.correo || "Correo no disponible",
-								foto: data.foto || null,
-								is_psicologo: data.is_psicologo,
-								telefono: data.telefono || "Teléfono no disponible",
-								descripcion: data.descripcion || "descripcion no disponible",
-								codigo_de_area: data.codigo_de_area || ''
-							}
-						});
-
-						return true;
+						return data;
+					
 					} else {
 						throw new Error('Datos de usuario no disponibles o usuario no logueado.');
 					}
 
-				} catch (error) {
-
-					return false;
-				}
+				// } catch (error) {
+					
+				// 	return false;
+				// }
 			},
 
 			//Validación de token para contexto global
@@ -292,22 +275,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.status === 200) {
 						setStore({ logged: true });
+						setStore({ dataUser: data.user });
 						return true;
-					} else if (response.status === 404) {
-						setStore({ logged: false });
-						console.log('Token inválido, usuario no logeado');
-						localStorage.removeItem('token'); // Limpia el token
-						return false;
-					} else {
-						setStore({ logged: false });
-						localStorage.removeItem('token');
-						console.error('Error:', data.msg || response.statusText);
-						return false;
-					}
+					}// else if (response.status === 404) {
+					// 	setStore({ logged: false });
+					// 	localStorage.removeItem('token'); // Limpia el token
+					// 	return false;
+					// } else {
+					// 	setStore({ logged: false });
+					// 	localStorage.removeItem('token');
+					// 	console.error('Error:', data.msg || response.statusText);
+					// 	return false;
+					// }
+					return false
 				} catch (error) {
 					setStore({ logged: false });
 					localStorage.removeItem('token');
-					console.log('Token inválido, usuario no logeado');
 					return false;
 				}
 			},
@@ -320,7 +303,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/psicologos');
 					const data = await response.json();
-					console.log(data);
 					if (response.status === 200) {
 						// Actualiza solo la propiedad psicologos en el store
 						setStore({
@@ -474,18 +456,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						clave: clave,
 					})
 				};
-				console.log(options.body);
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/user', options);
 					const data = await response.json();
 
 					if (response.status === 201) {
-						console.log(data);
 						return { success: true, data };
 					} else if (response.status === 400) {
 						return { success: false, error: 'Bad Request: ' + data.msg };
 					} else if (response.status === 500) {
-						console.log(data);
 						return { success: false, error: 'Internal Server Error: ' + data.msg };
 					} else {
 						return { success: false, error: data.msg || response.statusText };
@@ -558,18 +537,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						console.error('Error al cargar las especialidades', response.statusText);
 					}
-					console.log(response);
 
 				} catch (error) {
 					console.error('Error:', error);
 				}
 			},
-			saveEspecialidades: async (especialidadesSeleccionadas) => {
+			saveEspecialidad : async (id) => {
 				let token = localStorage.getItem("token")
-				const store = getStore()
-				console.log(store.dataUser);
-				console.log(especialidadesSeleccionadas);
-
+				const store=getStore()
+				const actions=getActions()
+				
+				
+				// for (let index = 0; index < especialidadesSeleccionadas.length; index++) {
+				// 	if (store.profesionalesPorEspecialidad.some(item=>item.id == especialidadesSeleccionadas[index])) {
+				// 		especialidadesSeleccionadas.splice(index,1)
+				// 	}
+					
+				// }
 				try {
 					const response = await fetch(process.env.BACKEND_URL + '/save-especialidad', {
 						method: 'POST',
@@ -578,14 +562,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`,
 						},
 						body: JSON.stringify({
-
-							especialidades: especialidadesSeleccionadas, // Lista de nombres de especialidades
+							
+							especialidad_id: id, // Lista de nombres de especialidades
 						}),
 					});
 
 					if (response.ok) {
-						const data = await response.json();
-						console.log('Especialidades guardadas:', data);
+						 const data = await response.json();
+						actions.getPsicologos()
+						return data
+						//await actions.obtenerEspecialidadesPorProfesional(); // Recargar las especialidades después de guardar
 					} else {
 						const errorData = await response.json();
 						console.error('Error al guardar especialidades:', errorData);
@@ -608,25 +594,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 					});
 
-					if (response.ok) {
-						const data = await response.json();
-						console.log('Especialidades obtenidas:', data);
-						// Guardar los datos obtenidos en el store
-						setStore({ especialidadesPorProfesional: data });
-					} else {
-						const errorData = await response.json();
-						console.error('Error al obtener especialidades:', errorData);
-					}
-				} catch (error) {
-					console.error('Error al realizar la solicitud:', error);
-				}
-			},
+                    if (response.ok) {
+                        const data = await response.json();
+                       
+                        // Guardar los datos obtenidos en el store
+                        setStore({ profesionalesPorEspecialidad: data });
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error al obtener especialidades:', errorData);
+                    }
+                } catch (error) {
+                    console.error('Error al realizar la solicitud:', error);
+                }
+            },
 			eliminarEspecialidadPorProfesional: async (especialidadId) => {
+				const store=getStore()
 				const token = localStorage.getItem("token");
 				const url = `${process.env.BACKEND_URL}/especialidades-por-profesional?especialidad_id=${especialidadId}`;
-				console.log('URL de eliminación:', url);
-				console.log('Token JWT:', token);
-
+				const actions=getActions()
+								
 				try {
 					const response = await fetch(url, {
 						method: 'DELETE',
@@ -638,8 +624,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						const data = await response.json();
-						console.log('Especialidad eliminada:', data.message);
+						actions.getPsicologos()
 						// Opcional: Actualizar el estado de especialidades después de la eliminación
+						// setStore({
+						// 	...store,
+						// 	profesionalesPorEspecialidad: store.profesionalesPorEspecialidad.filter(
+						// 		especialidad => especialidad.id !== especialidadId
+						// 	)
+						// });
+						return true
 					} else {
 						const errorData = await response.json();
 						console.error('Error al eliminar la especialidad:', errorData);
