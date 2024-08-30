@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Modal } from "./modal"
 import { AgregarEjercicioEditar } from "./agregarEjercicioEditar";
 
 

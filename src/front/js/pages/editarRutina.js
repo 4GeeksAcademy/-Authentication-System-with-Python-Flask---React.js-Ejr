@@ -7,7 +7,7 @@ export const EditarRutina = () => {
 
     return (
         <>
-            <EdicionRutina/>
+            <EdicionRutina />
         </>
     );
 };

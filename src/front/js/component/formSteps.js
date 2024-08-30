@@ -58,6 +58,13 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
           <div className="text-right">
             <button
               type="button"
+              onClick={() => setCancelRoutineCreation(true)}
+              className="bg-transparent hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
               onClick={handleCreateRoutine}
               className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
               disabled={formData.routineName == '' ? true : false}
