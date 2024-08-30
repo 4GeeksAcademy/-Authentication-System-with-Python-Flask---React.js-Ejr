@@ -11,9 +11,12 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
   }
   const closeDropdown = () => setIsOpen(false)
 
-  function showTooltip(index) {
+  function showTooltip(index, event) {
     const tooltip = document.getElementById(`tooltip-${index}`);
     if (tooltip) {
+      const { top, left, width } = event.target.getBoundingClientRect();
+      tooltip.style.top = `${top - tooltip.offsetHeight - 8}px`; // 8px de margen
+      tooltip.style.left = `${left + width / 2 - tooltip.offsetWidth / 2}px`; // Centrar horizontalmente
       tooltip.classList.remove('invisible', 'opacity-0');
       tooltip.classList.add('visible', 'opacity-100');
     }
@@ -240,32 +243,38 @@ export const FormSteps = ({ step, formData, setCancelRoutineCreation, filteredEx
 
               {filteredExercises.map((item, index) => {
                 return (
-                  <article key={item.id} className="w-full h-40 flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md">
-                    <div className="hidden sm:block sm:basis-36 w-1/2">
+                  <article
+                    key={item.id}
+                    className="w-full h-40 flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden group"
+                  >
+                    <div className="hidden sm:block sm:basis-36 w-1/2 overflow-hidden">
                       <img
                         alt=""
-                        src={item.image ? item.image : "https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"}
-                        className={`${item.image ? 'invert object-scale-down p-2' : ''} aspect-square h-full w-full object-cover overflow-hidden`}
-                        style={{
-                          filter: item.image ? 'invert(100%) sepia(100%) saturate(5000%) hue-rotate(67deg) brightness(83%)' : '',
-                        }}
+                        src={
+                          item.image
+                            ? item.image
+                            : "https://placehold.jp/303031/878787/150x150.png?text=No%20disponible"
+                        }
+                        className={`${item.image ? 'object-scale-down p-2' : ''} aspect-square h-full w-full object-cover bg-neutral-50 transition-transform duration-300 group-hover:scale-110`}
                       />
                     </div>
                     <div className="p-3 flex flex-1 flex-col gap-4 justify-between w-1/2">
                       <div className="flex flex-col gap-3 dark:border-white/10 relative">
                         <div
                           id={`tooltip-${index}`}
-                          className="absolute -top-10 z-[99999] invisible px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition duration-300 dark:bg-gray-700 overflow-visible"
+                          className="fixed z-[99999] invisible px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition duration-300 dark:bg-gray-700"
                         >
                           {item.name}
                         </div>
 
                         {/* Arreglar esto Tooltips */}
-                        <h3 className="font-bold text-neutral-900 dark:text-white" onMouseEnter={() => showTooltip(index)}
-                          onMouseLeave={() => hideTooltip(index)}>
+                        <h3
+                          className="font-bold text-neutral-900 dark:text-white"
+                          onMouseEnter={(e) => showTooltip(index, e)}
+                          onMouseLeave={() => hideTooltip(index)}
+                        >
                           {truncateName(item.name)}
                         </h3>
-
 
                         <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
                           {item.category}
