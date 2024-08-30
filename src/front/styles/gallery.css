@@ -138,6 +138,7 @@
 .modal-backdrop.show {
   background-color: rgb(42, 27, 59); 
 }
+
 .gallery-modal .modal-content {
   border-radius: 15px;
   box-shadow: 0 40px 15px rgba(29, 14, 63, 0.9);
@@ -209,7 +210,6 @@
   border: 2px solid #ffffff; 
 }
 
-
 .gallery-modal .modal-title {
   width: 100%;
   text-align: center;
@@ -217,6 +217,7 @@
   font-weight: bold;
   color: #ffffff;
 }
+
 /* Descripción del modal */
 .gallery-modal .custom-modal-description {
   width: 100%;
@@ -226,3 +227,15 @@
   margin-top: 20px;
 }
 
+/* Ajuste para mostrar 3 elementos por fila */
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
