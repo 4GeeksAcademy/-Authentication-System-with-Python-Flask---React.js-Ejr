@@ -36,11 +36,11 @@ export const SignUp = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         actions.register(dataForm)
-        // setDataForm({
-        //     email: '',
-        //     password: '',
-        //     confirmPassword: '',
-        // }) 
+        setDataForm({
+            email: '',
+            password: '',
+            confirmPassword: '',
+        }) 
         console.log(dataForm)
     }
 
@@ -51,16 +51,16 @@ export const SignUp = () => {
                 <label>Email
                     <input className="form-control" name="email" value={dataForm.email} placeholder="Introduce tu email aquí" onChange={handleChange} type="text"></input>
                 </label>
-                <label>Password
-                    <div className="contenedor-password">
+                <label>Contraseña
+                    <div className="contenedor-password2">
                         <input className="form-control" name="password" value={dataForm.password} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
-                        {visible ? <span class="fa-solid fa-eye-slash icon" onClick={handleClick}></span> : <span className="fa-solid fa-eye icon" onClick={handleClick}></span>}
+                        {visible ? <span class="fa-solid fa-eye-slash icon2" onClick={handleClick}></span> : <span className="fa-solid fa-eye icon" onClick={handleClick}></span>}
                     </div>
                 </label>
-                <label>Confirm Password
-                    <div className="contenedor-password">
+                <label>Confirma contraseña
+                    <div className="contenedor-password2">
                         <input className="form-control" name="confirmPassword" value={dataForm.confirmPassword} placeholder="" onChange={handleChange} type={visible ? "text" : "password"}></input>
-                        {visible ? <span class="fa-solid fa-eye-slash icon" onClick={handleClick}></span> : <span className="fa-solid fa-eye icon" onClick={handleClick}></span>}
+                        {visible ? <span class="fa-solid fa-eye-slash icon2" onClick={handleClick}></span> : <span className="fa-solid fa-eye icon" onClick={handleClick}></span>}
                     </div>
                 </label>
                 <div className="p-3">Registrarse como:</div>
@@ -76,7 +76,8 @@ export const SignUp = () => {
                                 "alumno"
                             )
                         }
-                        type="radio" name="flexRadioDefault" id="flexRadioDefault1"></input>
+                        type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    </input>
                     <label className="form-check-label"
                         for="flexRadioDefault1">
                         Alumno
@@ -94,7 +95,8 @@ export const SignUp = () => {
                                 "profesor"
                             )
                         }
-                        type="radio" name="flexRadioDefault" id="flexRadioDefault2"></input>
+                        type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    </input>
                     <label className="form-check-label" for="flexRadioDefault2">
                         Profesor
                     </label>

@@ -1,0 +1,67 @@
+/* Estilos generales para la lista de cursos */
+.lista-cursos {
+    max-width: 1500px; /* Ancho máximo igual al de barraBusqueda.css */
+    margin: 15px auto 0; /* Añade margen superior para separar de elementos anteriores y Centra la barra de búsqueda horizontalmente*/
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    padding: 1rem; /* Espaciado interno del contenedor */
+    border-radius: 10px;
+}
+
+/* Estilos para el contenedor de la tarjeta */
+.card {
+    background-color: #416788; /* fondo para el contenedor de la tarjeta */
+    border: none; /* Elimina el borde por defecto de la tarjeta */
+    border-radius: 0.25rem; /* Bordes redondeados de la tarjeta */
+    overflow: hidden; /* bordes redondeados se apliquen a los elementos hijos */
+}
+
+/* Estilos para la imagen en la parte superior de la tarjeta */
+.card-img-top {
+    height: 180px; /* Altura  imagen de la tarjeta */
+    object-fit: cover; /* la imagen cubra el área sin distorsionarse */
+}
+
+/* Estilos para el cuerpo de la tarjeta */
+.card-body-ListaCurso{
+    padding: 1.25rem; /* Espaciado interno del cuerpo de la tarjeta */
+    background-color: #416788; /* Color de fondo para el cuerpo de la tarjeta */
+    color: #e0e0e2; /* Color del texto dentro del cuerpo de la tarjeta */
+}
+
+/* Estilos para el pie de la tarjeta */
+.card-footer {
+    background-color: #000022; /* Color de fondo para el pie de la tarjeta */
+    border-top: 1px solid #dee2e6; /* Borde superior para separar del cuerpo */
+    padding: 0.75rem; /* Espaciado interno del pie de la tarjeta */
+}
+
+/* Estilo para el botón en el pie de la tarjeta */
+.card-footer .btn-primary {
+    width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+    text-align: center; /* Centra el texto dentro del botón */
+    background-color: #416788; /* fondo para el botón */
+    border: none; /* Elimina el borde por defecto del botón */
+    color: #e0e0e2;
+    padding: 10px; /* Espaciado interno del botón */
+    border-radius: 5px; /* Bordes redondeados para el botón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transición suave para hover */
+}
+
+.card-footer .btn-primary:hover {
+    background-color: #354d66; /* Color de fondo en hover */
+}
+
+/* Estilo para el mensaje cuando no hay cursos disponibles */
+.noCursos {
+    max-width: 1710px; /* Ancho máximo igual al de lista-cursos */
+    margin: 0 auto; /* Centrado del contenedor horizontalmente */
+    padding: 2rem; /* Espaciado interno para que el mensaje tenga espacio */
+    text-align: center; /* Centrado del texto */
+    background-color: #416788; /* cuerpo de la tarjeta */
+    color: #e0e0e2; /*texto para que contraste con el fondo */
+    border-radius: 0.25rem; /* Bordes redondeados para coincidir con las tarjetas */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    font-size: 1.25rem; /* Tamaño del mensaje */
+    font-weight: bold; /* negrita para destacar el mensaje */
+}

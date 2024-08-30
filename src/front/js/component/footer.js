@@ -12,8 +12,9 @@ export const Footer = () => (
                 <Link to="/about">
                     <li><a href="#about">Sobre Nosotros</a></li>
                 </Link>
-                <li><a href="#services">Servicios</a></li>
-                <li><a href="#contact">Contacto</a></li>
+                <Link to="/contacto">
+                    <li><a href="#contact">Contacto</a></li>
+                </Link>
             </ul>
 			<p>&copy; 2024 LEARNING NETWORK. Todos los derechos reservados.</p>
         </div>
