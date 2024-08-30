@@ -37,26 +37,29 @@
     font-weight: bolder;
     transition: 0.4s ease;
     width: 80%;
+    letter-spacing: 1px;
 }
 
 .cart-container .aside-container .buttons-container .checkout-btn {
-    color: var(--color-forest);
+    background: var(--color-green);
+    color: var(--color-white);
     font-size: 1.2em;
 }
 
 .cart-container .aside-container .buttons-container .checkout-btn:hover {
-    background: var(--color-green);
+    background: var(--color-light-green);
+    color: var(--color-forest);
 }
 
 .cart-container .aside-container .buttons-container .clear-cart-btn {
-    background: var(--color-light-green);
-    color: var(--color-forest);
+    background: var(--color-red);
+    color: var(--color-white);
     font-size: 1.2em;
 }
 
 .cart-container .aside-container .buttons-container .clear-cart-btn:hover {
-    background: var(--color-red);
-    color: var(--color-white);
+    background: var(--color-light-green);
+    color: var(--color-forest);
 }
 
 @media (width < 980px) {

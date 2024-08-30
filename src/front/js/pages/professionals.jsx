@@ -84,7 +84,7 @@ const Professionals = () => {
         }
       },
       {
-        breakpoint: 1024,
+        breakpoint: 1510,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
@@ -93,7 +93,7 @@ const Professionals = () => {
         }
       },
       {
-        breakpoint: 900,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
@@ -128,11 +128,14 @@ const Professionals = () => {
             <Slider {...settings}>
             {nutritionists && nutritionists.length > 0 ? (
                     nutritionists.map((nutricionist, index) => (
+                      console.log(nutricionist),
+                      
                         <NutricionistCard
                             key={index}
                             id={nutricionist.id}
                             name={nutricionist.name}
                             calendly_name={nutricionist.calendly_name}
+                            description={nutricionist.description}
                             // image_url={nutricionist.image_url}
                             // calendlyLink={nutricionist.calendly_link}
                         />
@@ -157,6 +160,7 @@ const Professionals = () => {
                             id={trainers.id}
                             name={trainers.name}
                             calendly_name={trainers.calendly_name}
+                            description={trainers.description}
                             // image_url={trainers.image_url}
                             // calendlyLink={trainer.calendly_link}
                         />

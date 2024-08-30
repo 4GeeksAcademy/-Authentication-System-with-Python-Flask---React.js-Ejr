@@ -448,30 +448,3 @@ def upload_image():
     file = request.files['image']
     result = cloudinary.uploader.upload(file)
     return result, 200
-
-# #Agregar el enlace de Calendly
-# @api.route('/professionals/<int:id>', methods=['PUT'])
-# def update_professional(id):
-#     data = request.get_json()
-#     professional = Professional.query.get(id)
-#     if not professional:
-#         return jsonify({"message": "Professional not found"}), 404
-
-#     if 'calendly_link' in data:
-#         professional.calendly_link = data['calendly_link']
-
-#     db.session.commit()
-#     return jsonify({"message": "Professional updated successfully"}), 200
-
-#Obtener el Enlace de Calendly
-# @api.route('/professionals/<int:id>', methods=['GET'])
-# def get_professional(id):
-#     professional = Professional.query.get(id)
-#     if not professional:
-#         return jsonify({"message": "Professional not found"}), 404
-
-#     return jsonify({
-#         "id": professional.id,
-#         "name": professional.name,
-#         "calendly_link": professional.calendly_link
-#     }), 200
