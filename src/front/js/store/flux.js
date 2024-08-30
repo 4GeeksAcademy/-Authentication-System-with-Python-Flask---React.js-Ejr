@@ -77,25 +77,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			applyToJobOffer: async (oferta_id) =>{
+			applyToJobOffer: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
 
-				if(!token){
-					return {msg: "Usuario no autenticado"}
+				if (!token) {
+					return { msg: "Usuario no autenticado" }
 				}
 
-				try{
+				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados`, {
 						method: 'POST',
-						headers:{
+						headers: {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${token}`
 						},
-						body: JSON.stringify({oferta_id})
+						body: JSON.stringify({ oferta_id })
 					});
 
-					if(resp.ok){
+					if (resp.ok) {
 						const data = await resp.json();
 						console.log('inscripcion exitosa', data);
 						return data;
@@ -103,12 +103,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const errorData = await resp.json();
 						console.log("Error al inscribirse: ", errorData.msg);
 						return errorData;
-						
+
 					}
-				} catch (error){
+				} catch (error) {
 					console.log("Error en la solitud de inscripcion.");
-					return {msg: "Error en la solicitud de inscripcion."}
-					
+					return { msg: "Error en la solicitud de inscripcion." }
+
 				}
 			},
 
@@ -215,12 +215,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					const data = await resp.json()
 					setStore(
-						{proyectos: [...getStore().proyectos, data.proyectos]})
+						{ proyectos: [...getStore().proyectos, data.proyectos] })
 					return data
 
 				} catch (error) {
 					console.log('error:' + error)
 				}
+			},
+			paymentCompany: (paymentMethod) => {
+
+				let promise = fetch(process.env.BACKEND_URL + '/api/create-payment', {
+					method: 'POST',
+					body: JSON.stringify({ payment_method: paymentMethod.id }),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then((response) =>
+					response.json()
+				).then((data) => {
+					setStore({ suscripción: data })
+				}).catch((error) => {
+					console.log('[error]', error)
+				});
 			}
 
 		}

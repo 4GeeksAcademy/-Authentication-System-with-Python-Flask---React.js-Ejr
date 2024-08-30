@@ -11,6 +11,7 @@ import CheckoutForm from "../component/Checkout";
 export const Register = () => {
 
   const { store, actions } = useContext(Context);
+  const [isDev, setIsDev] = useState(true)
   const stripePromise = loadStripe("pk_test_51PsqIxG3cEcyZuNpill2BXWYLnqGWok6W48xAOpaOlq5BHME5440qc4FGMIzdoADAgiR77Q3VBP3tmrzLuVWmbOy00tZCSphPW");
   const {
     register,
@@ -38,11 +39,14 @@ export const Register = () => {
 
   return (
     <div className="container-fluid p-0">
+      <button onClick={() => setIsDev(false)}>Empresa</button>
+      <button onClick={() => setIsDev(true)}>Developer</button>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-50 mx-auto my-5 m-0 "
       >
         <h1 className="w-100 text-center fw-bolder my-5">Registro</h1>
+
 
         {store?.msg && <AlertSuccess />}
 
@@ -77,28 +81,30 @@ export const Register = () => {
               </button>
             )}
           </div>
+          {isDev && (
+            <div className="form-group mb-2">
+              <label
+                htmlFor="username"
+                className="form-label m-0 fw-semibold my-2"
+              >
+                Apellidos:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                placeholder="Apellidos.."
+                {...register("username", { required: true })}
+                aria-invalid={errors.username ? "true" : "false"}
+              />
+              {errors.username?.type === "required" && (
+                <button className="btn btn-warning w-100 mt-2" role="alert">
+                  El campo apellidos está vacío
+                </button>
+              )}
+            </div>
+          )}
 
-          <div className="form-group mb-2">
-            <label
-              htmlFor="username"
-              className="form-label m-0 fw-semibold my-2"
-            >
-              Apellidos:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              placeholder="Apellidos.."
-              {...register("username", { required: true })}
-              aria-invalid={errors.username ? "true" : "false"}
-            />
-            {errors.username?.type === "required" && (
-              <button className="btn btn-warning w-100 mt-2" role="alert">
-                El campo apellidos está vacío
-              </button>
-            )}
-          </div>
           <div className="form-group mb-2">
             <label htmlFor="email" className="form-label m-0 fw-semibold my-2">
               Email:
@@ -170,28 +176,38 @@ export const Register = () => {
               </button>
             )}
           </div>
+          {!isDev && (
+            <div className="form-group">
+              <label htmlFor="cif" className="form-label m-0 fw-semibold my-2">
+                CIF:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="cif"
+                {...register("cif")}
+                placeholder="Escriba el CIF.."
+              />
+            </div>
+          )}
 
-          <div className="form-group">
-            <label htmlFor="cif" className="form-label m-0 fw-semibold my-2">
-              CIF:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="cif"
-              {...register("cif")}
-              placeholder="Escriba el CIF.."
-            />
-          </div>
 
           <button type="submit" className="btn w-100 mt-4 stylebutton p-3">
             Registrarse
           </button>
         </div>
       </form>
-      <Elements stripe={stripePromise}>
-        <CheckoutForm />
-      </Elements>
+
+
+      <div className="container">
+        <div className="row">
+          <Elements stripe={stripePromise}>
+            {/* Load the checkout form */}
+            <CheckoutForm />
+          </Elements>
+        </div>
+      </div>
+
     </div>
   );
 };

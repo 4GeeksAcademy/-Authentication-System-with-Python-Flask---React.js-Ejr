@@ -1,62 +1,46 @@
-import React, {useState, useEffect} from "react";
+import React, { useContext } from 'react'
+import CardSection from './CardSection'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Context } from "../store/appContext";
+const Checkout = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const { actions } = useContext(Context);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const Checkout = () => {    const stripe = useStripe();
-    const elements = useElements();
-    const [clientSecret, setClientSecret] = useState('');
-    const [loading, setLoading] = useState(false);
-  
-    useEffect(() => {
-        // Create PaymentIntent as soon as the page loads 
-        fetch(process.env.BACKEND_URL + '/api/create-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          //la cantidad ha pagar esta puesta fija, pero puede recibir un objeto desde el contexto
-          body: JSON.stringify({ amount: 1000, currency: 'usd' }) // Amount in cents
-        })
-          .then((res) => res.json())
-          .then((data) => setClientSecret(data.clientSecret)); 
-      }, []);
+    if (!stripe || !elements) {
 
+      return;
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-  
-      if (!stripe || !elements) {
-        return;
-      }
-  
-      setLoading(true);
-  
-      const { error, paymentIntent } = await stripe.confirmCardPayment(
-       clientSecret,
-        {
-          payment_method: {
-            card: elements.getElement(CardElement),
-          },
-        },
-      );
-  
-      setLoading(false);
-  
-      if (error) {
-        console.log('[error]', error);
-      } else if (paymentIntent.status === 'succeeded') {
-        console.log('Payment succeeded!');
-      }
-      else{
-        console.log('some error')
-      }
-    };
-  
-    return (
+    }
+
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+    })
+
+    if (error) {
+      console.log(['error'], error);
+    } else {
+      console.log('[PaymentMethod]', paymentMethod);
+      actions.paymentCompany(paymentMethod)
+    }
+
+  }
+
+  return (
+    <div className="col-lg-12">
       <form onSubmit={handleSubmit}>
-        <CardElement />
-        <button type="submit" disabled={!stripe || loading}>
-          Pay
-        </button>
+        <h1>Suscripción anual: <span>200€</span></h1>
+        <div className="form-group">
+          <CardSection />
+        </div>
+        <button className="btn btn-primary">Pagar Suscripción</button>
       </form>
-    );
-  };
-
+    </div>
+  )
+}
 export default Checkout

@@ -3,6 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
+import os
 from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
@@ -11,10 +12,11 @@ from flask_bcrypt import generate_password_hash , check_password_hash
 import stripe
 
 
+
 api = Blueprint('api', __name__)
 
 # API KEY STRIPE
-stripe.api_key = "sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY"
+stripe.api_key = 'sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY'
 
 # Allow CORS requests to this API
 CORS(api)
@@ -38,7 +40,7 @@ def register():
     password = request.json.get("password", None)
     country = request.json.get("country", None)
     cif= request.json.get("cif", None)
-    if not name or not username or not email or not password or not country:
+    if not name or not email or not password or not country:
         return jsonify({'success':False, 'msg':'Todos los campos son necesarios'})
     email_exist = User.query.filter_by(email=email).first()
     if email_exist:
@@ -307,18 +309,15 @@ def addProjects():
 
 @api.route('/create-payment', methods=['POST'])
 def create_payment():
-    try:
-        data = request.json 
-        intent = stripe.PaymentIntent.create(
-            amount= data.amount,
-            currency= data.currency,
-            description='Suscripción',
-            automatic_payment_methods={
-                'enabled': True
-            }
-        )
-        return jsonify({
-            'clientSecret': intent['client_secret']
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
+    data = request.get_json()
+    amount = 200
+    payment = stripe.PaymentIntent.create(
+        amount=amount,
+        currency='eur',
+        payment_method=data['payment_method'],
+        payment_method_types=["card"],
+        off_session=True,
+        confirm=True,
+    )
+    print(payment)
+    return jsonify({'Suscripción': True, 'payment':f'Has sido suscrito con éxito, has pagado la cantidad de {payment.amount} {payment.currency}'}),200
