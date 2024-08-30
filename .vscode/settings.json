@@ -1,7 +1,18 @@
 {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "vscode.typescript-language-features",
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "css.validate": false,
+    "postcss.enable": true,
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
     }
 }

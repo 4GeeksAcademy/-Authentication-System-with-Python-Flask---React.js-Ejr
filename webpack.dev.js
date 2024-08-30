@@ -25,7 +25,7 @@ module.exports = merge(common, {
         port,
         hot: true,
         allowedHosts: "all",
-        historyApiFallback: true,
+        historyApiFallback: {disableDotRule: true},
         static: {
           directory: path.resolve(__dirname, "dist"),
         },

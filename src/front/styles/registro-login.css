@@ -1,0 +1,120 @@
+
+  /* Estilos de formulario de registro e inicio de sesión */
+.form-container {
+  width: 100%;
+  max-height: 1500px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px 30px;
+}
+
+.form-container2 {
+  width: 100%; 
+  max-height: 550px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px 30px;
+}
+
+.title {
+  text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Verdana, sans-serif;
+  margin: 10px 0 30px 0;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 15px;
+}
+.form-control{
+  border:0px;
+  border-bottom: 1px solid;
+  border-color:rgb(13,110,253);
+  border-radius: 0px;
+}
+
+
+.form-btn:active {
+  box-shadow: none;
+}
+
+.sign-up-label {
+  margin: 0;
+  font-size: 15px;
+  color: #747474;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.sign-up-link {
+  margin-left: 1px;
+  font-size: 11px;
+  text-decoration: underline;
+  text-decoration-color: teal;
+  color: teal;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.input-group-text {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+}
+
+/* Estilos de línea divisoria formulario */
+.linea-divisoria {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.linea {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #534f4fdc;
+}
+
+.circulo {
+  width: 10px;
+  height: 10px;
+  background-color: #534f4fdc;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+.form-check-input{
+  width: 20px;
+  height: 20px;
+  border-color: grey;
+}
+.label-left {
+  text-align: left !important;
+}
+.btn-login-registro {
+  width: 70%;
+  height: 50px !important;
+  background: #2b214a;
+  border: none;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.btn-login-registro:hover{
+  width: 72%;
+  height: 50px !important;
+  background: #112d52;
+  border: none;
+}

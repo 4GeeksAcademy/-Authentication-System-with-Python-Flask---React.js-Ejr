@@ -1,0 +1,18 @@
+.legal-docs .accordion-body {
+    text-align: justify;
+    margin: 10px 0;
+    line-height: 1.6;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Media query para pantallas menores de 768px */
+  @media (max-width: 768px) {
+    .legal-docs .accordion-body {
+      text-align: left;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 14px;
+    }
+  }
+  
