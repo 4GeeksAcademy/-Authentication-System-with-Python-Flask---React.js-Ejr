@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 const getState = ({ getStore, getActions, setStore }) => {
 
@@ -455,6 +456,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, message: 'Ocurrió un error al verificar el token.' };
 				}
 			},
+
+			//Post a Mercado Pago
+			/* createPreference: async () => {
+				try {
+					const response = await axios.post(process.env.BACKEND_URL + '/create_preference', {
+						title: 'HablemosUY',
+						quantity: 1,
+						price: 800
+					});
+					const { id } = response.data;
+					return id;
+				} catch (error) {
+					console.log(error);
+					
+
+				}
+			}, */
 
 			/* Hasta ésta línea de código estará trabajando Pablo */
 			register: async (nombre, apellido, fecha_de_nacimiento, codigo_de_area, telefono, foto, correo, clave) => {

@@ -178,13 +178,7 @@ const Perfil = () => {
                     <div className="col-12 col-md-4">
                         <div className="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <button className="nav-link active nav-perfil" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{store.dataUser && store.dataUser.is_psicologo ? 'Agendas de pacientes' : 'Mis agendass'}</button>
-<<<<<<< HEAD
-                            <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
-                                Métodos de pago
-                            </button>
-=======
                             <button className="nav-link nav-perfil" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Métodos de pago</button>
->>>>>>> 1525254274660407a627f88b97bf800015ef3428
                             {store.dataUser && store.dataUser.is_psicologo && (
                                 <button className="nav-link nav-perfil" id="v-pills-especialidad-tab" data-bs-toggle="pill" data-bs-target="#v-pills-especialidad" type="button" role="tab" aria-controls="v-pills-especialidad" aria-selected="false">
                                     Mis especialidades
