@@ -19,9 +19,9 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "is_teacher": self.is_teacher,
-            "profesor": self.profesor.serialize() if self.profesor else None,
-            "alumno": self.alumno.serialize() if self.alumno else None
-        }
+            "profesor": [p.serialize() for p in self.profesor] if isinstance(self.profesor, list) else (self.profesor.serialize() if self.profesor else None),
+            "alumno": [a.serialize() for a in self.alumno] if isinstance(self.alumno, list) else (self.alumno.serialize() if self.alumno else None)
+    }
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -99,7 +99,6 @@ class Curso(db.Model):
     precio = db.Column(db.Integer(), nullable=True)
     fecha_inicio = db.Column(db.String(120), nullable=True)
     idioma = db.Column(db.String(120), nullable=False)
-    modulos = db.Column(db.String(120), nullable=True)
     profesor_id = db.Column(db.Integer(), db.ForeignKey('profesor.id')) 
 
     videos = db.relationship('Videos', backref='curso', lazy=True)
@@ -120,7 +119,6 @@ class Curso(db.Model):
             "precio": self.precio,
             "fecha_inicio": self.fecha_inicio,
             "idioma": self.idioma,
-            "modulos": self.modulos,
             "profesor_id": self.profesor_id,
             "portada": self.portada,
             "matriculas": [matricula.serialize() for matricula in self.matriculas] if self.matriculas else None,

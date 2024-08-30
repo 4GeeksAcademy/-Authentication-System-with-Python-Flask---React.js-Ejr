@@ -77,6 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 busqueda: "",
                 
             },
+            
         },
         actions: {
             //FUNCIONES DE JAVIER (mirar abajo)
@@ -177,33 +178,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore ({...store, cursosConFiltros: [] })
 
             },
-            
-
-            // Acción para iniciar sesión alumno
-            loginAlumno: async (dataForm) => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + '/api/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dataForm)
-                    });
-
-                    if (response.ok) {
-                        const userData = await response.json();
-                        setStore({ usuarioA: userData.user, autentificacion: true });
-                        localStorage.setItem('token', userData.token);
-                        return true;
-                    } else {
-                        console.error('Login fallido');
-                        return false;
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    return false;
-                }
-            },
 
             // Cerrar sesión Alumno
             logoutAlumno: () => {
@@ -271,7 +245,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             // Acción para obtener los cursos del profesor
-            obtenerCursosTutor: async (profesorId) => {
+            obtenerCursosProfesor: async (profesorId) => {
                 const store = getStore();// Obtenemos el estado actual del store.
                 const token = localStorage.getItem('token'); // Obtén el token de autenticación
 
@@ -333,7 +307,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Acción para inicio de sesión de contacto
+            // Acción para inicio de sesión
             loginUser: async ({ email, password }) => {
                 try {
                     const response = await fetch(process.env.BACKEND_URL + '/api/login', {
@@ -370,40 +344,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     };
                 }
             },
-
-            // Acción para crear un contacto
-            createContact: async ({ name, email, password }) => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + '/api/signup', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ name, email, password })
-                    });
-
-                    const data = await response.json();
-                    console.log('Response data:', data);
-
-                    if (response.ok) {
-                        return {
-                            success: true,
-                            message: 'Registro exitoso. Puedes iniciar sesión ahora.'
-                        };
-                    } else {
-                        return {
-                            success: false,
-                            message: data.message || 'Error desconocido durante el registro'
-                        };
-                    }
-                } catch (error) {
-                    console.error('Error en createContact:', error);
-                    return {
-                        success: false,
-                        message: 'Error de conexión o servidor no disponible'
-                    };
-                }
-            }
         }
     };
 };
