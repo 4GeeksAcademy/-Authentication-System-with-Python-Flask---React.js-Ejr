@@ -68,7 +68,11 @@ export const SectionTabs = () => {
 						</div>
 					</div>
 				);
-			case 'Archive':
+
+		}
+	};
+
+	/* case 'Archive':
 				return (
 					<div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16  animate__animated animate__fadeIn">
 						<div className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
@@ -84,7 +88,6 @@ export const SectionTabs = () => {
 								Archive Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam veniam sed recusandae!
 							</p>
 							<a
-								/* 	onClick={(e) => handleSectionClick(e)} */
 								href="#"
 								className="mt-8 inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-400"
 							>
@@ -110,7 +113,6 @@ export const SectionTabs = () => {
 								Notifications Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam veniam sed recusandae!
 							</p>
 							<a
-								/* 	onClick={(e) => handleSectionClick(e)} */
 								href="#"
 								className="mt-8 inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-400"
 							>
@@ -118,9 +120,7 @@ export const SectionTabs = () => {
 							</a>
 						</div>
 					</div>
-				);
-		}
-	};
+				); */
 
 	return (
 		<div>
@@ -148,7 +148,7 @@ export const SectionTabs = () => {
 						>
 							Estadísticas
 						</a>
-
+						{/* 
 						<a
 							href="#"
 							onClick={(e) => handleTabClick(e, 'Archive')}
@@ -169,7 +169,7 @@ export const SectionTabs = () => {
 								}`}
 						>
 							Notifications
-						</a>
+						</a> */}
 					</nav>
 				</div>
 			</div>

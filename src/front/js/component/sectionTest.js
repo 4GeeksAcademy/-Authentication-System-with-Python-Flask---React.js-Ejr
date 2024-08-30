@@ -5,7 +5,7 @@ export const SectionTest = () => {
 	const location = useLocation();
 
 	return (location.pathname != "/login" && location.pathname != "/signup") && (
-		<section className="bg-neutral-900 text-white">
+		<section className=" text-white">
 			<div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
 				<div className="mx-auto max-w-lg text-center">
 					<h2 className="text-3xl font-bold sm:text-4xl">Kickstart your marketing</h2>
@@ -18,7 +18,7 @@ export const SectionTest = () => {
 
 				<div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 					<a
-						className="block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
+						className="bg-neutral-900  block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
 						href="#"
 					>
 						<svg
@@ -49,7 +49,7 @@ export const SectionTest = () => {
 					</a>
 
 					<a
-						className="block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
+						className="bg-neutral-900  block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
 						href="#"
 					>
 						<svg
@@ -80,7 +80,7 @@ export const SectionTest = () => {
 					</a>
 
 					<a
-						className="block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
+						className="bg-neutral-900  block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
 						href="#"
 					>
 						<svg
@@ -111,7 +111,7 @@ export const SectionTest = () => {
 					</a>
 
 					<a
-						className="block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
+						className="bg-neutral-900  block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
 						href="#"
 					>
 						<svg
@@ -142,7 +142,7 @@ export const SectionTest = () => {
 					</a>
 
 					<a
-						className="block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
+						className="bg-neutral-900  block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
 						href="#"
 					>
 						<svg
@@ -173,7 +173,7 @@ export const SectionTest = () => {
 					</a>
 
 					<a
-						className="block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
+						className="bg-neutral-900  block rounded-xl border border-emerald-700/50 p-8 shadow-xl transition hover:border-emerald-500 hover:shadow-emerald-500/10"
 						href="#"
 					>
 						<svg

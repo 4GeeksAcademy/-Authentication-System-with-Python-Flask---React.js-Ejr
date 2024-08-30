@@ -47,7 +47,7 @@ export const CarouselHome = () => {
             <div className="flex flex-col gap-4 justify-center mx-auto w-full">
                 <Carousel showThumbs={false} showStatus={false} swipeable={false}>
                     {store.allWeeklyRoutineUserList.sort((a, b) => a.day_num - b.day_num).map((item, index) => (
-                        <div key={index} className="w-full mx-auto min-h-[40vh] flex">
+                        <div key={index} className="w-full mx-auto min-h-[55vh] flex">
                             <ExercisesList weeklyRoutine={item} />
                         </div>
                     ))}

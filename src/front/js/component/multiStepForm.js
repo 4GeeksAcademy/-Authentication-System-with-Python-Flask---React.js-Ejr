@@ -4,9 +4,11 @@ import { toast } from "react-toastify"
 import { Modal } from "./modal"
 import { FormSteps } from "./formSteps"
 import { StepsCount } from "./stepsCount"
+import { useNavigate } from "react-router-dom"
 
 export const MultiStepForm = () => {
   const { store, actions } = useContext(Context)
+  const navigate = useNavigate();
   const [step, setStep] = useState(1) // Para controlar el paso actual
   const [formData, setFormData] = useState({
     routineName: '',
@@ -211,6 +213,7 @@ export const MultiStepForm = () => {
   }
 
   const handleFinishRoutine = () => {
+    navigate("/routine")
     setFormData({
       routineName: '',
       selectedDay: '',

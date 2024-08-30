@@ -93,7 +93,7 @@ export const ExercisesList = ({ weeklyRoutine }) => {
                 )
               })}
             </div >
-            <div className="w-1/2">
+            <div className="w-1/2 flex flex-col justify-center">
               <Progress percentage={percentage} />
             </div>
           </div>

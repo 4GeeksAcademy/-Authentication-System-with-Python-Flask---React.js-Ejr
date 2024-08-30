@@ -12,7 +12,7 @@ export const CreateRoutine = () => {
   // }, []);
 
   return (
-    <div className="min-h-screen justify-center bg-neutral-900">
+    <div className="min-h-screen justify-center">
       <MultiStepForm />
     </div>
   )

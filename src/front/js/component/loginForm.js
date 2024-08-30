@@ -45,11 +45,11 @@ export const LoginForm = () => {
           render({ data }) {
             const errorMessages = {
               "Invalid email or password": "Correo o contraseña incorrectos",
-              "User not found": "Usuario no encontrado",
-              "Unexpected error": "Error inesperado durante el inicio de sesión",
+              "User not found": "Correo o contraseña incorrectos",
+              "Unexpected error": "Correo o contraseña incorrectos",
             };
 
-            return errorMessages[data] || "Error inesperado durante el inicio de sesión";
+            return errorMessages[data] || "Correo o contraseña incorrectos";
           }
         }
       }
