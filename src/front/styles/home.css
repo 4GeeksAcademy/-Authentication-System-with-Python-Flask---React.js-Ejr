@@ -85,8 +85,8 @@
 .icon-container{
     font-size:40px; /* Tamaño del icono */
     display: flex;
-        justify-content: space-around; /* Distribuye espacio entre iconos */
-        align-items: center; /* Alinea iconos verticalmente */
+    justify-content: space-around; /* Distribuye espacio entre iconos */
+    align-items: center; /* Alinea iconos verticalmente */
 }
 
 
@@ -144,7 +144,7 @@
     margin-bottom: 15px; /* Espacio entre párrafos */
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    color: #416788
+    color: #416788;
   }
   .text-body-secondary {
     font-size: 1rem; /* Ajusta el tamaño de la fuente secundaria */
