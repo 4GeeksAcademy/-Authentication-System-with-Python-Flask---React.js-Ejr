@@ -283,9 +283,6 @@ def delete_postulado(oferta_id):
     if not user:
         return jsonify({"msg": "Usuario no permitido"}), 401
 
-    if not user.profile_programador:
-        return jsonify({"msg": "Solo los programadores pueden desinscribirse."}), 403
-
     oferta = Ofertas.query.get(oferta_id)
     if not oferta:
         return jsonify({"msg": "Oferta no encontrada o ID inválido"}), 404

@@ -143,7 +143,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { msg: "Error en la solicitud de desinscripción.", type: "error" };
 				}
 			},
-			getNumeroPostuladaos: async (oferta_id) => {
+
+			getNumeroPostulados: async (oferta_id) => {
 				try {
 					const response = await fetch(`/api/ofertas/${oferta_id}/postulados`);
 					if (response.ok) {
