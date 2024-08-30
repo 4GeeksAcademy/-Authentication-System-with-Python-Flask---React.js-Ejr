@@ -16,7 +16,7 @@ export const Userview = () => {
     return (
 
         <div className="container-userview">
-            <div className='body'>
+            <div className='body-userview'>
                 <UsersProfile />
 
 

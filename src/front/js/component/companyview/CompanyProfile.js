@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileImage from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
 import { EditCompanyDescription } from './EditCompanyDescription';
@@ -9,6 +9,77 @@ import CountrySelector from '../userview/Dropdown';
 import Stars from '../stars';
 
 const CompanyProfile = () => {
+   
+    const [companyData, setCompanyData] = useState({
+        name: '',
+        description: '',
+        phone: '',
+        email: '',
+        country: '',
+    });
+
+    const apiUrl = "https://studious-garbanzo-g4xv5w4wq96whpg79-3001.app.github.dev";
+
+    
+    useEffect(() => {
+        const fetchCompanyData = async () => {
+            try {
+                const response = await fetch(`${apiUrl}/company/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setCompanyData({
+                        name: data.name,
+                        description: data.description,
+                        phone: data.phone,
+                        email: data.email,
+                        country: data.country,
+                    });
+                } else {
+                    console.error('Error al obtener los datos de la compañía');
+                }
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
+        };
+
+        fetchCompanyData();
+    }, []);
+
+    
+    const handleFieldChange = (field, value) => {
+        setCompanyData({
+            ...companyData,
+            [field]: value,
+        });
+    };
+
+    
+    const handleSaveProfile = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/company/profile`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(companyData)
+            });
+
+            if (response.ok) {
+                console.log('Perfil actualizado exitosamente');
+            } else {
+                console.error('Error al actualizar el perfil');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
+    };
+
     return (
         <div style={styles.pageContainer}>
             <div className="row" style={styles.row}>
@@ -24,15 +95,27 @@ const CompanyProfile = () => {
                             <div className="col-md-6" style={styles.centerColumn}>
                                 <div style={styles.topLeftAligned}>
                                     <div style={styles.buttonEditContainer}>
-                                        <ButtonEdit />
+                                        <ButtonEdit
+                                            name={companyData.name}
+                                            onSave={(value) => handleFieldChange('name', value)}
+                                        />
                                     </div>
                                     <div style={styles.companyDescriptionContainer}>
-                                        <EditCompanyDescription />
+                                        <EditCompanyDescription
+                                            description={companyData.description}
+                                            onSave={(value) => handleFieldChange('description', value)}
+                                        />
                                     </div>
                                 </div>
                                 <div style={styles.contactContainer}>
-                                    <EditCompanyPhone />
-                                    <EditCompanyMail />
+                                    <EditCompanyPhone
+                                        phone={companyData.phone}
+                                        onSave={(value) => handleFieldChange('phone', value)}
+                                    />
+                                    <EditCompanyMail
+                                        email={companyData.email}
+                                        onSave={(value) => handleFieldChange('email', value)}
+                                    />
                                 </div>
                             </div>
 
@@ -42,12 +125,18 @@ const CompanyProfile = () => {
                                         <Stars />
                                     </div>
                                     <div style={styles.countrySelectorContainer}>
-                                        <CountrySelector />
+                                        <CountrySelector
+                                            country={companyData.country}
+                                            onSave={(value) => handleFieldChange('country', value)}
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <button className="btn btn-primary mt-3" onClick={handleSaveProfile}>
+                        Guardar Cambios
+                    </button>
                 </div>
 
                 <div className="col-lg-3" style={styles.flexContainer}>
@@ -59,6 +148,8 @@ const CompanyProfile = () => {
         </div>
     );
 };
+
+
 
 const styles = {
     pageContainer: {

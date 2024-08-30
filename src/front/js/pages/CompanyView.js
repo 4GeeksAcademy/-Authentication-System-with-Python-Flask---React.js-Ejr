@@ -10,7 +10,7 @@ export const Companyview = () => {
     return (
 
         <div className="container-company">
-            <div className='body'>
+            <div className='.body-company'>
                 <CompanyProfile />
 
 
