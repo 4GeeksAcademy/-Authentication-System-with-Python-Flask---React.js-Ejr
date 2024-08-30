@@ -113,7 +113,7 @@ def login():
     return jsonify({'success': False, 'msg': 'Combinación usuario/contraseña no es válida'}), 401
 
 @api.route('/signup', methods=['POST'])
-def create_user2():
+def sign_up():
     data = request.json
     email = data.get('email')
     password = data.get('password')
