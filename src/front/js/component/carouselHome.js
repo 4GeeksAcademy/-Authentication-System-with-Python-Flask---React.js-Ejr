@@ -38,7 +38,7 @@ export const CarouselHome = () => {
             {/* Buttons */}
             <div className="relative w-full z-10 flex items-center">
                 <div className="md:absolute md:right-10 m-auto flex gap-2">
-                    <button className="p-2 transition-all duration-150 rounded-lg border border-emerald-600 bg-transparent text-sm font-medium text-emerald-400 hover:bg-emerald-600 hover:text-neutral-900 focus:outline-none focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-800"><EditIcon /></button>
+                    <Link to="/editarrutina" className="p-2 transition-all duration-150 rounded-lg border border-emerald-600 bg-transparent text-sm font-medium text-emerald-400 hover:bg-emerald-600 hover:text-neutral-900 focus:outline-none focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-800"><EditIcon /></Link>
                     <Link to="/routine/create" className="p-2 transition-all duration-150 rounded-lg border border-emerald-600 bg-transparent text-sm font-medium text-emerald-400 hover:bg-emerald-600 hover:text-neutral-900 focus:outline-none focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-800"><AddIcon /></Link>
                 </div>
             </div>
