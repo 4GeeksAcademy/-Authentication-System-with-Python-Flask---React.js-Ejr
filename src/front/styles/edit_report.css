@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.edit-report__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.edit-report__title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    color: #075E81;
+}
+
+.edit-report__error {
+    color: red;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.edit-report__form {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: #075E81;
+}
+
+.edit-report__form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.edit-report__form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    width: 48%;
+    margin-bottom: 15px;
+}
+
+
+.edit-report__form-group label {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 80px; 
+    margin-right: 30px;
+    background-color: #FBEE84; 
+    height: 50px; 
+    border-radius: 25px;
+    color: #075E81; 
+    text-align: center; 
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 22pt;
+    padding: 5px;
+}
+
+.edit-report__form-group input[type="date"],
+.edit-report__form-group input[type="number"],
+.edit-report__form-group input[type="checkbox"],
+.edit-report__form-group textarea {
+    border-radius: 25px;
+    width: 140px;
+    height: 50px; 
+    border-width: 3px; 
+    border-color: #075E81; 
+    border-style: solid; 
+    box-shadow: none; 
+    padding: 0 10px; 
+    outline: none; 
+    padding-left: 5px;
+    text-align: center;
+    font-size: 13pt;
+    color: #075E81;
+}
+
+.edit-report__form-group input[type="checkbox"] {
+    width: auto;
+    margin-left: 10px;
+    margin-top: 0; 
+}
+
+.edit-report-textarea__form-group {
+    width: 100%;
+}
+
+.edit-report-textarea__form-group label {
+    display: block; 
+    margin-bottom: 15px; 
+    width: 100px; 
+    margin-right: 30px;
+    background-color: #FBEE84; 
+    height: 50px; 
+    border-radius: 25px;
+    color: #075E81; 
+    text-align: center; 
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 17pt;
+    padding: 7px;
+}
+
+.edit-report-textarea__form-group textarea {
+    height: 100px; 
+    padding: 12px; 
+    box-sizing: border-box; 
+    border-radius: 25px; 
+    border-width: 3px; 
+    border-color: #075E81; 
+    border-style: solid; 
+    box-shadow: none; 
+    padding: 10px; 
+    resize: vertical; 
+    width: 100%; 
+    height: 135px; 
+    font-size: 14pt;
+    color: #075E81;
+}
+
+
+.edit-report__form-group input[type="number"] {
+    max-width: 100%;
+}
+
+.edit-report__btn {
+    margin-top: 15px;
+    background-color: #075E81; 
+    color: white; 
+    border-radius: 25px; 
+    height: 50px; 
+    font-size: 15pt;
+    border: none;
+    width: 50%;
+    font-weight: 700px;
+}
+
+.edit-report__btn:hover {
+    background-color: #FBEE84;
+    color: #075E81;
+}
+
+.edit-report-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+
+}
+
+
+@media (max-width: 1135px) {
+    .edit-report__form-group {
+        width: 100%;
+    }
+
+    .edit-report__form-group input[type="date"],
+    .edit-report__form-group input[type="number"],
+    .edit-report__form-group textarea{
+        width: 100%;
+    }
+
+
+    .switch-edit {
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        height: 34px;
+    }
+    
+    .switch-edit input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    /* Estilo para el slider del interruptor */
+    .slider-edit {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        transition: .4s;
+        border-radius: 34px;
+        border: 3px solid #075E81; 
+    }
+    
+    /* El círculo dentro del slider */
+    .slider-edit:before {
+        position: absolute;
+        content: "";
+        height: 37px;
+        width: 37px;
+        border-radius: 50%;
+        left: 3px;
+        bottom: 3px;
+        background-color: #075E81;
+        transition: .4s;
+    }
+    
+    input:checked + .slider-edit {
+        background-color: #075E81; 
+    }
+    
+    input:checked + .slider-edit:before {
+        transform: translateX(33px); 
+        background-color: white;
+    }
+
+
+}
+
+.switch-edit {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 34px;
+}
+
+.switch-edit input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Estilo para el slider del interruptor */
+.slider-edit {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    transition: .4s;
+    border-radius: 34px;
+    border: 3px solid #075E81; 
+}
+
+/* El círculo dentro del slider */
+.slider-edit:before {
+    position: absolute;
+    content: "";
+    height: 37px;
+    width: 37px;
+    border-radius: 50%;
+    left: 3px;
+    bottom: 3px;
+    background-color: #075E81;
+    transition: .4s;
+}
+
+input:checked + .slider-edit {
+    background-color: #075E81; 
+}
+
+input:checked + .slider-edit:before {
+    transform: translateX(33px); 
+    background-color: white;
+}

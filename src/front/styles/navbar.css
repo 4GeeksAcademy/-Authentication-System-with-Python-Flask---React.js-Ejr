@@ -1,0 +1,88 @@
+/* Mostrar el icono de perfil solo en pantallas grandes */
+.profile-icon {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    /* Oculta el icono de perfil en pantallas pequeñas */
+    .profile-icon {
+        display: none;
+    }
+}
+
+/* Estilos del botón de hamburguesa */
+.custom-toggler {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    padding: 0;
+}
+
+.custom-toggler-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 30px;
+    height: 10px;
+}
+
+.dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+}
+
+.dot1 {
+    background-color: #FBEE84;
+}
+
+.dot2 {
+    background-color: #63DDFC;
+}
+
+.dot3 {
+    background-color: #B4E49D;
+}
+
+.navbar-toggler-icon {
+    display: none;
+}
+
+.custom-toggler:focus, .custom-toggler:hover {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Margen Interno */
+.offcanvas-body .navbar-nav .nav-item {
+    margin-top: 80px;
+    margin-left: 60px;
+}
+
+/* Logo Offcanvas */
+.offcanvas-body {
+    position: relative;
+}
+
+.offcanvas-body .logo-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.offcanvas-body .logo-container img {
+    width: 40px;
+    height: auto;
+    opacity: 0.2;
+}
+
+/* Títulos Pequeños */
+.no-bullets li {
+    color: white;
+    font-weight: 500;
+    font-size: 14pt;
+}

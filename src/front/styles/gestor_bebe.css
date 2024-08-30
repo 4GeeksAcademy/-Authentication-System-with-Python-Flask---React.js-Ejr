@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.container-gestor-bebe {
+    width: 50%;
+    margin: auto;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 100vh;
+}
+
+.gestor-bebe-input-wrapper {
+    position: relative; 
+    width: 100%; 
+}
+
+.gestor-bebe-unit {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%); 
+    color: #075E81; 
+    pointer-events: none; 
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container-img-gestor-bebes {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.img-gestor-bebe {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block; 
+}
+
+.img-gestor-bebe-camara {
+    position: absolute; 
+    bottom: 25px; 
+    right: 25px; 
+    background-color: rgba(255, 255, 255, 0.397);
+    width: 150px;
+    height: 150px; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-gestor-bebe-camara svg {
+    width: 100px;
+    height: 100px;
+}
+
+.form-gestor-bebe {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-gestor-bebe label {
+    min-width: 150px;
+    max-width: 150px;
+    color: #075E81;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    line-height: 33px;
+    height: 40px;
+    border: 3px solid #B4E49D;
+    border-radius: 25px;
+    margin-right: 20px;
+}
+
+.form-gestor-bebe input {
+    background-color: white !important;
+    height: 40px;
+    border: 3px solid #075E81;
+    border-radius: 25px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.btn-container-gestor-bebe {
+    margin-top: 25px;
+    width: 100%;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+}
+
+.btn-edit-gestor-bebe {
+    background-color: #B4E49D ;
+    font-weight: 700;
+    color: #075E81;
+    width: 100%;
+    margin-right: 30px;
+    font-size: 14pt;
+    border-radius: 25pt;
+    outline: none;
+
+}
+
+.btn-home-gestor-bebe{
+    background-color: #075E81;
+    font-weight: 600;
+    color: #B4E49D;
+    width: 100%;
+    font-size: 14pt;
+    border-radius: 25px;
+    outline: none;
+}
+
+.btn-save-gestor-bebe{
+    background-color: #075E81;
+    font-weight: 600;
+    color: #B4E49D;
+    width: 100%;
+    margin-right: 30px;
+    font-size: 14pt;
+    border-radius: 25px;
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .container-gestor-bebe {
+        width: 95%;
+    }
+
+    .img-gestor-bebe {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 30px;
+    }
+
+    .form-gestor-bebe label,
+    .form-gestor-bebe input {
+        width: 100%; 
+        max-width: none;
+        min-width: none; 
+    }
+
+    .btn-container-gestor-bebe {
+        margin-top: 15px;
+        align-items: center;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .btn-edit-gestor-bebe,
+    .btn-save-gestor-bebe {
+        width: 50%;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .gestor-bebe-unit {
+        display: none;
+    }
+
+    .img-gestor-bebe-camara {
+        display: none;
+    }
+}

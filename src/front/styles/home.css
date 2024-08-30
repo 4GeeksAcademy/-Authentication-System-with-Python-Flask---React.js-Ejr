@@ -1,7 +1,79 @@
-/*
-    home.css: This website contains selectors only used in home.css
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+
+.tituloApp{
+    color:#075E81;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+.img-size {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.custom-btn {
+    z-index: 1;
+    color: #075E81;
+    font-weight: bold;
+    background-color: #FBEE84;
+    border-color: #FBEE84;
+    border-radius: 20px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.custom-btn:hover {
+    background-color: #fbed84b7;
+    border-color: #fbed84b7;
+}
+.jumbotron {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.overlay {
+    position: relative;
+    z-index: 1; /* Para asegurar que el contenido esté por encima de la imagen */
+    
+}
+.jumbotron::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Gris oscuro con opacidad */
+    z-index: 0;
+}
+
+/* Cambia el color de fondo del offcanvas */
+.offcanvas-custom {
+    background-color: #075E81; /* Cambia este color al que desees */
+  }
+
+.titulo-navItem{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+.no-bullets {
+    list-style-type: none;  /* Quitar los puntos */
+    padding-left: 20px;     /* Mantener el espacio a la izquierda */
+}
+
+.no-bullets li {
+    margin-bottom: 10px; /* Añadir un espacio entre los elementos de la lista */
+}
+li{
+    font-family: 'Poppins', sans-serif;
+}
