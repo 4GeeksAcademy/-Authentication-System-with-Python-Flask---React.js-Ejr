@@ -153,7 +153,7 @@ export const FormOffer = () => {
                                 />
                             </div>
                             <div className="col-4 d-flex flex-column">
-                                <label htmlFor="Localidad" className="form-label text-secondary fw-bold my-3">Localidad</label>
+                                <label htmlFor="localidad" className="form-label text-secondary fw-bold my-3">Localidad</label>
                                 <input
                                     type="text"
                                     className="form-control"

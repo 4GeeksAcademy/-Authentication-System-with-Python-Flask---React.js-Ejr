@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../styles/CardOffer.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
@@ -6,84 +6,125 @@ import { ModalJobApply } from "./ModalJobApply.jsx";
 import { FcExpired } from "react-icons/fc";
 
 export const CardOffer = ({ id }) => {
-    const { actions, store } = useContext(Context);
-    const offer = store.jobOffers.find(offer => offer.id === id);
-    const navigate = useNavigate();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
-    const [modalType, setModalType] = useState('');
-    if (!offer) return <div>Oferta no encontrada</div>;
+  const { actions, store } = useContext(Context);
+  const offer = store.jobOffers.find(offer => offer.id === id);
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [showLoginButton, setShowLoginButton] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false); // Estado para verificar si el usuario está inscrito
 
-    const handleViewDetails = () => {
-        navigate(`/singleoffer/${id}`);
-    };
+  if (!offer) return <div>Oferta no encontrada</div>;
 
-    const handleApplyClick = async () => {
-        if(!store.user || !store.user.profile_programador){
-            setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
-            setModalType('warning');
-            setIsModalOpen(true);
-            return;
-        }
+  // Comprueba si el usuario ya está inscrito en la oferta al cargar el componente
+  useEffect(() => {
+    if (store.user && store.user.profile_programador) {
+      // Verificar si el usuario está inscrito en la oferta actual
+      const subscribed = store.user.inscribedOffers?.includes(id);
+      setIsSubscribed(subscribed);
+    }
+  }, [store.user, id]);
 
-        const result = await actions.applyToJobOffer(id);
+  const handleViewDetails = () => {
+    navigate(`/singleoffer/${id}`);
+  };
 
-        if (result.msg ) {
-            setModalMessage(result.msg);
-            setModalType(result.type);
-            setIsModalOpen(true);
-        }
-    };
+  const handleApplyClick = async () => {
+    // Verifica si el usuario no está logueado o no es programador
+    if (!store.user || !store.user.profile_programador) {
+      setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
+      setModalType('warning');
+      setShowLoginButton(!store.user); // Muestra el botón de login solo si el usuario no está registrado
+      setIsModalOpen(true);
+      return;
+    }
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+    if (isSubscribed) {
+      // Acción para desinscribirse
+      const result = await actions.unapplyFromJobOffer(id);
+      if (result.msg) {
+        setModalMessage(result.msg);
+        setModalType(result.type || 'success');
+        setIsSubscribed(false); // Actualiza el estado para reflejar la desinscripción
+        setIsModalOpen(true);
+      } else {
+        setModalMessage("Error al desinscribirse, intente nuevamente.");
+        setModalType('error');
+        setIsModalOpen(true);
+      }
+    } else {
+      // Acción para inscribirse
+      const result = await actions.applyToJobOffer(id);
+      if (result.msg) {
+        setModalMessage(result.msg);
+        setModalType(result.type || 'success');
+        setIsSubscribed(true); 
+        setIsModalOpen(true);
+      } else {
+        setModalMessage("Error al inscribirse, intente nuevamente.");
+        setModalType('error');
+        setIsModalOpen(true);
+      }
+    }
+  };
 
-    return (
-        <>
-            <div className="container">
-                <div className="row card-offer mt-2">
-                    <div className="col-2 img-box">
-                        <img
-                            className="card-offer-logo"
-                            src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
-                            alt="Company Logo"
-                        />
-                    </div>
-                    <div className="col-9 header-box d-flex flex-column">
-                        <h2 className="card-offer-title">{offer.name}</h2>
-                        <span className="card-offer-company"> nombreEmpresa - {offer.localidad}</span>
-                        <div className="card-offer-description text-muted">
-                            <p className="text-description">{offer.descripcion}</p>
-                        </div>
-                        <div className="data-footer">
-                            <ul className="card-offer-details d-flex text-muted">
-                                <li className="list-footer-details"><FcExpired className="exp-icon"/> {offer.plazo}</li>
-                                <li className="list-footer-details">{offer.modalidad + " | "}</li>
-                                <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
-                                <li className="list-footer-details">{offer.experiencia_minima}</li>
-                            </ul>
-                            <div className="card-offer-actions">
-                                <button
-                                    onClick={handleViewDetails}
-                                    className="btn btn-details btn-sm text-decoration-none me-2">
-                                    Ver detalles
-                                </button>
-                                <button className="btn btn-inscribirse btn-sm" onClick={handleApplyClick}>
-                                    Inscribirse
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setShowLoginButton(false); // Resetea el estado al cerrar el modal
+  };
+
+  return (
+    <>
+      <div className="container">
+        <div className="row card-offer mt-2">
+          <div className="col-2 img-box">
+            <img
+              className="card-offer-logo"
+              src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
+              alt="Company Logo"
+            />
+          </div>
+          <div className="col-9 header-box d-flex flex-column">
+            <h2 className="card-offer-title">{offer.name}</h2>
+            <span className="fecha-publicacion text-muted">creada el {offer.fecha_publicacion}</span>
+            <span className="card-offer-company">nombreEmpresa - {offer.localidad}</span>
+            <div className="card-offer-description text-muted">
+              <p className="text-description">{offer.descripcion}</p>
             </div>
-            {isModalOpen && (
-                <ModalJobApply  
-                    message={modalMessage}
-                    type={modalType} 
-                    onClose={handleCloseModal}
-                />
-            )}
-        </>
-    );
+            <div className="data-footer">
+              <ul className="card-offer-details d-flex text-muted">
+                <li className="list-footer-details">
+                  <FcExpired className="exp-icon" /> {offer.plazo}
+                </li>
+                <li className="list-footer-details">{offer.modalidad + " | "}</li>
+                <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
+                <li className="list-footer-details">{offer.experiencia_minima}</li>
+              </ul>
+              <div className="card-offer-actions">
+                <button
+                  onClick={handleViewDetails}
+                  className="btn btn-details btn-sm text-decoration-none me-2">
+                  Ver detalles
+                </button>
+                <button
+                  className={`btn ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-sm`}
+                  onClick={handleApplyClick}>
+                  {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {isModalOpen && (
+        <ModalJobApply
+          message={modalMessage}
+          type={modalType}
+          onClose={handleCloseModal}
+          showLoginButton={showLoginButton}
+        />
+      )}
+    </>
+  );
 };
