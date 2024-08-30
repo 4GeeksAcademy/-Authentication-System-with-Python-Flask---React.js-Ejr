@@ -145,12 +145,12 @@ def signup():
 
 
  #Pago con API stripe   
-
-stripe.api_key = os.getenv("STRIPE_PRIVATE")
+#El backend maneja la creación del PaymentIntent y devuelve el client_secret.
+stripe.api_key = os.getenv("STRIPE_PRIVATE") #establece la clave secreta de Stripe, esencial para realizar operaciones seguras con la API de Stripe.
 
 @api.route('/create-payment', methods=['POST']) #copiado del repositorio codespace de Javi
 def create_payment():
-    try:
+    try: # Recibe los datos de la cantidad y moneda.
         data = request.json
         #PODEMOS PASAR TODOS LOS ELEMENTOS QUE PERMITA EL OBJETO DE PAYMENTINTENT.CREATE 
         intent = stripe.PaymentIntent.create(
@@ -161,11 +161,8 @@ def create_payment():
             }
         )
         return jsonify({
-            'clientSecret': intent['client_secret']
+            'clientSecret': intent['client_secret'] #Devuelve el client_secret del PaymentIntent, que es necesario en el frontend para confirmar el pago.
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
-
-#Para que todo funcione, necesitas hacer que el formulario en tu frontend envíe la solicitud al backend y reciba el clientSecret de Stripe para manejar el proceso de pago
-#Para instalar el paquete de Stripe, tuve que poner: pip install stripe ,en la consola Backend y: npm install @stripe/react-stripe-js @stripe/stripe-js ,en el Fronted

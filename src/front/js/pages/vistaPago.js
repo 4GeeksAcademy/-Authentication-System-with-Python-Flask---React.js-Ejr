@@ -1,20 +1,17 @@
-//VistaPago:
-
-//Manejo del Pago: La función handleButtonClick se encarga de hacer una solicitud al backend para obtener el clientSecret.
-//luego redirige a FormularioPago con clientSecret y cantidad en el estado de la ubicación.
+//VistaPago: Se carga la vista de pago con el formulario de Stripe. Al cargar, se solicita al backend que cree un PaymentIntent.
 
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements} from '@stripe/react-stripe-js';
+import { Elements} from '@stripe/react-stripe-js'; //permite integrar el formulario de pago de manera sencilla.
 import { CheckoutForm } from "../component/checkout.jsx";
 
 
 const VistaPago = () => {
 	const { store, actions } = useContext(Context);
 	//la clave en .env!!! ----------- esta de abajo es la clave publica
-	const stripePromise = loadStripe(process.env.STRIPE_PROMISE);
+	const stripePromise = loadStripe(process.env.STRIPE_PROMISE); //carga la clave pública de Stripe desde las variables de entorno .env
 	
 	
 	return (

@@ -1,5 +1,4 @@
-//VistaDetallada.js: Muestra la información del curso y tiene un botón para "Ir a pagar". Cuando el usuario hace clic en este botón, debería redirigir a VistaPago.js.
-//VistaPago.js: Se encarga de preparar y mostrar la información de pago y luego redirige al componente de formulario de pago (FormularioPago.js), donde se procesará el pago usando Stripe.
+//VistaDetallada:Frontend (VistaDetallada.js): El usuario selecciona un curso y hace clic en "Ir a pagar".
 
 import React, { useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -28,7 +27,7 @@ const VistaDetallada = () => {
     console.log('Cursos en store:', store.cursosConFiltros); // Verifica los cursos en el estado global
     console.log('Curso encontrado:', curso); // Verifica el curso encontrado
 
-    // Función para manejar la navegación a la vista de pago
+    // Al hacer clic en el botón "Ir a pagar", el usuario es redirigido a la vista de pago (VistaPago)
     const handleGoToPayment = () => {
         navigate('/vistaPago', { state: { curso } }); // Pasa información del curso a VistaPago
     };
