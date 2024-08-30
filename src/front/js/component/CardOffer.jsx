@@ -12,8 +12,9 @@ export const CardOffer = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalType, setModalType] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false); 
-  const [numeroPostuladaos, setNumeroPostulados] = useState(0);
+  const [showLoginButton, setShowLoginButton] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [numeroInscritos, setNumeroInscritos] = useState(0);
 
   if (!offer) return <div>Oferta no encontrada</div>;
 
@@ -22,7 +23,12 @@ export const CardOffer = ({ id }) => {
       const subscribed = store.user.inscribedOffers?.includes(id);
       setIsSubscribed(subscribed);
     }
-  }, [store.user, id]);
+    actions.getNumeroPostulados(id).then((count) => {
+      if (count !== null) {
+        setNumeroInscritos(count);
+      }
+    });
+  }, [store.user, id, actions]);
 
   const handleViewDetails = () => {
     navigate(`/singleoffer/${id}`);
@@ -32,6 +38,7 @@ export const CardOffer = ({ id }) => {
     if (!store.user || !store.user.profile_programador) {
       setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
       setModalType('warning');
+      setShowLoginButton(!store.user);
       setIsModalOpen(true);
       return;
     }
@@ -41,7 +48,8 @@ export const CardOffer = ({ id }) => {
       if (result.msg) {
         setModalMessage(result.msg);
         setModalType(result.type || 'success');
-        setIsSubscribed(false); 
+        setIsSubscribed(false);
+        setNumeroInscritos(prev => prev - 1);
         setIsModalOpen(true);
       } else {
         setModalMessage("Error al desinscribirse, intente nuevamente.");
@@ -53,7 +61,8 @@ export const CardOffer = ({ id }) => {
       if (result.msg) {
         setModalMessage(result.msg);
         setModalType(result.type || 'success');
-        setIsSubscribed(true); 
+        setIsSubscribed(true);
+        setNumeroInscritos(prev => prev + 1);
         setIsModalOpen(true);
       } else {
         setModalMessage("Error al inscribirse, intente nuevamente.");
@@ -65,6 +74,7 @@ export const CardOffer = ({ id }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setShowLoginButton(false);
   };
 
   return (
@@ -77,11 +87,18 @@ export const CardOffer = ({ id }) => {
               src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
               alt="Company Logo"
             />
+            <span className="num-postulados text-muted">
+              {numeroInscritos} postulados
+            </span>
           </div>
           <div className="col-9 header-box d-flex flex-column">
             <h2 className="card-offer-title">{offer.name}</h2>
-            <span className="fecha-publicacion text-muted">creada el {offer.fecha_publicacion}</span>
-            <span className="card-offer-company">nombreEmpresa - {offer.localidad}</span>
+            <span className="fecha-publicacion text-muted">
+              creada el {offer.fecha_publicacion}
+            </span>
+            <span className="card-offer-company">
+              nombreEmpresa - {offer.localidad}
+            </span>
             <div className="card-offer-description text-muted">
               <p className="text-description">{offer.descripcion}</p>
             </div>
@@ -91,7 +108,9 @@ export const CardOffer = ({ id }) => {
                   <FcExpired className="exp-icon" /> {offer.plazo}
                 </li>
                 <li className="list-footer-details">{offer.modalidad + " | "}</li>
-                <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
+                <li className="list-footer-details mx-2">
+                  {offer.salario + " | "}
+                </li>
                 <li className="list-footer-details">{offer.experiencia_minima}</li>
               </ul>
               <div className="card-offer-actions">
