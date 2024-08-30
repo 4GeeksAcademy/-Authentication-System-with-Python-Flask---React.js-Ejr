@@ -386,13 +386,13 @@ export const EdicionRutina = () => {
                             </div>
                         </div>
                         {/* MODAL BOTON AGREGAR EJERCICIO */}
-                        {/* <AgregarEjercicioEditar isAddExerciseModalOpen={isAddExerciseModalOpen} searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} addedExercises={addedExercises} filteredExercises={filteredExercises} closeDropdown={closeDropdown} toggleDropdown={toggleDropdown} isOpen={isOpen} handleAddExercises={handleAddExercises} handleOpenModal={handleOpenModal} setIsAddExerciseModalOpen={setIsAddExerciseModalOpen} cerrarModalEjercicio={cerrarModalEjercicio} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} handleFormSubmit={handleFormSubmit} setsInput={setsInput} setSetsInput={setSetsInput} setRepsInput={setRepsInput} repsInput={repsInput} selectSets={selectSets} handleSelectChange={handleSelectChange} setsList={setsList} /> */}
-                        <div tabIndex="-1" aria-hidden="true" className={`${isAddExerciseModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
+                            <AgregarEjercicioEditar isAddExerciseModalOpen={isAddExerciseModalOpen} setIsAddExerciseModalOpen={setIsAddExerciseModalOpen} routine={routine} />
+                        {/* <div tabIndex="-1" aria-hidden="true" className={`${isAddExerciseModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
                             <div className='w-full flex flex-col'>
-                                {/* EJERCICIOS */}
+                                EJERCICIOS
                                 <div className="flex flex-row flex-wrap gap-2 w-full items-end justify-end mb-5">
 
-                                    {/* search input */}
+                                    search input
                                     <div className="relative">
                                         <label htmlFor="Search" className="sr-only"> Search for... </label>
                                         <input
@@ -428,7 +428,7 @@ export const EdicionRutina = () => {
                                         </span>
                                     </div>
 
-                                    {/* filtrar */}
+                                    filtrar
                                     <div>
                                         <select
                                             name="HeadlineAct"
@@ -448,7 +448,7 @@ export const EdicionRutina = () => {
                                         </select>
                                     </div>
 
-                                    {/* lista de ejercicios */}
+                                    lista de ejercicios
                                     <div className="relative">
                                         <div className="inline-flex items-center overflow-hidden rounded-md h-8 border bg-white dark:border-neutral-800 dark:bg-neutral-900">
                                             <div
@@ -572,20 +572,11 @@ export const EdicionRutina = () => {
                                         )
                                     })}
                                 </div>
-
                                 <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
-                                    {/* <button
-                                        type="button"
-                                        onClick={() => setIsAddExerciseModalOpen(false)}
-                                        className="bg-transparent hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
-                                    >
-                                        Cancelar
-                                    </button> */}
                                     <button
                                         type="button"
                                         onClick={() => { setIsAddExerciseModalOpen(false), cerrarModalEjercicio() }}
                                         className="disabled:bg-emerald-300 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-all ease-in"
-                                    // disabled={addedExercises.length == 0 ? true : false}
                                     >
                                         Finalizar
                                     </button>
@@ -653,7 +644,7 @@ export const EdicionRutina = () => {
                                     </div>
                                 </form>
                             </Modal>
-                        </div>
+                        </div> */}
                         {/* MODAL BOTON CAMBIAR NOMBRE RUTINA */}
                         <div id="crud-modal" tabIndex="-1" aria-hidden="true" className={`${isEditRoutineModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
                             <div className="relative p-4 w-full max-w-md max-h-full">

@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "./modal"
 
 
-export const AgregarEjercicioEditar = (isAddExerciseModalOpen, searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, addedExercises, filteredExercises, closeDropdown, toggleDropdown, isOpen, handleAddExercises, handleOpenModal, setIsAddExerciseModalOpen, cerrarModalEjercicio, isModalOpen, setIsModalOpen, handleFormSubmit, setsInput, setSetsInput, setRepsInput, repsInput, selectSets, handleSelectChange, setsList) => {
+export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExerciseModalOpen, routine, setRoutine }) => {
 
-    const navigate = useNavigate()
     const { store, actions } = useContext(Context);
     // const [routine, setRoutine] = useState({});
     // const [day, setDay] = useState('');
@@ -18,284 +17,204 @@ export const AgregarEjercicioEditar = (isAddExerciseModalOpen, searchTerm, setSe
     // const [isDeleteRoutineModalOpen, setIsDeleteRoutineModalOpen] = useState(false)
     // const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false)
 
-    // const [searchTerm, setSearchTerm] = useState("")
-    // const [selectedCategory, setSelectedCategory] = useState("")
-    // const [addedExercises, setAddedExercises] = useState([])
-    // const [isOpen, setIsOpen] = useState(false)
-    // const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' })
-    // const [isModalOpen, setIsModalOpen] = useState(false)
-    // const [selectSets, setSelectSets] = useState('')
+    const [searchTerm, setSearchTerm] = useState("")
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const [addedExercises, setAddedExercises] = useState([])
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedExercise, setSelectedExercise] = useState({ id: '', name: '' })
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [selectSets, setSelectSets] = useState('')
     // const [isFinishModalOpen, setIsFinishModalOpen] = useState(false)
-    // const [setsInput, setSetsInput] = useState('')
-    // const [repsInput, setRepsInput] = useState('')
+    const [setsInput, setSetsInput] = useState('')
+    const [repsInput, setRepsInput] = useState('')
 
-    // const setsList = store.allSetsList.slice(0, 5)
+    const setsList = store.allSetsList.slice(0, 5)
 
-    // async function checkIfSetExists(sets, reps) {
-    //     try {
-    //         // Filtra para ver si ya existe un set con las mismas series y repeticiones
-    //         const existingSet = setsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps))
+    async function checkIfSetExists(sets, reps) {
+        try {
+            // Filtra para ver si ya existe un set con las mismas series y repeticiones
+            const existingSet = setsList.find(set => set.sets === parseInt(sets) && set.repetitions === parseInt(reps))
 
-    //         return existingSet || null // Si existe, retorna el set si no, retorna null
-    //     } catch (error) {
-    //         console.error("Error al verificar el set:", error)
-    //         return null
-    //     }
-    // }
+            return existingSet || null // Si existe, retorna el set si no, retorna null
+        } catch (error) {
+            console.error("Error al verificar el set:", error)
+            return null
+        }
+    }
 
-    // const cerrarModalEjercicio = () => {
+    const cerrarModalEjercicio = () => {
 
-    //     closeDropdown(),
-    //         setAddedExercises([])
-    // }
+        closeDropdown(),
+            setAddedExercises([])
+    }
 
-    // const handleFormSubmit = async (event) => {
-    //     event.preventDefault()
-    //     if (!selectSets) {
-    //         try {
-    //             // Verifica si ya existe un set con las series y repeticiones ingresadas
-    //             const existingSet = await checkIfSetExists(setsInput, repsInput)
+    const handleFormSubmit = async (event) => {
+        event.preventDefault()
+        if (!selectSets) {
+            try {
+                // Verifica si ya existe un set con las series y repeticiones ingresadas
+                const existingSet = await checkIfSetExists(setsInput, repsInput)
 
-    //             if (existingSet) {
-    //                 // Si ya existe, usa el id del set existente
-    //                 store.setId = existingSet.id
-    //                 handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
-    //             } else {
-    //                 // Si no existe, crea el set y guárdalo en el store
-    //                 const newSets = await actions.postSets(setsInput, repsInput)
+                if (existingSet) {
+                    // Si ya existe, usa el id del set existente
+                    store.setId = existingSet.id
+                    handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
+                } else {
+                    // Si no existe, crea el set y guárdalo en el store
+                    const newSets = await actions.postSets(setsInput, repsInput)
 
-    //                 if (newSets) {
-    //                     handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
-    //                 } else {
-    //                     console.error("No se pudo crear las series y repeticiones")
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             console.error("Error al verificar o crear las series y repeticiones:", error)
-    //         }
-    //     } else {
-    //         // Caso 2: El usuario seleccionó un set previo
-    //         handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
-    //     }
-    //     setSetsInput('')
+                    if (newSets) {
+                        handleAddExercises(selectedExercise.id, selectedExercise.name, store.setId)
+                    } else {
+                        console.error("No se pudo crear las series y repeticiones")
+                    }
+                }
+            } catch (error) {
+                console.error("Error al verificar o crear las series y repeticiones:", error)
+            }
+        } else {
+            // Caso 2: El usuario seleccionó un set previo
+            handleAddExercises(selectedExercise.id, selectedExercise.name, selectSets)
+            console.log("HOLA");
+
+        }
+        setSetsInput('')
+        setRepsInput('')
+        setSelectSets('')
+    }
+
+    const handleSelectChange = (e) => {
+        setSelectSets(e.target.value)
+    }
+    // const handleFinishRoutine = () => {
+    //     setFormData({
+    //         routineName: '',
+    //         selectedDay: '',
+    //         exercises: ''
+    //     })
+    //     setSelectedExercise({ id: '', name: '' })
     //     setRepsInput('')
+    //     setSetsInput('')
     //     setSelectSets('')
-
-    // }
-    // const handleSelectChange = (e) => {
-    //     setSelectSets(e.target.value)
-    // }
-    // // const handleFinishRoutine = () => {
-    // //     setFormData({
-    // //         routineName: '',
-    // //         selectedDay: '',
-    // //         exercises: ''
-    // //     })
-    // //     setSelectedExercise({ id: '', name: '' })
-    // //     setRepsInput('')
-    // //     setSetsInput('')
-    // //     setSelectSets('')
-    // //     setStep(1)
-    // //     setAddedExercises([])
-    // //     setIsFinishModalOpen(false)
-    // //     actions.setCompleteRoutine(true)
-    // // }
-
-    // const handleAddExercises = async (id, name, setId) => {
-    //     const isExerciseAdded = addedExercises.some(exercise => exercise.id === id)
-
-    //     const actionPromise = new Promise(async (resolve, reject) => {
-    //         try {
-    //             let response
-    //             if (isExerciseAdded) {
-    //                 // Elimina el ejercicio si ya está agregado
-    //                 response = await actions.deleteExerciseRoutine(routine.id.toString(), id.toString())
-    //                 if (!response || response.error) throw new Error('Error al eliminar el ejercicio')
-    //                 resolve('Ejercicio eliminado exitosamente')
-    //                 setRoutine(await store.oneRoutine)
-    //             } else {
-    //                 // Agrega el ejercicio si no está en la rutina
-    //                 console.log(routine.id);
-
-    //                 response = await actions.postExerciseRoutine(routine.id.toString(), id.toString(), setId.toString())
-    //                 if (!response || response.error) throw new Error('Error al agregar el ejercicio')
-    //                 resolve('Ejercicio agregado exitosamente')
-    //                 setRoutine(await store.oneRoutine)
-    //                 setIsModalOpen(false)
-    //             }
-    //         } catch (error) {
-    //             reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio')
-    //         }
-    //     })
-
-    //     toast.promise(
-    //         actionPromise,
-    //         {
-    //             pending: isExerciseAdded ? 'Eliminando ejercicio...' : 'Agregando ejercicio...',
-    //             success: isExerciseAdded ? 'Ejercicio eliminado exitosamente 👌' : 'Ejercicio agregado exitosamente 👌',
-    //             error: isExerciseAdded ? 'No se pudo eliminar el ejercicio 🤯' : 'No se pudo agregar el ejercicio 🤯',
-    //         }
-    //     )
-
-    //     actionPromise.then(() => {
-    //         setAddedExercises(prevExercises => {
-    //             if (isExerciseAdded) {
-    //                 // Elimina el ejercicio de la lista
-    //                 return prevExercises.filter(exercise => exercise.id !== id)
-    //             } else {
-    //                 // Agrega el ejercicio a la lista
-    //                 const exerciseSet = setsList.find((item) => item.id == setId)
-    //                 console.log(exerciseSet)
-    //                 return [...prevExercises, { id, name, exerciseSet }]
-    //             }
-    //         })
-    //     }).catch(error => {
-    //         console.error(error)
-    //     })
-    //     console.log(addedExercises)
+    //     setStep(1)
+    //     setAddedExercises([])
+    //     setIsFinishModalOpen(false)
+    //     actions.setCompleteRoutine(true)
     // }
 
-    // const handleOpenModal = (item) => {
-    //     if (isExerciseSelected(item.id)) {
-    //         handleAddExercises(item.id, item.name)
-    //     } else {
-    //         actions.allSets()
-    //         setSelectedExercise({ id: item.id, name: item.name })
-    //         console.log(item.id)
-    //         setIsModalOpen(true)
-    //     }
-    // }
+    const handleAddExercises = async (id, name, setId) => {
+        console.log(id)
+        console.log(name)
+        console.log(setId)
 
-    // const isExerciseSelected = (id) => {
-    //     return addedExercises.some(exercise => exercise.id === id)
-    // }
-    // const closeDropdown = () => setIsOpen(false)
+        const isExerciseAdded = addedExercises.some(exercise => exercise.id === id)
+        console.log(isExerciseAdded)
 
-    // const toggleDropdown = (e) => {
-    //     e.preventDefault()
-    //     setIsOpen(!isOpen)
-    // }
+        const actionPromise = new Promise(async (resolve, reject) => {
+            try {
+                let response
+                if (isExerciseAdded) {
+                    // Elimina el ejercicio si ya está agregado
+                    response = await actions.deleteExerciseRoutine(routine.id.toString(), id.toString())
+                    if (!response || response.error) throw new Error('Error al eliminar el ejercicio')
+                    resolve('Ejercicio eliminado exitosamente')
+                    setRoutine(await store.oneRoutine)
+                } else {
+                    // Agrega el ejercicio si no está en la rutina
+                    console.log(routine.id);
+                    console.log("routine.id");
 
-    // const filteredExercises = store.allExerciseList.filter((item) => {
-    //     const matchesCategory = selectedCategory === "" || item.category === selectedCategory
-    //     const matchesSearchTerm = item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    //     return matchesCategory && matchesSearchTerm
-    // })
+                    response = await actions.postExerciseRoutine(routine.id.toString(), id.toString(), setId.toString())
+                    if (!response || response.error) throw new Error('Error al agregar el ejercicio')
+                    resolve('Ejercicio agregado exitosamente')
+                    setRoutine(await store.oneRoutine)
+                    setIsModalOpen(false)
+                }
+            } catch (error) {
+                reject(isExerciseAdded ? 'No se pudo eliminar el ejercicio' : 'No se pudo agregar el ejercicio')
+            }
+        })
 
-    // // PREVIO A MOSTRAR EJERCICIOS EDITAR
-    // const setSelectedDay = async (e) => {
-    //     setDay(e.target.options[e.target.selectedIndex].text)
-    //     await actions.oneRoutine(e.target.value)
-    //     setRoutine(await store.oneRoutine)
-    // }
+        toast.promise(
+            actionPromise,
+            {
+                pending: isExerciseAdded ? 'Eliminando ejercicio...' : 'Agregando ejercicio...',
+                success: isExerciseAdded ? 'Ejercicio eliminado exitosamente 👌' : 'Ejercicio agregado exitosamente 👌',
+                error: isExerciseAdded ? 'No se pudo eliminar el ejercicio 🤯' : 'No se pudo agregar el ejercicio 🤯',
+            }
+        )
 
-    // const handleChange = (e) => {
-    //     setName(e.target.value);
-    // }
+        actionPromise.then(() => {
+            console.log("HOLA");
+            setAddedExercises(prevExercises => {
+                if (isExerciseAdded) {
+                    console.log("HOLA")
 
-    // const handleDeleteSubmit = async (e, day) => {
-    //     if (e) {
-    //         e.preventDefault()
-    //     }
+                    // Elimina el ejercicio de la lista
+                    return prevExercises.filter(exercise => exercise.id !== id)
+                } else {
+                    console.log("HOLA");
+                    // Agrega el ejercicio a la lista
+                    const exerciseSet = setsList.find((item) => item.id == setId)
+                    console.log(exerciseSet)
+                    return [...prevExercises, { id, name, exerciseSet }]
+                }
+            })
+        }).catch(error => {
+            console.error(error)
+        })
+    }
 
-    //     const deleteWeeklyUserRoutine = new Promise(async (resolve, reject) => {
-    //         const success = await actions.deleteWeeklyUserRoutine(day)
+    const handleOpenModal = (item) => {
+        if (isExerciseSelected(item.id)) {
+            handleAddExercises(item.id, item.name)
+        } else {
+            actions.allSets()
+            setSelectedExercise({ id: item.id, name: item.name })
+            console.log(item.id)
+            setIsModalOpen(true)
+        }
+    }
 
-    //         if (success === true) {
-    //             resolve("Rutina Dia Eliminada")
-    //             setRoutine({})
-    //             setIsDeleteRoutineModalOpen(false)
-    //         } else {
-    //             reject("Elimincacion fallida")
-    //         }
-    //     })
+    const isExerciseSelected = (id) => {
+        return addedExercises.some(exercise => exercise.id === id)
+    }
+    const closeDropdown = () => setIsOpen(false)
 
-    //     toast.promise(
-    //         deleteWeeklyUserRoutine,
-    //         {
-    //             pending: 'Eliminando...',
-    //             success: 'Rutina Dia eliminada exitosamente 👌',
-    //             error: 'No se pudo eliminar su Rutina Dia 🤯'
-    //         }
-    //     )
+    const toggleDropdown = (e) => {
+        e.preventDefault()
+        setIsOpen(!isOpen)
+    }
 
-    //     deleteWeeklyUserRoutine.then(() => {
-    //         navigate("/editarrutina")
-    //     }).catch((error) => {
-    //         console.error(error)
-    //     })
-    // }
+    const filteredExercises = store.allExerciseList.filter((item) => {
+        const matchesCategory = selectedCategory === "" || item.category === selectedCategory
+        const matchesSearchTerm = item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        return matchesCategory && matchesSearchTerm
+    })
 
-    // const handleDeleteExerciseRoutine = async (e, routine_id, exercise_id) => {
-    //     e.preventDefault()
+    function showTooltip(index) {
+        const tooltip = document.getElementById(`tooltip-${index}`);
+        if (tooltip) {
+            tooltip.classList.remove('invisible', 'opacity-0');
+            tooltip.classList.add('visible', 'opacity-100');
+        }
+    }
 
-    //     const deleteExerciseRoutine = new Promise(async (resolve, reject) => {
+    function hideTooltip(index) {
+        const tooltip = document.getElementById(`tooltip-${index}`);
+        if (tooltip) {
+            tooltip.classList.remove('visible', 'opacity-100');
+            tooltip.classList.add('invisible', 'opacity-0');
+        }
+    }
 
-    //         const success = await actions.deleteExerciseRoutine(routine_id, exercise_id)
-    //         if (success === true) {
-    //             setRoutine(await store.oneRoutine)
-    //             setIsDeleteExerciseModalOpen(false)
-    //             if (routine.exercises) {
-    //                 console.log(routine.exercises.length);
-
-    //             }
-    //             resolve("Ejercicio elimindado de la rutina")
-    //             if (routine.exercises) {
-    //                 if (routine.exercises.length === 1) {
-    //                     handleDeleteSubmit(null, day)
-    //                 }
-    //             }
-    //         } else {
-    //             reject("Elimincacion fallida")
-    //         }
-    //     })
-
-    //     toast.promise(
-    //         deleteExerciseRoutine,
-    //         {
-    //             pending: 'Eliminando...',
-    //             success: 'Ejercicio eliminado exitosamente 👌',
-    //             error: 'No se pudo eliminar el ejercicio de la rutina 🤯'
-    //         }
-    //     )
-
-    //     deleteExerciseRoutine.then(() => {
-    //         navigate("/editarrutina")
-    //     }).catch((error) => {
-    //         console.error(error)
-    //     })
-    // }
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     const editInfoPromise = new Promise(async (resolve, reject) => {
-    //         let success = await actions.putRoutine(
-    //             routine.id,
-    //             name,
-    //         );
-    //         if (success === true) {
-    //             setRoutine(await store.oneRoutine)
-
-    //             setIsEditRoutineModalOpen(false)
-
-    //             resolve("Actualizacion exitosa");
-    //         } else {
-    //             reject("Error al actualizar");
-    //         }
-    //         success = true
-    //     });
-
-    //     toast.promise(
-    //         editInfoPromise,
-    //         {
-    //             pending: 'Actualizando...',
-    //             success: 'Actualizacion exitosa 😎',
-    //             error: 'Error al actualizar'
-    //         }
-    //     );
-    //     setName("")
-    // };
+    function truncateName(name) {
+        const words = name.split(' ');
+        if (words.length > 3) {
+            return words.slice(0, 3).join(' ') + '...';
+        }
+        return name;
+    }
 
     // // PREVIO A MOSTRAR EJERCICIOS EDITAR
     useEffect(() => {
@@ -317,9 +236,8 @@ export const AgregarEjercicioEditar = (isAddExerciseModalOpen, searchTerm, setSe
     return (
         <div tabIndex="-1" aria-hidden="true" className={`${isAddExerciseModalOpen ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-neutral-950/40 backdrop-blur-sm transition-all ease-in flex`}>
             <div className='w-full flex flex-col'>
-                {/* EJERCICIOS */}
+                {/* Paso 3: Ejercicios */}
                 <div className="flex flex-row flex-wrap gap-2 w-full items-end justify-end mb-5">
-
                     {/* search input */}
                     <div className="relative">
                         <label htmlFor="Search" className="sr-only"> Search for... </label>
@@ -443,64 +361,80 @@ export const AgregarEjercicioEditar = (isAddExerciseModalOpen, searchTerm, setSe
                         )}
                     </div>
                 </div>
-                <div className="h-96 gap-4">
-                    {filteredExercises.map((item, index) => {
-                        return (
-                            <article key={item.id} className="flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 max-w-full flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden">
-                                <div className="hidden sm:block sm:basis-36">
-                                    <img
-                                        alt=""
-                                        src="https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"
-                                        className="aspect-square h-full w-full object-cover"
-                                    />
-                                </div>
-                                <div className="p-3 flex flex-1 flex-col gap-4 justify-between">
-                                    <div className="flex flex-col gap-3 dark:border-white/10">
-                                        <h3 className="font-bold uppercase text-neutral-900 dark:text-white">
-                                            {item.name}
-                                        </h3>
-                                        <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
-                                            {item.category}
-                                        </span>
-                                    </div>
-                                    <div className="self-end">
-                                        <input
-                                            checked={isExerciseSelected(item.id)}
-                                            onChange={() => handleOpenModal(item)} // Solo abre la modal al cambiar el estado del checkbox
-                                            type="checkbox"
-                                            id={`react-${index}`}
-                                            className="peer hidden"
+                <div className='h-[50vh] overflow-y-scroll'>
+                    <div className="grid grid-cols-1 gap-4 w-full mx-auto p-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))" }}> {/* Grid adaptable */}
+
+                        {filteredExercises.map((item, index) => {
+                            return (
+                                <article key={item.id} className="w-full h-40 flex bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md">
+                                    <div className="hidden sm:block sm:basis-36 w-1/2">
+                                        <img
+                                            alt=""
+                                            src={item.image ? item.image : "https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"}
+                                            className={`${item.image ? 'invert object-scale-down p-2' : ''} aspect-square h-full w-full object-cover overflow-hidden`}
+                                            style={{
+                                                filter: item.image ? 'invert(100%) sepia(100%) saturate(5000%) hue-rotate(67deg) brightness(83%)' : '',
+                                            }}
                                         />
-                                        <label
-                                            htmlFor={`react-${index}`}
-                                            className="dark:hover:text-emerald-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
-                                        >
-                                            <div>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="icon icon-tabler icons-tabler-outline icon-tabler-plus size-8"
-                                                >
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M12 5l0 14" />
-                                                    <path d="M5 12l14 0" />
-                                                </svg>
-                                            </div>
-                                        </label>
                                     </div>
+                                    <div className="p-3 flex flex-1 flex-col gap-4 justify-between w-1/2">
+                                        <div className="flex flex-col gap-3 dark:border-white/10 relative">
+                                            <div
+                                                id={`tooltip-${index}`}
+                                                className="absolute -top-10 z-[99999] invisible px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition duration-300 dark:bg-gray-700 overflow-visible"
+                                            >
+                                                {item.name}
+                                            </div>
+
+                                            {/* Arreglar esto Tooltips */}
+                                            <h3 className="font-bold text-neutral-900 dark:text-white" onMouseEnter={() => showTooltip(index)}
+                                                onMouseLeave={() => hideTooltip(index)}>
+                                                {truncateName(item.name)}
+                                            </h3>
 
 
-                                </div>
-                            </article>
-                        )
-                    })}
+                                            <span className="rounded-full bg-neutral-800 px-2 w-fit py-1 text-xs font-medium lowercase text-neutral-400 text-center">
+                                                {item.category}
+                                            </span>
+                                        </div>
+                                        <div className="self-end">
+                                            <input
+                                                checked={isExerciseSelected(item.id)}
+                                                onChange={() => handleOpenModal(item)} // Solo abre la modal al cambiar el estado del checkbox
+                                                type="checkbox"
+                                                id={`react-${index}`}
+                                                className="peer hidden"
+                                            />
+                                            <label
+                                                htmlFor={`react-${index}`}
+                                                className="dark:hover:text-emerald-400 flex size-6 cursor-pointer items-center justify-center rounded-lg bg-white p-5 text-neutral-500 transition-all ease-in hover:bg-neutral-50 hover:text-emerald-400 active:scale-95 peer-checked:bg-gradient-to-br peer-checked:from-emerald-600 peer-checked:to-green-400 peer-checked:text-neutral-700 dark:border-emerald-600 dark:bg-neutral-800 dark:text-emerald-600 dark:hover:bg-neutral-700 dark:peer-checked:text-neutral-900"
+                                            >
+                                                <div>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        className="icon icon-tabler icons-tabler-outline icon-tabler-plus size-8"
+                                                    >
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M12 5l0 14" />
+                                                        <path d="M5 12l14 0" />
+                                                    </svg>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </article>
+                            )
+                        })}
+                    </div>
                 </div>
-                <div className="w-full flex gap-4 flex-col items-center sm:flex-row sm:w-fit self-end">
+
+                <div className="mt-4 w-full flex gap-4 flex-col-reverse items-center sm:flex-row sm:w-fit self-end">
                     <button
                         type="button"
                         onClick={() => { setIsAddExerciseModalOpen(false), cerrarModalEjercicio() }}
@@ -572,6 +506,6 @@ export const AgregarEjercicioEditar = (isAddExerciseModalOpen, searchTerm, setSe
                     </div>
                 </form>
             </Modal>
-        </div>
+        </div >
     )
 };
