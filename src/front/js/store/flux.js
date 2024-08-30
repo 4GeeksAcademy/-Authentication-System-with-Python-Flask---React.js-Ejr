@@ -185,6 +185,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     let response = await axios.get(process.env.BACKEND_URL + '/valid-token', {
                         headers: {
+                            "Content-Type": "application/json",
                             'Authorization': `Bearer ${token}`
                         },
                     })
@@ -257,6 +258,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     let response = await axios.delete(process.env.BACKEND_URL + "/delete-account", {
                         headers: {
+                            "Content-Type": "application/json",
                             'Authorization': `Bearer ${token}`
                         }
                     })
@@ -279,6 +281,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/physical-user-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -300,6 +303,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/last-one-physical-user-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -321,6 +325,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/last-physical-user-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -349,6 +354,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/physical-information", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -380,6 +386,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/physical-information', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -418,10 +425,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             // GET ALL WeeklyRoutine OF USER / TRAER TODAS RUTINA SEMANA DE USUARIO
             allWeeklyRoutineUser: async () => {
+
                 let token = localStorage.getItem("token")
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + "/weekly-user-routine", {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -443,6 +452,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const resp = await axios.get(process.env.BACKEND_URL + `/weekly-user-routine/${week}`, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -474,12 +484,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/weekly-routine', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
 
                     if (response.status == 200) {
                         console.log('Weekly Routine successfully added:', response.data);
+                        await getActions().allWeeklyRoutineUser()
+                        console.log(response.data);
+
                         return true;
                     }
                 } catch (error) {
@@ -509,6 +523,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.put(process.env.BACKEND_URL + `/weekly-user-routine/${oldDay}`, payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -529,7 +544,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             // DELETE WeeklyRoutine / ELIMINAR RUTINA SEMANA
             deleteWeeklyUserRoutine: async (day) => {
+
                 try {
+                    const store = getStore()
                     const token = localStorage.getItem('token')
                     if (!token) {
                         return ({ "error": "no token found" })
@@ -538,13 +555,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const resp = await axios.delete(process.env.BACKEND_URL + `/weekly-user-routine/${day}`,
                         {
                             headers: {
+                                "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`
                             }
                         }
                     );
-
                     if (resp.status == 200) {
-                        console.log(resp.data);
+                        setStore({ allWeeklyRoutineUserList: store.allWeeklyRoutineUserList.filter(item => item.day != day) })
                         return true;
                     }
                 }
@@ -578,7 +595,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     if (resp.status == 200) {
                         setStore({ oneRoutine: resp.data })
-                        console.log(getStore().oneRoutine);
                         return true;
                     }
                 }
@@ -602,6 +618,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/routine', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -636,12 +653,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.put(process.env.BACKEND_URL + `/routine/${id}`, payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
 
                     if (response.status == 200) {
                         console.log('Routine successfully update:', response.data);
+                        await getActions().oneRoutine(id)
+                        console.log("funciona");
+
                         return true;
                     }
                 } catch (error) {
@@ -665,6 +686,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const resp = await axios.delete(process.env.BACKEND_URL + `/delete-routine/${id}`,
                         {
                             headers: {
+                                "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`
                             }
                         }
@@ -733,6 +755,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise', payload, {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`
                         }
                     });
@@ -897,11 +920,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     };
                     console.log('Sending payload:', payload);
                     let response = await axios.post(process.env.BACKEND_URL + '/exercise-routine', payload, {
-                        // headers: {
-                        //     Authorization: `Bearer ${token}`
-                        // }
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
                     });
+                    console.log(response);
                     if (response.status == 200) {
+                        await getActions().oneRoutine(routine_id)
+                        await getActions().allWeeklyRoutineUser()
                         console.log('Exercise Routine successfully added:', response.data);
                         return true;
                     }
@@ -926,12 +952,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const resp = await axios.delete(process.env.BACKEND_URL + `/exercise-routine/${routine_id}/${exercise_id}`,
                         {
                             headers: {
+                                "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`
                             }
                         }
                     );
 
                     if (resp.status == 200) {
+                        await getActions().oneRoutine(routine_id)
+                        await getActions().allWeeklyRoutineUser()
                         console.log(resp.data);
                         return true;
                     }

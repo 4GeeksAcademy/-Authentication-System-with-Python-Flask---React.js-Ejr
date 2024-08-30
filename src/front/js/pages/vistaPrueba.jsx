@@ -17,7 +17,8 @@ export const VistaPrueba = () => {
 		// actions.postExercise("elevaciones laterales","HOMBRO","ejericio de hobro", "123")
 		// actions.postFollowUp(10,7)
 		// actions.allRoutine();
-		// actions.oneRoutine(1);
+		// actions.oneRoutine(11);
+		// store.oneRoutine();
 		// actions.allExercise();
 		// actions.oneExercise(1);
 		// actions.allExerciseRoutine();
@@ -48,7 +49,7 @@ export const VistaPrueba = () => {
 		// actions.putSets(1, 1, 4, 12)
 		// actions.deleteWeeklyUserRoutine("DOMINGO")
 		// actions.deleteRoutine(12)
-		actions.deleteExerciseRoutine(11,1)
+		// actions.deleteExerciseRoutine(11, 1)
 	}, [])
 	// console.log(store.allCategoryList);
 	// console.log(Object.keys(store.allCategoryList));
