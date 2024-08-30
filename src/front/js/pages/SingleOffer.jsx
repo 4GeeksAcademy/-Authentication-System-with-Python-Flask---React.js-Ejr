@@ -85,7 +85,7 @@ export const SingleOffer = () => {
             <div className="container my-5">
                 <div className="card single-card single-offer-box mb-4">
                     <div className="card-body">
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
                             <div className="card-offer-logo">
                                 <img
                                     src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
@@ -94,14 +94,14 @@ export const SingleOffer = () => {
                             </div>
                             <div className="d-flex flex-column offer-header">
                                 <h2 className="mb-0">{offer.name}</h2>
-                                <span className="text-muted">
+                                <span className="text-muted fecha-publi-single">
                                     {offer.fecha_publicacion}
                                     <span className="ms-3">{offer.localidad}</span>
                                 </span>
                                 <div className="salary-box">
                                     <span className="text-success">{offer.salario}</span>
                                 </div>
-                                <span className="text-muted">Número de inscritos: {numeroInscritos}</span>
+                                <span className="text-muted num-postulados">Postulados ({numeroInscritos})</span>
                             </div>
                             {isProgramador && (
                                 <button
@@ -112,7 +112,7 @@ export const SingleOffer = () => {
                                 </button>
                             )}
                         </div>
-                        <div className="requisit-list d-flex mt-4">
+                        <div className="requisit-list d-flex mt-5">
                             <ul className="text-muted">
                                 <li>{offer.modalidad}</li>
                                 <li>{offer.experiencia_minima}</li>
@@ -128,7 +128,7 @@ export const SingleOffer = () => {
                         </div>
                         <hr />
                         <div className="requisitos-minimos-single-offer">
-                            <div className="text-secondary fw-bold fs-2 text-decoration-underline">
+                            <div className="fs-4">
                                 <h3>Requisitos Mínimos</h3>
                             </div>
                             <p className="text-muted text-start">
