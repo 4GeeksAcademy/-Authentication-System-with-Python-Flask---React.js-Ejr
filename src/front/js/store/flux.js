@@ -63,6 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             error: null, // Estado para errores
             cursosProfe: [], //Almacena los cursos asignados al profesor específico.
             cursosAlumno: [], // Almacena los cursos en los que el alumno está inscrito
+            cursoSeleccionado: [], //Almacena los cursos seleccionados por el alumno para comprar.
             autentificacion: false, // Indica si el usuarioProfe está autenticado.
             usuarioPr:  null,  // Usuario que es un profesor.
             usuarioA: null, //información del usuario que se ha autenticado como alumno.
@@ -122,6 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try { // Enviamos una solicitud GET para obtener todos los cursos.
                     const response = await fetch(process.env.BACKEND_URL+'/api/cursos'); // Solicita los datos de cursos
                     const data = await response.json(); // Convierte la respuesta en JSON
+                    console.log('Cursos cargados:', data); // Verifica los cursos cargados
                     setStore({ ...store, cursos: data, cursosConFiltros: data, loading: false }); 
                     // Actualizamos ambos estados tanto de cursos y cursosConFiltrado y oculta el estado de carga
                 } catch (error) {

@@ -1,5 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
+import os
+
+import stripe #plataforma de pago. Para instalar el paquete de Stripe, tuve que poner: pip install stripe ,en la consola Backend y: npm install @stripe/react-stripe-js @stripe/stripe-js ,en el Fronted
 from api.models import db, User, Curso, Profesor, Alumno, Videos, Matricula, Pagos
 
 # Crear el Blueprint para la API
@@ -176,3 +179,25 @@ def create_user2():
     db.session.commit()
     
     return jsonify(new_user.serialize()), 201
+  
+ #Pago con API stripe   
+#El backend maneja la creación del PaymentIntent y devuelve el client_secret.
+stripe.api_key = os.getenv("STRIPE_PRIVATE") #establece la clave secreta de Stripe, esencial para realizar operaciones seguras con la API de Stripe.
+
+@api.route('/create-payment', methods=['POST']) #copiado del repositorio codespace de JaviSeigle
+def create_payment():
+    try: # Recibe los datos de la cantidad y moneda.
+        data = request.json
+        #PODEMOS PASAR TODOS LOS ELEMENTOS QUE PERMITA EL OBJETO DE PAYMENTINTENT.CREATE 
+        intent = stripe.PaymentIntent.create(
+            amount=data['amount'], # se deberia de calcular el precio en el back, no recibirse del front
+            currency=data['currency'],
+            automatic_payment_methods={
+                'enabled': True
+            }
+        )
+        return jsonify({
+            'clientSecret': intent['client_secret'] #Devuelve el client_secret del PaymentIntent, que es necesario en el frontend para confirmar el pago.
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
