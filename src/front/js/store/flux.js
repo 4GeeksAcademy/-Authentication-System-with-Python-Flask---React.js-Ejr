@@ -81,8 +81,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 
-				if(!token){
-					return {msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error'}
+				if (!token) {
+					return { msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error' }
 				}
 
 				try {
@@ -98,28 +98,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('inscripcion exitosa', data);
-						return {msg: "Inscripcion realizada con exito.", type: "success"};
+						return { msg: "Inscripcion realizada con exito.", type: "success" };
 					} else {
 						const errorData = await resp.json();
 						console.log("Error al inscribirse: ", errorData.msg);
-						return  {msg: errorData.msg, type: 'warning'};
-						
+						return { msg: errorData.msg, type: 'warning' };
+
 					}
 				} catch (error) {
 					console.log("Error en la solitud de inscripcion.");
-					return {msg: "Error en la solicitud de inscripcion.", type: "error"}
-					
+					return { msg: "Error en la solicitud de inscripcion.", type: "error" }
+
 				}
 			},
 
 			unapplyFromJobOffer: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
-			
+
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
-			
+
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
 						method: 'DELETE',
@@ -128,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${token}`,
 						},
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('Desinscripción exitosa', data);
@@ -289,7 +289,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}).then((response) =>
 					response.json()
 				).then((data) => {
-					setStore({ suscripción: data })
+					setStore({ user: data.user, suscripcion: data })
 				}).catch((error) => {
 					console.log('[error]', error)
 				});

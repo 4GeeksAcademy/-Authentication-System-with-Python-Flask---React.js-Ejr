@@ -17,7 +17,11 @@ export const Inicio = () => {
                     <p className="lead text-secondary mt-3">
                         ¿Eres un programador en busca de proyectos desafiantes? ¿O una empresa que necesita talento tecnológico para llevar sus ideas al siguiente nivel? ¡Estás en el lugar indicado!
                     </p>
-
+                    {store.suscripcion?.payment && (
+                        <div class="alert alert-success my-2" role="alert">
+                            {store.suscripcion?.payment}
+                        </div>
+                    )}
                     {!store.user && (
                         <div className="mt-4">
                             <Link to={"/register"}>

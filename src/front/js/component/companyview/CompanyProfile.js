@@ -10,13 +10,12 @@ import CountrySelector from '../userview/Dropdown';
 import CheckoutForm from "../../component/Checkout";
 import Stars from '../stars';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 
 const CompanyProfile = () => {
     const stripePromise = loadStripe("pk_test_51PsqIxG3cEcyZuNpill2BXWYLnqGWok6W48xAOpaOlq5BHME5440qc4FGMIzdoADAgiR77Q3VBP3tmrzLuVWmbOy00tZCSphPW");
-    const { store, actions } = useContext(Context);
-    const [showPay, setShowPay] = useState(false)
+    const { store } = useContext(Context);
     return (
         <div style={styles.pageContainer}>
             <div className="row" style={styles.row}>
@@ -42,6 +41,7 @@ const CompanyProfile = () => {
                                     <EditCompanyPhone />
                                     <EditCompanyMail />
                                 </div>
+
                             </div>
 
                             <div className="col-md-4" style={styles.rightColumn}>
@@ -53,19 +53,36 @@ const CompanyProfile = () => {
                                         <CountrySelector />
                                     </div>
                                     <div className="w-100 text-center">
-                                        <h5>Suscripción actual:{!store.user?.profile_empleador.premium ? " Gratis" : "Premium"}</h5>
-                                        <button onClick={() => setShowPay(true)}>Suscripción anual Premium: 200€</button>
+                                        <h5>Suscripción actual:{!store.user?.profile_empleador.premium ? <button type="button" disabled className="p-1 mx-2 btn btn-outline-dark">Free</button> : <button type="button" disabled className="p-1 mx-2 btn btn-outline-success">Premium</button>}</h5>
 
-                                        {showPay && (
-
-                                            <div >
-                                                <Elements stripe={stripePromise}>
-                                                    {/* Load the checkout form */}
-                                                    <CheckoutForm />
-                                                </Elements>
-                                            </div>
+                                        {!store.user?.profile_empleador.premium && (
+                                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                Pasar la Suscripción a Premium
+                                            </button>
 
                                         )}
+
+
+                                        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-dialog-centered">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h1 className="modal-title fs-5" id="exampleModalLabel">Coste anual de la suscripción: 200€</h1>
+                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div className="modal-body">
+                                                        <div >
+                                                            <Elements stripe={stripePromise}>
+                                                                {/* Load the checkout form */}
+                                                                <CheckoutForm />
+                                                            </Elements>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                     </div>
                                 </div>

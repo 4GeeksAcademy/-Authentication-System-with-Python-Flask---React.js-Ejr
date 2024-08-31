@@ -368,23 +368,13 @@ def reset_password():
     db.session.commit()
     return jsonify({"msg":"Password updated"}), 200
 
-@api.route('/reset-password', methods=['POST'])
-@jwt_required()
-def reset_password():
-
-    user_id=get_jwt_identity()
-    password=request.json.get('password')
-    user=User.query.get(user_id)
-    if not user:
-        return jsonify({"msg":"User not found"}), 404
-    user.password=user.generate_password_hash(password)
-    db.session.commit()
-    return jsonify({"msg":"Password updated"}), 200
 
 
 
 @api.route('/create-payment', methods=['POST'])
+@jwt_required()
 def create_payment():
+    user_id = get_jwt_identity()
     data = request.get_json()
     amount = 200
     payment = stripe.PaymentIntent.create(
@@ -395,5 +385,14 @@ def create_payment():
         off_session=True,
         confirm=True,
     )
-    print(payment)
-    return jsonify({'Suscripción': True, 'payment':f'Has sido suscrito con éxito, has pagado la cantidad de {payment.amount} {payment.currency}'}),200
+    user = User.query.get(user_id)
+    empleador = user.profile_empleador
+    if(empleador):
+        print(payment)
+        empleador.premium=True
+        db.session.commit()
+        return jsonify({'success': True, 'payment':f'Has sido suscrito con éxito, gracias por confiar en Loopy', "user":user.serialize()}),200
+    else:
+        return jsonify({'success': False, 'payment':f'Algo ha fallado, por favor vuelva a intentarlo'}),200
+    
+    
