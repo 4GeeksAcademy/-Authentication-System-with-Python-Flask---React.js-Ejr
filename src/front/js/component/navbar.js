@@ -1,14 +1,25 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link , useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.css";
 import logo from '../../img/LogoNombre2b.png';
 
 export const Navbar = () => {
+    const{store,actions}=useContext(Context)
 	//localStorage, almacenar datos en el navegador del usuario de manera persistente, después de que el navegador se cierra o la página se recarga
     // Leer el estado de autenticación y la imagen de perfil desde localStorage
     const logueado = localStorage.getItem('logueado'); //Verifica si el usuario está autenticado.
     const usuarioImage = localStorage.getItem('usuarioImage'); //Obtiene la URL de la imagen del perfil del usuario.
+    useEffect(
+        ()=>{
+            console.log(logueado)
+        },[logueado])
+    
+    const navigate = useNavigate();
+    const handleLogout = ()=>{
+        actions.logout()
+        navigate("/")
+    }
 
     return (
         <nav className="navbar mb-0">
@@ -27,6 +38,9 @@ export const Navbar = () => {
                         <li><Link className="dropdown-item" to="/cursos">Cursos</Link></li>
                         <li><Link className="dropdown-item" to="/logout">Salir</Link></li>
                     </ul>
+                    <button className="btn btn-secondary" type="button" onClick={()=>handleLogout()}>
+                        Cerrar sesión
+                    </button>
                 </div>
             ) : ( //Si no está autenticado, se muestran los botones de "Iniciar sesión" y "Registrarse".
                 <div className="navbar-buttons">
