@@ -54,7 +54,7 @@ export const CheckoutForm = () => {
         console.log('[error]', error);
       } else if (paymentIntent.status === 'succeeded') {
         console.log('Payment succeeded!');
-        navigate("/completoDisWeb"); // Cambia "/completoDWeb" por la ruta que corresponda a tu página
+        navigate("/completoDisWeb"); // Cambia "/completoDisWeb" por la ruta que corresponda a tu página
       }
       else{
         console.log('some error')
