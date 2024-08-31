@@ -23,21 +23,6 @@ export const Navbar = () => {
               className="dropdown"
               style={{ marginRight: '15px' }}
             >
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButtonDark"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Categories
-              </button>
-              <ul className="dropdown-menu dropdown-menu-dark">
-                <li><a className="dropdown-item" id="actionGames" href="#">Action</a></li>
-                <li><a className="dropdown-item" id="roleplayingGames" href="#">RPG</a></li>
-                <li><a className="dropdown-item" id="strategy" href="#">Strategy</a></li>
-              </ul>
-
             </div>
             <button
               className="btn btn-secondary"

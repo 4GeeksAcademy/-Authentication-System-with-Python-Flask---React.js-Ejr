@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
+    const redirect = useNavigate()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -14,11 +15,16 @@ export const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Login form submitted:', formData);
-        // Add logic for logging in the user here
-    };
+    const handleSubmit = (e, formData) => {
+        e.preventDefault()
+        actions.login(formData)
+        console.log('Form submitted:', formData);
+        setFormData({
+          email: '',
+          password: '',
+        })
+        redirect("/")
+      };
 
     return (
         <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto', backgroundColor: '#f7f7f7', borderRadius: '8px' }}>
@@ -50,7 +56,7 @@ export const Login = () => {
                     />
                 </div>
 
-                <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px' }}>
+                <button type="submit" onClick={(e) => handleSubmit(e, formData)} style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px' }}>
                     Login
                 </button>
             </form>

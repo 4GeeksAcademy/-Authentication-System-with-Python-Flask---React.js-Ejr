@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
+import { Context } from '../store/appContext';
 
 export const SignUp = () => {
+  const redirect = useNavigate()
+  const { store, actions } = useContext(Context)
+
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     password: '',
   });
 
   const handleChange = (e) => {
+    console.log(e.target.name)
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e, formData) => {
+    e.preventDefault()
+    actions.signup(formData)
     console.log('Form submitted:', formData);
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+    })
+    redirect("/")
   };
 
   return (
@@ -29,11 +40,11 @@ export const SignUp = () => {
           <label style={{ display: 'block', marginBottom: '5px' }}>Full Name:</label>
           <input
             type="text"
-            name="Full_Name"
-            value={formData.firstName}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             style={{ width: '100%', padding: '8px' }}
-            required
+          //required
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
@@ -58,7 +69,7 @@ export const SignUp = () => {
             required
           />
         </div>
-        <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px' }}>
+        <button type="submit" onClick={(e) => handleSubmit(e, formData)} style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px' }}>
           Sign Up
         </button>
       </form>

@@ -45,6 +45,7 @@ class Game(db.Model):
     name = db.Column(db.String(100), unique = False, nullable = False)
     category = db.Column(db.String(100), unique = False, nullable = False) 
     favorited_by = db.relationship('Favorite', back_populates='game', cascade='all, delete-orphan')
+    # add an images column and return it in on like 57 in the serialize
     def __repr__(self):
         return f'<game {self.name}>'
 
@@ -53,6 +54,7 @@ class Game(db.Model):
             "id": self.id,
             "name": self.name,
             "category": self.category
+            #"image": self.image
         }
 
     
