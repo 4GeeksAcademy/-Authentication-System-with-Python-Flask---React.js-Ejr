@@ -95,7 +95,7 @@ export const SingleOffer = () => {
                             </div>
                             <div className="d-flex flex-column offer-header">
                                 <h2 className="mb-0">{offer.name}</h2>
-                                <span className="ms-3 companyName-localidad">nombre empresa</span>
+                                <span className="ms-3 companyName-localidad">{offer.nombre_empresa}</span>
                                 <span className="fecha_publicacion text-secondary">
                                     fecha de publicación  {offer.fecha_publicacion}
                                 </span>                                
