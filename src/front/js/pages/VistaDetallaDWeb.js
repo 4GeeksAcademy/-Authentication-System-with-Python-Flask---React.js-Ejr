@@ -36,7 +36,7 @@ const VistaDetallada = () => {
     // // Cargar cursos cuando el componente se monta
     useEffect(() => {
         console.log('Cargando cursos...');
-        // actions.cargarCursos();
+    //    actions.cargarCursos(); 
     }, []);
     
 
