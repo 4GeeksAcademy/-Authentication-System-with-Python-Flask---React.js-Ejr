@@ -88,7 +88,7 @@ export const CardOffer = ({ id }) => {
               alt="Company Logo"
             />
             <span className="num-postulados text-muted">
-              {numeroInscritos} postulados
+              ({numeroInscritos}) postulados
             </span>
           </div>
           <div className="col-9 header-box d-flex flex-column">

@@ -83,7 +83,7 @@
     position: relative;
     bottom: 40px;
 }
-.btn-up{
-    background-color: rgb(103, 147, 174);
 
+.btn-single-up{
+    background-color: rgb(103, 147, 174); ;
 }
