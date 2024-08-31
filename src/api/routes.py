@@ -72,23 +72,58 @@ def crear_curso():
     db.session.commit()
     return jsonify({'success': True, 'curso': new_curso.serialize()}), 200
 
+
+
+
+
+
+
+
+
+
+
+
+
 @api.route('/cursos/<int:curso_id>', methods=['GET'])
-#@jwt_required() AUN NO SE SI HACE FALTA
+@jwt_required()  # Proteger la ruta para que solo usuarios autenticados puedan acceder
 def get_curso(curso_id):
     curso = Curso.query.get(curso_id)
     if curso:
-        return jsonify({"msg": curso.serialize()}), 200
+        # Suponemos que el primer video asociado al curso es el que queremos mostrar
+        video = Videos.query.filter_by(curso_id=curso_id).first()
+        video_url = video.url if video else None
+        return jsonify({"msg": curso.serialize(), "video_url": video_url}), 200
     else:
         return jsonify({"error": "Curso not found"}), 404
 
 @api.route('/cursos', methods=['GET'])
-#@jwt_required() AUN NO SE SI HACE FALTA
+@jwt_required()  # Proteger la ruta para que solo usuarios autenticados puedan acceder
 def get_cursos():
     cursos = Curso.query.all()
     if cursos:
         return jsonify({"msg": [curso.serialize() for curso in cursos]}), 200
     else:
         return jsonify({"error": "Cursos not found"}), 404
+
+@api.route('/curso/<int:curso_id>/videos', methods=['GET'])
+@jwt_required()
+def get_curso_videos(curso_id):
+    user_id = get_jwt_identity()  # Obtener el ID del usuario desde el JWT
+
+    # Verificar si el usuario está matriculado en el curso
+    matricula = Matricula.query.filter_by(alumno_id=user_id, curso_id=curso_id).first()
+    if not matricula:
+        return jsonify({"error": "No estás matriculado en este curso."}), 403
+
+
+
+
+
+
+
+
+
+
 
 @api.route('/login', methods=['POST'])
 def login():

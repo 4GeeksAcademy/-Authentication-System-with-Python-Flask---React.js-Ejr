@@ -1,48 +1,63 @@
-import React, { useEffect, useState } from 'react';
 
-const VerVideo = () => {
-    const [data, setData] = useState(null);
+import React, { useEffect, useState } from 'react';
+import '../../styles/pantallaVideo.css'; 
+
+const VerVideo = ({ cursoId }) => {
+    const [videoUrl, setVideoUrl] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const url = 'https://yt-api.p.rapidapi.com/dl?id=arj7oStGLkU';
-            const options = {
-                method: 'GET',
-                headers: {
-                    'x-rapidapi-key': 'cc9f42dc01msh6e75c1774fdae52p1b03e2jsnf594dc9b1506',
-                    'x-rapidapi-host': 'yt-api.p.rapidapi.com'
-                }
-            };
-
+        const fetchVideo = async () => {
             try {
-                const response = await fetch(url, options);
+                // Asume que tienes un token de autenticación en tu almacenamiento local
+                const token = localStorage.getItem('token');
+                
+                const response = await fetch(`/api/curso/${cursoId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const result = await response.json(); // Use .json() if API returns JSON
-                setData(result);
+
+                const data = await response.json();
+                setVideoUrl(data.video_url); // Obtenemos la URL del video
             } catch (error) {
                 setError(error.message);
+                console.error('Error fetching video:', error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchData();
-    }, []); // Empty dependency array means this effect runs once after initial render
+        fetchVideo();
+    }, [cursoId]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
-            <h1>Video Data</h1>
-            <div> </div>
-            <pre>{JSON.stringify(data, null, 2)}</pre> {/* Format JSON for better readability */}
+        <div className='videoPantalla'>
+            <div className='videoContainer'>
+                {videoUrl ? (
+                    <iframe
+                        src={videoUrl}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className='videoIframe'
+                        title="Video de YouTube"
+                    />
+                ) : (
+                    <p>No video available for this course.</p>
+                )}
+            </div>
         </div>
     );
 };
 
 export default VerVideo;
+
