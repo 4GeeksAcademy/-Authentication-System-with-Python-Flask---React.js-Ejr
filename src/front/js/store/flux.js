@@ -212,35 +212,36 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             // Acción para iniciar sesión profe
-            login: async (dataForm) => {
-                try {
-                    // solicitud POST a la API para autenticar al usuario profe.
-                    const response = await fetch(process.env.BACKEND_URL + '/api/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dataForm) // Los datos del formulario de inicio de sesión
-                    });
+            // login: async (dataForm) => {
+            //     try {
+            //         // solicitud POST a la API para autenticar al usuario profe.
+            //         const response = await fetch(process.env.BACKEND_URL + '/api/login', {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //             body: JSON.stringify(dataForm) // Los datos del formulario de inicio de sesión
+            //         });
 
-                    if (response.ok) {
-                        const userData = await response.json();
-                        setStore({ usuarioPr: userData.user, autentificado: true });
-                        localStorage.setItem('token', userData.token);
-                        return true;
-                    } else {
-                        console.error('Login fallido');
-                        return false;
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    return false;
-                }
-            },
+            //         if (response.ok) {
+            //             const userData = await response.json();
+            //             setStore({ usuarioPr: userData.user, autentificado: true });
+            //             localStorage.setItem('token', userData.token);
+            //             return true;
+            //         } else {
+            //             console.error('Login fallido');
+            //             return false;
+            //         }
+            //     } catch (error) {
+            //         console.error('Login error:', error);
+            //         return false;
+            //     }
+            // },
 
             // Cerrar sesión Profe
             logout: () => {
                 localStorage.removeItem('token'); // Elimina el token del localStorage
+                localStorage.removeItem('logueado');
                 setStore({ usuarioPr: null, autentificado: false, cursosProfe: [] });
             },
 
@@ -322,6 +323,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Response data:', data);
 
                     if (response.ok) {
+                        localStorage.setItem("logueado", data.token)
                         return {
                             success: true,
                             user: data.user,

@@ -17,7 +17,6 @@ const VistaDetallada = () => {
 
     console.log('ID desde la URL:', cursoId); // Verifica el ID obtenido de la URL
 
-    // Encuentra el curso por ID en el estado global
     
 
     useEffect(() => {
