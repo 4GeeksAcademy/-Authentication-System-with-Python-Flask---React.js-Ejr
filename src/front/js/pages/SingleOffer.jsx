@@ -85,51 +85,65 @@ export const SingleOffer = () => {
             <div className="container my-5">
                 <div className="card single-card single-offer-box mb-4">
                     <div className="card-body">
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
                             <div className="card-offer-logo">
                                 <img
                                     src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
                                     alt="Company Logo"
                                 />
+                                <span className="text-muted num-postulados">Postulados ({numeroInscritos})</span>
                             </div>
                             <div className="d-flex flex-column offer-header">
                                 <h2 className="mb-0">{offer.name}</h2>
-                                <span className="text-muted">
-                                    {offer.fecha_publicacion}
-                                    <span className="ms-3">{offer.localidad}</span>
-                                </span>
-                                <div className="salary-box">
-                                    <span className="text-success">{offer.salario}</span>
-                                </div>
-                                <span className="text-muted">Número de inscritos: {numeroInscritos}</span>
+                                <span className="ms-3 companyName-localidad">{offer.nombre_empresa}</span>
+                                <span className="fecha_publicacion text-secondary">
+                                    fecha de publicación  {offer.fecha_publicacion}
+                                </span>                                
                             </div>
                             {isProgramador && (
                                 <button
-                                    className={`btn ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-lg`}
+                                    className={`btn btn-up ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-lg`}
                                     onClick={handleApplyClick}
                                 >
                                     {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
                                 </button>
                             )}
                         </div>
-                        <div className="requisit-list d-flex mt-4">
-                            <ul className="text-muted">
+                        <div className="data-list d-flex justify-content-start mt-5">
+                            <ul className="text-muted data-1">
                                 <li>{offer.modalidad}</li>
-                                <li>{offer.experiencia_minima}</li>
-                                <li>{offer.salario}</li>
-                                <li>{offer.plazo}</li>
-                            </ul>
-                            <ul className="text-muted">
-                                <li>{offer.idiomas}</li>
                                 <li>{offer.tipo_contrato}</li>
-                                <li>{offer.horario}</li>
+                                <li>{offer.localidad}</li>
+                            </ul>
+                            <ul className="text-muted data-2">
+                                <li>{offer.idiomas}</li>
+                                <li>{offer.salario}</li>
                                 <li>{offer.estudios_minimos}</li>
                             </ul>
                         </div>
+                        <div className="requisits-box">
+                            <h2 className="">Requisitos</h2>
+                            <div className="formacion">
+                                <h5 className="lh-1 mt-4">Estudios minimos</h5>
+                                <p>{offer.estudios_minimos}</p>
+                            </div>
+                            <div className="expriencia-min mt-4">
+                                <h5>Experiencia minima</h5>
+                                <p>{offer.experiencia_minima}</p>
+                            </div>
+                            <div className="idiomas mt-4">
+                                <h5>Idiomas requeridos</h5>
+                                <p>{offer.idiomas}</p>
+                            </div>
+                            <div className="tipo-contrato mt-4">
+                                <h5>Tipo de contrato</h5>
+                                <p>{offer.tipo_contrato}</p>
+                            </div>
+                        </div>
                         <hr />
                         <div className="requisitos-minimos-single-offer">
-                            <div className="text-secondary fw-bold fs-2 text-decoration-underline">
-                                <h3>Requisitos Mínimos</h3>
+                            <div className="fs-4">
+                                <h3 className="">Requisitos Mínimos</h3>
                             </div>
                             <p className="text-muted text-start">
                                 {offer.requisitos_minimos}
@@ -144,7 +158,7 @@ export const SingleOffer = () => {
                             <div className="sigle-buttons">
                                 {isProgramador && (
                                     <button
-                                        className={`btn-inscribirse-up ${isSubscribed ? 'btn-desinscribirse-single' : 'btn-inscribirse-sigle'} btn-lg mt-3`}
+                                        className={`btn-down ${isSubscribed ? 'btn-desinscribirse-single' : 'btn-inscribirse-sigle'} btn-lg mt-3`}
                                         onClick={handleApplyClick}
                                     >
                                         {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
@@ -154,8 +168,6 @@ export const SingleOffer = () => {
                         </div>
                     </div>
                 </div>
-
-
             </div>
             {isModalOpen && (
                 <ModalJobApply

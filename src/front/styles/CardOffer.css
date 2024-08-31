@@ -95,6 +95,11 @@
     align-items: center; 
 
 }
+
+.card-offer-details .list-footer-details:nth-child(3){
+    font-size: 0.85rem;
+
+}
 .card-offer-actions{
     display: flex;
     gap: 10px; 

@@ -1,35 +1,43 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CardOffer } from "./CardOffer.jsx";
 import { Context } from "../store/appContext.js";
-import "../../styles/CardListOffer.css"
-
+import "../../styles/CardListOffer.css";
 
 export const ListOffers = ({ searchTerm }) => {
     const { store, actions } = useContext(Context);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        actions.loadAllJobOffers();
-    }, []);
+        if (!loaded) {
+            actions.loadAllJobOffers().then(() => setLoaded(true));
+        }
+    }, [loaded, actions]); 
 
+    const filterOffers = (offers, searchTerm) => {
+        if (!searchTerm) return offers;
 
-    const searchOffers = store.jobOffers?.filter((offer) => {
-        const nameMatch = offer.name?.toLowerCase().includes(searchTerm?.toLowerCase());
-        const modalityMatch = offer.modality?.toLowerCase().includes(searchTerm?.toLowerCase());
-        const salaryMatch = offer.salary?.toLowerCase().includes(searchTerm?.toLowerCase());
+        return offers.filter(offer => {
+            const term = searchTerm.toLowerCase();
+            const nameMatch = offer.name?.toLowerCase().includes(term);
+            const modalityMatch = offer.modality?.toLowerCase().includes(term);
+            const salaryMatch = offer.salary?.toLowerCase().includes(term);
 
-        return nameMatch || modalityMatch || salaryMatch;
-    });
+            return nameMatch || modalityMatch || salaryMatch;
+        });
+    };
+
+    const filteredOffers = filterOffers(store.jobOffers || [], searchTerm);
 
     return (
-        <div className="list-offer-container">
+        <div className="list-offer-container mt-3">
             <div className="row d-flex flex-column g-2">
-                {searchOffers.length > 0 ? (
-                    searchOffers.map((offer, index) => (
-                        <div className="col list-offer-box" key={index}>
+                {filteredOffers.length > 0 ? (
+                    filteredOffers.map((offer) => (
+                        <div className="col list-offer-box" key={offer.id}>
                             <CardOffer
                                 title={offer.name}
-                                modality={offer.modality}  
-                                salary={offer.salary}    
+                                modality={offer.modality}
+                                salary={offer.salary}
                                 description={offer.description}
                                 id={offer.id}
                             />
