@@ -45,7 +45,7 @@ export const FormOffer = () => {
                 experiencia_minima: formData.experiencia_minima?.toUpperCase()
 
             };
-            
+
             try {
                 const resp = await actions.createJobOffer(updatedFormData);
                 console.log(resp);
@@ -101,7 +101,7 @@ export const FormOffer = () => {
                                     className="form-control"
                                     placeholder="Tecnologi vanguar SL, "
                                     onChange={handleChange}
-                                    value={formData.horario}
+                                    value={formData.nombre_empresa}
                                 />                                
                             </div>
                             <div className="col-4">
@@ -240,7 +240,7 @@ export const FormOffer = () => {
                                     value={formData.plazo}
                                 />
                             </div>
-                            <row className="mt-3">
+                            <div className=" row mt-3">
                                 <div className="col-12">
                                     <label htmlFor="requisitos" className="form-label text-secondary fw-bold my-3">Requisitos minimos</label>
                                     <input
@@ -253,7 +253,7 @@ export const FormOffer = () => {
                                         value={formData.requisitos_minimos}
                                     />
                                 </div>
-                            </row>
+                            </div>
                         </div>
                         <div className="row last-row mt-3">
                             <div className="col-12 box-description">
