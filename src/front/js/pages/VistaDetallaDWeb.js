@@ -47,7 +47,7 @@ const VistaDetallada = () => {
     return (
         <div className="curso-vistaDetallada">
             <h1>{curso.nombre}</h1>
-            <p><strong>Descripción:</strong> {curso.descripcion}</p>
+            <p><strong>Descripción Curso:</strong> {curso.descripcion}</p>
             <p><strong>Precio:</strong> €{curso.precio}</p>
             <button onClick={handleGoToPayment} className="btn btn-primary_pagar">Ir a pagar</button>
         </div>
