@@ -1,0 +1,35 @@
+
+.container3 {
+    margin-top: 5%; 
+    font-family: 'Lora', serif;
+    color: #416788;
+  }
+  
+
+  #cajaPrincipal-contacto {
+    margin-top: 20px;
+    margin-bottom: 100px; 
+    background-color: #E0E0E2;
+    color: #416788;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 4px 8px #416788;
+  }
+
+  #cajaPrincipal-contacto .img-fluid {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* La imagen cubre el contenedor completamente */
+    top: 0;
+    left: 0;
+    box-shadow: 0 4px 8px #416788;
+      }
+  
+  .text-center-contacto{
+    margin-bottom: 100px;
+    margin-left: 45px;
+    margin-right: 45px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  
