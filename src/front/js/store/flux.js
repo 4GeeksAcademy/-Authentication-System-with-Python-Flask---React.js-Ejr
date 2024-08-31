@@ -146,12 +146,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getNumeroPostulados: async (oferta_id) => {
 				try {
-					const response = await fetch(`/api/ofertas/${oferta_id}/postulados`);
+					const response = await fetch(`${process.env.BACKEND_URL}/api/ofertas/${oferta_id}/postulados`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${getStore().token}`
+						},
+					});
 					if (response.ok) {
 						const data = await response.json();
 						return data.numero_postulados;
 					} else {
-						console.error('Error al obtener número de postulaciones:', response.statusText);
+						const errorData = await response.json();
+						console.error('Error al obtener número de postulaciones:', errorData.msg);
 						return null;
 					}
 				} catch (error) {

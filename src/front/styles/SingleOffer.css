@@ -10,15 +10,10 @@
     top: 10px;
 }
 
-.salary-box{
-    font-size: 0.7rem;
-    text-decoration: underline;
-}
 .btn-inscribirse-up{
     position: relative;
     bottom: 40px;
 }
-
 .btn-company{
     background-color: rgb(175, 206, 225);
 
@@ -31,8 +26,64 @@
 }
 .offer-header{
     position: relative;
-    right: 40px;
+    left: 20px;
     bottom: 20px;
     cursor: pointer;
 }
+.localidad-publicacion span{
+   font-size: 1rem;
+   position: relative;
+   bottom: 5px;
+    
+}
 
+.fecha_publicacion {
+    position: absolute;
+    top: 60px;
+    font-size: 0.85rem;
+
+}
+.companyName-localidad{
+    position: relative;
+    right: 14px;
+    bottom: 5px;
+    font-size: 1rem;
+    color: blue
+}
+
+.companyName-localidad:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.requisit-list{
+    list-style: none;
+    font-size: 0.85rem;
+
+}
+
+.requisits-box h5{
+    font-size: 1.2rem;
+}
+.requisits-box p{
+    position: relative;
+    bottom: 5px;
+}
+.data-2{
+    position: relative;
+    left: 100px;
+    
+}
+
+.formacion{
+    font-size: 1rem;
+    
+}
+.experiencia-min  .idiomas  .tipo-contrato{
+    position: relative;
+    bottom: 40px;
+}
+.btn-up{
+    background-color: rgb(103, 147, 174);
+
+}

@@ -162,8 +162,9 @@ class Ofertas(db.Model):
     __tablename__="ofertas"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column (db.String (100), nullable=False)
+    nombre_empresa = db.Column (db.String(100), nullable=False)
     descripcion = db.Column (db.String(), nullable=False)
-    salario = db.Column (db.String(20), nullable=False)
+    salario = db.Column (db.String(20))
     localidad = db.Column(db.String(30), nullable=False)
     requisitos_minimos = db.Column(db.String(400), nullable=False)
     horario = db.Column(db.String(100))
@@ -186,6 +187,7 @@ class Ofertas(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "nombre_empresa": self.nombre_empresa,
             "descripcion": self.descripcion,
             "salario": self.salario,
             "localidad": self.localidad,

@@ -32,7 +32,6 @@
     text-shadow: 5px 5px 15px #909090;;
 }
 
-
 .button-box {
     display: flex;
     justify-content: flex-end;
@@ -56,6 +55,15 @@
     color: white;
     
 }
+.btn-cancelar{
+    background-color: rgb(103, 147, 174);
+    color: rgb(0, 0, 0);
+}
+.btn-cancelar:hover{
+    background-color: rgb(0, 157, 255);
+    color: white;
+    
+}
 .btn-reset{
     background-color: rgb(103, 147, 174);
     color: rgb(0, 0, 0);
@@ -63,13 +71,8 @@
 .btn-reset:hover{
     background-color: rgb(0, 157, 255);
     color: white;
-    
+
 }
 .last-row{
     position: relative;
-}
-.update-photo-box{
-    position: absolute;
-    right: 5px;
-    bottom: -22px;
 }

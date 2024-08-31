@@ -164,6 +164,7 @@ def crear_oferta():
         return jsonify({"success": False, "msg": "El usuario no es un empleador"}), 400
 
     name = request.json.get("name")
+    nombre_empresa = request.json.get("nombre_empresa")
     descripcion = request.json.get("descripcion")
     salario = request.json.get("salario")
     localidad = request.json.get("localidad")
@@ -177,7 +178,7 @@ def crear_oferta():
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
     
-    if not name or not descripcion or not localidad or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
+    if not name or not nombre_empresa or not descripcion or not localidad or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     try:
@@ -193,6 +194,7 @@ def crear_oferta():
 
     nueva_oferta = Ofertas(
         name=name,
+        nombre_empresa=nombre_empresa,
         descripcion=descripcion,
         salario=salario,
         localidad=localidad,
