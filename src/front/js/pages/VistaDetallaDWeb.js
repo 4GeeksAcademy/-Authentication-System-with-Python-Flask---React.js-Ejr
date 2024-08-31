@@ -88,7 +88,7 @@ const VistaDetallada = () => {
                                         Tema 1: Introducción al Diseño Web
                                     </button>
                                 </h2>
-                                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#cursoContenido">
+                                <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#cursoContenido">
                                     <div className="accordion-body">
                                         <ul>
                                             <li>Lección 1: Introducción</li>
