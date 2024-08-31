@@ -83,7 +83,8 @@
     position: relative;
     bottom: 40px;
 }
-.btn-up{
+.btn-inscribirse, .btn-desinscribirse{
     background-color: rgb(103, 147, 174);
+    min-width: 250px;
 
 }
