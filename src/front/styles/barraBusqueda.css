@@ -1,0 +1,140 @@
+/* Contenedor principal de la barra de búsqueda */
+.barra-busqueda {
+    background-color: #416788; /* Fondo de la barra */
+    border: 1px solid #000022; /* Borde oscuro */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Cambia la dirección del flex a columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 10px; /* Espacio entre filas de contenido */
+    max-width: 1500px; /* Ancho máximo de la barra de búsqueda */
+    margin: 15px auto 0; /* Añade margen superior para separar de elementos anteriores y Centra la barra de búsqueda horizontalmente*/
+}
+
+/* Estilos para las columnas */
+.barra-busqueda .colunCategoria,
+.barra-busqueda .colunNivel-col,
+.barra-busqueda .colunPrecio,
+.barra-busqueda .colunFecha,
+.barra-busqueda .colunIdioma,
+.barra-busqueda .colunBusqueda {
+    flex: 1;
+    max-width: 250px; /* Ancho máximo para las columnas para evitar que se expandan demasiado */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos en cada columna */
+    
+}
+
+/* Ajusta el tamaño de los grupos de formulario */
+.barra-busqueda .form-group {
+    width: 100%; /* Ocupa el 100% del ancho del contenedor padre */
+    max-width: 200px; /* Ancho máximo para los grupos de formulario */
+    margin-bottom: 10px; /* Espacio inferior entre los grupos de formulario */
+    display: flex;
+    flex-direction: column; /* Apilar los elementos verticalmente */
+    align-items: center; /* Centra los elementos dentro del grupo */
+}
+
+/* Estilo para las etiquetas en los grupos de formulario */
+.barra-busqueda .form-label {
+    font-size: 0.9em; /* Tamaño de la fuente de las etiquetas */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el control */
+}
+
+
+.barra-busqueda .form-control {
+    background-color: #416788; /* Fondo de la barra */
+}
+/* Estilo para los controles dentro de los grupos de formulario */
+.barra-busqueda .form-control, 
+.barra-busqueda .dropdown-toggle {
+    background-color: #416788; /* Fondo de la barra */
+    border: 1px solid #000022; /* Borde oscuro */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    font-size: 0.9em; /* Tamaño de la fuente de los controles */
+    padding: 6px; /* Padding reducido para los controles */
+    border-radius: 4px; /* Radio del borde ajustado */
+    margin-bottom: 5px; /* Espacio entre el control y el siguiente elemento */
+}
+
+/* Alinear las etiquetas en la misma altura */
+.barra-busqueda .form-label {
+    margin-bottom: 0; /* Elimina el margen inferior para alinearlas mejor */
+}
+
+/* Contenedor de botones */
+.colunBotones {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    margin-top: 20px; /* Ajusta el espacio superior para colocar los botones más abajo */
+}
+
+/* Agrupación de botones */
+.colunBotones .botones {
+    display: flex;
+    flex-direction: row; /* Alinea los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+}
+
+/* Estilo para los botones "Aceptar" y "Restablecer" */
+.barra-busqueda .btn-primary, 
+.barra-busqueda .btn-secondary {
+    background-color: #000022; /* Color de fondo específico */
+    color: #E0E0E2; /* Color de texto específico */
+    box-shadow: 0 4px 8px #000022; /* Sombra con el color específico #000022 */
+    border: none;
+    padding: 8px 16px; /* Ajusta el padding para igualar el tamaño */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Efecto de transición */
+    font-size: 0.9em; /* Tamaño de la fuente igual al de los controles */
+    line-height: 1.5; /* Altura de línea para alinear verticalmente */
+    min-width: 100px; /* Ancho mínimo para los botones */
+    text-align: center; /* Centra el texto dentro del botón */
+    height: 34px; /* Altura fija para igualar con los controles */
+    display: flex; /* Usar flexbox para alinear verticalmente el texto */
+    align-items: center; /* Centra verticalmente el texto dentro del botón */
+    box-sizing: border-box; /* Incluye padding y border en el ancho/alto del elemento */
+}
+
+/* Efecto hover para los botones "Aceptar" y "Restablecer" */
+.barra-busqueda .btn-primary:hover, 
+.barra-busqueda .btn-secondary:hover {
+    background-color: #7389AE; /* Cambio de color al pasar el mouse */
+    color: #E0E0E2; /* Mantener el color del texto */
+}
+
+
+/* Estilo de las estrellas en la valoración */
+.estrellas .estrella {
+    font-size: 20px;
+    color: #E0E0E2; /* Color de la estrella vacía */
+    cursor: pointer;
+}
+
+.estrellas .rellena {
+    color: #e9f322; /* Color de la estrella rellena */
+}
+
+/* Estilos para los errores del formulario */
+.error {
+    color: #000022;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Estilos para la barra de búsqueda */
+.buscadorContenedor {
+    position: relative;
+}
+
+.iconoBuscador {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #000022;
+}
