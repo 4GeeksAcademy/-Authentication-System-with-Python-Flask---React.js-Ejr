@@ -1,6 +1,6 @@
 //VistaDetallada:Frontend (VistaDetallada.js): El usuario selecciona un curso y hace clic en "Ir a pagar".
 
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
@@ -10,6 +10,7 @@ const VistaDetallada = () => {
     const { id } = useParams(); // Obtiene el id del curso desde la URL
     const { store, actions } = useContext(Context); // Obtiene el estado global
     const navigate = useNavigate(); // Hook para navegación
+    const [curso, setCurso]=useState({})
 
     // Convierte el id de la URL a un número entero
     const cursoId = parseInt(id, 10);
@@ -17,12 +18,11 @@ const VistaDetallada = () => {
     console.log('ID desde la URL:', cursoId); // Verifica el ID obtenido de la URL
 
     // Encuentra el curso por ID en el estado global
-    const curso = store.cursos.find(curso => curso.id === cursoId);
+    
 
     useEffect(() => {
-        console.log(curso);
-       
-    }, [curso]);
+        setCurso(store.cursos.find(curso => curso.id === cursoId));
+    }, []);
     
     console.log('Cursos en store:', store.cursosConFiltros); // Verifica los cursos en el estado global
     console.log('Curso encontrado:', curso); // Verifica el curso encontrado
