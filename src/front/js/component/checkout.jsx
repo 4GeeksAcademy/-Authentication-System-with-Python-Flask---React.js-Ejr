@@ -4,6 +4,8 @@
 import React, {useState, useEffect, useContext} from "react";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Context } from "../store/appContext";
+import "../../styles/checkout.css";
+import { useNavigate } from "react-router-dom"; 
 
 
 
@@ -13,6 +15,7 @@ export const CheckoutForm = () => {
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState(''); //clave para confirmar el pago
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // Hook para navegación
   
     useEffect(() => {
         // Al cargar la página, se realiza una solicitud POST al backend para crear un PaymentIntent
@@ -51,6 +54,7 @@ export const CheckoutForm = () => {
         console.log('[error]', error);
       } else if (paymentIntent.status === 'succeeded') {
         console.log('Payment succeeded!');
+        navigate("/completoDWeb"); // Cambia "/completoDWeb" por la ruta que corresponda a tu página
       }
       else{
         console.log('some error')
@@ -58,10 +62,10 @@ export const CheckoutForm = () => {
     };
   
     return (
-      <form onSubmit={handleSubmit}>
+      <form className="tarjetaCredito" onSubmit={handleSubmit}>
         <CardElement />
         <button type="submit" disabled={!stripe || loading}>
-          Pay
+          Pagar
         </button>
       </form>
     );

@@ -50,7 +50,7 @@ const Layout = () => {
                         <Route element={<Contacto />} path="/contacto" />
                         <Route path="/curso/:id" element={<VistaDetallada />} />
                         <Route element={<VistaPago />} path="/vistaPago" />
-                        <Route element={<CompletoDisWeb />} path="/completoDisWeb" />
+                        <Route path="/completoDWeb" element={<CompletoDisWeb/>}/>
                         {/* Protege la ruta VistaAlumno con PrivateRouteAlumno, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede accerder */}
                         {/*DESCOMENTAR<Route element={<PrivateRouteAlumno vista={VistaAlumno} />} path="/vistaAlumno" />*/}
                         {/* Protege la ruta VistaProfe con PrivateRoute, si el store.autentificacion es true,  y store.usuarioPr?.is_teacher es true, puede acceder */}
