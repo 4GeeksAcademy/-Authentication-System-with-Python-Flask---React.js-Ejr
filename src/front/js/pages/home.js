@@ -14,8 +14,7 @@ export const Home = () => {
       setIsLoading(false);
     };
     fetchGames();
-  }, []);hello
-// i 
+  }, []);
   return (
     <>
       {isLoading ? (
