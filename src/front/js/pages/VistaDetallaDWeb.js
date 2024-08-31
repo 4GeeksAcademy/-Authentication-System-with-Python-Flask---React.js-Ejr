@@ -21,7 +21,6 @@ const VistaDetallada = () => {
 
     useEffect(() => {
         store.cursos.find(curso => curso.id === cursoId); // Encuentra el curso por ID en el estado global
-
     }, []);
 
     
@@ -33,10 +32,10 @@ const VistaDetallada = () => {
         navigate('/vistaPago', { state: { curso } }); // Pasa información del curso a VistaPago
     };
 
-    // Cargar cursos cuando el componente se monta
+    // // Cargar cursos cuando el componente se monta
     useEffect(() => {
         console.log('Cargando cursos...');
-    //    actions.cargarCursos(); 
+        // actions.cargarCursos();
     }, []);
     
 
