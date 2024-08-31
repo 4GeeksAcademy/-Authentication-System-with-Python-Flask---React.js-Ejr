@@ -8,7 +8,7 @@ from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash , check_password_hash
-
+from models import Company, db
 
 api = Blueprint('api', __name__)
 
@@ -361,43 +361,32 @@ def reset_password():
     db.session.commit()
     return jsonify({"msg":"Password updated"}), 200
 
-#datos company user
+#datos company 
 
-@api.route('/company/profile', methods=['GET'])
+#telefono compañia
+
+@api.route('/updateCompanyPhone', methods=['PUT'])
 @jwt_required()
-def get_company_profile():
+def update_company_phone():
     user_id = get_jwt_identity()
-    company = Company.query.filter_by(user_id=user_id).first()
     
-    if company:
-        return jsonify({
-            "name": company.name,
-            "description": company.description,
-            "phone": company.phone,
-            "email": company.email,
-            "country": company.country
-        }), 200
-    else:
-        return jsonify({"msg": "Company not found"}), 404
-
-@api.route('/company/profile', methods=['PUT'])
-@jwt_required()
-def update_company_profile():
-    user_id = get_jwt_identity()
+  
     company = Company.query.filter_by(user_id=user_id).first()
     
     if not company:
-        return jsonify({"msg": "Company not found"}), 404
+        return jsonify({"success": False, "msg": "Empresa no encontrada"}), 404
     
-    data = request.json
-    company.name = data.get('name', company.name)
-    company.description = data.get('description', company.description)
-    company.phone = data.get('phone', company.phone)
-    company.email = data.get('email', company.email)
-    company.country = data.get('country', company.country)
+    phone = request.json.get('phone')
     
-    db.session.commit()
+    if not phone:
+        return jsonify({"success": False, "msg": "Número de teléfono es requerido"}), 400
     
-    return jsonify({"msg": "Company profile updated successfully"}), 200
-
-
+ 
+    company.phone = phone
+    
+    try:
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Teléfono actualizado exitosamente"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al actualizar el teléfono: {str(e)}"}), 500
