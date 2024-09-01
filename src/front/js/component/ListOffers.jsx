@@ -11,16 +11,21 @@ export const ListOffers = ({ searchTerm }) => {
         if (!loaded) {
             actions.loadAllJobOffers().then(() => setLoaded(true));
         }
-    }, [loaded, actions]);
+    }, [loaded, actions]); 
+
     const filterOffers = (offers, searchTerm) => {
+        if (!searchTerm) return offers;
+
         return offers.filter(offer => {
-            const nameMatch = offer.name?.toLowerCase().includes(searchTerm?.toLowerCase());
-            const modalityMatch = offer.modality?.toLowerCase().includes(searchTerm?.toLowerCase());
-            const salaryMatch = offer.salary?.toLowerCase().includes(searchTerm?.toLowerCase());
+            const term = searchTerm.toLowerCase();
+            const nameMatch = offer.name?.toLowerCase().includes(term);
+            const modalityMatch = offer.modality?.toLowerCase().includes(term);
+            const salaryMatch = offer.salary?.toLowerCase().includes(term);
 
             return nameMatch || modalityMatch || salaryMatch;
         });
     };
+
     const filteredOffers = filterOffers(store.jobOffers || [], searchTerm);
 
     return (

@@ -42,34 +42,37 @@ export const SingleOffer = () => {
             return;
         }
 
-        if (isSubscribed) {
-            const result = await actions.unapplyFromJobOffer(id);
-            if (result.msg) {
-                setModalMessage(result.msg);
-                setModalType(result.type || 'success');
-                setIsSubscribed(false);
-                setNumeroInscritos(prev => prev - 1);
-                setIsModalOpen(true);
-            } else {
-                setModalMessage("Error al desinscribirse, intente nuevamente.");
-                setModalType('error');
-                setIsModalOpen(true);
-            }
+      try {
+      let result;
+      if (isSubscribed) {
+        result = await actions.unapplyFromJobOffer(id);
+        if (result?.msg) {
+          setModalMessage(result.msg);
+          setModalType(result.type === "success" ? "success" : "error");
+          setIsSubscribed(false);
+          setNumeroInscritos((prev) => prev - 1);
         } else {
-            const result = await actions.applyToJobOffer(id);
-            if (result.msg) {
-                setModalMessage(result.msg);
-                setModalType(result.type || 'success');
-                setIsSubscribed(true);
-                setNumeroInscritos(prev => prev + 1);
-                setIsModalOpen(true);
-            } else {
-                setModalMessage("Error al inscribirse, intente nuevamente.");
-                setModalType('error');
-                setIsModalOpen(true);
-            }
+          throw new Error("Error al desinscribirse, intente nuevamente.");
         }
-    };
+      } else {
+
+        result = await actions.applyToJobOffer(id);
+        if (result?.msg) {
+          setModalMessage(result.msg);
+          setModalType(result.type === "success" ? "success" : "error");
+          setIsSubscribed(true);
+          setNumeroInscritos((prev) => prev + 1);
+        } else {
+          throw new Error("Error al inscribirse, intente nuevamente.");
+        }
+      }
+    } catch (error) {
+      setModalMessage(error.message);
+      setModalType("error");
+    } finally {
+      setIsModalOpen(true);
+    }
+  };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -95,7 +98,7 @@ export const SingleOffer = () => {
                             </div>
                             <div className="d-flex flex-column offer-header">
                                 <h2 className="mb-0">{offer.name}</h2>
-                                <span className="ms-3 companyName-localidad">nombre empresa</span>
+                                <span className="ms-3 companyName-localidad">{offer.nombre_empresa}</span>
                                 <span className="fecha_publicacion text-secondary">
                                     fecha de publicación  {offer.fecha_publicacion}
                                 </span>                                
@@ -158,7 +161,7 @@ export const SingleOffer = () => {
                             <div className="sigle-buttons">
                                 {isProgramador && (
                                     <button
-                                        className={`btn-down ${isSubscribed ? 'btn-desinscribirse-single' : 'btn-inscribirse-sigle'} btn-lg mt-3`}
+                                        className={`btn-single-up ${isSubscribed ? 'btn-desinscribirse-single' : 'btn-inscribirse-sigle'} btn-lg mt-3`}
                                         onClick={handleApplyClick}
                                     >
                                         {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
