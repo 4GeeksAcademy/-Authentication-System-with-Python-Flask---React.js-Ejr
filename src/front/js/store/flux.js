@@ -391,19 +391,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			getFavorites: async () => {
 				const store = getStore();
-
+				const user_id = store.user?.id; 
+			
+				if (!user_id) {
+					console.error('No se pudo obtener el ID del usuario');
+					return;
+				}
+			
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/${user_id}/favoritos`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							
 						},
 					});
-
+			
 					if (response.ok) {
 						const data = await response.json();
-						setStore({ favorites: data.favoritos });
+						setStore({ favorites: data }); // Asegúrate de que el 'data' ya es la lista de favoritos
 					} else {
 						console.error('Error al obtener los favoritos');
 					}
