@@ -1,40 +1,76 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from "../store/appContext";
 
-const Favoritos = () => {
-    const { store, actions } = useContext(Context);
+export const Favoritos = () => {
+        const { store, actions } = useContext(Context);
+    
+        useEffect(() => {
+            actions.getFavorites();
+        }, []);
+    
 
-    const handleDeleteFavorite = (programador_id, oferta_id, empleador_id) => {
-        actions.removeFavorite(programador_id, oferta_id, empleador_id);
-    }
-
-    return (
-        <div>
-            <div className="dropdown me-3">
-                <button className="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Favorites <span className="badge badge-light">{store.favorites.length}</span>
-                </button>
-                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    {store.favorites.length === 0 ? (
-                        <li><span className="dropdown-item">No favorites</span></li>
-                    ) : (
-                        store.favorites.map((favorite, index) => (
-                            <li key={index} className="d-flex justify-content-between align-items-center">
-                                <span className="dropdown-item">{favorite.name}</span>
-                                <button 
-                                    className="btn btn-outline-danger btn-sm" 
-                                    style={{ marginRight: "15px" }}
-                                    onClick={() => handleDeleteFavorite(favorite.programador_id, favorite.oferta_id, favorite.empleador_id)}
-                                >
-                                    <i className="fa fa-trash"></i>
-                                </button>
-                            </li>
+        const renderFavoriteInfo = (favorito) => {
+            if (favorito.oferta_id) {
+                return (
+                    <>
+                        <h5 className="card-title">{favorito.ofertas.name}</h5>
+                        <p className="card-text">{favorito.ofertas.descripcion}</p>
+                        <p className="card-text"><strong>Empresa:</strong> {favorito.ofertas.nombre_empresa}</p>
+                    </>
+                );
+            } else if (favorito.programador_id) {
+                return (
+                    <>
+                        <h5 className="card-title">{favorito.programador.user.name}</h5>
+                        <p className="card-text">{favorito.programador.descripcion}</p>
+                        <p className="card-text"><strong>Tecnologías:</strong> {favorito.programador.tecnologias}</p>
+                        <p className="card-text"><strong>Experiencia:</strong> {favorito.programador.experiencia}</p>
+                    </>
+                );
+            } else if (favorito.empleador_id) {
+                return (
+                    <>
+                        <h5 className="card-title">{favorito.empleador.user.name}</h5>
+                        <p className="card-text">{favorito.empleador.descripcion}</p>
+                        <p className="card-text"><strong>CIF:</strong> {favorito.empleador.cif}</p>
+                    </>
+                );
+            } else {
+                return <p className="card-text">Información no disponible</p>;
+            }
+        };
+    
+        return (
+            <div className="container mt-5">
+                <div className="row">
+                    {store.favorites && store.favorites.length > 0 ? (
+                        store.favorites.map((favorito, index) => (
+                            <div key={index} className="col-md-4 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        {renderFavoriteInfo(favorito)}
+                                        <button
+                                            className="btn btn-danger mt-3"
+                                            onClick={() =>
+                                                actions.removeFavorite(
+                                                    favorito.programador_id,
+                                                    favorito.empleador_id,
+                                                    favorito.oferta_id
+                                                )
+                                            }
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         ))
+                    ) : (
+                        <div className="col-12">
+                            <p className="text-center">No tienes favoritos aún.</p>
+                        </div>
                     )}
-                </ul>
+                </div>
             </div>
-        </div>
-    );
-};
-
-export default Favoritos;
+        );
+    };

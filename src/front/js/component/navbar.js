@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import Favoritos from "../component/favoritos";
+
 
 
 
@@ -132,7 +132,6 @@ export const Navbar = () => {
                   </>
     
                 )}
-                <Favoritos />
               </div>
             </div>
           </div>
