@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../../styles/StarRatings.css';
 
-export const StarRating = ({ totalStars = 5 }) => {
+export const StarsRating = ({ totalStars = 5, SingleOfferRating = '' }) => {
     const [ratings, setRatings] = useState([]);
 
     const handleRating = (rate) => {
@@ -17,7 +17,7 @@ export const StarRating = ({ totalStars = 5 }) => {
     const averageRating = calculateAverageRating();
 
     return (
-        <div className="rating d-flex">
+        <div className={`rating d-flex ${SingleOfferRating}`}>
             {[...Array(totalStars)].map((_, index) => (
                 <span
                     key={index}
@@ -27,9 +27,7 @@ export const StarRating = ({ totalStars = 5 }) => {
                     ★
                 </span>
             ))}
-            <p>
-                ({averageRating})
-            </p>
+            <p>({averageRating})</p>
         </div>
     );
 };
