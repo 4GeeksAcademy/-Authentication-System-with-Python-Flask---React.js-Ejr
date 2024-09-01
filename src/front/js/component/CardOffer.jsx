@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "./ModalJobApply.jsx";
 import { FaRegHeart } from "react-icons/fa";
-import { StarRating } from "./StarsRating.jsx";
+import { StarsRating } from "./StarsRating.jsx";
 
 export const CardOffer = ({ id }) => {
     const { actions, store } = useContext(Context);
@@ -32,6 +32,12 @@ export const CardOffer = ({ id }) => {
 
     const handleViewDetails = () => {
         navigate(`/singleoffer/${id}`);
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { day: 'numeric', month: 'long' };
+        return date.toLocaleDateString('es-ES', options);
     };
 
     const handleApplyClick = async () => {
@@ -89,7 +95,7 @@ export const CardOffer = ({ id }) => {
                             alt="Company Logo"
                         />
                         <span className="num-postulados text-muted">
-                            ({numeroInscritos}) postulados
+                            ({numeroInscritos}) Se han inscrito
                         </span>
                     </div>
                     <div className="col-9 header-box d-flex flex-column">
@@ -100,14 +106,14 @@ export const CardOffer = ({ id }) => {
                         <span className="card-offer-company">
                             {offer.nombre_empresa} - {offer.localidad}
                         </span>
-                        <StarRating />
+                        <StarsRating />
                         <div className="card-offer-description text-muted">
                             <p className="text-description">{offer.descripcion}</p>
                         </div>
                         <div className="data-footer">
                             <ul className="card-offer-details d-flex text-muted">
                                 <li className="list-footer-details">
-                                    publicada el {offer.fecha_publicacion}
+                                    Publicada el {formatDate(offer.fecha_publicacion)}
                                 </li>
                                 <li className="list-footer-details">
                                     {offer.modalidad + " | "}
@@ -122,7 +128,7 @@ export const CardOffer = ({ id }) => {
                             <div className="card-offer-actions">
                                 <button
                                     onClick={handleViewDetails}
-                                    className="btn btn-details btn-sm text-decoration-none me-2"
+                                    className="btn btn-details btn-sm text-decoration-none me-3"
                                 >
                                     Ver detalles
                                 </button>
