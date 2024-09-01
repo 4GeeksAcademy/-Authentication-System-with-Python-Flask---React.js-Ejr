@@ -27,35 +27,37 @@ export const LoginPage = () => {
     };
 
     return (
-        <form className="login-container" onSubmit={handleLogin}>
-            <h4>Iniciar Sesión</h4>
-            <div className="username">
-                <label>Correo electrónico:</label>
-                <input
-                    className="inputname"
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </div>
-            <div className="password">
-                <label>Contraseña:</label>
-                <input
-                    className="inputpassword"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </div>
-            <button type="submit" className="loginbutton">Login</button>
-            <div>
-                <p onClick={handleForgotPassword} className="forgot-password-link">
-                    ¿Olvidaste tu contraseña?
-                </p>
-            </div>
-        </form>
+        <div className='centrar'>
+            <form className="login-container" onSubmit={handleLogin}>
+                <h4>Iniciar Sesión</h4>
+                <div className="username">
+                    <label>Correo electrónico:</label>
+                    <input
+                        className="inputname"
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="password">
+                    <label>Contraseña:</label>
+                    <input
+                        className="inputpassword"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="loginbutton">Login</button>
+                <div>
+                    <p onClick={handleForgotPassword} className="forgot-password-link">
+                        ¿Olvidaste tu contraseña?
+                    </p>
+                </div>
+            </form>
+        </div>
     );
 };
 

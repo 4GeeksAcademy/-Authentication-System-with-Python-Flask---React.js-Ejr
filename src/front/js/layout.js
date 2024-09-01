@@ -15,7 +15,6 @@ import { LoginPage } from "./pages/login"
 import { Navbar } from "./component/navbar";
 import { Register } from "./pages/register";
 import { TimeLine } from "./pages/TimeLine.jsx";
-import Perfil from "./pages/perfil";
 import { Footer } from "./component/footer";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { FormOffer } from "./component/FormOffer.jsx";
