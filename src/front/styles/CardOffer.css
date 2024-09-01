@@ -12,6 +12,17 @@
     overflow: hidden; 
 }
 
+.heart-icon{
+    position: relative;
+    top: 10px;
+    left: 65px;
+    color:  rgb(103, 147, 174);
+    font-size: 1.9rem;
+}
+.heart-icon:hover{
+    color: rgb(135, 193, 229);
+}
+
 .card-offer:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -41,6 +52,7 @@
 
 .card-offer-description {
     position: relative;
+    bottom: 20px;
     font-size: 0.85rem;
     color: #666;
     display: -webkit-box;
@@ -52,7 +64,6 @@
 }
 
 .text-description {
-    margin: 0;
     line-height: 1.2em;
 }
 
@@ -106,8 +117,17 @@
     margin-top: 10px; 
     font-size: 0.85rem;
 }
+.card-offer-actions .btn-details{
+    position: relative;
+    left: 70px;
+    background-color: rgb(103, 147, 174);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
 
-.card-offer-actions .btn-details,
+}
+
 .card-offer-actions .btn-inscribirse,
 .card-offer-actions .btn-desinscribirse {
     position: relative;
