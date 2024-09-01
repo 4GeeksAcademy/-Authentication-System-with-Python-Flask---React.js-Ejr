@@ -235,8 +235,7 @@ def get_offer(id):
 
     except Exception as e:
         return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
-
-
+    
 
 @api.route('/postulados', methods=['POST'])
 @jwt_required()
@@ -297,6 +296,88 @@ def delete_postulado(oferta_id):
     db.session.commit()
 
     return jsonify({"msg": "Desinscripción realizada con éxito."}), 200
+
+# Mostrar todas las calificaciones
+@api.route('/ratings', methods=['GET'])
+def get_all_ratings():
+    try:
+        ratings = Ratings.query.all()
+        if ratings:
+            return jsonify({"success": True, "ratings": [rating.serialize() for rating in ratings]}), 200
+        return jsonify({"success": False, "msg": "No hay calificaciones disponibles"}), 404
+    except Exception as e:
+        return jsonify({"success": False, "msg": f"Error al obtener las calificaciones: {str(e)}"}), 500
+
+# Mostrar una calificación específica
+@api.route('/ratings/<int:id>', methods=['GET'])
+def get_rating(id):
+    try:
+        rating = Ratings.query.get(id)
+        if not rating:
+            return jsonify({"success": False, "msg": "Calificación no encontrada"}), 404
+        return jsonify({"success": True, "rating": rating.serialize()}), 200
+    except Exception as e:
+        return jsonify({"success": False, "msg": f"Error al obtener la calificación: {str(e)}"}), 500
+
+# Crear una nueva calificación
+@api.route('/ratings', methods=['POST'])
+@jwt_required()
+def create_rating():
+    from_id = request.json.get("from_id")
+    to_id = request.json.get("to_id")
+    value = request.json.get("value")
+
+    if not from_id or not to_id or not value:
+        return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
+
+    if value < 1 or value > 5:
+        return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
+
+    new_rating = Ratings(from_id=from_id, to_id=to_id, value=value)
+
+    try:
+        db.session.add(new_rating)
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Calificación creada exitosamente", "rating": new_rating.serialize()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al crear la calificación: {str(e)}"}), 500
+
+# Actualizar una calificación existente
+@api.route('/ratings/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_rating(id):
+    rating = Ratings.query.get(id)
+    if not rating:
+        return jsonify({"success": False, "msg": "Calificación no encontrada"}), 404
+
+    value = request.json.get("value")
+    if value is not None:
+        if value < 1 or value > 5:
+            return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
+        rating.value = value
+
+    try:
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Calificación actualizada exitosamente", "rating": rating.serialize()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al actualizar la calificación: {str(e)}"}), 500
+
+@api.route('/ratings/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_rating(id):
+    rating = Ratings.query.get(id)
+    if not rating:
+        return jsonify({"success": False, "msg": "Calificación no encontrada"}), 404
+
+    try:
+        db.session.delete(rating)
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Calificación eliminada exitosamente"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al eliminar la calificación: {str(e)}"}), 500
     
 
 #contact

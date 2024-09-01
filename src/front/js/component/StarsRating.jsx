@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../styles/ratings.css';
+import '../../styles/StarRatings.css';
 
 export const StarRating = ({ totalStars = 5 }) => {
     const [ratings, setRatings] = useState([]);

@@ -5,7 +5,7 @@
 .card-single-offer{
     box-shadow: -1px 2px 20px 4px #d4c4c4;
 }
-.card-offer-description{
+.card-SinglOffer-description{
     position: relative;
     top: 10px;
 }
@@ -83,7 +83,16 @@
     position: relative;
     bottom: 40px;
 }
-.btn-up{
-    background-color: rgb(103, 147, 174);
 
+.btn-up{
+    color: black;
+    background-color: rgb(103, 147, 174); ;
+    position: relative;
+    left: 190px;
+    bottom: 15px;
+    min-width: 170px;
+}
+.btn-up:hover{
+    color: white;
+    background-color: rgb(135, 193, 229);
 }
