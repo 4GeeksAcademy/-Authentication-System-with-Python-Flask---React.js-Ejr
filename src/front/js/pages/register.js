@@ -38,7 +38,7 @@ export const Register = () => {
   return (
     <div className="container-fluid p-0">
       <div className="d-flex justify-content-center py-4">
-        <div className="row w-75" style={{ height: "20rem" }}>
+        <div className="row w-75 border rounded shadow" >
           <div className='col bg-primary'>
             <button onClick={() => setIsDev(false)}>Empresa</button>
             <button onClick={() => setIsDev(true)}>Developer</button>
@@ -46,21 +46,25 @@ export const Register = () => {
           <div className="col">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="w-50 mx-auto my-5 m-0 "
+              className="mx-2 my-5 "
             >
-              <h1 className="w-100 text-center fw-bolder my-5">Registro</h1>
+              <div className=" w-100 text-center fw-bolder my-5">
+                <h1 >Crear Cuenta</h1>
+                <h4>{isDev ? "Programador" : "Empresa"}</h4>
+              </div>
+
 
 
               {store?.msg && <AlertSuccess />}
 
-              <div className="w-100 px-4 border rounded shadow p-3 mb-5 bg-white rounded py-2">
-                <div className="form-group mb-2">
+              <div className="w-100 px-4  p-3 mb-5 bg-white rounded py-2">
+                <div className="form-group mb-2  ">
                   <label htmlFor="name" className="form-label m-0 fw-semibold my-2">
                     Nombre:
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="sombreado form-control"
                     id="name"
                     name="name"
                     placeholder="Nombre.."
@@ -94,7 +98,7 @@ export const Register = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="sombreado form-control"
                       id="username"
                       placeholder="Apellidos.."
                       {...register("username", { required: true })}
@@ -114,7 +118,7 @@ export const Register = () => {
                   </label>
                   <input
                     type="email"
-                    className="form-control"
+                    className="sombreado form-control"
                     id="email"
                     placeholder="Email.."
                     {...register("email", { required: true })}
@@ -135,7 +139,7 @@ export const Register = () => {
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="sombreado form-control"
                     id="country"
                     placeholder="Pais.."
                     {...register("country", { required: true })}
@@ -156,7 +160,7 @@ export const Register = () => {
                   </label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="sombreado form-control"
                     id="password"
                     placeholder="Contraseña.."
                     {...register("password", {
@@ -187,7 +191,7 @@ export const Register = () => {
                     <input
                       type="text"
                       className="form-control"
-                      id="cif"
+                      sombreado id="cif"
                       {...register("cif")}
                       placeholder="Escriba el CIF.."
                     />
@@ -202,9 +206,9 @@ export const Register = () => {
             </form>
           </div>
         </div>
-      </div>
+      </div >
 
 
-    </div>
+    </div >
   );
 };
