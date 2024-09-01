@@ -190,8 +190,8 @@ export const Register = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
-                      sombreado id="cif"
+                      className="form-control sombreado"
+                      id="cif"
                       {...register("cif")}
                       placeholder="Escriba el CIF.."
                     />
