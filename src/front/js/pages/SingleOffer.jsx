@@ -105,7 +105,7 @@ export const SingleOffer = () => {
                             </div>
                             {isProgramador && (
                                 <button
-                                    className={`btn btn-up ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-lg`}
+                                    className={`btn btn-up ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'}`}
                                     onClick={handleApplyClick}
                                 >
                                     {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
