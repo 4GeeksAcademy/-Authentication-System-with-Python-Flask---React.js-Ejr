@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			user: null,
 			proyectos: [],
+			userPostulaciones: [],
 			favorites: [],
 		},
 		actions: {
@@ -99,16 +100,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (resp.ok) {
 						const data = await resp.json();
-						console.log('Inscripción exitosa', data);
-						return { msg: "Inscripción realizada con éxito.", type: "success" };
+						console.log('inscripcion exitosa', data);
+						return {msg: "Inscripcion realizada con exito.", type: "success"};
 					} else {
 						const errorData = await resp.json();
 						console.log("Error al inscribirse: ", errorData.msg);
 						return { msg: errorData.msg, type: 'warning' };
 					}
-				} catch (error) {
-					console.log("Error en la solicitud de inscripción.");
-					return { msg: "Error en la solicitud de inscripción.", type: "error" };
+				} catch (error){
+					console.log("Error en la solitud de inscripcion.");
+					return {msg: "Error en la solicitud de inscripcion.", type: "error"}
+					
 				}
 			},
 
@@ -143,15 +145,48 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { msg: "Error en la solicitud de desinscripción.", type: "error" };
 				}
 			},
+			loadUserPostulaciones: async () => {
+				const store = getStore();
+				const token = store.token;
+				if (!token) return;
+			  
+				try {
+				  const response = await fetch(`${process.env.BACKEND_URL}/api/user/postulados`, {
+					method: 'GET',
+					headers: {
+					  'Content-Type': 'application/json',
+					  Authorization: `Bearer ${token}`,
+					},
+				  });
+			  
+				  if (response.ok) {
+					const data = await response.json();
+					setStore({ userPostulaciones: data.postulados });
+					console.log('Postulaciones del usuario cargadas:', data.postulados);
+				  } else {
+					const errorData = await response.json();
+					console.error('Error al cargar las postulaciones:', errorData.msg);
+				  }
+				} catch (error) {
+				  console.error('Error al obtener postulaciones:', error);
+				}
+			  },
+			  
 
 			getNumeroPostulados: async (oferta_id) => {
 				try {
-					const response = await fetch(`/api/ofertas/${oferta_id}/postulados`);
+					const response = await fetch(`${process.env.BACKEND_URL}/api/ofertas/${oferta_id}/postulados`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${getStore().token}`							},
+					});
 					if (response.ok) {
 						const data = await response.json();
 						return data.numero_postulados;
 					} else {
-						console.error('Error al obtener número de postulaciones:', response.statusText);
+						const errorData = await response.json();
+						console.error('Error al obtener número de postulaciones:', errorData.msg);
 						return null;
 					}
 				} catch (error) {
@@ -235,6 +270,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						localStorage.setItem('token', data.token);
 						setStore({ token: data.token, user: data.user });
+						await actions.loadUserPostulaciones(); //Cargamos las postulaciones del usuario al inciar sesión
 						return data;
 					} else {
 						return false;

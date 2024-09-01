@@ -5,7 +5,14 @@ import { FilterListOffer } from "../component/FilterListOffer.jsx";
 
 export const TimeLine = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [filterTerm, setFilterTerm] = useState("");
+    const [filterTerm, setFilterTerm] = useState(""); 
+    const [filters, setFilters] = useState({ 
+        plazo: "",
+        salario: [0, 100000],
+        searchText: "",
+        fecha_publicacion: "",
+        experience: []
+    });
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -21,14 +28,19 @@ export const TimeLine = () => {
         }
     };
 
+    const handleFiltersChange = (updatedFilters) => {
+        setFilters(updatedFilters);
+    };
 
     return (
         <>
-            <div className="container my-3">
+            <div className="container my-5">
                 <div className="row">
                     <div className="col-12 text-center fw-bold text-muted header-box">
                         <h2 className="fw-bold">Construyendo un Futuro</h2>
-                        <h3 className="fw-bold">Encuentra aquí las mejores oportunidades para tu carrera</h3>
+                        <h3 className="fw-bold">
+                            Encuentra aquí las mejores oportunidades para tu carrera
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -41,15 +53,13 @@ export const TimeLine = () => {
                     onChange={handleSearchChange}
                     onKeyDown={handleKeyDown}
                 />
-                <button
-                    className="btn btn-search ms-3"
-                    onClick={handleSearchClick}
-                >
+                <button className="btn btn-search ms-3" onClick={handleSearchClick}>
                     Buscar
                 </button>
             </div>
-            <ListOffers searchTerm={filterTerm} />
-            <FilterListOffer/>
+            <ListOffers searchTerm={filterTerm} filters={filters} />
+            <FilterListOffer onFilterChange={handleFiltersChange} />
         </>
     );
 };
+

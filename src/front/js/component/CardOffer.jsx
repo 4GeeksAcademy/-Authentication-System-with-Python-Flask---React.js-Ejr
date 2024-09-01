@@ -7,13 +7,13 @@ import { FcExpired } from "react-icons/fc";
 
 export const CardOffer = ({ id }) => {
   const { actions, store } = useContext(Context);
-  const offer = store.jobOffers.find(offer => offer.id === id);
+  const offer = store.jobOffers.find((offer) => offer.id === id);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [modalType, setModalType] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false); 
-  const [numeroPostuladaos, setNumeroPostulados] = useState(0);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [numeroInscritos, setNumeroInscritos] = useState(0);
 
   if (!offer) return <div>Oferta no encontrada</div>;
 
@@ -22,7 +22,12 @@ export const CardOffer = ({ id }) => {
       const subscribed = store.user.inscribedOffers?.includes(id);
       setIsSubscribed(subscribed);
     }
-  }, [store.user, id]);
+    actions.getNumeroPostulados(id).then((count) => {
+      if (count !== null) {
+        setNumeroInscritos(count);
+      }
+    });
+  }, [store.user, id, actions]);
 
   const handleViewDetails = () => {
     navigate(`/singleoffer/${id}`);
@@ -31,35 +36,40 @@ export const CardOffer = ({ id }) => {
   const handleApplyClick = async () => {
     if (!store.user || !store.user.profile_programador) {
       setModalMessage("Solo los programadores pueden inscribirse en esta oferta.");
-      setModalType('warning');
+      setModalType("warning");
       setIsModalOpen(true);
       return;
     }
 
-    if (isSubscribed) {
-      const result = await actions.unapplyFromJobOffer(id);
-      if (result.msg) {
-        setModalMessage(result.msg);
-        setModalType(result.type || 'success');
-        setIsSubscribed(false); 
-        setIsModalOpen(true);
+    try {
+      let result;
+      if (isSubscribed) {
+        result = await actions.unapplyFromJobOffer(id);
+        if (result?.msg) {
+          setModalMessage(result.msg);
+          setModalType(result.type === "success" ? "success" : "error");
+          setIsSubscribed(false);
+          setNumeroInscritos((prev) => prev - 1);
+        } else {
+          throw new Error("Error al desinscribirse, intente nuevamente.");
+        }
       } else {
-        setModalMessage("Error al desinscribirse, intente nuevamente.");
-        setModalType('error');
-        setIsModalOpen(true);
+
+        result = await actions.applyToJobOffer(id);
+        if (result?.msg) {
+          setModalMessage(result.msg);
+          setModalType(result.type === "success" ? "success" : "error");
+          setIsSubscribed(true);
+          setNumeroInscritos((prev) => prev + 1);
+        } else {
+          throw new Error("Error al inscribirse, intente nuevamente.");
+        }
       }
-    } else {
-      const result = await actions.applyToJobOffer(id);
-      if (result.msg) {
-        setModalMessage(result.msg);
-        setModalType(result.type || 'success');
-        setIsSubscribed(true); 
-        setIsModalOpen(true);
-      } else {
-        setModalMessage("Error al inscribirse, intente nuevamente.");
-        setModalType('error');
-        setIsModalOpen(true);
-      }
+    } catch (error) {
+      setModalMessage(error.message);
+      setModalType("error");
+    } finally {
+      setIsModalOpen(true);
     }
   };
 
@@ -77,11 +87,18 @@ export const CardOffer = ({ id }) => {
               src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
               alt="Company Logo"
             />
+            <span className="num-postulados text-muted">
+              ({numeroInscritos}) postulados
+            </span>
           </div>
           <div className="col-9 header-box d-flex flex-column">
             <h2 className="card-offer-title">{offer.name}</h2>
-            <span className="fecha-publicacion text-muted">creada el {offer.fecha_publicacion}</span>
-            <span className="card-offer-company">nombreEmpresa - {offer.localidad}</span>
+            <span className="fecha-publicacion text-muted">
+              publicada el {offer.fecha_publicacion}
+            </span>
+            <span className="card-offer-company">
+              {offer.nombre_empresa} - {offer.localidad}
+            </span>
             <div className="card-offer-description text-muted">
               <p className="text-description">{offer.descripcion}</p>
             </div>
@@ -90,23 +107,36 @@ export const CardOffer = ({ id }) => {
                 <li className="list-footer-details">
                   <FcExpired className="exp-icon" /> {offer.plazo}
                 </li>
-                <li className="list-footer-details">{offer.modalidad + " | "}</li>
-                <li className="list-footer-details mx-2">{offer.salario + " | "}</li>
-                <li className="list-footer-details">{offer.experiencia_minima}</li>
+                <li className="list-footer-details">
+                  {offer.modalidad + " | "}
+                </li>
+                <li className="list-footer-details mx-2">
+                  {offer.salario + " | "}
+                </li>
+                <li className="list-footer-details">
+                  {offer.experiencia_minima}
+                </li>
               </ul>
               <div className="card-offer-actions">
                 <button
                   onClick={handleViewDetails}
-                  className="btn btn-details btn-sm text-decoration-none me-2">
+                  className="btn btn-details btn-sm text-decoration-none me-2"
+                >
                   Ver detalles
                 </button>
-                {!store.user || (store.user && store.user.profile_programador) && (
-                  <button
-                    className={`btn ${isSubscribed ? 'btn-desinscribirse' : 'btn-inscribirse'} btn-sm`}
-                    onClick={handleApplyClick}>
-                    {isSubscribed ? 'Desinscribirse' : 'Inscribirse'}
-                  </button>
-                )}
+                {!store.user ||
+                  (store.user && store.user.profile_programador && (
+                    <button
+                      className={`btn ${
+                        isSubscribed
+                          ? "btn-desinscribirse"
+                          : "btn-inscribirse"
+                      } btn-sm`}
+                      onClick={handleApplyClick}
+                    >
+                      {isSubscribed ? "Desinscribirse" : "Inscribirse"}
+                    </button>
+                  ))}
               </div>
             </div>
           </div>

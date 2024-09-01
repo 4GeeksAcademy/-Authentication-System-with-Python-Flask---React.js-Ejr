@@ -95,6 +95,11 @@
     align-items: center; 
 
 }
+
+.card-offer-details .list-footer-details:nth-child(3){
+    font-size: 0.85rem;
+
+}
 .card-offer-actions{
     display: flex;
     gap: 10px; 
@@ -119,6 +124,8 @@
     color: white;
     background-color: rgb(135, 193, 229);
 }
-
+.num-postulados{
+    font-size: 0.75rem;
+}
 
 
