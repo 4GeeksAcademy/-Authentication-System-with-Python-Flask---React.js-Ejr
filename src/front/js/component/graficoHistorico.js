@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ApexCharts from "apexcharts";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import BackButton from "./backButton";
 
 export const GraficoHistorico = () => {
     const { store, actions } = useContext(Context);
@@ -108,7 +109,7 @@ export const GraficoHistorico = () => {
         async function fetchData() {
             const data = await actions.get_last_physical_user_information();
             console.log(store.lastPhysicalUserInformationList);
-            
+
             if (store.lastPhysicalUserInformationList.length === 0) {
                 setIsModalOpen(true)
             }
@@ -118,7 +119,10 @@ export const GraficoHistorico = () => {
     }, [actions]);
 
     return (
-        <div className="w-2/3 bg-white rounded-lg shadow dark:bg-neutral-800 p-4 md:p-6 mx-auto min-h-[60vh]">
+        <div className="w-2/3 bg-white rounded-lg shadow dark:bg-neutral-800 p-4 md:p-6 mx-auto min-h-[60vh] relative">
+            <div className="absolute left-0">
+                <BackButton />
+            </div>
             <span className="relative flex justify-center w-full sm:w-3/4 mx-auto">
                 <div
                     className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-75"

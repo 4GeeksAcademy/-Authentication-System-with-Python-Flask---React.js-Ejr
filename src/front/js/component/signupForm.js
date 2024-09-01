@@ -160,7 +160,7 @@ export const SignupForm = () => {
                                     name="sex"
                                     value={user.sex}
                                     onChange={handleChange}
-                                    className="mt-1 w-full rounded-md border-neutral-200 bg-white py-1 text-sm text-neutral-700 shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 focus:ring-emerald-500 focus:border-emerald-500"
+                                    className="mt-1 w-full rounded-md border-neutral-200 bg-white py-1 text-sm text-neutral-700 shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 focus:ring-emerald-500 focus:border-emerald-500 px-3"
                                     required
                                 >
                                     <option value="" disabled>Seleccionar</option>

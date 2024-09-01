@@ -364,8 +364,8 @@ export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExercis
                         )}
                     </div>
                 </div>
-                <div className='h-[50vh] overflow-y-scroll'>
-                    <div className="grid grid-cols-1 gap-4 w-full mx-auto p-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))" }}> {/* Grid adaptable */}
+                <div className='h-[50vh]  max-w-[900px] overflow-y-scroll'>
+                    <div className="grid grid-cols-1 gap-4 mx-auto p-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))" }}> {/* Grid adaptable */}
 
                         {filteredExercises.map((item, index) => {
                             return (
@@ -374,10 +374,7 @@ export const AgregarEjercicioEditar = ({ isAddExerciseModalOpen, setIsAddExercis
                                         <img
                                             alt=""
                                             src={item.image ? item.image : "https://placehold.jp/303031/878787/150x150.png?text=placeholder%20image"}
-                                            className={`${item.image ? 'invert object-scale-down p-2' : ''} aspect-square h-full w-full object-cover overflow-hidden`}
-                                            style={{
-                                                filter: item.image ? 'invert(100%) sepia(100%) saturate(5000%) hue-rotate(67deg) brightness(83%)' : '',
-                                            }}
+                                            className={`${item.image ? ' object-scale-down p-2' : ''} aspect-square h-full w-full object-cover overflow-hidden`}
                                         />
                                     </div>
                                     <div className="p-3 flex flex-1 flex-col gap-4 justify-between w-1/2">

@@ -6,6 +6,7 @@ import ProfileIcon from "../component/profileIcon";
 import "react-toastify/dist/ReactToastify.css"
 import { toast } from "react-toastify";
 import { Badge } from "../component/badge";
+import BackButton from "../component/backButton";
 
 export const Profile = () => {
   const { store, actions } = useContext(Context)
@@ -66,7 +67,7 @@ export const Profile = () => {
         setIsModalOpen(true)
       }
     }
-  
+
     fetchData();
   }, [])
 
@@ -104,7 +105,16 @@ export const Profile = () => {
 
   return (
     <div className="sm:w-2/3 w-11/12 mx-auto flex flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-3 h-full bg-neutral-800 border-neutral-700 relative min-h-[800px]">
-      <h1 className="text-neutral-50 font-bold text-3xl">Perfil</h1>
+      <div className="absolute left-0">
+        <BackButton />
+      </div>
+      {/* form title */}
+      <span className="relative flex justify-center w-full sm:w-3/4 mx-auto">
+        <div
+          className="absolute inset-x-0 top-1/2 h-px -translate-y-3/4 bg-red bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-75"
+        ></div>
+        <span className="relative z-10 text-white font-bold px-2 sm:px-6 bg-neutral-800 sm:text-xl">Perfil</span>
+      </span>
       <div className="flex flex-col items-center">
         {
           !store.currentUser ? <>

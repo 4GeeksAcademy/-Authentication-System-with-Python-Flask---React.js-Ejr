@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 
 import { AddIcon, EditIcon } from "./icons";
+import BackButton from "./backButton";
 
 
 /* const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min; */
@@ -27,12 +28,15 @@ export const CarouselHome = () => {
     return (
         <>
 
-            {/* Title */}
-            <span className="relative flex justify-center w-full sm:w-3/4">
+            <div className="absolute left-0">
+                <BackButton />
+            </div>
+            {/* form title */}
+            <span className="relative flex justify-center w-full sm:w-3/4 mx-auto">
                 <div
                     className="absolute inset-x-0 top-1/2 h-px -translate-y-3/4 bg-red bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-75"
                 ></div>
-                <span className="relative z-10 text-neutral-50 font-bold px-2 sm:px-6 bg-neutral-800 text-xl">Mi rutina</span>
+                <span className="relative z-10 text-white font-bold px-2 sm:px-6 bg-neutral-800 sm:text-xl">Mi rutina</span>
             </span>
 
             {/* Buttons */}

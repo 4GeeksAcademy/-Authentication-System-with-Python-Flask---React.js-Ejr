@@ -24,6 +24,7 @@ import { ErrorView } from "./pages/error";
 import { Stats } from "./pages/stats";
 import ProtectedRoute from "./component/protectedRoute";
 import { EditarRutina } from "./pages/editarRutina.js";
+import { ExercisesDetail } from "./pages/exercisesDetail.js";
 
 const usePageTitle = (defaultTitle) => {
     const location = useLocation();
@@ -89,10 +90,12 @@ const Layout = () => {
                         <Route element={<EditarRutina />} path="/editarrutina" />
                         <Route element={<ProtectedRoute><Stats /></ProtectedRoute>} path="/stats" />
                         <Route element={<ProtectedRoute><Exercises /></ProtectedRoute>} path="/exercises" />
+                        <Route element={<ExercisesDetail />} path="/exercises/:id" />
+
                         {/* <Route element={<ProtectedRoute><Dashboard /></ProtectedRoute>} path="/dashboard" /> */}
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        {/* <Route element={<Single />} path="/single/:theid" /> */}
                         <Route element={<ErrorView />} path="/*" />
 
                         {/* Rutas protegidas */}
