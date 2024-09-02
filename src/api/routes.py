@@ -328,18 +328,18 @@ def get_rating(id):
 @api.route('/ratings', methods=['POST'])
 @jwt_required()
 def create_rating():
-    programador_id = request.json.get("from_id")
-    empleador_id = request.json.get("to_id")
+    from_id = request.json.get("from_id")
+    to_id = request.json.get("to_id")
     value = request.json.get("value")
 
-    if not programador_id or not empleador_id or not value:
+    if not from_id or not to_id or not value:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     if value < 1 or value > 5:
         return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
 
-    new_rating = Ratings(programador_id=programador_id, empleador_id=empleador_id, value=value)
-    print(new_rating.serialize())
+    new_rating = Ratings(from_id=from_id, to_id=to_id, value=value)
+
     try:
         # db.session.add(new_rating)
         # db.session.commit()
@@ -494,7 +494,7 @@ def add_favorito():
     db.session.add(new_favorite)
     db.session.commit()
 
-    return jsonify(new_favorite.serialize()), 201
+    return jsonify({"success": True, "data": new_favorite.serialize()}), 201
 
 
 @api.route('/user/<int:user_id>/favoritos', methods=['GET'])
@@ -502,14 +502,21 @@ def get_user_favorites(user_id):
     user = User.query.get(user_id)
     
     if not user:
-        return jsonify({'msg': 'Usuario no encontrado'}), 404
+        return jsonify({"success": False, 'msg': 'Usuario no encontrado'}), 404
     
     favoritos = []
-    
+    results = []
+    def loader(el):        
+        if el['oferta_id'] is not None:
+            results.append(Ofertas.query.get(el['oferta_id']))
+        elif el['empleador_id'] is not None:
+            results.append(Empleador.query.get(el['empleador_id']))
+        else:
+            return ({"success": True, "msg": "El usuario no tiene favortios "}), 418
+            
     if user.profile_programador:
         favoritos.extend(user.profile_programador.favoritos)
-    
+        favoritos = [loader(favorito.serialize()) for favorito in favoritos]
     if user.profile_empleador:
-        favoritos.extend(user.profile_empleador.favoritos)
-    
-    return jsonify([favorito.serialize() for favorito in favoritos]), 200
+        favoritos.extend(user.profile_empleador.favoritos)  
+    return jsonify({"success": True, "favoritos": [result.serialize() for result in results]}), 200
