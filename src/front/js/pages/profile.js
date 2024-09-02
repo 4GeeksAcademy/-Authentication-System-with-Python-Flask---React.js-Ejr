@@ -387,12 +387,12 @@ export const Profile = () => {
                 <div className='flex flex-col md:flex-row gap-4 w-full'>
                   <div className="w-full">
                     <label htmlFor="weight" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Peso (kg)</label>
-                    <input value={userData.weight}
+                    <input value={userData.weight} min={0}
                       onChange={handleChange} type="number" name="weight" id="weight" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="76,8" required />
                   </div>
                   <div className="w-full">
                     <label htmlFor="height" className="block mb-1 text-sm font-medium text-neutral-900 dark:text-white">Altura (cm)</label>
-                    <input value={userData.height}
+                    <input value={userData.height} min={0}
                       onChange={handleChange} type="number" name="height" id="height" className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 focus:ring-emerald-500 focus:border-emerald-500" placeholder="178 cm" required />
                   </div>
                 </div>

@@ -104,7 +104,7 @@ export const Exercises = () => {
                         <>
                             {Array.from({ length: skeletonCount }).map((_, index) => (
                                 <article key={index} className="w-full h-60 flex flex-col bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden ">
-                                    <div className="hidden sm:block sm:basis-36 h-1/2 overflow-hidden">
+                                    <div className="block sm:basis-36 h-1/2 overflow-hidden">
                                         <div className="aspect-square h-full w-full bg-neutral-700 animate-pulse"></div>
                                     </div>
                                     <div className="p-3 flex flex-1 flex-col gap-4 justify-between h-1/2">
@@ -125,7 +125,7 @@ export const Exercises = () => {
                                 <article
                                     className="w-full h-60 flex flex-col bg-white transition-all shadow-xl dark:bg-neutral-900 border border-neutral-700 rounded-md overflow-hidden group"
                                 >
-                                    <div className="hidden sm:block sm:basis-36 h-1/2 overflow-hidden">
+                                    <div className="block sm:basis-36 h-1/2 overflow-hidden">
                                         <img
                                             alt=""
                                             src={

@@ -57,17 +57,17 @@ export const ExercisesList = ({ weeklyRoutine }) => {
   return (
     <>
       <div className="flex w-full gap-6">
-        <div className="mx-auto w-[80%] flex flex-col gap-4">
+        <div className="mx-auto md:w-[80%] w-11/12 flex flex-col gap-4">
           <p className="font-bold text-lg md:text-xl text-white text-center">{weeklyRoutine.routine.name.toUpperCase()} | {weeklyRoutine.day}</p>
-          <div className="flex">
-            <div className="w-1/2 space-y-3 rounded-lg h-96 overflow-y-scroll pr-4">
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-1/2 space-y-3 rounded-lg h-96 overflow-y-scroll pr-1 md:pr-4">
               {weeklyRoutine?.routine.exercises.map((item, index) => {
 
                 return (
                   < label
                     key={index}
                     htmlFor={`option ${index}`}
-                    className="flex items-center cursor-pointer gap-4 rounded-lg border p-4 transition border-emerald-700 bg-neutral-700 "
+                    className={`flex items-center cursor-pointer gap-4 rounded-lg border p-4 transition border-emerald-700 bg-neutral-700 ${currentDay !== day ? 'opacity-20 cursor-not-allowed' : ''}`}
                   >
                     <div className="flex items-center">
                       <input
@@ -84,21 +84,21 @@ export const ExercisesList = ({ weeklyRoutine }) => {
                       />
                       {/* {`option ${index}` == false ? setDone(done + 1) : null} */}
                     </div>
-                    <div className="flex gap-3">
-                      <p className="font-medium text-white">{item.exercise.name}</p>
-                      <MinusIcon />
-                      <span className="font-medium text-neutral-400">{item?.sets.sets} / {item?.sets.repetitions}</span>
+                    <div className="flex gap-3 md:items-center md:flex-nowrap flex-wrap w-full">
+                      <p className="font-medium text-white md:text-left text-center w-full">{item.exercise.name}</p>
+                      <div className="hidden md:block"> <MinusIcon /></div>
+                      <span className="font-medium text-neutral-400 md:w-1/3 text-center md:text-left w-full">{item?.sets.sets} / {item?.sets.repetitions}</span>
                     </div>
                   </label>
                 )
               })}
             </div >
-            <div className="w-1/2 flex flex-col justify-center">
+            <div className="w-full md:w-1/2 flex flex-col justify-center">
               <Progress percentage={percentage} />
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };

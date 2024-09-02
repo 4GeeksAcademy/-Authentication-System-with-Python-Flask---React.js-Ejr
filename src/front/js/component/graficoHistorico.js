@@ -119,7 +119,7 @@ export const GraficoHistorico = () => {
     }, [actions]);
 
     return (
-        <div className="w-2/3 bg-white rounded-lg shadow dark:bg-neutral-800 p-4 md:p-6 mx-auto min-h-[60vh] relative">
+        <div className="w-11/12 md:w-2/3 bg-white rounded-lg shadow dark:bg-neutral-800 p-4 md:p-6 mx-auto min-h-[60vh] relative">
             <div className="absolute left-0">
                 <BackButton />
             </div>
