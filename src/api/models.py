@@ -24,8 +24,8 @@ class Postulados(db.Model):
 class Ratings(db.Model):
     __tablename__="ratings"
     id = db.Column(db.Integer, primary_key=True)
-    from_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
-    to_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
+    from_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"))
+    to_id = db.Column (db.Integer, db.ForeignKey ("programador.id"))
     value = db.Column(db.Integer)
     
 

@@ -215,11 +215,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 					const data = await response.json();
 					console.log("esta es la data",data)
-					return data;  // Asegúrate de que esta línea devuelva la respuesta correcta
+					return data; 
 			
 				} catch (error) {
 					console.error("Error en la solicitud de creación de calificación:", error);
-					return undefined;  // O maneja el error de otra manera
+					return; 
 				}
 			},
 
