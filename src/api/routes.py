@@ -339,10 +339,10 @@ def create_rating():
         return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
 
     new_rating = Ratings(from_id=from_id, to_id=to_id, value=value)
-
+    print("objeto new rating", new_rating.serialize())
     try:
-        db.session.add(new_rating)
-        db.session.commit()
+        # db.session.add(new_rating)
+        # db.session.commit()
         return jsonify({"success": True, "msg": "Calificación creada exitosamente", "rating": new_rating.serialize()}), 201
     except Exception as e:
         db.session.rollback()
