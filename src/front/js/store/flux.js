@@ -212,11 +212,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!response.ok) {
 						throw new Error("Error en la respuesta de la API");
 					}
-			
+
 					const data = await response.json();
-					console.log("esta es la data",data)
+					console.log("esta es la data", data)
 					return data;  // Asegúrate de que esta línea devuelva la respuesta correcta
-			
+
 				} catch (error) {
 					console.error("Error en la solicitud de creación de calificación:", error);
 					return undefined;  // O maneja el error de otra manera
@@ -286,7 +286,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-		
+
 			getMessage: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
@@ -474,7 +474,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await response.json();
-					setStore({ favorites:[...getStore().favorites, data]});
+					setStore({ favorites: [...getStore().favorites, data] });
 					return data;
 
 				} catch (error) {
@@ -502,8 +502,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getFavorites: async () => {
-				const store = getStore();
-				const user_id = store.user.id;
+				const user = getStore().user;
+				const user_id = user.id;
 				console.log(user_id)
 				if (!user_id) {
 					console.error('No se pudo obtener el ID del usuario');
