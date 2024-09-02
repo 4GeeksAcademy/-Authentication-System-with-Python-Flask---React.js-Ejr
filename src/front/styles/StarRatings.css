@@ -1,0 +1,15 @@
+.rating{
+    position: relative;
+    bottom: 20px;
+}
+
+.rating span{
+    font-size: 1.2rem;
+}
+.rating p{
+    position: relative;
+    top:6px;
+    left: 6px;
+    font-size: 0.75rem;
+    color: gray;
+}
