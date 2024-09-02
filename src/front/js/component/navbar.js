@@ -7,10 +7,7 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav
-      className="navbar"
-      style={{ backgroundColor: "#6793AE", height: "120px" }}
-    >
+    <nav className="navbar" style={{ backgroundColor: "#6793AE", height: "120px" }}>
       <div className="container-fluid">
         <Link to={""} className="navbar-brand">
           <img
@@ -33,13 +30,14 @@ export const Navbar = () => {
                   INICIO
                 </Link>
                 {store.user?.profile_programador && (
-                  <>                  <Link
-                    to={"/timeline"}
-                    className="nav-link active me-3"
-                    style={{ color: "white" }}
-                  >
-                    OFERTAS
-                  </Link>
+                  <>
+                    <Link
+                      to={"/timeline"}
+                      className="nav-link active me-3"
+                      style={{ color: "white" }}
+                    >
+                      OFERTAS
+                    </Link>
                     <Link
                       to={"/Userview"}
                       className="nav-link active me-3"
@@ -48,7 +46,6 @@ export const Navbar = () => {
                       PERFIL
                     </Link>
                   </>
-
                 )}
                 {store.user?.profile_empleador && (
                   <>
@@ -81,7 +78,45 @@ export const Navbar = () => {
                   </>
                 )}
 
-                {!store.user ? (
+                {store.user ? (
+                  <>
+                   <Link 
+                        to="/favoritosPage"
+                        className="nav-link active me-3"
+                        style={{ color: "white" }}
+                      >
+                        FAVORITOS
+  
+                    </Link>
+
+                    <button
+                      type="button"
+                      className="btn rounded-pill me-3"
+                      style={{
+                        backgroundColor: "white",
+                        borderColor: "white",
+                        color: "#70879C",
+                      }}
+                    >
+                      Usuario: {store.user.name}
+                    </button>
+                    
+                    <button
+                      onClick={() => actions.logOut()}
+                      type="button"
+                      className="btn rounded-pill me-3"
+                      style={{
+                        backgroundColor: "#70879C",
+                        borderColor: "white",
+                        color: "white",
+                      }}
+                    >
+                      Cerrar Sesión
+                    </button>
+
+                    
+                  </>
+                ) : (
                   <>
                     <button
                       type="button"
@@ -106,31 +141,6 @@ export const Navbar = () => {
                       onClick={() => navigate("/register")}
                     >
                       REGISTRARSE
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      type="button"
-                      className="btn rounded-pill me-3"
-                      style={{
-                        backgroundColor: "white",
-                        borderColor: "white",
-                        color: "#70879C",
-                      }}
-                    >
-                      Usuario: {store.user.name}
-                    </button>
-                    <button onClick={() => actions.logOut()}
-                      type="button"
-                      className="btn rounded-pill me-3"
-                      style={{
-                        backgroundColor: "#70879C",
-                        borderColor: "white",
-                        color: "white",
-                      }}
-                    >
-                      Cerrar Sesión
                     </button>
                   </>
                 )}

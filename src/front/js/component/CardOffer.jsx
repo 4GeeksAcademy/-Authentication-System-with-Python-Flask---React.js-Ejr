@@ -3,8 +3,8 @@ import "../../styles/CardOffer.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "./ModalJobApply.jsx";
-import { FaRegHeart } from "react-icons/fa";
-import { StarsRating } from "./StarsRating.jsx";
+import { FaRegHeart, FaHeart } from "react-icons/fa"; 
+import { StarRating } from "./StarsRating.jsx";
 
 export const CardOffer = ({ id }) => {
     const { actions, store } = useContext(Context);
@@ -15,6 +15,7 @@ export const CardOffer = ({ id }) => {
     const [modalType, setModalType] = useState("");
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
+    const [isFavorite, setIsFavorite] = useState(false); 
 
     if (!offer) return <div>Oferta no encontrada</div>;
 
@@ -28,7 +29,11 @@ export const CardOffer = ({ id }) => {
                 setNumeroInscritos(count);
             }
         });
-    }, [store.user, id, actions]);
+
+        
+        const favorite = store.favorites?.some((fav) => fav.oferta_id === id);
+        setIsFavorite(favorite);
+    }, [store.user, id, actions, store.favorites]);
 
     const handleViewDetails = () => {
         navigate(`/singleoffer/${id}`);
@@ -61,7 +66,6 @@ export const CardOffer = ({ id }) => {
                     throw new Error("Error al desinscribirse, intente nuevamente.");
                 }
             } else {
-
                 result = await actions.applyToJobOffer(id);
                 if (result?.msg) {
                     setModalMessage(result.msg);
@@ -76,6 +80,31 @@ export const CardOffer = ({ id }) => {
             setModalMessage(error.message);
             setModalType("error");
         } finally {
+            setIsModalOpen(true);
+        }
+    };
+
+    const handleFavoriteClick = async () => {
+        if (!store.user) {
+            setModalMessage("Debes estar registrado para agregar a favoritos.");
+            setModalType("warning");
+            setIsModalOpen(true);
+            return;
+        }
+        const programador_id = store.user.profile_programador?.id || null; 
+        const empleador_id = store.user.profile_empleador?.id || null; 
+        const oferta_id = id; 
+    
+        try {
+            if (isFavorite) {
+                await actions.removeFavorite(programador_id, empleador_id, oferta_id);
+            } else {
+                await actions.addFavorite(programador_id, empleador_id, oferta_id);
+            }
+            setIsFavorite(!isFavorite);
+        } catch (error) {
+            setModalMessage("Error al agregar a favoritos. Intente nuevamente.");
+            setModalType("error");
             setIsModalOpen(true);
         }
     };
@@ -101,7 +130,13 @@ export const CardOffer = ({ id }) => {
                     <div className="col-9 header-box d-flex flex-column">
                         <div className="title-heart d-flex justify-content-between">
                             <h2 className="card-offer-title">{offer.name}</h2>
-                            <FaRegHeart className="heart-icon"/>
+                            <div onClick={handleFavoriteClick} style={{ cursor: "pointer" }}>
+                                {isFavorite ? (
+                                    <FaHeart className="heart-icon" />
+                                ) : (
+                                    <FaRegHeart className="heart-icon" />
+                                )}
+                            </div>
                         </div>
                         <span className="card-offer-company">
                             {offer.nombre_empresa} - {offer.localidad}

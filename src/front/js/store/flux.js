@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			user: null,
 			proyectos: [],
-			userPostulaciones: []
+			userPostulaciones: [],
+			favorites: [],
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -49,6 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de oferta:", error);
 				}
 			},
+
 			createJobOffer: async (offerData) => {
 				console.log(offerData);
 
@@ -79,29 +81,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			applyToJobOffer: async (oferta_id) => {
+			applyToJobOffer: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
 
+				if (!token) {
+					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				if (!token) {
 					return { msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error' }
 				}
 
 				try {
+				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados`, {
 						method: 'POST',
+						headers: {
 						headers: {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${token}`
 						},
 						body: JSON.stringify({ oferta_id })
+						body: JSON.stringify({ oferta_id })
 					});
 
 					if (resp.ok) {
+					if (resp.ok) {
 						const data = await resp.json();
-						console.log('Inscripcion exitosa:', data)
-						setStore({
-							userPostulaciones: [...store.userPostulaciones, { user_id: store.user.id, oferta_id }]
-						  });
+						console.log('inscripcion exitosa', data);
 						return {msg: "Inscripcion realizada con exito.", type: "success"};
 					} else {
 						const errorData = await resp.json();
@@ -120,9 +126,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 
+
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
+
 
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
@@ -132,6 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${token}`,
 						},
 					});
+
 
 					if (resp.ok) {
 						const data = await resp.json();
@@ -205,9 +214,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					return data;
 				} catch (error) {
-					console.log("Error loading message from backend", error);
+					console.log("Error cargando mensaje desde el backend", error);
 				}
 			},
+
 			register: async (formData) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/register", {
@@ -216,24 +226,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json'
 						},
 						body: JSON.stringify(formData),
-					})
-					const data = await resp.json()
-					setStore(data)
-					localStorage.setItem('token', data.token)
-					return data
+					});
+					const data = await resp.json();
+					setStore(data);
+					localStorage.setItem('token', data.token);
+					return data;
 
 				} catch (error) {
-					console.log('error:' + error)
+					console.log('Error:', error);
 				}
 			},
+
 			resetStore: () => {
-				setStore({ msg: "", success: "" })
+				setStore({ msg: "", success: "" });
 			},
+
 			logOut: () => {
-				localStorage.removeItem("token")
-				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
-				return true
+				localStorage.removeItem("token");
+				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" });
+				return true;
 			},
+
 			editUser: async (formData, texto, token) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `/api/user/edit${texto}`, {
@@ -243,21 +256,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`
 						},
 						body: JSON.stringify(formData),
-					})
-					const data = await resp.json()
-					setStore(data)
-					localStorage.setItem('token', data.token)
-					return data
+					});
+					const data = await resp.json();
+					setStore(data);
+					localStorage.setItem('token', data.token);
+					return data;
 
 				} catch (error) {
-					console.log('error:' + error)
+					console.log('Error:', error);
 				}
 			},
-			logOut: () => {
-				localStorage.removeItem("token")
-				setStore({ msg: "", token: "", success: "", user: "", empleador: "", programador: "" })
-				return true
-			},
+
 			login: async (credentials) => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/login`, {
@@ -275,7 +284,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						await actions.loadUserPostulaciones(); //Cargamos las postulaciones del usuario al inciar sesión
 						return data;
 					} else {
-
 						return false;
 					}
 				} catch (error) {
@@ -289,6 +297,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: token });
 				}
 			},
+
 			addProjects: async (formData, token) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/user/programador/addProjects", {
@@ -298,14 +307,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`
 						},
 						body: JSON.stringify(formData),
-					})
-					const data = await resp.json()
-					setStore(
-						{ proyectos: [...getStore().proyectos, data.proyectos] })
-					return data
+					});
+					const data = await resp.json();
+					setStore({ proyectos: [...getStore().proyectos, data.proyectos] });
+					return data;
 
 				} catch (error) {
-					console.log('error:' + error)
+					console.log('Error:' + error)
 				}
 			},
 			paymentCompany: (paymentMethod) => {
@@ -364,6 +372,78 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			addFavorite: async (programador_id, empleador_id, oferta_id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							programador_id: programador_id,
+							empleador_id: empleador_id,
+							oferta_id: oferta_id,
+						}),
+					});
+			
+					if (!response.ok) {
+						throw new Error('Error al agregar favorito');
+					}
+			
+					const data = await response.json();
+					return data;
+			
+				} catch (error) {
+					console.error('Error:', error);
+					throw error;
+				}
+			},
+
+			removeFavorite: async (programador_id, empleador_id, oferta_id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos?programador_id=${programador_id}&empleador_id=${empleador_id}&oferta_id=${oferta_id}`, {
+						method: 'DELETE',
+					});
+
+					if (!response.ok) {
+						throw new Error('Error al eliminar favorito');
+					}
+
+					return { success: true, programador_id, empleador_id, oferta_id };
+
+				} catch (error) {
+					console.error('Error:', error);
+					throw error;
+				}
+			},
+			
+			getFavorites: async () => {
+				const store = getStore();
+				const user_id = store.user?.id; 
+			
+				if (!user_id) {
+					console.error('No se pudo obtener el ID del usuario');
+					return;
+				}
+			
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/${user_id}/favoritos`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					});
+			
+					if (response.ok) {
+						const data = await response.json();
+						setStore({ favorites: data }); // Asegúrate de que el 'data' ya es la lista de favoritos
+					} else {
+						console.error('Error al obtener los favoritos');
+					}
+				} catch (error) {
+					console.error('Error en la solicitud de favoritos:', error);
+				}
+			},
 		}
 	};
 };
