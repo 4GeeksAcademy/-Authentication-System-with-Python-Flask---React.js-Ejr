@@ -1,20 +1,42 @@
-import React, { useState } from "react";
-import '../../styles/StarRatings.css';
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext.js";
 
-export const StarsRating = ({ totalStars = 5, SingleOfferRating = '' }) => {
-    const [ratings, setRatings] = useState([]);
+export const StarsRating = ({ totalStars = 5, offerId }) => {
+    const { store, actions } = useContext(Context);
+    const [rating, setRating] = useState(0);
+    const [submitted, setSubmitted] = useState(false);
 
-    const handleRating = (rate) => {
-        setRatings((prevRatings) => [...prevRatings, rate]);
+    const handleRating = async (rate) => {
+        if (!offerId) {
+            console.error("Offer ID is missing");
+            return;
+        }
+
+        try {
+            const current_user = store?.user?.id;
+            if (!current_user) {
+                console.error("User ID is not available");
+                return;
+            }
+
+            const result = await actions.createRating({
+                from_id: current_user,
+                to_id: offerId,
+                value: rate,
+            });
+
+            console.log(result);
+            if (result?.success) {
+                setRating(rate);
+                console.log("Calificación creada exitosamente:", result.rating);
+                setSubmitted(true);
+            } else {
+                console.error(result?.msg || "Error al enviar la calificación");
+            }
+        } catch (error) {
+            console.error("Error al enviar la calificación:", error);
+        }
     };
-
-    const calculateAverageRating = () => {
-        if (ratings.length === 0) return 0;
-        const total = ratings.reduce((sum, rating) => sum + rating, 0);
-        return (total / ratings.length).toFixed(1); 
-    };
-
-    const averageRating = calculateAverageRating();
 
     return (
         <div className={`rating d-flex ${SingleOfferRating}`}>
@@ -22,17 +44,16 @@ export const StarsRating = ({ totalStars = 5, SingleOfferRating = '' }) => {
                 <span
                     key={index}
                     onClick={() => handleRating(index + 1)}
-                    style={{ color: index < averageRating ? '#ffd700' : '#ccc' }}
+                    style={{
+                        color: index < rating ? "#ffd700" : "#ccc",
+                        cursor: "pointer",
+                    }}
                 >
                     ★
                 </span>
             ))}
-            <p>({averageRating})</p>
+            <p>({rating}) {submitted && "¡Gracias por tu calificación!"}</p>
         </div>
     );
 };
-
-
-
-
 

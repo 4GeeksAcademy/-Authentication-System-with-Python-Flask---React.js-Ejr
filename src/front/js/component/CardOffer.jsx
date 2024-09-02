@@ -141,7 +141,7 @@ export const CardOffer = ({ id }) => {
                         <span className="card-offer-company">
                             {offer.nombre_empresa} - {offer.localidad}
                         </span>
-                        <StarsRating />
+                        <StarsRating offerId={id} />
                         <div className="card-offer-description text-muted">
                             <p className="text-description">{offer.descripcion}</p>
                         </div>
