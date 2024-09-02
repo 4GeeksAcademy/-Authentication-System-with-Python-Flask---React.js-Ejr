@@ -3,11 +3,13 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
+
 export const Inicio = () => {
     const { store, actions } = useContext(Context);
 
 
     return (
+
         <div className="inicio-container container mt-5 text-muted">
             <div className="row align-items-center">
                 <div className="col-lg-6 text-center text-lg-start">
@@ -17,7 +19,11 @@ export const Inicio = () => {
                     <p className="lead text-secondary mt-3">
                         ¿Eres un programador en busca de proyectos desafiantes? ¿O una empresa que necesita talento tecnológico para llevar sus ideas al siguiente nivel? ¡Estás en el lugar indicado!
                     </p>
-
+                    {store.suscripcion?.payment && (
+                        <div class="alert alert-success my-2" role="alert">
+                            {store.suscripcion?.payment}
+                        </div>
+                    )}
                     {!store.user && (
                         <div className="mt-4">
                             <Link to={"/register"}>

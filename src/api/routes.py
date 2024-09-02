@@ -3,17 +3,22 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
+import os
 from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash , check_password_hash
-from models import Company, db
+import stripe
+
+
 
 api = Blueprint('api', __name__)
 
 
 
+# API KEY STRIPE
+stripe.api_key = 'sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY'
 
 # Allow CORS requests to this API
 CORS(api)
@@ -37,7 +42,7 @@ def register():
     password = request.json.get("password", None)
     country = request.json.get("country", None)
     cif= request.json.get("cif", None)
-    if not name or not username or not email or not password or not country:
+    if not name or not email or not password or not country:
         return jsonify({'success':False, 'msg':'Todos los campos son necesarios'})
     email_exist = User.query.filter_by(email=email).first()
     if email_exist:
@@ -444,32 +449,67 @@ def reset_password():
     db.session.commit()
     return jsonify({"msg":"Password updated"}), 200
 
-#datos company 
 
-#telefono compañia
 
-@api.route('/updateCompanyPhone', methods=['PUT'])
+
+@api.route('/create-payment', methods=['POST'])
 @jwt_required()
-def update_company_phone():
+def create_payment():
     user_id = get_jwt_identity()
-    
-  
-    company = Company.query.filter_by(user_id=user_id).first()
-    
-    if not company:
-        return jsonify({"success": False, "msg": "Empresa no encontrada"}), 404
-    
-    phone = request.json.get('phone')
-    
-    if not phone:
-        return jsonify({"success": False, "msg": "Número de teléfono es requerido"}), 400
-    
- 
-    company.phone = phone
-    
-    try:
+    data = request.get_json()
+    amount = 200
+    payment = stripe.PaymentIntent.create(
+        amount=amount,
+        currency='eur',
+        payment_method=data['payment_method'],
+        payment_method_types=["card"],
+        off_session=True,
+        confirm=True,
+    )
+    user = User.query.get(user_id)
+    empleador = user.profile_empleador
+    if(empleador):
+        print(payment)
+        empleador.premium=True
         db.session.commit()
-        return jsonify({"success": True, "msg": "Teléfono actualizado exitosamente"}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"success": False, "msg": f"Error al actualizar el teléfono: {str(e)}"}), 500
+        return jsonify({'success': True, 'payment':f'Has sido suscrito con éxito, gracias por confiar en Loopy', "user":user.serialize()}),200
+    else:
+        return jsonify({'success': False, 'payment':f'Algo ha fallado, por favor vuelva a intentarlo'}),200
+    
+    
+#Favoritos
+@api.route('/favoritos', methods=['POST'])
+def add_favorito():
+    data = request.json
+
+    if not data.get('programador_id') and not data.get('empleador_id') and not data.get('oferta_id'):
+        return jsonify({'msg': 'Debe proporcionar al menos un ID de programador, empleador o oferta'}), 400
+    
+    new_favorite = Favoritos(
+        programador_id=data.get('programador_id'),
+        empleador_id=data.get('empleador_id'),
+        oferta_id=data.get('oferta_id')
+    )
+    
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return jsonify(new_favorite.serialize()), 201
+
+
+@api.route('/user/<int:user_id>/favoritos', methods=['GET'])
+def get_user_favorites(user_id):
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({'msg': 'Usuario no encontrado'}), 404
+    
+    favoritos = []
+    
+    if user.profile_programador:
+        favoritos.extend(user.profile_programador.favoritos)
+    
+    if user.profile_empleador:
+        favoritos.extend(user.profile_empleador.favoritos)
+    
+    return jsonify([favorito.serialize() for favorito in favoritos]), 200

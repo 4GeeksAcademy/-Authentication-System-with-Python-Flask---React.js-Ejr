@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 336214effe53
+Revision ID: 66386b1dc2af
 Revises: 
-Create Date: 2024-08-31 17:12:08.086197
+Create Date: 2024-09-02 11:42:13.907592
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '336214effe53'
+revision = '66386b1dc2af'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,6 +43,7 @@ def upgrade():
     sa.Column('cif', sa.String(length=15), nullable=True),
     sa.Column('metodo_pago', sa.String(length=100), nullable=True),
     sa.Column('descripcion', sa.String(length=300), nullable=True),
+    sa.Column('premium', sa.Boolean(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
@@ -100,13 +101,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('id', 'from_id', 'to_id')
     )
     op.create_table('favoritos',
-    sa.Column('programador_id', sa.Integer(), nullable=False),
-    sa.Column('empleador_id', sa.Integer(), nullable=False),
-    sa.Column('oferta_id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('programador_id', sa.Integer(), nullable=True),
+    sa.Column('empleador_id', sa.Integer(), nullable=True),
+    sa.Column('oferta_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['empleador_id'], ['empleador.id'], ),
     sa.ForeignKeyConstraint(['oferta_id'], ['ofertas.id'], ),
     sa.ForeignKeyConstraint(['programador_id'], ['programador.id'], ),
-    sa.PrimaryKeyConstraint('programador_id', 'empleador_id', 'oferta_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('postulados',
     sa.Column('user_id', sa.Integer(), nullable=False),
