@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
 
-export const StarsRating = ({ totalStars = 5, offerId }) => {
+export const StarsRating = ({ totalStars = 5, offerId, SingleOfferRating }) => {
     const { store, actions } = useContext(Context);
     const [rating, setRating] = useState(0);
     const [submitted, setSubmitted] = useState(false);
