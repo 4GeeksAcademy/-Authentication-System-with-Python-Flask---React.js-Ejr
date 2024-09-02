@@ -3,17 +3,22 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
+import os
 from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash , check_password_hash
+import stripe
+
 
 
 api = Blueprint('api', __name__)
 
 
 
+# API KEY STRIPE
+stripe.api_key = 'sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY'
 
 # Allow CORS requests to this API
 CORS(api)
@@ -37,7 +42,7 @@ def register():
     password = request.json.get("password", None)
     country = request.json.get("country", None)
     cif= request.json.get("cif", None)
-    if not name or not username or not email or not password or not country:
+    if not name or not email or not password or not country:
         return jsonify({'success':False, 'msg':'Todos los campos son necesarios'})
     email_exist = User.query.filter_by(email=email).first()
     if email_exist:
@@ -443,3 +448,32 @@ def reset_password():
     user.password=user.generate_password_hash(password)
     db.session.commit()
     return jsonify({"msg":"Password updated"}), 200
+
+
+
+
+@api.route('/create-payment', methods=['POST'])
+@jwt_required()
+def create_payment():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    amount = 200
+    payment = stripe.PaymentIntent.create(
+        amount=amount,
+        currency='eur',
+        payment_method=data['payment_method'],
+        payment_method_types=["card"],
+        off_session=True,
+        confirm=True,
+    )
+    user = User.query.get(user_id)
+    empleador = user.profile_empleador
+    if(empleador):
+        print(payment)
+        empleador.premium=True
+        db.session.commit()
+        return jsonify({'success': True, 'payment':f'Has sido suscrito con éxito, gracias por confiar en Loopy', "user":user.serialize()}),200
+    else:
+        return jsonify({'success': False, 'payment':f'Algo ha fallado, por favor vuelva a intentarlo'}),200
+    
+    

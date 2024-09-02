@@ -78,25 +78,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			applyToJobOffer: async (oferta_id) =>{
+			applyToJobOffer: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
 
-				if(!token){
-					return {msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error'}
+				if (!token) {
+					return { msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error' }
 				}
 
-				try{
+				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados`, {
 						method: 'POST',
-						headers:{
+						headers: {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${token}`
 						},
-						body: JSON.stringify({oferta_id})
+						body: JSON.stringify({ oferta_id })
 					});
 
-					if(resp.ok){
+					if (resp.ok) {
 						const data = await resp.json();
 						console.log('Inscripcion exitosa:', data)
 						setStore({
@@ -106,22 +106,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						const errorData = await resp.json();
 						console.log("Error al inscribirse: ", errorData.msg);
-						return  {msg: errorData.msg, type: 'warning'};
-						
+						return { msg: errorData.msg, type: 'warning' };
+
 					}
-				} catch (error){
-					return {msg: "Error en la solicitud de inscripcion.", type: "error"}
+				} catch (error) {
+					console.log("Error en la solitud de inscripcion.");
+					return { msg: "Error en la solicitud de inscripcion.", type: "error" }
+
 				}
 			},
 
 			unapplyFromJobOffer: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
-			
+
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
-			
+
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
 						method: 'DELETE',
@@ -130,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${token}`,
 						},
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('Desinscripción exitosa', data);
@@ -299,12 +301,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					const data = await resp.json()
 					setStore(
-						{proyectos: [...getStore().proyectos, data.proyectos]})
+						{ proyectos: [...getStore().proyectos, data.proyectos] })
 					return data
 
 				} catch (error) {
 					console.log('error:' + error)
 				}
+			},
+			paymentCompany: (paymentMethod) => {
+				const token = localStorage.getItem('token');
+				let promise = fetch(process.env.BACKEND_URL + '/api/create-payment', {
+					method: 'POST',
+					body: JSON.stringify({ payment_method: paymentMethod.id }),
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`
+					}
+				}).then((response) =>
+					response.json()
+				).then((data) => {
+					setStore({ user: data.user, suscripcion: data })
+				}).catch((error) => {
+					console.log('[error]', error)
+				});
 			},
 
 			resetPassword: async (token, password1, password2) => {

@@ -130,6 +130,7 @@ class Empleador(db.Model):
     cif = db.Column (db.String(15), unique=True)
     metodo_pago = db.Column (db.String(100))
     descripcion = db.Column(db.String(300))
+    premium = db.Column(db.Boolean ,default=False)
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
     rating = db.relationship ("Ratings", backref="empleador", lazy=True)
     favoritos = db.relationship ("Favoritos", backref="empleador", lazy=True)
@@ -145,6 +146,7 @@ class Empleador(db.Model):
             "cif": self.cif,
             "metodo_pago": self.metodo_pago,
             "descripcion": self.descripcion,
+            "premium": self.premium,
             "favoritos": [favoritos.serialize() for favoritos in self.favoritos]  if self.favoritos else None
         }
     
