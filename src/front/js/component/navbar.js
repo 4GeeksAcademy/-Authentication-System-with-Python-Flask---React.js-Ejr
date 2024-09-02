@@ -5,6 +5,10 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const handleLogOutRedirect = () => {
+    actions.logOut()
+    navigate("/")
+  }
 
   return (
     <nav className="navbar" style={{ backgroundColor: "#6793AE", height: "120px" }}>
@@ -80,13 +84,13 @@ export const Navbar = () => {
 
                 {store.user ? (
                   <>
-                   <Link 
-                        to="/favoritosPage"
-                        className="nav-link active me-3"
-                        style={{ color: "white" }}
-                      >
-                        FAVORITOS
-  
+                    <Link
+                      to="/favoritosPage"
+                      className="nav-link active me-3"
+                      style={{ color: "white" }}
+                    >
+                      FAVORITOS
+
                     </Link>
 
                     <button
@@ -100,9 +104,9 @@ export const Navbar = () => {
                     >
                       Usuario: {store.user.name}
                     </button>
-                    
+
                     <button
-                      onClick={() => actions.logOut()}
+                      onClick={handleLogOutRedirect}
                       type="button"
                       className="btn rounded-pill me-3"
                       style={{
@@ -114,7 +118,7 @@ export const Navbar = () => {
                       Cerrar Sesión
                     </button>
 
-                    
+
                   </>
                 ) : (
                   <>
