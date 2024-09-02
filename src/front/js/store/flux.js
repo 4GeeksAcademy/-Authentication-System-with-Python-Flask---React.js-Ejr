@@ -521,8 +521,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 
 					if (response.ok) {
-						const data = await response.json();
-						setStore(data); // Asegúrate de que el 'data' ya es la lista de favoritos
+						const { favoritos } = await response.json();
+						setStore({ favoritos: favoritos }); // Asegúrate de que el 'data' ya es la lista de favoritos
 					} else {
 						console.error('Error al obtener los favoritos');
 					}
