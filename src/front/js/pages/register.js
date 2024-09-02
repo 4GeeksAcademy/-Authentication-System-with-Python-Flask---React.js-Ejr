@@ -4,19 +4,20 @@ import { useForm } from "react-hook-form";
 import { Context } from "../store/appContext";
 import AlertSuccess from "../component/alertSuccess";
 import { useNavigate } from "react-router-dom";
-import { loadStripe } from '@stripe/stripe-js';
 
 
 export const Register = () => {
 
   const { store, actions } = useContext(Context);
   const [isDev, setIsDev] = useState(true)
+  const [focusActive, setFocusActive] = useState(false)
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const navigate = useNavigate();
+
 
   const onSubmit = (formData) => {
     actions.register(formData)
@@ -34,34 +35,46 @@ export const Register = () => {
     return () => clearTimeout(timer);
   }
 
+  const handleDevActive = () => {
+    setIsDev(false)
+    setFocusActive(true)
+  }
+
+  const handleCompanyActive = () => {
+    setIsDev(true)
+    setFocusActive(true)
+  }
+
 
   return (
     <div className="container-fluid p-0">
-      <div className="d-flex justify-content-center py-4">
-        <div className="row w-75 border rounded shadow" >
-          <div className='col bg-primary'>
-            <button onClick={() => setIsDev(false)}>Empresa</button>
-            <button onClick={() => setIsDev(true)}>Developer</button>
+      <div className="d-flex justify-content-center py-4 my-4 centrar">
+        <div className="row contenedor-registro border rounded shadow " >
+          <div className='col header-formulario'>
+            <h1 className="fw-bold fs-1">Bienvenido!!!</h1>
+            <span className="fw-lighter fs-5 mb-5">Empieza tu viaje con nosotros.</span>
+            <div className="d-flex mx-auto flex-column w-100 justify-content-around my-5">
+              <button className={`btn btn-light py-3 my-2 colortext ${focusActive && !isDev && "selectActive"}`} onClick={handleDevActive}>Pulsa aquí si eres empleador</button>
+              <button className={`btn btn-light py-3 my-2 colortext ${focusActive && isDev && "selectActive"}`} onClick={handleCompanyActive}>Pulsa aquí si eres programador</button>
+            </div>
           </div>
-          <div className="col">
+          <div className="col my-auto">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="mx-2 my-5 "
+              className="mx-2 my-3 "
             >
-              <div className=" w-100 text-center fw-bolder my-5">
-                <h1 >Crear Cuenta</h1>
-                <h4>{isDev ? "Programador" : "Empresa"}</h4>
+              <div className=" w-100 text-center ">
+                <h1 className="fw-bold fs-1" >Crear Cuenta</h1>
+                <h4 className="fw-lighter fs-3">{isDev ? "Programador" : "Empresa"}</h4>
               </div>
 
 
 
               {store?.msg && <AlertSuccess />}
 
-              <div className="w-100 px-4  p-3 mb-5 bg-white rounded py-2">
+              <div className="w-100  mb-1 bg-white rounded ">
                 <div className="form-group mb-2  ">
-                  <label htmlFor="name" className="form-label m-0 fw-semibold my-2">
-                    Nombre:
-                  </label>
+
                   <input
                     type="text"
                     className="sombreado form-control"
@@ -90,12 +103,6 @@ export const Register = () => {
                 </div>
                 {isDev && (
                   <div className="form-group mb-2">
-                    <label
-                      htmlFor="username"
-                      className="form-label m-0 fw-semibold my-2"
-                    >
-                      Apellidos:
-                    </label>
                     <input
                       type="text"
                       className="sombreado form-control"
@@ -113,9 +120,6 @@ export const Register = () => {
                 )}
 
                 <div className="form-group mb-2">
-                  <label htmlFor="email" className="form-label m-0 fw-semibold my-2">
-                    Email:
-                  </label>
                   <input
                     type="email"
                     className="sombreado form-control"
@@ -131,12 +135,6 @@ export const Register = () => {
                   )}
                 </div>
                 <div className="form-group mb-2">
-                  <label
-                    htmlFor="country"
-                    className="form-label m-0 fw-semibold my-2"
-                  >
-                    Pais:
-                  </label>
                   <input
                     type="text"
                     className="sombreado form-control"
@@ -152,12 +150,7 @@ export const Register = () => {
                   )}
                 </div>
                 <div className="form-group mb-2">
-                  <label
-                    htmlFor="password"
-                    className="form-label m-0 fw-semibold my-2"
-                  >
-                    Contraseña:
-                  </label>
+
                   <input
                     type="password"
                     className="sombreado form-control"
@@ -185,9 +178,7 @@ export const Register = () => {
                 </div>
                 {!isDev && (
                   <div className="form-group">
-                    <label htmlFor="cif" className="form-label m-0 fw-semibold my-2">
-                      CIF:
-                    </label>
+
                     <input
                       type="text"
                       className="form-control sombreado"
