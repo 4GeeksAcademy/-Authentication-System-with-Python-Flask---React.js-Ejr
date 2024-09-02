@@ -328,18 +328,18 @@ def get_rating(id):
 @api.route('/ratings', methods=['POST'])
 @jwt_required()
 def create_rating():
-    from_id = request.json.get("from_id")
-    to_id = request.json.get("to_id")
+    programador_id = request.json.get("from_id")
+    empleador_id = request.json.get("to_id")
     value = request.json.get("value")
 
-    if not from_id or not to_id or not value:
+    if not programador_id or not empleador_id or not value:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     if value < 1 or value > 5:
         return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
 
-    new_rating = Ratings(from_id=from_id, to_id=to_id, value=value)
-    print("objeto new rating", new_rating.serialize())
+    new_rating = Ratings(programador_id=programador_id, empleador_id=empleador_id, value=value)
+    print(new_rating.serialize())
     try:
         # db.session.add(new_rating)
         # db.session.commit()

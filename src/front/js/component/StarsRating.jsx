@@ -13,7 +13,8 @@ export const StarsRating = ({ totalStars = 5, offerId, SingleOfferRating }) => {
         }
 
         try {
-            const current_user = store?.user?.id;
+            const current_user = store?.user?.profile_programador?.id;
+            console.log(current_user)
             if (!current_user) {
                 console.error("User ID is not available");
                 return;
