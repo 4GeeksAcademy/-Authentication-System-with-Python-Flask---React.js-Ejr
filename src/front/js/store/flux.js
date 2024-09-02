@@ -8,6 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: null,
 			proyectos: [],
 			userPostulaciones: [],
+			ratings: [],
 			favorites: [],
 		},
 		actions: {
@@ -196,7 +197,96 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
+			createRating: async (ratingData) => {
+				try {
+					const token = localStorage.getItem('token');
+					const response = await fetch(`${process.env.BACKEND_URL}/api/ratings`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+						body: JSON.stringify(ratingData),
+					});
+					console.log(ratingData)
+					if (!response.ok) {
+						throw new Error("Error en la respuesta de la API");
+					}
+			
+					const data = await response.json();
+					console.log("esta es la data",data)
+					return data;  // Asegúrate de que esta línea devuelva la respuesta correcta
+			
+				} catch (error) {
+					console.error("Error en la solicitud de creación de calificación:", error);
+					return undefined;  // O maneja el error de otra manera
+				}
+			},
 
+			updateRating: async (id, value) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/ratings/${id}`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`,
+						},
+						body: JSON.stringify({ value })
+					});
+
+					if (!response.ok) {
+						throw new Error("Error en la respuesta de la API");
+					}
+
+					const data = await response.json();
+
+					if (data.success) {
+						console.log("Calificación actualizada:", data.rating);
+						const store = getStore();
+						setStore({
+							ratings: store.ratings.map(rating =>
+								rating.id === id ? data.rating : rating
+							)
+						});
+					} else {
+						console.error("Error al actualizar calificación:", data.msg);
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de actualización de calificación:", error);
+				}
+			},
+
+			deleteRating: async (id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/ratings/${id}`, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`,
+						}
+					});
+
+					if (!response.ok) {
+						throw new Error("Error en la respuesta de la API");
+					}
+
+					const data = await response.json();
+
+					if (data.success) {
+						console.log("Calificación eliminada exitosamente");
+						const store = getStore();
+						setStore({
+							ratings: store.ratings.filter(rating => rating.id !== id)
+						});
+					} else {
+						console.error("Error al eliminar calificación:", data.msg);
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de eliminación de calificación:", error);
+				}
+			},
+
+		
 			getMessage: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
@@ -273,7 +363,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(data)
 						localStorage.setItem('token', data.token);
 						setStore({ token: data.token, user: data.user });
-						//await actions.loadUserPostulaciones(); //Cargamos las postulaciones del usuario al inciar sesión
+
 						return data;
 					} else {
 						return false;
