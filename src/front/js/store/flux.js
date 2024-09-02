@@ -361,7 +361,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						localStorage.setItem('token', data.token);
 						setStore({ token: data.token, user: data.user });
-						await actions.loadUserPostulaciones(); //Cargamos las postulaciones del usuario al inciar sesión
 						return data;
 					} else {
 						return false;
