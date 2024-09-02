@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { LogoGymtrack } from "./logoGymtrack";
 
 
@@ -49,25 +49,25 @@ export const Footer = () => {
 						className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
 					>
 						<li>
-							<a className="text-neutral-200 transition hover:text-neutral-200/75" href="#"> About </a>
+							<Link to="/" className="text-neutral-200 transition hover:text-neutral-200/75" > Inicio </Link>
 						</li>
 
 						<li>
-							<a className="text-neutral-200 transition hover:text-neutral-200/75" href="#"> Services </a>
+							<Link to="/routine" className="text-neutral-200 transition hover:text-neutral-200/75" > Rutina </Link>
 						</li>
 
 						<li>
-							<a className="text-neutral-200 transition hover:text-neutral-200/75" href="#"> Projects </a>
+							<Link to="/stats" className="text-neutral-200 transition hover:text-neutral-200/75" > Estadísticas </Link>
 						</li>
 
 						<li>
-							<a className="text-neutral-200 transition hover:text-neutral-200/75" href="#"> Blog </a>
+							<Link to="/exercises" className="text-neutral-200 transition hover:text-neutral-200/75" > Ejercicios </Link>
 						</li>
 					</ul>
 				</div>
 
 				<p className="mt-12 text-center text-sm text-neutral-500 lg:text-right">
-					GYMTRACK &copy; 2024. All rights reserved.
+					GYMTRACK &copy; 2024
 				</p>
 			</div>
 		</footer>

@@ -105,9 +105,10 @@ export const Profile = () => {
 
   return (
     <div className="sm:w-2/3 w-11/12 mx-auto flex flex-col items-center gap-4 justify-between overflow-y-auto py-5 px-3 h-full bg-neutral-800 border-neutral-700 relative min-h-[800px]">
-      <div className="absolute left-0">
+      <div className="absolute left-0 -top-[6px]">
         <BackButton />
       </div>
+
       {/* form title */}
       <span className="relative flex justify-center w-full sm:w-3/4 mx-auto">
         <div

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import BackButton from "./backButton";
 
 export const EmptyRoutine = () => {
     const { store, actions } = useContext(Context);
@@ -8,6 +9,9 @@ export const EmptyRoutine = () => {
     return (
         <>
             <div className="w-3/4 min-h-[60vh] mx-auto flex rounded-md flex-col items-center gap-4 py-5 px-5 bg-neutral-800 border-neutral-700 relative">
+                <div className="absolute left-0 top-1">
+                    <BackButton />
+                </div>
 
                 {/* Title */}
                 <span className="relative flex justify-center w-full sm:w-3/4">

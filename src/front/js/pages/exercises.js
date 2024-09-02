@@ -38,7 +38,7 @@ export const Exercises = () => {
     return (
         <>
             <div className="flex flex-row flex-wrap gap-2 w-[80vw] max-w-[1600px] items-end justify-end mb-5 m-auto relative">
-                <div className="absolute left-0 top-1">
+                <div className="absolute left-0 -top-[6px]">
                     <BackButton />
                 </div>
 
@@ -97,7 +97,7 @@ export const Exercises = () => {
             </div>
 
             {/* Renderiza la lista de ejercicios filtrados */}
-            <div className='min-h-[50vh]'>
+            <div className='min-h-[50vh] w-[80vw] max-w-[1600px] mx-auto'>
                 <div className="grid grid-cols-1 gap-4 w-full mx-auto p-2 max-w-[1920px]" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}> {/* Grid adaptable */}
 
                     {filteredExercises.length === 0 ? (

@@ -28,9 +28,10 @@ export const CarouselHome = () => {
     return (
         <>
 
-            <div className="absolute left-0">
+            <div className="absolute left-0 top-1">
                 <BackButton />
             </div>
+
             {/* form title */}
             <span className="relative flex justify-center w-full sm:w-3/4 mx-auto">
                 <div

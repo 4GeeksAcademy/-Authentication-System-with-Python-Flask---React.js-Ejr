@@ -10,7 +10,6 @@ export const ExercisesDetail = props => {
     const [exercise, setExercise] = useState(null);
 
     useEffect(() => {
-        // Cargar los ejercicios y categorías si no están cargados
         if (store.allExerciseList.length === 0) {
             actions.allExercise();
         }
@@ -20,8 +19,10 @@ export const ExercisesDetail = props => {
     }, [actions, store.allExerciseList.length, store.allCategoryList.length]);
 
     useEffect(() => {
-        // Obtener los detalles del ejercicio utilizando la ID
         const fetchedExercise = store.allExerciseList.find(ex => ex.id === parseInt(id));
+        if (fetchedExercise) {
+            document.title = `${fetchedExercise.name} | GYMTRACK`;
+        }
         setExercise(fetchedExercise);
     }, [id, store.allExerciseList]);
 
@@ -31,9 +32,10 @@ export const ExercisesDetail = props => {
 
     return (
         <div className="w-2/3 bg-white rounded-lg shadow dark:bg-neutral-800 p-4 md:p-6 mx-auto min-h-[60vh] flex flex-col relative">
-            <div className="absolute left-0">
-                <BackButton />
-            </div>
+            <div className="absolute left-0 -top-[6px]">
+                    <BackButton />
+                </div>
+
 
 
             {/* form title */}
