@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import React, { useContext, useState } from 'react';
+
 import { Context } from "../../store/appContext";
 import ProfileImage from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
@@ -16,7 +16,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 
 const CompanyProfile = () => {
-    // Estado para los datos de la compañía
+
     const [companyData, setCompanyData] = useState({
         name: '',
         description: '',
