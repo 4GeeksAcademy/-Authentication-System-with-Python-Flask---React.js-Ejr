@@ -81,30 +81,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			applyToJobOffer: async (oferta_id) => {
-			applyToJobOffer: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
 
-				if (!token) {
-					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				if (!token) {
 					return { msg: "Usuario no autenticado: registrate o inicia sesión", type: 'error' }
 				}
 
 				try {
-				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados`, {
 						method: 'POST',
-						headers: {
 						headers: {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${token}`
 						},
 						body: JSON.stringify({ oferta_id })
-						body: JSON.stringify({ oferta_id })
 					});
 
-					if (resp.ok) {
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('inscripcion exitosa', data);
@@ -126,11 +119,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 
-
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
-
 
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/postulados/${oferta_id}`, {
@@ -140,7 +131,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${token}`,
 						},
 					});
-
 
 					if (resp.ok) {
 						const data = await resp.json();
@@ -307,13 +297,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${token}`
 						},
 						body: JSON.stringify(formData),
-					});
-					const data = await resp.json();
-					setStore({ proyectos: [...getStore().proyectos, data.proyectos] });
-					return data;
+					})
+					const data = await resp.json()
+					setStore(
+						{ proyectos: [...getStore().proyectos, data.proyectos] })
+					return data
 
 				} catch (error) {
-					console.log('Error:' + error)
+					console.log('Error:', error);
 				}
 			},
 			paymentCompany: (paymentMethod) => {
