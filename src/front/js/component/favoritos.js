@@ -45,7 +45,7 @@ export const Favoritos = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-                {store.favorites && store.favorites.length > 0 ? (
+                {store.favoritos && store.favorites.length > 0 ? (
                     store.favorites.map((favorito, index) => (
                         <div key={index} className="col-md-4 mb-3">
                             <div className="card">
