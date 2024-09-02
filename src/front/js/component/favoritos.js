@@ -10,6 +10,8 @@ export const Favoritos = () => {
 
 
     const renderFavoriteInfo = (favorito) => {
+        console.log(favorito);
+
         if (favorito.oferta_id) {
             return (
                 <>
@@ -43,35 +45,35 @@ export const Favoritos = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-            {store.favorites && store.favorites.length > 0 ? (
-                        store.favorites.map((favorito, index) => (
-                            <div key={index} className="col-md-4 mb-3">
-                                <div className="card">
-                                    <div className="card-body">
-                                        {renderFavoriteInfo(favorito)}
-                                        <button
-                                            className="btn btn-danger mt-3"
-                                            onClick={() =>
-                                                actions.removeFavorite(
-                                                    favorito.programador_id,
-                                                    favorito.empleador_id,
-                                                    favorito.oferta_id
-                                                )
-                                            }
-                                        >
-                                            Eliminar
-                                        </button>
-                                    </div>
+                {store.favorites && store.favorites.length > 0 ? (
+                    store.favorites.map((favorito, index) => (
+                        <div key={index} className="col-md-4 mb-3">
+                            <div className="card">
+                                <div className="card-body">
+                                    {renderFavoriteInfo(favorito)}
+                                    <button
+                                        className="btn btn-danger mt-3"
+                                        onClick={() =>
+                                            actions.removeFavorite(
+                                                favorito.programador_id,
+                                                favorito.empleador_id,
+                                                favorito.oferta_id
+                                            )
+                                        }
+                                    >
+                                        Eliminar
+                                    </button>
                                 </div>
                             </div>
-                        ))
-                    ) : (
-                        <div className="col-12">
-                            <p className="text-center">No tienes favoritos aún.</p>
                         </div>
-                    )}
-                </div>
+                    ))
+                ) : (
+                    <div className="col-12">
+                        <p className="text-center">No tienes favoritos aún.</p>
+                    </div>
+                )}
             </div>
+        </div>
 
     );
 };
