@@ -39,24 +39,25 @@ class Ratings(db.Model):
             "to_id": self.to_id,
             "value": self.value
         }
-    
+
+        
 class Favoritos(db.Model):
-    __tablename__="favoritos"
-    programador_id = db.Column (db.Integer, db.ForeignKey ("programador.id"), primary_key=True)
-    empleador_id = db.Column (db.Integer, db.ForeignKey ("empleador.id"), primary_key=True)
-    oferta_id =db.Column (db.Integer, db.ForeignKey ("ofertas.id"), primary_key=True)
-    
+    __tablename__ = "favoritos"
+    id = db.Column(db.Integer, primary_key=True)
+    programador_id = db.Column(db.Integer, db.ForeignKey("programador.id"), nullable=True)
+    empleador_id = db.Column(db.Integer, db.ForeignKey("empleador.id"), nullable=True)
+    oferta_id = db.Column(db.Integer, db.ForeignKey("ofertas.id"), nullable=True)
+
     def __repr__(self):
-        return f'<Favoritos {self.programador_id}>'
+        return f'<Favoritos {self.programador_id}-{self.empleador_id}-{self.oferta_id}>'
 
     def serialize(self):
         return {
             "programador_id": self.programador_id,
             "empleador_id": self.empleador_id,
             "oferta_id": self.oferta_id
-
-            
         }
+
     
 class User(db.Model):
     __tablename__="user"
@@ -106,8 +107,8 @@ class Programador(db.Model):
     proyectos = db.relationship ("Proyectos", backref="programador", lazy=True)
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
     rating = db.relationship ("Ratings", backref="programador", lazy=True)
-    favoritos = db.relationship ("Favoritos", backref="programador", lazy=True)
-   
+    favoritos = db.relationship("Favoritos", backref="programador", lazy=True)
+
 
     def __repr__(self):
         return f'<Programador {self.id}>'
@@ -117,7 +118,7 @@ class Programador(db.Model):
             "id": self.id,
             "precio_hora": self.precio_hora,
             "tecnologias": self.tecnologias,
-            "experiencia": self.experiencia,
+            "experiencia": self.experiencia.value if self.experiencia else None,
             "descripcion": self.descripcion,
             "rating": self.rating,
             "proyectos": [proyectos.serialize()for proyectos in self.proyectos],
@@ -130,6 +131,7 @@ class Empleador(db.Model):
     cif = db.Column (db.String(15), unique=True)
     metodo_pago = db.Column (db.String(100))
     descripcion = db.Column(db.String(300))
+    premium = db.Column(db.Boolean ,default=False)
     user_id= db.Column (db.Integer, db.ForeignKey("user.id"), nullable=False)
     rating = db.relationship ("Ratings", backref="empleador", lazy=True)
     favoritos = db.relationship ("Favoritos", backref="empleador", lazy=True)
@@ -145,6 +147,7 @@ class Empleador(db.Model):
             "cif": self.cif,
             "metodo_pago": self.metodo_pago,
             "descripcion": self.descripcion,
+            "premium": self.premium,
             "favoritos": [favoritos.serialize() for favoritos in self.favoritos]  if self.favoritos else None
         }
     

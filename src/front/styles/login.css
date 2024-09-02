@@ -1,23 +1,13 @@
-
-body {
-
-  padding: 0;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0; 
-}
-
 .username {
   margin-bottom: 15px;
   width: 100%;
   margin-top: 25px;
 }
 
-.password{
+.password {
   margin-bottom: 15px;
   width: 100%;
-  
+
 
 }
 
@@ -36,34 +26,43 @@ body {
   background-color: #6693ae;
 }
 
-.inputname, .inputpassword {
+.inputname,
+.inputpassword {
   width: 100%;
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
   box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 
-.inputname :focus, .inputpassword :focus {
-  border-color: #6693ae; 
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
-  outline: none; 
+.inputname :focus,
+.inputpassword :focus {
+  border-color: #6693ae;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
 }
 
-.login-container{
-  width: 600px; 
-  height: 350px; 
+.login-container {
+  width: 600px;
+  height: 350px;
   margin: 0 auto;
-  padding: 20px; 
-  border: 1px solid #ccc; 
-  border-radius: 8px; 
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   justify-content: center;
   background-color: #fff;
-  
+
 
 }
 
+.centrar {
+  min-height: 70vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
