@@ -46,7 +46,7 @@
 
 .login-container {
   width: 600px;
-  height: 350px;
+  min-height: 350px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;

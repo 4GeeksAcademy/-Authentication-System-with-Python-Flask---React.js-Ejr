@@ -7,6 +7,7 @@ export const LoginPage = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState("")
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -18,6 +19,7 @@ export const LoginPage = () => {
             navigate("/");
         } else {
             console.log("Error al iniciar sesión");
+            setError(true)
         }
     };
 
@@ -29,14 +31,20 @@ export const LoginPage = () => {
     return (
         <div className='centrar'>
             <form className="login-container" onSubmit={handleLogin}>
-                <h4>Iniciar Sesión</h4>
+                <h2 className='text-center'>Iniciar Sesión</h2>
+                {error && (
+                    <div className="alert alert-warning m-0 p-2 text-center " role="alert">
+                        No existe ningún usuario registrado con esos datos.
+                    </div>
+                )}
+
                 <div className="username">
                     <label>Correo electrónico:</label>
                     <input
                         className="inputname"
-                        type="text"
+                        type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value.trim())}
                         required
                     />
                 </div>
@@ -46,7 +54,7 @@ export const LoginPage = () => {
                         className="inputpassword"
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value.trim())}
                         required
                     />
                 </div>
