@@ -102,7 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('inscripcion exitosa', data);
-						return {msg: "Inscripcion realizada con exito.", type: "success"};
+						return { msg: "Inscripcion realizada con exito.", type: "success" };
 					} else {
 						const errorData = await resp.json();
 						console.log("Error al inscribirse: ", errorData.msg);
@@ -151,29 +151,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 				if (!token) return;
-			  
+
 				try {
-				  const response = await fetch(`${process.env.BACKEND_URL}/api/user/postulados`, {
-					method: 'GET',
-					headers: {
-					  'Content-Type': 'application/json',
-					  Authorization: `Bearer ${token}`,
-					},
-				  });
-			  
-				  if (response.ok) {
-					const data = await response.json();
-					setStore({ userPostulaciones: data.postulados });
-					console.log('Postulaciones del usuario cargadas:', data.postulados);
-				  } else {
-					const errorData = await response.json();
-					console.error('Error al cargar las postulaciones:', errorData.msg);
-				  }
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/postulados`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`,
+						},
+					});
+
+					if (response.ok) {
+						const data = await response.json();
+						setStore({ userPostulaciones: data.postulados });
+						console.log('Postulaciones del usuario cargadas:', data.postulados);
+					} else {
+						const errorData = await response.json();
+						console.error('Error al cargar las postulaciones:', errorData.msg);
+					}
 				} catch (error) {
-				  console.error('Error al obtener postulaciones:', error);
+					console.error('Error al obtener postulaciones:', error);
 				}
-			  },
-			  
+			},
+
 
 			getNumeroPostulados: async (oferta_id) => {
 				try {
@@ -181,7 +181,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: `Bearer ${getStore().token}`							},
+							Authorization: `Bearer ${getStore().token}`
+						},
 					});
 					if (response.ok) {
 						const data = await response.json();
@@ -359,8 +360,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (resp.ok) {
 						const data = await resp.json();
+						console.log(data)
 						localStorage.setItem('token', data.token);
 						setStore({ token: data.token, user: data.user });
+
 						return data;
 					} else {
 						return false;
@@ -465,14 +468,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							oferta_id: oferta_id,
 						}),
 					});
-			
+
 					if (!response.ok) {
 						throw new Error('Error al agregar favorito');
 					}
-			
+
 					const data = await response.json();
+					setStore({ favorites:[...getStore().favorites, data]});
 					return data;
-			
+
 				} catch (error) {
 					console.error('Error:', error);
 					throw error;
@@ -496,16 +500,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw error;
 				}
 			},
-			
+
 			getFavorites: async () => {
 				const store = getStore();
-				const user_id = store.user?.id; 
-			
+				const user_id = store.user.id;
+				console.log(user_id)
 				if (!user_id) {
 					console.error('No se pudo obtener el ID del usuario');
 					return;
 				}
-			
+
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/user/${user_id}/favoritos`, {
 						method: 'GET',
@@ -513,7 +517,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						},
 					});
-			
+
 					if (response.ok) {
 						const data = await response.json();
 						setStore({ favorites: data }); // Asegúrate de que el 'data' ya es la lista de favoritos

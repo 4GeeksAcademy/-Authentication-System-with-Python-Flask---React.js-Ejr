@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "./ModalJobApply.jsx";
 import { FaRegHeart, FaHeart } from "react-icons/fa"; 
-import { StarRating } from "./StarsRating.jsx";
+import { StarsRating} from "./StarsRating.jsx"
 
 export const CardOffer = ({ id }) => {
     const { actions, store } = useContext(Context);
