@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export const Inicio = () => {
     const { store } = useContext(Context);
 
+    
 
     return (
 
