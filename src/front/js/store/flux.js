@@ -362,7 +362,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						console.log(data)
 						localStorage.setItem('token', data.token);
-						setStore({ token: data.token, user: data.user });
+						setStore({ token: data.tokenn, user: data.user });
 
 						return data;
 					} else {
