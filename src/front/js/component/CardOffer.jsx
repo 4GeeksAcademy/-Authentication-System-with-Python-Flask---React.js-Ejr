@@ -30,12 +30,10 @@ export const CardOffer = ({ id }) => {
             }
         });
 
-
-
         const favorite = store.favorites?.some((fav) => fav.id === id);
         console.log(favorite)
         console.log(id)
-        setIsFavorite(favorite);
+        setIsFavorite(!isFavorite);
     }, [store.user, id, actions, store.favorites]);
 
     const handleViewDetails = () => {
