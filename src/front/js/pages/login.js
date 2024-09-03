@@ -30,41 +30,45 @@ export const LoginPage = () => {
 
     return (
         <div className='centrar'>
-            <form className="login-container" onSubmit={handleLogin}>
-                <h2 className='text-center'>Iniciar Sesión</h2>
-                {error && (
-                    <div className="alert alert-warning m-0 p-2 text-center " role="alert">
-                        No existe ningún usuario registrado con esos datos.
-                    </div>
-                )}
+            <section id="content">
+                <form className="login-container" onSubmit={handleLogin}>
+                    <h1 className='text-center'>Iniciar Sesión</h1>
+                    {error && (
+                        <div className="alert alert-warning m-0 p-2 text-center " role="alert">
+                            No existe ningún usuario registrado con esos datos.
+                        </div>
+                    )}
 
-                <div className="username">
-                    <label>Correo electrónico:</label>
-                    <input
-                        className="inputname"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value.trim())}
-                        required
-                    />
-                </div>
-                <div className="password">
-                    <label>Contraseña:</label>
-                    <input
-                        className="inputpassword"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value.trim())}
-                        required
-                    />
-                </div>
-                <button type="submit" className="loginbutton">Login</button>
-                <div>
-                    <p onClick={handleForgotPassword} className="forgot-password-link">
-                        ¿Olvidaste tu contraseña?
-                    </p>
-                </div>
-            </form>
+                    <div className="username">
+                        <input
+                            className="inputname"
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value.trim())}
+                            required
+                            id="username"
+                        />
+                    </div>
+                    <div className="password">
+                        <input
+                            className="inputpassword"
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            id="password"
+                            onChange={(e) => setPassword(e.target.value.trim())}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="loginbutton">Login</button>
+                    <div>
+                        <p onClick={handleForgotPassword} className="forgot-password-link fst-italic text-decoration-underline">
+                            ¿Olvidaste tu contraseña?
+                        </p>
+                    </div>
+                </form>
+            </section>
         </div>
     );
 };
