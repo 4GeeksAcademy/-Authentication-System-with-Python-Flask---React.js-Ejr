@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+.stylebutton {
+    background-color: #6693ae;
+    color: white;
+}
+
+.stylebutton:hover {
+    background-color: #5e88a3;
+    color: white;
+}
+
+.sombreado {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    margin: 1rem 0
+}
+
+.contenedor-registro {
+    display: flex;
+    justify-content: center;
+    width: 60rem;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+.header-formulario {
+    background-color: #5e88a3;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.colortext {
+    color: #5e88a3;
+}
+.colortext:focus {
+    text-decoration: underline;
+    font-weight: 900;
+}
+
+.centrar {
+    min-height: 70vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectActive {
+    background-color: #dddbdb;
+    text-decoration: underline;
+    font-weight: 900;
+}

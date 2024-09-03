@@ -1,0 +1,154 @@
+.big-singleoffer-container{
+    height: 1200px;
+}
+.card-singleoffer-header{
+    position: relative;
+    left: 220px;
+    bottom: 110px;
+}
+
+.single-offer-box {
+    height: auto;
+    width: 100%; 
+    max-width: 60rem; 
+    padding: 10px; 
+    box-shadow: -1px 2px 20px 4px #d4c4c4;
+  }
+.card-single-offer{
+    box-shadow: -1px 2px 20px 4px #d4c4c4;
+}
+.card-SinglOffer-description{
+    position: relative;
+    top: 10px;
+}
+.btn-company{
+    background-color: rgb(175, 206, 225);
+
+}
+.single-rating{
+    position: relative;
+    top: 10px;
+}
+.card-offer-logo img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.offer-header{
+    position: relative;
+    left: 20px;
+    bottom: 20px;
+    cursor: pointer;
+}
+.localidad-publicacion span{
+   font-size: 1rem;
+   position: relative;
+   bottom: 5px;
+    
+}
+
+.fecha_publicacion {
+    position: absolute;
+    top: 60px;
+    font-size: 0.85rem;
+    
+
+}
+.fecha_publicacion:hover{
+    text-decoration: underline;
+}
+.companyName-localidad{
+    position: relative;
+    right: 14px;
+    bottom: 5px;
+    font-size: 1rem;
+    color: #167db7;
+    
+}
+
+.companyName-localidad:hover{
+    text-decoration: underline;
+    color: #167db7;
+    cursor: pointer;
+}
+
+.requisits-box{
+    position: relative;
+    bottom: 50px;
+    line-height: 25px;
+}
+
+.requisit-list{
+    list-style: none;
+    font-size: 0.85rem;
+
+}
+
+.requisits-box h5{
+    font-size: 1.2rem;
+}
+.requisits-box p{
+    position: relative;
+    bottom: 5px;
+}
+.data-header-list{
+    position: relative;
+    left: 220px;
+    bottom: 120px;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.single-offer-rating{
+    position: relative;
+    top: 20px;
+}
+.data-2{
+    position: relative;
+    left: 150px;
+    
+}
+
+.formacion{
+    font-size: 1rem;
+    
+}
+.experiencia-min  .idiomas  .tipo-contrato{
+    position: relative;
+    bottom: 40px;
+}
+
+.btn-apply {
+    color: black;
+    background-color: rgb(103, 147, 174);
+    min-width: 180px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-apply:hover {
+    color: white;
+    background-color: rgb(135, 193, 229);
+}
+
+.btn-apply-top-right {
+    position: absolute;
+    right: 220px;
+    bottom: 65px;
+}
+
+.btn-apply-bottom-left {
+    position: static;
+    left: 20px;
+    bottom: -8px;
+    margin-top: 20px; 
+    display: block;
+}
+.num-postulados-single{
+    font-size: 0.9rem;
+    text-wrap: nowrap;
+}
+
+.num-postulado-single{
+    font-size: 0.9rem;
+}

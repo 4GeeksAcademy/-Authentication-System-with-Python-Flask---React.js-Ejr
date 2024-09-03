@@ -1,0 +1,33 @@
+body{
+    min-height: 1200px;
+}
+
+.search-bar {
+    margin: auto;
+    max-width: 820px;
+    display: flex;
+
+}
+
+.btn-search {
+    background-color: rgb(103, 147, 174);
+    color:black;
+    padding: 5px 11px;
+    height: 100%;
+    width: 100px;
+}
+.btn-search:hover{
+    background-color: rgb(135, 193, 229);
+    color: aliceblue;
+
+}
+
+.header-box h3{
+    color: rgb(103, 147, 174);
+    font-size: 1.8rem;
+
+}
+
+.header-box h2{
+    font-size: 3rem;
+}
