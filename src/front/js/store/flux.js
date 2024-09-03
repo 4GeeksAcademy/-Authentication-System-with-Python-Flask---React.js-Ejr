@@ -506,7 +506,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const user = getStore().user;
 				console.log(user)
 				const user_id = user?.id;
-				console.log(user_id)
 				if (!user_id) {
 					console.error('No se pudo obtener el ID del usuario');
 					return;
@@ -522,7 +521,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						const { favoritos } = await response.json();
-						setStore({ favoritos: favoritos }); // Asegúrate de que el 'data' ya es la lista de favoritos
+						setStore({ favorites: favoritos }); // Asegúrate de que el 'data' ya es la lista de favoritos
 					} else {
 						console.error('Error al obtener los favoritos');
 					}

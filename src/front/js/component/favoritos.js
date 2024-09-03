@@ -10,14 +10,26 @@ export const Favoritos = () => {
 
 
     const renderFavoriteInfo = (favorito) => {
-        console.log(favorito);
-
-        if (favorito.oferta_id) {
+        console.log(favorito.id);
+        if (favorito) {
             return (
                 <>
-                    <h5 className="card-title">{favorito.ofertas.name}</h5>
-                    <p className="card-text">{favorito.ofertas.descripcion}</p>
-                    <p className="card-text"><strong>Empresa:</strong> {favorito.ofertas.nombre_empresa}</p>
+                    <h5 className="card-title text-center">Ofertas</h5>
+                    <p className="card-text"><strong>Empresa:</strong> {favorito.nombre_empresa}</p>
+                    <p className="card-text"><strong>Nombre de la oferta:</strong> {favorito.name}</p>
+                    <p className="card-text"><strong>Descripcion:</strong> {favorito.descripcion}</p>
+                    <p className="card-text"><strong>Estudios minimos: </strong> {favorito.estudios_minimos}</p>
+                    <p className="card-text"><strong>Experiencia minima: </strong>{favorito.experiencia_minima}</p>
+                    <p className="card-text"><strong>Fecha de publicacion:</strong> {favorito.fecha_publicacion}</p>
+                    <p className="card-text"><strong>Horario: </strong> {favorito.horario}</p>
+                    <p className="card-text"><strong>Idiomas: </strong> {favorito.idiomas}</p>
+                    <p className="card-text"><strong>Localidad: </strong> {favorito.localidad}</p>
+                    <p className="card-text"><strong>Modalidad: </strong> {favorito.modalidad}</p>
+                    <p className="card-text"><strong>Plazo: </strong> {favorito.plazo}</p>
+                    <p className="card-text"><strong>Requisitos minimos: </strong> {favorito.requisitos_minimos}</p>
+                    <p className="card-text"><strong>Salario: </strong>{favorito.salario}</p>
+                    <p className="card-text"><strong>Tipo de contrato:</strong> {favorito.tipo_contrato}</p>
+
                 </>
             );
         } else if (favorito.programador_id) {
@@ -45,7 +57,7 @@ export const Favoritos = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-                {store.favoritos && store.favorites.length > 0 ? (
+                {store.favorites && store.favorites.length > 0 ? (
                     store.favorites.map((favorito, index) => (
                         <div key={index} className="col-md-4 mb-3">
                             <div className="card">
@@ -57,7 +69,7 @@ export const Favoritos = () => {
                                             actions.removeFavorite(
                                                 favorito.programador_id,
                                                 favorito.empleador_id,
-                                                favorito.oferta_id
+                                                favorito.id
                                             )
                                         }
                                     >
