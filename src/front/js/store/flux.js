@@ -534,7 +534,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 			
 					if (data.success) {
-						// Aquí podrías actualizar el estado global de favoritos
+						
 						setStore({
 							favorites: getStore().favorites.filter(
 								(fav) => fav.id !== oferta_id || fav.programador_id !== programador_id || fav.empleador_id !== empleador_id

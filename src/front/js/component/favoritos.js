@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from "../store/appContext";
-import "../../styles/faovirtos.css";
+import "../../styles/favoritos.css";
 
 export const Favoritos = () => {
     const { store, actions } = useContext(Context);
@@ -8,6 +8,7 @@ export const Favoritos = () => {
     useEffect(() => {
         actions.getFavorites();
     }, []);
+
 
     const renderFavoriteInfo = (favorito) => {
         console.log(favorito.id);
