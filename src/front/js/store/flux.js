@@ -367,7 +367,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						console.log(data)
 						localStorage.setItem('token', data.token);
-						setStore({ token: data.token, user: data.user });
+						setStore({ token: data.tokenn, user: data.user });
 
 						return data;
 					} else {
@@ -488,24 +488,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			removeFavorite: async (programador_id, empleador_id, oferta_id) => {
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos?programador_id=${programador_id}&empleador_id=${empleador_id}&oferta_id=${oferta_id}`, {
-						method: 'DELETE',
-					});
-
-					if (!response.ok) {
-						throw new Error('Error al eliminar favorito');
-					}
-
-					return { success: true, programador_id, empleador_id, oferta_id };
-
-				} catch (error) {
-					console.error('Error:', error);
-					throw error;
-				}
-			},
-
 			getFavorites: async () => {
 
 				const user = getStore().user;
@@ -534,7 +516,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error en la solicitud de favoritos:', error);
 				}
 			},
-		}
+
+			removeFavorite: async (programador_id, empleador_id, oferta_id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`, {
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${localStorage.getItem("token")}` // Si estás utilizando autenticación con tokens
+						},
+						body: JSON.stringify({
+							programador_id: programador_id,
+							empleador_id: empleador_id,
+							oferta_id: oferta_id
+						})
+					});
+			
+					if (!response.ok) {
+						throw new Error("Error al eliminar favorito.");
+					}
+			
+					const data = await response.json();
+			
+					if (data.success) {
+						
+						setStore({
+							favorites: getStore().favorites.filter(
+								(fav) => fav.id !== oferta_id || fav.programador_id !== programador_id || fav.empleador_id !== empleador_id
+							)
+						});
+						return { success: true };
+					} else {
+						return { success: false, msg: data.msg || "Error desconocido." };
+					}
+				} catch (error) {
+					console.error("Error en removeFavorite:", error);
+					return { success: false, msg: error.message };
+				}
+			},
+		},
 	};
 };
 

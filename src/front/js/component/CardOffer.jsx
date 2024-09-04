@@ -97,21 +97,29 @@ export const CardOffer = ({ id }) => {
         const programador_id = store.user.profile_programador?.id || null;
         const empleador_id = store.user.profile_empleador?.id || null;
         const oferta_id = id;
-
+    
         try {
             if (isFavorite) {
-                await actions.removeFavorite(programador_id, empleador_id, oferta_id);
+                const result = await actions.removeFavorite(programador_id, empleador_id, oferta_id);
+                if (result?.success) {
+                    setIsFavorite(false);
+                } else {
+                    throw new Error("No se pudo eliminar de favoritos. Intenta nuevamente.");
+                }
             } else {
-                await actions.addFavorite(programador_id, empleador_id, oferta_id);
+                const result = await actions.addFavorite(programador_id, empleador_id, oferta_id);
+                if (result?.success) {
+                    setIsFavorite(true);
+                } else {
+                    throw new Error("No se pudo agregar a favoritos. Intenta nuevamente.");
+                }
             }
-            setIsFavorite(!isFavorite);
         } catch (error) {
-            setModalMessage("Error al agregar a favoritos. Intente nuevamente.");
+            setModalMessage(error.message);
             setModalType("error");
             setIsModalOpen(true);
         }
     };
-
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
