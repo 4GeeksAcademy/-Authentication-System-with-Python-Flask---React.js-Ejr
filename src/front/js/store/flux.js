@@ -23,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (resp.ok) {
 						const data = await resp.json();
+						console.log('esto es la data', data)
 						setStore({ jobOffers: data.ofertas });
 					} else {
 						console.error("Error al cargar ofertas");

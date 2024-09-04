@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CardOffer } from "./CardOffer.jsx";
+import { CardOfferPremium } from "./CardOfferPremium.jsx";
 import { Context } from "../store/appContext.js";
 import "../../styles/CardListOffer.css";
 
@@ -9,14 +10,16 @@ export const ListOffers = ({ searchTerm }) => {
 
     useEffect(() => {
         if (!loaded) {
-            actions.loadAllJobOffers().then(() => setLoaded(true));
+            actions.loadAllJobOffers();
+            setLoaded(true);
         }
-    }, [loaded, actions]); 
+    }, [loaded, actions]);
 
+    // Filtra ofertas según el término de búsqueda
     const filterOffers = (offers, searchTerm) => {
         if (!searchTerm) return offers;
 
-        return offers.filter(offer => {
+        return offers.filter((offer) => {
             const term = searchTerm.toLowerCase();
             const nameMatch = offer.name?.toLowerCase().includes(term);
             const modalityMatch = offer.modality?.toLowerCase().includes(term);
@@ -28,21 +31,36 @@ export const ListOffers = ({ searchTerm }) => {
 
     const filteredOffers = filterOffers(store.jobOffers || [], searchTerm);
 
+    // Obtiene el empleador asociado a la oferta y verifica si es premium
+    const getEmployerPremiumStatus = (employerId) => {
+        const employer = store.user?.profile_empleador?.premium?.find((emp) => emp.id === employerId);
+        console.log(employer)
+        return employer?.premium === true;
+    };
+
     return (
         <div className="list-offer-container mt-3">
             <div className="row d-flex flex-column g-2">
                 {filteredOffers.length > 0 ? (
-                    filteredOffers.map((offer) => (
-                        <div className="col list-offer-box" key={offer.id}>
-                            <CardOffer
-                                title={offer.name}
-                                modality={offer.modality}
-                                salary={offer.salary}
-                                description={offer.description}
-                                id={offer.id}
-                            />
-                        </div>
-                    ))
+                    filteredOffers.map((offer) => {
+                        const isPremium = getEmployerPremiumStatus(offer.empleador_id);
+
+                        return (
+                            <div className="col list-offer-box" key={offer.id}>
+                                {isPremium ? (
+                                    <CardOfferPremium
+                                        title={offer.name}
+                                        id={offer.id}
+                                    />
+                                ) : (
+                                    <CardOffer
+                                        title={offer.name}
+                                        id={offer.id}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })
                 ) : (
                     <p className="no-offers-section text-center shadow-lg">
                         No hay ofertas disponibles
