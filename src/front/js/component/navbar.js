@@ -6,7 +6,9 @@ export const Navbar = () => {
     <div className="main-div">
       <h1>ThunderCats</h1>
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> 
+
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Dark background */}
+
         <div className="container-fluid">
           {/* Left Side */}
           <div
@@ -23,6 +25,7 @@ export const Navbar = () => {
               className="dropdown"
               style={{ marginRight: '15px' }}
             >
+
             </div>
             <button
               className="btn btn-secondary"
@@ -50,6 +53,7 @@ export const Navbar = () => {
         </div>
       </nav >
     </div >
+
   );
 };
 

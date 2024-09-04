@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
     const redirect = useNavigate()
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -25,6 +27,7 @@ export const Login = () => {
         })
         redirect("/")
       };
+
 
     return (
         <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto', backgroundColor: '#f7f7f7', borderRadius: '8px' }}>
@@ -56,7 +59,9 @@ export const Login = () => {
                     />
                 </div>
 
+
                 <button type="submit" onClick={(e) => handleSubmit(e, formData)} style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px' }}>
+
                     Login
                 </button>
             </form>
