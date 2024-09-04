@@ -14,10 +14,12 @@ export const CardOffer = ({ id }) => {
     const [modalType, setModalType] = useState("");
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
-    const [isFavorite, setIsFavorite] = useState(false);
-    
+
     const offer = store.jobOffers.find((offer) => offer.id === id);
     if (!offer) return <div>Oferta no encontrada</div>;
+
+    const isFavorite = (id) => store.favorites?.filter((fav) => fav.id == id)[0]
+
 
     useEffect(() => {
         if (store.user && store.user.profile_programador) {
@@ -30,15 +32,13 @@ export const CardOffer = ({ id }) => {
             }
         });
 
-        const favorite = store.favorites?.some((fav) => fav.id === id);
-        setIsFavorite(!isFavorite);
     }, [store.user, id, actions, store.favorites]);
 
     const handleViewDetails = () => {
         navigate(`/singleoffer/${id}`);
     };
 
-    const handleViewCompany = () =>{
+    const handleViewCompany = () => {
         navigate(`/Companyview/${id}`)
     }
 
@@ -97,19 +97,19 @@ export const CardOffer = ({ id }) => {
         const programador_id = store.user.profile_programador?.id || null;
         const empleador_id = store.user.profile_empleador?.id || null;
         const oferta_id = id;
-    
+
         try {
-            if (isFavorite) {
+            if (isFavorite(id)) {
                 const result = await actions.removeFavorite(programador_id, empleador_id, oferta_id);
-                if (result?.success) {
-                    setIsFavorite(false);
+                if (result) {
+                    // setIsFavorite(false);
                 } else {
                     throw new Error("No se pudo eliminar de favoritos. Intenta nuevamente.");
                 }
             } else {
                 const result = await actions.addFavorite(programador_id, empleador_id, oferta_id);
-                if (result?.success) {
-                    setIsFavorite(true);
+                if (result) {
+                    // setIsFavorite(true);
                 } else {
                     throw new Error("No se pudo agregar a favoritos. Intenta nuevamente.");
                 }
@@ -123,6 +123,9 @@ export const CardOffer = ({ id }) => {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+
+
 
     return (
         <>
@@ -142,16 +145,18 @@ export const CardOffer = ({ id }) => {
                         <div className="title-heart d-flex justify-content-between">
                             <h2 className="card-offer-title">{offer.name} </h2>
                             <div onClick={handleFavoriteClick} style={{ cursor: "pointer" }}>
-                                {isFavorite ? (
-                                    <FaHeart className="heart-icon" />
-                                ) : (
-                                    <FaRegHeart className="heart-icon" />
-                                )}
+                                {
+                                    isFavorite(id) ? (
+                                        <FaHeart className="heart-icon" />
+                                    ) : (
+                                        <FaRegHeart className="heart-icon" />
+                                    )
+                                }
                             </div>
                         </div>
-                        <span 
+                        <span
                             className="card-offer-company"
-                            onClick={() =>handleViewCompany(id)}
+                            onClick={() => handleViewCompany(id)}
                         >
                             {offer.nombre_empresa} - {offer.localidad}
                         </span>

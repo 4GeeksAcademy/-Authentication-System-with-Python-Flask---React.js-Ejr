@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log('esto es la data', data)
 						setStore({ jobOffers: data.ofertas });
 
-						const premiumOffers = jobOffers.filter(offer => offer.empleador && offer.empleador.premium);
+						const premiumOffers = getStore().jobOffers.filter(offer => offer.empleador && offer.empleador.premium);
 						console.log(premiumOffers);
 						setStore({ premiumOffers });
 					} else {
@@ -186,7 +186,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: `Bearer ${getStore().token}`
+							Authorization: `Bearer ${localStorage.getItem('token')}`
 						},
 					});
 					if (response.ok) {
@@ -224,7 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				} catch (error) {
 					console.error("Error en la solicitud de creación de calificación:", error);
-					return; 
+					return;
 				}
 			},
 
@@ -368,7 +368,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(data)
 						localStorage.setItem('token', data.token);
 						setStore({ token: data.tokenn, user: data.user });
-
+						getActions().getFavorites(data.user.id)
 						return data;
 					} else {
 						return false;
@@ -478,9 +478,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw new Error('Error al agregar favorito');
 					}
 
-					const data = await response.json();
-					setStore({ favorites: [...getStore().favorites, data] });
-					return data;
+					getActions().getFavorites()
+
+					return true;
 
 				} catch (error) {
 					console.error('Error:', error);
@@ -488,18 +488,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getFavorites: async () => {
+			getFavorites: async (id = getStore().user.id) => {
 
-				const user = getStore().user;
-				console.log(user)
-				const user_id = user?.id;
-				if (!user_id) {
+
+				if (!id) {
 					console.error('No se pudo obtener el ID del usuario');
 					return;
 				}
 
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/user/${user_id}/favoritos`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}/favoritos`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -526,26 +524,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${localStorage.getItem("token")}` // Si estás utilizando autenticación con tokens
 						},
 						body: JSON.stringify({
-							programador_id: programador_id,
-							empleador_id: empleador_id,
+							programador_id: programador_id || null,
+							empleador_id: empleador_id || null,
 							oferta_id: oferta_id
 						})
 					});
-			
+
 					if (!response.ok) {
 						throw new Error("Error al eliminar favorito.");
 					}
-			
+
 					const data = await response.json();
-			
+
 					if (data.success) {
-						
+
 						setStore({
 							favorites: getStore().favorites.filter(
 								(fav) => fav.id !== oferta_id || fav.programador_id !== programador_id || fav.empleador_id !== empleador_id
 							)
 						});
-						return { success: true };
+						getActions().getFavorites()
+						return true;
 					} else {
 						return { success: false, msg: data.msg || "Error desconocido." };
 					}

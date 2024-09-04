@@ -57,7 +57,7 @@ export const Favoritos = () => {
     return (
         <div className="favoritos-container mt-5">
             <div className="favoritos-row row">
-                {store.favorites && store.favorites.length > 0 ? (
+                {store.favorites?.length > 0 ? (
                     store.favorites.map((favorito, index) => (
                         <div key={index} className="favoritos-col col-md-4 mb-3">
                             <div className="favoritos-card card">
@@ -67,8 +67,8 @@ export const Favoritos = () => {
                                         className="favoritos-btn  mt-3"
                                         onClick={() =>
                                             actions.removeFavorite(
-                                                favorito.programador_id,
-                                                favorito.empleador_id,
+                                                store.user.profile_programador.id,
+                                                store.user.profile_empleador?.id,
                                                 favorito.id
                                             )
                                         }
