@@ -25,6 +25,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						console.log('esto es la data', data)
 						setStore({ jobOffers: data.ofertas });
+
+						const premiumOffers = jobOffers.filter(offer => offer.empleador && offer.empleador.premium);
+						console.log(premiumOffers);
+						setStore({ premiumOffers });
 					} else {
 						console.error("Error al cargar ofertas");
 					}
