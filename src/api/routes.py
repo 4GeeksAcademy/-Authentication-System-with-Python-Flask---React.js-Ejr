@@ -341,8 +341,8 @@ def create_rating():
     new_rating = Ratings(programador_id=programador_id, empleador_id=empleador_id, value=value)
 
     try:
-        db.session.add(new_rating)
-        db.session.commit()
+        # db.session.add(new_rating)
+        # db.session.commit()
         return jsonify({"success": True, "msg": "Calificación creada exitosamente", "rating": new_rating.serialize()}), 201
     except Exception as e:
         db.session.rollback()

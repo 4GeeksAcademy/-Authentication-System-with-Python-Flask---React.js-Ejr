@@ -194,7 +194,8 @@ class Ofertas(db.Model):
             "experiencia_minima": self.experiencia_minima.value,
             "fecha_publicacion": self.fecha_publicacion.isoformat(),
             "empleador_id": self.empleador_id,
-            "favoritos": [favorito.serialize() for favorito in self.favoritos] if self.favoritos else None
+            "favoritos": [favorito.serialize() for favorito in self.favoritos] if self.favoritos else None,
+            "premium":  self.empleador.premium if self.empleador else None
         }
 
 

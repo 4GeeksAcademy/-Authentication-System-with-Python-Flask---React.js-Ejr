@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import "../../styles/CardOffer.css";
+import "../../styles/CardOfferPremium.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "./ModalJobApply.jsx";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { StarsRating } from "./StarsRating.jsx";
+import { FcApproval } from "react-icons/fc";
 
-
-export const CardOffer = ({ id }) => {
+export const CardOfferPremium = ({ id }) => {
     const navigate = useNavigate();
     const { actions, store } = useContext(Context);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,8 +16,10 @@ export const CardOffer = ({ id }) => {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
-    
+
+    // Buscar la oferta en el store
     const offer = store.jobOffers.find((offer) => offer.id === id);
+
     if (!offer) return <div>Oferta no encontrada</div>;
 
     useEffect(() => {
@@ -24,6 +27,7 @@ export const CardOffer = ({ id }) => {
             const subscribed = store.user.inscribedOffers?.includes(id);
             setIsSubscribed(subscribed);
         }
+
         actions.getNumeroPostulados(id).then((count) => {
             if (count !== null) {
                 setNumeroInscritos(count);
@@ -31,16 +35,16 @@ export const CardOffer = ({ id }) => {
         });
 
         const favorite = store.favorites?.some((fav) => fav.id === id);
-        setIsFavorite(!isFavorite);
+        setIsFavorite(favorite);
     }, [store.user, id, actions, store.favorites]);
 
     const handleViewDetails = () => {
         navigate(`/singleoffer/${id}`);
     };
 
-    const handleViewCompany = () =>{
-        navigate(`/Companyview/${id}`)
-    }
+    const handleViewCompany = () => {
+        navigate(`/Companyview/${id}`);
+    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -80,6 +84,7 @@ export const CardOffer = ({ id }) => {
                 }
             }
         } catch (error) {
+            console.log('este es el error --> ', error)
             setModalMessage(error.message);
             setModalType("error");
         } finally {
@@ -118,73 +123,75 @@ export const CardOffer = ({ id }) => {
 
     return (
         <>
-            <div className="container">
-                <div className="row card-offer mt-2">
-                    <div className="col-2 img-box">
-                        <img
-                            className="card-offer-logo"
-                            src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
-                            alt="Company Logo"
-                        />
-                        <span className="num-postulados text-muted">
-                            ({numeroInscritos}) Se han inscrito
-                        </span>
-                    </div>
-                    <div className="col-9 header-box d-flex flex-column">
-                        <div className="title-heart d-flex justify-content-between">
-                            <h2 className="card-offer-title">{offer.name} </h2>
-                            <div onClick={handleFavoriteClick} style={{ cursor: "pointer" }}>
-                                {isFavorite ? (
-                                    <FaHeart className="heart-icon" />
-                                ) : (
-                                    <FaRegHeart className="heart-icon" />
-                                )}
-                            </div>
-                        </div>
-                        <span 
-                            className="card-offer-company"
-                            onClick={() =>handleViewCompany(id)}
+            <div className="card-offer-premium mt-2">
+                <div className="card-offer-logo-premium-container col-12 col-md-4 col-lg-3">
+                    <img
+                        className="card-offer-logo-premium img-fluid"
+                        src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
+                        alt="Company Logo"
+                    />
+                    <span className="num-postulados-premium mt-2">
+                        {numeroInscritos} Se han inscrito
+                    </span>
+                </div>
+                <div className="card-offer-content-premium ms-3 col-12 col-md-8 col-lg-9">
+                    <div className="title-heart-premium d-flex align-items-center justify-content-between mb-2">
+                        <h2 className="card-offer-title-premium">
+                            {offer.name} <FcApproval />
+                        </h2>
+                        <div
+                            onClick={handleFavoriteClick}
+                            className="heart-icon-premium"
+                            style={{ cursor: "pointer" }}
                         >
-                            {offer.nombre_empresa} - {offer.localidad}
-                        </span>
-                        <div className="card-offer-description text-muted">
-                            <p className="text-description">{offer.descripcion}</p>
+                            {isFavorite ? <FaHeart /> : <FaRegHeart />}
                         </div>
-                        <div className="data-footer">
-                            <ul className="card-offer-details d-flex text-muted">
-                                <li className="list-footer-details">
-                                    Publicada el {formatDate(offer.fecha_publicacion)}
-                                </li>
-                                <li className="list-footer-details">
-                                    {offer.modalidad + " | "}
-                                </li>
-                                <li className="list-footer-details mx-2">
-                                    {offer.salario + " | "}
-                                </li>
-                                <li className="list-footer-details">
-                                    {offer.experiencia_minima}
-                                </li>
-                            </ul>
-                            <div className="card-offer-actions">
-                                <button
-                                    onClick={handleViewDetails}
-                                    className="btn btn-details btn-sm text-decoration-none me-3"
-                                >
-                                    Ver detalles
-                                </button>
-                                {!store.user ||
-                                    (store.user && store.user.profile_programador && (
-                                        <button
-                                            className={`btn ${isSubscribed
-                                                ? "btn-desinscribirse"
-                                                : "btn-inscribirse"
-                                                } btn-sm`}
-                                            onClick={handleApplyClick}
-                                        >
-                                            {isSubscribed ? "Desinscribirse" : "Inscribirse"}
-                                        </button>
-                                    ))}
-                            </div>
+                    <StarsRating offerId={id} />
+                    </div>
+                    <span
+                        className="card-offer-company-premium mt-2"
+                        onClick={handleViewCompany}
+                    >
+                        {offer.nombre_empresa} - {offer.localidad}
+                    </span>
+                    <div className="card-offer-description-premium mt-2">
+                        <p className="text-description-premium">{offer.descripcion}</p>
+                    </div>
+                    <div className="data-footer-premium mt-auto">
+                        <ul className="card-offer-details-premium list-unstyled d-flex flex-wrap">
+                            <li className="list-footer-details-premium me-3">
+                                Publicada el {formatDate(offer.fecha_publicacion)}
+                            </li>
+                            <li className="list-footer-details-premium me-3">
+                                {offer.modalidad}
+                            </li>
+                            <li className="list-footer-details-premium me-3">
+                                {offer.salario}
+                            </li>
+                            <li className="list-footer-details-premium">
+                                {offer.experiencia_minima}
+                            </li>
+                        </ul>
+                        <div className="card-offer-actions-premium mt-2">
+                            <button
+                                onClick={handleViewDetails}
+                                className="btn btn-details-premium btn-sm me-3"
+                            >
+                                Ver detalles
+                            </button>
+                            {!store.user ||
+                                (store.user && store.user.profile_programador && (
+                                    <button
+                                        className={`btn ${
+                                            isSubscribed
+                                                ? "btn-desinscribirse-premium"
+                                                : "btn-inscribirse-premium"
+                                        } btn-sm`}
+                                        onClick={handleApplyClick}
+                                    >
+                                        {isSubscribed ? "Desinscribirse" : "Inscribirse"}
+                                    </button>
+                                ))}
                         </div>
                     </div>
                 </div>

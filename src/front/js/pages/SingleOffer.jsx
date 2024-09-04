@@ -1,12 +1,13 @@
 // SingleOffer.jsx
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "../component/ModalJobApply.jsx";
 import { StarsRating } from "../component/StarsRating.jsx";
 import "../../styles/SingleOffer.css";
 
 export const SingleOffer = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const { store, actions } = useContext(Context);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
@@ -73,6 +74,9 @@ export const SingleOffer = () => {
             setIsModalOpen(true);
         }
     };
+    const handleViewCompany = () =>{
+        navigate(`/Companyview/${id}`)
+    }
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -107,7 +111,10 @@ export const SingleOffer = () => {
                         <div className="card-singleoffer-header d-flex align-items-center">
                             <div className="d-flex flex-column offer-header">
                                 <h2 className="mb-0">{offer.name}</h2>
-                                <span className="ms-3 companyName-localidad">
+                                <span 
+                                className="ms-3 companyName-localidad"
+                                onClick={handleViewCompany}
+                                >
                                     {offer.nombre_empresa} - {offer.localidad}
                                 </span>
                                 <span className="fecha_publicacion text-secondary">

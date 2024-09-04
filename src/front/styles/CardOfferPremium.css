@@ -1,0 +1,139 @@
+.card-offer-premium {
+    position: relative;
+    display: flex;
+    border: 3px solid gold;
+    color: gold;
+    border-radius: 4px;
+    transition: box-shadow 0.2s;
+    width: 100%;
+    max-width: 825px; 
+    background-color: rgb(44, 48, 53);
+    height: auto; /* Cambiado de 220px a auto para mejor manejo en pantallas pequeñas */
+    border-color: #fff 0.5px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.card-offer-logo-premium {
+    width: 100%; /* Cambiado de 120px a 100% para mejor responsividad */
+    max-width: 120px; /* Añadido para limitar el tamaño en pantallas grandes */
+    height: auto; /* Cambiado de 120px a auto para mantener la proporción */
+    object-fit: cover;
+    border-radius: 4px;
+}
+.card-offer-logo-premium {
+    width: 100%; /* Cambiado de 120px a 100% para mejor responsividad */
+    max-width: 120px; /* Añadido para limitar el tamaño en pantallas grandes */
+    height: auto; /* Cambiado de 120px a auto para mantener la proporción */
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.card-offer-logo-premium-container{
+    height: fit-content;
+    max-width: 120px;
+}
+
+.heart-icon-premium {
+    position: absolute; 
+    top: 10px;
+    right: 10px; 
+    color: gold;
+    font-size: 1.9rem;
+}
+
+.heart-icon-premium:hover {
+    color: gold
+}
+
+.card-offer-company-premium {
+    font-size: 0.9rem;
+    color: #007bff;
+    margin-top: 10px; /* Añadido margen superior para separar del título */
+}
+
+.card-offer-company-premium:hover {
+    text-decoration: underline;
+}
+
+.header-box-premium .card-offer-title-premium {
+    font-size: 1.5rem;
+    margin-bottom: 10px; /* Añadido margen inferior para separar del icono de corazón */
+}
+
+.card-offer-description-premium {
+    font-size: 0.85rem;
+    color: #666;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3.6em;
+    margin-bottom: 10px; /* Añadido margen inferior para separación de otros elementos */
+}
+
+
+
+.text-description-premium {
+    line-height: 1.2em;
+}
+
+.card-offer-details-premium {
+    list-style: none;
+    font-size: 0.9rem;
+    margin: 0; 
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Añadido para permitir el ajuste en pantallas pequeñas */
+    gap: 10px; /* Añadido espacio entre los elementos de la lista */
+}
+
+.data-footer-premium {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; 
+    margin-top: auto;
+    padding: 10px 0;
+}
+
+.card-offer-actions-premium {
+    display: flex;
+    flex-wrap: wrap; /* Añadido para mejor ajuste de los botones en pantallas pequeñas */
+    gap: 10px; 
+    margin-top: 10px; 
+    font-size: 0.85rem;
+}
+
+.card-offer-actions-premium .btn-details-premium {
+    position: relative;
+    left: 60px;
+    background-color: rgb(103, 147, 174);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+
+}
+
+.card-offer-actions-premium .btn-inscribirse-premium,
+.card-offer-actions-premium .btn-desinscribirse-premium {
+    background-color: rgb(225, 255, 0);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+}
+
+.card-offer-actions-premium .btn-details-premium:hover,
+.card-offer-actions-premium .btn-inscribirse-premium:hover,
+.card-offer-actions-premium .btn-desinscribirse-premium:hover {
+    color: white;
+    background-color: rgb(135, 193, 229);
+}
+
+.num-postulados-premium {
+    font-size: 0.75rem;
+    white-space: nowrap; /* Mantener el texto en una sola línea */
+}
