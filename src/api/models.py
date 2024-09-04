@@ -7,14 +7,16 @@ class Postulados(db.Model):
     __tablename__ = "postulados"
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
     oferta_id = db.Column(db.Integer, db.ForeignKey("ofertas.id"), primary_key=True)
+    estado = db.Column(db.String(20), nullable=False, default='pendiente')
 
     def __repr__(self):
-        return f'<Postulados {self.user_id}>'
+        return f'<Postulados {self.user_id} - {self.oferta_id}>'
 
     def serialize(self):
         return {
             "user_id": self.user_id,
-            "oferta_id": self.oferta_id
+            "oferta_id": self.oferta_id,
+            "estado": self.estado,
         }
 
 
