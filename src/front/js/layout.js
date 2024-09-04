@@ -13,6 +13,7 @@ import { LoginPage } from "./pages/login"
 import { Navbar } from "./component/navbar";
 import { Register } from "./pages/register";
 import { TimeLine } from "./pages/TimeLine.jsx";
+import Form_Contact_Postulados from "./pages/Form_Contact_Postulados.js";
 import { Footer } from "./component/footer";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { FormOffer } from "./component/FormOffer.jsx";
@@ -50,6 +51,7 @@ const Layout = () => {
                         <Route element={<TimeLine />} path="/timeline" />
                         <Route element={<FormOffer />} path="/formoffer" />
                         <Route element={<Userview />} path="/Userview" />
+                        <Route element={<Form_Contact_Postulados />} path="/Form_Contact_Postulados" />
                         <Route element={<Companyview />} path="/Companyview" />
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
