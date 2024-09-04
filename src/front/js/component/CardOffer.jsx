@@ -126,11 +126,11 @@ export const CardOffer = ({ id }) => {
                         src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
                         alt="Company Logo"
                     />
-                    <span className="num-postulados mt-2">
+                    <span className="num-postulados m-2">
                         {numeroInscritos} Se han inscrito
                     </span>
                 </div>
-                <div className="card-offer-content col-12 col-md-8 col-lg-9">
+                <div className="card-offer-content ms-3 col-12 col-md-8 col-lg-9">
                     <div className="title-heart d-flex align-items-center justify-content-between mb-2">
                         <h2 className="card-offer-title">
                             {offer.name}
@@ -153,7 +153,7 @@ export const CardOffer = ({ id }) => {
                         <p className="text-description">{offer.descripcion}</p>
                     </div>
                     <div className="data-footer mt-auto">
-                        <ul className="card-offer-details list-unstyled d-flex flex-wrap">
+                        <ul className="card-offer-details list-unstyled d-flex">
                             <li className="list-footer-details me-3">
                                 Publicada el {formatDate(offer.fecha_publicacion)}
                             </li>

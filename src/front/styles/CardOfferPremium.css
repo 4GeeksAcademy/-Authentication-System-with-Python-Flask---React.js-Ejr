@@ -25,13 +25,6 @@
     object-fit: cover;
     border-radius: 4px;
 }
-.card-offer-logo-premium {
-    width: 100%;
-    max-width: 120px; 
-    height: auto;
-    object-fit: cover;
-    border-radius: 4px;
-}
 
 .card-offer-logo-premium-container{
     height: fit-content;
@@ -60,11 +53,6 @@
     text-decoration: underline;
 }
 
-.header-box-premium .card-offer-title-premium {
-    font-size: 1.5rem;
-    margin-bottom: 10px; 
-}
-
 .card-offer-description-premium {
     position: relative;
     bottom: 15px;
@@ -79,56 +67,82 @@
     margin-bottom: 10px; 
 }
 
-.card-offer-details-premium{
-    list-style: none;
-    font-size: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .text-description-premium {
     line-height: 1.2em;
 }
+.card-offer-details-premium{
+    list-style: none;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+.data-footer-premium{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    margin-top: auto; 
+    padding: 10px 0; 
+}
+
+.card-offer-details-premium li{
+    position: relative;
+    top: 10px;
+}
+.card-offer-details-premium .list-footer-details-premium:first-child {
+    position: relative;
+    right: 130px;
+    list-style: none;
+    font-size: 0.9rem;
+    margin: 0; 
+    padding: 0;
+    display: flex;
+    align-items: center; 
+}
+
+.card-offer-details-premium .list-footer-details-premium:nth-child(3) {
+    font-size: 0.8rem;
+}
+
+
 
 .card-offer-actions-premium {
     display: flex;
-    align-items: center;
-    position: relative;
-    left: 60px;
-    bottom: 10px;
+    gap: 10px; 
+    margin-top: 10px; 
+    font-size: 0.85rem;
 }
 
-.card-offer-actions-premium .btn-details-premium,
-.card-offer-actions-premium .btn-inscribirse-premium,
-.card-offer-actions-premium .btn-desinscribirse-premium {
-    padding: 4px 8px; 
+.card-offer-actions-premium .btn-details-premium {
+    position: relative;
+    left: 70px;
+    background-color: rgb(103, 147, 174);
     font-size: 0.75rem;
+    padding: 4px 8px;
     border-radius: 4px;
     border: none;
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    min-width: 100px; 
-    max-width: 120px; 
-    box-sizing: border-box; 
 }
 
-.btn-details-premium {
+.card-offer-actions-premium .btn-inscribirse-premium,
+.card-offer-actions-premium .btn-desinscribirse-premium {
+    position: relative;
+    left: 50px;
     background-color: rgb(103, 147, 174);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
 }
 
-.btn-inscribirse-premium,
-.btn-desinscribirse-premium {
-    background-color: rgb(225, 255, 0);
-}
-
-.card-offer-actions-premium .btn-details-premium:hover,
-.card-offer-actions-premium .btn-inscribirse-premium:hover,
-.card-offer-actions-premium .btn-desinscribirse-premium:hover {
+.card-offer-actions-premium:hover .btn-details-premium:hover,
+.card-offer-actions-premium:hover .btn-inscribirse-premium:hover,
+.card-offer-actions-premium:hover .btn-desinscribirse-premium:hover {
     color: white;
     background-color: rgb(135, 193, 229);
 }
+
+
+
 .num-postulados-premium {
     font-size: 0.75rem;
     white-space: nowrap; 
