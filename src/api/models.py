@@ -1,19 +1,25 @@
 from flask_sqlalchemy import SQLAlchemy
-
 db = SQLAlchemy()
 
-class User(db.Model):
+class Game(db.Model):
+    __tablename__ = 'games'  # Define el nombre de la tabla manualmente
+
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    platform = db.Column(db.String(50), nullable=False)
+    genre = db.Column(db.String(50), nullable=True)
+    description = db.Column(db.String(200), nullable=True)
+    launch_date = db.Column(db.Date, nullable=True)
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<Game {self.name}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
-            # do not serialize the password, its a security breach
+            "game": self.name,
+            "platform": self.platform,
+            "genre": self.genre,
+            "description": self.description,
+            "launch_date": self.launch_date
         }

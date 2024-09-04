@@ -1,6 +1,6 @@
 
 import click
-from api.models import db, User
+from api.models import db, Game
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -13,7 +13,7 @@ def setup_commands(app):
     This is an example command "insert-test-users" that you can run from the command line
     by typing: $ flask insert-test-users 5
     Note: 5 is the number of users to add
-    """
+    
     @app.cli.command("insert-test-users") # name of our command
     @click.argument("count") # argument of out command
     def insert_test_users(count):
@@ -32,3 +32,4 @@ def setup_commands(app):
     @app.cli.command("insert-test-data")
     def insert_test_data():
         pass
+        """
