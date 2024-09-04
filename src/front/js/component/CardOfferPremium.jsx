@@ -17,9 +17,7 @@ export const CardOfferPremium = ({ id }) => {
     const [numeroInscritos, setNumeroInscritos] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
 
-    console.log("ID de la oferta:", id);
-    console.log("Ofertas en el store:", store.jobOffers);
-
+    // Buscar la oferta en el store
     const offer = store.jobOffers.find((offer) => offer.id === id);
 
     if (!offer) return <div>Oferta no encontrada</div>;
@@ -125,74 +123,75 @@ export const CardOfferPremium = ({ id }) => {
 
     return (
         <>
-            <div className="container">
-                <div className="row card-offer-premium bg-dark mt-2">
-                    <div className="col-2 img-box">
-                        <img
-                            className="card-offer-logo-premium"
-                            src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
-                            alt="Company Logo"
-                        />
-                        <span className="num-postulados-premium text-muted">
-                            {numeroInscritos} Se han inscrito
-                        </span>
-                    </div>
-                    <div className="col-9 header-box-premium d-flex flex-column">
-                        <div className="title-heart-premium d-flex justify-content-between">
-                            <h2 className="card-offer-title">{offer.name} <FcApproval/></h2>
-                            <div onClick={handleFavoriteClick} style={{ cursor: "pointer" }}>
-                                {isFavorite ? (
-                                    <FaHeart className="heart-icon" />
-                                ) : (
-                                    <FaRegHeart className="heart-icon" />
-                                )}
-                            </div>
-                        </div>
-                        <span 
-                            className="card-offer-company-premium"
-                            onClick={handleViewCompany}
+            <div className="card-offer-premium mt-2">
+                <div className="card-offer-logo-premium-container col-12 col-md-4 col-lg-3">
+                    <img
+                        className="card-offer-logo-premium img-fluid"
+                        src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
+                        alt="Company Logo"
+                    />
+                    <span className="num-postulados-premium mt-2">
+                        {numeroInscritos} Se han inscrito
+                    </span>
+                </div>
+                <div className="card-offer-content-premium ms-3 col-12 col-md-8 col-lg-9">
+                    <div className="title-heart-premium d-flex align-items-center justify-content-between mb-2">
+                        <h2 className="card-offer-title-premium">
+                            {offer.name} <FcApproval />
+                        </h2>
+                        <div
+                            onClick={handleFavoriteClick}
+                            className="heart-icon-premium"
+                            style={{ cursor: "pointer" }}
                         >
-                            {offer.nombre_empresa} - {offer.localidad}
-                        </span>
-                        <StarsRating offerId={id} />
-                        <div className="card-offer-description-premium text-muted">
-                            <p className="text-description-premium">{offer.descripcion}</p>
+                            {isFavorite ? <FaHeart /> : <FaRegHeart />}
                         </div>
-                        <div className="data-footer-premium">
-                            <ul className="card-offer-details-premium d-flex text-muted">
-                                <li className="list-footer-details-premium">
-                                    Publicada el {formatDate(offer.fecha_publicacion)}
-                                </li>
-                                <li className="list-footer-details-premium">
-                                    {offer.modalidad + " | "}
-                                </li>
-                                <li className="list-footer-details-premium mx-2">
-                                    {offer.salario + " | "}
-                                </li>
-                                <li className="list-footer-details-premium">
-                                    {offer.experiencia_minima}
-                                </li>
-                            </ul>
-                            <div className="card-offer-actions-premium">
-                                <button
-                                    onClick={handleViewDetails}
-                                    className="btn btn-details-premium btn-sm text-decoration-none me-3"
-                                >
-                                    Ver detalles
-                                </button>
-                                {!store.user ||
-                                    (store.user && store.user.profile_programador && (
-                                        <button
-                                            className={`btn ${isSubscribed
-                                                ? "btn-desinscribirse"
-                                                : "btn-inscribirse"
-                                                } btn-sm`}
-                                            onClick={handleApplyClick}
-                                        >
-                                            {isSubscribed ? "Desinscribirse" : "Inscribirse"}
-                                        </button>
-                                    ))}
-                            </div>
+                    <StarsRating offerId={id} />
+                    </div>
+                    <span
+                        className="card-offer-company-premium mt-2"
+                        onClick={handleViewCompany}
+                    >
+                        {offer.nombre_empresa} - {offer.localidad}
+                    </span>
+                    <div className="card-offer-description-premium mt-2">
+                        <p className="text-description-premium">{offer.descripcion}</p>
+                    </div>
+                    <div className="data-footer-premium mt-auto">
+                        <ul className="card-offer-details-premium list-unstyled d-flex flex-wrap">
+                            <li className="list-footer-details-premium me-3">
+                                Publicada el {formatDate(offer.fecha_publicacion)}
+                            </li>
+                            <li className="list-footer-details-premium me-3">
+                                {offer.modalidad}
+                            </li>
+                            <li className="list-footer-details-premium me-3">
+                                {offer.salario}
+                            </li>
+                            <li className="list-footer-details-premium">
+                                {offer.experiencia_minima}
+                            </li>
+                        </ul>
+                        <div className="card-offer-actions-premium mt-2">
+                            <button
+                                onClick={handleViewDetails}
+                                className="btn btn-details-premium btn-sm me-3"
+                            >
+                                Ver detalles
+                            </button>
+                            {!store.user ||
+                                (store.user && store.user.profile_programador && (
+                                    <button
+                                        className={`btn ${
+                                            isSubscribed
+                                                ? "btn-desinscribirse-premium"
+                                                : "btn-inscribirse-premium"
+                                        } btn-sm`}
+                                        onClick={handleApplyClick}
+                                    >
+                                        {isSubscribed ? "Desinscribirse" : "Inscribirse"}
+                                    </button>
+                                ))}
                         </div>
                     </div>
                 </div>

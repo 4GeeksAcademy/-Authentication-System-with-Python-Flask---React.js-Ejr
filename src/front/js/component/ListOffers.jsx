@@ -42,7 +42,6 @@ export const ListOffers = ({ searchTerm }) => {
                 {filteredOffers.length > 0 ? (
                     filteredOffers.map((offer) => {
                         const isPremium = isEmployerPremium(offer);
-
                         return (
                             <div className="col list-offer-box" key={offer.id}>
                                 {isPremium ? (
