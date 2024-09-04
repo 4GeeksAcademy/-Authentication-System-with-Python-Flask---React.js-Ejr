@@ -37,8 +37,8 @@ export const ListOffers = ({ searchTerm }) => {
     }
 
     return (
-        <div className="list-offer-container mt-3">
-            <div className="row d-flex flex-column g-2">
+        <div className="list-offer-container mt-3 ">
+            <div className="row d-flex flex-column g-2 ">
                 {filteredOffers.length > 0 ? (
                     filteredOffers.map((offer) => {
                         const isPremium = isEmployerPremium(offer);

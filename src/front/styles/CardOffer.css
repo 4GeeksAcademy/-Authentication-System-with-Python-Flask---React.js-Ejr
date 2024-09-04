@@ -7,7 +7,7 @@
     transition: box-shadow 0.2s;
     width: 100%;
     max-width: 825px; 
-    height: 220px; 
+    height: auto; 
     border-color: #fff 0.5px;
     overflow: hidden; 
 }
