@@ -31,14 +31,13 @@ export const ListOffers = ({ searchTerm }) => {
 
     const filteredOffers = filterOffers(store.jobOffers || [], searchTerm);
 
-    // Obtiene el empleador asociado a la oferta y verifica si es premium
     const isEmployerPremium = (offer) => {
         return offer.premium === true;
     }
 
     return (
         <div className="list-offer-container mt-3 m-auto">
-            <div className=" row-cardlist-offer row d-flex flex-column g-2">
+            <div className="row d-flex flex-column text-start g-2">
                 {filteredOffers.length > 0 ? (
                     filteredOffers.map((offer) => {
                         const isPremium = isEmployerPremium(offer);
