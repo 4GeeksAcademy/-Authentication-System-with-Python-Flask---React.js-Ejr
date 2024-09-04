@@ -1,184 +1,127 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800);
 
-.topBefore input::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder {
-    color: #aca49c;
-    font-size: 0.875em;
+
+
+.seccion-form {
+    padding: 2em 10px;
+    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
+
 }
 
-.topBefore input:focus::-webkit-input-placeholder,
-textarea:focus::-webkit-input-placeholder {
-    color: #bbb5af;
+.seccion-form h1 {
+    color: #65889e;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
 }
 
-.topBefore input::-moz-placeholder,
-textarea::-moz-placeholder {
-    color: #aca49c;
-    font-size: 0.875em;
+div.form-contact-postulados {
+    width: 100%;
+    max-width: 450px;
+    border: 2px solid #65889e;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.topBefore input:focus::-moz-placeholder,
-textarea:focus::-moz-placeholder {
-    color: #bbb5af;
-}
-
-.topBefore input::placeholder,
-textarea::placeholder {
-    color: #aca49c;
-    font-size: 0.875em;
-}
-
-.topBefore input:focus::placeholder,
-textarea::focus:placeholder {
-    color: #bbb5af;
-}
-
-.topBefore input::-ms-placeholder,
-textarea::-ms-placeholder {
-    color: #aca49c;
-    font-size: 0.875em;
-}
-
-.topBefore input:focus::-ms-placeholder,
-textarea:focus::-ms-placeholder {
-    color: #bbb5af;
-}
-
-/* on hover placeholder */
-
-.topBefore input:hover::-webkit-input-placeholder,
-textarea:hover::-webkit-input-placeholder {
-    color: #e2dedb;
-    font-size: 0.875em;
-}
-
-.topBefore input:hover:focus::-webkit-input-placeholder,
-textarea:hover:focus::-webkit-input-placeholder {
-    color: #cbc6c1;
-}
-
-.topBefore input:hover::-moz-placeholder,
-textarea:hover::-moz-placeholder {
-    color: #e2dedb;
-    font-size: 0.875em;
-}
-
-.topBefore input:hover:focus::-moz-placeholder,
-textarea:hover:focus::-moz-placeholder {
-    color: #cbc6c1;
-}
-
-.topBefore input:hover::placeholder,
-textarea:hover::placeholder {
-    color: #e2dedb;
-    font-size: 0.875em;
-}
-
-.topBefore input:hover:focus::placeholder,
-textarea:hover:focus::placeholder {
-    color: #cbc6c1;
-}
-
-input:hover::placeholder,
-textarea:hover::placeholder {
-    color: #e2dedb;
-    font-size: 0.875em;
-}
-
-.topBefore input:hover:focus::-ms-placeholder,
-textarea:hover::focus:-ms-placeholder {
-    color: #cbc6c1;
-}
-
-.contenedor {
-    font-family: 'Lato', sans-serif;
-    font-weight: bold;
-}
-
-.intro {
+.input-field {
     position: relative;
-    margin: 100px 0 25px 0;
-    font-size: 2.3em;
+}
+
+.input-field i {
+    color: #65889e;
+    ;
+    margin: 0px 1rem;
+    font-size: 25px;
+    width: 25px;
+    top: -15px;
+    position: relative;
+}
+
+.input-field i.fa-pen {
+    top: -40px;
+    position: relative;
+}
+
+.input-field:active {
+    color: #547182;
+}
+
+.input-field input,
+textarea {
+    margin-left: 3rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #65889e;
+    height: 3rem;
+    margin: 0 0 15px 0;
+    transition: all .3s;
+    width: 80%;
+    padding-top: 20px;
+    font-size: 16px;
+}
+
+.input-field textarea {
+    padding: 1.6rem 0;
+    height: 100px;
+}
+
+.input-field label {
+    color: #65889e;
+    position: absolute;
+    left: 1.6rem;
+    cursor: text;
+    margin-left: 3rem;
+}
+
+.btn-block {
+    margin: 0 auto;
     text-align: center;
-    letter-spacing: 7px;
-    color: #cbc6c1;
 }
 
-#formPostulado {
-    position: relative;
-    width: 500px;
-    margin: 50px auto 100px auto;
-}
-
-.topBefore input {
-    font-family: 'Lato', sans-serif;
-    font-size: 0.875em;
-    width: 470px;
-    height: 50px;
-    padding: 0px 15px 0px 15px;
-
-    background: transparent;
-    outline: none;
-    color: #726659;
-
-    border: solid 1px #b3aca7;
-    border-bottom: none;
-
-    transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-}
-
-.topBefore input:hover {
-    background: #b3aca7;
-    color: #e2dedb;
-}
-
-.topBefore textarea {
-    width: 470px;
-    max-width: 470px;
-    height: 110px;
-    max-height: 130px;
-    padding: 15px;
-
-    background: transparent;
-    outline: none;
-
-    color: #726659;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.875em;
-
-    border: solid 1px #b3aca7;
-
-    transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-}
-
-.topBeforetextarea:hover {
-    background: #b3aca7;
-    color: #e2dedb;
-}
-
-#submit {
-    width: 470px;
-
-    padding: 0;
-    margin: -5px 0px 0px 0px;
-
-    font-family: 'Lato', sans-serif;
-    font-size: 0.875em;
-    color: #b3aca7;
-
-    outline: none;
+.btn-block .btn {
+    text-decoration: none;
+    color: #fff;
+    background-color: #65889e;
+    -webkit-transition: .2s ease-out;
+    transition: .2s ease-out;
     cursor: pointer;
-
-    border: solid 1px #b3aca7;
-    border-top: none;
+    border: none;
+    padding: 10px 35px;
+    font-size: 19px;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
-#submit:hover {
-    color: #e2dedb;
+.btn-block .btn i {
+    float: right;
+    padding-left: 10px;
+    font-size: 16px;
+    padding-top: 3px;
+}
+
+@media (max-width: 400px) {
+    div.form-contact-postulados {
+        width: 90%;
+        padding: 20px 10px;
+    }
+
+    .input-field input,
+    textarea {
+        width: 73%;
+
+    }
+
+    .input-field i {
+        margin: 0px 1rem 0px 0.6rem;
+    }
+
+    input-field label {
+        left: 0.7rem;
+    }
+}
+
+.input-field input[type="text"],
+.input-field input[type="email"] {
+    background-color: rgba(230, 230, 224, 0.982);
+
 }
