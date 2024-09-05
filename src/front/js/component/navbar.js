@@ -22,7 +22,7 @@ export const Navbar = () => {
           />
         </Link>
 
-        <div className="navbar navbar-expand-lg ms-auto">
+        <div className="navbar navbar-expand-sm ms-auto">
           <div className="container-fluid">
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav me-auto">

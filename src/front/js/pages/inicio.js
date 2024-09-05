@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import Form_Contact_Postulados from "./Form_Contact_Postulados";
+
 
 
 export const Inicio = () => {
@@ -37,7 +37,7 @@ export const Inicio = () => {
                             </Link>
                         </div>
                     )}
-                    <Form_Contact_Postulados/>
+                    
 
                 </div>
                 <div className="col-lg-6 text-center mt-4 mt-lg-0">

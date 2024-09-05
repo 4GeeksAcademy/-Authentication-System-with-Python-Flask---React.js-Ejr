@@ -191,23 +191,24 @@ export const CardOffer = ({ id }) => {
                                             className={`btn ${isSubscribed
                                                 ? "btn-desinscribirse"
                                                 : "btn-inscribirse"
-                                        } btn-sm`}
-                                        onClick={handleApplyClick}
-                                    >
-                                        {isSubscribed ? "Desinscribirse" : "Inscribirse"}
-                                    </button>
-                                ))}
+                                                } btn-sm`}
+                                            onClick={handleApplyClick}
+                                        >
+                                            {isSubscribed ? "Desinscribirse" : "Inscribirse"}
+                                        </button>
+                                    ))}
+                            </div>
                         </div>
                     </div>
                 </div>
+                {isModalOpen && (
+                    <ModalJobApply
+                        message={modalMessage}
+                        type={modalType}
+                        onClose={handleCloseModal}
+                    />
+                )}
             </div>
-            {isModalOpen && (
-                <ModalJobApply
-                    message={modalMessage}
-                    type={modalType}
-                    onClose={handleCloseModal}
-                />
-            )}
         </>
-    );
-};
+    )
+}
