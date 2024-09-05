@@ -18,7 +18,11 @@ export const Home = () => {
   return (
     <>
       {isLoading ? (
-        <>Is Loading</>
+        <><div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div></>
       ) : (
         <div>
           <div className="text-center mt-2" id="home">
@@ -59,14 +63,17 @@ export const Home = () => {
             <div className="container-fluid d-flex flex-wrap justify-content-center gap-3">
               {store.games.map((game, index) => (
                 <Card
+                  game_id = {game.id}
                   key={index}
                   title={game.title}
                   description={game.short_description}
                   genre={game.genre}
                   imgurl={game.thumbnail}
+                  id = {index}
                 />
               ))}
             </div>
+            
           </div>
         </div>
       )}

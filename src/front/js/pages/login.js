@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '../store/appContext';
 
 export const Login = () => {
+    const {store, actions} = useContext(Context)
     const redirect = useNavigate()
 
     const [formData, setFormData] = useState({

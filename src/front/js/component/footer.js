@@ -22,7 +22,6 @@ export const Footer = () => {
 						<h5>Pages</h5>
 						<ul className="list-unstyled">
 							<li><a href="/about">About Us</a></li>
-							<li><a href="/services">Services Us</a></li>
 							<li><Link to="/contact" className="nav-link">Contact Us</Link></li>
 						</ul>
 					</div>

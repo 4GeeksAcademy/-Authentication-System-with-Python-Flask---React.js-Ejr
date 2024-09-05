@@ -219,7 +219,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("An Error Occurred while Signing in", response.status);
                     return false;
                 } else {
-                    console.log("Successfully Signed In", response.status);
+                    const data = await response.json()
+                    sessionStorage.setItem("token", data.token)
+                    console.log("Successfully Signed In", response.body);
                     return true;
                 }
             },
@@ -286,7 +288,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return true;
             },
 
-            addFavorites: async (newGameId) => {
+            addFavorites: async (newGameId, user) => {
+                console.log("clicked", user)
                 let options = {
                     method: 'POST',
                     headers: {
@@ -294,7 +297,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         Authorization: "Bearer " + sessionStorage.getItem("token")
                     },
                     body: JSON.stringify({
-                        game_id: newGameId
+                        game_id: newGameId,
+                        user_id: user.id
                     })
                 };
                 let response = await fetch(process.env.BACKEND_URL + "api/favorites", options);

@@ -15,12 +15,13 @@ export const Navbar = () => {
             className="left-div"
             style={{ display: 'flex', alignItems: 'center' }}
           >
-            <button
+            <a
               className="btn btn-secondary"
+              href="/"
               style={{ marginRight: '15px', backgroundColor: '#6c757d', borderColor: '#6c757d' }}
             >
               Home
-            </button>
+            </a>
             <div
               className="dropdown"
               style={{ marginRight: '15px' }}
@@ -45,7 +46,7 @@ export const Navbar = () => {
               Sign Up
             </Link>
             <Link
-              to="/Login" className="btn btn-secondary" 
+              to="/Login" className="btn btn-secondary"
               style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}>
               Login
             </Link>
