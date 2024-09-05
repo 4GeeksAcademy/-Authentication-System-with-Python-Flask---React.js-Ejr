@@ -319,6 +319,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await resp.json();
 					setStore(data);
+					console.log(data);
 					localStorage.setItem('token', data.token);
 					return data;
 
