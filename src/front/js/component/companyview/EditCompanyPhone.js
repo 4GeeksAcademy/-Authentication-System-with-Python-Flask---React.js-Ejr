@@ -1,48 +1,79 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Context } from '../../store/appContext';
-import { Form, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button, Form } from 'react-bootstrap';
 
-export const PhoneNumber = () => {
-    const { store, actions } = useContext(Context);
-    const [phone, setPhone] = useState('');
+export const EditCompanyPhone = ({ increaseProgress }) => {
+    const [companyPhone, setCompanyPhone] = useState('N'); 
+    const [showModal, setShowModal] = useState(false); 
+    const [newPhone, setNewPhone] = useState(companyPhone); 
 
-    useEffect(() => {
-        
-        actions.getPhoneNumber();
-    }, []);
+    const handleShow = () => setShowModal(true);
+    const handleClose = () => setShowModal(false);
 
-    useEffect(() => {       
-    
-        if (store.phoneNumber) {
-            setPhone(store.phoneNumber);
+    const handleSave = (e) => {
+        e.preventDefault(); 
+        setCompanyPhone(newPhone); 
+        handleClose();
+        increaseProgress(10);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            handleSave(e);
         }
-    }, [store.phoneNumber]);
-
-    const handleSave = async (e) => {
-        e.preventDefault();
-        if (!phone.trim()) {
-            console.error("El número de teléfono no puede estar vacío.");
-            return;
-        }
-
-        
-        await actions.savePhoneNumber(phone);
     };
 
     return (
-        <Form onSubmit={handleSave}>
-            <Form.Group controlId="formPhoneNumber">
-                <Form.Label>Número de Teléfono</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Introduce tu número de teléfono"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Guardar
-            </Button>
-        </Form>
+        <>
+            <div className="d-flex align-items-center" style={{
+                color: 'Black', fontFamily: 'Arial, sans-serif',
+                fontWeight: 'bold', fontSize: '25px',
+            }}>
+                <p className="mb-0">
+                    <FontAwesomeIcon
+                        icon={faPhone}
+                        style={{ color: '#6793AE', width: '25px', height: '25px', marginRight: '10px' }}
+                    />
+                    {companyPhone}
+                </p>
+
+                <button
+                    type="button"
+                    className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center ms-2"
+                    style={{ width: 25, height: 25, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)' }}
+                    onClick={handleShow}
+                >
+                    <FontAwesomeIcon icon={faEdit}  style={{width: '15px', height: '15px',}}/>
+                </button>
+            </div>
+            <Modal show={showModal} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editar el Teléfono de la Empresa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onKeyDown={handleKeyDown} onSubmit={handleSave}>
+                        <Form.Group controlId="formPhone">
+                            <Form.Control
+                                type="text"
+                                className="form-control"
+                                value={newPhone}
+                                onChange={(e) => setNewPhone(e.target.value)}
+                                placeholder="Número de teléfono"
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose} style={{  backgroundColor: 'rgba(103, 147, 174, 1)' }}>
+                        Cancelar
+                    </Button>
+                    <Button  type="submit" variant="secondary" onClick={handleSave} style={{  backgroundColor: 'rgba(103, 147, 174, 0.27)' , color: 'rgba(103, 147, 174, 1)' }}>
+                        Guardar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };

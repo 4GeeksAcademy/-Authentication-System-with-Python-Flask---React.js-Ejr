@@ -4,7 +4,7 @@ import { Context } from "../../store/appContext";
 import ProfileImage from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
 import { EditCompanyDescription } from './EditCompanyDescription';
-import { PhoneNumber } from './EditCompanyPhone';
+import { EditCompanyPhone } from './EditCompanyPhone';
 import { EditCompanyMail } from './EditCompanyMail';
 import ProfileProgress from '../ProfileProgress';
 import CountrySelector from '../userview/Dropdown';
@@ -39,7 +39,7 @@ const CompanyProfile = () => {
                                 </div>
                                 <div style={styles.rightAligned}>
                                     <div style={styles.contactContainer}>
-                                        <PhoneNumber />
+                                        <EditCompanyPhone />
                                         <EditCompanyMail />
                                     </div>
                                 </div>
