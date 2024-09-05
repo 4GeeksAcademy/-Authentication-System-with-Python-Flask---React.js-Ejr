@@ -240,7 +240,67 @@ def get_offer(id):
 
     except Exception as e:
         return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
-    
+
+@api.route('/ofertas/<int:oferta_id>/postulados/detalles', methods=['GET'])
+@jwt_required()
+def get_postulados_detalles(oferta_id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user or not user.profile_empleador:
+        return jsonify({"msg": "Acceso denegado. Solo empleadores pueden ver los postulados."}), 403
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta or oferta.empleador_id != user.profile_empleador.id:
+        return jsonify({"msg": "Oferta no encontrada o no pertenece al empleador actual."}), 404
+
+    postulados = Postulados.query.filter_by(oferta_id=oferta_id).all()
+    postulados_data = []
+
+    for postulado in postulados:
+        usuario_postulante = User.query.get(postulado.user_id)
+        if not usuario_postulante or not usuario_postulante.profile_programador:
+            continue
+
+        # Obtener información del perfil de programador
+        programador_info = usuario_postulante.profile_programador.serialize()
+
+        postulados_data.append({
+            "user_id": usuario_postulante.id,
+            "username": usuario_postulante.username,
+            "email": usuario_postulante.email,
+            "programador": programador_info,
+            "estado": postulado.estado
+        })
+
+    return jsonify(postulados_data), 200
+
+
+@api.route('/postulados/<int:user_id>/<int:oferta_id>', methods=['PUT'])
+@jwt_required()
+def update_postulado_estado(user_id, oferta_id):
+    empleador_id = get_jwt_identity()
+    empleador = User.query.get(empleador_id)
+
+    if not empleador or not empleador.profile_empleador:
+        return jsonify({"msg": "Acceso denegado. Solo empleadores pueden actualizar el estado de postulados."}), 403
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta or oferta.empleador_id != empleador.profile_empleador.id:
+        return jsonify({"msg": "Oferta no encontrada o no pertenece al empleador actual."}), 404
+
+    postulado = Postulados.query.filter_by(user_id=user_id, oferta_id=oferta_id).first()
+    if not postulado:
+        return jsonify({"msg": "Postulado no encontrado."}), 404
+
+    estado = request.json.get('estado')
+    if estado not in ["contratado", "rechazado"]:
+        return jsonify({"msg": "Estado no válido. Use 'contratado' o 'rechazado'."}), 400
+
+    postulado.estado = estado
+    db.session.commit()
+
+    return jsonify(postulado.serialize()), 200
 
 @api.route('/postulados', methods=['POST'])
 @jwt_required()
@@ -297,10 +357,11 @@ def delete_postulado(oferta_id):
     if not postulado:
         return jsonify({"msg": "No estás inscrito en esta oferta"}), 404
 
+    if postulado.estado == "contratado":
+        return jsonify({"msg": "No puedes cancelar tu postulación porque ya has sido contratado."}), 403
+
     db.session.delete(postulado)
     db.session.commit()
-
-    return jsonify({"msg": "Desinscripción realizada con éxito."}), 200
 
 # Mostrar todas las calificaciones
 @api.route('/ratings', methods=['GET'])

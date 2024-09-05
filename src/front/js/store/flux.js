@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			user: null,
 			proyectos: [],
-			userPostulaciones: [],
+			postulados: [],
 			ratings: [],
 			favorites: [],
 			companyName: null,
@@ -24,13 +24,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						}
 					});
-
+			
 					if (resp.ok) {
 						const data = await resp.json();
-						console.log('esto es la data', data)
+						console.log('esto es la data', data);
 						setStore({ jobOffers: data.ofertas });
+						
+						const { jobOffers, user } = getStore(); 
+						const premiumOffers = jobOffers.filter(offer => offer.empleador_id === user?.id);
 
-						const premiumOffers = getStore().jobOffers.filter(offer => offer.empleador && offer.empleador.premium);
 						console.log(premiumOffers);
 						setStore({ premiumOffers });
 					} else {
@@ -40,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
-
+		
 			loadJobOfferById: async (id) => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {
@@ -63,7 +65,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createJobOffer: async (offerData) => {
 				console.log(offerData);
-
 				try {
 					const token = localStorage.getItem('token');
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/crearOferta`, {
@@ -156,33 +157,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { msg: "Error en la solicitud de desinscripción.", type: "error" };
 				}
 			},
-			loadUserPostulaciones: async () => {
+			loadUserPostulaciones: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
-				if (!token) return;
-
+			
+				if (!token) {
+					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
+				}
+			
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/user/postulados`, {
+					// Hacer la solicitud al endpoint
+					const response = await fetch(`${process.env.BACKEND_URL}/api/ofertas/${oferta_id}/postulados/detalles`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`,
+							Authorization: `Bearer ${token}`, // Enviar el token de autenticación
 						},
 					});
-
+			
 					if (response.ok) {
-						const data = await response.json();
-						setStore({ userPostulaciones: data.postulados });
-						console.log('Postulaciones del usuario cargadas:', data.postulados);
+						// Procesar la respuesta si la solicitud fue exitosa
+						const postulados = await response.json();
+						console.log('Postulados:', postulados);
+						setStore({ postulados });
+						return { postulados, type: "success" };
 					} else {
 						const errorData = await response.json();
-						console.error('Error al cargar las postulaciones:', errorData.msg);
+						console.error('Error al obtener postulados:', errorData.msg);
+						return { msg: errorData.msg, type: 'warning' };
 					}
 				} catch (error) {
-					console.error('Error al obtener postulaciones:', error);
+					console.error('Error en la solicitud:', error);
+					return { msg: "Error en la solicitud de postulados.", type: "error" };
 				}
 			},
-
 
 			getNumeroPostulados: async (oferta_id) => {
 				try {
@@ -206,6 +214,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
+			changePostuladoStatus: async (oferta_id, user_id, estado) => {
+				const store = getStore();
+				const token = store.token;
+
+				if (!token) {
+					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
+				}
+
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/postulados/${user_id}/${oferta_id}`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify({ estado }),
+					});
+
+					if (response.ok) {
+						const postulado = await response.json();
+						return { postulado, type: "success" };
+					} else {
+						const errorData = await response.json();
+						console.error('Error al cambiar el estado del postulado:', errorData.msg);
+						return { msg: errorData.msg, type: 'warning' };
+					}
+				} catch (error) {
+					console.error('Error en la solicitud de cambio de estado:', error);
+					return { msg: "Error en la solicitud de cambio de estado.", type: "error" };
+				}
+			},
+
 			createRating: async (ratingData) => {
 				try {
 					const token = localStorage.getItem('token');

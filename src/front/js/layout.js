@@ -20,6 +20,7 @@ import { FormOffer } from "./component/FormOffer.jsx";
 import PreguntasFrecuentes from "./pages/preguntasFrecuentes.js";
 import { SingleOffer } from "./pages/SingleOffer.jsx";
 import { FavoritosPage } from "./pages/favoritosPage.js";
+import { PostuladosList } from "./pages/PostuladosList.jsx";
 
 //create your first component
 const Layout = () => {
@@ -55,8 +56,9 @@ const Layout = () => {
                         <Route element={<Companyview />} path="/Companyview" />
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
-                        <Route element={<FavoritosPage />} path="/favoritosPage" />                        
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route element={<FavoritosPage />} path="/favoritosPage" />
+                        <Route element={<PostuladosList />} path="/postuladoslist/:oferta_id" />
+                        <Route element={<h1>Not found!</h1>}/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>
