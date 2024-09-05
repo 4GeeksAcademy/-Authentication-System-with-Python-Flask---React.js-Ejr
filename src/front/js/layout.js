@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Context } from "../../front/js/store/appContext"
@@ -20,7 +20,8 @@ import { SobreNosotros } from "./pages/sobreNosotros";
 import { FormOffer } from "./component/FormOffer.jsx";
 import PreguntasFrecuentes from "./pages/preguntasFrecuentes.js";
 import { SingleOffer } from "./pages/SingleOffer.jsx";
-import { FavoritosPage } from "./pages/favoritosPage.js"; 
+import { FavoritosPage } from "./pages/favoritosPage.js";
+
 
 //create your first component
 const Layout = () => {
@@ -56,7 +57,7 @@ const Layout = () => {
                         <Route element={<Companyview />} path="/Companyview" />
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
-                        <Route element={<FavoritosPage />} path="/favoritosPage" />
+                        <Route element={<FavoritosPage />} path="/favoritosPage" />                        
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

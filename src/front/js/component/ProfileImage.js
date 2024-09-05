@@ -3,26 +3,42 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function ProfileImage() {
+function ProfileImage({ increaseProgress }) { // Asegúrate de pasar increaseProgress como prop
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Falta definir el estado showModal
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-
-    
-    increaseProgress(10);
+    if (file) {  // Asegura que se seleccione un archivo
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+      
+      if (increaseProgress) {
+        increaseProgress(10); // Asegúrate de que increaseProgress esté disponible
+      }
+    }
   };
 
   const handleSave = () => {
+    if (!image) return; // Asegúrate de que se ha seleccionado una imagen antes de guardar
+
     setShowModal(false);
+    const formData = new FormData();
+    formData.append('image', image);
+
+    // Send the image to your API
+    fetch('/api/upload-profile-image', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
   };
 
   const handleKeyDown = (e) => {
@@ -41,7 +57,6 @@ function ProfileImage() {
           className="rounded"
           width="200"
           height="200"
-          
         />
         <Button
           className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center mt-2"
@@ -80,10 +95,10 @@ function ProfileImage() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)} style={{  backgroundColor: 'rgba(103, 147, 174, 1)' }}>
+          <Button variant="secondary" onClick={() => setShowModal(false)} style={{ backgroundColor: 'rgba(103, 147, 174, 1)' }}>
             Cancelar
           </Button>
-          <Button variant="secondary" onClick={handleSave} style={{  backgroundColor: 'rgba(103, 147, 174, 0.27)' , color: 'rgba(103, 147, 174, 1)' }}>
+          <Button variant="secondary" onClick={handleSave} style={{ backgroundColor: 'rgba(103, 147, 174, 0.27)', color: 'rgba(103, 147, 174, 1)' }}>
             Guardar Cambios
           </Button>
         </Modal.Footer>

@@ -328,21 +328,21 @@ def get_rating(id):
 @api.route('/ratings', methods=['POST'])
 @jwt_required()
 def create_rating():
-    from_id = request.json.get("from_id")
-    to_id = request.json.get("to_id")
+    programador_id = request.json.get("from_id")
+    empleador_id = request.json.get("to_id")
     value = request.json.get("value")
 
-    if not from_id or not to_id or not value:
+    if not empleador_id or not programador_id or not value:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     if value < 1 or value > 5:
         return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
 
-    new_rating = Ratings(from_id=from_id, to_id=to_id, value=value)
+    new_rating = Ratings(programador_id=programador_id, empleador_id=empleador_id, value=value)
 
     try:
-        db.session.add(new_rating)
-        db.session.commit()
+        # db.session.add(new_rating)
+        # db.session.commit()
         return jsonify({"success": True, "msg": "Calificación creada exitosamente", "rating": new_rating.serialize()}), 201
     except Exception as e:
         db.session.rollback()
@@ -494,7 +494,7 @@ def add_favorito():
     db.session.add(new_favorite)
     db.session.commit()
 
-    return jsonify(new_favorite.serialize()), 201
+    return jsonify({"success": True, "data": new_favorite.serialize()}), 201
 
 
 @api.route('/user/<int:user_id>/favoritos', methods=['GET'])
@@ -502,14 +502,103 @@ def get_user_favorites(user_id):
     user = User.query.get(user_id)
     
     if not user:
-        return jsonify({'msg': 'Usuario no encontrado'}), 404
+        return jsonify({"success": False, 'msg': 'Usuario no encontrado'}), 404
     
     favoritos = []
-    
+    results = []
+    def loader(el):        
+        if el['oferta_id'] is not None:
+            results.append(Ofertas.query.get(el['oferta_id']))
+        elif el['empleador_id'] is not None:
+            results.append(Empleador.query.get(el['empleador_id']))
+        else:
+            return ({"success": True, "msg": "El usuario no tiene favortios "}), 418
+            
     if user.profile_programador:
         favoritos.extend(user.profile_programador.favoritos)
-    
+        favoritos = [loader(favorito.serialize()) for favorito in favoritos]
     if user.profile_empleador:
-        favoritos.extend(user.profile_empleador.favoritos)
+        favoritos.extend(user.profile_empleador.favoritos)  
+    return jsonify({"success": True, "favoritos": [result.serialize() for result in results]}), 200
+
+#cambio nombre empresa
+@api.route('/empleador/nombre_empresa', methods=['PUT'])
+@jwt_required()
+def update_company_name():    
+    current_user_id = get_jwt_identity()
+    try:
+        user=User.query.get(current_user_id)
+            
+        if not user:
+            return jsonify({"success": False, "msg": "Empleador no encontrado"}), 404
+
+        new_company_name = request.json.get("nombre_empresa", None)
+        
+        
+        if not new_company_name:
+            return jsonify({"success": False, "msg": "El nombre de la empresa es requerido"}), 400
+        
+        user.name = new_company_name
+        db.session.commit()
+        
+        print(user.serialize())
+
+        return jsonify({"success": True, "msg": "Nombre de la empresa actualizado correctamente",  "user":user.serialize()}), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify({"success": False, "msg": "Error"}), 200
+
+
+# modificar correo empresa
+@api.route('/empleador/email_empresa', methods=['PUT'])
+@jwt_required()
+def update_company_email():    
+    current_user_id = get_jwt_identity()
+    try:
+        user = User.query.get(current_user_id)
+            
+        if not user:
+            return jsonify({"success": False, "msg": "Empleador no encontrado"}), 404
+
+        new_company_email = request.json.get("email_empresa", None)
+        
+        if not new_company_email:
+            return jsonify({"success": False, "msg": "El email de la empresa es requerido"}), 400
+        
+        # Validar que el correo tenga el formato correcto
+        if "@" not in new_company_email or "." not in new_company_email:
+            return jsonify({"success": False, "msg": "El formato del email es inválido"}), 400
+        
+        user.email = new_company_email
+        db.session.commit()
+        
+        print(user.serialize())
+
+        return jsonify({"success": True, "msg": "Email de la empresa actualizado correctamente",  "user":user.serialize()}), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify({"success": False, "msg": "Error"}), 500
     
-    return jsonify([favorito.serialize() for favorito in favoritos]), 200
+@api.route('/empleador/phone_empresa', methods=['GET', 'POST'])
+@jwt_required()
+def manage_phone():
+    # Obtener el usuario autenticado
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if request.method == 'GET':
+        # Devolver el número de teléfono del usuario
+        return jsonify({"phone": user.phone}), 200
+
+    if request.method == 'POST':
+        data = request.get_json()
+        phone = data.get('phone', None)
+
+        if not phone:
+            return jsonify({"msg": "Número de teléfono es requerido"}), 400
+
+        # Actualizar el número de teléfono del usuario
+        user.phone = phone
+        db.session.commit()
+
+        return jsonify({"msg": "Número de teléfono actualizado correctamente"}), 200
