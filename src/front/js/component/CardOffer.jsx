@@ -5,7 +5,6 @@ import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "./ModalJobApply.jsx";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
-
 export const CardOffer = ({ id }) => {
     const navigate = useNavigate();
     const { actions, store } = useContext(Context);
@@ -26,6 +25,7 @@ export const CardOffer = ({ id }) => {
             const subscribed = store.user.inscribedOffers?.includes(id);
             setIsSubscribed(subscribed);
         }
+
         actions.getNumeroPostulados(id).then((count) => {
             if (count !== null) {
                 setNumeroInscritos(count);
@@ -39,8 +39,8 @@ export const CardOffer = ({ id }) => {
     };
 
     const handleViewCompany = () => {
-        navigate(`/Companyview/${id}`)
-    }
+        navigate(`/Companyview/${id}`);
+    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -201,14 +201,14 @@ export const CardOffer = ({ id }) => {
                         </div>
                     </div>
                 </div>
+                {isModalOpen && (
+                    <ModalJobApply
+                        message={modalMessage}
+                        type={modalType}
+                        onClose={handleCloseModal}
+                    />
+                )}
             </div>
-            {isModalOpen && (
-                <ModalJobApply
-                    message={modalMessage}
-                    type={modalType}
-                    onClose={handleCloseModal}
-                />
-            )}
         </>
-    );
-};
+    )
+}
