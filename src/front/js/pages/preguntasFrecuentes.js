@@ -8,6 +8,7 @@ import { MdWork } from "react-icons/md";
 import { BsPersonWorkspace } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import Form_Contact_Postulados from "./Form_Contact_Postulados";
 
 const PreguntasFrecuentes = () => {
   const [isDevelop, setIsDevelop] = useState(false);
@@ -83,6 +84,7 @@ const PreguntasFrecuentes = () => {
           <GrMoney />
         </div>
       </div>
+      <Form_Contact_Postulados />
     </>
   );
 };

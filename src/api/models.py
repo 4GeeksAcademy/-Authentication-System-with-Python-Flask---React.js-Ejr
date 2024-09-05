@@ -62,11 +62,11 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     photo = db.Column(db.String(200))
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
-    country = db.Column(db.String(20), nullable=False)
-    profile_programador = db.relationship("Programador", backref="user", uselist=False)
-    profile_empleador = db.relationship("Empleador", backref="user", uselist=False)
-    postulados = db.relationship("Postulados", backref="user", lazy=True)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    country = db.Column (db.String (20), unique=False, nullable=False)
+    profile_programador = db.relationship ("Programador", backref="user", uselist=False)
+    profile_empleador = db.relationship ("Empleador", backref="user", uselist=False)
+    postulados= db.relationship ("Postulados", backref= "user", lazy=True)
    
 
     def __repr__(self):
@@ -81,9 +81,8 @@ class User(db.Model):
             "photo": self.photo,
             "country": self.country,
             "profile_programador": self.profile_programador.serialize() if self.profile_programador else None,
-            "profile_empleador": self.profile_empleador.serialize() if self.profile_empleador else None,
-            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None,
-            
+            "profile_empleador": self.profile_empleador.serialize()  if self.profile_empleador else None,
+            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
         }
 
 

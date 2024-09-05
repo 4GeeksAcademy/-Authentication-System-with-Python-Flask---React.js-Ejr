@@ -3,40 +3,43 @@ import "../../styles/CardOffer.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { ModalJobApply } from "./ModalJobApply.jsx";
-import { FaRegHeart, FaHeart } from "react-icons/fa"; 
-import { StarsRating} from "./StarsRating.jsx"
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 export const CardOffer = ({ id }) => {
-    const { actions, store } = useContext(Context);
-    const offer = store.jobOffers.find((offer) => offer.id === id);
     const navigate = useNavigate();
+    const { actions, store } = useContext(Context);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [modalType, setModalType] = useState("");
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
-    const [isFavorite, setIsFavorite] = useState(false); 
 
+    const offer = store.jobOffers.find((offer) => offer.id === id);
     if (!offer) return <div>Oferta no encontrada</div>;
+
+    const isFavorite = (id) => store.favorites?.filter((fav) => fav.id == id)[0]
+
 
     useEffect(() => {
         if (store.user && store.user.profile_programador) {
             const subscribed = store.user.inscribedOffers?.includes(id);
             setIsSubscribed(subscribed);
         }
+
         actions.getNumeroPostulados(id).then((count) => {
             if (count !== null) {
                 setNumeroInscritos(count);
             }
         });
 
-        
-        const favorite = store.favorites?.some((fav) => fav.oferta_id === id);
-        setIsFavorite(favorite);
     }, [store.user, id, actions, store.favorites]);
 
     const handleViewDetails = () => {
         navigate(`/singleoffer/${id}`);
+    };
+
+    const handleViewCompany = () => {
+        navigate(`/Companyview/${id}`);
     };
 
     const formatDate = (dateString) => {
@@ -91,27 +94,38 @@ export const CardOffer = ({ id }) => {
             setIsModalOpen(true);
             return;
         }
-        const programador_id = store.user.profile_programador?.id || null; 
-        const empleador_id = store.user.profile_empleador?.id || null; 
-        const oferta_id = id; 
-    
+        const programador_id = store.user.profile_programador?.id || null;
+        const empleador_id = store.user.profile_empleador?.id || null;
+        const oferta_id = id;
+
         try {
-            if (isFavorite) {
-                await actions.removeFavorite(programador_id, empleador_id, oferta_id);
+            if (isFavorite(id)) {
+                const result = await actions.removeFavorite(programador_id, empleador_id, oferta_id);
+                if (result) {
+                    // setIsFavorite(false);
+                } else {
+                    throw new Error("No se pudo eliminar de favoritos. Intenta nuevamente.");
+                }
             } else {
-                await actions.addFavorite(programador_id, empleador_id, oferta_id);
+                const result = await actions.addFavorite(programador_id, empleador_id, oferta_id);
+                if (result) {
+                    // setIsFavorite(true);
+                } else {
+                    throw new Error("No se pudo agregar a favoritos. Intenta nuevamente.");
+                }
             }
-            setIsFavorite(!isFavorite);
         } catch (error) {
-            setModalMessage("Error al agregar a favoritos. Intente nuevamente.");
+            setModalMessage(error.message);
             setModalType("error");
             setIsModalOpen(true);
         }
     };
-
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+
+
 
     return (
         <>
@@ -129,19 +143,23 @@ export const CardOffer = ({ id }) => {
                     </div>
                     <div className="col-9 header-box d-flex flex-column">
                         <div className="title-heart d-flex justify-content-between">
-                            <h2 className="card-offer-title">{offer.name}</h2>
+                            <h2 className="card-offer-title">{offer.name} </h2>
                             <div onClick={handleFavoriteClick} style={{ cursor: "pointer" }}>
-                                {isFavorite ? (
-                                    <FaHeart className="heart-icon" />
-                                ) : (
-                                    <FaRegHeart className="heart-icon" />
-                                )}
+                                {
+                                    isFavorite(id) ? (
+                                        <FaHeart className="heart-icon" />
+                                    ) : (
+                                        <FaRegHeart className="heart-icon" />
+                                    )
+                                }
                             </div>
                         </div>
-                        <span className="card-offer-company">
+                        <span
+                            className="card-offer-company"
+                            onClick={() => handleViewCompany(id)}
+                        >
                             {offer.nombre_empresa} - {offer.localidad}
                         </span>
-                        <StarsRating offerId={id} />
                         <div className="card-offer-description text-muted">
                             <p className="text-description">{offer.descripcion}</p>
                         </div>
@@ -183,14 +201,14 @@ export const CardOffer = ({ id }) => {
                         </div>
                     </div>
                 </div>
+                {isModalOpen && (
+                    <ModalJobApply
+                        message={modalMessage}
+                        type={modalType}
+                        onClose={handleCloseModal}
+                    />
+                )}
             </div>
-            {isModalOpen && (
-                <ModalJobApply
-                    message={modalMessage}
-                    type={modalType}
-                    onClose={handleCloseModal}
-                />
-            )}
         </>
-    );
-};
+    )
+}

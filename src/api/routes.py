@@ -602,3 +602,33 @@ def manage_phone():
         db.session.commit()
 
         return jsonify({"msg": "Número de teléfono actualizado correctamente"}), 200
+
+@api.route('/favoritos', methods=['DELETE'])
+def remove_favorite():
+    data = request.json
+
+    
+    if not data or not all(key in data for key in ('programador_id', 'empleador_id', 'oferta_id')):
+        return jsonify({"success": False, "msg": "Faltan campos obligatorios"}), 400
+
+    try:
+       
+        favorito = Favoritos.query.filter_by(
+            programador_id=data['programador_id'],
+            empleador_id=data['empleador_id'],
+            oferta_id=data['oferta_id']
+        ).first()
+
+        
+        if not favorito:
+            return jsonify({"success": False, "msg": "Favorito no encontrado"}), 404
+
+     
+        db.session.delete(favorito)
+        db.session.commit()
+
+        return jsonify({"success": True, "msg": "Favorito eliminado exitosamente"}), 200
+
+    except Exception as e:
+        
+        return jsonify({"success": False, "msg": "Ocurrió un error al eliminar el favorito", "error": str(e)}), 500

@@ -27,7 +27,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (resp.ok) {
 						const data = await resp.json();
+						console.log('esto es la data', data)
 						setStore({ jobOffers: data.ofertas });
+
+						const premiumOffers = getStore().jobOffers.filter(offer => offer.empleador && offer.empleador.premium);
+						console.log(premiumOffers);
+						setStore({ premiumOffers });
 					} else {
 						console.error("Error al cargar ofertas");
 					}
@@ -185,7 +190,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: `Bearer ${getStore().token}`
+							Authorization: `Bearer ${localStorage.getItem('token')}`
 						},
 					});
 					if (response.ok) {
@@ -223,7 +228,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				} catch (error) {
 					console.error("Error en la solicitud de creación de calificación:", error);
-					return undefined;  // O maneja el error de otra manera
+					return;
 				}
 			},
 
@@ -366,8 +371,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						console.log(data)
 						localStorage.setItem('token', data.token);
-						setStore({ token: data.token, user: data.user });
-
+						setStore({ token: data.tokenn, user: data.user });
+						getActions().getFavorites(data.user.id)
 						return data;
 					} else {
 						return false;
@@ -478,7 +483,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await response.json();
-					setStore({ favorites: [...getStore().favorites, data] });
+					setStore({ favorites:[...getStore().favorites, data]});
 					return data;
 
 				} catch (error) {
@@ -487,35 +492,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			removeFavorite: async (programador_id, empleador_id, oferta_id) => {
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos?programador_id=${programador_id}&empleador_id=${empleador_id}&oferta_id=${oferta_id}`, {
-						method: 'DELETE',
-					});
+			getFavorites: async (id = getStore().user.id) => {
 
-					if (!response.ok) {
-						throw new Error('Error al eliminar favorito');
-					}
 
-					return { success: true, programador_id, empleador_id, oferta_id };
-
-				} catch (error) {
-					console.error('Error:', error);
-					throw error;
-				}
-			},
-
-			getFavorites: async () => {
-				const store = getStore();
-				const user_id = store.user.id;
-				console.log(user_id)
-				if (!user_id) {
+				if (!id) {
 					console.error('No se pudo obtener el ID del usuario');
 					return;
 				}
 
 				try {
-					const response = await fetch("${process.env.BACKEND_URL}/api/user/${user_id}/favoritos", {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/${user_id}/favoritos`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -524,7 +510,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						const data = await response.json();
-						setStore({ favorites: data });
+						setStore({ favorites: data }); // Asegúrate de que el 'data' ya es la lista de favoritos
 					} else {
 						console.error('Error al obtener los favoritos');
 					}
@@ -532,191 +518,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error en la solicitud de favoritos:', error);
 				}
 			},
-
-			getCompanyName: async () => {
-				const store = getStore();
-				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
-				if (!token) {
-					console.error("No se pudo obtener el token de autenticación");
-					return;
-				}
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}api/empleador/nombre_empresa`, {
-						method: 'GET',
-						headers: {
-							'Authorization': `Bearer ${token}`
-						}
-					});
-					const contentType = response.headers.get("content-type");
-					if (contentType && contentType.indexOf("application/json") === -1) {
-						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text(); 
-						console.error("Contenido de la respuesta no JSON:", text);
-						return null;
-					}
-					if (!response.ok) {
-						throw new Error("Error al obtener el nombre de la empresa, status: " + response.status);
-					}
-					const data = await response.json();
-					setStore({ companyName: data.nombre });
-					return data.nombre;
-				} catch (error) {
-					console.error("Error en la solicitud del nombre de la empresa:", error);
-					return null;
-				}
-			},
-			updateCompanyName: async (newName) => {
-				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
-				if (!token) {
-					console.error("No se pudo obtener el token de autenticación");
-					return;
-				}
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/nombre_empresa`, {
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${token}`
-						},
-						body: JSON.stringify({ nombre_empresa: newName })
-					});
-					const contentType = response.headers.get("content-type");
-					if (contentType && contentType.indexOf("application/json") === -1) {
-						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text();  
-						console.error("Contenido de la respuesta no JSON:", text);
-						return null;
-					}
-					if (!response.ok) {
-						throw new Error("Error al actualizar el nombre de la empresa, status: " + response.status);
-					}
-					const data = await response.json();
-					setStore({ user: data.user });
-					return data.user;
-				} catch (error) {
-					console.error("Error en la solicitud de actualización del nombre de la empresa:", error);
-					return null;
-				}
-			},	
-			getCompanyEmail: async () => {
-				const store = getStore();
-				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
-				if (!token) {
-					console.error("No se pudo obtener el token de autenticación");
-					return;
-				}
-				try {
-					const response = await fetch(`${process.env.BACKEND_URL}api/empleador/email_empresa`, {
-						method: 'GET',
-						headers: {
-							'Authorization': `Bearer ${token}`
-						}
-					});
-					const contentType = response.headers.get("content-type");
-					if (contentType && contentType.indexOf("application/json") === -1) {
-						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text(); 
-						console.error("Contenido de la respuesta no JSON:", text);
-						return null;
-					}
-					if (!response.ok) {
-						throw new Error("Error al obtener el email de la empresa, status: " + response.status);
-					}
-					const data = await response.json();
-					setStore({ companyEmail: data.Email });
-					return data.Email;
-				} catch (error) {
-					console.error("Error en la solicitud del email de la empresa:", error);
-					return null;
-				}
-			},
-
-            updateCompanyEmail: async (newEmail) => {
-                try {
-                    const response = await fetch("/api/empleador/correo_empresa", {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${localStorage.getItem("token")}`
-                        },
-                        body: JSON.stringify({
-                            email_empresa: newEmail
-                        })
-                    });
-
-                    const data = await response.json();
-                    if (response.ok && data.success) {
-                        // Actualiza el correo en el store global
-                        const store = getStore();
-                        setStore({
-                            user: {
-                                ...store.user,
-                                email: newEmail
-                            }
-                        });
-                        localStorage.setItem('user', JSON.stringify({
-                            ...store.user,
-                            email: newEmail
-                        })); // Guardar en localStorage
-                        return true; // Actualización exitosa
-                    } else {
-                        console.error("Error al actualizar el correo:", data.msg);
-                        return false; // Fallo en la actualización
-                    }
-                } catch (error) {
-                    console.error("Error al actualizar el correo:", error);
-                    return false;
-                }
-            },
-			getPhoneNumber: async () => {
-                try {
-                    const token = localStorage.getItem('token'); // Asume que el token está en localStorage
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/phone", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-                    const data = await resp.json();
-                    if (resp.ok) {
-                        setStore({ phoneNumber: data.phone });
-                    } else {
-                        console.error(data.msg);
-                    }
-                } catch (error) {
-                    console.error("Error fetching phone number", error);
-                }
-            },
-
-            savePhoneNumber: async (phone) => {
-                try {
-                    const token = localStorage.getItem('token');
-                    const resp = await fetch(process.env.BACKEND_URL + '/empleador/phone_empresa', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`
-                        },
-                        body: JSON.stringify({ phone })
-                    });
-                    const data = await resp.json();
-                    if (resp.ok) {
-                        // Actualizar el store con el nuevo número de teléfono
-                        setStore({ phoneNumber: phone });
-                        console.log("Número de teléfono actualizado correctamente");
-                    } else {
-                        console.error(data.msg);
-                    }
-                } catch (error) {
-                    console.error("Error updating phone number", error);
-                }
-            }
-        
-        }
+		}
 	};
 };
 
