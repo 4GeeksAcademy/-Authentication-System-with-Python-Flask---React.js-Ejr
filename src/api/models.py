@@ -61,6 +61,7 @@ class User(db.Model):
     name = db.Column(db.String(20), nullable=False)
     username = db.Column(db.String(50), nullable=False)
     photo = db.Column(db.String(200))
+    phone = db.Column(db.String(30))
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     country = db.Column(db.String(20), nullable=False)
@@ -79,6 +80,7 @@ class User(db.Model):
             "username": self.username,
             "photo": self.photo,
             "country": self.country,
+            "phone": self.phone,
             "profile_programador": self.profile_programador.serialize() if self.profile_programador else None,
             "profile_empleador": self.profile_empleador.serialize() if self.profile_empleador else None,
             "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
