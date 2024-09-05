@@ -10,6 +10,7 @@ import { GrMoney } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import Form_Contact_Postulados from "./Form_Contact_Postulados";
 
+
 const PreguntasFrecuentes = () => {
   const [isDevelop, setIsDevelop] = useState(false);
   const [showAcordeon, setShowAcordeon] = useState(false);

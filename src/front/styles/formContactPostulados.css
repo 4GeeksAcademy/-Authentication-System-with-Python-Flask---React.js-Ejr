@@ -15,6 +15,13 @@
     margin-bottom: 2rem;
 }
 
+.seccion-form h5 {
+    color: #65889e;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #65889e;
+
+}
+
 div.form-contact-postulados {
     width: 100%;
     max-width: 450px;
@@ -122,6 +129,6 @@ textarea {
 
 .input-field input[type="text"],
 .input-field input[type="email"] {
-    background-color: rgba(230, 230, 224, 0.982);
+    background-color: rgb(240, 240, 240);
 
 }
