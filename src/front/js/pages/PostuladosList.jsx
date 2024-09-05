@@ -5,53 +5,55 @@ import { Context } from "../store/appContext";
 
 export const PostuladosList = () => {
     const { store, actions } = useContext(Context);
-    const { oferta_id } = useParams(); // Obtén el ID de la oferta desde los parámetros de la URL
-    const [loading, setLoading] = useState(true); // Estado para la carga
-    const [error, setError] = useState(null); // Estado para el manejo de errores
-    const [postulados, setPostulados] = useState([]); // Estado para almacenar los postulados
+    const { oferta_id } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [postulados, setPostulados] = useState([]);
 
     useEffect(() => {
         const fetchPostulados = async () => {
             setLoading(true);
-            setError(null);
-
-            // Llama a la acción para cargar los postulados
-            const response = await actions.loadUserPostulaciones(oferta_id);
-            console.log('Response de loadUserPostulaciones:', response); // Verifica lo que llega aquí
-            
-            if (response.type === "success") {
-                setPostulados(response.postulados); // Almacena los postulados en el estado
-            } else {
-                setError(response.msg); // Maneja el error
+            try {
+                const response = await fetch(`${process.env.BACKEND_URL}/api/oferta/${oferta_id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${store.token}`
+                    }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                     setPostulados(data.oferta.postulados);
+                    
+                } else {
+                    setError(data.msg);
+                }
+            } catch (error) {
+                setError('Error al obtener los postulados');
+            } finally {
+                setLoading(false);
             }
-
-            setLoading(false);
         };
 
-        fetchPostulados();
-    }, [oferta_id, actions]); // Reejecuta cuando cambian oferta_id o actions
+        if (oferta_id) {
+            fetchPostulados();
+        }
+    }, [oferta_id, store.token]);
 
     return (
-        <div className="container mt-5">
-            <h2>Lista de Postulados</h2>
-            {loading ? (
-                <p>Cargando postulados...</p>
-            ) : error ? (
-                <p className="text-danger">{error}</p>
-            ) : postulados.length > 0 ? (
-                <ul className="list-group">
-                    {postulados.map((postulado, index) => (
-                        <li key={index} className="list-group-item">
-                            <strong>Nombre:</strong> {postulado.user.name} <br />
-                            <strong>Email:</strong> {postulado.user.email} <br />
-                            <strong>Estado:</strong> {postulado.estado}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No hay postulados para esta oferta.</p>
-            )}
+        <div>
+            <h2>Detalles de Postulados</h2>
+            {loading && <p>Cargando...</p>}
+            {error && <p>{error}</p>}
+            <ul>
+                {postulados.map((postulado) => (
+                    <li key={postulado.user_id}>
+                        <p>Usuario: {postulado.username}</p>
+                        <p>Email: {postulado.email}</p>
+                        <p>Estado: {postulado.estado}</p>
+                        <p>Programador: {postulado.programador.id}</p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
-

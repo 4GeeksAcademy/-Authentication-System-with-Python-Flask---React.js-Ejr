@@ -20,13 +20,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						}
 					});
-
+			
 					if (resp.ok) {
 						const data = await resp.json();
-						console.log('esto es la data', data)
+						console.log('esto es la data', data);
 						setStore({ jobOffers: data.ofertas });
-
-						const premiumOffers = jobOffers.filter(offer => offer.empleador && offer.empleador.premium);
+						
+						const { jobOffers, user } = getStore(); // Asegúrate de usar la función correcta para obtener el store
+						const premiumOffers = jobOffers.filter(offer => offer.empleador_id === user?.id);
 						console.log(premiumOffers);
 						setStore({ premiumOffers });
 					} else {
@@ -36,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
-
+		
 			loadJobOfferById: async (id) => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {

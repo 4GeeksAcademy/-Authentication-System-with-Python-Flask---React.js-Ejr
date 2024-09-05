@@ -4,36 +4,38 @@ import { CardOfferPremium } from "./CardOfferPremium.jsx";
 import { Context } from "../store/appContext.js";
 import "../../styles/CardListOffer.css";
 
-export const ListOffers = ({ searchTerm }) => {
+export const ListOffers = ({ searchTerm, empleador_id }) => {
     const { store, actions } = useContext(Context);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         if (!loaded) {
-            actions.loadAllJobOffers();
+            actions.loadAllJobOffers(); 
             setLoaded(true);
         }
     }, [loaded, actions]);
 
-    // Filtra ofertas según el término de búsqueda
-    const filterOffers = (offers, searchTerm) => {
+    const filterOffersByEmployer = (offers, empleador_id) => {
+        if (!empleador_id) return offers;
+        return offers.filter((offer) => offer.empleador_id === empleador_id);
+    };
+
+    const filterOffersBySearchTerm = (offers, searchTerm) => {
         if (!searchTerm) return offers;
 
+        const term = searchTerm.toLowerCase();
         return offers.filter((offer) => {
-            const term = searchTerm.toLowerCase();
             const nameMatch = offer.name?.toLowerCase().includes(term);
             const modalityMatch = offer.modality?.toLowerCase().includes(term);
             const salaryMatch = offer.salary?.toLowerCase().includes(term);
-
             return nameMatch || modalityMatch || salaryMatch;
         });
     };
 
-    const filteredOffers = filterOffers(store.jobOffers || [], searchTerm);
+    const offersByEmployer = filterOffersByEmployer(store.jobOffers || [], empleador_id);
+    const filteredOffers = filterOffersBySearchTerm(offersByEmployer, searchTerm);
 
-    const isEmployerPremium = (offer) => {
-        return offer.premium === true;
-    }
+    const isEmployerPremium = (offer) => offer.premium === true;
 
     return (
         <div className="list-offer-container mt-3 m-auto">

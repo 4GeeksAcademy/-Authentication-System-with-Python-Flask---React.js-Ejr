@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import { PostuladosList } from "./PostuladosList.jsx";
+
 
 
 export const Inicio = () => {
@@ -72,7 +72,6 @@ export const Inicio = () => {
                     </div>
                 </div>
             </div>
-            <PostuladosList/>
         </div>
     );
 };
