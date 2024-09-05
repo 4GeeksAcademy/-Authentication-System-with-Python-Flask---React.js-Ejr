@@ -67,7 +67,7 @@ export const Contact = () => {
   };
 
   return (
-    <div className="container-contact">
+    <div className="container-contact contenedor">
       <section className="contact-section text-center mt-5">
         <h2 style={{ color: "#6793AE" }} className="fw-bold">
           Contáctanos

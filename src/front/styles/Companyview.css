@@ -5,9 +5,9 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    margin: 20px;    
+    margin: 20px;
     box-sizing: border-box;
-    max-width:97%;
+    max-width: 97%;
     padding: 15px;
     background-color: rgb(177, 200, 211);
 }
@@ -18,9 +18,9 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    margin: 20px;    
+    margin: 20px;
     box-sizing: border-box;
-    max-width:97%;
+    max-width: 97%;
     padding: 15px;
     
 }
