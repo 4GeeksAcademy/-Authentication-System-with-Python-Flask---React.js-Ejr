@@ -7,12 +7,12 @@ export const PhoneNumber = () => {
     const [phone, setPhone] = useState('');
 
     useEffect(() => {
-        // Al iniciar el componente, traer el número de teléfono desde la API
+        
         actions.getPhoneNumber();
     }, []);
 
-    useEffect(() => {
-        // Cuando el número de teléfono del store cambia, actualizar el estado local
+    useEffect(() => {       
+    
         if (store.phoneNumber) {
             setPhone(store.phoneNumber);
         }
@@ -25,7 +25,7 @@ export const PhoneNumber = () => {
             return;
         }
 
-        // Llamar a la acción que guarda el número de teléfono en el backend
+        
         await actions.savePhoneNumber(phone);
     };
 
