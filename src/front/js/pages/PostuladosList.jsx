@@ -5,73 +5,53 @@ import { Context } from "../store/appContext";
 
 export const PostuladosList = () => {
     const { store, actions } = useContext(Context);
-    const { oferta_id } = useParams(); 
-    const [postulados, setPostulados] = useState([]);
+    const { oferta_id } = useParams(); // Obtén el ID de la oferta desde los parámetros de la URL
+    const [loading, setLoading] = useState(true); // Estado para la carga
+    const [error, setError] = useState(null); // Estado para el manejo de errores
+    const [postulados, setPostulados] = useState([]); // Estado para almacenar los postulados
 
     useEffect(() => {
-        const loadPostulados = async () => {
-            const response = await actions.getPostuladosByOferta(oferta_id);
-            if (response) setPostulados(response);
+        const fetchPostulados = async () => {
+            setLoading(true);
+            setError(null);
+
+            // Llama a la acción para cargar los postulados
+            const response = await actions.loadUserPostulaciones(oferta_id);
+            console.log('Response de loadUserPostulaciones:', response); // Verifica lo que llega aquí
+            
+            if (response.type === "success") {
+                setPostulados(response.postulados); // Almacena los postulados en el estado
+            } else {
+                setError(response.msg); // Maneja el error
+            }
+
+            setLoading(false);
         };
-        loadPostulados();
-    }, [oferta_id, actions]);
 
-    const handleContratar = async (user_id) => {
-        const result = await actions.changePostuladoStatus(oferta_id, user_id, "contratado");
-        if (result.type === "success") {
-            setPostulados((prev) => prev.map(p => p.user_id === user_id ? { ...p, estado: "contratado" } : p));
-        }
-    };
-
-    const handleRechazar = async (user_id) => {
-        const result = await actions.changePostuladoStatus(oferta_id, user_id, "rechazado");
-        if (result.type === "success") {
-            setPostulados((prev) => prev.map(p => p.user_id === user_id ? { ...p, estado: "rechazado" } : p));
-        }
-    };
+        fetchPostulados();
+    }, [oferta_id, actions]); // Reejecuta cuando cambian oferta_id o actions
 
     return (
         <div className="container mt-5">
-            <div className="row">
-                <div className="col-12">
-                    <h3 className="postulados-title text-secondary fw-bold">Lista de postulados a tu oferta</h3>
-                    {postulados.length > 0 ? (
-                        <div className="row mt-3">
-                            {postulados.map((postulado) => (
-                                <div key={postulado.user_id} className="col-md-4 mb-4">
-                                    <div className="card h-100">
-                                        <div className="card-body">
-                                            <h5 className="card-title">{postulado.user.name}</h5>
-                                            <p className="card-text"><strong>Email:</strong> {postulado.user.email}</p>
-                                            <p className="card-text"><strong>Estado:</strong> {postulado.estado}</p>
-                                            <div className="d-flex justify-content-between">
-                                                {postulado.estado === "pendiente" && (
-                                                    <>
-                                                        <button
-                                                            className="btn btn-success"
-                                                            onClick={() => handleContratar(postulado.user_id)}
-                                                        >
-                                                            Contratar
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-danger"
-                                                            onClick={() => handleRechazar(postulado.user_id)}
-                                                        >
-                                                            Rechazar
-                                                        </button>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="mt-3">No hay postulados para esta oferta.</p>
-                    )}
-                </div>
-            </div>
+            <h2>Lista de Postulados</h2>
+            {loading ? (
+                <p>Cargando postulados...</p>
+            ) : error ? (
+                <p className="text-danger">{error}</p>
+            ) : postulados.length > 0 ? (
+                <ul className="list-group">
+                    {postulados.map((postulado, index) => (
+                        <li key={index} className="list-group-item">
+                            <strong>Nombre:</strong> {postulado.user.name} <br />
+                            <strong>Email:</strong> {postulado.user.email} <br />
+                            <strong>Estado:</strong> {postulado.estado}
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No hay postulados para esta oferta.</p>
+            )}
         </div>
     );
 };
+

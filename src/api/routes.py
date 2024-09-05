@@ -255,9 +255,26 @@ def get_postulados_detalles(oferta_id):
         return jsonify({"msg": "Oferta no encontrada o no pertenece al empleador actual."}), 404
 
     postulados = Postulados.query.filter_by(oferta_id=oferta_id).all()
-    postulados_data = [postulado.user.serialize() for postulado in postulados]
+    postulados_data = []
+
+    for postulado in postulados:
+        usuario_postulante = User.query.get(postulado.user_id)
+        if not usuario_postulante or not usuario_postulante.profile_programador:
+            continue
+
+        # Obtener información del perfil de programador
+        programador_info = usuario_postulante.profile_programador.serialize()
+
+        postulados_data.append({
+            "user_id": usuario_postulante.id,
+            "username": usuario_postulante.username,
+            "email": usuario_postulante.email,
+            "programador": programador_info,
+            "estado": postulado.estado
+        })
 
     return jsonify(postulados_data), 200
+
 
 @api.route('/postulados/<int:user_id>/<int:oferta_id>', methods=['PUT'])
 @jwt_required()
