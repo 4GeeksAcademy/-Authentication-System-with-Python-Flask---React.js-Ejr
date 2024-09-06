@@ -75,7 +75,7 @@ export const PostuladosList = () => {
                                     <li className="data-postulado"></li>
                                 </ul>
                                 <Link to={`/Form_Contact_Postulados/${postulado.user_id}`}>
-                                    <button className="btn btn-primary">Contactar</button>
+                                    <button className="boton-contactar">Contactar</button>
                                 </Link>
                             </div>
                             <div className="card-footer">
