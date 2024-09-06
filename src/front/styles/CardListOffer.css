@@ -7,3 +7,9 @@
     padding: 1rem;
 }
 
+.no-offers-section{
+    position: relative;
+    top: 25px;
+    right: 15px;
+}
+
