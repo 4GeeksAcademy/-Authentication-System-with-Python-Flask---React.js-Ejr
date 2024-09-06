@@ -1,10 +1,11 @@
+/* Estilos generales */
 .favorites-body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
 }
 
-
+/* Barra de búsqueda */
 .search-bar {
     width: 100%;      
     display: flex;
@@ -25,26 +26,27 @@
     width: 100px;
     border-radius: 0 4px 4px 0;
 }
+
 .btn-search:hover {
     background-color: rgb(135, 193, 229);
     color: aliceblue;
 }
 
+/* Títulos de la cabecera */
 .header-box h3{
     color: rgb(103, 147, 174);
     font-size: 1.8rem;
-
 }
 
 .header-box h2{
     font-size: 3rem;
 }
 
-
 /* Contenedor principal */
 .favorites-container {
+    width: 100%;
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 10px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -65,14 +67,22 @@
     text-align: center;
 }
 
-/* Estilos para la fila que contiene las tarjetas */
+/* Fila de favoritos */
 .favorites-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; /* Cambia la dirección para que las tarjetas se alineen verticalmente */
+    align-items: center; /* Centra las tarjetas horizontalmente */
     gap: 20px;
-    justify-content: center; /* Centrar las tarjetas horizontalmente */
-    align-items: center;     /* Alineación vertical si hay varias filas */
-    width: 100%;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+/* Tarjetas de oferta favoritas */
+.favorites-card-offer {
+    width: 100%; /* Haz que cada tarjeta ocupe el 100% del ancho disponible */
+    max-width: 800px; /* Ajusta este valor para que las tarjetas no sean demasiado grandes */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    
 }
 
 /* Estilos para cuando no hay ofertas favoritas */
@@ -91,5 +101,9 @@
 
     .favorites-title {
         font-size: 28px;
+    }
+
+    .favorites-card-offer {
+        max-width: 100%; /* Asegura que las tarjetas ocupen todo el ancho en pantallas pequeñas */
     }
 }
