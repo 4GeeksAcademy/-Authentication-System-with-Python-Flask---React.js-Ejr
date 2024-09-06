@@ -50,11 +50,11 @@ export const PostuladosList = () => {
                     Cada vez más cerca de encontrar el candidato perfecto
                 </p>
             </div>
-            {loading && <p>Cargando...</p>}
-            {error && <p>{error}</p>}
+            {loading && <p className="text-center">Cargando...</p>}
+            {error && <p className="text-center">{error}</p>}
             <div className="row">
                 {postulados.map((postulado) => (
-                    <div className="col-lg-4 col-md-6 col-sm-12 my-3" key={postulado.user_id}>
+                    <div className="col-lg-4 col-md-6 col-sm-12 my-3 d-flex justify-content-between" key={postulado.user_id}>
                         <div className="card card-box h-100 shadow-sm">
                             <div className="card-body card-body-body">
                                 <h5 className="card-title text-center fw-bold fs-4">{postulado.username}</h5>
@@ -67,7 +67,7 @@ export const PostuladosList = () => {
                                 <p className="postulados-card-text">
                                     <strong>Datos de interés:</strong> {postulado.programador.id}
                                 </p>
-                                <ul className="data-list-postulado">
+                                <ul className="data-list-postulado d-flex">
                                     <li className="data-postulado"></li>
                                     <li className="data-postulado"></li>
                                     <li className="data-postulado"></li>
