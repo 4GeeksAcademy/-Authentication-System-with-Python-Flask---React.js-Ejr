@@ -15,6 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			phoneNumber: 'null',
 			description: 'null',
 			skills: [],
+			userPrice: 50,
+			userCurrency: 'EUR',
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -866,7 +868,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de agregar habilidad:", error.message);
 					alert(`Error en la solicitud de agregar habilidad: ${error.message}`);
 				}
-			}
+			},
+			loadUserPrice: async (userId) => {
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}/price`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					});
+
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({
+							userPrice: data.price,
+							userCurrency: data.currency,
+						});
+					} else {
+						console.error("Error al cargar el precio del usuario");
+					}
+				} catch (error) {
+					console.error("Error en la solicitud del precio del usuario:", error);
+				}
+			},
+
+			updateUserPrice: async (userId, price, currency) => {
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}/price`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ price, currency }),
+					});
+
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({
+							userPrice: data.price,
+							userCurrency: data.currency,
+						});
+						return data;
+					} else {
+						console.error("Error al actualizar el precio del usuario");
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de actualización del precio del usuario:", error);
+				}
+			},
 
 		}
 	};

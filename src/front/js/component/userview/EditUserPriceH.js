@@ -1,63 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { Context } from '../../store/appContext'; 
 
-export const EditUserPrice = ({ increaseProgress, userId }) => {
-    const [userPrice, setUserPrice] = useState(50); // Estado inicial
+export const EditUserPrice = ({ userId, increaseProgress }) => {
+    const { store, actions } = useContext(Context); // Usa el contexto
     const [showModal, setShowModal] = useState(false);
-    const [selectedCurrency, setSelectedCurrency] = useState('EUR');
 
-    const handleShow = () => setShowModal(true);
-    const handleClose = () => setShowModal(false);
+    // Recuperar el precio y la moneda desde localStorage o usar valores por defecto
+    const [userPrice, setUserPrice] = useState(() => {
+        const storedPrice = localStorage.getItem('userPrice');
+        return storedPrice ? JSON.parse(storedPrice) : (store.user?.price || 50);
+    });
 
-    // Función para guardar el precio en el backend
-    const handleSave = async (e) => {
-        e.preventDefault();
-        try {
-            // Hacer una petición POST/PUT para guardar el precio en la base de datos
-            const response = await fetch(`/api/users/${userId}/price`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ price: userPrice, currency: selectedCurrency }),
-            });
-            if (response.ok) {
-                handleClose();
-                increaseProgress(10); 
-            } else {
-                console.error("Error al guardar el precio.");
-            }
-        } catch (error) {
-            console.error("Error al hacer la solicitud:", error);
-        }
-    };
+    const [selectedCurrency, setSelectedCurrency] = useState(() => {
+        const storedCurrency = localStorage.getItem('selectedCurrency');
+        return storedCurrency ? JSON.parse(storedCurrency) : (store.user?.currency || 'EUR');
+    });
 
-    // Cargar el precio desde la API al iniciar el componente
     useEffect(() => {
         const fetchUserPrice = async () => {
             try {
-                const response = await fetch(`/api/users/${userId}/price`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setUserPrice(data.price || 50); // Si no hay precio, usar 50
-                    setSelectedCurrency(data.currency || 'EUR');
-                }
+                await actions.getUserPrice(userId);
+                // Actualiza los estados locales después de cargar los datos
+                setUserPrice(store.user?.price || 50);
+                setSelectedCurrency(store.user?.currency || 'EUR');
             } catch (error) {
-                console.error("Error al cargar el precio del usuario:", error);
+                console.error("Error al obtener el precio del usuario:", error);
             }
         };
 
         fetchUserPrice();
-    }, [userId]);
+    }, [userId, actions, store.user?.price, store.user?.currency]);
 
-    const handleRangeChange = (e) => {
-        setUserPrice(e.target.value);
-    };
+    const handleShow = () => setShowModal(true);
+    const handleClose = () => setShowModal(false);
 
-    const handleCurrencyChange = (e) => {
-        setSelectedCurrency(e.target.value);
+    const handleSave = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await actions.updateUserPrice(userId, userPrice, selectedCurrency);
+            if (response) {
+                // Guardar los cambios en localStorage
+                localStorage.setItem('userPrice', JSON.stringify(userPrice));
+                localStorage.setItem('selectedCurrency', JSON.stringify(selectedCurrency));
+                increaseProgress(10);
+            }
+        } catch (error) {
+            console.error("Error al guardar el precio del usuario:", error);
+        } finally {
+            handleClose();
+        }
     };
 
     return (
@@ -90,7 +84,7 @@ export const EditUserPrice = ({ increaseProgress, userId }) => {
                                 max="500"
                                 step="5"
                                 value={userPrice}
-                                onChange={handleRangeChange}
+                                onChange={(e) => setUserPrice(e.target.value)}
                             />
                             <Form.Text>{`Precio Seleccionado: ${userPrice} ${selectedCurrency}`}</Form.Text>
                         </Form.Group>
@@ -100,7 +94,7 @@ export const EditUserPrice = ({ increaseProgress, userId }) => {
                             <Form.Control
                                 as="select"
                                 value={selectedCurrency}
-                                onChange={handleCurrencyChange}
+                                onChange={(e) => setSelectedCurrency(e.target.value)}
                             >
                                 <option value="EUR">EUR - Euro</option>
                                 <option value="USD">USD - Dólar</option>
@@ -109,14 +103,14 @@ export const EditUserPrice = ({ increaseProgress, userId }) => {
                                 <option value="CNY">CNY - Yuan chino</option>
                             </Form.Control>
                         </Form.Group>
+                        <Button type="submit" variant="secondary" style={{ backgroundColor: 'rgba(103, 147, 174, 0.27)', color: 'rgba(103, 147, 174, 1)' }}>
+                            Guardar
+                        </Button>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose} style={{ backgroundColor: 'rgba(103, 147, 174, 1)' }}>
                         Cancelar
-                    </Button>
-                    <Button type="submit" variant="secondary" style={{ backgroundColor: 'rgba(103, 147, 174, 0.27)', color: 'rgba(103, 147, 174, 1)' }}>
-                        Guardar
                     </Button>
                 </Modal.Footer>
             </Modal>

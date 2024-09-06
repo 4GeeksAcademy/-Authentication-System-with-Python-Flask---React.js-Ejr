@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { useSessionStorage } from 'react-use';
 
 const CarrerSelector = () => {
   const [selectedCarrer, setSelectedCarrer] = useState(null);
-  const [storedCarrer, setStoredCarrer] = useSessionStorage('selectedCarrer', null);
 
-  const handleSelect = (e) => {
-    setSelectedCarrer(e);
-    setStoredCarrer(e);
-  };
-
-  React.useEffect(() => {
+  // Obtener el valor almacenado de localStorage
+  useEffect(() => {
+    const storedCarrer = localStorage.getItem('selectedCarrer');
     if (storedCarrer) {
       setSelectedCarrer(storedCarrer);
     }
-  }, [storedCarrer]);
+  }, []);
+
+  // Manejar la selección y almacenar en localStorage
+  const handleSelect = (e) => {
+    setSelectedCarrer(e);
+    localStorage.setItem('selectedCarrer', e); // Guardar en localStorage
+  };
 
   return (
     <div className="d-flex align-items-center">
