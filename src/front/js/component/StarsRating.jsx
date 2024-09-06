@@ -14,23 +14,28 @@ export const StarsRating = ({ totalStars = 5, offerId, SingleOfferRating }) => {
 
         try {
             const current_user = store?.user?.profile_programador?.id;
-            console.log(current_user)
             if (!current_user) {
                 console.error("User ID is not available");
                 return;
             }
 
-            const result = await actions.createRating({
+            const ratingData = {
                 from_id: current_user,
                 to_id: offerId,
                 value: rate,
-            });
+            };
 
-            console.log(result);
+            console.log("Sending rating data:", ratingData);
+
+            // Call createRating action
+            const result = await actions.createRating(ratingData);
+
+            console.log("Rating result:", result);
+
             if (result?.success) {
                 setRating(rate);
-                console.log("Calificación creada exitosamente:", result.rating);
                 setSubmitted(true);
+                console.log("Calificación creada exitosamente:", result.rating);
             } else {
                 console.error(result?.msg || "Error al enviar la calificación");
             }
@@ -53,8 +58,9 @@ export const StarsRating = ({ totalStars = 5, offerId, SingleOfferRating }) => {
                     ★
                 </span>
             ))}
-            <p>({rating}) {submitted && "¡Gracias por tu calificación!"}</p>
+            <p>
+                ({rating}) {submitted && "¡Gracias por tu calificación!"}
+            </p>
         </div>
     );
 };
-

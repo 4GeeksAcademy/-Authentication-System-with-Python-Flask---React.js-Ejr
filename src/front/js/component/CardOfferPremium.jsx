@@ -16,7 +16,6 @@ export const CardOfferPremium = ({ id }) => {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
-
     // Buscar la oferta en el store
     const offer = store.jobOffers.find((offer) => offer.id === id);
 

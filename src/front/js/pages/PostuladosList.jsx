@@ -12,7 +12,6 @@ export const PostuladosList = () => {
     const [error, setError] = useState(null);
     const [postulados, setPostulados] = useState([]);
 
-
     useEffect(() => {
         const fetchPostulados = async () => {
             setLoading(true);
@@ -26,7 +25,6 @@ export const PostuladosList = () => {
                 const data = await response.json();
                 if (response.ok) {
                     setPostulados(data.oferta.postulados);
-
                 } else {
                     setError(data.msg);
                 }
@@ -42,6 +40,22 @@ export const PostuladosList = () => {
         }
     }, [oferta_id, store.token]);
 
+    // Función para manejar el cambio de estado del postulado
+    const handleStatusChange = async (user_id, estado) => {
+        const result = await actions.changePostuladoStatus(oferta_id, user_id, estado);
+        if (result.type === "success") {
+            alert(`Estado actualizado a ${estado}`);
+            // Actualizar la lista de postulados después de cambiar el estado
+            setPostulados(prevPostulados =>
+                prevPostulados.map(postulado =>
+                    postulado.user_id === user_id ? { ...postulado, estado } : postulado
+                )
+            );
+        } else {
+            setError(result.msg);
+        }
+    };
+
     return (
         <div className="container mt-4">
             <div className="postulados-box-header text-center">
@@ -56,10 +70,10 @@ export const PostuladosList = () => {
             {error && <p className="text-center">{error}</p>}
             <div className="row">
                 {postulados.map((postulado) => (
-                    <div className="col-lg-4 col-md-6 col-sm-12 my-3 d-flex justify-content-between" key={postulado.user_id}>
-                        <div className="card card-box h-100 shadow-sm">
+                    <div className="col-lg-4 col-md-6 col-sm-12 my-3 d-flex" key={postulado.user_id}>
+                        <div className="card card-box h-100 shadow-md">
                             <div className="card-body card-body-body">
-                                <h5 className="card-title text-center fw-bold fs-4">{postulado.username}</h5>
+                                <h5 className="card-title  fw-bold fs-4">{postulado.username}</h5>
                                 <p className="postulados-card-text">
                                     <strong>Email:</strong> {postulado.email}
                                 </p>
@@ -77,6 +91,20 @@ export const PostuladosList = () => {
                                 <Link to={`/Form_Contact_Postulados/${postulado.user_id}`}>
                                     <button className="boton-contactar">Contactar</button>
                                 </Link>
+                                <div className="d-flex justify-content-between mt-3">
+                                    <button
+                                        className="btn btn-contratar"
+                                        onClick={() => handleStatusChange(postulado.user_id, 'contratado')}
+                                    >
+                                        Contratar
+                                    </button>
+                                    <button
+                                        className="btn btn-rechazar"
+                                        onClick={() => handleStatusChange(postulado.user_id, 'rechazado')}
+                                    >
+                                        Rechazar
+                                    </button>
+                                </div>
                             </div>
                             <div className="card-footer">
                                 <small className="text-muted text-center">Más detalles en el perfil</small>
