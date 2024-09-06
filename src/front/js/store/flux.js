@@ -28,10 +28,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 
+
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('esto es la data', data);
 						setStore({ jobOffers: data.ofertas });
+
+						const { jobOffers, user } = getStore();
 
 						const { jobOffers, user } = getStore();
 						const premiumOffers = jobOffers.filter(offer => offer.empleador_id === user?.id);
@@ -45,6 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
+
 
 			loadJobOfferById: async (id) => {
 				try {
@@ -167,6 +171,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
+
 
 				try {
 					// Hacer la solicitud al endpoint
@@ -415,7 +420,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const data = await resp.json();
 						console.log(data)
 						localStorage.setItem('token', data.token);
-						setStore({ token: data.tokenn, user: data.user });
+						setStore({ token: data.token, user: data.user });
 						getActions().getFavorites(data.user.id)
 						return data;
 					} else {

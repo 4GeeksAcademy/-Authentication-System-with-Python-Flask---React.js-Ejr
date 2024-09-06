@@ -67,18 +67,7 @@ export const Navbar = () => {
                     >
                       PERFIL
                     </Link>
-                    <button
-                      type="button"
-                      className="btn rounded-pill me-4 pe-none"
-                      style={{
-                        backgroundColor: "#70879C",
-                        borderColor: "white",
-                        color: "white",
-                      }}
-                    >
-                      Suscripción: {store.user.profile_empleador.premium ? "Premium" : "Free"}
-                    </button>
-                  </>
+                    </>
                 )}
 
                 {store.user ? (
@@ -91,6 +80,20 @@ export const Navbar = () => {
                       FAVORITOS
 
                     </Link>
+                    {store.user.profile_empleador && (
+                       <button
+                       type="button"
+                       className="btn rounded-pill me-4 pe-none"
+                       style={{
+                         backgroundColor: "#70879C",
+                         borderColor: "white",
+                         color: "white",
+                       }}
+                     >
+                       Suscripción: {store.user.profile_empleador.premium ? "Premium" : "Free"}
+                     </button>
+                   
+                    )}
 
                     <button
                       type="button"
