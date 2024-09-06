@@ -30,8 +30,8 @@ const ResetPasswordRequest = () => {
   };
 
   return (
-    <div>
-      <h1>Restablecer Contraseña</h1>
+    <div className='reset-password-request-container'>
+      <h3 className='tittle'>Restablecer Contraseña</h3>
       <form onSubmit={handleSubmit}>
         <label>
           Correo Electrónico:
