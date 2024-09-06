@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../store/appContext";
+import '../../styles/PostuladosList.css'
 
 export const PostuladosList = () => {
     const { store, actions } = useContext(Context);
@@ -22,8 +23,8 @@ export const PostuladosList = () => {
                 });
                 const data = await response.json();
                 if (response.ok) {
-                     setPostulados(data.oferta.postulados);
-                    
+                    setPostulados(data.oferta.postulados);
+
                 } else {
                     setError(data.msg);
                 }
@@ -40,20 +41,45 @@ export const PostuladosList = () => {
     }, [oferta_id, store.token]);
 
     return (
-        <div>
-            <h2>Detalles de Postulados</h2>
-            {loading && <p>Cargando...</p>}
-            {error && <p>{error}</p>}
-            <ul>
+        <div className="container mt-4">
+            <div className="postulados-box-header text-center">
+                <h2 className="postulados-header text-secondary fw-bold">
+                    Es hora de <span className="color-title-postulado">contactar!</span>
+                </h2>
+                <p className="text-secondary p-header">
+                    Cada vez más cerca de encontrar el candidato perfecto
+                </p>
+            </div>
+            {loading && <p className="text-center">Cargando...</p>}
+            {error && <p className="text-center">{error}</p>}
+            <div className="row">
                 {postulados.map((postulado) => (
-                    <li key={postulado.user_id}>
-                        <p>Usuario: {postulado.username}</p>
-                        <p>Email: {postulado.email}</p>
-                        <p>Estado: {postulado.estado}</p>
-                        <p>Programador: {postulado.programador.id}</p>
-                    </li>
+                    <div className="col-lg-4 col-md-6 col-sm-12 my-3 d-flex justify-content-between" key={postulado.user_id}>
+                        <div className="card card-box h-100 shadow-sm">
+                            <div className="card-body card-body-body">
+                                <h5 className="card-title text-center fw-bold fs-4">{postulado.username}</h5>
+                                <p className="postulados-card-text">
+                                    <strong>Email:</strong> {postulado.email}
+                                </p>
+                                <p className="postulados-card-text">
+                                    <strong>Estado:</strong> {postulado.estado}
+                                </p>
+                                <p className="postulados-card-text">
+                                    <strong>Datos de interés:</strong> {postulado.programador.id}
+                                </p>
+                                <ul className="data-list-postulado d-flex">
+                                    <li className="data-postulado"></li>
+                                    <li className="data-postulado"></li>
+                                    <li className="data-postulado"></li>
+                                </ul>
+                            </div>
+                            <div className="card-footer">
+                                <small className="text-muted text-center">Más detalles en el perfil</small>
+                            </div>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

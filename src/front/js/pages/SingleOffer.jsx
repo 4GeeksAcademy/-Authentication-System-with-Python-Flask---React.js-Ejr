@@ -86,127 +86,72 @@ export const SingleOffer = () => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        const options = { day: "numeric", month: "long" };
+        const options = { day: "numeric", month: "short" };
         return date.toLocaleDateString("es-ES", options);
     };
 
     if (!offer) {
-        return <div className="container mt-5">Oferta no encontrada</div>;
+        return <div className="container my-5">Oferta no encontrada</div>;
     }
 
     return (
         <>
-            <div className="container my-5">
-                <div className="card single-offer-box mb-4 shadow-lg p-3">
+            <div className="container my-4 p-0">
+                <div className="card single-offer-box shadow-sm p-3 shadow-lg">
                     <div className="row">
-                        <div className="col-2">
-                            <div className="card-offer-logo">
-                                <img
-                                    src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
-                                    alt="Company Logo"
-                                    className="img-fluid rounded"
-                                />
-                                <div className="text-muted postulados-single-offer d-flex mt-2">
-                                    <span className="text-muted ms-1 num-postulados-single">{numeroInscritos}</span>
-                                    <span className="text-muted ms-1 num-postulados-single">Inscritos a esta oferta</span>
-                                </div>
+                        <div className="col-3">
+                            <img
+                                src="https://img.freepik.com/vector-premium/concepto-pequena-empresa-fachada-cafeteria-tiendas-ventas_654623-1161.jpg"
+                                alt="Company Logo"
+                                className="img-fluid rounded-circle"
+                            />
+                            <div className="text-muted mt-2">
+                                <span className="num-postulados">{numeroInscritos}</span> Inscritos
                             </div>
                         </div>
-                        <div className="col-7 text-start">
-                            <div className="d-flex flex-column flex-md-row align-items-start justify-content-between">
-                                <div className="d-flex flex-column">
-                                    <h2 className="mb-0">{offer.name}</h2>
-                                    <span 
-                                        className="companyName-localidad"
-                                        onClick={handleViewCompany}
-                                    >
-                                        {offer.nombre_empresa} - {offer.localidad}
-                                    </span>
-                                    <span className="fecha_publicacion text-secondary">
-                                        publicada el {formatDate(offer.fecha_publicacion)}
-                                    </span>
-                                    <StarsRating SingleOfferRating="single-offer-rating" />
-                                </div>
-                                {isProgramador && (
-                                    <button
-                                        className="btn btn-apply mt-2 mt-md-0"
-                                        onClick={handleApplyClick}
-                                    >
-                                        {isSubscribed ? "Desinscribirse" : "Inscribirse"}
-                                    </button>
-                                )}
-                            </div>
-                            <div className="col-3">
-
-                            </div>
+                        <div className="col-9">
+                            <h2 className="offer-title">{offer.name}</h2>
+                            <p className="company-info" onClick={handleViewCompany}>
+                                {offer.nombre_empresa} - {offer.localidad}
+                            </p>
+                            <p className="date-posted">Publicado el {formatDate(offer.fecha_publicacion)}</p>
+                            <StarsRating className="offer-rating" />
+                            {isProgramador && (
+                                <button className="btn btn-apply mt-2" onClick={handleApplyClick}>
+                                    {isSubscribed ? "Desinscribirse" : "Inscribirse"}
+                                </button>
+                            )}
                         </div>
                     </div>
-                        <div className="row">
-                            <div className="col-12 mt-4">
-                                <div className="data-header-list">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <ul className="text-muted">
-                                                <li>{offer.idiomas}</li>
-                                                <li>{offer.salario}</li>
-                                                <li>{offer.estudios_minimos}</li>
-                                            </ul>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <ul className="text-muted">
-                                                <li>{offer.modalidad}</li>
-                                                <li>{offer.tipo_contrato}</li>
-                                                <li>{offer.localidad}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="row mt-3">
+                        <div className="col-12">
+                            <ul className="offer-details">
+                                <li>{offer.idiomas}</li>
+                                <li>{offer.salario}</li>
+                                <li>{offer.estudios_minimos}</li>
+                                <li>{offer.modalidad}</li>
+                                <li>{offer.tipo_contrato}</li>
+                                <li>{offer.localidad}</li>
+                            </ul>
                         </div>
-                        <div className="col-12 mt-4">
-                            <div className="requisits-box">
-                                <h2>Requisitos</h2>
-                                <div className="formacion">
-                                    <h5 className="lh-1 mt-4">Estudios mínimos</h5>
-                                    <p>{offer.estudios_minimos}</p>
-                                </div>
-                                <div className="experiencia-min mt-4">
-                                    <h5>Experiencia mínima</h5>
-                                    <p>{offer.experiencia_minima}</p>
-                                </div>
-                                <div className="idiomas mt-4">
-                                    <h5>Idiomas requeridos</h5>
-                                    <p>{offer.idiomas}</p>
-                                </div>
-                                <div className="tipo-contrato mt-4">
-                                    <h5>Tipo de contrato</h5>
-                                    <p>{offer.tipo_contrato}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-12 mt-4">
+                    </div>
+                    <div className="row mt-3">
+                        <div className="col-12">
                             <hr />
-                            <div className="requisitos-minimos-single-offer">
-                                <h3>Requisitos Mínimos</h3>
-                                <p className="text-muted text-start">{offer.requisitos_minimos}</p>
-                            </div>
+                            <h3>Requisitos Mínimos</h3>
+                            <p className="requisitos-minimos">{offer.requisitos_minimos}</p>
                             <hr />
-                            <div className="offer-description mt-3">
-                                <h5 className="fw-bold">Descripción</h5>
-                                <p>{offer.descripcion}</p>
-                            </div>
+                            <h3>Descripción</h3>
+                            <p className="offer-description">{offer.descripcion}</p>
                             {isProgramador && (
-                                <div className="text-end mt-4">
-                                    <button
-                                        className="btn btn-apply"
-                                        onClick={handleApplyClick}
-                                    >
+                                <div className="text-end mt-3">
+                                    <button className="btn btn-apply btn-lg" onClick={handleApplyClick}>
                                         {isSubscribed ? "Desinscribirse" : "Inscribirse"}
                                     </button>
                                 </div>
                             )}
                         </div>
-                    
+                    </div>
                 </div>
             </div>
             {isModalOpen && (
