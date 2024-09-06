@@ -1,0 +1,19 @@
+.circular-progress-bar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .circular-progress-bar svg {
+    transform: rotate(-90deg);
+  }
+  
+  .circular-progress-bar .progress-text {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    
+  }
+  
