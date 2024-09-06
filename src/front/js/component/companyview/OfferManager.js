@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import OfferCard from './OfferCard';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { ListOffers } from '../CardListOffers.jsx';
+import { Context } from '../../store/appContext.js';
 
-const OfferManager = () => {
+const OfferManager = ({ empleador_id }) => {
+    const { store, actions } = useContext(Context);
     const [offers, setOffers] = useState([]);
     const [offerCount, setOfferCount] = useState(0);
     const [selectedOfferIndex, setSelectedOfferIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [isSubscribed, setIsSubscribed] = useState(false);
+    const [numeroInscritos, setNumeroInscritos] = useState(0);
     const [modalData, setModalData] = useState({
         title: '',
         description: '',
         status: 'Activo',
         price: 100,
     });
+
+
+
+    useEffect((id) => {
+        if (store.jobOffers.length > 0) {
+            const employerOffers = store.jobOffers.filter(offer => offer.empleador_id === store.user?.id);
+            console.log('ofertas del usuario: ', employerOffers)
+            setOffers(employerOffers);
+        }
+        if (store.user && store.user.profile_programador) {
+            const subscribed = store.user.inscribedOffers?.includes(id);
+            setIsSubscribed(subscribed);
+        }
+        // actions.getNumeroPostulados(id).then((count) => {
+        //     if (count !== null) {
+        //         setNumeroInscritos(count);
+        //     }
+        // });
+        
+    }, [store.jobOffers, empleador_id]);
 
     const createNewOffer = () => {
         const newOffer = {
@@ -64,21 +89,26 @@ const OfferManager = () => {
                 <Button variant="btn btn-secondary" onClick={() => handleOpenModal()}>
                     Crear nueva oferta
                 </Button>
+                <div className="fs-1 text-secondary fw-bold">
+                    Tienes {numeroInscritos} candidatos a tus ofertas:
+                </div>
             </div>
+            
             <div className="d-flex flex-wrap justify-content-center">
                 {offers.map((offer, index) => (
                     <OfferCard
                         key={index}
-                        title={offer.title}
-                        description={offer.description}
+                        title={offer.name}
+                        description={offer.descripcion}
                         status={offer.status}
-                        price={offer.price}
+                        price={offer.salario}
+                        oferta_id={offer.id}
                         onEdit={() => handleOpenModal(index)}
                     />
                 ))}
             </div>
 
-            
+            {/* Modal para crear y editar ofertas */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>{selectedOfferIndex !== null ? 'Editar Oferta' : 'Nueva Oferta'}</Modal.Title>
@@ -143,3 +173,5 @@ const OfferManager = () => {
 };
 
 export default OfferManager;
+
+

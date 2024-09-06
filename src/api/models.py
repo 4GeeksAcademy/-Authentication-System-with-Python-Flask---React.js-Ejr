@@ -7,14 +7,20 @@ class Postulados(db.Model):
     __tablename__ = "postulados"
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
     oferta_id = db.Column(db.Integer, db.ForeignKey("ofertas.id"), primary_key=True)
+    estado = db.Column(db.String(20), nullable=False, default='pendiente')
 
     def __repr__(self):
-        return f'<Postulados {self.user_id}>'
+        return f'<Postulados {self.user_id} - {self.oferta_id}>'
 
     def serialize(self):
+        user = User.query.get(self.user_id)
         return {
             "user_id": self.user_id,
-            "oferta_id": self.oferta_id
+            "oferta_id": self.oferta_id,
+            "email": user.email,
+            "username": user.username,
+            "programador": user.profile_programador.serialize() if user.profile_programador else None,
+            "estado": self.estado,
         }
 
 
@@ -61,6 +67,7 @@ class User(db.Model):
     name = db.Column(db.String(20), nullable=False)
     username = db.Column(db.String(50), nullable=False)
     photo = db.Column(db.String(200))
+    phone = db.Column(db.String(30))
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     country = db.Column(db.String(20), nullable=False)
@@ -79,6 +86,7 @@ class User(db.Model):
             "username": self.username,
             "photo": self.photo,
             "country": self.country,
+            "phone": self.phone,
             "profile_programador": self.profile_programador.serialize() if self.profile_programador else None,
             "profile_empleador": self.profile_empleador.serialize() if self.profile_empleador else None,
             "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
@@ -194,7 +202,9 @@ class Ofertas(db.Model):
             "experiencia_minima": self.experiencia_minima.value,
             "fecha_publicacion": self.fecha_publicacion.isoformat(),
             "empleador_id": self.empleador_id,
-            "favoritos": [favorito.serialize() for favorito in self.favoritos] if self.favoritos else None
+            "postulados": [postulado.serialize() for postulado in self.postulados] if self.postulados else None,
+            "favoritos": [favorito.serialize() for favorito in self.favoritos] if self.favoritos else None,
+            "premium":  self.empleador.premium if self.empleador else None
         }
 
 

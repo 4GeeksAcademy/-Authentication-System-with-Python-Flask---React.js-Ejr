@@ -13,12 +13,14 @@ import { LoginPage } from "./pages/login"
 import { Navbar } from "./component/navbar";
 import { Register } from "./pages/register";
 import { TimeLine } from "./pages/TimeLine.jsx";
+import Form_Contact_Postulados from "./pages/Form_Contact_Postulados.js";
 import { Footer } from "./component/footer";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { FormOffer } from "./component/FormOffer.jsx";
 import PreguntasFrecuentes from "./pages/preguntasFrecuentes.js";
 import { SingleOffer } from "./pages/SingleOffer.jsx";
 import { FavoritosPage } from "./pages/favoritosPage.js";
+import { PostuladosList } from "./pages/PostuladosList.jsx";
 
 //create your first component
 const Layout = () => {
@@ -50,11 +52,13 @@ const Layout = () => {
                         <Route element={<TimeLine />} path="/timeline" />
                         <Route element={<FormOffer />} path="/formoffer" />
                         <Route element={<Userview />} path="/Userview" />
+                        <Route element={<Form_Contact_Postulados />} path="/Form_Contact_Postulados" />
                         <Route element={<Companyview />} path="/Companyview" />
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<FavoritosPage />} path="/favoritosPage" />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route element={<PostuladosList />} path="/postuladoslist/:oferta_id" />
+                        <Route element={<h1>Not found!</h1>}/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>

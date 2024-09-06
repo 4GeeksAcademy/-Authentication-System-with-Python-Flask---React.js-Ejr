@@ -3,9 +3,11 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 
+
 export const Inicio = () => {
     const { store } = useContext(Context);
 
+    
 
     return (
 
@@ -35,6 +37,7 @@ export const Inicio = () => {
                             </Link>
                         </div>
                     )}
+                    
 
                 </div>
                 <div className="col-lg-6 text-center mt-4 mt-lg-0">

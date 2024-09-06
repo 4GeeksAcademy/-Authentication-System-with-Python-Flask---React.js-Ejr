@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e7a6cb336cc9
+Revision ID: b81d2ba1f704
 Revises: 
-Create Date: 2024-09-02 18:39:06.871800
+Create Date: 2024-09-05 18:40:45.801856
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e7a6cb336cc9'
+revision = 'b81d2ba1f704'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,6 +32,7 @@ def upgrade():
     sa.Column('name', sa.String(length=20), nullable=False),
     sa.Column('username', sa.String(length=50), nullable=False),
     sa.Column('photo', sa.String(length=200), nullable=True),
+    sa.Column('phone', sa.String(length=30), nullable=True),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.Column('country', sa.String(length=20), nullable=False),
@@ -113,6 +114,7 @@ def upgrade():
     op.create_table('postulados',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('oferta_id', sa.Integer(), nullable=False),
+    sa.Column('estado', sa.String(length=20), nullable=False),
     sa.ForeignKeyConstraint(['oferta_id'], ['ofertas.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'oferta_id')
