@@ -69,11 +69,16 @@ class User(db.Model):
     photo = db.Column(db.String(200))
     phone = db.Column(db.String(30))
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
-    country = db.Column(db.String(20), nullable=False)
-    profile_programador = db.relationship("Programador", backref="user", uselist=False)
-    profile_empleador = db.relationship("Empleador", backref="user", uselist=False)
-    postulados = db.relationship("Postulados", backref="user", lazy=True)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    country = db.Column (db.String (20), unique=False, nullable=False)
+    profile_programador = db.relationship ("Programador", backref="user", uselist=False)
+    profile_empleador = db.relationship ("Empleador", backref="user", uselist=False)
+    postulados= db.relationship ("Postulados", backref= "user", lazy=True)
+    description = db.Column(db.String(500))
+    skills = db.relationship('Skills', backref='user', lazy=True)
+    price = db.Column(db.Float, nullable=True)  
+    currency = db.Column(db.String(3), nullable=True)
+   
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -88,8 +93,11 @@ class User(db.Model):
             "country": self.country,
             "phone": self.phone,
             "profile_programador": self.profile_programador.serialize() if self.profile_programador else None,
-            "profile_empleador": self.profile_empleador.serialize() if self.profile_empleador else None,
-            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
+            "profile_empleador": self.profile_empleador.serialize()  if self.profile_empleador else None,
+            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None,
+            "description": self.description,
+            "price": self.price,  
+            "currency": self.currency,
         }
 
 
@@ -254,3 +262,25 @@ class Contact(db.Model):
             "message": self.message,
             "privacy_policy_accepted": self.privacy_policy_accepted
         }
+    
+class Skills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    language = db.Column(db.String(120), nullable=False)
+    experience = db.Column(db.String(120), nullable=False)
+    projects = db.Column(db.Integer, nullable=False)
+    certificate_name = db.Column(db.String(255), nullable=True)
+    certificate_link = db.Column(db.String(255), nullable=True)
+    icon = db.Column(db.String(255), nullable=False)
+
+
+    def serialize(self):
+        return {
+            'language': self.language,
+            'experience': self.experience,
+            'projects': self.projects,
+            'certificateName': self.certificate_name,
+            'certificateLink': self.certificate_link,
+            'icon': self.icon
+        }
+

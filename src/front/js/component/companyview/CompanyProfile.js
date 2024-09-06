@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { Context } from "../../store/appContext";
-import ProfileImage from '../ProfileImage';
+import {ProfileImage} from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
 import { EditCompanyDescription } from './EditCompanyDescription';
 import { EditCompanyPhone } from './EditCompanyPhone';
@@ -14,93 +15,63 @@ import { Elements } from '@stripe/react-stripe-js';
 
 
 const CompanyProfile = () => {
-    const stripePromise = loadStripe("pk_test_51PsqIxG3cEcyZuNpill2BXWYLnqGWok6W48xAOpaOlq5BHME5440qc4FGMIzdoADAgiR77Q3VBP3tmrzLuVWmbOy00tZCSphPW");
-    const { store } = useContext(Context);
+
+    const [progress, setProgress] = React.useState(0);
     return (
         <div style={styles.pageContainer}>
             <div className="row" style={styles.row}>
                 <div className="col-lg-9" style={styles.flexContainer}>
-                    <div className="card mb-0" style={styles.profileCard}>
-                        <div className="row no-gutters">
+                    <div className="card mb-4" style={styles.profileCard}>
+                        <div className="row">
                             <div className="col-md-2" style={styles.profileColumn}>
                                 <div style={styles.profileImageContainer}>
                                     <ProfileImage />
+
                                 </div>
                             </div>
 
-                            <div className="col-md-6" style={styles.centerColumn}>
+                            <div className="col-md-7" style={styles.centerColumn}>
                                 <div style={styles.topLeftAligned}>
-                                    <div style={styles.buttonEditContainer}>
+                                    <div style={styles.userNameContainer}>
                                         <ButtonEdit />
                                     </div>
-                                    <div style={styles.companyDescriptionContainer}>
-                                        <EditCompanyDescription />
+
+                                </div>
+                                <div style={styles.rightAligned}>
+                                    <div style={styles.contactContainer}>
+                                        <EditCompanyPhone />
+                                        <EditCompanyMail />
                                     </div>
                                 </div>
-                                <div style={styles.contactContainer}>
-                                    <EditCompanyPhone />
-                                    <EditCompanyMail />
-                                </div>
-
                             </div>
 
-                            <div className="col-md-4" style={styles.rightColumn}>
+                            <div className="col-md-2" style={styles.rightColumn}>
                                 <div style={styles.rightAlignedContainer}>
                                     <div style={styles.starsContainer}>
-                                        <Stars />
+                                        <Stars rating={4.3} />
                                     </div>
                                     <div style={styles.countrySelectorContainer}>
                                         <CountrySelector />
-                                    </div>
-                                    <div className="w-100 text-center">
-                                        <h5>Suscripción actual:{!store.user?.profile_empleador.premium ? <button type="button" disabled className="p-1 mx-2 btn btn-outline-dark">Free</button> : <button type="button" disabled className="p-1 mx-2 btn btn-outline-success">Premium</button>}</h5>
-
-                                        {!store.user?.profile_empleador.premium && (
-                                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Pasar la Suscripción a Premium
-                                            </button>
-
-                                        )}
-
-
-                                        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div className="modal-dialog modal-dialog-centered">
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h1 className="modal-title fs-5" id="exampleModalLabel">Coste anual de la suscripción: 200€</h1>
-                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div className="modal-body">
-                                                        <div >
-                                                            <Elements stripe={stripePromise}>
-                                                                {/* Load the checkout form */}
-                                                                <CheckoutForm />
-                                                            </Elements>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
-                <div className="col-lg-3" style={styles.flexContainer}>
-                    <div className="card mb-0" style={styles.progressCard}>
-                        <ProfileProgress />
+                <div className="col-lg-3 text-center" style={styles.flexContainer}>
+                    <div className="card" style={styles.progressCard}>
+                        <ProfileProgress progress={78} />
+
+
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
 const styles = {
     pageContainer: {
         width: 'calc(100% - 10px)',
