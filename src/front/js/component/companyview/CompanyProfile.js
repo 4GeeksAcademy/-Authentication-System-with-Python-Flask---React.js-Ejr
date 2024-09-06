@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Context } from "../../store/appContext";
-import ProfileImage from '../ProfileImage';
+import {ProfileImage} from '../ProfileImage';
 import { ButtonEdit } from './EditCompanyName';
 import { EditCompanyDescription } from './EditCompanyDescription';
 import { EditCompanyPhone } from './EditCompanyPhone';

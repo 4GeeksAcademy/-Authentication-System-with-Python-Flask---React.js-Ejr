@@ -12,8 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			companyName: null,
 			companyEmail: null,
-			phoneNumber: '',
-			
+			phoneNumber: 'null',
+			description: 'null',
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -559,8 +559,238 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error en la solicitud de favoritos:', error);
 				}
 			},
-		}
-	};
+			getCompanyName: async () => {
+				const store = getStore();
+				const token = localStorage.getItem('token');
+				console.log("Token:", token);  
+				if (!token) {
+					console.error("No se pudo obtener el token de autenticación");
+					return;
+				}
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}api/empleador/nombre_empresa`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+					const contentType = response.headers.get("content-type");
+					if (contentType && contentType.indexOf("application/json") === -1) {
+						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
+						const text = await response.text(); 
+						console.error("Contenido de la respuesta no JSON:", text);
+						return null;
+					}
+					if (!response.ok) {
+						throw new Error("Error al obtener el nombre de la empresa, status: " + response.status);
+					}
+					const data = await response.json();
+					setStore({ companyName: data.nombre });
+					return data.nombre;
+				} catch (error) {
+					console.error("Error en la solicitud del nombre de la empresa:", error);
+					return null;
+				}
+			},
+			updateCompanyName: async (newName) => {
+				const token = localStorage.getItem('token');
+				console.log("Token:", token);  
+				if (!token) {
+					console.error("No se pudo obtener el token de autenticación");
+					return;
+				}
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/nombre_empresa`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify({ nombre_empresa: newName })
+					});
+					const contentType = response.headers.get("content-type");
+					if (contentType && contentType.indexOf("application/json") === -1) {
+						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
+						const text = await response.text();  
+						console.error("Contenido de la respuesta no JSON:", text);
+						return null;
+					}
+					if (!response.ok) {
+						throw new Error("Error al actualizar el nombre de la empresa, status: " + response.status);
+					}
+					const data = await response.json();
+					setStore({ user: data.user });
+					return data.user;
+				} catch (error) {
+					console.error("Error en la solicitud de actualización del nombre de la empresa:", error);
+					return null;
+				}
+			},
+
+			getCompanyPhone: async () => {
+				const store = getStore();
+				const token = localStorage.getItem('token');
+				console.log("Token:", token);  
+				if (!token) {
+					console.error("No se pudo obtener el token de autenticación");
+					return;
+				}
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/telefono_empresa`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+					const contentType = response.headers.get("content-type");
+					if (contentType && contentType.indexOf("application/json") === -1) {
+						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
+						const text = await response.text(); 
+						console.error("Contenido de la respuesta no JSON:", text);
+						return null;
+					}
+					if (!response.ok) {
+						throw new Error("Error al obtener el telefono de la empresa, status: " + response.status);
+					}
+					const data = await response.json();
+					setStore({ companyPhone: data.telefono });
+					return data.telefono;
+				} catch (error) {
+					console.error("Error en la solicitud del telefono de la empresa:", error);
+					return null;
+				}
+			},
+			
+			// Actualizar el teléfono de la empresa
+			updateCompanyPhone: async (newPhone) => {
+				const token = localStorage.getItem('token');
+				console.log("Token:", token);  
+				if (!token) {
+					console.error("No se pudo obtener el token de autenticación");
+					return;
+				}
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/telefono_empresa`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify({ telefono_empresa: newPhone }) 
+					});
+					const contentType = response.headers.get("content-type");
+					if (contentType && contentType.indexOf("application/json") === -1) {
+						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
+						const text = await response.text();  
+						console.error("Contenido de la respuesta no JSON:", text);
+						return null;
+					}
+					if (!response.ok) {
+						throw new Error("Error al actualizar el telefono de la empresa, status: " + response.status);
+					}
+					const data = await response.json();
+					setStore({ user: data.user }); 
+					return data.user;
+				} catch (error) {
+					console.error("Error en la solicitud de actualización del telefono de la empresa:", error);
+					return null;
+				}
+			}, getProfileImage: async () => {
+                try {
+                    const token = localStorage.getItem("token");  
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/get-profile-image`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.profile_image_url;  
+                    } else {
+                        console.error("Error al obtener la imagen de perfil");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error en la solicitud de obtener imagen de perfil:", error);
+                    return null;
+                }
+            },
+
+            // Acción para subir la imagen de perfil
+            uploadProfileImage: async (imageFile) => {
+                try {
+                    const token = localStorage.getItem("token");  
+                    const formData = new FormData();
+                    formData.append('image', imageFile);  
+
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/upload-profile-image`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`, 
+                        },
+                        body: formData  
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.profile_image_url;  
+                    } else {
+                        console.error("Error al subir la imagen de perfil");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error al subir la imagen de perfil:", error);
+                    return null;
+                }
+            },
+
+			 // Acción para obtener la descripción
+            getDescription: async () => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/get-description`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            setStore({ description: data.description });
+                        }
+                    } else {
+                        console.error('Error al obtener la descripción:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud de descripción:', error);
+                }
+            },
+            // Acción para actualizar la descripción
+            updateDescription: async (newDescription) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/update-description`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify({ description: newDescription })
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            setStore({ description: data.description });
+                        }
+                    } else {
+                        console.error('Error al actualizar la descripción:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud de actualización:', error);
+                }
+            },
+        }
+    };
 };
 
 export default getState;

@@ -8,7 +8,7 @@ import { Context } from '../../store/appContext';
 export const ButtonEdit = ({ increaseProgress }) => {
     const { store, actions } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
-    const [newName, setNewName] = useState('Nombre de la Empresa');
+    const [newName, setNewName] = useState('');
     useEffect(() => {
         const fetchCompanyName = async () => {
             try {

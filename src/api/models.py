@@ -74,6 +74,7 @@ class User(db.Model):
     profile_programador = db.relationship ("Programador", backref="user", uselist=False)
     profile_empleador = db.relationship ("Empleador", backref="user", uselist=False)
     postulados= db.relationship ("Postulados", backref= "user", lazy=True)
+    description = db.Column(db.String(500))
    
 
     def __repr__(self):
@@ -90,7 +91,8 @@ class User(db.Model):
             "phone": self.phone,
             "profile_programador": self.profile_programador.serialize() if self.profile_programador else None,
             "profile_empleador": self.profile_empleador.serialize()  if self.profile_empleador else None,
-            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None
+            "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None,
+            "description": self.description,
         }
 
 
