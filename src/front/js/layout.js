@@ -52,13 +52,13 @@ const Layout = () => {
                         <Route element={<TimeLine />} path="/timeline" />
                         <Route element={<FormOffer />} path="/formoffer" />
                         <Route element={<Userview />} path="/Userview" />
-                        <Route element={<Form_Contact_Postulados />} path="/Form_Contact_Postulados" />
+                        <Route element={<Form_Contact_Postulados />} path="/Form_Contact_Postulados/:id_programador" />
                         <Route element={<Companyview />} path="/Companyview" />
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<FavoritosPage />} path="/favoritosPage" />
                         <Route element={<PostuladosList />} path="/postuladoslist/:oferta_id" />
-                        <Route element={<h1>Not found!</h1>}/>
+                        <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

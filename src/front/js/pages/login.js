@@ -47,6 +47,7 @@ export const LoginPage = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value.trim())}
                             required
+                            autoComplete='off'
                             id="username"
                         />
                     </div>

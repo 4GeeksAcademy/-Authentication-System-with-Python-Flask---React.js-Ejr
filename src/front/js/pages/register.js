@@ -84,21 +84,21 @@ export const Register = () => {
                     </button>
                   )}
                 </div>
-                  <div className="form-group mb-2">
-                    <input
-                      type="text"
-                      className="sombreado form-control"
-                      id="username"
-                      placeholder="Apellidos.."
-                      {...register("username", { required: true })}
-                      aria-invalid={errors.username ? "true" : "false"}
-                    />
-                    {errors.username?.type === "required" && (
-                      <button className="btn btn-warning w-100 mt-2" role="alert">
-                        El campo apellidos está vacío
-                      </button>
-                    )}
-                  </div>
+                <div className="form-group mb-2">
+                  <input
+                    type="text"
+                    className="sombreado form-control"
+                    id="username"
+                    placeholder="Apellidos.."
+                    {...register("username", { required: true })}
+                    aria-invalid={errors.username ? "true" : "false"}
+                  />
+                  {errors.username?.type === "required" && (
+                    <button className="btn btn-warning w-100 mt-2" role="alert">
+                      El campo apellidos está vacío
+                    </button>
+                  )}
+                </div>
 
                 <div className="form-group mb-2">
                   <input
@@ -157,17 +157,17 @@ export const Register = () => {
                     </button>
                   )}
                 </div>
-                  <div className="form-group">
+                <div className="form-group">
 
-                    <input
-                      type="text"
-                      className="form-control sombreado"
-                      id="cif"
-                      {...register("cif")}
-                      placeholder="Escriba el CIF.."
-                    />
-                  </div>
-            
+                  <input
+                    type="text"
+                    className="form-control sombreado"
+                    id="cif"
+                    {...register("cif")}
+                    placeholder="Escriba el CIF.."
+                  />
+                </div>
+
 
 
                 <button type="submit" className="btn w-100 mt-4 stylebutton p-3">

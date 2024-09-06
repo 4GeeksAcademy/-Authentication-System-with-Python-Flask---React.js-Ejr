@@ -34,3 +34,7 @@
 .borde {
     border-right: 1px solid white;
 }
+
+.contenedor {
+    min-height: 80rem;
+}
