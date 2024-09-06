@@ -20,13 +20,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						}
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('esto es la data', data);
 						setStore({ jobOffers: data.ofertas });
-						
-						const { jobOffers, user } = getStore(); 
+
+						const { jobOffers, user } = getStore();
 						const premiumOffers = jobOffers.filter(offer => offer.empleador_id === user?.id);
 
 						console.log(premiumOffers);
@@ -38,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
-		
+
 			loadJobOfferById: async (id) => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {
@@ -156,11 +156,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadUserPostulaciones: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
-			
+
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
-			
+
 				try {
 					// Hacer la solicitud al endpoint
 					const response = await fetch(`${process.env.BACKEND_URL}/api/ofertas/${oferta_id}/postulados/detalles`, {
@@ -170,7 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${token}`, // Enviar el token de autenticación
 						},
 					});
-			
+
 					if (response.ok) {
 						// Procesar la respuesta si la solicitud fue exitosa
 						const postulados = await response.json();
@@ -593,6 +593,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, msg: error.message };
 				}
 			},
+			getUser: async (id_programador) => {
+
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/getUsers/${id_programador}`)
+					const data = await response.json();
+
+
+					setStore({ postulado: data.user })
+
+
+				} catch (error) {
+					console.log("Error");
+				}
+			}
 		},
 	};
 };

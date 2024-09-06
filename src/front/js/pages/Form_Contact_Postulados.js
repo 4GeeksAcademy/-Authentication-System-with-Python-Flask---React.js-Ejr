@@ -2,11 +2,12 @@ import React, { useContext, useState, useRef, useEffect } from 'react'
 import "../../styles/formContactPostulados.css"
 import { Context } from '../store/appContext';
 import emailjs from "emailjs-com"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 
 const Form_Contact_Postulados = () => {
-
-    const { store } = useContext(Context);
+    const { id_programador } = useParams()
+    const { store, actions } = useContext(Context);
     const [formData, setFormData] = useState({ name: "", email: "", message: "" })
     const [error, setError] = useState(false)
     const [isConfirmSend, setIsConfirmSend] = useState(false)
@@ -33,7 +34,7 @@ const Form_Contact_Postulados = () => {
                         const timer = setTimeout(() => {
 
                             console.log('Se ha enviado el correo al postulado!');
-                            setFormData({})
+
                             navigate("/")
 
 
@@ -54,7 +55,13 @@ const Form_Contact_Postulados = () => {
         setFormData({
             email: `${store.user?.email}`,
             name: `${store.user?.name}`,
+
         })
+
+
+        if (id_programador) {
+            actions.getUser(id_programador)
+        }
 
 
     }, [])
@@ -81,29 +88,29 @@ const Form_Contact_Postulados = () => {
                         <div className="input-field">
                             <i className="fas fa-user"></i>
                             <label htmlFor="nombre">Nombre</label>
-                            <input type="text" name="nombre" value={"Aqui Nombre del Dev"} disabled /> Poner el value de programador seleccionad
+                            <input type="text" name="nombre" value={store.postulado?.name} disabled />
                         </div>
                         <div className="input-field">
                             <i className="fa-solid fa-user-group"></i>
                             <label htmlFor="apellidos">Apellidos</label>
-                            <input type="text" name="apellidos" value={"Aqui Apellidos del Dev"} disabled /> Poner el value de programador seleccionado
+                            <input type="text" name="apellidos" value={store.postulado?.username} disabled />
                         </div>
 
                         <div className="input-field">
                             <i className="fas fa-at"></i>
                             <label htmlFor="emaildev">Email</label>
-                            <input type="email" name="emaildev" value={"Aqui el email Dev"} disabled />  Poner el value de programador seleccionad
+                            <input type="email" name="emaildev" value={store.postulado?.email} disabled />
                         </div>
                         <h5>Datos del contactante</h5>
                         <div className="input-field">
                             <i className="fas fa-user"></i>
                             <label htmlFor="name">Nombre</label>
-                            <input id="name" type="text" name="name" onChange={handleOnChange} value={formData.name} disabled />
+                            <input id="name" type="text" name="name" onChange={handleOnChange} value={formData.name}  />
                         </div>
                         <div className="input-field">
                             <i className="fa-solid fa-user-group"></i>
                             <label htmlFor="email">Email</label>
-                            <input id="email" type="email" name="email" onChange={handleOnChange} value={formData.email} disabled />
+                            <input id="email" type="email" name="email" onChange={handleOnChange} value={formData.email}  />
                         </div>
 
 

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../store/appContext";
 import '../../styles/PostuladosList.css'
+import { Link } from "react-router-dom";
 
 export const PostuladosList = () => {
     const { store, actions } = useContext(Context);
@@ -10,6 +11,7 @@ export const PostuladosList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [postulados, setPostulados] = useState([]);
+
 
     useEffect(() => {
         const fetchPostulados = async () => {
@@ -72,6 +74,9 @@ export const PostuladosList = () => {
                                     <li className="data-postulado"></li>
                                     <li className="data-postulado"></li>
                                 </ul>
+                                <Link to={`/Form_Contact_Postulados/${postulado.user_id}`}>
+                                    <button className="btn btn-primary">Contactar</button>
+                                </Link>
                             </div>
                             <div className="card-footer">
                                 <small className="text-muted text-center">Más detalles en el perfil</small>
