@@ -348,7 +348,7 @@ def addProjects():
             return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
     return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404
 
-@api.route('/reset-password', methods=['POST'])
+@api.route('/resetpassword', methods=['POST'])
 @jwt_required()
 def reset_password():
 

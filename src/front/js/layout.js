@@ -21,9 +21,12 @@ import { SobreNosotros } from "./pages/sobreNosotros";
 import { FormOffer } from "./component/FormOffer.jsx";
 import PreguntasFrecuentes from "./pages/preguntasFrecuentes.js";
 import { SingleOffer } from "./pages/SingleOffer.jsx";
+import ResetPassword from "./component/ResetPassword.js";
+import ResetPasswordRequest from "./component/RequestPasswordReset.js";
+
 
 //create your first component
-const Layout = () => {
+function Layout() {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
@@ -57,12 +60,16 @@ const Layout = () => {
                         <Route element={<PreguntasFrecuentes />} path="/preguntasfrecuentes" />
                         <Route element={<SingleOffer />} path="/singleoffer/:id" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<ResetPassword />} path="/reset-password/:token" />
+                        <Route element={<ResetPasswordRequest />} path="/reset-password" />
+
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>
     );
-};
+}
 
 export default injectContext(Layout);

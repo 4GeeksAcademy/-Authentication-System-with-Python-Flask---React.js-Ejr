@@ -271,46 +271,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			resetPassword: async (token, password1, password2) => {
-				if (!password1 || !password2) {
-					console.log("Faltan campos");
-					return false;
-				}
+			requestPasswordReset: async (email) => {
+                try {
+                    const resp = await fetch(`${process.env.BACKEND_URL}/api/requestpasswordreset`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email }),
+                    });
 
-				if (password1.trim() !== password2.trim()) {
-					console.log("Las contraseñas no coinciden");
-					return false;
-				}
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        console.log("Correo de restablecimiento enviado", data);
+                        return { success: true, message: data.message };
+                    } else {
+                        const errorData = await resp.json();
+                        console.log("Error al solicitar restablecimiento:", errorData.message);
+                        return { success: false, message: errorData.message };
+                    }
+                } catch (error) {
+                    console.error("Error al solicitar restablecimiento de contraseña:", error);
+                    return { success: false, message: "Error al conectarse con el servidor." };
+                }
+            },
 
-				try {
-					const resp = await fetch(`${process.env.BACKEND_URL}/reset-password`, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							password: password1,
-						}),
-					});
+            resetPassword: async (token, password) => {
+                try {
+                    const resp = await fetch(`${process.env.BACKEND_URL}/api/resetpassword`, {
+                        method: 'POST',
+                        headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ password }),
+                    });
 
-					if (resp.ok) {
-						const data = await resp.json();
-						console.log("Contraseña cambiada exitosamente", data);
-						return true;
-					} else {
-						const errorData = await resp.json();
-						console.log("Error al cambiar contraseña:", errorData.message);
-						return false;
-					}
-				} catch (error) {
-					console.error("Error al cambiar contraseña:", error);
-					return false;
-				}
-			},
-
-		}
-	};
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        console.log("Contraseña restablecida exitosamente", data);
+                        return { success: true, message: data.message };
+                    } else {
+                        const errorData = await resp.json();
+                        console.log("Error al restablecer contraseña:", errorData.message);
+                        return { success: false, message: errorData.message };
+                    }
+                } catch (error) {
+                    console.error("Error al restablecer contraseña:", error);
+                    return { success: false, message: "Error al conectarse con el servidor." };
+                }
+            },
+        }
+    };
 };
+			
+	
+
 
 export default getState;

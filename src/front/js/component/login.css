@@ -61,6 +61,7 @@ label {
   width: 600px; 
   height: 350px; 
   margin: 0 auto;
+  margin-top: 50px;
   padding: 20px; 
   border: 1px solid #ccc; 
   border-radius: 8px; 
