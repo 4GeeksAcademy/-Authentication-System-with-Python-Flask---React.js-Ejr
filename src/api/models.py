@@ -76,6 +76,8 @@ class User(db.Model):
     postulados= db.relationship ("Postulados", backref= "user", lazy=True)
     description = db.Column(db.String(500))
     skills = db.relationship('Skills', backref='user', lazy=True)
+    price = db.Column(db.Float, nullable=True)  
+    currency = db.Column(db.String(3), nullable=True)
    
 
     def __repr__(self):
@@ -94,6 +96,8 @@ class User(db.Model):
             "profile_empleador": self.profile_empleador.serialize()  if self.profile_empleador else None,
             "postulados": [postulados.serialize() for postulados in self.postulados] if self.postulados else None,
             "description": self.description,
+            "price": self.price,  
+            "currency": self.currency,
         }
 
 
@@ -259,7 +263,7 @@ class Contact(db.Model):
             "privacy_policy_accepted": self.privacy_policy_accepted
         }
     
-    class Skills(db.Model):
+class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     language = db.Column(db.String(120), nullable=False)
@@ -268,6 +272,7 @@ class Contact(db.Model):
     certificate_name = db.Column(db.String(255), nullable=True)
     certificate_link = db.Column(db.String(255), nullable=True)
     icon = db.Column(db.String(255), nullable=False)
+
 
     def serialize(self):
         return {

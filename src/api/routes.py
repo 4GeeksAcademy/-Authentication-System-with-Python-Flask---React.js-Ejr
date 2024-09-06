@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app, url_for
 import os
-from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
+from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact, Skills
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -619,7 +619,7 @@ def remove_favorite():
         return jsonify({"success": False, "msg": "Ocurrió un error al eliminar el favorito", "error": str(e)}), 500
     
     #cambio nombre empresa
-@api.route('/empleador/nombre_empresa', methods=['PUT'])
+@api.route('empleador/nombre_empresa', methods=['PUT'])
 @jwt_required()
 def update_company_name():    
     current_user_id = get_jwt_identity()
@@ -765,40 +765,79 @@ def get_country():
     else:
         return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
 
-@api.route('/update-skills', methods=['POST'])
+@api.route('api/skills/<int:user_id>', methods=['GET'])
 @jwt_required()
-def update_skills():
-    user_id = get_jwt_identity()  # Obtener el ID del usuario del token JWT
-    skills_data = request.json.get('skills', [])
+def get_user_skills(user_id):
+    current_user = get_jwt_identity()
+    if current_user != user_id:
+        return jsonify({'message': 'Unauthorized'}), 403
 
-    # Primero, eliminar las habilidades existentes del usuario
-    Skills.query.filter_by(user_id=user_id).delete()
+    skills = Skills.query.filter_by(user_id=user_id).all()
+    return jsonify({'skills': [skills.serialize() for skills in skills]}), 200
 
-    # Luego, agregar las nuevas habilidades
-    for skill in skills_data:
-        new_skill = Skills(
-            user_id=user_id,
-            language=skill.get('language'),
-            experience=skill.get('experience'),
-            projects=skill.get('projects'),
-            certificate_name=skill.get('certificateName'),
-            certificate_link=skill.get('certificateLink'),
-            icon=skill.get('icon')
-        )
-        db.session.add(new_skill)
-
-    db.session.commit()
-
-    return jsonify({"msg": "Habilidades actualizadas correctamente"}), 200
-@api.route('/get-skills', methods=['GET'])
+@api.route('/api/skills/<int:user_id>', methods=['POST'])
 @jwt_required()
-def get_skills():
-    user_id = get_jwt_identity()
+def add_skills(user_id):
+    current_user_id = get_jwt_identity()
 
-    # Obtener las habilidades del usuario
-    user_skills = Skills.query.filter_by(user_id=user_id).all()
+    if user_id != current_user_id:
+        return jsonify({"msg": "Unauthorized"}), 403
 
-    skills = [skill.serialize() for skill in user_skills]
+    data = request.json
+    new_skills = Skills(
+        user_id=user_id,
+        language=data.get('language'),
+        icon=data.get('icon'),
+        experience=data.get('experience'),
+        projects=data.get('projects'),
+        certificate_name=data.get('certificate_name'),
+        certificate_link=data.get('certificate_link')
+    )
 
-    return jsonify({"skills": skills}), 200
- 
+    try:
+        db.session.add(new_skills)
+        db.session.commit()
+        return jsonify({"newSkills": new_skills.serialize()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error al crear habilidad", "error": str(e)}), 500
+
+@api.route('/users/<int:user_id>/price', methods=['POST'])
+@jwt_required()
+def save_user_price(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+    data = request.get_json()
+    price = data.get('price')
+    currency = data.get('currency')
+
+    # Validar que los valores estén presentes
+    if price is None or currency is None:
+        return jsonify({'success': False, 'msg': 'Debes proporcionar un precio y una moneda'}), 400
+
+    # Actualizar los valores en el usuario
+    user.price = price
+    user.currency = currency
+
+    try:
+        db.session.commit()
+        return jsonify({'success': True, 'msg': 'Precio actualizado correctamente', 'user': user.serialize()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'msg': f'Error al guardar el precio: {str(e)}'}), 500
+
+# Obtener el precio y la moneda del usuario
+@api.route('/users/<int:user_id>/price', methods=['GET'])
+@jwt_required()
+def get_user_price(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+    return jsonify({
+        'success': True,
+        'price': user.price,
+        'currency': user.currency
+    }), 200

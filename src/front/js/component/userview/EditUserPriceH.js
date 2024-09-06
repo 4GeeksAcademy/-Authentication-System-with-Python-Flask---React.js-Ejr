@@ -1,27 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-export const EditUserPrice = ({ increaseProgress }) => {
-    const [userPrice, setUserPrice] = useState(50); 
+export const EditUserPrice = ({ increaseProgress, userId }) => {
+    const [userPrice, setUserPrice] = useState(50); // Estado inicial
     const [showModal, setShowModal] = useState(false);
     const [selectedCurrency, setSelectedCurrency] = useState('EUR');
+
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
-    const handleSave = (e) => {
+    // Función para guardar el precio en el backend
+    const handleSave = async (e) => {
         e.preventDefault();
-        handleClose();
-        increaseProgress(10); 
+        try {
+            // Hacer una petición POST/PUT para guardar el precio en la base de datos
+            const response = await fetch(`/api/users/${userId}/price`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ price: userPrice, currency: selectedCurrency }),
+            });
+            if (response.ok) {
+                handleClose();
+                increaseProgress(10); 
+            } else {
+                console.error("Error al guardar el precio.");
+            }
+        } catch (error) {
+            console.error("Error al hacer la solicitud:", error);
+        }
     };
 
-    
+    // Cargar el precio desde la API al iniciar el componente
+    useEffect(() => {
+        const fetchUserPrice = async () => {
+            try {
+                const response = await fetch(`/api/users/${userId}/price`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserPrice(data.price || 50); // Si no hay precio, usar 50
+                    setSelectedCurrency(data.currency || 'EUR');
+                }
+            } catch (error) {
+                console.error("Error al cargar el precio del usuario:", error);
+            }
+        };
+
+        fetchUserPrice();
+    }, [userId]);
+
     const handleRangeChange = (e) => {
         setUserPrice(e.target.value);
     };
 
-    
     const handleCurrencyChange = (e) => {
         setSelectedCurrency(e.target.value);
     };
@@ -29,17 +63,17 @@ export const EditUserPrice = ({ increaseProgress }) => {
     return (
         <>
             <div className="d-flex align-items-center" style={{ color: 'Black', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
-            <button
+                <button
                     type="button"
                     className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center ms-2"
                     style={{ width: 25, height: 25, backgroundColor: 'rgba(103, 147, 174, 1)', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', marginRight: '10px' }}
                     onClick={handleShow}
                 >
-                    <FontAwesomeIcon icon={faEdit}  style={{width: '15px', height: '15px',}}/>
+                    <FontAwesomeIcon icon={faEdit} style={{ width: '15px', height: '15px' }} />
                 </button>
                 <div>
-                    <p className="mb-0">Precio/Hora</p> 
-                    <p className="mb-0">{`${userPrice} ${selectedCurrency}`}</p> 
+                    <p className="mb-0">Precio/Hora</p>
+                    <p className="mb-0">{`${userPrice} ${selectedCurrency}`}</p>
                 </div>
             </div>
 
@@ -81,7 +115,7 @@ export const EditUserPrice = ({ increaseProgress }) => {
                     <Button variant="secondary" onClick={handleClose} style={{ backgroundColor: 'rgba(103, 147, 174, 1)' }}>
                         Cancelar
                     </Button>
-                    <Button type="submit" variant="secondary" onClick={handleSave} style={{ backgroundColor: 'rgba(103, 147, 174, 0.27)', color: 'rgba(103, 147, 174, 1)' }}>
+                    <Button type="submit" variant="secondary" style={{ backgroundColor: 'rgba(103, 147, 174, 0.27)', color: 'rgba(103, 147, 174, 1)' }}>
                         Guardar
                     </Button>
                 </Modal.Footer>

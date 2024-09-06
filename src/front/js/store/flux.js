@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			companyEmail: null,
 			phoneNumber: 'null',
 			description: 'null',
+			skills: [],
 		},
 		actions: {
 			loadAllJobOffers: async () => {
@@ -24,13 +25,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 						}
 					});
-			
+
 					if (resp.ok) {
 						const data = await resp.json();
 						console.log('esto es la data', data);
 						setStore({ jobOffers: data.ofertas });
-						
-						const { jobOffers, user } = getStore(); 
+
+						const { jobOffers, user } = getStore();
 						const premiumOffers = jobOffers.filter(offer => offer.empleador_id === user?.id);
 
 						console.log(premiumOffers);
@@ -42,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error en la solicitud de ofertas:", error);
 				}
 			},
-		
+
 			loadJobOfferById: async (id) => {
 				try {
 					const resp = await fetch(`${process.env.BACKEND_URL}/api/oferta/${id}`, {
@@ -160,11 +161,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadUserPostulaciones: async (oferta_id) => {
 				const store = getStore();
 				const token = store.token;
-			
+
 				if (!token) {
 					return { msg: "Usuario no autenticado: regístrate o inicia sesión", type: 'error' };
 				}
-			
+
 				try {
 					// Hacer la solicitud al endpoint
 					const response = await fetch(`${process.env.BACKEND_URL}/api/ofertas/${oferta_id}/postulados/detalles`, {
@@ -174,7 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							Authorization: `Bearer ${token}`, // Enviar el token de autenticación
 						},
 					});
-			
+
 					if (response.ok) {
 						// Procesar la respuesta si la solicitud fue exitosa
 						const postulados = await response.json();
@@ -524,7 +525,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await response.json();
-					setStore({ favorites:[...getStore().favorites, data]});
+					setStore({ favorites: [...getStore().favorites, data] });
 					return data;
 
 				} catch (error) {
@@ -562,7 +563,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getCompanyName: async () => {
 				const store = getStore();
 				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
+				console.log("Token:", token);
 				if (!token) {
 					console.error("No se pudo obtener el token de autenticación");
 					return;
@@ -577,7 +578,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const contentType = response.headers.get("content-type");
 					if (contentType && contentType.indexOf("application/json") === -1) {
 						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text(); 
+						const text = await response.text();
 						console.error("Contenido de la respuesta no JSON:", text);
 						return null;
 					}
@@ -594,13 +595,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			updateCompanyName: async (newName) => {
 				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
+				console.log("Token:", token);
 				if (!token) {
 					console.error("No se pudo obtener el token de autenticación");
 					return;
 				}
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/nombre_empresa`, {
+					const response = await fetch(`${process.env.BACKEND_URL}api/empleador/nombre_empresa`, {
 						method: 'PUT',
 						headers: {
 							'Content-Type': 'application/json',
@@ -611,7 +612,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const contentType = response.headers.get("content-type");
 					if (contentType && contentType.indexOf("application/json") === -1) {
 						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text();  
+						const text = await response.text();
 						console.error("Contenido de la respuesta no JSON:", text);
 						return null;
 					}
@@ -630,13 +631,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getCompanyPhone: async () => {
 				const store = getStore();
 				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
+				console.log("Token:", token);
 				if (!token) {
 					console.error("No se pudo obtener el token de autenticación");
 					return;
 				}
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/telefono_empresa`, {
+					const response = await fetch(`${process.env.BACKEND_URL}api/empleador/telefono_empresa`, {
 						method: 'GET',
 						headers: {
 							'Authorization': `Bearer ${token}`
@@ -645,7 +646,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const contentType = response.headers.get("content-type");
 					if (contentType && contentType.indexOf("application/json") === -1) {
 						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text(); 
+						const text = await response.text();
 						console.error("Contenido de la respuesta no JSON:", text);
 						return null;
 					}
@@ -660,28 +661,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
-			
+
 			// Actualizar el teléfono de la empresa
 			updateCompanyPhone: async (newPhone) => {
 				const token = localStorage.getItem('token');
-				console.log("Token:", token);  
+				console.log("Token:", token);
 				if (!token) {
 					console.error("No se pudo obtener el token de autenticación");
 					return;
 				}
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/api/empleador/telefono_empresa`, {
+					const response = await fetch(`${process.env.BACKEND_URL}api/empleador/telefono_empresa`, {
 						method: 'PUT',
 						headers: {
 							'Content-Type': 'application/json',
 							'Authorization': `Bearer ${token}`
 						},
-						body: JSON.stringify({ telefono_empresa: newPhone }) 
+						body: JSON.stringify({ telefono_empresa: newPhone })
 					});
 					const contentType = response.headers.get("content-type");
 					if (contentType && contentType.indexOf("application/json") === -1) {
 						console.error("Respuesta no es JSON. Tipo de contenido:", contentType);
-						const text = await response.text();  
+						const text = await response.text();
 						console.error("Contenido de la respuesta no JSON:", text);
 						return null;
 					}
@@ -689,108 +690,186 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw new Error("Error al actualizar el telefono de la empresa, status: " + response.status);
 					}
 					const data = await response.json();
-					setStore({ user: data.user }); 
+					setStore({ user: data.user });
 					return data.user;
 				} catch (error) {
 					console.error("Error en la solicitud de actualización del telefono de la empresa:", error);
 					return null;
 				}
 			}, getProfileImage: async () => {
-                try {
-                    const token = localStorage.getItem("token");  
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/get-profile-image`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                        }
-                    });
+				try {
+					const token = localStorage.getItem("token");
+					const response = await fetch(`${process.env.BACKEND_URL}api/get-profile-image`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+						}
+					});
 
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data.profile_image_url;  
-                    } else {
-                        console.error("Error al obtener la imagen de perfil");
-                        return null;
-                    }
-                } catch (error) {
-                    console.error("Error en la solicitud de obtener imagen de perfil:", error);
-                    return null;
-                }
-            },
+					if (response.ok) {
+						const data = await response.json();
+						return data.profile_image_url;
+					} else {
+						console.error("Error al obtener la imagen de perfil");
+						return null;
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de obtener imagen de perfil:", error);
+					return null;
+				}
+			},
 
-            // Acción para subir la imagen de perfil
-            uploadProfileImage: async (imageFile) => {
-                try {
-                    const token = localStorage.getItem("token");  
-                    const formData = new FormData();
-                    formData.append('image', imageFile);  
+			// Acción para subir la imagen de perfil
+			uploadProfileImage: async (imageFile) => {
+				try {
+					const token = localStorage.getItem("token");
+					const formData = new FormData();
+					formData.append('image', imageFile);
 
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/upload-profile-image`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`, 
-                        },
-                        body: formData  
-                    });
+					const response = await fetch(`${process.env.BACKEND_URL}api/upload-profile-image`, {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+						},
+						body: formData
+					});
 
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data.profile_image_url;  
-                    } else {
-                        console.error("Error al subir la imagen de perfil");
-                        return null;
-                    }
-                } catch (error) {
-                    console.error("Error al subir la imagen de perfil:", error);
-                    return null;
-                }
-            },
+					if (response.ok) {
+						const data = await response.json();
+						return data.profile_image_url;
+					} else {
+						console.error("Error al subir la imagen de perfil");
+						return null;
+					}
+				} catch (error) {
+					console.error("Error al subir la imagen de perfil:", error);
+					return null;
+				}
+			},
 
-			 // Acción para obtener la descripción
-            getDescription: async () => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/get-description`, {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }
-                    });
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.success) {
-                            setStore({ description: data.description });
-                        }
-                    } else {
-                        console.error('Error al obtener la descripción:', response.statusText);
-                    }
-                } catch (error) {
-                    console.error('Error en la solicitud de descripción:', error);
-                }
-            },
-            // Acción para actualizar la descripción
-            updateDescription: async (newDescription) => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/update-description`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        },
-                        body: JSON.stringify({ description: newDescription })
-                    });
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.success) {
-                            setStore({ description: data.description });
-                        }
-                    } else {
-                        console.error('Error al actualizar la descripción:', response.statusText);
-                    }
-                } catch (error) {
-                    console.error('Error en la solicitud de actualización:', error);
-                }
-            },
-        }
-    };
+			// Acción para obtener la descripción
+			getDescription: async () => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}api/get-description`, {
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('token')}`
+						}
+					});
+					if (response.ok) {
+						const data = await response.json();
+						if (data.success) {
+							setStore({ description: data.description });
+						}
+					} else {
+						console.error('Error al obtener la descripción:', response.statusText);
+					}
+				} catch (error) {
+					console.error('Error en la solicitud de descripción:', error);
+				}
+			},
+			// Acción para actualizar la descripción
+			updateDescription: async (newDescription) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}api/update-description`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`
+						},
+						body: JSON.stringify({ description: newDescription })
+					});
+					if (response.ok) {
+						const data = await response.json();
+						if (data.success) {
+							setStore({ description: data.description });
+						}
+					} else {
+						console.error('Error al actualizar la descripción:', response.statusText);
+					}
+				} catch (error) {
+					console.error('Error en la solicitud de actualización:', error);
+				}
+			},
+			loadUserSkills: async () => {
+				const store = getStore();
+				const userId = store.user?.id;
+
+				if (!userId) {
+					console.error("No user found");
+					return;
+				}
+
+				try {
+					
+
+					const resp = await fetch(`${process.env.BACKEND_URL}api/skills/${userId}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${store.token}`
+						}
+					});
+
+					if (resp.ok) {
+						const data = await resp.json();
+						
+						if (data.skills) {
+							setStore({ skills: data.skills });
+							console.log("Skills loaded", data.skills);
+						} else {
+							console.error("No skills found in response");
+						}
+					} else {
+						const errorData = await resp.json();
+						console.error("Error al cargar habilidades:", errorData.message);
+						alert(`Error al cargar habilidades: ${errorData.message}`);
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de habilidades:", error.message);
+					alert(`Error en la solicitud de habilidades: ${error.message}`);
+				}
+			},
+
+			addUserSkills: async (newSkills) => {
+				const store = getStore();
+				const userId = store.user?.id;
+
+				if (!userId) {
+					console.error("No user found");
+					return;
+				}
+
+				try {
+					console.log("Sending request to:", `${process.env.BACKEND_URL}/api/skills/${userId}`);
+					console.log("Request body:", newSkills);
+
+					const resp = await fetch(`${process.env.BACKEND_URL}api/skills/${userId}`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${store.token}`
+						},
+						body: JSON.stringify(newSkills)
+					});
+
+					if (resp.ok) {
+						const data = await resp.json();
+						const updatedSkills = [...store.skills, data.newSkills];
+						setStore({ skills: updatedSkills });
+						console.log("Skills added", data.newSkills);
+					} else {
+						const errorData = await resp.json();
+						console.error("Error al agregar habilidad:", errorData.msg);
+						alert(`Error al agregar habilidad: ${errorData.msg}`);
+					}
+				} catch (error) {
+					console.error("Error en la solicitud de agregar habilidad:", error.message);
+					alert(`Error en la solicitud de agregar habilidad: ${error.message}`);
+				}
+			}
+
+		}
+	};
 };
 
 export default getState;
