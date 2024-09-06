@@ -6,10 +6,20 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_bcrypt import Bcrypt 
+from flask_jwt_extended import JWTManager, create_access_token,get_jwt_identity, jwt_required
+from flask import Flask
+from flask_mail import Mail, Message
+from datetime import timedelta
+from api.mail.mail_config import mail
+
+
+
+
 
 # from models import Person
 
@@ -18,6 +28,28 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+# bcrypt config
+bcrypt = Bcrypt(app) 
+
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
+
+
+
+
+app.config['MAIL_SERVER']= 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASSWORD")
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_DEFAULT_SENDER'] = ('InfoLoopy', 'infoloopy10@gmail.com')
+app.config['MAIL_DEBUG'] = True
+mail.init_app(app)  # Inicializa mail con la aplicación
+
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -72,3 +104,6 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+
+   

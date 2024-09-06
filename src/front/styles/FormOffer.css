@@ -1,0 +1,78 @@
+.form-container{
+    margin: 0 auto;
+    position: relative;
+    height: fit-content;
+    width: 60%;
+}
+
+.form-box {
+    max-width:100%; 
+    max-height: 100%;
+    background-color: white;
+    border: 1px solid #f3eaea;
+    border-radius: 4px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.form-header {
+    text-align: center;
+}
+
+.form-header h2 {
+    font-size: 3.5rem;
+    color: rgba(33, 37, 41, 0.75);
+    text-shadow: 5px 5px 15px #909090;
+    text-wrap: nowrap;
+}
+
+.form-header span {
+    font-size: 2rem;
+    color: rgb(103, 147, 174);
+    text-shadow: 5px 5px 15px #909090;
+}
+
+.button-box {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px; 
+}
+
+.text-area {
+    position: relative;
+    height: 200px; 
+    max-height: 200px;
+    width: 100%; 
+    resize:none; 
+}
+.btn-submit{
+    background-color: rgb(103, 147, 174);
+    color: rgb(0, 0, 0);
+}
+.btn-submit:hover{
+    background-color: rgb(0, 157, 255);
+    color: white;
+    
+}
+.btn-cancelar{
+    background-color: rgb(103, 147, 174);
+    color: rgb(0, 0, 0);
+}
+.btn-cancelar:hover{
+    background-color: rgb(0, 157, 255);
+    color: white;
+    
+}
+.btn-reset{
+    background-color: rgb(103, 147, 174);
+    color: rgb(0, 0, 0);
+}
+.btn-reset:hover{
+    background-color: rgb(0, 157, 255);
+    color: white;
+
+}
+.last-row{
+    position: relative;
+}

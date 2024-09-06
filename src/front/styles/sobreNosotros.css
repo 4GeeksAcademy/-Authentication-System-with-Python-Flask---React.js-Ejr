@@ -1,0 +1,96 @@
+.frase {
+    margin: 60px;
+    justify-content: center;
+    text-align: center;
+    color: #6793AE;
+    font-size: 40px;
+
+}
+
+.mission-vision-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.mission-vision-section .mission-box,
+.mission-vision-section .vision-box {
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-align: justify;
+    flex: 1;
+    margin-right: 15px;
+}
+
+.mission-vision-section .mission-box {
+    margin-right: 15px;
+}
+
+.mission-vision-section .vision-box {
+    margin-right: 0;
+}
+
+.section-margin {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.values-section .values-grid,
+.why-choose-us-section .benefits-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.values-section .values-grid .value-item,
+.why-choose-us-section .benefits-grid .benefit-item {
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px 10px;
+    margin: 0 5px;
+    /* Margen de 5px entre las cajas */
+    flex: 1;
+    /* Permite que las cajas ocupen el mismo ancho */
+    transition: transform 0.3s ease;
+    margin-bottom: 60px;
+}
+
+.values-section .values-grid .value-item.innovation,
+.why-choose-us-section .benefits-grid .benefit-item.networking {
+    border: 2px solid #6793AE;
+}
+
+.values-section .values-grid .value-item.quality,
+.why-choose-us-section .benefits-grid .benefit-item.tools {
+    background-color: #6793AE;
+}
+
+.values-section .values-grid .value-item.transparency,
+.why-choose-us-section .benefits-grid .benefit-item.support {
+    border: 2px solid #6793AE;
+}
+
+.values-section .values-grid .value-item.collaboration,
+.why-choose-us-section .benefits-grid .benefit-item.security {
+    background-color: #6793AE;
+}
+
+.values-section .values-grid .icon,
+.why-choose-us-section .benefits-grid .icon {
+    font-size: 2rem;
+    color: inherit;
+    margin-bottom: 15px;
+}
+
+.value-item:hover,
+.benefit-item:hover {
+    transform: translateY(-5px);
+}
+
+.contenedor {
+    min-height: 80rem;
+}
