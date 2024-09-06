@@ -765,4 +765,40 @@ def get_country():
     else:
         return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
 
-   
+@api.route('/update-skills', methods=['POST'])
+@jwt_required()
+def update_skills():
+    user_id = get_jwt_identity()  # Obtener el ID del usuario del token JWT
+    skills_data = request.json.get('skills', [])
+
+    # Primero, eliminar las habilidades existentes del usuario
+    Skills.query.filter_by(user_id=user_id).delete()
+
+    # Luego, agregar las nuevas habilidades
+    for skill in skills_data:
+        new_skill = Skills(
+            user_id=user_id,
+            language=skill.get('language'),
+            experience=skill.get('experience'),
+            projects=skill.get('projects'),
+            certificate_name=skill.get('certificateName'),
+            certificate_link=skill.get('certificateLink'),
+            icon=skill.get('icon')
+        )
+        db.session.add(new_skill)
+
+    db.session.commit()
+
+    return jsonify({"msg": "Habilidades actualizadas correctamente"}), 200
+@api.route('/get-skills', methods=['GET'])
+@jwt_required()
+def get_skills():
+    user_id = get_jwt_identity()
+
+    # Obtener las habilidades del usuario
+    user_skills = Skills.query.filter_by(user_id=user_id).all()
+
+    skills = [skill.serialize() for skill in user_skills]
+
+    return jsonify({"skills": skills}), 200
+ 

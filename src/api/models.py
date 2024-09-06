@@ -75,6 +75,7 @@ class User(db.Model):
     profile_empleador = db.relationship ("Empleador", backref="user", uselist=False)
     postulados= db.relationship ("Postulados", backref= "user", lazy=True)
     description = db.Column(db.String(500))
+    skills = db.relationship('Skills', backref='user', lazy=True)
    
 
     def __repr__(self):
@@ -257,3 +258,24 @@ class Contact(db.Model):
             "message": self.message,
             "privacy_policy_accepted": self.privacy_policy_accepted
         }
+    
+    class Skills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    language = db.Column(db.String(120), nullable=False)
+    experience = db.Column(db.String(120), nullable=False)
+    projects = db.Column(db.Integer, nullable=False)
+    certificate_name = db.Column(db.String(255), nullable=True)
+    certificate_link = db.Column(db.String(255), nullable=True)
+    icon = db.Column(db.String(255), nullable=False)
+
+    def serialize(self):
+        return {
+            'language': self.language,
+            'experience': self.experience,
+            'projects': self.projects,
+            'certificateName': self.certificate_name,
+            'certificateLink': self.certificate_link,
+            'icon': self.icon
+        }
+

@@ -7,7 +7,7 @@ import { Context } from '../../store/appContext';
 export const EditCompanyPhone = ({ increaseProgress }) => {
     const { store, actions } = useContext(Context);
     const [showModal, setShowModal] = useState(false); 
-    const [newPhone, setNewPhone] = useState(''); // Cadena vacía por defecto
+    const [newPhone, setNewPhone] = useState(''); 
     
     useEffect(() => {
         const fetchCompanyPhone = async () => {
