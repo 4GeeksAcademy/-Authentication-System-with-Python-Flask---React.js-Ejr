@@ -1,13 +1,20 @@
 // src/component/ResetPassword.js
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import '../../styles/ResetPasswordRequest.css';  // Ajusta la ruta según la ubicación real del archivo
 
 const ResetPassword = () => {
-  const { token } = useParams(); // Obtiene el token de la URL
+  const location = useLocation();
+	//almacenamos en variable queryParams la busqueda realizada que se encuentra en el url
+	const queryParams = new URLSearchParams(location.search);
+	//extraemos el token del queryPArams
+	const token = queryParams.get('token');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,10 +25,11 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/resetpassword/${token}`, {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/resetpassword`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ password: password1 }),
       });
@@ -61,7 +69,12 @@ const ResetPassword = () => {
         </label>
         <button type="submit">Restablecer Contraseña</button>
       </form>
-      {message && <p>{message}</p>}
+      {message &&<div>
+        <p>{message}</p>
+        <button className='btn' onClick={()=>navigate('/login')}>
+          Login
+        </button>
+        </div>}
     </div>
   );
 };

@@ -14,71 +14,12 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token,get_jwt_identity, jwt_required
 from flask import Flask
 from flask_mail import Mail, Message
-from flask_cors import CORS
 from datetime import timedelta
-
-app = Flask(__name__)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'infoloopy10@gmail.com'
-app.config['MAIL_PASSWORD'] = 'yloz aavj knib yzve'
+from api.mail.mail_config import mail
 
 
-mail = Mail(app)
-CORS(app)
-# Configuración de entorno
-ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 
-# Configuración de Bcrypt
-bcrypt = Bcrypt(app) 
 
-# Configuración de JWT
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Cambia esto!
-jwt = JWTManager(app)
-
-# Configuración de base de datos
-db_url = os.getenv("DATABASE_URL")
-if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
-
-# Tu endpoint para enviar correos de restablecimiento de contraseña
-@app.route('/send-reset-email', methods=['POST'])
-def send_reset_email():
-    email=request.json.get('email')
-    user=User.query.filter_by(email=email).first()
-
-    if not user:
-        return jsonify({"msg": "usuario no encontrado"})
-    token=create_access_token(identity=user.id,expires_delta=timedelta(minutes=5))
-
-    template_html = f"""
-    <html>
-        <body>
-            <h1>Reset your password</h1>
-            <p>Haz click para restablecer tu contraseña:</p>
-            <a href="https://glowing-space-telegram-g4xj494v99jv2pgwj-3000.app.github.dev/resetpassword?token={token}">Reset password</a>
-        </body>
-    </html>
-    """
-    msg=Message(
-        "Reset your password",
-        sender="noreply@example.com",
-        recipients=[user.email],
-        html=template_html
-    )
-    mail.send(msg)
-    return jsonify({"msg":"Email sent"}), 200
-
-# Tu endpoint para restablecer la contraseña
-@app.route('/reset-password/<token>', methods=['GET', 'POST'])
-def reset_password(token):
-    # Implementar la lógica para verificar el token y restablecer la contraseña
-    # Mostrar el formulario o manejar el restablecimiento de la contraseña
-    pass
 
 # from models import Person
 
@@ -95,6 +36,20 @@ bcrypt = Bcrypt(app)
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
+
+
+
+
+app.config['MAIL_SERVER']= 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASSWORD")
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_DEFAULT_SENDER'] = ('InfoLoopy', 'infoloopy10@gmail.com')
+app.config['MAIL_DEBUG'] = True
+mail.init_app(app)  # Inicializa mail con la aplicación
+
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

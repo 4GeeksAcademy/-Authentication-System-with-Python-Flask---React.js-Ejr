@@ -117,7 +117,7 @@ class Programador(db.Model):
             "id": self.id,
             "precio_hora": self.precio_hora,
             "tecnologias": self.tecnologias,
-            "experiencia": self.experiencia,
+            "experiencia": self.experiencia.value,
             "descripcion": self.descripcion,
             "rating": self.rating,
             "proyectos": [proyectos.serialize()for proyectos in self.proyectos],
