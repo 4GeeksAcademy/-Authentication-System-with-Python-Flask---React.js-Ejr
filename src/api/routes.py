@@ -360,8 +360,13 @@ def delete_postulado(oferta_id):
     if postulado.estado == "contratado":
         return jsonify({"msg": "No puedes cancelar tu postulación porque ya has sido contratado."}), 403
 
-    db.session.delete(postulado)
-    db.session.commit()
+    try:
+        db.session.delete(postulado)
+        db.session.commit()
+        return jsonify({"msg": "Te has desinscrito de la oferta exitosamente."}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Error al desinscribirse de la oferta: {str(e)}"}), 500
 
 # Mostrar todas las calificaciones
 @api.route('/ratings', methods=['GET'])
@@ -402,8 +407,8 @@ def create_rating():
     new_rating = Ratings(programador_id=programador_id, empleador_id=empleador_id, value=value)
 
     try:
-        # db.session.add(new_rating)
-        # db.session.commit()
+        db.session.add(new_rating)
+        db.session.commit()
         return jsonify({"success": True, "msg": "Calificación creada exitosamente", "rating": new_rating.serialize()}), 201
     except Exception as e:
         db.session.rollback()

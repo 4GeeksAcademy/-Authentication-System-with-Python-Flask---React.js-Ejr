@@ -61,6 +61,7 @@ export const CardOffer = ({ id }) => {
             if (isSubscribed) {
                 result = await actions.unapplyFromJobOffer(id);
                 if (result?.msg) {
+                    console.log('este el result msg:', result.msg )
                     setModalMessage(result.msg);
                     setModalType(result.type === "success" ? "success" : "error");
                     setIsSubscribed(false);

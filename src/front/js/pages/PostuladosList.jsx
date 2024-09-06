@@ -65,7 +65,7 @@ export const PostuladosList = () => {
                                     <strong>Estado:</strong> {postulado.estado}
                                 </p>
                                 <p className="postulados-card-text">
-                                    <strong>Datos de interés:</strong> {postulado.programador.id}
+                                    <strong>Datos del postulado</strong> {postulado.programador.id}
                                 </p>
                                 <ul className="data-list-postulado d-flex">
                                     <li className="data-postulado"></li>
