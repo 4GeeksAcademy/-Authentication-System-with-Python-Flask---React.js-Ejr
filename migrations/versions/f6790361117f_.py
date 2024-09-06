@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f0feefbbff24
+Revision ID: f6790361117f
 Revises: 
-Create Date: 2024-09-06 14:41:43.571216
+Create Date: 2024-09-06 16:25:51.018862
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f0feefbbff24'
+revision = 'f6790361117f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,6 +36,9 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.Column('country', sa.String(length=20), nullable=False),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('price', sa.Float(), nullable=True),
+    sa.Column('currency', sa.String(length=3), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -58,6 +61,18 @@ def upgrade():
     sa.Column('descripcion', sa.String(length=300), nullable=True),
     sa.Column('rating_value', sa.Float(precision=2), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('skills',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('language', sa.String(length=120), nullable=False),
+    sa.Column('experience', sa.String(length=120), nullable=False),
+    sa.Column('projects', sa.Integer(), nullable=False),
+    sa.Column('certificate_name', sa.String(length=255), nullable=True),
+    sa.Column('certificate_link', sa.String(length=255), nullable=True),
+    sa.Column('icon', sa.String(length=255), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -129,6 +144,7 @@ def downgrade():
     op.drop_table('ratings')
     op.drop_table('proyectos')
     op.drop_table('ofertas')
+    op.drop_table('skills')
     op.drop_table('programador')
     op.drop_table('empleador')
     op.drop_table('user')

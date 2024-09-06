@@ -35,8 +35,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ jobOffers: data.ofertas });
 
 						const { jobOffers, user } = getStore();
-
-						const { jobOffers, user } = getStore();
 						const premiumOffers = jobOffers.filter(offer => offer.empleador_id === user?.id);
 
 						console.log(premiumOffers);
