@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../store/appContext";
-import '../../styles/PostuladosList.css'
+import '../../styles/PostuladosList.css';
 import { Link } from "react-router-dom";
 
 export const PostuladosList = () => {
@@ -24,7 +24,7 @@ export const PostuladosList = () => {
                 });
                 const data = await response.json();
                 if (response.ok) {
-                    setPostulados(data.oferta.postulados);
+                    setPostulados(Array.isArray(data.oferta.postulados) ? data.oferta.postulados : null);
                 } else {
                     setError(data.msg);
                 }
@@ -40,16 +40,16 @@ export const PostuladosList = () => {
         }
     }, [oferta_id, store.token]);
 
-    // Función para manejar el cambio de estado del postulado
     const handleStatusChange = async (user_id, estado) => {
         const result = await actions.changePostuladoStatus(oferta_id, user_id, estado);
         if (result.type === "success") {
             alert(`Estado actualizado a ${estado}`);
-            // Actualizar la lista de postulados después de cambiar el estado
+
             setPostulados(prevPostulados =>
+                Array.isArray(prevPostulados) ? 
                 prevPostulados.map(postulado =>
                     postulado.user_id === user_id ? { ...postulado, estado } : postulado
-                )
+                ) : prevPostulados
             );
         } else {
             setError(result.msg);
@@ -67,13 +67,24 @@ export const PostuladosList = () => {
                 </p>
             </div>
             {loading && <p className="text-center">Cargando...</p>}
-            {error && <p className="text-center">{error}</p>}
+            {error && <p className="text-center text-secondary">{error}</p>}
+            {!Array.isArray(postulados) && !loading && (
+                <p className="text-center text-danger">No se encontraron postulados o el formato de datos es incorrecto.</p>
+            )}
+            {Array.isArray(postulados) && postulados.length === 0 && !loading && (
+                <p className="text-center text-warning">No hay postulados disponibles para esta oferta.</p>
+            )}
             <div className="row">
-                {postulados.map((postulado) => (
+                {Array.isArray(postulados) && postulados.map((postulado) => (
                     <div className="col-lg-4 col-md-6 col-sm-12 my-3 d-flex" key={postulado.user_id}>
-                        <div className="card card-box h-100 shadow-md">
+                        <div className="card card-box h-100 shadow-sm">
+                            <img 
+                            className="foto-perfil"
+                            src="https://static.vecteezy.com/system/resources/previews/002/205/989/non_2x/user-profile-icon-free-vector.jpg" 
+                            alt=""
+                            />
                             <div className="card-body card-body-body">
-                                <h5 className="card-title  fw-bold fs-4">{postulado.username}</h5>
+                                <h5 className="card-title fw-bold fs-4">{postulado.username}</h5>
                                 <p className="postulados-card-text">
                                     <strong>Email:</strong> {postulado.email}
                                 </p>
@@ -81,7 +92,7 @@ export const PostuladosList = () => {
                                     <strong>Estado:</strong> {postulado.estado}
                                 </p>
                                 <p className="postulados-card-text">
-                                    <strong>Datos del postulado</strong> {postulado.programador.id}
+                                    <strong>Datos del postulado:</strong> {postulado.programador?.id}
                                 </p>
                                 <ul className="data-list-postulado d-flex">
                                     <li className="data-postulado"></li>
@@ -93,10 +104,10 @@ export const PostuladosList = () => {
                                 </Link>
                                 <div className="d-flex justify-content-between mt-3">
                                     <button
-                                        className="btn btn-contratar"
+                                        className="btn btn-contrata"
                                         onClick={() => handleStatusChange(postulado.user_id, 'contratado')}
                                     >
-                                        Contratar
+                                        Aceptar
                                     </button>
                                     <button
                                         className="btn btn-rechazar"

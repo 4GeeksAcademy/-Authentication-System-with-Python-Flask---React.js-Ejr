@@ -67,11 +67,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-height: 3.6em;
-    margin-bottom: 10px;
 }
 
 .text-description {
-    line-height: 1.5em;
+    line-height: 1.2em;
 }
 
 .card-offer-details {

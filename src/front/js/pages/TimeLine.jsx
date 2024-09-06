@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ListOffers } from "../component/CardListOffers.jsx";
 import "../../styles/TimeLine.css";
-import { FilterListOffer } from "../component/FilterListOffer.jsx";
 
 export const TimeLine = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -57,7 +56,6 @@ export const TimeLine = () => {
             </div>
             <div className="list-offers-container text-center">
                 <ListOffers searchTerm={filterTerm} filters={filters} />
-                <FilterListOffer filters={filters} handleFiltersChange={handleFiltersChange} />
             </div>
         </div>
     );
