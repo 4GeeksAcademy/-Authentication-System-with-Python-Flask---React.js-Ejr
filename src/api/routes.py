@@ -3,17 +3,22 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import datetime
 from flask import Flask, request, jsonify, url_for, Blueprint
+import os
 from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import generate_password_hash , check_password_hash
+import stripe
+
 
 
 api = Blueprint('api', __name__)
 
 
 
+# API KEY STRIPE
+stripe.api_key = 'sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY'
 
 # Allow CORS requests to this API
 CORS(api)
@@ -37,7 +42,7 @@ def register():
     password = request.json.get("password", None)
     country = request.json.get("country", None)
     cif= request.json.get("cif", None)
-    if not name or not username or not email or not password or not country:
+    if not name or not email or not password or not country:
         return jsonify({'success':False, 'msg':'Todos los campos son necesarios'})
     email_exist = User.query.filter_by(email=email).first()
     if email_exist:
@@ -159,6 +164,7 @@ def crear_oferta():
         return jsonify({"success": False, "msg": "El usuario no es un empleador"}), 400
 
     name = request.json.get("name")
+    nombre_empresa = request.json.get("nombre_empresa")
     descripcion = request.json.get("descripcion")
     salario = request.json.get("salario")
     localidad = request.json.get("localidad")
@@ -172,7 +178,7 @@ def crear_oferta():
     experiencia_minima = request.json.get("experiencia_minima")
     fecha_publicacion_str = request.json.get("fecha_publicacion")
     
-    if not name or not descripcion or not localidad or not salario or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
+    if not name or not nombre_empresa or not descripcion or not localidad or not plazo or not modalidad or not fecha_publicacion_str or not experiencia_minima:
         return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
 
     try:
@@ -188,6 +194,7 @@ def crear_oferta():
 
     nueva_oferta = Ofertas(
         name=name,
+        nombre_empresa=nombre_empresa,
         descripcion=descripcion,
         salario=salario,
         localidad=localidad,
@@ -234,7 +241,66 @@ def get_offer(id):
     except Exception as e:
         return jsonify({"success": False, "msg": f"Error al obtener la oferta: {str(e)}"}), 500
 
+@api.route('/ofertas/<int:oferta_id>/postulados/detalles', methods=['GET'])
+@jwt_required()
+def get_postulados_detalles(oferta_id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
 
+    if not user or not user.profile_empleador:
+        return jsonify({"msg": "Acceso denegado. Solo empleadores pueden ver los postulados."}), 403
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta or oferta.empleador_id != user.profile_empleador.id:
+        return jsonify({"msg": "Oferta no encontrada o no pertenece al empleador actual."}), 404
+
+    postulados = Postulados.query.filter_by(oferta_id=oferta_id).all()
+    postulados_data = []
+
+    for postulado in postulados:
+        usuario_postulante = User.query.get(postulado.user_id)
+        if not usuario_postulante or not usuario_postulante.profile_programador:
+            continue
+
+        # Obtener información del perfil de programador
+        programador_info = usuario_postulante.profile_programador.serialize()
+
+        postulados_data.append({
+            "user_id": usuario_postulante.id,
+            "username": usuario_postulante.username,
+            "email": usuario_postulante.email,
+            "programador": programador_info,
+            "estado": postulado.estado
+        })
+
+    return jsonify(postulados_data), 200
+
+
+@api.route('/postulados/<int:user_id>/<int:oferta_id>', methods=['PUT'])
+@jwt_required()
+def update_postulado_estado(user_id, oferta_id):
+    empleador_id = get_jwt_identity()
+    empleador = User.query.get(empleador_id)
+
+    if not empleador or not empleador.profile_empleador:
+        return jsonify({"msg": "Acceso denegado. Solo empleadores pueden actualizar el estado de postulados."}), 403
+
+    oferta = Ofertas.query.get(oferta_id)
+    if not oferta or oferta.empleador_id != empleador.profile_empleador.id:
+        return jsonify({"msg": "Oferta no encontrada o no pertenece al empleador actual."}), 404
+
+    postulado = Postulados.query.filter_by(user_id=user_id, oferta_id=oferta_id).first()
+    if not postulado:
+        return jsonify({"msg": "Postulado no encontrado."}), 404
+
+    estado = request.json.get('estado')
+    if estado not in ["contratado", "rechazado"]:
+        return jsonify({"msg": "Estado no válido. Use 'contratado' o 'rechazado'."}), 400
+
+    postulado.estado = estado
+    db.session.commit()
+
+    return jsonify(postulado.serialize()), 200
 
 @api.route('/postulados', methods=['POST'])
 @jwt_required()
@@ -291,10 +357,93 @@ def delete_postulado(oferta_id):
     if not postulado:
         return jsonify({"msg": "No estás inscrito en esta oferta"}), 404
 
+    if postulado.estado == "contratado":
+        return jsonify({"msg": "No puedes cancelar tu postulación porque ya has sido contratado."}), 403
+
     db.session.delete(postulado)
     db.session.commit()
 
-    return jsonify({"msg": "Desinscripción realizada con éxito."}), 200
+# Mostrar todas las calificaciones
+@api.route('/ratings', methods=['GET'])
+def get_all_ratings():
+    try:
+        ratings = Ratings.query.all()
+        if ratings:
+            return jsonify({"success": True, "ratings": [rating.serialize() for rating in ratings]}), 200
+        return jsonify({"success": False, "msg": "No hay calificaciones disponibles"}), 404
+    except Exception as e:
+        return jsonify({"success": False, "msg": f"Error al obtener las calificaciones: {str(e)}"}), 500
+
+# Mostrar una calificación específica
+@api.route('/ratings/<int:id>', methods=['GET'])
+def get_rating(id):
+    try:
+        rating = Ratings.query.get(id)
+        if not rating:
+            return jsonify({"success": False, "msg": "Calificación no encontrada"}), 404
+        return jsonify({"success": True, "rating": rating.serialize()}), 200
+    except Exception as e:
+        return jsonify({"success": False, "msg": f"Error al obtener la calificación: {str(e)}"}), 500
+
+# Crear una nueva calificación
+@api.route('/ratings', methods=['POST'])
+@jwt_required()
+def create_rating():
+    programador_id = request.json.get("from_id")
+    empleador_id = request.json.get("to_id")
+    value = request.json.get("value")
+
+    if not empleador_id or not programador_id or not value:
+        return jsonify({"success": False, "msg": "Todos los campos son requeridos"}), 400
+
+    if value < 1 or value > 5:
+        return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
+
+    new_rating = Ratings(programador_id=programador_id, empleador_id=empleador_id, value=value)
+
+    try:
+        # db.session.add(new_rating)
+        # db.session.commit()
+        return jsonify({"success": True, "msg": "Calificación creada exitosamente", "rating": new_rating.serialize()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al crear la calificación: {str(e)}"}), 500
+
+# Actualizar una calificación existente
+@api.route('/ratings/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_rating(id):
+    rating = Ratings.query.get(id)
+    if not rating:
+        return jsonify({"success": False, "msg": "Calificación no encontrada"}), 404
+
+    value = request.json.get("value")
+    if value is not None:
+        if value < 1 or value > 5:
+            return jsonify({"success": False, "msg": "El valor de la calificación debe estar entre 1 y 5"}), 400
+        rating.value = value
+
+    try:
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Calificación actualizada exitosamente", "rating": rating.serialize()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al actualizar la calificación: {str(e)}"}), 500
+
+@api.route('/ratings/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_rating(id):
+    rating = Ratings.query.get(id)
+    if not rating:
+        return jsonify({"success": False, "msg": "Calificación no encontrada"}), 404
+
+    try:
+        db.session.delete(rating)
+        db.session.commit()
+        return jsonify({"success": True, "msg": "Calificación eliminada exitosamente"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "msg": f"Error al eliminar la calificación: {str(e)}"}), 500
     
 
 #contact
@@ -360,3 +509,106 @@ def reset_password():
     user.password=user.generate_password_hash(password)
     db.session.commit()
     return jsonify({"msg":"Password updated"}), 200
+
+
+
+
+@api.route('/create-payment', methods=['POST'])
+@jwt_required()
+def create_payment():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    amount = 200
+    payment = stripe.PaymentIntent.create(
+        amount=amount,
+        currency='eur',
+        payment_method=data['payment_method'],
+        payment_method_types=["card"],
+        off_session=True,
+        confirm=True,
+    )
+    user = User.query.get(user_id)
+    empleador = user.profile_empleador
+    if(empleador):
+        print(payment)
+        empleador.premium=True
+        db.session.commit()
+        return jsonify({'success': True, 'payment':f'Has sido suscrito con éxito, gracias por confiar en Loopy', "user":user.serialize()}),200
+    else:
+        return jsonify({'success': False, 'payment':f'Algo ha fallado, por favor vuelva a intentarlo'}),200
+    
+    
+#Favoritos
+@api.route('/favoritos', methods=['POST'])
+def add_favorito():
+    data = request.json
+
+    if not data.get('programador_id') and not data.get('empleador_id') and not data.get('oferta_id'):
+        return jsonify({'msg': 'Debe proporcionar al menos un ID de programador, empleador o oferta'}), 400
+    
+    new_favorite = Favoritos(
+        programador_id=data.get('programador_id'),
+        empleador_id=data.get('empleador_id'),
+        oferta_id=data.get('oferta_id')
+    )
+    
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return jsonify({"success": True, "data": new_favorite.serialize()}), 201
+
+
+@api.route('/user/<int:user_id>/favoritos', methods=['GET'])
+def get_user_favorites(user_id):
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({"success": False, 'msg': 'Usuario no encontrado'}), 404
+    
+    favoritos = []
+    results = []
+    def loader(el):        
+        if el['oferta_id'] is not None:
+            results.append(Ofertas.query.get(el['oferta_id']))
+        elif el['empleador_id'] is not None:
+            results.append(Empleador.query.get(el['empleador_id']))
+        else:
+            return ({"success": True, "msg": "El usuario no tiene favortios "}), 418
+            
+    if user.profile_programador:
+        favoritos.extend(user.profile_programador.favoritos)
+        favoritos = [loader(favorito.serialize()) for favorito in favoritos]
+    if user.profile_empleador:
+        favoritos.extend(user.profile_empleador.favoritos)  
+    return jsonify({"success": True, "favoritos": [result.serialize() for result in results]}), 200
+
+
+@api.route('/favoritos', methods=['DELETE'])
+def remove_favorite():
+    data = request.json
+
+    
+    if not data or not all(key in data for key in ('programador_id', 'empleador_id', 'oferta_id')):
+        return jsonify({"success": False, "msg": "Faltan campos obligatorios"}), 400
+
+    try:
+       
+        favorito = Favoritos.query.filter_by(
+            programador_id=data['programador_id'],
+            empleador_id=data['empleador_id'],
+            oferta_id=data['oferta_id']
+        ).first()
+
+        
+        if not favorito:
+            return jsonify({"success": False, "msg": "Favorito no encontrado"}), 404
+
+     
+        db.session.delete(favorito)
+        db.session.commit()
+
+        return jsonify({"success": True, "msg": "Favorito eliminado exitosamente"}), 200
+
+    except Exception as e:
+        
+        return jsonify({"success": False, "msg": "Ocurrió un error al eliminar el favorito", "error": str(e)}), 500

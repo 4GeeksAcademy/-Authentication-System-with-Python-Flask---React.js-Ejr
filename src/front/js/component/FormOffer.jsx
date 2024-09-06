@@ -10,6 +10,7 @@ export const FormOffer = () => {
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         name: "",
+        nombre_empresa: "",
         descripcion: "",
         salario: "",
         localidad: "",
@@ -17,7 +18,7 @@ export const FormOffer = () => {
         estudios_minimos: "",
         tipo_contrato: "",
         idiomas: "",
-        horario:"",
+        horario: "",
         plazo: "",
         modalidad: "",
         experiencia_minima: "",
@@ -31,10 +32,10 @@ export const FormOffer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { name, descripcion, salario, localidad, plazo, modalidad, experiencia_minima } = formData;
+        const { name, nombre_empresa, descripcion, localidad, plazo, modalidad, experiencia_minima } = formData;
 
-        if (!name || !descripcion || !salario || !localidad || !plazo || !modalidad || !experiencia_minima) {
-            setError('Por favor, completa todos los campos.');
+        if (!name || !nombre_empresa || !descripcion || !localidad || !plazo || !modalidad || !experiencia_minima) {
+            setError('Por favor, completa los campos requeridos.');
         } else {
             const offerDate = new Date().toISOString();
             const updatedFormData = {
@@ -44,7 +45,6 @@ export const FormOffer = () => {
                 experiencia_minima: formData.experiencia_minima?.toUpperCase()
 
             };
-            console.log(updatedFormData)
 
             try {
                 const resp = await actions.createJobOffer(updatedFormData);
@@ -79,10 +79,10 @@ export const FormOffer = () => {
                         {error && <div className="alert alert-danger">{error}</div>}
                         <div className="row my-3 text-secondary fw-bold">
                             <div className="col-4 d-flex flex-column">
-                                <label htmlFor="name" className="form-label">Titulo de la oferta</label>
+                                <label htmlFor="name" className="form-label my-3">Titulo de la oferta</label>
                                 <input
                                     type="text"
-                                    className="form-control mt-2"
+                                    className="form-control"
                                     name="name"
                                     id="name"
                                     placeholder="Software ing full-stack"
@@ -93,23 +93,19 @@ export const FormOffer = () => {
                                 />
                             </div>
                             <div className="col-4">
-                                <label htmlFor="modalidad" className="form-label mb-3">Modalidad</label>
-                                <select
-                                    className="form-select"
-                                    name="modalidad"
-                                    id="modalidad"
-                                    required
+                                <label htmlFor="nombre_empresa" className="form-label text-secondary fw-bold my-3">Nombre de la empresa</label>
+                                <input
+                                    type="text"
+                                    name="nombre_empresa"
+                                    id="nombre_empresa"
+                                    className="form-control"
+                                    placeholder="Tecnologi vanguar SL, "
                                     onChange={handleChange}
-                                    value={formData.modalidad}
-                                >
-                                    <option value="">Seleccione una opción</option>
-                                    <option value="teletrabajo">Teletrabajo</option>
-                                    <option value="presencial">Presencial</option>
-                                    <option value="hybrido">Hybrido</option>
-                                </select>
+                                    value={formData.nombre_empresa}
+                                />                                
                             </div>
                             <div className="col-4">
-                                <label htmlFor="experiencia_minima" className="form-label mb-3">Experiencia mínima</label>
+                                <label htmlFor="experiencia_minima" className="form-label text-secondary fw-bold my-3">Experiencia mínima</label>
                                 <select
                                     className="form-select"
                                     name="experiencia_minima"
@@ -140,17 +136,20 @@ export const FormOffer = () => {
                                 />
                             </div>
                             <div className="col-4">
-                                <label htmlFor="plazo" className="form-label text-secondary fw-bold my-3">Plazo</label>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Introduzca el plazo límite"
-                                    name="plazo"
-                                    id="plazo"
+                                <label htmlFor="modalidad" className="form-label text-secondary fw-bold my-3">Modalidad</label>
+                                <select
+                                    className="form-select"
+                                    name="modalidad"
+                                    id="modalidad"
                                     required
                                     onChange={handleChange}
-                                    value={formData.plazo}
-                                />
+                                    value={formData.modalidad}
+                                >
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="teletrabajo">Teletrabajo</option>
+                                    <option value="presencial">Presencial</option>
+                                    <option value="hybrido">Hybrido</option>
+                                </select>
                             </div>
                             <div className="col-4 d-flex flex-column">
                                 <label htmlFor="localidad" className="form-label text-secondary fw-bold my-3">Localidad</label>
@@ -170,10 +169,10 @@ export const FormOffer = () => {
                         <div className="row my-3">
                             <div className="col-4">
                                 <label htmlFor="idiomas" className="form-label text-secondary fw-bold my-3">Idiomas</label>
-                                <input 
-                                    type="text" 
-                                    name="idiomas" 
-                                    id="idiomas" 
+                                <input
+                                    type="text"
+                                    name="idiomas"
+                                    id="idiomas"
                                     className="form-control"
                                     placeholder="Ingles - Nivel intermedio..."
                                     onChange={handleChange}
@@ -182,10 +181,10 @@ export const FormOffer = () => {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="estudios_minimos" className="form-label text-secondary fw-bold my-3">Estudios Minimos</label>
-                                <select 
-                                    name="estudios_minimos" 
-                                    id="estudios_minimos"
+                                <select
                                     className="form-select"
+                                    name="estudios_minimos"
+                                    id="estudios_minimos"
                                     onChange={handleChange}
                                     value={formData.estudios_minimos}
                                 >
@@ -193,52 +192,67 @@ export const FormOffer = () => {
                                     <option value="Sin estudios">Sin estudios</option>
                                     <option value="Primaria">Educacion primaria</option>
                                     <option value="ESO">Educacion Secundaria Obligatoria</option>
-                                    <option value="BACH">Bachillerato</option>
-                                    <option value="CFGM">Ciclo Formativo de Grado Medio</option>
-                                    <option value="CFGS">Ciclo Formativo de Grado Superior</option>
-                                    <option value="Universidad">Grado Universitario</option>
+                                    <option value="Bachillerato">Bachillerato</option>
+                                    <option value="Ciclo Formativo de Grado Medio">Ciclo Formativo de Grado Medio</option>
+                                    <option value="Ciclo Formativo de Grado Superior">Ciclo Formativo de Grado Superior</option>
+                                    <option value="Grado Universidad">Grado Universitario</option>
                                     <option value="Licenciatura">Licenciatura</option>
                                     <option value="Doctorado">Doctorado</option>
                                 </select>
                             </div>
                             <div className="col-4">
                                 <label htmlFor="tipo_contrato" className="form-label text-secondary fw-bold my-3">Tipo de contrato</label>
-                                <input 
-                                    type="text" 
-                                    name="tipo_contrato" 
+                                <input
+                                    type="text"
+                                    name="tipo_contrato"
                                     id="tipo_contrato"
                                     className="form-control"
                                     placeholder="Indefinido, fijo, no disponible..."
                                     onChange={handleChange}
-                                    value={formData.tipo_contrato}    
+                                    value={formData.tipo_contrato}
                                 />
-                                
+
                             </div>
                         </div>
                         <div className="row my-3">
                             <div className="col-8 requisits-minim">
-                                <label htmlFor="requisitos" className="form-label text-secondary fw-bold my-3">Requisitos minimos</label>
+                                <label htmlFor="horario" className="form-label text-secondary fw-bold my-3">Horarios</label>
                                 <input
                                     type="text"
-                                    className="form-control input-requisits"
-                                    name="requisitos_minimos"
-                                    id="requisitos"
-                                    placeholder="impresindible..."
+                                    name="horario"
+                                    id="horario"
+                                    className="form-control"
+                                    placeholder="8:00 AM - 17:00 PM"
                                     onChange={handleChange}
-                                    value={formData.requisitos_minimos}
+                                    value={formData.horario}
                                 />
                             </div>
                             <div className="col-4">
-                                <label htmlFor="horario" className="form-label text-secondary fw-bold my-3">Horarios</label>
-                                <input 
-                                type="text" 
-                                name="horario" 
-                                id="horario"
-                                className="form-control"
-                                placeholder="8:00 AM - 17:00 PM" 
-                                onChange={handleChange}
-                                value={formData.horario}
-                            />
+                                <label htmlFor="plazo" className="form-label text-secondary fw-bold my-3">Plazo</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Introduzca el plazo límite"
+                                    name="plazo"
+                                    id="plazo"
+                                    required
+                                    onChange={handleChange}
+                                    value={formData.plazo}
+                                />
+                            </div>
+                            <div className=" row mt-3">
+                                <div className="col-12">
+                                    <label htmlFor="requisitos" className="form-label text-secondary fw-bold my-3">Requisitos minimos</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="requisitos_minimos"
+                                        id="requisitos"
+                                        placeholder="impresindible..."
+                                        onChange={handleChange}
+                                        value={formData.requisitos_minimos}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div className="row last-row mt-3">

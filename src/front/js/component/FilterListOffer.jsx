@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/FilterListOffer.css";
 
-export const FilterListOffer = () => {
-    const [filters, setFilters] = useState({
-        plazo: "",
-        salary: [0, 100000],
-        searchText: "",
-        fecha_publicacion: "",
-        experience: [] 
-    });
+export const FilterListOffer = ({ filters, handleFiltersChange }) => {
+    const [localFilters, setLocalFilters] = useState(filters);
+
+    // Este useEffect se ejecuta cuando localFilters cambia, para notificar al componente padre
+    useEffect(() => {
+        handleFiltersChange(localFilters);
+    }, [localFilters, handleFiltersChange]);
 
     const handleCheckboxChange = (event) => {
-        const { name, value, checked } = event.target;
+        const { value, checked } = event.target;
 
-        setFilters(prevFilters => {
+        setLocalFilters((prevFilters) => {
             const newExperience = checked
                 ? [...prevFilters.experience, value]
-                : prevFilters.experience.filter(item => item !== value);
+                : prevFilters.experience.filter((item) => item !== value);
 
             return {
                 ...prevFilters,
@@ -28,7 +27,7 @@ export const FilterListOffer = () => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
-        setFilters(prevFilters => ({
+        setLocalFilters((prevFilters) => ({
             ...prevFilters,
             [name]: value
         }));
@@ -36,11 +35,12 @@ export const FilterListOffer = () => {
 
     const handleSalaryChange = (event) => {
         const [min, max] = event.target.value.split(',').map(Number);
-        setFilters(prevFilters => ({
+        setLocalFilters((prevFilters) => ({
             ...prevFilters,
-            salary: [min, max]
+            salario: [min, max]
         }));
     };
+
 
     return (
         <div className="FilterListOffer-box p-3 ms-5 shadow-lg">
@@ -81,8 +81,8 @@ export const FilterListOffer = () => {
                     min="0"
                     max="100000"
                     step="1000"
-                    value={filters.salary[0]}
-                    onChange={(e) => handleSalaryChange({ target: { value: `${e.target.value},${filters.salary[1]}` } })}
+                    value={filters.salario[0]}
+                    onChange={(e) => handleSalaryChange({ target: { value: `${e.target.value},${filters.salario[1]}` } })}
                 />
                 <label htmlFor="salaryMax">Salario Máximo:</label>
                 <input
@@ -91,11 +91,11 @@ export const FilterListOffer = () => {
                     min="0"
                     max="100000"
                     step="1000"
-                    value={filters.salary[1]}
-                    onChange={(e) => handleSalaryChange({ target: { value: `${filters.salary[0]},${e.target.value}` } })}
+                    value={filters.salario[1]}
+                    onChange={(e) => handleSalaryChange({ target: { value: `${filters.salario[0]},${e.target.value}` } })}
                 />
                 <p>
-                    Salario: ${filters.salary[0]} - ${filters.salary[1]}
+                    Salario: ${filters.salario[0]} - ${filters.salario[1]}
                 </p>
             </div>
 
@@ -134,8 +134,8 @@ export const FilterListOffer = () => {
             </div>
 
             <div>
-                <h3>Fecha de publicacion</h3>
-                <label htmlFor="location">Seleccione fecha:</label>
+                <h3>Fecha de publicación</h3>
+                <label htmlFor="fecha_publicacion">Seleccione fecha:</label>
                 <input
                     className="form-control"
                     id="fecha_publicacion"

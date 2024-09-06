@@ -47,6 +47,7 @@ const perfil = () => {
         }
     }
 
+
     return (
         <div className='container'>
             <div className='row border border-black my-5'>
@@ -97,7 +98,9 @@ const perfil = () => {
                                         <label htmlFor="tecnologias" className="form-label">Tecnologias</label>
                                         <input type="text" className="form-control" name='tecnologias' value={editProgramador.tecnologias} onChange={handleChangeProgramador} id="tecnologias" disabled={edit} />
 
+
                                     </div>
+                                    
                                 </>)}
                         {store.empleador && (
                             <>
@@ -163,6 +166,7 @@ const perfil = () => {
 
                         <div className='row border'>
                             <div className='col'>Favoritos</div>
+                            
                         </div>
                     </div>
                     <Link to={"/user"}>
