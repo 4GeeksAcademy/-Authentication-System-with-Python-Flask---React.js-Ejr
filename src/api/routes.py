@@ -8,7 +8,6 @@ from api.models import Modalidad, Postulados, db, User, Programador, Empleador, 
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_bcrypt import generate_password_hash, check_password_hash
 import stripe
 from werkzeug.utils import secure_filename
 
@@ -53,9 +52,9 @@ def register():
     if email_exist:
         return jsonify({'success': False, 'msg':'Ya existe una cuenta registrada con el email '+ email}),400
 
-    hashed_password = generate_password_hash(password).decode('utf-8')
     
-    new_user = User(name=name, username=username, email=email, password=hashed_password, country=country )
+    
+    new_user = User(name=name, username=username, email=email, password=password, country=country )
     
     db.session.add(new_user)
     db.session.commit()
@@ -152,7 +151,7 @@ def login():
     password = request.json.get("password", None)
     user= User.query.filter_by(email=email).first()
     if user:
-        if (check_password_hash(user.password, password)):
+        if (user.password == password):
             access_token = create_access_token(identity=user.id)
             return jsonify({'login': True, 'msg': 'Has iniciado sesión', 'user':user.serialize(), 'token': access_token}),200
         return jsonify({'login': False, 'msg': 'La contraseña es incorrecta'}),400
