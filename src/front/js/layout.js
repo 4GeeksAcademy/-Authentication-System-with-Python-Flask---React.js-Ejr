@@ -63,6 +63,7 @@ function Layout() {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<ResetPassword />} path="/reset-password/:token" />
                         <Route element={<ResetPasswordRequest />} path="/reset-password" />
+                        <Route element={<h1>Not found!</h1>} />
 
 
                     </Routes>

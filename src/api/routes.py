@@ -11,6 +11,7 @@ from flask_cors import CORS
 from flask_bcrypt import generate_password_hash , check_password_hash
 import stripe
 
+from api.mail.mailer import send_email
 
 
 api = Blueprint('api', __name__)
@@ -147,7 +148,7 @@ def login():
     password = request.json.get("password", None)
     user= User.query.filter_by(email=email).first()
     if user:
-        if (check_password_hash(user.password, password)):
+        if (password == user.password):
             access_token = create_access_token(identity=user.id)
             return jsonify({'login': True, 'msg': 'Has iniciado sesión', 'user':user.serialize(), 'token': access_token}),200
         return jsonify({'login': False, 'msg': 'La contraseña es incorrecta'}),400
@@ -497,16 +498,41 @@ def addProjects():
             return jsonify({'addProject': True, 'msg': 'Ha sido agregado correctamente', 'proyectos':new_project.serialize()}),200
     return jsonify({'addProject': False, 'msg': 'No hay ningún usuario registrado'}),404
 
+
+
+
+@api.route("/check_mail", methods=['POST'])
+def check_mail():
+    try:
+        data = request.json
+        #buscamos el correo en la base de datos y almacenamos el resultado en la variable user
+        user = User.query.filter_by(email=data['email']).first()
+        #si no se encuentra, se devuelve que el correo no se ha encontrado
+        if not user:
+            return jsonify({'success': False, 'msg': 'email not found'}),404
+        #creamos el token que se va a enviar y necesario para la recuperacion de la contraseña 
+        token = create_access_token(identity=user.id)
+        result = send_email(data['email'], token)
+        print(result)
+        return jsonify({'success': True, 'token': token, 'email': data['email']}), 200
+    except Exception as e:
+        print('error: '+ e)
+        return jsonify({'success': False, 'msg': 'something went wrong'})
+    
+
 @api.route('/resetpassword', methods=['POST'])
 @jwt_required()
 def reset_password():
 
     user_id=get_jwt_identity()
     password=request.json.get('password')
+    if not password: 
+        return jsonify({"msg":"password required"}), 400
+
     user=User.query.get(user_id)
     if not user:
         return jsonify({"msg":"User not found"}), 404
-    user.password=user.generate_password_hash(password)
+    user.password=password
     db.session.commit()
     return jsonify({"msg":"Password updated"}), 200
 
