@@ -170,6 +170,45 @@ def all_games():
 
     return jsonify(response_body), 200
 
+@api.route('add-games', methods=['POST'])
+def add_games():
+    games_data = request.json
+    print(request.json)
+    games_to_add = []
+    for game in games_data:
+        new_game = Game(
+            name = game.get('title'),
+            genre = game.get('genre'),
+            short_description = game.get('short_description'),
+            thumbnail = game.get('thumbnail'),
+            game_url = game.get('game_url')
+        )
+        games_to_add.append(new_game)
+
+    db.session.bulk_save_objects(games_to_add)
+    db.session.commit()
+    return jsonify({'message': "Games added"}), 201
+    # req_platform = game.get('platform', None)
+    # req_publisher = game.get('publisher', None)
+    # req_developer = game.get('developer', None)
+    # req_release_date = game.get('release_date', None)
+
+    
+
+
+    # Change these above to the game models columns "thumbnail, short_description, game_url, name, category"
+
+#     games=[{id:380
+        # title:"Dark Orbit Reloaded"
+        # thumbnail:"https://www.freetogame.com/g/380/thumbnail.jpg"
+        # short_description:"A browser-based 3D space-combat MMO with a massive playerbase!"
+        # game_url:"https://www.freetogame.com/open/darkorbit"
+        # genre:"Shooter"
+        # platform:"Web Browser"
+        # publisher:"Bigpoint"
+        # developer:"Bigpoint"
+        # release_date:"2006-12-11"
+        # freetogame_profile_url:"https://www.freetogame.com/darkorbit"}]
 
 
 

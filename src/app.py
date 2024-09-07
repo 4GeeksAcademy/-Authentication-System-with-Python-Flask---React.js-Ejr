@@ -20,8 +20,7 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 jwt = JWTManager(app)
-CORS(app)
-
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 app.url_map.strict_slashes = False
 
 # database condiguration

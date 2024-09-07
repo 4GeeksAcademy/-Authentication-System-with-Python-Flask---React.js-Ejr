@@ -9,7 +9,7 @@ export const Home = () => {
 
   useEffect(() => {
     const fetchGames = async () => {
-      setIsLoading(true);
+      setIsLoading(false);
       await actions.fetchGames();
       setIsLoading(false);
     };
@@ -19,10 +19,10 @@ export const Home = () => {
     <>
       {isLoading ? (
         <><div class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div></>
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div></>
       ) : (
         <div>
           <div className="text-center mt-2" id="home">
@@ -63,17 +63,17 @@ export const Home = () => {
             <div className="container-fluid d-flex flex-wrap justify-content-center gap-3">
               {store.games.map((game, index) => (
                 <Card
-                  game_id = {game.id}
+                  game_id={game.id}
                   key={index}
-                  title={game.title}
+                  title={game.name}
                   description={game.short_description}
                   genre={game.genre}
                   imgurl={game.thumbnail}
-                  id = {index}
+                  id={index}
                 />
               ))}
             </div>
-            
+
           </div>
         </div>
       )}

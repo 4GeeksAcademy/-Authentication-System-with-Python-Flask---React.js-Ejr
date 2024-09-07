@@ -42,8 +42,12 @@ class User(db.Model):
 class Game(db.Model):
     __tablename__ = "game"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique = False, nullable = False)
-    category = db.Column(db.String(100), unique = False, nullable = False) 
+    name = db.Column(db.String(1024), unique = False, nullable = False)
+    genre = db.Column(db.String(1024), unique = False, nullable = False) 
+    thumbnail = db.Column(db.String(1024), unique = False, nullable = False) 
+    short_description = db.Column(db.String(1024), unique = False, nullable = False) 
+    game_url = db.Column(db.String(1024), unique = False, nullable = False) 
+    # thumbnail, short_description, game_url
     favorited_by = db.relationship('Favorite', back_populates='game', cascade='all, delete-orphan')
     # add an images column and return it in on like 57 in the serialize
     def __repr__(self):
@@ -53,7 +57,11 @@ class Game(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "category": self.category
+            "genre": self.genre,
+            "thumbnail": self.thumbnail,
+            "short_description": self.short_description,
+            "game_url": self.game_url,
+
             #"image": self.image
         }
 
