@@ -7,11 +7,15 @@ import "../../styles/CardListOffer.css";
 export const ListOffers = ({ searchTerm, empleador_id }) => {
     const { store, actions } = useContext(Context);
     const [loaded, setLoaded] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!loaded) {
-            actions.loadAllJobOffers(); 
-            setLoaded(true);
+            setLoading(true); 
+            actions.loadAllJobOffers().then(() => {
+                setLoaded(true);
+                setLoading(false); 
+            });
         }
     }, [loaded, actions]);
 
@@ -40,7 +44,9 @@ export const ListOffers = ({ searchTerm, empleador_id }) => {
     return (
         <div className="list-offer-container mt-3 m-auto">
             <div className="row d-flex flex-column text-start g-2">
-                {filteredOffers.length > 0 ? (
+                {loading ? (
+                    <p className="loading-section text-center">Cargando ofertas...</p>
+                ) : filteredOffers.length > 0 ? (
                     filteredOffers.map((offer) => {
                         const isPremium = isEmployerPremium(offer);
                         return (
@@ -60,7 +66,7 @@ export const ListOffers = ({ searchTerm, empleador_id }) => {
                         );
                     })
                 ) : (
-                    <p className="no-offers-section text-center shadow-lg">
+                    <p className="no-offers-section text-center text-secondary shadow-lg">
                         No hay ofertas disponibles
                     </p>
                 )}

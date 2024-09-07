@@ -3,6 +3,7 @@ import OfferCard from './OfferCard';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { ListOffers } from '../CardListOffers.jsx';
 import { Context } from '../../store/appContext.js';
+import { useNavigate } from 'react-router-dom';
 
 const OfferManager = ({ empleador_id }) => {
     const { store, actions } = useContext(Context);
@@ -11,7 +12,6 @@ const OfferManager = ({ empleador_id }) => {
     const [selectedOfferIndex, setSelectedOfferIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [isSubscribed, setIsSubscribed] = useState(false);
-    const [numeroInscritos, setNumeroInscritos] = useState(0);
     const [modalData, setModalData] = useState({
         title: '',
         description: '',
@@ -60,9 +60,6 @@ const OfferManager = ({ empleador_id }) => {
                 <Button variant="btn btn-secondary" onClick={createNewOffer}>
                     Crear nueva oferta
                 </Button>
-                <div className="fs-1 text-secondary fw-bold">
-                    Tienes {numeroInscritos} candidatos a tus ofertas:
-                </div>
             </div>
             
             <div className="d-flex flex-wrap justify-content-center">

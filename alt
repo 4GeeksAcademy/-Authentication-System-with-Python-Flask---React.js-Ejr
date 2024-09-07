@@ -1,0 +1,971 @@
+[33mcommit 6721d048daaf967b0fbbf545129c564f48e6699b[m[33m ([m[1;36mHEAD -> [m[1;32mpruebas[m[33m, [m[1;31morigin/pruebas[m[33m)[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Sep 3 10:32:39 2024 +0000
+
+    fin login
+
+[33mcommit 2768135ed2d2417f52258fb9ce12bb917912cc8c[m
+Merge: 3e768ff 8479469
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Sep 3 10:16:54 2024 +0200
+
+    Merge pull request #71 from 4GeeksAcademy/pruebas
+    
+    Pruebas
+
+[33mcommit 847946987bf56ee0c3ebd184b1fb378d07b7a0d6[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Sep 3 08:16:14 2024 +0000
+
+    fix
+
+[33mcommit ddbd1096c94eab35136d0358406060dd3431e730[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Sep 3 06:57:41 2024 +0000
+
+    enlazar ofertas favoritos
+
+[33mcommit 3e768ffe89491c16ba54b7a03307239f76eebe69[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 19:35:15 2024 +0000
+
+    fix flux v2
+
+[33mcommit 7f6d8b4c7a71b7beb6bee6a97b76b02dc3a28a46[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 19:25:45 2024 +0000
+
+    añadido flux
+
+[33mcommit eb9382989cdc5bcd36b247a9e6d9a58777916129[m
+Merge: 2dce00a 33b81e4
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 20:32:58 2024 +0200
+
+    Merge pull request #70 from 4GeeksAcademy/login_fix
+    
+    fix
+
+[33mcommit 33b81e45bc1638930406494af2de457cf9e9661b[m[33m ([m[1;31morigin/login_fix[m[33m, [m[1;32mlogin_fix[m[33m)[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 18:31:15 2024 +0000
+
+    fix
+
+[33mcommit 2dce00a77b0095a144d86c12b63dde2c981f65f1[m
+Merge: 1df6825 d40b997
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Sep 2 18:28:31 2024 +0000
+
+    Merge branch 'Favoritos' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into develop
+
+[33mcommit d40b9970dc7e9964d1aaabef32c32cf4259cd88b[m
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Sep 2 18:28:08 2024 +0000
+
+    fix: backend favoritos post fixed
+
+[33mcommit 1df682565f9c62e2ec3e85777fe4bb24115fc5f9[m
+Merge: 63d5faf cc2010c
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Sep 2 17:48:43 2024 +0000
+
+    Merge branch 'Favoritos' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into develop
+
+[33mcommit cc2010ca97ba4c01b7ff34449459d10d2df96936[m
+Merge: a17c3ff e3dd522
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Sep 2 17:48:00 2024 +0000
+
+    Merge branch 'Favoritos' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into Favoritos
+
+[33mcommit a17c3ff50119960336dacad6891b4bc05abdbac4[m
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Sep 2 17:47:19 2024 +0000
+
+    fix: starRatings
+
+[33mcommit 63d5faf0277551eb06f4635c409e81112bbfa6d8[m
+Merge: be8cc93 a812726
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 19:38:38 2024 +0200
+
+    Merge pull request #69 from 4GeeksAcademy/form_registro
+    
+    Form registro fix eliminado eleccion dev y empresa
+
+[33mcommit a81272697eb62bc76d6e296bf1417437c4593d89[m[33m ([m[1;31morigin/form_registro[m[33m, [m[1;32mform_registro[m[33m)[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 17:37:34 2024 +0000
+
+    fix eliminar dev y empresa
+
+[33mcommit e3dd522a1e54d6fa66db18738eb9fba2698dbbf9[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 16:36:35 2024 +0000
+
+    v3
+
+[33mcommit be8cc9387917a30dd49f1df2601be2a1ae35b196[m
+Merge: ec174dc a8a36ad
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 13:54:49 2024 +0200
+
+    Merge pull request #68 from 4GeeksAcademy/Favoritos
+    
+     añadido el setStore al flux addFavorite
+
+[33mcommit a8a36ad7b453ec1fd81b406cf417e22881ec044f[m
+Merge: a07bd81 ec174dc
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 13:54:42 2024 +0200
+
+    Merge branch 'develop' into Favoritos
+
+[33mcommit a07bd8103a0c73141f8c50de3d6551f672453974[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 11:52:14 2024 +0000
+
+     añadido el setStore al flux addFavorite
+
+[33mcommit ec174dcbb88f6c7a0176a2a8df7987014027048f[m
+Merge: 3fcfd8e e6046f3
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 13:45:32 2024 +0200
+
+    Merge pull request #65 from 4GeeksAcademy/timeLine
+    
+    Time line
+
+[33mcommit e6046f30a657ca8932c34710a1eafd34f7711985[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 11:42:33 2024 +0000
+
+    migrate upgrade
+
+[33mcommit 3fcfd8e2b4e834f646cf4253b405507655be2874[m
+Merge: b2d99cc beab269
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 13:25:00 2024 +0200
+
+    Merge pull request #67 from 4GeeksAcademy/timeLine
+    
+    Fix login from postulados : flux.js login
+
+[33mcommit beab2695e9421a08b0de051a064814c37e542369[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 11:23:55 2024 +0000
+
+    Fix login from postulados : flux.js login
+
+[33mcommit b2d99cc90f485618ccb24ee3bab1e194adbb0bf0[m
+Merge: 1a404b5 f617ea3
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 13:20:11 2024 +0200
+
+    Merge pull request #66 from 4GeeksAcademy/timeLine
+    
+    StarsRating
+
+[33mcommit f617ea315b10af81703e6b707d0dc3240ea8ee6c[m
+Merge: 9079be3 1a404b5
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 13:20:01 2024 +0200
+
+    Merge branch 'develop' into timeLine
+
+[33mcommit 9079be324a8bd294c1995a2870cc8ae85b2ab306[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Sep 2 11:13:14 2024 +0000
+
+    StarsRating
+
+[33mcommit 1a404b5c77b4306ebad04334b61db1b29575316e[m
+Merge: 796c6f9 188b02b
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 09:22:28 2024 +0200
+
+    Merge pull request #64 from 4GeeksAcademy/Favoritos
+    
+    v1
+
+[33mcommit 188b02b603df61f532d02062293523c842c2698f[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 07:18:20 2024 +0000
+
+    v1
+
+[33mcommit 796c6f99a64a876e7ef3cacfe17a2566b6620c34[m[33m ([m[1;31morigin/api[m[33m, [m[1;32mapi[m[33m)[m
+Merge: d5697e6 89c0af9
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 07:07:28 2024 +0000
+
+    Merge branch 'Favoritos' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into develop
+
+[33mcommit d5697e6738020b1fa8b93e29fe122ee8b4ba673e[m
+Merge: ffcdfae 618d0ae
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 07:23:05 2024 +0200
+
+    Merge pull request #63 from 4GeeksAcademy/api
+    
+    Api finish, form registro mejorada
+
+[33mcommit 618d0aeb53d822b2b6d761c219558a71e779aad9[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 05:21:27 2024 +0000
+
+    finish form registro
+
+[33mcommit 71fc656b20b2b3de9655a9088501163abce8bb2b[m
+Merge: 388489d ffcdfae
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Sep 2 03:18:38 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into api
+
+[33mcommit ffcdfae2f4e00a3828878c6162fed77198089317[m
+Merge: d6cb98c 2d456e4
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sun Sep 1 19:39:47 2024 +0200
+
+    Merge pull request #62 from 4GeeksAcademy/timeLine
+    
+    modifies
+
+[33mcommit 2d456e4921aa97d6f3c3fa0a4b97f3a01926802a[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sun Sep 1 17:38:49 2024 +0000
+
+    modifies
+
+[33mcommit 89c0af9de1f699121b2859f2e74b81311433017d[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Sun Sep 1 15:02:22 2024 +0000
+
+    card favoritos
+
+[33mcommit dbe1a559f7c76fac730f71d017e12e4da7495edb[m
+Merge: e5a9e56 d6cb98c
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Sun Sep 1 12:15:48 2024 +0000
+
+    merge
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into Favoritos
+
+[33mcommit d6cb98ca7f47f6d61306ff33461f92c48c12ca87[m
+Merge: 1b90c38 9c3caac
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sun Sep 1 14:15:24 2024 +0200
+
+    Merge pull request #61 from 4GeeksAcademy/timeLine
+    
+    Modifies
+
+[33mcommit 9c3caac0273700c44aa14c301319069ba058eabb[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sun Sep 1 12:14:24 2024 +0000
+
+    Modifies
+
+[33mcommit 388489db7418974779a074ef3d00bd64d265686d[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sun Sep 1 11:38:05 2024 +0000
+
+    v2
+
+[33mcommit 67e6462bd4783a65194fb79c83d852503452e311[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sun Sep 1 11:36:40 2024 +0000
+
+    v2
+
+[33mcommit e5a9e56512a2d47bcf760683e38a6362695519c9[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Sun Sep 1 11:20:21 2024 +0000
+
+    favoritos
+
+[33mcommit 1dfdc8cb0b13dc16363eabfa5b17eaee040ba4c0[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sun Sep 1 10:31:58 2024 +0000
+
+    modificando form v1
+
+[33mcommit 73b1e5ae3ba19fc5ef64c7013dedf8baa8be9579[m
+Merge: bb3fc3e 1b90c38
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Sun Sep 1 09:14:01 2024 +0000
+
+    merge
+
+[33mcommit 28e385a555833827c285cb8f555f635b6b41298f[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sun Sep 1 06:21:48 2024 +0000
+
+    login fix
+
+[33mcommit 58f9522355b53f80603d040e5f7fc05efbfd4a64[m
+Merge: a5c12c7 1b90c38
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sun Sep 1 05:32:49 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into api
+
+[33mcommit 1b90c38ef6f69f74f9d029131564f76366957f61[m
+Merge: 8507060 0df1085
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 20:03:17 2024 +0200
+
+    Merge pull request #60 from 4GeeksAcademy/timeLine
+    
+    Time line
+
+[33mcommit 0df1085bf66553fd271e9e35a1d88b588c55dd03[m
+Merge: f337ba6 8507060
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 18:02:06 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into timeLine
+
+[33mcommit f337ba611b978ca6bb42f35d25216ca7c264a12f[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 18:01:00 2024 +0000
+
+    modifies
+
+[33mcommit 314942e4ba8e5e35077a5f2017a5d6c0c1a4e103[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 17:12:39 2024 +0000
+
+    reset_db
+
+[33mcommit 8507060247f280f65a18b7a0f2c93298b13b1763[m
+Merge: 980634f e46df80
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 18:34:27 2024 +0200
+
+    Merge pull request #59 from 4GeeksAcademy/timeLine
+    
+    Time line
+
+[33mcommit e46df8009f5fd8958d375b05a81e164764b94975[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 16:33:26 2024 +0000
+
+    fix: postulados fetch
+
+[33mcommit a5c12c7839539f7df0e982673c89f2d6e293a5ef[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sat Aug 31 15:03:03 2024 +0000
+
+    suscripcion api finalizada
+
+[33mcommit d382b844d77f70d61c7cd9a802130f4cef03ae64[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sat Aug 31 12:34:14 2024 +0000
+
+    ewew
+
+[33mcommit 4cff250e36d1286dede2406cbba90da9d91b304e[m
+Merge: 1791fff 980634f
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Sat Aug 31 12:31:53 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into api
+
+[33mcommit f7229d4af17a6d61b921ce30de005dcba32d9776[m
+Merge: c50ca35 980634f
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 10:06:11 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into timeLine
+
+[33mcommit c50ca35a2c47de44bbc79ae948b274f0b2a02a9e[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 10:05:53 2024 +0000
+
+    reset_db
+
+[33mcommit 980634f76b78a2982deb099f4c50d40092d5c35e[m
+Merge: bfe1542 cd6b054
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 12:04:14 2024 +0200
+
+    Merge pull request #58 from 4GeeksAcademy/timeLine
+    
+    modifies formoffer and ddbb, reset db
+
+[33mcommit cd6b0544b71f79147d4f9cf848b203e42e19af36[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Sat Aug 31 10:03:27 2024 +0000
+
+    modifies formoffer and ddbb, reset db
+
+[33mcommit bfe15421884ed75a7438b3c12bff83033f7cb24c[m
+Merge: a6b8882 ce19b42
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 23:30:33 2024 +0200
+
+    Merge pull request #57 from 4GeeksAcademy/timeLine
+    
+    modifies timeline
+
+[33mcommit ce19b42a241bf37074ca2bc562c17ec31db101a2[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 21:28:46 2024 +0000
+
+    modifies timeline
+
+[33mcommit 1791fff5dbd4deee31c7214279bc7ab3b23e03fa[m
+Merge: d9b392e a6b8882
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Fri Aug 30 19:30:33 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into api
+
+[33mcommit d9b392eab29d7a09a688b609873d957e7423f0d5[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Fri Aug 30 19:24:50 2024 +0000
+
+    v4
+
+[33mcommit a6b888288d1705ffa5235a2b82ca37bdec54e577[m
+Merge: c67f884 2bb0419
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 21:22:32 2024 +0200
+
+    Merge pull request #56 from 4GeeksAcademy/timeLine
+    
+    Time line
+
+[33mcommit 2bb0419e6da50c87f999c553cc61fd1513c4ebc1[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 19:21:40 2024 +0000
+
+    modifies
+
+[33mcommit bb3fc3e26a05025e023003a3a2d191d40c09e9f9[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Fri Aug 30 19:06:21 2024 +0000
+
+    flux
+
+[33mcommit a8649c157cc623145d37317eb14a2582a8273aa2[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Fri Aug 30 16:40:54 2024 +0000
+
+    merge
+
+[33mcommit 74ecbd6599ff86921bdb4e7ad103dd346bbe9e85[m
+Merge: 5351ee7 c67f884
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Fri Aug 30 16:40:44 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into Favoritos
+
+[33mcommit c3367482f12439ce4b6e28b299db044afbbcabe0[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 15:48:36 2024 +0000
+
+    cambios
+
+[33mcommit c67f8844fd0f1a1c79fcd48099ad3a58d3fe7c29[m
+Merge: ebf24d7 4faef44
+Author: IsaSimpson <167341295+IsaSimpson@users.noreply.github.com>
+Date:   Fri Aug 30 17:48:05 2024 +0200
+
+    Merge pull request #54 from 4GeeksAcademy/reset_password
+    
+    Correcion Reset
+
+[33mcommit 4faef4481fb3e61317934dcf52d6b1975f18a9cf[m
+Author: IsaSimpson <167341295+IsaSimpson@users.noreply.github.com>
+Date:   Fri Aug 30 15:46:48 2024 +0000
+
+    Correcion Reset
+
+[33mcommit ebf24d71ff563f81833a357977333409c8dd412d[m
+Merge: 435ca57 7d76efd
+Author: IsaSimpson <167341295+IsaSimpson@users.noreply.github.com>
+Date:   Fri Aug 30 17:34:52 2024 +0200
+
+    Merge pull request #53 from 4GeeksAcademy/reset_password
+    
+    Reset password
+
+[33mcommit 7d76efdd6bae3c8ce427e645ecd24d7deb7ceb04[m
+Merge: 2a60989 435ca57
+Author: IsaSimpson <167341295+IsaSimpson@users.noreply.github.com>
+Date:   Fri Aug 30 15:31:55 2024 +0000
+
+    Upgrade
+
+[33mcommit 2a609898aab0efaf108cbe9a569b80b64252bf37[m
+Author: IsaSimpson <167341295+IsaSimpson@users.noreply.github.com>
+Date:   Fri Aug 30 15:26:33 2024 +0000
+
+    Hecho
+
+[33mcommit 1ca4df0fa63df1d29e1ecb5c0295d65dca5b02d3[m
+Author: IsaSimpson <167341295+IsaSimpson@users.noreply.github.com>
+Date:   Fri Aug 30 15:16:16 2024 +0000
+
+    resetPassword creado
+
+[33mcommit 76b3464ce851c89baec95fedf8bf71f2f7510f7b[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Fri Aug 30 15:15:58 2024 +0000
+
+    v3
+
+[33mcommit 435ca575b06a4f87755acd5eb81379abe4be20de[m
+Merge: 04c941a 41b0d4a
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 12:54:20 2024 +0200
+
+    Merge pull request #52 from 4GeeksAcademy/timeLine
+    
+    modifies
+
+[33mcommit 41b0d4a4b6426bebe6dc9aca5320e5feb8cd6c23[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 10:52:22 2024 +0000
+
+    modifies
+
+[33mcommit 04c941a97d3b9b7de514072c0e517296a649b580[m
+Merge: 38ef7d8 602fece
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 12:03:38 2024 +0200
+
+    Merge pull request #51 from 4GeeksAcademy/timeLine
+    
+    Time line
+
+[33mcommit 602fecec8951a6b0ac918536cdcb8b4a52cf00f0[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 10:02:35 2024 +0000
+
+    endpoits postulados, inscripciones, control de errores, moda...
+
+[33mcommit d1a404a1e52c605b0bfe6f52c11788c480c7308c[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 23:25:08 2024 +0000
+
+    upgrade
+
+[33mcommit c0d646387af0928533f7bb3b9a250c0074d9ebcd[m
+Merge: b0d44c0 38ef7d8
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 23:16:16 2024 +0000
+
+    upgrade
+
+[33mcommit b0d44c004f6937cf8a63adc0e628ad48880d34cd[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 23:10:54 2024 +0000
+
+    upgrade
+
+[33mcommit 38ef7d8b16b6762ae664bd28f9aa5c074c3114a3[m
+Merge: dbbcdb4 97c4c2d
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Fri Aug 30 01:09:09 2024 +0200
+
+    Merge pull request #50 from 4GeeksAcademy/CrearOferta
+    
+    Crear oferta
+
+[33mcommit 97c4c2d0fcb978647432e6d6e92c75474f3eacfd[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 23:03:30 2024 +0000
+
+    fix: offerform
+
+[33mcommit cb14f010da45838dee2956b405197fd2bd4f585f[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 22:09:04 2024 +0000
+
+    Upgrading db
+
+[33mcommit 487152627d4c32e35c1578571aadfc13dbbd8d3c[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 22:05:23 2024 +0000
+
+    cambios en la base de datos
+
+[33mcommit dbbcdb483b5a9f4f1cb6ba7d487c30ccba9454ff[m
+Merge: aa39dc5 68561c5
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 16:24:15 2024 +0200
+
+    Merge pull request #49 from 4GeeksAcademy/timeLine
+    
+    manipulacion de error al postularse a oferta
+
+[33mcommit 68561c5911cd061fca579766a892ea3d5a0c6288[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 14:23:02 2024 +0000
+
+    manipulacion de error al postularse a oferta
+
+[33mcommit c75ec7c52bc1ca856f18a0e1a2ec07ab1553c668[m
+Merge: be6bbc9 aa39dc5
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Thu Aug 29 13:04:29 2024 +0000
+
+    ggiMerge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into api
+
+[33mcommit aa39dc54e0555fff4ab2ce1eb7465cebaf928594[m
+Merge: 0f01ad7 7343112
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 13:20:05 2024 +0200
+
+    Merge pull request #48 from 4GeeksAcademy/timeLine
+    
+    inscripcion a ofertas
+
+[33mcommit 73431127f9074791a9d0250f95cb68514f6ddc06[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Thu Aug 29 11:16:23 2024 +0000
+
+    Endpoint create_postulados
+
+[33mcommit be6bbc96390403422741321a2b3039976fd2df5c[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Thu Aug 29 10:26:51 2024 +0000
+
+    v2
+
+[33mcommit 5351ee73df39ca46187d5e23f161135ecd70e9f0[m
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Wed Aug 28 19:36:41 2024 +0000
+
+    pull develop
+
+[33mcommit 2e7563e67eb14f6413cdf05731486d339e5a8c76[m
+Merge: 3e33b7a 0f01ad7
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Wed Aug 28 19:35:55 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into Favoritos
+
+[33mcommit 98deb385d5305084a496f1edf4f00c1fc67702d9[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Wed Aug 28 19:32:29 2024 +0000
+
+    modifies
+
+[33mcommit 3e33b7a0c7b4262f0458941859ff929b54d1fd76[m
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Wed Aug 28 19:29:26 2024 +0000
+
+    fix: routes and models
+
+[33mcommit e62987d532891efe382f2e1629d1bc3bc617a61f[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Wed Aug 28 19:24:48 2024 +0000
+
+    v1
+
+[33mcommit ad220129669545e19cb1c20006fe118216735f84[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Wed Aug 28 18:59:41 2024 +0000
+
+    guardar
+
+[33mcommit 57abca8dd3ef960443e1efd604eb430a7a9dde55[m
+Merge: 2f5fe8d 0f01ad7
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Wed Aug 28 14:36:22 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into timeLine
+
+[33mcommit 2f5fe8d00d3b447dbd0a58c9eef72b3f284eb17f[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Wed Aug 28 14:34:05 2024 +0000
+
+    CardOffers v5
+
+[33mcommit 0f01ad706f8386da7668078e3b5000be1f239bd4[m
+Merge: 759cb3c 08c40cd
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Wed Aug 28 12:47:25 2024 +0200
+
+    Merge pull request #46 from 4GeeksAcademy/proyectos
+    
+    Añadir proyectos finalizado
+
+[33mcommit 08c40cdebab1f6cd05093b43758935de989366a1[m[33m ([m[1;31morigin/proyectos[m[33m, [m[1;32mproyectos[m[33m)[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Wed Aug 28 10:46:29 2024 +0000
+
+    añadir proyectos finalizado
+
+[33mcommit 759cb3c03b18a9fbd2df9c43ad6f65a732c8d5b6[m
+Merge: fcd5bc0 18175a5
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Aug 27 20:51:31 2024 +0200
+
+    Merge pull request #45 from 4GeeksAcademy/proyectos
+    
+    funcionalidad de añadir proyectos añadida a falta de algunos conceptos
+
+[33mcommit 18175a5e669e1f7b92c5daf2856739dc9b778fe6[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Aug 27 18:48:55 2024 +0000
+
+    funcionalidad de añadir proyectos añadida a falta de algunos conceptos
+
+[33mcommit fcd5bc065454f6f7fa14884a483171036dff9d52[m
+Merge: 8bac309 2adbf1b
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 16:40:22 2024 +0200
+
+    Merge pull request #44 from 4GeeksAcademy/timeLine
+    
+    Time line
+
+[33mcommit 2adbf1ba33b56c8566be4a5d497c3bb21ad9dfa8[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 14:37:41 2024 +0000
+
+    Modificaciones
+
+[33mcommit 4d06ce930ae8d74f3d3773a81117d50c43660690[m
+Merge: 9adbed8 8bac309
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 12:40:14 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into timeLine
+
+[33mcommit 8bac309c840370b13dbfbdc723b1e8e51c30e401[m
+Merge: 908f3de 41c1e26
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Aug 27 13:28:54 2024 +0200
+
+    Merge pull request #42 from 4GeeksAcademy/proyectos
+    
+    Fix route login ok v2
+
+[33mcommit 41c1e2633c63f0049e0de0974e21909dc6ca0c46[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Tue Aug 27 11:27:44 2024 +0000
+
+    fix route login v2
+
+[33mcommit 908f3de8c9e023d2289dc5b475d6d6eed21dd35c[m
+Merge: acf58cf 3394ed6
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 13:14:45 2024 +0200
+
+    Merge pull request #41 from 4GeeksAcademy/CrearOferta
+    
+    Crear oferta
+
+[33mcommit 3394ed632bf9c8180f7ee080783cd582e93f0251[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 11:12:26 2024 +0000
+
+    Experience uppercase
+
+[33mcommit b29b0735a59da3d8756785da868ab44ce435dbe9[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Tue Aug 27 11:05:52 2024 +0000
+
+    favoritos
+
+[33mcommit 2583fec853a5e1a4a7da5171ee0fa97d7c1dfff6[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 10:16:49 2024 +0000
+
+    reset_db
+
+[33mcommit 9adbed827ff37891278524e5ed98bfba3a382271[m
+Merge: 49e4457 acf58cf
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Tue Aug 27 09:48:23 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into timeLine
+
+[33mcommit 82a159b1a46e30d77c987ff71665bae48f05cd8b[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 19:47:12 2024 +0000
+
+    salario to string
+
+[33mcommit 415d6077fc29df37943288a176ed01d284c8ded0[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 19:32:35 2024 +0000
+
+    modificacion bbdd salario string
+
+[33mcommit f4136ef571210cd7270fa441db3d0501eab552ce[m
+Merge: 7282b72 acf58cf
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 19:00:46 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into CrearOferta
+
+[33mcommit c3021deb8557c43d0dbb7ab08e8174f89cfa4fd0[m[33m ([m[1;31morigin/enlazar[m[33m, [m[1;32menlazar[m[33m)[m
+Merge: 4c917be acf58cf
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Aug 26 19:00:26 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into enlazar
+
+[33mcommit 4c917be06b2e2712fdc897a4841606ebc60e53bb[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Aug 26 18:59:55 2024 +0000
+
+    fix route login
+
+[33mcommit acf58cfaf33e6abde49a818ccdc5c0c6a05a2974[m
+Merge: d86568e ca3dec2
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Mon Aug 26 20:54:43 2024 +0200
+
+    Merge pull request #40 from 4GeeksAcademy/Contact
+    
+    Contact
+
+[33mcommit 7282b72a5636b276bc4147e513c879d3fdc7675a[m
+Merge: e68183e 49e4457
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 18:54:20 2024 +0000
+
+    Merge branch 'timeLine' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into CrearOferta
+
+[33mcommit ca3dec25987d10b95d5dc9242f00464d8f286c44[m
+Merge: 1613d39 d86568e
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Mon Aug 26 18:53:12 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into Contact
+
+[33mcommit 1613d390d8469f3095822e85373d843d6db85e91[m
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Mon Aug 26 18:53:08 2024 +0000
+
+    guardar
+
+[33mcommit e68183e8102494d8a6ef00c672562b7d80786790[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 18:42:48 2024 +0000
+
+    hola
+
+[33mcommit ecf3958a0bb9a7afe19472a108de457e64044d88[m
+Merge: fc1e89b d86568e
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 18:42:19 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into CrearOferta
+
+[33mcommit d86568e5d3c866ae6adb47975b1bcb033be9d918[m
+Merge: a4ff4b8 8675c47
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Aug 26 20:40:33 2024 +0200
+
+    Merge pull request #39 from 4GeeksAcademy/enlazar
+    
+    fix layout corregido
+
+[33mcommit fc1e89b8bc6e008db7ef14b305f7f13e69323470[m
+Merge: a4ff4b8 cadc2c6
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 18:40:22 2024 +0000
+
+    Merge branch 'CrearOferta' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into CrearOferta
+
+[33mcommit cadc2c688500cdf4d38795928f20a6271b3509a2[m
+Merge: ca9f4ea 5abff86
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Aug 26 18:37:27 2024 +0000
+
+    Merge branch 'CrearOferta' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into CrearOferta
+
+[33mcommit ca9f4eaf04c87651f07f6b1c17c25b3bc46e5798[m
+Author: Javier Seiglie <96433186+jseiglie@users.noreply.github.com>
+Date:   Mon Aug 26 18:36:51 2024 +0000
+
+    fix: crear oferta
+
+[33mcommit 8675c479f97419830b2e517243c99dba011f1d01[m
+Merge: ded3fdd a4ff4b8
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Aug 26 18:36:44 2024 +0000
+
+    fix layout corregido
+
+[33mcommit ded3fdd615e644debf80f2a986285000dc54584d[m
+Author: Vicente Torres Luna <143291208+vtorresvcf@users.noreply.github.com>
+Date:   Mon Aug 26 18:05:42 2024 +0000
+
+    fix
+
+[33mcommit a4ff4b8fd22d57e5555d0cc94f86f1e7f6884253[m
+Merge: 5abff86 3e60105
+Author: fabruizb <166636528+fabruizb@users.noreply.github.com>
+Date:   Mon Aug 26 20:03:18 2024 +0200
+
+    Merge pull request #38 from 4GeeksAcademy/viewEnterprise
+    
+    View enterprise
+
+[33mcommit 3e6010503abc7cf9e73f69756d25664ae59e8866[m
+Merge: 2008e13 5abff86
+Author: fabruizb <166636528+fabruizb@users.noreply.github.com>
+Date:   Mon Aug 26 18:00:36 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into viewEnterprise
+
+[33mcommit 2008e13c7b66bd6703a20fe546cec23a9979c287[m
+Merge: aff5e45 cb0a6ae
+Author: fabruizb <166636528+fabruizb@users.noreply.github.com>
+Date:   Mon Aug 26 17:52:06 2024 +0000
+
+    Merge branch 'develop' into viewEnterprise
+
+[33mcommit 8c5b28a4a26be0e17ef8a34a2a638a310fa24dc5[m
+Merge: 5ed391a 5abff86
+Author: Mariona Estrada <165200714+estradapm@users.noreply.github.com>
+Date:   Mon Aug 26 17:50:38 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into Contact
+
+[33mcommit 5abff86b8685b9850f0b4c13615838edf312b633[m
+Merge: 4534ab1 1562912
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 19:50:00 2024 +0200
+
+    Merge pull request #37 from 4GeeksAcademy/CrearOferta
+    
+    pruebas crear oferta
+
+[33mcommit 15629127fd882437e6bef523c9072ad9eda859e1[m
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 17:49:21 2024 +0000
+
+    pruebas crear oferta
+
+[33mcommit cb0a6ae1b1cbb45581149cd275238e6d84255e5d[m
+Merge: 1bab015 4534ab1
+Author: fabruizb <166636528+fabruizb@users.noreply.github.com>
+Date:   Mon Aug 26 17:48:28 2024 +0000
+
+    Merge branch 'develop' of https://github.com/4GeeksAcademy/Proyecto_Final_App_Work into develop
+
+[33mcommit aff5e45f0b31d926a559f5db8151ca6001bac9cf[m
+Author: fabruizb <166636528+fabruizb@users.noreply.github.com>
+Date:   Mon Aug 26 17:45:39 2024 +0000
+
+    cambios en layout.js
+
+[33mcommit 49e4457636384db4bf2403aa8004b066e334ac1b[m
+Merge: 8d52774 4534ab1
+Author: Alejandro Valencia <99873279+soutAle@users.noreply.github.com>
+Date:   Mon Aug 26 17:07:01 2024 +0000
+
+    Merge branch 'd
