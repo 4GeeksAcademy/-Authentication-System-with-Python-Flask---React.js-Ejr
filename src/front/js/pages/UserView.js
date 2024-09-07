@@ -1,7 +1,7 @@
 import React from 'react';
 import UsersProfile from '../component/userview/UsersProfile';
-import UserDescription from '../component/userview/UserDescripcion';
-import { EditDescriptionUserAccordion } from '../component/userview/DescriptionUserAccordion';
+import AccordionDescription from '../component/companyview/AccordionDescripcion';
+import { DescriptionAccordion } from '../component/companyview/DescriptionAccordion';
 import UserExperience from '../component/userview/UserExperience';
 import UserLenguages from '../component/userview/UserLenguages';
 import UserProjects from '../component/userview/UserProjects';
@@ -20,9 +20,9 @@ export const Userview = () => {
                 <UsersProfile />
 
 
-                <UserDescription title="Descripción">
-                    <EditDescriptionUserAccordion />
-                </UserDescription>
+                <AccordionDescription title="Descripción">
+                    <DescriptionAccordion />
+                </AccordionDescription>
 
                 <UserExperience title="Experiencia">
                     <EditExperienceUserAccordion />

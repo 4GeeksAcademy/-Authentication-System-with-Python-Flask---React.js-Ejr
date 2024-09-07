@@ -2,27 +2,31 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from datetime import datetime
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Blueprint, request, jsonify, current_app, url_for
 import os
-from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact
-from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
+from api.models import Modalidad, Postulados, db, User, Programador, Empleador, Ratings, Favoritos, Ofertas, Experience, Proyectos, Contact, Skills
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_bcrypt import generate_password_hash , check_password_hash
 import stripe
+from werkzeug.utils import secure_filename
 
+# Crear el Blueprint
+api = Blueprint('api', __name__,static_folder='src/front/img/uploads')
 
-
-api = Blueprint('api', __name__)
-
+# Configuración de la carpeta de subidas
+UPLOAD_FOLDER = 'src/front/img/uploads/profile_images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+def allowed_file(filename):
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 
 # API KEY STRIPE
 stripe.api_key = 'sk_test_51PsqIxG3cEcyZuNprPRA1UTti31vG7fgiVVBfefTiZ61KUnQpESthKWS5oV9QFWCQoVsWzLbAJLmGP7npT9Wejth00qZpNlIhY'
 
-# Allow CORS requests to this API
+# Habilitar CORS
 CORS(api)
-
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -48,9 +52,9 @@ def register():
     if email_exist:
         return jsonify({'success': False, 'msg':'Ya existe una cuenta registrada con el email '+ email}),400
 
-    hashed_password = generate_password_hash(password).decode('utf-8')
     
-    new_user = User(name=name, username=username, email=email, password=hashed_password, country=country )
+    
+    new_user = User(name=name, username=username, email=email, password=password, country=country )
     
     db.session.add(new_user)
     db.session.commit()
@@ -147,7 +151,7 @@ def login():
     password = request.json.get("password", None)
     user= User.query.filter_by(email=email).first()
     if user:
-        if (check_password_hash(user.password, password)):
+        if (user.password == password):
             access_token = create_access_token(identity=user.id)
             return jsonify({'login': True, 'msg': 'Has iniciado sesión', 'user':user.serialize(), 'token': access_token}),200
         return jsonify({'login': False, 'msg': 'La contraseña es incorrecta'}),400
@@ -617,3 +621,227 @@ def remove_favorite():
     except Exception as e:
         
         return jsonify({"success": False, "msg": "Ocurrió un error al eliminar el favorito", "error": str(e)}), 500
+    
+    #cambio nombre empresa
+@api.route('empleador/nombre_empresa', methods=['PUT'])
+@jwt_required()
+def update_company_name():    
+    current_user_id = get_jwt_identity()
+    try:
+        user=User.query.get(current_user_id)
+            
+        if not user:
+            return jsonify({"success": False, "msg": "Empleador no encontrado"}), 404
+
+        new_company_name = request.json.get("nombre_empresa", None)
+        
+        
+        if not new_company_name:
+            return jsonify({"success": False, "msg": "El nombre de la empresa es requerido"}), 400
+        
+        user.name = new_company_name
+        db.session.commit()
+        
+        print(user.serialize())
+
+        return jsonify({"success": True, "msg": "Nombre de la empresa actualizado correctamente",  "user":user.serialize()}), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify({"success": False, "msg": "Error"}), 200
+    
+
+#cambio telefono empresa    
+@api.route('/empleador/telefono_empresa', methods=['PUT'])
+@jwt_required()
+def update_company_phone():    
+    current_user_id = get_jwt_identity()
+    try:
+        user=User.query.get(current_user_id)
+            
+        if not user:
+            return jsonify({"success": False, "msg": "Empleador no encontrado"}), 404
+
+        new_company_phone = request.json.get("telefono_empresa", None)
+        
+        
+        if not new_company_phone:
+            return jsonify({"success": False, "msg": "El telefono de la empresa es requerido"}), 400
+        
+        user.phone = new_company_phone
+        db.session.commit()
+        
+        print(user.serialize())
+
+        return jsonify({"success": True, "msg": "Telefono de la empresa actualizado correctamente",  "user":user.serialize()}), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify({"success": False, "msg": "Error"}), 200
+    
+# Ruta para subir la imagen de perfil
+
+@api.route('/get-profile-image', methods=['GET'])
+@jwt_required()
+def get_profile_image():
+    current_user_id = get_jwt_identity() 
+
+    user = User.query.get(current_user_id)
+    if user and user.profile_image_url:
+        return jsonify({"profile_image_url": user.profile_image_url, "success": True}), 200
+    else:
+        return jsonify({"msg": "Imagen de perfil no encontrada"}), 404
+
+
+@api.route('/upload-profile-image', methods=['POST'])
+@jwt_required()
+def upload_profile_image():
+    current_user_id = get_jwt_identity()
+    if 'image' not in request.files:
+        return jsonify({"msg": "No se envió ninguna imagen"}), 400
+
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({"msg": "No se seleccionó ninguna imagen"}), 400
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        file_path = os.path.join(upload_folder, filename)
+        file.save(file_path)
+
+        user = User.query.get(current_user_id)
+        if user:
+            user.profile_image_url = url_for('serve_uploaded_file', filename=filename)
+            db.session.commit()
+            return jsonify({"profile_image_url": user.profile_image_url, "success": True}), 200
+        else:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+    else:
+        return jsonify({"msg": "Extensión de archivo no permitida"}), 400
+
+#cambio de descripcion empresa
+
+@api.route('/update-description', methods=['PUT'])
+@jwt_required()
+def update_description():
+    user_id = get_jwt_identity()
+    description = request.json.get('description', '')
+    user = User.query.get(user_id)
+    if user:
+        user.description = description
+        db.session.commit()
+        return jsonify({'success': True, 'msg': 'Descripción actualizada correctamente', 'description': user.description}), 200
+    else:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+@api.route('/get-description', methods=['GET'])
+@jwt_required()
+def get_description():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({'success': True, 'description': user.description}), 200
+    else:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+    
+#actualizar el pais
+
+
+@api.route('/update-country', methods=['PUT'])
+@jwt_required()
+def update_country():
+    user_id = get_jwt_identity()
+    country_code = request.json.get('country')
+    user = User.query.get(user_id)
+    if user:
+        user.country = country_code
+        db.session.commit()
+        return jsonify({'success': True, 'msg': 'País actualizado correctamente'}), 200
+    else:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+@api.route('/get-country', methods=['GET'])
+@jwt_required()
+def get_country():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({'success': True, 'country': user.country}), 200
+    else:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+@api.route('api/skills/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user_skills(user_id):
+    current_user = get_jwt_identity()
+    if current_user != user_id:
+        return jsonify({'message': 'Unauthorized'}), 403
+
+    skills = Skills.query.filter_by(user_id=user_id).all()
+    return jsonify({'skills': [skills.serialize() for skills in skills]}), 200
+
+@api.route('/api/skills/<int:user_id>', methods=['POST'])
+@jwt_required()
+def add_skills(user_id):
+    current_user_id = get_jwt_identity()
+
+    if user_id != current_user_id:
+        return jsonify({"msg": "Unauthorized"}), 403
+
+    data = request.json
+    new_skills = Skills(
+        user_id=user_id,
+        language=data.get('language'),
+        icon=data.get('icon'),
+        experience=data.get('experience'),
+        projects=data.get('projects'),
+        certificate_name=data.get('certificate_name'),
+        certificate_link=data.get('certificate_link')
+    )
+
+    try:
+        db.session.add(new_skills)
+        db.session.commit()
+        return jsonify({"newSkills": new_skills.serialize()}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error al crear habilidad", "error": str(e)}), 500
+
+@api.route('/users/<int:user_id>/price', methods=['POST'])
+@jwt_required()
+def save_user_price(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+    data = request.get_json()
+    price = data.get('price')
+    currency = data.get('currency')
+
+    # Validar que los valores estén presentes
+    if price is None or currency is None:
+        return jsonify({'success': False, 'msg': 'Debes proporcionar un precio y una moneda'}), 400
+
+    # Actualizar los valores en el usuario
+    user.price = price
+    user.currency = currency
+
+    try:
+        db.session.commit()
+        return jsonify({'success': True, 'msg': 'Precio actualizado correctamente', 'user': user.serialize()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'msg': f'Error al guardar el precio: {str(e)}'}), 500
+
+# Obtener el precio y la moneda del usuario
+@api.route('/users/<int:user_id>/price', methods=['GET'])
+@jwt_required()
+def get_user_price(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'msg': 'Usuario no encontrado'}), 404
+
+    return jsonify({
+        'success': True,
+        'price': user.price,
+        'currency': user.currency
+    }), 200

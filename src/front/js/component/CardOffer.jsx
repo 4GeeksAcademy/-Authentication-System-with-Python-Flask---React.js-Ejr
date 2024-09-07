@@ -13,12 +13,15 @@ export const CardOffer = ({ id }) => {
     const [modalType, setModalType] = useState("");
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [numeroInscritos, setNumeroInscritos] = useState(0);
+    const [isFavorite, setIsFavorite] = useState(false); // Nuevo estado
 
     const offer = store.jobOffers.find((offer) => offer.id === id);
     if (!offer) return <div>Oferta no encontrada</div>;
 
-    const isFavorite = (id) => store.favorites?.filter((fav) => fav.id == id)[0]
-
+    // Función que determina si la oferta es favorita
+    const checkIfFavorite = () => {
+        return store.favorites?.some((fav) => fav.id === id);
+    }
 
     useEffect(() => {
         if (store.user && store.user.profile_programador) {
@@ -31,6 +34,9 @@ export const CardOffer = ({ id }) => {
                 setNumeroInscritos(count);
             }
         });
+
+        // Verifica si la oferta ya es favorita al cargar el componente
+        setIsFavorite(checkIfFavorite());
 
     }, [store.user, id, actions, store.favorites]);
 
@@ -100,17 +106,17 @@ export const CardOffer = ({ id }) => {
         const oferta_id = id;
 
         try {
-            if (isFavorite(id)) {
+            if (isFavorite) {
                 const result = await actions.removeFavorite(programador_id, empleador_id, oferta_id);
                 if (result) {
-                    // setIsFavorite(false);
+                    setIsFavorite(false);
                 } else {
                     throw new Error("No se pudo eliminar de favoritos. Intenta nuevamente.");
                 }
             } else {
                 const result = await actions.addFavorite(programador_id, empleador_id, oferta_id);
                 if (result) {
-                    // setIsFavorite(true);
+                    setIsFavorite(true);
                 } else {
                     throw new Error("No se pudo agregar a favoritos. Intenta nuevamente.");
                 }
@@ -121,6 +127,7 @@ export const CardOffer = ({ id }) => {
             setIsModalOpen(true);
         }
     };
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -208,4 +215,4 @@ export const CardOffer = ({ id }) => {
             )}
         </>
     );
-}
+};

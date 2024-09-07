@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import logo from "../../img/LOOPY.png"
+
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -14,12 +16,9 @@ export const Navbar = () => {
     <nav className="navbar" style={{ backgroundColor: "#6793AE", height: "120px" }}>
       <div className="container-fluid">
         <Link to={""} className="navbar-brand">
-          <img
-            src="/docs/5.3/assets/brand/bootstrap-logo.svg"
-            alt="Bootstrap"
-            width="30"
-            height="24"
-          />
+        <img src={logo} alt="Logo" width="100px" height="auto" />
+
+
         </Link>
 
         <div className="navbar navbar-expand-sm ms-auto">

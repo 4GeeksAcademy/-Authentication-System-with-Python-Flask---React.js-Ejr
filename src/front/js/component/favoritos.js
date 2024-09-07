@@ -8,11 +8,9 @@ export const Favoritos = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterTerm, setFilterTerm] = useState("");
     const [filters, setFilters] = useState({ 
-        plazo: "",
-        salario: [0, 100000],
+        
         searchText: "",
-        fecha_publicacion: "",
-        experience: []
+
     });
 
     useEffect(() => {

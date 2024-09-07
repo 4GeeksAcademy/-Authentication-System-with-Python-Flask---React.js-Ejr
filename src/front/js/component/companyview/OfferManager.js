@@ -41,6 +41,7 @@ const OfferManager = ({ empleador_id }) => {
 
     const createNewOffer = () => {
         const newOffer = {
+            id: generateOfferId(),
             title: `Oferta ${offerCount + 1}`,
             description: `Descripción de la oferta ${offerCount + 1}`,
             status: 'Activo',
@@ -48,51 +49,21 @@ const OfferManager = ({ empleador_id }) => {
         };
         setOffers([...offers, newOffer]);
         setOfferCount(offerCount + 1);
-    };
 
-    const handleOpenModal = (index = null) => {
-        if (index !== null) {
-            setModalData(offers[index]);
-            setSelectedOfferIndex(index);
-        } else {
-            setModalData({
-                title: '',
-                description: '',
-                status: 'Activo',
-                price: 100,
-            });
-            setSelectedOfferIndex(null);
-        }
-        setShowModal(true);
-    };
-
-    const handleSaveOffer = () => {
-        if (selectedOfferIndex !== null) {
-            const updatedOffers = [...offers];
-            updatedOffers[selectedOfferIndex] = modalData;
-            setOffers(updatedOffers);
-        } else {
-            setOffers([...offers, modalData]);
-            setOfferCount(offerCount + 1);
-        }
-        setShowModal(false);
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setModalData({ ...modalData, [name]: value });
+       
+        navigate(`/formoffer`);
     };
 
     return (
-        <div className='container'>
+        <div className="container">
             <div className="text-center mb-4">
-                <Button variant="btn btn-secondary" onClick={() => handleOpenModal()}>
+                <Button variant="btn btn-secondary" onClick={createNewOffer}>
                     Crear nueva oferta
                 </Button>
             </div>
             
             <div className="d-flex flex-wrap justify-content-center">
-                {offers.map((offer, index) => (
+                {offers.map((offer) => (
                     <OfferCard
                         key={index}
                         title={offer.name}
