@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/card.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
 
@@ -11,21 +11,27 @@ export const Card = (props) => {
   return (
     <div className="card bg-dark text-white" style={{ width: "15rem" }}>
       {/* onClick={() => { navigate(`/game/${id}`) }} */}
-      <img
-        src={imgurl}
-        className="card-img-top"
-        alt="..."
-      />
+      <Link to={`/game/${id}`}>
+        <img
+          src={imgurl}
+          className="card-img-top"
+          alt="..."
+        />
+      </Link>
       <div className="card-body">
-        <h5 className="card-title">
-          {title}
-        </h5>
+        <Link to={`/game/${id}`}>
+          <h5 className="card-title">
+            {title}
+          </h5>
+        </Link>
         <p className="game-genre">
           {genre}
         </p>
         <p className="card-text">
           {description}
         </p>
+        {/* Render trash can if user already has it favorited */}
+        
         <button onClick={() => { actions.addFavorites(game_id, store.user) }}>
           Favorite
         </button>

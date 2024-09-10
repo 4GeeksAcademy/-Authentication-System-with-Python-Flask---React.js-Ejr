@@ -7,6 +7,8 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 
+import requests
+
 api = Blueprint('api', __name__)
 
 
@@ -135,14 +137,41 @@ def add_favorite_game():
         return jsonify("Please, provide a valid game id"),400
     game = Game.query.filter_by(id = req_game_id).first()
     if game is None:
-        return jsonify("Game not found"),404
+        # return jsonify("Game not found"),404
+        headers = {
+            'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+            'X-RapidAPI-Key': '2e240ebbcfmshe7dd173b3cb55d7p1e9497jsna56b128e8714',
+            "Content-Type": "application/json"
+        }
+        params = { "id": req_game_id }
+
+        game_data = requests.get(
+            "https://free-to-play-games-database.p.rapidapi.com/api/game",
+            headers=headers,
+            params=params
+        ).json()
+        
+        game = Game(
+            id=game_data.get("id"),
+            name=game_data.get("title"),
+            genre=game_data.get("genre"),
+            thumbnail=game_data.get("thumbnail"),
+            short_description=game_data.get("short_description"),
+            game_url=game_data.get("game_url"),
+        )
+        db.session.add(game)
+        db.session.commit()
+        db.session.refresh()
     # game = {
         #     "id" : 1,
         #     "name": "Andres Games",
         #     "category": "Out of category for me"
         #   }
     #merging 3 models User, Game, Favorite
-    new_favorite_game = Favorite(game_id = game.id, user_id = get_user.id)
+    new_favorite_game = Favorite(
+        game_id = game.id,
+        user_id = get_user.id
+    )
     db.session.add(new_favorite_game)
     db.session.commit()
     return jsonify({"added_favorite" : new_favorite_game.serialize()}),200

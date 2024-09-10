@@ -7,14 +7,16 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      setIsLoading(false);
-      await actions.fetchGames();
-      setIsLoading(false);
-    };
-    fetchGames();
-  }, []);
+  // useEffect(() => {
+  //   // 
+  //   const fetchGames = async () => {
+  //     setIsLoading(true);
+  //     await actions.fetchGames();
+  //     setIsLoading(false);
+  //   };
+  //   fetchGames();
+  // }, []);
+
   return (
     <>
       {isLoading ? (
