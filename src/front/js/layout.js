@@ -1,15 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Login } from "./pages/login";
+import { Registro_edad } from "./pages/registro_edad";
+import { Perfil } from "./pages/perfil";
+import { Busqueda } from "./pages/busqueda";
+import { Match_busqueda } from "./pages/match_busqueda";
+import { Match_resultados } from "./pages/match_resultados";
+import { Registro_plataforma } from "./pages/registro_plataforma";
+import { Registro_juegos } from "./pages/regisltro_juegos";
+import { Registro_form } from "./pages/registro_form";
+import { Registro_genero } from "./pages/registro_genero";
 
 //create your first component
 const Layout = () => {
@@ -21,17 +24,21 @@ const Layout = () => {
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
+            <BrowserRouter basename={basename}>            
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Login/>} path="/login"/>
+                        <Route element={<Registro_edad/>} path="/registro-edad"/>
+                        <Route element={<Perfil/>} path="/perfil"/>
+                        <Route element={<Busqueda/>} path="/busqueda"/>
+                        <Route element={<Match_busqueda/>} path="/match-busqueda"/>
+                        <Route element={<Match_resultados/>} path="/match-resultados"/>
+                        <Route element={<Registro_plataforma/>} path="/registro-plataforma"/>
+                        <Route element={<Registro_juegos/>} path="/registro-juegos"/>
+                        <Route element={<Registro_form/>} path="/registro-form"/>
+                        <Route element={<Registro_genero/>} path="/registro-genero"/>
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
-                </ScrollToTop>
             </BrowserRouter>
         </div>
     );
