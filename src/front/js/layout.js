@@ -37,7 +37,7 @@ const Layout = () => {
                         <Route element={<GameSelection />} path="/game-selection" />
                         <Route element={<RegistrationForm />} path="/registration-form" />
                         <Route element={<GenreSelection />} path="/genre-selection" />
-                        <Route element={<h1>Page Not Found</h1>}/>
+                        <Route element={<h1>Page Not Found</h1>} path="*"/>
                     </Routes>
             </BrowserRouter>
         </div>
