@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Registro_plataforma = () => {
+export const Profile = () => {
     return(
         <div>
-            Registro plataforma
+            Profile
         </div>
     )
 }

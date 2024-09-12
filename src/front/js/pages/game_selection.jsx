@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Registro_juegos = () => {
+export const GameSelection = () => {
     return(
         <div>
-            Registro juegos
+            GameSelection
         </div>
     )
 }

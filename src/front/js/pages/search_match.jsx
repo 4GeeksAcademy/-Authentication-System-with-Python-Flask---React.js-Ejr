@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Registro_edad = () => {
+export const SearchMatch = () => {
     return(
         <div>
-            Registro_edad
+            SearchMatch
         </div>
     )
 }

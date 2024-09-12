@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Match_resultados = () => {
+export const MatchResults = () => {
     return(
         <div>
-            Match resultados
+            MatchResults
         </div>
     )
 }

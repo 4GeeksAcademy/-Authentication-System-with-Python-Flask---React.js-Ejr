@@ -1,9 +1,10 @@
 import React from "react";
 
-export const Match_busqueda = () => {
+export const PlatformSelection = () => {
     return(
         <div>
-            Match busqueda
+            PlatformSelection
         </div>
     )
+    
 }

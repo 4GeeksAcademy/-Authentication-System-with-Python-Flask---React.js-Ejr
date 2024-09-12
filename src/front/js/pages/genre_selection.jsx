@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Perfil = () => {
+export const GenreSelection = () => {
     return(
         <div>
-            Perfil
+            GenreSelection
         </div>
     )
 }

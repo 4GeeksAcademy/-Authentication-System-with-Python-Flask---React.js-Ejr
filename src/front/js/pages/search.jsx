@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Registro_form = () => {
+export const Search = () => {
     return(
         <div>
-            Registro form
+            Search
         </div>
     )
 }
