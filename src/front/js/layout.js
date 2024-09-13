@@ -7,7 +7,7 @@ import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer.jsx";
 
 import { Home } from "./pages/home.jsx";
-import { Login } from "./pages/login.jsx";
+import  Login  from "./pages/login.jsx";
 import { AgeVerification } from "./pages/age_verification.jsx";
 import { Profile } from "./pages/profile.jsx";
 import { Search } from "./pages/search.jsx";

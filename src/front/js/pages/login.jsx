@@ -1,9 +1,9 @@
 import React from 'react';
-import LogLogin from '../../img/LogLogin.png';
+import LogLogin from '../../img/login/LogLogin.png';
 
 const Login = () => {
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#272932', fontFamily: 'Poppins' }} className="d-flex flex-column">
+        <div style={{ minHeight: '100vh', backgroundColor: '#272932', fontFamily: 'Poppins',marginTop: '60px'  }} className="d-flex flex-column">
             <div className="row no-gutters flex-fill">
                 {/* Columna derecha con la imagen, que ahora se muestra primero en pantallas pequeñas */}
                 <div className="col-12 col-md-6 p-0 d-flex align-items-center justify-content-center order-first order-md-last">
