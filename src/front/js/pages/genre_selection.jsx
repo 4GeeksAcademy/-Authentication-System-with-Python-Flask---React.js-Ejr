@@ -18,37 +18,37 @@ export const GenreSelection = () => {
             <div className="col-md-4 mb-3">
                 <div className="genre-card">
                     <img src={action} alt="Acción" style={{width: '24%', height: '70px', objectFit: 'cover'}} />
-                    <p>Acción</p>
+                    <p className="pt-4">Acción</p>
                 </div>
             </div>
             <div className="col-md-4 mb-3">
                 <div className="genre-card">
                     <img src={adventure} alt="Acción" style={{width: '30%', height: '70px', objectFit: 'cover'}} />
-                    <p>Adventure</p>
+                    <p className="pt-4">Adventure</p>
                 </div>
             </div>
             <div className="col-md-4 mb-3">
                 <div className="genre-card">
                     <img src={rpg} alt="Acción" style={{width: '20%', height: '70px', objectFit: 'cover'}} />
-                    <p>RPG</p>
+                    <p className="pt-4">RPG</p>
                 </div>
             </div>
             <div className="col-md-4 mb-3">
                 <div className="genre-card">
                     <img src={strategy} alt="Acción" style={{width: '20%', height: '70px', objectFit: 'cover'}} />
-                    <p>Strategy</p>
+                    <p className="pt-4">Strategy</p>
                 </div>
             </div>
             <div className="col-md-4 mb-3">
                 <div className="genre-card">
                     <img src={sport} alt="Acción" style={{width: '30%', height: '70px', objectFit: 'cover'}} />
-                    <p>Sports</p>
+                    <p className="pt-4">Sports</p>
                 </div>
             </div>
             <div className="col-md-4 mb-3">
                 <div className="genre-card selected">
                     <img src={shooter} alt="Acción" style={{width: '23%', height: '70px', objectFit: 'cover'}} />
-                    <p>Shooter</p>
+                    <p className="pt-4">Shooter</p>
                 </div>
             </div>
         </div>
