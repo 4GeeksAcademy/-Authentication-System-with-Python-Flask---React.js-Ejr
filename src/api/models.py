@@ -84,8 +84,7 @@ class User(db.Model):
     subscription = db.relationship('Subscription',backref='user',lazy=True)
     session_member = db.relationship('Session_member',backref='user',lazy=True)
     friend_request_sent = db.relationship('Friend_request',foreign_keys='Friend_request.user_send_invite',backref='send',lazy=True)
-    friend_request_received = db.relationship('Friend_request',foreign_keys='Friend_request.user_receive_invite',backref='receive',lazy=True)
-    friend_request_sent = db.relationship('Friend_request',foreign_keys='Friend_request.user_send_invite',backref='send',lazy=True)
+    friend_request_received = db.relationship('Friend_request',foreign_keys='Friend_request.user_receive_invite',backref='receive',lazy=True)    
     friendship_first = db.relationship('Friendship',foreign_keys='Friendship.user_id_first',backref='first',lazy=True)
     friendship_second = db.relationship('Friendship',foreign_keys='Friendship.user_id_second',backref='second',lazy=True)
 
