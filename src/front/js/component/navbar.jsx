@@ -31,7 +31,7 @@ export const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav mx-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to="index.html">
+                  <Link className="nav-link" to="/login">
                     Home
                   </Link>
                 </li>
