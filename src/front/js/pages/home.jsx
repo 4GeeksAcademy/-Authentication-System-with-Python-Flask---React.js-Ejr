@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
-import { Banner } from "./banner.jsx";
-import { Joingaming } from "./joingaming.jsx";
-import { MatchGamers } from "./matchGamers.jsx";
-import { Gamesrecomended } from "./gamesrecomended.jsx";
-import { NewsletterSection } from "./newsletter.jsx";
+import { Banner } from "../component/banner.jsx";
+import { Joingaming } from "../component/joingaming.jsx";
+import { MatchGamers } from "../component/matchGamers.jsx";
+import { Gamesrecomended } from "../component/gamesrecomended.jsx";
+import { NewsletterSection } from "../component/newsletter.jsx";
 
 export const Home = () => {
   return (
