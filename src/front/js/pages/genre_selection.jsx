@@ -1,16 +1,17 @@
 import React from "react";
 import "../../styles/genre_selection.css"
 
-import logo from "../../img/logo-marca.png"
-import sport from "../../img/material-symbols_sports-score.png"
-import strategy from "../../img/ph_horse-fill.png"
-import rpg from "../../img/solar_shield-bold-duotone.png"
-import action from "../../img/ph_sword-bold.png"
-import adventure from "../../img/material-symbols-light_map.png"
-import shooter from "../../img/Vector.png"
+import logo from "../../img/logo/logo-marca.png"
+import sport from "../../img/genre_games/material-symbols_sports-score.png"
+import strategy from "../../img/genre_games/ph_horse-fill.png"
+import rpg from "../../img/genre_games/solar_shield-bold-duotone.png"
+import action from "../../img/genre_games/ph_sword-bold.png"
+import adventure from "../../img/genre_games/material-symbols-light_map.png"
+import shooter from "../../img/genre_games/Vector.png"
+
 export const GenreSelection = () => {
     return (
-    <div className="d-flex flex-column min-vh-100" style={{backgroundColor: "#16171C", color: "#fff"}}>
+    <div className="d-flex flex-column min-vh-100 pb-3" style={{backgroundColor: "#16171C", color: "#fff"}}>
         <img src={logo} alt="Logo" style={{width: '40%', height: '80px', margin: '10px', objectFit: "contain"}} />
     <div className="container text-center my-auto">
         <div className="row justify-content-center align-items-center">
