@@ -1,0 +1,45 @@
+body {
+    font-family: "Poppins";
+}
+
+.genre-card {
+    background-color: #222328;
+    border: solid 1px #575757;
+    padding:  20px 10px;
+    text-align: center;
+    border-radius: 10px;
+    color: #858995;
+    transition: background-color 0.3s;
+}
+
+.genre-card:hover {
+    background-color: #700B97;
+    cursor: pointer;
+}
+
+.genre-card.selected {
+    border-color: #444; 
+    background-color: #700B97; 
+  }
+
+
+.btn-prev, .btn-next {
+    background-color: #444;
+    border: none;
+    padding: 10px 60px; 
+    border-radius: 20px;
+    color: #fff;
+    margin: 0px 30px; 
+}
+
+@media (max-width: 576px) {
+    .btn-prev, .btn-next {
+        padding: 8px 20px; 
+        font-size: 0.875rem; 
+        margin: 0px 10px; 
+    }
+}
+
+.btn-prev:hover, .btn-next:hover {
+    background-color: #700B97;
+}
