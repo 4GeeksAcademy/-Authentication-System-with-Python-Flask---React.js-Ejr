@@ -57,7 +57,7 @@ export const GenreSelection = () => {
     <footer className="text-center py-3 my-4">
     <div className="d-flex justify-content-center gap-2 flex-wrap">
         <button className="btn btn-prev"><i className="fa-solid fa-arrow-left me-2"></i>Back</button>
-        <button className="btn btn-next">Continue</button>
+        
     </div>
 </footer>
     </div>
