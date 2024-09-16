@@ -1,0 +1,20 @@
+.FilterListOffer-box {
+    position: absolute;
+    top: 375px;
+    left: 5px;
+    border: 1px solid rgb(103, 147, 174);;
+    border-radius: 4px;
+    color: rgb(143, 172, 190);
+    width: 15%;
+    height: fit-content;
+    overflow: hidden;
+    opacity: 0.85; 
+    margin-bottom: 150px;
+    
+}
+.FilterListOffer-box h3{
+    font-size: 1rem;
+    color: rgb(103, 147, 174);
+    font-weight: bold;
+    margin-top: 15px;
+}

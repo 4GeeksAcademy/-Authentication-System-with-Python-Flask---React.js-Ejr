@@ -1,0 +1,73 @@
+.container-single-offer {
+    display: flex;
+    justify-content: center; /* Centra el contenedor horizontalmente */
+    padding: 0;
+    margin: 0;
+}
+
+.single-offer-box {
+    width: 100%; 
+    max-width: 700px; 
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.single-offer-box img {
+    max-width: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.offer-title {
+    font-size: 1.9rem;
+    margin: 0;
+}
+
+.company-info {
+    color: #007bff;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.date-posted {
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.offer-rating {
+    margin: 5px 0;
+}
+
+.btn-apply {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.offer-details {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.offer-details li {
+    background-color: #f8f9fa;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.requisitos-minimos {
+    color: #6c757d;
+}
+
+.offer-description {
+    margin-top: 10px;
+}
