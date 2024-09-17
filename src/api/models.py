@@ -95,7 +95,7 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_type":self.user_type,
+            "user_type":self.user_type.value,
             "username":self.username,
             "email": self.email,
             "first_name":self.first_name,
@@ -103,12 +103,12 @@ class User(db.Model):
             "age":self.age,
             "discord_id":self.discord_id,
             "steam_id":self.steam_id,
-            "schedule":self.schedule,
+            "schedule":self.schedule.value,
             "description":self.description,
-            "region":self.description,
-            "gender":self.gender,
-            "platform":self.platform,
-            "type_game":self.type_game,
+            "region":self.description.value,
+            "gender":self.gender.value,
+            "platform":[platform.value for platform in self.platform],
+            "type_game":[type_game.value for type_game in self.type_game],
             "profile_img_url":self.profile_img_url           
             # do not serialize the password, its a security breach
         }
@@ -132,10 +132,11 @@ class Game(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "platform":self.platform,
+            "name":self.name,
+            "platform":[platform.value for platform in self.platform],
             "released":self.released,
             "background_image":self.background_image,
-            "type_game":self.type_game,
+            "type_game":[type_game.value for type_game in self.type_game],
             "rating":self.rating            
             # do not serialize the password, its a security breach
         }
@@ -228,10 +229,10 @@ class Session(db.Model):
             "game_id":self.game_id,
             "host_id":self.host_id,
             "start_date":self.start_date,
-            "duration":self.duration,
-            "language":self.language,
-            "session_type":self.session_type,
-            "region":self.region,
+            "duration":self.duration.value,
+            "language":self.language.value,
+            "session_type":self.session_type.value,
+            "region":self.region.value,
             "background_img":self.background_img,
             "description":self.description,
             "capacity":self.capacity
