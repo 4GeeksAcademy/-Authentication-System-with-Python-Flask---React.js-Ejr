@@ -91,8 +91,49 @@ def post_new_user():
     except Exception as err:
         return jsonify({"error":"There was an unexpected error","msg":str(err)}),500 
 
+""" LOGIN AND AUTENTICATION """
 
+@api.route('/login', methods=['POST'])
+def login():
+    user = request.json.get("username", None)
+    passw = request.json.get("password", None)
+    print(f"User: {user}, Password: {passw}")    
 
+    if user is None or passw is None:
+            return jsonify({"msg":"Username and password are required"}),400
+    
+    try:       
+        query_user = db.session.query(User).filter_by(username=user).one()
+        user_db_passw = query_user.password
+
+        validate = bcrypt.check_password_hash(user_db_passw,passw)
+        
+        if validate:
+            user_id = query_user.id
+            usr_type = query_user.user_type.value
+            print(usr_type)
+            custom_claims = {"user_type": usr_type}
+            access_token = create_access_token(identity = user_id, additional_claims=custom_claims)
+            return jsonify({"access_token":access_token,"username":query_user.username,"user_type":query_user.user_type.value})      
+        else: 
+            return jsonify({"error":"Incorrect password"}),400
+
+    except Exception as err:
+        print(f"Error: {err}")  # Para depuración
+        return jsonify({"error":"there was an unexpected error","msg":str(err)}),500
+    
+  
+@api.route('/validate',methods=['GET'])
+@jwt_required()
+def validate_access():
+    try:
+        current_id = get_jwt_identity()
+        if current_id:
+            return jsonify({"validate":True})
+        else:
+            return jsonify({"validate":False})
+    except Exception as err:
+        return jsonify({"error":"There was an unexpected error","msg":str(err)})
 
 
 
