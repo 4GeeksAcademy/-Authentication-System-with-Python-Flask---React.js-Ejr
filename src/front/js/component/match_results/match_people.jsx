@@ -3,24 +3,58 @@ import React from "react";
 export const MatchPeople = () => {
     return (
         <div>
-            <div className="w-100 border border-dark rounded">
+            <div className="w-100 bg-dark border border-dark rounded p-3 mb-2">
                 <div className="row">
-                    <div className="col-2 text-center">
-                        <img src="https://media.rawg.io/media/games/daa/daaee07fcb40744d90cf8142f94a241f.jpg" className="card-img-top rounded-circle" alt="..." style={{objectFit: "contain", width: "80px", height: "80px"}}/>    
+                    <div className="col-12 col-lg-2 text-center px-0">
+                        <img src="https://media.rawg.io/media/games/a5a/a5a7fb8d9cb8063a8b42ee002b410db6.jpg" className="card-img-top rounded-circle" alt="..." style={{objectFit: "cover", width: "80px", height: "80px"}}/>    
                     </div>
-                    <div className="col-6">
-                        hola
+                    <div className="col-8 col-lg-6">
+                        <span className="fs-5">@Anjhelo</span><span className="fs-7 text-white-50 ps-2">Anjhelo Vela</span>
+                        <div className="py-2 d-flex">
+                            <div className="p-0 border rounded me-2" style={{backgroundColor: "#6610f2"}}>
+                                <span className="text-uppercase fw-light px-1" style={{fontSize: "0.9rem"}}>Schedule</span>
+                            </div>
+                            <div className="p-0 border rounded me-2" style={{backgroundColor: "#fd7e14"}}>
+                                <span className="text-uppercase fw-light px-1" style={{fontSize: "0.9rem"}}>Region</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-4">
-                        <button style={{backgroundColor: "#9B75F9", color: "white", border: "none", borderRadius: "20px",  fontSize: "16px", display: "block", width: "75%", marginBottom: "10px"}}>
+                    <div className="col-4 col-lg-4 d-grid" style={{justifyContent: "right"}}>
+                        <button className="px-3" style={{backgroundColor: "#9B75F9", color: "white", border: "none", borderRadius: "20px",  fontSize: "16px", display: "block", width: "100%", marginBottom: "10px"}}>
                             Connect
                         </button>
-                        <button style={{backgroundColor: "white", color: "#9B75F9", border: "2px solid #9B75F9", borderRadius: "20px", fontSize: "16px", display: "block", width: "75%"}}>
+                        <button style={{backgroundColor: "white", color: "#9B75F9", border: "2px solid #9B75F9", borderRadius: "20px", fontSize: "16px", display: "block", width: "100%"}}>
                             Profile
                         </button>
                     </div>
                 </div>
-            </div>            
+            </div>
+            <div className="w-100 bg-dark border border-dark rounded p-3">
+                <div className="row">
+                    <div className="col-12 col-lg-2 text-center px-0">
+                        <img src="https://media.rawg.io/media/games/a5a/a5a7fb8d9cb8063a8b42ee002b410db6.jpg" className="card-img-top rounded-circle" alt="..." style={{objectFit: "cover", width: "80px", height: "80px"}}/>    
+                    </div>
+                    <div className="col-8 col-lg-6">
+                        <span className="fs-5">@Anjhelo</span><span className="fs-7 text-white-50 ps-2">Anjhelo Vela</span>
+                        <div className="py-2 d-flex">
+                            <div className="p-0 border rounded me-2" style={{backgroundColor: "#6610f2"}}>
+                                <span className="text-uppercase fw-light px-1" style={{fontSize: "0.9rem"}}>Schedule</span>
+                            </div>
+                            <div className="p-0 border rounded me-2" style={{backgroundColor: "#fd7e14"}}>
+                                <span className="text-uppercase fw-light px-1" style={{fontSize: "0.9rem"}}>Region</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-4 col-lg-4 d-grid" style={{justifyContent: "right"}}>
+                        <button className="px-3" style={{backgroundColor: "#9B75F9", color: "white", border: "none", borderRadius: "20px",  fontSize: "16px", display: "block", width: "100%", marginBottom: "10px"}}>
+                            Connect
+                        </button>
+                        <button style={{backgroundColor: "white", color: "#9B75F9", border: "2px solid #9B75F9", borderRadius: "20px", fontSize: "16px", display: "block", width: "100%"}}>
+                            Profile
+                        </button>
+                    </div>
+                </div>
+            </div>                  
         </div>        
     )
 }

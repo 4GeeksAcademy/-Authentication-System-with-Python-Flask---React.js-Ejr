@@ -15,7 +15,7 @@ export const MatchResults = () => {
                         <GameSelected />
                     </div>
                     <div className="col-md-8 mb-2 d-flex px-0">
-                        <div className="bg-dark border-0 rounded p-2 m-2 w-100 text-start">
+                        <div className=" border-0 rounded p-2 m-2 w-100 text-start">
                             <div className="container px-0">
                                 <div className="row">
                                     <h4 className="">Results:</h4>
