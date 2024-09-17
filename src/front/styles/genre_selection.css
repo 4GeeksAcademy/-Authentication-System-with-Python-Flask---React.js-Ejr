@@ -32,12 +32,24 @@ body {
     margin: 0px 30px; 
 }
 
-@media (max-width: 576px) {
+.btn-search{
+    background-color: #8c67f6;
+    border-radius: 10px;
+    color: white;
+    border: none;
+}
+
+@media (max-width: 768px) {
     .btn-prev, .btn-next {
         padding: 8px 20px; 
         font-size: 0.875rem; 
         margin: 0px 10px; 
     }
+    .center-mobile {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+      }
 }
 
 .btn-prev:hover, .btn-next:hover {
