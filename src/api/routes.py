@@ -71,7 +71,8 @@ def get_game_by_name():
 
 def post_new_user():
     data = request.get_json()
-    required = {"username","email","password","first_name","last_name","age","discord_id","steam_id","schedule","description","region","gender","platform","type_game"}
+    """ required = {"username","email","password","first_name","last_name","age","discord_id","steam_id","schedule","description","region","gender","platform","type_game"} """
+    required = {"username","email","password","first_name","last_name","age","gender","platform","type_game"}
     query_user = db.session.query(User).filter_by(username = data['username']).first()
     try:        
         for item in required:
@@ -83,7 +84,8 @@ def post_new_user():
 
         else:            
             hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-            new_user = User(username = data["username"], email = data["email"],password = hashed_password, first_name = data["first_name"],last_name = data["last_name"], age = data["age"], discord_id = data["discord_id"], steam_id = data["steam_id"],schedule = data["schedule"], description = data["description"], region = data["region"], gender = data["gender"],platform = data["platform"], type_game = data["type_game"], user_type ="NORMAL")
+            """ new_user = User(username = data["username"], email = data["email"],password = hashed_password, first_name = data["first_name"],last_name = data["last_name"], age = data["age"], discord_id = data["discord_id"], steam_id = data["steam_id"],schedule = data["schedule"], description = data["description"], region = data["region"], gender = data["gender"],platform = data["platform"], type_game = data["type_game"], user_type ="NORMAL") """
+            new_user = User(username = data["username"], email = data["email"],password = hashed_password, first_name = data["first_name"],last_name = data["last_name"], age = data["age"],   gender = data["gender"],platform = data["platform"], type_game = data["type_game"], user_type ="NORMAL")
             db.session.add(new_user)   
             db.session.commit()
             return jsonify({"msg":"User registered successfully"}),200        
@@ -91,8 +93,48 @@ def post_new_user():
     except Exception as err:
         return jsonify({"error":"There was an unexpected error","msg":str(err)}),500 
 
+""" LOGIN AND AUTENTICATION """
 
+@api.route('/login', methods=['POST'])
+def login():
+    user = request.json.get("username", None)
+    passw = request.json.get("password", None)
+    print(f"User: {user}, Password: {passw}")    
 
+    if user is None or passw is None:
+            return jsonify({"msg":"Username and password are required"}),400
+    
+    try:       
+        query_user = db.session.query(User).filter_by(username=user).one()
+        user_db_passw = query_user.password
+
+        validate = bcrypt.check_password_hash(user_db_passw,passw)
+        
+        if validate:
+            user_id = query_user.id
+            usr_type = query_user.user_type.value
+            print(usr_type)
+            custom_claims = {"user_type": usr_type}
+            access_token = create_access_token(identity = user_id, additional_claims=custom_claims)
+            return jsonify({"access_token":access_token,"username":query_user.username,"user_type":query_user.user_type.value})      
+        else: 
+            return jsonify({"error":"Incorrect password"}),400
+
+    except Exception as err:        
+        return jsonify({"error":"there was an unexpected error","msg":str(err)}),500
+    
+  
+@api.route('/validate',methods=['GET'])
+@jwt_required()
+def validate_access():
+    try:
+        current_id = get_jwt_identity()
+        if current_id:
+            return jsonify({"validate":True}),200
+        else:
+            return jsonify({"validate":False}),400
+    except Exception as err:
+        return jsonify({"error":"There was an unexpected error","msg":str(err)}),500
 
 
 
