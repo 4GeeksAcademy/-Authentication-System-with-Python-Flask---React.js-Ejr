@@ -162,8 +162,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             token: null,
             // list of games, user
             games: [], // list because there will be multiple games per user
-            user: {}   // object because there is just one user
-
+            user: {},   // object because there is just one user
+            favorites: [] //declaring or INITIALIZING an empty array
         },
         actions: {
             filterGames: async (genre) => {
@@ -218,6 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 let data = await response.json(); // will get the data out of the response
                 console.log(data);
                 setStore({ games: data }); // games is FROM THE STORE above
+                localStorage.setItem("gamesAdded", "true")
                 return true;
             },
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/card.css";
 import { useNavigate, Link } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -8,6 +8,25 @@ export const Card = (props) => {
   const { store, actions } = useContext(Context)
   const { title, description, imgurl, genre, id, game_id } = props
   const navigate = useNavigate()
+  const [addFavorite, setAddFavorite] = useState(false)
+  const favoriteGame = store.user?.favorite_game?.find((item) => item.game_id === game_id);
+
+
+  useEffect(() => {
+    setAddFavorite(addFavorite);
+  }, [store.favorites]);
+  //? is a NULL operator and checks to see if something exists or not
+  const setFavorite = () => {
+    if (favoriteGame) {
+      setAddFavorite(false)
+      actions.deleteFavorites(favoriteGame.id);
+    } else {
+      //actions.addFavorites(props.title);
+      setAddFavorite(!addFavorite)
+      actions.addFavorites(game_id, store.user) //was originally the onclick in button
+    }
+  }
+
   return (
     <div className="card bg-dark text-white" style={{ width: "15rem" }}>
       {/* onClick={() => { navigate(`/game/${id}`) }} */}
@@ -31,9 +50,10 @@ export const Card = (props) => {
           {description}
         </p>
         {/* Render trash can if user already has it favorited */}
-        
-        <button onClick={() => { actions.addFavorites(game_id, store.user) }}>
-          Favorite
+
+        <button
+          onClick={setFavorite}>
+          {addFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </button>
       </div>
     </div>
