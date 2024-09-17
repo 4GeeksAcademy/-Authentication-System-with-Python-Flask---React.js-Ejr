@@ -6,9 +6,14 @@ from api.models import db, User, Game, Favorite_game, Friend_request, Friendship
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from sqlalchemy.sql import func
+from flask_jwt_extended import JWTManager, create_access_token,jwt_required, get_jwt_identity
+from flask_bcrypt import Bcrypt
 
 
 api = Blueprint('api', __name__)
+
+bcrypt = Bcrypt()
+jwt = JWTManager()
 
 # Allow CORS requests to this API
 CORS(api)
@@ -24,7 +29,7 @@ def get_random_games(number_games):
         if number_games > rows_count:
             return jsonify({"msg":"Your number of games requested is above the total number of games in our BD"}),400
         else:
-            query_games = db.session.query(Game).order_by(func.random()).limit(4).all()
+            query_games = db.session.query(Game).order_by(func.random()).limit(number_games).all()
             serialize_games = [result.serialize() for result in query_games]        
             return jsonify(serialize_games),200       
 
@@ -60,8 +65,31 @@ def get_game_by_name():
     except Exception as err:
         return jsonify({"error":"There was an unexpected error","msg":str(err)}),500 
 
+""" USER ENDPOINT """
 
+@api.route("/users",methods=["POST"])
 
+def post_new_user():
+    data = request.get_json()
+    required = {"username","email","password","first_name","last_name","age","discord_id","steam_id","schedule","description","region","gender","platform","type_game"}
+    query_user = db.session.query(User).filter_by(username = data['username']).first()
+    try:        
+        for item in required:
+            if item not in data or not data[item]:
+                return jsonify({"msg":"Some required fields are missing or empty"}),400
+
+        if query_user is not None:
+            return jsonify({"msg":"User already exists"}),400
+
+        else:            
+            hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+            new_user = User(username = data["username"], email = data["email"],password = hashed_password, first_name = data["first_name"],last_name = data["last_name"], age = data["age"], discord_id = data["discord_id"], steam_id = data["steam_id"],schedule = data["schedule"], description = data["description"], region = data["region"], gender = data["gender"],platform = data["platform"], type_game = data["type_game"], user_type ="NORMAL")
+            db.session.add(new_user)   
+            db.session.commit()
+            return jsonify({"msg":"User registered successfully"}),200        
+       
+    except Exception as err:
+        return jsonify({"error":"There was an unexpected error","msg":str(err)}),500 
 
 
 
