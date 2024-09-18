@@ -6,7 +6,7 @@ export const Gamesrecomended = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.getGamesRecomended(3); // Llama a la acción con el número de juegos recomendados que deseas
+    actions.getGamesRecomended(3);
   }, []);
 
   return (
