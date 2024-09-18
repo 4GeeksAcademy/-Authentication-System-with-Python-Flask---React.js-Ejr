@@ -1,7 +1,260 @@
-/*
-    home.css: This website contains selectors only used in home.css
+body {
+  font-family: "Poppins", sans-serif;
+}
+.carousel-item img {
+  opacity: 0.7;
+  transition: opacity 0.5s ease;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.carousel-item img:hover {
+  opacity: 1;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin: 0;
+  padding: 10px 0;
+  transition: color 0.3s ease;
+}
+
+h2 {
+  font-size: 46px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin: 0;
+  padding: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.navbar {
+  background-color: #161616;
+}
+.navbar .nav_button {
+  background-color: #8c67f6;
+  border-radius: 10px;
+  color: white;
+}
+.nav-link {
+  color: white !important;
+}
+
+.nav-link:hover {
+  color: #8c67f6 !important;
+}
+
+.custom-toggler {
+  border-color: #fff;
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+/*Start Carrousel*/
+.carousel-inner img {
+  width: 1440px;
+  height: 625px;
+  max-height: 500px;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.carousel-caption {
+  top: 200px;
+  bottom: auto;
+  transform: translateY(0);
+  text-align: center;
+  width: 100%;
+  margin-left: 30px;
+}
+
+/*End carrousel*/
+
+/*Start Button*/
+
+.custom-button {
+  background-color: #8c67f6;
+  border-radius: 10px;
+  color: white;
+  padding: 15px 90px;
+  font-size: 18px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(140, 103, 246, 0.3);
+}
+
+.custom-button:hover {
+  background-color: #8c67f6;
+  transform: scale(1.05);
+}
+
+.custom-button:active {
+  background-color: #8c67f6;
+  transform: scale(0.95);
+}
+
+.custom-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(140, 103, 246, 0.5);
+}
+
+/* Estilos generales para otros botones */
+.custom-buttom-search,
+.custom-button-card-gamers {
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.custom-buttom-search {
+  background-color: #222328;
+  padding: 5px 50px;
+}
+
+.custom-buttom-search:hover {
+  background-color: #ffff;
+}
+
+.custom-buttom-search:active {
+  background-color: #3a3c43;
+}
+
+.custom-button-card-gamers {
+  background-color: #8c67f6;
+  padding: 10px 20px;
+}
+
+.custom-button-card-gamers:hover {
+  background-color: #8c67f6;
+}
+
+/*End button*/
+
+.custom-card {
+  margin-bottom: 5px;
+}
+
+.custom-bg-gamers {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.border-card-match-gamers {
+  border-color: #8c67f6 !important;
+}
+
+.custom-card-games-recomended {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.custom-rounded-bottom {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.custom-card-games-recomended .card-body {
+  background-color: #222328;
+}
+/* Start Menu */
+.header__wrapper .header__menu {
+  background: #191919;
+}
+
+.header__wrapper .header__menu .main__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header__wrapper .header__menu .main__menu li a {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 18px;
+  color: #fff;
+  text-transform: uppercase;
+  transition: color 300ms ease-in-out;
+}
+
+.header__wrapper .header__menu .main__menu li a:hover {
+  color: #dd163b;
+}
+/*End menu*/
+
+/* Start news letter*/
+.newsletter__section {
+  background-color: #000000;
+}
+
+.newsletter__wrapper {
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.newsletter__subtitle {
+  font-size: 18px;
+  color: #8c67f6;
+  text-transform: uppercase;
+}
+
+.newsletter__title {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 46px;
+  color: #fff;
+}
+
+.input-group .form-control {
+  background: #161616;
+  color: #fff;
+  border: 2px solid #8c67f6;
+  border-radius: 8px 0 0 8px;
+  height: 50px;
+}
+
+.input-group .btn {
+  background-color: #8c67f6;
+  color: #fff;
+  border-radius: 0 8px 8px 0;
+  height: 50px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.input-group .btn:hover {
+  background-color: #8c67f6;
+  transform: scale(1.05);
+}
+
+/* End news letter */
+
+/* Start footer */
+.footer {
+  background-color: #161616;
+}
+
+.logo img {
+  max-width: 300px;
+  height: 100px;
+}
+
+.social__icon .list-inline-item a {
+  margin: 0 10px;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.social__icon .list-inline-item a:hover {
+  color: #8c67f6;
+}
+/* End footer */
