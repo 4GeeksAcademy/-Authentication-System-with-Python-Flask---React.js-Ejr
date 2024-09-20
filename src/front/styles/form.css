@@ -1,0 +1,50 @@
+/* Form.css */
+.form-container {
+    background-color: #343a40; /* Color oscuro igual al de la barra de navegación */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.2);
+    padding: 3rem; /* Aumentar el padding para hacer el cuerpo más grande */
+    transition: all 0.3s ease-in-out;
+    color: #ecf0f1; /* Color del texto */
+    width: 400px; /* Aumentar el ancho del formulario */
+    margin-top: 20px; /* Espacio desde la parte superior */
+}
+.form-container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px; /* Aumentar el padding del botón */
+    font-size: 1.1rem; /* Aumentar el tamaño de fuente del botón */
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.form-control {
+    background-color: #1a242f;
+    border: 1px solid #5e3434;
+    color: #ecf0f1;
+    border-radius: 5px;
+    height: 50px; /* Aumentar la altura de los inputs */
+}
+
+.form-control:focus {
+    background-color: #0088ff;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    color: #ecf0f1;
+}
+
+h1 {
+    color: #ecf0f1;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem; /* Aumentar el tamaño del título */
+}
