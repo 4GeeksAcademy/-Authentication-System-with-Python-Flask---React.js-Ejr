@@ -78,6 +78,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, message: "Error de conexión al servidor" };
 				}
 			},
+
+			verifyToken: async () => {
+				const token = localStorage.getItem("token");
+			
+				if (!token) {
+					setStore({ auth: false });
+					return false;  // No hay token, el usuario no está autenticado
+				}
+			
+				const requestOptions = {
+					method: 'GET',
+					headers: { 
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`  // Enviamos el token en el header
+					}
+				};
+			
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/paginaprivada", requestOptions);
+			
+					if (response.status === 200) {
+						setStore({ auth: true });
+						return true;  // Token válido, usuario autenticado
+					} else {
+						localStorage.removeItem("token");
+						setStore({ auth: false });
+						return false;  // Token inválido o expirado
+					}
+				} catch (error) {
+					console.error('Error verifying token:', error);
+					setStore({ auth: false });
+					return false;
+				}
+			},
+			
 			
 			changeColor: (index, color) => {
 				//get the store
