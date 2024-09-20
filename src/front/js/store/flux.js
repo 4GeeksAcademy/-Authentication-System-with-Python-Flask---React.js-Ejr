@@ -54,43 +54,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ auth: false});
 				localStorage.removeItem("token");
 			},
-
-			signup: (email, password) => {
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        "email": email,
-                        "password": password
-                    })
-                };
-
-                fetch(process.env.BACKEND_URL + "/api/signup", requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.msg === "You've been successfully registered") {
-                            // Puedes realizar alguna acción adicional si el registro fue exitoso
-                            console.log("Registro exitoso:", data.msg);
-                        } else {
-                            // Puedes manejar errores o mostrar mensajes de error al usuario
-                            console.error("Error en el registro:", data.msg);
-                        }
-                    })
-                    .catch(error => console.log('error', error));
-            },
-
-			getMessage: async () => {
+			signup: async (email, password) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email, password })
+				};
+			
 				try {
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
+					const response = await fetch(process.env.BACKEND_URL + "/api/signup", requestOptions);
+			
+					if (response.status !== 200) {
+						const errorData = await response.json();
+						return { success: false, message: errorData.msg || "Error en el registro" };
+					}
+			
+					const data = await response.json();
+					console.log("Registro exitoso:", data.msg);
+					return { success: true };
+					
 				} catch (error) {
-					console.log("Error loading message from backend", error)
+					console.error("Error during signup:", error);
+					return { success: false, message: "Error de conexión al servidor" };
 				}
 			},
+			
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

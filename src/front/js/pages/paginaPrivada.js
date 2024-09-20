@@ -14,7 +14,7 @@ export const PaginaPrivada = () => {
 
                     </div>
                     <div className="col">
-                        <h1 className="display-4">Bienvenido al contenido secreto</h1>
+                        <h1 className="display-4">Si has llegado hasta aquí, quiere decir que </h1>
                         <br></br>
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" className="bi bi-emoji-smile" viewBox="0 0 16 16">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />

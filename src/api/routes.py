@@ -55,23 +55,22 @@ def login():
     return jsonify(access_token=access_token)
 
 ######## SIGNUP ########
-
 @api.route('/signup', methods=['POST'])
 def signup():
-
     body = request.get_json()
     user = User.query.filter_by(email=body["email"]).first()
 
-    if user == None:
+    if user is None:
         user = User(email=body["email"], password=body["password"], is_active=True)
         db.session.add(user)
         db.session.commit()
         response_body = {
-            "msg" : "Usuario creado correctamente"
+            "msg": "Usuario creado correctamente"
         }
         return jsonify(response_body), 200
     else:
-        return jsonify({"msg" : "Usuario ya existe"})
+        return jsonify({"msg": "El correo electrónico ya está registrado"}), 400
+
 
 @api.route('/user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):

@@ -10,7 +10,7 @@ export const SignupOk = () => {
     useEffect(() => {
         const redirectTimeout = setTimeout(() => {
             setRedirect(true);
-        }, 2000);
+        }, 3000);
 
         return () => clearTimeout(redirectTimeout);
     }, []);
